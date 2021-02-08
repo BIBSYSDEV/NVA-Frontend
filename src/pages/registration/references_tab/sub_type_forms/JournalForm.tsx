@@ -126,14 +126,16 @@ const JournalForm = () => {
 
       {(publicationInstance.type === JournalType.ARTICLE ||
         publicationInstance.type === JournalType.SHORT_COMMUNICATION) && (
-        <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-          <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+        <>
+          <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
+            <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+          </BackgroundDiv>
           <NviValidation
             isPeerReviewed={publicationInstance.peerReviewed}
             isRated={!!publicationContext?.level}
             dataTestId="nvi_journal"
           />
-        </BackgroundDiv>
+        </>
       )}
     </>
   );

@@ -1,12 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import Card from '../../../../components/Card';
+import BackgroundDiv from '../../../../components/BackgroundDiv';
 import { StyledNormalTextPreWrapped } from '../../../../components/styled/Wrappers';
-
-const StyledNviValidation = styled(Card)`
-  margin-top: 1rem;
-`;
+import lightTheme from '../../../../themes/lightTheme';
 
 interface NviValidationProps {
   dataTestId: string;
@@ -19,7 +15,7 @@ const NviValidation = ({ dataTestId, isPeerReviewed, isRated, isTextbook }: NviV
   const { t } = useTranslation('registration');
 
   return (
-    <StyledNviValidation data-testid={dataTestId}>
+    <BackgroundDiv backgroundColor={lightTheme.palette.section.black} data-testid={dataTestId}>
       {!isTextbook ? (
         isPeerReviewed ? (
           isRated ? (
@@ -39,7 +35,7 @@ const NviValidation = ({ dataTestId, isPeerReviewed, isRated, isTextbook }: NviV
       ) : (
         <StyledNormalTextPreWrapped data-testid="nvi_fail">{t('references.nvi_fail')}</StyledNormalTextPreWrapped>
       )}
-    </StyledNviValidation>
+    </BackgroundDiv>
   );
 };
 

@@ -75,9 +75,7 @@ const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
           <>
             {files.length > 0 && (
               <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-                <Typography color="primary" variant="h2">
-                  {t('files_and_license.files')}
-                </Typography>
+                <Typography variant="h2">{t('files_and_license.files')}</Typography>
                 {files.map((file, index) => (
                   <FileCard
                     key={index}

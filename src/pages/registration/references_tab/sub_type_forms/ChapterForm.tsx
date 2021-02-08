@@ -49,9 +49,7 @@ const ChapterForm = () => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <StyledDiv>
           <InfoIcon color="primary" />
-          <Typography color="primary" variant="body1">
-            {t('references.chapter.info_anthology')}
-          </Typography>
+          <Typography variant="body1">{t('references.chapter.info_anthology')}</Typography>
         </StyledDiv>
 
         <DoiField />
@@ -81,7 +79,7 @@ const ChapterForm = () => {
           </Field>
 
           <StyledDashIconWrapper>
-            <RemoveIcon />
+            <RemoveIcon color="primary" />
           </StyledDashIconWrapper>
 
           <Field name={ReferenceFieldNames.PAGES_TO}>
@@ -99,14 +97,17 @@ const ChapterForm = () => {
       </BackgroundDiv>
 
       {publicationInstance.type === ChapterType.BOOK && (
-        <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-          <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+        <>
+          <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
+            <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+          </BackgroundDiv>
+
           <NviValidation
             isPeerReviewed={!!publicationInstance.peerReviewed}
             isRated={!!publicationContext?.level}
             dataTestId="nvi-chapter"
           />
-        </BackgroundDiv>
+        </>
       )}
     </>
   );
