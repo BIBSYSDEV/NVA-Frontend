@@ -136,22 +136,20 @@ const DescriptionPanel = () => {
 
           <Field name={DescriptionFieldNames.LANGUAGE}>
             {({ field }: FieldProps<string>) => (
-              <MuiThemeProvider theme={lightTheme}>
-                <TextField
-                  {...field}
-                  data-testid="registration-language-field"
-                  fullWidth
-                  label={t('description.primary_language')}
-                  placeholder={t('description.primary_language')}
-                  select
-                  variant="filled">
-                  {registrationLanguages.map(({ id, value }) => (
-                    <MenuItem value={value} key={id} data-testid={`registration-language-${id}`}>
-                      {t(`languages:${id}`)}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </MuiThemeProvider>
+              <TextField
+                {...field}
+                data-testid="registration-language-field"
+                fullWidth
+                label={t('description.primary_language')}
+                placeholder={t('description.primary_language')}
+                select
+                variant="filled">
+                {registrationLanguages.map(({ id, value }) => (
+                  <MenuItem value={value} key={id} data-testid={`registration-language-${id}`}>
+                    {t(`languages:${id}`)}
+                  </MenuItem>
+                ))}
+              </TextField>
             )}
           </Field>
         </DateAndLanguageWrapper>

@@ -2,7 +2,7 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { MuiThemeProvider, TextField, Typography } from '@material-ui/core';
+import { TextField, Typography } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import RemoveIcon from '@material-ui/icons/Remove';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
@@ -68,15 +68,13 @@ const ChapterForm = () => {
         <StyledPageNumberWrapper>
           <Field name={ReferenceFieldNames.PAGES_FROM}>
             {({ field }: FieldProps<string>) => (
-              <MuiThemeProvider theme={lightTheme}>
-                <StyledPageNumberField
-                  variant="filled"
-                  data-testid="chapter-pages-from"
-                  label={t('references.pages_from')}
-                  {...field}
-                  value={field.value ?? ''}
-                />
-              </MuiThemeProvider>
+              <StyledPageNumberField
+                variant="filled"
+                data-testid="chapter-pages-from"
+                label={t('references.pages_from')}
+                {...field}
+                value={field.value ?? ''}
+              />
             )}
           </Field>
 
@@ -86,15 +84,13 @@ const ChapterForm = () => {
 
           <Field name={ReferenceFieldNames.PAGES_TO}>
             {({ field }: FieldProps<string>) => (
-              <MuiThemeProvider theme={lightTheme}>
-                <StyledPageNumberField
-                  data-testid="chapter-pages-to"
-                  variant="filled"
-                  label={t('references.pages_to')}
-                  {...field}
-                  value={field.value ?? ''}
-                />
-              </MuiThemeProvider>
+              <StyledPageNumberField
+                data-testid="chapter-pages-to"
+                variant="filled"
+                label={t('references.pages_to')}
+                {...field}
+                value={field.value ?? ''}
+              />
             )}
           </Field>
         </StyledPageNumberWrapper>
