@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react';
 import { Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import AddIcon from '@material-ui/icons/Add';
 
 import Card from '../../components/Card';
 import Heading from '../../components/Heading';
@@ -48,6 +49,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
           <StyledNewButton
             color="primary"
             variant="outlined"
+            startIcon={<AddIcon />}
             data-testid="button-open-add-admin"
             onClick={toggleOpenAddAdminModal}>
             {t('users.add_institution_admin')}
@@ -59,7 +61,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
         open={openAddAdminModal}
         onClose={toggleOpenAddAdminModal}
         headingText={t('users.add_institution_admin')}
-        data-testid="add-role-modal">
+        dataTestId="add-role-modal">
         <AddRoleModalContent
           role={RoleName.INSTITUTION_ADMIN}
           users={users}

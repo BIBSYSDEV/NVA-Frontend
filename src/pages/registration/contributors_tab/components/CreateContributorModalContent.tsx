@@ -1,24 +1,25 @@
-import React, { useState, FC } from 'react';
-import { Formik, Form, Field, FieldProps, FormikValues, ErrorMessage } from 'formik';
-import { Collapse, Button, TextField, CircularProgress } from '@material-ui/core';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikValues } from 'formik';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-
-import { emptyNewContributor } from '../../../../types/contributor.types';
+import styled from 'styled-components';
+import { Button, CircularProgress, Collapse, DialogActions, TextField } from '@material-ui/core';
 import { createAuthority } from '../../../../api/authorityApi';
-import { Authority } from '../../../../types/authority.types';
-import { setNotification } from '../../../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../../../types/notification.types';
+import BackgroundDiv from '../../../../components/BackgroundDiv';
 import {
+  StyledNormalTextPreWrapped,
   StyledProgressWrapper,
   StyledRightAlignedWrapper,
-  StyledNormalTextPreWrapped,
 } from '../../../../components/styled/Wrappers';
+import { setNotification } from '../../../../redux/actions/notificationActions';
+import lightTheme from '../../../../themes/lightTheme';
+import { Authority } from '../../../../types/authority.types';
+import { emptyNewContributor } from '../../../../types/contributor.types';
+import { NotificationVariant } from '../../../../types/notification.types';
 import { newContributorValidationSchema } from '../../../../utils/validation/newContributorValidation';
 
-const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
-  margin-top: 1rem;
+const StyledBackgroundDiv = styled(BackgroundDiv)`
+  padding: 0;
 `;
 
 interface CreateContributorModalContentProps {
@@ -26,7 +27,7 @@ interface CreateContributorModalContentProps {
   handleCloseModal: () => void;
 }
 
-const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({ addAuthor, handleCloseModal }) => {
+const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: CreateContributorModalContentProps) => {
   const [readMore, setReadMore] = useState(false);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation('common');
@@ -46,7 +47,7 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
   };
 
   return (
-    <>
+    <StyledBackgroundDiv backgroundColor={lightTheme.palette.background.paper}>
       {loading ? (
         <StyledProgressWrapper>
           <CircularProgress size={100} />
@@ -94,7 +95,8 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
                   />
                 )}
               </Field>
-              <StyledButtonContainer>
+              <DialogActions>
+                <Button onClick={handleCloseModal}>{t('common:close')}</Button>
                 <Button
                   data-testid="button-create-authority"
                   type="submit"
@@ -103,12 +105,12 @@ const CreateContributorModalContent: FC<CreateContributorModalContentProps> = ({
                   disabled={isSubmitting}>
                   {t('create_authority')}
                 </Button>
-              </StyledButtonContainer>
+              </DialogActions>
             </Form>
           )}
         </Formik>
       )}
-    </>
+    </StyledBackgroundDiv>
   );
 };
 

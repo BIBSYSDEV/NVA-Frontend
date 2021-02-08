@@ -1,7 +1,10 @@
-import React, { FC } from 'react';
+import { ErrorMessage, Field, FieldProps } from 'formik';
+import prettyBytes from 'pretty-bytes';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import DateFnsUtils from '@date-io/date-fns';
 import {
-  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
@@ -14,18 +17,16 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import { File, licenses, LicenseNames } from '../../../types/file.types';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
-import { useTranslation } from 'react-i18next';
-import Card from '../../../components/Card';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import HelpIcon from '@material-ui/icons/Help';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Field, FieldProps, ErrorMessage } from 'formik';
+import HelpIcon from '@material-ui/icons/Help';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import BackgroundDiv from '../../../components/BackgroundDiv';
+import DangerButton from '../../../components/DangerButton';
+import lightTheme, { datePickerTranslationProps } from '../../../themes/lightTheme';
+import { File, LicenseNames, licenses } from '../../../types/file.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
-import { datePickerTranslationProps } from '../../../themes/mainTheme';
 
 const StyledDescription = styled(Typography)`
   font-style: italic;
@@ -82,6 +83,10 @@ const StyledActions = styled.div`
   margin-top: 1rem;
 `;
 
+const StyledTypography = styled(Typography)`
+  overflow-wrap: break-word;
+`;
+
 interface FileCardProps {
   file: File;
   removeFile: () => void;
@@ -89,14 +94,14 @@ interface FileCardProps {
   toggleLicenseModal?: () => void;
 }
 
-const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLicenseModal }) => {
+const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileCardProps) => {
   const { t, i18n } = useTranslation('registration');
 
   return (
-    <Card data-testid="uploaded-file-card">
-      <Typography variant="h5">{file.name}</Typography>
+    <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight} data-testid="uploaded-file-card">
+      <StyledTypography variant="h5">{file.name}</StyledTypography>
       <StyledDescription>
-        {t('files_and_license.uploaded_size', { size: Math.round(file.size / 1000) })}
+        {t('files_and_license.uploaded_size', { size: prettyBytes(file.size, { locale: true }) })}
       </StyledDescription>
 
       {baseFieldName && (
@@ -104,7 +109,7 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
           <Field name={`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`}>
             {({ field }: FieldProps) => (
               <FormControlLabel
-                control={<Checkbox color="primary" {...field} checked={field.value} />}
+                control={<Checkbox {...field} color="primary" checked={field.value} />}
                 label={t('files_and_license.administrative_contract')}
               />
             )}
@@ -142,7 +147,7 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
                       <KeyboardDatePicker
                         {...datePickerTranslationProps}
                         data-testid="uploaded-file-embargo-date"
-                        inputVariant="outlined"
+                        inputVariant="filled"
                         label={t('files_and_license.embargo_date')}
                         {...field}
                         onChange={(value) => form.setFieldValue(field.name, value)}
@@ -180,7 +185,7 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
                             ) : null;
                           },
                         }}
-                        variant="outlined"
+                        variant="filled"
                         value={field.value?.identifier || ''}
                         error={!!error && touched}
                         helperText={<ErrorMessage name={field.name} />}
@@ -222,12 +227,15 @@ const FileCard: FC<FileCardProps> = ({ file, removeFile, baseFieldName, toggleLi
       )}
 
       <StyledActions>
-        <Button variant="contained" color="secondary" data-testid="button-remove-file" onClick={removeFile}>
-          <DeleteIcon />
+        <DangerButton
+          variant="outlined"
+          data-testid="button-remove-file"
+          startIcon={<DeleteIcon />}
+          onClick={removeFile}>
           {t('common:remove')}
-        </Button>
+        </DangerButton>
       </StyledActions>
-    </Card>
+    </BackgroundDiv>
   );
 };
 

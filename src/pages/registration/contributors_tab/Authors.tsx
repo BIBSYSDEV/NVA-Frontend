@@ -1,12 +1,10 @@
 import { FieldArrayRenderProps, move, useFormikContext } from 'formik';
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
-
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { Authority } from '../../../types/authority.types';
 import { Contributor, emptyContributor, Identity, UnverifiedContributor } from '../../../types/contributor.types';
@@ -14,27 +12,18 @@ import { NotificationVariant } from '../../../types/notification.types';
 import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
+import useIsMobile from '../../../utils/hooks/useIsMobile';
 import AddContributorModal from './AddContributorModal';
 import AuthorList from './components/AuthorList';
 
-const StyledAuthors = styled.div`
-  display: grid;
-  grid-template-areas: 'authors' 'add-author';
-`;
-
-const StyledAddAuthorButton = styled(Button)`
-  margin: 1rem;
-  border-radius: 0;
-  padding: 1rem 0;
-`;
-
-const StyledAddIcon = styled(AddIcon)`
-  margin-right: 0.5rem;
+const StyledButton = styled(Button)`
+  margin: 1rem 0rem;
+  border-radius: 1rem;
 `;
 
 type AuthorsProps = Pick<FieldArrayRenderProps, 'push' | 'replace'>;
 
-const Authors: FC<AuthorsProps> = ({ push, replace }) => {
+const Authors = ({ push, replace }: AuthorsProps) => {
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
   const { values, setFieldValue } = useFormikContext<Registration>();
@@ -44,6 +33,7 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
   const [openContributorModal, setOpenContributorModal] = useState(false);
   const [unverifiedAuthor, setUnverifiedAuthor] = useState<UnverifiedContributor | null>(null);
   const orderedAuthors = contributors.map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
+  const isMobile = useIsMobile();
 
   const handleOnRemove = (indexToRemove: number) => {
     const remainingAuthors = contributors
@@ -101,31 +91,44 @@ const Authors: FC<AuthorsProps> = ({ push, replace }) => {
   };
 
   return (
-    <StyledAuthors>
+    <>
+      {((isMobile && contributors.length >= 2) || (!isMobile && contributors.length >= 5)) && (
+        <StyledButton
+          onClick={() => {
+            setOpenContributorModal(true);
+            setUnverifiedAuthor(null);
+          }}
+          variant="contained"
+          color="secondary"
+          startIcon={<AddIcon />}
+          data-testid="add-contributor">
+          {t('contributors.add_author')}
+        </StyledButton>
+      )}
       <AuthorList
         authors={orderedAuthors}
         onDelete={handleOnRemove}
         onMoveAuthor={handleMoveAuthor}
         openContributorModal={handleOpenContributorModal}
       />
-      <StyledAddAuthorButton
+      <StyledButton
         onClick={() => {
           setOpenContributorModal(true);
           setUnverifiedAuthor(null);
         }}
         variant="contained"
-        color="default"
+        color="secondary"
+        startIcon={<AddIcon />}
         data-testid="add-contributor">
-        <StyledAddIcon />
-        <Typography variant="button">{t('contributors.add_author')}</Typography>
-      </StyledAddAuthorButton>
+        {t('contributors.add_author')}
+      </StyledButton>
       <AddContributorModal
         initialSearchTerm={unverifiedAuthor?.name}
         open={openContributorModal}
         toggleModal={() => setOpenContributorModal(!openContributorModal)}
         onAuthorSelected={onAuthorSelected}
       />
-    </StyledAuthors>
+    </>
   );
 };
 

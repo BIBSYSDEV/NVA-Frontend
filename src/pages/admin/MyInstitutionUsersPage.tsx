@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { FormControlLabel, Checkbox, Divider, Button } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 
 import SubHeading from '../../components/SubHeading';
 import { useSelector } from 'react-redux';
@@ -56,6 +57,7 @@ const MyInstitutionUsersPage: FC = () => {
           <StyledNewButton
             color="primary"
             variant="outlined"
+            startIcon={<AddIcon />}
             data-testid="button-add-institution-admin"
             onClick={() => setRoleToAdd(RoleName.INSTITUTION_ADMIN)}>
             {t('users.add_institution_admin')}
@@ -78,6 +80,7 @@ const MyInstitutionUsersPage: FC = () => {
           <StyledNewButton
             color="primary"
             variant="outlined"
+            startIcon={<AddIcon />}
             data-testid="button-add-curator"
             onClick={() => setRoleToAdd(RoleName.CURATOR)}>
             {t('users.add_curator')}
@@ -100,6 +103,7 @@ const MyInstitutionUsersPage: FC = () => {
           <StyledNewButton
             color="primary"
             variant="outlined"
+            startIcon={<AddIcon />}
             data-testid="button-add-editor"
             onClick={() => setRoleToAdd(RoleName.EDITOR)}>
             {t('users.add_editor')}
@@ -128,7 +132,7 @@ const MyInstitutionUsersPage: FC = () => {
                 ? t('users.add_curator')
                 : t('users.add_editor')
             }
-            data-testid="add-role-modal">
+            dataTestId="add-role-modal">
             <AddRoleModalContent
               role={roleToAdd}
               users={users}

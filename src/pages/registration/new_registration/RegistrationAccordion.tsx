@@ -1,61 +1,44 @@
-import React, { ReactNode, FC } from 'react';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import React from 'react';
+import { Accordion, AccordionProps } from '@material-ui/core';
 import styled from 'styled-components';
-import { Typography } from '@material-ui/core';
-
-interface RegistrationAccordionProps {
-  headerLabel: string;
-  icon: ReactNode;
-  expanded: boolean;
-  onChange: (event: React.ChangeEvent<unknown>, isExpanded: boolean) => void;
-  ariaControls: string;
-  children?: ReactNode;
-  dataTestId?: string;
-}
 
 const StyledRegistrationAccordion = styled(Accordion)`
-  margin-bottom: 2rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+  background: ${({ theme }) => theme.palette.background.default};
+  border-width: 4px;
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.md}px`}) {
     max-width: 90vw;
+  }
+
+  .MuiAccordionSummary-content {
+    align-items: center;
+    padding: 1rem 0;
+
+    > :first-child {
+      // Space between icon and title
+      margin-right: 1rem;
+    }
+
+    .MuiSvgIcon-root {
+      font-size: 4rem;
+      @media (max-width: ${({ theme }) => `${theme.breakpoints.values.md}px`}) {
+        display: none;
+      }
+    }
+  }
+
+  .MuiAccordionDetails-root {
+    flex-direction: column;
+    > :not(:first-child) {
+      margin-top: 1rem;
+    }
   }
 `;
 
-const StyledAccordionSummary = styled(AccordionSummary)`
-  min-height: 5rem;
-  align-items: center;
-`;
-
-const StyledIcon = styled.div`
-  display: inline-flex;
-  align-items: center;
-  margin-right: 1rem;
-`;
-
-const StyledAccordionDetails = styled(AccordionDetails)`
-  flex-direction: column;
-`;
-
-const RegistrationAccordion: FC<RegistrationAccordionProps> = ({
-  headerLabel,
-  icon,
-  expanded,
-  onChange,
-  children,
-  ariaControls,
-  dataTestId,
-}) => {
-  return (
-    <StyledRegistrationAccordion expanded={expanded} onChange={onChange}>
-      <StyledAccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={ariaControls} data-testid={dataTestId}>
-        <StyledIcon>{icon}</StyledIcon>
-        <Typography variant="h6">{headerLabel}</Typography>
-      </StyledAccordionSummary>
-      <StyledAccordionDetails>{children}</StyledAccordionDetails>
-    </StyledRegistrationAccordion>
-  );
-};
+const RegistrationAccordion = ({ children, ...props }: AccordionProps) => (
+  <StyledRegistrationAccordion variant="outlined" square {...props}>
+    {children}
+  </StyledRegistrationAccordion>
+);
 
 export default RegistrationAccordion;

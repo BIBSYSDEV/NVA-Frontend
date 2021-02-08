@@ -1,128 +1,94 @@
-import React, { FC } from 'react';
-import LabelContentRow from '../../components/LabelContentRow';
-import NormalText from '../../components/NormalText';
-import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
-import { Link } from '@material-ui/core';
+import React from 'react';
+import { Link, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
 import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
+import { ChapterPublicationContext } from '../../types/publication_types/chapterRegistration.types';
+import RegistrationSummary from './RegistrationSummary';
+import { levelMap } from '../../types/registration.types';
 
-const StyledContainer = styled.div`
-  display: flex;
-`;
-
-const StyledOpenInNewIcon = styled(OpenInNewIcon)`
-  margin-left: 0.25rem;
-`;
-
-export const PublicPublicationContextJournal: FC<{ publicationContext: JournalPublicationContext }> = ({
-  publicationContext,
-}) => {
+export const PublicJournalContent = ({ publicationContext }: { publicationContext: JournalPublicationContext }) => {
   const { t } = useTranslation('registration');
-  const { onlineIssn, title, url } = publicationContext;
+  const { onlineIssn, printIssn, title, url, level } = publicationContext;
 
   return title ? (
-    <LabelContentRow minimal multiple label={`${t('references.journal')}:`}>
-      <StyledContainer>
-        <NormalText>{title}</NormalText>
-        {url && (
-          <Link href={url} target="_blank" rel="noopener noreferrer">
-            <StyledOpenInNewIcon aria-label={url} />
-          </Link>
-        )}
-      </StyledContainer>
-      {onlineIssn && `${t('references.issn')} ${onlineIssn}`}
-    </LabelContentRow>
+    <>
+      <Typography variant="h3">{t('references.journal')}</Typography>
+      {url ? (
+        <Typography component={Link} href={url} target="_blank" rel="noopener noreferrer">
+          {title}
+        </Typography>
+      ) : (
+        <Typography>{title}</Typography>
+      )}
+      {onlineIssn && (
+        <Typography>
+          {t('references.issn')}: {[onlineIssn, printIssn].filter((issn) => issn).join(', ')}
+        </Typography>
+      )}
+      <PublicLevelContent level={level} />
+    </>
   ) : null;
 };
 
-export const PublicPublicationContextBook = ({
+export const PublicPublisherContent = ({
   publicationContext,
 }: {
-  publicationContext: BookPublicationContext;
+  publicationContext: Partial<BookPublicationContext & DegreePublicationContext & ReportPublicationContext>;
 }) => {
   const { t } = useTranslation('registration');
-  const { publisher, url, seriesTitle } = publicationContext;
+  const { publisher, url, level } = publicationContext;
 
-  return (
+  return publisher ? (
     <>
-      {publisher && (
-        <LabelContentRow minimal multiple label={`${t('common:publisher')}:`}>
-          <StyledContainer>
-            <NormalText>{publisher}</NormalText>
-            {url && (
-              <Link href={url} target="_blank" rel="noopener noreferrer">
-                <StyledOpenInNewIcon aria-label={url} />
-              </Link>
-            )}
-          </StyledContainer>
-        </LabelContentRow>
+      <Typography variant="h3">{t('common:publisher')}</Typography>
+      {url ? (
+        <Typography component={Link} href={url} target="_blank" rel="noopener noreferrer">
+          {publisher}
+        </Typography>
+      ) : (
+        <Typography>{publisher}</Typography>
       )}
-      <DisplaySeriesTitle seriesTitle={seriesTitle} />
+      <PublicLevelContent level={level} />
     </>
-  );
+  ) : null;
 };
 
-export const PublicPublicationContextDegree: FC<{ publicationContext: DegreePublicationContext }> = ({
+export const PublicLinkedContextContent = ({
   publicationContext,
+}: {
+  publicationContext: ChapterPublicationContext;
 }) => {
   const { t } = useTranslation('registration');
-  const { publisher, seriesTitle, url } = publicationContext;
+  const { linkedContext } = publicationContext;
 
   return (
     <>
-      {publisher && (
-        <LabelContentRow minimal multiple label={`${t('common:publisher')}:`}>
-          <StyledContainer>
-            <NormalText>{publisher}</NormalText>
-            {url && (
-              <Link href={url} target="_blank" rel="noopener noreferrer">
-                <StyledOpenInNewIcon aria-label={url} />
-              </Link>
-            )}
-          </StyledContainer>
-        </LabelContentRow>
-      )}
-      <DisplaySeriesTitle seriesTitle={seriesTitle} />
+      <Typography variant="h3">{t('references.chapter.published_in')}</Typography>
+      <RegistrationSummary id={linkedContext} />
     </>
   );
 };
 
-export const PublicPublicationContextReport: FC<{ publicationContext: ReportPublicationContext }> = ({
-  publicationContext,
-}) => {
-  const { t } = useTranslation('registration');
-  const { onlineIssn, publisher, seriesTitle, url } = publicationContext;
-
-  return (
-    <>
-      {publisher && (
-        <LabelContentRow minimal multiple label={`${t('common:publisher')}:`}>
-          <StyledContainer>
-            <NormalText>{publisher}</NormalText>
-            {url && (
-              <Link href={url} target="_blank" rel="noopener noreferrer">
-                <StyledOpenInNewIcon aria-label={url} />
-              </Link>
-            )}
-          </StyledContainer>
-          {onlineIssn && `${t('references.issn')} ${onlineIssn}`}
-        </LabelContentRow>
-      )}
-      <DisplaySeriesTitle seriesTitle={seriesTitle} />
-    </>
-  );
-};
-
-const DisplaySeriesTitle: FC<{ seriesTitle: string }> = ({ seriesTitle }) => {
+export const PublicSeriesContent = ({ seriesTitle }: { seriesTitle: string }) => {
   const { t } = useTranslation('registration');
 
   return seriesTitle ? (
-    <LabelContentRow minimal label={`${t('references.series')}:`}>
-      {seriesTitle}
-    </LabelContentRow>
+    <>
+      <Typography variant="h3">{t('references.series')}</Typography>
+      <Typography>{seriesTitle}</Typography>
+    </>
+  ) : null;
+};
+
+const PublicLevelContent = ({ level }: { level?: string | number | null }) => {
+  const { t } = useTranslation('registration');
+  const levelValue = level ? levelMap[level] : null;
+  return levelValue ? (
+    <Typography>
+      {t('references.level')}: {levelValue}
+    </Typography>
   ) : null;
 };

@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import { AccordionActions, AccordionDetails, AccordionSummary, Typography } from '@material-ui/core';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useUppy } from '@uppy/react';
 
 import RegistrationAccordion from './RegistrationAccordion';
-import { File, emptyFile } from '../../../types/file.types';
-import FileCard from '../files_and_license_tab/FileCard';
+import { File } from '../../../types/file.types';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
@@ -17,14 +19,15 @@ import FileUploader from '../files_and_license_tab/FileUploader';
 import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { createUppy } from '../../../utils/uppy/uppy-config';
+import UploadedFileRow from './UploadedFileRow';
 
-const StyledFileCard = styled.div`
-  margin-top: 1rem;
+const StyledRegistrationAccorion = styled(RegistrationAccordion)`
+  border-color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
 interface UploadRegistrationProps {
   expanded: boolean;
-  onChange: (event: React.ChangeEvent<unknown>, isExpanded: boolean) => void;
+  onChange: (event: ChangeEvent<unknown>, isExpanded: boolean) => void;
 }
 
 const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => {
@@ -53,43 +56,55 @@ const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => 
   };
 
   return (
-    <RegistrationAccordion
-      dataTestId="new-registration-file"
-      headerLabel={t('registration:registration.start_with_uploading_file')}
-      icon={<CloudDownloadIcon />}
-      expanded={expanded}
-      onChange={onChange}
-      ariaControls="registration-method-file">
-      {uppy ? (
-        <>
-          <FileUploader uppy={uppy} addFile={(newFile: File) => setUploadedFiles((files) => [newFile, ...files])} />
-          {uploadedFiles.map((file) => (
-            <StyledFileCard key={file.identifier}>
-              <FileCard
-                file={{
-                  ...emptyFile,
-                  identifier: file.identifier,
-                  name: file.name,
-                  size: file.size,
-                }}
-                removeFile={() => {
-                  setUploadedFiles(uploadedFiles.filter((uploadedFile) => uploadedFile.identifier !== file.identifier));
-                  uppy.removeFile(file.identifier);
-                }}
-              />
-            </StyledFileCard>
-          ))}
-          {uploadedFiles.length > 0 && (
-            <ButtonWithProgress
-              data-testid="registration-file-start-button"
-              isLoading={isLoading}
-              onClick={createRegistrationWithFiles}>
-              {t('registration.start_registration')}
-            </ButtonWithProgress>
-          )}
-        </>
-      ) : null}
-    </RegistrationAccordion>
+    <StyledRegistrationAccorion expanded={expanded} onChange={onChange}>
+      <AccordionSummary data-testid="new-registration-file" expandIcon={<ExpandMoreIcon fontSize="large" />}>
+        <CloudUploadIcon />
+        <div>
+          <Typography variant="h2">{t('registration:registration.start_with_uploading_file_title')}</Typography>
+          <Typography>{t('registration:registration.start_with_uploading_file_description')}</Typography>
+        </div>
+      </AccordionSummary>
+
+      <AccordionDetails>
+        {uppy && (
+          <>
+            <FileUploader uppy={uppy} addFile={(newFile: File) => setUploadedFiles((files) => [newFile, ...files])} />
+            {uploadedFiles.length > 0 && (
+              <>
+                <Typography variant="subtitle1">{t('files_and_license.files')}:</Typography>
+                {uploadedFiles.map((file) => (
+                  <UploadedFileRow
+                    key={file.identifier}
+                    file={file}
+                    removeFile={() => {
+                      const uppyFiles = uppy.getFiles();
+                      const uppyId = uppyFiles.find((uppyFile) => uppyFile.response?.uploadURL === file.identifier)?.id;
+                      uppyId && uppy.removeFile(uppyId);
+                      setUploadedFiles(
+                        uploadedFiles.filter((uploadedFile) => uploadedFile.identifier !== file.identifier)
+                      );
+                    }}
+                  />
+                ))}
+              </>
+            )}
+          </>
+        )}
+      </AccordionDetails>
+
+      <AccordionActions>
+        <ButtonWithProgress
+          data-testid="registration-file-start-button"
+          endIcon={<ArrowForwardIcon fontSize="large" />}
+          color="secondary"
+          variant="contained"
+          isLoading={isLoading}
+          disabled={uploadedFiles.length === 0}
+          onClick={createRegistrationWithFiles}>
+          {t('registration.start_registration')}
+        </ButtonWithProgress>
+      </AccordionActions>
+    </StyledRegistrationAccorion>
   );
 };
 

@@ -1,28 +1,32 @@
 import { useFormikContext } from 'formik';
-import React, { FC } from 'react';
+import React from 'react';
+import BackgroundDiv from '../../../components/BackgroundDiv';
+import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
+import lightTheme from '../../../themes/lightTheme';
+import { DegreeType, ReferenceFieldNames } from '../../../types/publicationFieldNames';
 import { DegreeRegistration } from '../../../types/registration.types';
-import { ReferenceFieldNames, DegreeType } from '../../../types/publicationFieldNames';
 import SelectTypeField from './components/SelectTypeField';
 import DegreeForm from './sub_type_forms/DegreeForm';
-import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 
 interface DegreeTypeFormProps {
   onChangeSubType: (type: string) => void;
 }
 
-const DegreeTypeForm: FC<DegreeTypeFormProps> = ({ onChangeSubType }) => {
+const DegreeTypeForm = ({ onChangeSubType }: DegreeTypeFormProps) => {
   const { values } = useFormikContext<DegreeRegistration>();
   const subType = values.entityDescription.reference.publicationInstance.type;
 
   return (
     <>
-      <StyledSelectWrapper>
-        <SelectTypeField
-          fieldName={ReferenceFieldNames.SUB_TYPE}
-          onChangeType={onChangeSubType}
-          options={Object.values(DegreeType)}
-        />
-      </StyledSelectWrapper>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
+        <StyledSelectWrapper>
+          <SelectTypeField
+            fieldName={ReferenceFieldNames.SUB_TYPE}
+            onChangeType={onChangeSubType}
+            options={Object.values(DegreeType)}
+          />
+        </StyledSelectWrapper>
+      </BackgroundDiv>
 
       {subType && <DegreeForm />}
     </>

@@ -1,15 +1,16 @@
-import { Field, useFormikContext, FieldProps, ErrorMessage } from 'formik';
+import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import React, { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { MenuItem, TextField as MuiTextField, TextField, Typography } from '@material-ui/core';
+import { MenuItem, MuiThemeProvider, TextField, Typography } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { Registration } from '../../types/registration.types';
-import DisciplineSearch from './description_tab/DisciplineSearch';
-import DatePickerField from './description_tab/DatePickerField';
+import BackgroundDiv from '../../components/BackgroundDiv';
+import lightTheme from '../../themes/lightTheme';
 import { registrationLanguages } from '../../types/language.types';
-import Card from '../../components/Card';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
+import { Registration } from '../../types/registration.types';
+import DatePickerField from './description_tab/DatePickerField';
+import DisciplineSearch from './description_tab/DisciplineSearch';
 import { ProjectsField } from './description_tab/projects_field';
 
 const NpiAndTagsWrapper = styled.div`
@@ -34,19 +35,13 @@ const DateAndLanguageWrapper = styled.div`
   }
 `;
 
-const StyledMainCard = styled(Card)`
-  display: grid;
-  gap: 1rem;
-`;
-
 const DescriptionPanel = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 
   return (
     <>
-      <StyledMainCard>
-        <Typography variant="h2">{t('heading.description')}</Typography>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
         <Field name={DescriptionFieldNames.TITLE}>
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
@@ -54,7 +49,7 @@ const DescriptionPanel = () => {
               required
               data-testid="registration-title-field"
               inputProps={{ 'data-testid': 'registration-title-input' }}
-              variant="outlined"
+              variant="filled"
               fullWidth
               label={t('common:title')}
               error={touched && !!error}
@@ -68,7 +63,7 @@ const DescriptionPanel = () => {
               {...field}
               data-testid="registration-abstract-field"
               inputProps={{ 'data-testid': 'registration-abstract-input' }}
-              variant="outlined"
+              variant="filled"
               fullWidth
               multiline
               rows="4"
@@ -86,10 +81,12 @@ const DescriptionPanel = () => {
               multiline
               rows="4"
               fullWidth
-              variant="outlined"
+              variant="filled"
             />
           )}
         </Field>
+      </BackgroundDiv>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
         <NpiAndTagsWrapper>
           <Field name={DescriptionFieldNames.NPI_SUBJECT_HEADING}>
             {({ field: { name, value } }: FieldProps<string>) => (
@@ -111,12 +108,12 @@ const DescriptionPanel = () => {
                 options={[]}
                 onChange={(_: ChangeEvent<unknown>, value: string[] | string) => setFieldValue(field.name, value)}
                 renderInput={(params) => (
-                  <MuiTextField
+                  <TextField
                     {...params}
                     data-testid="registration-tag-field"
                     label={t('description.keywords')}
                     helperText={t('description.keywords_helper')}
-                    variant="outlined"
+                    variant="filled"
                     fullWidth
                     onBlur={(event) => {
                       const value = event.target.value;
@@ -132,7 +129,8 @@ const DescriptionPanel = () => {
             )}
           </Field>
         </NpiAndTagsWrapper>
-
+      </BackgroundDiv>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DateAndLanguageWrapper>
           <DatePickerField />
 
@@ -145,7 +143,7 @@ const DescriptionPanel = () => {
                 label={t('description.primary_language')}
                 placeholder={t('description.primary_language')}
                 select
-                variant="outlined">
+                variant="filled">
                 {registrationLanguages.map(({ id, value }) => (
                   <MenuItem value={value} key={id} data-testid={`registration-language-${id}`}>
                     {t(`languages:${id}`)}
@@ -155,11 +153,15 @@ const DescriptionPanel = () => {
             )}
           </Field>
         </DateAndLanguageWrapper>
-      </StyledMainCard>
-      <Card>
-        <Typography variant="h5">{t('description.connect_project')}</Typography>
-        <ProjectsField />
-      </Card>
+      </BackgroundDiv>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
+        <Typography variant="h5" color="primary">
+          {t('description.connect_project')}
+        </Typography>
+        <MuiThemeProvider theme={lightTheme}>
+          <ProjectsField />
+        </MuiThemeProvider>
+      </BackgroundDiv>
     </>
   );
 };

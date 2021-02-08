@@ -1,11 +1,11 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import Modal from '../../../components/Modal';
+import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
 import AddContributorModalContent from './components/AddContributorModalContent';
-import { Button } from '@material-ui/core';
 import CreateContributorModalContent from './components/CreateContributorModalContent';
-import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 
 interface AddContributorModalProps {
   onAuthorSelected: (author: Authority) => void;
@@ -14,18 +14,21 @@ interface AddContributorModalProps {
   initialSearchTerm?: string;
 }
 
-const AddContributorModal: FC<AddContributorModalProps> = ({
-  onAuthorSelected,
-  toggleModal,
-  open,
-  initialSearchTerm,
-}) => {
+const AddContributorModal = ({ onAuthorSelected, toggleModal, open, initialSearchTerm }: AddContributorModalProps) => {
   const { t } = useTranslation('registration');
   const [createNewAuthor, setCreateNewAuthor] = useState(false);
+  const user = useSelector((store: RootStore) => store.user);
 
   const addAuthor = (author: Authority) => {
     toggleModal();
     onAuthorSelected(author);
+  };
+
+  const addSelfAsAuthor = () => {
+    toggleModal();
+    if (user?.authority) {
+      onAuthorSelected(user.authority);
+    }
   };
 
   const handleCloseModal = () => {
@@ -41,24 +44,24 @@ const AddContributorModal: FC<AddContributorModalProps> = ({
         createNewAuthor
           ? t('contributors.create_new_author')
           : initialSearchTerm
-          ? t('contributors.connect_author_identity')
+          ? t('contributors.verify_person')
           : t('contributors.add_author')
       }
       onClose={handleCloseModal}
       open={open}
       fullWidth
-      maxWidth="md">
+      maxWidth="md"
+      dataTestId="contributor-modal">
       {createNewAuthor ? (
         <CreateContributorModalContent addAuthor={addAuthor} handleCloseModal={handleCloseModal} />
       ) : (
-        <>
-          <AddContributorModalContent addAuthor={addAuthor} initialSearchTerm={initialSearchTerm} />
-          <StyledRightAlignedWrapper>
-            <Button color="primary" data-testid="button-create-new-author" onClick={() => setCreateNewAuthor(true)}>
-              {t('contributors.create_new_author')}
-            </Button>
-          </StyledRightAlignedWrapper>
-        </>
+        <AddContributorModalContent
+          addAuthor={addAuthor}
+          addSelfAsAuthor={addSelfAsAuthor}
+          handleCloseModal={handleCloseModal}
+          openNewAuthorModal={() => setCreateNewAuthor(true)}
+          initialSearchTerm={initialSearchTerm}
+        />
       )}
     </Modal>
   );

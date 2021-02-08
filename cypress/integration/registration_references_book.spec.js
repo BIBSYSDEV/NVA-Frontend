@@ -17,7 +17,7 @@ describe('Registration: References: Book', () => {
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' '); //makes the select options open
     cy.get('[data-testid=publication-context-type-Book]').should('be.visible');
     cy.get('[data-testid=publication-context-type-Book]').click({ force: true });
-    cy.get('[data-testid=publication-context-type-heading]').contains('Book');
+    cy.get('[data-testid=publication-context-type-Book]').contains('Book');
 
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-BookMonograph]').click({ force: true });
@@ -34,6 +34,8 @@ describe('Registration: References: Book', () => {
     cy.get('[data-testid=isbn-chip]').should('have.length', 2);
 
     // choose peer review value and show NVI status
+    cy.get('[data-testid=nvi_book]').get('[data-testid=nvi_fail]');
+    cy.get('[data-testid=is-textbook-checkbox]').click({ force: true });
     cy.get('[data-testid=peer_review-true]').click({ force: true });
     cy.get('[data-testid=nvi_book]').get('[data-testid=nvi_success]');
     cy.get('[data-testid=peer_review-false]').click({ force: true });

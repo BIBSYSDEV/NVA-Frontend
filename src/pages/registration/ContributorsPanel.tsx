@@ -1,10 +1,11 @@
+import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormHelperText, Typography } from '@material-ui/core';
-import { useFormikContext, FieldArray, ErrorMessage, FieldArrayRenderProps } from 'formik';
-import Card from '../../components/Card';
-import { Registration } from '../../types/registration.types';
+import { FormHelperText, MuiThemeProvider, Typography } from '@material-ui/core';
+import BackgroundDiv from '../../components/BackgroundDiv';
+import lightTheme from '../../themes/lightTheme';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
+import { Registration } from '../../types/registration.types';
 import Authors from './contributors_tab/Authors';
 
 const ContributorsPanel = () => {
@@ -18,21 +19,23 @@ const ContributorsPanel = () => {
   const contributorsError = errors.entityDescription?.contributors;
 
   return (
-    <Card>
-      <Typography variant="h2">{t('contributors.authors')}</Typography>
-      <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
-        {({ push, replace, name }: FieldArrayRenderProps) => (
-          <>
-            <Authors push={push} replace={replace} />
-            {contributors.length === 0 && typeof contributorsError === 'string' && (
-              <FormHelperText error>
-                <ErrorMessage name={name} />
-              </FormHelperText>
-            )}
-          </>
-        )}
-      </FieldArray>
-    </Card>
+    <>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+        <Typography variant="h2">{t('contributors.authors')}</Typography>
+        <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
+          {({ push, replace }: FieldArrayRenderProps) => (
+            <MuiThemeProvider theme={lightTheme}>
+              <Authors push={push} replace={replace} />
+            </MuiThemeProvider>
+          )}
+        </FieldArray>
+      </BackgroundDiv>
+      {contributors.length === 0 && typeof contributorsError === 'string' && (
+        <FormHelperText error>
+          <ErrorMessage name={ContributorFieldNames.CONTRIBUTORS} />
+        </FormHelperText>
+      )}
+    </>
   );
 };
 

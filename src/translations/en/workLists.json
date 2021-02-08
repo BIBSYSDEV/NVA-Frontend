@@ -1,6 +1,5 @@
 {
   "doi_requests": {
-    "archive": "Archive case",
     "doi_requests": "DOI requests",
     "go_to_registration": "Go to registration",
     "no_pending_doi_requests": "You don't have any awaiting DOI requests",

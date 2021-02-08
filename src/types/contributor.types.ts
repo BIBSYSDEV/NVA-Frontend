@@ -21,11 +21,15 @@ export interface Contributor extends BackendType {
   sequence: number;
 }
 
+export interface Labels {
+  [key: string]: string;
+}
+
+// DOI lookup can give labels without id for institutions,
+// while when a contributor is added manually there will be ids present, and no need for labels.
 export interface Institution extends BackendType {
-  id: string;
-  labels?: {
-    [key: string]: string;
-  };
+  id?: string;
+  labels?: Labels;
 }
 
 export const emptyContributor: Contributor = {

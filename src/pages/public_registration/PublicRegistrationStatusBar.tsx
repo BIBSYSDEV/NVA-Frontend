@@ -1,18 +1,20 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, DialogActions, TextField, Typography } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import EditIcon from '@material-ui/icons/Edit';
 import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { RootStore } from '../../redux/reducers/rootReducer';
 import Card from '../../components/Card';
-import { PublicRegistrationContentProps } from './PublicRegistrationContent';
+import { PublicRegistrationProps } from './PublicRegistrationContent';
 import Modal from '../../components/Modal';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
@@ -56,10 +58,7 @@ enum LoadingName {
   ApproveDoi = 'APPROVE_DOI',
 }
 
-export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = ({
-  registration,
-  refetchRegistration,
-}) => {
+export const PublicRegistrationStatusBar = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('registration');
   const user = useSelector((store: RootStore) => store.user);
@@ -137,7 +136,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
   const isPublishedRegistration = status === RegistrationStatus.PUBLISHED;
 
   return isOwner || isCurator ? (
-    <StyledStatusBar>
+    <StyledStatusBar data-testid="public-registration-status">
       <StyledStatusBarDescription>
         {isPublishedRegistration ? (
           <StyledPublishedStatusIcon fontSize="large" />
@@ -156,6 +155,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
           <Button
             variant={registrationIsValid ? 'outlined' : 'contained'}
             color="primary"
+            endIcon={<EditIcon />}
             data-testid="button-edit-registration">
             {t('edit_registration')}
           </Button>
@@ -188,8 +188,9 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
 
         {!hasNvaDoi && (
           <ButtonWithProgress
-            variant={reference.doi ? 'outlined' : 'contained'}
+            variant={reference.doi || !isPublishedRegistration ? 'outlined' : 'contained'}
             color="primary"
+            endIcon={<LocalOfferIcon />}
             isLoading={isLoading === LoadingName.RequestDoi}
             data-testid="button-toggle-request-doi"
             onClick={() => (isPublishedRegistration ? toggleRequestDoiModal() : sendDoiRequest())}>
@@ -201,6 +202,7 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
           <ButtonWithProgress
             disabled={!!isLoading || !registrationIsValid}
             data-testid="button-publish-registration"
+            color="secondary"
             endIcon={<CloudUploadIcon />}
             onClick={onClickPublish}
             isLoading={isLoading === LoadingName.Publish}>
@@ -210,13 +212,18 @@ export const PublicRegistrationStatusBar: FC<PublicRegistrationContentProps> = (
       </div>
 
       {!hasNvaDoi && (
-        <Modal open={openRequestDoiModal} onClose={toggleRequestDoiModal} headingText={t('public_page.request_doi')}>
+        <Modal
+          open={openRequestDoiModal}
+          onClose={toggleRequestDoiModal}
+          headingText={t('public_page.request_doi')}
+          dataTestId="request-doi-modal">
           <Typography>{t('public_page.request_doi_description')}</Typography>
           <TextField
             variant="outlined"
             multiline
             rows="4"
             fullWidth
+            data-testid="request-doi-message"
             label={t('public_page.message_to_curator')}
             onChange={(event) => setMessageToCurator(event.target.value)}
           />

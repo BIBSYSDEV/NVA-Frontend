@@ -1,9 +1,8 @@
-import React, { FC } from 'react';
-import { Link } from '@material-ui/core';
+import React from 'react';
+import { Link, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import LabelContentRow from '../../components/LabelContentRow';
 import { DoiRequestStatus, Registration } from '../../types/registration.types';
 import { RootStore } from '../../redux/reducers/rootReducer';
 
@@ -15,7 +14,7 @@ export interface PublicDoiProps {
   registration: Registration;
 }
 
-const PublicDoi: FC<PublicDoiProps> = ({ registration }) => {
+const PublicDoi = ({ registration }: PublicDoiProps) => {
   const { t } = useTranslation('registration');
   const user = useSelector((store: RootStore) => store.user);
 
@@ -29,12 +28,15 @@ const PublicDoi: FC<PublicDoiProps> = ({ registration }) => {
   const isDraftDoi = nvaDoi && !hasApprovedDoiRequest && canSeeDraftDoi;
 
   return doiToPresent ? (
-    <LabelContentRow minimal label={`${t('registration.link_to_resource')}:`}>
-      <Link href={doiToPresent} target="_blank" rel="noopener noreferrer">
-        {doiToPresent}
-      </Link>
+    <Typography
+      component={Link}
+      data-testid="doi-presentation"
+      href={doiToPresent}
+      target="_blank"
+      rel="noopener noreferrer">
+      {doiToPresent}
       {isDraftDoi && <StyledDraftSpan>({t('public_page.in_progess')})</StyledDraftSpan>}
-    </LabelContentRow>
+    </Typography>
   ) : null;
 };
 

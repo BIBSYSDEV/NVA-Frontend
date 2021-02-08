@@ -1,10 +1,9 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
+import { TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { NpiDiscipline } from '../../../types/registration.types';
 import { disciplineOptions, getNpiDiscipline } from '../../../utils/npiDisciplines';
 
@@ -20,7 +19,7 @@ interface DisciplineSearchProps {
   placeholder?: string;
 }
 
-const DisciplineSearch: FC<DisciplineSearchProps> = ({ dataTestId, setValueFunction, value, placeholder }) => {
+const DisciplineSearch = ({ dataTestId, setValueFunction, value, placeholder }: DisciplineSearchProps) => {
   const { t } = useTranslation();
 
   return (
@@ -36,7 +35,7 @@ const DisciplineSearch: FC<DisciplineSearchProps> = ({ dataTestId, setValueFunct
           data-testid={dataTestId}
           label={t('registration:description.npi_disciplines')}
           fullWidth
-          variant="outlined"
+          variant="filled"
           autoComplete="false"
           placeholder={placeholder}
           InputProps={{

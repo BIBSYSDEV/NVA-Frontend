@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
-import { Field, FieldProps, ErrorMessage } from 'formik';
-import { TextField, MenuItem } from '@material-ui/core';
+import { ErrorMessage, Field, FieldProps } from 'formik';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { MenuItem, TextField } from '@material-ui/core';
 
 interface SelectTypeFieldProps {
   fieldName: string;
@@ -10,21 +10,21 @@ interface SelectTypeFieldProps {
   onChangeType?: (value: string) => void;
 }
 
-const SelectTypeField: FC<SelectTypeFieldProps> = ({
+const SelectTypeField = ({
   fieldName,
   options,
   dataTestId = 'publication-instance-type',
   onChangeType,
-}) => {
+}: SelectTypeFieldProps) => {
   const { t } = useTranslation();
 
   return (
-    <Field name={fieldName} variant="outlined">
+    <Field name={fieldName}>
       {({ field, meta: { error, touched } }: FieldProps) => (
         <TextField
           data-testid={dataTestId}
           select
-          variant="outlined"
+          variant="filled"
           fullWidth
           {...field}
           label={t('common:type')}

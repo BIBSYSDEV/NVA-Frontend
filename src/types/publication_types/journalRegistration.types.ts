@@ -1,8 +1,9 @@
-import { BackendType, PagesRange, RegistrationDate } from '../registration.types';
+import { BackendType, RegistrationDate } from '../registration.types';
 import { PublicationType, JournalType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { Contributor } from '../contributor.types';
 import { BackendTypeNames, emptyDate } from './commonRegistration.types';
+import { emptyPagesRange, PagesRange } from './pages.types';
 
 export interface JournalPublicationInstance {
   type: JournalType | '';
@@ -17,7 +18,8 @@ export interface JournalPublicationInstance {
 export interface JournalPublicationContext {
   type: PublicationType | '';
   level: string | number | null;
-  onlineIssn: string;
+  onlineIssn?: string;
+  printIssn?: string;
   openAccess: boolean;
   peerReviewed: boolean;
   title: string;
@@ -46,7 +48,7 @@ export const emptyJournalPublicationInstance: JournalPublicationInstance = {
   type: '',
   articleNumber: '',
   issue: '',
-  pages: { type: BackendTypeNames.PAGES_RANGE, begin: '', end: '' },
+  pages: emptyPagesRange,
   peerReviewed: false,
   volume: '',
   corrigendumFor: '',

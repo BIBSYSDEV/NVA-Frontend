@@ -19,6 +19,7 @@ import { Link as MuiLink } from '@material-ui/core';
 import { StyledNormalTextPreWrapped } from '../../components/styled/Wrappers';
 import { useLocation } from 'react-router-dom';
 import { User } from '../../types/user.types';
+import DangerButton from '../../components/DangerButton';
 
 const StyledInformation = styled.div`
   margin-bottom: 1rem;
@@ -36,7 +37,7 @@ const StyledOrcidLine = styled.div`
   }
 `;
 
-const StyledButton = styled(Button)`
+const StyledButton = styled(DangerButton)`
   justify-self: right;
 `;
 
@@ -122,9 +123,9 @@ const UserOrcid = ({ user }: UserOrcidProps) => {
               <StyledButton
                 data-testid="button-confirm-delete-orcid"
                 onClick={toggleConfirmDialog}
+                startIcon={<DeleteIcon />}
                 variant="outlined"
                 color="secondary">
-                <DeleteIcon />
                 {t('common:remove')}
               </StyledButton>
 
@@ -159,7 +160,8 @@ const UserOrcid = ({ user }: UserOrcidProps) => {
             headingIcon={{ src: orcidIcon, alt: 'ORCID iD icon' }}
             headingText={t('profile:orcid.create_or_connect')}
             onClose={toggleModal}
-            open={openModal}>
+            open={openModal}
+            dataTestId="orcid-modal">
             <OrcidModalContent />
           </Modal>
         </>

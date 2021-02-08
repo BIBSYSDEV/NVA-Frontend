@@ -12,10 +12,10 @@ interface RegistrationSearchProps {
 }
 
 const RegistrationSearch = ({ searchTerm, noHitsText }: RegistrationSearchProps) => {
+  const { t } = useTranslation('common');
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[1]);
   const [page, setPage] = useState(0);
-  const [searchResults, isLoadingSearch] = useSearchRegistrations(searchTerm, rowsPerPage, page * rowsPerPage);
-  const { t } = useTranslation('common');
+  const [searchResults, isLoadingSearch] = useSearchRegistrations({ searchTerm }, rowsPerPage, page * rowsPerPage);
 
   return (
     <>

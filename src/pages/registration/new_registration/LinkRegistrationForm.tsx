@@ -1,22 +1,22 @@
-import { Field, Formik, Form, FieldProps, ErrorMessage } from 'formik';
-import React, { FC } from 'react';
+import { Field, Formik, Form, FieldProps, FormikHelpers } from 'formik';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
-import { doiValidationSchema } from '../../../utils/validation/doiSearchValidation';
+import { doiValidationSchema, isValidUrl } from '../../../utils/validation/doiSearchValidation';
 
-const StyledInputBox = styled.div`
+const StyledForm = styled(Form)`
   display: flex;
   align-items: center;
-  margin-top: 0.3rem;
 `;
 
 const StyledTextField = styled(TextField)`
-  margin-right: 1rem;
+  margin: 0 1rem 0 0;
 `;
 
-export interface DoiFormValues {
+interface DoiFormValues {
   doiUrl: string;
 }
 
@@ -24,38 +24,58 @@ const emptyDoiFormValues: DoiFormValues = {
   doiUrl: '',
 };
 
+const doiUrlBase = 'https://doi.org/';
+const doiUrlPlaceholder = `${doiUrlBase}10.1000/xyz123`;
+const doiRegExp = new RegExp('\\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'<>])\\S)+)\\b'); // https://stackoverflow.com/a/10324802
+
 interface LinkRegistrationFormProps {
-  handleSearch: (values: { doiUrl: string }) => void;
+  handleSearch: (doiUrl: string) => Promise<void>;
 }
 
-const LinkRegistrationForm: FC<LinkRegistrationFormProps> = ({ handleSearch }) => {
+const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps) => {
   const { t } = useTranslation('registration');
 
+  const onSubmit = async (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
+    let doiUrl = values.doiUrl.trim().toLowerCase();
+    if (!isValidUrl(doiUrl)) {
+      const regexMatch = doiRegExp.exec(doiUrl);
+      if (regexMatch && regexMatch.length > 0) {
+        doiUrl = `${doiUrlBase}${regexMatch[0]}`;
+      }
+    }
+    setValues({ doiUrl });
+    await handleSearch(doiUrl);
+  };
+
   return (
-    <Formik onSubmit={handleSearch} initialValues={emptyDoiFormValues} validationSchema={doiValidationSchema}>
+    <Formik onSubmit={onSubmit} initialValues={emptyDoiFormValues} validationSchema={doiValidationSchema}>
       {({ isSubmitting }) => (
-        <Form noValidate>
-          <StyledInputBox>
-            <Field name="doiUrl">
-              {({ field, meta: { error, touched } }: FieldProps) => (
-                <StyledTextField
-                  variant="outlined"
-                  label={t('registration.link_to_resource')}
-                  required
-                  fullWidth
-                  aria-label="DOI-link"
-                  inputProps={{ 'data-testid': 'new-registration-link-input' }}
-                  {...field}
-                  error={!!error && touched}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            </Field>
-            <ButtonWithProgress data-testid="doi-search-button" isLoading={isSubmitting} type="submit">
-              {t('common:search')}
-            </ButtonWithProgress>
-          </StyledInputBox>
-        </Form>
+        <StyledForm noValidate>
+          <Field name="doiUrl">
+            {({ field, meta: { error, touched } }: FieldProps<string>) => (
+              <StyledTextField
+                variant="outlined"
+                label={t('registration.link_to_resource')}
+                required
+                fullWidth
+                disabled={isSubmitting}
+                aria-label="DOI-link"
+                inputProps={{ 'data-testid': 'new-registration-link-input' }}
+                {...field}
+                error={!!error && touched}
+                InputLabelProps={{ shrink: true }}
+                placeholder={doiUrlPlaceholder}
+              />
+            )}
+          </Field>
+          <ButtonWithProgress
+            data-testid="doi-search-button"
+            isLoading={isSubmitting}
+            type="submit"
+            endIcon={<SearchIcon />}>
+            {t('common:search')}
+          </ButtonWithProgress>
+        </StyledForm>
       )}
     </Formik>
   );

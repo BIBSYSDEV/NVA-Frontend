@@ -1,32 +1,30 @@
-import React, { FC, useState } from 'react';
-import Login from './Login';
-import Logo from './Logo';
-import styled from 'styled-components';
-import { Button, Typography, IconButton } from '@material-ui/core';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { Link as RouterLink } from 'react-router-dom';
+import styled from 'styled-components';
+import { AppBar, Button, IconButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import LibraryBooks from '@material-ui/icons/LibraryBooks';
-import Mail from '@material-ui/icons/Mail';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
-import MobileMenu from './MobileMenu';
+import { RootStore } from '../../redux/reducers/rootReducer';
 import { getRegistrationPath, UrlPathTemplate } from '../../utils/urlPaths';
+import Login from './Login';
+import Logo from './Logo';
+import MobileMenu from './MobileMenu';
 
-const StyledPageHeader = styled.div`
+const StyledAppBar = styled(AppBar)`
   display: grid;
   grid-template-areas: 'logo shortcuts auth';
   grid-template-columns: 5rem auto auto;
   align-items: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  border-bottom: 2px solid ${({ theme }) => theme.palette.separator.main};
+  padding: 0 1rem;
   min-height: 4rem;
+
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     grid-template-areas: 'menu logo auth';
     grid-template-columns: 1fr 1fr 1fr;
-    padding-right: 1rem;
   }
 `;
 
@@ -48,7 +46,7 @@ const StyledBurgerMenu = styled.div`
   }
 `;
 
-const Header: FC = () => {
+const Header = () => {
   const { t } = useTranslation('registration');
   const user = useSelector((store: RootStore) => store.user);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -58,7 +56,7 @@ const Header: FC = () => {
   };
 
   return (
-    <StyledPageHeader>
+    <StyledAppBar position="static" color="inherit" elevation={0}>
       <StyledBurgerMenu>
         <IconButton onClick={handleClick}>
           <MenuIcon />
@@ -69,33 +67,30 @@ const Header: FC = () => {
       {user?.isCreator && (
         <StyledShortcuts>
           <Button
-            color="primary"
             component={RouterLink}
             data-testid="new-registration"
             to={getRegistrationPath()}
             startIcon={<AddIcon />}>
-            <Typography variant="button">{t('new_registration')}</Typography>
+            {t('new_registration')}
           </Button>
           <Button
-            color="primary"
             component={RouterLink}
             data-testid="my-registrations"
             to={UrlPathTemplate.MyRegistrations}
-            startIcon={<LibraryBooks />}>
-            <Typography variant="button">{t('workLists:my_registrations')}</Typography>
+            startIcon={<LibraryBooksIcon />}>
+            {t('workLists:my_registrations')}
           </Button>
           <Button
-            color="primary"
             component={RouterLink}
             data-testid="my-messages"
             to={UrlPathTemplate.MyMessages}
-            startIcon={<Mail />}>
-            <Typography variant="button">{t('workLists:my_messages')}</Typography>
+            startIcon={<MailIcon />}>
+            {t('workLists:my_messages')}
           </Button>
         </StyledShortcuts>
       )}
       <Login />
-    </StyledPageHeader>
+    </StyledAppBar>
   );
 };
 

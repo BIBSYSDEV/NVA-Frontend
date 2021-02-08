@@ -1,15 +1,6 @@
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
-import {
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  TablePagination,
-  Button,
-  Typography,
-} from '@material-ui/core';
+import { Table, TableHead, TableRow, TableCell, TableBody, TablePagination, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
@@ -23,6 +14,7 @@ import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import DangerButton from '../../components/DangerButton';
 
 const StyledTable = styled(Table)`
   width: 100%;
@@ -126,15 +118,14 @@ const UserList: FC<UserListProps> = ({
                     </TableCell>
                     <TableCell align="right">
                       {roleToRemove && (
-                        <Button
-                          color="secondary"
+                        <DangerButton
                           variant="outlined"
                           startIcon={<DeleteIcon />}
                           disabled={isLastInstitutionAdmin}
                           data-testid={`button-remove-role-${roleToRemove}-${user.username}`}
                           onClick={() => setRemoveRoleForUser(user.username)}>
                           {t('common:remove')}
-                        </Button>
+                        </DangerButton>
                       )}
                       {roleToAdd && (
                         <ButtonWithProgress

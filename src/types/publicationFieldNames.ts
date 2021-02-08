@@ -3,6 +3,7 @@ export enum PublicationType {
   BOOK = 'Book',
   REPORT = 'Report',
   DEGREE = 'Degree',
+  CHAPTER = 'Chapter',
 }
 
 export enum JournalType {
@@ -34,14 +35,20 @@ export enum DegreeType {
   OTHER = 'OtherStudentWork',
 }
 
+export enum ChapterType {
+  BOOK = 'ChapterArticle',
+}
+
+export type RegistrationSubtype = JournalType | ReportType | BookType | DegreeType | ChapterType;
+
 // Enums representing name of fields used by Formik
 export const contextTypeBaseFieldName = 'entityDescription.reference.publicationContext';
 export const instanceTypeBaseFieldName = 'entityDescription.reference.publicationInstance';
 
 export enum ReferenceFieldNames {
   ARTICLE_NUMBER = 'entityDescription.reference.publicationInstance.articleNumber',
-  DOI = 'entityDescription.reference.doi',
   CORRIGENDUM_FOR = 'entityDescription.reference.publicationInstance.corrigendumFor',
+  DOI = 'entityDescription.reference.doi',
   TEXTBOOK_CONTENT = 'entityDescription.reference.publicationInstance.textbookContent',
   ISBN_LIST = 'entityDescription.reference.publicationContext.isbnList',
   ISSUE = 'entityDescription.reference.publicationInstance.issue',
@@ -51,6 +58,7 @@ export enum ReferenceFieldNames {
   PAGES_PAGES = 'entityDescription.reference.publicationInstance.pages.pages',
   PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
   PUBLICATION_CONTEXT_LEVEL = 'entityDescription.reference.publicationContext.level',
+  PUBLICATION_CONTEXT_LINKED_CONTEXT = 'entityDescription.reference.publicationContext.linkedContext',
   PUBLICATION_CONTEXT_TITLE = 'entityDescription.reference.publicationContext.title',
   PUBLICATION_CONTEXT_PUBLISHER = 'entityDescription.reference.publicationContext.publisher',
   PUBLICATION_CONTEXT_TYPE = 'entityDescription.reference.publicationContext.type',
@@ -62,6 +70,7 @@ export enum ReferenceFieldNames {
 
 export enum DescriptionFieldNames {
   ABSTRACT = 'entityDescription.abstract',
+  DATE = 'entityDescription.date',
   DESCRIPTION = 'entityDescription.description',
   LANGUAGE = 'entityDescription.language',
   NPI_SUBJECT_HEADING = 'entityDescription.npiSubjectHeading',
@@ -94,6 +103,7 @@ export enum SpecificContributorFieldNames {
   AFFILIATIONS = 'affiliations',
   CORRESPONDING = 'correspondingAuthor',
   EMAIL = 'email',
+  ID = 'id',
   ROLE = 'role', // TODO
   SEQUENCE = 'sequence',
 }

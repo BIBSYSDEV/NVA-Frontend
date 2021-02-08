@@ -1,18 +1,17 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, DialogActions } from '@material-ui/core';
-
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../../api/authorityApi';
-import { setAuthorityData } from '../../../redux/actions/userActions';
-import NewAuthorityCard from './NewAuthorityCard';
-import AuthorityList from './AuthorityList';
-import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
-import { NotificationVariant } from '../../../types/notification.types';
+import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/actions/notificationActions';
+import { setAuthorityData } from '../../../redux/actions/userActions';
+import { NotificationVariant } from '../../../types/notification.types';
 import { User } from '../../../types/user.types';
+import AuthorityList from './AuthorityList';
+import NewAuthorityCard from './NewAuthorityCard';
 
 const StyledAuthorityContainer = styled.div`
   min-width: 20rem;
@@ -29,7 +28,7 @@ interface ConnectAuthorityProps {
   handleCloseModal: () => void;
 }
 
-export const ConnectAuthority: FC<ConnectAuthorityProps> = ({ user, handleCloseModal }) => {
+export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('profile');
   const [selectedArpId, setSelectedArpId] = useState('');
@@ -93,7 +92,7 @@ export const ConnectAuthority: FC<ConnectAuthorityProps> = ({ user, handleCloseM
               </Button>
               <ButtonWithProgress
                 data-testid="connect-author-button"
-                color="primary"
+                color="secondary"
                 variant="contained"
                 size="large"
                 onClick={updateAuthorityForUser}

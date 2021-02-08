@@ -1,17 +1,19 @@
-import { Field, useFormikContext, FieldProps } from 'formik';
-import React, { FC } from 'react';
+import { Field, FieldProps, useFormikContext } from 'formik';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Typography, FormControlLabel, Checkbox } from '@material-ui/core';
-import DoiField from '../components/DoiField';
+import { Checkbox, FormControlLabel, Typography } from '@material-ui/core';
+import BackgroundDiv from '../../../../components/BackgroundDiv';
+import lightTheme from '../../../../themes/lightTheme';
 import { BookType, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
-import IsbnListField from '../components/IsbnListField';
-import TotalPagesField from '../components/TotalPagesField';
 import { BookRegistration } from '../../../../types/registration.types';
-import PeerReview from '../components/PeerReview';
+import DoiField from '../components/DoiField';
+import IsbnListField from '../components/IsbnListField';
 import NviValidation from '../components/NviValidation';
-import SeriesField from '../components/SeriesField';
+import PeerReview from '../components/PeerReview';
 import PublisherField from '../components/PublisherField';
+import SeriesField from '../components/SeriesField';
+import TotalPagesField from '../components/TotalPagesField';
 
 const StyledSection = styled.div`
   display: grid;
@@ -32,65 +34,68 @@ const StyledTextBook = styled.div`
   grid-area: text-book;
 `;
 
-const StyledTypography = styled(Typography)`
-  padding-top: 1.5rem;
-`;
-
-const BookForm: FC = () => {
+const BookForm = () => {
   const { t } = useTranslation('registration');
   const { values } = useFormikContext<BookRegistration>();
   const {
     reference: {
       publicationContext,
-      publicationInstance: { peerReviewed, type },
+      publicationInstance: { peerReviewed, textbookContent, type },
     },
   } = values.entityDescription;
 
   return (
     <>
-      <DoiField />
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+        <DoiField />
+        <PublisherField />
 
-      <PublisherField />
+        <StyledSection>
+          <IsbnListField />
+          <TotalPagesField />
+        </StyledSection>
+      </BackgroundDiv>
 
-      <StyledSection>
-        <IsbnListField />
-        <TotalPagesField />
-      </StyledSection>
-
-      <StyledSection>
-        <StyledPeerReview>
-          <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
-        </StyledPeerReview>
-        <StyledTextBook>
-          <Typography variant="h5">{t('references.is_book_a_textbook')}</Typography>
-          <Field name={ReferenceFieldNames.TEXTBOOK_CONTENT}>
-            {({ field }: FieldProps) => (
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    data-testid="is-textbook-checkbox"
-                    color="primary"
-                    checked={field.value ?? false}
-                    {...field}
-                  />
-                }
-                label={t('references.is_book_a_textbook_confirm')}
-              />
-            )}
-          </Field>
-        </StyledTextBook>
-      </StyledSection>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
+        <StyledSection>
+          <StyledPeerReview>
+            <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+          </StyledPeerReview>
+          <StyledTextBook>
+            <Typography variant="h5">{t('references.is_book_a_textbook')}</Typography>
+            <Field name={ReferenceFieldNames.TEXTBOOK_CONTENT}>
+              {({ field }: FieldProps) => (
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      data-testid="is-textbook-checkbox"
+                      color="primary"
+                      checked={field.value ?? false}
+                      {...field}
+                    />
+                  }
+                  label={<Typography>{t('references.is_book_a_textbook_confirm')}</Typography>}
+                />
+              )}
+            </Field>
+          </StyledTextBook>
+        </StyledSection>
+      </BackgroundDiv>
 
       {(type === BookType.ANTHOLOGY || type === BookType.MONOGRAPH) && (
-        <>
-          <StyledTypography variant="h5">{t('references.series')}</StyledTypography>
+        <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
+          <Typography variant="h5">{t('references.series')}</Typography>
           <Typography>{t('references.series_info')}</Typography>
           <SeriesField />
-
-          {type === BookType.MONOGRAPH && (
-            <NviValidation isPeerReviewed={peerReviewed} isRated={!!publicationContext?.level} dataTestId="nvi_book" />
-          )}
-        </>
+        </BackgroundDiv>
+      )}
+      {type === BookType.MONOGRAPH && (
+        <NviValidation
+          isPeerReviewed={peerReviewed}
+          isRated={!!publicationContext?.level}
+          isTextbook={!!textbookContent}
+          dataTestId="nvi_book"
+        />
       )}
     </>
   );

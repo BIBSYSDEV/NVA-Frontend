@@ -1,11 +1,11 @@
-import React, { FC, Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { Link as MuiLink, Typography, ListItem, ListItemText } from '@material-ui/core';
-import CalendarIcon from '@material-ui/icons/Today';
-import TagIcon from '@material-ui/icons/LocalOffer';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import Truncate from 'react-truncate';
+import { Link } from 'react-router-dom';
+import TextTruncate from 'react-text-truncate';
+import styled from 'styled-components';
+import { Link as MuiLink, ListItem, ListItemText, Typography } from '@material-ui/core';
+import TagIcon from '@material-ui/icons/LocalOffer';
+import CalendarIcon from '@material-ui/icons/Today';
 import { SearchRegistration } from '../../types/search.types';
 import { displayDate } from '../../utils/date-helpers';
 import { getRegistrationLandingPagePath, getUserPath } from '../../utils/urlPaths';
@@ -69,9 +69,7 @@ const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) =
         </StyledContributors>
 
         <Typography>
-          <Truncate lines={3} ellipsis="[...]">
-            {registration.abstract}
-          </Truncate>
+          <TextTruncate line={3} truncateText="[...]" text={registration.abstract} />
         </Typography>
         <StyledMetadata>
           {registration.publicationDate && (

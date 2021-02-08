@@ -1,8 +1,8 @@
+import { StrictTypes, Uppy as UppyType } from '@uppy/core';
 import * as LicenseImages from '../resources/images/licenses';
-import { Uppy as UppyType, StrictTypes } from '@uppy/core';
-import { BackendType } from './registration.types';
 import i18n from '../translations/i18n';
 import { BackendTypeNames } from './publication_types/commonRegistration.types';
+import { BackendType } from './registration.types';
 
 export enum LicenseNames {
   CC = 'CC',
@@ -26,10 +26,10 @@ interface LicenseInfo {
 
 export const licenses: LicenseInfo[] = [
   {
-    buttonImage: LicenseImages.lockButton,
+    buttonImage: LicenseImages.ccButton,
     description: i18n.t('licenses:description.cc'),
     identifier: i18n.t('licenses:labels.cc'),
-    image: LicenseImages.lockImage,
+    image: LicenseImages.ccImage,
     label: i18n.t('licenses:labels.cc'),
     link: i18n.t('licenses:links.cc'),
   },

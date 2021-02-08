@@ -1,63 +1,75 @@
 import { useFormikContext } from 'formik';
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
 import DeleteIcon from '@material-ui/icons/RemoveCircleSharp';
+import WarningIcon from '@material-ui/icons/Warning';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
+import DangerButton from '../../../../components/DangerButton';
 import AddInstitution from '../../../../components/institution/AddInstitution';
 import AffiliationHierarchy from '../../../../components/institution/AffiliationHierarchy';
 import Modal from '../../../../components/Modal';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { Institution } from '../../../../types/contributor.types';
 import { FormikInstitutionUnit } from '../../../../types/institution.types';
-import { LanguageCodes, registrationLanguages } from '../../../../types/language.types';
 import { NotificationVariant } from '../../../../types/notification.types';
 import { BackendTypeNames } from '../../../../types/publication_types/commonRegistration.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
-import { getMostSpecificUnit } from '../../../../utils/institutions-helpers';
+import useIsMobile from '../../../../utils/hooks/useIsMobile';
+import { getAffiliationLabel, getMostSpecificUnit } from '../../../../utils/institutions-helpers';
+
+const StyledAffiliationsCell = styled.div`
+  grid-area: affiliation;
+`;
 
 const StyledCard = styled.div`
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
-  border-bottom: 1px solid ${({ theme }) => theme.palette.separator.main};
+  border-bottom: 1px solid ${({ theme }) => theme.palette.divider};
   &:first-of-type {
-    border-top: 1px solid ${({ theme }) => theme.palette.separator.main};
+    border-top: 1px solid ${({ theme }) => theme.palette.divider};
   }
 `;
 
-const StyledDeleteIcon = styled(DeleteIcon)`
-  margin-right: 0.5rem;
-`;
-
-const StyledAddIcon = styled(AddIcon)`
-  margin-right: 0.5rem;
-`;
-
-const StyledAddButton = styled(Button)`
-  margin-top: 0.5rem;
-  margin-left: 0.5rem;
+const StyledAddAffiliationButton = styled(Button)`
+  grid-area: add-affiliation;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 1rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    margin: 1rem 0;
+  }
 `;
 
 interface AffiliationsCellProps {
   affiliations: Institution[];
+  authorName: string;
   baseFieldName: string;
 }
 
-const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldName }) => {
+const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: AffiliationsCellProps) => {
   const { t } = useTranslation('registration');
   const disptach = useDispatch();
-  const { values, setFieldValue } = useFormikContext<Registration>();
+  const { setFieldValue } = useFormikContext<Registration>();
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [affiliationToRemove, setAffiliationToRemove] = useState<Institution | null>(null);
+  const [affiliationToVerify, setAffiliationToVerify] = useState('');
+  const isMobile = useIsMobile();
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
+
+  const verifyAffiliationOnClick = (affiliationString: string) => {
+    setAffiliationToVerify(affiliationString);
+    toggleAffiliationModal();
+  };
 
   const addAffiliation = (value: FormikInstitutionUnit) => {
     if (!value.unit) {
@@ -72,52 +84,94 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
       return;
     }
 
-    const labelKey =
-      registrationLanguages.find((language) => language.value === values.entityDescription.language)?.id ??
-      LanguageCodes.ENGLISH;
-
     const addedAffiliation: Institution = {
       type: BackendTypeNames.ORGANIZATION,
       id: mostSpecificUnit.id,
-      labels: {
-        [labelKey]: mostSpecificUnit.name,
-      },
     };
-    const newAffiliations = affiliations ? [...affiliations, addedAffiliation] : [addedAffiliation];
-    setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.AFFILIATIONS}`, newAffiliations);
+
+    let updatedAffiliations = [...affiliations]; // Must spread affiliations in order to keep changes when switching tab
+    if (affiliationToVerify) {
+      // Verify affiliation
+      const affiliationIndex = updatedAffiliations.findIndex(
+        (affiliation) => affiliation.labels && getAffiliationLabel(affiliation.labels) === affiliationToVerify
+      );
+      updatedAffiliations[affiliationIndex] = addedAffiliation;
+    } else {
+      // Add new affiliation
+      if (updatedAffiliations) {
+        updatedAffiliations.push(addedAffiliation);
+      } else {
+        updatedAffiliations = [addedAffiliation];
+      }
+    }
+
+    setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.AFFILIATIONS}`, updatedAffiliations);
     toggleAffiliationModal();
   };
 
   return (
-    <>
-      {affiliations?.map((affiliation) => (
-        <StyledCard key={affiliation.id}>
-          <AffiliationHierarchy unitUri={affiliation.id} />
-          <Button
+    <StyledAffiliationsCell>
+      {affiliations?.map((affiliation, index) => (
+        <StyledCard key={affiliation.id ?? index}>
+          {affiliation.id ? (
+            <AffiliationHierarchy unitUri={affiliation.id} />
+          ) : (
+            affiliation.labels && (
+              <>
+                <Typography>"{getAffiliationLabel(affiliation.labels)}"</Typography>
+                <Button
+                  color="primary"
+                  startIcon={<WarningIcon />}
+                  variant="outlined"
+                  data-testid="button-set-unverified-affiliation"
+                  onClick={() =>
+                    affiliation.labels && verifyAffiliationOnClick(getAffiliationLabel(affiliation.labels))
+                  }>
+                  {t('contributors.verify_affiliation')}
+                </Button>
+              </>
+            )
+          )}
+          <DangerButton
             size="small"
-            color="secondary"
             data-testid={`button-remove-affiliation-${affiliation.id}`}
+            startIcon={<DeleteIcon />}
             onClick={() => setAffiliationToRemove(affiliation)}>
-            <StyledDeleteIcon />
-            <Typography variant="button">{t('common:remove')}</Typography>
-          </Button>
+            {t('contributors.remove_affiliation')}
+          </DangerButton>
         </StyledCard>
       ))}
-      <StyledAddButton
+      <StyledAddAffiliationButton
         size="small"
         color="primary"
         data-testid="button-add-affiliation"
+        startIcon={<AddIcon />}
         onClick={toggleAffiliationModal}>
-        <StyledAddIcon />
-        <Typography variant="button">{t('contributors.add_affiliation')}</Typography>
-      </StyledAddButton>
+        {t('contributors.add_affiliation')}
+      </StyledAddAffiliationButton>
 
       {/* Modal for adding affiliation */}
       <Modal
         open={openAffiliationModal}
-        onClose={toggleAffiliationModal}
-        headingText={t('contributors.select_institution')}>
-        <AddInstitution onClose={toggleAffiliationModal} onSubmit={addAffiliation} />
+        onClose={() => {
+          setAffiliationToVerify('');
+          toggleAffiliationModal();
+        }}
+        maxWidth="sm"
+        fullWidth={isMobile}
+        headingText={t('contributors.select_institution')}
+        dataTestId="affiliation-modal">
+        <>
+          <Typography>
+            {t('common:name')}: <b>{authorName}</b>
+          </Typography>
+          {affiliationToVerify && (
+            <Typography>
+              {t('contributors.prefilled_affiliation')}: <b>{affiliationToVerify}</b>
+            </Typography>
+          )}
+          <AddInstitution onClose={toggleAffiliationModal} onSubmit={addAffiliation} />
+        </>
       </Modal>
 
       {/* Confirm dialog for removing affiliation */}
@@ -134,7 +188,7 @@ const AffiliationsCell: FC<AffiliationsCellProps> = ({ affiliations, baseFieldNa
         onCancel={() => setAffiliationToRemove(null)}>
         <Typography>{t('contributors.confirm_remove_affiliation_text')}</Typography>
       </ConfirmDialog>
-    </>
+    </StyledAffiliationsCell>
   );
 };
 
