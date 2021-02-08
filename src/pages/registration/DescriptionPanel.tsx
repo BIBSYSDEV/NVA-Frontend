@@ -12,6 +12,7 @@ import { Registration } from '../../types/registration.types';
 import DatePickerField from './description_tab/DatePickerField';
 import DisciplineSearch from './description_tab/DisciplineSearch';
 import { ProjectsField } from './description_tab/projects_field';
+import { LightThemeWrapper } from '../../components/LightThemeWrapper';
 
 const NpiAndTagsWrapper = styled.div`
   display: grid;
@@ -136,7 +137,7 @@ const DescriptionPanel = () => {
 
           <Field name={DescriptionFieldNames.LANGUAGE}>
             {({ field }: FieldProps<string>) => (
-              <MuiThemeProvider theme={lightTheme}>
+              <LightThemeWrapper>
                 <TextField
                   {...field}
                   data-testid="registration-language-field"
@@ -151,7 +152,7 @@ const DescriptionPanel = () => {
                     </MenuItem>
                   ))}
                 </TextField>
-              </MuiThemeProvider>
+              </LightThemeWrapper>
             )}
           </Field>
         </DateAndLanguageWrapper>
