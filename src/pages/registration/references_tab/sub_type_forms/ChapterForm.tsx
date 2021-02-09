@@ -22,7 +22,7 @@ const StyledDiv = styled(StyledCenterAlignedContentWrapper)`
 const StyledPageNumberWrapper = styled.div`
   display: grid;
   grid-template-areas: 'pages-from dash pages-to';
-  grid-template-columns: 12rem 3rem 12rem;
+  grid-template-columns: max-content 3rem max-content;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     grid-template-areas: 'pages-from' 'dash' 'pages-to';
     grid-template-columns: auto;
