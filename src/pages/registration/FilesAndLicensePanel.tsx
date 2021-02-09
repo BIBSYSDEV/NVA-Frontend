@@ -81,11 +81,16 @@ const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     key={index}
                     file={file}
                     removeFile={() => {
-                      uppy.setState({
-                        files: uppy.getFiles().filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier),
-                      });
+                      const remainingFiles = uppy
+                        .getFiles()
+                        .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
+                      uppy.setState({ files: remainingFiles });
                       remove(index);
-                      setFieldTouched(name);
+
+                      if (remainingFiles.length === 0) {
+                        // Ensure field is set to touched even if it's empty
+                        setFieldTouched(name);
+                      }
                     }}
                     toggleLicenseModal={toggleLicenseModal}
                     baseFieldName={`${name}[${index}]`}
