@@ -7,8 +7,10 @@ import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 
 const StyledTextField = styled(TextField)`
   display: inline;
+  width: fit-content;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     display: grid;
+    width: auto;
   }
 `;
 
