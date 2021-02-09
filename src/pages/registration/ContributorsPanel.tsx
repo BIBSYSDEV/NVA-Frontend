@@ -19,6 +19,7 @@ const ContributorsPanel = () => {
   } = useFormikContext<Registration>();
   const contributorsError = errors.entityDescription?.contributors;
   const contributorsTouched = touched.entityDescription?.contributors;
+
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
@@ -31,7 +32,7 @@ const ContributorsPanel = () => {
           )}
         </FieldArray>
       </BackgroundDiv>
-      {contributors.length === 0 && contributorsTouched && typeof contributorsError === 'string' && (
+      {contributors.length === 0 && !!contributorsTouched && typeof contributorsError === 'string' && (
         <FormHelperText error>
           <ErrorMessage name={ContributorFieldNames.CONTRIBUTORS} />
         </FormHelperText>

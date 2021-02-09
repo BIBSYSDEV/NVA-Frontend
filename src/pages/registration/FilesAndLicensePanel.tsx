@@ -35,7 +35,7 @@ interface FilesAndLicensePanelProps {
 
 const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation('registration');
-  const { values, setFieldTouched, touched } = useFormikContext<Registration>();
+  const { values, setFieldTouched, errors, touched } = useFormikContext<Registration>();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const {
     fileSet: { files = [] },
@@ -67,6 +67,9 @@ const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const toggleLicenseModal = () => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
   };
+
+  const filesError = errors.fileSet?.files;
+  const filesTouched = touched.fileSet?.files;
 
   return (
     <>
@@ -101,7 +104,7 @@ const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
             <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
               <FileUploader uppy={uppy} addFile={(file) => push(file)} />
-              {files.length === 0 && !!touched.fileSet?.files && (
+              {files.length === 0 && !!filesTouched && typeof filesError === 'string' && (
                 <FormHelperText error>
                   <ErrorMessage name={name} />
                 </FormHelperText>
