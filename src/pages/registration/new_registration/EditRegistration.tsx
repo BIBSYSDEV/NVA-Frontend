@@ -2,11 +2,11 @@ import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import BackgroundDiv from '../../components/BackgroundDiv';
-import { PageHeader } from '../../components/PageHeader';
-import LinkRegistration from './new_registration/LinkRegistration';
-import UploadRegistration from './new_registration/UploadRegistration';
-import RegistrationForm from './RegistrationForm';
+import BackgroundDiv from '../../../components/BackgroundDiv';
+import { PageHeader } from '../../../components/PageHeader';
+import RegistrationForm from '../RegistrationForm';
+import LinkRegistration from './LinkRegistration';
+import UploadRegistration from './UploadRegistration';
 
 const StyledEditRegistration = styled.div`
   margin-top: 2rem;
