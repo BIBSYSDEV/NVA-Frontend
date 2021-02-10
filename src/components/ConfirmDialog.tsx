@@ -18,13 +18,22 @@ interface ConfirmDialogProps {
   onAccept: () => void;
   onCancel: () => void;
   isLoading?: boolean;
+  dataTestId?: string;
 }
 
-const ConfirmDialog: FC<ConfirmDialogProps> = ({ children, open, title, onAccept, onCancel, isLoading = false }) => {
+const ConfirmDialog: FC<ConfirmDialogProps> = ({
+  children,
+  open,
+  title,
+  onAccept,
+  onCancel,
+  isLoading = false,
+  dataTestId,
+}) => {
   const { t } = useTranslation('common');
 
   return (
-    <Dialog open={open} onClose={onCancel}>
+    <Dialog open={open} onClose={onCancel} data-testid={dataTestId}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
         <StyledDialogContentText>{children}</StyledDialogContentText>
