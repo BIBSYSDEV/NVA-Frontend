@@ -13,7 +13,7 @@ export interface Identity extends BackendType {
 }
 
 export interface Contributor extends BackendType {
-  affiliations: Institution[];
+  affiliations?: Institution[];
   correspondingAuthor?: boolean;
   email?: string;
   identity: Identity;
