@@ -8,6 +8,7 @@ import BackgroundDiv from '../../components/BackgroundDiv';
 import Card from '../../components/Card';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import NormalText from '../../components/NormalText';
+import { PageHeader } from '../../components/PageHeader';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { SearchFieldName } from '../../types/search.types';
 import { ORCID_BASE_URL } from '../../utils/constants';
@@ -31,7 +32,7 @@ const StyledRegistrations = styled.div`
 `;
 
 const PublicProfile: FC = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('profile');
   const history = useHistory();
   const arpId = new URLSearchParams(history.location.search).get('id') ?? '';
 
@@ -42,6 +43,7 @@ const PublicProfile: FC = () => {
 
   return (
     <BackgroundDiv>
+      <PageHeader>{t('my_public_profile')}</PageHeader>
       {isLoadingUser || isLoadingRegistrations ? (
         <CircularProgress />
       ) : (
@@ -77,7 +79,7 @@ const PublicProfile: FC = () => {
             </Card>
             {registrations && (
               <StyledRegistrations>
-                <Typography variant="h2">{t('registrations')}</Typography>
+                <Typography variant="h2">{t('common:registrations')}</Typography>
                 <SearchResults searchResult={registrations} />
               </StyledRegistrations>
             )}
