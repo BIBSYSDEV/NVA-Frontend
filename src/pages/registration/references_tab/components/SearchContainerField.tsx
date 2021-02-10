@@ -83,7 +83,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
                       <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                      <TextTruncate line={1} truncateText="[...]" text={optionText} />
+                      <TextTruncate line={1} element="span" truncateText="[...]" text={optionText} />
                     </Typography>
                   </StyledFlexColumn>
                 );
