@@ -35,7 +35,7 @@ interface FilesAndLicensePanelProps {
 
 const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation('registration');
-  const { values } = useFormikContext<Registration>();
+  const { values, setFieldTouched, errors, touched } = useFormikContext<Registration>();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const {
     fileSet: { files = [] },
@@ -68,6 +68,9 @@ const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
   };
 
+  const filesError = errors.fileSet?.files;
+  const filesTouched = touched.fileSet?.files;
+
   return (
     <>
       <FieldArray name={FileFieldNames.FILES}>
@@ -81,10 +84,16 @@ const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     key={index}
                     file={file}
                     removeFile={() => {
-                      uppy.setState({
-                        files: uppy.getFiles().filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier),
-                      });
+                      const remainingFiles = uppy
+                        .getFiles()
+                        .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
+                      uppy.setState({ files: remainingFiles });
                       remove(index);
+
+                      if (remainingFiles.length === 0) {
+                        // Ensure field is set to touched even if it's empty
+                        setFieldTouched(name);
+                      }
                     }}
                     toggleLicenseModal={toggleLicenseModal}
                     baseFieldName={`${name}[${index}]`}
@@ -95,7 +104,7 @@ const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
             <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
               <FileUploader uppy={uppy} addFile={(file) => push(file)} />
-              {files.length === 0 && (
+              {files.length === 0 && !!filesTouched && typeof filesError === 'string' && (
                 <FormHelperText error>
                   <ErrorMessage name={name} />
                 </FormHelperText>
