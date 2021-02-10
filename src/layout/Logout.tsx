@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Link as MuiLink } from '@material-ui/core';
 import styled from 'styled-components';
-
+import { Link as MuiLink } from '@material-ui/core';
+import BackgroundDiv from '../components/BackgroundDiv';
 import Heading from '../components/Heading';
 import NormalText from '../components/NormalText';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
-const StyledLoginComponent = styled.div`
+const StyledBackgroundDiv = styled(BackgroundDiv)`
   text-align: center;
 `;
 
@@ -20,12 +20,12 @@ const Logout: FC = () => {
   const { t } = useTranslation('authorization');
 
   return (
-    <StyledLoginComponent>
+    <StyledBackgroundDiv>
       <Heading>{t('logged_out')}</Heading>
       <MuiLink component={Link} to={UrlPathTemplate.Home}>
         <StyledText>{t('back_to_home')}</StyledText>
       </MuiLink>
-    </StyledLoginComponent>
+    </StyledBackgroundDiv>
   );
 };
 

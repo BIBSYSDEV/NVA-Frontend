@@ -1,19 +1,20 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Button } from '@material-ui/core';
-import styled from 'styled-components';
-import { RootStore } from '../../redux/reducers/rootReducer';
 import { Link as RouterLink } from 'react-router-dom';
-import { RegistrationStatus } from '../../types/registration.types';
-import RegistrationList from './RegistrationList';
-import TabButton from '../../components/TabButton';
-import useFetchMyRegistrations from '../../utils/hooks/useFetchMyRegistrations';
-import { StyledRightAlignedWrapper, StyledCenterAlignedContentWrapper } from '../../components/styled/Wrappers';
-import ListSkeleton from '../../components/ListSkeleton';
+import styled from 'styled-components';
+import { Button } from '@material-ui/core';
+import BackgroundDiv from '../../components/BackgroundDiv';
 import Card from '../../components/Card';
+import ListSkeleton from '../../components/ListSkeleton';
 import { PageHeader } from '../../components/PageHeader';
+import { StyledCenterAlignedContentWrapper, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import TabButton from '../../components/TabButton';
+import { RootStore } from '../../redux/reducers/rootReducer';
+import { RegistrationStatus } from '../../types/registration.types';
+import useFetchMyRegistrations from '../../utils/hooks/useFetchMyRegistrations';
 import { getUserPath } from '../../utils/urlPaths';
+import RegistrationList from './RegistrationList';
 
 const StyledContainer = styled.div`
   width: 100%;
@@ -43,7 +44,7 @@ const MyRegistrations: FC = () => {
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
   return (
-    <>
+    <BackgroundDiv>
       <PageHeader>{t('my_registrations')}</PageHeader>
       <StyledContainer>
         <StyledRightAlignedWrapper>
@@ -82,7 +83,7 @@ const MyRegistrations: FC = () => {
           )}
         </Card>
       </StyledContainer>
-    </>
+    </BackgroundDiv>
   );
 };
 

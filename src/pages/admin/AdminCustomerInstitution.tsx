@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { CircularProgress } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
-
-import CustomerInstitutionMetadataForm from './CustomerInstitutionMetadataForm';
-import CustomerInstitutionAdminsForm from './CustomerInstitutionAdminsForm';
+import BackgroundDiv from '../../components/BackgroundDiv';
+import { PageHeader } from '../../components/PageHeader';
 import { emptyCustomerInstitution } from '../../types/customerInstitution.types';
 import { useFetchCustomerInstitution } from '../../utils/hooks/useFetchCustomerInstitution';
 import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';
-import { PageHeader } from '../../components/PageHeader';
+import CustomerInstitutionAdminsForm from './CustomerInstitutionAdminsForm';
+import CustomerInstitutionMetadataForm from './CustomerInstitutionMetadataForm';
 
 const StyledCustomerInstitution = styled.section`
   display: flex;
@@ -28,7 +28,7 @@ const AdminCustomerInstitution: FC<AdminCustomerInstitutionProps> = ({ customerI
   const [users, isLoadingUsers, refetchInstitutionUsers] = useFetchUsersForInstitution(editMode ? customerId : '');
 
   return (
-    <>
+    <BackgroundDiv>
       <PageHeader>{t(editMode ? 'edit_institution' : 'add_institution')}</PageHeader>
       <StyledCustomerInstitution>
         {isLoadingCustomerInstitution ? (
@@ -50,7 +50,7 @@ const AdminCustomerInstitution: FC<AdminCustomerInstitutionProps> = ({ customerI
           </>
         )}
       </StyledCustomerInstitution>
-    </>
+    </BackgroundDiv>
   );
 };
 

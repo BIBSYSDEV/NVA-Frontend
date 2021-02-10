@@ -1,7 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Trans, useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
+import BackgroundDiv from '../../components/BackgroundDiv';
 import { PageHeader } from '../../components/PageHeader';
 
 const StyledPrivacyContainer = styled.div`
@@ -21,7 +22,7 @@ const PrivacyPolicy = () => {
   const { t } = useTranslation('privacy');
 
   return (
-    <>
+    <BackgroundDiv>
       <PageHeader>{t('privacy_statement')}</PageHeader>
 
       <StyledPrivacyContainer>
@@ -309,7 +310,7 @@ const PrivacyPolicy = () => {
           </Typography>
         </TableContainer>
       </StyledPrivacyContainer>
-    </>
+    </BackgroundDiv>
   );
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import BackgroundDiv from '../../components/BackgroundDiv';
 import Card from '../../components/Card';
 import ListSkeleton from '../../components/ListSkeleton';
 import { PageHeader } from '../../components/PageHeader';
@@ -15,7 +16,7 @@ const MyMessages = () => {
   );
 
   return (
-    <>
+    <BackgroundDiv>
       <PageHeader>{t('my_messages')}</PageHeader>
       {isLoadingPendingDoiRequests ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
@@ -30,7 +31,7 @@ const MyMessages = () => {
           ))}
         </>
       )}
-    </>
+    </BackgroundDiv>
   );
 };
 

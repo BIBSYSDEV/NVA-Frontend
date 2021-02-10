@@ -1,17 +1,18 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { getAllCustomerInstitutions } from '../../api/customerInstitutionsApi';
-import Card from '../../components/Card';
-import { Button, CircularProgress } from '@material-ui/core';
-import InstitutionList from './InstitutionList';
 import { Link as RouterLink } from 'react-router-dom';
-import { CustomerInstitution } from '../../types/customerInstitution.types';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
-import { StyledProgressWrapper, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import { Button, CircularProgress } from '@material-ui/core';
+import { getAllCustomerInstitutions } from '../../api/customerInstitutionsApi';
+import BackgroundDiv from '../../components/BackgroundDiv';
+import Card from '../../components/Card';
 import { PageHeader } from '../../components/PageHeader';
+import { StyledProgressWrapper, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { CustomerInstitution } from '../../types/customerInstitution.types';
+import { NotificationVariant } from '../../types/notification.types';
 import { getAdminInstitutionPath } from '../../utils/urlPaths';
+import InstitutionList from './InstitutionList';
 
 const AdminCustomerInstitutions: FC = () => {
   const { t } = useTranslation('admin');
@@ -34,7 +35,7 @@ const AdminCustomerInstitutions: FC = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <BackgroundDiv>
       <PageHeader>{t('admin_institutions')}</PageHeader>
       <Card>
         <StyledRightAlignedWrapper>
@@ -54,7 +55,7 @@ const AdminCustomerInstitutions: FC = () => {
           <InstitutionList institutions={institutions} />
         )}
       </Card>
-    </>
+    </BackgroundDiv>
   );
 };
 

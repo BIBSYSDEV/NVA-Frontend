@@ -1,8 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Trans, useTranslation } from 'react-i18next';
+import styled from 'styled-components';
+import { Link as MuiLink, Typography } from '@material-ui/core';
+import BackgroundDiv from '../../components/BackgroundDiv';
 import { PageHeader } from '../../components/PageHeader';
-import { Typography, Link as MuiLink } from '@material-ui/core';
 import { ContactInformation } from '../../utils/constants';
 
 const StyledAboutContainer = styled.div`
@@ -16,7 +17,7 @@ const About = () => {
   const { t } = useTranslation('about');
 
   return (
-    <>
+    <BackgroundDiv>
       <PageHeader>{t('about_heading')}</PageHeader>
       <StyledAboutContainer>
         <Typography>{t('description.paragraph0.intro')}</Typography>
@@ -37,7 +38,7 @@ const About = () => {
           </Trans>
         </Typography>
       </StyledAboutContainer>
-    </>
+    </BackgroundDiv>
   );
 };
 

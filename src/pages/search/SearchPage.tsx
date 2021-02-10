@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import BackgroundDiv from '../../components/BackgroundDiv';
 import { PageHeader } from '../../components/PageHeader';
 import SearchBar from '../../components/SearchBar';
 import { getSearchPath } from '../../utils/urlPaths';
@@ -24,13 +25,13 @@ const SearchPage: FC = () => {
   };
 
   return (
-    <>
+    <BackgroundDiv>
       <PageHeader backPath="/">{t('registrations')}</PageHeader>
       <StyledSearch>
         <SearchBar handleSearch={handleSearch} initialSearchTerm={searchTerm} />
         <RegistrationSearch searchTerm={searchTerm} />
       </StyledSearch>
-    </>
+    </BackgroundDiv>
   );
 };
 
