@@ -46,7 +46,8 @@ const AuthorList: FC<AuthorListProps> = ({ authors, onDelete, onMoveAuthor, open
             onDelete(authorToRemove.sequence - 1);
             closeConfirmDialog();
           }}
-          onCancel={closeConfirmDialog}>
+          onCancel={closeConfirmDialog}
+          dataTestId="comfirm-remove-author-dialog">
           <Typography>
             {t('contributors.confirm_remove_author_text', {
               contributorName: authorToRemove.identity.name,

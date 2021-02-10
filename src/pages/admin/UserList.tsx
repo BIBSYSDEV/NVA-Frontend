@@ -166,7 +166,8 @@ const UserList: FC<UserListProps> = ({
               title={t('users.remove_role_title')}
               isLoading={updatedRoleForUsers.length > 0}
               onCancel={() => setRemoveRoleForUser('')}
-              onAccept={handleRemoveRoleFromUser}>
+              onAccept={handleRemoveRoleFromUser}
+              dataTestId="confirm-remove-role-dialog">
               {t('users.remove_role_text')}
             </ConfirmDialog>
           )}

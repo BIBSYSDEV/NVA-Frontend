@@ -51,7 +51,8 @@ const DoiField = () => {
         open={openConfirmDialog}
         title={t('references.delete_doi_title')}
         onAccept={changeType}
-        onCancel={toggleConfirmDialog}>
+        onCancel={toggleConfirmDialog}
+        dataTestId="comfirm-delete-doi-dialog">
         <Typography>{t('references.delete_doi_text')}</Typography>
       </ConfirmDialog>
     </>
