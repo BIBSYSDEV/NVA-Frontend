@@ -28,8 +28,8 @@ export const getMostSpecificUnit = (values: FormikInstitutionUnit): InstitutionU
 export const getDistinctContributorUnits = (contributors: Contributor[]) => {
   const unitIds = contributors
     .flatMap((contributor) => contributor.affiliations)
-    .filter((affiliation) => affiliation?.id)
-    .map((unit) => unit.id) as string[];
+    .filter((affiliation) => !!affiliation?.id)
+    .map((unit) => unit?.id) as string[];
   return [...new Set(unitIds)];
 };
 

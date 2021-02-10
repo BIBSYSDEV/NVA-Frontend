@@ -50,7 +50,7 @@ const StyledAddAffiliationButton = styled(Button)`
 `;
 
 interface AffiliationsCellProps {
-  affiliations: Institution[];
+  affiliations?: Institution[];
   authorName: string;
   baseFieldName: string;
 }
@@ -63,7 +63,6 @@ const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Affiliati
   const [affiliationToRemove, setAffiliationToRemove] = useState<Institution | null>(null);
   const [affiliationToVerify, setAffiliationToVerify] = useState('');
   const isMobile = useIsMobile();
-
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
   const verifyAffiliationOnClick = (affiliationString: string) => {
@@ -89,7 +88,7 @@ const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Affiliati
       id: mostSpecificUnit.id,
     };
 
-    let updatedAffiliations = [...affiliations]; // Must spread affiliations in order to keep changes when switching tab
+    let updatedAffiliations = affiliations ? [...affiliations] : []; // Must spread affiliations in order to keep changes when switching tab
     if (affiliationToVerify) {
       // Verify affiliation
       const affiliationIndex = updatedAffiliations.findIndex(
@@ -179,13 +178,16 @@ const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Affiliati
         open={!!affiliationToRemove}
         title={t('contributors.confirm_remove_affiliation_title')}
         onAccept={() => {
-          setFieldValue(
-            `${baseFieldName}.${SpecificContributorFieldNames.AFFILIATIONS}`,
-            affiliations.filter((affiliation) => affiliation.id !== affiliationToRemove?.id)
-          );
+          if (affiliations) {
+            setFieldValue(
+              `${baseFieldName}.${SpecificContributorFieldNames.AFFILIATIONS}`,
+              affiliations.filter((affiliation) => affiliation.id !== affiliationToRemove?.id)
+            );
+          }
           setAffiliationToRemove(null);
         }}
-        onCancel={() => setAffiliationToRemove(null)}>
+        onCancel={() => setAffiliationToRemove(null)}
+        dataTestId="confirm-remove-affiliation-dialog">
         <Typography>{t('contributors.confirm_remove_affiliation_text')}</Typography>
       </ConfirmDialog>
     </StyledAffiliationsCell>

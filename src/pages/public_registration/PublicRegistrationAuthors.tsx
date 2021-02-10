@@ -62,7 +62,7 @@ const PublicRegistrationAuthors: FC<PublicRegistrationAuthorsProps> = ({ contrib
                 name
               )}
               <sup>
-                {affiliationIndexes?.length > 0 && affiliationIndexes.join(',')}
+                {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
                 {email && (
                   <IconButton size="small" href={`mailto:${email}`}>
                     <MailOutlineIcon fontSize="small" />

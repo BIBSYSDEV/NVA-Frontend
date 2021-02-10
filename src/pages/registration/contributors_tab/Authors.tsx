@@ -26,7 +26,7 @@ type AuthorsProps = Pick<FieldArrayRenderProps, 'push' | 'replace'>;
 const Authors = ({ push, replace }: AuthorsProps) => {
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
-  const { values, setFieldValue } = useFormikContext<Registration>();
+  const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const {
     entityDescription: { contributors },
   } = values;
@@ -40,6 +40,11 @@ const Authors = ({ push, replace }: AuthorsProps) => {
       .filter((_, index) => index !== indexToRemove)
       .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
     setFieldValue(ContributorFieldNames.CONTRIBUTORS, remainingAuthors);
+
+    if (remainingAuthors.length === 0) {
+      // Ensure field is set to touched even if it's empty
+      setFieldTouched(ContributorFieldNames.CONTRIBUTORS);
+    }
   };
 
   const handleMoveAuthor = (newIndex: number, oldIndex: number) => {

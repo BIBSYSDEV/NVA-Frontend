@@ -165,7 +165,8 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations, refetchReg
         onCancel={() => {
           setShowDeleteModal(false);
         }}
-        isLoading={isDeleting}>
+        isLoading={isDeleting}
+        dataTestId="confirm-delete-dialog">
         <Typography>
           {t('workLists:delete_registration_message', {
             title: registrationToDelete?.mainTitle ?? registrationToDelete?.identifier,
