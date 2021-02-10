@@ -126,7 +126,8 @@ const UserInstitution = ({ user }: UserInstituionProps) => {
         title={t('organization.confirm_remove_affiliation_title')}
         onAccept={removeInstitution}
         onCancel={() => setInstitutionIdToRemove('')}
-        isLoading={isRemovingInstitution}>
+        isLoading={isRemovingInstitution}
+        dataTestId="confirm-remove-affiliation-dialog">
         <Typography>{t('organization.confirm_remove_affiliation_text')}</Typography>
       </ConfirmDialog>
     </>
