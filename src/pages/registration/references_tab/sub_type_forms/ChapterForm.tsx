@@ -1,4 +1,4 @@
-import { Field, FieldProps, useFormikContext } from 'formik';
+import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -20,20 +20,29 @@ const StyledDiv = styled(StyledCenterAlignedContentWrapper)`
 `;
 
 const StyledPageNumberWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-areas: 'pages-from dash pages-to';
+  grid-template-columns: max-content 3rem max-content;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-areas: 'pages-from' 'dash' 'pages-to';
+    grid-template-columns: auto;
+  }
 `;
 
 const StyledDashIconWrapper = styled.div`
-  margin-right: 1rem;
-  margin-top: 1rem;
   display: flex;
   align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
 `;
 
 const StyledPageNumberField = styled(TextField)`
-  margin-right: 1rem;
-  width: 10rem;
+  display: inline;
+  width: fit-content;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    display: grid;
+    width: auto;
+  }
 `;
 
 const ChapterForm = () => {
@@ -49,9 +58,7 @@ const ChapterForm = () => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <StyledDiv>
           <InfoIcon color="primary" />
-          <Typography color="primary" variant="body1">
-            {t('references.chapter.info_anthology')}
-          </Typography>
+          <Typography variant="body1">{t('references.chapter.info_anthology')}</Typography>
         </StyledDiv>
 
         <DoiField />
@@ -69,29 +76,33 @@ const ChapterForm = () => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
         <StyledPageNumberWrapper>
           <Field name={ReferenceFieldNames.PAGES_FROM}>
-            {({ field }: FieldProps<string>) => (
+            {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <StyledPageNumberField
                 variant="filled"
                 data-testid="chapter-pages-from"
                 label={t('references.pages_from')}
                 {...field}
                 value={field.value ?? ''}
+                error={touched && !!error}
+                helperText={<ErrorMessage name={field.name} />}
               />
             )}
           </Field>
 
           <StyledDashIconWrapper>
-            <RemoveIcon />
+            <RemoveIcon color="primary" />
           </StyledDashIconWrapper>
 
           <Field name={ReferenceFieldNames.PAGES_TO}>
-            {({ field }: FieldProps<string>) => (
+            {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <StyledPageNumberField
                 data-testid="chapter-pages-to"
                 variant="filled"
                 label={t('references.pages_to')}
                 {...field}
                 value={field.value ?? ''}
+                error={touched && !!error}
+                helperText={<ErrorMessage name={field.name} />}
               />
             )}
           </Field>
@@ -99,14 +110,17 @@ const ChapterForm = () => {
       </BackgroundDiv>
 
       {publicationInstance.type === ChapterType.BOOK && (
-        <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-          <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+        <>
+          <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
+            <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+          </BackgroundDiv>
+
           <NviValidation
             isPeerReviewed={!!publicationInstance.peerReviewed}
             isRated={!!publicationContext?.level}
             dataTestId="nvi-chapter"
           />
-        </BackgroundDiv>
+        </>
       )}
     </>
   );

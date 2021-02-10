@@ -22,6 +22,7 @@ const PublicProjectsContent = ({ registration }: PublicRegistrationContentProps)
       <MuiThemeProvider theme={lightTheme}>
         {registration.projects.map((project) => (
           <StyledProjectChip
+            key={project.id}
             label={
               <Typography>
                 {project.name}

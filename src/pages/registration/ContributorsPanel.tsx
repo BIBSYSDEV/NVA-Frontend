@@ -1,7 +1,7 @@
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormHelperText, Typography } from '@material-ui/core';
+import { FormHelperText, MuiThemeProvider, Typography } from '@material-ui/core';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
@@ -21,11 +21,13 @@ const ContributorsPanel = () => {
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        <Typography variant="h2" color="primary">
-          {t('contributors.authors')}
-        </Typography>
+        <Typography variant="h2">{t('contributors.authors')}</Typography>
         <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
-          {({ push, replace }: FieldArrayRenderProps) => <Authors push={push} replace={replace} />}
+          {({ push, replace }: FieldArrayRenderProps) => (
+            <MuiThemeProvider theme={lightTheme}>
+              <Authors push={push} replace={replace} />
+            </MuiThemeProvider>
+          )}
         </FieldArray>
       </BackgroundDiv>
       {contributors.length === 0 && typeof contributorsError === 'string' && (

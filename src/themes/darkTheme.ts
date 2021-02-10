@@ -9,6 +9,7 @@ const darkTheme = createMuiTheme({
     type: 'dark',
     primary: { main: Color.BlueMegaLight },
     error: { main: Color.ErrorLight },
+    text: { primary: Color.White },
   },
   overrides: {
     ...lightTheme.overrides,
@@ -51,10 +52,26 @@ const darkTheme = createMuiTheme({
         },
       },
     },
-  },
-  props: {
-    MuiTypography: {
-      color: 'primary',
+    MuiInputBase: {
+      ...lightTheme.overrides?.MuiInputBase,
+      root: {
+        ...lightTheme.overrides?.MuiInputBase?.root,
+        color: Color.Black,
+      },
+    },
+    MuiInputLabel: {
+      ...lightTheme.overrides?.MuiInputLabel,
+      root: {
+        ...lightTheme.overrides?.MuiInputLabel?.root,
+        color: Color.Black,
+      },
+    },
+    MuiListItem: {
+      ...lightTheme.overrides?.MuiListItem,
+      root: {
+        ...lightTheme.overrides?.MuiListItem?.root,
+        color: Color.Black,
+      },
     },
   },
 });
