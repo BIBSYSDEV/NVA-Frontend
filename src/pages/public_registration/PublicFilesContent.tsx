@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
@@ -103,16 +103,23 @@ const FileRow = ({ file }: { file: File }) => {
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [currentFileUrl, setCurrentFileUrl] = useState('');
 
-  const handleDownload = async (fileId: string) => {
+  const handleDownload = useCallback(async () => {
     setIsLoadingFile(true);
-    const file = await downloadFile(identifier, fileId);
-    if (!file || file?.error) {
-      dispatch(setNotification(file.error, NotificationVariant.Error));
+    const downloadedFile = await downloadFile(identifier, file.identifier);
+    if (!downloadedFile || downloadedFile?.error) {
+      dispatch(setNotification(downloadedFile.error, NotificationVariant.Error));
     } else {
-      setCurrentFileUrl(file);
+      setCurrentFileUrl(downloadedFile);
     }
     setIsLoadingFile(false);
-  };
+  }, [dispatch, identifier, file.identifier]);
+
+  useEffect(() => {
+    if (file.size < 10000000) {
+      // Download file without any user interaction if file size < 10MB
+      handleDownload();
+    }
+  }, [handleDownload, file.size]);
 
   const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
   const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
@@ -145,7 +152,7 @@ const FileRow = ({ file }: { file: File }) => {
             fullWidth
             endIcon={<CloudDownloadIcon />}
             isLoading={isLoadingFile}
-            onClick={() => handleDownload(file.identifier)}>
+            onClick={handleDownload}>
             {t('download')}
           </ButtonWithProgress>
         ) : (
