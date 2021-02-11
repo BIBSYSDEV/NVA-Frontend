@@ -28,6 +28,7 @@ const StyledFileRow = styled.div`
     'preview  preview preview preview preview ';
   grid-template-columns: 5fr 1fr 2fr 2fr 2fr;
   column-gap: 1rem;
+  align-items: center;
   padding: 1rem;
   background: ${({ theme }) => theme.palette.common.white};
 
@@ -46,27 +47,23 @@ const StyledFileName = styled(Typography)`
   font-size: 1rem;
   font-weight: 700;
   line-break: anywhere;
-  align-self: center;
 `;
 
 const StyledSize = styled(Typography)`
   grid-area: size;
-  align-self: center;
 `;
 
 const StyledVersion = styled(Typography)`
   grid-area: version;
-  align-self: center;
 `;
+
 const StyledLicenseImg = styled.img`
   grid-area: license;
-  align-self: center;
   cursor: pointer;
 `;
 
 const StyledDownload = styled.div`
   grid-area: download;
-  align-self: center;
 `;
 
 // const StyledPreview = styled.div`
