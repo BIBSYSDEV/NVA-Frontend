@@ -9,7 +9,7 @@
     "@material-ui/lab": "4.0.0-alpha.57",
     "@material-ui/pickers": "^3.2.10",
     "@material-ui/styles": "^4.11.3",
-    "@uppy/aws-s3-multipart": "^1.8.12",
+    "@uppy/aws-s3-multipart": "^1.8.13",
     "@uppy/core": "^1.16.1",
     "@uppy/dashboard": "^1.16.1",
     "@uppy/locales": "^1.17.1",
