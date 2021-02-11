@@ -1,31 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Link as MuiLink, Typography } from '@material-ui/core';
+import { Button, Collapse, Typography } from '@material-ui/core';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import SearchIcon from '@material-ui/icons/Search';
 import BackgroundDiv from '../../components/BackgroundDiv';
+import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import lightTheme from '../../themes/lightTheme';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import AboutContent from '../infopages/AboutContent';
 
 const StyledDashboard = styled.div`
   display: grid;
-  grid-template-areas: 'description' 'links';
+  grid-template-areas: 'tagline' 'description' 'links';
   justify-items: center;
   width: 100%;
 `;
 
-const StyledBackgroundDiv = styled(BackgroundDiv)`
-  grid-area: description;
+const StyledTaglineDiv = styled(BackgroundDiv)`
+  grid-area: tagline;
   margin: 0;
+  display: grid;
+  grid-template-areas: '. text-tagline .';
+  grid-template-columns: 1fr 2fr 1fr;
 `;
 
-const StyledLinksContainer = styled.div`
+const StyledDescriptionDiv = styled(BackgroundDiv)`
+  grid-area: description;
+  margin: 0;
+  padding-top: 0;
+`;
+
+const StyledLinksContainer = styled(BackgroundDiv)`
   display: grid;
+  grid-area: links;
   grid-template-areas: 'search new-registration';
   gap: 2rem;
-  margin-top: 2rem;
 `;
 
 const StyledLink = styled(Link)`
@@ -56,17 +67,34 @@ const StyledText = styled.div`
   text-align: center;
 `;
 
+const StyledTypography = styled(Typography)`
+  max-width: 40rem;
+  grid-area: text-tagline;
+`;
+
 const Dashboard = () => {
   const { t } = useTranslation('common');
+  const [readMore, setReadMore] = useState(false);
+
+  const toggleReadMore = () => setReadMore(!readMore);
 
   return (
     <StyledDashboard>
-      <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-        <Typography variant="subtitle1">{t('about:short_description')}</Typography>
-        <MuiLink component={Link} to={UrlPathTemplate.About} data-testid="about_read_more_link">
-          {t('read_more')}
-        </MuiLink>
-      </StyledBackgroundDiv>
+      <StyledTaglineDiv backgroundColor={lightTheme.palette.section.megaDark}>
+        <StyledTypography variant="h3" variantMapping={{ h3: 'p' }}>
+          {t('about:short_description')}
+        </StyledTypography>
+      </StyledTaglineDiv>
+      <StyledDescriptionDiv backgroundColor={lightTheme.palette.section.megaDark}>
+        <Collapse in={readMore} collapsedHeight="0rem">
+          <AboutContent />
+        </Collapse>
+        <StyledRightAlignedWrapper>
+          <Button color="secondary" variant="contained" data-testid="button-read-more" onClick={toggleReadMore}>
+            {t(readMore ? 'read_less' : 'read_more')}
+          </Button>
+        </StyledRightAlignedWrapper>
+      </StyledDescriptionDiv>
       <StyledLinksContainer>
         <StyledSearchLink to={UrlPathTemplate.Search}>
           <StyledLinkContent>
