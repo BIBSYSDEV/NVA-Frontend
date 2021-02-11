@@ -13,7 +13,7 @@
     "@uppy/core": "^1.16.1",
     "@uppy/dashboard": "^1.16.0",
     "@uppy/locales": "^1.17.1",
-    "@uppy/react": "^1.11.2",
+    "@uppy/react": "^1.11.3",
     "aws-amplify": "^3.3.18",
     "axios": "^0.21.1",
     "date-fns": "^2.17.0",
