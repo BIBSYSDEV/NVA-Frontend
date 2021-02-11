@@ -67,10 +67,9 @@ const StyledDownload = styled.div`
   grid-area: download;
 `;
 
-const StyledPreviewPdfOrImg = styled(PreviewFile)`
+const StyledPreviewFile = styled(PreviewFile)`
   grid-area: preview;
-  margin-top: 0.5rem;
-  max-height: 25rem;
+  margin-top: 1rem;
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
     display: none;
@@ -161,7 +160,7 @@ const FileRow = ({ file }: { file: File }) => {
           </Button>
         )}
       </StyledDownload>
-      {currentFileUrl && <StyledPreviewPdfOrImg url={currentFileUrl} file={file} />}
+      {currentFileUrl && <StyledPreviewFile url={currentFileUrl} file={file} />}
     </StyledFileRow>
   );
 };
