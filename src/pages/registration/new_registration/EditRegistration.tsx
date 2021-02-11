@@ -51,7 +51,9 @@ const EditRegistration: FC = () => {
       </StyledEditRegistration>
     </BackgroundDiv>
   ) : (
-    <RegistrationForm identifier={identifier} isNewRegistration={!!location.state?.isNewRegistration} />
+    <BackgroundDiv>
+      <RegistrationForm identifier={identifier} isNewRegistration={!!location.state?.isNewRegistration} />
+    </BackgroundDiv>
   );
 };
 
