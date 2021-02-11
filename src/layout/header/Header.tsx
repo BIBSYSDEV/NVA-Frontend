@@ -57,12 +57,16 @@ const Header = () => {
 
   return (
     <StyledAppBar position="static" color="inherit" elevation={0}>
-      <StyledBurgerMenu>
-        <IconButton onClick={handleClick}>
-          <MenuIcon />
-        </IconButton>
-      </StyledBurgerMenu>
-      <MobileMenu anchorEl={anchorEl} onClose={() => setAnchorEl(null)} />
+      {user && (
+        <>
+          <StyledBurgerMenu>
+            <IconButton onClick={handleClick}>
+              <MenuIcon />
+            </IconButton>
+          </StyledBurgerMenu>
+          <MobileMenu anchorEl={anchorEl} onClose={() => setAnchorEl(null)} />
+        </>
+      )}
       <Logo />
       {user?.isCreator && (
         <StyledShortcuts>

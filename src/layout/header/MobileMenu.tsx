@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Menu, MenuItem } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,7 @@ interface MobileMenuProps {
   onClose: () => void;
 }
 
-const MobileMenu: FC<MobileMenuProps> = ({ anchorEl, onClose }) => {
+const MobileMenu = ({ anchorEl, onClose }: MobileMenuProps) => {
   const { t } = useTranslation('registration');
   const history = useHistory();
 
@@ -18,6 +18,7 @@ const MobileMenu: FC<MobileMenuProps> = ({ anchorEl, onClose }) => {
       history.push(newPath);
     }
   };
+
   return (
     <Menu
       anchorEl={anchorEl}
