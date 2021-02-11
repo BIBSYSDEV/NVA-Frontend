@@ -25,7 +25,7 @@ const StyledFileRow = styled.div`
   display: grid;
   grid-template-areas:
     'name     size    version license download'
-    'preview  preview preview preview preview';
+    'preview  preview preview preview preview ';
   grid-template-columns: 5fr 1fr 2fr 2fr 2fr;
   column-gap: 1rem;
   padding: 1rem;
@@ -33,8 +33,8 @@ const StyledFileRow = styled.div`
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
     grid-template-areas:
-      'name     size   '
-      'version  license'
+      'name     size    '
+      'version  license '
       'download download';
     grid-template-columns: 1fr;
     row-gap: 1rem;
