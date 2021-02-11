@@ -30,14 +30,10 @@ export const PreviewFile = ({ url, file, ...props }: PreviewFileProps) => {
   ) : null;
 };
 
-const PreviewPdf = ({ url, ...props }: CommonPreviewProps) => {
-  const fallbackPdfPreviewUrl = `https://docs.google.com/viewer?url=${url}&embedded=true`;
-
-  return (
-    <StyledObject data={url} type="application/pdf" {...props}>
-      <embed type="application/pdf" src={fallbackPdfPreviewUrl} />
-    </StyledObject>
-  );
-};
+const PreviewPdf = ({ url, ...props }: CommonPreviewProps) => (
+  <StyledObject type="application/pdf" data={url} {...props}>
+    <embed type="application/pdf" src={url} />
+  </StyledObject>
+);
 
 const PreviewImg = ({ url, file, ...props }: PreviewFileProps) => <StyledImg src={url} alt={file.name} {...props} />;
