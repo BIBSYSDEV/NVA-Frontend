@@ -116,7 +116,7 @@ const FileRow = ({ file }: { file: File }) => {
 
   useEffect(() => {
     if (file.size < 10000000) {
-      // Download file without any user interaction if file size < 10MB
+      // Download file without user interaction if file size < 10MB
       handleDownload();
     }
   }, [handleDownload, file.size]);
