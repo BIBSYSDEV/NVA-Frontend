@@ -6,16 +6,7 @@ import LockIcon from '@material-ui/icons/Lock';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import {
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import prettyBytes from 'pretty-bytes';
 import { File, licenses } from '../../types/file.types';
 import { downloadFile } from '../../api/fileApi';
@@ -24,19 +15,49 @@ import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
-const StyledTableCell = styled(TableCell)`
-  font-size: 1rem;
-  word-wrap: break-word;
+const StyledFileRowContainer = styled.div`
+  > :not(:last-child) {
+    margin-bottom: 1rem;
+  }
 `;
 
-const StyledNameTableCell = styled(StyledTableCell)`
-  min-width: 10rem;
+const StyledFileRow = styled.div`
+  display: grid;
+  grid-template-areas:
+    'name     size    version license download'
+    'preview  preview preview preview preview';
+  grid-template-columns: 5fr 1fr 2fr 2fr 2fr;
+  column-gap: 1rem;
+  padding: 1rem;
+  background: ${({ theme }) => theme.palette.common.white};
+`;
+
+const StyledFileName = styled(Typography)`
+  grid-area: name;
+  font-size: 1rem;
   font-weight: 700;
   line-break: anywhere;
+  align-self: center;
 `;
 
+const StyledSize = styled(Typography)`
+  grid-area: size;
+  align-self: center;
+`;
+
+const StyledVersion = styled(Typography)`
+  grid-area: version;
+  align-self: center;
+`;
 const StyledLicenseImg = styled.img`
+  grid-area: license;
+  align-self: center;
   cursor: pointer;
+`;
+
+const StyledDownload = styled.div`
+  grid-area: download;
+  align-self: center;
 `;
 
 const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) => {
@@ -50,24 +71,11 @@ const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) =>
         {t('registration:files_and_license.files')}
       </Typography>
 
-      <TableContainer>
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>{t('registration:files_and_license.title')}</StyledTableCell>
-              <StyledTableCell>{t('size')}</StyledTableCell>
-              <StyledTableCell>{t('version')}</StyledTableCell>
-              <StyledTableCell>{t('registration:files_and_license.license')}</StyledTableCell>
-              <StyledTableCell />
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {publiclyAvailableFiles.map((file) => (
-              <FileRow key={file.identifier} file={file} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <StyledFileRowContainer>
+        {publiclyAvailableFiles.map((file) => (
+          <FileRow key={file.identifier} file={file} />
+        ))}
+      </StyledFileRowContainer>
     </>
   );
 };
@@ -94,22 +102,20 @@ const FileRow = ({ file }: { file: File }) => {
   const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
 
   return (
-    <TableRow hover>
-      <StyledNameTableCell>{file.name}</StyledNameTableCell>
-      <StyledTableCell>{prettyBytes(file.size, { locale: true })}</StyledTableCell>
-      <StyledTableCell>
+    <StyledFileRow>
+      <StyledFileName>{file.name}</StyledFileName>
+      <StyledSize>{prettyBytes(file.size, { locale: true })}</StyledSize>
+      <StyledVersion>
         {file.publisherAuthority
           ? t('registration:files_and_license.published_version')
           : t('registration:files_and_license.accepted_version')}
-      </StyledTableCell>
-      <StyledTableCell>
-        <StyledLicenseImg
-          onClick={() => window.open(licenseData?.link)}
-          alt={file.license?.identifier}
-          src={licenseData?.buttonImage}
-        />
-      </StyledTableCell>
-      <StyledTableCell>
+      </StyledVersion>
+      <StyledLicenseImg
+        onClick={() => window.open(licenseData?.link)}
+        alt={file.license?.identifier}
+        src={licenseData?.buttonImage}
+      />
+      <StyledDownload>
         {fileEmbargoDate && fileEmbargoDate > new Date() ? (
           <Typography>
             <LockIcon />
@@ -137,8 +143,8 @@ const FileRow = ({ file }: { file: File }) => {
             {t('open')}
           </Button>
         )}
-      </StyledTableCell>
-    </TableRow>
+      </StyledDownload>
+    </StyledFileRow>
   );
 };
 
