@@ -25,11 +25,11 @@ export const PreviewFile = ({ url, file, ...props }: PreviewFileProps) => {
   return fileType.includes('pdf') ? (
     <PreviewPdf url={url} {...props} />
   ) : fileType.includes('image') ? (
-    <PreviewImg url={url} {...props} />
+    <PreviewImg url={url} file={file} {...props} />
   ) : null;
 };
 
-export const PreviewPdf = ({ url, ...props }: CommonPreviewProps) => {
+const PreviewPdf = ({ url, ...props }: CommonPreviewProps) => {
   const fallbackPdfPreviewUrl = `https://docs.google.com/viewer?url=${url}&embedded=true`;
 
   return (
@@ -39,4 +39,4 @@ export const PreviewPdf = ({ url, ...props }: CommonPreviewProps) => {
   );
 };
 
-const PreviewImg = ({ url, ...props }: CommonPreviewProps) => <StyledImg src={url} alt="UPSYDAISY" {...props} />;
+const PreviewImg = ({ url, file, ...props }: PreviewFileProps) => <StyledImg src={url} alt={file.name} {...props} />;
