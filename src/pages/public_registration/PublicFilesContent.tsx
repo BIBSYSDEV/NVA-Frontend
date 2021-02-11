@@ -165,7 +165,7 @@ const FileRow = ({ file, registrationId }: FileRowProps) => {
             color="secondary"
             fullWidth
             endIcon={<OpenInNewIcon />}
-            onClick={() => window.open(currentFileUrl)}>
+            href={currentFileUrl}>
             {t('open')}
           </Button>
         )}
