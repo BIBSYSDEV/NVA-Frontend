@@ -14,6 +14,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
+import { PreviewPdfOrImg } from './PreviewPdfOrImg';
 
 const StyledFileRowContainer = styled.div`
   > :not(:last-child) {
@@ -66,16 +67,15 @@ const StyledDownload = styled.div`
   grid-area: download;
 `;
 
-// const StyledPreview = styled.div`
-//   grid-area: preview;
-//   margin-top: 0.5rem;
-//   height: 20rem;
-//   background: red;
+const StyledPreviewPdfOrImg = styled(PreviewPdfOrImg)`
+  grid-area: preview;
+  margin-top: 0.5rem;
+  height: 25rem;
 
-//   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
-//     display: none;
-//   }
-// `;
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
+    display: none;
+  }
+`;
 
 const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('common');
@@ -161,7 +161,7 @@ const FileRow = ({ file }: { file: File }) => {
           </Button>
         )}
       </StyledDownload>
-      {/* {currentFileUrl && <StyledPreview />} */}
+      {currentFileUrl && <StyledPreviewPdfOrImg url={currentFileUrl} />}
     </StyledFileRow>
   );
 };
