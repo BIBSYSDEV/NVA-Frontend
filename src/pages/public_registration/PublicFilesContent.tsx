@@ -36,7 +36,7 @@ const StyledFileRow = styled.div`
       'name     size    '
       'version  license '
       'download download';
-    grid-template-columns: 1fr;
+    grid-template-columns: auto auto;
     row-gap: 1rem;
   }
 `;
