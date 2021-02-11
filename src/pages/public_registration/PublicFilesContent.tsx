@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import LockIcon from '@material-ui/icons/Lock';
-import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Button, Typography } from '@material-ui/core';
@@ -89,30 +88,34 @@ const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) =>
 
       <StyledFileRowContainer>
         {publiclyAvailableFiles.map((file) => (
-          <FileRow key={file.identifier} file={file} />
+          <FileRow key={file.identifier} file={file} registrationId={registration.identifier} />
         ))}
       </StyledFileRowContainer>
     </>
   );
 };
 
-const FileRow = ({ file }: { file: File }) => {
+interface FileRowProps {
+  file: File;
+  registrationId: string;
+}
+
+const FileRow = ({ file, registrationId }: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('common');
-  const { identifier } = useParams<{ identifier: string }>();
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [currentFileUrl, setCurrentFileUrl] = useState('');
 
   const handleDownload = useCallback(async () => {
     setIsLoadingFile(true);
-    const downloadedFile = await downloadFile(identifier, file.identifier);
+    const downloadedFile = await downloadFile(registrationId, file.identifier);
     if (!downloadedFile || downloadedFile?.error) {
       dispatch(setNotification(downloadedFile.error, NotificationVariant.Error));
     } else {
       setCurrentFileUrl(downloadedFile);
     }
     setIsLoadingFile(false);
-  }, [dispatch, identifier, file.identifier]);
+  }, [dispatch, registrationId, file.identifier]);
 
   useEffect(() => {
     if (file.size < 10000000) {
