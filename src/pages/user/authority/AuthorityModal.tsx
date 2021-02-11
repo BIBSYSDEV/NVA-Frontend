@@ -64,7 +64,8 @@ const AuthorityModal = ({ closeModal, handleNextClick, user }: AuthorityModalPro
         open={openCancelConfirmation}
         title={t('authority.cancel_connect_authority_title')}
         onAccept={handleLogout}
-        onCancel={() => setOpenCancelConfirmation(false)}>
+        onCancel={() => setOpenCancelConfirmation(false)}
+        dataTestId="confirm-cancel-connect-authority-dialog">
         {t('authority.cancel_connect_authority_text')}
       </ConfirmDialog>
     </>

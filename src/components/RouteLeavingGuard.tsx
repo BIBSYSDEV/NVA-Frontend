@@ -45,7 +45,8 @@ const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({ modalDescription, modal
         open={showModal}
         title={modalHeading}
         onAccept={handleConfirmNavigationClick}
-        onCancel={() => setShowModal(false)}>
+        onCancel={() => setShowModal(false)}
+        dataTestId="confirm-leaving-registration-form-dialog">
         <NormalText>{modalDescription}</NormalText>
       </ConfirmDialog>
     </>

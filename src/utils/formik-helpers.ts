@@ -209,7 +209,6 @@ export const touchedReferenceTabFields = (publicationType: PublicationType | '')
 export const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<Registration> => ({
   entityDescription: {
     contributors: contributors.map((contributor) => ({
-      affiliations: [],
       correspondingAuthor: true,
       sequence: true,
       email: contributor.correspondingAuthor,
