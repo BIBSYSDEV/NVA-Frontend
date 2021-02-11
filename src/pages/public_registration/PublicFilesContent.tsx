@@ -30,6 +30,15 @@ const StyledFileRow = styled.div`
   column-gap: 1rem;
   padding: 1rem;
   background: ${({ theme }) => theme.palette.common.white};
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
+    grid-template-areas:
+      'name     size   '
+      'version  license'
+      'download download';
+    grid-template-columns: 1fr;
+    row-gap: 1rem;
+  }
 `;
 
 const StyledFileName = styled(Typography)`
@@ -59,6 +68,17 @@ const StyledDownload = styled.div`
   grid-area: download;
   align-self: center;
 `;
+
+// const StyledPreview = styled.div`
+//   grid-area: preview;
+//   margin-top: 0.5rem;
+//   height: 20rem;
+//   background: red;
+
+//   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
+//     display: none;
+//   }
+// `;
 
 const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('common');
@@ -144,6 +164,7 @@ const FileRow = ({ file }: { file: File }) => {
           </Button>
         )}
       </StyledDownload>
+      {/* {currentFileUrl && <StyledPreview />} */}
     </StyledFileRow>
   );
 };
