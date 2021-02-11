@@ -35,7 +35,8 @@ const StyledDescriptionDiv = styled(BackgroundDiv)`
 const StyledLinksContainer = styled(BackgroundDiv)`
   display: grid;
   grid-area: links;
-  grid-template-areas: 'search new-registration';
+  grid-template-areas: '. search new-registration .';
+  grid-template-columns: 1fr 3fr 3fr 1fr;
   gap: 2rem;
 `;
 
@@ -47,10 +48,12 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledSearchLink = styled(StyledLink)`
+  grid-area: search;
   border-color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
 const StyledNewRegistrationLink = styled(StyledLink)`
+  grid-area: new-registration;
   border-color: ${({ theme }) => theme.palette.primary.main};
 `;
 
@@ -59,7 +62,6 @@ const StyledLinkContent = styled.div`
   grid-template-areas: 'icon' 'text';
   justify-items: center;
   gap: 1rem;
-  width: 12rem;
 `;
 
 const StyledText = styled.div`
@@ -99,9 +101,11 @@ const Dashboard = () => {
         <StyledSearchLink to={UrlPathTemplate.Search}>
           <StyledLinkContent>
             <SearchIcon fontSize="large" />
-            <Typography variant="h4" variantMapping={{ h4: 'p' }}>
-              {t('search_for_publication')}
-            </Typography>
+            <StyledText>
+              <Typography variant="h4" variantMapping={{ h4: 'p' }}>
+                {t('search_for_publication')}
+              </Typography>
+            </StyledText>
           </StyledLinkContent>
         </StyledSearchLink>
         <StyledNewRegistrationLink to={UrlPathTemplate.NewRegistration}>
