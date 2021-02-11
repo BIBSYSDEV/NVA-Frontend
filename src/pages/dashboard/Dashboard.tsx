@@ -1,26 +1,18 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Link as MuiLink, Typography } from '@material-ui/core';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import SearchIcon from '@material-ui/icons/Search';
 import BackgroundDiv from '../../components/BackgroundDiv';
-import SearchBar from '../../components/SearchBar';
 import lightTheme from '../../themes/lightTheme';
-import { getSearchPath, UrlPathTemplate } from '../../utils/urlPaths';
-import LatestRegistrations from './LatestRegistrations';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 
 const StyledDashboard = styled.div`
   display: grid;
-  grid-template-areas: 'description' 'search-bar';
-  grid-template-rows: auto auto;
+  grid-template-areas: 'description' 'links';
   justify-items: center;
-  width: 100%;
-`;
-
-const StyledSearchBarContainer = styled.div`
-  grid-area: search-bar;
   width: 100%;
 `;
 
@@ -39,7 +31,8 @@ const StyledLinksContainer = styled.div`
 const StyledLink = styled(Link)`
   border: 2px solid;
   border-radius: 4px;
-  padding: 3rem 6rem;
+  padding: 1rem 6rem;
+  text-decoration: none;
 `;
 
 const StyledSearchLink = styled(StyledLink)`
@@ -54,50 +47,47 @@ const StyledLinkContent = styled.div`
   display: grid;
   grid-template-areas: 'icon' 'text';
   justify-items: center;
-  gap: 2rem;
+  gap: 1rem;
   width: 12rem;
 `;
 
-const Dashboard = () => {
-  const { t } = useTranslation();
-  const history = useHistory();
+const StyledText = styled.div`
+  grid-area: text;
+  text-align: center;
+`;
 
-  const handleSearch = async (searchTerm: string) => {
-    if (searchTerm.length) {
-      history.push(getSearchPath(searchTerm));
-    }
-  };
+const Dashboard = () => {
+  const { t } = useTranslation('common');
 
   return (
     <StyledDashboard>
       <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
         <Typography variant="subtitle1">{t('about:short_description')}</Typography>
         <MuiLink component={Link} to={UrlPathTemplate.About} data-testid="about_read_more_link">
-          {t('common:read_more')}
+          {t('read_more')}
         </MuiLink>
       </StyledBackgroundDiv>
       <StyledLinksContainer>
         <StyledSearchLink to={UrlPathTemplate.Search}>
           <StyledLinkContent>
             <SearchIcon fontSize="large" />
-            <Typography variant="h4" variantMapping={{ h4: 'a' }}>
-              Søk etter forskning
+            <Typography variant="h4" variantMapping={{ h4: 'p' }}>
+              {t('search_for_publication')}
             </Typography>
           </StyledLinkContent>
         </StyledSearchLink>
         <StyledNewRegistrationLink to={UrlPathTemplate.NewRegistration}>
           <StyledLinkContent>
             <PostAddIcon fontSize="large" />
-            <Typography variant="h4" variantMapping={{ h4: 'a' }}>
-              Ny registrering
-            </Typography>
+            <StyledText>
+              <Typography variant="h4" variantMapping={{ h4: 'p' }}>
+                {t('registration:new_registration')}
+              </Typography>
+              <Typography>{t('requires_login')}</Typography>
+            </StyledText>
           </StyledLinkContent>
         </StyledNewRegistrationLink>
       </StyledLinksContainer>
-      {/* <StyledSearchBarContainer>
-        <SearchBar handleSearch={handleSearch} initialSearchTerm="" />
-        <LatestRegistrations />
-      </StyledSearchBarContainer> */}
     </StyledDashboard>
   );
 };
