@@ -100,6 +100,8 @@ interface FileRowProps {
   registrationId: string;
 }
 
+const maxFileSize = 10000000; //10 MB
+
 const FileRow = ({ file, registrationId }: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('common');
@@ -118,9 +120,8 @@ const FileRow = ({ file, registrationId }: FileRowProps) => {
   }, [dispatch, registrationId, file.identifier]);
 
   useEffect(() => {
-    if (file.size < 10000000) {
-      // Download file without user interaction if file size < 10MB
-      handleDownload();
+    if (file.size < maxFileSize) {
+      handleDownload(); // Download file without user interaction
     }
   }, [handleDownload, file.size]);
 
