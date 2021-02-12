@@ -6,7 +6,6 @@ import { Button, Collapse, Typography } from '@material-ui/core';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import SearchIcon from '@material-ui/icons/Search';
 import BackgroundDiv from '../../components/BackgroundDiv';
-import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import lightTheme from '../../themes/lightTheme';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import AboutContent from '../infopages/AboutContent';
@@ -22,14 +21,17 @@ const StyledTaglineDiv = styled(BackgroundDiv)`
   grid-area: tagline;
   margin: 0;
   display: grid;
-  grid-template-areas: '. text-tagline .';
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-areas: '. text-tagline text-tagline .' '. . short-description .';
+  grid-template-columns: 1fr 1fr 2.5fr 1fr;
 `;
 
 const StyledDescriptionDiv = styled(BackgroundDiv)`
   grid-area: description;
+  display: grid;
+  grid-template-areas: '. . button .' '. text-description text-description .';
+  grid-template-columns: 1fr 1fr 2.5fr 1fr;
   margin: 0;
-  padding-top: 0;
+  padding: 0 0 2rem 1rem;
 `;
 
 const StyledLinksContainer = styled(BackgroundDiv)`
@@ -69,9 +71,28 @@ const StyledText = styled.div`
   text-align: center;
 `;
 
-const StyledTypography = styled(Typography)`
+const StyledTagline = styled(Typography)`
+  font-family: 'Barlow', sans-serif;
+  font-weight: bold;
   max-width: 40rem;
   grid-area: text-tagline;
+  white-space: pre-wrap;
+`;
+
+const StyledShortDescription = styled(Typography)`
+  padding-top: 1.5rem;
+  max-width: 40rem;
+  grid-area: short-description;
+  white-space: pre-wrap;
+`;
+
+const StyledCollapse = styled(Collapse)`
+  grid-area: text-description;
+  padding-top: 1rem;
+`;
+
+const StyledButtonWrapper = styled.div`
+  grid-area: button;
 `;
 
 const Dashboard = () => {
@@ -83,19 +104,20 @@ const Dashboard = () => {
   return (
     <StyledDashboard>
       <StyledTaglineDiv backgroundColor={lightTheme.palette.section.megaDark}>
-        <StyledTypography variant="h3" variantMapping={{ h3: 'p' }}>
+        <StyledTagline variant="h1">{t('nva_tagline')}</StyledTagline>
+        <StyledShortDescription variant="h3" variantMapping={{ h3: 'p' }}>
           {t('about:short_description')}
-        </StyledTypography>
+        </StyledShortDescription>
       </StyledTaglineDiv>
       <StyledDescriptionDiv backgroundColor={lightTheme.palette.section.megaDark}>
-        <Collapse in={readMore} collapsedHeight="0rem">
+        <StyledCollapse in={readMore} collapsedHeight="0rem">
           <AboutContent />
-        </Collapse>
-        <StyledRightAlignedWrapper>
+        </StyledCollapse>
+        <StyledButtonWrapper>
           <Button color="secondary" variant="contained" data-testid="button-read-more" onClick={toggleReadMore}>
             {t(readMore ? 'read_less' : 'read_more')}
           </Button>
-        </StyledRightAlignedWrapper>
+        </StyledButtonWrapper>
       </StyledDescriptionDiv>
       <StyledLinksContainer>
         <StyledSearchLink to={UrlPathTemplate.Search}>
