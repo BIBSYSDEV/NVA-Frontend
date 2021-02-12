@@ -1,0 +1,39 @@
+import React from 'react';
+import styled from 'styled-components';
+import { File } from '../../types/file.types';
+
+const StyledObject = styled.object`
+  width: 100%;
+  height: 25rem;
+`;
+
+const StyledImg = styled.img`
+  max-width: 100%;
+  max-height: 100%;
+`;
+
+interface CommonPreviewProps {
+  url: string;
+}
+
+interface PreviewFileProps extends CommonPreviewProps {
+  file: File;
+}
+
+export const PreviewFile = ({ url, file, ...props }: PreviewFileProps) => {
+  const fileType = file.mimeType.toLowerCase();
+
+  return fileType.includes('pdf') ? (
+    <PreviewPdf url={url} {...props} />
+  ) : fileType.includes('image') ? (
+    <PreviewImg url={url} file={file} {...props} />
+  ) : null;
+};
+
+const PreviewPdf = ({ url, ...props }: CommonPreviewProps) => (
+  <StyledObject type="application/pdf" data={url} {...props}>
+    <embed type="application/pdf" src={url} />
+  </StyledObject>
+);
+
+const PreviewImg = ({ url, file, ...props }: PreviewFileProps) => <StyledImg src={url} alt={file.name} {...props} />;
