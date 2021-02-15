@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import LockIcon from '@material-ui/icons/Lock';
-import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Button, Typography } from '@material-ui/core';
@@ -89,30 +88,42 @@ const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) =>
 
       <StyledFileRowContainer>
         {publiclyAvailableFiles.map((file) => (
-          <FileRow key={file.identifier} file={file} />
+          <FileRow key={file.identifier} file={file} registrationId={registration.identifier} />
         ))}
       </StyledFileRowContainer>
     </>
   );
 };
 
-const FileRow = ({ file }: { file: File }) => {
+interface FileRowProps {
+  file: File;
+  registrationId: string;
+}
+
+const maxFileSize = 10000000; //10 MB
+
+const FileRow = ({ file, registrationId }: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('common');
-  const { identifier } = useParams<{ identifier: string }>();
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [currentFileUrl, setCurrentFileUrl] = useState('');
 
-  const handleDownload = async (fileId: string) => {
+  const handleDownload = useCallback(async () => {
     setIsLoadingFile(true);
-    const file = await downloadFile(identifier, fileId);
-    if (!file || file?.error) {
-      dispatch(setNotification(file.error, NotificationVariant.Error));
+    const downloadedFile = await downloadFile(registrationId, file.identifier);
+    if (!downloadedFile || downloadedFile?.error) {
+      dispatch(setNotification(downloadedFile.error, NotificationVariant.Error));
     } else {
-      setCurrentFileUrl(file);
+      setCurrentFileUrl(downloadedFile);
     }
     setIsLoadingFile(false);
-  };
+  }, [dispatch, registrationId, file.identifier]);
+
+  useEffect(() => {
+    if (file.size < maxFileSize) {
+      handleDownload(); // Download file without user interaction
+    }
+  }, [handleDownload, file.size]);
 
   const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
   const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
@@ -145,7 +156,7 @@ const FileRow = ({ file }: { file: File }) => {
             fullWidth
             endIcon={<CloudDownloadIcon />}
             isLoading={isLoadingFile}
-            onClick={() => handleDownload(file.identifier)}>
+            onClick={handleDownload}>
             {t('download')}
           </ButtonWithProgress>
         ) : (
@@ -155,7 +166,7 @@ const FileRow = ({ file }: { file: File }) => {
             color="secondary"
             fullWidth
             endIcon={<OpenInNewIcon />}
-            onClick={() => window.open(currentFileUrl)}>
+            href={currentFileUrl}>
             {t('open')}
           </Button>
         )}
