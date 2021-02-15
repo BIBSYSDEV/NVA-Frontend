@@ -23,6 +23,10 @@ const StyledTaglineDiv = styled(BackgroundDiv)`
   display: grid;
   grid-template-areas: '. text-tagline text-tagline .' '. . short-description .';
   grid-template-columns: 1fr 1fr 2.5fr 1fr;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    grid-template-areas: 'text-tagline' 'short-description';
+    grid-template-columns: 1fr;
+  }
 `;
 
 const StyledDescriptionDiv = styled(BackgroundDiv)`
@@ -32,6 +36,14 @@ const StyledDescriptionDiv = styled(BackgroundDiv)`
   grid-template-columns: 1fr 1fr 2.5fr 1fr;
   margin: 0;
   padding: 0 0 2rem 1rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    grid-template-areas: 'button' 'text-description';
+    grid-template-columns: 1fr;
+    padding: 0 0 1rem 2rem;
+  }
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    padding: 0 0 0 0.5rem;
+  }
 `;
 
 const StyledLinksContainer = styled(BackgroundDiv)`
@@ -40,6 +52,17 @@ const StyledLinksContainer = styled(BackgroundDiv)`
   grid-template-areas: '. search new-registration .';
   grid-template-columns: 1fr 3fr 3fr 1fr;
   gap: 2rem;
+  margin-top: 1rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    grid-template-areas: 'search new-registration';
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-areas: 'search' 'new-registration';
+    grid-template-columns: 1fr;
+  }
 `;
 
 const StyledLink = styled(Link)`
@@ -77,6 +100,9 @@ const StyledTagline = styled(Typography)`
   max-width: 40rem;
   grid-area: text-tagline;
   white-space: pre-wrap;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    font-size: 2rem;
+  }
 `;
 
 const StyledShortDescription = styled(Typography)`
