@@ -1,16 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CommonPreviewProps } from './PreviewFile';
 
-const StyledObject = styled.object`
+interface ObjectProps {
+  readonly isLoaded: boolean;
+}
+
+const StyledObject = styled.object<ObjectProps>`
   width: 100%;
-  height: 25rem;
+  height: ${({ isLoaded }) => (isLoaded ? '25rem' : '0rem')};
 `;
 
-const PreviewPdf = ({ url, ...props }: CommonPreviewProps) => (
-  <StyledObject type="application/pdf" data={url} {...props}>
-    <embed type="application/pdf" src={url} />
-  </StyledObject>
-);
+const PreviewPdf = ({ url, ...props }: CommonPreviewProps) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <StyledObject
+      type="application/pdf"
+      data={url}
+      {...props}
+      onLoad={() => {
+        setIsLoaded(true);
+      }}
+      isLoaded={isLoaded}
+    />
+  );
+};
 
 export default PreviewPdf;
