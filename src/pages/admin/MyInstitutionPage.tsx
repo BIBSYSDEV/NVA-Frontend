@@ -5,12 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import SaveIcon from '@material-ui/icons/Save';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
-import BackgroundDiv from '../../components/BackgroundDiv';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import Card from '../../components/Card';
 import ListSkeleton from '../../components/ListSkeleton';
 import { PageHeader } from '../../components/PageHeader';
-import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import { StyledPageWrapperWithMaxWidth, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import {
@@ -46,7 +45,7 @@ const MyCustomerInstitutionPage: FC = () => {
   };
 
   return (
-    <BackgroundDiv>
+    <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('common:my_institution')}</PageHeader>
       <Card>
         {isLoadingCustomerInstitution ? (
@@ -93,7 +92,7 @@ const MyCustomerInstitutionPage: FC = () => {
           </Formik>
         )}
       </Card>
-    </BackgroundDiv>
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 

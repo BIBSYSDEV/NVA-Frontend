@@ -2,9 +2,8 @@ import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import LinkIcon from '@material-ui/icons/Link';
-import BackgroundDiv from '../../components/BackgroundDiv';
 import { PageHeader } from '../../components/PageHeader';
-import { StyledCenterAlignedContentWrapper } from '../../components/styled/Wrappers';
+import { StyledCenterAlignedContentWrapper, StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import TabButton from '../../components/TabButton';
 import DoiRequests from './DoiRequests';
 
@@ -36,7 +35,7 @@ const WorklistPage: FC = () => {
   const [selectedTab, setSelectedTab] = useState(Tab.Doi);
 
   return (
-    <BackgroundDiv>
+    <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('my_worklist')}</PageHeader>
       <StyledContainer>
         <StyledTabsContainer>
@@ -59,7 +58,7 @@ const WorklistPage: FC = () => {
         {/* {selectedTab === Tab.Approval && <PublicationsForApproval />} */}
         {selectedTab === Tab.Doi && <DoiRequests />}
       </StyledContainer>
-    </BackgroundDiv>
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 

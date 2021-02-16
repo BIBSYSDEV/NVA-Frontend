@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Link as MuiLink } from '@material-ui/core';
-import BackgroundDiv from '../components/BackgroundDiv';
 import Heading from '../components/Heading';
 import NormalText from '../components/NormalText';
+import { StyledPageWrapperWithMaxWidth } from '../components/styled/Wrappers';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
-const StyledBackgroundDiv = styled(BackgroundDiv)`
+const StyledBackgroundDiv = styled(StyledPageWrapperWithMaxWidth)`
   text-align: center;
 `;
 

@@ -4,12 +4,12 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Button, Checkbox, Divider, FormControlLabel } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import BackgroundDiv from '../../components/BackgroundDiv';
 import Card from '../../components/Card';
 import ListSkeleton from '../../components/ListSkeleton';
 import Modal from '../../components/Modal';
 import NormalText from '../../components/NormalText';
 import { PageHeader } from '../../components/PageHeader';
+import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import SubHeading from '../../components/SubHeading';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { RoleName } from '../../types/user.types';
@@ -38,7 +38,7 @@ const MyInstitutionUsersPage: FC = () => {
   };
 
   return (
-    <BackgroundDiv>
+    <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('users.user_administration')}</PageHeader>
       <Card>
         {/* Admins */}
@@ -142,7 +142,7 @@ const MyInstitutionUsersPage: FC = () => {
           </Modal>
         )}
       </Card>
-    </BackgroundDiv>
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 

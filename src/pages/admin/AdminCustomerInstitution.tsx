@@ -2,8 +2,8 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { CircularProgress } from '@material-ui/core';
-import BackgroundDiv from '../../components/BackgroundDiv';
 import { PageHeader } from '../../components/PageHeader';
+import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { emptyCustomerInstitution } from '../../types/customerInstitution.types';
 import { useFetchCustomerInstitution } from '../../utils/hooks/useFetchCustomerInstitution';
 import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';
@@ -28,7 +28,7 @@ const AdminCustomerInstitution: FC<AdminCustomerInstitutionProps> = ({ customerI
   const [users, isLoadingUsers, refetchInstitutionUsers] = useFetchUsersForInstitution(editMode ? customerId : '');
 
   return (
-    <BackgroundDiv>
+    <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t(editMode ? 'edit_institution' : 'add_institution')}</PageHeader>
       <StyledCustomerInstitution>
         {isLoadingCustomerInstitution ? (
@@ -50,7 +50,7 @@ const AdminCustomerInstitution: FC<AdminCustomerInstitutionProps> = ({ customerI
           </>
         )}
       </StyledCustomerInstitution>
-    </BackgroundDiv>
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 

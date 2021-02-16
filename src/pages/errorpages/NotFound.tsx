@@ -1,11 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import BackgroundDiv from '../../components/BackgroundDiv';
 import Heading from '../../components/Heading';
+import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 
-const StyledNotFoundWrapper = styled(BackgroundDiv)`
-  width: 100%;
+const StyledNotFoundWrapper = styled(StyledPageWrapperWithMaxWidth)`
   text-align: center;
   padding-top: 4rem;
 `;

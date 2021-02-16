@@ -4,11 +4,14 @@ import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
-import BackgroundDiv from '../../components/BackgroundDiv';
 import Card from '../../components/Card';
 import ListSkeleton from '../../components/ListSkeleton';
 import { PageHeader } from '../../components/PageHeader';
-import { StyledCenterAlignedContentWrapper, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import {
+  StyledCenterAlignedContentWrapper,
+  StyledPageWrapperWithMaxWidth,
+  StyledRightAlignedWrapper,
+} from '../../components/styled/Wrappers';
 import TabButton from '../../components/TabButton';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { RegistrationStatus } from '../../types/registration.types';
@@ -44,7 +47,7 @@ const MyRegistrations: FC = () => {
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
   return (
-    <BackgroundDiv>
+    <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('my_registrations')}</PageHeader>
       <StyledContainer>
         <StyledRightAlignedWrapper>
@@ -83,7 +86,7 @@ const MyRegistrations: FC = () => {
           )}
         </Card>
       </StyledContainer>
-    </BackgroundDiv>
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 

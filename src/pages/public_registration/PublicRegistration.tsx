@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { CircularProgress } from '@material-ui/core';
-import BackgroundDiv from '../../components/BackgroundDiv';
+import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { RegistrationStatus } from '../../types/registration.types';
 import useFetchRegistration from '../../utils/hooks/useFetchRegistration';
@@ -22,7 +22,7 @@ const PublicRegistration: FC = () => {
     userIsRegistrationCurator(user, registration);
 
   return (
-    <BackgroundDiv>
+    <StyledPageWrapperWithMaxWidth>
       {isLoadingRegistration ? (
         <CircularProgress color="inherit" size={20} />
       ) : registration ? (
@@ -34,7 +34,7 @@ const PublicRegistration: FC = () => {
       ) : (
         <NotFound />
       )}
-    </BackgroundDiv>
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 

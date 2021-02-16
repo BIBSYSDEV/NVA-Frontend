@@ -6,10 +6,9 @@ import styled from 'styled-components';
 import { Button, Typography } from '@material-ui/core';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
-import BackgroundDiv from '../../components/BackgroundDiv';
 import Card from '../../components/Card';
 import { PageHeader } from '../../components/PageHeader';
-import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import { StyledPageWrapperWithMaxWidth, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -84,7 +83,7 @@ const MyProfilePage: FC = () => {
   }, [user.authority, dispatch, user.externalOrcid]);
 
   return (
-    <BackgroundDiv>
+    <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('my_profile')}</PageHeader>
       <StyledUserPage>
         {user.authority && (
@@ -115,7 +114,7 @@ const MyProfilePage: FC = () => {
           <UserInstitution user={user} />
         </StyledPrimaryUserInfo>
       </StyledUserPage>
-    </BackgroundDiv>
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 

@@ -2,8 +2,8 @@ import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import BackgroundDiv from '../../../components/BackgroundDiv';
 import { PageHeader } from '../../../components/PageHeader';
+import { StyledPageWrapperWithMaxWidth } from '../../../components/styled/Wrappers';
 import RegistrationForm from '../RegistrationForm';
 import LinkRegistration from './LinkRegistration';
 import UploadRegistration from './UploadRegistration';
@@ -43,17 +43,17 @@ const EditRegistration: FC = () => {
     setExpanded(isExpanded ? panel : false);
 
   return !showForm ? (
-    <BackgroundDiv>
+    <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('new_registration')}</PageHeader>
       <StyledEditRegistration>
         <LinkRegistration expanded={expanded === PanelName.Link} onChange={handleChange(PanelName.Link)} />
         <UploadRegistration expanded={expanded === PanelName.File} onChange={handleChange(PanelName.File)} />
       </StyledEditRegistration>
-    </BackgroundDiv>
+    </StyledPageWrapperWithMaxWidth>
   ) : (
-    <BackgroundDiv>
+    <StyledPageWrapperWithMaxWidth>
       <RegistrationForm identifier={identifier} isNewRegistration={!!location.state?.isNewRegistration} />
-    </BackgroundDiv>
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 

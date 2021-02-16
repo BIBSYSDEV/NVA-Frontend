@@ -4,10 +4,13 @@ import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { Button, CircularProgress } from '@material-ui/core';
 import { getAllCustomerInstitutions } from '../../api/customerInstitutionsApi';
-import BackgroundDiv from '../../components/BackgroundDiv';
 import Card from '../../components/Card';
 import { PageHeader } from '../../components/PageHeader';
-import { StyledProgressWrapper, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import {
+  StyledPageWrapperWithMaxWidth,
+  StyledProgressWrapper,
+  StyledRightAlignedWrapper,
+} from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { NotificationVariant } from '../../types/notification.types';
@@ -35,7 +38,7 @@ const AdminCustomerInstitutions: FC = () => {
   }, [dispatch]);
 
   return (
-    <BackgroundDiv>
+    <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('admin_institutions')}</PageHeader>
       <Card>
         <StyledRightAlignedWrapper>
@@ -55,7 +58,7 @@ const AdminCustomerInstitutions: FC = () => {
           <InstitutionList institutions={institutions} />
         )}
       </Card>
-    </BackgroundDiv>
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 

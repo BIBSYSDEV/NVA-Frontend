@@ -35,7 +35,6 @@ const StyledContent = styled.div`
   flex-direction: column;
   align-self: center;
   width: 100%;
-  max-width: ${({ theme }) => theme.breakpoints.values.lg + 'px'}; // todo: fix this
   align-items: center;
   flex-grow: 1;
 `;

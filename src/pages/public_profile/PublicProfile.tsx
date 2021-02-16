@@ -4,11 +4,11 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { CircularProgress, IconButton, Link as MuiLink, Typography } from '@material-ui/core';
 import WorkIcon from '@material-ui/icons/Work';
-import BackgroundDiv from '../../components/BackgroundDiv';
 import Card from '../../components/Card';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import NormalText from '../../components/NormalText';
 import { PageHeader } from '../../components/PageHeader';
+import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { SearchFieldName } from '../../types/search.types';
 import { ORCID_BASE_URL } from '../../utils/constants';
@@ -42,7 +42,7 @@ const PublicProfile: FC = () => {
   });
 
   return (
-    <BackgroundDiv>
+    <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('my_public_profile')}</PageHeader>
       {isLoadingUser || isLoadingRegistrations ? (
         <CircularProgress />
@@ -86,7 +86,7 @@ const PublicProfile: FC = () => {
           </>
         )
       )}
-    </BackgroundDiv>
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 
