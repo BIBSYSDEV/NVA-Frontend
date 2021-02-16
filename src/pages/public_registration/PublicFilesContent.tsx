@@ -14,7 +14,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
-import PreviewFile from './preview_file';
+import { PreviewFile } from './preview_file/PreviewFile';
 
 const StyledFileRowContainer = styled.div`
   > :not(:last-child) {

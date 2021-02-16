@@ -1,8 +1,8 @@
 import React from 'react';
 import { File } from '../../../types/file.types';
-import PreviewImg from './PreviewImg';
-import PreviewPdf from './PreviewPdf';
-import PreviewUnavailable from './PreviewUnavailable';
+import { PreviewImg } from './PreviewImg';
+import { PreviewPdf } from './PreviewPdf';
+import { PreviewUnavailable } from './PreviewUnavailable';
 
 export interface CommonPreviewProps {
   url: string;
@@ -12,7 +12,7 @@ interface PreviewFileProps extends CommonPreviewProps {
   file: File;
 }
 
-const PreviewFile = ({ url, file, ...props }: PreviewFileProps) => {
+export const PreviewFile = ({ url, file, ...props }: PreviewFileProps) => {
   const fileType = file.mimeType.toLowerCase();
 
   return fileType.includes('pdf') ? (
@@ -23,5 +23,3 @@ const PreviewFile = ({ url, file, ...props }: PreviewFileProps) => {
     <PreviewUnavailable {...props} />
   );
 };
-
-export default PreviewFile;
