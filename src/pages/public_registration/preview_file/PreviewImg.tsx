@@ -1,12 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PreviewFileProps } from './PreviewFile';
+import { CommonPreviewProps } from './PreviewFile';
 
 const StyledImg = styled.img`
   max-width: 100%;
   max-height: 100%;
 `;
 
-const PreviewImg = ({ url, file, ...props }: PreviewFileProps) => <StyledImg src={url} alt={file.name} {...props} />;
+interface PreviewImgProps extends CommonPreviewProps {
+  imgAlt: string;
+}
+
+const PreviewImg = ({ url, imgAlt, ...props }: PreviewImgProps) => <StyledImg src={url} alt={imgAlt} {...props} />;
 
 export default PreviewImg;

@@ -8,7 +8,7 @@ export interface CommonPreviewProps {
   url: string;
 }
 
-export interface PreviewFileProps extends CommonPreviewProps {
+interface PreviewFileProps extends CommonPreviewProps {
   file: File;
 }
 
@@ -18,7 +18,7 @@ const PreviewFile = ({ url, file, ...props }: PreviewFileProps) => {
   return fileType.includes('pdf') ? (
     <PreviewPdf url={url} {...props} />
   ) : fileType.includes('image') ? (
-    <PreviewImg url={url} file={file} {...props} />
+    <PreviewImg url={url} imgAlt={file.name} {...props} />
   ) : (
     <PreviewUnavailable {...props} />
   );
