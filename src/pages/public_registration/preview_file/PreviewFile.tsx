@@ -20,7 +20,7 @@ const PreviewFile = ({ url, file, ...props }: PreviewFileProps) => {
   ) : fileType.includes('image') ? (
     <PreviewImg url={url} file={file} {...props} />
   ) : (
-    <PreviewUnavailable />
+    <PreviewUnavailable {...props} />
   );
 };
 
