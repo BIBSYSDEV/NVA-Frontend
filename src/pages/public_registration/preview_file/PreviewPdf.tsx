@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CommonPreviewProps } from './PreviewFile';
-import PreviewUnavailable from './PreviewUnavailable';
+import { PreviewUnavailable } from './PreviewUnavailable';
 
 interface ObjectProps {
   readonly successfullyLoadedPdf: boolean;
@@ -12,7 +12,7 @@ const StyledObject = styled.object<ObjectProps>`
   height: ${({ successfullyLoadedPdf }) => (successfullyLoadedPdf ? '25rem' : null)};
 `;
 
-const PreviewPdf = ({ url, ...props }: CommonPreviewProps) => {
+export const PreviewPdf = ({ url, ...props }: CommonPreviewProps) => {
   const [successfullyLoadedPdf, setSuccessfullyLoadedPdf] = useState(false);
 
   return (
@@ -26,5 +26,3 @@ const PreviewPdf = ({ url, ...props }: CommonPreviewProps) => {
     </StyledObject>
   );
 };
-
-export default PreviewPdf;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
-const PreviewUnavailable = ({ ...props }) => {
+export const PreviewUnavailable = ({ ...props }) => {
   const { t } = useTranslation('registration');
 
   return (
@@ -11,5 +11,3 @@ const PreviewUnavailable = ({ ...props }) => {
     </Typography>
   );
 };
-
-export default PreviewUnavailable;

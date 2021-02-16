@@ -11,6 +11,6 @@ interface PreviewImgProps extends CommonPreviewProps {
   imgAlt: string;
 }
 
-const PreviewImg = ({ url, imgAlt, ...props }: PreviewImgProps) => <StyledImg src={url} alt={imgAlt} {...props} />;
-
-export default PreviewImg;
+export const PreviewImg = ({ url, imgAlt, ...props }: PreviewImgProps) => (
+  <StyledImg src={url} alt={imgAlt} {...props} />
+);
