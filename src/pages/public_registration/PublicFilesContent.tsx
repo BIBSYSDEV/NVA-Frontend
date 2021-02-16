@@ -13,7 +13,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
-import { PreviewFile } from './PreviewFile';
+import { PreviewFile } from './preview_file/PreviewFile';
 
 const StyledFileRowContainer = styled.div`
   > :not(:last-child) {
@@ -69,6 +69,7 @@ const StyledDownload = styled.div`
 const StyledPreviewFile = styled(PreviewFile)`
   grid-area: preview;
   margin-top: 1rem;
+  max-height: 25rem;
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
     display: none;
