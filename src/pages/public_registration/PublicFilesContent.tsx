@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import LockIcon from '@material-ui/icons/Lock';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Button, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Button, CircularProgress, Typography } from '@material-ui/core';
 import prettyBytes from 'pretty-bytes';
 import { File, licenses } from '../../types/file.types';
 import { downloadFile } from '../../api/fileApi';
@@ -66,19 +67,19 @@ const StyledDownload = styled.div`
   grid-area: download;
 `;
 
-const StyledPreviewFile = styled(PreviewFile)`
+const StyledPreviewAccordion = styled(Accordion)`
   grid-area: preview;
   margin-top: 1rem;
-  max-height: 25rem;
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
     display: none;
   }
 `;
 
+const maxFileSize = 10000000; //10 MB
+
 const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('common');
-
   const publiclyAvailableFiles = registration.fileSet.files.filter((file) => !file.administrativeAgreement);
 
   return (
@@ -88,8 +89,13 @@ const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) =>
       </Typography>
 
       <StyledFileRowContainer>
-        {publiclyAvailableFiles.map((file) => (
-          <FileRow key={file.identifier} file={file} registrationId={registration.identifier} />
+        {publiclyAvailableFiles.map((file, index) => (
+          <FileRow
+            key={file.identifier}
+            file={file}
+            registrationId={registration.identifier}
+            openPreviewByDefault={index === 0 && publiclyAvailableFiles[0].size < maxFileSize}
+          />
         ))}
       </StyledFileRowContainer>
     </>
@@ -99,15 +105,15 @@ const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) =>
 interface FileRowProps {
   file: File;
   registrationId: string;
+  openPreviewByDefault: boolean;
 }
 
-const maxFileSize = 10000000; //10 MB
-
-const FileRow = ({ file, registrationId }: FileRowProps) => {
+const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('common');
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [currentFileUrl, setCurrentFileUrl] = useState('');
+  const [openPreviewAccordion, setOpenPreviewAccordion] = useState(openPreviewByDefault);
 
   const handleDownload = useCallback(async () => {
     setIsLoadingFile(true);
@@ -121,10 +127,10 @@ const FileRow = ({ file, registrationId }: FileRowProps) => {
   }, [dispatch, registrationId, file.identifier]);
 
   useEffect(() => {
-    if (file.size < maxFileSize) {
+    if (openPreviewAccordion && !currentFileUrl) {
       handleDownload(); // Download file without user interaction
     }
-  }, [handleDownload, file.size]);
+  }, [handleDownload, currentFileUrl, openPreviewAccordion, file.size]);
 
   const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
   const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
@@ -172,7 +178,16 @@ const FileRow = ({ file, registrationId }: FileRowProps) => {
           </Button>
         )}
       </StyledDownload>
-      {currentFileUrl && <StyledPreviewFile url={currentFileUrl} file={file} />}
+      <StyledPreviewAccordion
+        expanded={openPreviewAccordion}
+        onChange={() => setOpenPreviewAccordion(!openPreviewAccordion)}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography>Forhåndsvisning</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          {isLoadingFile || !currentFileUrl ? <CircularProgress /> : <PreviewFile url={currentFileUrl} file={file} />}
+        </AccordionDetails>
+      </StyledPreviewAccordion>
     </StyledFileRow>
   );
 };

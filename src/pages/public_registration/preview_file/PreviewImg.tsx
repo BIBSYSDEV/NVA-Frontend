@@ -4,7 +4,7 @@ import { CommonPreviewProps } from './PreviewFile';
 
 const StyledImg = styled.img`
   max-width: 100%;
-  max-height: 100%;
+  max-height: 25rem;
 `;
 
 interface PreviewImgProps extends CommonPreviewProps {
