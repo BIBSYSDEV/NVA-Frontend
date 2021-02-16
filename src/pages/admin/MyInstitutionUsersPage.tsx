@@ -1,22 +1,22 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import { FormControlLabel, Checkbox, Divider, Button } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-
-import SubHeading from '../../components/SubHeading';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+import { Button, Checkbox, Divider, FormControlLabel } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import Card from '../../components/Card';
+import ListSkeleton from '../../components/ListSkeleton';
+import Modal from '../../components/Modal';
+import NormalText from '../../components/NormalText';
+import { PageHeader } from '../../components/PageHeader';
+import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
+import SubHeading from '../../components/SubHeading';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { RoleName } from '../../types/user.types';
-import Card from '../../components/Card';
-import UserList from './UserList';
-import NormalText from '../../components/NormalText';
 import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';
 import { filterUsersByRole } from '../../utils/role-helpers';
-import Modal from '../../components/Modal';
 import { AddRoleModalContent } from './AddRoleModalContent';
-import ListSkeleton from '../../components/ListSkeleton';
-import { PageHeader } from '../../components/PageHeader';
+import UserList from './UserList';
 
 const StyledContainer = styled.div`
   margin-bottom: 2rem;
@@ -38,7 +38,7 @@ const MyInstitutionUsersPage: FC = () => {
   };
 
   return (
-    <>
+    <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('users.user_administration')}</PageHeader>
       <Card>
         {/* Admins */}
@@ -142,7 +142,7 @@ const MyInstitutionUsersPage: FC = () => {
           </Modal>
         )}
       </Card>
-    </>
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 

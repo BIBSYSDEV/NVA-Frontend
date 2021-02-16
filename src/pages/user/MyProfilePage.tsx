@@ -1,25 +1,24 @@
-import React, { useEffect, FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, Typography } from '@material-ui/core';
-import { Link as RouterLink } from 'react-router-dom';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
+import Card from '../../components/Card';
+import { PageHeader } from '../../components/PageHeader';
+import { StyledPageWrapperWithMaxWidth, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import { setNotification } from '../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import { NotificationVariant } from '../../types/notification.types';
+import { getUserPath, UrlPathTemplate } from '../../utils/urlPaths';
 import UserInfo from './UserInfo';
+import UserInstitution from './UserInstitution';
 import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
-import Card from '../../components/Card';
-import UserInstitution from './UserInstitution';
-import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
-import { PageHeader } from '../../components/PageHeader';
-import { getUserPath, UrlPathTemplate } from '../../utils/urlPaths';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -84,7 +83,7 @@ const MyProfilePage: FC = () => {
   }, [user.authority, dispatch, user.externalOrcid]);
 
   return (
-    <>
+    <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('my_profile')}</PageHeader>
       <StyledUserPage>
         {user.authority && (
@@ -115,7 +114,7 @@ const MyProfilePage: FC = () => {
           <UserInstitution user={user} />
         </StyledPrimaryUserInfo>
       </StyledUserPage>
-    </>
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 

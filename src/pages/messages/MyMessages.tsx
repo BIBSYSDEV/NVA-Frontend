@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Card from '../../components/Card';
 import ListSkeleton from '../../components/ListSkeleton';
 import { PageHeader } from '../../components/PageHeader';
+import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import SubHeading from '../../components/SubHeading';
 import { RoleName } from '../../types/user.types';
 import useFetchRegistrationsWithPendingDoiRequest from '../../utils/hooks/useFetchRegistrationsWithPendingDoiRequest';
@@ -15,7 +16,7 @@ const MyMessages = () => {
   );
 
   return (
-    <>
+    <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('my_messages')}</PageHeader>
       {isLoadingPendingDoiRequests ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
@@ -30,7 +31,7 @@ const MyMessages = () => {
           ))}
         </>
       )}
-    </>
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 
