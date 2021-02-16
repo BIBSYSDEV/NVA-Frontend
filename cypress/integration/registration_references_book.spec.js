@@ -29,7 +29,7 @@ describe('Registration: References: Book', () => {
 
     // fill out ISBN_LIST field
     cy.get('[data-testid=isbn-input]').type('9788202509460').type('{enter}');
-    cy.get('[data-testid=isbn-input]').type('978-1-78-763271-4');
+    cy.get('[data-testid=isbn-input]').type('978-1-78-763271-4').type('{enter}');
     cy.get('[data-testid=is-textbook-checkbox]').click({ force: true });
     cy.get('[data-testid=isbn-chip]').should('have.length', 2);
 
