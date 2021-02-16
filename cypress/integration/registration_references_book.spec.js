@@ -28,8 +28,7 @@ describe('Registration: References: Book', () => {
     cy.get('[data-testid=publisher-search-input]').should('have.value', 'Novum Testamentum');
 
     // fill out ISBN_LIST field
-    cy.get('[data-testid=isbn-input]').type('9788202509460').type('{enter}');
-    cy.get('[data-testid=isbn-input]').type('978-1-78-763271-4');
+    cy.get('[data-testid=isbn-input]').type('978-1-78-763271-4').type('{enter}').type('9788202509460');
     cy.get('[data-testid=is-textbook-checkbox]').click({ force: true });
     cy.get('[data-testid=isbn-chip]').should('have.length', 2);
 

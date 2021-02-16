@@ -1,8 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Trans, useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
 import { PageHeader } from '../../components/PageHeader';
+import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 
 const StyledPrivacyContainer = styled.div`
   display: block;
@@ -21,7 +22,7 @@ const PrivacyPolicy = () => {
   const { t } = useTranslation('privacy');
 
   return (
-    <>
+    <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('privacy_statement')}</PageHeader>
 
       <StyledPrivacyContainer>
@@ -309,7 +310,7 @@ const PrivacyPolicy = () => {
           </Typography>
         </TableContainer>
       </StyledPrivacyContainer>
-    </>
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 
