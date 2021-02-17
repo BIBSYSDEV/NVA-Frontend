@@ -70,6 +70,7 @@ const StyledDownload = styled.div`
 const StyledPreviewAccordion = styled(Accordion)`
   grid-area: preview;
   margin-top: 1rem;
+  max-height: 35rem;
   background: #f6f6f6;
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
