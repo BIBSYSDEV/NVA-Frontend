@@ -83,6 +83,7 @@
     "current_validation_errors": "NB! The registration has validation errors that must be fixed before it can be published",
     "in_progess": "In progress",
     "message_to_curator": "Message to curator",
+    "preview": "Preview",
     "preview_unavailable": "Preview not available. Open file in suited program.",
     "reserve_doi": "Reserve a DOI",
     "request_doi": "Request a DOI",

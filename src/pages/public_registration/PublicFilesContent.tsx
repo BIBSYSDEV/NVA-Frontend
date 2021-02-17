@@ -70,6 +70,7 @@ const StyledDownload = styled.div`
 const StyledPreviewAccordion = styled(Accordion)`
   grid-area: preview;
   margin-top: 1rem;
+  background: #f6f6f6;
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
     display: none;
@@ -179,10 +180,12 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
         )}
       </StyledDownload>
       <StyledPreviewAccordion
+        variant="outlined"
+        square
         expanded={openPreviewAccordion}
         onChange={() => setOpenPreviewAccordion(!openPreviewAccordion)}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>Forhåndsvisning</Typography>
+          <Typography variant="button">{t('registration:public_page.preview')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           {isLoadingFile || !currentFileUrl ? <CircularProgress /> : <PreviewFile url={currentFileUrl} file={file} />}
