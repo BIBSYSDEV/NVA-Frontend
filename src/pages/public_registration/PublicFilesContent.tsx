@@ -118,7 +118,7 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
   const [openPreviewAccordion, setOpenPreviewAccordion] = useState(openPreviewByDefault);
 
   const handleDownload = useCallback(
-    async (manuallyTriggered = false) => {
+    async (manuallyTriggered = true) => {
       setIsLoadingFile(true);
       const downloadedFile = await downloadFile(registrationId, file.identifier);
       if (!downloadedFile || downloadedFile?.error) {
@@ -136,7 +136,7 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
 
   useEffect(() => {
     if (openPreviewAccordion && !currentFileUrl) {
-      handleDownload(); // Download file without user interaction
+      handleDownload(false); // Download file without user interaction
     }
   }, [handleDownload, currentFileUrl, openPreviewAccordion, file.size]);
 
@@ -171,7 +171,7 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
             fullWidth
             endIcon={<CloudDownloadIcon />}
             isLoading={isLoadingFile}
-            onClick={() => handleDownload(true)}>
+            onClick={handleDownload}>
             {t('download')}
           </ButtonWithProgress>
         ) : (
