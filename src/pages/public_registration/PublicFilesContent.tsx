@@ -116,16 +116,22 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
   const [currentFileUrl, setCurrentFileUrl] = useState('');
   const [openPreviewAccordion, setOpenPreviewAccordion] = useState(openPreviewByDefault);
 
-  const handleDownload = useCallback(async () => {
-    setIsLoadingFile(true);
-    const downloadedFile = await downloadFile(registrationId, file.identifier);
-    if (!downloadedFile || downloadedFile?.error) {
-      dispatch(setNotification(downloadedFile.error, NotificationVariant.Error));
-    } else {
-      setCurrentFileUrl(downloadedFile);
-    }
-    setIsLoadingFile(false);
-  }, [dispatch, registrationId, file.identifier]);
+  const handleDownload = useCallback(
+    async (manuallyTriggered = false) => {
+      setIsLoadingFile(true);
+      const downloadedFile = await downloadFile(registrationId, file.identifier);
+      if (!downloadedFile || downloadedFile?.error) {
+        dispatch(setNotification(downloadedFile.error, NotificationVariant.Error));
+      } else {
+        setCurrentFileUrl(downloadedFile);
+        if (manuallyTriggered) {
+          window.open(downloadedFile, '_blank');
+        }
+      }
+      setIsLoadingFile(false);
+    },
+    [dispatch, registrationId, file.identifier]
+  );
 
   useEffect(() => {
     if (openPreviewAccordion && !currentFileUrl) {
@@ -164,7 +170,7 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
             fullWidth
             endIcon={<CloudDownloadIcon />}
             isLoading={isLoadingFile}
-            onClick={handleDownload}>
+            onClick={() => handleDownload(true)}>
             {t('download')}
           </ButtonWithProgress>
         ) : (
