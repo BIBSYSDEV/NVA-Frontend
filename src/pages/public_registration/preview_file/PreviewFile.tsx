@@ -15,7 +15,7 @@ interface PreviewFileProps extends CommonPreviewProps {
 
 // FileType values should be a unique (sub)string for MIME types
 enum FileType {
-  Image = 'image',
+  Image = 'image/',
   Office = 'officedocument',
   PDF = 'application/pdf',
 }
