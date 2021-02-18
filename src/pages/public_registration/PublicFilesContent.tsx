@@ -142,6 +142,7 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
 
   const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
   const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
+  const fileIsEmbargoed = fileEmbargoDate ? fileEmbargoDate > new Date() : false;
 
   return (
     <StyledFileRow>
@@ -158,7 +159,7 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
         src={licenseData?.buttonImage}
       />
       <StyledDownload>
-        {fileEmbargoDate && fileEmbargoDate > new Date() ? (
+        {fileEmbargoDate && fileIsEmbargoed ? (
           <Typography>
             <LockIcon />
             {t('will_be_available')} {fileEmbargoDate.toLocaleDateString()}
@@ -186,18 +187,20 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
           </Button>
         )}
       </StyledDownload>
-      <StyledPreviewAccordion
-        variant="outlined"
-        square
-        expanded={openPreviewAccordion}
-        onChange={() => setOpenPreviewAccordion(!openPreviewAccordion)}>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography variant="button">{t('registration:public_page.preview')}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          {isLoadingFile || !currentFileUrl ? <CircularProgress /> : <PreviewFile url={currentFileUrl} file={file} />}
-        </AccordionDetails>
-      </StyledPreviewAccordion>
+      {!fileIsEmbargoed && (
+        <StyledPreviewAccordion
+          variant="outlined"
+          square
+          expanded={openPreviewAccordion}
+          onChange={() => setOpenPreviewAccordion(!openPreviewAccordion)}>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography variant="button">{t('registration:public_page.preview')}</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            {isLoadingFile || !currentFileUrl ? <CircularProgress /> : <PreviewFile url={currentFileUrl} file={file} />}
+          </AccordionDetails>
+        </StyledPreviewAccordion>
+      )}
     </StyledFileRow>
   );
 };
