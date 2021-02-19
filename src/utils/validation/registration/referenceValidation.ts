@@ -26,7 +26,7 @@ const pagesRangeField = Yup.object()
       .typeError(ErrorMessage.INVALID_FORMAT)
       .min(0, ErrorMessage.MUST_BE_POSITIVE)
       .when('end', {
-        is: (value) => value && !isNaN(value),
+        is: (value: number) => value && !isNaN(value),
         then: Yup.number().max(Yup.ref('end'), ErrorMessage.INVALID_PAGE_INTERVAL),
       }),
     end: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(Yup.ref('begin'), ErrorMessage.INVALID_PAGE_INTERVAL),

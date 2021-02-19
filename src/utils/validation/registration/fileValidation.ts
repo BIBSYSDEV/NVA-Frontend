@@ -29,6 +29,6 @@ export const fileValidationSchema = Yup.object().shape({
     .nullable()
     .when('administrativeAgreement', {
       is: false,
-      then: Yup.object().required(ErrorMessage.REQUIRED),
+      then: Yup.object().nullable().required(ErrorMessage.REQUIRED),
     }),
 });
