@@ -15,6 +15,10 @@ declare module '@material-ui/core/styles/createPalette' {
     section?: ExtendedPaletteOptions;
   }
 
+  interface TypeBackground {
+    footer: string;
+  }
+
   interface ExtendedPalette extends PaletteColor {
     megaLight: string;
     megaDark: string;
@@ -70,6 +74,7 @@ const lightTheme = createMuiTheme({
     },
     background: {
       default: Color.White,
+      footer: Color.Footer,
     },
     section: {
       megaLight: Color.BlueMegaLight,
