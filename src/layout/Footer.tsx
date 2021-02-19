@@ -12,6 +12,11 @@ const StyledFooter = styled.div`
   align-items: center;
   min-height: 4rem;
   background: ${({ theme }) => theme.palette.background.footer};
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.md}px`}) {
+    grid-template-areas: 'logo privacy';
+    grid-template-columns: 1fr 1fr;
+  }
 `;
 
 const StyledLogoContainer = styled.div`
