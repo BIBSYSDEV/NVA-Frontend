@@ -38,7 +38,7 @@ const AuthorityModal = ({ closeModal, handleNextClick, user }: AuthorityModalPro
         open={true}
         onClose={handleCloseModal}
         headingText={user.authority ? t('authority.connected_authority') : t('authority.connect_authority')}
-        headingDataTestid={user.authority ? 'connected-authority-heading' : 'connect-authority-heading'}
+        headingDataTestId={user.authority ? 'connected-authority-heading' : 'connect-authority-heading'}
         fullWidth
         maxWidth="md">
         {user.authority ? (

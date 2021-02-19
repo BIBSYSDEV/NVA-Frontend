@@ -70,7 +70,7 @@ const Modal: FC<ModalProps> = ({
   dataTestId,
   headingIcon,
   headingText,
-  headingDataTestid,
+  headingDataTestId,
   onClose,
   open,
   ...props
@@ -95,12 +95,12 @@ const Modal: FC<ModalProps> = ({
           {headingIcon ? (
             <StyledInfoContainer>
               {headingIcon && <StyledAvatar src={headingIcon.src} alt={headingIcon.alt} />}
-              <StyledHeading variant="h3" data-testid={headingDataTestid}>
+              <StyledHeading variant="h3" data-testid={headingDataTestId}>
                 {headingText}
               </StyledHeading>
             </StyledInfoContainer>
           ) : (
-            <StyledHeading variant="h3" data-testid={headingDataTestid}>
+            <StyledHeading variant="h3" data-testid={headingDataTestId}>
               {headingText}
             </StyledHeading>
           )}
