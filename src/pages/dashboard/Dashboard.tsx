@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, Collapse, Typography } from '@material-ui/core';
 import PostAddIcon from '@material-ui/icons/PostAdd';
@@ -9,6 +9,10 @@ import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import AboutContent from '../infopages/AboutContent';
+import { useAuthentication } from '../../utils/hooks/useAuthentication';
+import { useSelector } from 'react-redux';
+import { RootStore } from '../../redux/reducers/rootReducer';
+import { LOGIN_REDIRECT_PATH_KEY } from '../../utils/constants';
 
 const StyledDashboard = styled.div`
   display: grid;
@@ -65,19 +69,20 @@ const StyledLinksContainer = styled(BackgroundDiv)`
   }
 `;
 
-const StyledLink = styled(Link)`
+const StyledLinkButton = styled(Button)`
   border: 2px solid;
   border-radius: 4px;
   padding: 1rem 6rem;
   text-decoration: none;
+  text-transform: none;
 `;
 
-const StyledSearchLink = styled(StyledLink)`
+const StyledSearchButton = styled(StyledLinkButton)`
   grid-area: search;
   border-color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
-const StyledNewRegistrationLink = styled(StyledLink)`
+const StyledNewRegistrationButton = styled(StyledLinkButton)`
   grid-area: new-registration;
   border-color: ${({ theme }) => theme.palette.primary.main};
 `;
@@ -123,9 +128,20 @@ const StyledButtonWrapper = styled.div`
 
 const Dashboard = () => {
   const { t } = useTranslation('common');
+  const history = useHistory();
+  const { user } = useSelector((store: RootStore) => store);
+  const { handleLogin } = useAuthentication();
   const [readMore, setReadMore] = useState(false);
 
   const toggleReadMore = () => setReadMore(!readMore);
+
+  useEffect(() => {
+    const loginPath = localStorage.getItem(LOGIN_REDIRECT_PATH_KEY);
+    if (loginPath) {
+      localStorage.removeItem(LOGIN_REDIRECT_PATH_KEY);
+      history.push(loginPath);
+    }
+  }, [history]);
 
   return (
     <StyledDashboard>
@@ -146,7 +162,7 @@ const Dashboard = () => {
         </StyledButtonWrapper>
       </StyledDescriptionDiv>
       <StyledLinksContainer>
-        <StyledSearchLink to={UrlPathTemplate.Search}>
+        <StyledSearchButton as={Link} to={UrlPathTemplate.Search}>
           <StyledLinkContent>
             <SearchIcon fontSize="large" />
             <StyledText>
@@ -155,8 +171,16 @@ const Dashboard = () => {
               </Typography>
             </StyledText>
           </StyledLinkContent>
-        </StyledSearchLink>
-        <StyledNewRegistrationLink to={UrlPathTemplate.NewRegistration}>
+        </StyledSearchButton>
+        <StyledNewRegistrationButton
+          onClick={() => {
+            if (user) {
+              history.push(UrlPathTemplate.NewRegistration);
+            } else {
+              localStorage.setItem(LOGIN_REDIRECT_PATH_KEY, UrlPathTemplate.NewRegistration);
+              handleLogin();
+            }
+          }}>
           <StyledLinkContent>
             <PostAddIcon fontSize="large" />
             <StyledText>
@@ -166,7 +190,7 @@ const Dashboard = () => {
               <Typography>{t('requires_login')}</Typography>
             </StyledText>
           </StyledLinkContent>
-        </StyledNewRegistrationLink>
+        </StyledNewRegistrationButton>
       </StyledLinksContainer>
     </StyledDashboard>
   );
