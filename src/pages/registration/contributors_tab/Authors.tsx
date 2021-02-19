@@ -7,7 +7,13 @@ import { Button } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { Authority } from '../../../types/authority.types';
-import { Contributor, emptyContributor, Identity, UnverifiedContributor } from '../../../types/contributor.types';
+import {
+  Contributor,
+  ContributorRole,
+  emptyContributor,
+  Identity,
+  UnverifiedContributor,
+} from '../../../types/contributor.types';
 import { NotificationVariant } from '../../../types/notification.types';
 import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
@@ -21,9 +27,17 @@ const StyledButton = styled(Button)`
   border-radius: 1rem;
 `;
 
-type AuthorsProps = Pick<FieldArrayRenderProps, 'push' | 'replace'>;
+type AuthorsArrayRenderProps = Pick<FieldArrayRenderProps, 'push' | 'replace'>;
 
-const Authors = ({ push, replace }: AuthorsProps) => {
+interface AuthorsProps {
+  contributorRole?: ContributorRole;
+}
+
+const Authors = ({
+  contributorRole = ContributorRole.CREATOR,
+  push,
+  replace,
+}: AuthorsProps & AuthorsArrayRenderProps) => {
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
@@ -83,6 +97,7 @@ const Authors = ({ push, replace }: AuthorsProps) => {
           type: BackendTypeNames.ORGANIZATION,
           id: unitUri,
         })),
+        role: contributorRole,
         sequence: orderedAuthors.length + 1,
       };
       push(newAuthor);
