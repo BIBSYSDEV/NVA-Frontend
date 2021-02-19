@@ -10,7 +10,7 @@ const StyledFooter = styled.div`
   grid-template-columns: 4fr 1fr;
   align-items: center;
   min-height: 4rem;
-  background: rgba(210, 210, 210, 0.25);
+  background: ${({ theme }) => theme.palette.background.footer};
 `;
 
 const StyledPrivacyButton = styled(Button)`
