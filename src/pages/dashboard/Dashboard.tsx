@@ -187,7 +187,7 @@ const Dashboard = () => {
               <Typography variant="h4" variantMapping={{ h4: 'p' }}>
                 {t('registration:new_registration')}
               </Typography>
-              <Typography>{t('requires_login')}</Typography>
+              {!user && <Typography>{t('requires_login')}</Typography>}
             </StyledText>
           </StyledLinkContent>
         </StyledNewRegistrationButton>
