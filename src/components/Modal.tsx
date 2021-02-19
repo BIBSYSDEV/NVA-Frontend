@@ -61,7 +61,7 @@ interface ModalProps extends Partial<DialogProps> {
   dataTestId?: string;
   headingIcon?: AvatarProps;
   headingText?: string;
-  headingDataTestid?: string;
+  headingDataTestId?: string;
   onClose?: () => void;
 }
 
