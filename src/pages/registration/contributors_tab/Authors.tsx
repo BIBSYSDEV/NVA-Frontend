@@ -123,7 +123,7 @@ const Authors = ({
           color="secondary"
           startIcon={<AddIcon />}
           data-testid="add-contributor">
-          {t('contributors.add_author')}
+          {contributorRole === ContributorRole.EDITOR ? t('contributors.add_editor') : t('contributors.add_author')}
         </StyledButton>
       )}
       <AuthorList
@@ -141,9 +141,10 @@ const Authors = ({
         color="secondary"
         startIcon={<AddIcon />}
         data-testid="add-contributor">
-        {t('contributors.add_author')}
+        {contributorRole === ContributorRole.EDITOR ? t('contributors.add_editor') : t('contributors.add_author')}
       </StyledButton>
       <AddContributorModal
+        contributorRole={contributorRole}
         initialSearchTerm={unverifiedAuthor?.name}
         open={openContributorModal}
         toggleModal={() => setOpenContributorModal(!openContributorModal)}
