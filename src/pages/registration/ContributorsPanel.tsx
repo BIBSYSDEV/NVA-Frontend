@@ -14,7 +14,7 @@ const ContributorsPanel = () => {
     },
   } = useFormikContext<Registration>();
 
-  return <>{publicationInstance.type !== BookType.ANTHOLOGY ? <ContributorAuthors /> : <ContributorEditors />}</>;
+  return publicationInstance.type !== BookType.ANTHOLOGY ? <ContributorAuthors /> : <ContributorEditors />;
 };
 
 export default ContributorsPanel;

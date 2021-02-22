@@ -28,6 +28,9 @@ export const ContributorEditors = () => {
       .filter((contributor) => contributor.role === ContributorRole.EDITOR)
       .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
     editorsRef.current = editors;
+    return () => {
+      editorsRef.current = [];
+    };
   }, [contributors]);
 
   useEffect(() => {
