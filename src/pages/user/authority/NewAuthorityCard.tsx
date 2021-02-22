@@ -2,15 +2,16 @@ import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, Radio, CircularProgress } from '@material-ui/core';
+import { Button, Radio } from '@material-ui/core';
 
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { createAuthority } from '../../../api/authorityApi';
 import { NotificationVariant } from '../../../types/notification.types';
-import { StyledProgressWrapper, StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
+import { StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
 import Label from '../../../components/Label';
 import { User } from '../../../types/user.types';
+import ButtonWithProgress from '../../../components/ButtonWithProgress';
 
 const StyledBoxContent = styled.div`
   display: grid;
@@ -42,7 +43,7 @@ const StyledDescription = styled(StyledNormalTextPreWrapped)`
   margin-left: 0.7rem;
 `;
 
-const StyledButton = styled(Button)`
+const StyledSaveButton = styled(ButtonWithProgress)`
   grid-area: create-button;
   margin-top: 2rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
@@ -65,13 +66,13 @@ interface NewAuthorityCardProps {
 
 const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ onClickCancel, user }) => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation('profile');
   const hasMatchingAuthorities = user.possibleAuthorities.length > 0;
   const { familyName, givenName, id, name } = user;
 
   const handleCreateAuthority = async () => {
-    setLoading(true);
+    setIsLoading(true);
     const authority = await createAuthority(givenName, familyName, id, user.cristinId);
     if (authority?.error) {
       dispatch(setNotification(authority.error, NotificationVariant.Error));
@@ -80,47 +81,41 @@ const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ onClickCancel, user }) =>
       dispatch(setAuthorityData(authority));
       dispatch(setNotification(t('feedback:success.created_authority')));
     }
-    setLoading(false);
+    setIsLoading(false);
   };
 
   return (
-    <>
-      {loading ? (
-        <StyledProgressWrapper>
-          <CircularProgress size={100} />
-        </StyledProgressWrapper>
-      ) : (
-        <StyledBoxContent>
-          <StyledAuthority>
-            <Radio color="primary" checked />
-            <StyledLabel>{name}</StyledLabel>
-          </StyledAuthority>
-          <StyledDescription>
-            {hasMatchingAuthorities
-              ? t('authority.description_create_own_authority')
-              : t('authority.description_no_authority_found')}
-          </StyledDescription>
-          <StyledButton
-            data-testid="create-author-button"
-            color="primary"
-            variant="contained"
-            size="large"
-            onClick={handleCreateAuthority}>
-            {t('common:create_authority')}
-          </StyledButton>
-          {hasMatchingAuthorities && (
-            <StyledCancelButton
-              data-testid="cancel-create-author-button"
-              color="secondary"
-              variant="contained"
-              size="large"
-              onClick={onClickCancel}>
-              {t('common:cancel')}
-            </StyledCancelButton>
-          )}
-        </StyledBoxContent>
+    <StyledBoxContent>
+      <StyledAuthority>
+        <Radio color="primary" checked />
+        <StyledLabel>{name}</StyledLabel>
+      </StyledAuthority>
+      <StyledDescription>
+        {hasMatchingAuthorities
+          ? t('authority.description_create_own_authority')
+          : t('authority.description_no_authority_found')}
+      </StyledDescription>
+      <StyledSaveButton
+        data-testid="create-author-button"
+        color="primary"
+        variant="contained"
+        size="large"
+        isLoading={isLoading}
+        onClick={handleCreateAuthority}>
+        {t('common:create_authority')}
+      </StyledSaveButton>
+      {hasMatchingAuthorities && (
+        <StyledCancelButton
+          data-testid="cancel-create-author-button"
+          color="secondary"
+          variant="contained"
+          size="large"
+          disabled={isLoading}
+          onClick={onClickCancel}>
+          {t('common:cancel')}
+        </StyledCancelButton>
       )}
-    </>
+    </StyledBoxContent>
   );
 };
 

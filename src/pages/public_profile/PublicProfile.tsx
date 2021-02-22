@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { CircularProgress, IconButton, Link as MuiLink, Typography } from '@material-ui/core';
+import { IconButton, Link as MuiLink, Typography } from '@material-ui/core';
 import WorkIcon from '@material-ui/icons/Work';
 import Card from '../../components/Card';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
@@ -15,6 +15,7 @@ import { ORCID_BASE_URL } from '../../utils/constants';
 import useFetchAuthority from '../../utils/hooks/useFetchAuthority';
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
 import SearchResults from '../search/SearchResults';
+import { PageSpinner } from '../../components/PageSpinner';
 
 const StyledLine = styled.div`
   display: flex;
@@ -45,7 +46,7 @@ const PublicProfile: FC = () => {
     <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('my_public_profile')}</PageHeader>
       {isLoadingUser || isLoadingRegistrations ? (
-        <CircularProgress />
+        <PageSpinner />
       ) : (
         authority && (
           <>
