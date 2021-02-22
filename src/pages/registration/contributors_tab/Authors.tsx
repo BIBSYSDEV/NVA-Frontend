@@ -104,6 +104,7 @@ const Authors = ({
     } else {
       const verifiedAuthor: Contributor = {
         ...orderedAuthors[unverifiedAuthor.index],
+        role: contributorRole,
         identity,
       };
       replace(unverifiedAuthor.index, verifiedAuthor);

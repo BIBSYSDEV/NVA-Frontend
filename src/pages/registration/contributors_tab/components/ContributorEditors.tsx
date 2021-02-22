@@ -1,5 +1,5 @@
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormHelperText, MuiThemeProvider, Typography } from '@material-ui/core';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
@@ -17,9 +17,22 @@ export const ContributorEditors = () => {
     },
     errors,
     touched,
+    setFieldValue,
   } = useFormikContext<Registration>();
   const contributorsError = errors.entityDescription?.contributors;
   const contributorsTouched = touched.entityDescription?.contributors;
+  const editorsRef = useRef(contributors);
+
+  useEffect(() => {
+    const editors = contributors
+      .filter((contributor) => contributor.role === ContributorRole.EDITOR)
+      .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
+    editorsRef.current = editors;
+  }, [contributors]);
+
+  useEffect(() => {
+    setFieldValue(ContributorFieldNames.CONTRIBUTORS, editorsRef.current);
+  }, [editorsRef, setFieldValue]);
 
   return (
     <>
