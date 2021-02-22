@@ -1,5 +1,5 @@
 import React from 'react';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, CircularProgressProps } from '@material-ui/core';
 import styled from 'styled-components';
 
 const ProgressContainer = styled.div`
@@ -8,8 +8,8 @@ const ProgressContainer = styled.div`
   justify-content: center;
 `;
 
-export const PageSpinner = () => (
+export const PageSpinner = (props: CircularProgressProps) => (
   <ProgressContainer>
-    <CircularProgress />
+    <CircularProgress size={50} {...props} />
   </ProgressContainer>
 );
