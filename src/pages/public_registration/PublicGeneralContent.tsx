@@ -68,7 +68,6 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
   const { t } = useTranslation('registration');
   const {
     date,
-    description,
     npiSubjectHeading,
     language,
     reference: { publicationContext, publicationInstance },
@@ -117,12 +116,6 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
         ) : isChapter(registration) ? (
           <PublicPublicationInstanceChapter publicationInstance={publicationInstance as ChapterPublicationInstance} />
         ) : null}
-
-        {description && (
-          <Typography>
-            {t('description.description')}: {description}
-          </Typography>
-        )}
       </StyledGroup0>
 
       <StyledGroup1>

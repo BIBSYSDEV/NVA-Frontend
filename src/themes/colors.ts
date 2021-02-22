@@ -6,6 +6,7 @@ export enum Color {
   BlueMain = '#0010A4',
   BlueLight = '#E5EEFC',
   BlueMegaLight = '#F4F8FF',
+  Footer = 'rgba(210, 210, 210, 0.25)',
   SecondaryDark = '#E99210',
   SecondaryLight = '#FFDAA2',
   SecondaryMain = '#FFB546',

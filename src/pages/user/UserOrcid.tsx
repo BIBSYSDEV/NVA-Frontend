@@ -107,7 +107,7 @@ const UserOrcid = ({ user }: UserOrcidProps) => {
         listOfOrcids.map((orcid: string) => {
           const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
           return (
-            <StyledOrcidLine key={orcid}>
+            <StyledOrcidLine key={orcid} data-testid="orcid-line">
               <StyledLine>
                 <StyledLabel>{t('orcid.your_orcid')}:</StyledLabel>
                 <IconButton size="small" href={orcidLink} key={orcid}>
