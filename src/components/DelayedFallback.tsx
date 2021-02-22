@@ -1,6 +1,5 @@
 import React, { useState, useEffect, FC } from 'react';
-import { CircularProgress } from '@material-ui/core';
-import { StyledProgressWrapper } from './styled/Wrappers';
+import { PageSpinner } from './PageSpinner';
 
 const DelayedFallback: FC = () => {
   const [show, setShow] = useState(false);
@@ -12,14 +11,6 @@ const DelayedFallback: FC = () => {
     };
   }, []);
 
-  return (
-    <>
-      {show && (
-        <StyledProgressWrapper>
-          <CircularProgress size={50} />
-        </StyledProgressWrapper>
-      )}
-    </>
-  );
+  return show ? <PageSpinner /> : null;
 };
 export default DelayedFallback;

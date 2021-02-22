@@ -14,7 +14,6 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { CircularProgress } from '@material-ui/core';
 import { useUppy } from '@uppy/react';
 import { RegistrationPageHeader } from '../../components/PageHeader';
 import RouteLeavingGuard from '../../components/RouteLeavingGuard';
@@ -29,6 +28,7 @@ import Forbidden from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
 import { RegistrationFormContent } from './RegistrationFormContent';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
+import { PageSpinner } from '../../components/PageSpinner';
 
 const StyledRegistration = styled.div`
   width: 100%;
@@ -84,7 +84,7 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
   const intialTouched: FormikTouched<Registration> = isNewRegistration ? {} : setNestedObjectValues(intialErrors, true);
 
   return isLoadingRegistration ? (
-    <CircularProgress />
+    <PageSpinner />
   ) : !isValidOwner && !isValidCurator ? (
     <Forbidden />
   ) : (
