@@ -1,14 +1,19 @@
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormHelperText, MuiThemeProvider, Typography } from '@material-ui/core';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
 import lightTheme from '../../../../themes/lightTheme';
+import { ContributorRole } from '../../../../types/contributor.types';
 import { ContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import Authors from '../Authors';
 
-export const ContributorAuthors = () => {
+interface ContributorsProps {
+  contributorRole?: ContributorRole;
+}
+
+export const Contributors = ({ contributorRole = ContributorRole.CREATOR }: ContributorsProps) => {
   const { t } = useTranslation('registration');
   const {
     values: {
@@ -16,18 +21,33 @@ export const ContributorAuthors = () => {
     },
     errors,
     touched,
+    setFieldValue,
   } = useFormikContext<Registration>();
   const contributorsError = errors.entityDescription?.contributors;
   const contributorsTouched = touched.entityDescription?.contributors;
+  const contributorsRef = useRef(contributors);
+
+  useEffect(() => {
+    const filteredContributors = contributors
+      .filter((contributor) => contributor.role === contributorRole)
+      .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
+    contributorsRef.current = filteredContributors;
+  }, [contributors, contributorRole]);
+
+  useEffect(() => {
+    setFieldValue(ContributorFieldNames.CONTRIBUTORS, contributorsRef.current);
+  }, [setFieldValue]);
 
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        <Typography variant="h2">{t('contributors.authors')}</Typography>
+        <Typography variant="h2">
+          {contributorRole === ContributorRole.EDITOR ? t('contributors.editors') : t('contributors.authors')}
+        </Typography>
         <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
           {({ push, replace }: FieldArrayRenderProps) => (
             <MuiThemeProvider theme={lightTheme}>
-              <Authors push={push} replace={replace} />
+              <Authors contributorRole={contributorRole} push={push} replace={replace} />
             </MuiThemeProvider>
           )}
         </FieldArray>
