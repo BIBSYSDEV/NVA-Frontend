@@ -9,6 +9,7 @@ import BackgroundDiv from '../../../../components/BackgroundDiv';
 import { RootStore } from '../../../../redux/reducers/rootReducer';
 import lightTheme from '../../../../themes/lightTheme';
 import { Authority } from '../../../../types/authority.types';
+import { ContributorRole } from '../../../../types/contributor.types';
 import { Registration } from '../../../../types/registration.types';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
@@ -56,6 +57,7 @@ interface AddContributorModalContentProps {
   addSelfAsAuthor: () => void;
   handleCloseModal: () => void;
   openNewAuthorModal: () => void;
+  contributorRole?: ContributorRole;
   initialSearchTerm?: string;
 }
 
@@ -64,6 +66,7 @@ const AddContributorModalContent = ({
   addSelfAsAuthor,
   handleCloseModal,
   openNewAuthorModal,
+  contributorRole,
   initialSearchTerm = '',
 }: AddContributorModalContentProps) => {
   const { t } = useTranslation('registration');
@@ -130,7 +133,9 @@ const AddContributorModalContent = ({
         </StyledCreateButton>
         {!isSelfAddedAsAuthor && (
           <StyledAddSelfButton color="primary" data-testid="button-add-self-author" onClick={addSelfAsAuthor}>
-            {t('contributors.add_self_as_author')}
+            {contributorRole === ContributorRole.EDITOR
+              ? t('contributors.add_self_as_editor')
+              : t('contributors.add_self_as_author')}
           </StyledAddSelfButton>
         )}
       </StyledDialogActions>
