@@ -44,15 +44,27 @@ const StyledChip = styled(Chip)`
 const PublicSummaryContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
 
-  const { abstract, tags } = registration.entityDescription;
+  const { abstract, description, tags } = registration.entityDescription;
 
   return (
     <StyledSummaryContent>
       <AbstractDiv>
-        <Typography variant="h4" component="h2" gutterBottom>
-          {t('description.abstract')}
-        </Typography>
-        <Typography>{abstract}</Typography>
+        {abstract && (
+          <>
+            <Typography variant="h4" component="h2" gutterBottom>
+              {t('description.abstract')}
+            </Typography>
+            <Typography paragraph>{abstract}</Typography>
+          </>
+        )}
+        {description && (
+          <>
+            <Typography variant="h4" component="h2" gutterBottom>
+              {t('description.description')}
+            </Typography>
+            <Typography>{description}</Typography>
+          </>
+        )}
       </AbstractDiv>
       <TagsDiv>
         <Typography variant="h4" component="h2" gutterBottom>
