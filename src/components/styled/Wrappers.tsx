@@ -10,13 +10,6 @@ export const StyledInformationWrapper = styled.div`
   padding-bottom: 1rem;
 `;
 
-export const StyledProgressWrapper = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 2rem;
-`;
-
 export const StyledRightAlignedWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
