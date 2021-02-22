@@ -1,3 +1,4 @@
+import { ContributorRole } from '../../types/contributor.types';
 import { LanguageValues } from '../../types/language.types';
 import { BackendTypeNames } from '../../types/publication_types/commonRegistration.types';
 import { JournalType, PublicationType } from '../../types/publicationFieldNames';
@@ -62,7 +63,7 @@ export const mockRegistration: JournalRegistration = {
           id: '901790000000',
           name: 'Test User',
         },
-        role: '',
+        role: ContributorRole.CREATOR,
         sequence: 1,
       },
       {
@@ -81,7 +82,7 @@ export const mockRegistration: JournalRegistration = {
           type: BackendTypeNames.IDENTITY,
           name: 'Osteloff, Oddny',
         },
-        role: '',
+        role: ContributorRole.CREATOR,
         sequence: 2,
       },
     ],
