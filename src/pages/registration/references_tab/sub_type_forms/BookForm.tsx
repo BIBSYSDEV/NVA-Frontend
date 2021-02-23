@@ -2,10 +2,10 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Checkbox, FormControlLabel, Typography } from '@material-ui/core';
+import { Checkbox, FormControlLabel, MuiThemeProvider, Typography } from '@material-ui/core';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
 import lightTheme from '../../../../themes/lightTheme';
-import { BookType, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import { BookType, DescriptionFieldNames, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookRegistration } from '../../../../types/registration.types';
 import DoiField from '../components/DoiField';
 import IsbnListField from '../components/IsbnListField';
@@ -14,6 +14,7 @@ import PeerReview from '../components/PeerReview';
 import PublisherField from '../components/PublisherField';
 import SeriesField from '../components/SeriesField';
 import TotalPagesField from '../components/TotalPagesField';
+import DisciplineSearch from '../../description_tab/DisciplineSearch';
 
 const StyledSection = styled.div`
   display: grid;
@@ -36,7 +37,7 @@ const StyledTextBook = styled.div`
 
 const BookForm = () => {
   const { t } = useTranslation('registration');
-  const { values } = useFormikContext<BookRegistration>();
+  const { values, setFieldValue } = useFormikContext<BookRegistration>();
   const {
     reference: {
       publicationContext,
@@ -49,6 +50,19 @@ const BookForm = () => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DoiField />
         <PublisherField />
+
+        <Field name={DescriptionFieldNames.NPI_SUBJECT_HEADING}>
+          {({ field: { name, value } }: FieldProps<string>) => (
+            <MuiThemeProvider theme={lightTheme}>
+              <DisciplineSearch
+                setValueFunction={(npiDiscipline) => setFieldValue(name, npiDiscipline?.id ?? '')}
+                dataTestId="search_npi"
+                value={value}
+                placeholder={t('description.search_for_npi_discipline')}
+              />
+            </MuiThemeProvider>
+          )}
+        </Field>
 
         <StyledSection>
           <IsbnListField />
