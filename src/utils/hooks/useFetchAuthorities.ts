@@ -19,12 +19,14 @@ const useFetchAuthorities = (searchTerm: string): [Authority[] | undefined, bool
     const fetchAuthorities = async () => {
       setIsLoading(true);
       const fetchedAuthorities = await getAuthorities(searchTerm, cancelToken);
-      if (fetchedAuthorities?.error) {
-        dispatch(setNotification(t('feedback:error.get_authorities'), NotificationVariant.Error));
-      } else if (fetchedAuthorities?.data) {
-        setAuthorities(fetchedAuthorities.data);
+      if (fetchedAuthorities) {
+        if (fetchedAuthorities.error) {
+          dispatch(setNotification(t('feedback:error.get_authorities'), NotificationVariant.Error));
+        } else if (fetchedAuthorities.data) {
+          setAuthorities(fetchedAuthorities.data);
+        }
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
     if (searchTerm) {
       fetchAuthorities();
