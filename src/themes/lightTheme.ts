@@ -128,6 +128,14 @@ const lightTheme = createMuiTheme({
     MuiInputBase: {
       root: {
         background: Color.White,
+
+        "& div[class*='MuiAutocomplete-tag']": {
+          // TODO: Set this in MuiAutocomplete.tag when Autocomplete is added to MUI core
+          margin: '0.5rem 0 !important',
+          '&:not(:last-child)': {
+            marginRight: '0.5rem !important',
+          },
+        },
       },
     },
     MuiLink: {
