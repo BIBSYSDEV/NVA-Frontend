@@ -43,6 +43,8 @@ export const apiRequest = async <T>(axiosRequestConfig: AxiosRequestConfig): Pro
       return { error: false };
     }
   } catch (error) {
-    return Axios.isCancel(error) ? null : { error: true };
+    // eslint-disable-next-line eqeqeq
+    const requestWasCancelled = Axios.isCancel(error) || error == 'Error: Request aborted';
+    return requestWasCancelled ? null : { error: true };
   }
 };
