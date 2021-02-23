@@ -96,9 +96,6 @@ i18n.use(LanguageDetector).init({
   interpolation: {
     formatSeparator: ',',
   },
-  react: {
-    wait: true,
-  },
 });
 
 // Seems like i18next require 4-letter languages for pluralization to work out of box, so we must add our own rules
