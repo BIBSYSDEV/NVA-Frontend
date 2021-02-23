@@ -16,6 +16,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { useUppy } from '@uppy/react';
 import { RegistrationPageHeader } from '../../components/PageHeader';
+import { PageSpinner } from '../../components/PageSpinner';
 import RouteLeavingGuard from '../../components/RouteLeavingGuard';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { emptyRegistration, Registration, RegistrationTab } from '../../types/registration.types';
@@ -28,7 +29,6 @@ import Forbidden from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
 import { RegistrationFormContent } from './RegistrationFormContent';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
-import { PageSpinner } from '../../components/PageSpinner';
 
 const StyledRegistration = styled.div`
   width: 100%;
@@ -66,11 +66,12 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
 
   const validateForm = (values: Registration) => {
     const {
-      reference: { publicationContext },
+      reference: { publicationContext, publicationInstance },
     } = values.entityDescription;
     try {
       validateYupSchema<Registration>(values, registrationValidationSchema, true, {
         publicationContextType: publicationContext.type,
+        publicationInstanceType: publicationInstance.type,
         publicationStatus: registration?.status,
       });
     } catch (err) {
