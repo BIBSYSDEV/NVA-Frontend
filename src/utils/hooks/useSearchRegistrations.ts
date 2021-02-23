@@ -24,12 +24,14 @@ const useSearchRegistrations = (
     const handleSearchRegistrations = async () => {
       setIsLoading(true);
       const response = await searchRegistrations(searchQuery, numberOfResults, searchAfter, cancelToken);
-      if (response?.error) {
-        dispatch(setNotification(t('error.search'), NotificationVariant.Error));
-      } else if (response?.data) {
-        setSearchResults(response.data);
+      if (response) {
+        if (response.error) {
+          dispatch(setNotification(t('error.search'), NotificationVariant.Error));
+        } else if (response.data) {
+          setSearchResults(response.data);
+        }
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
     handleSearchRegistrations();
