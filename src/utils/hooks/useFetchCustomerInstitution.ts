@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -7,12 +6,14 @@ import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { getCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
+import useCancelToken from './useCancelToken';
 
 export const useFetchCustomerInstitution = (
   customerId: string
 ): [CustomerInstitution | undefined, boolean, (customerInstitution: CustomerInstitution) => void] => {
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
+  const cancelToken = useCancelToken();
   const [isLoading, setIsLoading] = useState(!!customerId);
   const [customerInstitution, setCustomerInstitution] = useState<CustomerInstitution>();
 
@@ -21,10 +22,8 @@ export const useFetchCustomerInstitution = (
   };
 
   useEffect(() => {
-    const cancelSource = Axios.CancelToken.source();
-
     const fetchCustomerInstitution = async () => {
-      const institution = await getCustomerInstitution(customerId, cancelSource.token);
+      const institution = await getCustomerInstitution(customerId, cancelToken);
       if (institution) {
         if (institution.error) {
           dispatch(setNotification(t('error.get_customer'), NotificationVariant.Error));
@@ -37,12 +36,7 @@ export const useFetchCustomerInstitution = (
     if (customerId) {
       fetchCustomerInstitution();
     }
-    return () => {
-      if (customerId) {
-        cancelSource.cancel();
-      }
-    };
-  }, [t, dispatch, customerId]);
+  }, [t, dispatch, cancelToken, customerId]);
 
   return [customerInstitution, isLoading, handleSetCustomerInstitution];
 };

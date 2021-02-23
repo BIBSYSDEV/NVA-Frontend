@@ -1,22 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import Axios from 'axios';
 
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { getRegistrations } from '../../api/registrationApi';
 import { LatestRegistration } from '../../types/search.types';
+import useCancelToken from './useCancelToken';
 
 const useFetchLatestRegistrations = (): [LatestRegistration[], boolean] => {
   const dispatch = useDispatch();
+  const cancelToken = useCancelToken();
   const [registrations, setRegistrations] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const cancelSource = Axios.CancelToken.source();
-
     const fetchRegistrations = async () => {
-      const registrations = await getRegistrations(cancelSource.token);
+      const registrations = await getRegistrations(cancelToken);
       if (registrations) {
         if (registrations.error) {
           dispatch(setNotification(registrations.error, NotificationVariant.Error));
@@ -27,11 +26,7 @@ const useFetchLatestRegistrations = (): [LatestRegistration[], boolean] => {
       }
     };
     fetchRegistrations();
-
-    return () => {
-      cancelSource.cancel();
-    };
-  }, [dispatch]);
+  }, [dispatch, cancelToken]);
 
   return [registrations, isLoading];
 };
