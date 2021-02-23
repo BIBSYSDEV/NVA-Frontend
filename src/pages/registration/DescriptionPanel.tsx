@@ -10,19 +10,7 @@ import { registrationLanguages } from '../../types/language.types';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import DatePickerField from './description_tab/DatePickerField';
-import DisciplineSearch from './description_tab/DisciplineSearch';
 import { ProjectsField } from './description_tab/projects_field';
-
-const NpiAndTagsWrapper = styled.div`
-  display: grid;
-  grid-template-areas: 'npi tags';
-  grid-template-columns: 1fr 1fr;
-  column-gap: 1rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-areas: 'npi' 'tags';
-    grid-template-columns: 1fr;
-  }
-`;
 
 const DateAndLanguageWrapper = styled.div`
   display: grid;
@@ -87,48 +75,35 @@ const DescriptionPanel = () => {
         </Field>
       </BackgroundDiv>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-        <NpiAndTagsWrapper>
-          <Field name={DescriptionFieldNames.NPI_SUBJECT_HEADING}>
-            {({ field: { name, value } }: FieldProps<string>) => (
-              // TODO: when we have a service for getting npiDisciplines by id this must be updated (only id is stored in backend for now)
-              <DisciplineSearch
-                setValueFunction={(npiDiscipline) => setFieldValue(name, npiDiscipline?.id ?? '')}
-                dataTestId="search_npi"
-                value={value}
-                placeholder={t('description.search_for_npi_discipline')}
-              />
-            )}
-          </Field>
-          <Field name={DescriptionFieldNames.TAGS}>
-            {({ field }: FieldProps) => (
-              <Autocomplete
-                {...field}
-                freeSolo
-                multiple
-                options={[]}
-                onChange={(_: ChangeEvent<unknown>, value: string[] | string) => setFieldValue(field.name, value)}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    data-testid="registration-tag-field"
-                    label={t('description.keywords')}
-                    helperText={t('description.keywords_helper')}
-                    variant="filled"
-                    fullWidth
-                    onBlur={(event) => {
-                      const value = event.target.value;
-                      const tags = value
-                        .split(/[|,;]+/)
-                        .map((value: string) => value.trim())
-                        .filter((tag) => tag !== '');
-                      setFieldValue(field.name, [...field.value, ...tags]);
-                    }}
-                  />
-                )}
-              />
-            )}
-          </Field>
-        </NpiAndTagsWrapper>
+        <Field name={DescriptionFieldNames.TAGS}>
+          {({ field }: FieldProps) => (
+            <Autocomplete
+              {...field}
+              freeSolo
+              multiple
+              options={[]}
+              onChange={(_: ChangeEvent<unknown>, value: string[] | string) => setFieldValue(field.name, value)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  data-testid="registration-tag-field"
+                  label={t('description.keywords')}
+                  helperText={t('description.keywords_helper')}
+                  variant="filled"
+                  fullWidth
+                  onBlur={(event) => {
+                    const value = event.target.value;
+                    const tags = value
+                      .split(/[|,;]+/)
+                      .map((value: string) => value.trim())
+                      .filter((tag) => tag !== '');
+                    setFieldValue(field.name, [...field.value, ...tags]);
+                  }}
+                />
+              )}
+            />
+          )}
+        </Field>
       </BackgroundDiv>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DateAndLanguageWrapper>
