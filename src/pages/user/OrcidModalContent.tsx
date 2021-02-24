@@ -6,7 +6,12 @@ import { Button, DialogActions, DialogContent, Typography } from '@material-ui/c
 import { ORCID_SIGN_IN_URL, USE_MOCK_DATA } from '../../utils/constants';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 
-const OrcidModalContent = () => {
+interface OrcidModalContentProps {
+  cancelFunction: () => void;
+  cancelText?: string;
+}
+
+const OrcidModalContent = ({ cancelFunction, cancelText }: OrcidModalContentProps) => {
   const { t } = useTranslation('profile');
   const history = useHistory();
 
@@ -25,6 +30,9 @@ const OrcidModalContent = () => {
         <Typography>{t('orcid.dialog.paragraph1')}</Typography>
       </DialogContent>
       <DialogActions>
+        <Button data-testid="cancel-connect-to-orcid" color="default" variant="outlined" onClick={cancelFunction}>
+          {cancelText ?? t('common:close')}
+        </Button>
         <Button data-testid="connect-to-orcid" onClick={openORCID} color="secondary" variant="contained">
           {t('orcid.connect_orcid')}
         </Button>

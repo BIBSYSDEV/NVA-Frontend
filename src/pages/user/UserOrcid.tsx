@@ -159,7 +159,7 @@ const UserOrcid = ({ user }: UserOrcidProps) => {
             onClose={toggleModal}
             open={openModal}
             dataTestId="orcid-modal">
-            <OrcidModalContent />
+            <OrcidModalContent cancelFunction={toggleModal} />
           </Modal>
         </>
       )}
