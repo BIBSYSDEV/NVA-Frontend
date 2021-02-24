@@ -1,4 +1,9 @@
 {
+  "affiliations": {
+    "add_affiliation": "Legg til tilhørighet",
+    "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilhørigheten?",
+    "confirm_remove_affiliation_title": "Fjerne tilhørighet?"
+  },
   "applications": "Applikasjoner",
   "authority": {
     "cancel_connect_authority_text": "Hvis du avbryter tilkoblingsprosessen vil du automatisk bli utlogget. Alle innloggede brukere må ha en tilkoblet forfatteridentitet for å kunne bruke applikasjonen. Ønsker du å avbryte likevel?",
@@ -20,7 +25,7 @@
     "connect_authority": "Koble til din forfatter ID",
     "contact_info": "Kontaktinformasjon",
     "language": "Språk",
-    "organizations": "Tilhørighet",
+    "affiliations": "Tilhørigheter",
     "roles": "Roller",
     "user_info": "Brukerinformasjon"
   },
@@ -59,14 +64,5 @@
     "institution_admins": "Administratorer",
     "no_roles": "Du har ingen roller fordi du ikke har fått tildelt roller av din administrator",
     "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen"
-  },
-  "organization": {
-    "add_institution": "Legg til institusjon",
-    "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilhørigheten?",
-    "confirm_remove_affiliation_title": "Fjerne tilhørighet?",
-    "edit_institution": "Endre institusjon",
-    "institution": "Institusjon",
-    "no_institutions_found": "Ingen institusjoner funnet",
-    "search_for_institution": "Søk etter institusjon"
   }
 }

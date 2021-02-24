@@ -24,7 +24,7 @@ interface UserInstituionProps {
   user: User;
 }
 
-const UserInstitution = ({ user }: UserInstituionProps) => {
+export const UserAffiliations = ({ user }: UserInstituionProps) => {
   const [openAddInstitutionForm, setOpenAddInstitutionForm] = useState(false);
   const [institutionIdToRemove, setInstitutionIdToRemove] = useState('');
   const [isRemovingInstitution, setIsRemovingInstitution] = useState(false);
@@ -95,7 +95,7 @@ const UserInstitution = ({ user }: UserInstituionProps) => {
   return (
     <>
       <Card>
-        <Typography variant="h5">{t('heading.organizations')}</Typography>
+        <Typography variant="h5">{t('heading.affiliations')}</Typography>
         {user.authority?.orgunitids &&
           user.authority.orgunitids.map((orgunitId) => (
             <InstitutionCard
@@ -116,22 +116,20 @@ const UserInstitution = ({ user }: UserInstituionProps) => {
               disabled={!user.authority}
               startIcon={<AddIcon />}
               data-testid="add-new-institution-button">
-              {t('organization.add_institution')}
+              {t('affiliations.add_affiliation')}
             </Button>
           </StyledRightAlignedWrapper>
         )}
       </Card>
       <ConfirmDialog
         open={!!institutionIdToRemove}
-        title={t('organization.confirm_remove_affiliation_title')}
+        title={t('affiliations.confirm_remove_affiliation_title')}
         onAccept={removeInstitution}
         onCancel={() => setInstitutionIdToRemove('')}
         isLoading={isRemovingInstitution}
         dataTestId="confirm-remove-affiliation-dialog">
-        <Typography>{t('organization.confirm_remove_affiliation_text')}</Typography>
+        <Typography>{t('affiliations.confirm_remove_affiliation_text')}</Typography>
       </ConfirmDialog>
     </>
   );
 };
-
-export default UserInstitution;

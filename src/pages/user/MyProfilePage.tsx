@@ -15,10 +15,10 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { NotificationVariant } from '../../types/notification.types';
 import { getUserPath, UrlPathTemplate } from '../../utils/urlPaths';
 import UserInfo from './UserInfo';
-import UserInstitution from './UserInstitution';
 import UserLanguage from './UserLanguage';
 import UserOrcid from './UserOrcid';
 import UserRoles from './UserRoles';
+import { UserAffiliations } from './UserAffiliations';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -111,7 +111,7 @@ const MyProfilePage: FC = () => {
             )}
           </Card>
           <UserOrcid user={user} />
-          <UserInstitution user={user} />
+          <UserAffiliations user={user} />
         </StyledPrimaryUserInfo>
       </StyledUserPage>
     </StyledPageWrapperWithMaxWidth>
