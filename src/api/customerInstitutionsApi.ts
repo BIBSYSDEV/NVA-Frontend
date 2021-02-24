@@ -9,28 +9,11 @@ export enum CustomerInstitutionApiPaths {
   CUSTOMER_INSTITUTION = '/customer',
 }
 
-export const getAllCustomerInstitutions = async () => {
-  try {
-    const idToken = await getIdToken();
-    const headers = {
-      Authorization: `Bearer ${idToken}`,
-    };
-    const response = await Axios.get(CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION, {
-      headers,
-    });
-    if (response.status === StatusCode.OK) {
-      return response.data.customers;
-    } else {
-      return {
-        error: i18n.t('feedback:error.get_customers'),
-      };
-    }
-  } catch {
-    return {
-      error: i18n.t('feedback:error.get_customers'),
-    };
-  }
-};
+export const getAllCustomerInstitutions = async (cancelToken?: CancelToken) =>
+  await authenticatedApiRequest<CustomerInstitution[]>({
+    url: CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION,
+    cancelToken,
+  });
 
 export const getCustomerInstitution = async (customerId: string, cancelToken?: CancelToken) =>
   await authenticatedApiRequest<CustomerInstitution>({
