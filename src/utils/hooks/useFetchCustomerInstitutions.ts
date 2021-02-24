@@ -22,7 +22,7 @@ export const useFetchCustomerInstitutions = (): [CustomerInstitution[], boolean]
         if (fetchedInstitutions.error) {
           dispatch(setNotification(t('error.get_customers'), NotificationVariant.Error));
         } else if (fetchedInstitutions.data) {
-          setCustomerInstitutions(fetchedInstitutions.data);
+          setCustomerInstitutions(fetchedInstitutions.data.customers);
         }
         setIsLoading(false);
       }
