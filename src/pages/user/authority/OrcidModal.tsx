@@ -1,22 +1,15 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import { Button } from '@material-ui/core';
 
 import OrcidModalContent from '../OrcidModalContent';
 import Modal from '../../../components/Modal';
 import orcidLogo from '../../../resources/images/orcid_logo.svg';
 
-const StyledSkipButtonContainer = styled.div`
-  text-align: center;
-  margin: 1rem 0;
-`;
-
 interface OrcidModalProps {
   closeModal: () => void;
 }
 
-const OrcidModal: FC<OrcidModalProps> = ({ closeModal }) => {
+const OrcidModal = ({ closeModal }: OrcidModalProps) => {
   const { t } = useTranslation('common');
 
   return (
@@ -27,13 +20,8 @@ const OrcidModal: FC<OrcidModalProps> = ({ closeModal }) => {
       onClose={closeModal}
       maxWidth="sm"
       headingIcon={{ src: orcidLogo, alt: 'ORCID iD icon' }}
-      headingText={t('profile:orcid.create_or_connect')}>
-      <OrcidModalContent />
-      <StyledSkipButtonContainer>
-        <Button data-testid="skip-connect-to-orcid" color="default" variant="outlined" onClick={closeModal}>
-          {t('profile:orcid.skip_this_step')}
-        </Button>
-      </StyledSkipButtonContainer>
+      headingText={t('profile:orcid.connect_orcid')}>
+      <OrcidModalContent cancelText={t('profile:orcid.skip_this_step')} cancelFunction={closeModal} />
     </Modal>
   );
 };

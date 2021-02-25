@@ -21,10 +21,6 @@ import { useLocation } from 'react-router-dom';
 import { User } from '../../types/user.types';
 import DangerButton from '../../components/DangerButton';
 
-const StyledInformation = styled.div`
-  margin-bottom: 1rem;
-`;
-
 const StyledOrcidLine = styled.div`
   display: grid;
   grid-template-areas: 'text button';
@@ -102,7 +98,7 @@ const UserOrcid = ({ user }: UserOrcidProps) => {
 
   return (
     <Card>
-      <Typography variant="h5">{t('common:orcid')}</Typography>
+      <Typography variant="h5">{t('orcid.orcid')}</Typography>
       {listOfOrcids?.length > 0 ? (
         listOfOrcids.map((orcid: string) => {
           const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
@@ -148,22 +144,22 @@ const UserOrcid = ({ user }: UserOrcidProps) => {
         })
       ) : (
         <>
-          <StyledInformation>{t('profile:orcid.description_why_use_orcid')}</StyledInformation>
+          <Typography paragraph>{t('orcid.orcid_description')}</Typography>
           <Button
-            color="primary"
+            color="secondary"
             data-testid="button-create-connect-orcid"
             onClick={toggleModal}
             variant="contained"
             size="small">
-            {t('profile:orcid.create_or_connect')}
+            {t('orcid.connect_orcid')}
           </Button>
           <Modal
             headingIcon={{ src: orcidIcon, alt: 'ORCID iD icon' }}
-            headingText={t('profile:orcid.create_or_connect')}
+            headingText={t('orcid.dialog.heading')}
             onClose={toggleModal}
             open={openModal}
             dataTestId="orcid-modal">
-            <OrcidModalContent />
+            <OrcidModalContent cancelFunction={toggleModal} />
           </Modal>
         </>
       )}
