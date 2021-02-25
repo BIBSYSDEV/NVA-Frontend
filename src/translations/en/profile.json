@@ -55,7 +55,7 @@
     "editor_description": "Responsible for the institution's publications and other resources in the service",
     "editors": "Editors",
     "institution_admin": "Administrator",
-    "institution_admin_description": "Access to give the roles of Curator and Editor to others",
+    "institution_admin_description": "Access to assign the roles of Curator and Editor to others",
     "institution_admins": "Administrators",
     "no_roles": "You don't have any roles because your administrator has not assigned any roles to you",
     "not_customer": "You don't have any roles because your institution is unknown to this application"
