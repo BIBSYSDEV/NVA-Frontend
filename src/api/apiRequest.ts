@@ -35,7 +35,7 @@ export const apiRequest = async <T>(axiosRequestConfig: AxiosRequestConfig): Pro
   try {
     const response = await Axios(axiosRequestConfig);
 
-    if (response.status === StatusCode.OK) {
+    if (response.status === StatusCode.OK || response.status === StatusCode.CREATED) {
       return { error: false, data: response.data };
     } else if (response.status >= 400) {
       return { error: true };

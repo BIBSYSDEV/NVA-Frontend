@@ -27,6 +27,9 @@ describe('Registration: References: Book', () => {
     cy.contains('Novum Testamentum').click({ force: true });
     cy.get('[data-testid=publisher-search-input]').should('have.value', 'Novum Testamentum');
 
+    // NPI Subject
+    cy.selectNpiDiscipline('Linguistics');
+
     // fill out ISBN_LIST field
     cy.get('[data-testid=isbn-input]').type('978-1-78-763271-4').type('{enter}').type('9788202509460');
     cy.get('[data-testid=is-textbook-checkbox]').click({ force: true });

@@ -28,7 +28,13 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR }: Cont
   const contributorsRef = useRef(contributors);
 
   useEffect(() => {
-    const filteredContributors = contributors
+    // Ensure all contributors has a role by setting Creator role as default
+    const contributorsWithRole = contributors.map((contributor) => ({
+      ...contributor,
+      role: contributor.role ?? ContributorRole.CREATOR,
+    }));
+
+    const filteredContributors = contributorsWithRole
       .filter((contributor) => contributor.role === contributorRole)
       .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
     contributorsRef.current = filteredContributors;

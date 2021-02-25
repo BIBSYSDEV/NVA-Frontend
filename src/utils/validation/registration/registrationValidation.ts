@@ -19,7 +19,10 @@ export const registrationValidationSchema = Yup.object().shape({
     abstract: Yup.string(),
     description: Yup.string(),
     tags: Yup.array().of(Yup.string()),
-    npiSubjectHeading: Yup.string(),
+    npiSubjectHeading: Yup.string().when('$publicationContextType', {
+      is: PublicationType.BOOK,
+      then: Yup.string().required(ErrorMessage.REQUIRED),
+    }),
     date: Yup.object().shape({
       year: Yup.number().required(ErrorMessage.REQUIRED),
       month: Yup.number()

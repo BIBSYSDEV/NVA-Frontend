@@ -32,9 +32,6 @@ describe('User connects to their Authority', () => {
     // connect orcid
     cy.get('[data-testid=connect-to-orcid]').click({ force: true });
 
-    // check that author is connected
-    cy.get('[data-testid=author-connected-info]').should('be.visible');
-
     // check that ORCID is connected
     cy.get('[data-testid=orcid-info]').contains('https://sandbox.orcid.org/0000-0001-2345-6789');
   });

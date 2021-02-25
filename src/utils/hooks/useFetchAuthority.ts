@@ -19,12 +19,12 @@ const useFetchAuthority = (arpId: string): [Authority | undefined, boolean] => {
       const fetchAuthority = async () => {
         const fetchedAuthority = await getAuthority(arpId, cancelToken);
         if (fetchedAuthority) {
-          setIsLoading(false);
           if (fetchedAuthority.error) {
             dispatch(setNotification(t('error.get_authority'), NotificationVariant.Error));
           } else if (fetchedAuthority.data) {
             setAuthority(fetchedAuthority.data);
           }
+          setIsLoading(false);
         }
       };
       fetchAuthority();

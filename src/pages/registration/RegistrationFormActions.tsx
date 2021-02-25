@@ -77,11 +77,11 @@ export const RegistrationFormActions = ({
     const updatedRegistration = await updateRegistration(values);
     if (updatedRegistration?.error) {
       dispatch(setNotification(updatedRegistration.error, NotificationVariant.Error));
+      setIsSaving(false);
     } else {
       refetchRegistration();
       dispatch(setNotification(t('feedback:success.update_registration')));
     }
-    setIsSaving(false);
     return !updatedRegistration.error;
   };
 
