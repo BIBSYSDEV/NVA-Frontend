@@ -56,7 +56,7 @@ interface UserOrcidProps {
   user: User;
 }
 
-const UserOrcid = ({ user }: UserOrcidProps) => {
+export const UserOrcid = ({ user }: UserOrcidProps) => {
   const { t } = useTranslation('profile');
   const listOfOrcids = user.authority ? user.authority.orcids : [];
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
@@ -98,7 +98,7 @@ const UserOrcid = ({ user }: UserOrcidProps) => {
 
   return (
     <Card>
-      <Typography variant="h5">{t('orcid.orcid')}</Typography>
+      <Typography variant="h2">{t('orcid.orcid')}</Typography>
       {listOfOrcids?.length > 0 ? (
         listOfOrcids.map((orcid: string) => {
           const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
@@ -166,5 +166,3 @@ const UserOrcid = ({ user }: UserOrcidProps) => {
     </Card>
   );
 };
-
-export default UserOrcid;

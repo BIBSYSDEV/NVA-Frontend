@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
@@ -14,13 +14,13 @@ interface UserRolesProps {
   user: User;
 }
 
-const UserRoles: FC<UserRolesProps> = ({ user }) => {
+export const UserRoles = ({ user }: UserRolesProps) => {
   const { t } = useTranslation('profile');
   const { isAppAdmin, isInstitutionAdmin, isEditor, isCurator, isCreator } = user;
 
   return (
     <Card>
-      <Typography variant="h5">{t('heading.roles')}</Typography>
+      <Typography variant="h2">{t('heading.roles')}</Typography>
       {user.customerId ? (
         !isAppAdmin &&
         !isInstitutionAdmin &&
@@ -82,5 +82,3 @@ const UserRoles: FC<UserRolesProps> = ({ user }) => {
     </Card>
   );
 };
-
-export default UserRoles;
