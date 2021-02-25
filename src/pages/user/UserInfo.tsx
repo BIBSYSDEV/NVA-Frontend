@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import LabelTextLine from '../../components/LabelTextLine';
 import { User } from '../../types/user.types';
@@ -9,16 +9,16 @@ interface UserInfoProps {
   user: User;
 }
 
-const UserInfo: FC<UserInfoProps> = ({ user }) => {
-  const { t } = useTranslation();
+export const UserInfo = ({ user }: UserInfoProps) => {
+  const { t } = useTranslation('profile');
 
   return (
     <Card>
-      <Typography variant="h5">{t('profile:heading.user_info')}</Typography>
+      <Typography variant="h2">{t('heading.user_info')}</Typography>
       <LabelTextLine dataTestId="user-name" label={t('common:name')}>
         {user.name}
       </LabelTextLine>
-      <LabelTextLine dataTestId="user-id" label={t('profile:id')}>
+      <LabelTextLine dataTestId="user-id" label={t('id')}>
         {user.id}
       </LabelTextLine>
       <LabelTextLine dataTestId="user-email" label={t('common:email')}>
@@ -27,5 +27,3 @@ const UserInfo: FC<UserInfoProps> = ({ user }) => {
     </Card>
   );
 };
-
-export default UserInfo;

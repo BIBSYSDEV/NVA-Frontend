@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
@@ -36,32 +36,36 @@ interface CustomerInstitutionMetadataFormProps {
   editMode: boolean;
 }
 
-const CustomerInstitutionMetadataForm: FC<CustomerInstitutionMetadataFormProps> = ({
+const CustomerInstitutionMetadataForm = ({
   customerInstitution,
   handleSetCustomerInstitution,
   editMode,
-}) => {
+}: CustomerInstitutionMetadataFormProps) => {
   const { t } = useTranslation('admin');
   const history = useHistory();
   const dispatch = useDispatch();
 
   const handleSubmit = async (values: CustomerInstitution) => {
     if (!editMode) {
-      const createdCustomer = await createCustomerInstitution(values);
-      if (!createdCustomer || createdCustomer?.error) {
-        dispatch(setNotification(createdCustomer.error, NotificationVariant.Error));
-      } else {
-        history.push(getAdminInstitutionPath(createdCustomer.id));
-        handleSetCustomerInstitution(createdCustomer);
-        dispatch(setNotification(t('feedback:success.created_customer')));
+      const createCustomerResponse = await createCustomerInstitution(values);
+      if (createCustomerResponse) {
+        if (createCustomerResponse.error) {
+          dispatch(setNotification(t('feedback:error.create_customer'), NotificationVariant.Error));
+        } else if (createCustomerResponse.data) {
+          history.push(getAdminInstitutionPath(createCustomerResponse.data.id));
+          handleSetCustomerInstitution(createCustomerResponse.data);
+          dispatch(setNotification(t('feedback:success.created_customer')));
+        }
       }
     } else {
-      const updatedCustomer = await updateCustomerInstitution(values);
-      if (!updatedCustomer || updatedCustomer?.error) {
-        dispatch(setNotification(updatedCustomer.error, NotificationVariant.Error));
-      } else {
-        handleSetCustomerInstitution(updatedCustomer);
-        dispatch(setNotification(t('feedback:success.update_customer')));
+      const updateCustomerResponse = await updateCustomerInstitution(values);
+      if (updateCustomerResponse) {
+        if (updateCustomerResponse.error) {
+          dispatch(setNotification(t('feedback:error.update_customer'), NotificationVariant.Error));
+        } else if (updateCustomerResponse.data) {
+          handleSetCustomerInstitution(updateCustomerResponse.data);
+          dispatch(setNotification(t('feedback:success.update_customer')));
+        }
       }
     }
   };

@@ -1,4 +1,9 @@
 {
+  "affiliations": {
+    "add_affiliation": "Add affiliation",
+    "confirm_remove_affiliation_text": "Are you sure you want to remove this affiliation?",
+    "confirm_remove_affiliation_title": "Remove affiliation?"
+  },
   "applications": "Applications",
   "authority": {
     "cancel_connect_authority_text": "You will be logged out if you don't add an author identity to your user. All authenticated users must have a connected author identity to use the application. Do you still want to cancel?",
@@ -18,7 +23,7 @@
     "connect_authority": "Connect your author ID",
     "contact_info": "Contact",
     "language": "Language",
-    "organizations": "Organizations",
+    "affiliations": "Affiliations",
     "roles": "Roles",
     "user_info": "User information"
   },
@@ -56,14 +61,5 @@
     "institution_admins": "Administrators",
     "no_roles": "You don't have any roles because your administrator has not assigned any roles to you",
     "not_customer": "You don't have any roles because your institution is unknown to this application"
-  },
-  "organization": {
-    "add_institution": "Add institution",
-    "confirm_remove_affiliation_text": "Are you sure you want to remove this affiliation?",
-    "confirm_remove_affiliation_title": "Remove affiliation?",
-    "edit_institution": "Edit institution",
-    "institution": "Institution",
-    "no_institutions_found": "No institutions found",
-    "search_for_institution": "Search for institution"
   }
 }

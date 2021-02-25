@@ -1,5 +1,5 @@
 import { Form, Formik } from 'formik';
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -26,7 +26,7 @@ const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
   margin-top: 2rem;
 `;
 
-const MyCustomerInstitutionPage: FC = () => {
+const MyCustomerInstitutionPage = () => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
   const { user } = useSelector((store: RootStore) => store);
@@ -35,12 +35,14 @@ const MyCustomerInstitutionPage: FC = () => {
   );
 
   const handleSubmit = async (values: CustomerInstitution) => {
-    const updatedCustomer = await updateCustomerInstitution(values);
-    if (!updatedCustomer || updatedCustomer?.error) {
-      dispatch(setNotification(updatedCustomer.error, NotificationVariant.Error));
-    } else {
-      handleSetCustomerInstitution(updatedCustomer);
-      dispatch(setNotification(t('feedback:success.update_customer')));
+    const updateCustomerResponse = await updateCustomerInstitution(values);
+    if (updateCustomerResponse) {
+      if (updateCustomerResponse.error) {
+        dispatch(setNotification(t('feedback:error.update_customer'), NotificationVariant.Error));
+      } else if (updateCustomerResponse.data) {
+        handleSetCustomerInstitution(updateCustomerResponse.data);
+        dispatch(setNotification(t('feedback:success.update_customer')));
+      }
     }
   };
 
