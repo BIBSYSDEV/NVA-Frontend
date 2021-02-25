@@ -95,7 +95,7 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
   return (
     <>
       <Card>
-        <Typography variant="h5">{t('heading.affiliations')}</Typography>
+        <Typography variant="h2">{t('heading.affiliations')}</Typography>
         {user.authority?.orgunitids &&
           user.authority.orgunitids.map((orgunitId) => (
             <InstitutionCard
