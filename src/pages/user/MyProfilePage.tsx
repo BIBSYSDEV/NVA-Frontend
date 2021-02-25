@@ -3,10 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
-import Card from '../../components/Card';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
@@ -26,7 +25,7 @@ const StyledUserPage = styled.div`
     grid-template-areas: 'top top' 'secondary-info primary-info' '. primary-info';
     grid-template-columns: 1fr 3fr;
   }
-  grid-gap: 3rem;
+  grid-gap: 2rem;
   font-size: 1rem;
   grid-template-areas: 'top' 'primary-info' 'secondary-info';
 `;
@@ -104,12 +103,6 @@ const MyProfilePage: FC = () => {
 
         <StyledPrimaryUserInfo>
           <UserInfo user={user} />
-          <Card>
-            <Typography variant="h5">{t('heading.author_info')}</Typography>
-            {user.authority && user.authority.feideids?.length > 0 && (
-              <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
-            )}
-          </Card>
           <UserOrcid user={user} />
           <UserInstitution user={user} />
         </StyledPrimaryUserInfo>
