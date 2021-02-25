@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
@@ -14,11 +14,11 @@ import { setAuthorityData } from '../../redux/actions/userActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { NotificationVariant } from '../../types/notification.types';
 import { getUserPath, UrlPathTemplate } from '../../utils/urlPaths';
-import UserInfo from './UserInfo';
-import UserInstitution from './UserInstitution';
-import UserLanguage from './UserLanguage';
-import UserOrcid from './UserOrcid';
-import UserRoles from './UserRoles';
+import { UserInfo } from './UserInfo';
+import { UserLanguage } from './UserLanguage';
+import { UserOrcid } from './UserOrcid';
+import { UserRoles } from './UserRoles';
+import { UserAffiliations } from './UserAffiliations';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -46,7 +46,7 @@ const StyledButtonWrapper = styled(StyledRightAlignedWrapper)`
   grid-area: top;
 `;
 
-const MyProfilePage: FC = () => {
+const MyProfilePage = () => {
   const { t } = useTranslation('profile');
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const user = useSelector((store: RootStore) => store.user)!; // If user has been empty this route would already be blocked
@@ -111,7 +111,7 @@ const MyProfilePage: FC = () => {
             )}
           </Card>
           <UserOrcid user={user} />
-          <UserInstitution user={user} />
+          <UserAffiliations user={user} />
         </StyledPrimaryUserInfo>
       </StyledUserPage>
     </StyledPageWrapperWithMaxWidth>

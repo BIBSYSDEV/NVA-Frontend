@@ -1,25 +1,17 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
-
-import { Button } from '@material-ui/core';
+import { Button, DialogActions, DialogContent, Typography } from '@material-ui/core';
 
 import { ORCID_SIGN_IN_URL, USE_MOCK_DATA } from '../../utils/constants';
-import NormalText from '../../components/NormalText';
-import Label from '../../components/Label';
-import { StyledCenterAlignedContentWrapper } from '../../components/styled/Wrappers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 
-const StyledButtonContainer = styled(StyledCenterAlignedContentWrapper)`
-  margin-top: 1rem;
-`;
+interface OrcidModalContentProps {
+  cancelFunction: () => void;
+  cancelText?: string;
+}
 
-const StyledSubHeading = styled(Label)`
-  margin: 1em 0;
-`;
-
-const OrcidModalContent: FC = () => {
+const OrcidModalContent = ({ cancelFunction, cancelText }: OrcidModalContentProps) => {
   const { t } = useTranslation('profile');
   const history = useHistory();
 
@@ -33,16 +25,18 @@ const OrcidModalContent: FC = () => {
 
   return (
     <>
-      <NormalText>{t('orcid.login')}</NormalText>
-      <StyledSubHeading>{t('orcid.why')}</StyledSubHeading>
-      <NormalText>{t('orcid.description_why_use_orcid')}</NormalText>
-      <StyledSubHeading>{t('orcid.what')}</StyledSubHeading>
-      <NormalText>{t('orcid.description_what_is_orcid')}</NormalText>
-      <StyledButtonContainer>
-        <Button data-testid="connect-to-orcid" onClick={openORCID} color="primary" variant="contained">
-          {t('orcid.create_or_connect')}
+      <DialogContent>
+        <Typography paragraph>{t('orcid.dialog.paragraph0')}</Typography>
+        <Typography>{t('orcid.dialog.paragraph1')}</Typography>
+      </DialogContent>
+      <DialogActions>
+        <Button data-testid="cancel-connect-to-orcid" color="default" variant="outlined" onClick={cancelFunction}>
+          {cancelText ?? t('common:close')}
         </Button>
-      </StyledButtonContainer>
+        <Button data-testid="connect-to-orcid" onClick={openORCID} color="secondary" variant="contained">
+          {t('orcid.connect_orcid')}
+        </Button>
+      </DialogActions>
     </>
   );
 };
