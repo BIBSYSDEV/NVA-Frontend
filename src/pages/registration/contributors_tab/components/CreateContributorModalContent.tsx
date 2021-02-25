@@ -98,7 +98,7 @@ const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: CreateCo
                 variant="contained"
                 isLoading={isLoading}
                 disabled={isSubmitting}>
-                {t('create_authority')}
+                {t('profile:authority.create_authority')}
               </ButtonWithProgress>
             </DialogActions>
           </Form>
