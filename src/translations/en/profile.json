@@ -29,18 +29,17 @@
   "my_profile": "My user profile",
   "my_public_profile": "My public profile",
   "orcid": {
-    "create_or_connect": "Create or connect your ORCID iD",
-    "description_what_is_orcid": "ORCID is an independent non-profit effort to provide an open registry of unique researcher identifiers and open services to link research activities and organizations to these identifiers.",
-    "description_why_use_orcid": "By connecting your ORCID iD it will be easier to identify you as an author. When you click the “Create or connect to ORCID iD” button, we will ask you to share your iD using an authenticated process: either by registering for an ORCID iD or, if you already have one, by signing into your ORCID account, then granting us permission to get your ORCID iD. We do this to ensure that you are correctly identified and securely connecting your ORCID iD.",
-    "login": "Log in to your ORCID account or create new ORCID account",
+    "connect_orcid": "Connect/create ORCID iD",
+    "dialog": {
+      "heading": "Connect or create ORCID iD",
+      "paragraph0": "Sign in to ORCID or register to create an account.",
+      "paragraph1": "ORCID provides a persistent digital identifier that you own and control, and that distinguishes you from every other researcher. Your ORCID iD can be used in many contexts. By connecting your ORCID iD it is easier to identify you as an author, and to retrieve and share your publications."
+    },
     "orcid": "ORCID",
+    "orcid_description": "To connect your ORCID iD, sign into ORCID. Or register to create your ORCID iD and connect. It makes it easier to identify you.",
     "remove_connection": "Remove connection to ORCID",
     "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Unit's access to read your ORCID, you have to go to your profile.",
-    "skip_this_step": "Skip this step (can be configured in 'profile' later)",
-    "suggestions": "Suggestions from ORCID",
-    "suggestions_description": "Suggestions from ORCID...",
-    "what": "What is ORCID?",
-    "why": "Why should I connect to ORCID?",
+    "skip_this_step": "Skip (can be configured later)",
     "your_orcid": "Your ORCID"
   },
   "roles": {

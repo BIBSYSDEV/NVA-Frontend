@@ -6,7 +6,7 @@ Cypress.Commands.add('mocklogin', () => {
   cy.get('[data-testid=author-radio-button]').eq(1).click({ force: true });
   cy.get('[data-testid=connect-author-button]').click({ force: true });
   cy.get('[data-testid=modal_next]').click({ force: true });
-  cy.get('[data-testid=skip-connect-to-orcid]').click({ force: true });
+  cy.get('[data-testid=cancel-connect-to-orcid]').click({ force: true });
 
   // navigate to profile
   cy.get('[data-testid=menu]').click({ force: true });
