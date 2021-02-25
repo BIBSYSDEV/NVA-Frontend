@@ -43,18 +43,18 @@
     "your_orcid": "Din ORCID"
   },
   "roles": {
-    "app_admin": "Applikasjonsadministrator",
-    "app_admin_description": "Tilgang til å opprette nye kundeinstitusjoner",
+    "app_admin": "Systemadministrator",
+    "app_admin_description": "Tilgang til å opprette nye institusjoner og tildele roller",
     "creator": "Registrator",
     "creator_description": "Tilgang til å registrere publikasjoner og andre ressurser",
     "curator": "Kurator",
-    "curator_description": "Tilgang til å godkjenne og publisere andres innhold",
+    "curator_description": "Tilgang til å redigere publikasjoner og andre ressurser, tildele DOI og besvare brukerstøttehenvendelser",
     "curators": "Kuratorer",
     "editor": "Redaktør",
-    "editor_description": "",
+    "editor_description": "Ansvarlig for institusjonens publikasjoner og andre ressurser i tjenesten",
     "editors": "Redaktører",
     "institution_admin": "Administrator",
-    "institution_admin_description": "Tilgang til å administrere din egen institusjon",
+    "institution_admin_description": "Tilgang til å gi rollene Kurator og Redaktør til andre",
     "institution_admins": "Administratorer",
     "no_roles": "Du har ingen roller fordi du ikke har fått tildelt roller av din administrator",
     "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen"

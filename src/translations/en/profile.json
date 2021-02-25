@@ -43,18 +43,18 @@
     "your_orcid": "Your ORCID"
   },
   "roles": {
-    "app_admin": "Application administrator",
-    "app_admin_description": "Access to create new customer institutions",
+    "app_admin": "System administrator",
+    "app_admin_description": "Access to create new institutions and assign roles",
     "creator": "Registrator",
     "creator_description": "Access to register publications and other resources",
     "curator": "Curator",
-    "curator_description": "Access to approve and publish other's content",
+    "curator_description": "Access to edit publications and other resources, assign DOIs and respond to support inquiries",
     "curators": "Curators",
     "editor": "Editor",
-    "editor_description": "",
+    "editor_description": "Responsible for the institution's publications and other resources in the service",
     "editors": "Editors",
     "institution_admin": "Administrator",
-    "institution_admin_description": "Access to administer your own institution",
+    "institution_admin_description": "Access to assign the roles of Curator and Editor to others",
     "institution_admins": "Administrators",
     "no_roles": "You don't have any roles because your administrator has not assigned any roles to you",
     "not_customer": "You don't have any roles because your institution is unknown to this application"
