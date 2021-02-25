@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { ErrorMessage, Field, FieldProps } from 'formik';
 import { NpiDiscipline } from '../../../../types/registration.types';
 import { disciplineOptions, getNpiDiscipline } from '../../../../utils/npiDisciplines';
-import { Field, FieldProps } from 'formik';
-import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
+import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
 
 const StyledSearchIcon = styled(SearchIcon)`
   margin-left: 0.5rem;
@@ -18,8 +18,12 @@ export const NpiDisciplineField = () => {
   const { t } = useTranslation('registration');
 
   return (
-    <Field name={DescriptionFieldNames.NPI_SUBJECT_HEADING}>
-      {({ field: { name, value }, form: { setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
+    <Field name={ReferenceFieldNames.NPI_SUBJECT_HEADING}>
+      {({
+        field: { name, value },
+        form: { setFieldValue, setFieldTouched },
+        meta: { error, touched },
+      }: FieldProps<string>) => (
         <Autocomplete
           options={disciplineOptions}
           groupBy={(discipline) => discipline.mainDiscipline}
@@ -29,14 +33,16 @@ export const NpiDisciplineField = () => {
           renderInput={(params) => (
             <TextField
               {...params}
+              onBlur={() => setFieldTouched(name)}
               data-testid="search_npi"
               label={t('description.npi_disciplines')}
+              required
               fullWidth
               variant="filled"
               autoComplete="false"
               placeholder={t('description.search_for_npi_discipline')}
               error={!!error && touched}
-              helperText={error}
+              helperText={<ErrorMessage name={name} />}
               InputProps={{
                 ...params.InputProps,
                 startAdornment: <StyledSearchIcon />,

@@ -24,6 +24,14 @@ Cypress.Commands.add('startRegistrationWithDoi', () => {
   cy.get('[data-testid=registration-link-next-button]').click({ force: true });
 });
 
+Cypress.Commands.add('selectNpiDiscipline', (npiDiscipline) => {
+  cy.get('[data-testid=search_npi]').click({ force: true }).type(npiDiscipline);
+  cy.contains(npiDiscipline).click({ force: true });
+  cy.get('[data-testid=search_npi]').within(() => {
+    cy.get('input').should('have.value', npiDiscipline);
+  });
+});
+
 Cypress.Commands.add('setUserRolesInRedux', (roles) => {
   cy.window()
     .its('store') // Redux store must be exposed via window.store
