@@ -21,31 +21,11 @@ export const getAuthority = async (arpId: string, cancelToken?: CancelToken) =>
     cancelToken,
   });
 
-export const getAuthorities = async (name: string, cancelToken?: CancelToken) => {
-  const url = `${AuthorityApiPaths.PERSON}?name=${encodeURIComponent(name)}`;
-
-  const error = i18n.t('feedback:error.get_authorities');
-
-  try {
-    // remove when Authorization headers are set for all requests
-    const idToken = await getIdToken();
-    const headers = {
-      Authorization: `Bearer ${idToken}`,
-    };
-
-    const response = await Axios.get(url, { headers, cancelToken });
-
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      return { error };
-    }
-  } catch (error) {
-    if (!Axios.isCancel(error)) {
-      return { error };
-    }
-  }
-};
+export const getAuthorities = async (name: string, cancelToken?: CancelToken) =>
+  await apiRequest<Authority[]>({
+    url: `${AuthorityApiPaths.PERSON}?name=${encodeURIComponent(name)}`,
+    cancelToken,
+  });
 
 export const createAuthority = async (firstName: string, lastName: string, feideId?: string, cristinId?: string) => {
   const url = AuthorityApiPaths.PERSON;
