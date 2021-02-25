@@ -38,12 +38,21 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR }: Cont
     setFieldValue(ContributorFieldNames.CONTRIBUTORS, contributorsRef.current);
   }, [setFieldValue]);
 
+  const getContributorHeading = (contributorRole: ContributorRole) => {
+    switch (contributorRole) {
+      case ContributorRole.EDITOR:
+        return t('contributors.editors');
+      case ContributorRole.SUPERVISOR:
+        return t('contributors.supervisors');
+      default:
+        return t('contributors.authors');
+    }
+  };
+
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        <Typography variant="h2">
-          {contributorRole === ContributorRole.EDITOR ? t('contributors.editors') : t('contributors.authors')}
-        </Typography>
+        <Typography variant="h2">{getContributorHeading(contributorRole)}</Typography>
         <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
           {({ push, replace }: FieldArrayRenderProps) => (
             <MuiThemeProvider theme={lightTheme}>
