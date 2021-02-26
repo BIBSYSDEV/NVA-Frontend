@@ -15,10 +15,10 @@ export const getAddContributorText = (contributorRole: ContributorRole) => {
 export const getContributorHeading = (contributorRole: ContributorRole) => {
   switch (contributorRole) {
     case ContributorRole.EDITOR:
-      return i18n.t('contributors.editors');
+      return i18n.t('registration:contributors.editors');
     case ContributorRole.SUPERVISOR:
-      return i18n.t('contributors.supervisors');
+      return i18n.t('registration:contributors.supervisors');
     default:
-      return i18n.t('contributors.authors');
+      return i18n.t('registration:contributors.authors');
   }
 };
