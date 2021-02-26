@@ -21,7 +21,6 @@ const ContributorsPanel = () => {
     setFieldValue,
   } = useFormikContext<Registration>();
 
-  console.log('All', contributors);
   const contributorsError = errors.entityDescription?.contributors;
   const contributorsTouched = touched.entityDescription?.contributors;
   const contributorsRef = useRef(contributors);
@@ -32,6 +31,7 @@ const ContributorsPanel = () => {
       ...contributor,
       role: contributor.role ?? ContributorRole.CREATOR,
     }));
+    // TODO: Check valid sequences?
     setFieldValue(ContributorFieldNames.CONTRIBUTORS, contributorsWithRole);
   }, [setFieldValue]);
 
