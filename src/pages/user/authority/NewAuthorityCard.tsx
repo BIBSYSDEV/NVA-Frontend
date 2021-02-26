@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -64,7 +64,7 @@ interface NewAuthorityCardProps {
   onClickCancel: () => void;
 }
 
-const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ onClickCancel, user }) => {
+const NewAuthorityCard = ({ onClickCancel, user }: NewAuthorityCardProps) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation('profile');
@@ -97,17 +97,16 @@ const NewAuthorityCard: FC<NewAuthorityCardProps> = ({ onClickCancel, user }) =>
       </StyledDescription>
       <StyledSaveButton
         data-testid="create-author-button"
-        color="primary"
+        color="secondary"
         variant="contained"
         size="large"
         isLoading={isLoading}
         onClick={handleCreateAuthority}>
-        {t('common:create_authority')}
+        {t('authority.create_authority')}
       </StyledSaveButton>
       {hasMatchingAuthorities && (
         <StyledCancelButton
           data-testid="cancel-create-author-button"
-          color="secondary"
           variant="contained"
           size="large"
           disabled={isLoading}
