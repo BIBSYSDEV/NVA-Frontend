@@ -132,10 +132,21 @@ const AuthorCard = ({
   contributorsLength,
 }: AuthorCardProps) => {
   const { t } = useTranslation('registration');
-  const index = author.sequence - 1;
-  const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
+  const {
+    values: {
+      entityDescription: { contributors },
+    },
+  } = useFormikContext<Registration>();
+
+  const fieldArrayIndex = contributors.findIndex(
+    (contributor) =>
+      contributor.identity.id === author.identity.id &&
+      contributor.identity.name === author.identity.name &&
+      contributor.role === author.role
+  );
+  const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${fieldArrayIndex}]`;
   const { values, setFieldValue } = useFormikContext<Registration>();
-  const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[index]?.email ?? '');
+  const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[fieldArrayIndex]?.email ?? '');
 
   return (
     <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
@@ -159,7 +170,7 @@ const AuthorCard = ({
               }
               variant="outlined"
               data-testid={`button-set-unverified-contributor-${author.identity.name}`}
-              onClick={() => openContributorModal({ name: author.identity.name, index })}>
+              onClick={() => openContributorModal({ name: author.identity.name, index: fieldArrayIndex })}>
               {t('contributors.verify_person')}
             </Button>
           )}

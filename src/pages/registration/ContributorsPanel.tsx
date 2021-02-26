@@ -21,6 +21,7 @@ const ContributorsPanel = () => {
     setFieldValue,
   } = useFormikContext<Registration>();
 
+  console.log('All', contributors);
   const contributorsError = errors.entityDescription?.contributors;
   const contributorsTouched = touched.entityDescription?.contributors;
   const contributorsRef = useRef(contributors);
