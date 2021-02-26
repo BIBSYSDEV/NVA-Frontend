@@ -11,3 +11,14 @@ export const getAddContributorText = (contributorRole: ContributorRole) => {
       return i18n.t('registration:contributors.add_author');
   }
 };
+
+export const getContributorHeading = (contributorRole: ContributorRole) => {
+  switch (contributorRole) {
+    case ContributorRole.EDITOR:
+      return i18n.t('contributors.editors');
+    case ContributorRole.SUPERVISOR:
+      return i18n.t('contributors.supervisors');
+    default:
+      return i18n.t('contributors.authors');
+  }
+};

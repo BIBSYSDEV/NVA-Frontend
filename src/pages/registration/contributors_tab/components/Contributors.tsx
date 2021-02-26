@@ -1,6 +1,5 @@
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import React, { useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { FormHelperText, MuiThemeProvider, Typography } from '@material-ui/core';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
 import lightTheme from '../../../../themes/lightTheme';
@@ -8,13 +7,13 @@ import { ContributorRole } from '../../../../types/contributor.types';
 import { ContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import Authors from '../Authors';
+import { getContributorHeading } from '../../../../utils/validation/registration/contributorTranslations';
 
 interface ContributorsProps {
   contributorRole?: ContributorRole;
 }
 
 export const Contributors = ({ contributorRole = ContributorRole.CREATOR }: ContributorsProps) => {
-  const { t } = useTranslation('registration');
   const {
     values: {
       entityDescription: { contributors },
@@ -43,17 +42,6 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR }: Cont
   useEffect(() => {
     setFieldValue(ContributorFieldNames.CONTRIBUTORS, contributorsRef.current);
   }, [setFieldValue]);
-
-  const getContributorHeading = (contributorRole: ContributorRole) => {
-    switch (contributorRole) {
-      case ContributorRole.EDITOR:
-        return t('contributors.editors');
-      case ContributorRole.SUPERVISOR:
-        return t('contributors.supervisors');
-      default:
-        return t('contributors.authors');
-    }
-  };
 
   return (
     <>
