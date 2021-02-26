@@ -82,7 +82,7 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
                 variant="text"
                 data-testid="button-create-authority"
                 onClick={toggleOpenNewAuthorityCard}>
-                {t('authority.create_own_authority')}
+                {t('authority.create_authority')}
               </Button>
             </StyledRightAlignedWrapper>
 
@@ -98,7 +98,7 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
                 onClick={updateAuthorityForUser}
                 disabled={!selectedArpId || isUpdatingAuthority}
                 isLoading={isUpdatingAuthority}>
-                {t('authority.connect_authority')}
+                {t('authority.connect_to_select_authority')}
               </ButtonWithProgress>
             </DialogActions>
           </>
