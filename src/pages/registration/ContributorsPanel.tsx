@@ -16,7 +16,7 @@ const ContributorsPanel = () => {
 
   return publicationContext.type === PublicationType.DEGREE ? (
     <>
-      <Contributors />
+      {/* <Contributors /> TODO: add author also */}
       <Contributors contributorRole={ContributorRole.SUPERVISOR} />
     </>
   ) : publicationInstance.type !== BookType.ANTHOLOGY ? (
