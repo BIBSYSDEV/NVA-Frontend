@@ -6,7 +6,7 @@
   },
   "applications": "Applikasjoner",
   "authority": {
-    "cancel_connect_authority_text": "Du må koble deg til forfatterregisteret for å gå videre. Hvis du avbryter, blir du logget av. Ønsker du å avbryte?",
+    "cancel_connect_authority_text": "Du må koble deg til forfatterregisteret for å gå videre. Hvis du avbryter, blir du logget ut. Ønsker du å avbryte?",
     "cancel_connect_authority_title": "Ønsker du å avbryte?",
     "connect_authority": "Koble til nasjonalt register over forfattere",
     "connect_to_select_authority": "Koble til valgt forfatter",
