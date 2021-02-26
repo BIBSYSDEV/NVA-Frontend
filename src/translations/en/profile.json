@@ -6,13 +6,15 @@
   },
   "applications": "Applications",
   "authority": {
-    "cancel_connect_authority_text": "You will be logged out if you don't add an author identity to your user. All authenticated users must have a connected author identity to use the application. Do you still want to cancel?",
+    "cancel_connect_authority_text": "You must connect to the author register to proceed. If you cancel, you will be logged out. Do you want to cancel?",
     "cancel_connect_authority_title": "Do you want to cancel?",
-    "connect_authority": "Connect your author ID",
+    "connect_authority": "Connect to the national register of authors",
+    "connect_to_select_authority": "Connect to selected author",
     "connected_authority": "Your author identity is connected",
-    "create_own_authority": "Create new author ID",
-    "description_create_own_authority": "There exists author identities which matches your name. You can still create a new one.",
-    "description_no_authority_found": "We cannot find an author identity which matches with your name (retrieved from your login account). A new author identity will be created in order for you to use this service. If the name does not match your name, you need to contact your curator at your institution in order to correct it.",
+    "create_authority": "Create new author",
+    "description_create_own_authority": "Do not create a new author in the author register if you are already registered. Check Example of publication to make sure you are not creating a duplicate.\n\nIf your name is misspelled for Example of publication, please link to this author. Contact the curator at your institution to correct typing errors in the author register. [Lenke til kontaktskjema]\n\nIf you get more than one Example of publication where you are definitely an author, connect to one of the authors. Contact the curator at your institution to clear duplicates in the author register. [Lenke til kontaktskjema]\n\nIf the name at the top of this page is not yours, cancel and contact the curator at your institution to correct the error. [Lenke til kontaktskjema]",
+    "description_no_authority_found": "Your name is not in the author register and must be added before you can continue.",
+    "example_publication": "Example of publication",
     "no_affiliations_found": "No affiliations found",
     "no_registrations_found": "No registrations found",
     "other_affiliations": "+ {{count}} other affiliation",
@@ -20,7 +22,6 @@
     "see_profile": "See author profile"
   },
   "heading": {
-    "connect_authority": "Connect your author ID",
     "contact_info": "Contact",
     "language": "Language",
     "affiliations": "Affiliations",

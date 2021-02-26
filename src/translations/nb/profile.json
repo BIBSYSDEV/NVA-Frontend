@@ -6,13 +6,15 @@
   },
   "applications": "Applikasjoner",
   "authority": {
-    "cancel_connect_authority_text": "Hvis du avbryter tilkoblingsprosessen vil du automatisk bli utlogget. Alle innloggede brukere må ha en tilkoblet forfatteridentitet for å kunne bruke applikasjonen. Ønsker du å avbryte likevel?",
+    "cancel_connect_authority_text": "Du må koble deg til forfatterregisteret for å gå videre. Hvis du avbryter, blir du logget ut. Ønsker du å avbryte?",
     "cancel_connect_authority_title": "Ønsker du å avbryte?",
-    "connect_authority": "Koble til din forfatteridentitet",
+    "connect_authority": "Koble til nasjonalt register over forfattere",
+    "connect_to_select_authority": "Koble til valgt forfatter",
     "connected_authority": "Din forfatteridentitet er koblet til",
-    "create_own_authority": "Opprett meg som forfatter",
-    "description_create_own_authority": "Du har valgt å ikke ta i bruk en eksisterende forfatteridentitet, som har publisert tidligere og oppretter nå en ny forfatteridentitet. \n\nDet er ikke ønskelig å opprette nye forfatteridentiteter. Sjekk registreringene til de forfatteridentitetene som har likt navn som deg, og vær sikker på at du ikke oppretter en duplikatidentitet. \n\nOm du ser noe feil i registreringene som er koblet til det som er din forfatteridentitet, så koble deg på denne identiteten og ta kontakt med kurator på din institusjon for å få rettet feilen. \n\nOm navnet over ikke stemmer med deg, så må du ta kontakt med din kurator ved din institusjon for å få korrigert din forfatteridentitet. [Lenke til kontaktskjema her]",
-    "description_no_authority_found": "Vi finner ikke en forfatteridentitet som passer med ditt navn (hentet fra din pålogging til denne tjenesten). Det vil derfor opprettes en ny forfatteridentitet, slik at du kan ta i bruk denne tjenesten. Om navnet over ikke stemmer med deg, så må du ta kontakt med kurator ved din institusjon for å få korrigert din forfatteridentitet.",
+    "create_authority": "Opprett ny forfatter",
+    "description_create_own_authority": "Ikke opprett ny forfatter i forfatterregisteret hvis du allerede er registrert. Sjekk Eksempel på publikasjon for å være sikker på at du ikke oppretter en dublett.\n\nEr navnet ditt skrevet feil for Eksempel på publikasjon, koble allikevel til denne forfatteren. Kontakt kurator ved din institusjon for å få rettet skrivefeil i forfatterregisteret. [Lenke til kontaktskjema]\n\nFår du flere treff med riktig Eksempel på publikasjon hvor du helt sikkert er forfatter, koble til en av forfatterne. Kontakt kurator ved din institusjon for å få ryddet dubletter i forfatterregisteret. [Lenke til kontaktskjema]\n\nHvis navnet øverst på denne siden ikke er ditt, avbryt og kontakt kurator ved din institusjon for å få rettet feilen. [Lenke til kontaktskjema]  ",
+    "description_no_authority_found": "Navnet ditt finnes ikke i forfatterregisteret og må legges til før du kan fortsette.",
+    "example_publication": "Eksempel på publikasjon",
     "no_affiliations_found": "Ingen tilhørigheter funnet",
     "no_registrations_found": "Ingen registreringer funnet",
     "other_affiliations": "+ {{count}} annen tilhørighet",
@@ -20,7 +22,6 @@
     "see_profile": "Se forfatterprofil"
   },
   "heading": {
-    "connect_authority": "Koble til din forfatter ID",
     "contact_info": "Kontaktinformasjon",
     "language": "Språk",
     "affiliations": "Tilhørigheter",
