@@ -28,19 +28,11 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR }: Cont
 
   useEffect(() => {
     // Ensure all contributors has a role by setting Creator role as default
-    const contributorsWithRole = contributors.map((contributor) => ({
+    const contributorsWithRole = contributorsRef.current.map((contributor) => ({
       ...contributor,
       role: contributor.role ?? ContributorRole.CREATOR,
     }));
-
-    const filteredContributors = contributorsWithRole
-      .filter((contributor) => contributor.role === contributorRole)
-      .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
-    contributorsRef.current = filteredContributors;
-  }, [contributors, contributorRole]);
-
-  useEffect(() => {
-    setFieldValue(ContributorFieldNames.CONTRIBUTORS, contributorsRef.current);
+    setFieldValue(ContributorFieldNames.CONTRIBUTORS, contributorsWithRole);
   }, [setFieldValue]);
 
   return (

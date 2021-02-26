@@ -10,19 +10,21 @@ const ContributorsPanel = () => {
     values: {
       entityDescription: {
         reference: { publicationContext, publicationInstance },
+        contributors,
       },
     },
   } = useFormikContext<Registration>();
 
+  console.log(contributors);
   return publicationContext.type === PublicationType.DEGREE ? (
     <>
-      {/* <Contributors /> TODO: add author also */}
+      <Contributors />
       <Contributors contributorRole={ContributorRole.SUPERVISOR} />
     </>
-  ) : publicationInstance.type !== BookType.ANTHOLOGY ? (
-    <Contributors />
-  ) : (
+  ) : publicationInstance.type === BookType.ANTHOLOGY ? (
     <Contributors contributorRole={ContributorRole.EDITOR} />
+  ) : (
+    <Contributors />
   );
 };
 
