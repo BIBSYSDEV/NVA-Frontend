@@ -47,7 +47,9 @@ const Authors = ({
   } = values;
   const [openContributorModal, setOpenContributorModal] = useState(false);
   const [unverifiedAuthor, setUnverifiedAuthor] = useState<UnverifiedContributor | null>(null);
-  const orderedAuthors = contributors.map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
+  const orderedAuthors = contributors
+    .filter((contributor) => contributor.role === contributorRole)
+    .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
   const isMobile = useIsMobile();
 
   const handleOnRemove = (indexToRemove: number) => {
