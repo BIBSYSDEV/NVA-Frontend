@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
@@ -12,7 +12,7 @@ interface AuthorListProps {
   openContributorModal: (unverifiedAuthor: UnverifiedContributor) => void;
 }
 
-const AuthorList: FC<AuthorListProps> = ({ authors, onDelete, onMoveAuthor, openContributorModal }) => {
+const AuthorList = ({ authors, onDelete, onMoveAuthor, openContributorModal }: AuthorListProps) => {
   const { t } = useTranslation('registration');
   const [authorToRemove, setAuthorToRemove] = useState<Contributor | null>(null);
 
@@ -36,6 +36,7 @@ const AuthorList: FC<AuthorListProps> = ({ authors, onDelete, onMoveAuthor, open
           }}
           onRemoveAuthorClick={() => setAuthorToRemove(author)}
           openContributorModal={openContributorModal}
+          contributorsLength={authors.length}
         />
       ))}
       {authorToRemove && (

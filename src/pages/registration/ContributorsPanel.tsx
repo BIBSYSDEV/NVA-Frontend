@@ -1,9 +1,12 @@
-import { useFormikContext } from 'formik';
-import React from 'react';
+import { FormHelperText } from '@material-ui/core';
+import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
+import React, { useEffect, useRef } from 'react';
+import BackgroundDiv from '../../components/BackgroundDiv';
+import lightTheme from '../../themes/lightTheme';
 import { ContributorRole } from '../../types/contributor.types';
-import { BookType, PublicationType } from '../../types/publicationFieldNames';
+import { BookType, ContributorFieldNames, PublicationType } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
-import { Contributors } from './contributors_tab/components/Contributors';
+import { Contributors } from './contributors_tab/Contributors';
 
 const ContributorsPanel = () => {
   const {
@@ -13,18 +16,51 @@ const ContributorsPanel = () => {
         contributors,
       },
     },
+    errors,
+    touched,
+    setFieldValue,
   } = useFormikContext<Registration>();
 
-  console.log(contributors);
-  return publicationContext.type === PublicationType.DEGREE ? (
+  const contributorsError = errors.entityDescription?.contributors;
+  const contributorsTouched = touched.entityDescription?.contributors;
+  const contributorsRef = useRef(contributors);
+
+  useEffect(() => {
+    // Ensure all contributors has a role by setting Creator role as default
+    const contributorsWithRole = contributorsRef.current.map((contributor) => ({
+      ...contributor,
+      role: contributor.role ?? ContributorRole.CREATOR,
+    }));
+    setFieldValue(ContributorFieldNames.CONTRIBUTORS, contributorsWithRole);
+  }, [setFieldValue]);
+
+  return (
     <>
-      <Contributors />
-      <Contributors contributorRole={ContributorRole.SUPERVISOR} />
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+        <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
+          {({ push, replace }: FieldArrayRenderProps) => (
+            <>
+              {publicationContext.type === PublicationType.DEGREE ? (
+                <>
+                  <Contributors push={push} replace={replace} />
+                  {/* TODO: Set Supervisor instead of Editor */}
+                  <Contributors contributorRole={ContributorRole.EDITOR} push={push} replace={replace} />
+                </>
+              ) : publicationInstance.type === BookType.ANTHOLOGY ? (
+                <Contributors contributorRole={ContributorRole.EDITOR} push={push} replace={replace} />
+              ) : (
+                <Contributors push={push} replace={replace} />
+              )}
+            </>
+          )}
+        </FieldArray>
+      </BackgroundDiv>
+      {contributors.length === 0 && !!contributorsTouched && typeof contributorsError === 'string' && (
+        <FormHelperText error>
+          <ErrorMessage name={ContributorFieldNames.CONTRIBUTORS} />
+        </FormHelperText>
+      )}
     </>
-  ) : publicationInstance.type === BookType.ANTHOLOGY ? (
-    <Contributors contributorRole={ContributorRole.EDITOR} />
-  ) : (
-    <Contributors />
   );
 };
 

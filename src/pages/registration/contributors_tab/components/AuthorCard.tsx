@@ -120,6 +120,7 @@ interface AuthorCardProps {
   onMoveAuthor: (event: React.ChangeEvent<any>) => void;
   onRemoveAuthorClick: () => void;
   openContributorModal: (unverifiedAuthor: UnverifiedContributor) => void;
+  contributorsLength: number;
 }
 
 const AuthorCard = ({
@@ -128,13 +129,13 @@ const AuthorCard = ({
   onMoveAuthor,
   onRemoveAuthorClick,
   openContributorModal,
+  contributorsLength,
 }: AuthorCardProps) => {
   const { t } = useTranslation('registration');
   const index = author.sequence - 1;
   const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
   const { values, setFieldValue } = useFormikContext<Registration>();
   const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[index]?.email ?? '');
-  const contributorsLength = values.entityDescription.contributors.length - 1;
 
   return (
     <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
@@ -165,12 +166,12 @@ const AuthorCard = ({
         </StyledVerifiedSection>
         <StyledRightAlignedWrapper>
           <StyledArrowSection>
-            {index < contributorsLength && (
+            {author.sequence < contributorsLength && (
               <StyledArrowButton color="secondary" onClick={() => onArrowMove('down')}>
                 <ArrowDownwardIcon />
               </StyledArrowButton>
             )}
-            {index !== 0 && (
+            {author.sequence !== 1 && (
               <StyledArrowButton color="secondary" onClick={() => onArrowMove('up')}>
                 <ArrowUpwardIcon />
               </StyledArrowButton>
