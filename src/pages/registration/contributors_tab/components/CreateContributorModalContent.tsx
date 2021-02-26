@@ -52,7 +52,9 @@ const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: CreateCo
         {({ isSubmitting }) => (
           <Form noValidate>
             <Collapse in={readMore} collapsedHeight="4.5rem">
-              <StyledNormalTextPreWrapped>{t('description_create_authority')}</StyledNormalTextPreWrapped>
+              <StyledNormalTextPreWrapped>
+                {t('registration:contributors.create_new_author_description')}
+              </StyledNormalTextPreWrapped>
             </Collapse>
             <StyledRightAlignedWrapper>
               <Button color="primary" data-testid="button-read-more" onClick={toggleReadMore}>
@@ -98,7 +100,7 @@ const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: CreateCo
                 variant="contained"
                 isLoading={isLoading}
                 disabled={isSubmitting}>
-                {t('create_authority')}
+                {t('profile:authority.create_authority')}
               </ButtonWithProgress>
             </DialogActions>
           </Form>
