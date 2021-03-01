@@ -150,13 +150,12 @@ const AuthorCard = ({
   }, [author.sequence]);
 
   const handleOnMoveAuthor = () => {
+    // TODO: Handle empty string
     const sequenceNumber = +sequenceValue;
     if (!isNaN(sequenceNumber)) {
       onMoveAuthor(sequenceNumber, author.sequence);
-    } else {
-      setSequenceValue(`${author.sequence}`);
     }
-    // TODO: Handle reset of last element if sequence set to a number out of range
+    setSequenceValue(`${author.sequence}`);
   };
 
   return (
@@ -200,7 +199,6 @@ const AuthorCard = ({
             )}
           </StyledArrowSection>
           <StyledSequenceTextField
-            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', min: '0' }}
             value={sequenceValue}
             onChange={(event) => {
               const newValue = event.target.value;
