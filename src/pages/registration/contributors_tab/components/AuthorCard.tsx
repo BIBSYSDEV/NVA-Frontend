@@ -44,8 +44,6 @@ const StyledAuthorSection = styled.div`
   align-items: start;
 `;
 
-// const StyledSequenceField = styled(Field)``;
-
 const StyledSequenceTextField = styled(TextField)`
   grid-area: sequence;
   width: 3rem;
@@ -144,12 +142,22 @@ const AuthorCard = ({
   const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${fieldArrayIndex}]`;
   const { values, setFieldValue } = useFormikContext<Registration>();
   const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[fieldArrayIndex]?.email ?? '');
-  const [sequenceValue, setSequenceValue] = useState(author.sequence); // TODO: handle NaN
+  const [sequenceValue, setSequenceValue] = useState(`${author.sequence}`);
 
   useEffect(() => {
     // Ensure sequence field is updated
-    setSequenceValue(author.sequence);
+    setSequenceValue(`${author.sequence}`);
   }, [author.sequence]);
+
+  const handleOnMoveAuthor = () => {
+    const sequenceNumber = +sequenceValue;
+    if (!isNaN(sequenceNumber)) {
+      onMoveAuthor(sequenceNumber, author.sequence);
+    } else {
+      setSequenceValue(`${author.sequence}`);
+    }
+    // TODO: Handle reset of last element if sequence set to a number out of range
+  };
 
   return (
     <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
@@ -192,17 +200,21 @@ const AuthorCard = ({
             )}
           </StyledArrowSection>
           <StyledSequenceTextField
+            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', min: '0' }}
             value={sequenceValue}
-            onChange={(event) => setSequenceValue(+event.target.value)}
+            onChange={(event) => {
+              const newValue = event.target.value;
+              setSequenceValue(newValue);
+            }}
             variant="filled"
             label={t('common:number_short')}
             onKeyDown={(event) => {
               if (event.key === 'Enter') {
                 event.preventDefault();
-                onMoveAuthor(sequenceValue, author.sequence);
+                handleOnMoveAuthor();
               }
             }}
-            onBlur={() => onMoveAuthor(sequenceValue, author.sequence)}
+            onBlur={handleOnMoveAuthor}
           />
         </StyledRightAlignedWrapper>
         <StyledCorrespondingWrapper>
