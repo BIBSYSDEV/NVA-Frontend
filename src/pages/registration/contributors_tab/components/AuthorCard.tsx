@@ -144,7 +144,7 @@ const AuthorCard = ({
   const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${fieldArrayIndex}]`;
   const { values, setFieldValue } = useFormikContext<Registration>();
   const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[fieldArrayIndex]?.email ?? '');
-  const [sequenceValue, setSequenceValue] = useState(author.sequence);
+  const [sequenceValue, setSequenceValue] = useState(author.sequence); // TODO: handle NaN
 
   useEffect(() => {
     // Ensure sequence field is updated

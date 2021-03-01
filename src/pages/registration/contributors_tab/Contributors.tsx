@@ -65,7 +65,21 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
 
   const handleMoveAuthor = (newSequence: number, oldSequence: number) => {
     const oldIndex = relevantContributors.findIndex((c) => c.sequence === oldSequence);
-    const newIndex = relevantContributors.findIndex((c) => c.sequence === newSequence);
+    const minNewIndex = 0;
+    const maxNewIndex = relevantContributors.length - 1;
+
+    const boundedNewIndex =
+      newSequence > relevantContributors.length ? maxNewIndex : newSequence < 0 ? minNewIndex : null;
+    const newIndex = boundedNewIndex
+      ? boundedNewIndex
+      : Math.min(
+          maxNewIndex,
+          Math.max(
+            minNewIndex,
+            relevantContributors.findIndex((c) => c.sequence === newSequence)
+          )
+        );
+
     const reorderedAuthors = move(relevantContributors, oldIndex, newIndex) as Contributor[];
     // Ensure incrementing sequence values
     const newAuthors = reorderedAuthors.map((contributor, index) => ({
