@@ -63,7 +63,9 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
     }
   };
 
-  const handleMoveAuthor = (newIndex: number, oldIndex: number) => {
+  const handleMoveAuthor = (newSequence: number, oldSequence: number) => {
+    const oldIndex = relevantContributors.findIndex((c) => c.sequence === oldSequence);
+    const newIndex = relevantContributors.findIndex((c) => c.sequence === newSequence);
     const reorderedAuthors = move(relevantContributors, oldIndex, newIndex) as Contributor[];
     // Ensure incrementing sequence values
     const newAuthors = reorderedAuthors.map((contributor, index) => ({

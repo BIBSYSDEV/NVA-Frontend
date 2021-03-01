@@ -1,5 +1,5 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Button, Checkbox, FormControlLabel, TextField, Tooltip, Typography } from '@material-ui/core';
@@ -44,11 +44,10 @@ const StyledAuthorSection = styled.div`
   align-items: start;
 `;
 
-const StyledSequenceField = styled(Field)`
-  grid-area: sequence;
-`;
+// const StyledSequenceField = styled(Field)``;
 
 const StyledSequenceTextField = styled(TextField)`
+  grid-area: sequence;
   width: 3rem;
   margin: -1rem 1rem 0 0;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
@@ -116,8 +115,7 @@ const StyledArrowButton = styled(Button)`
 
 interface AuthorCardProps {
   author: Contributor;
-  onArrowMove: (direction: 'up' | 'down') => void;
-  onMoveAuthor: (event: React.ChangeEvent<any>) => void;
+  onMoveAuthor: (newSequence: number, oldSequence: number) => void;
   onRemoveAuthorClick: () => void;
   openContributorModal: (unverifiedAuthor: UnverifiedContributor) => void;
   contributorsLength: number;
@@ -125,7 +123,6 @@ interface AuthorCardProps {
 
 const AuthorCard = ({
   author,
-  onArrowMove,
   onMoveAuthor,
   onRemoveAuthorClick,
   openContributorModal,
@@ -147,6 +144,11 @@ const AuthorCard = ({
   const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${fieldArrayIndex}]`;
   const { values, setFieldValue } = useFormikContext<Registration>();
   const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[fieldArrayIndex]?.email ?? '');
+  const [sequenceValue, setSequenceValue] = useState(author.sequence);
+
+  useEffect(() => {
+    setSequenceValue(author.sequence);
+  }, [author.sequence]);
 
   return (
     <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
@@ -178,35 +180,29 @@ const AuthorCard = ({
         <StyledRightAlignedWrapper>
           <StyledArrowSection>
             {author.sequence < contributorsLength && (
-              <StyledArrowButton color="secondary" onClick={() => onArrowMove('down')}>
+              <StyledArrowButton color="secondary" onClick={() => onMoveAuthor(author.sequence + 1, author.sequence)}>
                 <ArrowDownwardIcon />
               </StyledArrowButton>
             )}
             {author.sequence !== 1 && (
-              <StyledArrowButton color="secondary" onClick={() => onArrowMove('up')}>
+              <StyledArrowButton color="secondary" onClick={() => onMoveAuthor(author.sequence - 1, author.sequence)}>
                 <ArrowUpwardIcon />
               </StyledArrowButton>
             )}
           </StyledArrowSection>
-          <StyledSequenceField name={`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`}>
-            {({ field }: FieldProps) => (
-              <StyledSequenceTextField
-                {...field}
-                variant="filled"
-                label={t('common:number_short')}
-                onKeyDown={(event) => {
-                  if (event.key === 'Enter' && field.value) {
-                    event.preventDefault();
-                    onMoveAuthor(event);
-                  }
-                }}
-                onBlur={(event) => {
-                  onMoveAuthor(event);
-                  field.onBlur(event);
-                }}
-              />
-            )}
-          </StyledSequenceField>
+          <StyledSequenceTextField
+            value={sequenceValue}
+            onChange={(event) => setSequenceValue(+event.target.value)}
+            variant="filled"
+            label={t('common:number_short')}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                event.preventDefault();
+                onMoveAuthor(sequenceValue, author.sequence);
+              }
+            }}
+            onBlur={() => onMoveAuthor(sequenceValue, author.sequence)}
+          />
         </StyledRightAlignedWrapper>
         <StyledCorrespondingWrapper>
           <StyledCorrespondingField name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>

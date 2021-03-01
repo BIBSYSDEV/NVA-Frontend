@@ -8,7 +8,7 @@ import AuthorCard from './AuthorCard';
 interface AuthorListProps {
   authors: Contributor[];
   onDelete: (index: number) => void;
-  onMoveAuthor: (newIndex: number, oldIndex: number) => void;
+  onMoveAuthor: (newSequence: number, oldSequence: number) => void;
   openContributorModal: (unverifiedAuthor: UnverifiedContributor) => void;
 }
 
@@ -26,14 +26,7 @@ const AuthorList = ({ authors, onDelete, onMoveAuthor, openContributorModal }: A
         <AuthorCard
           author={author}
           key={author.identity.id || author.identity.name}
-          onMoveAuthor={(event) => onMoveAuthor(event.target.value - 1, author.sequence - 1)}
-          onArrowMove={(direction: 'up' | 'down') => {
-            if (direction === 'up') {
-              onMoveAuthor(author.sequence - 2, author.sequence - 1);
-            } else {
-              onMoveAuthor(author.sequence, author.sequence - 1);
-            }
-          }}
+          onMoveAuthor={onMoveAuthor}
           onRemoveAuthorClick={() => setAuthorToRemove(author)}
           openContributorModal={openContributorModal}
           contributorsLength={authors.length}
