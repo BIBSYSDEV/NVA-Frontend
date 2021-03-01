@@ -39,21 +39,19 @@ const ContributorsPanel = () => {
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
-          {({ push, replace }: FieldArrayRenderProps) => (
-            <>
-              {publicationContext.type === PublicationType.DEGREE ? (
-                <>
-                  <Contributors push={push} replace={replace} />
-                  {/* TODO: Set Supervisor instead of Editor */}
-                  <Contributors contributorRole={ContributorRole.EDITOR} push={push} replace={replace} />
-                </>
-              ) : publicationInstance.type === BookType.ANTHOLOGY ? (
-                <Contributors contributorRole={ContributorRole.EDITOR} push={push} replace={replace} />
-              ) : (
+          {({ push, replace }: FieldArrayRenderProps) =>
+            publicationContext.type === PublicationType.DEGREE ? (
+              <>
                 <Contributors push={push} replace={replace} />
-              )}
-            </>
-          )}
+                {/* TODO: Set Supervisor instead of Editor */}
+                <Contributors contributorRole={ContributorRole.EDITOR} push={push} replace={replace} />
+              </>
+            ) : publicationInstance.type === BookType.ANTHOLOGY ? (
+              <Contributors contributorRole={ContributorRole.EDITOR} push={push} replace={replace} />
+            ) : (
+              <Contributors push={push} replace={replace} />
+            )
+          }
         </FieldArray>
       </BackgroundDiv>
       {contributors.length === 0 && !!contributorsTouched && typeof contributorsError === 'string' && (

@@ -147,6 +147,7 @@ const AuthorCard = ({
   const [sequenceValue, setSequenceValue] = useState(author.sequence);
 
   useEffect(() => {
+    // Ensure sequence field is updated
     setSequenceValue(author.sequence);
   }, [author.sequence]);
 
