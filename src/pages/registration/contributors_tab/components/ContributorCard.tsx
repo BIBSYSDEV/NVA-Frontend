@@ -131,15 +131,15 @@ export const ContributorCard = ({
     },
   } = useFormikContext<Registration>();
 
-  const fieldArrayIndex = contributors.findIndex(
+  const contributorIndex = contributors.findIndex(
     (c) =>
       c.identity.id === contributor.identity.id &&
       c.identity.name === contributor.identity.name &&
       c.role === contributor.role
   );
-  const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${fieldArrayIndex}]`;
+  const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${contributorIndex}]`;
   const { values, setFieldValue } = useFormikContext<Registration>();
-  const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[fieldArrayIndex]?.email ?? '');
+  const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[contributorIndex]?.email ?? '');
   const [sequenceValue, setSequenceValue] = useState(`${contributor.sequence}`);
 
   useEffect(() => {
@@ -177,7 +177,7 @@ export const ContributorCard = ({
               }
               variant="outlined"
               data-testid={`button-set-unverified-contributor-${contributor.identity.name}`}
-              onClick={() => openContributorModal({ name: contributor.identity.name, index: fieldArrayIndex })}>
+              onClick={() => openContributorModal({ name: contributor.identity.name, index: contributorIndex })}>
               {t('contributors.verify_person')}
             </Button>
           )}
