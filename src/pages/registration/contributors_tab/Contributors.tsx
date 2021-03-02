@@ -24,8 +24,8 @@ import {
   getContributorHeading,
 } from '../../../utils/validation/registration/contributorTranslations';
 import AddContributorModal from './AddContributorModal';
-import AuthorList from './components/AuthorList';
 import lightTheme from '../../../themes/lightTheme';
+import { ContributorList } from './components/ContributorList';
 
 const StyledButton = styled(Button)`
   margin: 1rem 0rem;
@@ -44,7 +44,7 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
     entityDescription: { contributors },
   } = values;
   const [openContributorModal, setOpenContributorModal] = useState(false);
-  const [unverifiedAuthor, setUnverifiedAuthor] = useState<UnverifiedContributor | null>(null);
+  const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
   const isMobile = useIsMobile();
 
   const relevantContributors = contributors.filter((contributor) => contributor.role === contributorRole);
@@ -63,7 +63,7 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
     }
   };
 
-  const handleMoveAuthor = (newSequence: number, oldSequence: number) => {
+  const handleMoveContributor = (newSequence: number, oldSequence: number) => {
     const oldIndex = relevantContributors.findIndex((c) => c.sequence === oldSequence);
     const minNewIndex = 0;
     const maxNewIndex = relevantContributors.length - 1;
@@ -80,17 +80,17 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
           )
         );
 
-    const reorderedAuthors = move(relevantContributors, oldIndex, newIndex) as Contributor[];
+    const reorderedContributors = move(relevantContributors, oldIndex, newIndex) as Contributor[];
     // Ensure incrementing sequence values
-    const newAuthors = reorderedAuthors.map((contributor, index) => ({
+    const newContributors = reorderedContributors.map((contributor, index) => ({
       ...contributor,
       sequence: index + 1,
     }));
-    setFieldValue(ContributorFieldNames.CONTRIBUTORS, [...otherContributors, ...newAuthors]);
+    setFieldValue(ContributorFieldNames.CONTRIBUTORS, [...otherContributors, ...newContributors]);
   };
 
   const handleOpenContributorModal = (unverifiedAuthor: UnverifiedContributor) => {
-    setUnverifiedAuthor(unverifiedAuthor);
+    setUnverifiedContributor(unverifiedAuthor);
     setOpenContributorModal(true);
   };
 
@@ -107,7 +107,7 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
       name: authority.name,
     };
 
-    if (!unverifiedAuthor) {
+    if (!unverifiedContributor) {
       const newAuthor: Contributor = {
         ...emptyContributor,
         identity,
@@ -121,11 +121,11 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
       push(newAuthor);
     } else {
       const verifiedAuthor: Contributor = {
-        ...relevantContributors[unverifiedAuthor.index],
+        ...relevantContributors[unverifiedContributor.index],
         role: contributorRole,
         identity,
       };
-      replace(unverifiedAuthor.index, verifiedAuthor);
+      replace(unverifiedContributor.index, verifiedAuthor);
     }
   };
 
@@ -137,7 +137,7 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
           <StyledButton
             onClick={() => {
               setOpenContributorModal(true);
-              setUnverifiedAuthor(null);
+              setUnverifiedContributor(null);
             }}
             variant="contained"
             color="secondary"
@@ -147,17 +147,17 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
           </StyledButton>
         )}
 
-        <AuthorList
-          authors={relevantContributors}
+        <ContributorList
+          contributors={relevantContributors}
           onDelete={handleOnRemove}
-          onMoveAuthor={handleMoveAuthor}
+          onMoveContributor={handleMoveContributor}
           openContributorModal={handleOpenContributorModal}
         />
 
         <StyledButton
           onClick={() => {
             setOpenContributorModal(true);
-            setUnverifiedAuthor(null);
+            setUnverifiedContributor(null);
           }}
           variant="contained"
           color="secondary"
@@ -167,7 +167,7 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
         </StyledButton>
         <AddContributorModal
           contributorRole={contributorRole}
-          initialSearchTerm={unverifiedAuthor?.name}
+          initialSearchTerm={unverifiedContributor?.name}
           open={openContributorModal}
           toggleModal={() => setOpenContributorModal(!openContributorModal)}
           onAuthorSelected={onAuthorSelected}
