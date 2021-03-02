@@ -88,14 +88,14 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
     setFieldValue(ContributorFieldNames.CONTRIBUTORS, [...otherContributors, ...newContributors]);
   };
 
-  const handleOpenContributorModal = (unverifiedAuthor: UnverifiedContributor) => {
-    setUnverifiedContributor(unverifiedAuthor);
+  const handleOpenContributorModal = (unverifiedContributor: UnverifiedContributor) => {
+    setUnverifiedContributor(unverifiedContributor);
     setOpenContributorModal(true);
   };
 
   const onAuthorSelected = (authority: Authority) => {
-    if (relevantContributors.some((author) => author.identity.id === authority.id)) {
-      dispatch(setNotification(t('contributors.author_already_added'), NotificationVariant.Info));
+    if (relevantContributors.some((contributor) => contributor.identity.id === authority.id)) {
+      dispatch(setNotification(t('contributors.contributor_already_added'), NotificationVariant.Info));
       return;
     }
 
@@ -107,7 +107,7 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
     };
 
     if (!unverifiedContributor) {
-      const newAuthor: Contributor = {
+      const newContributor: Contributor = {
         ...emptyContributor,
         identity,
         affiliations: authority.orgunitids.map((unitUri) => ({
@@ -117,14 +117,14 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
         role: contributorRole,
         sequence: relevantContributors.length + 1,
       };
-      push(newAuthor);
+      push(newContributor);
     } else {
-      const verifiedAuthor: Contributor = {
+      const verifiedContributor: Contributor = {
         ...relevantContributors[unverifiedContributor.index],
         role: contributorRole,
         identity,
       };
-      replace(unverifiedContributor.index, verifiedAuthor);
+      replace(unverifiedContributor.index, verifiedContributor);
     }
   };
 
