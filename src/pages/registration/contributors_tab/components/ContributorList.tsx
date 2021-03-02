@@ -29,8 +29,8 @@ export const ContributorList = ({
     <>
       {contributors.map((contributor) => (
         <ContributorCard
-          contributor={contributor}
           key={contributor.identity.id || contributor.identity.name}
+          contributor={contributor}
           onMoveContributor={onMoveContributor}
           onRemoveContributorClick={() => setContributorToRemove(contributor)}
           openContributorModal={openContributorModal}
