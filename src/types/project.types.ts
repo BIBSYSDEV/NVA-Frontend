@@ -25,7 +25,7 @@ export interface CristinProject {
   titles: CristinProjectTitle[];
   participants: CristinProjectParticipant[];
   institutions: CristinProjectInstitution[];
-  fundings: CristinProjectFunding[];
+  fundings?: CristinProjectFunding[];
 }
 
 interface CristinProjectTitle {
