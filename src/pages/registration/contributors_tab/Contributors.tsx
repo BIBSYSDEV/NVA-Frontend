@@ -142,7 +142,7 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
             variant="contained"
             color="secondary"
             startIcon={<AddIcon />}
-            data-testid="add-contributor">
+            data-testid={`add-contributor-${contributorRole}`}>
             {getAddContributorText(contributorRole)}
           </StyledButton>
         )}
@@ -162,7 +162,7 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
           variant="contained"
           color="secondary"
           startIcon={<AddIcon />}
-          data-testid="add-contributor">
+          data-testid={`add-contributor-${contributorRole}`}>
           {getAddContributorText(contributorRole)}
         </StyledButton>
         <AddContributorModal
