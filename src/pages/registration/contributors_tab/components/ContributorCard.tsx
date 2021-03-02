@@ -201,10 +201,7 @@ export const ContributorCard = ({
           </StyledArrowSection>
           <StyledSequenceTextField
             value={sequenceValue}
-            onChange={(event) => {
-              const newValue = event.target.value;
-              setSequenceValue(newValue);
-            }}
+            onChange={(event) => setSequenceValue(event.target.value)}
             variant="filled"
             label={t('common:number_short')}
             onKeyDown={(event) => {
