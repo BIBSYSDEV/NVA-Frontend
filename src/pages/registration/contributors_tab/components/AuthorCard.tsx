@@ -150,9 +150,8 @@ const AuthorCard = ({
   }, [author.sequence]);
 
   const handleOnMoveAuthor = () => {
-    // TODO: Handle empty string
     const sequenceNumber = +sequenceValue;
-    if (!isNaN(sequenceNumber)) {
+    if (sequenceValue && !isNaN(sequenceNumber)) {
       onMoveAuthor(sequenceNumber, author.sequence);
     }
     setSequenceValue(`${author.sequence}`);
