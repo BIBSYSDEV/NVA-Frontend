@@ -5,6 +5,7 @@ export const ErrorMessage = {
   MISSING_AUTHOR: i18n.t('registration:feedback.minimum_one_author'),
   MISSING_EDITOR: i18n.t('registration:feedback.minimum_one_editor'),
   MISSING_FILE: i18n.t('registration:feedback.minimum_one_file'),
+  MISSING_SUPERVISOR: i18n.t('registration:feedback.minimum_one_supervisor'),
   INVALID_PAGE_INTERVAL: i18n.t('registration:feedback.invalid_page_interval'),
   INVALID_FORMAT: i18n.t('registration:feedback.invalid_format'),
   INVALID_ISBN: i18n.t('registration:feedback.invalid_isbn'),

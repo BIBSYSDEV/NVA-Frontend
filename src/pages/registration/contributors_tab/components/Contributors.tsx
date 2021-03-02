@@ -1,6 +1,5 @@
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import React, { useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { FormHelperText, MuiThemeProvider, Typography } from '@material-ui/core';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
 import lightTheme from '../../../../themes/lightTheme';
@@ -8,13 +7,13 @@ import { ContributorRole } from '../../../../types/contributor.types';
 import { ContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import Authors from '../Authors';
+import { getContributorHeading } from '../../../../utils/validation/registration/contributorTranslations';
 
 interface ContributorsProps {
   contributorRole?: ContributorRole;
 }
 
 export const Contributors = ({ contributorRole = ContributorRole.CREATOR }: ContributorsProps) => {
-  const { t } = useTranslation('registration');
   const {
     values: {
       entityDescription: { contributors },
@@ -47,9 +46,7 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR }: Cont
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        <Typography variant="h2">
-          {contributorRole === ContributorRole.EDITOR ? t('contributors.editors') : t('contributors.authors')}
-        </Typography>
+        <Typography variant="h2">{getContributorHeading(contributorRole)}</Typography>
         <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
           {({ push, replace }: FieldArrayRenderProps) => (
             <MuiThemeProvider theme={lightTheme}>
