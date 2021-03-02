@@ -31,7 +31,6 @@ const ContributorsPanel = () => {
       ...contributor,
       role: contributor.role ?? ContributorRole.CREATOR,
     }));
-    // TODO: Check valid sequences?
     setFieldValue(ContributorFieldNames.CONTRIBUTORS, contributorsWithRole);
   }, [setFieldValue]);
 
@@ -43,8 +42,7 @@ const ContributorsPanel = () => {
             publicationContext.type === PublicationType.DEGREE ? (
               <>
                 <Contributors push={push} replace={replace} />
-                {/* TODO: Set Supervisor instead of Editor */}
-                <Contributors contributorRole={ContributorRole.EDITOR} push={push} replace={replace} />
+                <Contributors contributorRole={ContributorRole.SUPERVISOR} push={push} replace={replace} />
               </>
             ) : publicationInstance.type === BookType.ANTHOLOGY ? (
               <Contributors contributorRole={ContributorRole.EDITOR} push={push} replace={replace} />
