@@ -19,6 +19,7 @@ import { BackendTypeNames } from '../../../types/publication_types/commonRegistr
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import useIsMobile from '../../../utils/hooks/useIsMobile';
+import { getAddContributorText } from '../../../utils/validation/registration/contributorTranslations';
 import AddContributorModal from './AddContributorModal';
 import AuthorList from './components/AuthorList';
 
@@ -123,7 +124,7 @@ const Authors = ({
           color="secondary"
           startIcon={<AddIcon />}
           data-testid="add-contributor">
-          {contributorRole === ContributorRole.EDITOR ? t('contributors.add_editor') : t('contributors.add_author')}
+          {getAddContributorText(contributorRole)}
         </StyledButton>
       )}
       <AuthorList
@@ -141,7 +142,7 @@ const Authors = ({
         color="secondary"
         startIcon={<AddIcon />}
         data-testid="add-contributor">
-        {contributorRole === ContributorRole.EDITOR ? t('contributors.add_editor') : t('contributors.add_author')}
+        {getAddContributorText(contributorRole)}
       </StyledButton>
       <AddContributorModal
         contributorRole={contributorRole}

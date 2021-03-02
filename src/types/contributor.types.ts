@@ -5,6 +5,7 @@ import { BackendType } from './registration.types';
 export enum ContributorRole {
   CREATOR = 'Creator',
   EDITOR = 'Editor',
+  SUPERVISOR = 'Supervisor',
 }
 
 export interface Identity extends BackendType {
