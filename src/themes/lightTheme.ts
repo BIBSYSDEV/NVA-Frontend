@@ -15,6 +15,10 @@ declare module '@material-ui/core/styles/createPalette' {
     section?: ExtendedPaletteOptions;
   }
 
+  interface TypeBackground {
+    footer: string;
+  }
+
   interface ExtendedPalette extends PaletteColor {
     megaLight: string;
     megaDark: string;
@@ -70,6 +74,7 @@ const lightTheme = createMuiTheme({
     },
     background: {
       default: Color.White,
+      footer: Color.Footer,
     },
     section: {
       megaLight: Color.BlueMegaLight,
@@ -123,6 +128,14 @@ const lightTheme = createMuiTheme({
     MuiInputBase: {
       root: {
         background: Color.White,
+
+        "& div[class*='MuiAutocomplete-tag']": {
+          // TODO: Set this in MuiAutocomplete.tag when Autocomplete is added to MUI core
+          margin: '0.5rem 0 !important',
+          '&:not(:last-child)': {
+            marginRight: '0.5rem !important',
+          },
+        },
       },
     },
     MuiLink: {

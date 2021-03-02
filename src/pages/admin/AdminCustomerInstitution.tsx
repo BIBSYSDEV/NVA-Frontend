@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
-import { CircularProgress } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-
-import CustomerInstitutionMetadataForm from './CustomerInstitutionMetadataForm';
-import CustomerInstitutionAdminsForm from './CustomerInstitutionAdminsForm';
+import styled from 'styled-components';
+import { PageHeader } from '../../components/PageHeader';
+import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { emptyCustomerInstitution } from '../../types/customerInstitution.types';
 import { useFetchCustomerInstitution } from '../../utils/hooks/useFetchCustomerInstitution';
 import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';
-import { PageHeader } from '../../components/PageHeader';
+import CustomerInstitutionAdminsForm from './CustomerInstitutionAdminsForm';
+import CustomerInstitutionMetadataForm from './CustomerInstitutionMetadataForm';
+import { PageSpinner } from '../../components/PageSpinner';
 
 const StyledCustomerInstitution = styled.section`
   display: flex;
@@ -28,11 +28,11 @@ const AdminCustomerInstitution: FC<AdminCustomerInstitutionProps> = ({ customerI
   const [users, isLoadingUsers, refetchInstitutionUsers] = useFetchUsersForInstitution(editMode ? customerId : '');
 
   return (
-    <>
+    <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t(editMode ? 'edit_institution' : 'add_institution')}</PageHeader>
       <StyledCustomerInstitution>
         {isLoadingCustomerInstitution ? (
-          <CircularProgress />
+          <PageSpinner />
         ) : (
           <>
             <CustomerInstitutionMetadataForm
@@ -50,7 +50,7 @@ const AdminCustomerInstitution: FC<AdminCustomerInstitutionProps> = ({ customerI
           </>
         )}
       </StyledCustomerInstitution>
-    </>
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 

@@ -30,8 +30,8 @@ const useSearchRegistrations = (
         } else if (response.data) {
           setSearchResults(response.data);
         }
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
     handleSearchRegistrations();

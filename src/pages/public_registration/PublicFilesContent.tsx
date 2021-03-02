@@ -1,21 +1,12 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import LockIcon from '@material-ui/icons/Lock';
-import { useParams } from 'react-router-dom';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import {
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Button, CircularProgress, Typography } from '@material-ui/core';
 import prettyBytes from 'pretty-bytes';
 import { File, licenses } from '../../types/file.types';
 import { downloadFile } from '../../api/fileApi';
@@ -23,25 +14,74 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
+import { PreviewFile } from './preview_file/PreviewFile';
 
-const StyledTableCell = styled(TableCell)`
-  font-size: 1rem;
-  word-wrap: break-word;
+const StyledFileRowContainer = styled.div`
+  > :not(:last-child) {
+    margin-bottom: 1rem;
+  }
 `;
 
-const StyledNameTableCell = styled(StyledTableCell)`
-  min-width: 10rem;
+const StyledFileRow = styled.div`
+  display: grid;
+  grid-template-areas:
+    'name     size    version license download'
+    'preview  preview preview preview preview ';
+  grid-template-columns: 5fr 1fr 2fr 2fr 2fr;
+  column-gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  background: ${({ theme }) => theme.palette.common.white};
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
+    grid-template-areas:
+      'name     size    '
+      'version  license '
+      'download download';
+    grid-template-columns: auto auto;
+    row-gap: 1rem;
+  }
+`;
+
+const StyledFileName = styled(Typography)`
+  grid-area: name;
+  font-size: 1rem;
   font-weight: 700;
   line-break: anywhere;
 `;
 
+const StyledSize = styled(Typography)`
+  grid-area: size;
+`;
+
+const StyledVersion = styled(Typography)`
+  grid-area: version;
+`;
+
 const StyledLicenseImg = styled.img`
+  grid-area: license;
   cursor: pointer;
 `;
 
+const StyledDownload = styled.div`
+  grid-area: download;
+`;
+
+const StyledPreviewAccordion = styled(Accordion)`
+  grid-area: preview;
+  margin-top: 1rem;
+  max-height: 35rem;
+  background: #f6f6f6;
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
+    display: none;
+  }
+`;
+
+const maxFileSize = 10000000; //10 MB
+
 const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('common');
-
   const publiclyAvailableFiles = registration.fileSet.files.filter((file) => !file.administrativeAgreement);
 
   return (
@@ -50,67 +90,76 @@ const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) =>
         {t('registration:files_and_license.files')}
       </Typography>
 
-      <TableContainer>
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>{t('registration:files_and_license.title')}</StyledTableCell>
-              <StyledTableCell>{t('size')}</StyledTableCell>
-              <StyledTableCell>{t('version')}</StyledTableCell>
-              <StyledTableCell>{t('registration:files_and_license.license')}</StyledTableCell>
-              <StyledTableCell />
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {publiclyAvailableFiles.map((file) => (
-              <FileRow key={file.identifier} file={file} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <StyledFileRowContainer>
+        {publiclyAvailableFiles.map((file, index) => (
+          <FileRow
+            key={file.identifier}
+            file={file}
+            registrationId={registration.identifier}
+            openPreviewByDefault={index === 0 && publiclyAvailableFiles[0].size < maxFileSize}
+          />
+        ))}
+      </StyledFileRowContainer>
     </>
   );
 };
 
-const FileRow = ({ file }: { file: File }) => {
+interface FileRowProps {
+  file: File;
+  registrationId: string;
+  openPreviewByDefault: boolean;
+}
+
+const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('common');
-  const { identifier } = useParams<{ identifier: string }>();
   const [isLoadingFile, setIsLoadingFile] = useState(false);
   const [currentFileUrl, setCurrentFileUrl] = useState('');
+  const [openPreviewAccordion, setOpenPreviewAccordion] = useState(openPreviewByDefault);
 
-  const handleDownload = async (fileId: string) => {
-    setIsLoadingFile(true);
-    const file = await downloadFile(identifier, fileId);
-    if (!file || file?.error) {
-      dispatch(setNotification(file.error, NotificationVariant.Error));
-    } else {
-      setCurrentFileUrl(file);
+  const handleDownload = useCallback(
+    async (manuallyTriggered = true) => {
+      setIsLoadingFile(true);
+      const downloadedFile = await downloadFile(registrationId, file.identifier);
+      if (!downloadedFile || downloadedFile?.error) {
+        dispatch(setNotification(downloadedFile.error, NotificationVariant.Error));
+      } else {
+        setCurrentFileUrl(downloadedFile);
+        if (manuallyTriggered) {
+          window.open(downloadedFile, '_blank');
+        }
+      }
+      setIsLoadingFile(false);
+    },
+    [dispatch, registrationId, file.identifier]
+  );
+
+  useEffect(() => {
+    if (openPreviewAccordion && !currentFileUrl) {
+      handleDownload(false); // Download file without user interaction
     }
-    setIsLoadingFile(false);
-  };
+  }, [handleDownload, currentFileUrl, openPreviewAccordion, file.size]);
 
   const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
   const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
+  const fileIsEmbargoed = fileEmbargoDate ? fileEmbargoDate > new Date() : false;
 
   return (
-    <TableRow hover>
-      <StyledNameTableCell>{file.name}</StyledNameTableCell>
-      <StyledTableCell>{prettyBytes(file.size, { locale: true })}</StyledTableCell>
-      <StyledTableCell>
+    <StyledFileRow>
+      <StyledFileName>{file.name}</StyledFileName>
+      <StyledSize>{prettyBytes(file.size, { locale: true })}</StyledSize>
+      <StyledVersion>
         {file.publisherAuthority
           ? t('registration:files_and_license.published_version')
           : t('registration:files_and_license.accepted_version')}
-      </StyledTableCell>
-      <StyledTableCell>
-        <StyledLicenseImg
-          onClick={() => window.open(licenseData?.link)}
-          alt={file.license?.identifier}
-          src={licenseData?.buttonImage}
-        />
-      </StyledTableCell>
-      <StyledTableCell>
-        {fileEmbargoDate && fileEmbargoDate > new Date() ? (
+      </StyledVersion>
+      <StyledLicenseImg
+        onClick={() => window.open(licenseData?.link)}
+        alt={file.license?.identifier}
+        src={licenseData?.buttonImage}
+      />
+      <StyledDownload>
+        {fileEmbargoDate && fileIsEmbargoed ? (
           <Typography>
             <LockIcon />
             {t('will_be_available')} {fileEmbargoDate.toLocaleDateString()}
@@ -123,7 +172,7 @@ const FileRow = ({ file }: { file: File }) => {
             fullWidth
             endIcon={<CloudDownloadIcon />}
             isLoading={isLoadingFile}
-            onClick={() => handleDownload(file.identifier)}>
+            onClick={handleDownload}>
             {t('download')}
           </ButtonWithProgress>
         ) : (
@@ -133,12 +182,26 @@ const FileRow = ({ file }: { file: File }) => {
             color="secondary"
             fullWidth
             endIcon={<OpenInNewIcon />}
-            onClick={() => window.open(currentFileUrl)}>
+            href={currentFileUrl}>
             {t('open')}
           </Button>
         )}
-      </StyledTableCell>
-    </TableRow>
+      </StyledDownload>
+      {!fileIsEmbargoed && (
+        <StyledPreviewAccordion
+          variant="outlined"
+          square
+          expanded={openPreviewAccordion}
+          onChange={() => setOpenPreviewAccordion(!openPreviewAccordion)}>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography variant="button">{t('registration:public_page.preview')}</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            {isLoadingFile || !currentFileUrl ? <CircularProgress /> : <PreviewFile url={currentFileUrl} file={file} />}
+          </AccordionDetails>
+        </StyledPreviewAccordion>
+      )}
+    </StyledFileRow>
   );
 };
 

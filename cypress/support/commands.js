@@ -6,7 +6,7 @@ Cypress.Commands.add('mocklogin', () => {
   cy.get('[data-testid=author-radio-button]').eq(1).click({ force: true });
   cy.get('[data-testid=connect-author-button]').click({ force: true });
   cy.get('[data-testid=modal_next]').click({ force: true });
-  cy.get('[data-testid=skip-connect-to-orcid]').click({ force: true });
+  cy.get('[data-testid=cancel-connect-to-orcid]').click({ force: true });
 
   // navigate to profile
   cy.get('[data-testid=menu]').click({ force: true });
@@ -22,6 +22,14 @@ Cypress.Commands.add('startRegistrationWithDoi', () => {
   cy.get('[data-testid=new-registration-link-input]').type('https://doi.org/10.1098/rspb.2018.0085');
   cy.get('[data-testid=doi-search-button]').click({ force: true });
   cy.get('[data-testid=registration-link-next-button]').click({ force: true });
+});
+
+Cypress.Commands.add('selectNpiDiscipline', (npiDiscipline) => {
+  cy.get('[data-testid=search_npi]').click({ force: true }).type(npiDiscipline);
+  cy.contains(npiDiscipline).click({ force: true });
+  cy.get('[data-testid=search_npi]').within(() => {
+    cy.get('input').should('have.value', npiDiscipline);
+  });
 });
 
 Cypress.Commands.add('setUserRolesInRedux', (roles) => {

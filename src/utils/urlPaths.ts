@@ -8,6 +8,7 @@ export enum UrlPathTemplate {
   MyMessages = '/my-messages',
   MyProfile = '/my-profile',
   MyRegistrations = '/my-registrations',
+  NewRegistration = '/registration',
   PrivacyPolicy = '/privacy-policy',
   Registration = '/registration/:identifier?',
   RegistrationLandingPage = '/registration/:identifier/public',

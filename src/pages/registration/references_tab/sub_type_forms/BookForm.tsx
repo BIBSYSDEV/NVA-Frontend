@@ -2,7 +2,7 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Checkbox, FormControlLabel, Typography } from '@material-ui/core';
+import { Checkbox, FormControlLabel, MuiThemeProvider, Typography } from '@material-ui/core';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
 import lightTheme from '../../../../themes/lightTheme';
 import { BookType, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
@@ -14,6 +14,7 @@ import PeerReview from '../components/PeerReview';
 import PublisherField from '../components/PublisherField';
 import SeriesField from '../components/SeriesField';
 import TotalPagesField from '../components/TotalPagesField';
+import { NpiDisciplineField } from '../components/NpiDisciplineField';
 
 const StyledSection = styled.div`
   display: grid;
@@ -49,6 +50,10 @@ const BookForm = () => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DoiField />
         <PublisherField />
+
+        <MuiThemeProvider theme={lightTheme}>
+          <NpiDisciplineField />
+        </MuiThemeProvider>
 
         <StyledSection>
           <IsbnListField />

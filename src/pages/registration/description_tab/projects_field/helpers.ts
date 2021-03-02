@@ -24,7 +24,7 @@ export const convertToResearchProject = (project: CristinProject): ResearchProje
   type: BackendTypeNames.RESEARCH_PROJECT,
   id: project.cristinProjectId,
   name: getProjectTitle(project),
-  grants: project.fundings.map((funding) => ({
+  grants: project.fundings?.map((funding) => ({
     id: funding.projectCode,
     source: funding.fundingSourceCode,
     type: BackendTypeNames.GRANT,

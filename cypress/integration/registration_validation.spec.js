@@ -101,11 +101,13 @@ describe('User opens registration form and can see validation errors', () => {
 
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
-    cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 1);
+    cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 2);
 
     // publicationContext
     cy.get('[data-testid=publisher-search-input]').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
+    // NPI Subject
+    cy.selectNpiDiscipline('Linguistics');
     cy.contains(ErrorMessage.REQUIRED).should('not.exist');
 
     // ISBN and pages
@@ -168,14 +170,14 @@ describe('User opens registration form and can see validation errors', () => {
 
   it('The User should be able to see validation errors on contributors tab', () => {
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
-    cy.contains(ErrorMessage.MISSING_CONTRIBUTOR).should('be.visible');
+    cy.contains(ErrorMessage.MISSING_AUTHOR).should('be.visible');
 
     // Add author
     cy.get('[data-testid=add-contributor]').click({ force: true });
     cy.get('[data-testid=search-input]').click({ force: true }).type('test');
     cy.get('[data-testid=author-radio-button]').eq(0).click({ force: true });
     cy.get('[data-testid=connect-author-button]').click({ force: true });
-    cy.contains(ErrorMessage.MISSING_CONTRIBUTOR).should('not.exist');
+    cy.contains(ErrorMessage.MISSING_AUTHOR).should('not.exist');
 
     // Set corresponding (and email)
     cy.get('[data-testid=author-corresponding-checkbox]').click({ force: true });

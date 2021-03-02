@@ -1,33 +1,32 @@
-import React, { FC } from 'react';
-import { Formik, Form } from 'formik';
+import { Form, Formik } from 'formik';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
 import SaveIcon from '@material-ui/icons/Save';
-
+import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
+import ButtonWithProgress from '../../components/ButtonWithProgress';
+import Card from '../../components/Card';
+import ListSkeleton from '../../components/ListSkeleton';
+import { PageHeader } from '../../components/PageHeader';
+import { StyledPageWrapperWithMaxWidth, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { RootStore } from '../../redux/reducers/rootReducer';
 import {
-  emptyCustomerInstitution,
   CustomerInstitution,
   CustomerInstitutionFieldNames,
+  emptyCustomerInstitution,
 } from '../../types/customerInstitution.types';
-import { PageHeader } from '../../components/PageHeader';
-import { useFetchCustomerInstitution } from '../../utils/hooks/useFetchCustomerInstitution';
-import { RootStore } from '../../redux/reducers/rootReducer';
-import { myInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
-import { SelectInstitutionField, CustomerInstitutionTextField } from './customerInstitutionFields';
-import Card from '../../components/Card';
-import ButtonWithProgress from '../../components/ButtonWithProgress';
-import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
-import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import ListSkeleton from '../../components/ListSkeleton';
-import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import { useFetchCustomerInstitution } from '../../utils/hooks/useFetchCustomerInstitution';
+import { myInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
+import { CustomerInstitutionTextField, SelectInstitutionField } from './customerInstitutionFields';
 
 const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
   margin-top: 2rem;
 `;
 
-const MyCustomerInstitutionPage: FC = () => {
+const MyCustomerInstitutionPage = () => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
   const { user } = useSelector((store: RootStore) => store);
@@ -36,17 +35,19 @@ const MyCustomerInstitutionPage: FC = () => {
   );
 
   const handleSubmit = async (values: CustomerInstitution) => {
-    const updatedCustomer = await updateCustomerInstitution(values);
-    if (!updatedCustomer || updatedCustomer?.error) {
-      dispatch(setNotification(updatedCustomer.error, NotificationVariant.Error));
-    } else {
-      handleSetCustomerInstitution(updatedCustomer);
-      dispatch(setNotification(t('feedback:success.update_customer')));
+    const updateCustomerResponse = await updateCustomerInstitution(values);
+    if (updateCustomerResponse) {
+      if (updateCustomerResponse.error) {
+        dispatch(setNotification(t('feedback:error.update_customer'), NotificationVariant.Error));
+      } else if (updateCustomerResponse.data) {
+        handleSetCustomerInstitution(updateCustomerResponse.data);
+        dispatch(setNotification(t('feedback:success.update_customer')));
+      }
     }
   };
 
   return (
-    <>
+    <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('common:my_institution')}</PageHeader>
       <Card>
         {isLoadingCustomerInstitution ? (
@@ -93,7 +94,7 @@ const MyCustomerInstitutionPage: FC = () => {
           </Formik>
         )}
       </Card>
-    </>
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 
