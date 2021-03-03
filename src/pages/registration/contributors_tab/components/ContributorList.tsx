@@ -4,6 +4,7 @@ import { Typography } from '@material-ui/core';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import { ContributorCard } from './ContributorCard';
+import { getRemoveContributorText } from '../../../../utils/validation/registration/contributorTranslations';
 
 interface ContributorListProps {
   contributors: Contributor[];
@@ -39,7 +40,7 @@ export const ContributorList = ({
       {contributorToRemove && (
         <ConfirmDialog
           open={!!contributorToRemove}
-          title={t('contributors.confirm_remove_author_title')}
+          title={getRemoveContributorText(contributorToRemove.role)}
           onAccept={() => {
             onDelete(contributorToRemove.sequence - 1);
             closeConfirmDialog();
