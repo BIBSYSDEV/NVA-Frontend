@@ -61,10 +61,20 @@ interface ModalProps extends Partial<DialogProps> {
   dataTestId?: string;
   headingIcon?: AvatarProps;
   headingText?: string;
+  headingDataTestId?: string;
   onClose?: () => void;
 }
 
-const Modal: FC<ModalProps> = ({ children, dataTestId, headingIcon, headingText, onClose, open, ...props }) => {
+const Modal: FC<ModalProps> = ({
+  children,
+  dataTestId,
+  headingIcon,
+  headingText,
+  headingDataTestId,
+  onClose,
+  open,
+  ...props
+}) => {
   const handleClose = () => {
     onClose && onClose();
   };
@@ -85,13 +95,17 @@ const Modal: FC<ModalProps> = ({ children, dataTestId, headingIcon, headingText,
           {headingIcon ? (
             <StyledInfoContainer>
               {headingIcon && <StyledAvatar src={headingIcon.src} alt={headingIcon.alt} />}
-              <StyledHeading variant="h3">{headingText}</StyledHeading>
+              <StyledHeading variant="h3" data-testid={headingDataTestId}>
+                {headingText}
+              </StyledHeading>
             </StyledInfoContainer>
           ) : (
-            <StyledHeading variant="h3">{headingText}</StyledHeading>
+            <StyledHeading variant="h3" data-testid={headingDataTestId}>
+              {headingText}
+            </StyledHeading>
           )}
         </StyledDialogTitle>
-        <StyledCloseIcon onClick={handleClose} />
+        <StyledCloseIcon onClick={handleClose} data-testid="close-modal" />
       </StyledHeaderContainer>
 
       <Fade in={open}>

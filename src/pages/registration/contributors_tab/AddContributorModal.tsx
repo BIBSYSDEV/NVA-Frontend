@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import Modal from '../../../components/Modal';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
+import { ContributorRole } from '../../../types/contributor.types';
+import { getAddContributorText } from '../../../utils/validation/registration/contributorTranslations';
 import AddContributorModalContent from './components/AddContributorModalContent';
 import CreateContributorModalContent from './components/CreateContributorModalContent';
 
@@ -11,10 +13,17 @@ interface AddContributorModalProps {
   onAuthorSelected: (author: Authority) => void;
   open: boolean;
   toggleModal: () => void;
+  contributorRole?: ContributorRole;
   initialSearchTerm?: string;
 }
 
-const AddContributorModal = ({ onAuthorSelected, toggleModal, open, initialSearchTerm }: AddContributorModalProps) => {
+const AddContributorModal = ({
+  onAuthorSelected,
+  toggleModal,
+  open,
+  contributorRole = ContributorRole.CREATOR,
+  initialSearchTerm,
+}: AddContributorModalProps) => {
   const { t } = useTranslation('registration');
   const [createNewAuthor, setCreateNewAuthor] = useState(false);
   const user = useSelector((store: RootStore) => store.user);
@@ -45,7 +54,7 @@ const AddContributorModal = ({ onAuthorSelected, toggleModal, open, initialSearc
           ? t('contributors.create_new_author')
           : initialSearchTerm
           ? t('contributors.verify_person')
-          : t('contributors.add_author')
+          : getAddContributorText(contributorRole)
       }
       onClose={handleCloseModal}
       open={open}
@@ -58,6 +67,7 @@ const AddContributorModal = ({ onAuthorSelected, toggleModal, open, initialSearc
         <AddContributorModalContent
           addAuthor={addAuthor}
           addSelfAsAuthor={addSelfAsAuthor}
+          contributorRole={contributorRole}
           handleCloseModal={handleCloseModal}
           openNewAuthorModal={() => setCreateNewAuthor(true)}
           initialSearchTerm={initialSearchTerm}

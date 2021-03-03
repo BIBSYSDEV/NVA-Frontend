@@ -4,18 +4,14 @@ import { MuiThemeProvider } from '@material-ui/core';
 import darkTheme from '../themes/darkTheme';
 import lightTheme from '../themes/lightTheme';
 import { isBackgroundColorDark } from '../utils/theme-helpers';
+import { StyledPageWrapper } from './styled/Wrappers';
 
 interface BakcgroundDivProps {
   backgroundColor?: string;
   children?: ReactNode;
 }
 
-const StyledBackgroundDiv = styled(({ backgroundColor, ...rest }) => <div {...rest} />)`
-  width: 100%;
-  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    padding: 1rem 2rem;
-  }
-  padding: 0.5rem;
+const StyledBackgroundDiv = styled(({ backgroundColor, ...rest }) => <StyledPageWrapper {...rest} />)`
   ${({ backgroundColor }) => `background-color: ${backgroundColor}`}
 `;
 

@@ -1,14 +1,20 @@
 {
+  "affiliations": {
+    "add_affiliation": "Legg til tilhørighet",
+    "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilhørigheten?",
+    "confirm_remove_affiliation_title": "Fjerne tilhørighet?"
+  },
   "applications": "Applikasjoner",
   "authority": {
-    "cancel_connect_authority_text": "Hvis du avbryter tilkoblingsprosessen vil du automatisk bli utlogget. Alle innloggede brukere må ha en tilkoblet forfatteridentitet for å kunne bruke applikasjonen. Ønsker du å avbryte likevel?",
+    "cancel_connect_authority_text": "Du må koble deg til forfatterregisteret for å gå videre. Hvis du avbryter, blir du logget ut. Ønsker du å avbryte?",
     "cancel_connect_authority_title": "Ønsker du å avbryte?",
-    "connect_authority": "Koble til din forfatteridentitet",
+    "connect_authority": "Koble til nasjonalt register over forfattere",
+    "connect_to_select_authority": "Koble til valgt forfatter",
     "connected_authority": "Din forfatteridentitet er koblet til",
-    "connected_info": "Ditt navn er lagt til i forfatterregisteret",
-    "create_own_authority": "Opprett meg som forfatter",
-    "description_create_own_authority": "Du har valgt å ikke ta i bruk en eksisterende forfatteridentitet, som har publisert tidligere og oppretter nå en ny forfatteridentitet. \n\nDet er ikke ønskelig å opprette nye forfatteridentiteter. Sjekk registreringene til de forfatteridentitetene som har likt navn som deg, og vær sikker på at du ikke oppretter en duplikatidentitet. \n\nOm du ser noe feil i registreringene som er koblet til det som er din forfatteridentitet, så koble deg på denne identiteten og ta kontakt med kurator på din institusjon for å få rettet feilen. \n\nOm navnet over ikke stemmer med deg, så må du ta kontakt med din kurator ved din institusjon for å få korrigert din forfatteridentitet. [Lenke til kontaktskjema her]",
-    "description_no_authority_found": "Vi finner ikke en forfatteridentitet som passer med ditt navn (hentet fra din pålogging til denne tjenesten). Det vil derfor opprettes en ny forfatteridentitet, slik at du kan ta i bruk denne tjenesten. Om navnet over ikke stemmer med deg, så må du ta kontakt med kurator ved din institusjon for å få korrigert din forfatteridentitet.",
+    "create_authority": "Opprett ny forfatter",
+    "description_create_own_authority": "Ikke opprett ny forfatter i forfatterregisteret hvis du allerede er registrert. Sjekk Eksempel på publikasjon for å være sikker på at du ikke oppretter en dublett.\n\nEr navnet ditt skrevet feil for Eksempel på publikasjon, koble allikevel til denne forfatteren. Kontakt kurator ved din institusjon for å få rettet skrivefeil i forfatterregisteret. [Lenke til kontaktskjema]\n\nFår du flere treff med riktig Eksempel på publikasjon hvor du helt sikkert er forfatter, koble til en av forfatterne. Kontakt kurator ved din institusjon for å få ryddet dubletter i forfatterregisteret. [Lenke til kontaktskjema]\n\nHvis navnet øverst på denne siden ikke er ditt, avbryt og kontakt kurator ved din institusjon for å få rettet feilen. [Lenke til kontaktskjema]  ",
+    "description_no_authority_found": "Navnet ditt finnes ikke i forfatterregisteret og må legges til før du kan fortsette.",
+    "example_publication": "Eksempel på publikasjon",
     "no_affiliations_found": "Ingen tilhørigheter funnet",
     "no_registrations_found": "Ingen registreringer funnet",
     "other_affiliations": "+ {{count}} annen tilhørighet",
@@ -16,11 +22,9 @@
     "see_profile": "Se forfatterprofil"
   },
   "heading": {
-    "author_info": "Forfatteridentitet",
-    "connect_authority": "Koble til din forfatter ID",
     "contact_info": "Kontaktinformasjon",
     "language": "Språk",
-    "organizations": "Tilhørighet",
+    "affiliations": "Tilhørigheter",
     "roles": "Roller",
     "user_info": "Brukerinformasjon"
   },
@@ -29,44 +33,34 @@
   "my_profile": "Min brukerprofil",
   "my_public_profile": "Min åpne profil",
   "orcid": {
-    "create_or_connect": "Opprett eller koble til din ORCID iD",
-    "description_what_is_orcid": "ORCID er en non-profit organisasjon som gir forskere en unik digital identifikator som kan brukes slik at forskningsresultater kan knyttes til riktig person.",
-    "description_why_use_orcid": "Ved å koble til din ORCID iD blir det enklere å identifisere deg som forfatter. Når du klikker på “Opprett eller koble til din ORCID iD” vil vi be deg om å dele din iD ved å enten registrere deg eller logge deg inn på ORCID.",
-    "login": "Logg inn på din ORCID-konto eller lag ny dersom du ikke har konto",
+    "connect_orcid": "Koble/opprette ORCID iD",
+    "dialog": {
+      "heading": "Koble eller opprette ORCID iD",
+      "paragraph0": "Logg inn på din ORCID-konto eller registrer deg hvis du ikke har en konto.",
+      "paragraph1": "ORCID gir deg en varig digital identifikator som du selv eier og kontrollerer, og som skiller deg fra andre forskere. Den kan brukes den i mange sammenhenger. Ved å koble din ORCID iD er det enklere å identifisere deg som forfatter, og å hente og dele dine publikasjoner."
+    },
     "orcid": "ORCID",
+    "orcid_description": "Koble din ORCID iD ved å logge på ORCID. Eller registrer deg for å få en ORCID iD og koble denne. Da blir det enklere å identifisere deg",
     "remove_connection": "Fjern kobling til ORCID",
     "remove_connection_info": "Er du sikker på at du vil fjerne koblingen til ORCID? \n\nDersom du ønsker å trekke tilbake Units godkjenning til å lese din ORCID, må du gå inn på din ORCID-profil.",
-    "skip_this_step": "Hopp over nå (kan gjøres under 'profil' senere)",
-    "suggestions": "Forslag fra ORCID",
-    "suggestions_description": "Forslag fra ORCID...",
-    "what": "Hva er ORCID?",
-    "why": "Hvorfor ber vi om ORCID?",
+    "skip_this_step": "Hopp over (kan gjøres senere)",
     "your_orcid": "Din ORCID"
   },
   "roles": {
-    "app_admin": "Applikasjonsadministrator",
-    "app_admin_description": "Tilgang til å opprette nye kundeinstitusjoner",
+    "app_admin": "Systemadministrator",
+    "app_admin_description": "Tilgang til å opprette nye institusjoner og tildele roller",
     "creator": "Registrator",
     "creator_description": "Tilgang til å registrere publikasjoner og andre ressurser",
     "curator": "Kurator",
-    "curator_description": "Tilgang til å godkjenne og publisere andres innhold",
+    "curator_description": "Tilgang til å redigere publikasjoner og andre ressurser, tildele DOI og besvare brukerstøttehenvendelser",
     "curators": "Kuratorer",
     "editor": "Redaktør",
-    "editor_description": "",
+    "editor_description": "Ansvarlig for institusjonens publikasjoner og andre ressurser i tjenesten",
     "editors": "Redaktører",
     "institution_admin": "Administrator",
-    "institution_admin_description": "Tilgang til å administrere din egen institusjon",
+    "institution_admin_description": "Tilgang til å gi rollene Kurator og Redaktør til andre",
     "institution_admins": "Administratorer",
     "no_roles": "Du har ingen roller fordi du ikke har fått tildelt roller av din administrator",
     "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen"
-  },
-  "organization": {
-    "add_institution": "Legg til institusjon",
-    "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilhørigheten?",
-    "confirm_remove_affiliation_title": "Fjerne tilhørighet?",
-    "edit_institution": "Endre institusjon",
-    "institution": "Institusjon",
-    "no_institutions_found": "Ingen institusjoner funnet",
-    "search_for_institution": "Søk etter institusjon"
   }
 }

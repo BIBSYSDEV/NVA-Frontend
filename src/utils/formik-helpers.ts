@@ -115,7 +115,6 @@ export const touchedDescriptionTabFields: FormikTouched<Registration> = {
     description: true,
     language: true,
     mainTitle: true,
-    npiSubjectHeading: true,
     tags: true,
   },
 };
@@ -175,6 +174,7 @@ export const touchedReferenceTabFields = (publicationType: PublicationType | '')
     case PublicationType.BOOK:
       return {
         entityDescription: {
+          npiSubjectHeading: true,
           reference: {
             publicationContext: {
               type: true,

@@ -1,9 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Trans, useTranslation } from 'react-i18next';
 import { PageHeader } from '../../components/PageHeader';
-import { Typography, Link as MuiLink } from '@material-ui/core';
-import { ContactInformation } from '../../utils/constants';
+import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
+import AboutContent from './AboutContent';
 
 const StyledAboutContainer = styled.div`
   display: block;
@@ -16,28 +16,12 @@ const About = () => {
   const { t } = useTranslation('about');
 
   return (
-    <>
+    <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('about_heading')}</PageHeader>
       <StyledAboutContainer>
-        <Typography>{t('description.paragraph0.intro')}</Typography>
-        <ul>
-          <Typography component="li">{t('description.paragraph0.bullet_point0')}</Typography>
-          <Typography component="li">{t('description.paragraph0.bullet_point1')}</Typography>
-        </ul>
-
-        <Typography paragraph>{t('description.paragraph1')}</Typography>
-        <Typography paragraph>{t('description.paragraph2')}</Typography>
-        <Typography paragraph>{t('description.paragraph3')}</Typography>
-        <Typography paragraph>{t('description.paragraph4')}</Typography>
-        <Typography paragraph>
-          <Trans t={t} i18nKey="description.paragraph5">
-            <MuiLink href={`mailto:${ContactInformation.UNIT_SUPPORT_EMAIL}`} target="_blank" rel="noopener noreferrer">
-              (i18n content: support email)
-            </MuiLink>
-          </Trans>
-        </Typography>
+        <AboutContent />
       </StyledAboutContainer>
-    </>
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 

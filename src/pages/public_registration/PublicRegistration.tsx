@@ -1,15 +1,15 @@
 import React, { FC } from 'react';
-import { CircularProgress } from '@material-ui/core';
-
-import { RegistrationStatus } from '../../types/registration.types';
-import { useParams } from 'react-router-dom';
-import useFetchRegistration from '../../utils/hooks/useFetchRegistration';
-import PublicRegistrationContent from './PublicRegistrationContent';
-import NotPublished from '../errorpages/NotPublished';
-import NotFound from '../errorpages/NotFound';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { userIsRegistrationOwner, userIsRegistrationCurator } from '../../utils/registration-helpers';
+import { RegistrationStatus } from '../../types/registration.types';
+import useFetchRegistration from '../../utils/hooks/useFetchRegistration';
+import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
+import NotFound from '../errorpages/NotFound';
+import NotPublished from '../errorpages/NotPublished';
+import PublicRegistrationContent from './PublicRegistrationContent';
+import { PageSpinner } from '../../components/PageSpinner';
 
 const PublicRegistration: FC = () => {
   const { identifier } = useParams<{ identifier: string }>();
@@ -22,9 +22,9 @@ const PublicRegistration: FC = () => {
     userIsRegistrationCurator(user, registration);
 
   return (
-    <>
+    <StyledPageWrapperWithMaxWidth>
       {isLoadingRegistration ? (
-        <CircularProgress color="inherit" size={20} />
+        <PageSpinner />
       ) : registration ? (
         isAllowedToSeePublicRegistration ? (
           <PublicRegistrationContent registration={registration} refetchRegistration={refetchRegistration} />
@@ -34,7 +34,7 @@ const PublicRegistration: FC = () => {
       ) : (
         <NotFound />
       )}
-    </>
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 

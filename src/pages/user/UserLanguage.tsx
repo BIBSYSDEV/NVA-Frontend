@@ -11,14 +11,14 @@ const StyledSelect = styled(Select)`
   max-width: 15rem;
 `;
 
-const UserLanguage: React.FC = () => {
+export const UserLanguage = () => {
   const { t, i18n } = useTranslation('profile');
 
   const selectedLanguage = i18n.language;
 
   return (
     <Card>
-      <Typography variant="h5">{t('heading.language')}</Typography>
+      <Typography variant="h2">{t('heading.language')}</Typography>
       <StyledSelect
         variant="outlined"
         value={selectedLanguage}
@@ -36,5 +36,3 @@ const UserLanguage: React.FC = () => {
     </Card>
   );
 };
-
-export default UserLanguage;

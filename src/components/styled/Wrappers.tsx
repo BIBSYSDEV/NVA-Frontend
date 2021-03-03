@@ -10,13 +10,6 @@ export const StyledInformationWrapper = styled.div`
   padding-bottom: 1rem;
 `;
 
-export const StyledProgressWrapper = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 2rem;
-`;
-
 export const StyledRightAlignedWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -43,4 +36,16 @@ export const StyledFlexColumn = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+`;
+
+export const StyledPageWrapper = styled.div`
+  width: 100%;
+  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    padding: 1rem 2rem;
+  }
+  padding: 0.5rem;
+`;
+
+export const StyledPageWrapperWithMaxWidth = styled(StyledPageWrapper)`
+  max-width: ${({ theme }) => theme.breakpoints.values.lg + 'px'};
 `;

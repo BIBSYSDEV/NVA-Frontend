@@ -3,17 +3,18 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Button, CircularProgress, TextField, Typography } from '@material-ui/core';
+import { Button, TextField, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
-import { StyledProgressWrapper } from '../../../../components/styled/Wrappers';
 import { RootStore } from '../../../../redux/reducers/rootReducer';
 import lightTheme from '../../../../themes/lightTheme';
 import { Authority } from '../../../../types/authority.types';
+import { ContributorRole } from '../../../../types/contributor.types';
 import { Registration } from '../../../../types/registration.types';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
 import AuthorityList from '../../../user/authority/AuthorityList';
+import { PageSpinner } from '../../../../components/PageSpinner';
 
 const StyledTextField = styled(TextField)`
   margin-bottom: 1rem;
@@ -56,6 +57,7 @@ interface AddContributorModalContentProps {
   addSelfAsAuthor: () => void;
   handleCloseModal: () => void;
   openNewAuthorModal: () => void;
+  contributorRole?: ContributorRole;
   initialSearchTerm?: string;
 }
 
@@ -64,6 +66,7 @@ const AddContributorModalContent = ({
   addSelfAsAuthor,
   handleCloseModal,
   openNewAuthorModal,
+  contributorRole,
   initialSearchTerm = '',
 }: AddContributorModalContentProps) => {
   const { t } = useTranslation('registration');
@@ -102,9 +105,7 @@ const AddContributorModalContent = ({
       />
 
       {isLoadingAuthorities ? (
-        <StyledProgressWrapper>
-          <CircularProgress size={100} />
-        </StyledProgressWrapper>
+        <PageSpinner />
       ) : authorities && authorities.length > 0 && debouncedSearchTerm ? (
         <AuthorityList
           authorities={authorities}
@@ -132,7 +133,9 @@ const AddContributorModalContent = ({
         </StyledCreateButton>
         {!isSelfAddedAsAuthor && (
           <StyledAddSelfButton color="primary" data-testid="button-add-self-author" onClick={addSelfAsAuthor}>
-            {t('contributors.add_self_as_author')}
+            {contributorRole === ContributorRole.EDITOR
+              ? t('contributors.add_self_as_editor')
+              : t('contributors.add_self_as_author')}
           </StyledAddSelfButton>
         )}
       </StyledDialogActions>

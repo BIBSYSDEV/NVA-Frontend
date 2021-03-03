@@ -21,10 +21,6 @@ import { useLocation } from 'react-router-dom';
 import { User } from '../../types/user.types';
 import DangerButton from '../../components/DangerButton';
 
-const StyledInformation = styled.div`
-  margin-bottom: 1rem;
-`;
-
 const StyledOrcidLine = styled.div`
   display: grid;
   grid-template-areas: 'text button';
@@ -60,7 +56,7 @@ interface UserOrcidProps {
   user: User;
 }
 
-const UserOrcid = ({ user }: UserOrcidProps) => {
+export const UserOrcid = ({ user }: UserOrcidProps) => {
   const { t } = useTranslation('profile');
   const listOfOrcids = user.authority ? user.authority.orcids : [];
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
@@ -102,12 +98,12 @@ const UserOrcid = ({ user }: UserOrcidProps) => {
 
   return (
     <Card>
-      <Typography variant="h5">{t('common:orcid')}</Typography>
+      <Typography variant="h2">{t('orcid.orcid')}</Typography>
       {listOfOrcids?.length > 0 ? (
         listOfOrcids.map((orcid: string) => {
           const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
           return (
-            <StyledOrcidLine key={orcid}>
+            <StyledOrcidLine key={orcid} data-testid="orcid-line">
               <StyledLine>
                 <StyledLabel>{t('orcid.your_orcid')}:</StyledLabel>
                 <IconButton size="small" href={orcidLink} key={orcid}>
@@ -148,27 +144,25 @@ const UserOrcid = ({ user }: UserOrcidProps) => {
         })
       ) : (
         <>
-          <StyledInformation>{t('profile:orcid.description_why_use_orcid')}</StyledInformation>
+          <Typography paragraph>{t('orcid.orcid_description')}</Typography>
           <Button
-            color="primary"
+            color="secondary"
             data-testid="button-create-connect-orcid"
             onClick={toggleModal}
             variant="contained"
             size="small">
-            {t('profile:orcid.create_or_connect')}
+            {t('orcid.connect_orcid')}
           </Button>
           <Modal
             headingIcon={{ src: orcidIcon, alt: 'ORCID iD icon' }}
-            headingText={t('profile:orcid.create_or_connect')}
+            headingText={t('orcid.dialog.heading')}
             onClose={toggleModal}
             open={openModal}
             dataTestId="orcid-modal">
-            <OrcidModalContent />
+            <OrcidModalContent cancelFunction={toggleModal} />
           </Modal>
         </>
       )}
     </Card>
   );
 };
-
-export default UserOrcid;
