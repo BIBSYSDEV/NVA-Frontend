@@ -19,7 +19,7 @@ const ContributorsPanel = () => {
       {/* <Contributors /> TODO: add author also */}
       <Contributors contributorRole={ContributorRole.SUPERVISOR} />
     </>
-  ) : publicationInstance.type !== BookType.ANTHOLOGY ? (
+  ) : publicationInstance.type === BookType.ANTHOLOGY ? (
     <Contributors contributorRole={ContributorRole.EDITOR} />
   ) : (
     <Contributors />
