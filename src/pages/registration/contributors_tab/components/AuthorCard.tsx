@@ -1,5 +1,5 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Button, Checkbox, FormControlLabel, TextField, Tooltip, Typography } from '@material-ui/core';
@@ -69,21 +69,6 @@ const StyledVerifiedSection = styled.div`
 
 const StyledCorrespondingWrapper = styled.div`
   grid-area: corresponding;
-  display: grid;
-  grid-template-areas: 'checkbox' 'email';
-`;
-
-const StyledCorrespondingField = styled(Field)`
-  grid-area: checkbox;
-`;
-
-const StyledEmailField = styled(Field)`
-  grid-area: email;
-`;
-
-const StyledEmailTextField = styled(TextField)`
-  margin: 0;
-  margin-left: 2rem;
 `;
 
 const StyledDangerButton = styled(DangerButton)`
@@ -133,7 +118,6 @@ const AuthorCard = ({
   const index = author.sequence - 1;
   const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
   const { values, setFieldValue } = useFormikContext<Registration>();
-  const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[index]?.email ?? '');
   const contributorsLength = values.entityDescription.contributors.length - 1;
 
   return (
@@ -197,7 +181,7 @@ const AuthorCard = ({
           </StyledSequenceField>
         </StyledRightAlignedWrapper>
         <StyledCorrespondingWrapper>
-          <StyledCorrespondingField name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
+          <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
             {({ field }: FieldProps) => (
               <FormControlLabel
                 data-testid="author-corresponding-checkbox"
@@ -205,30 +189,7 @@ const AuthorCard = ({
                 label={t('contributors.corresponding')}
               />
             )}
-          </StyledCorrespondingField>
-          {author.correspondingAuthor && (
-            <StyledEmailField name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
-              {({ field, meta: { error, touched } }: FieldProps) => (
-                <StyledEmailTextField
-                  data-testid="author-email-input"
-                  {...field}
-                  label={t('common:email')}
-                  required
-                  variant="filled"
-                  onChange={(event) => {
-                    setEmailValue(event.target.value);
-                  }}
-                  onBlur={(event) => {
-                    setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`, emailValue);
-                    field.onBlur(event);
-                  }}
-                  value={emailValue}
-                  error={touched && !!error}
-                  helperText={touched && error}
-                />
-              )}
-            </StyledEmailField>
-          )}
+          </Field>
         </StyledCorrespondingWrapper>
       </StyledAuthorSection>
       {author.identity && (
