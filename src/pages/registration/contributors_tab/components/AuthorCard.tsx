@@ -185,7 +185,20 @@ const AuthorCard = ({
             {({ field }: FieldProps) => (
               <FormControlLabel
                 data-testid="author-corresponding-checkbox"
-                control={<Checkbox checked={!!field.value} color="default" {...field} />}
+                control={
+                  <Checkbox
+                    checked={!!field.value}
+                    color="default"
+                    {...field}
+                    // TODO: Remove this block when backend has removed validation for email field
+                    onChange={(event) => {
+                      field.onChange(event);
+                      if (event.target.checked) {
+                        setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`, 'NO_EMAIL');
+                      }
+                    }}
+                  />
+                }
                 label={t('contributors.corresponding')}
               />
             )}
