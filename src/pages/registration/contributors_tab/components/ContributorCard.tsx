@@ -142,6 +142,7 @@ export const ContributorCard = ({
   const { values, setFieldValue } = useFormikContext<Registration>();
   const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[contributorIndex]?.email ?? '');
   const [sequenceValue, setSequenceValue] = useState(`${contributor.sequence}`);
+  const numberOfContributorsWithSameRole = contributors.filter((c) => c.role === contributor.role).length;
 
   useEffect(() => {
     // Ensure sequence field is updated
@@ -185,7 +186,7 @@ export const ContributorCard = ({
         </StyledVerifiedSection>
         <StyledRightAlignedWrapper>
           <StyledArrowSection>
-            {contributor.sequence < contributors.length && (
+            {contributor.sequence < numberOfContributorsWithSameRole && (
               <StyledArrowButton
                 color="secondary"
                 onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}>
