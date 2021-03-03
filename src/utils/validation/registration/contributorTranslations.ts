@@ -22,3 +22,14 @@ export const getContributorHeading = (contributorRole: ContributorRole) => {
       return i18n.t('registration:contributors.authors');
   }
 };
+
+export const getRemoveContributorText = (contributorRole: ContributorRole) => {
+  switch (contributorRole) {
+    case ContributorRole.EDITOR:
+      return i18n.t('registration:contributors.remove_editor');
+    case ContributorRole.SUPERVISOR:
+      return i18n.t('registration:contributors.remove_supervisor');
+    default:
+      return i18n.t('registration:contributors.remove_author');
+  }
+};
