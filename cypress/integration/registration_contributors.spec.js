@@ -15,7 +15,7 @@ describe('Registration: Contributors', () => {
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
 
     // click Add Contributor button
-    cy.get('[data-testid=add-contributor]').click({ force: true });
+    cy.get('[data-testid=add-contributor-Creator]').click({ force: true });
 
     // verify that there is a search field
     cy.get('[data-testid=search-input]').should('be.visible');
