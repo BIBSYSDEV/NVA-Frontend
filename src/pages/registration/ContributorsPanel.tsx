@@ -52,7 +52,7 @@ const ContributorsPanel = () => {
           }
         </FieldArray>
       </BackgroundDiv>
-      {contributors.length === 0 && !!contributorsTouched && typeof contributorsError === 'string' && (
+      {!!contributorsTouched && typeof contributorsError === 'string' && (
         <FormHelperText error>
           <ErrorMessage name={ContributorFieldNames.CONTRIBUTORS} />
         </FormHelperText>
