@@ -1,14 +1,20 @@
 {
+  "affiliations": {
+    "add_affiliation": "Add affiliation",
+    "confirm_remove_affiliation_text": "Are you sure you want to remove this affiliation?",
+    "confirm_remove_affiliation_title": "Remove affiliation?"
+  },
   "applications": "Applications",
   "authority": {
-    "cancel_connect_authority_text": "You will be logged out if you don't add an author identity to your user. All authenticated users must have a connected author identity to use the application. Do you still want to cancel?",
+    "cancel_connect_authority_text": "You must connect to the author register to proceed. If you cancel, you will be logged out. Do you want to cancel?",
     "cancel_connect_authority_title": "Do you want to cancel?",
-    "connect_authority": "Connect your author ID",
+    "connect_authority": "Connect to the national register of authors",
+    "connect_to_select_authority": "Connect to selected author",
     "connected_authority": "Your author identity is connected",
-    "connected_info": "Your name is added to the author registry",
-    "create_own_authority": "Create new author ID",
-    "description_create_own_authority": "There exists author identities which matches your name. You can still create a new one.",
-    "description_no_authority_found": "We cannot find an author identity which matches with your name (retrieved from your login account). A new author identity will be created in order for you to use this service. If the name does not match your name, you need to contact your curator at your institution in order to correct it.",
+    "create_authority": "Create new author",
+    "description_create_own_authority": "Do not create a new author in the author register if you are already registered. Check Example of publication to make sure you are not creating a duplicate.\n\nIf your name is misspelled for Example of publication, please link to this author. Contact the curator at your institution to correct typing errors in the author register. [Lenke til kontaktskjema]\n\nIf you get more than one Example of publication where you are definitely an author, connect to one of the authors. Contact the curator at your institution to clear duplicates in the author register. [Lenke til kontaktskjema]\n\nIf the name at the top of this page is not yours, cancel and contact the curator at your institution to correct the error. [Lenke til kontaktskjema]",
+    "description_no_authority_found": "Your name is not in the author register and must be added before you can continue.",
+    "example_publication": "Example of publication",
     "no_affiliations_found": "No affiliations found",
     "no_registrations_found": "No registrations found",
     "other_affiliations": "+ {{count}} other affiliation",
@@ -16,11 +22,9 @@
     "see_profile": "See author profile"
   },
   "heading": {
-    "author_info": "Author identity",
-    "connect_authority": "Connect your author ID",
     "contact_info": "Contact",
     "language": "Language",
-    "organizations": "Organizations",
+    "affiliations": "Affiliations",
     "roles": "Roles",
     "user_info": "User information"
   },
@@ -29,44 +33,34 @@
   "my_profile": "My user profile",
   "my_public_profile": "My public profile",
   "orcid": {
-    "create_or_connect": "Create or connect your ORCID iD",
-    "description_what_is_orcid": "ORCID is an independent non-profit effort to provide an open registry of unique researcher identifiers and open services to link research activities and organizations to these identifiers.",
-    "description_why_use_orcid": "By connecting your ORCID iD it will be easier to identify you as an author. When you click the “Create or connect to ORCID iD” button, we will ask you to share your iD using an authenticated process: either by registering for an ORCID iD or, if you already have one, by signing into your ORCID account, then granting us permission to get your ORCID iD. We do this to ensure that you are correctly identified and securely connecting your ORCID iD.",
-    "login": "Log in to your ORCID account or create new ORCID account",
+    "connect_orcid": "Connect/create ORCID iD",
+    "dialog": {
+      "heading": "Connect or create ORCID iD",
+      "paragraph0": "Sign in to ORCID or register to create an account.",
+      "paragraph1": "ORCID provides a persistent digital identifier that you own and control, and that distinguishes you from every other researcher. Your ORCID iD can be used in many contexts. By connecting your ORCID iD it is easier to identify you as an author, and to retrieve and share your publications."
+    },
     "orcid": "ORCID",
+    "orcid_description": "To connect your ORCID iD, sign into ORCID. Or register to create your ORCID iD and connect. It makes it easier to identify you.",
     "remove_connection": "Remove connection to ORCID",
     "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Unit's access to read your ORCID, you have to go to your profile.",
-    "skip_this_step": "Skip this step (can be configured in 'profile' later)",
-    "suggestions": "Suggestions from ORCID",
-    "suggestions_description": "Suggestions from ORCID...",
-    "what": "What is ORCID?",
-    "why": "Why should I connect to ORCID?",
+    "skip_this_step": "Skip (can be configured later)",
     "your_orcid": "Your ORCID"
   },
   "roles": {
-    "app_admin": "Application administrator",
-    "app_admin_description": "Access to create new customer institutions",
+    "app_admin": "System administrator",
+    "app_admin_description": "Access to create new institutions and assign roles",
     "creator": "Registrator",
     "creator_description": "Access to register publications and other resources",
     "curator": "Curator",
-    "curator_description": "Access to approve and publish other's content",
+    "curator_description": "Access to edit publications and other resources, assign DOIs and respond to support inquiries",
     "curators": "Curators",
     "editor": "Editor",
-    "editor_description": "",
+    "editor_description": "Responsible for the institution's publications and other resources in the service",
     "editors": "Editors",
     "institution_admin": "Administrator",
-    "institution_admin_description": "Access to administer your own institution",
+    "institution_admin_description": "Access to assign the roles of Curator and Editor to others",
     "institution_admins": "Administrators",
     "no_roles": "You don't have any roles because your administrator has not assigned any roles to you",
     "not_customer": "You don't have any roles because your institution is unknown to this application"
-  },
-  "organization": {
-    "add_institution": "Add institution",
-    "confirm_remove_affiliation_text": "Are you sure you want to remove this affiliation?",
-    "confirm_remove_affiliation_title": "Remove affiliation?",
-    "edit_institution": "Edit institution",
-    "institution": "Institution",
-    "no_institutions_found": "No institutions found",
-    "search_for_institution": "Search for institution"
   }
 }

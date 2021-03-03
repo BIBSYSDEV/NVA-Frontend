@@ -14,9 +14,9 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { CircularProgress } from '@material-ui/core';
 import { useUppy } from '@uppy/react';
 import { RegistrationPageHeader } from '../../components/PageHeader';
+import { PageSpinner } from '../../components/PageSpinner';
 import RouteLeavingGuard from '../../components/RouteLeavingGuard';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { emptyRegistration, Registration, RegistrationTab } from '../../types/registration.types';
@@ -66,11 +66,12 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
 
   const validateForm = (values: Registration) => {
     const {
-      reference: { publicationContext },
+      reference: { publicationContext, publicationInstance },
     } = values.entityDescription;
     try {
       validateYupSchema<Registration>(values, registrationValidationSchema, true, {
         publicationContextType: publicationContext.type,
+        publicationInstanceType: publicationInstance.type,
         publicationStatus: registration?.status,
       });
     } catch (err) {
@@ -84,7 +85,7 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
   const intialTouched: FormikTouched<Registration> = isNewRegistration ? {} : setNestedObjectValues(intialErrors, true);
 
   return isLoadingRegistration ? (
-    <CircularProgress />
+    <PageSpinner />
   ) : !isValidOwner && !isValidCurator ? (
     <Forbidden />
   ) : (

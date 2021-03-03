@@ -1,9 +1,11 @@
-import { BackendType } from './registration.types';
 import { BackendTypeNames } from './publication_types/commonRegistration.types';
+import { BackendType } from './registration.types';
 
 // For available roles, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/Role.java
-enum ContributorRole {
+export enum ContributorRole {
   CREATOR = 'Creator',
+  EDITOR = 'Editor',
+  SUPERVISOR = 'Supervisor',
 }
 
 export interface Identity extends BackendType {
@@ -17,7 +19,7 @@ export interface Contributor extends BackendType {
   correspondingAuthor?: boolean;
   email?: string;
   identity: Identity;
-  role: ContributorRole | '';
+  role: ContributorRole;
   sequence: number;
 }
 
@@ -40,7 +42,7 @@ export const emptyContributor: Contributor = {
     name: '',
     type: BackendTypeNames.IDENTITY,
   },
-  role: '',
+  role: ContributorRole.CREATOR,
   sequence: 0,
   type: BackendTypeNames.CONTRIBUTOR,
 };

@@ -35,9 +35,11 @@ const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, selectedArp
           <TableHead>
             <TableRow>
               <TableCell padding="checkbox"></TableCell>
-              <TableCell>{t('name')}</TableCell>
-              <TableCell>{t('last_registration')}</TableCell>
-              <TableCell>{t('profile:heading.organizations')}</TableCell>
+              <TableCell data-testid="author-name-column">{t('name')}</TableCell>
+              <TableCell data-testid="author-last-registration-column">
+                {t('profile:authority.example_publication')}
+              </TableCell>
+              <TableCell data-testid="author-organizations-column">{t('profile:heading.affiliations')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

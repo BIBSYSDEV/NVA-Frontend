@@ -1,14 +1,21 @@
 import { useState, useEffect } from 'react';
-import Axios from 'axios';
+import { useDispatch } from 'react-redux';
 import { PublicationTableNumber } from '../constants';
 import { Publisher } from '../../types/registration.types';
 import { getPublishers } from '../../api/publicationChannelApi';
 import useDebounce from './useDebounce';
+import useCancelToken from './useCancelToken';
+import { NotificationVariant } from '../../types/notification.types';
+import { useTranslation } from 'react-i18next';
+import { setNotification } from '../../redux/actions/notificationActions';
 
 const useFetchPublishers = (
   publicationTable: PublicationTableNumber,
   initialSearchTerm = ''
 ): [Publisher[], boolean, (searchTerm: string) => void] => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation('feedback');
+  const cancelToken = useCancelToken();
   const [publishers, setPublishers] = useState<Publisher[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
@@ -17,27 +24,24 @@ const useFetchPublishers = (
   const handleNewSearchTerm = (searchTerm: string) => setSearchTerm(searchTerm);
 
   useEffect(() => {
-    const cancelSource = Axios.CancelToken.source();
     const fetchPublishers = async () => {
       setIsLoading(true);
-      const fetchedPublishers = await getPublishers(debouncedSearchTerm, publicationTable, cancelSource.token);
-      if (fetchedPublishers?.data) {
-        setPublishers(fetchedPublishers.data.results);
+      const fetchedPublishersResponse = await getPublishers(debouncedSearchTerm, publicationTable, cancelToken);
+      if (fetchedPublishersResponse) {
+        if (fetchedPublishersResponse.error) {
+          dispatch(setNotification(t('error.get_publishers'), NotificationVariant.Error));
+        } else if (fetchedPublishersResponse.data) {
+          setPublishers(fetchedPublishersResponse.data.results);
+        }
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
     if (debouncedSearchTerm) {
       fetchPublishers();
     } else {
       setPublishers([]);
     }
-
-    return () => {
-      if (debouncedSearchTerm) {
-        cancelSource.cancel();
-      }
-    };
-  }, [publicationTable, debouncedSearchTerm]);
+  }, [dispatch, t, cancelToken, publicationTable, debouncedSearchTerm]);
 
   return [publishers, isLoading, handleNewSearchTerm];
 };

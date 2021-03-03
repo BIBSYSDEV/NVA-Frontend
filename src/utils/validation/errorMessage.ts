@@ -2,8 +2,10 @@ import i18n from '../../translations/i18n';
 
 export const ErrorMessage = {
   REQUIRED: i18n.t('common:mandatory'),
-  MISSING_CONTRIBUTOR: i18n.t('registration:feedback.minimum_one_contributor'),
+  MISSING_AUTHOR: i18n.t('registration:feedback.minimum_one_author'),
+  MISSING_EDITOR: i18n.t('registration:feedback.minimum_one_editor'),
   MISSING_FILE: i18n.t('registration:feedback.minimum_one_file'),
+  MISSING_SUPERVISOR: i18n.t('registration:feedback.minimum_one_supervisor'),
   INVALID_PAGE_INTERVAL: i18n.t('registration:feedback.invalid_page_interval'),
   INVALID_FORMAT: i18n.t('registration:feedback.invalid_format'),
   INVALID_ISBN: i18n.t('registration:feedback.invalid_isbn'),

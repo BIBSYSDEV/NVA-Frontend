@@ -1,9 +1,9 @@
 import Amplify from 'aws-amplify';
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import { CircularProgress } from '@material-ui/core';
 import { addQualifierIdForAuthority, AuthorityQualifiers, getAuthority } from './api/authorityApi';
 import { getInstitutionUser } from './api/roleApi';
 import { getCurrentUserAttributes } from './api/userApi';
@@ -15,14 +15,14 @@ import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
 import { setNotification } from './redux/actions/notificationActions';
 import { setAuthorityData, setPossibleAuthorities, setRoles, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
-import { awsConfig } from './utils/aws-config';
-import { USE_MOCK_DATA } from './utils/constants';
-import { mockUser } from './utils/testfiles/mock_feide_user';
-import { useTranslation } from 'react-i18next';
 import { Authority } from './types/authority.types';
 import { NotificationVariant } from './types/notification.types';
 import { InstitutionUser } from './types/user.types';
+import { awsConfig } from './utils/aws-config';
+import { USE_MOCK_DATA } from './utils/constants';
 import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
+import { mockUser } from './utils/testfiles/mock_feide_user';
+import { PageSpinner } from './components/PageSpinner';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -31,24 +31,15 @@ const StyledApp = styled.div`
 `;
 
 const StyledContent = styled.div`
-  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-self: center;
   width: 100%;
-  max-width: ${({ theme }) => theme.breakpoints.values.lg + 'px'};
   align-items: center;
   flex-grow: 1;
 `;
 
-const ProgressContainer = styled.div`
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const App: FC = () => {
+const App = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
   const user = useSelector((store: RootStore) => store.user);
@@ -144,9 +135,7 @@ const App: FC = () => {
   }, [dispatch, t, matchingAuthorities, user]);
 
   return isLoadingUser ? (
-    <ProgressContainer>
-      <CircularProgress />
-    </ProgressContainer>
+    <PageSpinner />
   ) : (
     <BrowserRouter>
       <StyledApp>

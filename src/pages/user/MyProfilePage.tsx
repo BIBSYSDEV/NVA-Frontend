@@ -1,25 +1,23 @@
-import React, { useEffect, FC } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button, Typography } from '@material-ui/core';
-import { Link as RouterLink } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
+import { PageHeader } from '../../components/PageHeader';
+import { StyledPageWrapperWithMaxWidth, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import { setNotification } from '../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import UserInfo from './UserInfo';
-import UserLanguage from './UserLanguage';
-import UserOrcid from './UserOrcid';
-import UserRoles from './UserRoles';
-import Card from '../../components/Card';
-import UserInstitution from './UserInstitution';
-import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
-import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { PageHeader } from '../../components/PageHeader';
 import { getUserPath, UrlPathTemplate } from '../../utils/urlPaths';
+import { UserInfo } from './UserInfo';
+import { UserLanguage } from './UserLanguage';
+import { UserOrcid } from './UserOrcid';
+import { UserRoles } from './UserRoles';
+import { UserAffiliations } from './UserAffiliations';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -27,7 +25,7 @@ const StyledUserPage = styled.div`
     grid-template-areas: 'top top' 'secondary-info primary-info' '. primary-info';
     grid-template-columns: 1fr 3fr;
   }
-  grid-gap: 3rem;
+  grid-gap: 2rem;
   font-size: 1rem;
   grid-template-areas: 'top' 'primary-info' 'secondary-info';
 `;
@@ -47,7 +45,7 @@ const StyledButtonWrapper = styled(StyledRightAlignedWrapper)`
   grid-area: top;
 `;
 
-const MyProfilePage: FC = () => {
+const MyProfilePage = () => {
   const { t } = useTranslation('profile');
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const user = useSelector((store: RootStore) => store.user)!; // If user has been empty this route would already be blocked
@@ -84,7 +82,7 @@ const MyProfilePage: FC = () => {
   }, [user.authority, dispatch, user.externalOrcid]);
 
   return (
-    <>
+    <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('my_profile')}</PageHeader>
       <StyledUserPage>
         {user.authority && (
@@ -105,17 +103,11 @@ const MyProfilePage: FC = () => {
 
         <StyledPrimaryUserInfo>
           <UserInfo user={user} />
-          <Card>
-            <Typography variant="h5">{t('heading.author_info')}</Typography>
-            {user.authority && user.authority.feideids?.length > 0 && (
-              <p data-testid="author-connected-info">{t('authority.connected_info')}</p>
-            )}
-          </Card>
           <UserOrcid user={user} />
-          <UserInstitution user={user} />
+          <UserAffiliations user={user} />
         </StyledPrimaryUserInfo>
       </StyledUserPage>
-    </>
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 

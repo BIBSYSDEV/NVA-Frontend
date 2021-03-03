@@ -2,10 +2,11 @@ import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import LinkRegistration from './new_registration/LinkRegistration';
-import UploadRegistration from './new_registration/UploadRegistration';
-import RegistrationForm from './RegistrationForm';
-import { PageHeader } from '../../components/PageHeader';
+import { PageHeader } from '../../../components/PageHeader';
+import { StyledPageWrapperWithMaxWidth } from '../../../components/styled/Wrappers';
+import RegistrationForm from '../RegistrationForm';
+import LinkRegistration from './LinkRegistration';
+import UploadRegistration from './UploadRegistration';
 
 const StyledEditRegistration = styled.div`
   margin-top: 2rem;
@@ -42,15 +43,17 @@ const EditRegistration: FC = () => {
     setExpanded(isExpanded ? panel : false);
 
   return !showForm ? (
-    <>
+    <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('new_registration')}</PageHeader>
       <StyledEditRegistration>
         <LinkRegistration expanded={expanded === PanelName.Link} onChange={handleChange(PanelName.Link)} />
         <UploadRegistration expanded={expanded === PanelName.File} onChange={handleChange(PanelName.File)} />
       </StyledEditRegistration>
-    </>
+    </StyledPageWrapperWithMaxWidth>
   ) : (
-    <RegistrationForm identifier={identifier} isNewRegistration={!!location.state?.isNewRegistration} />
+    <StyledPageWrapperWithMaxWidth>
+      <RegistrationForm identifier={identifier} isNewRegistration={!!location.state?.isNewRegistration} />
+    </StyledPageWrapperWithMaxWidth>
   );
 };
 
