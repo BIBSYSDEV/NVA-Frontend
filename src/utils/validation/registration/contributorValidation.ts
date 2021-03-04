@@ -19,11 +19,11 @@ export const contributorsValidationSchema = Yup.array().when(
     if (publicationContextType === PublicationType.DEGREE) {
       return Yup.array()
         .of(contributorValidationSchema)
-        .test('supervisor-test', ErrorMessage.MISSING_SUPERVISOR, (contributors) =>
-          hasRole(contributors, ContributorRole.SUPERVISOR)
-        )
         .test('author-test', ErrorMessage.MISSING_AUTHOR, (contributors) =>
           hasRole(contributors, ContributorRole.CREATOR)
+        )
+        .test('supervisor-test', ErrorMessage.MISSING_SUPERVISOR, (contributors) =>
+          hasRole(contributors, ContributorRole.SUPERVISOR)
         );
     } else if (publicationInstanceType === BookType.ANTHOLOGY) {
       return Yup.array()
