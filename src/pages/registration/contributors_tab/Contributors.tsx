@@ -132,7 +132,7 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
     <>
       <Typography variant="h2">{getContributorHeading(contributorRole)}</Typography>
       <MuiThemeProvider theme={lightTheme}>
-        {((isMobile && contributors.length >= 2) || (!isMobile && contributors.length >= 5)) && (
+        {((isMobile && relevantContributors.length >= 2) || (!isMobile && relevantContributors.length >= 5)) && (
           <StyledButton
             onClick={() => {
               setOpenContributorModal(true);
