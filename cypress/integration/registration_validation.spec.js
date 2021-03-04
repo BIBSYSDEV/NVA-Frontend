@@ -190,17 +190,6 @@ describe('User opens registration form and can see validation errors', () => {
 
     // Set corresponding
     cy.get('[data-testid=author-corresponding-checkbox]').eq(0).click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
-    cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
-    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('be.visible');
-
-    // Add author and set corresponding
-    cy.get('[data-testid=add-contributor-Creator]').click({ force: true });
-    cy.get('[data-testid=search-input]').click({ force: true }).type('test');
-    cy.get('[data-testid=author-radio-button]').eq(1).click({ force: true });
-    cy.get('[data-testid=connect-author-button]').click({ force: true });
-    cy.get('[data-testid=author-corresponding-checkbox]').eq(1).click({ force: true });
   });
 
   it('The User should be able to see validation errors on files tab', () => {
