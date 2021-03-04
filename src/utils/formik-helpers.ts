@@ -88,16 +88,13 @@ export const getAllFileFields = (files: File[]): string[] => {
 };
 
 export const getAllContributorFields = (contributors: Contributor[]): string[] => {
-  const fieldNames: string[] = [];
-  if (contributors.length === 0) {
-    fieldNames.push(ContributorFieldNames.CONTRIBUTORS);
-  } else {
-    contributors.forEach((contributor, index) => {
-      const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
-      fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`);
-      fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`);
-    });
-  }
+  const fieldNames: string[] = [ContributorFieldNames.CONTRIBUTORS];
+
+  contributors.forEach((contributor, index) => {
+    const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
+    fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`);
+    fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`);
+  });
   return fieldNames;
 };
 
