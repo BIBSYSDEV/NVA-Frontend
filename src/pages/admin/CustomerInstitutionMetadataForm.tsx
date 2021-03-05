@@ -18,7 +18,8 @@ import { createCustomerInstitution, updateCustomerInstitution } from '../../api/
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { customerInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
-import { SelectInstitutionField, CustomerInstitutionTextField } from './customerInstitutionFields';
+import { CustomerInstitutionTextField } from './customerInstitutionFields/CustomerInstitutionTextField';
+import { SelectInstitutionField } from './customerInstitutionFields/SelectInstitutionField';
 import { getAdminInstitutionPath } from '../../utils/urlPaths';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
