@@ -6,7 +6,6 @@ import { Form, Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import SaveIcon from '@material-ui/icons/Save';
 
-import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import {
   CustomerInstitution,
@@ -21,6 +20,8 @@ import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { customerInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
 import { SelectInstitutionField, CustomerInstitutionTextField } from './customerInstitutionFields';
 import { getAdminInstitutionPath } from '../../utils/urlPaths';
+import BackgroundDiv from '../../components/BackgroundDiv';
+import lightTheme from '../../themes/lightTheme';
 
 const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
   margin-top: 2rem;
@@ -67,7 +68,7 @@ const CustomerInstitutionMetadataForm = ({
   };
 
   return (
-    <Card>
+    <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
       <Heading>{t('common:institution')}</Heading>
       <Formik
         enableReinitialize
@@ -114,7 +115,7 @@ const CustomerInstitutionMetadataForm = ({
           </Form>
         )}
       </Formik>
-    </Card>
+    </BackgroundDiv>
   );
 };
 

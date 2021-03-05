@@ -1,10 +1,9 @@
-import React, { FC, useState } from 'react';
-import { Button } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Button, MuiThemeProvider } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import AddIcon from '@material-ui/icons/Add';
 
-import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import { filterUsersByRole } from '../../utils/role-helpers';
@@ -12,6 +11,8 @@ import UserList from './UserList';
 import Modal from '../../components/Modal';
 import { AddRoleModalContent } from './AddRoleModalContent';
 import ListSkeleton from '../../components/ListSkeleton';
+import BackgroundDiv from '../../components/BackgroundDiv';
+import lightTheme from '../../themes/lightTheme';
 
 const StyledNewButton = styled(Button)`
   margin-top: 1rem;
@@ -23,11 +24,11 @@ interface CustomerInstitutionAdminsFormProps {
   isLoadingUsers: boolean;
 }
 
-const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
+const CustomerInstitutionAdminsForm = ({
   users,
   refetchInstitutionUsers,
   isLoadingUsers,
-}) => {
+}: CustomerInstitutionAdminsFormProps) => {
   const { t } = useTranslation('admin');
   const [openAddAdminModal, setOpenAddAdminModal] = useState(false);
   const toggleOpenAddAdminModal = () => {
@@ -35,7 +36,7 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
   };
 
   return (
-    <Card>
+    <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
       <Heading>{t('administrators')}</Heading>
       {isLoadingUsers ? (
         <ListSkeleton maxWidth={25} />
@@ -47,8 +48,8 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
             refetchUsers={refetchInstitutionUsers}
           />
           <StyledNewButton
-            color="primary"
-            variant="outlined"
+            color="secondary"
+            variant="contained"
             startIcon={<AddIcon />}
             data-testid="button-open-add-admin"
             onClick={toggleOpenAddAdminModal}>
@@ -57,19 +58,21 @@ const CustomerInstitutionAdminsForm: FC<CustomerInstitutionAdminsFormProps> = ({
         </>
       )}
 
-      <Modal
-        open={openAddAdminModal}
-        onClose={toggleOpenAddAdminModal}
-        headingText={t('users.add_institution_admin')}
-        dataTestId="add-role-modal">
-        <AddRoleModalContent
-          role={RoleName.INSTITUTION_ADMIN}
-          users={users}
-          closeModal={toggleOpenAddAdminModal}
-          refetchUsers={refetchInstitutionUsers}
-        />
-      </Modal>
-    </Card>
+      <MuiThemeProvider theme={lightTheme}>
+        <Modal
+          open={openAddAdminModal}
+          onClose={toggleOpenAddAdminModal}
+          headingText={t('users.add_institution_admin')}
+          dataTestId="add-role-modal">
+          <AddRoleModalContent
+            role={RoleName.INSTITUTION_ADMIN}
+            users={users}
+            closeModal={toggleOpenAddAdminModal}
+            refetchUsers={refetchInstitutionUsers}
+          />
+        </Modal>
+      </MuiThemeProvider>
+    </BackgroundDiv>
   );
 };
 
