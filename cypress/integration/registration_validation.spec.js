@@ -169,7 +169,7 @@ describe('User opens registration form and can see validation errors', () => {
   });
 
   it('The User should be able to see validation errors on contributors tab', () => {
-    cy.get('[data-testid=nav-tabpanel-contributors]').first().click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.contains(ErrorMessage.MISSING_AUTHOR).should('be.visible');
 
     // Add author
@@ -191,15 +191,15 @@ describe('User opens registration form and can see validation errors', () => {
     // Set corresponding (and email)
     cy.get('[data-testid=author-corresponding-checkbox]').first().click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.exist');
-    cy.get('[data-testid=nav-tabpanel-reference]').first().click({ force: true });
-    cy.get('[data-testid=nav-tabpanel-contributors]').first().click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('be.visible');
 
     cy.get('[data-testid=author-email-input]').first().click({ force: true }).type('test');
-    cy.get('[data-testid=nav-tabpanel-contributors]').first().click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.contains(ErrorMessage.INVALID_FORMAT).should('be.visible');
     cy.get('[data-testid=author-email-input]').first().click({ force: true }).type('@email.com');
-    cy.get('[data-testid=nav-tabpanel-contributors]').first().click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.contains(ErrorMessage.INVALID_FORMAT).should('not.exist');
     cy.contains(ErrorMessage.REQUIRED).should('not.exist');
 
@@ -209,12 +209,12 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=author-radio-button]').first().click({ force: true });
     cy.get('[data-testid=connect-author-button]').first().click({ force: true });
     cy.get('[data-testid=author-corresponding-checkbox]').eq(1).click({ force: true });
-    cy.get('[data-testid=nav-tabpanel-description]').first().click({ force: true });
-    cy.get('[data-testid=nav-tabpanel-contributors]').first().click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('be.visible');
     cy.get('[data-testid=nav-tabpanel-contributors]').get('[data-testid=error-tab]');
     cy.get('[data-testid=author-email-input]').eq(1).click({ force: true }).type('test@email.com');
-    cy.get('[data-testid=nav-tabpanel-contributors]').first().click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.exist');
     cy.get('[data-testid=nav-tabpanel-contributors]').children('[data-testid=error-tab]').should('not.exist');
   });
