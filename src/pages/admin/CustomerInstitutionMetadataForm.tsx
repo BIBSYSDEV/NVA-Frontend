@@ -26,10 +26,6 @@ const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
   margin-top: 2rem;
 `;
 
-const StyledCard = styled(Card)`
-  min-width: 60vw;
-`;
-
 interface CustomerInstitutionMetadataFormProps {
   customerInstitution: CustomerInstitution;
   handleSetCustomerInstitution: (customerInstitution: CustomerInstitution) => void;
@@ -71,7 +67,7 @@ const CustomerInstitutionMetadataForm = ({
   };
 
   return (
-    <StyledCard>
+    <Card>
       <Heading>{t('common:institution')}</Heading>
       <Formik
         enableReinitialize
@@ -118,7 +114,7 @@ const CustomerInstitutionMetadataForm = ({
           </Form>
         )}
       </Formik>
-    </StyledCard>
+    </Card>
   );
 };
 
