@@ -33,7 +33,7 @@ interface CustomerInstitutionMetadataFormProps {
   editMode: boolean;
 }
 
-const CustomerInstitutionMetadataForm = ({
+export const CustomerInstitutionMetadataForm = ({
   customerInstitution,
   handleSetCustomerInstitution,
   editMode,
@@ -118,5 +118,3 @@ const CustomerInstitutionMetadataForm = ({
     </BackgroundDiv>
   );
 };
-
-export default CustomerInstitutionMetadataForm;

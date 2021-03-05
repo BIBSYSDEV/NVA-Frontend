@@ -24,7 +24,7 @@ interface CustomerInstitutionAdminsFormProps {
   isLoadingUsers: boolean;
 }
 
-const CustomerInstitutionAdminsForm = ({
+export const CustomerInstitutionAdminsForm = ({
   users,
   refetchInstitutionUsers,
   isLoadingUsers,
@@ -75,5 +75,3 @@ const CustomerInstitutionAdminsForm = ({
     </BackgroundDiv>
   );
 };
-
-export default CustomerInstitutionAdminsForm;
