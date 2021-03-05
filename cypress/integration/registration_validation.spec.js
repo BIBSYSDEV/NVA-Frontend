@@ -169,9 +169,10 @@ describe('User opens registration form and can see validation errors', () => {
   });
 
   it('The User should be able to see validation errors on contributors tab', () => {
+    console.log(0);
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.contains(ErrorMessage.MISSING_AUTHOR).should('be.visible');
-
+    console.log(1);
     // Add author
     cy.get('[data-testid=add-contributor-Creator]').click({ force: true });
     cy.get('[data-testid=search-input]').click({ force: true }).type('test');
@@ -180,7 +181,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.contains(ErrorMessage.MISSING_AUTHOR).should('not.exist');
     cy.contains(ErrorMessage.MISSING_SUPERVISOR).should('be.visible');
 
-    // Add supervisor
+    console.log(2); // Add supervisor
     cy.get('[data-testid=add-contributor-Supervisor]').click({ force: true });
     cy.get('[data-testid=search-input]').click({ force: true }).type('test');
     cy.get('[data-testid=author-radio-button]').eq(0).click({ force: true });
@@ -188,6 +189,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.contains(ErrorMessage.MISSING_AUTHOR).should('not.exist');
     cy.contains(ErrorMessage.MISSING_SUPERVISOR).should('not.exist');
 
+    console.log(3);
     // Set corresponding (and email)
     cy.get('[data-testid=author-corresponding-checkbox]').eq(0).click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.exist');
@@ -195,6 +197,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('be.visible');
 
+    console.log(4);
     cy.get('[data-testid=author-email-input]').click({ force: true }).type('test');
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.contains(ErrorMessage.INVALID_FORMAT).should('be.visible');
@@ -203,6 +206,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.contains(ErrorMessage.INVALID_FORMAT).should('not.exist');
     cy.contains(ErrorMessage.REQUIRED).should('not.exist');
 
+    console.log(5);
     // Add author and set corresponding without setting email
     cy.get('[data-testid=add-contributor-Creator]').click({ force: true });
     cy.get('[data-testid=search-input]').click({ force: true }).type('test');
