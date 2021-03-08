@@ -1,13 +1,11 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Link, IconButton, Typography } from '@material-ui/core';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
-
-import { Contributor } from '../../types/contributor.types';
-import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
-import OrcidLogo from '../../resources/images/orcid_logo.svg';
-import { ORCID_BASE_URL } from '../../utils/constants';
+import { IconButton, Link, Typography } from '@material-ui/core';
 import AffiliationHierarchy from '../../components/institution/AffiliationHierarchy';
+import OrcidLogo from '../../resources/images/orcid_logo.svg';
+import { Contributor } from '../../types/contributor.types';
+import { ORCID_BASE_URL } from '../../utils/constants';
+import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
 
 const StyledAuthor = styled.span`
   margin-right: 1rem;
@@ -43,7 +41,6 @@ const PublicRegistrationAuthors: FC<PublicRegistrationAuthorsProps> = ({ contrib
         {contributors.map((contributor, index) => {
           const {
             identity: { id, name, orcId },
-            email,
           } = contributor;
           const affiliationIndexes = contributor.affiliations
             ?.map((affiliation) => affiliation.id && distinctUnits.indexOf(affiliation.id) + 1)
@@ -63,11 +60,6 @@ const PublicRegistrationAuthors: FC<PublicRegistrationAuthorsProps> = ({ contrib
               )}
               <sup>
                 {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
-                {email && (
-                  <IconButton size="small" href={`mailto:${email}`}>
-                    <MailOutlineIcon fontSize="small" />
-                  </IconButton>
-                )}
                 {orcId && (
                   <IconButton size="small" href={`${ORCID_BASE_URL}/${orcId}`}>
                     <img src={OrcidLogo} height="20" alt="orcid" />

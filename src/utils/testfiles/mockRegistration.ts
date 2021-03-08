@@ -57,7 +57,6 @@ export const mockRegistration: JournalRegistration = {
         type: BackendTypeNames.CONTRIBUTOR,
         affiliations: [],
         correspondingAuthor: true,
-        email: 'test@test.no',
         identity: {
           type: BackendTypeNames.IDENTITY,
           id: '901790000000',
@@ -77,7 +76,6 @@ export const mockRegistration: JournalRegistration = {
           },
         ],
         correspondingAuthor: false,
-        email: '',
         identity: {
           type: BackendTypeNames.IDENTITY,
           name: 'Osteloff, Oddny',

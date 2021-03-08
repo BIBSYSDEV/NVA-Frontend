@@ -7,10 +7,6 @@ const contributorValidationSchema = Yup.object().shape({
   correspondingAuthor: Yup.boolean(),
   sequence: Yup.number(),
   role: Yup.string(),
-  email: Yup.string().when('correspondingAuthor', {
-    is: true,
-    then: Yup.string().email(ErrorMessage.INVALID_FORMAT).required(ErrorMessage.REQUIRED),
-  }),
 });
 
 export const contributorsValidationSchema = Yup.array().when(
