@@ -1,15 +1,15 @@
+import deepmerge, { Options } from 'deepmerge';
 import { FormikErrors, FormikTouched, getIn } from 'formik';
-import {
-  FileFieldNames,
-  SpecificFileFieldNames,
-  SpecificContributorFieldNames,
-  ContributorFieldNames,
-  PublicationType,
-} from '../types/publicationFieldNames';
 import { Contributor } from '../types/contributor.types';
 import { File } from '../types/file.types';
+import {
+  ContributorFieldNames,
+  FileFieldNames,
+  PublicationType,
+  SpecificContributorFieldNames,
+  SpecificFileFieldNames,
+} from '../types/publicationFieldNames';
 import { Registration } from '../types/registration.types';
-import deepmerge, { Options } from 'deepmerge';
 
 interface CustomError {
   fieldName: string;
@@ -94,9 +94,6 @@ export const getAllContributorFields = (contributors: Contributor[]): string[] =
     const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
     fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`);
     fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`);
-    if (contributor.correspondingAuthor) {
-      fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`);
-    }
   });
   return fieldNames;
 };
@@ -208,7 +205,6 @@ export const touchedContributorTabFields = (contributors: Contributor[]): Formik
     contributors: contributors.map((contributor) => ({
       correspondingAuthor: true,
       sequence: true,
-      email: contributor.correspondingAuthor,
     })),
   },
 });

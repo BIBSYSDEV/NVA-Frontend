@@ -17,7 +17,6 @@ export interface Identity extends BackendType {
 export interface Contributor extends BackendType {
   affiliations?: Institution[];
   correspondingAuthor?: boolean;
-  email?: string;
   identity: Identity;
   role: ContributorRole;
   sequence: number;
@@ -37,7 +36,6 @@ export interface Institution extends BackendType {
 export const emptyContributor: Contributor = {
   affiliations: [],
   correspondingAuthor: false,
-  email: '',
   identity: {
     name: '',
     type: BackendTypeNames.IDENTITY,
