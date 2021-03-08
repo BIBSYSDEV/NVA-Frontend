@@ -15,8 +15,8 @@ import lightTheme from '../../../../themes/lightTheme';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
-import AffiliationsCell from './AffiliationsCell';
 import { getRemoveContributorText } from '../../../../utils/validation/registration/contributorTranslations';
+import AffiliationsCell from './AffiliationsCell';
 
 const StyledCheckIcon = styled(CheckIcon)`
   color: ${({ theme }) => theme.palette.success.main};
@@ -67,21 +67,6 @@ const StyledVerifiedSection = styled.div`
 
 const StyledCorrespondingWrapper = styled.div`
   grid-area: corresponding;
-  display: grid;
-  grid-template-areas: 'checkbox' 'email';
-`;
-
-const StyledCorrespondingField = styled(Field)`
-  grid-area: checkbox;
-`;
-
-const StyledEmailField = styled(Field)`
-  grid-area: email;
-`;
-
-const StyledEmailTextField = styled(TextField)`
-  margin: 0;
-  margin-left: 2rem;
 `;
 
 const StyledDangerButton = styled(DangerButton)`
@@ -139,8 +124,7 @@ export const ContributorCard = ({
       c.role === contributor.role
   );
   const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${contributorIndex}]`;
-  const { values, setFieldValue } = useFormikContext<Registration>();
-  const [emailValue, setEmailValue] = useState(values.entityDescription.contributors[contributorIndex]?.email ?? '');
+  const { setFieldValue } = useFormikContext<Registration>();
   const [sequenceValue, setSequenceValue] = useState(`${contributor.sequence}`);
   const numberOfContributorsWithSameRole = contributors.filter((c) => c.role === contributor.role).length;
 
@@ -216,38 +200,28 @@ export const ContributorCard = ({
           />
         </StyledRightAlignedWrapper>
         <StyledCorrespondingWrapper>
-          <StyledCorrespondingField name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
+          <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
             {({ field }: FieldProps) => (
               <FormControlLabel
                 data-testid="author-corresponding-checkbox"
-                control={<Checkbox checked={!!field.value} color="default" {...field} />}
+                control={
+                  <Checkbox
+                    checked={!!field.value}
+                    color="default"
+                    {...field}
+                    // TODO: Remove this block when backend has removed validation for email field
+                    onChange={(event) => {
+                      field.onChange(event);
+                      if (event.target.checked) {
+                        setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`, 'NO_EMAIL');
+                      }
+                    }}
+                  />
+                }
                 label={t('contributors.corresponding')}
               />
             )}
-          </StyledCorrespondingField>
-          {contributor.correspondingAuthor && (
-            <StyledEmailField name={`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`}>
-              {({ field, meta: { error, touched } }: FieldProps) => (
-                <StyledEmailTextField
-                  data-testid="author-email-input"
-                  {...field}
-                  label={t('common:email')}
-                  required
-                  variant="filled"
-                  onChange={(event) => {
-                    setEmailValue(event.target.value);
-                  }}
-                  onBlur={(event) => {
-                    setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`, emailValue);
-                    field.onBlur(event);
-                  }}
-                  value={emailValue}
-                  error={touched && !!error}
-                  helperText={touched && error}
-                />
-              )}
-            </StyledEmailField>
-          )}
+          </Field>
         </StyledCorrespondingWrapper>
       </StyledContributorSection>
       {contributor.identity && (
