@@ -167,7 +167,7 @@ describe('User opens registration form and can see validation errors', () => {
 
     cy.get('[data-testid=nav-tabpanel-reference]').children('[data-testid=error-tab]').should('not.exist');
   });
-
+  //ASDdas
   it('The User should be able to see validation errors on contributors tab', () => {
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.contains(ErrorMessage.MISSING_AUTHOR).should('be.visible');
