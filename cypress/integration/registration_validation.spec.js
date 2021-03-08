@@ -169,27 +169,28 @@ describe('User opens registration form and can see validation errors', () => {
   });
 
   it('The User should be able to see validation errors on contributors tab', () => {
-    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-contributors]').first().click({ force: true });
     cy.contains(ErrorMessage.MISSING_AUTHOR).should('be.visible');
 
     // Add author
-    cy.get('[data-testid=add-contributor-Creator]').click({ force: true });
-    cy.get('[data-testid=search-input]').click({ force: true }).type('test');
-    cy.get('[data-testid=author-radio-button]').eq(0).click({ force: true });
-    cy.get('[data-testid=connect-author-button]').click({ force: true });
+    cy.get('[data-testid=add-contributor-Creator]').first().click({ force: true });
+    cy.get('[data-testid=search-input]').first().type('test');
+    cy.get('[data-testid=author-radio-button]').first().click({ force: true });
+    cy.get('[data-testid=connect-author-button]').first().click({ force: true });
     cy.contains(ErrorMessage.MISSING_AUTHOR).should('not.exist');
     cy.contains(ErrorMessage.MISSING_SUPERVISOR).should('be.visible');
 
     // Add supervisor
-    cy.get('[data-testid=add-contributor-Supervisor]').click({ force: true });
-    cy.get('[data-testid=search-input]').click({ force: true }).type('test');
-    cy.get('[data-testid=author-radio-button]').eq(0).click({ force: true });
-    cy.get('[data-testid=connect-author-button]').click({ force: true });
+    cy.get('[data-testid=add-contributor-Supervisor]').first().click({ force: true });
+    cy.get('[data-testid=search-input]').first().type('test');
+    cy.get('[data-testid=author-radio-button]').last().click({ force: true });
+    cy.get('[data-testid=connect-author-button]').first().click({ force: true });
     cy.contains(ErrorMessage.MISSING_AUTHOR).should('not.exist');
     cy.contains(ErrorMessage.MISSING_SUPERVISOR).should('not.exist');
 
     // Set corresponding
     cy.get('[data-testid=author-corresponding-checkbox]').eq(0).click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-contributors]').children('[data-testid=error-tab]').should('not.exist');
   });
 
   it('The User should be able to see validation errors on files tab', () => {
