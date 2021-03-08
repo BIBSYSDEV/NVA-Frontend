@@ -129,7 +129,14 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     }
   };
 
-  const registrationIsValid = registrationValidationSchema.isValidSync(registration);
+  const registrationIsValid = registrationValidationSchema.isValidSync(registration, {
+    context: {
+      publicationContextType: registration.entityDescription.reference.publicationContext.type,
+      publicationInstanceType: registration.entityDescription.reference.publicationInstance.type,
+      publicationStatus: registration.status,
+    },
+  });
+
   const isOwner = user && user.isCreator && owner === user.id;
   const isCurator = user && user.isCurator && user.customerId === publisher.id;
   const hasNvaDoi = !!doi || doiRequest;
