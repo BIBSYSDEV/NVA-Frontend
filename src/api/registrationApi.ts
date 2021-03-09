@@ -12,8 +12,8 @@ export enum PublicationsApiPaths {
   PUBLICATIONS_BY_OWNER = '/publication/by-owner',
   DOI_LOOKUP = '/doi-fetch',
   FOR_APPROVAL = '/publications/approval',
-  DOI_REQUEST = '/publications/doirequest',
-  UPDATE_DOI_REQUEST = '/publications/update-doi-request',
+  DOI_REQUEST = '/publication/doirequest',
+  UPDATE_DOI_REQUEST = '/publication/update-doi-request',
 }
 
 export const createRegistration = async (partialPublication?: RegistrationFileSet) => {
