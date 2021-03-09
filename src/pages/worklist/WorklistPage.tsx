@@ -15,11 +15,6 @@ const StyledTabsContainer = styled(StyledCenterAlignedContentWrapper)`
   margin-bottom: 1rem;
 `;
 
-// const StyledPlaylistAddCheckIcon = styled(PlaylistAddCheckIcon)`
-//   width: 3rem;
-//   height: 3rem;
-// `;
-
 const StyledLinkIcon = styled(LinkIcon)`
   width: 3rem;
   height: 3rem;
@@ -39,13 +34,6 @@ const WorklistPage: FC = () => {
       <PageHeader>{t('my_worklist')}</PageHeader>
       <StyledContainer>
         <StyledTabsContainer>
-          {/* <TabButton
-            data-testid="for-approval-button"
-            onClick={() => setSelectedTab(Tab.Approval)}
-            isSelected={selectedTab === Tab.Approval}>
-            <StyledPlaylistAddCheckIcon fontSize="large" />
-            {t('for_approval')}
-          </TabButton> */}
           <TabButton
             data-testid="doi-requests-button"
             onClick={() => setSelectedTab(Tab.Doi)}
@@ -55,7 +43,6 @@ const WorklistPage: FC = () => {
           </TabButton>
         </StyledTabsContainer>
 
-        {/* {selectedTab === Tab.Approval && <PublicationsForApproval />} */}
         {selectedTab === Tab.Doi && <DoiRequests />}
       </StyledContainer>
     </StyledPageWrapperWithMaxWidth>

@@ -81,7 +81,6 @@ export const interceptRequestsOnMock = () => {
 
   // WORKLIST
   mock.onGet(new RegExp(`${PublicationsApiPaths.DOI_REQUEST}/*`)).reply(200, mockRegistrationsWithPendingDoiRequest);
-  mock.onGet(new RegExp(`${PublicationsApiPaths.FOR_APPROVAL}/*`)).reply(200, mockMyRegistrations.publications);
 
   //MY MESSAGES
   mock
