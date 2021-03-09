@@ -1,16 +1,19 @@
 import Axios, { CancelToken } from 'axios';
 import i18n from '../translations/i18n';
-import { Registration, RegistrationPreview } from '../types/registration.types';
+import { DoiRequestStatus, Registration, RegistrationPreview } from '../types/registration.types';
 import { RegistrationFileSet } from '../types/file.types';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
 import { apiRequest, authenticatedApiRequest } from './apiRequest';
+import { RoleName } from '../types/user.types';
 
 export enum PublicationsApiPaths {
   PUBLICATION = '/publication',
   PUBLICATIONS_BY_OWNER = '/publication/by-owner',
   DOI_LOOKUP = '/doi-fetch',
   FOR_APPROVAL = '/publications/approval',
+  DOI_REQUEST = '/publications/doirequest',
+  UPDATE_DOI_REQUEST = '/publications/update-doi-request',
 }
 
 export const createRegistration = async (partialPublication?: RegistrationFileSet) => {
@@ -140,4 +143,39 @@ export const deleteRegistration = async (identifier: string) =>
   authenticatedApiRequest({
     url: `${PublicationsApiPaths.PUBLICATION}/${identifier}`,
     method: 'DELETE',
+  });
+
+export const getRegistrationsWithPendingDoiRequest = async (role: RoleName, cancelToken?: CancelToken) =>
+  await authenticatedApiRequest<Registration[]>({
+    url: `${PublicationsApiPaths.DOI_REQUEST}?role=${role}`,
+    cancelToken,
+  });
+
+export const createDoiRequest = async (registrationId: string, message?: string, cancelToken?: CancelToken) =>
+  await authenticatedApiRequest({
+    url: PublicationsApiPaths.DOI_REQUEST,
+    method: 'POST',
+    data: {
+      publicationId: registrationId,
+      message,
+    },
+    cancelToken,
+  });
+
+export const updateDoiRequest = async (registrationId: string, status: DoiRequestStatus) =>
+  await authenticatedApiRequest({
+    url: `${PublicationsApiPaths.UPDATE_DOI_REQUEST}/${registrationId}`,
+    method: 'POST',
+    data: {
+      doiRequestStatus: status,
+    },
+  });
+
+export const updateDoiRequestWithMessage = async (registrationId: string, message: string) =>
+  await authenticatedApiRequest({
+    url: `${PublicationsApiPaths.UPDATE_DOI_REQUEST}/${registrationId}/message`,
+    method: 'POST',
+    data: {
+      message,
+    },
   });
