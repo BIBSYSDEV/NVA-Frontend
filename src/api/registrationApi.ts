@@ -11,6 +11,7 @@ export enum PublicationsApiPaths {
   PUBLICATIONS_BY_OWNER = '/publication/by-owner',
   DOI_LOOKUP = '/doi-fetch',
   FOR_APPROVAL = '/publications/approval',
+  MESSAGES = '/publication/messages',
 }
 
 export const createRegistration = async (partialPublication?: RegistrationFileSet) => {
@@ -140,4 +141,14 @@ export const deleteRegistration = async (identifier: string) =>
   authenticatedApiRequest({
     url: `${PublicationsApiPaths.PUBLICATION}/${identifier}`,
     method: 'DELETE',
+  });
+
+export const addMessage = async (identifier: string, message: string) =>
+  authenticatedApiRequest({
+    url: `${PublicationsApiPaths.MESSAGES}`,
+    method: 'POST',
+    data: {
+      publicationIdentifier: identifier,
+      message,
+    },
   });

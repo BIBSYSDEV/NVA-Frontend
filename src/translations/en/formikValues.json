@@ -1,6 +1,5 @@
 {
   "entityDescription-contributors": "$t(registration:contributors.authors)",
-  "entityDescription-contributors-email": "$t(common:email)",
   "entityDescription-date-year": "$t(registration:description.date_published)",
   "entityDescription-mainTitle": "$t(common:title)",
   "entityDescription-reference-publicationContext-isbnList": "$t(registration:references.isbn)",

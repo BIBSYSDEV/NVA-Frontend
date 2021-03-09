@@ -5,37 +5,37 @@ import { ErrorMessage } from '../errorMessage';
 
 const contributorValidationSchema = Yup.object().shape({
   correspondingAuthor: Yup.boolean(),
-  email: Yup.string().when('correspondingAuthor', {
-    is: true,
-    then: Yup.string().email(ErrorMessage.INVALID_FORMAT).required(ErrorMessage.REQUIRED),
-  }),
+  sequence: Yup.number(),
+  role: Yup.string(),
 });
 
-export const contributorsValidationSchema = Yup.array()
-  .when('$publicationInstanceType', {
-    is: BookType.ANTHOLOGY,
-    then: Yup.array()
-      .of(contributorValidationSchema)
-      .test('editor-test', ErrorMessage.MISSING_EDITOR, (contributors) =>
-        hasRole(contributors, ContributorRole.EDITOR)
-      ),
-    otherwise: Yup.array()
-      .of(contributorValidationSchema)
-      .test('author-test', ErrorMessage.MISSING_AUTHOR, (contributors) =>
-        hasRole(contributors, ContributorRole.CREATOR)
-      ),
-  })
-  .when('$publicationContextType', {
-    is: PublicationType.DEGREE,
-    then: Yup.array()
-      .of(contributorValidationSchema)
-      .test('supervisor-test', ErrorMessage.MISSING_SUPERVISOR, (contributors) =>
-        hasRole(contributors, ContributorRole.SUPERVISOR)
-      )
-      .test('author-test', ErrorMessage.MISSING_AUTHOR, (contributors) =>
-        hasRole(contributors, ContributorRole.CREATOR)
-      ),
-  });
+export const contributorsValidationSchema = Yup.array().when(
+  ['$publicationContextType', '$publicationInstanceType'],
+  (publicationContextType: any, publicationInstanceType: any) => {
+    if (publicationContextType === PublicationType.DEGREE) {
+      return Yup.array()
+        .of(contributorValidationSchema)
+        .test('author-test', ErrorMessage.MISSING_AUTHOR, (contributors) =>
+          hasRole(contributors, ContributorRole.CREATOR)
+        )
+        .test('supervisor-test', ErrorMessage.MISSING_SUPERVISOR, (contributors) =>
+          hasRole(contributors, ContributorRole.SUPERVISOR)
+        );
+    } else if (publicationInstanceType === BookType.ANTHOLOGY) {
+      return Yup.array()
+        .of(contributorValidationSchema)
+        .test('editor-test', ErrorMessage.MISSING_EDITOR, (contributors) =>
+          hasRole(contributors, ContributorRole.EDITOR)
+        );
+    } else {
+      return Yup.array()
+        .of(contributorValidationSchema)
+        .test('author-test', ErrorMessage.MISSING_AUTHOR, (contributors) =>
+          hasRole(contributors, ContributorRole.CREATOR)
+        );
+    }
+  }
+);
 
 const hasRole = (contributors: any, role: ContributorRole) =>
   !!contributors && contributors.some((contributor: Contributor) => contributor.role === role);
