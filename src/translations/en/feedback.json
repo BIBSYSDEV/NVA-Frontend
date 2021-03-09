@@ -32,7 +32,6 @@
     "get_users_for_institution": "Could not get users",
     "institution_mismatch": "This user belongs to another institution",
     "login": "Login failed",
-    "message_failed": "Could not send message",
     "missing_user": "Missing user",
     "orcid_login": "ORCID login failed",
     "publish_registration": "Could not publish registration",
