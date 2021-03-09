@@ -6,6 +6,7 @@ import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import SubHeading from '../../components/SubHeading';
 import { RoleName } from '../../types/user.types';
+import { useFetchMessages } from '../../utils/hooks/useFetchMessages';
 import useFetchRegistrationsWithPendingDoiRequest from '../../utils/hooks/useFetchRegistrationsWithPendingDoiRequest';
 import { DoiRequestAccordion } from '../worklist/DoiRequestAccordion';
 
@@ -14,6 +15,10 @@ const MyMessages = () => {
   const [registrationsWithPendingDoiRequest, isLoadingPendingDoiRequests] = useFetchRegistrationsWithPendingDoiRequest(
     RoleName.CREATOR
   );
+
+  const [messages, isLoadingMessages] = useFetchMessages(RoleName.CREATOR);
+
+  console.log(registrationsWithPendingDoiRequest, messages);
 
   return (
     <StyledPageWrapperWithMaxWidth>

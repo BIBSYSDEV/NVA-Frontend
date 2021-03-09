@@ -6,6 +6,7 @@ import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
 import { apiRequest, authenticatedApiRequest } from './apiRequest';
 import { RoleName } from '../types/user.types';
+import { Message } from '../types/publication_types/messages.types';
 
 export enum PublicationsApiPaths {
   PUBLICATION = '/publication',
@@ -13,6 +14,7 @@ export enum PublicationsApiPaths {
   DOI_LOOKUP = '/doi-fetch',
   DOI_REQUEST = '/publication/doirequest',
   UPDATE_DOI_REQUEST = '/publication/update-doi-request',
+  MESSAGES = '/publication/messages',
 }
 
 export const createRegistration = async (partialPublication?: RegistrationFileSet) => {
@@ -157,4 +159,11 @@ export const updateDoiRequestWithMessage = async (registrationId: string, messag
     data: {
       message,
     },
+  });
+
+export const getMessages = async (role: RoleName, cancelToken?: CancelToken) =>
+  await authenticatedApiRequest<Message[]>({
+    url: `${PublicationsApiPaths.MESSAGES}?role=${role}`,
+    method: 'GET',
+    cancelToken,
   });
