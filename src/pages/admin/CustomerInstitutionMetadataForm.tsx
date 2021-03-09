@@ -6,7 +6,6 @@ import { Form, Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import SaveIcon from '@material-ui/icons/Save';
 
-import Card from '../../components/Card';
 import Heading from '../../components/Heading';
 import {
   CustomerInstitution,
@@ -19,15 +18,14 @@ import { createCustomerInstitution, updateCustomerInstitution } from '../../api/
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { customerInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
-import { SelectInstitutionField, CustomerInstitutionTextField } from './customerInstitutionFields';
+import { CustomerInstitutionTextField } from './customerInstitutionFields/CustomerInstitutionTextField';
+import { SelectInstitutionField } from './customerInstitutionFields/SelectInstitutionField';
 import { getAdminInstitutionPath } from '../../utils/urlPaths';
+import BackgroundDiv from '../../components/BackgroundDiv';
+import lightTheme from '../../themes/lightTheme';
 
 const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
   margin-top: 2rem;
-`;
-
-const StyledCard = styled(Card)`
-  min-width: 60vw;
 `;
 
 interface CustomerInstitutionMetadataFormProps {
@@ -36,7 +34,7 @@ interface CustomerInstitutionMetadataFormProps {
   editMode: boolean;
 }
 
-const CustomerInstitutionMetadataForm = ({
+export const CustomerInstitutionMetadataForm = ({
   customerInstitution,
   handleSetCustomerInstitution,
   editMode,
@@ -71,7 +69,7 @@ const CustomerInstitutionMetadataForm = ({
   };
 
   return (
-    <StyledCard>
+    <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
       <Heading>{t('common:institution')}</Heading>
       <Formik
         enableReinitialize
@@ -118,8 +116,6 @@ const CustomerInstitutionMetadataForm = ({
           </Form>
         )}
       </Formik>
-    </StyledCard>
+    </BackgroundDiv>
   );
 };
-
-export default CustomerInstitutionMetadataForm;

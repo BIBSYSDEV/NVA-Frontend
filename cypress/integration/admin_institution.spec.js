@@ -20,7 +20,9 @@ describe('User administers institutions ', () => {
     cy.get('[data-testid=add-institution-button]').click({ force: true });
 
     cy.get('[data-testid=autocomplete-institution]').click({ force: true }).type('ntnu');
-    cy.get('.MuiAutocomplete-option').contains('Norwegian University of Science and Technology').click({ force: true });
+    cy.get('[class^=MuiAutocomplete-option]')
+      .contains('Norwegian University of Science and Technology')
+      .click({ force: true });
     cy.get('[data-testid=customer-institution-short-name-input]').type('NTNU');
     cy.get('[data-testid=customer-institution-archive-name-input]').type('NTNU Open');
     cy.get('[data-testid=customer-institution-feide-organization-id-input]').type('NO919477822');

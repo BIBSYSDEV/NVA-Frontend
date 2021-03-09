@@ -13,6 +13,7 @@ export enum PublicationsApiPaths {
   DOI_LOOKUP = '/doi-fetch',
   DOI_REQUEST = '/publication/doirequest',
   UPDATE_DOI_REQUEST = '/publication/update-doi-request',
+  MESSAGES = '/publication/messages',
 }
 
 export const createRegistration = async (partialPublication?: RegistrationFileSet) => {
@@ -155,6 +156,17 @@ export const updateDoiRequestWithMessage = async (registrationId: string, messag
     url: `${PublicationsApiPaths.UPDATE_DOI_REQUEST}/${registrationId}/message`,
     method: 'POST',
     data: {
+      publicationIdentifier: registrationId,
+      message,
+    },
+  });
+
+export const addMessage = async (identifier: string, message: string) =>
+  authenticatedApiRequest({
+    url: `${PublicationsApiPaths.MESSAGES}`,
+    method: 'POST',
+    data: {
+      publicationIdentifier: identifier,
       message,
     },
   });

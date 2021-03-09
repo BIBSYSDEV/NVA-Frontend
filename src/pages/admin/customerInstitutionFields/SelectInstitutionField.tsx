@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Field, FieldProps, ErrorMessage } from 'formik';
 import useFetchInstitutions from '../../../utils/hooks/useFetchInstitutions';
 import { CustomerInstitutionFieldNames } from '../../../types/customerInstitution.types';
@@ -8,7 +8,7 @@ interface SelectInstitutionFieldProps {
   disabled?: boolean;
 }
 
-const SelectInstitutionField: FC<SelectInstitutionFieldProps> = ({ disabled = false }) => {
+export const SelectInstitutionField = ({ disabled = false }: SelectInstitutionFieldProps) => {
   const [institutions, isLoadingInstitutions] = useFetchInstitutions();
 
   return (
@@ -36,5 +36,3 @@ const SelectInstitutionField: FC<SelectInstitutionFieldProps> = ({ disabled = fa
     </Field>
   );
 };
-
-export default SelectInstitutionField;
