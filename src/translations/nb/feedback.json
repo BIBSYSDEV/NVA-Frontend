@@ -38,6 +38,7 @@
     "publish_registration": "Kunne ikke publisere registrering",
     "remove_role": "Kunne ikke fjerne rolle",
     "search": "Søk feilet",
+    "send_message": "Kunne ikke sende melding",
     "update_authority": "Kunne ikke oppdatere {{qualifier}} for autoritet",
     "update_customer": "Kunne ikke oppdatere institusjon",
     "update_doi_request": "Kunne ikke oppdatere DOI-forespørsel",
@@ -65,9 +66,9 @@
     "doi_request_sent": "DOI-forespørsel sendt",
     "doi_request_updated": "DOI-forespørselen ble oppdatert",
     "login": "Logget inn",
-    "message_sent": "Melding sendt",
     "published_registration": "Registreringen ble publisert",
     "removed_role": "Rollen ble fjernet",
+    "message_sent": "Melding sendt",
     "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",
     "update_registration": "Registreringen er oppdatert"
