@@ -10,7 +10,7 @@ import InstitutionList from './InstitutionList';
 import { PageSpinner } from '../../components/PageSpinner';
 import { useFetchCustomerInstitutions } from '../../utils/hooks/useFetchCustomerInstitutions';
 
-const AdminCustomerInstitutions = () => {
+export const AdminCustomerInstitutions = () => {
   const { t } = useTranslation('admin');
   const [customerInstitutions, isLoadingCustomerInstitutions] = useFetchCustomerInstitutions();
 
@@ -32,5 +32,3 @@ const AdminCustomerInstitutions = () => {
     </StyledPageWrapperWithMaxWidth>
   );
 };
-
-export default AdminCustomerInstitutions;

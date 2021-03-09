@@ -152,18 +152,19 @@ export const updateDoiRequest = async (registrationId: string, status: DoiReques
     },
   });
 
-export const updateDoiRequestWithMessage = async (registrationId: string, message: string) =>
-  await authenticatedApiRequest({
-    url: `${PublicationsApiPaths.UPDATE_DOI_REQUEST}/${registrationId}/message`,
-    method: 'POST',
-    data: {
-      message,
-    },
-  });
-
 export const getMessages = async (role: RoleName, cancelToken?: CancelToken) =>
   await authenticatedApiRequest<Message[]>({
     url: `${PublicationsApiPaths.MESSAGES}?role=${role}`,
     method: 'GET',
     cancelToken,
+  });
+
+export const addMessage = async (identifier: string, message: string) =>
+  await authenticatedApiRequest({
+    url: `${PublicationsApiPaths.MESSAGES}`,
+    method: 'POST',
+    data: {
+      publicationIdentifier: identifier,
+      message,
+    },
   });
