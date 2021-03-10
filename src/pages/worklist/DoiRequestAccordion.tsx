@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { Accordion, AccordionDetails, AccordionSummary, Button } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import { updateDoiRequestWithMessage } from '../../api/doiRequestApi';
 import Label from '../../components/Label';
 import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/actions/notificationActions';
@@ -14,6 +13,7 @@ import { NotificationVariant } from '../../types/notification.types';
 import useFetchRegistration from '../../utils/hooks/useFetchRegistration';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import MessageList from './MessageList';
+import { updateDoiRequestWithMessage } from '../../api/registrationApi';
 
 const StyledAccordion = styled(Accordion)`
   width: 100%;
