@@ -50,8 +50,8 @@ const IsbnListField = () => {
             <TextField
               {...params}
               data-testid="isbn-input"
-              label={t('references.isbn')}
-              helperText={t('references.isbn_helper')}
+              label={t('resource_type.isbn')}
+              helperText={t('resource_type.isbn_helper')}
               variant="filled"
               fullWidth
               error={!!error}

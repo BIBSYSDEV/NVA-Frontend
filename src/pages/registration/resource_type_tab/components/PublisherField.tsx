@@ -19,7 +19,7 @@ const PublisherField: FC = () => {
           publicationTable={PublicationTableNumber.PUBLISHERS}
           label={t('common:publisher')}
           required
-          placeholder={t('references.search_for_publisher')}
+          placeholder={t('resource_type.search_for_publisher')}
           errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
           setValue={(newValue) => {
             const contextValues: any = formatPublicationContextWithPublisher(value.type, newValue);

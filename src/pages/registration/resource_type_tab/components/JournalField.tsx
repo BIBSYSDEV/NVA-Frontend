@@ -17,9 +17,9 @@ const JournalField: FC = () => {
         <PublicationChannelSearch
           dataTestId="journal-search-input"
           publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
-          label={t('references.journal')}
+          label={t('resource_type.journal')}
           required
-          placeholder={t('references.search_for_journal')}
+          placeholder={t('resource_type.search_for_journal')}
           errorFieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_TITLE}
           setValue={(newValue) => {
             const contextValues = formatPublicationContextWithTitle(value.type, newValue);

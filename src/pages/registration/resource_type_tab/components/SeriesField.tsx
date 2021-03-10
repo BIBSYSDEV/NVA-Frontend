@@ -18,7 +18,7 @@ const SeriesField: FC = () => {
           dataTestId="series-search-input"
           publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
           label={t('common:title')}
-          placeholder={t('references.search_for_series')}
+          placeholder={t('resource_type.search_for_series')}
           errorFieldName={name}
           setValue={(newValue) => {
             setFieldValue(name, newValue?.title ?? '');

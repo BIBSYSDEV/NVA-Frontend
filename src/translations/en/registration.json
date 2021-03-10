@@ -107,7 +107,7 @@
     "start_with_uploading_file_description": "Upload file if the resource isn't published on the Internet with a DOI",
     "start_with_uploading_file_title": "Start with uploading file"
   },
-  "references": {
+  "resource_type": {
     "article_number": "Article number",
     "chapter": {
       "info_anthology": "The anthology where this chapter is published in must be published in advance",

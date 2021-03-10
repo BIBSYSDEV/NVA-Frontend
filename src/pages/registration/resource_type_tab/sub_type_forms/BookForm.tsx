@@ -64,10 +64,10 @@ const BookForm = () => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
         <StyledSection>
           <StyledPeerReview>
-            <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+            <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('resource_type.peer_review')} />
           </StyledPeerReview>
           <StyledTextBook>
-            <Typography variant="h5">{t('references.is_book_a_textbook')}</Typography>
+            <Typography variant="h5">{t('resource_type.is_book_a_textbook')}</Typography>
             <Field name={ReferenceFieldNames.TEXTBOOK_CONTENT}>
               {({ field }: FieldProps) => (
                 <FormControlLabel
@@ -79,7 +79,7 @@ const BookForm = () => {
                       {...field}
                     />
                   }
-                  label={<Typography>{t('references.is_book_a_textbook_confirm')}</Typography>}
+                  label={<Typography>{t('resource_type.is_book_a_textbook_confirm')}</Typography>}
                 />
               )}
             </Field>
@@ -89,8 +89,8 @@ const BookForm = () => {
 
       {(type === BookType.ANTHOLOGY || type === BookType.MONOGRAPH) && (
         <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-          <Typography variant="h5">{t('references.series')}</Typography>
-          <Typography>{t('references.series_info')}</Typography>
+          <Typography variant="h5">{t('resource_type.series')}</Typography>
+          <Typography>{t('resource_type.series_info')}</Typography>
           <SeriesField />
         </BackgroundDiv>
       )}

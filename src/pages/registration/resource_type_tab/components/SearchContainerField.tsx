@@ -124,7 +124,7 @@ const SelectedContainerSummary = ({ publicationContext }: SelectedContainerSumma
     <>
       {title && (
         <Typography>
-          {t('references.journal')}: {title}
+          {t('resource_type.journal')}: {title}
         </Typography>
       )}
       {publisher && (
@@ -139,12 +139,12 @@ const SelectedContainerSummary = ({ publicationContext }: SelectedContainerSumma
       )}
       {levelValue && (
         <Typography>
-          {t('references.level')}: {levelValue}
+          {t('resource_type.level')}: {levelValue}
         </Typography>
       )}
       {(printIssn || onlineIssn) && (
         <Typography>
-          {t('references.issn')}: {[printIssn, onlineIssn].filter((issn) => issn).join(', ')}
+          {t('resource_type.issn')}: {[printIssn, onlineIssn].filter((issn) => issn).join(', ')}
         </Typography>
       )}
     </>

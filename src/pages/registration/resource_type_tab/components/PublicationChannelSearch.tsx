@@ -52,7 +52,7 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
               <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
             </Typography>
             <Typography variant="body2" color="textSecondary">
-              {t('references.level')}: {option.level}
+              {t('resource_type.level')}: {option.level}
             </Typography>
           </StyledFlexColumn>
         )}

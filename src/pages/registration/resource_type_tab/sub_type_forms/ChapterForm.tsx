@@ -58,7 +58,7 @@ const ChapterForm = () => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <StyledDiv>
           <InfoIcon color="primary" />
-          <Typography variant="body1">{t('references.chapter.info_anthology')}</Typography>
+          <Typography variant="body1">{t('resource_type.chapter.info_anthology')}</Typography>
         </StyledDiv>
 
         <DoiField />
@@ -67,8 +67,8 @@ const ChapterForm = () => {
           <SearchContainerField
             fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_LINKED_CONTEXT}
             searchSubtypes={[BookType.ANTHOLOGY]}
-            label={t('references.chapter.published_in')}
-            placeholder={t('references.chapter.search_for_anthology')}
+            label={t('resource_type.chapter.published_in')}
+            placeholder={t('resource_type.chapter.search_for_anthology')}
           />
         )}
       </BackgroundDiv>
@@ -80,7 +80,7 @@ const ChapterForm = () => {
               <StyledPageNumberField
                 variant="filled"
                 data-testid="chapter-pages-from"
-                label={t('references.pages_from')}
+                label={t('resource_type.pages_from')}
                 {...field}
                 value={field.value ?? ''}
                 error={touched && !!error}
@@ -98,7 +98,7 @@ const ChapterForm = () => {
               <StyledPageNumberField
                 data-testid="chapter-pages-to"
                 variant="filled"
-                label={t('references.pages_to')}
+                label={t('resource_type.pages_to')}
                 {...field}
                 value={field.value ?? ''}
                 error={touched && !!error}
@@ -112,7 +112,7 @@ const ChapterForm = () => {
       {publicationInstance.type === ChapterType.BOOK && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-            <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+            <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('resource_type.peer_review')} />
           </BackgroundDiv>
 
           <NviValidation

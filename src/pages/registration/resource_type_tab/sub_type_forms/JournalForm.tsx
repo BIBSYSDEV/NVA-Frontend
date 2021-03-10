@@ -45,8 +45,8 @@ const JournalForm = () => {
           <SearchContainerField
             fieldName={ReferenceFieldNames.CORRIGENDUM_FOR}
             searchSubtypes={[JournalType.ARTICLE, JournalType.SHORT_COMMUNICATION]}
-            label={t('references.original_article')}
-            placeholder={t('references.search_for_original_article')}
+            label={t('resource_type.original_article')}
+            placeholder={t('resource_type.search_for_original_article')}
           />
         ) : (
           <JournalField />
@@ -58,7 +58,7 @@ const JournalForm = () => {
               <TextField
                 data-testid="volume-field"
                 variant="filled"
-                label={t('references.volume')}
+                label={t('resource_type.volume')}
                 {...field}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
@@ -71,7 +71,7 @@ const JournalForm = () => {
               <TextField
                 data-testid="issue-field"
                 variant="filled"
-                label={t('references.issue')}
+                label={t('resource_type.issue')}
                 {...field}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
@@ -84,7 +84,7 @@ const JournalForm = () => {
               <TextField
                 data-testid="pages-from-field"
                 variant="filled"
-                label={t('references.pages_from')}
+                label={t('resource_type.pages_from')}
                 {...field}
                 value={field.value ?? ''}
                 error={touched && !!error}
@@ -98,7 +98,7 @@ const JournalForm = () => {
               <TextField
                 data-testid="pages-to-field"
                 variant="filled"
-                label={t('references.pages_to')}
+                label={t('resource_type.pages_to')}
                 {...field}
                 value={field.value ?? ''}
                 error={touched && !!error}
@@ -107,14 +107,14 @@ const JournalForm = () => {
             )}
           </Field>
 
-          <StyledLabel color="primary">{t('references.or')}</StyledLabel>
+          <StyledLabel color="primary">{t('resource_type.or')}</StyledLabel>
 
           <Field name={ReferenceFieldNames.ARTICLE_NUMBER}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 data-testid="article-number-field"
                 variant="filled"
-                label={t('references.article_number')}
+                label={t('resource_type.article_number')}
                 {...field}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
@@ -128,7 +128,7 @@ const JournalForm = () => {
         publicationInstance.type === JournalType.SHORT_COMMUNICATION) && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-            <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('references.peer_review')} />
+            <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('resource_type.peer_review')} />
           </BackgroundDiv>
           <NviValidation
             isPeerReviewed={publicationInstance.peerReviewed}

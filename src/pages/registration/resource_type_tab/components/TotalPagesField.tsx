@@ -23,7 +23,7 @@ const TotalPagesField = () => {
         <StyledTextField
           inputProps={{ 'data-testid': 'pages-input' }}
           variant="filled"
-          label={t('references.number_of_pages')}
+          label={t('resource_type.number_of_pages')}
           {...field}
           value={field.value ?? ''}
           error={touched && !!error}
