@@ -11,7 +11,7 @@ import { Message } from '../../types/publication_types/messages.types';
 
 export const useFetchMessages = (role: RoleName): [Message[], boolean, () => void] => {
   const dispatch = useDispatch();
-  const { t } = useTranslation();
+  const { t } = useTranslation('feedback');
   const cancelToken = useCancelToken();
   const [isLoading, setIsLoading] = useState(true);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -21,8 +21,7 @@ export const useFetchMessages = (role: RoleName): [Message[], boolean, () => voi
     const response = await getMessages(role, cancelToken);
     if (response) {
       if (response.error) {
-        //TODO
-        dispatch(setNotification(t('feedback:error.get_doi_requests'), NotificationVariant.Error));
+        dispatch(setNotification(t('error.get_messages'), NotificationVariant.Error));
       } else if (response.data) {
         setMessages(response.data);
       }
