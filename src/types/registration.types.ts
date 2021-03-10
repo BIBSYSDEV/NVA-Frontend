@@ -20,7 +20,7 @@ export enum RegistrationStatus {
 
 export enum RegistrationTab {
   Description = 0,
-  Reference = 1,
+  ResourceType = 1,
   Contributors = 2,
   FilesAndLicenses = 3,
 }

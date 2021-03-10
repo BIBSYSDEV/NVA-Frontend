@@ -26,7 +26,7 @@ export const RegistrationFormContent: FC<RegistrationFormContentProps> = ({ tabN
           <DescriptionPanel />
         </StyledPanel>
       )}
-      {tabNumber === RegistrationTab.Reference && (
+      {tabNumber === RegistrationTab.ResourceType && (
         <StyledPanel>
           <ResourceTypePanel />
         </StyledPanel>
