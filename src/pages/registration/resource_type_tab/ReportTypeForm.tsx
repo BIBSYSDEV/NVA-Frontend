@@ -3,7 +3,7 @@ import React from 'react';
 import BackgroundDiv from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import lightTheme from '../../../themes/lightTheme';
-import { ReferenceFieldNames, ReportType } from '../../../types/publicationFieldNames';
+import { ResourceFieldNames, ReportType } from '../../../types/publicationFieldNames';
 import { ReportRegistration } from '../../../types/registration.types';
 import SelectTypeField from './components/SelectTypeField';
 import ReportForm from './sub_type_forms/ReportForm';
@@ -21,7 +21,7 @@ const ReportTypeForm = ({ onChangeSubType }: ReportTypeFormProps) => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
         <StyledSelectWrapper>
           <SelectTypeField
-            fieldName={ReferenceFieldNames.SUB_TYPE}
+            fieldName={ResourceFieldNames.SUB_TYPE}
             onChangeType={onChangeSubType}
             options={Object.values(ReportType)}
           />

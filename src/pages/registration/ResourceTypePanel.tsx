@@ -12,7 +12,7 @@ import {
   contextTypeBaseFieldName,
   instanceTypeBaseFieldName,
   PublicationType,
-  ReferenceFieldNames,
+  ResourceFieldNames,
 } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import BookTypeForm from './resource_type_tab/BookTypeForm';
@@ -72,7 +72,7 @@ export const ResourceTypePanel = () => {
         <StyledSelectWrapper>
           <SelectTypeField
             dataTestId="publication-context-type"
-            fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_TYPE}
+            fieldName={ResourceFieldNames.PUBLICATION_CONTEXT_TYPE}
             options={Object.values(PublicationType)}
             onChangeType={onChangeType}
           />

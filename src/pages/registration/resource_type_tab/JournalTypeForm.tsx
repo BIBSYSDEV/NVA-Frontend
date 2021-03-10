@@ -3,7 +3,7 @@ import React from 'react';
 import BackgroundDiv from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import lightTheme from '../../../themes/lightTheme';
-import { JournalType, ReferenceFieldNames } from '../../../types/publicationFieldNames';
+import { JournalType, ResourceFieldNames } from '../../../types/publicationFieldNames';
 import { JournalRegistration } from '../../../types/registration.types';
 import SelectTypeField from './components/SelectTypeField';
 import JournalForm from './sub_type_forms/JournalForm';
@@ -21,7 +21,7 @@ const JournalTypeForm = ({ onChangeSubType }: JournalTypeFormProps) => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
         <StyledSelectWrapper>
           <SelectTypeField
-            fieldName={ReferenceFieldNames.SUB_TYPE}
+            fieldName={ResourceFieldNames.SUB_TYPE}
             onChangeType={onChangeSubType}
             options={Object.values(JournalType)}
           />

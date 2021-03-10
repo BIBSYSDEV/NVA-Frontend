@@ -113,7 +113,7 @@ export const touchedDescriptionTabFields: FormikTouched<Registration> = {
   },
 };
 
-export const touchedReferenceTabFields = (publicationType: PublicationType | ''): FormikTouched<unknown> => {
+export const touchedResourceTabFields = (publicationType: PublicationType | ''): FormikTouched<unknown> => {
   switch (publicationType) {
     case PublicationType.PUBLICATION_IN_JOURNAL:
       return {

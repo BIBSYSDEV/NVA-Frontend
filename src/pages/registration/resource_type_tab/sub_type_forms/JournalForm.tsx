@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
 import lightTheme from '../../../../themes/lightTheme';
-import { JournalType, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import { JournalType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { JournalRegistration } from '../../../../types/registration.types';
 import DoiField from '../components/DoiField';
 import JournalField from '../components/JournalField';
@@ -43,7 +43,7 @@ const JournalForm = () => {
 
         {publicationInstance.type === JournalType.CORRIGENDUM ? (
           <SearchContainerField
-            fieldName={ReferenceFieldNames.CORRIGENDUM_FOR}
+            fieldName={ResourceFieldNames.CORRIGENDUM_FOR}
             searchSubtypes={[JournalType.ARTICLE, JournalType.SHORT_COMMUNICATION]}
             label={t('resource_type.original_article')}
             placeholder={t('resource_type.search_for_original_article')}
@@ -53,7 +53,7 @@ const JournalForm = () => {
         )}
 
         <StyledArticleDetail>
-          <Field name={ReferenceFieldNames.VOLUME}>
+          <Field name={ResourceFieldNames.VOLUME}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 data-testid="volume-field"
@@ -66,7 +66,7 @@ const JournalForm = () => {
             )}
           </Field>
 
-          <Field name={ReferenceFieldNames.ISSUE}>
+          <Field name={ResourceFieldNames.ISSUE}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 data-testid="issue-field"
@@ -79,7 +79,7 @@ const JournalForm = () => {
             )}
           </Field>
 
-          <Field name={ReferenceFieldNames.PAGES_FROM}>
+          <Field name={ResourceFieldNames.PAGES_FROM}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 data-testid="pages-from-field"
@@ -93,7 +93,7 @@ const JournalForm = () => {
             )}
           </Field>
 
-          <Field name={ReferenceFieldNames.PAGES_TO}>
+          <Field name={ResourceFieldNames.PAGES_TO}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 data-testid="pages-to-field"
@@ -109,7 +109,7 @@ const JournalForm = () => {
 
           <StyledLabel color="primary">{t('resource_type.or')}</StyledLabel>
 
-          <Field name={ReferenceFieldNames.ARTICLE_NUMBER}>
+          <Field name={ResourceFieldNames.ARTICLE_NUMBER}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 data-testid="article-number-field"
@@ -128,7 +128,7 @@ const JournalForm = () => {
         publicationInstance.type === JournalType.SHORT_COMMUNICATION) && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-            <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('resource_type.peer_review')} />
+            <PeerReview fieldName={ResourceFieldNames.PEER_REVIEW} label={t('resource_type.peer_review')} />
           </BackgroundDiv>
           <NviValidation
             isPeerReviewed={publicationInstance.peerReviewed}

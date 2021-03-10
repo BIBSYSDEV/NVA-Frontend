@@ -7,7 +7,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import { NpiDiscipline } from '../../../../types/registration.types';
 import { disciplineOptions, getNpiDiscipline } from '../../../../utils/npiDisciplines';
-import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 
 const StyledSearchIcon = styled(SearchIcon)`
   margin-left: 0.5rem;
@@ -18,7 +18,7 @@ export const NpiDisciplineField = () => {
   const { t } = useTranslation('registration');
 
   return (
-    <Field name={ReferenceFieldNames.NPI_SUBJECT_HEADING}>
+    <Field name={ResourceFieldNames.NPI_SUBJECT_HEADING}>
       {({
         field: { name, value },
         form: { setFieldValue, setFieldTouched },

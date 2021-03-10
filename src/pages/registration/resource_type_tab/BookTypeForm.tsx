@@ -3,7 +3,7 @@ import React from 'react';
 import BackgroundDiv from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import lightTheme from '../../../themes/lightTheme';
-import { BookType, ReferenceFieldNames } from '../../../types/publicationFieldNames';
+import { BookType, ResourceFieldNames } from '../../../types/publicationFieldNames';
 import { BookRegistration } from '../../../types/registration.types';
 import SelectTypeField from './components/SelectTypeField';
 import BookForm from './sub_type_forms/BookForm';
@@ -21,7 +21,7 @@ const BookTypeForm = ({ onChangeSubType }: BookTypeFormProps) => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
         <StyledSelectWrapper>
           <SelectTypeField
-            fieldName={ReferenceFieldNames.SUB_TYPE}
+            fieldName={ResourceFieldNames.SUB_TYPE}
             onChangeType={onChangeSubType}
             options={Object.values(BookType)}
           />

@@ -6,7 +6,7 @@ import { Chip, TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
-import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { ErrorMessage } from '../../../../utils/validation/errorMessage';
 import { isbnRegex } from '../../../../utils/validation/registration/referenceValidation';
 
@@ -15,7 +15,7 @@ const IsbnListField = () => {
   const dispatch = useDispatch();
 
   return (
-    <Field name={ReferenceFieldNames.ISBN_LIST}>
+    <Field name={ResourceFieldNames.ISBN_LIST}>
       {({ field, form: { setFieldValue, setFieldTouched }, meta: { error } }: FieldProps) => (
         <Autocomplete
           freeSolo

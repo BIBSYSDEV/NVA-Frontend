@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { InputAdornment, TextField, Typography } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
-import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 
 const StyledClearIcon = styled(ClearIcon)`
@@ -23,7 +23,7 @@ const DoiField = () => {
   };
 
   const changeType = () => {
-    setFieldValue(ReferenceFieldNames.DOI, '');
+    setFieldValue(ResourceFieldNames.DOI, '');
     toggleConfirmDialog();
   };
 

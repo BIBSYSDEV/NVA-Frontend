@@ -8,7 +8,7 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
 import { StyledCenterAlignedContentWrapper } from '../../../../components/styled/Wrappers';
 import lightTheme from '../../../../themes/lightTheme';
-import { BookType, ChapterType, ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import { BookType, ChapterType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { ChapterRegistration } from '../../../../types/registration.types';
 import DoiField from '../components/DoiField';
 import NviValidation from '../components/NviValidation';
@@ -65,7 +65,7 @@ const ChapterForm = () => {
 
         {publicationInstance.type === ChapterType.BOOK && (
           <SearchContainerField
-            fieldName={ReferenceFieldNames.PUBLICATION_CONTEXT_LINKED_CONTEXT}
+            fieldName={ResourceFieldNames.PUBLICATION_CONTEXT_LINKED_CONTEXT}
             searchSubtypes={[BookType.ANTHOLOGY]}
             label={t('resource_type.chapter.published_in')}
             placeholder={t('resource_type.chapter.search_for_anthology')}
@@ -75,7 +75,7 @@ const ChapterForm = () => {
 
       <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
         <StyledPageNumberWrapper>
-          <Field name={ReferenceFieldNames.PAGES_FROM}>
+          <Field name={ResourceFieldNames.PAGES_FROM}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <StyledPageNumberField
                 variant="filled"
@@ -93,7 +93,7 @@ const ChapterForm = () => {
             <RemoveIcon color="primary" />
           </StyledDashIconWrapper>
 
-          <Field name={ReferenceFieldNames.PAGES_TO}>
+          <Field name={ResourceFieldNames.PAGES_TO}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <StyledPageNumberField
                 data-testid="chapter-pages-to"
@@ -112,7 +112,7 @@ const ChapterForm = () => {
       {publicationInstance.type === ChapterType.BOOK && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-            <PeerReview fieldName={ReferenceFieldNames.PEER_REVIEW} label={t('resource_type.peer_review')} />
+            <PeerReview fieldName={ResourceFieldNames.PEER_REVIEW} label={t('resource_type.peer_review')} />
           </BackgroundDiv>
 
           <NviValidation
