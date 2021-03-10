@@ -78,15 +78,15 @@ export const MessageAccordion = ({ message, refetchMessages }: MessageAccordionP
   };
 
   return (
-    <StyledAccordion data-testid={`doi-request-${identifier}`}>
+    <StyledAccordion data-testid={`message-${identifier}`}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <StyledStatus data-testid={`status-doi-request-${identifier}`}>
+        <StyledStatus data-testid={`message-type-${identifier}`}>
           {message.messages.some((m) => m.isDoiRequestRelated) ? t('types.doi') : t('types.support')}
         </StyledStatus>
-        <StyledTitle data-testid={`title-doi-request-${identifier}`}>
+        <StyledTitle data-testid={`message-title-${identifier}`}>
           {message.publication.entityDescription?.mainTitle}
         </StyledTitle>
-        <StyledOwner data-testid={`owner-doi-request-${identifier}`}>
+        <StyledOwner data-testid={`message-owner-${identifier}`}>
           <Label>{message.publication.owner}</Label>
           {new Date(message.messages[message.messages.length - 1].date).toLocaleDateString()}
         </StyledOwner>
