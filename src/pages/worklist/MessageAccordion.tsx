@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
@@ -63,11 +63,9 @@ interface MessageAccordionProps {
 export const MessageAccordion = ({ message, refetchMessages }: MessageAccordionProps) => {
   const { t } = useTranslation('workLists');
   const dispatch = useDispatch();
-  const [isSendingMessage, setIsSendingMessage] = useState(false);
   const identifier = message.publication.identifier;
 
   const onClickSendMessage = async (message: string) => {
-    setIsSendingMessage(true);
     const updatedDoiRequestWithMessage = await addMessage(identifier, message);
     if (updatedDoiRequestWithMessage) {
       if (updatedDoiRequestWithMessage.error) {
@@ -76,7 +74,6 @@ export const MessageAccordion = ({ message, refetchMessages }: MessageAccordionP
         dispatch(setNotification(t('feedback:success.send_message'), NotificationVariant.Success));
         refetchMessages();
       }
-      setIsSendingMessage(false);
     }
   };
 
@@ -97,12 +94,7 @@ export const MessageAccordion = ({ message, refetchMessages }: MessageAccordionP
       <AccordionDetails>
         <StyledMessages>
           <MessageList messages={message.messages} />
-          <MessageForm
-            confirmAction={async (message) => {
-              onClickSendMessage(message);
-            }}
-            disabled={isSendingMessage}
-          />
+          <MessageForm confirmAction={onClickSendMessage} />
         </StyledMessages>
         <StyledAccordionActionButtons>
           <Button
