@@ -104,7 +104,7 @@ export const RegistrationFormActions = ({
               startIcon={<ArrowBackIcon />}
               onClick={() => setTabNumber(tabNumber - 1)}>
               {tabNumber === RegistrationTab.Reference && t('heading.description')}
-              {tabNumber === RegistrationTab.Contributors && t('heading.reference')}
+              {tabNumber === RegistrationTab.Contributors && t('heading.resource_type')}
               {tabNumber === RegistrationTab.FilesAndLicenses && t('heading.contributors')}
             </StyledBackButton>
           </StyledBackButtonContainer>
@@ -134,7 +134,7 @@ export const RegistrationFormActions = ({
               data-testid="button-next-tab"
               endIcon={<ArrowForwardIcon />}
               onClick={() => setTabNumber(tabNumber + 1)}>
-              {tabNumber === RegistrationTab.Description && t('heading.reference')}
+              {tabNumber === RegistrationTab.Description && t('heading.resource_type')}
               {tabNumber === RegistrationTab.Reference && t('heading.contributors')}
               {tabNumber === RegistrationTab.Contributors && t('heading.files_and_license')}
             </Button>

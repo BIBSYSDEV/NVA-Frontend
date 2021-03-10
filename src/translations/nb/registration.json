@@ -83,7 +83,7 @@
     "description": "Beskrivelse",
     "files_and_license": "Filer og lisens",
     "publish_settings": "Publiseringsvalg",
-    "reference": "Referanse",
+    "resource_type": "Ressurstype",
     "validation_errors": "Valideringsfeil"
   },
   "new_registration": "Ny registrering",

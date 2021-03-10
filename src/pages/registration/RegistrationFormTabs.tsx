@@ -109,8 +109,8 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
         error={hasTouchedError(errors, touched, descriptionFieldNames)}
       />
       <LinkTab
-        label={t('heading.reference')}
-        {...a11yProps('reference')}
+        label={t('heading.resource_type')}
+        {...a11yProps('resource_type')}
         error={hasTouchedError(errors, touched, referenceFieldNames)}
       />
 
