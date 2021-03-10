@@ -110,7 +110,7 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
       />
       <LinkTab
         label={t('heading.resource_type')}
-        {...a11yProps('resource_type')}
+        {...a11yProps('resource-type')}
         error={hasTouchedError(errors, touched, resourceFieldNames)}
       />
 
