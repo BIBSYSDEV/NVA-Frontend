@@ -1,4 +1,4 @@
-describe('Registration: References: Book', () => {
+describe('Registration: Resource type: Book', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.server();
@@ -6,12 +6,11 @@ describe('Registration: References: Book', () => {
 
   it('The user should be able to fill out the form for book type', () => {
     cy.mocklogin();
-    // navigate to References (update this when functionality for starting a registration is done)
     cy.get('[data-testid=new-registration]').click({ force: true });
 
     cy.startRegistrationWithDoi();
 
-    cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
 
     // choose Book type
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' '); //makes the select options open

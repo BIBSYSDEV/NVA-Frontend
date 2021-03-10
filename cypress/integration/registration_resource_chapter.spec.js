@@ -1,4 +1,4 @@
-describe.skip('Registration: References: Chapter', () => {
+describe.skip('Registration: Resource type: Chapter', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.server();
@@ -6,12 +6,11 @@ describe.skip('Registration: References: Chapter', () => {
 
   it('The user should be able to fill out the form for chapter type', () => {
     cy.mocklogin();
-    // navigate to References (update this when functionality for starting a registration is done)
     cy.get('[data-testid=new-registration]').click({ force: true });
 
     cy.startRegistrationWithDoi();
 
-    cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
 
     // choose Report type
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' '); //makes the select options open
