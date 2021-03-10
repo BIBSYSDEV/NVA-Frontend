@@ -20,8 +20,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { RegistrationStatus, DoiRequestStatus } from '../../types/registration.types';
-import { createDoiRequest, updateDoiRequest } from '../../api/doiRequestApi';
-import { publishRegistration } from '../../api/registrationApi';
+import { createDoiRequest, publishRegistration, updateDoiRequest } from '../../api/registrationApi';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { getRegistrationPath } from '../../utils/urlPaths';
 

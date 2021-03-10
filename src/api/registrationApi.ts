@@ -1,16 +1,18 @@
 import Axios, { CancelToken } from 'axios';
 import i18n from '../translations/i18n';
-import { Registration, RegistrationPreview } from '../types/registration.types';
+import { DoiRequestStatus, Registration, RegistrationPreview } from '../types/registration.types';
 import { RegistrationFileSet } from '../types/file.types';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
 import { apiRequest, authenticatedApiRequest } from './apiRequest';
+import { RoleName } from '../types/user.types';
 
 export enum PublicationsApiPaths {
   PUBLICATION = '/publication',
   PUBLICATIONS_BY_OWNER = '/publication/by-owner',
   DOI_LOOKUP = '/doi-fetch',
-  FOR_APPROVAL = '/publications/approval',
+  DOI_REQUEST = '/publication/doirequest',
+  UPDATE_DOI_REQUEST = '/publication/update-doi-request',
   MESSAGES = '/publication/messages',
 }
 
@@ -117,30 +119,46 @@ export const getRegistrationByDoi = async (doiUrl: string) => {
   }
 };
 
-// Fetch publications ready for approval
-export const getRegistrationsForApproval = async () => {
-  try {
-    const idToken = await getIdToken();
-    const response = await Axios.get(PublicationsApiPaths.FOR_APPROVAL, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
-
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      return [];
-    }
-  } catch {
-    return { error: i18n.t('feedback:error.get_approvable_registrations') };
-  }
-};
-
 export const deleteRegistration = async (identifier: string) =>
   authenticatedApiRequest({
     url: `${PublicationsApiPaths.PUBLICATION}/${identifier}`,
     method: 'DELETE',
+  });
+
+export const getRegistrationsWithPendingDoiRequest = async (role: RoleName, cancelToken?: CancelToken) =>
+  await authenticatedApiRequest<Registration[]>({
+    url: `${PublicationsApiPaths.DOI_REQUEST}?role=${role}`,
+    cancelToken,
+  });
+
+export const createDoiRequest = async (registrationId: string, message?: string, cancelToken?: CancelToken) =>
+  await authenticatedApiRequest({
+    url: PublicationsApiPaths.DOI_REQUEST,
+    method: 'POST',
+    data: {
+      publicationId: registrationId,
+      message,
+    },
+    cancelToken,
+  });
+
+export const updateDoiRequest = async (registrationId: string, status: DoiRequestStatus) =>
+  await authenticatedApiRequest({
+    url: `${PublicationsApiPaths.UPDATE_DOI_REQUEST}/${registrationId}`,
+    method: 'POST',
+    data: {
+      doiRequestStatus: status,
+    },
+  });
+
+export const updateDoiRequestWithMessage = async (registrationId: string, message: string) =>
+  await authenticatedApiRequest({
+    url: `${PublicationsApiPaths.UPDATE_DOI_REQUEST}/${registrationId}/message`,
+    method: 'POST',
+    data: {
+      publicationIdentifier: registrationId,
+      message,
+    },
   });
 
 export const addMessage = async (identifier: string, message: string) =>
