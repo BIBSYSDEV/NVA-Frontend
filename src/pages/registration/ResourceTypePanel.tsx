@@ -15,15 +15,15 @@ import {
   ReferenceFieldNames,
 } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
-import BookTypeForm from './references_tab/BookTypeForm';
-import ChapterTypeForm from './references_tab/ChapterTypeForm';
-import SelectTypeField from './references_tab/components/SelectTypeField';
-import DegreeTypeForm from './references_tab/DegreeTypeForm';
-import JournalTypeForm from './references_tab/JournalTypeForm';
-import ReportTypeForm from './references_tab/ReportTypeForm';
+import BookTypeForm from './resource_type_tab/BookTypeForm';
+import ChapterTypeForm from './resource_type_tab/ChapterTypeForm';
+import SelectTypeField from './resource_type_tab/components/SelectTypeField';
+import DegreeTypeForm from './resource_type_tab/DegreeTypeForm';
+import JournalTypeForm from './resource_type_tab/JournalTypeForm';
+import ReportTypeForm from './resource_type_tab/ReportTypeForm';
 import { isJournalTypeWithPeerReview } from '../../utils/registration-helpers';
 
-const ReferencesPanel = () => {
+export const ResourceTypePanel = () => {
   const { values, setTouched, setFieldValue, touched } = useFormikContext<Registration>();
   const publicationContextType = values.entityDescription.reference.publicationContext.type;
 
@@ -93,5 +93,3 @@ const ReferencesPanel = () => {
     </>
   );
 };
-
-export default ReferencesPanel;

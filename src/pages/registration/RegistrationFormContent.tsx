@@ -3,10 +3,10 @@ import styled from 'styled-components';
 
 import { RegistrationTab } from '../../types/registration.types';
 import DescriptionPanel from './DescriptionPanel';
-import ReferencesPanel from './ReferencesPanel';
 import ContributorsPanel from './ContributorsPanel';
 import FilesAndLicensePanel from './FilesAndLicensePanel';
 import { Uppy } from '../../types/file.types';
+import { ResourceTypePanel } from './ResourceTypePanel';
 
 const StyledPanel = styled.div`
   margin-top: 2rem;
@@ -28,7 +28,7 @@ export const RegistrationFormContent: FC<RegistrationFormContentProps> = ({ tabN
       )}
       {tabNumber === RegistrationTab.Reference && (
         <StyledPanel>
-          <ReferencesPanel />
+          <ResourceTypePanel />
         </StyledPanel>
       )}
       {tabNumber === RegistrationTab.Contributors && (
