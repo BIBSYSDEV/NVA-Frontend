@@ -6,8 +6,8 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { RoleName } from '../../types/user.types';
 import useCancelToken from './useCancelToken';
-import { getRegistrationsWithPendingDoiRequest } from '../../api/doiRequestApi';
 import { Registration } from '../../types/registration.types';
+import { getRegistrationsWithPendingDoiRequest } from '../../api/registrationApi';
 
 const useFetchRegistrationsWithPendingDoiRequest = (role: RoleName): [Registration[], boolean, () => void] => {
   const dispatch = useDispatch();

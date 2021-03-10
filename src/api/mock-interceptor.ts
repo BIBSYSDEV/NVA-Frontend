@@ -24,7 +24,6 @@ import { mockSearchResults } from '../utils/testfiles/search_results';
 import { threeMockSearchResults } from '../utils/testfiles/three_search_results';
 import { AuthorityApiPaths } from './authorityApi';
 import { CustomerInstitutionApiPaths } from './customerInstitutionsApi';
-import { DoiRequestApiPaths } from './doiRequestApi';
 import { FileApiPaths } from './fileApi';
 import { InstitutionApiPaths } from './institutionApi';
 import { ProjectsApiPaths } from './projectApi';
@@ -81,12 +80,11 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATIONS_BY_OWNER}/*`)).reply(200, mockMyRegistrations);
 
   // WORKLIST
-  mock.onGet(new RegExp(`${DoiRequestApiPaths.DOI_REQUEST}/*`)).reply(200, mockRegistrationsWithPendingDoiRequest);
-  mock.onGet(new RegExp(`${PublicationsApiPaths.FOR_APPROVAL}/*`)).reply(200, mockMyRegistrations.publications);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.DOI_REQUEST}/*`)).reply(200, mockRegistrationsWithPendingDoiRequest);
 
   //MY MESSAGES
   mock
-    .onGet(new RegExp(`${DoiRequestApiPaths.DOI_REQUEST}?role=Creator`))
+    .onGet(new RegExp(`${PublicationsApiPaths.DOI_REQUEST}?role=Creator`))
     .reply(200, mockRegistrationsWithPendingDoiRequest);
 
   //PUBLICATION
