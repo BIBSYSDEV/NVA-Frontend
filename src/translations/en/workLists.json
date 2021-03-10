@@ -11,7 +11,6 @@
   },
   "delete_registration": "Delete unpublished registration",
   "delete_registration_message": "Do you want to delete \"{{title}}\"?",
-  "for_approval": "For approval",
   "go_to_public_profile": "My public profile",
   "my_messages": "My messages",
   "my_registrations": "My registrations",

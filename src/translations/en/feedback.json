@@ -10,7 +10,6 @@
     "delete_identifier": "Could not delete {{qualifier}}",
     "delete_registration": "Could not delete registration",
     "download_file": "Could not download file",
-    "get_approvable_registrations": "Could not fetch registrations awaiting approval",
     "get_authority": "Could not retrieve authority",
     "get_authorities": "Could not retrieve authorities",
     "get_customer": "Could not retrieve customer institution",
