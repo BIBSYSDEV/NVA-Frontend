@@ -1,6 +1,6 @@
 import { Registration } from '../registration.types';
 
-interface MessageItem {
+export interface MessageItem {
   date: string;
   id: string;
   identifier: string;

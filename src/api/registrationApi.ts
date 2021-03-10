@@ -126,12 +126,6 @@ export const deleteRegistration = async (identifier: string) =>
     method: 'DELETE',
   });
 
-export const getRegistrationsWithPendingDoiRequest = async (role: RoleName, cancelToken?: CancelToken) =>
-  await authenticatedApiRequest<Registration[]>({
-    url: `${PublicationsApiPaths.DOI_REQUEST}?role=${role}`,
-    cancelToken,
-  });
-
 export const createDoiRequest = async (registrationId: string, message?: string, cancelToken?: CancelToken) =>
   await authenticatedApiRequest({
     url: PublicationsApiPaths.DOI_REQUEST,

@@ -10,10 +10,10 @@ import Label from '../../components/Label';
 import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import useFetchRegistration from '../../utils/hooks/useFetchRegistration';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
-import MessageList from './MessageList';
-import { updateDoiRequestWithMessage } from '../../api/registrationApi';
+import { Message } from '../../types/publication_types/messages.types';
+import { addMessage } from '../../api/registrationApi';
+import { MessageList } from './MessageList';
 
 const StyledAccordion = styled(Accordion)`
   width: 100%;
@@ -55,29 +55,26 @@ const StyledAccordionActionButtons = styled.div`
   justify-content: flex-end;
 `;
 
-interface DoiRequestAccordionProps {
-  identifier: string;
+interface MessageAccordionProps {
+  message: Message;
+  refetchMessages: () => void;
 }
 
-export const DoiRequestAccordion = ({ identifier }: DoiRequestAccordionProps) => {
+export const MessageAccordion = ({ message, refetchMessages }: MessageAccordionProps) => {
   const { t } = useTranslation('workLists');
   const dispatch = useDispatch();
   const [isSendingMessage, setIsSendingMessage] = useState(false);
-  const [registration, , refetchRegistration] = useFetchRegistration(identifier);
-
-  if (!registration?.doiRequest) {
-    return null;
-  }
+  const identifier = message.publication.identifier;
 
   const onClickSendMessage = async (message: string) => {
     setIsSendingMessage(true);
-    const updatedDoiRequestWithMessage = await updateDoiRequestWithMessage(identifier, message);
+    const updatedDoiRequestWithMessage = await addMessage(identifier, message);
     if (updatedDoiRequestWithMessage) {
       if (updatedDoiRequestWithMessage.error) {
-        dispatch(setNotification(t('feedback:error.message_failed'), NotificationVariant.Error));
+        dispatch(setNotification(t('feedback:error.send_message'), NotificationVariant.Error));
       } else {
-        dispatch(setNotification(t('feedback:success.message_sent'), NotificationVariant.Success));
-        refetchRegistration();
+        dispatch(setNotification(t('feedback:success.send_message'), NotificationVariant.Success));
+        refetchMessages();
       }
       setIsSendingMessage(false);
     }
@@ -87,19 +84,19 @@ export const DoiRequestAccordion = ({ identifier }: DoiRequestAccordionProps) =>
     <StyledAccordion data-testid={`doi-request-${identifier}`}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <StyledStatus data-testid={`status-doi-request-${identifier}`}>
-          {t(`doi_requests.status.${registration?.doiRequest.status}`)}
+          {message.messages.some((m) => m.isDoiRequestRelated) ? t('types.doi') : t('types.support')}
         </StyledStatus>
         <StyledTitle data-testid={`title-doi-request-${identifier}`}>
-          {registration?.entityDescription?.mainTitle}
+          {message.publication.entityDescription?.mainTitle}
         </StyledTitle>
         <StyledOwner data-testid={`owner-doi-request-${identifier}`}>
-          <Label>{registration?.owner}</Label>
-          {new Date(registration?.doiRequest.createdDate).toLocaleDateString()}
+          <Label>{message.publication.owner}</Label>
+          {new Date(message.messages[message.messages.length - 1].date).toLocaleDateString()}
         </StyledOwner>
       </AccordionSummary>
       <AccordionDetails>
         <StyledMessages>
-          {registration?.doiRequest.messages && <MessageList messages={registration?.doiRequest.messages} />}
+          <MessageList messages={message.messages} />
           <MessageForm
             confirmAction={async (message) => {
               onClickSendMessage(message);
@@ -115,7 +112,7 @@ export const DoiRequestAccordion = ({ identifier }: DoiRequestAccordionProps) =>
             endIcon={<ArrowForwardIcon />}
             component={RouterLink}
             to={getRegistrationLandingPagePath(identifier)}>
-            {t('doi_requests.go_to_registration')}
+            {t('go_to_registration')}
           </Button>
         </StyledAccordionActionButtons>
       </AccordionDetails>

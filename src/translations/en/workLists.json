@@ -1,22 +1,18 @@
 {
-  "doi_requests": {
-    "doi_requests": "DOI requests",
-    "go_to_registration": "Go to registration",
-    "no_pending_doi_requests": "You don't have any awaiting DOI requests",
-    "status": {
-      "APPROVED": "Approved",
-      "REJECTED": "Rejected",
-      "REQUESTED": "Requested"
-    }
-  },
   "delete_registration": "Delete unpublished registration",
   "delete_registration_message": "Do you want to delete \"{{title}}\"?",
   "go_to_public_profile": "My public profile",
+  "go_to_registration": "Go to registration",
   "my_messages": "My messages",
   "my_registrations": "My registrations",
   "my_worklist": "My worklist",
+  "no_messages": "You don't have any messages",
   "no_pending_registrations": "You don't have any registrations awaiting approval",
   "published_registrations": "Published registrations",
   "submitter": "Submitter",
+  "types": {
+    "doi": "DOI Request",
+    "support": "Support"
+  },
   "unpublished_registrations": "Unpublished registrations"
 }

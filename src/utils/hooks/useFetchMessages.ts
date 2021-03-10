@@ -6,8 +6,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { RoleName } from '../../types/user.types';
 import useCancelToken from './useCancelToken';
-import { Registration } from '../../types/registration.types';
-import { getMessages, getRegistrationsWithPendingDoiRequest } from '../../api/registrationApi';
+import { getMessages } from '../../api/registrationApi';
 import { Message } from '../../types/publication_types/messages.types';
 
 export const useFetchMessages = (role: RoleName): [Message[], boolean, () => void] => {
