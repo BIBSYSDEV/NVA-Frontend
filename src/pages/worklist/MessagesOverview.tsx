@@ -1,8 +1,7 @@
+import { Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import Card from '../../components/Card';
 import ListSkeleton from '../../components/ListSkeleton';
-import SubHeading from '../../components/SubHeading';
 import { RoleName } from '../../types/user.types';
 import { useFetchMessages } from '../../utils/hooks/useFetchMessages';
 
@@ -21,9 +20,7 @@ export const MessagesOverview = ({ role }: MessagesOverviewProps) => {
       {isLoadingMessages && messages.length === 0 ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : messages.length === 0 ? (
-        <Card>
-          <SubHeading>{t('no_messages')}</SubHeading>
-        </Card>
+        <Typography>{t('no_messages')}</Typography>
       ) : (
         <>
           {messages.map((message) => (
