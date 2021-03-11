@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -32,7 +32,7 @@ const StyledRegistrations = styled.div`
   width: 100%;
 `;
 
-const PublicProfile: FC = () => {
+const PublicProfile = () => {
   const { t } = useTranslation('profile');
   const history = useHistory();
   const arpId = new URLSearchParams(history.location.search).get('id') ?? '';
