@@ -31,7 +31,6 @@
   "id": "ID",
   "info_nva": "Info hentet fra NVA",
   "my_profile": "Min brukerprofil",
-  "my_public_profile": "Min åpne profil",
   "orcid": {
     "connect_orcid": "Koble/opprette ORCID iD",
     "dialog": {
@@ -46,6 +45,7 @@
     "skip_this_step": "Hopp over (kan gjøres senere)",
     "your_orcid": "Din ORCID"
   },
+  "public_profile": "Offentlig profil",
   "roles": {
     "app_admin": "Systemadministrator",
     "app_admin_description": "Tilgang til å opprette nye institusjoner og tildele roller",
