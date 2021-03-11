@@ -31,7 +31,6 @@
   "id": "ID",
   "info_nva": "Info retrieved from NVA",
   "my_profile": "My user profile",
-  "my_public_profile": "My public profile",
   "orcid": {
     "connect_orcid": "Connect/create ORCID iD",
     "dialog": {
@@ -46,6 +45,7 @@
     "skip_this_step": "Skip (can be configured later)",
     "your_orcid": "Your ORCID"
   },
+  "public_profile": "Public profile",
   "roles": {
     "app_admin": "System administrator",
     "app_admin_description": "Access to create new institutions and assign roles",
