@@ -44,7 +44,7 @@ const PublicProfile: FC = () => {
 
   return (
     <StyledPageWrapperWithMaxWidth>
-      <PageHeader>{t('my_public_profile')}</PageHeader>
+      <PageHeader>{t('public_profile')}</PageHeader>
       {isLoadingUser || isLoadingRegistrations ? (
         <PageSpinner />
       ) : (
