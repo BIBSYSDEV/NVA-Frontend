@@ -76,7 +76,7 @@
     "@types/react-redux": "^7.1.16",
     "@types/react-router-dom": "^5.1.7",
     "@types/react-text-truncate": "^0.14.0",
-    "@types/styled-components": "^5.1.7",
+    "@types/styled-components": "^5.1.8",
     "@types/yup": "^0.29.11",
     "axios-mock-adapter": "^1.19.0",
     "cypress": "^6.6.0",
