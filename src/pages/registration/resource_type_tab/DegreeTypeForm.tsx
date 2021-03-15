@@ -3,17 +3,17 @@ import React from 'react';
 import BackgroundDiv from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import lightTheme from '../../../themes/lightTheme';
-import { JournalType, ReferenceFieldNames } from '../../../types/publicationFieldNames';
-import { JournalRegistration } from '../../../types/registration.types';
+import { DegreeType, ResourceFieldNames } from '../../../types/publicationFieldNames';
+import { DegreeRegistration } from '../../../types/registration.types';
 import SelectTypeField from './components/SelectTypeField';
-import JournalForm from './sub_type_forms/JournalForm';
+import DegreeForm from './sub_type_forms/DegreeForm';
 
-interface JournalTypeFormProps {
+interface DegreeTypeFormProps {
   onChangeSubType: (type: string) => void;
 }
 
-const JournalTypeForm = ({ onChangeSubType }: JournalTypeFormProps) => {
-  const { values } = useFormikContext<JournalRegistration>();
+const DegreeTypeForm = ({ onChangeSubType }: DegreeTypeFormProps) => {
+  const { values } = useFormikContext<DegreeRegistration>();
   const subType = values.entityDescription.reference.publicationInstance.type;
 
   return (
@@ -21,16 +21,16 @@ const JournalTypeForm = ({ onChangeSubType }: JournalTypeFormProps) => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
         <StyledSelectWrapper>
           <SelectTypeField
-            fieldName={ReferenceFieldNames.SUB_TYPE}
+            fieldName={ResourceFieldNames.SUB_TYPE}
             onChangeType={onChangeSubType}
-            options={Object.values(JournalType)}
+            options={Object.values(DegreeType)}
           />
         </StyledSelectWrapper>
       </BackgroundDiv>
 
-      {subType && <JournalForm />}
+      {subType && <DegreeForm />}
     </>
   );
 };
 
-export default JournalTypeForm;
+export default DegreeTypeForm;

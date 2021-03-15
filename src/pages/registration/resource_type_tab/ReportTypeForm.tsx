@@ -3,17 +3,17 @@ import React from 'react';
 import BackgroundDiv from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import lightTheme from '../../../themes/lightTheme';
-import { BookType, ReferenceFieldNames } from '../../../types/publicationFieldNames';
-import { BookRegistration } from '../../../types/registration.types';
+import { ResourceFieldNames, ReportType } from '../../../types/publicationFieldNames';
+import { ReportRegistration } from '../../../types/registration.types';
 import SelectTypeField from './components/SelectTypeField';
-import BookForm from './sub_type_forms/BookForm';
+import ReportForm from './sub_type_forms/ReportForm';
 
-interface BookTypeFormProps {
+interface ReportTypeFormProps {
   onChangeSubType: (type: string) => void;
 }
 
-const BookTypeForm = ({ onChangeSubType }: BookTypeFormProps) => {
-  const { values } = useFormikContext<BookRegistration>();
+const ReportTypeForm = ({ onChangeSubType }: ReportTypeFormProps) => {
+  const { values } = useFormikContext<ReportRegistration>();
   const subType = values.entityDescription.reference.publicationInstance.type;
 
   return (
@@ -21,16 +21,16 @@ const BookTypeForm = ({ onChangeSubType }: BookTypeFormProps) => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
         <StyledSelectWrapper>
           <SelectTypeField
-            fieldName={ReferenceFieldNames.SUB_TYPE}
+            fieldName={ResourceFieldNames.SUB_TYPE}
             onChangeType={onChangeSubType}
-            options={Object.values(BookType)}
+            options={Object.values(ReportType)}
           />
         </StyledSelectWrapper>
       </BackgroundDiv>
 
-      {subType && <BookForm />}
+      {subType && <ReportForm />}
     </>
   );
 };
 
-export default BookTypeForm;
+export default ReportTypeForm;

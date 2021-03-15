@@ -3,7 +3,7 @@ import React from 'react';
 import BackgroundDiv from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import lightTheme from '../../../themes/lightTheme';
-import { ChapterType, ReferenceFieldNames } from '../../../types/publicationFieldNames';
+import { ChapterType, ResourceFieldNames } from '../../../types/publicationFieldNames';
 import { ChapterRegistration } from '../../../types/registration.types';
 import SelectTypeField from './components/SelectTypeField';
 import ChapterForm from './sub_type_forms/ChapterForm';
@@ -21,7 +21,7 @@ const JournalTypeForm = ({ onChangeSubType }: ChapterTypeFormProps) => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
         <StyledSelectWrapper>
           <SelectTypeField
-            fieldName={ReferenceFieldNames.SUB_TYPE}
+            fieldName={ResourceFieldNames.SUB_TYPE}
             onChangeType={onChangeSubType}
             options={Object.values(ChapterType)}
           />
