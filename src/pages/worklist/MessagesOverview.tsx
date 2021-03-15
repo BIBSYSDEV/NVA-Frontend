@@ -23,7 +23,7 @@ export const MessagesOverview = ({ role }: MessagesOverviewProps) => {
       {supportRequests.map((supportRequest) =>
         supportRequest.messageCollections.map((messageCollection) => (
           <SupportRequestAccordion
-            key={supportRequest.publication.identifier}
+            key={messageCollection.messages[0].identifier}
             registration={supportRequest.publication}
             messageCollection={messageCollection}
             fetchSupportRequests={fetchSupportRequests}
