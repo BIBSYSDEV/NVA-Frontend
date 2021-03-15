@@ -1,5 +1,5 @@
 import { RoleName } from '../../src/types/user.types';
-import { mockRegistrationsWithPendingDoiRequest } from '../../src/utils/testfiles/mockRegistration';
+import { mockMessages } from '../../src/utils/testfiles/mockRegistration';
 
 describe('Worklist', () => {
   beforeEach(() => {
@@ -13,14 +13,11 @@ describe('Worklist', () => {
 
   it('The Curator should be able to view worklist', () => {
     cy.url().should('include', '/worklist');
-
-    cy.get('[data-testid=doi-requests-button]').click({ force: true });
   });
 
   it('The Curator should be able to open an item in the DOI request list and see the summary of the registration', () => {
-    const { identifier } = mockRegistrationsWithPendingDoiRequest[0];
-    cy.get('[data-testid=doi-requests-button]').click();
-    cy.get(`[data-testid=doi-request-${identifier}]`).click();
+    const { identifier } = mockMessages[0].publication;
+    cy.get(`[data-testid=message-${identifier}]`).click();
     cy.get(`[data-testid=go-to-registration-${identifier}]`).click();
     cy.url().should('include', `/registration/${identifier}/public`);
   });

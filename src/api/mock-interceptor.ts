@@ -12,10 +12,6 @@ import { mockSchoolOfSportDepartment } from '../utils/testfiles/institutions/sch
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import { mockRoles } from '../utils/testfiles/mock_feide_user';
 import { mockCustomerInstitution, mockCustomerInstitutions } from '../utils/testfiles/mockCustomerInstitutions';
-import {
-  mockRegistrationsWithPendingDoiRequest,
-  mockRegistrationWithPendingDoiRequest,
-} from '../utils/testfiles/mockRegistration';
 import mockMyRegistrations from '../utils/testfiles/my_registrations.json';
 import mockProjects from '../utils/testfiles/projects_real.json';
 import mockPublishedRegistrations from '../utils/testfiles/published_registrations.json';
@@ -31,6 +27,7 @@ import { PublicationChannelApiPaths } from './publicationChannelApi';
 import { PublicationsApiPaths } from './registrationApi';
 import { RoleApiPaths } from './roleApi';
 import { SearchApiPaths } from './searchApi';
+import { mockMessages, mockRegistration } from '../utils/testfiles/mockRegistration';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -79,20 +76,15 @@ export const interceptRequestsOnMock = () => {
   //MY PUBLICATIONS
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATIONS_BY_OWNER}/*`)).reply(200, mockMyRegistrations);
 
-  // WORKLIST
-  mock.onGet(new RegExp(`${PublicationsApiPaths.DOI_REQUEST}/*`)).reply(200, mockRegistrationsWithPendingDoiRequest);
-
   //MY MESSAGES
-  mock
-    .onGet(new RegExp(`${PublicationsApiPaths.DOI_REQUEST}?role=Creator`))
-    .reply(200, mockRegistrationsWithPendingDoiRequest);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.MESSAGES}`)).reply(200, mockMessages);
 
   //PUBLICATION
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/new`)).reply(200, emptyRegistration);
   mock
     .onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/4327439`))
     .reply(200, { ...emptyRegistration, owner: 'tu@unit.no' });
-  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/*`)).reply(200, mockRegistrationWithPendingDoiRequest);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/*`)).reply(200, mockRegistration);
 
   // lookup DOI
   mock.onPost(new RegExp(`${PublicationsApiPaths.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);

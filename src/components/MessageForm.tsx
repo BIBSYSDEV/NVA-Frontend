@@ -10,7 +10,6 @@ import ButtonWithProgress from './ButtonWithProgress';
 interface MessageFormProps {
   confirmAction: (message: string) => Promise<unknown> | void;
   cancelAction?: () => void;
-  disabled?: boolean;
 }
 
 interface MessageFormData {
@@ -25,7 +24,7 @@ const validationSchema = Yup.object().shape({
   message: Yup.string().required(ErrorMessageString.REQUIRED),
 });
 
-export const MessageForm = ({ confirmAction, cancelAction, disabled }: MessageFormProps) => {
+export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) => {
   const { t } = useTranslation('registration');
 
   return (
@@ -42,9 +41,9 @@ export const MessageForm = ({ confirmAction, cancelAction, disabled }: MessageFo
             {({ field, meta: { touched, error } }: FieldProps<string>) => (
               <TextField
                 {...field}
-                disabled={disabled}
+                disabled={isSubmitting}
                 inputProps={{ 'data-testid': 'message-input' }}
-                variant="outlined"
+                variant="filled"
                 multiline
                 rows="4"
                 fullWidth
@@ -64,7 +63,6 @@ export const MessageForm = ({ confirmAction, cancelAction, disabled }: MessageFo
             )}
             <ButtonWithProgress
               data-testid="send-button"
-              disabled={disabled}
               type="submit"
               variant="contained"
               color="secondary"

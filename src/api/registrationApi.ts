@@ -6,6 +6,7 @@ import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
 import { apiRequest, authenticatedApiRequest } from './apiRequest';
 import { RoleName } from '../types/user.types';
+import { Message } from '../types/publication_types/messages.types';
 
 export enum PublicationsApiPaths {
   PUBLICATION = '/publication',
@@ -125,12 +126,6 @@ export const deleteRegistration = async (identifier: string) =>
     method: 'DELETE',
   });
 
-export const getRegistrationsWithPendingDoiRequest = async (role: RoleName, cancelToken?: CancelToken) =>
-  await authenticatedApiRequest<Registration[]>({
-    url: `${PublicationsApiPaths.DOI_REQUEST}?role=${role}`,
-    cancelToken,
-  });
-
 export const createDoiRequest = async (registrationId: string, message?: string, cancelToken?: CancelToken) =>
   await authenticatedApiRequest({
     url: PublicationsApiPaths.DOI_REQUEST,
@@ -151,18 +146,15 @@ export const updateDoiRequest = async (registrationId: string, status: DoiReques
     },
   });
 
-export const updateDoiRequestWithMessage = async (registrationId: string, message: string) =>
-  await authenticatedApiRequest({
-    url: `${PublicationsApiPaths.UPDATE_DOI_REQUEST}/${registrationId}/message`,
-    method: 'POST',
-    data: {
-      publicationIdentifier: registrationId,
-      message,
-    },
+export const getMessages = async (role: RoleName, cancelToken?: CancelToken) =>
+  await authenticatedApiRequest<Message[]>({
+    url: `${PublicationsApiPaths.MESSAGES}?role=${role}`,
+    method: 'GET',
+    cancelToken,
   });
 
 export const addMessage = async (identifier: string, message: string) =>
-  authenticatedApiRequest({
+  await authenticatedApiRequest({
     url: `${PublicationsApiPaths.MESSAGES}`,
     method: 'POST',
     data: {
