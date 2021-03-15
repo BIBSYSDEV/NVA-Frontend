@@ -6,7 +6,7 @@ import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
 import { apiRequest, authenticatedApiRequest } from './apiRequest';
 import { RoleName } from '../types/user.types';
-import { Message } from '../types/publication_types/messages.types';
+import { MessageType, SupportRequest } from '../types/publication_types/messages.types';
 
 export enum PublicationsApiPaths {
   PUBLICATION = '/publication',
@@ -147,18 +147,19 @@ export const updateDoiRequest = async (registrationId: string, status: DoiReques
   });
 
 export const getMessages = async (role: RoleName, cancelToken?: CancelToken) =>
-  await authenticatedApiRequest<Message[]>({
+  await authenticatedApiRequest<SupportRequest[]>({
     url: `${PublicationsApiPaths.MESSAGES}?role=${role}`,
     method: 'GET',
     cancelToken,
   });
 
-export const addMessage = async (identifier: string, message: string) =>
+export const addMessage = async (identifier: string, message: string, messageType: MessageType) =>
   await authenticatedApiRequest({
     url: `${PublicationsApiPaths.MESSAGES}`,
     method: 'POST',
     data: {
       publicationIdentifier: identifier,
       message,
+      messageType,
     },
   });

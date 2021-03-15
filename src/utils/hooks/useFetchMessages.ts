@@ -7,14 +7,14 @@ import { NotificationVariant } from '../../types/notification.types';
 import { RoleName } from '../../types/user.types';
 import useCancelToken from './useCancelToken';
 import { getMessages } from '../../api/registrationApi';
-import { Message } from '../../types/publication_types/messages.types';
+import { SupportRequest } from '../../types/publication_types/messages.types';
 
-export const useFetchMessages = (role: RoleName): [Message[], boolean, () => void] => {
+export const useFetchMessages = (role: RoleName): [SupportRequest[], boolean, () => void] => {
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
   const cancelToken = useCancelToken();
   const [isLoading, setIsLoading] = useState(true);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<SupportRequest[]>([]);
 
   const fetchMessages = useCallback(async () => {
     setIsLoading(true);
