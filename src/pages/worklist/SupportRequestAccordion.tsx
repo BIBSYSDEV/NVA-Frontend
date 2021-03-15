@@ -87,7 +87,11 @@ export const SupportRequestAccordion = ({
     <StyledAccordion data-testid={`message-${identifier}`}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <StyledStatus data-testid={`message-type-${identifier}`}>
-          {messageCollection.messageType === MessageType.DoiRequest ? t('types.doi') : t('types.support')}
+          {messageCollection.messageType === MessageType.DoiRequest
+            ? t('types.doi')
+            : messageCollection.messageType === MessageType.Support
+            ? t('types.support')
+            : null}
         </StyledStatus>
         <StyledTitle data-testid={`message-title-${identifier}`}>
           {registration.entityDescription?.mainTitle}
