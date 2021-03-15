@@ -56,13 +56,17 @@ const StyledAccordionActionButtons = styled.div`
   justify-content: flex-end;
 `;
 
-interface MessageAccordionProps {
+interface SupportRequestAccordionProps {
   messageCollection: MessageCollection;
   registration: Registration;
-  refetchMessages: () => void;
+  fetchSupportRequests: () => void;
 }
 
-export const MessageAccordion = ({ messageCollection, registration, refetchMessages }: MessageAccordionProps) => {
+export const SupportRequestAccordion = ({
+  messageCollection,
+  registration,
+  fetchSupportRequests,
+}: SupportRequestAccordionProps) => {
   const { t } = useTranslation('workLists');
   const dispatch = useDispatch();
   const identifier = registration.identifier;
@@ -74,7 +78,7 @@ export const MessageAccordion = ({ messageCollection, registration, refetchMessa
         dispatch(setNotification(t('feedback:error.send_message'), NotificationVariant.Error));
       } else {
         dispatch(setNotification(t('feedback:success.send_message'), NotificationVariant.Success));
-        refetchMessages();
+        fetchSupportRequests();
       }
     }
   };

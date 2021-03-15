@@ -9,29 +9,29 @@ import useCancelToken from './useCancelToken';
 import { getMessages } from '../../api/registrationApi';
 import { SupportRequest } from '../../types/publication_types/messages.types';
 
-export const useFetchMessages = (role: RoleName): [SupportRequest[], boolean, () => void] => {
+export const useFetchSupportRequests = (role: RoleName): [SupportRequest[], boolean, () => void] => {
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
   const cancelToken = useCancelToken();
   const [isLoading, setIsLoading] = useState(true);
-  const [messages, setMessages] = useState<SupportRequest[]>([]);
+  const [supportRequests, setSupportRequests] = useState<SupportRequest[]>([]);
 
-  const fetchMessages = useCallback(async () => {
+  const fetchSupportRequests = useCallback(async () => {
     setIsLoading(true);
     const response = await getMessages(role, cancelToken);
     if (response) {
       if (response.error) {
         dispatch(setNotification(t('error.get_messages'), NotificationVariant.Error));
       } else if (response.data) {
-        setMessages(response.data);
+        setSupportRequests(response.data);
       }
       setIsLoading(false);
     }
   }, [t, dispatch, cancelToken, role]);
 
   useEffect(() => {
-    fetchMessages();
-  }, [fetchMessages]);
+    fetchSupportRequests();
+  }, [fetchSupportRequests]);
 
-  return [messages, isLoading, fetchMessages];
+  return [supportRequests, isLoading, fetchSupportRequests];
 };
