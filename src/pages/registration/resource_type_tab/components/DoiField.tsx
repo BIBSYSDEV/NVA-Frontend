@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { InputAdornment, TextField, Typography } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
-import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 
 const StyledClearIcon = styled(ClearIcon)`
@@ -23,7 +23,7 @@ const DoiField = () => {
   };
 
   const changeType = () => {
-    setFieldValue(ReferenceFieldNames.DOI, '');
+    setFieldValue(ResourceFieldNames.DOI, '');
     toggleConfirmDialog();
   };
 
@@ -49,11 +49,11 @@ const DoiField = () => {
 
       <ConfirmDialog
         open={openConfirmDialog}
-        title={t('references.delete_doi_title')}
+        title={t('resource_type.delete_doi_title')}
         onAccept={changeType}
         onCancel={toggleConfirmDialog}
         dataTestId="confirm-delete-doi-dialog">
-        <Typography>{t('references.delete_doi_text')}</Typography>
+        <Typography>{t('resource_type.delete_doi_text')}</Typography>
       </ConfirmDialog>
     </>
   ) : null;

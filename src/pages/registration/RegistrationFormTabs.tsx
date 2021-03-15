@@ -6,7 +6,7 @@ import { Tabs } from '@material-ui/core';
 
 import LinkTab from '../../components/LinkTab';
 import { Registration, RegistrationTab } from '../../types/registration.types';
-import { ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
+import { ResourceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 import {
   hasTouchedError,
   getAllFileFields,
@@ -15,7 +15,7 @@ import {
   touchedContributorTabFields,
   touchedDescriptionTabFields,
   touchedFilesTabFields,
-  touchedReferenceTabFields,
+  touchedResourceTabFields,
 } from '../../utils/formik-helpers';
 
 const StyledTabs = styled(Tabs)`
@@ -35,7 +35,7 @@ const a11yProps = (tabDescription: string) => {
 };
 
 const descriptionFieldNames = Object.values(DescriptionFieldNames);
-const referenceFieldNames = Object.values(ReferenceFieldNames);
+const resourceFieldNames = Object.values(ResourceFieldNames);
 
 const noTouchedTab = -1;
 type HighestTouchedTab = RegistrationTab | typeof noTouchedTab;
@@ -65,8 +65,8 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
     // All fields for each tab
     const tabFields = {
       [RegistrationTab.Description]: () => touchedDescriptionTabFields,
-      [RegistrationTab.Reference]: () =>
-        touchedReferenceTabFields(valuesRef.current.entityDescription.reference.publicationContext.type),
+      [RegistrationTab.ResourceType]: () =>
+        touchedResourceTabFields(valuesRef.current.entityDescription.reference.publicationContext.type),
       [RegistrationTab.Contributors]: () =>
         touchedContributorTabFields(valuesRef.current.entityDescription.contributors),
       [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(valuesRef.current.fileSet.files),
@@ -109,9 +109,9 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
         error={hasTouchedError(errors, touched, descriptionFieldNames)}
       />
       <LinkTab
-        label={t('heading.reference')}
-        {...a11yProps('reference')}
-        error={hasTouchedError(errors, touched, referenceFieldNames)}
+        label={t('heading.resource_type')}
+        {...a11yProps('resource-type')}
+        error={hasTouchedError(errors, touched, resourceFieldNames)}
       />
 
       <LinkTab

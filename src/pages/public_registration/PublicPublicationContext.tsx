@@ -15,7 +15,7 @@ export const PublicJournalContent = ({ publicationContext }: { publicationContex
 
   return title ? (
     <>
-      <Typography variant="h3">{t('references.journal')}</Typography>
+      <Typography variant="h3">{t('resource_type.journal')}</Typography>
       {url ? (
         <Typography component={Link} href={url} target="_blank" rel="noopener noreferrer">
           {title}
@@ -25,7 +25,7 @@ export const PublicJournalContent = ({ publicationContext }: { publicationContex
       )}
       {onlineIssn && (
         <Typography>
-          {t('references.issn')}: {[onlineIssn, printIssn].filter((issn) => issn).join(', ')}
+          {t('resource_type.issn')}: {[onlineIssn, printIssn].filter((issn) => issn).join(', ')}
         </Typography>
       )}
       <PublicLevelContent level={level} />
@@ -66,7 +66,7 @@ export const PublicLinkedContextContent = ({
 
   return (
     <>
-      <Typography variant="h3">{t('references.chapter.published_in')}</Typography>
+      <Typography variant="h3">{t('resource_type.chapter.published_in')}</Typography>
       <RegistrationSummary id={linkedContext} />
     </>
   );
@@ -77,7 +77,7 @@ export const PublicSeriesContent = ({ seriesTitle }: { seriesTitle: string }) =>
 
   return seriesTitle ? (
     <>
-      <Typography variant="h3">{t('references.series')}</Typography>
+      <Typography variant="h3">{t('resource_type.series')}</Typography>
       <Typography>{seriesTitle}</Typography>
     </>
   ) : null;
@@ -88,7 +88,7 @@ const PublicLevelContent = ({ level }: { level?: string | number | null }) => {
   const levelValue = level ? levelMap[level] : null;
   return levelValue ? (
     <Typography>
-      {t('references.level')}: {levelValue}
+      {t('resource_type.level')}: {levelValue}
     </Typography>
   ) : null;
 };

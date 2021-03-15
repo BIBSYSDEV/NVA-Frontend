@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
-import { ReferenceFieldNames } from '../../../../types/publicationFieldNames';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 
 const StyledTextField = styled(TextField)`
   display: inline;
@@ -18,12 +18,12 @@ const TotalPagesField = () => {
   const { t } = useTranslation('registration');
 
   return (
-    <Field name={ReferenceFieldNames.PAGES_PAGES}>
+    <Field name={ResourceFieldNames.PAGES_PAGES}>
       {({ field, meta: { touched, error } }: FieldProps) => (
         <StyledTextField
           inputProps={{ 'data-testid': 'pages-input' }}
           variant="filled"
-          label={t('references.number_of_pages')}
+          label={t('resource_type.number_of_pages')}
           {...field}
           value={field.value ?? ''}
           error={touched && !!error}

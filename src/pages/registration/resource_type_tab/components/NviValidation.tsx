@@ -20,20 +20,20 @@ const NviValidation = ({ dataTestId, isPeerReviewed, isRated, isTextbook }: NviV
         isPeerReviewed ? (
           isRated ? (
             <StyledNormalTextPreWrapped data-testid="nvi_success">
-              {t('references.nvi_success')}
+              {t('resource_type.nvi_success')}
             </StyledNormalTextPreWrapped>
           ) : (
             <StyledNormalTextPreWrapped data-testid="nvi_fail_not_rated">
-              {t('references.nvi_fail_not_rated')}
+              {t('resource_type.nvi_fail_not_rated')}
             </StyledNormalTextPreWrapped>
           )
         ) : (
           <StyledNormalTextPreWrapped data-testid="nvi_fail_no_peer_review">
-            {t('references.nvi_fail_no_peer_review')}
+            {t('resource_type.nvi_fail_no_peer_review')}
           </StyledNormalTextPreWrapped>
         )
       ) : (
-        <StyledNormalTextPreWrapped data-testid="nvi_fail">{t('references.nvi_fail')}</StyledNormalTextPreWrapped>
+        <StyledNormalTextPreWrapped data-testid="nvi_fail">{t('resource_type.nvi_fail')}</StyledNormalTextPreWrapped>
       )}
     </BackgroundDiv>
   );

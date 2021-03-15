@@ -83,7 +83,7 @@
     "description": "Beskrivelse",
     "files_and_license": "Filer og lisens",
     "publish_settings": "Publiseringsvalg",
-    "reference": "Referanse",
+    "resource_type": "Ressurstype",
     "validation_errors": "Valideringsfeil"
   },
   "new_registration": "Ny registrering",
@@ -107,7 +107,7 @@
     "start_with_uploading_file_description": "Last opp fil hvis ressursen ikke er publisert på Internett med en DOI",
     "start_with_uploading_file_title": "Start med å laste opp fil"
   },
-  "references": {
+  "resource_type": {
     "article_number": "Artikkelnummer",
     "delete_doi_title": "Endre type?",
     "delete_doi_text": "Om du fjerner lenke til publikasjonen vil du endre fra registrering til publisering. Ønsker du å fortsette?",

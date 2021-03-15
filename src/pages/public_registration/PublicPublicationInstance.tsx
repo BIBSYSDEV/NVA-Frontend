@@ -11,13 +11,13 @@ import i18n from '../../translations/i18n';
 
 const getPageInterval = (pages: PagesRange) => {
   return pages.begin || pages.end
-    ? `${i18n.t('registration:references.pages')} ${pages.begin ?? '?'}-${pages.end ?? '?'}`
+    ? `${i18n.t('registration:resource_type.pages')} ${pages.begin ?? '?'}-${pages.end ?? '?'}`
     : '';
 };
 
 const PublicPeerReviewed = ({ peerReviewed }: { peerReviewed: boolean }) => {
   const { t } = useTranslation('registration');
-  return peerReviewed ? <Typography>{t('references.peer_reviewed')}</Typography> : null;
+  return peerReviewed ? <Typography>{t('resource_type.peer_reviewed')}</Typography> : null;
 };
 
 export const PublicPublicationInstanceJournal = ({
@@ -31,16 +31,16 @@ export const PublicPublicationInstanceJournal = ({
 
   const fieldTexts = [];
   if (volume) {
-    fieldTexts.push(`${t('references.volume')} ${volume}`);
+    fieldTexts.push(`${t('resource_type.volume')} ${volume}`);
   }
   if (issue) {
-    fieldTexts.push(`${t('references.issue')} ${issue}`);
+    fieldTexts.push(`${t('resource_type.issue')} ${issue}`);
   }
   if (pagesInterval) {
     fieldTexts.push(pagesInterval);
   }
   if (articleNumber) {
-    fieldTexts.push(`${t('references.article_number')} ${articleNumber}`);
+    fieldTexts.push(`${t('resource_type.article_number')} ${articleNumber}`);
   }
 
   return (
@@ -63,7 +63,7 @@ export const PublicPublicationInstanceBook = ({
     <>
       <PublicTotalPagesContent pages={pages} />
       <PublicPeerReviewed peerReviewed={peerReviewed} />
-      {textbookContent && <Typography>{t('references.text_book')}</Typography>}
+      {textbookContent && <Typography>{t('resource_type.text_book')}</Typography>}
     </>
   );
 };
@@ -109,7 +109,7 @@ const PublicTotalPagesContent = ({ pages }: { pages: PagesMonograph | null }) =>
 
   return pages?.pages ? (
     <Typography>
-      {t('references.number_of_pages')}: {pages.pages}
+      {t('resource_type.number_of_pages')}: {pages.pages}
     </Typography>
   ) : null;
 };
@@ -118,7 +118,7 @@ export const PublicIsbnContent = ({ isbnList }: { isbnList?: string[] }) => {
   const { t } = useTranslation('registration');
   return isbnList ? (
     <Typography>
-      {t('references.isbn')}: {isbnList.join(', ')}
+      {t('resource_type.isbn')}: {isbnList.join(', ')}
     </Typography>
   ) : null;
 };
