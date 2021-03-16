@@ -69,7 +69,7 @@ const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) =
         </StyledContributors>
 
         <Typography>
-          <TextTruncate line={3} element="span" truncateText="[...]" text={registration.abstract} />
+          <TextTruncate line={3} truncateText=" [...]" text={registration.abstract} />
         </Typography>
         <StyledMetadata>
           {registration.publicationDate && (
