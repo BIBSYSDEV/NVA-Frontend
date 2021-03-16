@@ -39,7 +39,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
     properties: [{ fieldName: SearchFieldName.Id, value: currentIdentifier }],
   });
   const selectedContainer =
-    currentIdentifier && selectedContainerSearch && selectedContainerSearch.hits.length === 1
+    currentIdentifier && selectedContainerSearch?.hits && selectedContainerSearch.hits.length === 1
       ? selectedContainerSearch.hits[0]
       : null;
 
@@ -83,7 +83,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
                       <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                      <TextTruncate line={1} element="span" truncateText="[...]" text={optionText} />
+                      <TextTruncate line={1} truncateText=" [...]" text={optionText} />
                     </Typography>
                   </StyledFlexColumn>
                 );

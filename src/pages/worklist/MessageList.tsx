@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
-import { MessageItem } from '../../types/publication_types/messages.types';
+import { Message } from '../../types/publication_types/messages.types';
 
 const StyledMessagesContainer = styled.div`
   display: grid;
@@ -19,7 +19,7 @@ const StyledTextTypography = styled(Typography)`
 `;
 
 interface MessageListProps {
-  messages: MessageItem[];
+  messages: Message[];
 }
 
 export const MessageList = ({ messages }: MessageListProps) => (

@@ -4,7 +4,7 @@ import { BackendTypeNames } from '../../types/publication_types/commonRegistrati
 import { JournalType, PublicationType } from '../../types/publicationFieldNames';
 import { JournalRegistration, RegistrationStatus } from '../../types/registration.types';
 import { mockCustomerInstitution } from './mockCustomerInstitutions';
-import { Message } from '../../types/publication_types/messages.types';
+import { MessageType, SupportRequest } from '../../types/publication_types/messages.types';
 
 export const mockRegistration: JournalRegistration = {
   type: BackendTypeNames.PUBLICATION,
@@ -108,36 +108,38 @@ export const mockRegistration: JournalRegistration = {
   },
 };
 
-export const mockMessages: Message[] = [
+export const mockMessages: SupportRequest[] = [
   {
     publication: mockRegistration,
-    messages: [
+    messageCollections: [
       {
-        text: 'Hello Mr. Curator! A have a question about this publication, okay?',
-        sender: 'creator@unit.no',
-        owner: 'creator@unit.no',
-        isDoiRequestRelated: false,
-        date: new Date(2020, 1).toISOString(),
-        id: 'http://test.no/1',
-        identifier: '1',
-      },
-      {
-        text: 'Yes, how may I assist you my dear friend?',
-        sender: 'curator@unit.no',
-        owner: 'creator@unit.no',
-        isDoiRequestRelated: false,
-        date: new Date(2020, 2).toISOString(),
-        id: 'http://test.no/2',
-        identifier: '2',
-      },
-      {
-        text: "I don't know...",
-        sender: 'creator@unit.no',
-        owner: 'creator@unit.no',
-        isDoiRequestRelated: false,
-        date: new Date(2020, 3).toISOString(),
-        id: 'http://test.no/3',
-        identifier: '3',
+        messageType: MessageType.Support,
+        messages: [
+          {
+            text: 'Hello Mr. Curator! A have a question about this publication, okay?',
+            sender: 'creator@unit.no',
+            owner: 'creator@unit.no',
+            date: new Date(2020, 1).toISOString(),
+            id: 'http://test.no/1',
+            identifier: '1',
+          },
+          {
+            text: 'Yes, how may I assist you my dear friend?',
+            sender: 'curator@unit.no',
+            owner: 'creator@unit.no',
+            date: new Date(2020, 2).toISOString(),
+            id: 'http://test.no/2',
+            identifier: '2',
+          },
+          {
+            text: "I don't know...",
+            sender: 'creator@unit.no',
+            owner: 'creator@unit.no',
+            date: new Date(2020, 3).toISOString(),
+            id: 'http://test.no/3',
+            identifier: '3',
+          },
+        ],
       },
     ],
   },
