@@ -6,6 +6,7 @@ import { MessageForm } from '../../components/MessageForm';
 import { addMessage } from '../../api/registrationApi';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
+import { MessageType } from '../../types/publication_types/messages.types';
 
 interface SupportModalContentProps {
   closeModal: () => void;
@@ -17,7 +18,7 @@ export const SupportModalContent = ({ closeModal }: SupportModalContentProps) =>
   const { identifier } = useParams<{ identifier: string }>();
 
   const sendMessage = async (message: string) => {
-    const messageResponse = await addMessage(identifier, message);
+    const messageResponse = await addMessage(identifier, message, MessageType.Support);
     if (messageResponse) {
       if (messageResponse.error) {
         dispatch(setNotification(t('error.send_message')));
