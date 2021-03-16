@@ -1,16 +1,25 @@
 import { Registration } from '../registration.types';
 
-export interface MessageItem {
+export enum MessageType {
+  DoiRequest = 'DoiRequest',
+  Support = 'Support',
+}
+
+export interface Message {
   date: string;
   id: string;
   identifier: string;
-  isDoiRequestRelated: boolean;
   owner: string;
   sender: string;
   text: string;
 }
 
-export interface Message {
-  messages: MessageItem[];
+export interface MessageCollection {
+  messageType: MessageType;
+  messages: Message[];
+}
+
+export interface SupportRequest {
+  messageCollections: MessageCollection[];
   publication: Registration;
 }

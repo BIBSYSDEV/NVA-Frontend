@@ -11,9 +11,10 @@ import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
-import { Message } from '../../types/publication_types/messages.types';
+import { MessageCollection, MessageType } from '../../types/publication_types/messages.types';
 import { addMessage } from '../../api/registrationApi';
 import { MessageList } from './MessageList';
+import { Registration } from '../../types/registration.types';
 
 const StyledAccordion = styled(Accordion)`
   width: 100%;
@@ -55,24 +56,29 @@ const StyledAccordionActionButtons = styled.div`
   justify-content: flex-end;
 `;
 
-interface MessageAccordionProps {
-  message: Message;
-  refetchMessages: () => void;
+interface SupportRequestAccordionProps {
+  messageCollection: MessageCollection;
+  registration: Registration;
+  fetchSupportRequests: () => void;
 }
 
-export const MessageAccordion = ({ message, refetchMessages }: MessageAccordionProps) => {
+export const SupportRequestAccordion = ({
+  messageCollection,
+  registration,
+  fetchSupportRequests,
+}: SupportRequestAccordionProps) => {
   const { t } = useTranslation('workLists');
   const dispatch = useDispatch();
-  const identifier = message.publication.identifier;
+  const identifier = registration.identifier;
 
   const onClickSendMessage = async (message: string) => {
-    const updatedDoiRequestWithMessage = await addMessage(identifier, message);
+    const updatedDoiRequestWithMessage = await addMessage(identifier, message, messageCollection.messageType);
     if (updatedDoiRequestWithMessage) {
       if (updatedDoiRequestWithMessage.error) {
         dispatch(setNotification(t('feedback:error.send_message'), NotificationVariant.Error));
       } else {
         dispatch(setNotification(t('feedback:success.send_message'), NotificationVariant.Success));
-        refetchMessages();
+        fetchSupportRequests();
       }
     }
   };
@@ -81,19 +87,23 @@ export const MessageAccordion = ({ message, refetchMessages }: MessageAccordionP
     <StyledAccordion data-testid={`message-${identifier}`}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <StyledStatus data-testid={`message-type-${identifier}`}>
-          {message.messages.some((m) => m.isDoiRequestRelated) ? t('types.doi') : t('types.support')}
+          {messageCollection.messageType === MessageType.DoiRequest
+            ? t('types.doi')
+            : messageCollection.messageType === MessageType.Support
+            ? t('types.support')
+            : null}
         </StyledStatus>
         <StyledTitle data-testid={`message-title-${identifier}`}>
-          {message.publication.entityDescription?.mainTitle}
+          {registration.entityDescription?.mainTitle}
         </StyledTitle>
         <StyledOwner data-testid={`message-owner-${identifier}`}>
-          <Label>{message.publication.owner}</Label>
-          {new Date(message.messages[message.messages.length - 1].date).toLocaleDateString()}
+          <Label>{registration.owner}</Label>
+          {new Date(messageCollection.messages[messageCollection.messages.length - 1].date).toLocaleDateString()}
         </StyledOwner>
       </AccordionSummary>
       <AccordionDetails>
         <StyledMessages>
-          <MessageList messages={message.messages} />
+          <MessageList messages={messageCollection.messages} />
           <MessageForm confirmAction={onClickSendMessage} />
         </StyledMessages>
         <StyledAccordionActionButtons>
