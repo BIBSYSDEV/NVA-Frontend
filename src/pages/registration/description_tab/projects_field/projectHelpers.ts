@@ -1,42 +1,18 @@
-import i18n from '../../../../translations/i18n';
-import { LanguageCodes } from '../../../../types/language.types';
 import { CristinProject, ResearchProject } from '../../../../types/project.types';
 import { BackendTypeNames } from '../../../../types/publication_types/commonRegistration.types';
 
-export const getProjectTitle = (option: CristinProject): string => {
-  const selectedLanguage = i18n.language;
-  if (selectedLanguage === LanguageCodes.NORWEGIAN_BOKMAL) {
-    const norwegianTitle = option.titles.find((title) => title.language === 'no')?.title;
-    if (norwegianTitle) {
-      return norwegianTitle;
-    }
-  }
-  if (selectedLanguage === LanguageCodes.ENGLISH) {
-    const englishTitle = option.titles.find((title) => title.language === 'en')?.title;
-    if (englishTitle) {
-      return englishTitle;
-    }
-  }
-  return option.titles[0].title;
-};
-
 export const convertToResearchProject = (project: CristinProject): ResearchProject => ({
   type: BackendTypeNames.RESEARCH_PROJECT,
-  id: project.cristinProjectId,
-  name: getProjectTitle(project),
-  grants: project.fundings?.map((funding) => ({
-    id: funding.projectCode,
-    source: funding.fundingSourceCode,
-    type: BackendTypeNames.GRANT,
-  })),
+  id: project.id,
+  name: project.title,
+  grants: [],
   approvals: [],
 });
 
 export const convertToCristinProject = (project: ResearchProject): CristinProject => ({
-  cristinProjectId: project.id,
-  mainLanguage: 'no',
-  titles: [{ language: 'no', title: project.name }],
-  participants: [],
-  institutions: [],
-  fundings: [],
+  type: 'Project',
+  id: project.id,
+  language: '',
+  title: project.name,
+  contributors: [],
 });

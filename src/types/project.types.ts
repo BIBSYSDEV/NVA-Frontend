@@ -57,19 +57,14 @@ interface ProjectContributor {
 export interface CristinProject {
   id: string;
   type: ProjectType;
-  identifier: ProjectIdentifier[];
+  identifier?: ProjectIdentifier[];
   title: string;
   language: string;
   alternativeTitles?: LanguageString[];
-  startDate: string;
-  endDate: string;
-  coordinatingInstitution: CoordinatingInstitution;
+  startDate?: string;
+  endDate?: string;
+  coordinatingInstitution?: CoordinatingInstitution;
   contributors: ProjectContributor[];
-}
-
-export interface CristinProjectFunding {
-  fundingSourceCode: string;
-  projectCode: string;
 }
 
 export interface ProjectSearchResponse {

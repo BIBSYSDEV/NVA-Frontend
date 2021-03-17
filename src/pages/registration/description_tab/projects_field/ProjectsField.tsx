@@ -12,7 +12,8 @@ import { ResearchProject } from '../../../../types/project.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import { useFetchProjects } from '../../../../utils/hooks/useFetchProjects';
-import { convertToCristinProject, convertToResearchProject, getProjectTitle } from './projectHelpers';
+import { convertToCristinProject, convertToResearchProject } from './projectHelpers';
+import { getAffiliationLabel } from '../../../../utils/institutions-helpers';
 
 const StyledProjectChip = styled(Chip)`
   height: auto;
@@ -28,10 +29,9 @@ export const ProjectsField = () => {
     <Field name={DescriptionFieldNames.PROJECTS}>
       {({ field, form: { setFieldValue } }: FieldProps<ResearchProject[]>) => (
         <Autocomplete
-          debug
           {...autocompleteTranslationProps}
           options={projects}
-          getOptionLabel={(option) => getProjectTitle(option)}
+          getOptionLabel={(option) => option.title}
           onInputChange={(_, newInputValue, reason) => {
             if (reason !== 'reset') {
               // Autocomplete triggers "reset" events after input change when it's controlled. Ignore these.
@@ -51,33 +51,20 @@ export const ProjectsField = () => {
             value.map((option, index) => (
               <StyledProjectChip
                 {...getTagProps({ index })}
-                data-testid={`project-chip-${option.cristinProjectId}`}
-                label={
-                  <StyledFlexColumn>
-                    <Typography variant="subtitle1">{getProjectTitle(option)}</Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {option.institutions.map((institution) => institution.name).join(', ')}
-                    </Typography>
-                  </StyledFlexColumn>
-                }
+                data-testid={`project-chip-${option.id}`}
+                label={<Typography variant="subtitle1">{option.title}</Typography>}
               />
             ))
           }
-          getOptionDisabled={(option) => {
-            console.log(
-              field.value.map((f) => f.id),
-              option.cristinProjectId
-            );
-            return field.value.some((project) => project.id === option.cristinProjectId);
-          }}
+          getOptionDisabled={(option) => field.value.some((project) => project.id.endsWith(option.id))}
           loading={isLoadingProjects}
           renderOption={(option, state) => (
-            <StyledFlexColumn data-testid={`project-option-${option.cristinProjectId}`}>
+            <StyledFlexColumn data-testid={`project-option-${option.id}`}>
               <Typography variant="subtitle1">
-                <EmphasizeSubstring text={getProjectTitle(option)} emphasized={state.inputValue} />
+                <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
               </Typography>
               <Typography variant="body2" color="textSecondary">
-                {option.institutions?.map((institution) => institution.name).join(', ')}
+                {option.coordinatingInstitution && getAffiliationLabel(option.coordinatingInstitution.name)}
               </Typography>
             </StyledFlexColumn>
           )}
