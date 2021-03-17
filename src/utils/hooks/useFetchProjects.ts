@@ -7,7 +7,7 @@ import { NotificationVariant } from '../../types/notification.types';
 import { CristinProject } from '../../types/project.types';
 import { searchProjectsByTitle } from '../../api/projectApi';
 
-const useFetchProjects = (searchTerm = ''): [CristinProject[], boolean] => {
+export const useFetchProjects = (searchTerm = ''): [CristinProject[], boolean] => {
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
   const [projects, setProjects] = useState<CristinProject[]>([]);
@@ -23,7 +23,7 @@ const useFetchProjects = (searchTerm = ''): [CristinProject[], boolean] => {
         if (fetchedProjects.error) {
           dispatch(setNotification(t('error.get_project'), NotificationVariant.Error));
         } else if (fetchedProjects.data) {
-          setProjects(fetchedProjects.data);
+          setProjects(fetchedProjects.data.hits);
         }
       }
     };
@@ -36,5 +36,3 @@ const useFetchProjects = (searchTerm = ''): [CristinProject[], boolean] => {
 
   return [projects, isLoading];
 };
-
-export default useFetchProjects;

@@ -11,8 +11,8 @@ import { autocompleteTranslationProps } from '../../../../themes/lightTheme';
 import { ResearchProject } from '../../../../types/project.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import useDebounce from '../../../../utils/hooks/useDebounce';
-import useFetchProjects from '../../../../utils/hooks/useFetchProjects';
-import { convertToCristinProject, convertToResearchProject, getProjectTitle } from './helpers';
+import { useFetchProjects } from '../../../../utils/hooks/useFetchProjects';
+import { convertToCristinProject, convertToResearchProject, getProjectTitle } from './projectHelpers';
 
 const StyledProjectChip = styled(Chip)`
   height: auto;
@@ -70,7 +70,7 @@ export const ProjectsField = () => {
                 <EmphasizeSubstring text={getProjectTitle(option)} emphasized={state.inputValue} />
               </Typography>
               <Typography variant="body2" color="textSecondary">
-                {option.institutions.map((institution) => institution.name).join(', ')}
+                {option.institutions?.map((institution) => institution.name).join(', ')}
               </Typography>
             </StyledFlexColumn>
           )}
