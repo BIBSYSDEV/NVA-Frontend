@@ -56,7 +56,7 @@ export const ProjectsField = () => {
               />
             ))
           }
-          getOptionDisabled={(option) => field.value.some((project) => project.id.endsWith(option.id))}
+          getOptionDisabled={(option) => field.value.some((project) => project.id === option.id)}
           loading={isLoadingProjects}
           renderOption={(option, state) => (
             <StyledFlexColumn data-testid={`project-option-${option.id}`}>
