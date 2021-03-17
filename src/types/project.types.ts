@@ -19,32 +19,64 @@ interface Approval extends BackendType {
   date: Date;
 }
 
-export interface CristinProject {
-  cristinProjectId: string;
-  mainLanguage: string;
-  titles: CristinProjectTitle[];
-  participants: CristinProjectParticipant[];
-  institutions: CristinProjectInstitution[];
-  fundings?: CristinProjectFunding[];
+type ProjectIdentifierType = 'CristinIdentifier';
+type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant';
+type OrganizationType = 'Organization';
+type PersonType = 'Person';
+type ProjectType = 'Project';
+
+interface ProjectIdentifier {
+  type: ProjectIdentifierType;
+  value: string;
+}
+interface LanguageString {
+  [key: string]: string;
 }
 
-interface CristinProjectTitle {
+interface CoordinatingInstitution {
+  id: string;
+  type: OrganizationType;
+  name: LanguageString;
+}
+
+interface ProjectContributor {
+  type?: ProjectContributorType;
+  identity: {
+    id: string;
+    type: PersonType;
+    firstName: string;
+    lastName: string;
+  };
+  affiliation: {
+    id: string;
+    type: OrganizationType;
+    name: LanguageString;
+  };
+}
+
+export interface CristinProject {
+  id: string;
+  type: ProjectType;
+  identifier: ProjectIdentifier[];
   title: string;
   language: string;
-}
-
-interface CristinProjectParticipant {
-  cristinPersonId: string;
-  fullName: string;
-}
-
-interface CristinProjectInstitution {
-  cristinInstitutionId: string;
-  name: string;
-  language: string;
+  alternativeTitles?: LanguageString[];
+  startDate: string;
+  endDate: string;
+  coordinatingInstitution: CoordinatingInstitution;
+  contributors: ProjectContributor[];
 }
 
 export interface CristinProjectFunding {
   fundingSourceCode: string;
   projectCode: string;
+}
+
+export interface ProjectSearchResponse {
+  id: string;
+  size: number;
+  searchString: string;
+  processingTime: number;
+  firstRecord: number;
+  hits: CristinProject[];
 }

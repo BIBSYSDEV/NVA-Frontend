@@ -28,6 +28,7 @@ export const ProjectsField = () => {
     <Field name={DescriptionFieldNames.PROJECTS}>
       {({ field, form: { setFieldValue } }: FieldProps<ResearchProject[]>) => (
         <Autocomplete
+          debug
           {...autocompleteTranslationProps}
           options={projects}
           getOptionLabel={(option) => getProjectTitle(option)}
@@ -62,7 +63,13 @@ export const ProjectsField = () => {
               />
             ))
           }
-          getOptionDisabled={(option) => field.value.some((project) => project.id === option.cristinProjectId)}
+          getOptionDisabled={(option) => {
+            console.log(
+              field.value.map((f) => f.id),
+              option.cristinProjectId
+            );
+            return field.value.some((project) => project.id === option.cristinProjectId);
+          }}
           loading={isLoadingProjects}
           renderOption={(option, state) => (
             <StyledFlexColumn data-testid={`project-option-${option.cristinProjectId}`}>
