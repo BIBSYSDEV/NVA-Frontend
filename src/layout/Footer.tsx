@@ -5,7 +5,7 @@ import { Button, Typography } from '@material-ui/core';
 import { UrlPathTemplate } from '../utils/urlPaths';
 import logo from '../resources/images/unit_logo.png';
 
-const StyledFooter = styled.div`
+const StyledFooter = styled.footer`
   display: grid;
   grid-template-areas: '. logo privacy';
   grid-template-columns: 1fr 1fr 1fr;
