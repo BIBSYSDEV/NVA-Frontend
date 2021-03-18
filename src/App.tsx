@@ -30,7 +30,7 @@ const StyledApp = styled.div`
   flex-direction: column;
 `;
 
-const StyledContent = styled.div`
+const StyledMainContent = styled.main`
   display: flex;
   flex-direction: column;
   align-self: center;
@@ -141,9 +141,9 @@ const App = () => {
       <StyledApp>
         <Notifier />
         <Header />
-        <StyledContent>
+        <StyledMainContent>
           <AppRoutes />
-        </StyledContent>
+        </StyledMainContent>
         <Footer />
       </StyledApp>
       {user && !isLoadingMatchingAuthorities && (user.authority || user.possibleAuthorities) && (
