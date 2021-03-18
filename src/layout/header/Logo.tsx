@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Link as MuiLink, Typography, Divider } from '@material-ui/core';
@@ -18,15 +18,13 @@ const StyledDivider = styled(Divider)`
   }
 `;
 
-const Logo: FC = () => (
+export const Logo = () => (
   <StyledLogo data-testid="logo">
     <MuiLink component={Link} to={UrlPathTemplate.Home}>
-      <Typography color="textPrimary" variant="h5">
+      <Typography variant="h5" component="h1">
         NVA
       </Typography>
     </MuiLink>
     <StyledDivider orientation="vertical" flexItem />
   </StyledLogo>
 );
-
-export default Logo;

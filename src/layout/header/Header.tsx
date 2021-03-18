@@ -11,7 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { getRegistrationPath, UrlPathTemplate } from '../../utils/urlPaths';
 import Login from './Login';
-import Logo from './Logo';
+import { Logo } from './Logo';
 import MobileMenu from './MobileMenu';
 
 const StyledAppBar = styled(AppBar)`
