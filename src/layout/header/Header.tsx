@@ -14,7 +14,7 @@ import Login from './Login';
 import { Logo } from './Logo';
 import MobileMenu from './MobileMenu';
 
-const StyledAppBar = styled(AppBar)`
+const StyledNav = styled.nav`
   display: grid;
   grid-template-areas: 'logo shortcuts auth';
   grid-template-columns: 5rem auto auto;
@@ -56,45 +56,47 @@ const Header = () => {
   };
 
   return (
-    <StyledAppBar position="static" color="inherit" elevation={0}>
-      {user && (
-        <>
-          <StyledBurgerMenu>
-            <IconButton onClick={handleClick}>
-              <MenuIcon />
-            </IconButton>
-          </StyledBurgerMenu>
-          <MobileMenu anchorEl={anchorEl} onClose={() => setAnchorEl(null)} />
-        </>
-      )}
-      <Logo />
-      {user?.isCreator && (
-        <StyledShortcuts>
-          <Button
-            component={RouterLink}
-            data-testid="new-registration"
-            to={getRegistrationPath()}
-            startIcon={<AddIcon />}>
-            {t('new_registration')}
-          </Button>
-          <Button
-            component={RouterLink}
-            data-testid="my-registrations"
-            to={UrlPathTemplate.MyRegistrations}
-            startIcon={<LibraryBooksIcon />}>
-            {t('workLists:my_registrations')}
-          </Button>
-          <Button
-            component={RouterLink}
-            data-testid="my-messages"
-            to={UrlPathTemplate.MyMessages}
-            startIcon={<MailIcon />}>
-            {t('workLists:my_messages')}
-          </Button>
-        </StyledShortcuts>
-      )}
-      <Login />
-    </StyledAppBar>
+    <AppBar position="static" color="inherit" elevation={0}>
+      <StyledNav>
+        {user && (
+          <>
+            <StyledBurgerMenu>
+              <IconButton onClick={handleClick}>
+                <MenuIcon />
+              </IconButton>
+            </StyledBurgerMenu>
+            <MobileMenu anchorEl={anchorEl} onClose={() => setAnchorEl(null)} />
+          </>
+        )}
+        <Logo />
+        {user?.isCreator && (
+          <StyledShortcuts>
+            <Button
+              component={RouterLink}
+              data-testid="new-registration"
+              to={getRegistrationPath()}
+              startIcon={<AddIcon />}>
+              {t('new_registration')}
+            </Button>
+            <Button
+              component={RouterLink}
+              data-testid="my-registrations"
+              to={UrlPathTemplate.MyRegistrations}
+              startIcon={<LibraryBooksIcon />}>
+              {t('workLists:my_registrations')}
+            </Button>
+            <Button
+              component={RouterLink}
+              data-testid="my-messages"
+              to={UrlPathTemplate.MyMessages}
+              startIcon={<MailIcon />}>
+              {t('workLists:my_messages')}
+            </Button>
+          </StyledShortcuts>
+        )}
+        <Login />
+      </StyledNav>
+    </AppBar>
   );
 };
 
