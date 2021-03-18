@@ -94,10 +94,19 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
       indicatorColor="secondary"
       value={tabNumber}
       variant="scrollable">
-      <LinkTab label={t('heading.description')} error={hasTouchedError(errors, touched, descriptionFieldNames)} />
-      <LinkTab label={t('heading.resource_type')} error={hasTouchedError(errors, touched, resourceFieldNames)} />
+      <LinkTab
+        data-testid="nav-tabpanel-description"
+        label={t('heading.description')}
+        error={hasTouchedError(errors, touched, descriptionFieldNames)}
+      />
+      <LinkTab
+        data-testid="nav-tabpanel-resource-type"
+        label={t('heading.resource_type')}
+        error={hasTouchedError(errors, touched, resourceFieldNames)}
+      />
 
       <LinkTab
+        data-testid="nav-tabpanel-contributors"
         label={t('heading.contributors')}
         error={hasTouchedError(
           errors,
@@ -106,6 +115,7 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
         )}
       />
       <LinkTab
+        data-testid="nav-tabpanel-files-and-license"
         label={t('heading.files_and_license')}
         error={hasTouchedError(errors, touched, getAllFileFields(valuesRef.current.fileSet.files))}
       />
