@@ -59,7 +59,6 @@ const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps) => {
                 required
                 fullWidth
                 disabled={isSubmitting}
-                aria-label="DOI-link"
                 inputProps={{ 'data-testid': 'new-registration-link-input' }}
                 {...field}
                 error={!!error && touched}

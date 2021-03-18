@@ -26,14 +26,6 @@ const StyledTabs = styled(Tabs)`
   }
 `;
 
-const a11yProps = (tabDescription: string) => {
-  return {
-    id: `nav-tab-${tabDescription}`,
-    'aria-controls': `nav-tabpanel-${tabDescription}`,
-    'data-testid': `nav-tabpanel-${tabDescription}`,
-  };
-};
-
 const descriptionFieldNames = Object.values(DescriptionFieldNames);
 const resourceFieldNames = Object.values(ResourceFieldNames);
 
@@ -96,27 +88,17 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
 
   return (
     <StyledTabs
-      aria-label="navigation"
       onChange={(_, value) => setTabNumber(value)}
       scrollButtons="auto"
       textColor="primary"
       indicatorColor="secondary"
       value={tabNumber}
       variant="scrollable">
-      <LinkTab
-        label={t('heading.description')}
-        {...a11yProps('description')}
-        error={hasTouchedError(errors, touched, descriptionFieldNames)}
-      />
-      <LinkTab
-        label={t('heading.resource_type')}
-        {...a11yProps('resource-type')}
-        error={hasTouchedError(errors, touched, resourceFieldNames)}
-      />
+      <LinkTab label={t('heading.description')} error={hasTouchedError(errors, touched, descriptionFieldNames)} />
+      <LinkTab label={t('heading.resource_type')} error={hasTouchedError(errors, touched, resourceFieldNames)} />
 
       <LinkTab
         label={t('heading.contributors')}
-        {...a11yProps('contributors')}
         error={hasTouchedError(
           errors,
           touched,
@@ -125,7 +107,6 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
       />
       <LinkTab
         label={t('heading.files_and_license')}
-        {...a11yProps('files-and-license')}
         error={hasTouchedError(errors, touched, getAllFileFields(valuesRef.current.fileSet.files))}
       />
     </StyledTabs>

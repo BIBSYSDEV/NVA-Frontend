@@ -15,7 +15,6 @@ const OrcidModal = ({ closeModal }: OrcidModalProps) => {
   return (
     <Modal
       dataTestId="open-orcid-modal"
-      aria-labelledby="orcid-modal"
       open={true}
       onClose={closeModal}
       maxWidth="sm"
