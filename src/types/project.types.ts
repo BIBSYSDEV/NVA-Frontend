@@ -1,3 +1,4 @@
+import { LanguageString } from './publication_types/commonRegistration.types';
 import { BackendType } from './registration.types';
 
 export interface ResearchProject extends BackendType {
@@ -28,9 +29,6 @@ type ProjectType = 'Project';
 interface ProjectIdentifier {
   type: ProjectIdentifierType;
   value: string;
-}
-interface LanguageString {
-  [key: string]: string;
 }
 
 interface CoordinatingInstitution {

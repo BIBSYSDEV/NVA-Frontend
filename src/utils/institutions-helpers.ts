@@ -1,7 +1,8 @@
 import i18n from '../translations/i18n';
-import { Contributor, Labels } from '../types/contributor.types';
+import { Contributor } from '../types/contributor.types';
 import { FormikInstitutionUnit, InstitutionUnitBase, RecursiveInstitutionUnit } from '../types/institution.types';
 import { LanguageCodes } from '../types/language.types';
+import { LanguageString } from '../types/publication_types/commonRegistration.types';
 
 // Exclude institutions on any level (root, subunit, subunit of subunit, etc) that has a matching id in excludeIds
 export const filterInstitutions = (
@@ -44,7 +45,7 @@ export const getLanguageCodeForInstitution = () => {
 };
 
 // Get label based on selected language
-export const getAffiliationLabel = (labels: Labels) => {
+export const getAffiliationLabel = (labels: LanguageString) => {
   const preferredLanguageCode = getLanguageCodeForInstitution();
   if (Object.keys(labels).includes(preferredLanguageCode)) {
     return labels[preferredLanguageCode];

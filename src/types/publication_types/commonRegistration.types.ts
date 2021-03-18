@@ -24,3 +24,7 @@ export const emptyDate = {
   month: '',
   day: '',
 };
+
+export interface LanguageString {
+  [key: string]: string;
+}
