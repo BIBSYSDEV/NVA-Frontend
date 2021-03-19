@@ -8,7 +8,7 @@ interface MobileMenuProps {
   onClose: () => void;
 }
 
-const MobileMenu = ({ anchorEl, onClose }: MobileMenuProps) => {
+export const MobileMenu = ({ anchorEl, onClose }: MobileMenuProps) => {
   const { t } = useTranslation('registration');
   const history = useHistory();
 
@@ -30,19 +30,15 @@ const MobileMenu = ({ anchorEl, onClose }: MobileMenuProps) => {
         vertical: 'bottom',
         horizontal: 'left',
       }}>
-      <nav>
-        <MenuItem data-testid="mobile-new-registration" onClick={() => handleClickMenuItem('/registration')}>
-          {t('new_registration')}
-        </MenuItem>
-        <MenuItem data-testid="mobile-my-registrations" onClick={() => handleClickMenuItem('/my-registrations')}>
-          {t('workLists:my_registrations')}
-        </MenuItem>
-        <MenuItem data-testid="mobile-my-messages" onClick={() => handleClickMenuItem('/my-messages')}>
-          {t('workLists:my_messages')}
-        </MenuItem>
-      </nav>
+      <MenuItem data-testid="mobile-new-registration" onClick={() => handleClickMenuItem('/registration')}>
+        {t('new_registration')}
+      </MenuItem>
+      <MenuItem data-testid="mobile-my-registrations" onClick={() => handleClickMenuItem('/my-registrations')}>
+        {t('workLists:my_registrations')}
+      </MenuItem>
+      <MenuItem data-testid="mobile-my-messages" onClick={() => handleClickMenuItem('/my-messages')}>
+        {t('workLists:my_messages')}
+      </MenuItem>
     </Menu>
   );
 };
-
-export default MobileMenu;

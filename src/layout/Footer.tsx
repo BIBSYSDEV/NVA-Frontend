@@ -29,7 +29,7 @@ const StyledPrivacyButton = styled(Button)`
   justify-self: center;
 `;
 
-const Footer = () => {
+export const Footer = () => {
   const { t } = useTranslation('privacy');
 
   return (
@@ -44,5 +44,3 @@ const Footer = () => {
     </StyledFooter>
   );
 };
-
-export default Footer;

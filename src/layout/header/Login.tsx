@@ -1,11 +1,11 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 
 import { RootStore } from '../../redux/reducers/rootReducer';
-import Menu from './Menu';
+import { Menu } from './Menu';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { AMPLIFY_REDIRECTED_KEY } from '../../utils/constants';
@@ -15,7 +15,7 @@ const StyledLoginComponent = styled.div`
   justify-self: right;
 `;
 
-const Login: FC = () => {
+export const Login = () => {
   const user = useSelector((state: RootStore) => state.user);
   const { t } = useTranslation('authorization');
   const { handleLogin, handleLogout } = useAuthentication();
@@ -48,5 +48,3 @@ const Login: FC = () => {
     </StyledLoginComponent>
   );
 };
-
-export default Login;

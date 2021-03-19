@@ -10,9 +10,9 @@ import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { getRegistrationPath, UrlPathTemplate } from '../../utils/urlPaths';
-import Login from './Login';
+import { Login } from './Login';
 import { Logo } from './Logo';
-import MobileMenu from './MobileMenu';
+import { MobileMenu } from './MobileMenu';
 
 const StyledNav = styled.nav`
   display: grid;
@@ -46,7 +46,7 @@ const StyledBurgerMenu = styled.div`
   }
 `;
 
-const Header = () => {
+export const Header = () => {
   const { t } = useTranslation('registration');
   const user = useSelector((store: RootStore) => store.user);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -99,5 +99,3 @@ const Header = () => {
     </AppBar>
   );
 };
-
-export default Header;
