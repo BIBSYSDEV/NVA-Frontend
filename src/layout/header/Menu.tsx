@@ -27,6 +27,20 @@ const StyledMobileMenuButton = styled(IconButton)`
   }
 `;
 
+const StyledMenuItem = styled(MenuItem)`
+  padding: 0;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+`;
+
+const StyledMenuItemText = styled(Typography)`
+  padding: 0.5rem 1rem;
+`;
+
 interface MenuProps {
   handleLogout: () => void;
   menuButtonLabel: string;
@@ -67,58 +81,56 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
           horizontal: 'left',
         }}>
         {user?.isCurator && (
-          <MenuItem
+          <StyledMenuItem
             key="menu-my-worklist-button"
             data-testid="menu-my-worklist-button"
-            component={Link}
-            to={UrlPathTemplate.Worklist}
             onClick={closeMenu}
             divider>
-            {t('workLists:my_worklist')}
-          </MenuItem>
+            <StyledLink to={UrlPathTemplate.Worklist}>
+              <StyledMenuItemText>{t('workLists:my_worklist')}</StyledMenuItemText>
+            </StyledLink>
+          </StyledMenuItem>
         )}
         {(user?.isAppAdmin || user?.isInstitutionAdmin) && [
           user.isAppAdmin && (
-            <MenuItem
+            <StyledMenuItem
               key="menu-admin-institutions-button"
               data-testid="menu-admin-institutions-button"
-              component={Link}
-              to={UrlPathTemplate.AdminInstitutions}
               onClick={closeMenu}>
-              {t('common:institutions')}
-            </MenuItem>
+              <StyledLink to={UrlPathTemplate.AdminInstitutions}>
+                <StyledMenuItemText>{t('common:institutions')}</StyledMenuItemText>
+              </StyledLink>
+            </StyledMenuItem>
           ),
           user.isInstitutionAdmin && [
-            <MenuItem
+            <StyledMenuItem
               key="menu-admin-institution-button"
               data-testid="menu-admin-institution-button"
-              component={Link}
-              to={UrlPathTemplate.MyInstitution}
               onClick={closeMenu}>
-              {t('common:my_institution')}
-            </MenuItem>,
-            <MenuItem
+              <StyledLink to={UrlPathTemplate.MyInstitution}>
+                <StyledMenuItemText>{t('common:my_institution')}</StyledMenuItemText>
+              </StyledLink>
+            </StyledMenuItem>,
+            <StyledMenuItem
               key="menu-admin-institution-users-button"
               data-testid="menu-admin-institution-users-button"
-              component={Link}
-              to={UrlPathTemplate.MyInstitutionUsers}
               onClick={closeMenu}>
-              {t('common:users')}
-            </MenuItem>,
+              <StyledLink to={UrlPathTemplate.MyInstitutionUsers}>
+                <StyledMenuItemText>{t('common:users')}</StyledMenuItemText>
+              </StyledLink>
+            </StyledMenuItem>,
           ],
           <Divider key="divider" />,
         ]}
-        <MenuItem
-          component={Link}
-          to={UrlPathTemplate.MyProfile}
-          data-testid="menu-user-profile-button"
-          onClick={closeMenu}>
-          {t('profile:my_profile')}
-        </MenuItem>
+        <StyledMenuItem data-testid="menu-user-profile-button" onClick={closeMenu}>
+          <StyledLink to={UrlPathTemplate.MyProfile}>
+            <StyledMenuItemText>{t('profile:my_profile')}</StyledMenuItemText>
+          </StyledLink>
+        </StyledMenuItem>
 
-        <MenuItem onClick={handleLogout} data-testid="menu-logout-button">
-          {t('authorization:logout')}
-        </MenuItem>
+        <StyledMenuItem onClick={handleLogout} data-testid="menu-logout-button">
+          <StyledMenuItemText>{t('authorization:logout')}</StyledMenuItemText>
+        </StyledMenuItem>
       </MuiMenu>
     </StyledMenu>
   );
