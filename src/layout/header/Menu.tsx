@@ -88,8 +88,7 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
             component={Link}
             to={UrlPathTemplate.Worklist}
             onClick={closeMenu}
-            disableGutters
-            tabIndex={0}>
+            disableGutters>
             <StyledIndentedTypography>{t('workLists:my_worklist')}</StyledIndentedTypography>
           </MenuItem>,
           <Divider key="divider1" />,
@@ -103,8 +102,7 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
               component={Link}
               to={UrlPathTemplate.AdminInstitutions}
               onClick={closeMenu}
-              disableGutters
-              tabIndex={1}>
+              disableGutters>
               <StyledIndentedTypography>{t('common:institutions')}</StyledIndentedTypography>
             </MenuItem>
           ),
@@ -115,8 +113,7 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
               component={Link}
               to={UrlPathTemplate.MyInstitution}
               onClick={closeMenu}
-              disableGutters
-              tabIndex={2}>
+              disableGutters>
               <StyledIndentedTypography>{t('common:my_institution')}</StyledIndentedTypography>
             </MenuItem>,
             <MenuItem
