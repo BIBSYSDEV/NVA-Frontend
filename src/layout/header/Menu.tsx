@@ -14,20 +14,6 @@ const StyledMenu = styled.div`
   grid-area: menu;
 `;
 
-const StyledPaddedTypography = styled(Typography)`
-  padding: 0 1rem;
-`;
-
-const StyledHeaderTypography = styled(StyledPaddedTypography)`
-  font-weight: bold;
-  margin-top: 0.5rem;
-  text-transform: uppercase;
-`;
-
-const StyledIndentedTypography = styled(StyledPaddedTypography)`
-  padding-left: 1.5rem;
-`;
-
 const StyledMenuButton = styled(Button)`
   text-transform: none;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
@@ -80,30 +66,26 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        {user?.isCurator && [
-          <StyledHeaderTypography key="1">{t('profile:roles.curator')}</StyledHeaderTypography>,
+        {user?.isCurator && (
           <MenuItem
             key="menu-my-worklist-button"
             data-testid="menu-my-worklist-button"
             component={Link}
             to={UrlPathTemplate.Worklist}
             onClick={closeMenu}
-            disableGutters>
-            <StyledIndentedTypography>{t('workLists:my_worklist')}</StyledIndentedTypography>
-          </MenuItem>,
-          <Divider key="divider1" />,
-        ]}
+            divider>
+            {t('workLists:my_worklist')}
+          </MenuItem>
+        )}
         {(user?.isAppAdmin || user?.isInstitutionAdmin) && [
-          <StyledHeaderTypography key="4">{t('common:admin')}</StyledHeaderTypography>,
           user.isAppAdmin && (
             <MenuItem
               key="menu-admin-institutions-button"
               data-testid="menu-admin-institutions-button"
               component={Link}
               to={UrlPathTemplate.AdminInstitutions}
-              onClick={closeMenu}
-              disableGutters>
-              <StyledIndentedTypography>{t('common:institutions')}</StyledIndentedTypography>
+              onClick={closeMenu}>
+              {t('common:institutions')}
             </MenuItem>
           ),
           user.isInstitutionAdmin && [
@@ -112,33 +94,30 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
               data-testid="menu-admin-institution-button"
               component={Link}
               to={UrlPathTemplate.MyInstitution}
-              onClick={closeMenu}
-              disableGutters>
-              <StyledIndentedTypography>{t('common:my_institution')}</StyledIndentedTypography>
+              onClick={closeMenu}>
+              {t('common:my_institution')}
             </MenuItem>,
             <MenuItem
               key="menu-admin-institution-users-button"
               data-testid="menu-admin-institution-users-button"
               component={Link}
               to={UrlPathTemplate.MyInstitutionUsers}
-              onClick={closeMenu}
-              disableGutters>
-              <StyledIndentedTypography>{t('common:users')}</StyledIndentedTypography>
+              onClick={closeMenu}>
+              {t('common:users')}
             </MenuItem>,
           ],
-          <Divider key="divider2" />,
+          <Divider key="divider" />,
         ]}
         <MenuItem
           component={Link}
           to={UrlPathTemplate.MyProfile}
           data-testid="menu-user-profile-button"
-          onClick={closeMenu}
-          disableGutters>
-          <StyledPaddedTypography>{t('profile:my_profile')}</StyledPaddedTypography>
+          onClick={closeMenu}>
+          {t('profile:my_profile')}
         </MenuItem>
 
-        <MenuItem onClick={handleLogout} data-testid="menu-logout-button" disableGutters>
-          <StyledPaddedTypography>{t('authorization:logout')}</StyledPaddedTypography>
+        <MenuItem onClick={handleLogout} data-testid="menu-logout-button">
+          {t('authorization:logout')}
         </MenuItem>
       </MuiMenu>
     </StyledMenu>
