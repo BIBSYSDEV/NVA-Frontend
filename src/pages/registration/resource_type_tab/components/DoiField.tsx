@@ -17,7 +17,11 @@ const StyledDoiRow = styled.div`
   align-items: center;
 `;
 
-const DoiField = () => {
+const StyledTypography = styled(Typography)`
+  white-space: pre-wrap;
+`;
+
+export const DoiField = () => {
   const { t } = useTranslation('registration');
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const { setFieldValue, values } = useFormikContext<Registration>();
@@ -57,11 +61,9 @@ const DoiField = () => {
           onAccept={removeDoi}
           onCancel={toggleConfirmDialog}
           dataTestId="confirm-delete-doi-dialog">
-          <Typography style={{ whiteSpace: 'pre-line' }}>{t('resource_type.remove_doi_text')}</Typography>
+          <StyledTypography>{t('resource_type.remove_doi_text')}</StyledTypography>
         </ConfirmDialog>
       </MuiThemeProvider>
     </StyledDoiRow>
   ) : null;
 };
-
-export default DoiField;
