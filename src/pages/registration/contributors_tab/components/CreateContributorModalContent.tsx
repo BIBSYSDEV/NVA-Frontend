@@ -65,7 +65,6 @@ const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: CreateCo
               {({ field, meta: { error, touched } }: FieldProps) => (
                 <TextField
                   {...field}
-                  aria-label="first name"
                   fullWidth
                   label={t('first_name')}
                   required
@@ -80,7 +79,6 @@ const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: CreateCo
               {({ field, meta: { error, touched } }: FieldProps) => (
                 <TextField
                   {...field}
-                  aria-label="last name"
                   fullWidth
                   label={t('last_name')}
                   required

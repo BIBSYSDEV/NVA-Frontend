@@ -10,7 +10,7 @@ import { StyledCenterAlignedContentWrapper } from '../../../../components/styled
 import lightTheme from '../../../../themes/lightTheme';
 import { BookType, ChapterType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { ChapterRegistration } from '../../../../types/registration.types';
-import DoiField from '../components/DoiField';
+import { DoiField } from '../components/DoiField';
 import NviValidation from '../components/NviValidation';
 import PeerReview from '../components/PeerReview';
 import SearchContainerField from '../components/SearchContainerField';
