@@ -145,7 +145,17 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                   <Field name={`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`}>
                     {({ field, form, meta: { error, touched } }: FieldProps) => (
                       <KeyboardDatePicker
+                        id={field.name}
                         {...datePickerTranslationProps}
+                        DialogProps={{
+                          'aria-labelledby': `${field.name}-label`,
+                          'aria-label': t('files_and_license.embargo_date'),
+                        }}
+                        KeyboardButtonProps={{
+                          'aria-labelledby': `${field.name}-label`,
+                        }}
+                        leftArrowButtonProps={{ 'aria-label': t('common:previous') }}
+                        rightArrowButtonProps={{ 'aria-label': t('common:next') }}
                         data-testid="uploaded-file-embargo-date"
                         inputVariant="filled"
                         label={t('files_and_license.embargo_date')}
