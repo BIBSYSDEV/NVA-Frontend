@@ -1,4 +1,4 @@
-import React, { FC, lazy, Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import DelayedFallback from './components/DelayedFallback';
@@ -23,7 +23,7 @@ const MyMessages = lazy(() => import('./pages/messages/MyMessages'));
 const WorklistPage = lazy(() => import('./pages/worklist/WorklistPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 
-const AppRoutes: FC = () => {
+export const AppRoutes = () => {
   const user = useSelector((store: RootStore) => store.user);
 
   return (
@@ -65,5 +65,3 @@ const AppRoutes: FC = () => {
     </Suspense>
   );
 };
-
-export default AppRoutes;

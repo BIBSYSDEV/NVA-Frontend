@@ -54,7 +54,6 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
           inputProps={{
             ...params.inputProps,
             'data-testid': 'autocomplete-institution',
-            'aria-label': t('institution'),
           }}
           InputProps={{
             ...params.InputProps,
