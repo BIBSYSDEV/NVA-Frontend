@@ -46,7 +46,7 @@ interface MenuProps {
   menuButtonLabel: string;
 }
 
-const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
+export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootStore) => store.user);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -62,7 +62,6 @@ const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
       <StyledMenuButton
         onClick={handleClickMenuAnchor}
         data-testid="menu"
-        disableFocusRipple
         endIcon={anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}>
         <Typography noWrap>{menuButtonLabel}</Typography>
       </StyledMenuButton>
@@ -143,5 +142,3 @@ const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
     </StyledMenu>
   );
 };
-
-export default Menu;
