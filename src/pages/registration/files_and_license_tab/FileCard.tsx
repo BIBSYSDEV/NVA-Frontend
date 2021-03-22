@@ -15,6 +15,7 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  Tooltip,
   Typography,
 } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -226,9 +227,11 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                       </StyledSelect>
                     )}
                   </Field>
-                  <IconButton size="small" data-testid="button-toggle-license-modal" onClick={toggleLicenseModal}>
-                    <HelpIcon />
-                  </IconButton>
+                  <Tooltip title={t<string>('common:help')}>
+                    <IconButton size="small" data-testid="button-toggle-license-modal" onClick={toggleLicenseModal}>
+                      <HelpIcon />
+                    </IconButton>
+                  </Tooltip>
                 </StyledVerticalAlign>
               </StyledFormControl>
             </StyledFileInfo>
