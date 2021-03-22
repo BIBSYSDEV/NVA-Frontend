@@ -66,7 +66,14 @@ const DatePickerField = () => {
     <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
       <MuiThemeProvider theme={lightTheme}>
         <KeyboardDatePicker
+          id="date-picker"
           {...datePickerTranslationProps}
+          DialogProps={{ 'aria-labelledby': 'date-picker-label', 'aria-label': t('description.date_published') }}
+          KeyboardButtonProps={{
+            'aria-labelledby': 'date-picker-label',
+          }}
+          leftArrowButtonProps={{ 'aria-label': t('common:previous') }}
+          rightArrowButtonProps={{ 'aria-label': t('common:next') }}
           data-testid="date-published-field"
           inputVariant="filled"
           label={t('description.date_published')}

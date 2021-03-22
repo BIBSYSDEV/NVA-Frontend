@@ -34,6 +34,7 @@ const DescriptionPanel = () => {
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
               {...field}
+              id={field.name}
               required
               data-testid="registration-title-field"
               inputProps={{ 'data-testid': 'registration-title-input' }}
@@ -49,6 +50,7 @@ const DescriptionPanel = () => {
           {({ field }: FieldProps<string>) => (
             <TextField
               {...field}
+              id={field.name}
               data-testid="registration-abstract-field"
               inputProps={{ 'data-testid': 'registration-abstract-input' }}
               variant="filled"
@@ -63,6 +65,7 @@ const DescriptionPanel = () => {
           {({ field }: FieldProps<string>) => (
             <TextField
               {...field}
+              id={field.name}
               data-testid="registration-description-field"
               inputProps={{ 'data-testid': 'registration-description-input' }}
               label={t('description.description_of_content')}
@@ -79,6 +82,7 @@ const DescriptionPanel = () => {
           {({ field }: FieldProps) => (
             <Autocomplete
               {...field}
+              id={field.name}
               freeSolo
               multiple
               options={[]}
@@ -113,6 +117,7 @@ const DescriptionPanel = () => {
             {({ field }: FieldProps<string>) => (
               <TextField
                 {...field}
+                id={field.name}
                 data-testid="registration-language-field"
                 fullWidth
                 label={t('description.primary_language')}
