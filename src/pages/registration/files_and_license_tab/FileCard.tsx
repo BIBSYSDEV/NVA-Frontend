@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import prettyBytes from 'pretty-bytes';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
@@ -28,6 +28,7 @@ import lightTheme, { datePickerTranslationProps } from '../../../themes/lightThe
 import { File, LicenseNames, licenses } from '../../../types/file.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
+import ConfirmDialog from '../../../components/ConfirmDialog';
 
 const StyledDescription = styled(Typography)`
   font-style: italic;
@@ -97,6 +98,8 @@ interface FileCardProps {
 
 const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileCardProps) => {
   const { t, i18n } = useTranslation('registration');
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
 
   return (
     <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight} data-testid="uploaded-file-card">
@@ -244,10 +247,21 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
           variant="outlined"
           data-testid="button-remove-file"
           startIcon={<DeleteIcon />}
-          onClick={removeFile}>
-          {t('common:remove')}
+          onClick={toggleOpenConfirmDialog}>
+          {t('files_and_license.remove_file')}
         </DangerButton>
       </StyledActions>
+
+      <ConfirmDialog
+        open={openConfirmDialog}
+        title={t('files_and_license.remove_file')}
+        onAccept={() => {
+          removeFile();
+          toggleOpenConfirmDialog();
+        }}
+        onCancel={toggleOpenConfirmDialog}>
+        <Typography>{t('files_and_license.remove_file_description', { fileName: file.name })}</Typography>
+      </ConfirmDialog>
     </BackgroundDiv>
   );
 };

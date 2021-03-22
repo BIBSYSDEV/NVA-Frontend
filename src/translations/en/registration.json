@@ -74,6 +74,7 @@
     "no_duplicates": "Cannot add \"{{fileName}}\", because a file with the same name already exists",
     "publicly_available": "Publicly available",
     "published_version": "Published version",
+    "remove_file": "Remove file",
     "select_version": "Select version",
     "title": "File name",
     "uploaded_size": "Uploaded {{size}}"
