@@ -7,7 +7,7 @@ import BackgroundDiv from '../../../../components/BackgroundDiv';
 import lightTheme from '../../../../themes/lightTheme';
 import { JournalType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { JournalRegistration } from '../../../../types/registration.types';
-import DoiField from '../components/DoiField';
+import { DoiField } from '../components/DoiField';
 import JournalField from '../components/JournalField';
 import NviValidation from '../components/NviValidation';
 import PeerReview from '../components/PeerReview';

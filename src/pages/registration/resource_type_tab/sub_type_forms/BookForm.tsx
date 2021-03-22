@@ -7,7 +7,7 @@ import BackgroundDiv from '../../../../components/BackgroundDiv';
 import lightTheme from '../../../../themes/lightTheme';
 import { BookType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookRegistration } from '../../../../types/registration.types';
-import DoiField from '../components/DoiField';
+import { DoiField } from '../components/DoiField';
 import IsbnListField from '../components/IsbnListField';
 import NviValidation from '../components/NviValidation';
 import PeerReview from '../components/PeerReview';
