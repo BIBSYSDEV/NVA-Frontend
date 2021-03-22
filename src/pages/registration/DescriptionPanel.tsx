@@ -79,6 +79,7 @@ const DescriptionPanel = () => {
           {({ field }: FieldProps) => (
             <Autocomplete
               {...field}
+              id="as"
               freeSolo
               multiple
               options={[]}
