@@ -122,7 +122,6 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                   <StyledFormControl>
                     <FormLabel component="legend">{t('files_and_license.select_version')}</FormLabel>
                     <RadioGroup
-                      aria-label="version"
                       {...field}
                       onChange={(event) => form.setFieldValue(field.name, event.target.value === 'published')}>
                       <FormControlLabel
