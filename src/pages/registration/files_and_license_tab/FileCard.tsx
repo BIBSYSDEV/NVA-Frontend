@@ -182,6 +182,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                   <Field name={`${baseFieldName}.${SpecificFileFieldNames.LICENSE}`}>
                     {({ field, form, meta: { error, touched } }: FieldProps) => (
                       <StyledSelect
+                        id={field.name}
                         data-testid="uploaded-file-select-license"
                         select
                         fullWidth
@@ -218,6 +219,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                             key={license.identifier}
                             value={license.identifier}
                             divider
+                            ContainerProps={{ 'aria-label': t('files_and_license.conditions_for_using_file') }}
                             dense>
                             <ListItemIcon>
                               <StyledLicenseOptionImage src={license.buttonImage} alt={license.identifier} />
