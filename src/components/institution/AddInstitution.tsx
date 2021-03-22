@@ -43,6 +43,7 @@ const AddInstitution: FC<AddInstitutionProps> = ({ onSubmit, onClose }) => {
           {({ field: { name, value }, form: { setFieldValue, isSubmitting } }: FieldProps) => (
             <StyledInstitutionSearchContainer>
               <InstitutionAutocomplete
+                id={name}
                 institutions={institutions}
                 isLoading={isLoadingInstitutions}
                 required
