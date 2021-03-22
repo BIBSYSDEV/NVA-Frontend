@@ -22,6 +22,7 @@ const SelectTypeField = ({
     <Field name={fieldName}>
       {({ field, meta: { error, touched } }: FieldProps) => (
         <TextField
+          id={field.name}
           data-testid={dataTestId}
           select
           variant="filled"
