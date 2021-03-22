@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -21,7 +21,7 @@ interface ConfirmDialogProps {
   dataTestId?: string;
 }
 
-const ConfirmDialog: FC<ConfirmDialogProps> = ({
+const ConfirmDialog = ({
   children,
   open,
   title,
@@ -29,12 +29,12 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
   onCancel,
   isLoading = false,
   dataTestId,
-}) => {
+}: ConfirmDialogProps) => {
   const { t } = useTranslation('common');
 
   return (
-    <Dialog open={open} onClose={onCancel} data-testid={dataTestId}>
-      <DialogTitle>{title}</DialogTitle>
+    <Dialog open={open} onClose={onCancel} data-testid={dataTestId} PaperProps={{ 'aria-labelledby': 'titleId' }}>
+      <DialogTitle id="titleId">{title}</DialogTitle>
       <DialogContent>
         <StyledDialogContentText>{children}</StyledDialogContentText>
       </DialogContent>
