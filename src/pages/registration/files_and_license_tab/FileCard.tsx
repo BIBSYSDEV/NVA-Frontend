@@ -244,7 +244,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
 
       <StyledActions>
         <DangerButton
-          variant="outlined"
+          variant="contained"
           data-testid="button-remove-file"
           startIcon={<DeleteIcon />}
           onClick={toggleOpenConfirmDialog}>
