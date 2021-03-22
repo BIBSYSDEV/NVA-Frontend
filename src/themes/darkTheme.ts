@@ -15,12 +15,12 @@ const darkTheme = createMuiTheme({
     ...lightTheme.overrides,
     MuiFilledInput: {
       root: {
-        backgroundColor: Color.BlueMegaLight,
+        ...lightTheme.overrides?.MuiFilledInput?.root,
         '&.Mui-focused': {
-          backgroundColor: Color.BlueMegaLight,
+          backgroundColor: Color.BlueLight,
         },
         '&:hover': {
-          backgroundColor: Color.BlueMegaLight,
+          backgroundColor: Color.BlueLight,
         },
         '&.Mui-disabled': {
           backgroundColor: 'rgba(255, 255, 255, 0.60)',
