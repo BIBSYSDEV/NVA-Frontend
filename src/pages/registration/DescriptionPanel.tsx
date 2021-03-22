@@ -9,7 +9,7 @@ import lightTheme from '../../themes/lightTheme';
 import { registrationLanguages } from '../../types/language.types';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
-import DatePickerField from './description_tab/DatePickerField';
+import { DatePickerField } from './description_tab/DatePickerField';
 import { ProjectsField } from './description_tab/projects_field';
 
 const DateAndLanguageWrapper = styled.div`

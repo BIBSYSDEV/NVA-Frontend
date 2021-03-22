@@ -17,7 +17,7 @@ const StyledFormControlLabel = styled(FormControlLabel)`
   height: 100%; /* Ensure this element is as high as the DatePicker for centering */
 `;
 
-const DatePickerField = () => {
+export const DatePickerField = () => {
   const { t, i18n } = useTranslation('registration');
   const { setFieldValue, values, errors, touched, setFieldTouched } = useFormikContext<Registration>();
   const { year, month, day } = values.entityDescription.date;
@@ -97,5 +97,3 @@ const DatePickerField = () => {
     </MuiPickersUtilsProvider>
   );
 };
-
-export default DatePickerField;
