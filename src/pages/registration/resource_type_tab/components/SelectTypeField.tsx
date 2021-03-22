@@ -30,7 +30,6 @@ const SelectTypeField = ({
           label={t('common:type')}
           required
           error={!!error && touched}
-          SelectProps={{ MenuProps: { autoFocus: false } }}
           helperText={<ErrorMessage name={field.name} />}
           onChange={(event) => (onChangeType ? onChangeType(event.target.value) : field.onChange(event))}>
           {options.map((typeValue) => (

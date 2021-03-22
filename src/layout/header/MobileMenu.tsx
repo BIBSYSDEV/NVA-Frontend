@@ -8,7 +8,7 @@ interface MobileMenuProps {
   onClose: () => void;
 }
 
-const MobileMenu = ({ anchorEl, onClose }: MobileMenuProps) => {
+export const MobileMenu = ({ anchorEl, onClose }: MobileMenuProps) => {
   const { t } = useTranslation('registration');
   const history = useHistory();
 
@@ -42,5 +42,3 @@ const MobileMenu = ({ anchorEl, onClose }: MobileMenuProps) => {
     </Menu>
   );
 };
-
-export default MobileMenu;
