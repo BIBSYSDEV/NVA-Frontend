@@ -60,8 +60,6 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
   return (
     <StyledMenu>
       <StyledMenuButton
-        aria-controls="menu"
-        aria-haspopup="true"
         onClick={handleClickMenuAnchor}
         data-testid="menu"
         endIcon={anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}>
