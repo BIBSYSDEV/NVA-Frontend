@@ -56,6 +56,8 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
           <MuiThemeProvider theme={lightTheme}>
             <Autocomplete
               {...autocompleteTranslationProps}
+              id={field.name}
+              aria-labelledby={`${field.name}-label`}
               popupIcon={null}
               options={options}
               onBlur={() => setFieldTouched(field.name)}
