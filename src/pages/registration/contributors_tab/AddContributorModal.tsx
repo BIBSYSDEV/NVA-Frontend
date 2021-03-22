@@ -47,8 +47,6 @@ const AddContributorModal = ({
 
   return (
     <Modal
-      aria-describedby="add-contributor-modal"
-      aria-labelledby="add-contributor-modal"
       headingText={
         createNewAuthor
           ? t('contributors.create_new_author')

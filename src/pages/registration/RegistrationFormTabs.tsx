@@ -26,14 +26,6 @@ const StyledTabs = styled(Tabs)`
   }
 `;
 
-const a11yProps = (tabDescription: string) => {
-  return {
-    id: `nav-tab-${tabDescription}`,
-    'aria-controls': `nav-tabpanel-${tabDescription}`,
-    'data-testid': `nav-tabpanel-${tabDescription}`,
-  };
-};
-
 const descriptionFieldNames = Object.values(DescriptionFieldNames);
 const resourceFieldNames = Object.values(ResourceFieldNames);
 
@@ -96,7 +88,6 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
 
   return (
     <StyledTabs
-      aria-label="navigation"
       onChange={(_, value) => setTabNumber(value)}
       scrollButtons="auto"
       textColor="primary"
@@ -104,19 +95,19 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
       value={tabNumber}
       variant="scrollable">
       <LinkTab
+        data-testid="nav-tabpanel-description"
         label={t('heading.description')}
-        {...a11yProps('description')}
         error={hasTouchedError(errors, touched, descriptionFieldNames)}
       />
       <LinkTab
+        data-testid="nav-tabpanel-resource-type"
         label={t('heading.resource_type')}
-        {...a11yProps('resource-type')}
         error={hasTouchedError(errors, touched, resourceFieldNames)}
       />
 
       <LinkTab
+        data-testid="nav-tabpanel-contributors"
         label={t('heading.contributors')}
-        {...a11yProps('contributors')}
         error={hasTouchedError(
           errors,
           touched,
@@ -124,8 +115,8 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
         )}
       />
       <LinkTab
+        data-testid="nav-tabpanel-files-and-license"
         label={t('heading.files_and_license')}
-        {...a11yProps('files-and-license')}
         error={hasTouchedError(errors, touched, getAllFileFields(valuesRef.current.fileSet.files))}
       />
     </StyledTabs>

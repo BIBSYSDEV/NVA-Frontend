@@ -34,7 +34,6 @@ const AuthorityModal = ({ closeModal, handleNextClick, user }: AuthorityModalPro
     <>
       <Modal
         dataTestId="connect-author-modal"
-        aria-labelledby="connect-author-modal"
         open={true}
         onClose={handleCloseModal}
         headingText={user.authority ? t('authority.connected_authority') : t('authority.connect_authority')}

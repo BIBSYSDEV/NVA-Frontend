@@ -66,7 +66,6 @@ export const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: C
                 <TextField
                   {...field}
                   id={field.name}
-                  aria-label="first name"
                   fullWidth
                   label={t('first_name')}
                   required
@@ -82,7 +81,6 @@ export const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: C
                 <TextField
                   {...field}
                   id={field.name}
-                  aria-label="last name"
                   fullWidth
                   label={t('last_name')}
                   required
