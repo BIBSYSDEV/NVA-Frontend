@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Avatar, Backdrop, Dialog, Fade, DialogTitle, DialogProps, Typography, AvatarProps } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
@@ -65,7 +65,7 @@ interface ModalProps extends Partial<DialogProps> {
   onClose?: () => void;
 }
 
-const Modal: FC<ModalProps> = ({
+const Modal = ({
   children,
   dataTestId,
   headingIcon,
@@ -74,7 +74,7 @@ const Modal: FC<ModalProps> = ({
   onClose,
   open,
   ...props
-}) => {
+}: ModalProps) => {
   const handleClose = () => {
     onClose && onClose();
   };
@@ -89,18 +89,19 @@ const Modal: FC<ModalProps> = ({
       onClose={handleClose}
       BackdropProps={{
         timeout: 500,
-      }}>
+      }}
+      PaperProps={{ 'aria-labelledby': 'titleId' }}>
       <StyledHeaderContainer>
         <StyledDialogTitle disableTypography>
           {headingIcon ? (
             <StyledInfoContainer>
               {headingIcon && <StyledAvatar src={headingIcon.src} alt={headingIcon.alt} />}
-              <StyledHeading variant="h3" data-testid={headingDataTestId}>
+              <StyledHeading id="titleId" variant="h3" data-testid={headingDataTestId}>
                 {headingText}
               </StyledHeading>
             </StyledInfoContainer>
           ) : (
-            <StyledHeading variant="h3" data-testid={headingDataTestId}>
+            <StyledHeading id="titleId" variant="h3" data-testid={headingDataTestId}>
               {headingText}
             </StyledHeading>
           )}
