@@ -65,7 +65,7 @@ export const ProjectsField = () => {
                 <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
               </Typography>
               <Typography variant="body2" color="textSecondary">
-                {option.coordinatingInstitution && getAffiliationLabel(option.coordinatingInstitution.name)}
+                {getAffiliationLabel(option.coordinatingInstitution.name)}
               </Typography>
             </StyledFlexColumn>
           )}

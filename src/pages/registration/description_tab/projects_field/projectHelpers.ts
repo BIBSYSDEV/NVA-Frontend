@@ -12,7 +12,12 @@ export const convertToResearchProject = (project: CristinProject): ResearchProje
 export const convertToCristinProject = (project: ResearchProject): CristinProject => ({
   type: 'Project',
   id: project.id,
-  language: '',
   title: project.name,
+  alternativeTitles: [],
+  identifier: [],
+  language: '',
   contributors: [],
+  startDate: '',
+  endDate: '',
+  coordinatingInstitution: { id: '', type: 'Organization', name: {} },
 });

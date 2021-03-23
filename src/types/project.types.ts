@@ -38,7 +38,7 @@ interface CoordinatingInstitution {
 }
 
 interface ProjectContributor {
-  type?: ProjectContributorType;
+  type: ProjectContributorType;
   identity: {
     id: string;
     type: PersonType;
@@ -55,13 +55,13 @@ interface ProjectContributor {
 export interface CristinProject {
   id: string;
   type: ProjectType;
-  identifier?: ProjectIdentifier[];
+  identifier: ProjectIdentifier[];
   title: string;
+  alternativeTitles: LanguageString[];
   language: string;
-  alternativeTitles?: LanguageString[];
-  startDate?: string;
-  endDate?: string;
-  coordinatingInstitution?: CoordinatingInstitution;
+  startDate: string;
+  endDate: string;
+  coordinatingInstitution: CoordinatingInstitution;
   contributors: ProjectContributor[];
 }
 

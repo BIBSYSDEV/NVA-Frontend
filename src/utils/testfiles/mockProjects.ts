@@ -1,44 +1,76 @@
 import { CristinProject, ProjectSearchResponse } from '../../types/project.types';
 
 export const mockProject: CristinProject = {
-  id: 'https://api.dev.nva.unit.no/project/406277',
+  id: 'https://api.dev.nva.aws.unit.no/project/404031',
   type: 'Project',
   identifier: [
     {
       type: 'CristinIdentifier',
-      value: '406277',
+      value: '404031',
     },
   ],
-  title: 'Tre fremstående vikingtidsdamer med britiske forbindelser',
+  title: 'Natur og identitet - internasjonal forskerkonferanse',
   language: 'https://lexvo.org/id/iso639-3/nno',
   alternativeTitles: [
     {
-      en: 'Three outstanding Viking Ladies with British connnections',
+      en: 'Nature and Identity - international research symposium',
     },
   ],
-  startDate: '2010-01-02T00:00:00Z',
-  endDate: '2011-02-28T00:00:00Z',
+  startDate: '2001-01-01T00:00:00Z',
+  endDate: '2001-12-31T00:00:00Z',
   coordinatingInstitution: {
-    id: 'https://api.cristin.no/v2/institutions/217',
+    id: 'https://api.cristin.no/v2/institutions/186',
     type: 'Organization',
     name: {
-      nb: 'Universitetet i Stavanger',
+      nb: 'UiT Norges arktiske universitet',
     },
   },
   contributors: [
     {
       type: 'ProjectManager',
       identity: {
-        id: 'https://api.cristin.no/v2/persons/334199',
+        id: 'https://api.cristin.no/v2/persons/328549',
         type: 'Person',
-        firstName: 'Helge',
-        lastName: 'Sørheim',
+        firstName: 'Kirsti Pedersen',
+        lastName: 'Gurholt',
       },
       affiliation: {
-        id: 'https://api.cristin.no/v2/institutions/217',
+        id: 'https://api.cristin.no/v2/institutions/186',
         type: 'Organization',
         name: {
-          nb: 'Universitetet i Stavanger',
+          nb: 'UiT Norges arktiske universitet',
+        },
+      },
+    },
+    {
+      type: 'ProjectParticipant',
+      identity: {
+        id: 'https://api.cristin.no/v2/persons/53368',
+        type: 'Person',
+        firstName: 'arvid',
+        lastName: 'viken',
+      },
+      affiliation: {
+        id: 'https://api.cristin.no/v2/institutions/186',
+        type: 'Organization',
+        name: {
+          nb: 'UiT Norges arktiske universitet',
+        },
+      },
+    },
+    {
+      type: 'ProjectParticipant',
+      identity: {
+        id: 'https://api.cristin.no/v2/persons/325305',
+        type: 'Person',
+        firstName: 'Stein Roar',
+        lastName: 'Mathisen',
+      },
+      affiliation: {
+        id: 'https://api.cristin.no/v2/institutions/186',
+        type: 'Organization',
+        name: {
+          nb: 'UiT Norges arktiske universitet',
         },
       },
     },
@@ -48,23 +80,23 @@ export const mockProject: CristinProject = {
 const mockProjects: CristinProject[] = [
   mockProject,
   {
-    id: 'https://api.dev.nva.unit.no/project/414252',
+    id: 'https://api.dev.nva.aws.unit.no/project/414343',
     type: 'Project',
     identifier: [
       {
         type: 'CristinIdentifier',
-        value: '414252',
+        value: '414343',
       },
     ],
-    title: 'Norrøne tekster og vikingtidshistorie',
+    title: 'Ornitologisk kartlegging i og ved Semsøyene naturreservat',
     language: 'https://lexvo.org/id/iso639-3/nno',
     alternativeTitles: [
       {
-        en: 'Old Norse Texts and Viking History',
+        en: 'Ornithological taxonomy at Semsøyene Islands Nature Preserve',
       },
     ],
-    startDate: '1995-03-01T00:00:00Z',
-    endDate: '2005-12-31T00:00:00Z',
+    startDate: '1998-11-01T00:00:00Z',
+    endDate: '2001-06-30T00:00:00Z',
     coordinatingInstitution: {
       id: 'https://api.cristin.no/v2/institutions/222',
       type: 'Organization',
@@ -76,10 +108,10 @@ const mockProjects: CristinProject[] = [
       {
         type: 'ProjectManager',
         identity: {
-          id: 'https://api.cristin.no/v2/persons/446719',
+          id: 'https://api.cristin.no/v2/persons/319749',
           type: 'Person',
-          firstName: 'Claus',
-          lastName: 'Krag',
+          firstName: 'Per Arne',
+          lastName: 'Åsheim',
         },
         affiliation: {
           id: 'https://api.cristin.no/v2/institutions/222',
@@ -92,23 +124,23 @@ const mockProjects: CristinProject[] = [
     ],
   },
   {
-    id: 'https://api.dev.nva.unit.no/project/414747',
+    id: 'https://api.dev.nva.aws.unit.no/project/414392',
     type: 'Project',
     identifier: [
       {
         type: 'CristinIdentifier',
-        value: '414747',
+        value: '414392',
       },
     ],
-    title: 'Fra vikinger til Kaptein Scott: heltedyrkelsen i Women in love',
+    title: 'Naturbasert avløpsteknologi',
     language: 'https://lexvo.org/id/iso639-3/nno',
     alternativeTitles: [
       {
-        en: 'From Vikings to Captain Scott: representing the heroic in Women in love',
+        en: 'Natural Treatment Systems',
       },
     ],
-    startDate: '2004-01-01T00:00:00Z',
-    endDate: '2005-07-31T00:00:00Z',
+    startDate: '1995-01-01T00:00:00Z',
+    endDate: '2002-12-31T00:00:00Z',
     coordinatingInstitution: {
       id: 'https://api.cristin.no/v2/institutions/222',
       type: 'Organization',
@@ -120,10 +152,10 @@ const mockProjects: CristinProject[] = [
       {
         type: 'ProjectManager',
         identity: {
-          id: 'https://api.cristin.no/v2/persons/319502',
+          id: 'https://api.cristin.no/v2/persons/27546',
           type: 'Person',
-          firstName: 'Peter',
-          lastName: 'Fjågesund',
+          firstName: 'Anonym',
+          lastName: 'Person',
         },
         affiliation: {
           id: 'https://api.cristin.no/v2/institutions/222',
@@ -136,266 +168,120 @@ const mockProjects: CristinProject[] = [
     ],
   },
   {
-    id: 'https://api.dev.nva.unit.no/project/426906',
+    id: 'https://api.dev.nva.aws.unit.no/project/414451',
     type: 'Project',
     identifier: [
       {
         type: 'CristinIdentifier',
-        value: '426906',
+        value: '414451',
       },
     ],
-    title: 'VikingGull - 11201346',
+    title: 'Tørking og duggpunktbestemmelse av naturgass',
     language: 'https://lexvo.org/id/iso639-3/nno',
-    startDate: '2013-08-01T00:00:00Z',
-    endDate: '2015-07-31T00:00:00Z',
+    alternativeTitles: [
+      {
+        en: 'Natural Gas dehydration and Dewpointing',
+      },
+    ],
+    startDate: '1999-03-01T00:00:00Z',
+    endDate: '2002-02-28T00:00:00Z',
     coordinatingInstitution: {
-      id: 'https://api.cristin.no/v2/institutions/215',
+      id: 'https://api.cristin.no/v2/institutions/222',
       type: 'Organization',
       name: {
-        nb: 'OsloMet - storbyuniversitetet',
+        nb: 'Universitetet i Sørøst-Norge',
       },
     },
     contributors: [
       {
         type: 'ProjectManager',
         identity: {
-          id: 'https://api.cristin.no/v2/persons/403581',
+          id: 'https://api.cristin.no/v2/persons/43310',
           type: 'Person',
-          firstName: 'Ingun Grimstad',
-          lastName: 'Klepp',
+          firstName: 'May-Britt',
+          lastName: 'Hägg',
         },
         affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/215',
+          id: 'https://api.cristin.no/v2/institutions/222',
           type: 'Organization',
           name: {
-            nb: 'OsloMet - storbyuniversitetet',
+            nb: 'Universitetet i Sørøst-Norge',
           },
         },
       },
       {
         type: 'ProjectParticipant',
         identity: {
-          id: 'https://api.cristin.no/v2/persons/509906',
+          id: 'https://api.cristin.no/v2/persons/26002',
           type: 'Person',
-          firstName: 'Gisle Marini',
-          lastName: 'Mardal',
+          firstName: 'Lars Erik',
+          lastName: 'Øi',
         },
         affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/0',
+          id: 'https://api.cristin.no/v2/institutions/222',
           type: 'Organization',
           name: {
-            nb: 'Ukjent institusjon',
+            nb: 'Universitetet i Sørøst-Norge',
           },
         },
       },
       {
         type: 'ProjectParticipant',
         identity: {
-          id: 'https://api.cristin.no/v2/persons/530000',
+          id: 'https://api.cristin.no/v2/persons/26022',
           type: 'Person',
-          firstName: 'Tone Skårdal',
-          lastName: 'Tobiasson',
+          firstName: 'Bernt',
+          lastName: 'Lie',
         },
         affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/0',
+          id: 'https://api.cristin.no/v2/institutions/222',
           type: 'Organization',
           name: {
-            nb: 'Ukjent institusjon',
-          },
-        },
-      },
-      {
-        type: 'ProjectParticipant',
-        identity: {
-          id: 'https://api.cristin.no/v2/persons/20500',
-          type: 'Person',
-          firstName: 'Marianne',
-          lastName: 'Vedeler',
-        },
-        affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/0',
-          type: 'Organization',
-          name: {
-            nb: 'Ukjent institusjon',
+            nb: 'Universitetet i Sørøst-Norge',
           },
         },
       },
     ],
   },
   {
-    id: 'https://api.dev.nva.unit.no/project/685661',
+    id: 'https://api.dev.nva.aws.unit.no/project/414803',
     type: 'Project',
     identifier: [
       {
         type: 'CristinIdentifier',
-        value: '685661',
+        value: '414803',
       },
     ],
-    title: 'VIKINGS: Volcanic Eruptions and their Impacts on Climate, Environment, and Viking Society in 500-1250 CE',
+    title: 'Antikkens syn på mennesket og naturen',
     language: 'https://lexvo.org/id/iso639-3/nno',
-    startDate: '2018-07-01T00:00:00Z',
-    endDate: '2023-06-30T00:00:00Z',
+    alternativeTitles: [
+      {
+        en: 'The View of Man and Nature in Greek Culture',
+      },
+    ],
+    startDate: '1995-01-01T00:00:00Z',
+    endDate: '1998-12-31T00:00:00Z',
     coordinatingInstitution: {
-      id: 'https://api.cristin.no/v2/institutions/185',
+      id: 'https://api.cristin.no/v2/institutions/222',
       type: 'Organization',
       name: {
-        nb: 'Universitetet i Oslo',
+        nb: 'Universitetet i Sørøst-Norge',
       },
     },
     contributors: [
       {
-        identity: {
-          id: 'https://api.cristin.no/v2/persons/592204',
-          type: 'Person',
-          firstName: 'Kirstin',
-          lastName: 'Krüger',
-        },
-        affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/185',
-          type: 'Organization',
-          name: {
-            nb: 'Universitetet i Oslo',
-          },
-        },
-      },
-      {
         type: 'ProjectManager',
         identity: {
-          id: 'https://api.cristin.no/v2/persons/592204',
+          id: 'https://api.cristin.no/v2/persons/319632',
           type: 'Person',
-          firstName: 'Kirstin',
-          lastName: 'Krüger',
+          firstName: 'Ole Martin',
+          lastName: 'Høystad',
         },
         affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/185',
+          id: 'https://api.cristin.no/v2/institutions/222',
           type: 'Organization',
           name: {
-            nb: 'Universitetet i Oslo',
-          },
-        },
-      },
-      {
-        identity: {
-          id: 'https://api.cristin.no/v2/persons/8748',
-          type: 'Person',
-          firstName: 'Frode',
-          lastName: 'Iversen',
-        },
-        affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/185',
-          type: 'Organization',
-          name: {
-            nb: 'Universitetet i Oslo',
-          },
-        },
-      },
-      {
-        type: 'ProjectParticipant',
-        identity: {
-          id: 'https://api.cristin.no/v2/persons/8748',
-          type: 'Person',
-          firstName: 'Frode',
-          lastName: 'Iversen',
-        },
-        affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/185',
-          type: 'Organization',
-          name: {
-            nb: 'Universitetet i Oslo',
-          },
-        },
-      },
-      {
-        identity: {
-          id: 'https://api.cristin.no/v2/persons/825267',
-          type: 'Person',
-          firstName: 'Anne Hope',
-          lastName: 'Jahren',
-        },
-        affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/185',
-          type: 'Organization',
-          name: {
-            nb: 'Universitetet i Oslo',
-          },
-        },
-      },
-      {
-        type: 'ProjectParticipant',
-        identity: {
-          id: 'https://api.cristin.no/v2/persons/825267',
-          type: 'Person',
-          firstName: 'Anne Hope',
-          lastName: 'Jahren',
-        },
-        affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/185',
-          type: 'Organization',
-          name: {
-            nb: 'Universitetet i Oslo',
-          },
-        },
-      },
-      {
-        identity: {
-          id: 'https://api.cristin.no/v2/persons/23391',
-          type: 'Person',
-          firstName: 'Henrik',
-          lastName: 'Svensen',
-        },
-        affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/185',
-          type: 'Organization',
-          name: {
-            nb: 'Universitetet i Oslo',
-          },
-        },
-      },
-      {
-        type: 'ProjectParticipant',
-        identity: {
-          id: 'https://api.cristin.no/v2/persons/23391',
-          type: 'Person',
-          firstName: 'Henrik',
-          lastName: 'Svensen',
-        },
-        affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/185',
-          type: 'Organization',
-          name: {
-            nb: 'Universitetet i Oslo',
-          },
-        },
-      },
-      {
-        type: 'ProjectParticipant',
-        identity: {
-          id: 'https://api.cristin.no/v2/persons/50501',
-          type: 'Person',
-          firstName: 'Jostein',
-          lastName: 'Bakke',
-        },
-        affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/184',
-          type: 'Organization',
-          name: {
-            nb: 'Universitetet i Bergen',
-          },
-        },
-      },
-      {
-        type: 'ProjectParticipant',
-        identity: {
-          id: 'https://api.cristin.no/v2/persons/50501',
-          type: 'Person',
-          firstName: 'Jostein',
-          lastName: 'Bakke',
-        },
-        affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/184',
-          type: 'Organization',
-          name: {
-            nb: 'Universitetet i Bergen',
+            nb: 'Universitetet i Sørøst-Norge',
           },
         },
       },
@@ -404,10 +290,10 @@ const mockProjects: CristinProject[] = [
 ];
 
 export const mockProjectSearch: ProjectSearchResponse = {
-  id: 'https://api.ENVIRONMENT.nva.aws.unit.no/project/search?QUERY_PARAMS',
+  id: 'https://api.dev.nva.aws.unit.no/project/search?QUERY_PARAMS',
   size: 0,
-  searchString: 'title=viking',
-  processingTime: 816,
+  searchString: 'title=natu',
+  processingTime: 5828,
   firstRecord: 0,
   hits: mockProjects,
 };

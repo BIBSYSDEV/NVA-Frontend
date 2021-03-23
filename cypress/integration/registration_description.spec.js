@@ -13,7 +13,7 @@ describe('Registration: Description', () => {
 
     cy.startRegistrationWithDoi();
 
-    cy.get('[data-testid=project-search-input]').click({ force: true }).type(mockProject.title.substring(0, 5));
+    cy.get('[data-testid=project-search-input]').click({ force: true }).type(mockProject.title.substring(0, 4));
     cy.get(`[data-testid="project-option-${mockProject.id}"]`).click({ force: true });
     cy.get(`[data-testid="project-chip-${mockProject.id}"]`).should('exist');
 
