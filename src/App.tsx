@@ -7,9 +7,9 @@ import styled from 'styled-components';
 import { addQualifierIdForAuthority, AuthorityQualifiers, getAuthority } from './api/authorityApi';
 import { getInstitutionUser } from './api/roleApi';
 import { getCurrentUserAttributes } from './api/userApi';
-import AppRoutes from './AppRoutes';
-import Footer from './layout/Footer';
-import Header from './layout/header/Header';
+import { AppRoutes } from './AppRoutes';
+import { Footer } from './layout/Footer';
+import { Header } from './layout/header/Header';
 import Notifier from './layout/Notifier';
 import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
 import { setNotification } from './redux/actions/notificationActions';
@@ -30,7 +30,7 @@ const StyledApp = styled.div`
   flex-direction: column;
 `;
 
-const StyledContent = styled.div`
+const StyledMainContent = styled.main`
   display: flex;
   flex-direction: column;
   align-self: center;
@@ -141,9 +141,9 @@ const App = () => {
       <StyledApp>
         <Notifier />
         <Header />
-        <StyledContent>
+        <StyledMainContent>
           <AppRoutes />
-        </StyledContent>
+        </StyledMainContent>
         <Footer />
       </StyledApp>
       {user && !isLoadingMatchingAuthorities && (user.authority || user.possibleAuthorities) && (

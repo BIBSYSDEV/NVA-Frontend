@@ -30,6 +30,7 @@ export const ProjectsField = () => {
       {({ field, form: { setFieldValue } }: FieldProps<ResearchProject[]>) => (
         <Autocomplete
           {...autocompleteTranslationProps}
+          id={field.name}
           options={projects}
           getOptionLabel={(option) => option.title}
           onInputChange={(_, newInputValue, reason) => {

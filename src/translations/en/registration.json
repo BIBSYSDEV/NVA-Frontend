@@ -114,8 +114,6 @@
       "published_in": "Published in",
       "search_for_anthology": "Search for the anthology where the chapter is published"
     },
-    "delete_doi_title": "Change type?",
-    "delete_doi_text": "Removing the link to the publication will change it from a registration to a new publication. Do you want to continue?",
     "is_book_a_textbook": "Is the book a textbook?",
     "is_book_a_textbook_confirm": "Yes, the book is a textbook",
     "is_peer_reviewed": "The registration is peer reviewed",
@@ -141,6 +139,8 @@
     "peer_review": "Is the publication peer reviewed?",
     "peer_reviewed": "Peer reviewed",
     "remove": "Remove",
+    "remove_doi": "Remove DOI",
+    "remove_doi_text": "You can remove the DOI that was used when starting registration.\nDo you wish to remove connection to the original DOI?",
     "search_for_journal": "Search for journals",
     "search_for_original_article": "Search for original article",
     "search_for_publisher": "Search for publisher",
