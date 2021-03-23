@@ -21,6 +21,7 @@ const TotalPagesField = () => {
     <Field name={ResourceFieldNames.PAGES_PAGES}>
       {({ field, meta: { touched, error } }: FieldProps) => (
         <StyledTextField
+          id={field.name}
           inputProps={{ 'data-testid': 'pages-input' }}
           variant="filled"
           label={t('resource_type.number_of_pages')}
