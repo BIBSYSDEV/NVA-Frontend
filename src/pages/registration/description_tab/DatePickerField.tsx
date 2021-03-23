@@ -17,7 +17,7 @@ const StyledFormControlLabel = styled(FormControlLabel)`
   height: 100%; /* Ensure this element is as high as the DatePicker for centering */
 `;
 
-const DatePickerField = () => {
+export const DatePickerField = () => {
   const { t, i18n } = useTranslation('registration');
   const { setFieldValue, values, errors, touched, setFieldTouched } = useFormikContext<Registration>();
   const { year, month, day } = values.entityDescription.date;
@@ -66,7 +66,14 @@ const DatePickerField = () => {
     <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
       <MuiThemeProvider theme={lightTheme}>
         <KeyboardDatePicker
+          id="date-picker"
           {...datePickerTranslationProps}
+          DialogProps={{ 'aria-labelledby': 'date-picker-label', 'aria-label': t('description.date_published') }}
+          KeyboardButtonProps={{
+            'aria-labelledby': 'date-picker-label',
+          }}
+          leftArrowButtonProps={{ 'aria-label': t('common:previous') }}
+          rightArrowButtonProps={{ 'aria-label': t('common:next') }}
           data-testid="date-published-field"
           inputVariant="filled"
           label={t('description.date_published')}
@@ -90,5 +97,3 @@ const DatePickerField = () => {
     </MuiPickersUtilsProvider>
   );
 };
-
-export default DatePickerField;

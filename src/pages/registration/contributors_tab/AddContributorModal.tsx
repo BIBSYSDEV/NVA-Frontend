@@ -6,8 +6,8 @@ import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
 import { ContributorRole } from '../../../types/contributor.types';
 import { getAddContributorText } from '../../../utils/validation/registration/contributorTranslations';
-import AddContributorModalContent from './components/AddContributorModalContent';
-import CreateContributorModalContent from './components/CreateContributorModalContent';
+import { AddContributorModalContent } from './components/AddContributorModalContent';
+import { CreateContributorModalContent } from './components/CreateContributorModalContent';
 
 interface AddContributorModalProps {
   onAuthorSelected: (author: Authority) => void;
