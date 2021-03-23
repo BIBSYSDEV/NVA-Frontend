@@ -41,6 +41,7 @@ export const DoiField = () => {
   return doi || referenceDoi ? (
     <StyledDoiRow>
       <TextField
+        id="doi-field"
         data-testid="doi-field"
         variant="filled"
         fullWidth

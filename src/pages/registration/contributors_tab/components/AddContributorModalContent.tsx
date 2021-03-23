@@ -61,7 +61,7 @@ interface AddContributorModalContentProps {
   initialSearchTerm?: string;
 }
 
-const AddContributorModalContent = ({
+export const AddContributorModalContent = ({
   addAuthor,
   addSelfAsAuthor,
   handleCloseModal,
@@ -91,6 +91,7 @@ const AddContributorModalContent = ({
         </Typography>
       )}
       <StyledTextField
+        id="search"
         variant="outlined"
         fullWidth
         value={searchTerm}
@@ -142,5 +143,3 @@ const AddContributorModalContent = ({
     </StyledBackgroundDiv>
   );
 };
-
-export default AddContributorModalContent;
