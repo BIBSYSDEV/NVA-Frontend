@@ -15,7 +15,7 @@ enum Operator {
   OR = ' OR ',
 }
 
-const createSearchTermFilter = (searchTerm?: string) => (searchTerm ? `*"${searchTerm}"*` : '');
+const createSearchTermFilter = (searchTerm?: string) => (searchTerm ? `"*${searchTerm}*"` : '');
 
 const createPropertyFilter = (properties?: PropertySearch[], canMatchAnyProperty?: boolean) =>
   properties && properties.length > 0
