@@ -11,58 +11,18 @@ import {
 } from '../types/publicationFieldNames';
 import { Registration } from '../types/registration.types';
 
-interface CustomError {
-  fieldName: string;
-  errorMessage: string;
-}
-
-// Convert all errors from nested object to flat array
-export const flattenFormikErrors = (validationErrors: FormikErrors<unknown>, fieldNamePrefix = ''): CustomError[] => {
-  if (typeof validationErrors === 'object') {
-    return Object.entries(validationErrors)
-      .map(([fieldName, errorMessage]) => {
-        const fieldPath = fieldNamePrefix ? `${fieldNamePrefix}-${fieldName}` : fieldName;
-        if (typeof errorMessage === 'object' && errorMessage !== null) {
-          if (Array.isArray(errorMessage)) {
-            const errorArray = errorMessage as FormikErrors<unknown>[];
-            const isStringErrors = errorArray.some((error) => typeof error === 'string');
-            // Merge errors in array, and ignore their indexes
-            const groupErrors = isStringErrors
-              ? [...new Set(errorArray)].filter((error) => error)[0]
-              : errorArray.reduce((result, current) => ({ ...result, ...current }), {});
-            return flattenFormikErrors(groupErrors, fieldPath);
-          } else {
-            return flattenFormikErrors(errorMessage as FormikErrors<unknown>, fieldPath);
-          }
-        }
-        return {
-          fieldName: fieldPath,
-          errorMessage: errorMessage as string,
-        };
-      })
-      .flat();
-  } else {
-    return [
-      {
-        fieldName: fieldNamePrefix,
-        errorMessage: validationErrors,
-      },
-    ];
-  }
-};
-
-export const hasTouchedError = (
+export const getErrorFieldNames = (
+  fieldNames: string[],
   errors: FormikErrors<unknown>,
-  touched: FormikTouched<unknown>,
-  fieldNames: string[]
-): boolean => {
-  if (!Object.keys(errors).length || !Object.keys(touched).length || !fieldNames.length) {
-    return false;
+  touched?: FormikTouched<unknown> // Touched setting ignored if not included
+) => {
+  if (!Object.keys(errors).length || !fieldNames.length) {
+    return [];
   }
 
-  return fieldNames.some((fieldName) => {
+  return fieldNames.filter((fieldName) => {
     const fieldHasError = !!getIn(errors, fieldName);
-    const fieldIsTouched = !!getIn(touched, fieldName);
+    const fieldIsTouched = touched === undefined || !!getIn(touched, fieldName);
     // Touched data can be inconsistent with array of null or undefined elements when adding elements dynamically
     // to a FieldArray, so ensure it is a boolean value
     return fieldHasError && fieldIsTouched;

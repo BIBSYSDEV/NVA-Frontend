@@ -8,7 +8,7 @@ import LinkTab from '../../components/LinkTab';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { ResourceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 import {
-  hasTouchedError,
+  getErrorFieldNames,
   getAllFileFields,
   getAllContributorFields,
   mergeTouchedFields,
@@ -26,8 +26,8 @@ const StyledTabs = styled(Tabs)`
   }
 `;
 
-const descriptionFieldNames = Object.values(DescriptionFieldNames);
-const resourceFieldNames = Object.values(ResourceFieldNames);
+export const descriptionFieldNames = Object.values(DescriptionFieldNames);
+export const resourceFieldNames = Object.values(ResourceFieldNames);
 
 const noTouchedTab = -1;
 type HighestTouchedTab = RegistrationTab | typeof noTouchedTab;
@@ -97,27 +97,26 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
       <LinkTab
         data-testid="nav-tabpanel-description"
         label={t('heading.description')}
-        error={hasTouchedError(errors, touched, descriptionFieldNames)}
+        error={getErrorFieldNames(descriptionFieldNames, errors, touched).length > 0}
       />
       <LinkTab
         data-testid="nav-tabpanel-resource-type"
         label={t('heading.resource_type')}
-        error={hasTouchedError(errors, touched, resourceFieldNames)}
+        error={getErrorFieldNames(resourceFieldNames, errors, touched).length > 0}
       />
 
       <LinkTab
         data-testid="nav-tabpanel-contributors"
         label={t('heading.contributors')}
-        error={hasTouchedError(
-          errors,
-          touched,
-          getAllContributorFields(valuesRef.current.entityDescription.contributors)
-        )}
+        error={
+          getErrorFieldNames(getAllContributorFields(valuesRef.current.entityDescription.contributors), errors, touched)
+            .length > 0
+        }
       />
       <LinkTab
         data-testid="nav-tabpanel-files-and-license"
         label={t('heading.files_and_license')}
-        error={hasTouchedError(errors, touched, getAllFileFields(valuesRef.current.fileSet.files))}
+        error={getErrorFieldNames(getAllFileFields(valuesRef.current.fileSet.files), errors, touched).length > 0}
       />
     </StyledTabs>
   );

@@ -25,9 +25,9 @@ export const registrationValidationSchema = Yup.object().shape({
       then: Yup.string().required(ErrorMessage.REQUIRED),
     }),
     date: Yup.object().shape({
-      year: Yup.number().required(ErrorMessage.REQUIRED),
-      month: Yup.number().transform(emptyStringToNull).nullable(),
-      day: Yup.number().transform(emptyStringToNull).nullable(),
+      year: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).required(ErrorMessage.REQUIRED),
+      month: Yup.number().transform(emptyStringToNull).typeError(ErrorMessage.INVALID_FORMAT).nullable(),
+      day: Yup.number().transform(emptyStringToNull).typeError(ErrorMessage.INVALID_FORMAT).nullable(),
     }),
     language: Yup.string().url().oneOf(Object.values(LanguageValues)),
     projects: Yup.array().of(Yup.object()), // TODO
