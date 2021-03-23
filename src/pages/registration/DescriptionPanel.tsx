@@ -10,7 +10,7 @@ import { registrationLanguages } from '../../types/language.types';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { DatePickerField } from './description_tab/DatePickerField';
-import { ProjectsField } from './description_tab/projects_field';
+import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 
 const DateAndLanguageWrapper = styled.div`
   display: grid;

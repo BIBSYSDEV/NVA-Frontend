@@ -1,11 +1,9 @@
 export enum BackendTypeNames {
-  APPROVAL = 'Approval',
   CONTRIBUTOR = 'Contributor',
   CUSTOMER = 'Customer',
   ENTITY_DESCRIPTION = 'EntityDescription',
   FILE = 'File',
   FILE_SET = 'FileSet',
-  GRANT = 'Grant',
   IDENTITY = 'Identity',
   INDEX_DATE = 'IndexDate',
   LICENSE = 'License',
@@ -15,7 +13,6 @@ export enum BackendTypeNames {
   PUBLICATION = 'Publication',
   PUBLICATION_DATE = 'PublicationDate',
   REFERENCE = 'Reference',
-  RESEARCH_PROJECT = 'ResearchProject',
 }
 
 export const emptyDate = {
@@ -24,3 +21,7 @@ export const emptyDate = {
   month: '',
   day: '',
 };
+
+export interface LanguageString {
+  [key: string]: string;
+}

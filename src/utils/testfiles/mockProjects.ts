@@ -1,0 +1,299 @@
+import { CristinProject, ProjectSearchResponse } from '../../types/project.types';
+
+export const mockProject: CristinProject = {
+  id: 'https://api.dev.nva.aws.unit.no/project/404031',
+  type: 'Project',
+  identifier: [
+    {
+      type: 'CristinIdentifier',
+      value: '404031',
+    },
+  ],
+  title: 'Natur og identitet - internasjonal forskerkonferanse',
+  language: 'https://lexvo.org/id/iso639-3/nno',
+  alternativeTitles: [
+    {
+      en: 'Nature and Identity - international research symposium',
+    },
+  ],
+  startDate: '2001-01-01T00:00:00Z',
+  endDate: '2001-12-31T00:00:00Z',
+  coordinatingInstitution: {
+    id: 'https://api.cristin.no/v2/institutions/186',
+    type: 'Organization',
+    name: {
+      nb: 'UiT Norges arktiske universitet',
+    },
+  },
+  contributors: [
+    {
+      type: 'ProjectManager',
+      identity: {
+        id: 'https://api.cristin.no/v2/persons/328549',
+        type: 'Person',
+        firstName: 'Kirsti Pedersen',
+        lastName: 'Gurholt',
+      },
+      affiliation: {
+        id: 'https://api.cristin.no/v2/institutions/186',
+        type: 'Organization',
+        name: {
+          nb: 'UiT Norges arktiske universitet',
+        },
+      },
+    },
+    {
+      type: 'ProjectParticipant',
+      identity: {
+        id: 'https://api.cristin.no/v2/persons/53368',
+        type: 'Person',
+        firstName: 'arvid',
+        lastName: 'viken',
+      },
+      affiliation: {
+        id: 'https://api.cristin.no/v2/institutions/186',
+        type: 'Organization',
+        name: {
+          nb: 'UiT Norges arktiske universitet',
+        },
+      },
+    },
+    {
+      type: 'ProjectParticipant',
+      identity: {
+        id: 'https://api.cristin.no/v2/persons/325305',
+        type: 'Person',
+        firstName: 'Stein Roar',
+        lastName: 'Mathisen',
+      },
+      affiliation: {
+        id: 'https://api.cristin.no/v2/institutions/186',
+        type: 'Organization',
+        name: {
+          nb: 'UiT Norges arktiske universitet',
+        },
+      },
+    },
+  ],
+};
+
+const mockProjects: CristinProject[] = [
+  mockProject,
+  {
+    id: 'https://api.dev.nva.aws.unit.no/project/414343',
+    type: 'Project',
+    identifier: [
+      {
+        type: 'CristinIdentifier',
+        value: '414343',
+      },
+    ],
+    title: 'Ornitologisk kartlegging i og ved Semsøyene naturreservat',
+    language: 'https://lexvo.org/id/iso639-3/nno',
+    alternativeTitles: [
+      {
+        en: 'Ornithological taxonomy at Semsøyene Islands Nature Preserve',
+      },
+    ],
+    startDate: '1998-11-01T00:00:00Z',
+    endDate: '2001-06-30T00:00:00Z',
+    coordinatingInstitution: {
+      id: 'https://api.cristin.no/v2/institutions/222',
+      type: 'Organization',
+      name: {
+        nb: 'Universitetet i Sørøst-Norge',
+      },
+    },
+    contributors: [
+      {
+        type: 'ProjectManager',
+        identity: {
+          id: 'https://api.cristin.no/v2/persons/319749',
+          type: 'Person',
+          firstName: 'Per Arne',
+          lastName: 'Åsheim',
+        },
+        affiliation: {
+          id: 'https://api.cristin.no/v2/institutions/222',
+          type: 'Organization',
+          name: {
+            nb: 'Universitetet i Sørøst-Norge',
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'https://api.dev.nva.aws.unit.no/project/414392',
+    type: 'Project',
+    identifier: [
+      {
+        type: 'CristinIdentifier',
+        value: '414392',
+      },
+    ],
+    title: 'Naturbasert avløpsteknologi',
+    language: 'https://lexvo.org/id/iso639-3/nno',
+    alternativeTitles: [
+      {
+        en: 'Natural Treatment Systems',
+      },
+    ],
+    startDate: '1995-01-01T00:00:00Z',
+    endDate: '2002-12-31T00:00:00Z',
+    coordinatingInstitution: {
+      id: 'https://api.cristin.no/v2/institutions/222',
+      type: 'Organization',
+      name: {
+        nb: 'Universitetet i Sørøst-Norge',
+      },
+    },
+    contributors: [
+      {
+        type: 'ProjectManager',
+        identity: {
+          id: 'https://api.cristin.no/v2/persons/27546',
+          type: 'Person',
+          firstName: 'Anonym',
+          lastName: 'Person',
+        },
+        affiliation: {
+          id: 'https://api.cristin.no/v2/institutions/222',
+          type: 'Organization',
+          name: {
+            nb: 'Universitetet i Sørøst-Norge',
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'https://api.dev.nva.aws.unit.no/project/414451',
+    type: 'Project',
+    identifier: [
+      {
+        type: 'CristinIdentifier',
+        value: '414451',
+      },
+    ],
+    title: 'Tørking og duggpunktbestemmelse av naturgass',
+    language: 'https://lexvo.org/id/iso639-3/nno',
+    alternativeTitles: [
+      {
+        en: 'Natural Gas dehydration and Dewpointing',
+      },
+    ],
+    startDate: '1999-03-01T00:00:00Z',
+    endDate: '2002-02-28T00:00:00Z',
+    coordinatingInstitution: {
+      id: 'https://api.cristin.no/v2/institutions/222',
+      type: 'Organization',
+      name: {
+        nb: 'Universitetet i Sørøst-Norge',
+      },
+    },
+    contributors: [
+      {
+        type: 'ProjectManager',
+        identity: {
+          id: 'https://api.cristin.no/v2/persons/43310',
+          type: 'Person',
+          firstName: 'May-Britt',
+          lastName: 'Hägg',
+        },
+        affiliation: {
+          id: 'https://api.cristin.no/v2/institutions/222',
+          type: 'Organization',
+          name: {
+            nb: 'Universitetet i Sørøst-Norge',
+          },
+        },
+      },
+      {
+        type: 'ProjectParticipant',
+        identity: {
+          id: 'https://api.cristin.no/v2/persons/26002',
+          type: 'Person',
+          firstName: 'Lars Erik',
+          lastName: 'Øi',
+        },
+        affiliation: {
+          id: 'https://api.cristin.no/v2/institutions/222',
+          type: 'Organization',
+          name: {
+            nb: 'Universitetet i Sørøst-Norge',
+          },
+        },
+      },
+      {
+        type: 'ProjectParticipant',
+        identity: {
+          id: 'https://api.cristin.no/v2/persons/26022',
+          type: 'Person',
+          firstName: 'Bernt',
+          lastName: 'Lie',
+        },
+        affiliation: {
+          id: 'https://api.cristin.no/v2/institutions/222',
+          type: 'Organization',
+          name: {
+            nb: 'Universitetet i Sørøst-Norge',
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'https://api.dev.nva.aws.unit.no/project/414803',
+    type: 'Project',
+    identifier: [
+      {
+        type: 'CristinIdentifier',
+        value: '414803',
+      },
+    ],
+    title: 'Antikkens syn på mennesket og naturen',
+    language: 'https://lexvo.org/id/iso639-3/nno',
+    alternativeTitles: [
+      {
+        en: 'The View of Man and Nature in Greek Culture',
+      },
+    ],
+    startDate: '1995-01-01T00:00:00Z',
+    endDate: '1998-12-31T00:00:00Z',
+    coordinatingInstitution: {
+      id: 'https://api.cristin.no/v2/institutions/222',
+      type: 'Organization',
+      name: {
+        nb: 'Universitetet i Sørøst-Norge',
+      },
+    },
+    contributors: [
+      {
+        type: 'ProjectManager',
+        identity: {
+          id: 'https://api.cristin.no/v2/persons/319632',
+          type: 'Person',
+          firstName: 'Ole Martin',
+          lastName: 'Høystad',
+        },
+        affiliation: {
+          id: 'https://api.cristin.no/v2/institutions/222',
+          type: 'Organization',
+          name: {
+            nb: 'Universitetet i Sørøst-Norge',
+          },
+        },
+      },
+    ],
+  },
+];
+
+export const mockProjectSearch: ProjectSearchResponse = {
+  id: 'https://api.dev.nva.aws.unit.no/project/search?QUERY_PARAMS',
+  size: 0,
+  searchString: 'title=natu',
+  processingTime: 5828,
+  firstRecord: 0,
+  hits: mockProjects,
+};
