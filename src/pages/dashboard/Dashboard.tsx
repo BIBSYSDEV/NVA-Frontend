@@ -176,11 +176,8 @@ const Dashboard = () => {
           as={Link}
           to={user ? UrlPathTemplate.NewRegistration : UrlPathTemplate.Login}
           onClick={() => {
-            if (user) {
-              history.push(UrlPathTemplate.NewRegistration);
-            } else {
+            if (!user) {
               localStorage.setItem(LOGIN_REDIRECT_PATH_KEY, UrlPathTemplate.NewRegistration);
-              handleLogin();
             }
           }}>
           <StyledLinkContent>
