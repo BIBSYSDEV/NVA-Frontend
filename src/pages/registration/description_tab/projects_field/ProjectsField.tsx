@@ -84,5 +84,3 @@ export const ProjectsField = () => {
     </Field>
   );
 };
-
-export default ProjectsField;
