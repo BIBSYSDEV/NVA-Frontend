@@ -171,21 +171,26 @@ export const ContributorCard = ({
         <StyledRightAlignedWrapper>
           <StyledArrowSection>
             {contributor.sequence < numberOfContributorsWithSameRole && (
-              <StyledArrowButton
-                color="secondary"
-                onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}>
-                <ArrowDownwardIcon />
-              </StyledArrowButton>
+              <Tooltip title={t<string>('contributors.move_down')}>
+                <StyledArrowButton
+                  color="secondary"
+                  onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}>
+                  <ArrowDownwardIcon />
+                </StyledArrowButton>
+              </Tooltip>
             )}
             {contributor.sequence !== 1 && (
-              <StyledArrowButton
-                color="secondary"
-                onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}>
-                <ArrowUpwardIcon />
-              </StyledArrowButton>
+              <Tooltip title={t<string>('contributors.move_up')}>
+                <StyledArrowButton
+                  color="secondary"
+                  onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}>
+                  <ArrowUpwardIcon />
+                </StyledArrowButton>
+              </Tooltip>
             )}
           </StyledArrowSection>
           <StyledSequenceTextField
+            id={`sequence-${contributor.sequence}`}
             value={sequenceValue}
             onChange={(event) => setSequenceValue(event.target.value)}
             variant="filled"

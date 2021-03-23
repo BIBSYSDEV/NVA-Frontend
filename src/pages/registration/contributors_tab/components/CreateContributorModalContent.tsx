@@ -24,7 +24,7 @@ interface CreateContributorModalContentProps {
   handleCloseModal: () => void;
 }
 
-const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: CreateContributorModalContentProps) => {
+export const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: CreateContributorModalContentProps) => {
   const [readMore, setReadMore] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation('common');
@@ -65,6 +65,7 @@ const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: CreateCo
               {({ field, meta: { error, touched } }: FieldProps) => (
                 <TextField
                   {...field}
+                  id={field.name}
                   fullWidth
                   label={t('first_name')}
                   required
@@ -79,6 +80,7 @@ const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: CreateCo
               {({ field, meta: { error, touched } }: FieldProps) => (
                 <TextField
                   {...field}
+                  id={field.name}
                   fullWidth
                   label={t('last_name')}
                   required
@@ -107,5 +109,3 @@ const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: CreateCo
     </StyledBackgroundDiv>
   );
 };
-
-export default CreateContributorModalContent;
