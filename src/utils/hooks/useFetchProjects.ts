@@ -23,7 +23,7 @@ export const useFetchProjects = (searchTerm = ''): [CristinProject[], boolean] =
         if (fetchedProjects.error) {
           dispatch(setNotification(t('error.get_project'), NotificationVariant.Error));
         } else if (fetchedProjects.data) {
-          setProjects(fetchedProjects.data.hits);
+          setProjects(fetchedProjects.data.hits ?? []);
         }
       }
     };

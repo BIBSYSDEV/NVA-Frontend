@@ -71,5 +71,5 @@ export interface ProjectSearchResponse {
   searchString: string;
   processingTime: number;
   firstRecord: number;
-  hits: CristinProject[];
+  hits?: CristinProject[];
 }
