@@ -31,6 +31,7 @@ export const ProjectsField = () => {
         <Autocomplete
           {...autocompleteTranslationProps}
           id={field.name}
+          aria-labelledby={`${field.name}-label`}
           options={projects}
           getOptionLabel={(option) => option.title}
           onInputChange={(_, newInputValue, reason) => {

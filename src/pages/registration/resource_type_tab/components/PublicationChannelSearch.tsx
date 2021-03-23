@@ -38,6 +38,8 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
     <MuiThemeProvider theme={lightTheme}>
       <Autocomplete
         {...autocompleteTranslationProps}
+        id={dataTestId}
+        aria-labelledby={`${dataTestId}-label`}
         popupIcon={null}
         options={publishers}
         onBlur={() => setFieldTouched(errorFieldName)}

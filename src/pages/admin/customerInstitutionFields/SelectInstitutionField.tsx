@@ -15,6 +15,7 @@ export const SelectInstitutionField = ({ disabled = false }: SelectInstitutionFi
     <Field name={CustomerInstitutionFieldNames.NAME}>
       {({ field: { name }, form: { values, setValues }, meta: { touched, error } }: FieldProps<string>) => (
         <InstitutionAutocomplete
+          id={name}
           disabled={disabled}
           required
           error={touched && !!error}

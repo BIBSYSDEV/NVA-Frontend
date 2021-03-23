@@ -18,6 +18,8 @@ const IsbnListField = () => {
     <Field name={ResourceFieldNames.ISBN_LIST}>
       {({ field, form: { setFieldValue, setFieldTouched }, meta: { error } }: FieldProps) => (
         <Autocomplete
+          id={field.name}
+          aria-labelledby={`${field.name}-label`}
           freeSolo
           autoSelect
           multiple

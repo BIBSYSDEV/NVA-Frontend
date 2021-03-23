@@ -83,6 +83,7 @@ const DescriptionPanel = () => {
             <Autocomplete
               {...field}
               id={field.name}
+              aria-labelledby={`${field.name}-label`}
               freeSolo
               multiple
               options={[]}
