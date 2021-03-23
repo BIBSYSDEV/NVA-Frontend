@@ -29,6 +29,7 @@ import Forbidden from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
 import { RegistrationFormContent } from './RegistrationFormContent';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
+import { ErrorSummary } from './ErrorSummary';
 
 const StyledRegistration = styled.div`
   width: 100%;
@@ -110,6 +111,7 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
               {values.entityDescription.mainTitle || `[${t('common:missing_title')}]`}
             </StyledRegistrationPageHeader>
             <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
+            <ErrorSummary />
             <RegistrationFormContent tabNumber={tabNumber} uppy={uppy} />
             <RegistrationFormActions
               tabNumber={tabNumber}

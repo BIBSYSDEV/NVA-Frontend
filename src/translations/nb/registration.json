@@ -87,8 +87,7 @@
     "description": "Beskrivelse",
     "files_and_license": "Filer og lisens",
     "publish_settings": "Publiseringsvalg",
-    "resource_type": "Ressurstype",
-    "validation_errors": "Valideringsfeil"
+    "resource_type": "Ressurstype"
   },
   "new_registration": "Ny registrering",
   "public_page": {

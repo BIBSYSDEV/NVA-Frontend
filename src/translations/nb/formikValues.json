@@ -2,6 +2,7 @@
   "entityDescription-contributors": "$t(registration:contributors.authors)",
   "entityDescription-date-year": "$t(registration:description.date_published)",
   "entityDescription-mainTitle": "$t(common:title)",
+  "entityDescription-npiSubjectHeading": "$t(registration:description.npi_disciplines)",
   "entityDescription-reference-publicationContext-isbnList": "$t(registration:resource_type.isbn)",
   "entityDescription-reference-publicationContext-publisher": "$t(common:publisher)",
   "entityDescription-reference-publicationContext-title": "$t(common:publisher)",

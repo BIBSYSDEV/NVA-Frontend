@@ -86,8 +86,7 @@
     "description": "Description",
     "files_and_license": "Files and License",
     "publish_settings": "Publish settings",
-    "resource_type": "Resource type",
-    "validation_errors": "Validation errors"
+    "resource_type": "Resource type"
   },
   "new_registration": "New registration",
   "public_page": {
