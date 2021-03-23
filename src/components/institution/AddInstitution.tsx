@@ -43,6 +43,7 @@ const AddInstitution = ({ onSubmit, onClose }: AddInstitutionProps) => {
           {({ field: { name, value }, form: { setFieldValue, isSubmitting } }: FieldProps) => (
             <StyledInstitutionSearchContainer>
               <InstitutionAutocomplete
+                id={name}
                 institutions={institutions}
                 isLoading={isLoadingInstitutions}
                 required
