@@ -1,8 +1,7 @@
 import { CristinProject, ResearchProject } from '../../../../types/project.types';
-import { BackendTypeNames } from '../../../../types/publication_types/commonRegistration.types';
 
 export const convertToResearchProject = (project: CristinProject): ResearchProject => ({
-  type: BackendTypeNames.RESEARCH_PROJECT,
+  type: 'ResearchProject',
   id: project.id,
   name: project.title,
   grants: [],

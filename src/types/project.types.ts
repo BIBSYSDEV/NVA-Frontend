@@ -1,47 +1,45 @@
 import { LanguageString } from './publication_types/commonRegistration.types';
-import { BackendType } from './registration.types';
 
-export interface ResearchProject extends BackendType {
+export interface ResearchProject {
+  type: 'ResearchProject';
   id: string;
   name: string;
   grants?: Grant[];
   approvals?: Approval[];
 }
 
-interface Grant extends BackendType {
+interface Grant {
+  type: 'Grant';
   id: string;
   source: string;
 }
 
-interface Approval extends BackendType {
+interface Approval {
+  type: 'Approval';
   applicationCode: string;
   approvedBy: string;
   approvalStatus: string;
   date: Date;
 }
 
-type ProjectIdentifierType = 'CristinIdentifier';
-type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant';
 type OrganizationType = 'Organization';
-type PersonType = 'Person';
-type ProjectType = 'Project';
 
 interface ProjectIdentifier {
-  type: ProjectIdentifierType;
+  type: 'CristinIdentifier';
   value: string;
 }
 
 interface CoordinatingInstitution {
-  id: string;
   type: OrganizationType;
+  id: string;
   name: LanguageString;
 }
 
 interface ProjectContributor {
-  type: ProjectContributorType;
+  type: 'ProjectManager' | 'ProjectParticipant';
   identity: {
+    type: 'Person';
     id: string;
-    type: PersonType;
     firstName: string;
     lastName: string;
   };
@@ -53,8 +51,8 @@ interface ProjectContributor {
 }
 
 export interface CristinProject {
+  type: 'Project';
   id: string;
-  type: ProjectType;
   identifier: ProjectIdentifier[];
   title: string;
   alternativeTitles: LanguageString[];
