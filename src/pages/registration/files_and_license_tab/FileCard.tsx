@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import prettyBytes from 'pretty-bytes';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
@@ -15,6 +15,7 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  Tooltip,
   Typography,
 } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -27,6 +28,7 @@ import lightTheme, { datePickerTranslationProps } from '../../../themes/lightThe
 import { File, LicenseNames, licenses } from '../../../types/file.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
+import ConfirmDialog from '../../../components/ConfirmDialog';
 
 const StyledDescription = styled(Typography)`
   font-style: italic;
@@ -96,6 +98,8 @@ interface FileCardProps {
 
 const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileCardProps) => {
   const { t, i18n } = useTranslation('registration');
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
 
   return (
     <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight} data-testid="uploaded-file-card">
@@ -144,7 +148,17 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                   <Field name={`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`}>
                     {({ field, form, meta: { error, touched } }: FieldProps) => (
                       <KeyboardDatePicker
+                        id={field.name}
                         {...datePickerTranslationProps}
+                        DialogProps={{
+                          'aria-labelledby': `${field.name}-label`,
+                          'aria-label': t('files_and_license.embargo_date'),
+                        }}
+                        KeyboardButtonProps={{
+                          'aria-labelledby': `${field.name}-label`,
+                        }}
+                        leftArrowButtonProps={{ 'aria-label': t('common:previous') }}
+                        rightArrowButtonProps={{ 'aria-label': t('common:next') }}
                         data-testid="uploaded-file-embargo-date"
                         inputVariant="filled"
                         label={t('files_and_license.embargo_date')}
@@ -167,6 +181,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                   <Field name={`${baseFieldName}.${SpecificFileFieldNames.LICENSE}`}>
                     {({ field, form, meta: { error, touched } }: FieldProps) => (
                       <StyledSelect
+                        id={field.name}
                         data-testid="uploaded-file-select-license"
                         select
                         fullWidth
@@ -203,6 +218,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                             key={license.identifier}
                             value={license.identifier}
                             divider
+                            ContainerProps={{ 'aria-label': t('files_and_license.conditions_for_using_file') }}
                             dense>
                             <ListItemIcon>
                               <StyledLicenseOptionImage src={license.buttonImage} alt={license.identifier} />
@@ -215,9 +231,11 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                       </StyledSelect>
                     )}
                   </Field>
-                  <IconButton size="small" data-testid="button-toggle-license-modal" onClick={toggleLicenseModal}>
-                    <HelpIcon />
-                  </IconButton>
+                  <Tooltip title={t<string>('common:help')}>
+                    <IconButton size="small" data-testid="button-toggle-license-modal" onClick={toggleLicenseModal}>
+                      <HelpIcon />
+                    </IconButton>
+                  </Tooltip>
                 </StyledVerticalAlign>
               </StyledFormControl>
             </StyledFileInfo>
@@ -227,13 +245,24 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
 
       <StyledActions>
         <DangerButton
-          variant="outlined"
+          variant="contained"
           data-testid="button-remove-file"
           startIcon={<DeleteIcon />}
-          onClick={removeFile}>
-          {t('common:remove')}
+          onClick={toggleOpenConfirmDialog}>
+          {t('files_and_license.remove_file')}
         </DangerButton>
       </StyledActions>
+
+      <ConfirmDialog
+        open={openConfirmDialog}
+        title={t('files_and_license.remove_file')}
+        onAccept={() => {
+          removeFile();
+          toggleOpenConfirmDialog();
+        }}
+        onCancel={toggleOpenConfirmDialog}>
+        <Typography>{t('files_and_license.remove_file_description', { fileName: file.name })}</Typography>
+      </ConfirmDialog>
     </BackgroundDiv>
   );
 };

@@ -76,6 +76,8 @@
     "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
     "publicly_available": "Offentlig tilgjengelig",
     "published_version": "Publisert versjon",
+    "remove_file": "Fjern fil",
+    "remove_file_description": "Ønsker du å fjerne {{fileName}}?",
     "select_version": "Velg versjon",
     "title": "Filnavn",
     "uploaded_size": "Lastet opp {{size}}"
