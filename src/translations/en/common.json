@@ -59,6 +59,7 @@
   "search_summary": "{{count}} result for \"{{searchTerm}}\"",
   "search_summary_plural": "{{count}} results for \"{{searchTerm}}\"",
   "select": "Select",
+  "selected": "Selected",
   "send": "Send",
   "show": "Show",
   "size": "Size",
