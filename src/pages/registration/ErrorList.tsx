@@ -45,13 +45,11 @@ const ErrorListElement = ({ heading, errors }: ErrorListProps) => {
     <>
       <Typography>{heading}</Typography>
       <StyledErrorList>
-        {errors.map((error, index) => {
-          return typeof error.field === 'string' && typeof error.message === 'string' ? (
-            <li key={index}>
-              {error.field}: {error.message}
-            </li>
-          ) : null;
-        })}
+        {errors.map((error, index) => (
+          <li key={index}>
+            {error.field}: {error.message}
+          </li>
+        ))}
       </StyledErrorList>
     </>
   ) : null;

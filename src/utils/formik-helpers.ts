@@ -21,17 +21,27 @@ const getErrorSummaries = (fieldNames: string[], errors: FormikErrors<unknown>, 
 
   const errorFieldNames = fieldNames.filter((fieldName) => {
     const fieldHasError = !!getIn(errors, fieldName);
-    const fieldIsTouched = touched === undefined || !!getIn(touched, fieldName);
-    // Touched data can be inconsistent with array of null or undefined elements when adding elements dynamically
-    // to a FieldArray, so ensure it is a boolean value
+    const fieldIsTouched = touched === undefined || !!getIn(touched, fieldName); // Ignore touched if not included as argument
     return fieldHasError && fieldIsTouched;
   });
 
   const errorSummaries: ErrorSummary[] = errorFieldNames.map((errorFieldName) => ({
-    field: i18n.t(`formikValues:${errorFieldName.replace(/[[\]\d]/g, '').replace(/[.]/g, '-')}`),
+    field: i18n.t(`formikValues:${errorFieldName.replace(/[[\]\d]/g, '').replace(/[.]/g, '-')}`, {
+      defaultValue: null, // Don't use the i18n key as fallback if no transtlations are found
+    }),
     message: getIn(errors, errorFieldName),
   }));
-  return errorSummaries;
+
+  const uniqueErrorSummaries = errorSummaries.filter(
+    (value, index, array) => array.findIndex((other) => other.field === value.field) === index
+  );
+
+  // Ensure we don't expose errors that are formatted as Objects
+  const filteredErrors = uniqueErrorSummaries.filter(
+    (error) => typeof error.field === 'string' && typeof error.message === 'string'
+  );
+
+  return filteredErrors;
 };
 
 export const getErrorsAcrossTabs = (
