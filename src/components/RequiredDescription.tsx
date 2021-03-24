@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 const StyledRequiredDescription = styled.div`
-  margin-top: 2rem;
+  margin-top: 1rem;
   display: flex;
 `;
 
@@ -23,8 +23,8 @@ export const RequiredDescription = () => {
 
   return (
     <StyledRequiredDescription>
-      <StyledAsterisk>*</StyledAsterisk>
-      <StyledTypography>{t('required_description')}</StyledTypography>
+      <StyledAsterisk gutterBottom>*</StyledAsterisk>
+      <StyledTypography gutterBottom>{t('required_description')}</StyledTypography>
     </StyledRequiredDescription>
   );
 };

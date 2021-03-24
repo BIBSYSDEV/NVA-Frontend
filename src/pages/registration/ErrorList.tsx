@@ -6,7 +6,6 @@ import { RegistrationTab } from '../../types/registration.types';
 import { ErrorSummary, TabErrors } from '../../types/publication_types/error.types';
 
 const StyledErrorBox = styled.div`
-  margin-top: 1rem;
   padding: 0.5rem 2rem;
   background-color: ${({ theme }) => theme.palette.error.light};
 `;

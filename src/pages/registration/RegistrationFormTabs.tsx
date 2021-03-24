@@ -16,6 +16,7 @@ import {
   getErrorsAcrossTabs,
 } from '../../utils/formik-helpers';
 import { ErrorList } from './ErrorList';
+import { RequiredDescription } from '../../components/RequiredDescription';
 
 const StyledTabs = styled(Tabs)`
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
@@ -117,6 +118,8 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
           error={errorFieldNames[RegistrationTab.FilesAndLicenses].length > 0}
         />
       </StyledTabs>
+
+      <RequiredDescription />
 
       <ErrorList errors={errorFieldNames} />
     </>
