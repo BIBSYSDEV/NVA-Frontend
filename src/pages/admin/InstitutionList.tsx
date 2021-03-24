@@ -33,6 +33,10 @@ const StyledSmallCell = styled(TableCell)`
     min-width: 9rem;
   }
 `;
+
+const StyledTypography = styled(Typography)`
+  font-weight: bold;
+`;
 interface InstitutionListProps {
   institutions: CustomerInstitution[];
 }
@@ -46,10 +50,10 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
         <TableHead>
           <TableRow>
             <TableCell>
-              <Typography>{t('name')}</Typography>
+              <StyledTypography>{t('name')}</StyledTypography>
             </TableCell>
             <TableCell>
-              <Typography>{t('date')}</Typography>
+              <StyledTypography>{t('date')}</StyledTypography>
             </TableCell>
             <TableCell />
           </TableRow>

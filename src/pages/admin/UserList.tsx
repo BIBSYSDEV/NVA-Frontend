@@ -25,6 +25,10 @@ const StyledTableRow = styled(TableRow)`
   }
 `;
 
+const StyledTypography = styled(Typography)`
+  font-weight: bold;
+`;
+
 interface UserListProps {
   userList: InstitutionUser[];
   roleToRemove?: RoleName;
@@ -96,10 +100,10 @@ const UserList: FC<UserListProps> = ({
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <Typography>{t('users.username')}</Typography>
+                  <StyledTypography>{t('users.username')}</StyledTypography>
                 </TableCell>
                 <TableCell>
-                  <Typography>{t('common:name')}</Typography>
+                  <StyledTypography>{t('common:name')}</StyledTypography>
                 </TableCell>
                 <TableCell />
               </TableRow>
