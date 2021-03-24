@@ -17,9 +17,11 @@ const PeerReview = ({ fieldName, label }: PeerReviewProps) => {
     <Field name={fieldName}>
       {({ field: { name, value } }: FieldProps) => (
         <>
-          <Typography variant="h5" color="primary">
-            {label}
-          </Typography>
+          <div>
+            <Typography variant="h5" color="primary" variantMapping={{ h5: 'body1' }}>
+              {label}
+            </Typography>
+          </div>
           <FormControl>
             <RadioGroup
               value={value ? 'true' : 'false'}
