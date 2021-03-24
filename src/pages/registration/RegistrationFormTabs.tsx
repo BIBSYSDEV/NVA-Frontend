@@ -17,6 +17,7 @@ import {
   touchedFilesTabFields,
   touchedResourceTabFields,
 } from '../../utils/formik-helpers';
+import { ErrorSummary } from './ErrorSummary';
 
 const StyledTabs = styled(Tabs)`
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
@@ -86,38 +87,52 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
     };
   }, [setTouched, tabNumber]);
 
-  return (
-    <StyledTabs
-      onChange={(_, value) => setTabNumber(value)}
-      scrollButtons="auto"
-      textColor="primary"
-      indicatorColor="secondary"
-      value={tabNumber}
-      variant="scrollable">
-      <LinkTab
-        data-testid="nav-tabpanel-description"
-        label={t('heading.description')}
-        error={getErrorFieldNames(descriptionFieldNames, errors, touched).length > 0}
-      />
-      <LinkTab
-        data-testid="nav-tabpanel-resource-type"
-        label={t('heading.resource_type')}
-        error={getErrorFieldNames(resourceFieldNames, errors, touched).length > 0}
-      />
+  const descriptionErrorFields = getErrorFieldNames(descriptionFieldNames, errors, touched);
+  const resourceErrorFields = getErrorFieldNames(resourceFieldNames, errors, touched);
+  const contributorsErrorFields = getErrorFieldNames(
+    getAllContributorFields(valuesRef.current.entityDescription.contributors),
+    errors,
+    touched
+  );
+  const filesErrorFields = getErrorFieldNames(getAllFileFields(valuesRef.current.fileSet.files), errors, touched);
 
-      <LinkTab
-        data-testid="nav-tabpanel-contributors"
-        label={t('heading.contributors')}
-        error={
-          getErrorFieldNames(getAllContributorFields(valuesRef.current.entityDescription.contributors), errors, touched)
-            .length > 0
-        }
+  return (
+    <>
+      <StyledTabs
+        onChange={(_, value) => setTabNumber(value)}
+        scrollButtons="auto"
+        textColor="primary"
+        indicatorColor="secondary"
+        value={tabNumber}
+        variant="scrollable">
+        <LinkTab
+          data-testid="nav-tabpanel-description"
+          label={t('heading.description')}
+          error={descriptionErrorFields.length > 0}
+        />
+        <LinkTab
+          data-testid="nav-tabpanel-resource-type"
+          label={t('heading.resource_type')}
+          error={resourceErrorFields.length > 0}
+        />
+        <LinkTab
+          data-testid="nav-tabpanel-contributors"
+          label={t('heading.contributors')}
+          error={contributorsErrorFields.length > 0}
+        />
+        <LinkTab
+          data-testid="nav-tabpanel-files-and-license"
+          label={t('heading.files_and_license')}
+          error={filesErrorFields.length > 0}
+        />
+      </StyledTabs>
+
+      <ErrorSummary
+        descriptionErrorFields={descriptionErrorFields}
+        resourceErrorFields={resourceErrorFields}
+        contributorsErrorFields={contributorsErrorFields}
+        filesErrorFields={filesErrorFields}
       />
-      <LinkTab
-        data-testid="nav-tabpanel-files-and-license"
-        label={t('heading.files_and_license')}
-        error={getErrorFieldNames(getAllFileFields(valuesRef.current.fileSet.files), errors, touched).length > 0}
-      />
-    </StyledTabs>
+    </>
   );
 };

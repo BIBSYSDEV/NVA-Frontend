@@ -14,15 +14,15 @@ import { Registration } from '../types/registration.types';
 export const getErrorFieldNames = (
   fieldNames: string[],
   errors: FormikErrors<unknown>,
-  touched?: FormikTouched<unknown> // Touched setting ignored if not included
+  touched: FormikTouched<unknown>
 ) => {
-  if (!Object.keys(errors).length || !fieldNames.length) {
+  if (!Object.keys(errors).length || !fieldNames.length || !Object.keys(touched).length) {
     return [];
   }
 
   return fieldNames.filter((fieldName) => {
     const fieldHasError = !!getIn(errors, fieldName);
-    const fieldIsTouched = touched === undefined || !!getIn(touched, fieldName);
+    const fieldIsTouched = !!getIn(touched, fieldName);
     // Touched data can be inconsistent with array of null or undefined elements when adding elements dynamically
     // to a FieldArray, so ensure it is a boolean value
     return fieldHasError && fieldIsTouched;
