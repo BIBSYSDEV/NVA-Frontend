@@ -51,6 +51,7 @@
   "registrations": "Registreringer",
   "reject_doi": "Avvis DOI",
   "remove": "Fjern",
+  "required_description": "Felt med stjerne er obligatorisk",
   "requires_login": "Krever innlogging",
   "save": "Lagre",
   "save_and_present": "Lagre og presenter",

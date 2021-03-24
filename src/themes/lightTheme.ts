@@ -165,6 +165,7 @@ const lightTheme = createMuiTheme({
     },
     MuiFormLabel: {
       asterisk: {
+        fontWeight: 'bold',
         color: Color.ErrorMain,
       },
       root: {
