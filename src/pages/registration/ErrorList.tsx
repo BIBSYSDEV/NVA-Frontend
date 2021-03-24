@@ -4,11 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
 import { RegistrationTab } from '../../types/registration.types';
 import { ErrorSummary, TabErrors } from '../../types/publication_types/error.types';
-
-const StyledErrorBox = styled.div`
-  padding: 0.5rem 2rem;
-  background-color: ${({ theme }) => theme.palette.error.light};
-`;
+import BackgroundDiv from '../../components/BackgroundDiv';
+import lightTheme from '../../themes/lightTheme';
 
 const StyledErrorList = styled.ul`
   margin: 0;
@@ -25,12 +22,12 @@ export const ErrorList = ({ errors }: ErrorSummaryProps) => {
     errors[RegistrationTab.ResourceType].length > 0 ||
     errors[RegistrationTab.Contributors].length > 0 ||
     errors[RegistrationTab.FilesAndLicenses].length > 0 ? (
-    <StyledErrorBox>
+    <BackgroundDiv backgroundColor={lightTheme.palette.error.light}>
       <ErrorListElement heading={t('heading.description')} errors={errors[RegistrationTab.Description]} />
       <ErrorListElement heading={t('heading.resource_type')} errors={errors[RegistrationTab.ResourceType]} />
       <ErrorListElement heading={t('heading.contributors')} errors={errors[RegistrationTab.Contributors]} />
       <ErrorListElement heading={t('heading.files_and_license')} errors={errors[RegistrationTab.FilesAndLicenses]} />
-    </StyledErrorBox>
+    </BackgroundDiv>
   ) : null;
 };
 
@@ -39,8 +36,8 @@ interface ErrorListProps {
   errors: ErrorSummary[];
 }
 
-const ErrorListElement = ({ heading, errors }: ErrorListProps) => {
-  return errors.length > 0 ? (
+const ErrorListElement = ({ heading, errors }: ErrorListProps) =>
+  errors.length > 0 ? (
     <>
       <Typography>{heading}</Typography>
       <StyledErrorList>
@@ -52,4 +49,3 @@ const ErrorListElement = ({ heading, errors }: ErrorListProps) => {
       </StyledErrorList>
     </>
   ) : null;
-};
