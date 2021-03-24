@@ -1,5 +1,6 @@
 import deepmerge, { Options } from 'deepmerge';
-import { FormikErrors, FormikTouched, getIn } from 'formik';
+import { FormikErrors, FormikTouched, FormikValues, getIn } from 'formik';
+import { descriptionFieldNames, resourceFieldNames } from '../pages/registration/RegistrationFormTabs';
 import { Contributor } from '../types/contributor.types';
 import { File } from '../types/file.types';
 import {
@@ -9,13 +10,9 @@ import {
   SpecificContributorFieldNames,
   SpecificFileFieldNames,
 } from '../types/publicationFieldNames';
-import { Registration } from '../types/registration.types';
+import { Registration, RegistrationTab } from '../types/registration.types';
 
-export const getErrorFieldNames = (
-  fieldNames: string[],
-  errors: FormikErrors<unknown>,
-  touched: FormikTouched<unknown>
-) => {
+const getErrorFieldNames = (fieldNames: string[], errors: FormikErrors<unknown>, touched: FormikTouched<unknown>) => {
   if (!Object.keys(errors).length || !fieldNames.length || !Object.keys(touched).length) {
     return [];
   }
@@ -27,6 +24,23 @@ export const getErrorFieldNames = (
     // to a FieldArray, so ensure it is a boolean value
     return fieldHasError && fieldIsTouched;
   });
+};
+
+export const getErrorFieldNamesAcrossTabs = (
+  values: FormikValues,
+  errors: FormikErrors<unknown>,
+  touched: FormikTouched<unknown>
+) => {
+  return {
+    [RegistrationTab.Description]: getErrorFieldNames(descriptionFieldNames, errors, touched),
+    [RegistrationTab.ResourceType]: getErrorFieldNames(resourceFieldNames, errors, touched),
+    [RegistrationTab.Contributors]: getErrorFieldNames(
+      getAllContributorFields(values.entityDescription.contributors),
+      errors,
+      touched
+    ),
+    [RegistrationTab.FilesAndLicenses]: getErrorFieldNames(getAllFileFields(values.fileSet.files), errors, touched),
+  };
 };
 
 export const getAllFileFields = (files: File[]): string[] => {

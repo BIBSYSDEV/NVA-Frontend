@@ -3,7 +3,7 @@ import { FormikProps, getIn, useFormikContext } from 'formik';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
-import { Registration } from '../../types/registration.types';
+import { Registration, RegistrationTab } from '../../types/registration.types';
 
 const StyledErrorBox = styled.div`
   margin-top: 1rem;
@@ -12,33 +12,30 @@ const StyledErrorBox = styled.div`
 `;
 
 const StyledErrorList = styled.ul`
-  margin-top: 0;
+  margin: 0;
 `;
 
 interface ErrorSummaryProps {
-  descriptionErrorFields: string[];
-  resourceErrorFields: string[];
-  contributorsErrorFields: string[];
-  filesErrorFields: string[];
+  errorFieldNames: {
+    [key: number]: string[]; // Each tab has its own key
+  };
 }
 
-export const ErrorSummary = ({
-  descriptionErrorFields,
-  resourceErrorFields,
-  contributorsErrorFields,
-  filesErrorFields,
-}: ErrorSummaryProps) => {
+export const ErrorSummary = ({ errorFieldNames }: ErrorSummaryProps) => {
   const { t } = useTranslation('registration');
 
-  return descriptionErrorFields.length > 0 ||
-    resourceErrorFields.length > 0 ||
-    contributorsErrorFields.length > 0 ||
-    filesErrorFields.length > 0 ? (
+  return errorFieldNames[RegistrationTab.Description].length > 0 ||
+    errorFieldNames[RegistrationTab.ResourceType].length > 0 ||
+    errorFieldNames[RegistrationTab.Contributors].length > 0 ||
+    errorFieldNames[RegistrationTab.FilesAndLicenses].length > 0 ? (
     <StyledErrorBox>
-      <ErrorList heading={t('heading.description')} fieldNames={descriptionErrorFields} />
-      <ErrorList heading={t('heading.resource_type')} fieldNames={resourceErrorFields} />
-      <ErrorList heading={t('heading.contributors')} fieldNames={contributorsErrorFields} />
-      <ErrorList heading={t('heading.files_and_license')} fieldNames={filesErrorFields} />
+      <ErrorList heading={t('heading.description')} fieldNames={errorFieldNames[RegistrationTab.Description]} />
+      <ErrorList heading={t('heading.resource_type')} fieldNames={errorFieldNames[RegistrationTab.ResourceType]} />
+      <ErrorList heading={t('heading.contributors')} fieldNames={errorFieldNames[RegistrationTab.Contributors]} />
+      <ErrorList
+        heading={t('heading.files_and_license')}
+        fieldNames={errorFieldNames[RegistrationTab.FilesAndLicenses]}
+      />
     </StyledErrorBox>
   ) : null;
 };
