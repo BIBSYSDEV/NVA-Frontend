@@ -11,6 +11,10 @@ const StyledErrorBox = styled.div`
   background-color: ${({ theme }) => theme.palette.error.light};
 `;
 
+const StyledErrorList = styled.ul`
+  margin-top: 0;
+`;
+
 interface ErrorSummaryProps {
   descriptionErrorFields: string[];
   resourceErrorFields: string[];
@@ -51,7 +55,7 @@ const ErrorList = ({ fieldNames, heading }: ErrorListProps) => {
   return fieldNames.length > 0 ? (
     <>
       <Typography>{heading}</Typography>
-      <ul>
+      <StyledErrorList>
         {fieldNames.map((fieldName) => {
           const translatedFieldName = t(fieldName.replace(/[[\]\d]/g, '').replace(/[.]/g, '-'));
           const translatedErrorMessage = getIn(errors, fieldName);
@@ -62,7 +66,7 @@ const ErrorList = ({ fieldNames, heading }: ErrorListProps) => {
             </li>
           ) : null;
         })}
-      </ul>
+      </StyledErrorList>
     </>
   ) : null;
 };
