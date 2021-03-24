@@ -1,5 +1,5 @@
 import { useFormikContext } from 'formik';
-import React, { FC, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Tabs } from '@material-ui/core';
@@ -37,7 +37,7 @@ interface RegistrationFormTabsProps {
   tabNumber: RegistrationTab;
 }
 
-export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumber, tabNumber }) => {
+export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFormTabsProps) => {
   const { t } = useTranslation('registration');
   const { errors, touched, values, setTouched } = useFormikContext<Registration>();
 

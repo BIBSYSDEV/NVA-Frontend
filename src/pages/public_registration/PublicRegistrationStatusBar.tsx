@@ -160,7 +160,15 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
 
   return isOwner || isCurator ? (
     <>
-      <ErrorList errors={errors} heading="Ikke publisert" />
+      <ErrorList
+        errors={errors}
+        heading={
+          registration.status === RegistrationStatus.PUBLISHED
+            ? t('public_page.published')
+            : t('public_page.not_published')
+        }
+        showOpenWizardButton
+      />
       <StyledStatusBar data-testid="public-registration-status">
         <StyledStatusBarDescription>
           {isPublishedRegistration ? (

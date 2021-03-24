@@ -92,10 +92,13 @@
   "new_registration": "Ny registrering",
   "public_page": {
     "current_validation_errors": "NB! Registreringen har valideringsfeil som må fikses før den kan publiseres",
+    "go_back_to_wizard": "Gå tilbake til skjema",
     "in_progess": "Under behandling",
     "message_to_curator": "Melding til kurator",
+    "not_published": "Ikke publisert",
     "preview": "Forhåndsvisning",
     "preview_unavailable": "Forhåndsvisning ikke tilgjengelig. Åpne filen i egnet program.",
+    "published": "Publisert",
     "reserve_doi": "Reserver en DOI",
     "request_doi": "Be om en DOI",
     "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet."
