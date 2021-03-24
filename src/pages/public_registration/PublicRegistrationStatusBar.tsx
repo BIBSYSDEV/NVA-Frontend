@@ -181,7 +181,6 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             <Typography>
               {t('common:status')}: {t(`status.${status}`)}
             </Typography>
-            {!registrationIsValid && <Typography>{t('public_page.current_validation_errors')}</Typography>}
           </div>
         </StyledStatusBarDescription>
         <div>
