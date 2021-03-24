@@ -72,6 +72,7 @@ export const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: C
                   disabled={isSubmitting}
                   variant="outlined"
                   error={!!error && touched}
+                  data-testid="create-contributor-first-name"
                   helperText={<ErrorMessage name={field.name} />}
                 />
               )}
@@ -87,6 +88,7 @@ export const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: C
                   disabled={isSubmitting}
                   variant="outlined"
                   error={!!error && touched}
+                  data-testid="create-contributor-last-name"
                   helperText={<ErrorMessage name={field.name} />}
                 />
               )}
