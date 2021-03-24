@@ -51,6 +51,7 @@
   "registrations": "Registrations",
   "reject_doi": "Reject DOI",
   "remove": "Remove",
+  "required_description": "Fields with asterisk are required",
   "requires_login": "Requires login",
   "save": "Save",
   "save_and_present": "Save and present",
