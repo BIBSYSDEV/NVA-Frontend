@@ -21,10 +21,11 @@ const StyledErrorListElement = styled.div`
 interface ErrorSummaryProps {
   errors: TabErrors;
   heading?: string;
+  description?: string;
   showOpenWizardButton?: boolean;
 }
 
-export const ErrorList = ({ errors, heading, showOpenWizardButton = false }: ErrorSummaryProps) => {
+export const ErrorList = ({ errors, heading, description, showOpenWizardButton = false }: ErrorSummaryProps) => {
   const { t } = useTranslation('registration');
   const { identifier } = useParams<{ identifier: string }>();
   const wizardUrl = getRegistrationPath(identifier);
@@ -47,6 +48,8 @@ export const ErrorList = ({ errors, heading, showOpenWizardButton = false }: Err
           {heading}
         </Typography>
       )}
+      {description && <Typography>{description}</Typography>}
+
       <ErrorListElement heading={t('heading.description')} errors={errors[RegistrationTab.Description]} />
       <ErrorListElement heading={t('heading.resource_type')} errors={errors[RegistrationTab.ResourceType]} />
       <ErrorListElement heading={t('heading.contributors')} errors={errors[RegistrationTab.Contributors]} />

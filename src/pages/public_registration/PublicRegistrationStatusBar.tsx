@@ -167,6 +167,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             ? t('public_page.published')
             : t('public_page.not_published')
         }
+        description={t('public_page.error_description')}
         showOpenWizardButton
       />
       <StyledStatusBar data-testid="public-registration-status">

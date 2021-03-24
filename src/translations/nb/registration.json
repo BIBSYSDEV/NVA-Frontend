@@ -92,6 +92,7 @@
   "new_registration": "Ny registrering",
   "public_page": {
     "current_validation_errors": "NB! Registreringen har valideringsfeil som må fikses før den kan publiseres",
+    "error_description": "For å publisere må du rette følgende feil:",
     "go_back_to_wizard": "Gå tilbake til skjema",
     "in_progess": "Under behandling",
     "message_to_curator": "Melding til kurator",
