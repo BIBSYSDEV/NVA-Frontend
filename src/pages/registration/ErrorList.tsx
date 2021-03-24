@@ -16,19 +16,23 @@ const StyledErrorList = styled.ul`
 const StyledErrorListElement = styled.div`
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+
+  h2 {
+    font-weight: 500;
+  }
 `;
 
 interface ErrorSummaryProps {
   errors: TabErrors;
   heading?: string;
   description?: string;
-  showOpenWizardButton?: boolean;
+  showOpenFormButton?: boolean;
 }
 
-export const ErrorList = ({ errors, heading, description, showOpenWizardButton = false }: ErrorSummaryProps) => {
+export const ErrorList = ({ errors, heading, description, showOpenFormButton = false }: ErrorSummaryProps) => {
   const { t } = useTranslation('registration');
   const { identifier } = useParams<{ identifier: string }>();
-  const wizardUrl = getRegistrationPath(identifier);
+  const formUrl = getRegistrationPath(identifier);
 
   const firstErrorTab =
     errors[RegistrationTab.Description].length > 0
@@ -55,8 +59,8 @@ export const ErrorList = ({ errors, heading, description, showOpenWizardButton =
       <ErrorListElement heading={t('heading.contributors')} errors={errors[RegistrationTab.Contributors]} />
       <ErrorListElement heading={t('heading.files_and_license')} errors={errors[RegistrationTab.FilesAndLicenses]} />
 
-      {showOpenWizardButton && (
-        <Button variant="contained" href={`${wizardUrl}?tab=${firstErrorTab}`}>
+      {showOpenFormButton && (
+        <Button variant="contained" href={`${formUrl}?tab=${firstErrorTab}`}>
           {t('public_page.go_back_to_wizard')}
         </Button>
       )}
@@ -72,11 +76,13 @@ interface ErrorListProps {
 const ErrorListElement = ({ heading, errors }: ErrorListProps) =>
   errors.length > 0 ? (
     <StyledErrorListElement>
-      <Typography>{heading}</Typography>
+      <Typography component="h2">{heading}:</Typography>
       <StyledErrorList>
         {errors.map((error, index) => (
           <li key={index}>
-            {error.field}: {error.message}
+            <Typography>
+              {error.field}: {error.message}
+            </Typography>
           </li>
         ))}
       </StyledErrorList>
