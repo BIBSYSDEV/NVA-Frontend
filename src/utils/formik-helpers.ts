@@ -12,18 +12,14 @@ import {
 } from '../types/publicationFieldNames';
 import { Registration, RegistrationTab } from '../types/registration.types';
 import i18n from '../translations/i18n';
+import { ErrorSummary } from '../types/publication_types/error.types';
 
-export interface CustomError {
-  field: string;
-  message: string;
-}
-
-const getErrorFieldNames = (fieldNames: string[], errors: FormikErrors<unknown>, touched?: FormikTouched<unknown>) => {
+const getErrorSummaries = (fieldNames: string[], errors: FormikErrors<unknown>, touched?: FormikTouched<unknown>) => {
   if (!Object.keys(errors).length || !fieldNames.length) {
     return [];
   }
 
-  const errorFields = fieldNames.filter((fieldName) => {
+  const errorFieldNames = fieldNames.filter((fieldName) => {
     const fieldHasError = !!getIn(errors, fieldName);
     const fieldIsTouched = touched === undefined || !!getIn(touched, fieldName);
     // Touched data can be inconsistent with array of null or undefined elements when adding elements dynamically
@@ -31,27 +27,27 @@ const getErrorFieldNames = (fieldNames: string[], errors: FormikErrors<unknown>,
     return fieldHasError && fieldIsTouched;
   });
 
-  const customErrors: CustomError[] = errorFields.map((errorFieldName) => ({
+  const errorSummaries: ErrorSummary[] = errorFieldNames.map((errorFieldName) => ({
     field: i18n.t(`formikValues:${errorFieldName.replace(/[[\]\d]/g, '').replace(/[.]/g, '-')}`),
     message: getIn(errors, errorFieldName),
   }));
-  return customErrors;
+  return errorSummaries;
 };
 
-export const getErrorFieldNamesAcrossTabs = (
+export const getErrorsAcrossTabs = (
   values: FormikValues,
   errors: FormikErrors<unknown>,
   touched?: FormikTouched<unknown>
 ) => {
   return {
-    [RegistrationTab.Description]: getErrorFieldNames(descriptionFieldNames, errors, touched),
-    [RegistrationTab.ResourceType]: getErrorFieldNames(resourceFieldNames, errors, touched),
-    [RegistrationTab.Contributors]: getErrorFieldNames(
+    [RegistrationTab.Description]: getErrorSummaries(descriptionFieldNames, errors, touched),
+    [RegistrationTab.ResourceType]: getErrorSummaries(resourceFieldNames, errors, touched),
+    [RegistrationTab.Contributors]: getErrorSummaries(
       getAllContributorFields(values.entityDescription.contributors),
       errors,
       touched
     ),
-    [RegistrationTab.FilesAndLicenses]: getErrorFieldNames(getAllFileFields(values.fileSet.files), errors, touched),
+    [RegistrationTab.FilesAndLicenses]: getErrorSummaries(getAllFileFields(values.fileSet.files), errors, touched),
   };
 };
 

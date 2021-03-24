@@ -24,8 +24,9 @@ import { createDoiRequest, publishRegistration, updateDoiRequest } from '../../a
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { getRegistrationPath } from '../../utils/urlPaths';
 import { validateYupSchema, yupToFormErrors } from 'formik';
-import { CustomError, getErrorFieldNamesAcrossTabs } from '../../utils/formik-helpers';
-import { ErrorSummary } from '../registration/ErrorSummary';
+import { getErrorsAcrossTabs } from '../../utils/formik-helpers';
+import { ErrorList } from '../registration/ErrorList';
+import { TabErrors, validTabs } from '../../types/publication_types/error.types';
 
 const StyledStatusBar = styled(Card)`
   display: flex;
@@ -78,7 +79,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
   const [isLoading, setIsLoading] = useState(LoadingName.None);
   const toggleRequestDoiModal = () => setOpenRequestDoiModal((state) => !state);
-  const [errors, setErrors] = useState<{ [key: number]: CustomError[] }>();
+  const [errors, setErrors] = useState<TabErrors>(validTabs);
 
   const sendDoiRequest = async () => {
     setIsLoading(LoadingName.RequestDoi);
@@ -132,22 +133,6 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     }
   };
 
-  const registrationIsValid = !(
-    errors &&
-    (errors[RegistrationTab.Description].length > 0 ||
-      errors[RegistrationTab.ResourceType].length > 0 ||
-      errors[RegistrationTab.Contributors].length > 0 ||
-      errors[RegistrationTab.FilesAndLicenses].length > 0)
-  );
-
-  registrationValidationSchema.isValidSync(registration, {
-    context: {
-      publicationContextType: registration.entityDescription.reference.publicationContext.type,
-      publicationInstanceType: registration.entityDescription.reference.publicationInstance.type,
-      publicationStatus: registration.status,
-    },
-  });
-
   useEffect(() => {
     try {
       validateYupSchema<Registration>(registration, registrationValidationSchema, true, {
@@ -157,10 +142,16 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
       });
     } catch (e) {
       const yupErrors = yupToFormErrors(e);
-      const errorFieldNames = getErrorFieldNamesAcrossTabs(registration, yupErrors);
-      setErrors(errorFieldNames);
+      const newErrors = getErrorsAcrossTabs(registration, yupErrors);
+      setErrors(newErrors);
     }
   }, [registration]);
+
+  const registrationIsValid =
+    errors[RegistrationTab.Description].length === 0 ||
+    errors[RegistrationTab.ResourceType].length === 0 ||
+    errors[RegistrationTab.Contributors].length === 0 ||
+    errors[RegistrationTab.FilesAndLicenses].length === 0;
 
   const isOwner = user && user.isCreator && owner === user.id;
   const isCurator = user && user.isCurator && user.customerId === publisher.id;
@@ -169,7 +160,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
 
   return isOwner || isCurator ? (
     <>
-      {errors && <ErrorSummary errors={errors} />}
+      <ErrorList errors={errors} />
       <StyledStatusBar data-testid="public-registration-status">
         <StyledStatusBarDescription>
           {isPublishedRegistration ? (

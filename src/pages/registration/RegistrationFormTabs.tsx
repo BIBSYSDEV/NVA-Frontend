@@ -13,9 +13,9 @@ import {
   touchedDescriptionTabFields,
   touchedFilesTabFields,
   touchedResourceTabFields,
-  getErrorFieldNamesAcrossTabs,
+  getErrorsAcrossTabs,
 } from '../../utils/formik-helpers';
-import { ErrorSummary } from './ErrorSummary';
+import { ErrorList } from './ErrorList';
 
 const StyledTabs = styled(Tabs)`
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
@@ -85,7 +85,7 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
     };
   }, [setTouched, tabNumber]);
 
-  const errorFieldNames = getErrorFieldNamesAcrossTabs(valuesRef.current, errors, touched);
+  const errorFieldNames = getErrorsAcrossTabs(valuesRef.current, errors, touched);
 
   return (
     <>
@@ -118,7 +118,7 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
         />
       </StyledTabs>
 
-      <ErrorSummary errors={errorFieldNames} />
+      <ErrorList errors={errorFieldNames} />
     </>
   );
 };

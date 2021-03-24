@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
 import { RegistrationTab } from '../../types/registration.types';
-import { CustomError } from '../../utils/formik-helpers';
+import { ErrorSummary, TabErrors } from '../../types/publication_types/error.types';
 
 const StyledErrorBox = styled.div`
   margin-top: 1rem;
@@ -16,12 +16,10 @@ const StyledErrorList = styled.ul`
 `;
 
 interface ErrorSummaryProps {
-  errors: {
-    [key: number]: CustomError[]; // Each tab has its own key
-  };
+  errors: TabErrors;
 }
 
-export const ErrorSummary = ({ errors }: ErrorSummaryProps) => {
+export const ErrorList = ({ errors }: ErrorSummaryProps) => {
   const { t } = useTranslation('registration');
 
   return errors[RegistrationTab.Description].length > 0 ||
@@ -29,27 +27,27 @@ export const ErrorSummary = ({ errors }: ErrorSummaryProps) => {
     errors[RegistrationTab.Contributors].length > 0 ||
     errors[RegistrationTab.FilesAndLicenses].length > 0 ? (
     <StyledErrorBox>
-      <ErrorList heading={t('heading.description')} errors={errors[RegistrationTab.Description]} />
-      <ErrorList heading={t('heading.resource_type')} errors={errors[RegistrationTab.ResourceType]} />
-      <ErrorList heading={t('heading.contributors')} errors={errors[RegistrationTab.Contributors]} />
-      <ErrorList heading={t('heading.files_and_license')} errors={errors[RegistrationTab.FilesAndLicenses]} />
+      <ErrorListElement heading={t('heading.description')} errors={errors[RegistrationTab.Description]} />
+      <ErrorListElement heading={t('heading.resource_type')} errors={errors[RegistrationTab.ResourceType]} />
+      <ErrorListElement heading={t('heading.contributors')} errors={errors[RegistrationTab.Contributors]} />
+      <ErrorListElement heading={t('heading.files_and_license')} errors={errors[RegistrationTab.FilesAndLicenses]} />
     </StyledErrorBox>
   ) : null;
 };
 
 interface ErrorListProps {
   heading: string;
-  errors: CustomError[];
+  errors: ErrorSummary[];
 }
 
-const ErrorList = ({ heading, errors }: ErrorListProps) => {
+const ErrorListElement = ({ heading, errors }: ErrorListProps) => {
   return errors.length > 0 ? (
     <>
       <Typography>{heading}</Typography>
       <StyledErrorList>
-        {errors.map((error) => {
+        {errors.map((error, index) => {
           return typeof error.field === 'string' && typeof error.message === 'string' ? (
-            <li key={error.field}>
+            <li key={index}>
               {error.field}: {error.message}
             </li>
           ) : null;
