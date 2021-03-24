@@ -11,25 +11,37 @@ import {
   SpecificFileFieldNames,
 } from '../types/publicationFieldNames';
 import { Registration, RegistrationTab } from '../types/registration.types';
+import i18n from '../translations/i18n';
 
-const getErrorFieldNames = (fieldNames: string[], errors: FormikErrors<unknown>, touched: FormikTouched<unknown>) => {
-  if (!Object.keys(errors).length || !fieldNames.length || !Object.keys(touched).length) {
+export interface CustomError {
+  field: string;
+  message: string;
+}
+
+const getErrorFieldNames = (fieldNames: string[], errors: FormikErrors<unknown>, touched?: FormikTouched<unknown>) => {
+  if (!Object.keys(errors).length || !fieldNames.length) {
     return [];
   }
 
-  return fieldNames.filter((fieldName) => {
+  const errorFields = fieldNames.filter((fieldName) => {
     const fieldHasError = !!getIn(errors, fieldName);
-    const fieldIsTouched = !!getIn(touched, fieldName);
+    const fieldIsTouched = touched === undefined || !!getIn(touched, fieldName);
     // Touched data can be inconsistent with array of null or undefined elements when adding elements dynamically
     // to a FieldArray, so ensure it is a boolean value
     return fieldHasError && fieldIsTouched;
   });
+
+  const customErrors: CustomError[] = errorFields.map((errorFieldName) => ({
+    field: i18n.t(`formikValues:${errorFieldName.replace(/[[\]\d]/g, '').replace(/[.]/g, '-')}`),
+    message: getIn(errors, errorFieldName),
+  }));
+  return customErrors;
 };
 
 export const getErrorFieldNamesAcrossTabs = (
   values: FormikValues,
   errors: FormikErrors<unknown>,
-  touched: FormikTouched<unknown>
+  touched?: FormikTouched<unknown>
 ) => {
   return {
     [RegistrationTab.Description]: getErrorFieldNames(descriptionFieldNames, errors, touched),

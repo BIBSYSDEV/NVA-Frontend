@@ -118,7 +118,7 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
         />
       </StyledTabs>
 
-      <ErrorSummary errorFieldNames={errorFieldNames} />
+      <ErrorSummary errors={errorFieldNames} />
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, DialogActions, TextField, Typography } from '@material-ui/core';
@@ -19,10 +19,13 @@ import Modal from '../../components/Modal';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-import { RegistrationStatus, DoiRequestStatus } from '../../types/registration.types';
+import { RegistrationStatus, DoiRequestStatus, Registration, RegistrationTab } from '../../types/registration.types';
 import { createDoiRequest, publishRegistration, updateDoiRequest } from '../../api/registrationApi';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { getRegistrationPath } from '../../utils/urlPaths';
+import { validateYupSchema, yupToFormErrors } from 'formik';
+import { CustomError, getErrorFieldNamesAcrossTabs } from '../../utils/formik-helpers';
+import { ErrorSummary } from '../registration/ErrorSummary';
 
 const StyledStatusBar = styled(Card)`
   display: flex;
@@ -75,6 +78,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
   const [isLoading, setIsLoading] = useState(LoadingName.None);
   const toggleRequestDoiModal = () => setOpenRequestDoiModal((state) => !state);
+  const [errors, setErrors] = useState<{ [key: number]: CustomError[] }>();
 
   const sendDoiRequest = async () => {
     setIsLoading(LoadingName.RequestDoi);
@@ -128,7 +132,15 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     }
   };
 
-  const registrationIsValid = registrationValidationSchema.isValidSync(registration, {
+  const registrationIsValid = !(
+    errors &&
+    (errors[RegistrationTab.Description].length > 0 ||
+      errors[RegistrationTab.ResourceType].length > 0 ||
+      errors[RegistrationTab.Contributors].length > 0 ||
+      errors[RegistrationTab.FilesAndLicenses].length > 0)
+  );
+
+  registrationValidationSchema.isValidSync(registration, {
     context: {
       publicationContextType: registration.entityDescription.reference.publicationContext.type,
       publicationInstanceType: registration.entityDescription.reference.publicationInstance.type,
@@ -136,116 +148,133 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     },
   });
 
+  useEffect(() => {
+    try {
+      validateYupSchema<Registration>(registration, registrationValidationSchema, true, {
+        publicationContextType: registration.entityDescription.reference.publicationContext.type,
+        publicationInstanceType: registration.entityDescription.reference.publicationInstance.type,
+        publicationStatus: registration.status,
+      });
+    } catch (e) {
+      const yupErrors = yupToFormErrors(e);
+      const errorFieldNames = getErrorFieldNamesAcrossTabs(registration, yupErrors);
+      setErrors(errorFieldNames);
+    }
+  }, [registration]);
+
   const isOwner = user && user.isCreator && owner === user.id;
   const isCurator = user && user.isCurator && user.customerId === publisher.id;
   const hasNvaDoi = !!doi || doiRequest;
   const isPublishedRegistration = status === RegistrationStatus.PUBLISHED;
 
   return isOwner || isCurator ? (
-    <StyledStatusBar data-testid="public-registration-status">
-      <StyledStatusBarDescription>
-        {isPublishedRegistration ? (
-          <StyledPublishedStatusIcon fontSize="large" />
-        ) : (
-          <StyledUnpublishedStatusIcon fontSize="large" />
-        )}
+    <>
+      {errors && <ErrorSummary errors={errors} />}
+      <StyledStatusBar data-testid="public-registration-status">
+        <StyledStatusBarDescription>
+          {isPublishedRegistration ? (
+            <StyledPublishedStatusIcon fontSize="large" />
+          ) : (
+            <StyledUnpublishedStatusIcon fontSize="large" />
+          )}
+          <div>
+            <Typography>
+              {t('common:status')}: {t(`status.${status}`)}
+            </Typography>
+            {!registrationIsValid && <Typography>{t('public_page.current_validation_errors')}</Typography>}
+          </div>
+        </StyledStatusBarDescription>
         <div>
-          <Typography>
-            {t('common:status')}: {t(`status.${status}`)}
-          </Typography>
-          {!registrationIsValid && <Typography>{t('public_page.current_validation_errors')}</Typography>}
-        </div>
-      </StyledStatusBarDescription>
-      <div>
-        <Link to={getRegistrationPath(identifier)}>
-          <Button
-            variant={registrationIsValid ? 'outlined' : 'contained'}
-            color="primary"
-            endIcon={<EditIcon />}
-            data-testid="button-edit-registration">
-            {t('edit_registration')}
-          </Button>
-        </Link>
+          <Link to={getRegistrationPath(identifier)}>
+            <Button
+              variant={registrationIsValid ? 'outlined' : 'contained'}
+              color="primary"
+              endIcon={<EditIcon />}
+              data-testid="button-edit-registration">
+              {t('edit_registration')}
+            </Button>
+          </Link>
 
-        {isCurator && isPublishedRegistration && doiRequest?.status === DoiRequestStatus.Requested && (
-          <>
+          {isCurator && isPublishedRegistration && doiRequest?.status === DoiRequestStatus.Requested && (
+            <>
+              <ButtonWithProgress
+                color="primary"
+                variant="contained"
+                data-testid="button-reject-doi"
+                endIcon={<CloseIcon />}
+                onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Rejected)}
+                isLoading={isLoading === LoadingName.RejectDoi}
+                disabled={!!isLoading}>
+                {t('common:reject_doi')}
+              </ButtonWithProgress>
+              <ButtonWithProgress
+                color="primary"
+                variant="contained"
+                data-testid="button-create-doi"
+                endIcon={<CheckIcon />}
+                onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Approved)}
+                isLoading={isLoading === LoadingName.ApproveDoi}
+                disabled={!!isLoading || !registrationIsValid}>
+                {t('common:create_doi')}
+              </ButtonWithProgress>
+            </>
+          )}
+
+          {!hasNvaDoi && (
             <ButtonWithProgress
+              variant={reference.doi || !isPublishedRegistration ? 'outlined' : 'contained'}
               color="primary"
-              variant="contained"
-              data-testid="button-reject-doi"
-              endIcon={<CloseIcon />}
-              onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Rejected)}
-              isLoading={isLoading === LoadingName.RejectDoi}
-              disabled={!!isLoading}>
-              {t('common:reject_doi')}
+              endIcon={<LocalOfferIcon />}
+              isLoading={isLoading === LoadingName.RequestDoi}
+              data-testid="button-toggle-request-doi"
+              onClick={() => (isPublishedRegistration ? toggleRequestDoiModal() : sendDoiRequest())}>
+              {isPublishedRegistration ? t('public_page.request_doi') : t('public_page.reserve_doi')}
             </ButtonWithProgress>
+          )}
+
+          {status === RegistrationStatus.DRAFT && (
             <ButtonWithProgress
-              color="primary"
-              variant="contained"
-              data-testid="button-create-doi"
-              endIcon={<CheckIcon />}
-              onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Approved)}
-              isLoading={isLoading === LoadingName.ApproveDoi}
-              disabled={!!isLoading || !registrationIsValid}>
-              {t('common:create_doi')}
+              disabled={!!isLoading || !registrationIsValid}
+              data-testid="button-publish-registration"
+              color="secondary"
+              endIcon={<CloudUploadIcon />}
+              onClick={onClickPublish}
+              isLoading={isLoading === LoadingName.Publish}>
+              {t('common:publish')}
             </ButtonWithProgress>
-          </>
-        )}
+          )}
+        </div>
 
         {!hasNvaDoi && (
-          <ButtonWithProgress
-            variant={reference.doi || !isPublishedRegistration ? 'outlined' : 'contained'}
-            color="primary"
-            endIcon={<LocalOfferIcon />}
-            isLoading={isLoading === LoadingName.RequestDoi}
-            data-testid="button-toggle-request-doi"
-            onClick={() => (isPublishedRegistration ? toggleRequestDoiModal() : sendDoiRequest())}>
-            {isPublishedRegistration ? t('public_page.request_doi') : t('public_page.reserve_doi')}
-          </ButtonWithProgress>
+          <Modal
+            open={openRequestDoiModal}
+            onClose={toggleRequestDoiModal}
+            headingText={t('public_page.request_doi')}
+            dataTestId="request-doi-modal">
+            <Typography>{t('public_page.request_doi_description')}</Typography>
+            <TextField
+              variant="outlined"
+              multiline
+              rows="4"
+              fullWidth
+              data-testid="request-doi-message"
+              label={t('public_page.message_to_curator')}
+              onChange={(event) => setMessageToCurator(event.target.value)}
+            />
+            <DialogActions>
+              <Button onClick={toggleRequestDoiModal}>{t('common:cancel')}</Button>
+              <ButtonWithProgress
+                variant="contained"
+                color="primary"
+                data-testid="button-send-doi-request"
+                onClick={sendDoiRequest}
+                isLoading={isLoading === LoadingName.RequestDoi}>
+                {t('common:send')}
+              </ButtonWithProgress>
+            </DialogActions>
+          </Modal>
         )}
-
-        {status === RegistrationStatus.DRAFT && (
-          <ButtonWithProgress
-            disabled={!!isLoading || !registrationIsValid}
-            data-testid="button-publish-registration"
-            color="secondary"
-            endIcon={<CloudUploadIcon />}
-            onClick={onClickPublish}
-            isLoading={isLoading === LoadingName.Publish}>
-            {t('common:publish')}
-          </ButtonWithProgress>
-        )}
-      </div>
-
-      {!hasNvaDoi && (
-        <Modal
-          open={openRequestDoiModal}
-          onClose={toggleRequestDoiModal}
-          headingText={t('public_page.request_doi')}
-          dataTestId="request-doi-modal">
-          <Typography>{t('public_page.request_doi_description')}</Typography>
-          <TextField
-            variant="outlined"
-            multiline
-            rows="4"
-            fullWidth
-            data-testid="request-doi-message"
-            label={t('public_page.message_to_curator')}
-            onChange={(event) => setMessageToCurator(event.target.value)}
-          />
-          <DialogActions>
-            <Button onClick={toggleRequestDoiModal}>{t('common:cancel')}</Button>
-            <ButtonWithProgress
-              variant="contained"
-              color="primary"
-              data-testid="button-send-doi-request"
-              onClick={sendDoiRequest}
-              isLoading={isLoading === LoadingName.RequestDoi}>
-              {t('common:send')}
-            </ButtonWithProgress>
-          </DialogActions>
-        </Modal>
-      )}
-    </StyledStatusBar>
+      </StyledStatusBar>
+    </>
   ) : null;
 };

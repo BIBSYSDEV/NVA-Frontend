@@ -1,9 +1,9 @@
 import React from 'react';
-import { FormikProps, getIn, useFormikContext } from 'formik';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
-import { Registration, RegistrationTab } from '../../types/registration.types';
+import { RegistrationTab } from '../../types/registration.types';
+import { CustomError } from '../../utils/formik-helpers';
 
 const StyledErrorBox = styled.div`
   margin-top: 1rem;
@@ -16,50 +16,41 @@ const StyledErrorList = styled.ul`
 `;
 
 interface ErrorSummaryProps {
-  errorFieldNames: {
-    [key: number]: string[]; // Each tab has its own key
+  errors: {
+    [key: number]: CustomError[]; // Each tab has its own key
   };
 }
 
-export const ErrorSummary = ({ errorFieldNames }: ErrorSummaryProps) => {
+export const ErrorSummary = ({ errors }: ErrorSummaryProps) => {
   const { t } = useTranslation('registration');
 
-  return errorFieldNames[RegistrationTab.Description].length > 0 ||
-    errorFieldNames[RegistrationTab.ResourceType].length > 0 ||
-    errorFieldNames[RegistrationTab.Contributors].length > 0 ||
-    errorFieldNames[RegistrationTab.FilesAndLicenses].length > 0 ? (
+  return errors[RegistrationTab.Description].length > 0 ||
+    errors[RegistrationTab.ResourceType].length > 0 ||
+    errors[RegistrationTab.Contributors].length > 0 ||
+    errors[RegistrationTab.FilesAndLicenses].length > 0 ? (
     <StyledErrorBox>
-      <ErrorList heading={t('heading.description')} fieldNames={errorFieldNames[RegistrationTab.Description]} />
-      <ErrorList heading={t('heading.resource_type')} fieldNames={errorFieldNames[RegistrationTab.ResourceType]} />
-      <ErrorList heading={t('heading.contributors')} fieldNames={errorFieldNames[RegistrationTab.Contributors]} />
-      <ErrorList
-        heading={t('heading.files_and_license')}
-        fieldNames={errorFieldNames[RegistrationTab.FilesAndLicenses]}
-      />
+      <ErrorList heading={t('heading.description')} errors={errors[RegistrationTab.Description]} />
+      <ErrorList heading={t('heading.resource_type')} errors={errors[RegistrationTab.ResourceType]} />
+      <ErrorList heading={t('heading.contributors')} errors={errors[RegistrationTab.Contributors]} />
+      <ErrorList heading={t('heading.files_and_license')} errors={errors[RegistrationTab.FilesAndLicenses]} />
     </StyledErrorBox>
   ) : null;
 };
 
 interface ErrorListProps {
   heading: string;
-  fieldNames: string[];
+  errors: CustomError[];
 }
 
-const ErrorList = ({ fieldNames, heading }: ErrorListProps) => {
-  const { t } = useTranslation('formikValues');
-  const { errors }: FormikProps<Registration> = useFormikContext();
-
-  return fieldNames.length > 0 ? (
+const ErrorList = ({ heading, errors }: ErrorListProps) => {
+  return errors.length > 0 ? (
     <>
       <Typography>{heading}</Typography>
       <StyledErrorList>
-        {fieldNames.map((fieldName) => {
-          const translatedFieldName = t(fieldName.replace(/[[\]\d]/g, '').replace(/[.]/g, '-'));
-          const translatedErrorMessage = getIn(errors, fieldName);
-
-          return typeof translatedErrorMessage === 'string' ? (
-            <li key={fieldName}>
-              {translatedFieldName}: {translatedErrorMessage}
+        {errors.map((error) => {
+          return typeof error.field === 'string' && typeof error.message === 'string' ? (
+            <li key={error.field}>
+              {error.field}: {error.message}
             </li>
           ) : null;
         })}
