@@ -13,9 +13,10 @@ const StyledErrorList = styled.ul`
 
 interface ErrorSummaryProps {
   errors: TabErrors;
+  heading?: string;
 }
 
-export const ErrorList = ({ errors }: ErrorSummaryProps) => {
+export const ErrorList = ({ errors, heading }: ErrorSummaryProps) => {
   const { t } = useTranslation('registration');
 
   return errors[RegistrationTab.Description].length > 0 ||
@@ -23,6 +24,11 @@ export const ErrorList = ({ errors }: ErrorSummaryProps) => {
     errors[RegistrationTab.Contributors].length > 0 ||
     errors[RegistrationTab.FilesAndLicenses].length > 0 ? (
     <BackgroundDiv backgroundColor={lightTheme.palette.error.light}>
+      {heading && (
+        <Typography variant="h4" component="h1" paragraph>
+          {heading}
+        </Typography>
+      )}
       <ErrorListElement heading={t('heading.description')} errors={errors[RegistrationTab.Description]} />
       <ErrorListElement heading={t('heading.resource_type')} errors={errors[RegistrationTab.ResourceType]} />
       <ErrorListElement heading={t('heading.contributors')} errors={errors[RegistrationTab.Contributors]} />

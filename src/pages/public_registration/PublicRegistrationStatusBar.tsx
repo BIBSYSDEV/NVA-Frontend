@@ -140,10 +140,10 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
         publicationInstanceType: registration.entityDescription.reference.publicationInstance.type,
         publicationStatus: registration.status,
       });
-    } catch (e) {
-      const yupErrors = yupToFormErrors(e);
-      const newErrors = getErrorsAcrossTabs(registration, yupErrors);
-      setErrors(newErrors);
+    } catch (error) {
+      const formErrors = yupToFormErrors(error);
+      const customErrors = getErrorsAcrossTabs(registration, formErrors);
+      setErrors(customErrors);
     }
   }, [registration]);
 
@@ -160,7 +160,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
 
   return isOwner || isCurator ? (
     <>
-      <ErrorList errors={errors} />
+      <ErrorList errors={errors} heading="Ikke publisert" />
       <StyledStatusBar data-testid="public-registration-status">
         <StyledStatusBarDescription>
           {isPublishedRegistration ? (
