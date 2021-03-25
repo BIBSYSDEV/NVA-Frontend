@@ -15,19 +15,17 @@ import {
 import i18n from '../../../translations/i18n';
 
 const registrationErrorMessage = {
-  titleRequired: i18n.t('feedback:validation.common.is_required', { field: i18n.t('common:title') }),
-  npiSubjectRequired: i18n.t('feedback:validation.common.is_required', {
+  titleRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('common:title') }),
+  npiSubjectRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:description.npi_disciplines'),
   }),
-  publishedDateRequired: i18n.t('feedback:validation.common.is_required', {
+  publishedDateRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:description.date_published'),
   }),
-  publisedDateInvalid: i18n.t('feedback:validation.common.has_invalid_format', {
+  publisedDateInvalid: i18n.t('feedback:validation.has_invalid_format', {
     field: i18n.t('registration:description.date_published'),
   }),
-  fileRequired: i18n.t('feedback:validation.common.is_required', {
-    field: i18n.t('registration:files_and_license.select_version'),
-  }),
+  fileRequired: i18n.t('feedback:validation.minimum_one_file'),
 };
 
 export const registrationValidationSchema = Yup.object().shape({
