@@ -14,7 +14,7 @@ const StyledErrorList = styled.ul`
   margin: 0;
 `;
 
-const StyledErrorListElement = styled.div`
+const StyledErrorListGroup = styled.div`
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 
@@ -55,10 +55,10 @@ export const ErrorList = ({ errors, heading, description, showOpenFormButton = f
       )}
       {description && <Typography>{description}</Typography>}
 
-      <ErrorListElement heading={t('heading.description')} errors={errors[RegistrationTab.Description]} />
-      <ErrorListElement heading={t('heading.resource_type')} errors={errors[RegistrationTab.ResourceType]} />
-      <ErrorListElement heading={t('heading.contributors')} errors={errors[RegistrationTab.Contributors]} />
-      <ErrorListElement heading={t('heading.files_and_license')} errors={errors[RegistrationTab.FilesAndLicenses]} />
+      <ErrorListGroup heading={t('heading.description')} errors={errors[RegistrationTab.Description]} />
+      <ErrorListGroup heading={t('heading.resource_type')} errors={errors[RegistrationTab.ResourceType]} />
+      <ErrorListGroup heading={t('heading.contributors')} errors={errors[RegistrationTab.Contributors]} />
+      <ErrorListGroup heading={t('heading.files_and_license')} errors={errors[RegistrationTab.FilesAndLicenses]} />
 
       {showOpenFormButton && (
         <Button variant="contained" href={`${formUrl}?tab=${firstErrorTab}`} endIcon={<EditIcon />}>
@@ -74,9 +74,9 @@ interface ErrorListProps {
   errors: ErrorSummary[];
 }
 
-const ErrorListElement = ({ heading, errors }: ErrorListProps) =>
+const ErrorListGroup = ({ heading, errors }: ErrorListProps) =>
   errors.length > 0 ? (
-    <StyledErrorListElement>
+    <StyledErrorListGroup>
       <Typography component="h2">{heading}:</Typography>
       <StyledErrorList>
         {errors.map((error, index) => (
@@ -87,5 +87,5 @@ const ErrorListElement = ({ heading, errors }: ErrorListProps) =>
           </li>
         ))}
       </StyledErrorList>
-    </StyledErrorListElement>
+    </StyledErrorListGroup>
   ) : null;
