@@ -85,8 +85,6 @@
     },
     "registration": {
       "isbn_invalid": "Ugyldig ISBN",
-      "first_name_required": "$t(common:first_name) er obligatorisk",
-      "last_name_required": "$t(common:last_name) er obligatorisk",
       "pages_invalid": "$t(registration:resource_type.number_of_pages) har ugyldig format",
       "peer_review_required": "$(registration:resource_type.peer_review) må ha en verdi"
     }
