@@ -1,10 +1,10 @@
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import i18n from '../translations/i18n';
 import * as Yup from 'yup';
 import { Button, DialogActions, TextField } from '@material-ui/core';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import { ErrorMessage as ErrorMessageString } from '../utils/validation/errorMessage';
 import ButtonWithProgress from './ButtonWithProgress';
 
 interface MessageFormProps {
@@ -20,8 +20,14 @@ const initValues: MessageFormData = {
   message: '',
 };
 
+const messageErrorMessage = {
+  messageRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('common:message'),
+  }),
+};
+
 const validationSchema = Yup.object().shape({
-  message: Yup.string().required(ErrorMessageString.REQUIRED),
+  message: Yup.string().required(messageErrorMessage.messageRequired),
 });
 
 export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) => {
