@@ -1,5 +1,5 @@
 import { CancelToken } from 'axios';
-import { CristinProject } from '../types/project.types';
+import { ProjectSearchResponse } from '../types/project.types';
 import { authenticatedApiRequest } from './apiRequest';
 
 export enum ProjectsApiPaths {
@@ -7,7 +7,7 @@ export enum ProjectsApiPaths {
 }
 
 export const searchProjectsByTitle = async (query: string, cancelToken?: CancelToken) =>
-  authenticatedApiRequest<CristinProject[]>({
+  await authenticatedApiRequest<ProjectSearchResponse>({
     url: ProjectsApiPaths.PROJECT,
     params: {
       title: query,

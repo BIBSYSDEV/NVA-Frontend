@@ -9,6 +9,7 @@ import {
 } from '../../../types/publicationFieldNames';
 import { ErrorMessage } from '../errorMessage';
 
+export const emptyStringToNull = (value: string, originalValue: string) => (originalValue === '' ? null : value);
 export const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/g; // ISBN without hyphens
 
 // Common Fields
@@ -17,7 +18,11 @@ const peerReviewedField = Yup.boolean().required(ErrorMessage.REQUIRED);
 const pagesMonographField = Yup.object()
   .nullable()
   .shape({
-    pages: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(1, ErrorMessage.MUST_BE_MIN_1),
+    pages: Yup.number()
+      .typeError(ErrorMessage.INVALID_FORMAT)
+      .min(1, ErrorMessage.MUST_BE_MIN_1)
+      .transform(emptyStringToNull)
+      .nullable(),
   });
 const pagesRangeField = Yup.object()
   .nullable()
@@ -28,8 +33,14 @@ const pagesRangeField = Yup.object()
       .when('end', {
         is: (value: number) => value && !isNaN(value),
         then: Yup.number().max(Yup.ref('end'), ErrorMessage.INVALID_PAGE_INTERVAL),
-      }),
-    end: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(Yup.ref('begin'), ErrorMessage.INVALID_PAGE_INTERVAL),
+      })
+      .transform(emptyStringToNull)
+      .nullable(),
+    end: Yup.number()
+      .typeError(ErrorMessage.INVALID_FORMAT)
+      .min(Yup.ref('begin'), ErrorMessage.INVALID_PAGE_INTERVAL)
+      .transform(emptyStringToNull)
+      .nullable(),
   });
 const publisherField = Yup.string().required(ErrorMessage.REQUIRED);
 
@@ -44,9 +55,21 @@ export const baseReference = Yup.object().shape({
 const journalPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(JournalType)).required(ErrorMessage.REQUIRED),
   peerReviewed: peerReviewedField,
-  articleNumber: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(0, ErrorMessage.MUST_BE_POSITIVE),
-  volume: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(0, ErrorMessage.MUST_BE_POSITIVE),
-  issue: Yup.number().typeError(ErrorMessage.INVALID_FORMAT).min(0, ErrorMessage.MUST_BE_POSITIVE),
+  articleNumber: Yup.number()
+    .typeError(ErrorMessage.INVALID_FORMAT)
+    .min(0, ErrorMessage.MUST_BE_POSITIVE)
+    .transform(emptyStringToNull)
+    .nullable(),
+  volume: Yup.number()
+    .typeError(ErrorMessage.INVALID_FORMAT)
+    .min(0, ErrorMessage.MUST_BE_POSITIVE)
+    .transform(emptyStringToNull)
+    .nullable(),
+  issue: Yup.number()
+    .typeError(ErrorMessage.INVALID_FORMAT)
+    .min(0, ErrorMessage.MUST_BE_POSITIVE)
+    .transform(emptyStringToNull)
+    .nullable(),
   pages: pagesRangeField,
   corrigendumFor: Yup.string()
     .optional()

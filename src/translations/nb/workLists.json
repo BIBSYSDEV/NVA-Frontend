@@ -1,23 +1,18 @@
 {
-  "doi_requests": {
-    "doi_requests": "DOI-forespørsler",
-    "go_to_registration": "Gå til registrering",
-    "no_pending_doi_requests": "Du har ingen ventende DOI-forespørsler",
-    "status": {
-      "APPROVED": "Godkjent",
-      "REJECTED": "Avvist",
-      "REQUESTED": "Under behandling"
-    }
-  },
   "delete_registration": "Slett upublisert registrering",
   "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
-  "for_approval": "Til godkjenning",
   "go_to_public_profile": "Min offentlige profil",
+  "go_to_registration": "Gå til registrering",
   "my_messages": "Mine meldinger",
   "my_registrations": "Mine registreringer",
   "my_worklist": "Min arbeidsliste",
+  "no_messages": "Du har ingen meldinger",
   "no_pending_registrations": "Du har ingen registreringer som venter på godkjenning",
   "published_registrations": "Publiserte registreringer",
   "submitter": "Innsender",
+  "types": {
+    "doi": "DOI-forespørsel",
+    "support": "Brukerstøtte"
+  },
   "unpublished_registrations": "Upubliserte registreringer"
 }

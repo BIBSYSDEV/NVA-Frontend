@@ -1,7 +1,7 @@
-import React, { FC, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
-import { DoiRequestMessage } from '../../types/registration.types';
+import { Message } from '../../types/publication_types/messages.types';
 
 const StyledMessagesContainer = styled.div`
   display: grid;
@@ -19,20 +19,19 @@ const StyledTextTypography = styled(Typography)`
 `;
 
 interface MessageListProps {
-  messages: DoiRequestMessage[];
+  messages: Message[];
 }
-const MessageList: FC<MessageListProps> = ({ messages }) => (
+
+export const MessageList = ({ messages }: MessageListProps) => (
   <StyledMessagesContainer>
     {messages.map((message) => (
-      <Fragment key={message.timestamp}>
+      <Fragment key={message.date}>
         <StyledAuthorTypography>
-          <b data-testid="message-author">{message.author}</b>{' '}
-          <span data-testid="message-timestamp">({new Date(message.timestamp).toLocaleDateString()})</span>:
+          <b data-testid="message-author">{message.sender}</b>{' '}
+          <span data-testid="message-timestamp">({new Date(message.date).toLocaleDateString()})</span>:
         </StyledAuthorTypography>
         <StyledTextTypography data-testid="message-text">{message.text}</StyledTextTypography>
       </Fragment>
     ))}
   </StyledMessagesContainer>
 );
-
-export default MessageList;

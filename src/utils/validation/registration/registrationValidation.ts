@@ -1,14 +1,15 @@
 import * as Yup from 'yup';
 import { LanguageValues } from '../../../types/language.types';
-import { BookType, PublicationType } from '../../../types/publicationFieldNames';
+import { PublicationType } from '../../../types/publicationFieldNames';
 import { ErrorMessage } from '../errorMessage';
-import { contributorValidationSchema } from './contributorValidation';
+import { contributorsValidationSchema } from './contributorValidation';
 import { fileValidationSchema } from './fileValidation';
 import {
   baseReference,
   bookReference,
   chapterReference,
   degreeReference,
+  emptyStringToNull,
   journalReference,
   reportReference,
 } from './referenceValidation';
@@ -25,20 +26,12 @@ export const registrationValidationSchema = Yup.object().shape({
     }),
     date: Yup.object().shape({
       year: Yup.number().required(ErrorMessage.REQUIRED),
-      month: Yup.number()
-        .nullable()
-        .transform((value: string, originalValue: string) => (originalValue === '' ? null : value)),
-      day: Yup.number()
-        .nullable()
-        .transform((value: string, originalValue: string) => (originalValue === '' ? null : value)),
+      month: Yup.number().transform(emptyStringToNull).nullable(),
+      day: Yup.number().transform(emptyStringToNull).nullable(),
     }),
     language: Yup.string().url().oneOf(Object.values(LanguageValues)),
     projects: Yup.array().of(Yup.object()), // TODO
-    contributors: Yup.array().when('$publicationInstanceType', {
-      is: BookType.ANTHOLOGY,
-      then: Yup.array().of(contributorValidationSchema).min(1, ErrorMessage.MISSING_EDITOR),
-      otherwise: Yup.array().of(contributorValidationSchema).min(1, ErrorMessage.MISSING_AUTHOR),
-    }),
+    contributors: contributorsValidationSchema,
     reference: baseReference
       .when('$publicationContextType', {
         is: PublicationType.PUBLICATION_IN_JOURNAL,

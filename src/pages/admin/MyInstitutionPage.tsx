@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import SaveIcon from '@material-ui/icons/Save';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-import Card from '../../components/Card';
 import ListSkeleton from '../../components/ListSkeleton';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
@@ -20,7 +19,10 @@ import {
 import { NotificationVariant } from '../../types/notification.types';
 import { useFetchCustomerInstitution } from '../../utils/hooks/useFetchCustomerInstitution';
 import { myInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
-import { CustomerInstitutionTextField, SelectInstitutionField } from './customerInstitutionFields';
+import { CustomerInstitutionTextField } from './customerInstitutionFields/CustomerInstitutionTextField';
+import { SelectInstitutionField } from './customerInstitutionFields/SelectInstitutionField';
+import BackgroundDiv from '../../components/BackgroundDiv';
+import lightTheme from '../../themes/lightTheme';
 
 const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
   margin-top: 2rem;
@@ -49,7 +51,7 @@ const MyCustomerInstitutionPage = () => {
   return (
     <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('common:my_institution')}</PageHeader>
-      <Card>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
         {isLoadingCustomerInstitution ? (
           <ListSkeleton arrayLength={4} minWidth={100} height={80} />
         ) : (
@@ -93,7 +95,7 @@ const MyCustomerInstitutionPage = () => {
             )}
           </Formik>
         )}
-      </Card>
+      </BackgroundDiv>
     </StyledPageWrapperWithMaxWidth>
   );
 };

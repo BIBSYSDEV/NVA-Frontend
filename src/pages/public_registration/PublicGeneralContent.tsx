@@ -123,7 +123,7 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
           <>
             {publicationInstance.type === JournalType.CORRIGENDUM && (
               <>
-                <Typography variant="h3">{t('references.original_article')}</Typography>
+                <Typography variant="h3">{t('resource_type.original_article')}</Typography>
                 <RegistrationSummary id={(publicationInstance as JournalPublicationInstance).corrigendumFor} />
               </>
             )}

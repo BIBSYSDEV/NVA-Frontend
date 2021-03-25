@@ -1,13 +1,34 @@
-import React, { FC } from 'react';
-import { Trans } from 'react-i18next';
+import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
+import { useParams } from 'react-router';
 import { Link, Typography } from '@material-ui/core';
 import { MessageForm } from '../../components/MessageForm';
+import { addMessage } from '../../api/registrationApi';
+import { useDispatch } from 'react-redux';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { MessageType } from '../../types/publication_types/messages.types';
 
 interface SupportModalContentProps {
   closeModal: () => void;
 }
 
-export const SupportModalContent: FC<SupportModalContentProps> = ({ closeModal }) => {
+export const SupportModalContent = ({ closeModal }: SupportModalContentProps) => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation('feedback');
+  const { identifier } = useParams<{ identifier: string }>();
+
+  const sendMessage = async (message: string) => {
+    const messageResponse = await addMessage(identifier, message, MessageType.Support);
+    if (messageResponse) {
+      if (messageResponse.error) {
+        dispatch(setNotification(t('error.send_message')));
+      } else {
+        dispatch(setNotification(t('success.send_message')));
+        closeModal();
+      }
+    }
+  };
+
   return (
     <>
       <Typography>
@@ -16,16 +37,7 @@ export const SupportModalContent: FC<SupportModalContentProps> = ({ closeModal }
         </Trans>
       </Typography>
 
-      <MessageForm
-        confirmAction={(message) => {
-          // TODO: Send message to backend
-          // eslint-disable-next-line no-console
-          console.log('Support Message:', message);
-          closeModal();
-          // dispatch(setNotification(t('feedback:success.message_sent')));
-        }}
-        cancelAction={closeModal}
-      />
+      <MessageForm confirmAction={sendMessage} cancelAction={closeModal} />
     </>
   );
 };

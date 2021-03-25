@@ -2,13 +2,9 @@ import { ContributorRole } from '../../types/contributor.types';
 import { LanguageValues } from '../../types/language.types';
 import { BackendTypeNames } from '../../types/publication_types/commonRegistration.types';
 import { JournalType, PublicationType } from '../../types/publicationFieldNames';
-import {
-  DoiRequestStatus,
-  JournalRegistration,
-  Registration,
-  RegistrationStatus,
-} from '../../types/registration.types';
+import { JournalRegistration, RegistrationStatus } from '../../types/registration.types';
 import { mockCustomerInstitution } from './mockCustomerInstitutions';
+import { MessageType, SupportRequest } from '../../types/publication_types/messages.types';
 
 export const mockRegistration: JournalRegistration = {
   type: BackendTypeNames.PUBLICATION,
@@ -57,7 +53,6 @@ export const mockRegistration: JournalRegistration = {
         type: BackendTypeNames.CONTRIBUTOR,
         affiliations: [],
         correspondingAuthor: true,
-        email: 'test@test.no',
         identity: {
           type: BackendTypeNames.IDENTITY,
           id: '901790000000',
@@ -77,7 +72,6 @@ export const mockRegistration: JournalRegistration = {
           },
         ],
         correspondingAuthor: false,
-        email: '',
         identity: {
           type: BackendTypeNames.IDENTITY,
           name: 'Osteloff, Oddny',
@@ -114,31 +108,39 @@ export const mockRegistration: JournalRegistration = {
   },
 };
 
-export const mockRegistrationWithPendingDoiRequest: JournalRegistration = {
-  ...mockRegistration,
-  doiRequest: {
-    type: 'DoiRequest',
-    createdDate: new Date(2020, 1).toISOString(),
-    modifiedDate: new Date(2020, 3).toISOString(),
-    status: DoiRequestStatus.Requested,
-    messages: [
+export const mockMessages: SupportRequest[] = [
+  {
+    publication: mockRegistration,
+    messageCollections: [
       {
-        text: 'Hello Mr. Curator! A have a question about this publication, okay?',
-        author: 'creator@unit.no',
-        timestamp: new Date(2020, 1).toISOString(),
-      },
-      {
-        text: 'Yes, how may I assist you my dear friend?',
-        author: 'curator@unit.no',
-        timestamp: new Date(2020, 2).toISOString(),
-      },
-      {
-        text: "I don't know...",
-        author: 'creator@unit.no',
-        timestamp: new Date(2020, 3).toISOString(),
+        messageType: MessageType.Support,
+        messages: [
+          {
+            text: 'Hello Mr. Curator! A have a question about this publication, okay?',
+            sender: 'creator@unit.no',
+            owner: 'creator@unit.no',
+            date: new Date(2020, 1).toISOString(),
+            id: 'http://test.no/1',
+            identifier: '1',
+          },
+          {
+            text: 'Yes, how may I assist you my dear friend?',
+            sender: 'curator@unit.no',
+            owner: 'creator@unit.no',
+            date: new Date(2020, 2).toISOString(),
+            id: 'http://test.no/2',
+            identifier: '2',
+          },
+          {
+            text: "I don't know...",
+            sender: 'creator@unit.no',
+            owner: 'creator@unit.no',
+            date: new Date(2020, 3).toISOString(),
+            id: 'http://test.no/3',
+            identifier: '3',
+          },
+        ],
       },
     ],
   },
-};
-
-export const mockRegistrationsWithPendingDoiRequest: Registration[] = [mockRegistrationWithPendingDoiRequest];
+];

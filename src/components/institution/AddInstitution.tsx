@@ -1,5 +1,5 @@
 import { Field, FieldProps, Form, Formik } from 'formik';
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Button, CircularProgress, Typography } from '@material-ui/core';
@@ -30,7 +30,7 @@ interface AddInstitutionProps {
   onClose?: () => void;
 }
 
-const AddInstitution: FC<AddInstitutionProps> = ({ onSubmit, onClose }) => {
+const AddInstitution = ({ onSubmit, onClose }: AddInstitutionProps) => {
   const { t } = useTranslation('common');
   const [institutions, isLoadingInstitutions] = useFetchInstitutions();
   const [selectedInstitutionId, setSelectedInstitutionId] = useState('');
@@ -43,6 +43,7 @@ const AddInstitution: FC<AddInstitutionProps> = ({ onSubmit, onClose }) => {
           {({ field: { name, value }, form: { setFieldValue, isSubmitting } }: FieldProps) => (
             <StyledInstitutionSearchContainer>
               <InstitutionAutocomplete
+                id={name}
                 institutions={institutions}
                 isLoading={isLoadingInstitutions}
                 required

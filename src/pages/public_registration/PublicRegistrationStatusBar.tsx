@@ -20,8 +20,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { RegistrationStatus, DoiRequestStatus } from '../../types/registration.types';
-import { createDoiRequest, updateDoiRequest } from '../../api/doiRequestApi';
-import { publishRegistration } from '../../api/registrationApi';
+import { createDoiRequest, publishRegistration, updateDoiRequest } from '../../api/registrationApi';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { getRegistrationPath } from '../../utils/urlPaths';
 
@@ -129,7 +128,14 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     }
   };
 
-  const registrationIsValid = registrationValidationSchema.isValidSync(registration);
+  const registrationIsValid = registrationValidationSchema.isValidSync(registration, {
+    context: {
+      publicationContextType: registration.entityDescription.reference.publicationContext.type,
+      publicationInstanceType: registration.entityDescription.reference.publicationInstance.type,
+      publicationStatus: registration.status,
+    },
+  });
+
   const isOwner = user && user.isCreator && owner === user.id;
   const isCurator = user && user.isCurator && user.customerId === publisher.id;
   const hasNvaDoi = !!doi || doiRequest;

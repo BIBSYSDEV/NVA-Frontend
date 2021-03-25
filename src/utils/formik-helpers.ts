@@ -1,15 +1,15 @@
+import deepmerge, { Options } from 'deepmerge';
 import { FormikErrors, FormikTouched, getIn } from 'formik';
-import {
-  FileFieldNames,
-  SpecificFileFieldNames,
-  SpecificContributorFieldNames,
-  ContributorFieldNames,
-  PublicationType,
-} from '../types/publicationFieldNames';
 import { Contributor } from '../types/contributor.types';
 import { File } from '../types/file.types';
+import {
+  ContributorFieldNames,
+  FileFieldNames,
+  PublicationType,
+  SpecificContributorFieldNames,
+  SpecificFileFieldNames,
+} from '../types/publicationFieldNames';
 import { Registration } from '../types/registration.types';
-import deepmerge, { Options } from 'deepmerge';
 
 interface CustomError {
   fieldName: string;
@@ -88,19 +88,13 @@ export const getAllFileFields = (files: File[]): string[] => {
 };
 
 export const getAllContributorFields = (contributors: Contributor[]): string[] => {
-  const fieldNames: string[] = [];
-  if (contributors.length === 0) {
-    fieldNames.push(ContributorFieldNames.CONTRIBUTORS);
-  } else {
-    contributors.forEach((contributor, index) => {
-      const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
-      fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`);
-      fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`);
-      if (contributor.correspondingAuthor) {
-        fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`);
-      }
-    });
-  }
+  const fieldNames: string[] = [ContributorFieldNames.CONTRIBUTORS];
+
+  contributors.forEach((contributor, index) => {
+    const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
+    fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`);
+    fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`);
+  });
   return fieldNames;
 };
 
@@ -119,7 +113,7 @@ export const touchedDescriptionTabFields: FormikTouched<Registration> = {
   },
 };
 
-export const touchedReferenceTabFields = (publicationType: PublicationType | ''): FormikTouched<unknown> => {
+export const touchedResourceTabFields = (publicationType: PublicationType | ''): FormikTouched<unknown> => {
   switch (publicationType) {
     case PublicationType.PUBLICATION_IN_JOURNAL:
       return {
@@ -211,7 +205,6 @@ export const touchedContributorTabFields = (contributors: Contributor[]): Formik
     contributors: contributors.map((contributor) => ({
       correspondingAuthor: true,
       sequence: true,
-      email: contributor.correspondingAuthor,
     })),
   },
 });

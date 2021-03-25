@@ -1,0 +1,34 @@
+import React, { FC } from 'react';
+import { Field, FieldProps, useFormikContext } from 'formik';
+import { useTranslation } from 'react-i18next';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { PublicationTableNumber } from '../../../../utils/constants';
+import { mapLevel, publicationContextToPublisher } from './resource-helpers';
+import { Registration } from '../../../../types/registration.types';
+import PublicationChannelSearch from './PublicationChannelSearch';
+
+const SeriesField: FC = () => {
+  const { t } = useTranslation('registration');
+  const { setFieldValue } = useFormikContext<Registration>();
+
+  return (
+    <Field name={ResourceFieldNames.SERIES_TITLE}>
+      {({ field: { name, value } }: FieldProps<string>) => (
+        <PublicationChannelSearch
+          dataTestId="series-search-input"
+          publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
+          label={t('common:title')}
+          placeholder={t('resource_type.search_for_series')}
+          errorFieldName={name}
+          setValue={(newValue) => {
+            setFieldValue(name, newValue?.title ?? '');
+            setFieldValue(ResourceFieldNames.PUBLICATION_CONTEXT_LEVEL, newValue ? mapLevel(newValue.level) : '');
+          }}
+          value={publicationContextToPublisher({ title: value })}
+        />
+      )}
+    </Field>
+  );
+};
+
+export default SeriesField;

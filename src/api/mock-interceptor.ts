@@ -12,19 +12,14 @@ import { mockSchoolOfSportDepartment } from '../utils/testfiles/institutions/sch
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import { mockRoles } from '../utils/testfiles/mock_feide_user';
 import { mockCustomerInstitution, mockCustomerInstitutions } from '../utils/testfiles/mockCustomerInstitutions';
-import {
-  mockRegistrationsWithPendingDoiRequest,
-  mockRegistrationWithPendingDoiRequest,
-} from '../utils/testfiles/mockRegistration';
 import mockMyRegistrations from '../utils/testfiles/my_registrations.json';
-import mockProjects from '../utils/testfiles/projects_real.json';
+import { mockProjectSearch } from '../utils/testfiles/mockProjects';
 import mockPublishedRegistrations from '../utils/testfiles/published_registrations.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import { mockSearchResults } from '../utils/testfiles/search_results';
 import { threeMockSearchResults } from '../utils/testfiles/three_search_results';
 import { AuthorityApiPaths } from './authorityApi';
 import { CustomerInstitutionApiPaths } from './customerInstitutionsApi';
-import { DoiRequestApiPaths } from './doiRequestApi';
 import { FileApiPaths } from './fileApi';
 import { InstitutionApiPaths } from './institutionApi';
 import { ProjectsApiPaths } from './projectApi';
@@ -32,6 +27,7 @@ import { PublicationChannelApiPaths } from './publicationChannelApi';
 import { PublicationsApiPaths } from './registrationApi';
 import { RoleApiPaths } from './roleApi';
 import { SearchApiPaths } from './searchApi';
+import { mockMessages, mockRegistration } from '../utils/testfiles/mockRegistration';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -80,27 +76,21 @@ export const interceptRequestsOnMock = () => {
   //MY PUBLICATIONS
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATIONS_BY_OWNER}/*`)).reply(200, mockMyRegistrations);
 
-  // WORKLIST
-  mock.onGet(new RegExp(`${DoiRequestApiPaths.DOI_REQUEST}/*`)).reply(200, mockRegistrationsWithPendingDoiRequest);
-  mock.onGet(new RegExp(`${PublicationsApiPaths.FOR_APPROVAL}/*`)).reply(200, mockMyRegistrations.publications);
-
   //MY MESSAGES
-  mock
-    .onGet(new RegExp(`${DoiRequestApiPaths.DOI_REQUEST}?role=Creator`))
-    .reply(200, mockRegistrationsWithPendingDoiRequest);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.MESSAGES}`)).reply(200, mockMessages);
 
   //PUBLICATION
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/new`)).reply(200, emptyRegistration);
   mock
     .onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/4327439`))
     .reply(200, { ...emptyRegistration, owner: 'tu@unit.no' });
-  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/*`)).reply(200, mockRegistrationWithPendingDoiRequest);
+  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/*`)).reply(200, mockRegistration);
 
   // lookup DOI
   mock.onPost(new RegExp(`${PublicationsApiPaths.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
 
   // PROJECT
-  mock.onGet(new RegExp(`${ProjectsApiPaths.PROJECT}/*`)).reply(200, mockProjects);
+  mock.onGet(new RegExp(`${ProjectsApiPaths.PROJECT}/*`)).reply(200, mockProjectSearch);
 
   // PUBLICATION CHANNEL
   mock.onPost(new RegExp(`${API_URL}${PublicationChannelApiPaths.SEARCH}`)).reply(200, mockNsdPublisers);

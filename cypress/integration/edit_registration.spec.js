@@ -16,8 +16,8 @@ describe('User opens an item in the My Registrations list', () => {
       'Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting'
     );
 
-    // Reference tab
-    cy.get('[data-testid=nav-tabpanel-reference]').click({ force: true });
+    // Resource Type tab
+    cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
     cy.contains('Contribution to journal');
 
     // Contributors tab

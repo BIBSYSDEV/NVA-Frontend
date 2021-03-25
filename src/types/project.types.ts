@@ -1,50 +1,73 @@
-import { BackendType } from './registration.types';
+import { LanguageString } from './publication_types/commonRegistration.types';
 
-export interface ResearchProject extends BackendType {
+export interface ResearchProject {
+  type: 'ResearchProject';
   id: string;
   name: string;
   grants?: Grant[];
   approvals?: Approval[];
 }
 
-interface Grant extends BackendType {
+interface Grant {
+  type: 'Grant';
   id: string;
   source: string;
 }
 
-interface Approval extends BackendType {
+interface Approval {
+  type: 'Approval';
   applicationCode: string;
   approvedBy: string;
   approvalStatus: string;
   date: Date;
 }
 
+type OrganizationType = 'Organization';
+
+interface ProjectIdentifier {
+  type: 'CristinIdentifier';
+  value: string;
+}
+
+interface CoordinatingInstitution {
+  type: OrganizationType;
+  id: string;
+  name: LanguageString;
+}
+
+interface ProjectContributor {
+  type: 'ProjectManager' | 'ProjectParticipant';
+  identity: {
+    type: 'Person';
+    id: string;
+    firstName: string;
+    lastName: string;
+  };
+  affiliation: {
+    id: string;
+    type: OrganizationType;
+    name: LanguageString;
+  };
+}
+
 export interface CristinProject {
-  cristinProjectId: string;
-  mainLanguage: string;
-  titles: CristinProjectTitle[];
-  participants: CristinProjectParticipant[];
-  institutions: CristinProjectInstitution[];
-  fundings?: CristinProjectFunding[];
-}
-
-interface CristinProjectTitle {
+  type: 'Project';
+  id: string;
+  identifier: ProjectIdentifier[];
   title: string;
+  alternativeTitles: LanguageString[];
   language: string;
+  startDate: string;
+  endDate: string;
+  coordinatingInstitution: CoordinatingInstitution;
+  contributors: ProjectContributor[];
 }
 
-interface CristinProjectParticipant {
-  cristinPersonId: string;
-  fullName: string;
-}
-
-interface CristinProjectInstitution {
-  cristinInstitutionId: string;
-  name: string;
-  language: string;
-}
-
-export interface CristinProjectFunding {
-  fundingSourceCode: string;
-  projectCode: string;
+export interface ProjectSearchResponse {
+  id: string;
+  size: number;
+  searchString: string;
+  processingTime: number;
+  firstRecord: number;
+  hits?: CristinProject[];
 }

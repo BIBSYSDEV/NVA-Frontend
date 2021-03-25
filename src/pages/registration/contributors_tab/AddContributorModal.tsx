@@ -5,8 +5,9 @@ import Modal from '../../../components/Modal';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
 import { ContributorRole } from '../../../types/contributor.types';
-import AddContributorModalContent from './components/AddContributorModalContent';
-import CreateContributorModalContent from './components/CreateContributorModalContent';
+import { getAddContributorText } from '../../../utils/validation/registration/contributorTranslations';
+import { AddContributorModalContent } from './components/AddContributorModalContent';
+import { CreateContributorModalContent } from './components/CreateContributorModalContent';
 
 interface AddContributorModalProps {
   onAuthorSelected: (author: Authority) => void;
@@ -46,16 +47,12 @@ const AddContributorModal = ({
 
   return (
     <Modal
-      aria-describedby="add-contributor-modal"
-      aria-labelledby="add-contributor-modal"
       headingText={
         createNewAuthor
           ? t('contributors.create_new_author')
           : initialSearchTerm
           ? t('contributors.verify_person')
-          : contributorRole === ContributorRole.EDITOR
-          ? t('contributors.add_editor')
-          : t('contributors.add_author')
+          : getAddContributorText(contributorRole)
       }
       onClose={handleCloseModal}
       open={open}

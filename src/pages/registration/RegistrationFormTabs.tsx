@@ -6,7 +6,7 @@ import { Tabs } from '@material-ui/core';
 
 import LinkTab from '../../components/LinkTab';
 import { Registration, RegistrationTab } from '../../types/registration.types';
-import { ReferenceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
+import { ResourceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 import {
   hasTouchedError,
   getAllFileFields,
@@ -15,7 +15,7 @@ import {
   touchedContributorTabFields,
   touchedDescriptionTabFields,
   touchedFilesTabFields,
-  touchedReferenceTabFields,
+  touchedResourceTabFields,
 } from '../../utils/formik-helpers';
 
 const StyledTabs = styled(Tabs)`
@@ -26,16 +26,8 @@ const StyledTabs = styled(Tabs)`
   }
 `;
 
-const a11yProps = (tabDescription: string) => {
-  return {
-    id: `nav-tab-${tabDescription}`,
-    'aria-controls': `nav-tabpanel-${tabDescription}`,
-    'data-testid': `nav-tabpanel-${tabDescription}`,
-  };
-};
-
 const descriptionFieldNames = Object.values(DescriptionFieldNames);
-const referenceFieldNames = Object.values(ReferenceFieldNames);
+const resourceFieldNames = Object.values(ResourceFieldNames);
 
 const noTouchedTab = -1;
 type HighestTouchedTab = RegistrationTab | typeof noTouchedTab;
@@ -65,8 +57,8 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
     // All fields for each tab
     const tabFields = {
       [RegistrationTab.Description]: () => touchedDescriptionTabFields,
-      [RegistrationTab.Reference]: () =>
-        touchedReferenceTabFields(valuesRef.current.entityDescription.reference.publicationContext.type),
+      [RegistrationTab.ResourceType]: () =>
+        touchedResourceTabFields(valuesRef.current.entityDescription.reference.publicationContext.type),
       [RegistrationTab.Contributors]: () =>
         touchedContributorTabFields(valuesRef.current.entityDescription.contributors),
       [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(valuesRef.current.fileSet.files),
@@ -96,7 +88,6 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
 
   return (
     <StyledTabs
-      aria-label="navigation"
       onChange={(_, value) => setTabNumber(value)}
       scrollButtons="auto"
       textColor="primary"
@@ -104,19 +95,19 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
       value={tabNumber}
       variant="scrollable">
       <LinkTab
+        data-testid="nav-tabpanel-description"
         label={t('heading.description')}
-        {...a11yProps('description')}
         error={hasTouchedError(errors, touched, descriptionFieldNames)}
       />
       <LinkTab
-        label={t('heading.reference')}
-        {...a11yProps('reference')}
-        error={hasTouchedError(errors, touched, referenceFieldNames)}
+        data-testid="nav-tabpanel-resource-type"
+        label={t('heading.resource_type')}
+        error={hasTouchedError(errors, touched, resourceFieldNames)}
       />
 
       <LinkTab
+        data-testid="nav-tabpanel-contributors"
         label={t('heading.contributors')}
-        {...a11yProps('contributors')}
         error={hasTouchedError(
           errors,
           touched,
@@ -124,8 +115,8 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
         )}
       />
       <LinkTab
+        data-testid="nav-tabpanel-files-and-license"
         label={t('heading.files_and_license')}
-        {...a11yProps('files-and-license')}
         error={hasTouchedError(errors, touched, getAllFileFields(valuesRef.current.fileSet.files))}
       />
     </StyledTabs>

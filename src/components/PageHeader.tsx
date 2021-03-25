@@ -56,20 +56,16 @@ export const PageHeader = ({ backPath, children, ...props }: PageHeaderProps) =>
         {t('back')}
       </Button>
       <StyledTypography variant="h1" onClick={toggleFullText} {...props}>
-        {showFullText ? (
-          children
-        ) : (
-          <TextTruncate
-            line={2}
-            truncateText="..."
-            text={children}
-            textTruncateChild={
-              <StyledButton variant="contained" onClick={toggleFullText}>
-                {showFullText ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-              </StyledButton>
-            }
-          />
-        )}
+        <TextTruncate
+          line={showFullText ? false : 2}
+          truncateText="..."
+          text={children}
+          textTruncateChild={
+            <StyledButton variant="contained" onClick={toggleFullText}>
+              {showFullText ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </StyledButton>
+          }
+        />
       </StyledTypography>
     </StyledHeader>
   );
