@@ -70,5 +70,38 @@
     "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",
     "update_registration": "Registreringen er oppdatert"
+  },
+  "validation": {
+    "common": {
+      "is_required": "{{field}} er obligatorisk",
+      "has_invalid_format": "{{field}} har ugyldig format"
+    },
+    "customer": {
+      "display_name_required": "$t(admin:display_name) er obligatorisk",
+      "feide_id_required": "$t(admin:feide_organization_id) er obligatorisk",
+      "institution_required": "$t(common:institution) er obligatorisk",
+      "short_name_required": "$t(admin:short_name) er obligatorisk"
+    },
+    "message": {
+      "message_required": "$t(common:message) er obligatorisk"
+    },
+    "registration": {
+      "date_published_invalid": "$t(registration:description.date_published) har ugyldig format",
+      "embargo_date_invalid": "$t(registration:files_and_license.embargo_date) har ugyldig format",
+      "embargo_date_must_be_future": "$t(registration:files_and_license.embargo_date) må være i fremtiden",
+      "file_version_required": "$t(registration:files_and_license.select_version) må ha en verdi",
+      "isbn_invalid": "Ugyldig ISBN",
+      "author_required": "Du må ha minst en forfatter på denne registreringen",
+      "editor_required": "Du må ha minst en redaktør på denne registreringen",
+      "supervisor_required": "Du må ha minst en veileder på denne registreringen",
+      "date_published_required": "$t(registration:description.date_published) er obligatorisk",
+      "title_required": "$t(common:title) er obligatorisk",
+      "license_required": "$t(registration:files_and_license.conditions_for_using_file) er obligatorisk",
+      "npi_required": "$t(registration:description.npi_disciplines) er obligatorisk",
+      "first_name_required": "$t(common:first_name) er obligatorisk",
+      "last_name_required": "$t(common:last_name) er obligatorisk",
+      "pages_invalid": "$t(registration:resource_type.number_of_pages) har ugyldig format",
+      "peer_review_required": "$(registration:resource_type.peer_review) må ha en verdi"
+    }
   }
 }

@@ -1,7 +1,6 @@
 import * as Yup from 'yup';
 import { LanguageValues } from '../../../types/language.types';
 import { PublicationType } from '../../../types/publicationFieldNames';
-import { ErrorMessage } from '../errorMessage';
 import { contributorsValidationSchema } from './contributorValidation';
 import { fileValidationSchema } from './fileValidation';
 import {
@@ -13,19 +12,38 @@ import {
   journalReference,
   reportReference,
 } from './referenceValidation';
+import i18n from '../../../translations/i18n';
+
+const registrationErrorMessage = {
+  titleRequired: i18n.t('feedback:validation.common.is_required', { field: i18n.t('common:title') }),
+  npiSubjectRequired: i18n.t('feedback:validation.common.is_required', {
+    field: i18n.t('registration:description.npi_disciplines'),
+  }),
+  publishedDateRequired: i18n.t('feedback:validation.common.is_required', {
+    field: i18n.t('registration:description.date_published'),
+  }),
+  publisedDateInvalid: i18n.t('feedback:validation.common.has_invalid_format', {
+    field: i18n.t('registration:description.date_published'),
+  }),
+  fileRequired: i18n.t('feedback:validation.common.is_required', {
+    field: i18n.t('registration:files_and_license.select_version'),
+  }),
+};
 
 export const registrationValidationSchema = Yup.object().shape({
   entityDescription: Yup.object().shape({
-    mainTitle: Yup.string().required(ErrorMessage.REQUIRED),
+    mainTitle: Yup.string().required(registrationErrorMessage.titleRequired),
     abstract: Yup.string(),
     description: Yup.string(),
     tags: Yup.array().of(Yup.string()),
     npiSubjectHeading: Yup.string().when('$publicationContextType', {
       is: PublicationType.BOOK,
-      then: Yup.string().required(ErrorMessage.REQUIRED),
+      then: Yup.string().required(registrationErrorMessage.npiSubjectRequired),
     }),
     date: Yup.object().shape({
-      year: Yup.number().required(ErrorMessage.REQUIRED),
+      year: Yup.number()
+        .typeError(registrationErrorMessage.publisedDateInvalid)
+        .required(registrationErrorMessage.publishedDateRequired),
       month: Yup.number().transform(emptyStringToNull).nullable(),
       day: Yup.number().transform(emptyStringToNull).nullable(),
     }),
@@ -55,6 +73,6 @@ export const registrationValidationSchema = Yup.object().shape({
       }),
   }),
   fileSet: Yup.object().shape({
-    files: Yup.array().of(fileValidationSchema).min(1, ErrorMessage.MISSING_FILE),
+    files: Yup.array().of(fileValidationSchema).min(1, registrationErrorMessage.fileRequired),
   }),
 });
