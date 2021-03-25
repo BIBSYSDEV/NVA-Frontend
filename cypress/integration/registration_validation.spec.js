@@ -61,12 +61,12 @@ describe('User opens registration form and can see validation errors', () => {
     // Publisher (publicationContext) field
     cy.get('[data-testid=journal-search-field] input').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
+    cy.get('[data-testid=journal-search-field] p').should('not.exist');
     cy.get('[data-testid=journal-search-field] input').clear();
-    cy.contains(ErrorMessage.REQUIRED).should('be.visible');
+    cy.get('[data-testid=journal-search-field] p').contains(ErrorMessage.REQUIRED).should('be.visible');
     cy.get('[data-testid=journal-search-field] input').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
+    cy.get('[data-testid=journal-search-field] p').should('not.exist');
 
     cy.get('[data-testid=volume-field]').click({ force: true }).type('-1');
     cy.get('[data-testid=issue-field]').click({ force: true }).type('-1');
@@ -99,10 +99,9 @@ describe('User opens registration form and can see validation errors', () => {
     // publicationInstance type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-BookMonograph]').click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
-
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
+    cy.get('[data-testid=publication-instance-type] p').contains(ErrorMessage.REQUIRED).should('not.exist');
     cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 2);
 
     // publicationContext
@@ -110,7 +109,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.contains('testament').click({ force: true });
     // NPI Subject
     cy.selectNpiDiscipline('Linguistics');
-    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
+    cy.get('[data-testid=publisher-search-field] p').should('not.exist');
 
     // ISBN and pages
     cy.get('[data-testid=isbn-field] input').type('9781787632714x').type('{enter}');
@@ -138,16 +137,15 @@ describe('User opens registration form and can see validation errors', () => {
     // publicationInstance type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-ReportResearch]').click({ force: true });
-    cy.get('[data-testid=publication-instance-type').contains(ErrorMessage.REQUIRED).should('not.exist');
-
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
+    cy.get('[data-testid=publication-instance-type] p').contains(ErrorMessage.REQUIRED).should('not.exist');
     cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 1);
 
     // publicationContext
     cy.get('[data-testid=publisher-search-field] input').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
+    cy.get('[data-testid=publisher-search-field] p').should('not.exist');
 
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
@@ -161,10 +159,9 @@ describe('User opens registration form and can see validation errors', () => {
     // publicationInstance type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-DegreeBachelor]').click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
-
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
+    cy.get('[data-testid=publication-instance-type] p').contains(ErrorMessage.REQUIRED).should('not.exist');
     cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 1);
 
     // publicationContext
