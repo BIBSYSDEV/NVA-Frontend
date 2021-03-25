@@ -25,18 +25,14 @@ describe('User opens registration form and can see validation errors', () => {
     // Title field
     cy.get('[data-testid=registration-title-field]').contains(ErrorMessage.REQUIRED).should('be.visible');
     cy.get('[data-testid=nav-tabpanel-description]').within(() => cy.get('[data-testid=error-tab]').should('exist'));
-    cy.get('[data-testid=registration-title-input]').click({ force: true }).type('TITLE INPUT');
-    cy.get('[data-testid=registration-title-field]').contains(ErrorMessage.REQUIRED).should('not.exist');
+    cy.get('[data-testid=registration-title-field] input').click({ force: true }).type('TITLE INPUT');
+    cy.get('[data-testid=registration-title-field] p').contains(ErrorMessage.REQUIRED).should('not.exist');
 
     // Date published field
-    cy.get('[data-testid=date-published-field]')
-      .parent()
-      .within(() => cy.get("input[type='text']").click({ force: true }).type('999'));
-    cy.get('[data-testid=date-published-field]').contains(ErrorMessage.INVALID_FORMAT).should('be.visible');
-    cy.get('[data-testid=date-published-field]')
-      .parent()
-      .within(() => cy.get("input[type='text']").clear().click({ force: true }).type('01.01.2000'));
-    cy.get('[data-testid=date-published-field]').contains(ErrorMessage.INVALID_FORMAT).should('not.exist');
+    cy.get('[data-testid=date-published-field] input').click({ force: true }).type('999');
+    cy.get('[data-testid=date-published-field] p').contains(ErrorMessage.INVALID_FORMAT).should('be.visible');
+    cy.get('[data-testid=date-published-field] input').clear().click({ force: true }).type('01.01.2000');
+    cy.get('[data-testid=date-published-field] p').should('not.exist');
 
     cy.get('[data-testid=nav-tabpanel-description]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
@@ -63,12 +59,12 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 1);
 
     // Publisher (publicationContext) field
-    cy.get('[data-testid=journal-search-input]').click({ force: true }).type('test');
+    cy.get('[data-testid=journal-search-field] input').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.exist');
-    cy.get('[data-testid=journal-search-input]').clear();
+    cy.get('[data-testid=journal-search-field] input').clear();
     cy.contains(ErrorMessage.REQUIRED).should('be.visible');
-    cy.get('[data-testid=journal-search-input]').click({ force: true }).type('test');
+    cy.get('[data-testid=journal-search-field] input').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.exist');
 
@@ -110,25 +106,25 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 2);
 
     // publicationContext
-    cy.get('[data-testid=publisher-search-input]').click({ force: true }).type('test');
+    cy.get('[data-testid=publisher-search-field] input').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
     // NPI Subject
     cy.selectNpiDiscipline('Linguistics');
     cy.contains(ErrorMessage.REQUIRED).should('not.exist');
 
     // ISBN and pages
-    cy.get('[data-testid=isbn-input]').type('9781787632714x').type('{enter}');
+    cy.get('[data-testid=isbn-field] input').type('9781787632714x').type('{enter}');
     cy.get('[data-testid=snackbar-warning]').contains(ErrorMessage.INVALID_ISBN);
     cy.get('[data-testid=snackbar-warning]').get('button[title=Close]').click({ force: true });
     cy.get('[data-testid=snackbar-warning]').should('not.exist');
-    cy.get('[data-testid=isbn-input]').type('invalid-isbn');
-    cy.get('[data-testid=pages-input]').type('-1');
+    cy.get('[data-testid=isbn-field] input').type('invalid-isbn');
+    cy.get('[data-testid=pages-field] input').type('-1');
     cy.get('[data-testid=snackbar-warning]').contains(ErrorMessage.INVALID_ISBN);
     cy.get('[data-testid=isbn-chip]').should('have.length', 0);
-    cy.contains(ErrorMessage.MUST_BE_MIN_1);
-    cy.get('[data-testid=pages-input]').clear().type('1a');
-    cy.contains(ErrorMessage.INVALID_FORMAT);
-    cy.get('[data-testid=pages-input]').clear().type('20');
+    cy.get('[data-testid=pages-field] p').contains(ErrorMessage.MUST_BE_MIN_1);
+    cy.get('[data-testid=pages-field] input').clear().type('1a');
+    cy.get('[data-testid=pages-field] p').contains(ErrorMessage.INVALID_FORMAT);
+    cy.get('[data-testid=pages-field] input').clear().type('20');
 
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
@@ -142,14 +138,14 @@ describe('User opens registration form and can see validation errors', () => {
     // publicationInstance type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-ReportResearch]').click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
+    cy.get('[data-testid=publication-instance-type').contains(ErrorMessage.REQUIRED).should('not.exist');
 
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
     cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 1);
 
     // publicationContext
-    cy.get('[data-testid=publisher-search-input]').click({ force: true }).type('test');
+    cy.get('[data-testid=publisher-search-field] input').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
     cy.contains(ErrorMessage.REQUIRED).should('not.exist');
 
@@ -172,9 +168,9 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`p:contains(${ErrorMessage.REQUIRED})`).should('have.length', 1);
 
     // publicationContext
-    cy.get('[data-testid=publisher-search-input]').click({ force: true }).type('test');
+    cy.get('[data-testid=publisher-search-field] input').click({ force: true }).type('test');
     cy.contains('testament').click({ force: true });
-    cy.contains(ErrorMessage.REQUIRED).should('not.exist');
+    cy.get('[data-testid=publisher-search-field] p').should('not.exist');
 
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
@@ -188,7 +184,7 @@ describe('User opens registration form and can see validation errors', () => {
 
     // Add author
     cy.get('[data-testid=add-contributor-Creator]').first().click({ force: true });
-    cy.get('[data-testid=search-input]').first().click({ force: true }).type('test');
+    cy.get('[data-testid=search-field] input').first().click({ force: true }).type('test');
     cy.get('[data-testid=author-radio-button]').first().click({ force: true });
     cy.get('[data-testid=connect-author-button]').click({ force: true });
     cy.contains(ErrorMessage.MISSING_AUTHOR).should('not.exist');
@@ -196,7 +192,7 @@ describe('User opens registration form and can see validation errors', () => {
 
     // Add supervisor
     cy.get('[data-testid=add-contributor-Supervisor]').first().click({ force: true });
-    cy.get('[data-testid=search-input]').last().click({ force: true }).type('test');
+    cy.get('[data-testid=search-field] input').last().click({ force: true }).type('test');
     cy.get('[data-testid=author-radio-button]').last().click({ force: true });
     cy.get('[data-testid=connect-author-button]').click({ force: true });
     cy.contains(ErrorMessage.MISSING_AUTHOR).should('not.exist');

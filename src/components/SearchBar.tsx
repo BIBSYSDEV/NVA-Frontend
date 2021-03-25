@@ -26,13 +26,14 @@ const SearchBar: FC<SearchBarProps> = ({ handleSearch, initialSearchTerm = '' })
         handleSearch(searchTerm);
       }}>
       <StyledTextField
+        id="search-field"
+        data-testid="search-field"
         autoFocus
         fullWidth
         variant="outlined"
         label={t('search')}
         onChange={(event) => setSearchTerm(event.target.value)}
         value={searchTerm}
-        inputProps={{ 'data-testid': 'search-input' }}
         InputProps={{
           endAdornment: (
             <IconButton type="submit" data-testid="search-button">
