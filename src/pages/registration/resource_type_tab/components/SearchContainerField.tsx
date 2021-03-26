@@ -57,7 +57,6 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
             <Autocomplete
               {...autocompleteTranslationProps}
               id={field.name}
-              debug
               aria-labelledby={`${field.name}-label`}
               popupIcon={null}
               options={options}
