@@ -10,17 +10,8 @@ import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
 import { getRegistrationPath } from '../../utils/urlPaths';
 
-const StyledErrorList = styled.ul`
-  margin: 0;
-`;
-
-const StyledErrorListGroup = styled.div`
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-
-  h2 {
-    font-weight: 500;
-  }
+const StyledTabHeading = styled(Typography)`
+  font-weight: 500;
 `;
 
 interface ErrorSummaryProps {
@@ -55,10 +46,12 @@ export const ErrorList = ({ errors, heading, description, showOpenFormButton = f
       )}
       {description && <Typography>{description}</Typography>}
 
-      <ErrorListGroup heading={t('heading.description')} errors={errors[RegistrationTab.Description]} />
-      <ErrorListGroup heading={t('heading.resource_type')} errors={errors[RegistrationTab.ResourceType]} />
-      <ErrorListGroup heading={t('heading.contributors')} errors={errors[RegistrationTab.Contributors]} />
-      <ErrorListGroup heading={t('heading.files_and_license')} errors={errors[RegistrationTab.FilesAndLicenses]} />
+      <dl>
+        <ErrorListGroup heading={t('heading.description')} errors={errors[RegistrationTab.Description]} />
+        <ErrorListGroup heading={t('heading.resource_type')} errors={errors[RegistrationTab.ResourceType]} />
+        <ErrorListGroup heading={t('heading.contributors')} errors={errors[RegistrationTab.Contributors]} />
+        <ErrorListGroup heading={t('heading.files_and_license')} errors={errors[RegistrationTab.FilesAndLicenses]} />
+      </dl>
 
       {showOpenFormButton && (
         <Button variant="contained" href={`${formUrl}?tab=${firstErrorTab}`} endIcon={<EditIcon />}>
@@ -76,16 +69,16 @@ interface ErrorListProps {
 
 const ErrorListGroup = ({ heading, errors }: ErrorListProps) =>
   errors.length > 0 ? (
-    <StyledErrorListGroup>
-      <Typography component="h2">{heading}:</Typography>
-      <StyledErrorList>
-        {errors.map((error, index) => (
-          <li key={index}>
-            <Typography>
-              {error.field}: {error.message}
-            </Typography>
-          </li>
-        ))}
-      </StyledErrorList>
-    </StyledErrorListGroup>
+    <>
+      <dt>
+        <StyledTabHeading>{heading}:</StyledTabHeading>
+      </dt>
+      {errors.map((error, index) => (
+        <dd key={index}>
+          <Typography>
+            {error.field}: {error.message}
+          </Typography>
+        </dd>
+      ))}
+    </>
   ) : null;
