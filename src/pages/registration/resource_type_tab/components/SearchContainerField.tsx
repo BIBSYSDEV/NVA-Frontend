@@ -57,6 +57,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
             <Autocomplete
               {...autocompleteTranslationProps}
               id={field.name}
+              debug
               aria-labelledby={`${field.name}-label`}
               popupIcon={null}
               options={options}
@@ -84,7 +85,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
                     <Typography variant="subtitle1">
                       <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
                     </Typography>
-                    <Typography variant="body2" color="textSecondary">
+                    <Typography component="span" variant="body2" color="textSecondary">
                       <TextTruncate line={1} truncateText=" [...]" text={optionText} />
                     </Typography>
                   </StyledFlexColumn>
