@@ -68,10 +68,10 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
         <LinkRegistrationForm handleSearch={handleSearch} />
         {noHit && <Typography>{t('no_hits')}</Typography>}
         {doi && (
-          <>
+          <div data-testid="link-metadata">
             <Typography variant="subtitle1">{t('registration')}:</Typography>
             <Typography>{doi.title}</Typography>
-          </>
+          </div>
         )}
       </AccordionDetails>
 
