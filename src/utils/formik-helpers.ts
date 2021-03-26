@@ -11,8 +11,6 @@ import {
   SpecificFileFieldNames,
 } from '../types/publicationFieldNames';
 import { Registration, RegistrationTab } from '../types/registration.types';
-import i18n from '../translations/i18n';
-import { ErrorSummary } from '../types/publication_types/error.types';
 
 const getErrorSummaries = (fieldNames: string[], errors: FormikErrors<unknown>, touched?: FormikTouched<unknown>) => {
   if (!Object.keys(errors).length || !fieldNames.length) {
@@ -25,23 +23,11 @@ const getErrorSummaries = (fieldNames: string[], errors: FormikErrors<unknown>, 
     return fieldHasError && fieldIsTouched;
   });
 
-  const errorSummaries: ErrorSummary[] = errorFieldNames.map((errorFieldName) => ({
-    field: i18n.t(`formikValues:${errorFieldName.replace(/[[\]\d]/g, '').replace(/[.]/g, '-')}`, {
-      defaultValue: null, // Don't use the i18n key as fallback if no transtlations are found
-    }),
-    message: getIn(errors, errorFieldName),
-  }));
-
-  const uniqueErrorSummaries = errorSummaries.filter(
-    (value, index, array) => array.findIndex((other) => other.field === value.field) === index
-  );
-
-  // Ensure we don't expose errors that are formatted as Objects
-  const filteredErrors = uniqueErrorSummaries.filter(
-    (error) => typeof error.field === 'string' && typeof error.message === 'string'
-  );
-
-  return filteredErrors;
+  const errorMessages = errorFieldNames.map((errorFieldName) => getIn(errors, errorFieldName));
+  // Keep only messages with type string, since they cannot be displayed properly otherwise
+  const filteredErrorMessages = errorMessages.filter((errorMessage) => typeof errorMessage === 'string');
+  const uniqueErrorMessages = [...new Set(filteredErrorMessages)];
+  return uniqueErrorMessages;
 };
 
 export const getErrorsAcrossTabs = (

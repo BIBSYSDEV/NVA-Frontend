@@ -1,15 +1,10 @@
 import { RegistrationTab } from '../registration.types';
 
-export interface ErrorSummary {
-  field: string;
-  message: string;
-}
-
 export interface TabErrors {
-  [RegistrationTab.Description]: ErrorSummary[];
-  [RegistrationTab.ResourceType]: ErrorSummary[];
-  [RegistrationTab.Contributors]: ErrorSummary[];
-  [RegistrationTab.FilesAndLicenses]: ErrorSummary[];
+  [RegistrationTab.Description]: string[];
+  [RegistrationTab.ResourceType]: string[];
+  [RegistrationTab.Contributors]: string[];
+  [RegistrationTab.FilesAndLicenses]: string[];
 }
 
 export const validTabs: TabErrors = {

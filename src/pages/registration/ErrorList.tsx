@@ -5,7 +5,7 @@ import { Button, Typography } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 import { RegistrationTab } from '../../types/registration.types';
-import { ErrorSummary, TabErrors } from '../../types/publication_types/error.types';
+import { TabErrors } from '../../types/publication_types/error.types';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
 import { getRegistrationPath } from '../../utils/urlPaths';
@@ -47,10 +47,13 @@ export const ErrorList = ({ errors, heading, description, showOpenFormButton = f
       {description && <Typography>{description}</Typography>}
 
       <dl>
-        <ErrorListGroup heading={t('heading.description')} errors={errors[RegistrationTab.Description]} />
-        <ErrorListGroup heading={t('heading.resource_type')} errors={errors[RegistrationTab.ResourceType]} />
-        <ErrorListGroup heading={t('heading.contributors')} errors={errors[RegistrationTab.Contributors]} />
-        <ErrorListGroup heading={t('heading.files_and_license')} errors={errors[RegistrationTab.FilesAndLicenses]} />
+        <ErrorListGroup heading={t('heading.description')} errorMessages={errors[RegistrationTab.Description]} />
+        <ErrorListGroup heading={t('heading.resource_type')} errorMessages={errors[RegistrationTab.ResourceType]} />
+        <ErrorListGroup heading={t('heading.contributors')} errorMessages={errors[RegistrationTab.Contributors]} />
+        <ErrorListGroup
+          heading={t('heading.files_and_license')}
+          errorMessages={errors[RegistrationTab.FilesAndLicenses]}
+        />
       </dl>
 
       {showOpenFormButton && (
@@ -64,20 +67,18 @@ export const ErrorList = ({ errors, heading, description, showOpenFormButton = f
 
 interface ErrorListProps {
   heading: string;
-  errors: ErrorSummary[];
+  errorMessages: string[];
 }
 
-const ErrorListGroup = ({ heading, errors }: ErrorListProps) =>
-  errors.length > 0 ? (
+const ErrorListGroup = ({ heading, errorMessages }: ErrorListProps) =>
+  errorMessages.length > 0 ? (
     <>
       <dt>
         <StyledTabHeading>{heading}:</StyledTabHeading>
       </dt>
-      {errors.map((error, index) => (
-        <dd key={index}>
-          <Typography>
-            {error.field}: {error.message}
-          </Typography>
+      {errorMessages.map((errorMessage) => (
+        <dd key={errorMessage}>
+          <Typography>{errorMessage}</Typography>
         </dd>
       ))}
     </>
