@@ -20,14 +20,12 @@ const initValues: MessageFormData = {
   message: '',
 };
 
-const messageErrorMessage = {
-  messageRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('common:message'),
-  }),
-};
-
 const validationSchema = Yup.object().shape({
-  message: Yup.string().required(messageErrorMessage.messageRequired),
+  message: Yup.string().required(
+    i18n.t('feedback:validation.is_required', {
+      field: i18n.t('common:message'),
+    })
+  ),
 });
 
 export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) => {
