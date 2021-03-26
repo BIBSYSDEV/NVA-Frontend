@@ -72,21 +72,14 @@
     "update_registration": "Registreringen er oppdatert"
   },
   "validation": {
-    "is_required": "{{field}} er obligatorisk",
-    "has_invalid_format": "{{field}} har ugyldig format",
     "author_required": "Du må ha minst en forfatter på denne registreringen",
     "editor_required": "Du må ha minst en redaktør på denne registreringen",
-    "supervisor_required": "Du må ha minst en veileder på denne registreringen",
+    "has_invalid_format": "{{field}} har ugyldig format",
+    "is_required": "{{field}} er obligatorisk",
     "minimum_one_file": "Du må laste opp minst en fil for denne registreringen",
+    "must_be_bigger_than": "{{field}} kan ikke være mindre enn {{limit}}",
     "must_be_in_future": "{{field}} må være i fremtiden",
-
-    "message": {
-      "message_required": "$t(common:message) er obligatorisk"
-    },
-    "registration": {
-      "isbn_invalid": "Ugyldig ISBN",
-      "pages_invalid": "$t(registration:resource_type.number_of_pages) har ugyldig format",
-      "peer_review_required": "$(registration:resource_type.peer_review) må ha en verdi"
-    }
+    "must_be_smaller_than": "{{field}} kan ikke være større enn {{limit}}",
+    "supervisor_required": "Du må ha minst en veileder på denne registreringen"
   }
 }
