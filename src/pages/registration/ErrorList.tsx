@@ -15,25 +15,25 @@ const StyledTabHeading = styled(Typography)`
 `;
 
 interface ErrorSummaryProps {
-  errors: TabErrors;
+  tabErrors: TabErrors;
   heading?: string;
   description?: string;
   showOpenFormButton?: boolean;
 }
 
-export const ErrorList = ({ errors, heading, description, showOpenFormButton = false }: ErrorSummaryProps) => {
+export const ErrorList = ({ tabErrors, heading, description, showOpenFormButton = false }: ErrorSummaryProps) => {
   const { t } = useTranslation('registration');
   const { identifier } = useParams<{ identifier: string }>();
   const formUrl = getRegistrationPath(identifier);
 
   const firstErrorTab =
-    errors[RegistrationTab.Description].length > 0
+    tabErrors[RegistrationTab.Description].length > 0
       ? RegistrationTab.Description
-      : errors[RegistrationTab.ResourceType].length > 0
+      : tabErrors[RegistrationTab.ResourceType].length > 0
       ? RegistrationTab.ResourceType
-      : errors[RegistrationTab.Contributors].length > 0
+      : tabErrors[RegistrationTab.Contributors].length > 0
       ? RegistrationTab.Contributors
-      : errors[RegistrationTab.FilesAndLicenses].length > 0
+      : tabErrors[RegistrationTab.FilesAndLicenses].length > 0
       ? RegistrationTab.FilesAndLicenses
       : null;
 
@@ -47,12 +47,12 @@ export const ErrorList = ({ errors, heading, description, showOpenFormButton = f
       {description && <Typography>{description}</Typography>}
 
       <dl>
-        <ErrorListGroup heading={t('heading.description')} errorMessages={errors[RegistrationTab.Description]} />
-        <ErrorListGroup heading={t('heading.resource_type')} errorMessages={errors[RegistrationTab.ResourceType]} />
-        <ErrorListGroup heading={t('heading.contributors')} errorMessages={errors[RegistrationTab.Contributors]} />
+        <ErrorListGroup heading={t('heading.description')} errorMessages={tabErrors[RegistrationTab.Description]} />
+        <ErrorListGroup heading={t('heading.resource_type')} errorMessages={tabErrors[RegistrationTab.ResourceType]} />
+        <ErrorListGroup heading={t('heading.contributors')} errorMessages={tabErrors[RegistrationTab.Contributors]} />
         <ErrorListGroup
           heading={t('heading.files_and_license')}
-          errorMessages={errors[RegistrationTab.FilesAndLicenses]}
+          errorMessages={tabErrors[RegistrationTab.FilesAndLicenses]}
         />
       </dl>
 

@@ -26,7 +26,7 @@ import { getRegistrationPath } from '../../utils/urlPaths';
 import { validateYupSchema, yupToFormErrors } from 'formik';
 import { getErrorsAcrossTabs } from '../../utils/formik-helpers';
 import { ErrorList } from '../registration/ErrorList';
-import { TabErrors, validTabs } from '../../types/publication_types/error.types';
+import { TabErrors } from '../../types/publication_types/error.types';
 
 const StyledStatusBar = styled(Card)`
   display: flex;
@@ -79,7 +79,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
   const [isLoading, setIsLoading] = useState(LoadingName.None);
   const toggleRequestDoiModal = () => setOpenRequestDoiModal((state) => !state);
-  const [errors, setErrors] = useState<TabErrors>(validTabs);
+  const [tabErrors, setTabErrors] = useState<TabErrors>();
 
   const sendDoiRequest = async () => {
     setIsLoading(LoadingName.RequestDoi);
@@ -143,15 +143,16 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     } catch (error) {
       const formErrors = yupToFormErrors(error);
       const customErrors = getErrorsAcrossTabs(registration, formErrors);
-      setErrors(customErrors);
+      setTabErrors(customErrors);
     }
   }, [registration]);
 
   const registrationIsValid =
-    errors[RegistrationTab.Description].length === 0 ||
-    errors[RegistrationTab.ResourceType].length === 0 ||
-    errors[RegistrationTab.Contributors].length === 0 ||
-    errors[RegistrationTab.FilesAndLicenses].length === 0;
+    !tabErrors ||
+    (tabErrors[RegistrationTab.Description].length === 0 &&
+      tabErrors[RegistrationTab.ResourceType].length === 0 &&
+      tabErrors[RegistrationTab.Contributors].length === 0 &&
+      tabErrors[RegistrationTab.FilesAndLicenses].length === 0);
 
   const isOwner = user && user.isCreator && owner === user.id;
   const isCurator = user && user.isCurator && user.customerId === publisher.id;
@@ -160,16 +161,18 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
 
   return isOwner || isCurator ? (
     <>
-      <ErrorList
-        errors={errors}
-        heading={
-          registration.status === RegistrationStatus.PUBLISHED
-            ? t('public_page.published')
-            : t('public_page.not_published')
-        }
-        description={t('public_page.error_description')}
-        showOpenFormButton
-      />
+      {tabErrors && (
+        <ErrorList
+          tabErrors={tabErrors}
+          heading={
+            registration.status === RegistrationStatus.PUBLISHED
+              ? t('public_page.published')
+              : t('public_page.not_published')
+          }
+          description={t('public_page.error_description')}
+          showOpenFormButton
+        />
+      )}
       <StyledStatusBar data-testid="public-registration-status">
         <StyledStatusBarDescription>
           {isPublishedRegistration ? (

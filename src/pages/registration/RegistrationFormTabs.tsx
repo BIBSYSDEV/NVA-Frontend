@@ -86,7 +86,7 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
     };
   }, [setTouched, tabNumber]);
 
-  const errorFieldNames = getErrorsAcrossTabs(valuesRef.current, errors, touched);
+  const tabErrors = getErrorsAcrossTabs(valuesRef.current, errors, touched);
 
   return (
     <>
@@ -100,28 +100,28 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
         <LinkTab
           data-testid="nav-tabpanel-description"
           label={t('heading.description')}
-          error={errorFieldNames[RegistrationTab.Description].length > 0}
+          error={tabErrors[RegistrationTab.Description].length > 0}
         />
         <LinkTab
           data-testid="nav-tabpanel-resource-type"
           label={t('heading.resource_type')}
-          error={errorFieldNames[RegistrationTab.ResourceType].length > 0}
+          error={tabErrors[RegistrationTab.ResourceType].length > 0}
         />
         <LinkTab
           data-testid="nav-tabpanel-contributors"
           label={t('heading.contributors')}
-          error={errorFieldNames[RegistrationTab.Contributors].length > 0}
+          error={tabErrors[RegistrationTab.Contributors].length > 0}
         />
         <LinkTab
           data-testid="nav-tabpanel-files-and-license"
           label={t('heading.files_and_license')}
-          error={errorFieldNames[RegistrationTab.FilesAndLicenses].length > 0}
+          error={tabErrors[RegistrationTab.FilesAndLicenses].length > 0}
         />
       </StyledTabs>
 
       <RequiredDescription />
 
-      <ErrorList errors={errorFieldNames} />
+      <ErrorList tabErrors={tabErrors} />
     </>
   );
 };

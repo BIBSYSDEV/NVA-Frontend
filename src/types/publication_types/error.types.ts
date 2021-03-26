@@ -6,10 +6,3 @@ export interface TabErrors {
   [RegistrationTab.Contributors]: string[];
   [RegistrationTab.FilesAndLicenses]: string[];
 }
-
-export const validTabs: TabErrors = {
-  [RegistrationTab.Description]: [],
-  [RegistrationTab.ResourceType]: [],
-  [RegistrationTab.Contributors]: [],
-  [RegistrationTab.FilesAndLicenses]: [],
-};
