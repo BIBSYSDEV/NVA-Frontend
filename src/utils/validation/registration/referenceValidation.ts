@@ -15,53 +15,56 @@ export const invalidIsbnErrorMessage = i18n.t('feedback:validation.has_invalid_f
 
 const resourceErrorMessage = {
   articleNumberInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:registration.resource_type.article_number'),
+    field: i18n.t('registration:resource_type.article_number'),
   }),
   articleNumberMustBeBigger: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('registration:resource_type.resource_type.pages_from'),
+    field: i18n.t('registration:resource_type.article_number'),
     limit: 0,
   }),
   corrigendumForRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.original_article'),
   }),
   corrigendumForInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:registration.original_article'),
+    field: i18n.t('registration:resource_type.original_article'),
   }),
   doiInvalid: i18n.t('feedback:validation.has_invalid_format', {
     field: i18n.t('registration:registration.link_to_resource'),
   }),
   issueInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:registration.resource_type.issue'),
+    field: i18n.t('registration:resource_type.issue'),
   }),
   issueMustBeBigger: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('registration:resource_type.resource_type.issue'),
+    field: i18n.t('registration:resource_type.issue'),
     limit: 0,
   }),
   isbnInvalid: invalidIsbnErrorMessage,
   journalRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.journal'),
   }),
+  linkedContextRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.chapter.published_in'),
+  }),
   pageBeginInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:resource_type.resource_type.pages_from'),
+    field: i18n.t('registration:resource_type.pages_from'),
   }),
   pageBeginMustBeBigger: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('registration:resource_type.resource_type.pages_from'),
+    field: i18n.t('registration:resource_type.pages_from'),
     limit: 0,
   }),
   pageBeginMustBeSmallerThanEnd: i18n.t('feedback:validation.must_be_smaller_than', {
-    field: i18n.t('registration:resource_type.resource_type.pages_from'),
-    limit: i18n.t('registration:resource_type.resource_type.pages_to'),
+    field: i18n.t('registration:resource_type.pages_from'),
+    limit: i18n.t('registration:resource_type.pages_to'),
   }),
   pageEndInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:resource_type.resource_type.pages_to'),
+    field: i18n.t('registration:resource_type.pages_to'),
   }),
   pageEndMustBeBigger: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('registration:resource_type.resource_type.pages_to'),
+    field: i18n.t('registration:resource_type.pages_to'),
     limit: 0,
   }),
   pageEndMustBeBiggerThanBegin: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('registration:resource_type.resource_type.pages_to'),
-    limit: i18n.t('registration:resource_type.resource_type.pages_from'),
+    field: i18n.t('registration:resource_type.pages_to'),
+    limit: i18n.t('registration:resource_type.pages_from'),
   }),
   pagesInvalid: i18n.t('feedback:validation.has_invalid_format', {
     field: i18n.t('registration:resource_type.number_of_pages'),
@@ -80,10 +83,10 @@ const resourceErrorMessage = {
     field: i18n.t('common:type'),
   }),
   volumeInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:registration.resource_type.volume'),
+    field: i18n.t('registration:resource_type.volume'),
   }),
   volumeMustBeBigger: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('registration:resource_type.resource_type.volume'),
+    field: i18n.t('registration:resource_type.volume'),
     limit: 0,
   }),
 };
@@ -223,7 +226,7 @@ const chapterPublicationInstance = Yup.object().shape({
 });
 
 const chapterPublicationContext = Yup.object().shape({
-  linkedContext: publisherField,
+  linkedContext: Yup.string().required(resourceErrorMessage.linkedContextRequired),
 });
 
 export const chapterReference = baseReference.shape({
