@@ -12,7 +12,14 @@ import {
 } from '../types/publicationFieldNames';
 import { Registration, RegistrationTab } from '../types/registration.types';
 
-const getErrorSummaries = (fieldNames: string[], errors: FormikErrors<unknown>, touched?: FormikTouched<unknown>) => {
+export interface TabErrors {
+  [RegistrationTab.Description]: string[];
+  [RegistrationTab.ResourceType]: string[];
+  [RegistrationTab.Contributors]: string[];
+  [RegistrationTab.FilesAndLicenses]: string[];
+}
+
+const getErrorMessages = (fieldNames: string[], errors: FormikErrors<unknown>, touched?: FormikTouched<unknown>) => {
   if (!Object.keys(errors).length || !fieldNames.length) {
     return [];
   }
@@ -30,21 +37,18 @@ const getErrorSummaries = (fieldNames: string[], errors: FormikErrors<unknown>, 
   return uniqueErrorMessages;
 };
 
-export const getErrorsAcrossTabs = (
-  values: FormikValues,
-  errors: FormikErrors<unknown>,
-  touched?: FormikTouched<unknown>
-) => {
-  return {
-    [RegistrationTab.Description]: getErrorSummaries(descriptionFieldNames, errors, touched),
-    [RegistrationTab.ResourceType]: getErrorSummaries(resourceFieldNames, errors, touched),
-    [RegistrationTab.Contributors]: getErrorSummaries(
+export const getTabErrors = (values: FormikValues, errors: FormikErrors<unknown>, touched?: FormikTouched<unknown>) => {
+  const tabErrors: TabErrors = {
+    [RegistrationTab.Description]: getErrorMessages(descriptionFieldNames, errors, touched),
+    [RegistrationTab.ResourceType]: getErrorMessages(resourceFieldNames, errors, touched),
+    [RegistrationTab.Contributors]: getErrorMessages(
       getAllContributorFields(values.entityDescription.contributors),
       errors,
       touched
     ),
-    [RegistrationTab.FilesAndLicenses]: getErrorSummaries(getAllFileFields(values.fileSet.files), errors, touched),
+    [RegistrationTab.FilesAndLicenses]: getErrorMessages(getAllFileFields(values.fileSet.files), errors, touched),
   };
+  return tabErrors;
 };
 
 export const getAllFileFields = (files: File[]): string[] => {

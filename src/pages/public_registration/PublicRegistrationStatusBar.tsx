@@ -24,9 +24,8 @@ import { createDoiRequest, publishRegistration, updateDoiRequest } from '../../a
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { getRegistrationPath } from '../../utils/urlPaths';
 import { validateYupSchema, yupToFormErrors } from 'formik';
-import { getErrorsAcrossTabs } from '../../utils/formik-helpers';
+import { getTabErrors, TabErrors } from '../../utils/formik-helpers';
 import { ErrorList } from '../registration/ErrorList';
-import { TabErrors } from '../../types/publication_types/error.types';
 
 const StyledStatusBar = styled(Card)`
   display: flex;
@@ -142,7 +141,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
       });
     } catch (error) {
       const formErrors = yupToFormErrors(error);
-      const customErrors = getErrorsAcrossTabs(registration, formErrors);
+      const customErrors = getTabErrors(registration, formErrors);
       setTabErrors(customErrors);
     }
   }, [registration]);

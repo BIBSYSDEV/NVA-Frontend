@@ -13,7 +13,7 @@ import {
   touchedDescriptionTabFields,
   touchedFilesTabFields,
   touchedResourceTabFields,
-  getErrorsAcrossTabs,
+  getTabErrors,
 } from '../../utils/formik-helpers';
 import { ErrorList } from './ErrorList';
 import { RequiredDescription } from '../../components/RequiredDescription';
@@ -86,7 +86,7 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
     };
   }, [setTouched, tabNumber]);
 
-  const tabErrors = getErrorsAcrossTabs(valuesRef.current, errors, touched);
+  const tabErrors = getTabErrors(valuesRef.current, errors, touched);
 
   return (
     <>
