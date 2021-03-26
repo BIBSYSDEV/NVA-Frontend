@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 const StyledRequiredDescription = styled.div`
   margin-top: 1rem;
+  margin-bottom: 0.25rem;
   display: flex;
 `;
 
@@ -23,8 +24,8 @@ export const RequiredDescription = () => {
 
   return (
     <StyledRequiredDescription>
-      <StyledAsterisk gutterBottom>*</StyledAsterisk>
-      <StyledTypography gutterBottom>{t('required_description')}</StyledTypography>
+      <StyledAsterisk>*</StyledAsterisk>
+      <StyledTypography>{t('required_description')}</StyledTypography>
     </StyledRequiredDescription>
   );
 };
