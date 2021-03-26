@@ -77,6 +77,7 @@
     "publicly_available": "Publicly available",
     "published_version": "Published version",
     "remove_file": "Remove file",
+    "remove_file_description": "Do you want to remove {{fileName}}?",
     "select_version": "Select version",
     "title": "File name",
     "uploaded_size": "Uploaded {{size}}"
@@ -102,6 +103,7 @@
     "request_doi": "Request a DOI",
     "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications. You will receive an email when the request has been evaluated."
   },
+  "validation_errors": "Validation errors",
   "registration": {
     "latest_registrations": "Recently added",
     "link_to_resource": "DOI to resource",

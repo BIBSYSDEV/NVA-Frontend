@@ -16,7 +16,7 @@ const StyledTabHeading = styled(Typography)`
 
 interface ErrorSummaryProps {
   tabErrors: TabErrors;
-  heading?: string;
+  heading: string;
   description?: string;
   showOpenFormButton?: boolean;
 }

@@ -121,7 +121,7 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
 
       <RequiredDescription />
 
-      <ErrorList tabErrors={tabErrors} />
+      <ErrorList tabErrors={tabErrors} heading={t('validation_errors')} />
     </>
   );
 };
