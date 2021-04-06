@@ -10,7 +10,6 @@ import BackgroundDiv from '../../components/BackgroundDiv';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import lightTheme from '../../themes/lightTheme';
 import { LOGIN_REDIRECT_PATH_KEY } from '../../utils/constants';
-import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import AboutContent from '../infopages/AboutContent';
 
@@ -130,7 +129,6 @@ const Dashboard = () => {
   const { t } = useTranslation('common');
   const history = useHistory();
   const { user } = useSelector((store: RootStore) => store);
-  const { handleLogin } = useAuthentication();
   const [readMore, setReadMore] = useState(false);
 
   const toggleReadMore = () => setReadMore(!readMore);
