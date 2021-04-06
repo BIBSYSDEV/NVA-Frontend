@@ -11,7 +11,7 @@ describe('User opens an item in the My Registrations list', () => {
     // Edit registration
     // Description tab
     cy.get('[data-testid=edit-registration-12345678]').click({ force: true });
-    cy.get('[data-testid=registration-title-input]').should(
+    cy.get('[data-testid=registration-title-field] input').should(
       'have.value',
       'Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting'
     );
