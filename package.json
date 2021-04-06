@@ -32,7 +32,7 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^5.2.1",
+    "styled-components": "^5.2.3",
     "yup": "^0.32.9"
   },
   "scripts": {
@@ -66,7 +66,7 @@
     "extends": "@istanbuljs/nyc-config-typescript"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.9.2",
+    "@cypress/code-coverage": "^3.9.4",
     "@cypress/instrument-cra": "^1.4.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/history": "^4.7.8",
