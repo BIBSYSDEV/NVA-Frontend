@@ -18,11 +18,11 @@ export const CustomerInstitutionTextField = ({
     {({ field, meta: { touched, error } }: FieldProps) => (
       <TextField
         {...field}
+        data-testid={dataTestId}
         label={label}
         required={required}
         fullWidth
         variant="filled"
-        inputProps={{ 'data-testid': dataTestId }}
         error={touched && !!error}
         helperText={<ErrorMessage name={field.name} />}
       />

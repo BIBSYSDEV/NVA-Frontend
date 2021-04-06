@@ -9,12 +9,12 @@ import { BookType, ResourceFieldNames } from '../../../../types/publicationField
 import { BookRegistration } from '../../../../types/registration.types';
 import { DoiField } from '../components/DoiField';
 import IsbnListField from '../components/IsbnListField';
+import { NpiDisciplineField } from '../components/NpiDisciplineField';
 import NviValidation from '../components/NviValidation';
 import PeerReview from '../components/PeerReview';
 import PublisherField from '../components/PublisherField';
 import SeriesField from '../components/SeriesField';
 import TotalPagesField from '../components/TotalPagesField';
-import { NpiDisciplineField } from '../components/NpiDisciplineField';
 
 const StyledSection = styled.div`
   display: grid;
@@ -67,7 +67,11 @@ const BookForm = () => {
             <PeerReview fieldName={ResourceFieldNames.PEER_REVIEW} label={t('resource_type.peer_review')} />
           </StyledPeerReview>
           <StyledTextBook>
-            <Typography variant="h5">{t('resource_type.is_book_a_textbook')}</Typography>
+            <div>
+              <Typography variant="h5" component="p">
+                {t('resource_type.is_book_a_textbook')}
+              </Typography>
+            </div>
             <Field name={ResourceFieldNames.TEXTBOOK_CONTENT}>
               {({ field }: FieldProps) => (
                 <FormControlLabel

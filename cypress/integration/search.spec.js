@@ -20,6 +20,6 @@ describe('Search', () => {
 });
 
 const searchForText = (text) => {
-  cy.get('[data-testid=search-input]').click({ force: true }).type(text);
+  cy.get('[data-testid=search-field] input').click({ force: true }).type(text);
   cy.get('[data-testid=search-button]').click({ force: true });
 };
