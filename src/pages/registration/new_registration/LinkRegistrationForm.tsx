@@ -54,12 +54,13 @@ const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps) => {
           <Field name="doiUrl">
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <StyledTextField
+                id={field.name}
+                data-testid="new-registration-link-field"
                 variant="outlined"
                 label={t('registration.link_to_resource')}
                 required
                 fullWidth
                 disabled={isSubmitting}
-                inputProps={{ 'data-testid': 'new-registration-link-input' }}
                 {...field}
                 error={!!error && touched}
                 InputLabelProps={{ shrink: true }}
