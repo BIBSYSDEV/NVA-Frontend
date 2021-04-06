@@ -20,6 +20,7 @@ const IsbnListField = () => {
         <Autocomplete
           id={field.name}
           aria-labelledby={`${field.name}-label`}
+          data-testid="isbn-field"
           freeSolo
           autoSelect
           multiple
@@ -51,7 +52,6 @@ const IsbnListField = () => {
           renderInput={(params) => (
             <TextField
               {...params}
-              data-testid="isbn-input"
               label={t('resource_type.isbn')}
               helperText={t('resource_type.isbn_helper')}
               variant="filled"

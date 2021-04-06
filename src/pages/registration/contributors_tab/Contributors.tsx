@@ -129,7 +129,7 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
   };
 
   return (
-    <>
+    <div data-testid={`contributors-${contributorRole}`}>
       <Typography variant="h2">{getContributorHeading(contributorRole)}</Typography>
       <MuiThemeProvider theme={lightTheme}>
         {((isMobile && relevantContributors.length >= 2) || (!isMobile && relevantContributors.length >= 5)) && (
@@ -172,6 +172,6 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
           onAuthorSelected={onAuthorSelected}
         />
       </MuiThemeProvider>
-    </>
+    </div>
   );
 };

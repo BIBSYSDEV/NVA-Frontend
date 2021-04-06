@@ -18,6 +18,6 @@ describe('Registration: Contributors', () => {
     cy.get('[data-testid=add-contributor-Creator]').click({ force: true });
 
     // verify that there is a search field
-    cy.get('[data-testid=search-input]').should('be.visible');
+    cy.get('[data-testid=search-field] input').should('be.visible');
   });
 });

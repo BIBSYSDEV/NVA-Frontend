@@ -92,6 +92,7 @@ export const AddContributorModalContent = ({
       )}
       <StyledTextField
         id="search"
+        data-testid="search-field"
         variant="outlined"
         fullWidth
         value={searchTerm}
@@ -99,7 +100,6 @@ export const AddContributorModalContent = ({
         autoFocus
         placeholder={t('common:search_placeholder')}
         label={t('common:search')}
-        inputProps={{ 'data-testid': 'search-input' }}
         InputProps={{
           startAdornment: <SearchIcon />,
         }}

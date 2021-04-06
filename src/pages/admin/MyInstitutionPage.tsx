@@ -68,18 +68,18 @@ const MyCustomerInstitutionPage = () => {
                   name={CustomerInstitutionFieldNames.DISPLAY_NAME}
                   label={t('display_name')}
                   required
-                  dataTestId="customer-institution-display-name-input"
+                  dataTestId="customer-institution-display-name-field"
                 />
                 <CustomerInstitutionTextField
                   name={CustomerInstitutionFieldNames.SHORT_NAME}
                   label={t('short_name')}
                   required
-                  dataTestId="customer-institution-short-name-input"
+                  dataTestId="customer-institution-short-name-field"
                 />
                 <CustomerInstitutionTextField
                   name={CustomerInstitutionFieldNames.ARCHIVE_NAME}
                   label={t('archive_name')}
-                  dataTestId="customer-institution-archive-name-input"
+                  dataTestId="customer-institution-archive-name-field"
                 />
                 <StyledButtonContainer>
                   <ButtonWithProgress
