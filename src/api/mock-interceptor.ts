@@ -56,6 +56,7 @@ const mockSingleAuthorityResponseWithOrcid: Authority = {
 const mockCreateUpload = { uploadId: 'asd', key: 'sfd' };
 const mockPrepareUpload = { url: 'https://file-upload.com/files/' };
 const mockCompleteUpload = {};
+const mockDownload = { presignedDownloadUrl: 'http://localhost:3000' };
 
 // AXIOS INTERCEPTOR
 export const interceptRequestsOnMock = () => {
@@ -66,7 +67,7 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(`${SearchApiPaths.REGISTRATIONS}/*`)).reply(200, threeMockSearchResults);
 
   // File
-  mock.onGet(new RegExp(`${FileApiPaths.DOWNLOAD}/*`)).reply(200, null);
+  mock.onGet(new RegExp(`${FileApiPaths.DOWNLOAD}/*`)).reply(200, mockDownload);
   mock.onPost(new RegExp(FileApiPaths.CREATE)).reply(200, mockCreateUpload);
   mock.onPost(new RegExp(FileApiPaths.PREPARE)).reply(200, mockPrepareUpload);
   mock.onPost(new RegExp(FileApiPaths.COMPLETE)).reply(200, mockCompleteUpload);
