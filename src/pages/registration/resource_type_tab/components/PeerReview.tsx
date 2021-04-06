@@ -18,7 +18,7 @@ const PeerReview = ({ fieldName, label }: PeerReviewProps) => {
       {({ field: { name, value } }: FieldProps) => (
         <>
           <div>
-            <Typography variant="h5" color="primary" variantMapping={{ h5: 'p' }}>
+            <Typography variant="h5" color="primary" component="p">
               {label}
             </Typography>
           </div>

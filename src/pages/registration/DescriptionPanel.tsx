@@ -136,7 +136,7 @@ const DescriptionPanel = () => {
         </DateAndLanguageWrapper>
       </BackgroundDiv>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-        <Typography variant="h5" color="primary" variantMapping={{ h5: 'p' }}>
+        <Typography variant="h5" color="primary" component="p">
           {t('description.connect_project')}
         </Typography>
         <MuiThemeProvider theme={lightTheme}>
