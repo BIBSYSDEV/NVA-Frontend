@@ -68,7 +68,7 @@ const BookForm = () => {
           </StyledPeerReview>
           <StyledTextBook>
             <div>
-              <Typography variant="h5" variantMapping={{ h5: 'body1' }}>
+              <Typography variant="h5" component="p">
                 {t('resource_type.is_book_a_textbook')}
               </Typography>
             </div>
