@@ -166,7 +166,7 @@ const Dashboard = () => {
           <StyledLinkContent>
             <SearchIcon fontSize="large" />
             <StyledText>
-              <Typography variant="h4" variantMapping={{ h4: 'p' }}>
+              <Typography variant="h4" component="p">
                 {t('search_for_publication')}
               </Typography>
             </StyledText>
@@ -183,7 +183,7 @@ const Dashboard = () => {
           <StyledLinkContent>
             <PostAddIcon fontSize="large" />
             <StyledText>
-              <Typography variant="h4" variantMapping={{ h4: 'p' }}>
+              <Typography variant="h4" component="p">
                 {t('registration:new_registration')}
               </Typography>
               {!user && <Typography>{t('requires_login')}</Typography>}

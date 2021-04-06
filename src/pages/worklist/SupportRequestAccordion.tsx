@@ -3,18 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { Accordion, AccordionDetails, AccordionSummary, Button } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@material-ui/core';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import Label from '../../components/Label';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { addMessage } from '../../api/registrationApi';
 import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { MessageCollection, MessageType } from '../../types/publication_types/messages.types';
-import { addMessage } from '../../api/registrationApi';
-import { MessageList } from './MessageList';
 import { Registration } from '../../types/registration.types';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
+import { MessageList } from './MessageList';
 
 const StyledAccordion = styled(Accordion)`
   width: 100%;
@@ -31,12 +30,14 @@ const StyledAccordion = styled(Accordion)`
   }
 `;
 
-const StyledStatus = styled(Label)`
+const StyledStatus = styled(Typography)`
   grid-area: status;
+  font-weight: bold;
 `;
 
-const StyledTitle = styled(Label)`
+const StyledTitle = styled(Typography)`
   grid-area: title;
+  font-weight: bold;
 `;
 
 const StyledOwner = styled.div`
@@ -97,7 +98,7 @@ export const SupportRequestAccordion = ({
           {registration.entityDescription?.mainTitle}
         </StyledTitle>
         <StyledOwner data-testid={`message-owner-${identifier}`}>
-          <Label>{registration.owner}</Label>
+          <Typography>{registration.owner}</Typography>
           {new Date(messageCollection.messages[messageCollection.messages.length - 1].date).toLocaleDateString()}
         </StyledOwner>
       </AccordionSummary>
