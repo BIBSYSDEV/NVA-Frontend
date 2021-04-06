@@ -19,12 +19,12 @@ import Modal from '../../components/Modal';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
-import { RegistrationStatus, DoiRequestStatus, Registration, RegistrationTab } from '../../types/registration.types';
+import { RegistrationStatus, DoiRequestStatus, Registration } from '../../types/registration.types';
 import { createDoiRequest, publishRegistration, updateDoiRequest } from '../../api/registrationApi';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { getRegistrationPath } from '../../utils/urlPaths';
 import { validateYupSchema, yupToFormErrors } from 'formik';
-import { getTabErrors, TabErrors } from '../../utils/formik-helpers';
+import { getFirstErrorTab, getTabErrors, TabErrors } from '../../utils/formik-helpers';
 import { ErrorList } from '../registration/ErrorList';
 
 const StyledStatusBar = styled(Card)`
@@ -146,30 +146,35 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     }
   }, [registration]);
 
-  const registrationIsValid =
-    !tabErrors ||
-    (tabErrors[RegistrationTab.Description].length === 0 &&
-      tabErrors[RegistrationTab.ResourceType].length === 0 &&
-      tabErrors[RegistrationTab.Contributors].length === 0 &&
-      tabErrors[RegistrationTab.FilesAndLicenses].length === 0);
+  const firstErrorTab = getFirstErrorTab(tabErrors);
+  const registrationIsValid = !tabErrors || firstErrorTab === -1;
 
   const isOwner = user && user.isCreator && owner === user.id;
   const isCurator = user && user.isCurator && user.customerId === publisher.id;
   const hasNvaDoi = !!doi || doiRequest;
   const isPublishedRegistration = status === RegistrationStatus.PUBLISHED;
+  const editRegistrationUrl = getRegistrationPath(identifier);
 
   return isOwner || isCurator ? (
     <>
-      {tabErrors && (
+      {!registrationIsValid && tabErrors && (
         <ErrorList
           tabErrors={tabErrors}
-          heading={
-            registration.status === RegistrationStatus.PUBLISHED
-              ? t('public_page.published')
-              : t('public_page.not_published')
+          description={
+            <>
+              <Typography variant="h4" component="h1">
+                {registration.status === RegistrationStatus.PUBLISHED
+                  ? t('public_page.published')
+                  : t('public_page.not_published')}
+              </Typography>
+              <Typography>{t('public_page.error_description')}</Typography>
+            </>
           }
-          description={t('public_page.error_description')}
-          showOpenFormButton
+          actions={
+            <Button variant="contained" href={`${editRegistrationUrl}?tab=${firstErrorTab}`} endIcon={<EditIcon />}>
+              {t('public_page.go_back_to_wizard')}
+            </Button>
+          }
         />
       )}
       <StyledStatusBar data-testid="public-registration-status">
@@ -186,7 +191,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           </div>
         </StyledStatusBarDescription>
         <div>
-          <Link to={getRegistrationPath(identifier)}>
+          <Link to={editRegistrationUrl}>
             <Button
               variant={registrationIsValid ? 'outlined' : 'contained'}
               color="primary"

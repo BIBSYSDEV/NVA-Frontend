@@ -1,13 +1,10 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Button, Typography } from '@material-ui/core';
-import { useParams } from 'react-router-dom';
-import EditIcon from '@material-ui/icons/Edit';
+import { Typography } from '@material-ui/core';
 import { RegistrationTab } from '../../types/registration.types';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
-import { getRegistrationPath } from '../../utils/urlPaths';
 import { TabErrors } from '../../utils/formik-helpers';
 
 const StyledTabHeading = styled(Typography)`
@@ -16,36 +13,16 @@ const StyledTabHeading = styled(Typography)`
 
 interface ErrorSummaryProps {
   tabErrors: TabErrors;
-  heading: string;
-  description?: string;
-  showOpenFormButton?: boolean;
+  description?: ReactNode;
+  actions?: ReactNode;
 }
 
-export const ErrorList = ({ tabErrors, heading, description, showOpenFormButton = false }: ErrorSummaryProps) => {
+export const ErrorList = ({ tabErrors, description, actions }: ErrorSummaryProps) => {
   const { t } = useTranslation('registration');
-  const { identifier } = useParams<{ identifier: string }>();
-  const formUrl = getRegistrationPath(identifier);
 
-  const firstErrorTab =
-    tabErrors[RegistrationTab.Description].length > 0
-      ? RegistrationTab.Description
-      : tabErrors[RegistrationTab.ResourceType].length > 0
-      ? RegistrationTab.ResourceType
-      : tabErrors[RegistrationTab.Contributors].length > 0
-      ? RegistrationTab.Contributors
-      : tabErrors[RegistrationTab.FilesAndLicenses].length > 0
-      ? RegistrationTab.FilesAndLicenses
-      : null;
-
-  return firstErrorTab !== null ? (
+  return (
     <BackgroundDiv backgroundColor={lightTheme.palette.error.light}>
-      {heading && (
-        <Typography variant="h4" component="h1" gutterBottom>
-          {heading}
-        </Typography>
-      )}
-      {description && <Typography>{description}</Typography>}
-
+      {description}
       <dl>
         <ErrorListGroup heading={t('heading.description')} errorMessages={tabErrors[RegistrationTab.Description]} />
         <ErrorListGroup heading={t('heading.resource_type')} errorMessages={tabErrors[RegistrationTab.ResourceType]} />
@@ -55,14 +32,9 @@ export const ErrorList = ({ tabErrors, heading, description, showOpenFormButton 
           errorMessages={tabErrors[RegistrationTab.FilesAndLicenses]}
         />
       </dl>
-
-      {showOpenFormButton && (
-        <Button variant="contained" href={`${formUrl}?tab=${firstErrorTab}`} endIcon={<EditIcon />}>
-          {t('public_page.go_back_to_wizard')}
-        </Button>
-      )}
+      {actions}
     </BackgroundDiv>
-  ) : null;
+  );
 };
 
 interface ErrorListProps {

@@ -51,6 +51,19 @@ export const getTabErrors = (values: FormikValues, errors: FormikErrors<unknown>
   return tabErrors;
 };
 
+export const getFirstErrorTab = (tabErrors?: TabErrors) =>
+  tabErrors
+    ? tabErrors[RegistrationTab.Description].length > 0
+      ? RegistrationTab.Description
+      : tabErrors[RegistrationTab.ResourceType].length > 0
+      ? RegistrationTab.ResourceType
+      : tabErrors[RegistrationTab.Contributors].length > 0
+      ? RegistrationTab.Contributors
+      : tabErrors[RegistrationTab.FilesAndLicenses].length > 0
+      ? RegistrationTab.FilesAndLicenses
+      : -1
+    : -1;
+
 export const getAllFileFields = (files: File[]): string[] => {
   const fieldNames: string[] = [];
   if (files.length === 0) {

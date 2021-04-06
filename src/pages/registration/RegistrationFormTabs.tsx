@@ -2,7 +2,7 @@ import { useFormikContext } from 'formik';
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Tabs } from '@material-ui/core';
+import { Tabs, Typography } from '@material-ui/core';
 
 import LinkTab from '../../components/LinkTab';
 import { Registration, RegistrationTab } from '../../types/registration.types';
@@ -14,6 +14,7 @@ import {
   touchedFilesTabFields,
   touchedResourceTabFields,
   getTabErrors,
+  getFirstErrorTab,
 } from '../../utils/formik-helpers';
 import { ErrorList } from './ErrorList';
 import { RequiredDescription } from '../../components/RequiredDescription';
@@ -121,7 +122,16 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
 
       <RequiredDescription />
 
-      <ErrorList tabErrors={tabErrors} heading={t('validation_errors')} />
+      {getFirstErrorTab(tabErrors) > -1 && (
+        <ErrorList
+          tabErrors={tabErrors}
+          description={
+            <Typography variant="h4" component="h2">
+              {t('validation_errors')}
+            </Typography>
+          }
+        />
+      )}
     </>
   );
 };
