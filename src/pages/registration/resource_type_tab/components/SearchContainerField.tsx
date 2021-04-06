@@ -97,7 +97,6 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
                   required
                   isLoading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
                   placeholder={props.placeholder}
-                  dataTestId="container-search-field"
                   showSearchIcon
                   errorMessage={meta.touched && !!meta.error ? meta.error : undefined}
                 />

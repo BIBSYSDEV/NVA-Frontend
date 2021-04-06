@@ -46,7 +46,7 @@ export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) =
               <TextField
                 {...field}
                 disabled={isSubmitting}
-                inputProps={{ 'data-testid': 'message-input' }}
+                data-testid="message-field"
                 variant="filled"
                 multiline
                 rows="4"
