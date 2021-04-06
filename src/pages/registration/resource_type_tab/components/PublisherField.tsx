@@ -15,7 +15,7 @@ const PublisherField: FC = () => {
     <Field name={contextTypeBaseFieldName}>
       {({ field: { name, value } }: FieldProps) => (
         <PublicationChannelSearch
-          dataTestId="publisher-search-input"
+          dataTestId="publisher-search-field"
           publicationTable={PublicationTableNumber.PUBLISHERS}
           label={t('common:publisher')}
           required
