@@ -59,7 +59,7 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
   const closeMenu = () => setAnchorEl(null);
 
   return (
-    <StyledMenu>
+    <StyledMenu ref={divRef}>
       <StyledMenuButton
         onClick={handleClickMenuAnchor}
         data-testid="menu"
@@ -69,7 +69,6 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
       <StyledMobileMenuButton onClick={handleClickMenuAnchor}>
         <AccountCircle />
       </StyledMobileMenuButton>
-      <div ref={divRef} />
       <MuiMenu
         anchorEl={anchorEl}
         container={divRef.current}

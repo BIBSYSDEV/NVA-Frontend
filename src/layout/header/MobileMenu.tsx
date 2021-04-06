@@ -21,8 +21,7 @@ export const MobileMenu = ({ anchorEl, onClose }: MobileMenuProps) => {
   };
 
   return (
-    <>
-      <div ref={divRef} />
+    <div ref={divRef}>
       <Menu
         anchorEl={anchorEl}
         container={divRef.current}
@@ -44,6 +43,6 @@ export const MobileMenu = ({ anchorEl, onClose }: MobileMenuProps) => {
           {t('workLists:my_messages')}
         </MenuItem>
       </Menu>
-    </>
+    </div>
   );
 };
