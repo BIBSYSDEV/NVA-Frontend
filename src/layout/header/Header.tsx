@@ -64,8 +64,8 @@ export const Header = () => {
               <IconButton onClick={handleClick}>
                 <MenuIcon />
               </IconButton>
+              <MobileMenu anchorEl={anchorEl} onClose={() => setAnchorEl(null)} />
             </StyledBurgerMenu>
-            <MobileMenu anchorEl={anchorEl} onClose={() => setAnchorEl(null)} />
           </>
         )}
         <Logo />
