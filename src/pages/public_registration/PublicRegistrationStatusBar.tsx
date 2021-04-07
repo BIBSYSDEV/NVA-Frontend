@@ -10,7 +10,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 
 import { RootStore } from '../../redux/reducers/rootReducer';
 import Card from '../../components/Card';
@@ -191,15 +190,14 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           </div>
         </StyledStatusBarDescription>
         <div>
-          <Link to={editRegistrationUrl}>
-            <Button
-              variant={registrationIsValid ? 'outlined' : 'contained'}
-              color="primary"
-              endIcon={<EditIcon />}
-              data-testid="button-edit-registration">
-              {t('edit_registration')}
-            </Button>
-          </Link>
+          <Button
+            href={editRegistrationUrl}
+            variant={registrationIsValid ? 'outlined' : 'contained'}
+            color="primary"
+            endIcon={<EditIcon />}
+            data-testid="button-edit-registration">
+            {t('edit_registration')}
+          </Button>
 
           {isCurator && isPublishedRegistration && doiRequest?.status === DoiRequestStatus.Requested && (
             <>
