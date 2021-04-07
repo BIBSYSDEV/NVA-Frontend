@@ -75,7 +75,7 @@
     "author_required": "You need to have at least one author registered for this registration",
     "editor_required": "You need to have at least one editor registered for this registration",
     "has_invalid_format": "{{field}} has invalid format",
-    "is_required": "{{field}} are required",
+    "is_required": "{{field}} is required",
     "minimum_one_file": "You need to have at least one file uploaded for this registration",
     "must_be_bigger_than": "{{field}} cannot be smaller than {{limit}}",
     "must_be_in_future": "{{field}} must be in future",
