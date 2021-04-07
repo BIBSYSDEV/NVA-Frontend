@@ -6,7 +6,6 @@ import { Tabs, Typography } from '@material-ui/core';
 
 import LinkTab from '../../components/LinkTab';
 import { Registration, RegistrationTab } from '../../types/registration.types';
-import { ResourceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 import {
   mergeTouchedFields,
   touchedContributorTabFields,
@@ -26,9 +25,6 @@ const StyledTabs = styled(Tabs)`
     }
   }
 `;
-
-export const descriptionFieldNames = Object.values(DescriptionFieldNames);
-export const resourceFieldNames = Object.values(ResourceFieldNames);
 
 const noTouchedTab = -1;
 type HighestTouchedTab = RegistrationTab | typeof noTouchedTab;

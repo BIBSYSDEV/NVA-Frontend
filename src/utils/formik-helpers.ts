@@ -1,12 +1,13 @@
 import deepmerge, { Options } from 'deepmerge';
 import { FormikErrors, FormikTouched, FormikValues, getIn } from 'formik';
-import { descriptionFieldNames, resourceFieldNames } from '../pages/registration/RegistrationFormTabs';
 import { Contributor } from '../types/contributor.types';
 import { File } from '../types/file.types';
 import {
   ContributorFieldNames,
+  DescriptionFieldNames,
   FileFieldNames,
   PublicationType,
+  ResourceFieldNames,
   SpecificContributorFieldNames,
   SpecificFileFieldNames,
 } from '../types/publicationFieldNames';
@@ -64,7 +65,10 @@ export const getFirstErrorTab = (tabErrors?: TabErrors) =>
       : -1
     : -1;
 
-export const getAllFileFields = (files: File[]): string[] => {
+const descriptionFieldNames = Object.values(DescriptionFieldNames);
+const resourceFieldNames = Object.values(ResourceFieldNames);
+
+const getAllFileFields = (files: File[]): string[] => {
   const fieldNames: string[] = [];
   if (files.length === 0) {
     fieldNames.push(FileFieldNames.FILES);
@@ -82,10 +86,10 @@ export const getAllFileFields = (files: File[]): string[] => {
   return fieldNames;
 };
 
-export const getAllContributorFields = (contributors: Contributor[]): string[] => {
+const getAllContributorFields = (contributors: Contributor[]): string[] => {
   const fieldNames: string[] = [ContributorFieldNames.CONTRIBUTORS];
 
-  contributors.forEach((contributor, index) => {
+  contributors.forEach((_, index) => {
     const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
     fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`);
     fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`);
@@ -197,7 +201,7 @@ export const touchedResourceTabFields = (publicationType: PublicationType | ''):
 
 export const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<Registration> => ({
   entityDescription: {
-    contributors: contributors.map((contributor) => ({
+    contributors: contributors.map((_) => ({
       correspondingAuthor: true,
       sequence: true,
     })),
