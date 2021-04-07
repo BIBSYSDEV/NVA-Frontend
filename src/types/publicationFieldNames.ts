@@ -63,7 +63,6 @@ export enum ResourceFieldNames {
   PUBLICATION_CONTEXT_TITLE = 'entityDescription.reference.publicationContext.title',
   PUBLICATION_CONTEXT_PUBLISHER = 'entityDescription.reference.publicationContext.publisher',
   PUBLICATION_CONTEXT_TYPE = 'entityDescription.reference.publicationContext.type',
-  PUBLICATION_INSTANCE_TYPE = 'entityDescription.reference.publicationInstance.type',
   SERIES_TITLE = 'entityDescription.reference.publicationContext.seriesTitle',
   SUB_TYPE = 'entityDescription.reference.publicationInstance.type',
   VOLUME = 'entityDescription.reference.publicationInstance.volume',
