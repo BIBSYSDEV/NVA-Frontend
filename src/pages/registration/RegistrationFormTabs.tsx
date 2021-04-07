@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Tabs, Typography } from '@material-ui/core';
 
-import LinkTab from '../../components/LinkTab';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import {
   mergeTouchedFields,
@@ -17,6 +16,7 @@ import {
 } from '../../utils/formik-helpers';
 import { ErrorList } from './ErrorList';
 import { RequiredDescription } from '../../components/RequiredDescription';
+import { LinkTab } from '../../components/LinkTab';
 
 const StyledTabs = styled(Tabs)`
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
