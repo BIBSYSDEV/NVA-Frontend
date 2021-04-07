@@ -72,14 +72,14 @@
     "update_registration": "Updated registration"
   },
   "validation": {
-    "author_required": "You need to have at least one author registered for this registration",
-    "editor_required": "You need to have at least one editor registered for this registration",
+    "author_required": "You need to register at least one author for this registration",
+    "editor_required": "You need to register at least one editor for this registration",
     "has_invalid_format": "{{field}} has invalid format",
     "is_required": "{{field}} are required",
-    "minimum_one_file": "You need to have at least one file uploaded for this registration",
+    "minimum_one_file": "You need to upload at least one file for this registration",
     "must_be_bigger_than": "{{field}} cannot be smaller than {{limit}}",
     "must_be_in_future": "{{field}} must be in future",
     "must_be_smaller_than": "{{field}} cannot be bigger than {{limit}}",
-    "supervisor_required": "You need to have at least one supervisor registered for this registration"
+    "supervisor_required": "You need to register at least one supervisor for this registration"
   }
 }
