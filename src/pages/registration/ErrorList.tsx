@@ -21,7 +21,7 @@ export const ErrorList = ({ tabErrors, description, actions }: ErrorSummaryProps
   const { t } = useTranslation('registration');
 
   return (
-    <BackgroundDiv backgroundColor={lightTheme.palette.error.light}>
+    <BackgroundDiv backgroundColor={lightTheme.palette.error.light} data-testid="error-list-div">
       {description}
       <dl>
         <ErrorListGroup heading={t('heading.description')} errorMessages={tabErrors[RegistrationTab.Description]} />
