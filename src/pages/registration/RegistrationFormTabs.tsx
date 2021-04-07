@@ -21,7 +21,7 @@ import { LinkTab } from '../../components/LinkTab';
 const StyledTabs = styled(Tabs)`
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     .MuiTabs-flexContainer {
-      justify-content: center;
+      justify-content: space-around;
     }
   }
 `;
@@ -89,11 +89,11 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
     <>
       <StyledTabs
         onChange={(_, value) => setTabNumber(value)}
-        scrollButtons="auto"
+        variant="scrollable"
+        scrollButtons="on"
         textColor="primary"
         indicatorColor="secondary"
-        value={tabNumber}
-        variant="scrollable">
+        value={tabNumber}>
         <LinkTab
           data-testid="nav-tabpanel-description"
           label={t('heading.description')}
