@@ -22,7 +22,7 @@ const registrationErrorMessage = {
   publishedDateRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:description.date_published'),
   }),
-  publisedDateInvalid: i18n.t('feedback:validation.has_invalid_format', {
+  publishedDateInvalid: i18n.t('feedback:validation.has_invalid_format', {
     field: i18n.t('registration:description.date_published'),
   }),
   fileRequired: i18n.t('feedback:validation.minimum_one_file'),
@@ -40,7 +40,7 @@ export const registrationValidationSchema = Yup.object().shape({
     }),
     date: Yup.object().shape({
       year: Yup.number()
-        .typeError(registrationErrorMessage.publisedDateInvalid)
+        .typeError(registrationErrorMessage.publishedDateInvalid)
         .required(registrationErrorMessage.publishedDateRequired),
       month: Yup.number().transform(emptyStringToNull).nullable(),
       day: Yup.number().transform(emptyStringToNull).nullable(),
