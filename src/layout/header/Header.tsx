@@ -59,14 +59,12 @@ export const Header = () => {
     <AppBar position="static" color="inherit" elevation={0}>
       <StyledNav>
         {user && (
-          <>
-            <StyledBurgerMenu>
-              <IconButton onClick={handleClick}>
-                <MenuIcon />
-              </IconButton>
-            </StyledBurgerMenu>
+          <StyledBurgerMenu>
+            <IconButton onClick={handleClick}>
+              <MenuIcon />
+            </IconButton>
             <MobileMenu anchorEl={anchorEl} onClose={() => setAnchorEl(null)} />
-          </>
+          </StyledBurgerMenu>
         )}
         <Logo />
         {user?.isCreator && (
