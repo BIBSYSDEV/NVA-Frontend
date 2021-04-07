@@ -9,7 +9,6 @@ import lightTheme, { datePickerTranslationProps } from '../../../themes/lightThe
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
-import { ErrorMessage } from '../../../utils/validation/errorMessage';
 import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 
 const StyledFormControlLabel = styled(FormControlLabel)`
@@ -87,7 +86,7 @@ export const DatePickerField = () => {
           onBlur={setYearFieldTouched}
           onClose={setYearFieldTouched}
           error={hasError}
-          helperText={hasError && (!date ? ErrorMessage.REQUIRED : ErrorMessage.INVALID_FORMAT)}
+          helperText={hasError && errors.entityDescription?.date?.year}
         />
       </MuiThemeProvider>
       <StyledFormControlLabel

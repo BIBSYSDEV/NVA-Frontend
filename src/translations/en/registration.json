@@ -52,19 +52,6 @@
     "year_only": "Year only"
   },
   "edit_registration": "Edit registration",
-  "feedback": {
-    "invalid_format": "Invalid format",
-    "invalid_isbn": "Invalid ISBN",
-    "invalid_page_interval": "Invalid page interval",
-    "invalid_url": "Invalid URL",
-    "minimum_one_author": "You need to have at least one author registered for this registration",
-    "minimum_one_editor": "You need to have at least one editor registered for this registration",
-    "minimum_one_file": "You need to have at least one file uploaded for this registration",
-    "minimum_one_supervisor": "You need to have at least one supervisor registered for this registration",
-    "must_be_min_1": "Value must be bigger than 0",
-    "must_be_positive": "Value must be positive",
-    "date_must_be_in_future": "Date must be in future"
-  },
   "files_and_license": {
     "accepted_version": "Accepted version",
     "administrative_contract": "Author agreement or other file to be saved but not published",
