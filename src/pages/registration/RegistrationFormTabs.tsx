@@ -90,7 +90,7 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
       <StyledTabs
         onChange={(_, value) => setTabNumber(value)}
         variant="scrollable"
-        scrollButtons="on"
+        scrollButtons="auto"
         textColor="primary"
         indicatorColor="secondary"
         value={tabNumber}>
