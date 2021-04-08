@@ -20,11 +20,13 @@ const StyledIconButton = styled(IconButton)`
   color: ${({ theme }) => theme.palette.section.megaDark};
 `;
 
-const StyledTruncatableHeading = styled.div`
+const StyledTruncatableHeading = styled.div<{ canBeTruncated: boolean }>`
   padding-bottom: 0.3rem;
   border-bottom: 3px solid;
-  display: flex;
   align-items: center;
+  display: grid;
+  grid-template-columns: ${({ canBeTruncated }) => (canBeTruncated ? '1fr auto' : '1fr')};
+  grid-column-gap: 1rem;
 `;
 
 export interface PageHeaderProps extends TypographyProps {
@@ -55,7 +57,7 @@ export const PageHeader = ({ backPath, children, ...props }: PageHeaderProps) =>
       <Button data-testid="navigate-back-button" startIcon={<ArrowBackIcon />} variant="text" onClick={onBackClick}>
         {t('back')}
       </Button>
-      <StyledTruncatableHeading>
+      <StyledTruncatableHeading canBeTruncated={canBeTruncated}>
         <Typography variant="h1" {...props}>
           <TextTruncate
             line={showFullText ? false : 2}
