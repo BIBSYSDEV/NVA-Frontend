@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Tabs, Typography } from '@material-ui/core';
 
-import LinkTab from '../../components/LinkTab';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import {
   mergeTouchedFields,
@@ -17,11 +16,12 @@ import {
 } from '../../utils/formik-helpers';
 import { ErrorList } from './ErrorList';
 import { RequiredDescription } from '../../components/RequiredDescription';
+import { LinkTab } from '../../components/LinkTab';
 
 const StyledTabs = styled(Tabs)`
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     .MuiTabs-flexContainer {
-      justify-content: center;
+      justify-content: space-around;
     }
   }
 `;
@@ -89,11 +89,11 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
     <>
       <StyledTabs
         onChange={(_, value) => setTabNumber(value)}
+        variant="scrollable"
         scrollButtons="auto"
         textColor="primary"
         indicatorColor="secondary"
-        value={tabNumber}
-        variant="scrollable">
+        value={tabNumber}>
         <LinkTab
           data-testid="nav-tabpanel-description"
           label={t('heading.description')}
