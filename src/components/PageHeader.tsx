@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
 import styled from 'styled-components';
-import { Button, Tooltip, Typography, TypographyProps } from '@material-ui/core';
+import { IconButton, Button, Tooltip, Typography, TypographyProps } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
@@ -15,7 +15,7 @@ const StyledHeader = styled.div`
   word-wrap: break-word;
 `;
 
-const StyledButton = styled(Button)`
+const StyledIconButton = styled(IconButton)`
   background-color: ${({ theme }) => theme.palette.section.light};
   color: ${({ theme }) => theme.palette.section.megaDark};
 `;
@@ -67,9 +67,9 @@ export const PageHeader = ({ backPath, children, ...props }: PageHeaderProps) =>
         </Typography>
         {canBeTruncated && (
           <Tooltip title={showFullText ? 'Minimer tittel' : 'Vis hele tittel'}>
-            <StyledButton variant="contained" onClick={toggleFullText}>
+            <StyledIconButton onClick={toggleFullText}>
               {showFullText ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </StyledButton>
+            </StyledIconButton>
           </Tooltip>
         )}
       </StyledTruncatableHeading>
