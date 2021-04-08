@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Avatar, Backdrop, Dialog, Fade, DialogTitle, DialogProps, Typography, AvatarProps } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import { useTranslation } from 'react-i18next';
 
 const StyledPaper = styled.div`
   background-color: ${({ theme }) => theme.palette.background};
@@ -75,6 +76,7 @@ const Modal = ({
   open,
   ...props
 }: ModalProps) => {
+  const { t } = useTranslation('common');
   const handleClose = () => {
     onClose && onClose();
   };
@@ -106,7 +108,7 @@ const Modal = ({
             </StyledHeading>
           )}
         </StyledDialogTitle>
-        <StyledCloseIcon onClick={handleClose} data-testid="close-modal" />
+        <StyledCloseIcon onClick={handleClose} data-testid="close-modal" titleAccess={t('close')} />
       </StyledHeaderContainer>
 
       <Fade in={open}>
