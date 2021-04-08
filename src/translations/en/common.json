@@ -41,6 +41,7 @@
   "orcid": "ORCID",
   "organization_number": "Organization number",
   "orgunitid": "Organization ID",
+  "page_title": "Nasjonalt Vitenarkiv",
   "picture": "Picture",
   "publish": "Publish",
   "publisher": "Publisher",
@@ -66,6 +67,7 @@
   "show": "Show",
   "size": "Size",
   "start": "Start",
+  "start_page": "Start page",
   "status": "Status",
   "support": "Support",
   "table_pagination": {

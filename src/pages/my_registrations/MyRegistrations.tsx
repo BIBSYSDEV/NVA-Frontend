@@ -18,6 +18,7 @@ import { RegistrationStatus } from '../../types/registration.types';
 import useFetchMyRegistrations from '../../utils/hooks/useFetchMyRegistrations';
 import { getUserPath } from '../../utils/urlPaths';
 import RegistrationList from './RegistrationList';
+import { Helmet } from 'react-helmet';
 
 const StyledContainer = styled.div`
   width: 100%;
@@ -48,6 +49,9 @@ const MyRegistrations: FC = () => {
 
   return (
     <StyledPageWrapperWithMaxWidth>
+      <Helmet>
+        <title>{t('my_registrations')}</title>
+      </Helmet>
       <PageHeader>{t('my_registrations')}</PageHeader>
       <StyledContainer>
         <StyledRightAlignedWrapper>

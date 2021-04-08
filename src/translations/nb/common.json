@@ -41,6 +41,7 @@
   "orcid": "ORCID",
   "organization_number": "Organisasjonsnummer",
   "orgunitid": "Organisasjons-ID",
+  "page_title": "Nasjonalt Vitenarkiv",
   "picture": "Bilde",
   "publish": "Publiser",
   "publisher": "Utgiver",
@@ -66,6 +67,7 @@
   "show": "Vis",
   "size": "Størrelse",
   "start": "Start",
+  "start_page": "Startside",
   "status": "Status",
   "support": "Brukerstøtte",
   "table_pagination": {
