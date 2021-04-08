@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, Collapse, Typography } from '@material-ui/core';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import SearchIcon from '@material-ui/icons/Search';
 import BackgroundDiv from '../../components/BackgroundDiv';
+import { RootStore } from '../../redux/reducers/rootReducer';
 import lightTheme from '../../themes/lightTheme';
+import { LOGIN_REDIRECT_PATH_KEY } from '../../utils/constants';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import AboutContent from '../infopages/AboutContent';
-import { useAuthentication } from '../../utils/hooks/useAuthentication';
-import { useSelector } from 'react-redux';
-import { RootStore } from '../../redux/reducers/rootReducer';
-import { LOGIN_REDIRECT_PATH_KEY } from '../../utils/constants';
 
 const StyledDashboard = styled.div`
   display: grid;
@@ -130,7 +129,6 @@ const Dashboard = () => {
   const { t } = useTranslation('common');
   const history = useHistory();
   const { user } = useSelector((store: RootStore) => store);
-  const { handleLogin } = useAuthentication();
   const [readMore, setReadMore] = useState(false);
 
   const toggleReadMore = () => setReadMore(!readMore);
@@ -166,25 +164,24 @@ const Dashboard = () => {
           <StyledLinkContent>
             <SearchIcon fontSize="large" />
             <StyledText>
-              <Typography variant="h4" variantMapping={{ h4: 'p' }}>
+              <Typography variant="h4" component="p">
                 {t('search_for_publication')}
               </Typography>
             </StyledText>
           </StyledLinkContent>
         </StyledSearchButton>
         <StyledNewRegistrationButton
+          as={Link}
+          to={user ? UrlPathTemplate.NewRegistration : UrlPathTemplate.Login}
           onClick={() => {
-            if (user) {
-              history.push(UrlPathTemplate.NewRegistration);
-            } else {
+            if (!user) {
               localStorage.setItem(LOGIN_REDIRECT_PATH_KEY, UrlPathTemplate.NewRegistration);
-              handleLogin();
             }
           }}>
           <StyledLinkContent>
             <PostAddIcon fontSize="large" />
             <StyledText>
-              <Typography variant="h4" variantMapping={{ h4: 'p' }}>
+              <Typography variant="h4" component="p">
                 {t('registration:new_registration')}
               </Typography>
               {!user && <Typography>{t('requires_login')}</Typography>}

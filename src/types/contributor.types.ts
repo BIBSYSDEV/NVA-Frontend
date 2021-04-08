@@ -1,4 +1,4 @@
-import { BackendTypeNames } from './publication_types/commonRegistration.types';
+import { BackendTypeNames, LanguageString } from './publication_types/commonRegistration.types';
 import { BackendType } from './registration.types';
 
 // For available roles, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/Role.java
@@ -22,15 +22,11 @@ export interface Contributor extends BackendType {
   sequence: number;
 }
 
-export interface Labels {
-  [key: string]: string;
-}
-
 // DOI lookup can give labels without id for institutions,
 // while when a contributor is added manually there will be ids present, and no need for labels.
 export interface Institution extends BackendType {
   id?: string;
-  labels?: Labels;
+  labels?: LanguageString;
 }
 
 export const emptyContributor: Contributor = {

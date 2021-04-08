@@ -22,6 +22,7 @@ const SelectTypeField = ({
     <Field name={fieldName}>
       {({ field, meta: { error, touched } }: FieldProps) => (
         <TextField
+          id={field.name}
           data-testid={dataTestId}
           select
           variant="filled"
@@ -30,7 +31,6 @@ const SelectTypeField = ({
           label={t('common:type')}
           required
           error={!!error && touched}
-          SelectProps={{ MenuProps: { autoFocus: false } }}
           helperText={<ErrorMessage name={field.name} />}
           onChange={(event) => (onChangeType ? onChangeType(event.target.value) : field.onChange(event))}>
           {options.map((typeValue) => (

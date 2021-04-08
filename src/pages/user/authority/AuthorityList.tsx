@@ -34,7 +34,9 @@ const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, selectedArp
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell padding="checkbox"></TableCell>
+              <TableCell id="selected-heading" padding="checkbox">
+                {t('common:selected')}
+              </TableCell>
               <TableCell data-testid="author-name-column">{t('name')}</TableCell>
               <TableCell data-testid="author-last-registration-column">
                 {t('profile:authority.example_publication')}
@@ -51,7 +53,10 @@ const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, selectedArp
                 onClick={() => onSelectAuthority?.(authority)}
                 selected={authority.id === selectedArpId}>
                 <TableCell padding="checkbox">
-                  <Radio checked={authority.id === selectedArpId} />
+                  <Radio
+                    inputProps={{ 'aria-labelledby': 'selected-heading' }}
+                    checked={authority.id === selectedArpId}
+                  />
                 </TableCell>
                 <TableCell>
                   <Typography>{authority.name}</Typography>

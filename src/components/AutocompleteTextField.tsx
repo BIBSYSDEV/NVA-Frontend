@@ -14,13 +14,11 @@ interface AutocompleteTextFieldProps
     Pick<TextFieldProps, 'placeholder' | 'label' | 'required'> {
   isLoading: boolean;
   showSearchIcon: boolean;
-  dataTestId?: string;
   errorMessage?: string;
 }
 
 export const AutocompleteTextField: FC<AutocompleteTextFieldProps> = ({
   isLoading,
-  dataTestId,
   showSearchIcon,
   errorMessage,
   ...params
@@ -29,10 +27,6 @@ export const AutocompleteTextField: FC<AutocompleteTextFieldProps> = ({
     {...params}
     variant="filled"
     fullWidth
-    inputProps={{
-      ...params.inputProps,
-      'data-testid': dataTestId,
-    }}
     InputProps={{
       ...params.InputProps,
       startAdornment: (

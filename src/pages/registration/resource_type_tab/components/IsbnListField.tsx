@@ -7,8 +7,7 @@ import { Autocomplete } from '@material-ui/lab';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../../types/notification.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { ErrorMessage } from '../../../../utils/validation/errorMessage';
-import { isbnRegex } from '../../../../utils/validation/registration/referenceValidation';
+import { invalidIsbnErrorMessage, isbnRegex } from '../../../../utils/validation/registration/referenceValidation';
 
 const IsbnListField = () => {
   const { t } = useTranslation('registration');
@@ -18,6 +17,9 @@ const IsbnListField = () => {
     <Field name={ResourceFieldNames.ISBN_LIST}>
       {({ field, form: { setFieldValue, setFieldTouched }, meta: { error } }: FieldProps) => (
         <Autocomplete
+          id={field.name}
+          aria-labelledby={`${field.name}-label`}
+          data-testid="isbn-field"
           freeSolo
           autoSelect
           multiple
@@ -30,7 +32,7 @@ const IsbnListField = () => {
               if (newIsbn?.match(isbnRegex)) {
                 setFieldValue(field.name, [...value, newIsbn]);
               } else {
-                dispatch(setNotification(ErrorMessage.INVALID_ISBN, NotificationVariant.Warning));
+                dispatch(setNotification(invalidIsbnErrorMessage, NotificationVariant.Warning));
               }
             } else {
               setFieldValue(field.name, value);
@@ -49,7 +51,6 @@ const IsbnListField = () => {
           renderInput={(params) => (
             <TextField
               {...params}
-              data-testid="isbn-input"
               label={t('resource_type.isbn')}
               helperText={t('resource_type.isbn_helper')}
               variant="filled"

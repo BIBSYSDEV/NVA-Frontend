@@ -61,7 +61,7 @@ interface AddContributorModalContentProps {
   initialSearchTerm?: string;
 }
 
-const AddContributorModalContent = ({
+export const AddContributorModalContent = ({
   addAuthor,
   addSelfAsAuthor,
   handleCloseModal,
@@ -91,6 +91,8 @@ const AddContributorModalContent = ({
         </Typography>
       )}
       <StyledTextField
+        id="search"
+        data-testid="search-field"
         variant="outlined"
         fullWidth
         value={searchTerm}
@@ -98,7 +100,6 @@ const AddContributorModalContent = ({
         autoFocus
         placeholder={t('common:search_placeholder')}
         label={t('common:search')}
-        inputProps={{ 'data-testid': 'search-input' }}
         InputProps={{
           startAdornment: <SearchIcon />,
         }}
@@ -142,5 +143,3 @@ const AddContributorModalContent = ({
     </StyledBackgroundDiv>
   );
 };
-
-export default AddContributorModalContent;

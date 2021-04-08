@@ -7,7 +7,7 @@ import BackgroundDiv from '../../../../components/BackgroundDiv';
 import lightTheme from '../../../../themes/lightTheme';
 import { JournalType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { JournalRegistration } from '../../../../types/registration.types';
-import DoiField from '../components/DoiField';
+import { DoiField } from '../components/DoiField';
 import JournalField from '../components/JournalField';
 import NviValidation from '../components/NviValidation';
 import PeerReview from '../components/PeerReview';
@@ -56,6 +56,7 @@ const JournalForm = () => {
           <Field name={ResourceFieldNames.VOLUME}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
+                id={field.name}
                 data-testid="volume-field"
                 variant="filled"
                 label={t('resource_type.volume')}
@@ -69,6 +70,7 @@ const JournalForm = () => {
           <Field name={ResourceFieldNames.ISSUE}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
+                id={field.name}
                 data-testid="issue-field"
                 variant="filled"
                 label={t('resource_type.issue')}
@@ -82,6 +84,7 @@ const JournalForm = () => {
           <Field name={ResourceFieldNames.PAGES_FROM}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
+                id={field.name}
                 data-testid="pages-from-field"
                 variant="filled"
                 label={t('resource_type.pages_from')}
@@ -96,6 +99,7 @@ const JournalForm = () => {
           <Field name={ResourceFieldNames.PAGES_TO}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
+                id={field.name}
                 data-testid="pages-to-field"
                 variant="filled"
                 label={t('resource_type.pages_to')}
@@ -112,6 +116,7 @@ const JournalForm = () => {
           <Field name={ResourceFieldNames.ARTICLE_NUMBER}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
+                id={field.name}
                 data-testid="article-number-field"
                 variant="filled"
                 label={t('resource_type.article_number')}

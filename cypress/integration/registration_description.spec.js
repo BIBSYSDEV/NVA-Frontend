@@ -1,3 +1,5 @@
+import { mockProject } from '../../src/utils/testfiles/mockProjects';
+
 describe('Registration: Description', () => {
   beforeEach(() => {
     cy.visit('/');
@@ -11,14 +13,11 @@ describe('Registration: Description', () => {
 
     cy.startRegistrationWithDoi();
 
-    cy.get('[data-testid=project-search-input]').click({ force: true }).type('phd');
+    cy.get('[data-testid=project-search-field] input').click({ force: true }).type(mockProject.title.substring(0, 4));
+    cy.get(`[data-testid="project-option-${mockProject.id}"]`).click({ force: true });
+    cy.get(`[data-testid="project-chip-${mockProject.id}"]`).should('exist');
 
-    const projectName = 'PhD prosjekt: Selvbestemmelse uten ord';
-    cy.contains(projectName).click({ force: true });
-    cy.get('[data-testid^=project-chip]').contains(projectName);
-
-    cy.get('[data-testid^=project-chip]').children().eq(1).click({ force: true });
-
-    cy.get('[data-testid^=project-chip]').should('not.exist');
+    cy.get(`[data-testid="project-chip-${mockProject.id}"]`).children().eq(1).click({ force: true });
+    cy.get(`[data-testid="project-chip-${mockProject.id}"]`).should('not.exist');
   });
 });

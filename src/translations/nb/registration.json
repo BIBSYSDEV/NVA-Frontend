@@ -18,6 +18,8 @@
     "create_new_author_description": "Personregisteret inneholder personer med opphavsrett til publiserte vitenskapelige arbeid som er tilgjengelig i institusjonens bibliotek, vitenarkiv eller er del av Norsk Vitenskapsindeks. Også omtalte personer kan bli registrert.\n\nOm personen du søker har publisert noe vitenskapelig tidligere, eller har nylig fullført en vitenskapelig grad ved en norsk utdanningsinstitusjon, så er det sannsynlig at personen alt er registrert.\n\nEn kurator vil prøve å finne ut om dette er en ny person eller om det er en ny skrivemåte på en tidligere registrert person.",
     "editors": "Redaktører",
     "known_author_identity": "Har tilknyttet forfatteridentitet",
+    "move_down": "Flytt ned",
+    "move_up": "Flytt opp",
     "prefilled_affiliation": "Forhåndsutfylt tilhørighet",
     "prefilled_name": "Forhåndsutfylt navn",
     "remove_affiliation": "Fjern tilhørighet",
@@ -50,19 +52,6 @@
     "year_only": "Kun årstall"
   },
   "edit_registration": "Endre registrering",
-  "feedback": {
-    "invalid_format": "Ugyldig format",
-    "invalid_isbn": "Ugyldig ISBN",
-    "invalid_page_interval": "Ugyldig sideintervall",
-    "invalid_url": "Ugyldig lenke",
-    "minimum_one_author": "Du må ha minst en forfatter på denne registreringen",
-    "minimum_one_editor": "Du må ha minst en redaktør på denne registreringen",
-    "minimum_one_file": "Du må laste opp minst en fil for denne registreringen",
-    "minimum_one_supervisor": "Du må ha minst en veileder på denne registreringen",
-    "must_be_min_1": "Verdien må være større enn 0",
-    "must_be_positive": "Verdien må være positiv",
-    "date_must_be_in_future": "Dato må være i fremtiden"
-  },
   "files_and_license": {
     "accepted_version": "Akseptert versjon",
     "administrative_contract": "Forfatteravtale eller annen fil som skal lagres men ikke publiseres",
@@ -74,6 +63,8 @@
     "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
     "publicly_available": "Offentlig tilgjengelig",
     "published_version": "Publisert versjon",
+    "remove_file": "Fjern fil",
+    "remove_file_description": "Ønsker du å fjerne {{fileName}}?",
     "select_version": "Velg versjon",
     "title": "Filnavn",
     "uploaded_size": "Lastet opp {{size}}"
@@ -83,20 +74,23 @@
     "description": "Beskrivelse",
     "files_and_license": "Filer og lisens",
     "publish_settings": "Publiseringsvalg",
-    "resource_type": "Ressurstype",
-    "validation_errors": "Valideringsfeil"
+    "resource_type": "Ressurstype"
   },
   "new_registration": "Ny registrering",
   "public_page": {
-    "current_validation_errors": "NB! Registreringen har valideringsfeil som må fikses før den kan publiseres",
+    "error_description": "For å publisere må du rette følgende feil:",
+    "go_back_to_wizard": "Gå tilbake til skjema",
     "in_progess": "Under behandling",
     "message_to_curator": "Melding til kurator",
+    "not_published": "Ikke publisert",
     "preview": "Forhåndsvisning",
     "preview_unavailable": "Forhåndsvisning ikke tilgjengelig. Åpne filen i egnet program.",
+    "published": "Publisert",
     "reserve_doi": "Reserver en DOI",
     "request_doi": "Be om en DOI",
     "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet."
   },
+  "validation_errors": "Valideringsfeil",
   "registration": {
     "latest_registrations": "Nye registreringer",
     "link_to_resource": "DOI til ressurs",
@@ -109,8 +103,6 @@
   },
   "resource_type": {
     "article_number": "Artikkelnummer",
-    "delete_doi_title": "Endre type?",
-    "delete_doi_text": "Om du fjerner lenke til publikasjonen vil du endre fra registrering til publisering. Ønsker du å fortsette?",
     "chapter": {
       "info_anthology": "Antologien hvor kapittelet er publisert i må være publisert først",
       "published_in": "Publisert i",
@@ -141,6 +133,8 @@
     "peer_review": "Er publikasjonen fagfellevurdert?",
     "peer_reviewed": "Fagfellevurdert",
     "remove": "Fjern",
+    "remove_doi": "Fjern DOI",
+    "remove_doi_text": "Du kan fjerne DOI som ble brukt ved registreringsstart.\nØnsker du å fjerne kobling til original DOI?",
     "search_for_journal": "Søk etter tidsskrift",
     "search_for_original_article": "Søk etter original artikkel",
     "search_for_publisher": "Søk etter utgiver",

@@ -4,12 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 import { addQualifierIdForAuthority, AuthorityQualifiers, getAuthority } from './api/authorityApi';
 import { getInstitutionUser } from './api/roleApi';
 import { getCurrentUserAttributes } from './api/userApi';
-import AppRoutes from './AppRoutes';
-import Footer from './layout/Footer';
-import Header from './layout/header/Header';
+import { AppRoutes } from './AppRoutes';
+import { Footer } from './layout/Footer';
+import { Header } from './layout/header/Header';
 import Notifier from './layout/Notifier';
 import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
 import { setNotification } from './redux/actions/notificationActions';
@@ -23,6 +24,7 @@ import { USE_MOCK_DATA } from './utils/constants';
 import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { PageSpinner } from './components/PageSpinner';
+import { LanguageCodes } from './types/language.types';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -30,7 +32,7 @@ const StyledApp = styled.div`
   flex-direction: column;
 `;
 
-const StyledContent = styled.div`
+const StyledMainContent = styled.main`
   display: flex;
   flex-direction: column;
   align-self: center;
@@ -39,9 +41,16 @@ const StyledContent = styled.div`
   flex-grow: 1;
 `;
 
+const getLanguageTagValue = (language: string) => {
+  if (language === LanguageCodes.ENGLISH) {
+    return 'en';
+  }
+  return 'no';
+};
+
 const App = () => {
   const dispatch = useDispatch();
-  const { t } = useTranslation('feedback');
+  const { t, i18n } = useTranslation('feedback');
   const user = useSelector((store: RootStore) => store.user);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [matchingAuthorities, isLoadingMatchingAuthorities] = useFetchAuthorities(user?.name ?? '');
@@ -134,22 +143,29 @@ const App = () => {
     }
   }, [dispatch, t, matchingAuthorities, user]);
 
-  return isLoadingUser ? (
-    <PageSpinner />
-  ) : (
-    <BrowserRouter>
-      <StyledApp>
-        <Notifier />
-        <Header />
-        <StyledContent>
-          <AppRoutes />
-        </StyledContent>
-        <Footer />
-      </StyledApp>
-      {user && !isLoadingMatchingAuthorities && (user.authority || user.possibleAuthorities) && (
-        <AuthorityOrcidModal user={user} />
+  return (
+    <>
+      <Helmet>
+        <html lang={getLanguageTagValue(i18n.language)} />
+      </Helmet>
+      {isLoadingUser ? (
+        <PageSpinner />
+      ) : (
+        <BrowserRouter>
+          <StyledApp>
+            <Notifier />
+            <Header />
+            <StyledMainContent>
+              <AppRoutes />
+            </StyledMainContent>
+            <Footer />
+          </StyledApp>
+          {user && !isLoadingMatchingAuthorities && (user.authority || user.possibleAuthorities) && (
+            <AuthorityOrcidModal user={user} />
+          )}
+        </BrowserRouter>
       )}
-    </BrowserRouter>
+    </>
   );
 };
 

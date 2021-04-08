@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { CircularProgress, TextField, TextFieldProps } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -12,9 +12,10 @@ interface InstitutionAutocompleteProps
   value: InstitutionUnitBase | null;
   isLoading?: boolean;
   onChange?: (value: InstitutionUnitBase | null) => void;
+  id: string;
 }
 
-const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
+const InstitutionAutocomplete = ({
   disabled,
   error,
   helperText,
@@ -23,13 +24,16 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
   required,
   value = null,
   isLoading = false,
+  id,
   onChange,
-}) => {
+}: InstitutionAutocompleteProps) => {
   const { t } = useTranslation('common');
 
   return (
     <Autocomplete
       {...autocompleteTranslationProps}
+      id={id}
+      aria-labelledby={`${id}-label`}
       disabled={disabled}
       options={sortInstitutionsAlphabetically(institutions)}
       getOptionLabel={(option) => option.name}
@@ -54,7 +58,6 @@ const InstitutionAutocomplete: FC<InstitutionAutocompleteProps> = ({
           inputProps={{
             ...params.inputProps,
             'data-testid': 'autocomplete-institution',
-            'aria-label': t('institution'),
           }}
           InputProps={{
             ...params.InputProps,

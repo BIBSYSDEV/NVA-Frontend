@@ -24,7 +24,7 @@ interface CreateContributorModalContentProps {
   handleCloseModal: () => void;
 }
 
-const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: CreateContributorModalContentProps) => {
+export const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: CreateContributorModalContentProps) => {
   const [readMore, setReadMore] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation('common');
@@ -65,13 +65,14 @@ const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: CreateCo
               {({ field, meta: { error, touched } }: FieldProps) => (
                 <TextField
                   {...field}
-                  aria-label="first name"
+                  id={field.name}
                   fullWidth
                   label={t('first_name')}
                   required
                   disabled={isSubmitting}
                   variant="outlined"
                   error={!!error && touched}
+                  data-testid="create-contributor-first-name"
                   helperText={<ErrorMessage name={field.name} />}
                 />
               )}
@@ -80,13 +81,14 @@ const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: CreateCo
               {({ field, meta: { error, touched } }: FieldProps) => (
                 <TextField
                   {...field}
-                  aria-label="last name"
+                  id={field.name}
                   fullWidth
                   label={t('last_name')}
                   required
                   disabled={isSubmitting}
                   variant="outlined"
                   error={!!error && touched}
+                  data-testid="create-contributor-last-name"
                   helperText={<ErrorMessage name={field.name} />}
                 />
               )}
@@ -109,5 +111,3 @@ const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: CreateCo
     </StyledBackgroundDiv>
   );
 };
-
-export default CreateContributorModalContent;

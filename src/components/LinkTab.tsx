@@ -1,11 +1,8 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Tab, TabProps } from '@material-ui/core';
 import ErrorIcon from '@material-ui/icons/Error';
-
-const StyledTab = styled(Tab)`
-  margin: auto;
-`;
+import { useTranslation } from 'react-i18next';
 
 const StyledErrorIcon = styled(ErrorIcon)`
   margin-left: 0.3rem;
@@ -16,8 +13,14 @@ interface LinkTabProps extends TabProps {
   error?: boolean;
 }
 
-const LinkTab: FC<LinkTabProps> = ({ error, ...rest }) => (
-  <StyledTab disableRipple icon={error ? <StyledErrorIcon data-testid="error-tab" /> : undefined} {...rest} />
-);
+export const LinkTab = ({ error, ...rest }: LinkTabProps) => {
+  const { t } = useTranslation('registration');
 
-export default LinkTab;
+  return (
+    <Tab
+      {...rest}
+      tabIndex="0" // Allow navigating to tab with both arrows and Tab
+      icon={error ? <StyledErrorIcon data-testid="error-tab" titleAccess={t('validation_errors')} /> : undefined}
+    />
+  );
+};

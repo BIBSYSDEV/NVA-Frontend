@@ -42,6 +42,7 @@ const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCan
           {({ field: { name, value }, form: { isSubmitting } }: FieldProps) => (
             <StyledInstitutionSearchContainer>
               <InstitutionAutocomplete
+                id={name}
                 institutions={initialInstitution}
                 isLoading={isLoadingInstitutions}
                 disabled

@@ -9,7 +9,6 @@ import { Uppy } from '../../types/file.types';
 import { ResourceTypePanel } from './ResourceTypePanel';
 
 const StyledPanel = styled.div`
-  margin-top: 2rem;
   margin-bottom: 1rem;
 `;
 

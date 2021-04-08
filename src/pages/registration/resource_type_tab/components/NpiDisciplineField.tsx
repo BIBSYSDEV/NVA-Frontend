@@ -25,6 +25,8 @@ export const NpiDisciplineField = () => {
         meta: { error, touched },
       }: FieldProps<string>) => (
         <Autocomplete
+          id={name}
+          aria-labelledby={`${name}-label`}
           options={disciplineOptions}
           groupBy={(discipline) => discipline.mainDiscipline}
           onChange={(_: unknown, value: NpiDiscipline | null) => setFieldValue(name, value?.id ?? '')}

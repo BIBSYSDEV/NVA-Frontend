@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
 import lightTheme from '../../../../themes/lightTheme';
-import DoiField from '../components/DoiField';
+import { DoiField } from '../components/DoiField';
 import PublisherField from '../components/PublisherField';
 import SeriesField from '../components/SeriesField';
 

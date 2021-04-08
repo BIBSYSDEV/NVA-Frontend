@@ -9,8 +9,8 @@ import lightTheme from '../../themes/lightTheme';
 import { registrationLanguages } from '../../types/language.types';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
-import DatePickerField from './description_tab/DatePickerField';
-import { ProjectsField } from './description_tab/projects_field';
+import { DatePickerField } from './description_tab/DatePickerField';
+import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 
 const DateAndLanguageWrapper = styled.div`
   display: grid;
@@ -34,9 +34,9 @@ const DescriptionPanel = () => {
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
               {...field}
+              id={field.name}
               required
               data-testid="registration-title-field"
-              inputProps={{ 'data-testid': 'registration-title-input' }}
               variant="filled"
               fullWidth
               label={t('common:title')}
@@ -49,8 +49,8 @@ const DescriptionPanel = () => {
           {({ field }: FieldProps<string>) => (
             <TextField
               {...field}
+              id={field.name}
               data-testid="registration-abstract-field"
-              inputProps={{ 'data-testid': 'registration-abstract-input' }}
               variant="filled"
               fullWidth
               multiline
@@ -63,8 +63,8 @@ const DescriptionPanel = () => {
           {({ field }: FieldProps<string>) => (
             <TextField
               {...field}
+              id={field.name}
               data-testid="registration-description-field"
-              inputProps={{ 'data-testid': 'registration-description-input' }}
               label={t('description.description_of_content')}
               multiline
               rows="4"
@@ -79,6 +79,8 @@ const DescriptionPanel = () => {
           {({ field }: FieldProps) => (
             <Autocomplete
               {...field}
+              id={field.name}
+              aria-labelledby={`${field.name}-label`}
               freeSolo
               multiple
               options={[]}
@@ -113,6 +115,7 @@ const DescriptionPanel = () => {
             {({ field }: FieldProps<string>) => (
               <TextField
                 {...field}
+                id={field.name}
                 data-testid="registration-language-field"
                 fullWidth
                 label={t('description.primary_language')}
@@ -130,7 +133,7 @@ const DescriptionPanel = () => {
         </DateAndLanguageWrapper>
       </BackgroundDiv>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-        <Typography variant="h5" color="primary">
+        <Typography variant="h5" color="primary" component="p">
           {t('description.connect_project')}
         </Typography>
         <MuiThemeProvider theme={lightTheme}>

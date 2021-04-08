@@ -10,7 +10,7 @@ import { StyledCenterAlignedContentWrapper } from '../../../../components/styled
 import lightTheme from '../../../../themes/lightTheme';
 import { BookType, ChapterType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { ChapterRegistration } from '../../../../types/registration.types';
-import DoiField from '../components/DoiField';
+import { DoiField } from '../components/DoiField';
 import NviValidation from '../components/NviValidation';
 import PeerReview from '../components/PeerReview';
 import SearchContainerField from '../components/SearchContainerField';
@@ -78,6 +78,7 @@ const ChapterForm = () => {
           <Field name={ResourceFieldNames.PAGES_FROM}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <StyledPageNumberField
+                id={field.name}
                 variant="filled"
                 data-testid="chapter-pages-from"
                 label={t('resource_type.pages_from')}
@@ -96,6 +97,7 @@ const ChapterForm = () => {
           <Field name={ResourceFieldNames.PAGES_TO}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <StyledPageNumberField
+                id={field.name}
                 data-testid="chapter-pages-to"
                 variant="filled"
                 label={t('resource_type.pages_to')}

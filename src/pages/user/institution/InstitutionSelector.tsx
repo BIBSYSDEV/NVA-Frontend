@@ -25,6 +25,7 @@ const InstitutionSelector: FC<InstitutionSelectorProps> = ({ units, fieldNamePre
         {({ field: { name, value }, form: { setFieldValue } }: FieldProps) => (
           <>
             <InstitutionAutocomplete
+              id={name}
               institutions={units}
               onChange={(value) => setFieldValue(name, value)}
               value={value}
