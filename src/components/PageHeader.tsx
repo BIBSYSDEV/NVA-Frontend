@@ -21,6 +21,7 @@ const StyledButton = styled(Button)`
 `;
 
 const StyledTruncatableHeading = styled.div`
+  padding-bottom: 0.3rem;
   border-bottom: 3px solid;
   display: flex;
   align-items: center;
@@ -60,6 +61,7 @@ export const PageHeader = ({ backPath, children, ...props }: PageHeaderProps) =>
             line={showFullText ? false : 2}
             truncateText="..."
             text={children}
+            element="span"
             onTruncated={() => setCanBeTruncated(true)}
           />
         </Typography>
