@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { Button } from '@material-ui/core';
+import { Helmet } from 'react-helmet';
 import Card from '../../components/Card';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
@@ -16,6 +17,9 @@ export const AdminCustomerInstitutions = () => {
 
   return (
     <StyledPageWrapperWithMaxWidth>
+      <Helmet>
+        <title>{t('admin_institutions')}</title>
+      </Helmet>
       <PageHeader>{t('admin_institutions')}</PageHeader>
       <Card>
         <StyledRightAlignedWrapper>

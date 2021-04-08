@@ -2,6 +2,7 @@ import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
+import { Helmet } from 'react-helmet';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 
@@ -23,6 +24,9 @@ const PrivacyPolicy = () => {
 
   return (
     <StyledPageWrapperWithMaxWidth>
+      <Helmet>
+        <title>{t('privacy_statement')}</title>
+      </Helmet>
       <PageHeader>{t('privacy_statement')}</PageHeader>
 
       <StyledPrivacyContainer>

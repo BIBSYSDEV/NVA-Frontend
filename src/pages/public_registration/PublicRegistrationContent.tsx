@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import deepmerge from 'deepmerge';
-
+import { Helmet } from 'react-helmet';
 import { emptyRegistration, Registration } from '../../types/registration.types';
 import PublicRegistrationAuthors from './PublicRegistrationAuthors';
 import PublicFilesContent from './PublicFilesContent';
@@ -37,11 +37,15 @@ const PublicRegistrationContent = ({ registration, refetchRegistration }: Public
   registration = deepmerge(emptyRegistration, registration);
 
   const { contributors, mainTitle } = registration.entityDescription;
+  const registrationTitle = mainTitle || `[${t('common:missing_title')}]`;
 
   return (
     <>
+      <Helmet>
+        <title>{registrationTitle}</title>
+      </Helmet>
       <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
-      <RegistrationPageHeader>{mainTitle || `[${t('common:missing_title')}]`}</RegistrationPageHeader>
+      <RegistrationPageHeader>{registrationTitle}</RegistrationPageHeader>
       <div>
         {contributors && <PublicRegistrationAuthors contributors={contributors} />}
 

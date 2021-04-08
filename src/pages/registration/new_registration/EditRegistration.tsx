@@ -2,6 +2,7 @@ import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 import { PageHeader } from '../../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../../components/styled/Wrappers';
 import RegistrationForm from '../RegistrationForm';
@@ -44,6 +45,9 @@ const EditRegistration: FC = () => {
 
   return !showForm ? (
     <StyledPageWrapperWithMaxWidth>
+      <Helmet>
+        <title>{t('new_registration')}</title>
+      </Helmet>
       <PageHeader>{t('new_registration')}</PageHeader>
       <StyledEditRegistration>
         <LinkRegistration expanded={expanded === PanelName.Link} onChange={handleChange(PanelName.Link)} />

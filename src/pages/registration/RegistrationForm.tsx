@@ -29,6 +29,7 @@ import Forbidden from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
 import { RegistrationFormContent } from './RegistrationFormContent';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
+import { Helmet } from 'react-helmet';
 
 const StyledRegistration = styled.div`
   width: 100%;
@@ -99,25 +100,29 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
         onSubmit={() => {
           /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
         }}>
-        {({ dirty, values }: FormikProps<Registration>) => (
-          <Form noValidate>
-            <RouteLeavingGuard
-              modalDescription={t('modal_unsaved_changes_description')}
-              modalHeading={t('modal_unsaved_changes_heading')}
-              shouldBlockNavigation={dirty}
-            />
-            <StyledRegistrationPageHeader>
-              {values.entityDescription.mainTitle || `[${t('common:missing_title')}]`}
-            </StyledRegistrationPageHeader>
-            <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
-            <RegistrationFormContent tabNumber={tabNumber} uppy={uppy} />
-            <RegistrationFormActions
-              tabNumber={tabNumber}
-              setTabNumber={setTabNumber}
-              refetchRegistration={refetchRegistration}
-            />
-          </Form>
-        )}
+        {({ dirty, values }: FormikProps<Registration>) => {
+          const registrationTitle = values.entityDescription.mainTitle || `[${t('common:missing_title')}]`;
+          return (
+            <Form noValidate>
+              <Helmet>
+                <title>{registrationTitle}</title>
+              </Helmet>
+              <RouteLeavingGuard
+                modalDescription={t('modal_unsaved_changes_description')}
+                modalHeading={t('modal_unsaved_changes_heading')}
+                shouldBlockNavigation={dirty}
+              />
+              <StyledRegistrationPageHeader>{registrationTitle}</StyledRegistrationPageHeader>
+              <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
+              <RegistrationFormContent tabNumber={tabNumber} uppy={uppy} />
+              <RegistrationFormActions
+                tabNumber={tabNumber}
+                setTabNumber={setTabNumber}
+                refetchRegistration={refetchRegistration}
+              />
+            </Form>
+          );
+        }}
       </Formik>
     </StyledRegistration>
   );

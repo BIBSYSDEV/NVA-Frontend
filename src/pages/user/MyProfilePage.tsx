@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
+import { Helmet } from 'react-helmet';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../api/authorityApi';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import { PageHeader } from '../../components/PageHeader';
@@ -83,6 +84,9 @@ const MyProfilePage = () => {
 
   return (
     <StyledPageWrapperWithMaxWidth>
+      <Helmet>
+        <title>{t('my_profile')}</title>
+      </Helmet>
       <PageHeader>{t('my_profile')}</PageHeader>
       <StyledUserPage>
         {user.authority && (

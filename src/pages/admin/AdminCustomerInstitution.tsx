@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { emptyCustomerInstitution } from '../../types/customerInstitution.types';
@@ -29,6 +30,9 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
 
   return (
     <StyledPageWrapperWithMaxWidth>
+      <Helmet>
+        <title>{editMode ? customerInstitution?.displayName : t('add_institution')}</title>
+      </Helmet>
       <PageHeader>{t(editMode ? 'edit_institution' : 'add_institution')}</PageHeader>
       <StyledCustomerInstitution>
         {isLoadingCustomerInstitution ? (
