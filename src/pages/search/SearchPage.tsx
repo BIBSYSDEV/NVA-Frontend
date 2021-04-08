@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -27,9 +26,6 @@ const SearchPage: FC = () => {
 
   return (
     <StyledPageWrapperWithMaxWidth>
-      <Helmet>
-        <title>{t('registrations')}</title>
-      </Helmet>
       <PageHeader backPath="/">{t('registrations')}</PageHeader>
       <StyledSearch>
         <SearchBar handleSearch={handleSearch} initialSearchTerm={searchTerm} />

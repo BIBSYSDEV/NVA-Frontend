@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import SaveIcon from '@material-ui/icons/Save';
-import { Helmet } from 'react-helmet';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import ListSkeleton from '../../components/ListSkeleton';
@@ -51,9 +50,6 @@ const MyCustomerInstitutionPage = () => {
 
   return (
     <StyledPageWrapperWithMaxWidth>
-      <Helmet>
-        <title>{t('common:my_institution')}</title>
-      </Helmet>
       <PageHeader>{t('common:my_institution')}</PageHeader>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
         {isLoadingCustomerInstitution ? (

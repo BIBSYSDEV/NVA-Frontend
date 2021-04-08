@@ -7,6 +7,7 @@ import { Button, Typography, TypographyProps } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import { Helmet } from 'react-helmet';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
 const StyledHeader = styled.div`
@@ -31,9 +32,10 @@ const StyledButton = styled(Button)`
 export interface PageHeaderProps extends TypographyProps {
   backPath?: string;
   children: string;
+  htmlTitle?: string;
 }
 
-export const PageHeader = ({ backPath, children, ...props }: PageHeaderProps) => {
+export const PageHeader = ({ backPath, children, htmlTitle, ...props }: PageHeaderProps) => {
   const { t } = useTranslation('common');
   const history = useHistory();
   const [showFullText, setShowFullText] = useState(false);
@@ -52,6 +54,9 @@ export const PageHeader = ({ backPath, children, ...props }: PageHeaderProps) =>
 
   return (
     <StyledHeader>
+      <Helmet>
+        <title>{htmlTitle ?? children}</title>
+      </Helmet>
       <Button data-testid="navigate-back-button" startIcon={<ArrowBackIcon />} variant="text" onClick={onBackClick}>
         {t('back')}
       </Button>

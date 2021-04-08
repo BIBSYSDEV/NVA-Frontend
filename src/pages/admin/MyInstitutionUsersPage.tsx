@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Button, Checkbox, Divider, FormControlLabel } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import { Helmet } from 'react-helmet';
 import Card from '../../components/Card';
 import ListSkeleton from '../../components/ListSkeleton';
 import Modal from '../../components/Modal';
@@ -40,9 +39,6 @@ const MyInstitutionUsersPage: FC = () => {
 
   return (
     <StyledPageWrapperWithMaxWidth>
-      <Helmet>
-        <title>{t('users.user_administration')}</title>
-      </Helmet>
       <PageHeader>{t('users.user_administration')}</PageHeader>
       <Card>
         {/* Admins */}

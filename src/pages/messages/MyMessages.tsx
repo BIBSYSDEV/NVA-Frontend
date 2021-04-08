@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Helmet } from 'react-helmet';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { RoleName } from '../../types/user.types';
@@ -11,9 +10,6 @@ const MyMessages = () => {
 
   return (
     <StyledPageWrapperWithMaxWidth>
-      <Helmet>
-        <title>{t('my_messages')}</title>
-      </Helmet>
       <PageHeader>{t('my_messages')}</PageHeader>
       <MessagesOverview role={RoleName.CREATOR} />
     </StyledPageWrapperWithMaxWidth>
