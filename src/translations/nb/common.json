@@ -75,6 +75,8 @@
     "rows_per_page": "Rader per side:"
   },
   "title": "Tittel",
+  "title_expand": "Vis hele tittel",
+  "title_minimize": "Minimer tittel",
   "type": "Type",
   "users": "Brukere",
   "version": "Versjon",

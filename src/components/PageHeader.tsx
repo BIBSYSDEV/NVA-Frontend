@@ -68,7 +68,7 @@ export const PageHeader = ({ backPath, children, ...props }: PageHeaderProps) =>
           />
         </Typography>
         {canBeTruncated && (
-          <Tooltip title={showFullText ? 'Minimer tittel' : 'Vis hele tittel'}>
+          <Tooltip title={showFullText ? t<string>('title_minimize') : t<string>('title_expand')}>
             <StyledIconButton onClick={toggleFullText}>
               {showFullText ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </StyledIconButton>
