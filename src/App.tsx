@@ -1,5 +1,5 @@
 import Amplify from 'aws-amplify';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
@@ -25,6 +25,7 @@ import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { PageSpinner } from './components/PageSpinner';
 import { LanguageCodes } from './types/language.types';
+import { SkipLink } from './components/SkipLink';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -52,6 +53,7 @@ const App = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation('feedback');
   const user = useSelector((store: RootStore) => store.user);
+  const mainContentRef = useRef<HTMLDivElement>(null);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [matchingAuthorities, isLoadingMatchingAuthorities] = useFetchAuthorities(user?.name ?? '');
 
@@ -154,8 +156,9 @@ const App = () => {
         <BrowserRouter>
           <StyledApp>
             <Notifier />
+            <SkipLink href="#main-content">{t('common:skip_to_main_content')}</SkipLink>
             <Header />
-            <StyledMainContent>
+            <StyledMainContent id="main-content" ref={mainContentRef}>
               <AppRoutes />
             </StyledMainContent>
             <Footer />
