@@ -1,15 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, ButtonProps } from '@material-ui/core';
+import { ButtonProps, Link } from '@material-ui/core';
 
-const StyledButton = styled(Button)`
-  width: fit-content;
-  align-self: center;
+const StyledSkipLink = styled(Link)`
+  text-align: center;
   position: absolute;
-  overflow: hidden;
   :focus {
     position: static;
   }
 `;
 
-export const SkipLink = ({ href, children }: ButtonProps) => <StyledButton href={href}>{children}</StyledButton>;
+export const SkipLink = ({ href, children }: ButtonProps) => <StyledSkipLink href={href}>{children}</StyledSkipLink>;
