@@ -12,7 +12,7 @@ import { UrlPathTemplate } from '../utils/urlPaths';
 const StyledHeader = styled.div`
   width: 100%;
   margin-bottom: 1rem;
-  word-wrap: break-word;
+  word-break: break-word;
 `;
 
 const StyledIconButton = styled(IconButton)`
