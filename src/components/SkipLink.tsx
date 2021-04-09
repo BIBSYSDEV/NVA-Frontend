@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ButtonProps, Link } from '@material-ui/core';
+import { LinkProps, Link } from '@material-ui/core';
 
 const StyledSkipLink = styled(Link)`
   text-align: center;
   position: absolute;
-  :focus {
+
+  &.Mui-focusVisible {
     position: static;
   }
 `;
 
-export const SkipLink = ({ href, children }: ButtonProps) => <StyledSkipLink href={href}>{children}</StyledSkipLink>;
+export const SkipLink = (props: LinkProps) => <StyledSkipLink {...props} />;
