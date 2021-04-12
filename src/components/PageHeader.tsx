@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
 import styled from 'styled-components';
-import { Button, Typography, TypographyProps } from '@material-ui/core';
+import { IconButton, Button, Tooltip, Typography, TypographyProps } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
@@ -13,20 +13,21 @@ import { UrlPathTemplate } from '../utils/urlPaths';
 const StyledHeader = styled.div`
   width: 100%;
   margin-bottom: 1rem;
-  word-wrap: break-word;
+  word-break: break-word;
 `;
 
-const StyledTypography = styled(Typography)`
-  border-bottom: 3px solid;
-  padding-bottom: 0.5rem;
-  cursor: pointer;
-`;
-
-const StyledButton = styled(Button)`
+const StyledIconButton = styled(IconButton)`
   background-color: ${({ theme }) => theme.palette.section.light};
   color: ${({ theme }) => theme.palette.section.megaDark};
-  padding: 0.2rem;
-  min-width: 0;
+`;
+
+const StyledTruncatableHeading = styled.div<{ canBeTruncated: boolean }>`
+  padding-bottom: 0.3rem;
+  border-bottom: 3px solid;
+  align-items: center;
+  display: grid;
+  grid-template-columns: ${({ canBeTruncated }) => (canBeTruncated ? '1fr auto' : '1fr')};
+  grid-column-gap: 1rem;
 `;
 
 export interface PageHeaderProps extends TypographyProps {
@@ -39,6 +40,7 @@ export const PageHeader = ({ backPath, children, htmlTitle, ...props }: PageHead
   const { t } = useTranslation('common');
   const history = useHistory();
   const [showFullText, setShowFullText] = useState(false);
+  const [canBeTruncated, setCanBeTruncated] = useState(false);
 
   const toggleFullText = () => setShowFullText(!showFullText);
 
@@ -60,18 +62,24 @@ export const PageHeader = ({ backPath, children, htmlTitle, ...props }: PageHead
       <Button data-testid="navigate-back-button" startIcon={<ArrowBackIcon />} variant="text" onClick={onBackClick}>
         {t('back')}
       </Button>
-      <StyledTypography variant="h1" onClick={toggleFullText} {...props}>
-        <TextTruncate
-          line={showFullText ? false : 2}
-          truncateText="..."
-          text={children}
-          textTruncateChild={
-            <StyledButton variant="contained" onClick={toggleFullText}>
+      <StyledTruncatableHeading canBeTruncated={canBeTruncated}>
+        <Typography variant="h1" {...props}>
+          <TextTruncate
+            line={showFullText ? false : 2}
+            truncateText="..."
+            text={children}
+            element="span"
+            onTruncated={() => setCanBeTruncated(true)}
+          />
+        </Typography>
+        {canBeTruncated && (
+          <Tooltip title={showFullText ? t<string>('title_minimize') : t<string>('title_expand')}>
+            <StyledIconButton onClick={toggleFullText}>
               {showFullText ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </StyledButton>
-          }
-        />
-      </StyledTypography>
+            </StyledIconButton>
+          </Tooltip>
+        )}
+      </StyledTruncatableHeading>
     </StyledHeader>
   );
 };

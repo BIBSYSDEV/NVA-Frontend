@@ -78,6 +78,8 @@
     "rows_per_page": "Rows per page:"
   },
   "title": "Title",
+  "title_expand": "Show complete title",
+  "title_minimize": "Minimize title",
   "type": "Type",
   "users": "Users",
   "version": "Version",
