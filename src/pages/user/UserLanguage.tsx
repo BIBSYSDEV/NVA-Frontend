@@ -1,11 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { MenuItem, Select, Typography } from '@material-ui/core';
+import { MenuItem, TextField, Typography } from '@material-ui/core';
 import Card from '../../components/Card';
 import { pageLanguages } from '../../types/language.types';
 
-const StyledSelect = styled(Select)`
+const StyledSelect = styled(TextField)`
   margin-top: 1rem;
   width: 100%;
   max-width: 15rem;
@@ -14,14 +14,14 @@ const StyledSelect = styled(Select)`
 export const UserLanguage = () => {
   const { t, i18n } = useTranslation('profile');
 
-  const selectedLanguage = i18n.language;
-
   return (
     <Card>
-      <Typography variant="h2">{t('heading.language')}</Typography>
+      <Typography variant="h2">{t('heading.settings')}</Typography>
       <StyledSelect
         variant="outlined"
-        value={selectedLanguage}
+        value={i18n.language}
+        select
+        label={t('common:language')}
         onChange={(event) => {
           const language = event.target.value as string;
           i18n.changeLanguage(language);
