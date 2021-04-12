@@ -134,7 +134,7 @@ const JournalForm = () => {
       {(publicationInstance.type === JournalType.ARTICLE ||
         publicationInstance.type === JournalType.SHORT_COMMUNICATION) && (
         <>
-          <BackgroundDiv backgroundColor={lightTheme.palette.section.dark} data-testid="peer-review">
+          <BackgroundDiv backgroundColor={lightTheme.palette.section.dark} data-testid="peer-review-field">
             <PeerReview fieldName={ResourceFieldNames.PEER_REVIEW} label={t('resource_type.peer_review')} />
           </BackgroundDiv>
           <NviValidation

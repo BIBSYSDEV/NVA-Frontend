@@ -69,7 +69,7 @@ const ChapterForm = () => {
             searchSubtypes={[BookType.ANTHOLOGY]}
             label={t('resource_type.chapter.published_in')}
             placeholder={t('resource_type.chapter.search_for_anthology')}
-            data-testid="search-anthology"
+            data-testid="search-anthology-field"
           />
         )}
       </BackgroundDiv>
