@@ -9,6 +9,7 @@ const StyledSkipLink = styled(Link)`
   align-items: center;
   height: 3rem;
   background: ${({ theme }) => theme.palette.section.black};
+  clip: rect(1px, 1px, 1px, 1px);
 
   :focus {
     position: static;

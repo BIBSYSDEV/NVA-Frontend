@@ -29,6 +29,7 @@ import Forbidden from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
 import { RegistrationFormContent } from './RegistrationFormContent';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
+import { SkipLink } from '../../components/SkipLink';
 
 const StyledRegistration = styled.div`
   width: 100%;
@@ -101,6 +102,7 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
         }}>
         {({ dirty, values }: FormikProps<Registration>) => (
           <Form noValidate>
+            <SkipLink href="#form">{t('common:skip_to_schema')}</SkipLink>
             <RouteLeavingGuard
               modalDescription={t('modal_unsaved_changes_description')}
               modalHeading={t('modal_unsaved_changes_heading')}
