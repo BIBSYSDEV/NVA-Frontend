@@ -8,7 +8,7 @@ const StyledSkipLink = styled(Link)`
   justify-content: center;
   align-items: center;
   height: 3rem;
-  background-color: #1a1a18;
+  background: ${({ theme }) => theme.palette.section.black};
 
   :focus {
     position: static;
@@ -16,8 +16,8 @@ const StyledSkipLink = styled(Link)`
 `;
 
 const StyledTypography = styled(Typography)`
-  color: #fff;
-  outline: 3px solid #e24c5e;
+  color: ${({ theme }) => theme.palette.background.default};
+  outline: 3px solid ${({ theme }) => theme.palette.error.main};
   outline-offset: 3px;
 `;
 
