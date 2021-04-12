@@ -33,7 +33,7 @@ export const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({
     <div>
       {unitHierarchyNames.map((unitName, index) =>
         index === 0 && boldTopLevel ? (
-          <StyledTypography>{unitName}</StyledTypography>
+          <StyledTypography key={unitName}>{unitName}</StyledTypography>
         ) : (
           <Typography key={unitName}>{unitName}</Typography>
         )

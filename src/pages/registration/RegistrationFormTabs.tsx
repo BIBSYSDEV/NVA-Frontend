@@ -1,33 +1,30 @@
 import { useFormikContext } from 'formik';
-import React, { FC, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Tabs } from '@material-ui/core';
+import { Tabs, Typography } from '@material-ui/core';
 
-import LinkTab from '../../components/LinkTab';
 import { Registration, RegistrationTab } from '../../types/registration.types';
-import { ResourceFieldNames, DescriptionFieldNames } from '../../types/publicationFieldNames';
 import {
-  hasTouchedError,
-  getAllFileFields,
-  getAllContributorFields,
   mergeTouchedFields,
   touchedContributorTabFields,
   touchedDescriptionTabFields,
   touchedFilesTabFields,
   touchedResourceTabFields,
+  getTabErrors,
+  getFirstErrorTab,
 } from '../../utils/formik-helpers';
+import { ErrorList } from './ErrorList';
+import { RequiredDescription } from '../../components/RequiredDescription';
+import { LinkTab } from '../../components/LinkTab';
 
 const StyledTabs = styled(Tabs)`
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     .MuiTabs-flexContainer {
-      justify-content: center;
+      justify-content: space-around;
     }
   }
 `;
-
-const descriptionFieldNames = Object.values(DescriptionFieldNames);
-const resourceFieldNames = Object.values(ResourceFieldNames);
 
 const noTouchedTab = -1;
 type HighestTouchedTab = RegistrationTab | typeof noTouchedTab;
@@ -37,7 +34,7 @@ interface RegistrationFormTabsProps {
   tabNumber: RegistrationTab;
 }
 
-export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumber, tabNumber }) => {
+export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFormTabsProps) => {
   const { t } = useTranslation('registration');
   const { errors, touched, values, setTouched } = useFormikContext<Registration>();
 
@@ -54,7 +51,7 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
   const highestPreviouslyTouchedTabRef = useRef<HighestTouchedTab>(noTouchedTab);
 
   useEffect(() => {
-    // All fields for each tab
+    // Touch all fields for each tab
     const tabFields = {
       [RegistrationTab.Description]: () => touchedDescriptionTabFields,
       [RegistrationTab.ResourceType]: () =>
@@ -86,39 +83,51 @@ export const RegistrationFormTabs: FC<RegistrationFormTabsProps> = ({ setTabNumb
     };
   }, [setTouched, tabNumber]);
 
-  return (
-    <StyledTabs
-      onChange={(_, value) => setTabNumber(value)}
-      scrollButtons="auto"
-      textColor="primary"
-      indicatorColor="secondary"
-      value={tabNumber}
-      variant="scrollable">
-      <LinkTab
-        data-testid="nav-tabpanel-description"
-        label={t('heading.description')}
-        error={hasTouchedError(errors, touched, descriptionFieldNames)}
-      />
-      <LinkTab
-        data-testid="nav-tabpanel-resource-type"
-        label={t('heading.resource_type')}
-        error={hasTouchedError(errors, touched, resourceFieldNames)}
-      />
+  const tabErrors = getTabErrors(valuesRef.current, errors, touched);
 
-      <LinkTab
-        data-testid="nav-tabpanel-contributors"
-        label={t('heading.contributors')}
-        error={hasTouchedError(
-          errors,
-          touched,
-          getAllContributorFields(valuesRef.current.entityDescription.contributors)
-        )}
-      />
-      <LinkTab
-        data-testid="nav-tabpanel-files-and-license"
-        label={t('heading.files_and_license')}
-        error={hasTouchedError(errors, touched, getAllFileFields(valuesRef.current.fileSet.files))}
-      />
-    </StyledTabs>
+  return (
+    <>
+      <StyledTabs
+        onChange={(_, value) => setTabNumber(value)}
+        variant="scrollable"
+        scrollButtons="auto"
+        textColor="primary"
+        indicatorColor="secondary"
+        value={tabNumber}>
+        <LinkTab
+          data-testid="nav-tabpanel-description"
+          label={t('heading.description')}
+          error={tabErrors[RegistrationTab.Description].length > 0}
+        />
+        <LinkTab
+          data-testid="nav-tabpanel-resource-type"
+          label={t('heading.resource_type')}
+          error={tabErrors[RegistrationTab.ResourceType].length > 0}
+        />
+        <LinkTab
+          data-testid="nav-tabpanel-contributors"
+          label={t('heading.contributors')}
+          error={tabErrors[RegistrationTab.Contributors].length > 0}
+        />
+        <LinkTab
+          data-testid="nav-tabpanel-files-and-license"
+          label={t('heading.files_and_license')}
+          error={tabErrors[RegistrationTab.FilesAndLicenses].length > 0}
+        />
+      </StyledTabs>
+
+      <RequiredDescription />
+
+      {getFirstErrorTab(tabErrors) > -1 && (
+        <ErrorList
+          tabErrors={tabErrors}
+          description={
+            <Typography variant="h4" component="h2">
+              {t('validation_errors')}
+            </Typography>
+          }
+        />
+      )}
+    </>
   );
 };

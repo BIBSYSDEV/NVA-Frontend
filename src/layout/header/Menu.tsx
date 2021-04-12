@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { useState, MouseEvent, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -50,6 +50,7 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootStore) => store.user);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const divRef = useRef<any>();
 
   const handleClickMenuAnchor = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -58,7 +59,7 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
   const closeMenu = () => setAnchorEl(null);
 
   return (
-    <StyledMenu>
+    <StyledMenu ref={divRef}>
       <StyledMenuButton
         onClick={handleClickMenuAnchor}
         data-testid="menu"
@@ -70,6 +71,7 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
       </StyledMobileMenuButton>
       <MuiMenu
         anchorEl={anchorEl}
+        container={divRef.current}
         getContentAnchorEl={null}
         keepMounted
         open={!!anchorEl}
