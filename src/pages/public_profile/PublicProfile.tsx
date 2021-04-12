@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { IconButton, Link as MuiLink, Typography } from '@material-ui/core';
 import WorkIcon from '@material-ui/icons/Work';
+import { Helmet } from 'react-helmet';
 import Card from '../../components/Card';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import NormalText from '../../components/NormalText';
@@ -50,6 +51,9 @@ const PublicProfile = () => {
       ) : (
         authority && (
           <>
+            <Helmet>
+              <title>{authority.name}</title>
+            </Helmet>
             <Card>
               <Typography variant="h2">{authority.name}</Typography>
               {authority.orgunitids.length > 0 && (
