@@ -22,6 +22,7 @@ interface SearchContainerFieldProps {
   searchSubtypes: RegistrationSubtype[];
   label: string;
   placeholder: string;
+  dataTestId: string;
 }
 
 const SearchContainerField = (props: SearchContainerFieldProps) => {
@@ -50,7 +51,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
       : searchContainerOptions?.hits ?? [];
 
   return (
-    <>
+    <div data-testid={`${props.dataTestId}`}>
       <Field name={props.fieldName}>
         {({ field, meta }: FieldProps<string>) => (
           <MuiThemeProvider theme={lightTheme}>
@@ -108,7 +109,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
       {selectedContainer?.reference?.publicationContext && (
         <SelectedContainerSummary publicationContext={selectedContainer.reference.publicationContext} />
       )}
-    </>
+    </div>
   );
 };
 

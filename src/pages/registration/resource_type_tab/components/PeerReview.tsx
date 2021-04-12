@@ -22,7 +22,7 @@ const PeerReview = ({ fieldName, label }: PeerReviewProps) => {
               {label}
             </Typography>
           </div>
-          <FormControl>
+          <FormControl data-testid="peer-review-field">
             <RadioGroup
               value={value ? 'true' : 'false'}
               onChange={(event) => setFieldValue(name, event.target.value === 'true')}>

@@ -42,14 +42,13 @@ const JournalForm = () => {
         <DoiField />
 
         {publicationInstance.type === JournalType.CORRIGENDUM ? (
-          <div data-testid="article-search-field">
-            <SearchContainerField
-              fieldName={ResourceFieldNames.CORRIGENDUM_FOR}
-              searchSubtypes={[JournalType.ARTICLE, JournalType.SHORT_COMMUNICATION]}
-              label={t('resource_type.original_article')}
-              placeholder={t('resource_type.search_for_original_article')}
-            />
-          </div>
+          <SearchContainerField
+            fieldName={ResourceFieldNames.CORRIGENDUM_FOR}
+            searchSubtypes={[JournalType.ARTICLE, JournalType.SHORT_COMMUNICATION]}
+            label={t('resource_type.original_article')}
+            placeholder={t('resource_type.search_for_original_article')}
+            dataTestId="article-search-field"
+          />
         ) : (
           <JournalField />
         )}
@@ -134,7 +133,7 @@ const JournalForm = () => {
       {(publicationInstance.type === JournalType.ARTICLE ||
         publicationInstance.type === JournalType.SHORT_COMMUNICATION) && (
         <>
-          <BackgroundDiv backgroundColor={lightTheme.palette.section.dark} data-testid="peer-review-field">
+          <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
             <PeerReview fieldName={ResourceFieldNames.PEER_REVIEW} label={t('resource_type.peer_review')} />
           </BackgroundDiv>
           <NviValidation
