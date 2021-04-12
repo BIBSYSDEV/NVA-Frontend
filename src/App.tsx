@@ -1,5 +1,5 @@
 import Amplify from 'aws-amplify';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
@@ -53,7 +53,6 @@ const App = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation('feedback');
   const user = useSelector((store: RootStore) => store.user);
-  const mainContentRef = useRef<HTMLDivElement>(null);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [matchingAuthorities, isLoadingMatchingAuthorities] = useFetchAuthorities(user?.name ?? '');
 
@@ -158,7 +157,7 @@ const App = () => {
             <Notifier />
             <SkipLink href="#main-content">{t('common:skip_to_main_content')}</SkipLink>
             <Header />
-            <StyledMainContent id="main-content" ref={mainContentRef}>
+            <StyledMainContent id="main-content">
               <AppRoutes />
             </StyledMainContent>
             <Footer />
