@@ -25,6 +25,7 @@ import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { PageSpinner } from './components/PageSpinner';
 import { LanguageCodes } from './types/language.types';
+import { SkipLink } from './components/SkipLink';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -145,7 +146,7 @@ const App = () => {
 
   return (
     <>
-      <Helmet>
+      <Helmet defaultTitle={t('common:page_title')} titleTemplate={`%s - ${t('common:page_title')}`}>
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
       {isLoadingUser ? (
@@ -154,8 +155,9 @@ const App = () => {
         <BrowserRouter>
           <StyledApp>
             <Notifier />
+            <SkipLink href="#main-content">{t('common:skip_to_main_content')}</SkipLink>
             <Header />
-            <StyledMainContent>
+            <StyledMainContent id="main-content">
               <AppRoutes />
             </StyledMainContent>
             <Footer />
