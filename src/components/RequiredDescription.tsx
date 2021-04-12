@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 const StyledRequiredDescription = styled.div`
-  margin-top: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
   display: flex;
 `;
 

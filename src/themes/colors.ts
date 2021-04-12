@@ -18,7 +18,7 @@ export enum Color {
   Panel = '#A9D8B8',
   Disabled = '#bbb',
   Header = '#ffe7e7',
-  ErrorLight = '#EE7575',
+  ErrorLight = '#FF8888',
   ErrorMain = '#C2363D',
   SuccessDark = '#008958',
   SuccessMain = '#08B677',
