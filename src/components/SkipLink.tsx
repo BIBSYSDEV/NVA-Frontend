@@ -17,7 +17,7 @@ const StyledSkipLink = styled(Link)`
 
 const StyledTypography = styled(Typography)`
   color: ${({ theme }) => theme.palette.background.default};
-  outline: 3px solid ${({ theme }) => theme.palette.error.main};
+  outline: 3px solid ${({ theme }) => theme.palette.secondary.main};
   outline-offset: 3px;
 `;
 
