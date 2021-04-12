@@ -35,13 +35,6 @@ const StyledRegistration = styled.div`
   width: 100%;
 `;
 
-const StyledRegistrationPageHeader = styled(RegistrationPageHeader)`
-  padding: 0.5rem 4rem;
-  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
-    padding: 0;
-  }
-`;
-
 interface RegistrationFormProps {
   identifier: string;
   isNewRegistration: boolean;
@@ -108,9 +101,9 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
               modalHeading={t('modal_unsaved_changes_heading')}
               shouldBlockNavigation={dirty}
             />
-            <StyledRegistrationPageHeader>
+            <RegistrationPageHeader>
               {values.entityDescription.mainTitle || `[${t('common:missing_title')}]`}
-            </StyledRegistrationPageHeader>
+            </RegistrationPageHeader>
             <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
             <RegistrationFormContent tabNumber={tabNumber} uppy={uppy} />
             <RegistrationFormActions

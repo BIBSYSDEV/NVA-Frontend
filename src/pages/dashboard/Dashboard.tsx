@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Button, Collapse, Typography } from '@material-ui/core';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import SearchIcon from '@material-ui/icons/Search';
+import { Helmet } from 'react-helmet';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import lightTheme from '../../themes/lightTheme';
@@ -143,6 +144,9 @@ const Dashboard = () => {
 
   return (
     <StyledDashboard>
+      <Helmet>
+        <title>{t('start_page')}</title>
+      </Helmet>
       <StyledTaglineDiv backgroundColor={lightTheme.palette.section.megaDark}>
         <StyledTagline variant="h1">{t('nva_tagline')}</StyledTagline>
         <StyledShortDescription variant="h3" variantMapping={{ h3: 'p' }}>

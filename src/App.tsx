@@ -146,7 +146,7 @@ const App = () => {
 
   return (
     <>
-      <Helmet>
+      <Helmet defaultTitle={t('common:page_title')} titleTemplate={`%s - ${t('common:page_title')}`}>
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
       {isLoadingUser ? (
