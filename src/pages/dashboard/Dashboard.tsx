@@ -75,10 +75,7 @@ const StyledLinkButton = styled(Button)`
   padding: 1rem 6rem;
   text-decoration: none;
   text-transform: none;
-
-  :visited {
-    color: ${({ theme }) => theme.palette.primary.main};
-  }
+  color: ${({ theme }) => theme.palette.primary.main};
 `;
 
 const StyledSearchButton = styled(StyledLinkButton)`
