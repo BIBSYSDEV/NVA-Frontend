@@ -56,7 +56,7 @@ const ChapterForm = () => {
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        <StyledDiv>
+        <StyledDiv data-testid="info-anthology">
           <InfoIcon color="primary" />
           <Typography variant="body1">{t('resource_type.chapter.info_anthology')}</Typography>
         </StyledDiv>
@@ -69,6 +69,7 @@ const ChapterForm = () => {
             searchSubtypes={[BookType.ANTHOLOGY]}
             label={t('resource_type.chapter.published_in')}
             placeholder={t('resource_type.chapter.search_for_anthology')}
+            dataTestId="search-anthology-field"
           />
         )}
       </BackgroundDiv>
