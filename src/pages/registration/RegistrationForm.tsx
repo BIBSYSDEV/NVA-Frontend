@@ -84,6 +84,7 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
     <Forbidden />
   ) : (
     <StyledRegistration>
+      <SkipLink href="#form">{t('common:skip_to_schema')}</SkipLink>
       <Formik
         enableReinitialize
         initialValues={initialValues}
@@ -103,7 +104,6 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
             <RegistrationPageHeader>
               {values.entityDescription.mainTitle || `[${t('common:missing_title')}]`}
             </RegistrationPageHeader>
-            <SkipLink href="#form">{t('common:skip_to_schema')}</SkipLink>
             <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
             <RegistrationFormContent tabNumber={tabNumber} uppy={uppy} />
             <RegistrationFormActions
