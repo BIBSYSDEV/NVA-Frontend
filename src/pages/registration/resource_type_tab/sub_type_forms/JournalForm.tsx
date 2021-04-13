@@ -47,6 +47,7 @@ const JournalForm = () => {
             searchSubtypes={[JournalType.ARTICLE, JournalType.SHORT_COMMUNICATION]}
             label={t('resource_type.original_article')}
             placeholder={t('resource_type.search_for_original_article')}
+            dataTestId="article-search-field"
           />
         ) : (
           <JournalField />
