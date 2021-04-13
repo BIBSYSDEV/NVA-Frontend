@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, Collapse, Typography } from '@material-ui/core';
 import PostAddIcon from '@material-ui/icons/PostAdd';
@@ -168,7 +168,7 @@ const Dashboard = () => {
         </StyledButtonWrapper>
       </StyledDescriptionDiv>
       <StyledLinksContainer>
-        <StyledSearchButton as={Link} to={UrlPathTemplate.Search}>
+        <StyledSearchButton href={UrlPathTemplate.Search}>
           <StyledLinkContent>
             <SearchIcon fontSize="large" />
             <StyledText>
@@ -179,8 +179,7 @@ const Dashboard = () => {
           </StyledLinkContent>
         </StyledSearchButton>
         <StyledNewRegistrationButton
-          as={Link}
-          to={user ? UrlPathTemplate.NewRegistration : UrlPathTemplate.Login}
+          href={user ? UrlPathTemplate.NewRegistration : UrlPathTemplate.Login}
           onClick={() => {
             if (!user) {
               localStorage.setItem(LOGIN_REDIRECT_PATH_KEY, UrlPathTemplate.NewRegistration);
