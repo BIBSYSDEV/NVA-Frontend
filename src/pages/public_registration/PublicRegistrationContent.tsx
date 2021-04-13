@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import deepmerge from 'deepmerge';
-
 import { emptyRegistration, Registration } from '../../types/registration.types';
 import PublicRegistrationAuthors from './PublicRegistrationAuthors';
 import PublicFilesContent from './PublicFilesContent';

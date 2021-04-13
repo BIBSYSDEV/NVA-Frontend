@@ -22,10 +22,10 @@
     "see_profile": "Se forfatterprofil"
   },
   "heading": {
-    "contact_info": "Kontaktinformasjon",
-    "language": "Språk",
     "affiliations": "Tilhørigheter",
+    "contact_info": "Kontaktinformasjon",
     "roles": "Roller",
+    "settings": "Innstillinger",
     "user_info": "Brukerinformasjon"
   },
   "id": "ID",
