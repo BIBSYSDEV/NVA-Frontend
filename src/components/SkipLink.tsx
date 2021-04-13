@@ -9,10 +9,11 @@ const StyledSkipLink = styled(Link)`
   align-items: center;
   height: 3rem;
   background: ${({ theme }) => theme.palette.section.black};
-  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: circle(0%);
 
   :focus {
     position: static;
+    clip-path: none;
   }
 `;
 
