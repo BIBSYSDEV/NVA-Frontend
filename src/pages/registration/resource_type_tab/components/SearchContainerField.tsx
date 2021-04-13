@@ -51,7 +51,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
       : searchContainerOptions?.hits ?? [];
 
   return (
-    <div data-testid={`${props.dataTestId}`}>
+    <div data-testid={props.dataTestId}>
       <Field name={props.fieldName}>
         {({ field, meta }: FieldProps<string>) => (
           <MuiThemeProvider theme={lightTheme}>
