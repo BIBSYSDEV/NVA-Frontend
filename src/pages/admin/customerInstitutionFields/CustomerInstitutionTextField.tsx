@@ -1,5 +1,5 @@
+import { ErrorMessage, Field, FieldInputProps, FieldProps } from 'formik';
 import React from 'react';
-import { Field, FieldProps, ErrorMessage, FieldInputProps } from 'formik';
 import { TextField, TextFieldProps } from '@material-ui/core';
 
 interface CustomerInstitutionTextFieldProps
@@ -19,6 +19,7 @@ export const CustomerInstitutionTextField = ({
       <TextField
         {...field}
         data-testid={dataTestId}
+        id={dataTestId}
         label={label}
         required={required}
         fullWidth

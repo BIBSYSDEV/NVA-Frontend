@@ -22,10 +22,10 @@
     "see_profile": "See author profile"
   },
   "heading": {
-    "contact_info": "Contact",
-    "language": "Language",
     "affiliations": "Affiliations",
+    "contact_info": "Contact",
     "roles": "Roles",
+    "settings": "Settings",
     "user_info": "User information"
   },
   "id": "ID",

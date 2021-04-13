@@ -75,13 +75,11 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
         ? minNewIndex
         : relevantContributors.findIndex((c) => c.sequence === newSequence);
 
-    if (newIndex === -1) {
-      return;
-    }
+    const orderedContributors =
+      newIndex > 0 ? (move(relevantContributors, oldIndex, newIndex) as Contributor[]) : relevantContributors;
 
-    const reorderedContributors = move(relevantContributors, oldIndex, newIndex) as Contributor[];
     // Ensure incrementing sequence values
-    const newContributors = reorderedContributors.map((contributor, index) => ({
+    const newContributors = orderedContributors.map((contributor, index) => ({
       ...contributor,
       sequence: index + 1,
     }));
