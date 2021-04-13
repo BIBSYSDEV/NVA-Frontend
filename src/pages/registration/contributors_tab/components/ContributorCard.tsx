@@ -144,7 +144,9 @@ export const ContributorCard = ({
   return (
     <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
       <StyledContributorSection>
-        <StyledNameField variant="h5">{contributor.identity.name}</StyledNameField>
+        <StyledNameField variant="h5" variantMapping={{ h5: 'h3' }}>
+          {contributor.identity.name}
+        </StyledNameField>
         <StyledVerifiedSection>
           {contributor.identity.id ? (
             <>
