@@ -95,7 +95,6 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
         }}>
         {({ dirty, values }: FormikProps<Registration>) => (
           <Form noValidate>
-            <SkipLink href="#form">{t('common:skip_to_schema')}</SkipLink>
             <RouteLeavingGuard
               modalDescription={t('modal_unsaved_changes_description')}
               modalHeading={t('modal_unsaved_changes_heading')}
@@ -104,6 +103,7 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
             <RegistrationPageHeader>
               {values.entityDescription.mainTitle || `[${t('common:missing_title')}]`}
             </RegistrationPageHeader>
+            <SkipLink href="#form">{t('common:skip_to_schema')}</SkipLink>
             <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
             <RegistrationFormContent tabNumber={tabNumber} uppy={uppy} />
             <RegistrationFormActions
