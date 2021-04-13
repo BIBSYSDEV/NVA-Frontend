@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
@@ -6,7 +7,6 @@ import styled from 'styled-components';
 import { Button, Collapse, Typography } from '@material-ui/core';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import SearchIcon from '@material-ui/icons/Search';
-import { Helmet } from 'react-helmet';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import lightTheme from '../../themes/lightTheme';
@@ -75,6 +75,10 @@ const StyledLinkButton = styled(Button)`
   padding: 1rem 6rem;
   text-decoration: none;
   text-transform: none;
+
+  :visited {
+    color: ${({ theme }) => theme.palette.primary.main};
+  }
 `;
 
 const StyledSearchButton = styled(StyledLinkButton)`
