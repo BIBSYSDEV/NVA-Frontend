@@ -14,5 +14,6 @@
   "spa": "Spanish",
   "swe": "Swedish",
   "ger": "German",
-  "mis": "Other"
+  "mis": "Other",
+  "und": "Unknown"
 }
