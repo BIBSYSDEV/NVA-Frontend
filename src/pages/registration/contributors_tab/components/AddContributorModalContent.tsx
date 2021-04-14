@@ -12,7 +12,6 @@ import lightTheme from '../../../../themes/lightTheme';
 import { Authority } from '../../../../types/authority.types';
 import { ContributorRole } from '../../../../types/contributor.types';
 import { Registration } from '../../../../types/registration.types';
-import { SEARCH_INTERVAL } from '../../../../utils/constants';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
 import AuthorityList from '../../../user/authority/AuthorityList';
@@ -73,7 +72,7 @@ export const AddContributorModalContent = ({
   const { t } = useTranslation('registration');
   const [selectedAuthor, setSelectedAuthor] = useState<Authority | null>(null);
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
-  const debouncedSearchTerm = useDebounce(searchTerm, SEARCH_INTERVAL);
+  const debouncedSearchTerm = useDebounce(searchTerm);
   const [authorities, isLoadingAuthorities] = useFetchAuthorities(debouncedSearchTerm);
   const user = useSelector((store: RootStore) => store.user);
 
