@@ -12,7 +12,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useUppy } from '@uppy/react';
 import { RegistrationPageHeader } from '../../components/PageHeader';
@@ -34,16 +34,20 @@ const StyledRegistration = styled.div`
   width: 100%;
 `;
 
-interface RegistrationFormProps {
-  identifier: string;
-  isNewRegistration: boolean;
+interface LocationState {
+  isNewRegistration?: boolean;
 }
 
-const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormProps) => {
+interface RegistrationFormProps {
+  identifier: string;
+}
+
+const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
   const history = useHistory();
   const uppy = useUppy(createUppy());
+  const isNewRegistration = !!useLocation<LocationState>().state?.isNewRegistration;
   const [registration, isLoadingRegistration, refetchRegistration] = useFetchRegistration(identifier);
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
