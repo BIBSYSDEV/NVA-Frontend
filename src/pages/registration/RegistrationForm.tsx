@@ -29,6 +29,7 @@ import Forbidden from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
 import { RegistrationFormContent } from './RegistrationFormContent';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
+import { SkipLink } from '../../components/SkipLink';
 
 const StyledRegistration = styled.div`
   width: 100%;
@@ -83,6 +84,7 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
     <Forbidden />
   ) : (
     <StyledRegistration>
+      <SkipLink href="#form">{t('common:skip_to_schema')}</SkipLink>
       <Formik
         enableReinitialize
         initialValues={initialValues}
