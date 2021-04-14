@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Button, MuiThemeProvider } from '@material-ui/core';
+import { Button, MuiThemeProvider, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import AddIcon from '@material-ui/icons/Add';
 
-import Heading from '../../components/Heading';
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import { filterUsersByRole } from '../../utils/role-helpers';
 import UserList from './UserList';
@@ -36,8 +35,8 @@ export const CustomerInstitutionAdminsForm = ({
   };
 
   return (
-    <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-      <Heading>{t('administrators')}</Heading>
+    <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
+      <Typography variant="h2">{t('administrators')}</Typography>
       {isLoadingUsers ? (
         <ListSkeleton maxWidth={25} />
       ) : (
