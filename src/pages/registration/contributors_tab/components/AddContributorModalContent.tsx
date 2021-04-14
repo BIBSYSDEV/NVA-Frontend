@@ -6,15 +6,16 @@ import styled from 'styled-components';
 import { Button, TextField, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
+import { PageSpinner } from '../../../../components/PageSpinner';
 import { RootStore } from '../../../../redux/reducers/rootReducer';
 import lightTheme from '../../../../themes/lightTheme';
 import { Authority } from '../../../../types/authority.types';
 import { ContributorRole } from '../../../../types/contributor.types';
 import { Registration } from '../../../../types/registration.types';
+import { SEARCH_INTERVAL } from '../../../../utils/constants';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
 import AuthorityList from '../../../user/authority/AuthorityList';
-import { PageSpinner } from '../../../../components/PageSpinner';
 
 const StyledTextField = styled(TextField)`
   margin-bottom: 1rem;
@@ -72,7 +73,7 @@ export const AddContributorModalContent = ({
   const { t } = useTranslation('registration');
   const [selectedAuthor, setSelectedAuthor] = useState<Authority | null>(null);
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
-  const debouncedSearchTerm = useDebounce(searchTerm);
+  const debouncedSearchTerm = useDebounce(searchTerm, SEARCH_INTERVAL);
   const [authorities, isLoadingAuthorities] = useFetchAuthorities(debouncedSearchTerm);
   const user = useSelector((store: RootStore) => store.user);
 
