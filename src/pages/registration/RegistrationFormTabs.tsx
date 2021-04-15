@@ -10,7 +10,7 @@ import { getTabErrors, getFirstErrorTab, getTouchedTabFields, mergeTouchedFields
 import { ErrorList } from './ErrorList';
 import { RequiredDescription } from '../../components/RequiredDescription';
 import { LinkTab } from '../../components/LinkTab';
-import { LocationState } from './RegistrationForm';
+import { RegistrationLocationState } from './RegistrationForm';
 
 const StyledTabs = styled(Tabs)`
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
@@ -20,9 +20,6 @@ const StyledTabs = styled(Tabs)`
   }
 `;
 
-const noTouchedTab = -1;
-export type HighestTouchedTab = RegistrationTab | typeof noTouchedTab;
-
 interface RegistrationFormTabsProps {
   setTabNumber: (newTab: RegistrationTab) => void;
   tabNumber: RegistrationTab;
@@ -31,7 +28,7 @@ interface RegistrationFormTabsProps {
 export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFormTabsProps) => {
   const { t } = useTranslation('registration');
   const { errors, touched, values, setTouched } = useFormikContext<Registration>();
-  const locationState = useLocation<LocationState>().state;
+  const locationState = useLocation<RegistrationLocationState>().state;
 
   const valuesRef = useRef(values);
   useEffect(() => {

@@ -19,7 +19,7 @@ import { registrationValidationSchema } from '../../utils/validation/registratio
 import Forbidden from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
 import { RegistrationFormContent } from './RegistrationFormContent';
-import { HighestTouchedTab, RegistrationFormTabs } from './RegistrationFormTabs';
+import { RegistrationFormTabs } from './RegistrationFormTabs';
 import { getTouchedTabFields } from '../../utils/formik-helpers';
 import { SkipLink } from '../../components/SkipLink';
 
@@ -27,7 +27,9 @@ const StyledRegistration = styled.div`
   width: 100%;
 `;
 
-export interface LocationState {
+export type HighestTouchedTab = RegistrationTab | -1;
+
+export interface RegistrationLocationState {
   highestValidatedTab?: HighestTouchedTab;
 }
 
@@ -40,7 +42,8 @@ const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const { t } = useTranslation('registration');
   const history = useHistory();
   const uppy = useUppy(createUppy());
-  const tabToValidate = useLocation<LocationState>().state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
+  const highestValidatedTab =
+    useLocation<RegistrationLocationState>().state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
   const [registration, isLoadingRegistration, refetchRegistration] = useFetchRegistration(identifier);
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
@@ -83,7 +86,7 @@ const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
         initialValues={initialValues}
         validate={validateForm}
         initialErrors={validateForm(initialValues)}
-        initialTouched={getTouchedTabFields(tabToValidate, initialValues)}
+        initialTouched={getTouchedTabFields(highestValidatedTab, initialValues)}
         onSubmit={() => {
           /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
         }}>

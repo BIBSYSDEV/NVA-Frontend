@@ -1,6 +1,6 @@
 import deepmerge, { Options } from 'deepmerge';
 import { FormikErrors, FormikTouched, FormikValues, getIn } from 'formik';
-import { HighestTouchedTab } from '../pages/registration/RegistrationFormTabs';
+import { HighestTouchedTab } from '../pages/registration/RegistrationForm';
 import { Contributor } from '../types/contributor.types';
 import { File } from '../types/file.types';
 import {

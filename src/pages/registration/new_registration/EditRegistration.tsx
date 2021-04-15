@@ -29,7 +29,6 @@ interface UrlParams {
 const EditRegistration: FC = () => {
   const { t } = useTranslation('registration');
   const { identifier } = useParams<UrlParams>();
-
   const [expanded, setExpanded] = useState<PanelName | false>(false);
   const [showForm, setShowForm] = useState(!!identifier);
 
