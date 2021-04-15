@@ -6,7 +6,7 @@ import { Tabs, Typography } from '@material-ui/core';
 import { useLocation } from 'react-router-dom';
 
 import { Registration, RegistrationTab } from '../../types/registration.types';
-import { getTabErrors, getFirstErrorTab, getTouchedTabFields } from '../../utils/formik-helpers';
+import { getTabErrors, getFirstErrorTab, getTouchedTabFields, mergeTouchedFields } from '../../utils/formik-helpers';
 import { ErrorList } from './ErrorList';
 import { RequiredDescription } from '../../components/RequiredDescription';
 import { LinkTab } from '../../components/LinkTab';
@@ -49,15 +49,16 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
     if (tabNumber > highestValidatedTab) {
       locationState.highestValidatedTab = tabNumber;
 
+      // Set fields on previous tabs to touched
       const touchedFieldsOnMount = getTouchedTabFields(tabNumber - 1, valuesRef.current);
       setTouched(touchedFieldsOnMount);
-
-      // Set fields on current tab to touched
-      return () => {
-        const touchedFieldsOnUnmount = getTouchedTabFields(tabNumber, valuesRef.current);
-        setTouched(touchedFieldsOnUnmount);
-      };
     }
+
+    // Set fields on current tab to touched
+    return () => {
+      const touchedFieldsOnUnmount = getTouchedTabFields(tabNumber, valuesRef.current);
+      setTouched(mergeTouchedFields([touchedRef.current, touchedFieldsOnUnmount]));
+    };
   }, [setTouched, tabNumber, locationState]);
 
   const tabErrors = getTabErrors(valuesRef.current, errors, touched);

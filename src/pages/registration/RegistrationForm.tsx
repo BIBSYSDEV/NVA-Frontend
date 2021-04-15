@@ -70,8 +70,6 @@ const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   };
 
   const initialValues = registration ? deepmerge(emptyRegistration, registration) : emptyRegistration;
-  const intialErrors = validateForm(initialValues);
-  const intialTouched = getTouchedTabFields(tabToValidate, initialValues);
 
   return isLoadingRegistration ? (
     <PageSpinner />
@@ -80,11 +78,10 @@ const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   ) : (
     <StyledRegistration>
       <Formik
-        enableReinitialize
         initialValues={initialValues}
         validate={validateForm}
-        initialErrors={intialErrors}
-        initialTouched={intialTouched}
+        initialErrors={validateForm(initialValues)}
+        initialTouched={getTouchedTabFields(tabToValidate, initialValues)}
         onSubmit={() => {
           /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
         }}>
