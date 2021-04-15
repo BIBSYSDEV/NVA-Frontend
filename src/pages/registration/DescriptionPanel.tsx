@@ -6,7 +6,7 @@ import { MenuItem, MuiThemeProvider, TextField, Typography } from '@material-ui/
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
-import { registrationLanguages } from '../../types/language.types';
+import { LanguageCodes, registrationLanguages } from '../../types/language.types';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { DatePickerField } from './description_tab/DatePickerField';
@@ -122,6 +122,12 @@ const DescriptionPanel = () => {
                 placeholder={t('description.primary_language')}
                 select
                 variant="filled">
+                {!registrationLanguages.some((registrationLanguage) => registrationLanguage.value === field.value) && (
+                  // Show if Registration has a language that's currently not supported
+                  <MenuItem value={field.value} disabled>
+                    {t(`languages:${LanguageCodes.Undefined}`)}
+                  </MenuItem>
+                )}
                 {registrationLanguages.map(({ id, value }) => (
                   <MenuItem value={value} key={id} data-testid={`registration-language-${id}`}>
                     {t(`languages:${id}`)}

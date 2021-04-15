@@ -4,7 +4,6 @@ import { IconButton, Link, Typography } from '@material-ui/core';
 import AffiliationHierarchy from '../../components/institution/AffiliationHierarchy';
 import OrcidLogo from '../../resources/images/orcid_logo.svg';
 import { Contributor } from '../../types/contributor.types';
-import { ORCID_BASE_URL } from '../../utils/constants';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
 
 const StyledAuthor = styled.span`
@@ -61,7 +60,7 @@ const PublicRegistrationAuthors: FC<PublicRegistrationAuthorsProps> = ({ contrib
               <sup>
                 {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
                 {orcId && (
-                  <IconButton size="small" href={`${ORCID_BASE_URL}/${orcId}`}>
+                  <IconButton size="small" href={orcId}>
                     <img src={OrcidLogo} height="20" alt="orcid" />
                   </IconButton>
                 )}

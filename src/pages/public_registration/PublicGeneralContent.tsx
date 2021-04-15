@@ -38,7 +38,7 @@ import {
   PublicIsbnContent,
 } from './PublicPublicationInstance';
 import styled from 'styled-components';
-import { registrationLanguages } from '../../types/language.types';
+import { LanguageCodes, registrationLanguages } from '../../types/language.types';
 import RegistrationSummary from './RegistrationSummary';
 import { JournalType } from '../../types/publicationFieldNames';
 import { BookRegistration, ReportRegistration } from '../../types/registration.types';
@@ -86,7 +86,12 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
         {language && (
           <Typography>
             {t('description.primary_language')}:{' '}
-            {t(`languages:${registrationLanguages.find((lang) => lang.value === language)?.id}`)}
+            {t(
+              `languages:${
+                registrationLanguages.find((registrationLanguage) => registrationLanguage.value === language)?.id ??
+                LanguageCodes.Undefined
+              }`
+            )}
           </Typography>
         )}
         {npiSubjectHeading && (

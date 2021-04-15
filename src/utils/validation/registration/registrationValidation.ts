@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import { LanguageValues } from '../../../types/language.types';
 import { PublicationType } from '../../../types/publicationFieldNames';
 import { contributorsValidationSchema } from './contributorValidation';
 import { fileValidationSchema } from './fileValidation';
@@ -45,7 +44,7 @@ export const registrationValidationSchema = Yup.object().shape({
       month: Yup.number().transform(emptyStringToNull).nullable(),
       day: Yup.number().transform(emptyStringToNull).nullable(),
     }),
-    language: Yup.string().url().oneOf(Object.values(LanguageValues)),
+    language: Yup.string(),
     projects: Yup.array().of(Yup.object()), // TODO
     contributors: contributorsValidationSchema,
     reference: baseReference

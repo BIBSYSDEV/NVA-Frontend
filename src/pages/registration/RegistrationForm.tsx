@@ -21,6 +21,7 @@ import { RegistrationFormActions } from './RegistrationFormActions';
 import { RegistrationFormContent } from './RegistrationFormContent';
 import { HighestTouchedTab, RegistrationFormTabs } from './RegistrationFormTabs';
 import { getTouchedTabFields } from '../../utils/formik-helpers';
+import { SkipLink } from '../../components/SkipLink';
 
 const StyledRegistration = styled.div`
   width: 100%;
@@ -77,6 +78,7 @@ const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     <Forbidden />
   ) : (
     <StyledRegistration>
+      <SkipLink href="#form">{t('common:skip_to_schema')}</SkipLink>
       <Formik
         initialValues={initialValues}
         validate={validateForm}
