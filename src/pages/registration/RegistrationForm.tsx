@@ -80,7 +80,7 @@ const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   ) : (
     <StyledRegistration>
       <Formik
-        // enableReinitialize
+        enableReinitialize
         initialValues={initialValues}
         validate={validateForm}
         initialErrors={intialErrors}

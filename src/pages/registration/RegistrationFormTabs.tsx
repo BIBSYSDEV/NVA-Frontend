@@ -31,8 +31,7 @@ interface RegistrationFormTabsProps {
 export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFormTabsProps) => {
   const { t } = useTranslation('registration');
   const { errors, touched, values, setTouched } = useFormikContext<Registration>();
-  const location = useLocation<LocationState>();
-  const tabToValidate = location.state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
+  const locationState = useLocation<LocationState>().state;
 
   const valuesRef = useRef(values);
   useEffect(() => {
@@ -45,8 +44,11 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
   }, [touched]);
 
   useEffect(() => {
-    if (tabNumber > tabToValidate) {
-      location.state.highestValidatedTab = tabNumber;
+    const highestValidatedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
+
+    if (tabNumber > highestValidatedTab) {
+      locationState.highestValidatedTab = tabNumber;
+
       const touchedFieldsOnMount = getTouchedTabFields(tabNumber - 1, valuesRef.current);
       setTouched(touchedFieldsOnMount);
 
@@ -56,7 +58,7 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
         setTouched(touchedFieldsOnUnmount);
       };
     }
-  }, [setTouched, tabNumber]);
+  }, [setTouched, tabNumber, locationState]);
 
   const tabErrors = getTabErrors(valuesRef.current, errors, touched);
 
