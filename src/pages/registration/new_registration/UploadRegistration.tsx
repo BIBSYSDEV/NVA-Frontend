@@ -48,7 +48,7 @@ const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => 
     };
     const registration = await createRegistration(registrationPayload);
     if (registration?.identifier) {
-      history.push(getRegistrationPath(registration.identifier), { isNewRegistration: true });
+      history.push(getRegistrationPath(registration.identifier), { highestValidatedTab: -1 });
     } else {
       setIsLoading(false);
       dispatch(setNotification(t('feedback:error.create_registration'), NotificationVariant.Error));

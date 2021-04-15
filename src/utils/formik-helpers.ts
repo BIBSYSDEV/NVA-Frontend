@@ -224,3 +224,21 @@ export const overwriteArrayMerge = (destinationArray: unknown[], sourceArray: un
 
 export const mergeTouchedFields = (touchedArray: FormikTouched<Registration>[]) =>
   deepmerge.all(touchedArray, { arrayMerge: overwriteArrayMerge });
+
+export const getTouchedTabFields = (tabToTouch: number, values: Registration, currentTouched?: any) => {
+  const tabFields = {
+    [RegistrationTab.Description]: () => touchedDescriptionTabFields,
+    [RegistrationTab.ResourceType]: () =>
+      touchedResourceTabFields(values.entityDescription.reference.publicationContext.type),
+    [RegistrationTab.Contributors]: () => touchedContributorTabFields(values.entityDescription.contributors),
+    [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(values.fileSet.files),
+  };
+
+  // Set all fields on previous tabs to touched
+  const fieldsToTouchOnMount = [];
+  for (let thisTab = RegistrationTab.Description; thisTab <= tabToTouch; thisTab++) {
+    fieldsToTouchOnMount.push(tabFields[thisTab]());
+  }
+  const mergedFields = mergeTouchedFields(fieldsToTouchOnMount);
+  return mergedFields;
+};

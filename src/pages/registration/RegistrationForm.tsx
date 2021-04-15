@@ -1,14 +1,5 @@
 import deepmerge from 'deepmerge';
-import {
-  Form,
-  Formik,
-  FormikErrors,
-  FormikProps,
-  FormikTouched,
-  setNestedObjectValues,
-  validateYupSchema,
-  yupToFormErrors,
-} from 'formik';
+import { Form, Formik, FormikErrors, FormikProps, FormikTouched, validateYupSchema, yupToFormErrors } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -28,14 +19,15 @@ import { registrationValidationSchema } from '../../utils/validation/registratio
 import Forbidden from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
 import { RegistrationFormContent } from './RegistrationFormContent';
-import { RegistrationFormTabs } from './RegistrationFormTabs';
+import { HighestTouchedTab, RegistrationFormTabs } from './RegistrationFormTabs';
+import { getTouchedTabFields } from '../../utils/formik-helpers';
 
 const StyledRegistration = styled.div`
   width: 100%;
 `;
 
-interface LocationState {
-  isNewRegistration?: boolean;
+export interface LocationState {
+  highestValidatedTab?: HighestTouchedTab;
 }
 
 interface RegistrationFormProps {
@@ -47,7 +39,7 @@ const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const { t } = useTranslation('registration');
   const history = useHistory();
   const uppy = useUppy(createUppy());
-  const isNewRegistration = !!useLocation<LocationState>().state?.isNewRegistration;
+  const tabToValidate = useLocation<LocationState>().state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
   const [registration, isLoadingRegistration, refetchRegistration] = useFetchRegistration(identifier);
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
@@ -78,8 +70,8 @@ const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   };
 
   const initialValues = registration ? deepmerge(emptyRegistration, registration) : emptyRegistration;
-  const intialErrors: FormikErrors<Registration> = isNewRegistration ? {} : validateForm(initialValues);
-  const intialTouched: FormikTouched<Registration> = isNewRegistration ? {} : setNestedObjectValues(intialErrors, true);
+  const intialErrors: FormikErrors<Registration> = validateForm(initialValues);
+  const intialTouched: FormikTouched<Registration> = getTouchedTabFields(tabToValidate, initialValues);
 
   return isLoadingRegistration ? (
     <PageSpinner />
@@ -88,7 +80,7 @@ const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   ) : (
     <StyledRegistration>
       <Formik
-        enableReinitialize
+        // enableReinitialize
         initialValues={initialValues}
         validate={validateForm}
         initialErrors={intialErrors}
