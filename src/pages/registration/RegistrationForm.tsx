@@ -1,5 +1,5 @@
 import deepmerge from 'deepmerge';
-import { Form, Formik, FormikErrors, FormikProps, FormikTouched, validateYupSchema, yupToFormErrors } from 'formik';
+import { Form, Formik, FormikErrors, FormikProps, validateYupSchema, yupToFormErrors } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -53,7 +53,7 @@ const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     }
   }, [history, registration, isValidOwner, isValidCurator]);
 
-  const validateForm = (values: Registration) => {
+  const validateForm = (values: Registration): FormikErrors<Registration> => {
     const {
       reference: { publicationContext, publicationInstance },
     } = values.entityDescription;
@@ -70,8 +70,8 @@ const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   };
 
   const initialValues = registration ? deepmerge(emptyRegistration, registration) : emptyRegistration;
-  const intialErrors: FormikErrors<Registration> = validateForm(initialValues);
-  const intialTouched: FormikTouched<Registration> = getTouchedTabFields(tabToValidate, initialValues);
+  const intialErrors = validateForm(initialValues);
+  const intialTouched = getTouchedTabFields(tabToValidate, initialValues);
 
   return isLoadingRegistration ? (
     <PageSpinner />
