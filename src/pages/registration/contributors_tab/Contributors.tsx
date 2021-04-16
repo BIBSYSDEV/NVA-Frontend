@@ -139,7 +139,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         setUnverifiedContributor(null);
       }}
       variant="contained"
-      color="secondary"
+      color={contributorRoles.length === 1 ? 'secondary' : 'default'}
       startIcon={<AddIcon />}
       data-testid={`add-${contributorType}`}>
       {getAddContributorText(contributorType)}
@@ -158,6 +158,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           onDelete={handleOnRemove}
           onMoveContributor={handleMoveContributor}
           openContributorModal={handleOpenContributorModal}
+          showRole={contributorRoles.length > 1}
         />
 
         {addContributorButton}

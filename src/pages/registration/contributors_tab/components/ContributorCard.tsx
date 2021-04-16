@@ -102,6 +102,7 @@ interface ContributorCardProps {
   onMoveContributor: (newSequence: number, oldSequence: number) => void;
   onRemoveContributorClick: () => void;
   openContributorModal: (unverifiedContributor: UnverifiedContributor) => void;
+  showRole: boolean;
 }
 
 export const ContributorCard = ({
@@ -109,6 +110,7 @@ export const ContributorCard = ({
   onMoveContributor,
   onRemoveContributorClick,
   openContributorModal,
+  showRole,
 }: ContributorCardProps) => {
   const { t } = useTranslation('registration');
   const {
@@ -207,28 +209,34 @@ export const ContributorCard = ({
           />
         </StyledRightAlignedWrapper>
         <StyledCorrespondingWrapper>
-          <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
-            {({ field }: FieldProps) => (
-              <FormControlLabel
-                data-testid="author-corresponding-checkbox"
-                control={
-                  <Checkbox
-                    checked={!!field.value}
-                    color="default"
-                    {...field}
-                    // TODO: Remove this block when backend has removed validation for email field
-                    onChange={(event) => {
-                      field.onChange(event);
-                      if (event.target.checked) {
-                        setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`, 'NO_EMAIL');
-                      }
-                    }}
-                  />
-                }
-                label={t('contributors.corresponding')}
-              />
-            )}
-          </Field>
+          {showRole ? (
+            <Typography variant="subtitle2" component="p">
+              {contributor.role}
+            </Typography>
+          ) : (
+            <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
+              {({ field }: FieldProps) => (
+                <FormControlLabel
+                  data-testid="author-corresponding-checkbox"
+                  control={
+                    <Checkbox
+                      checked={!!field.value}
+                      color="default"
+                      {...field}
+                      // TODO: Remove this block when backend has removed validation for email field
+                      onChange={(event) => {
+                        field.onChange(event);
+                        if (event.target.checked) {
+                          setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`, 'NO_EMAIL');
+                        }
+                      }}
+                    />
+                  }
+                  label={t('contributors.corresponding')}
+                />
+              )}
+            </Field>
+          )}
         </StyledCorrespondingWrapper>
       </StyledContributorSection>
       {contributor.identity && (
