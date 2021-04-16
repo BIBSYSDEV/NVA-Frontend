@@ -98,7 +98,7 @@ const getAllContributorFields = (contributors: Contributor[]): string[] => {
   return fieldNames;
 };
 
-export const touchedDescriptionTabFields: FormikTouched<Registration> = {
+const touchedDescriptionTabFields: FormikTouched<Registration> = {
   entityDescription: {
     abstract: true,
     date: {
@@ -113,7 +113,7 @@ export const touchedDescriptionTabFields: FormikTouched<Registration> = {
   },
 };
 
-export const touchedResourceTabFields = (publicationType: PublicationType | ''): FormikTouched<unknown> => {
+const touchedResourceTabFields = (publicationType: PublicationType | ''): FormikTouched<unknown> => {
   switch (publicationType) {
     case PublicationType.PUBLICATION_IN_JOURNAL:
       return {
@@ -200,7 +200,7 @@ export const touchedResourceTabFields = (publicationType: PublicationType | ''):
   }
 };
 
-export const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<Registration> => ({
+const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<Registration> => ({
   entityDescription: {
     contributors: contributors.map((_) => ({
       correspondingAuthor: true,
@@ -209,7 +209,7 @@ export const touchedContributorTabFields = (contributors: Contributor[]): Formik
   },
 });
 
-export const touchedFilesTabFields = (files: File[]): FormikTouched<Registration> => ({
+const touchedFilesTabFields = (files: File[]): FormikTouched<Registration> => ({
   fileSet: {
     files: files.map((file) => ({
       administrativeAgreement: true,
@@ -220,8 +220,7 @@ export const touchedFilesTabFields = (files: File[]): FormikTouched<Registration
   },
 });
 
-export const overwriteArrayMerge = (destinationArray: unknown[], sourceArray: unknown[], options?: Options) =>
-  sourceArray;
+const overwriteArrayMerge = (destinationArray: unknown[], sourceArray: unknown[], options?: Options) => sourceArray;
 
 export const mergeTouchedFields = (touchedArray: FormikTouched<Registration>[]) =>
   deepmerge.all(touchedArray, { arrayMerge: overwriteArrayMerge });
