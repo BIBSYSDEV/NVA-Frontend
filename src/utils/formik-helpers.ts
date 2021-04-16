@@ -132,6 +132,7 @@ export const touchedResourceTabFields = (publicationType: PublicationType | ''):
               },
               peerReviewed: true,
               volume: true,
+              corrigendumFor: true,
             },
           },
         },
