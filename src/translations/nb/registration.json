@@ -2,6 +2,7 @@
   "contributors": {
     "add_affiliation": "Legg til tilhørighet",
     "add_author": "Legg til forfatter",
+    "add_contributor": "Legg til bidragsyter",
     "add_duplicate_affiliation": "Tilhørigheten er allerede lagt til",
     "add_editor": "Legg til redaktør",
     "add_other_contributor": "Legg til flere",
@@ -24,6 +25,7 @@
     "prefilled_name": "Forhåndsutfylt navn",
     "remove_affiliation": "Fjern tilhørighet",
     "remove_author": "Fjern forfatter",
+    "remove_contributor": "Fjern bidragsyter",
     "remove_editor": "Fjern redaktør",
     "remove_supervisor": "Fjern veileder",
     "select_institution": "Velg institusjon",

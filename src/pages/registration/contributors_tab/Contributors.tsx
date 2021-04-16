@@ -33,10 +33,10 @@ const StyledButton = styled(Button)`
 `;
 
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
-  contributorRole?: ContributorRole;
+  contributorRoles: ContributorRole[];
 }
 
-export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, replace }: ContributorsProps) => {
+export const Contributors = ({ contributorRoles, push, replace }: ContributorsProps) => {
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
@@ -47,8 +47,12 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
   const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
   const isMobile = useIsMobile();
 
-  const relevantContributors = contributors.filter((contributor) => contributor.role === contributorRole);
-  const otherContributors = contributors.filter((contributor) => contributor.role !== contributorRole);
+  const relevantContributors = contributors.filter((contributor) =>
+    contributorRoles.some((role) => role === contributor.role)
+  );
+  const otherContributors = contributors.filter(
+    (contributor) => !contributorRoles.some((role) => role === contributor.role)
+  );
 
   const handleOnRemove = (indexToRemove: number) => {
     const nextRelevantContributors = relevantContributors
@@ -112,37 +116,42 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
           type: BackendTypeNames.ORGANIZATION,
           id: unitUri,
         })),
-        role: contributorRole,
+        role: contributorRoles[0],
         sequence: relevantContributors.length + 1,
       };
       push(newContributor);
     } else {
       const verifiedContributor: Contributor = {
         ...relevantContributors[unverifiedContributor.index],
-        role: contributorRole,
+        role: contributorRoles[0],
         identity,
       };
       replace(unverifiedContributor.index, verifiedContributor);
     }
   };
 
+  const contributorType = contributorRoles.length === 1 ? contributorRoles[0] : 'Contributors';
+
+  const addContributorButton = (
+    <StyledButton
+      onClick={() => {
+        setOpenContributorModal(true);
+        setUnverifiedContributor(null);
+      }}
+      variant="contained"
+      color="secondary"
+      startIcon={<AddIcon />}
+      data-testid={`add-${contributorType}`}>
+      {getAddContributorText(contributorType)}
+    </StyledButton>
+  );
+
   return (
-    <div data-testid={`contributors-${contributorRole}`}>
-      <Typography variant="h2">{getContributorHeading(contributorRole)}</Typography>
+    <div data-testid={contributorRoles[0]}>
+      <Typography variant="h2">{getContributorHeading(contributorType)}</Typography>
       <MuiThemeProvider theme={lightTheme}>
-        {((isMobile && relevantContributors.length >= 2) || (!isMobile && relevantContributors.length >= 5)) && (
-          <StyledButton
-            onClick={() => {
-              setOpenContributorModal(true);
-              setUnverifiedContributor(null);
-            }}
-            variant="contained"
-            color="secondary"
-            startIcon={<AddIcon />}
-            data-testid={`add-contributor-${contributorRole}`}>
-            {getAddContributorText(contributorRole)}
-          </StyledButton>
-        )}
+        {((isMobile && relevantContributors.length >= 2) || (!isMobile && relevantContributors.length >= 5)) &&
+          addContributorButton}
 
         <ContributorList
           contributors={relevantContributors}
@@ -151,19 +160,9 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
           openContributorModal={handleOpenContributorModal}
         />
 
-        <StyledButton
-          onClick={() => {
-            setOpenContributorModal(true);
-            setUnverifiedContributor(null);
-          }}
-          variant="contained"
-          color="secondary"
-          startIcon={<AddIcon />}
-          data-testid={`add-contributor-${contributorRole}`}>
-          {getAddContributorText(contributorRole)}
-        </StyledButton>
+        {addContributorButton}
         <AddContributorModal
-          contributorRole={contributorRole}
+          contributorRole={contributorRoles[0]} // TODO (next task)
           initialSearchTerm={unverifiedContributor?.name}
           open={openContributorModal}
           toggleModal={() => setOpenContributorModal(!openContributorModal)}

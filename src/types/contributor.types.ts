@@ -6,6 +6,11 @@ export enum ContributorRole {
   CREATOR = 'Creator',
   EDITOR = 'Editor',
   SUPERVISOR = 'Supervisor',
+  ContactPerson = 'ContactPerson',
+  RelatedPerson = 'RelatedPerson',
+  Researcher = 'Researcher',
+  RightsHolder = 'RightsHolder',
+  Other = 'Other',
 }
 
 export interface Identity extends BackendType {

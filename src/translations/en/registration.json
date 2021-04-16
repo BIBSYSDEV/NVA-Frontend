@@ -2,6 +2,7 @@
   "contributors": {
     "add_affiliation": "Add affiliation",
     "add_author": "Add author",
+    "add_contributor": "Add contributor",
     "add_duplicate_affiliation": "Affiliation is already added",
     "add_editor": "Add editor",
     "add_other_contributor": "Add more contributors",
@@ -24,6 +25,7 @@
     "prefilled_name": "Prefilled name",
     "remove_affiliation": "Remove affiliation",
     "remove_author": "Remove author",
+    "remove_contributor": "Remove contributor",
     "remove_editor": "Remove editor",
     "remove_supervisor": "Remove supervisor",
     "select_institution": "Select institution",

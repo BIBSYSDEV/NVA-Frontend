@@ -38,18 +38,41 @@ const ContributorsPanel = () => {
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
-          {({ push, replace }: FieldArrayRenderProps) =>
-            publicationContext.type === PublicationType.DEGREE ? (
-              <>
-                <Contributors push={push} replace={replace} />
-                <Contributors contributorRole={ContributorRole.SUPERVISOR} push={push} replace={replace} />
-              </>
-            ) : publicationInstance.type === BookType.ANTHOLOGY ? (
-              <Contributors contributorRole={ContributorRole.EDITOR} push={push} replace={replace} />
-            ) : (
-              <Contributors push={push} replace={replace} />
-            )
-          }
+          {({ push, replace }: FieldArrayRenderProps) => (
+            <>
+              {publicationContext.type === PublicationType.DEGREE ? (
+                <>
+                  <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.CREATOR]} />
+                  <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.SUPERVISOR]} />
+                  <Contributors
+                    push={push}
+                    replace={replace}
+                    contributorRoles={Object.values(ContributorRole).filter(
+                      (role) => role !== ContributorRole.CREATOR && role !== ContributorRole.SUPERVISOR
+                    )}
+                  />
+                </>
+              ) : publicationInstance.type === BookType.ANTHOLOGY ? (
+                <>
+                  <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.EDITOR]} />
+                  <Contributors
+                    push={push}
+                    replace={replace}
+                    contributorRoles={Object.values(ContributorRole).filter((role) => role !== ContributorRole.EDITOR)}
+                  />
+                </>
+              ) : (
+                <>
+                  <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.CREATOR]} />
+                  <Contributors
+                    push={push}
+                    replace={replace}
+                    contributorRoles={Object.values(ContributorRole).filter((role) => role !== ContributorRole.CREATOR)}
+                  />
+                </>
+              )}
+            </>
+          )}
         </FieldArray>
       </BackgroundDiv>
       {!!contributorsTouched && typeof contributorsError === 'string' && (
