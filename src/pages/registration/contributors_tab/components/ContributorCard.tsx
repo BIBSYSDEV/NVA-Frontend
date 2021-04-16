@@ -126,7 +126,6 @@ export const ContributorCard = ({
       c.role === contributor.role
   );
   const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${contributorIndex}]`;
-  const { setFieldValue } = useFormikContext<Registration>();
   const [sequenceValue, setSequenceValue] = useState(`${contributor.sequence}`);
   const numberOfContributorsWithSameRole = contributors.filter((c) => c.role === contributor.role).length;
 
@@ -218,20 +217,7 @@ export const ContributorCard = ({
               {({ field }: FieldProps) => (
                 <FormControlLabel
                   data-testid="author-corresponding-checkbox"
-                  control={
-                    <Checkbox
-                      checked={!!field.value}
-                      color="default"
-                      {...field}
-                      // TODO: Remove this block when backend has removed validation for email field
-                      onChange={(event) => {
-                        field.onChange(event);
-                        if (event.target.checked) {
-                          setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`, 'NO_EMAIL');
-                        }
-                      }}
-                    />
-                  }
+                  control={<Checkbox checked={!!field.value} color="default" {...field} />}
                   label={t('contributors.corresponding')}
                 />
               )}
