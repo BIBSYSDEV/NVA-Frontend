@@ -184,7 +184,7 @@ export const touchedResourceTabFields = (publicationType: PublicationType | ''):
           },
         },
       };
-    default:
+    case PublicationType.CHAPTER:
       return {
         entityDescription: {
           reference: {
@@ -198,6 +198,8 @@ export const touchedResourceTabFields = (publicationType: PublicationType | ''):
           },
         },
       };
+    default:
+      return {};
   }
 };
 
