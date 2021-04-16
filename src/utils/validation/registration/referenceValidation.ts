@@ -162,7 +162,11 @@ const journalPublicationInstance = Yup.object().shape({
 });
 
 const journalPublicationContext = Yup.object().shape({
-  title: Yup.string().required(resourceErrorMessage.journalRequired),
+  title: Yup.string().when('$publicationInstanceType', {
+    is: JournalType.CORRIGENDUM,
+    then: Yup.string(),
+    otherwise: Yup.string().required(resourceErrorMessage.journalRequired),
+  }),
 });
 
 export const journalReference = baseReference.shape({
