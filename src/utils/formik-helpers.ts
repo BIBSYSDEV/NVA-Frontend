@@ -190,6 +190,7 @@ export const touchedResourceTabFields = (publicationType: PublicationType | ''):
           reference: {
             publicationContext: {
               type: true,
+              linkedContext: true,
             },
             publicationInstance: {
               type: true,
