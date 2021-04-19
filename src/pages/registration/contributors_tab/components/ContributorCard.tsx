@@ -102,7 +102,7 @@ interface ContributorCardProps {
   onMoveContributor: (newSequence: number, oldSequence: number) => void;
   onRemoveContributorClick: () => void;
   openContributorModal: (unverifiedContributor: UnverifiedContributor) => void;
-  showRole: boolean;
+  contributorsLength: number;
 }
 
 export const ContributorCard = ({
@@ -110,7 +110,7 @@ export const ContributorCard = ({
   onMoveContributor,
   onRemoveContributorClick,
   openContributorModal,
-  showRole,
+  contributorsLength,
 }: ContributorCardProps) => {
   const { t } = useTranslation('registration');
   const {
@@ -127,7 +127,6 @@ export const ContributorCard = ({
   );
   const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${contributorIndex}]`;
   const [sequenceValue, setSequenceValue] = useState(`${contributor.sequence}`);
-  const numberOfContributorsWithSameRole = contributors.filter((c) => c.role === contributor.role).length;
 
   useEffect(() => {
     // Ensure sequence field is updated
@@ -173,7 +172,7 @@ export const ContributorCard = ({
         </StyledVerifiedSection>
         <StyledRightAlignedWrapper>
           <StyledArrowSection>
-            {contributor.sequence < numberOfContributorsWithSameRole && (
+            {contributor.sequence < contributorsLength && (
               <Tooltip title={t<string>('contributors.move_down')}>
                 <StyledArrowButton
                   color="secondary"
@@ -208,7 +207,7 @@ export const ContributorCard = ({
           />
         </StyledRightAlignedWrapper>
         <StyledCorrespondingWrapper>
-          {showRole ? (
+          {contributorsLength > 1 ? (
             <Typography variant="subtitle2" component="p">
               {contributor.role}
             </Typography>

@@ -80,7 +80,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         : relevantContributors.findIndex((c) => c.sequence === newSequence);
 
     const orderedContributors =
-      newIndex > 0 ? (move(relevantContributors, oldIndex, newIndex) as Contributor[]) : relevantContributors;
+      newIndex >= 0 ? (move(relevantContributors, oldIndex, newIndex) as Contributor[]) : relevantContributors;
 
     // Ensure incrementing sequence values
     const newContributors = orderedContributors.map((contributor, index) => ({
@@ -158,7 +158,6 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           onDelete={handleOnRemove}
           onMoveContributor={handleMoveContributor}
           openContributorModal={handleOpenContributorModal}
-          showRole={contributorRoles.length > 1}
         />
 
         {addContributorButton}
