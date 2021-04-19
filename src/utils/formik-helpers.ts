@@ -132,6 +132,7 @@ export const touchedResourceTabFields = (publicationType: PublicationType | ''):
               },
               peerReviewed: true,
               volume: true,
+              corrigendumFor: true,
             },
           },
         },
@@ -183,12 +184,13 @@ export const touchedResourceTabFields = (publicationType: PublicationType | ''):
           },
         },
       };
-    default:
+    case PublicationType.CHAPTER:
       return {
         entityDescription: {
           reference: {
             publicationContext: {
               type: true,
+              linkedContext: true,
             },
             publicationInstance: {
               type: true,
@@ -196,6 +198,8 @@ export const touchedResourceTabFields = (publicationType: PublicationType | ''):
           },
         },
       };
+    default:
+      return {};
   }
 };
 
