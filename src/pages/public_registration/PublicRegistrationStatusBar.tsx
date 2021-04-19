@@ -170,7 +170,11 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             </>
           }
           actions={
-            <Button variant="contained" href={`${editRegistrationUrl}?tab=${firstErrorTab}`} endIcon={<EditIcon />}>
+            <Button
+              variant="contained"
+              href={`${editRegistrationUrl}?tab=${firstErrorTab}`}
+              endIcon={<EditIcon />}
+              data-testid="back-to-wizard-button">
               {t('public_page.go_back_to_wizard')}
             </Button>
           }

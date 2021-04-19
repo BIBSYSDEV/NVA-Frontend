@@ -28,6 +28,11 @@ const StyledTruncatableHeading = styled.div<{ canBeTruncated: boolean }>`
   display: grid;
   grid-template-columns: ${({ canBeTruncated }) => (canBeTruncated ? '1fr auto' : '1fr')};
   grid-column-gap: 1rem;
+
+  span {
+    display: block;
+    width: 100%;
+  }
 `;
 
 export interface PageHeaderProps extends TypographyProps {
