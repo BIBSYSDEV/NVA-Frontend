@@ -10,7 +10,7 @@ describe('Registration', () => {
     cy.url().should('include', '/registration');
 
     cy.get('[data-testid=new-registration-link]').click({ force: true });
-    cy.get('[data-testid=new-registration-link-input]').type('https://doi.org/10.1098/rspb.2018.0085');
+    cy.get('[data-testid=new-registration-link-field] input').type('https://doi.org/10.1098/rspb.2018.0085');
     cy.get('[data-testid=doi-search-button]').click({ force: true });
     cy.contains(
       'Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting'
@@ -18,7 +18,7 @@ describe('Registration', () => {
 
     cy.get('[data-testid=registration-link-next-button]').click({ force: true });
     cy.get('[data-testid=error-tab]').should('have.length', 0);
-    cy.get('[data-testid=registration-title-input]').should(
+    cy.get('[data-testid=registration-title-field] input').should(
       'have.value',
       'Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting'
     );

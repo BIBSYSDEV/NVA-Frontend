@@ -41,6 +41,7 @@
   "orcid": "ORCID",
   "organization_number": "Organization number",
   "orgunitid": "Organization ID",
+  "page_title": "Nasjonalt Vitenarkiv",
   "picture": "Picture",
   "publish": "Publish",
   "publisher": "Publisher",
@@ -65,7 +66,10 @@
   "send": "Send",
   "show": "Show",
   "size": "Size",
+  "skip_to_main_content": "Skip to main content",
+  "skip_to_schema": "Skip to schema",
   "start": "Start",
+  "start_page": "Start page",
   "status": "Status",
   "support": "Support",
   "table_pagination": {
@@ -75,6 +79,8 @@
     "rows_per_page": "Rows per page:"
   },
   "title": "Title",
+  "title_expand": "Show complete title",
+  "title_minimize": "Minimize title",
   "type": "Type",
   "users": "Users",
   "version": "Version",

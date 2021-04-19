@@ -1,18 +1,9 @@
 import deepmerge from 'deepmerge';
-import {
-  Form,
-  Formik,
-  FormikErrors,
-  FormikProps,
-  FormikTouched,
-  setNestedObjectValues,
-  validateYupSchema,
-  yupToFormErrors,
-} from 'formik';
+import { Form, Formik, FormikErrors, FormikProps, validateYupSchema, yupToFormErrors } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useUppy } from '@uppy/react';
 import { RegistrationPageHeader } from '../../components/PageHeader';
@@ -29,29 +20,30 @@ import Forbidden from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
 import { RegistrationFormContent } from './RegistrationFormContent';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
-import { RequiredDescription } from '../../components/RequiredDescription';
+import { getTouchedTabFields } from '../../utils/formik-helpers';
+import { SkipLink } from '../../components/SkipLink';
 
 const StyledRegistration = styled.div`
   width: 100%;
 `;
 
-const StyledRegistrationPageHeader = styled(RegistrationPageHeader)`
-  padding: 0.5rem 4rem;
-  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
-    padding: 0;
-  }
-`;
+export type HighestTouchedTab = RegistrationTab | -1;
+
+export interface RegistrationLocationState {
+  highestValidatedTab?: HighestTouchedTab;
+}
 
 interface RegistrationFormProps {
   identifier: string;
-  isNewRegistration: boolean;
 }
 
-const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormProps) => {
+const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
   const history = useHistory();
   const uppy = useUppy(createUppy());
+  const highestValidatedTab =
+    useLocation<RegistrationLocationState>().state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
   const [registration, isLoadingRegistration, refetchRegistration] = useFetchRegistration(identifier);
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
@@ -65,7 +57,7 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
     }
   }, [history, registration, isValidOwner, isValidCurator]);
 
-  const validateForm = (values: Registration) => {
+  const validateForm = (values: Registration): FormikErrors<Registration> => {
     const {
       reference: { publicationContext, publicationInstance },
     } = values.entityDescription;
@@ -82,8 +74,6 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
   };
 
   const initialValues = registration ? deepmerge(emptyRegistration, registration) : emptyRegistration;
-  const intialErrors: FormikErrors<Registration> = isNewRegistration ? {} : validateForm(initialValues);
-  const intialTouched: FormikTouched<Registration> = isNewRegistration ? {} : setNestedObjectValues(intialErrors, true);
 
   return isLoadingRegistration ? (
     <PageSpinner />
@@ -91,12 +81,12 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
     <Forbidden />
   ) : (
     <StyledRegistration>
+      <SkipLink href="#form">{t('common:skip_to_schema')}</SkipLink>
       <Formik
-        enableReinitialize
         initialValues={initialValues}
         validate={validateForm}
-        initialErrors={intialErrors}
-        initialTouched={intialTouched}
+        initialErrors={validateForm(initialValues)}
+        initialTouched={getTouchedTabFields(highestValidatedTab, initialValues)}
         onSubmit={() => {
           /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
         }}>
@@ -107,11 +97,10 @@ const RegistrationForm = ({ identifier, isNewRegistration }: RegistrationFormPro
               modalHeading={t('modal_unsaved_changes_heading')}
               shouldBlockNavigation={dirty}
             />
-            <StyledRegistrationPageHeader>
+            <RegistrationPageHeader>
               {values.entityDescription.mainTitle || `[${t('common:missing_title')}]`}
-            </StyledRegistrationPageHeader>
+            </RegistrationPageHeader>
             <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
-            <RequiredDescription />
             <RegistrationFormContent tabNumber={tabNumber} uppy={uppy} />
             <RegistrationFormActions
               tabNumber={tabNumber}

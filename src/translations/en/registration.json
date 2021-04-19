@@ -52,19 +52,6 @@
     "year_only": "Year only"
   },
   "edit_registration": "Edit registration",
-  "feedback": {
-    "invalid_format": "Invalid format",
-    "invalid_isbn": "Invalid ISBN",
-    "invalid_page_interval": "Invalid page interval",
-    "invalid_url": "Invalid URL",
-    "minimum_one_author": "You need to have at least one author registered for this registration",
-    "minimum_one_editor": "You need to have at least one editor registered for this registration",
-    "minimum_one_file": "You need to have at least one file uploaded for this registration",
-    "minimum_one_supervisor": "You need to have at least one supervisor registered for this registration",
-    "must_be_min_1": "Value must be bigger than 0",
-    "must_be_positive": "Value must be positive",
-    "date_must_be_in_future": "Date must be in future"
-  },
   "files_and_license": {
     "accepted_version": "Accepted version",
     "administrative_contract": "Author agreement or other file to be saved but not published",
@@ -77,6 +64,7 @@
     "publicly_available": "Publicly available",
     "published_version": "Published version",
     "remove_file": "Remove file",
+    "remove_file_description": "Do you want to remove {{fileName}}?",
     "select_version": "Select version",
     "title": "File name",
     "uploaded_size": "Uploaded {{size}}"
@@ -86,20 +74,23 @@
     "description": "Description",
     "files_and_license": "Files and License",
     "publish_settings": "Publish settings",
-    "resource_type": "Resource type",
-    "validation_errors": "Validation errors"
+    "resource_type": "Resource type"
   },
   "new_registration": "New registration",
   "public_page": {
-    "current_validation_errors": "NB! The registration has validation errors that must be fixed before it can be published",
+    "error_description": "To publish you must fix the following errors:",
+    "go_back_to_wizard": "Go back to form",
     "in_progess": "In progress",
     "message_to_curator": "Message to curator",
+    "not_published": "Not published",
     "preview": "Preview",
     "preview_unavailable": "Preview not available. Open file in suited program.",
+    "published": "Published",
     "reserve_doi": "Reserve a DOI",
     "request_doi": "Request a DOI",
     "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications. You will receive an email when the request has been evaluated."
   },
+  "validation_errors": "Validation errors",
   "registration": {
     "latest_registrations": "Recently added",
     "link_to_resource": "DOI to resource",

@@ -1,20 +1,18 @@
 import React, { FC, useState } from 'react';
-import styled from 'styled-components';
-import { Table, TableHead, TableRow, TableCell, TableBody, TablePagination, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddIcon from '@material-ui/icons/Add';
 import { useDispatch } from 'react-redux';
-
-import Label from './../../components/Label';
-import { InstitutionUser, RoleName } from '../../types/user.types';
+import styled from 'styled-components';
+import { Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typography } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { addRoleToUser, removeRoleFromUser } from '../../api/roleApi';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import ConfirmDialog from '../../components/ConfirmDialog';
-import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import DangerButton from '../../components/DangerButton';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
+import { InstitutionUser, RoleName } from '../../types/user.types';
+import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 
 const StyledTable = styled(Table)`
   width: 100%;
@@ -25,6 +23,10 @@ const StyledTableRow = styled(TableRow)`
   :nth-child(odd) {
     background-color: ${(props) => props.theme.palette.background.default};
   }
+`;
+
+const StyledTypography = styled(Typography)`
+  font-weight: bold;
 `;
 
 interface UserListProps {
@@ -98,10 +100,10 @@ const UserList: FC<UserListProps> = ({
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <Label>{t('users.username')}</Label>
+                  <StyledTypography>{t('users.username')}</StyledTypography>
                 </TableCell>
                 <TableCell>
-                  <Label>{t('common:name')}</Label>
+                  <StyledTypography>{t('common:name')}</StyledTypography>
                 </TableCell>
                 <TableCell />
               </TableRow>

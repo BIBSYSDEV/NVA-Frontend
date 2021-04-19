@@ -15,7 +15,7 @@ const SeriesField: FC = () => {
     <Field name={ResourceFieldNames.SERIES_TITLE}>
       {({ field: { name, value } }: FieldProps<string>) => (
         <PublicationChannelSearch
-          dataTestId="series-search-input"
+          dataTestId="series-search-field"
           publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
           label={t('common:title')}
           placeholder={t('resource_type.search_for_series')}

@@ -29,7 +29,10 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
 
   return (
     <StyledPageWrapperWithMaxWidth>
-      <PageHeader>{t(editMode ? 'edit_institution' : 'add_institution')}</PageHeader>
+      <PageHeader htmlTitle={editMode ? customerInstitution?.displayName : t('add_institution')}>
+        {t(editMode ? 'edit_institution' : 'add_institution')}
+      </PageHeader>
+
       <StyledCustomerInstitution>
         {isLoadingCustomerInstitution ? (
           <PageSpinner />

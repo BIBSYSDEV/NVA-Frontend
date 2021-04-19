@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 import { addQualifierIdForAuthority, AuthorityQualifiers, getAuthority } from './api/authorityApi';
 import { getInstitutionUser } from './api/roleApi';
 import { getCurrentUserAttributes } from './api/userApi';
@@ -23,6 +24,8 @@ import { USE_MOCK_DATA } from './utils/constants';
 import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { PageSpinner } from './components/PageSpinner';
+import { LanguageCodes } from './types/language.types';
+import { SkipLink } from './components/SkipLink';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -39,11 +42,18 @@ const StyledMainContent = styled.main`
   flex-grow: 1;
 `;
 
+const getLanguageTagValue = (language: string) => {
+  if (language === LanguageCodes.ENGLISH) {
+    return 'en';
+  }
+  return 'no';
+};
+
 const App = () => {
   const dispatch = useDispatch();
-  const { t } = useTranslation('feedback');
+  const { t, i18n } = useTranslation('feedback');
   const user = useSelector((store: RootStore) => store.user);
-  const [isLoadingUser, setIsLoadingUser] = useState(true);
+  const [isLoading, setIsLoading] = useState({ userAttributes: true, userRoles: true, userAuthority: true });
   const [matchingAuthorities, isLoadingMatchingAuthorities] = useFetchAuthorities(user?.name ?? '');
 
   useEffect(() => {
@@ -60,20 +70,16 @@ const App = () => {
       if (feideUser) {
         if (feideUser.error) {
           dispatch(setNotification(feideUser.error, NotificationVariant.Error));
-          setIsLoadingUser(false);
         } else if (feideUser) {
           dispatch(setUser(feideUser));
-          // Wait with setting isLoadingUser to false until roles are loaded in separate useEffect,
-          // which will be trigged when user is updated in redux
         }
-      } else {
-        setIsLoadingUser(false);
+        setIsLoading((state) => ({ ...state, userAttributes: false }));
       }
     };
 
     if (USE_MOCK_DATA) {
       setUser(mockUser);
-      setIsLoadingUser(false);
+      setIsLoading({ userAttributes: false, userRoles: false, userAuthority: false });
     } else {
       getUser();
     }
@@ -90,7 +96,7 @@ const App = () => {
           const roles = (institutionUser as InstitutionUser).roles.map((role) => role.rolename);
           dispatch(setRoles(roles));
         }
-        setIsLoadingUser(false);
+        setIsLoading((state) => ({ ...state, userRoles: false }));
       }
     };
 
@@ -129,27 +135,36 @@ const App = () => {
         } else {
           dispatch(setPossibleAuthorities(matchingAuthorities));
         }
+        setIsLoading((state) => ({ ...state, userAuthority: false }));
       };
       fetchAuthority();
     }
   }, [dispatch, t, matchingAuthorities, user]);
 
-  return isLoadingUser ? (
-    <PageSpinner />
-  ) : (
-    <BrowserRouter>
-      <StyledApp>
-        <Notifier />
-        <Header />
-        <StyledMainContent>
-          <AppRoutes />
-        </StyledMainContent>
-        <Footer />
-      </StyledApp>
-      {user && !isLoadingMatchingAuthorities && (user.authority || user.possibleAuthorities) && (
-        <AuthorityOrcidModal user={user} />
+  return (
+    <>
+      <Helmet defaultTitle={t('common:page_title')} titleTemplate={`%s - ${t('common:page_title')}`}>
+        <html lang={getLanguageTagValue(i18n.language)} />
+      </Helmet>
+      {Object.values(isLoading).some((isLoading) => isLoading) ? (
+        <PageSpinner />
+      ) : (
+        <BrowserRouter>
+          <StyledApp>
+            <Notifier />
+            <SkipLink href="#main-content">{t('common:skip_to_main_content')}</SkipLink>
+            <Header />
+            <StyledMainContent id="main-content">
+              <AppRoutes />
+            </StyledMainContent>
+            <Footer />
+          </StyledApp>
+          {user && !isLoadingMatchingAuthorities && (user.authority || user.possibleAuthorities) && (
+            <AuthorityOrcidModal user={user} />
+          )}
+        </BrowserRouter>
       )}
-    </BrowserRouter>
+    </>
   );
 };
 

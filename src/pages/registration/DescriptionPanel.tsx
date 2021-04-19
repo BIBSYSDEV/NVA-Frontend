@@ -6,7 +6,7 @@ import { MenuItem, MuiThemeProvider, TextField, Typography } from '@material-ui/
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
-import { registrationLanguages } from '../../types/language.types';
+import { LanguageCodes, registrationLanguages } from '../../types/language.types';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { DatePickerField } from './description_tab/DatePickerField';
@@ -37,7 +37,6 @@ const DescriptionPanel = () => {
               id={field.name}
               required
               data-testid="registration-title-field"
-              inputProps={{ 'data-testid': 'registration-title-input' }}
               variant="filled"
               fullWidth
               label={t('common:title')}
@@ -52,7 +51,6 @@ const DescriptionPanel = () => {
               {...field}
               id={field.name}
               data-testid="registration-abstract-field"
-              inputProps={{ 'data-testid': 'registration-abstract-input' }}
               variant="filled"
               fullWidth
               multiline
@@ -67,7 +65,6 @@ const DescriptionPanel = () => {
               {...field}
               id={field.name}
               data-testid="registration-description-field"
-              inputProps={{ 'data-testid': 'registration-description-input' }}
               label={t('description.description_of_content')}
               multiline
               rows="4"
@@ -125,6 +122,12 @@ const DescriptionPanel = () => {
                 placeholder={t('description.primary_language')}
                 select
                 variant="filled">
+                {!registrationLanguages.some((registrationLanguage) => registrationLanguage.value === field.value) && (
+                  // Show if Registration has a language that's currently not supported
+                  <MenuItem value={field.value} disabled>
+                    {t(`languages:${LanguageCodes.Undefined}`)}
+                  </MenuItem>
+                )}
                 {registrationLanguages.map(({ id, value }) => (
                   <MenuItem value={value} key={id} data-testid={`registration-language-${id}`}>
                     {t(`languages:${id}`)}
@@ -136,7 +139,7 @@ const DescriptionPanel = () => {
         </DateAndLanguageWrapper>
       </BackgroundDiv>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-        <Typography variant="h5" color="primary">
+        <Typography variant="h5" color="primary" component="p">
           {t('description.connect_project')}
         </Typography>
         <MuiThemeProvider theme={lightTheme}>

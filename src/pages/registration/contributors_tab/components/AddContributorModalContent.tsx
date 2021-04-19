@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Button, TextField, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
+import { PageSpinner } from '../../../../components/PageSpinner';
 import { RootStore } from '../../../../redux/reducers/rootReducer';
 import lightTheme from '../../../../themes/lightTheme';
 import { Authority } from '../../../../types/authority.types';
@@ -14,7 +15,6 @@ import { Registration } from '../../../../types/registration.types';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
 import AuthorityList from '../../../user/authority/AuthorityList';
-import { PageSpinner } from '../../../../components/PageSpinner';
 
 const StyledTextField = styled(TextField)`
   margin-bottom: 1rem;
@@ -92,6 +92,7 @@ export const AddContributorModalContent = ({
       )}
       <StyledTextField
         id="search"
+        data-testid="search-field"
         variant="outlined"
         fullWidth
         value={searchTerm}
@@ -99,7 +100,6 @@ export const AddContributorModalContent = ({
         autoFocus
         placeholder={t('common:search_placeholder')}
         label={t('common:search')}
-        inputProps={{ 'data-testid': 'search-input' }}
         InputProps={{
           startAdornment: <SearchIcon />,
         }}

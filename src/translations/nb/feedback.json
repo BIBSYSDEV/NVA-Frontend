@@ -70,5 +70,16 @@
     "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",
     "update_registration": "Registreringen er oppdatert"
+  },
+  "validation": {
+    "author_required": "Du må ha minst en forfatter på denne registreringen",
+    "editor_required": "Du må ha minst en redaktør på denne registreringen",
+    "has_invalid_format": "{{field}} har ugyldig format",
+    "is_required": "{{field}} er obligatorisk",
+    "minimum_one_file": "Du må laste opp minst en fil for denne registreringen",
+    "must_be_bigger_than": "{{field}} kan ikke være mindre enn {{limit}}",
+    "must_be_in_future": "{{field}} må være i fremtiden",
+    "must_be_smaller_than": "{{field}} kan ikke være større enn {{limit}}",
+    "supervisor_required": "Du må ha minst en veileder på denne registreringen"
   }
 }

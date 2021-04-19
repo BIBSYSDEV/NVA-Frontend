@@ -1,8 +1,13 @@
 import React, { FC } from 'react';
+import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
+import useFetchDepartment from '../../utils/hooks/useFetchDepartment';
 import { getUnitHierarchyNames } from '../../utils/institutions-helpers';
 import { AffiliationSkeleton } from './AffiliationSkeleton';
-import useFetchDepartment from '../../utils/hooks/useFetchDepartment';
+
+const StyledTypography = styled(Typography)`
+  font-weight: bold;
+`;
 
 interface AffiliationHierarchyProps {
   unitUri: string;
@@ -26,11 +31,13 @@ export const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({
     </i>
   ) : (
     <div>
-      {unitHierarchyNames.map((unitName, index) => (
-        <Typography key={unitName} variant={index === 0 && boldTopLevel ? 'h6' : 'body1'}>
-          {unitName}
-        </Typography>
-      ))}
+      {unitHierarchyNames.map((unitName, index) =>
+        index === 0 && boldTopLevel ? (
+          <StyledTypography key={unitName}>{unitName}</StyledTypography>
+        ) : (
+          <Typography key={unitName}>{unitName}</Typography>
+        )
+      )}
     </div>
   );
 };

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, Collapse, Typography } from '@material-ui/core';
 import PostAddIcon from '@material-ui/icons/PostAdd';
@@ -10,7 +11,6 @@ import BackgroundDiv from '../../components/BackgroundDiv';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import lightTheme from '../../themes/lightTheme';
 import { LOGIN_REDIRECT_PATH_KEY } from '../../utils/constants';
-import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import AboutContent from '../infopages/AboutContent';
 
@@ -75,6 +75,7 @@ const StyledLinkButton = styled(Button)`
   padding: 1rem 6rem;
   text-decoration: none;
   text-transform: none;
+  color: ${({ theme }) => theme.palette.primary.main};
 `;
 
 const StyledSearchButton = styled(StyledLinkButton)`
@@ -130,7 +131,6 @@ const Dashboard = () => {
   const { t } = useTranslation('common');
   const history = useHistory();
   const { user } = useSelector((store: RootStore) => store);
-  const { handleLogin } = useAuthentication();
   const [readMore, setReadMore] = useState(false);
 
   const toggleReadMore = () => setReadMore(!readMore);
@@ -145,6 +145,9 @@ const Dashboard = () => {
 
   return (
     <StyledDashboard>
+      <Helmet>
+        <title>{t('start_page')}</title>
+      </Helmet>
       <StyledTaglineDiv backgroundColor={lightTheme.palette.section.megaDark}>
         <StyledTagline variant="h1">{t('nva_tagline')}</StyledTagline>
         <StyledShortDescription variant="h3" variantMapping={{ h3: 'p' }}>
@@ -162,19 +165,18 @@ const Dashboard = () => {
         </StyledButtonWrapper>
       </StyledDescriptionDiv>
       <StyledLinksContainer>
-        <StyledSearchButton as={Link} to={UrlPathTemplate.Search}>
+        <StyledSearchButton href={UrlPathTemplate.Search}>
           <StyledLinkContent>
             <SearchIcon fontSize="large" />
             <StyledText>
-              <Typography variant="h4" variantMapping={{ h4: 'p' }}>
+              <Typography variant="h4" component="p">
                 {t('search_for_publication')}
               </Typography>
             </StyledText>
           </StyledLinkContent>
         </StyledSearchButton>
         <StyledNewRegistrationButton
-          as={Link}
-          to={user ? UrlPathTemplate.NewRegistration : UrlPathTemplate.Login}
+          href={user ? UrlPathTemplate.NewRegistration : UrlPathTemplate.Login}
           onClick={() => {
             if (!user) {
               localStorage.setItem(LOGIN_REDIRECT_PATH_KEY, UrlPathTemplate.NewRegistration);
@@ -183,7 +185,7 @@ const Dashboard = () => {
           <StyledLinkContent>
             <PostAddIcon fontSize="large" />
             <StyledText>
-              <Typography variant="h4" variantMapping={{ h4: 'p' }}>
+              <Typography variant="h4" component="p">
                 {t('registration:new_registration')}
               </Typography>
               {!user && <Typography>{t('requires_login')}</Typography>}

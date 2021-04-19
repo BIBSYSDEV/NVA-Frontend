@@ -32,6 +32,7 @@ export const ProjectsField = () => {
           {...autocompleteTranslationProps}
           id={field.name}
           aria-labelledby={`${field.name}-label`}
+          data-testid="project-search-field"
           options={projects}
           getOptionLabel={(option) => option.title}
           onInputChange={(_, newInputValue, reason) => {
@@ -76,7 +77,6 @@ export const ProjectsField = () => {
               label={t('description.project_association')}
               isLoading={isLoadingProjects}
               placeholder={t('description.search_for_project')}
-              dataTestId="project-search-input"
               showSearchIcon={field.value.length === 0}
             />
           )}

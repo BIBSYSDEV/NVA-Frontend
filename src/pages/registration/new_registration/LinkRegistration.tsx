@@ -36,7 +36,7 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
     if (!doi) {
       return;
     }
-    history.push(getRegistrationPath(doi.identifier), { isNewRegistration: true });
+    history.push(getRegistrationPath(doi.identifier), { highestValidatedTab: -1 });
   };
 
   const handleSearch = async (doiUrl: string) => {
@@ -68,10 +68,10 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
         <LinkRegistrationForm handleSearch={handleSearch} />
         {noHit && <Typography>{t('no_hits')}</Typography>}
         {doi && (
-          <>
+          <div data-testid="link-metadata">
             <Typography variant="subtitle1">{t('registration')}:</Typography>
             <Typography>{doi.title}</Typography>
-          </>
+          </div>
         )}
       </AccordionDetails>
 

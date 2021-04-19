@@ -2,16 +2,14 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, Radio } from '@material-ui/core';
-
+import { Button, Radio, Typography } from '@material-ui/core';
+import { createAuthority } from '../../../api/authorityApi';
+import ButtonWithProgress from '../../../components/ButtonWithProgress';
+import { StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
-import { createAuthority } from '../../../api/authorityApi';
 import { NotificationVariant } from '../../../types/notification.types';
-import { StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
-import Label from '../../../components/Label';
 import { User } from '../../../types/user.types';
-import ButtonWithProgress from '../../../components/ButtonWithProgress';
 
 const StyledBoxContent = styled.div`
   display: grid;
@@ -34,7 +32,7 @@ const StyledAuthority = styled.div`
   grid-area: authority;
 `;
 
-const StyledLabel = styled(Label)`
+const StyledLabel = styled(Typography)`
   display: inline-grid;
 `;
 

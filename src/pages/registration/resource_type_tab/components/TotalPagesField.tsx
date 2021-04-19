@@ -22,7 +22,7 @@ const TotalPagesField = () => {
       {({ field, meta: { touched, error } }: FieldProps) => (
         <StyledTextField
           id={field.name}
-          inputProps={{ 'data-testid': 'pages-input' }}
+          data-testid="pages-field"
           variant="filled"
           label={t('resource_type.number_of_pages')}
           {...field}

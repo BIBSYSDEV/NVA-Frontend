@@ -1,29 +1,29 @@
-import React, { FC, useState, ChangeEvent, MouseEvent } from 'react';
+import React, { ChangeEvent, FC, MouseEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 import {
   Button,
   Table,
   TableBody,
   TableCell,
-  TableHead,
-  TableRow,
   TableContainer,
+  TableHead,
   TablePagination,
+  TableRow,
   Typography,
 } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
-import { RegistrationPreview, RegistrationStatus } from '../../types/registration.types';
-import ConfirmDialog from '../../components/ConfirmDialog';
 import { deleteRegistration } from '../../api/registrationApi';
-import { useDispatch } from 'react-redux';
-import { NotificationVariant } from '../../types/notification.types';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { getRegistrationLandingPagePath, getRegistrationPath } from '../../utils/urlPaths';
+import ConfirmDialog from '../../components/ConfirmDialog';
 import DangerButton from '../../components/DangerButton';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { NotificationVariant } from '../../types/notification.types';
+import { RegistrationPreview, RegistrationStatus } from '../../types/registration.types';
+import { getRegistrationLandingPagePath, getRegistrationPath } from '../../utils/urlPaths';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};
@@ -32,7 +32,11 @@ const StyledTableRow = styled(TableRow)`
   }
 `;
 
-const StyledLabel = styled(Typography)`
+const StyledTypography = styled(Typography)`
+  font-weight: bold;
+`;
+
+const StyledLabel = styled(StyledTypography)`
   min-width: 12rem;
 `;
 
@@ -83,13 +87,13 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations, refetchReg
           <TableHead>
             <TableRow>
               <TableCell data-testid="header-registration-title">
-                <StyledLabel variant="h6">{t('title')}</StyledLabel>
+                <StyledLabel>{t('title')}</StyledLabel>
               </TableCell>
               <TableCell data-testid="header-registration-status">
-                <Typography variant="h6">{t('status')}</Typography>
+                <StyledTypography>{t('status')}</StyledTypography>
               </TableCell>
               <TableCell data-testid="header-registration-created">
-                <Typography variant="h6">{t('created_date')}</Typography>
+                <StyledTypography>{t('created_date')}</StyledTypography>
               </TableCell>
               <TableCell />
               <TableCell />

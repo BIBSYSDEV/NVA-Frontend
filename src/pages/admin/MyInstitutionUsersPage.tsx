@@ -1,8 +1,8 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Button, Checkbox, Divider, FormControlLabel } from '@material-ui/core';
+import { Button, Checkbox, Divider, FormControlLabel, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import Card from '../../components/Card';
 import ListSkeleton from '../../components/ListSkeleton';
@@ -10,7 +10,6 @@ import Modal from '../../components/Modal';
 import NormalText from '../../components/NormalText';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
-import SubHeading from '../../components/SubHeading';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { RoleName } from '../../types/user.types';
 import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';
@@ -26,7 +25,7 @@ const StyledNewButton = styled(Button)`
   margin-top: 1rem;
 `;
 
-const MyInstitutionUsersPage: FC = () => {
+const MyInstitutionUsersPage = () => {
   const { t } = useTranslation('admin');
   const user = useSelector((store: RootStore) => store.user);
   const [users, isLoading, fetchInstitutionUsers] = useFetchUsersForInstitution(user?.customerId ?? '');
@@ -43,7 +42,9 @@ const MyInstitutionUsersPage: FC = () => {
       <Card>
         {/* Admins */}
         <StyledContainer>
-          <SubHeading>{t('profile:roles.institution_admins')}</SubHeading>
+          <Typography variant="h3" component="h2">
+            {t('profile:roles.institution_admins')}
+          </Typography>
           <Divider />
           {isLoading ? (
             <ListSkeleton maxWidth={25} />
@@ -66,7 +67,9 @@ const MyInstitutionUsersPage: FC = () => {
 
         {/* Curators */}
         <StyledContainer>
-          <SubHeading>{t('profile:roles.curators')}</SubHeading>
+          <Typography variant="h3" component="h2">
+            {t('profile:roles.curators')}
+          </Typography>
           <Divider />
           {isLoading ? (
             <ListSkeleton maxWidth={25} />
@@ -89,7 +92,9 @@ const MyInstitutionUsersPage: FC = () => {
 
         {/* Editors */}
         <StyledContainer>
-          <SubHeading>{t('profile:roles.editors')}</SubHeading>
+          <Typography variant="h3" component="h2">
+            {t('profile:roles.editors')}
+          </Typography>
           <Divider />
           {isLoading ? (
             <ListSkeleton maxWidth={25} />
@@ -111,7 +116,9 @@ const MyInstitutionUsersPage: FC = () => {
         </StyledContainer>
 
         <StyledContainer>
-          <SubHeading>{t('profile:roles.creator')}</SubHeading>
+          <Typography variant="h3" component="h2">
+            {t('profile:roles.creator')}
+          </Typography>
           <Divider />
           <NormalText>{t('users.creator_info')}</NormalText>
           <FormControlLabel

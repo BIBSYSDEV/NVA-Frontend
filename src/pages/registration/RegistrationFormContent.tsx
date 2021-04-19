@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { RegistrationTab } from '../../types/registration.types';
@@ -9,7 +9,6 @@ import { Uppy } from '../../types/file.types';
 import { ResourceTypePanel } from './ResourceTypePanel';
 
 const StyledPanel = styled.div`
-  margin-top: 0.5rem;
   margin-bottom: 1rem;
 `;
 
@@ -18,29 +17,11 @@ interface RegistrationFormContentProps {
   uppy: Uppy;
 }
 
-export const RegistrationFormContent: FC<RegistrationFormContentProps> = ({ tabNumber, uppy }) => {
-  return (
-    <>
-      {tabNumber === RegistrationTab.Description && (
-        <StyledPanel>
-          <DescriptionPanel />
-        </StyledPanel>
-      )}
-      {tabNumber === RegistrationTab.ResourceType && (
-        <StyledPanel>
-          <ResourceTypePanel />
-        </StyledPanel>
-      )}
-      {tabNumber === RegistrationTab.Contributors && (
-        <StyledPanel>
-          <ContributorsPanel />
-        </StyledPanel>
-      )}
-      {tabNumber === RegistrationTab.FilesAndLicenses && (
-        <StyledPanel>
-          <FilesAndLicensePanel uppy={uppy} />
-        </StyledPanel>
-      )}
-    </>
-  );
-};
+export const RegistrationFormContent = ({ tabNumber, uppy }: RegistrationFormContentProps) => (
+  <StyledPanel id="form">
+    {tabNumber === RegistrationTab.Description && <DescriptionPanel />}
+    {tabNumber === RegistrationTab.ResourceType && <ResourceTypePanel />}
+    {tabNumber === RegistrationTab.Contributors && <ContributorsPanel />}
+    {tabNumber === RegistrationTab.FilesAndLicenses && <FilesAndLicensePanel uppy={uppy} />}
+  </StyledPanel>
+);
