@@ -3,10 +3,9 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Radio, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
-
+import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
 import { Authority } from '../../../types/authority.types';
 import useFetchLastRegistrationFromAlma from '../../../utils/hooks/useFetchLastRegistration';
-import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
 
 const StyledTableRow = styled(TableRow)`
   cursor: pointer;
@@ -25,7 +24,7 @@ const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, selectedArp
   return (
     <>
       {searchTerm && (
-        <Typography variant="subtitle2">
+        <Typography variant="subtitle2" component="p">
           {t('search_summary', { count: authorities?.length ?? 0, searchTerm })}:
         </Typography>
       )}

@@ -108,12 +108,45 @@ export const AddContributorModalContent = ({
       {isLoadingAuthorities ? (
         <PageSpinner />
       ) : authorities && authorities.length > 0 && debouncedSearchTerm ? (
-        <AuthorityList
-          authorities={authorities}
-          selectedArpId={selectedAuthor?.id}
-          onSelectAuthority={setSelectedAuthor}
-          searchTerm={debouncedSearchTerm}
-        />
+        authorities.length > 6 ? (
+          <>
+            <StyledDialogActions>
+              <StyledVerifyButton
+                color="secondary"
+                data-testid="connect-author-button"
+                disabled={!selectedAuthor}
+                onClick={() => selectedAuthor && addAuthor(selectedAuthor)}
+                size="large"
+                variant="contained">
+                {initialSearchTerm ? t('contributors.verify_person') : t('common:add')}
+              </StyledVerifyButton>
+              <StyledCloseButton onClick={handleCloseModal}>{t('common:close')}</StyledCloseButton>
+              <StyledCreateButton color="primary" data-testid="button-create-new-author" onClick={openNewAuthorModal}>
+                {t('contributors.create_new_author')}
+              </StyledCreateButton>
+              {!isSelfAddedAsAuthor && (
+                <StyledAddSelfButton color="primary" data-testid="button-add-self-author" onClick={addSelfAsAuthor}>
+                  {contributorRole === ContributorRole.EDITOR
+                    ? t('contributors.add_self_as_editor')
+                    : t('contributors.add_self_as_author')}
+                </StyledAddSelfButton>
+              )}
+            </StyledDialogActions>
+            <AuthorityList
+              authorities={authorities}
+              selectedArpId={selectedAuthor?.id}
+              onSelectAuthority={setSelectedAuthor}
+              searchTerm={debouncedSearchTerm}
+            />
+          </>
+        ) : (
+          <AuthorityList
+            authorities={authorities}
+            selectedArpId={selectedAuthor?.id}
+            onSelectAuthority={setSelectedAuthor}
+            searchTerm={debouncedSearchTerm}
+          />
+        )
       ) : (
         debouncedSearchTerm && <Typography>{t('common:no_hits')}</Typography>
       )}

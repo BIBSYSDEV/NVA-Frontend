@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 import Modal from '../../../components/Modal';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
@@ -8,6 +9,11 @@ import { ContributorRole } from '../../../types/contributor.types';
 import { getAddContributorText } from '../../../utils/validation/registration/contributorTranslations';
 import { AddContributorModalContent } from './components/AddContributorModalContent';
 import { CreateContributorModalContent } from './components/CreateContributorModalContent';
+
+const StyledModalContent = styled.div`
+  min-height: 90vh;
+  max-height: 90vh;
+`;
 
 interface AddContributorModalProps {
   onAuthorSelected: (author: Authority) => void;
@@ -59,18 +65,20 @@ const AddContributorModal = ({
       fullWidth
       maxWidth="md"
       dataTestId="contributor-modal">
-      {createNewAuthor ? (
-        <CreateContributorModalContent addAuthor={addAuthor} handleCloseModal={handleCloseModal} />
-      ) : (
-        <AddContributorModalContent
-          addAuthor={addAuthor}
-          addSelfAsAuthor={addSelfAsAuthor}
-          contributorRole={contributorRole}
-          handleCloseModal={handleCloseModal}
-          openNewAuthorModal={() => setCreateNewAuthor(true)}
-          initialSearchTerm={initialSearchTerm}
-        />
-      )}
+      <StyledModalContent>
+        {createNewAuthor ? (
+          <CreateContributorModalContent addAuthor={addAuthor} handleCloseModal={handleCloseModal} />
+        ) : (
+          <AddContributorModalContent
+            addAuthor={addAuthor}
+            addSelfAsAuthor={addSelfAsAuthor}
+            contributorRole={contributorRole}
+            handleCloseModal={handleCloseModal}
+            openNewAuthorModal={() => setCreateNewAuthor(true)}
+            initialSearchTerm={initialSearchTerm}
+          />
+        )}
+      </StyledModalContent>
     </Modal>
   );
 };
