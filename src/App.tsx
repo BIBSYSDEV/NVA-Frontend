@@ -53,7 +53,7 @@ const App = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation('feedback');
   const user = useSelector((store: RootStore) => store.user);
-  const [isLoadingUser, setIsLoadingUser] = useState({ attributes: true, roles: true, authority: true });
+  const [isLoading, setIsLoading] = useState({ userAttributes: true, userRoles: true, userAuthority: true });
   const [matchingAuthorities, isLoadingMatchingAuthorities] = useFetchAuthorities(user?.name ?? '');
 
   useEffect(() => {
@@ -73,13 +73,13 @@ const App = () => {
         } else if (feideUser) {
           dispatch(setUser(feideUser));
         }
-        setIsLoadingUser((state) => ({ ...state, attributes: false }));
+        setIsLoading((state) => ({ ...state, userAttributes: false }));
       }
     };
 
     if (USE_MOCK_DATA) {
       setUser(mockUser);
-      setIsLoadingUser({ attributes: false, roles: false, authority: false });
+      setIsLoading({ userAttributes: false, userRoles: false, userAuthority: false });
     } else {
       getUser();
     }
@@ -96,7 +96,7 @@ const App = () => {
           const roles = (institutionUser as InstitutionUser).roles.map((role) => role.rolename);
           dispatch(setRoles(roles));
         }
-        setIsLoadingUser((state) => ({ ...state, roles: false }));
+        setIsLoading((state) => ({ ...state, userRoles: false }));
       }
     };
 
@@ -135,7 +135,7 @@ const App = () => {
         } else {
           dispatch(setPossibleAuthorities(matchingAuthorities));
         }
-        setIsLoadingUser((state) => ({ ...state, authority: false }));
+        setIsLoading((state) => ({ ...state, userAuthority: false }));
       };
       fetchAuthority();
     }
@@ -146,7 +146,7 @@ const App = () => {
       <Helmet defaultTitle={t('common:page_title')} titleTemplate={`%s - ${t('common:page_title')}`}>
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
-      {Object.values(isLoadingUser).some((isLoading) => isLoading) ? (
+      {Object.values(isLoading).some((isLoading) => isLoading) ? (
         <PageSpinner />
       ) : (
         <BrowserRouter>
