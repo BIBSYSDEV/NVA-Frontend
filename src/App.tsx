@@ -53,7 +53,7 @@ const App = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation('feedback');
   const user = useSelector((store: RootStore) => store.user);
-  const [isLoadingUser, setIsLoadingUser] = useState(true);
+  const [isLoading, setIsLoading] = useState({ userAttributes: true, userRoles: true, userAuthority: true });
   const [matchingAuthorities, isLoadingMatchingAuthorities] = useFetchAuthorities(user?.name ?? '');
 
   useEffect(() => {
@@ -70,20 +70,16 @@ const App = () => {
       if (feideUser) {
         if (feideUser.error) {
           dispatch(setNotification(feideUser.error, NotificationVariant.Error));
-          setIsLoadingUser(false);
         } else if (feideUser) {
           dispatch(setUser(feideUser));
-          // Wait with setting isLoadingUser to false until roles are loaded in separate useEffect,
-          // which will be trigged when user is updated in redux
         }
-      } else {
-        setIsLoadingUser(false);
+        setIsLoading((state) => ({ ...state, userAttributes: false }));
       }
     };
 
     if (USE_MOCK_DATA) {
       setUser(mockUser);
-      setIsLoadingUser(false);
+      setIsLoading({ userAttributes: false, userRoles: false, userAuthority: false });
     } else {
       getUser();
     }
@@ -100,7 +96,7 @@ const App = () => {
           const roles = (institutionUser as InstitutionUser).roles.map((role) => role.rolename);
           dispatch(setRoles(roles));
         }
-        setIsLoadingUser(false);
+        setIsLoading((state) => ({ ...state, userRoles: false }));
       }
     };
 
@@ -139,6 +135,7 @@ const App = () => {
         } else {
           dispatch(setPossibleAuthorities(matchingAuthorities));
         }
+        setIsLoading((state) => ({ ...state, userAuthority: false }));
       };
       fetchAuthority();
     }
@@ -149,7 +146,7 @@ const App = () => {
       <Helmet defaultTitle={t('common:page_title')} titleTemplate={`%s - ${t('common:page_title')}`}>
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
-      {isLoadingUser ? (
+      {Object.values(isLoading).some((isLoading) => isLoading) ? (
         <PageSpinner />
       ) : (
         <BrowserRouter>

@@ -1,5 +1,6 @@
 import deepmerge, { Options } from 'deepmerge';
 import { FormikErrors, FormikTouched, FormikValues, getIn } from 'formik';
+import { HighestTouchedTab } from '../pages/registration/RegistrationForm';
 import { Contributor } from '../types/contributor.types';
 import { File } from '../types/file.types';
 import {
@@ -97,7 +98,7 @@ const getAllContributorFields = (contributors: Contributor[]): string[] => {
   return fieldNames;
 };
 
-export const touchedDescriptionTabFields: FormikTouched<Registration> = {
+const touchedDescriptionTabFields: FormikTouched<Registration> = {
   entityDescription: {
     abstract: true,
     date: {
@@ -112,7 +113,7 @@ export const touchedDescriptionTabFields: FormikTouched<Registration> = {
   },
 };
 
-export const touchedResourceTabFields = (publicationType: PublicationType | ''): FormikTouched<unknown> => {
+const touchedResourceTabFields = (publicationType: PublicationType | ''): FormikTouched<unknown> => {
   switch (publicationType) {
     case PublicationType.PUBLICATION_IN_JOURNAL:
       return {
@@ -199,11 +200,22 @@ export const touchedResourceTabFields = (publicationType: PublicationType | ''):
         },
       };
     default:
-      return {};
+      return {
+        entityDescription: {
+          reference: {
+            publicationContext: {
+              type: true,
+            },
+            publicationInstance: {
+              type: true,
+            },
+          },
+        },
+      };
   }
 };
 
-export const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<Registration> => ({
+const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<Registration> => ({
   entityDescription: {
     contributors: contributors.map((_) => ({
       correspondingAuthor: true,
@@ -212,7 +224,7 @@ export const touchedContributorTabFields = (contributors: Contributor[]): Formik
   },
 });
 
-export const touchedFilesTabFields = (files: File[]): FormikTouched<Registration> => ({
+const touchedFilesTabFields = (files: File[]): FormikTouched<Registration> => ({
   fileSet: {
     files: files.map((file) => ({
       administrativeAgreement: true,
@@ -223,8 +235,28 @@ export const touchedFilesTabFields = (files: File[]): FormikTouched<Registration
   },
 });
 
-export const overwriteArrayMerge = (destinationArray: unknown[], sourceArray: unknown[], options?: Options) =>
-  sourceArray;
+const overwriteArrayMerge = (destinationArray: unknown[], sourceArray: unknown[], options?: Options) => sourceArray;
 
 export const mergeTouchedFields = (touchedArray: FormikTouched<Registration>[]) =>
   deepmerge.all(touchedArray, { arrayMerge: overwriteArrayMerge });
+
+export const getTouchedTabFields = (
+  tabToTouch: HighestTouchedTab,
+  values: Registration
+): FormikTouched<Registration> => {
+  const tabFields = {
+    [RegistrationTab.Description]: () => touchedDescriptionTabFields,
+    [RegistrationTab.ResourceType]: () =>
+      touchedResourceTabFields(values.entityDescription.reference.publicationContext.type),
+    [RegistrationTab.Contributors]: () => touchedContributorTabFields(values.entityDescription.contributors),
+    [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(values.fileSet.files),
+  };
+
+  // Set all fields on previous tabs to touched
+  const fieldsToTouchOnMount = [];
+  for (let thisTab = RegistrationTab.Description; thisTab <= tabToTouch; thisTab++) {
+    fieldsToTouchOnMount.push(tabFields[thisTab]());
+  }
+  const mergedFields = mergeTouchedFields(fieldsToTouchOnMount);
+  return mergedFields;
+};
