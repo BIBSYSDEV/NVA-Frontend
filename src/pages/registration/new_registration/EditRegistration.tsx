@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { PageHeader } from '../../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../../components/styled/Wrappers';
@@ -25,14 +25,10 @@ enum PanelName {
 interface UrlParams {
   identifier: string;
 }
-interface LocationState {
-  isNewRegistration?: boolean;
-}
 
 const EditRegistration: FC = () => {
   const { t } = useTranslation('registration');
   const { identifier } = useParams<UrlParams>();
-  const location = useLocation<LocationState>();
   const [expanded, setExpanded] = useState<PanelName | false>(false);
   const [showForm, setShowForm] = useState(!!identifier);
 
@@ -52,7 +48,7 @@ const EditRegistration: FC = () => {
     </StyledPageWrapperWithMaxWidth>
   ) : (
     <StyledPageWrapperWithMaxWidth>
-      <RegistrationForm identifier={identifier} isNewRegistration={!!location.state?.isNewRegistration} />
+      <RegistrationForm identifier={identifier} />
     </StyledPageWrapperWithMaxWidth>
   );
 };
