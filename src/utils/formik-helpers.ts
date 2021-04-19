@@ -200,7 +200,18 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
         },
       };
     default:
-      return {};
+      return {
+        entityDescription: {
+          reference: {
+            publicationContext: {
+              type: true,
+            },
+            publicationInstance: {
+              type: true,
+            },
+          },
+        },
+      };
   }
 };
 
