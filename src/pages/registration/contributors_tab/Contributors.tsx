@@ -130,7 +130,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     }
   };
 
-  const contributorType = contributorRoles.length === 1 ? contributorRoles[0] : 'Contributors';
+  const contributorType = contributorRoles.length === 1 ? contributorRoles[0] : 'Contributor';
 
   const addContributorButton = (
     <StyledButton
@@ -147,7 +147,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   );
 
   return (
-    <div data-testid={contributorRoles[0]}>
+    <div data-testid={contributorType}>
       <Typography variant="h2">{getContributorHeading(contributorType)}</Typography>
       <MuiThemeProvider theme={lightTheme}>
         {((isMobile && relevantContributors.length >= 2) || (!isMobile && relevantContributors.length >= 5)) &&
