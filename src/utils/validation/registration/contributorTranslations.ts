@@ -3,11 +3,11 @@ import { ContributorRole } from '../../../types/contributor.types';
 
 export const getAddContributorText = (contributorRole: ContributorRole | string) => {
   switch (contributorRole) {
-    case ContributorRole.CREATOR:
+    case ContributorRole.Creator:
       return i18n.t('registration:contributors.add_author');
-    case ContributorRole.EDITOR:
+    case ContributorRole.Editor:
       return i18n.t('registration:contributors.add_editor');
-    case ContributorRole.SUPERVISOR:
+    case ContributorRole.Supervisor:
       return i18n.t('registration:contributors.add_supervisor');
     default:
       return i18n.t('registration:contributors.add_contributor');
@@ -16,11 +16,11 @@ export const getAddContributorText = (contributorRole: ContributorRole | string)
 
 export const getContributorHeading = (contributorRole: ContributorRole | string) => {
   switch (contributorRole) {
-    case ContributorRole.CREATOR:
+    case ContributorRole.Creator:
       return i18n.t('registration:contributors.authors');
-    case ContributorRole.EDITOR:
+    case ContributorRole.Editor:
       return i18n.t('registration:contributors.editors');
-    case ContributorRole.SUPERVISOR:
+    case ContributorRole.Supervisor:
       return i18n.t('registration:contributors.supervisors');
     default:
       return i18n.t('registration:heading.contributors');
@@ -29,11 +29,11 @@ export const getContributorHeading = (contributorRole: ContributorRole | string)
 
 export const getRemoveContributorText = (contributorRole: ContributorRole | string) => {
   switch (contributorRole) {
-    case ContributorRole.CREATOR:
+    case ContributorRole.Creator:
       return i18n.t('registration:contributors.remove_author');
-    case ContributorRole.EDITOR:
+    case ContributorRole.Editor:
       return i18n.t('registration:contributors.remove_editor');
-    case ContributorRole.SUPERVISOR:
+    case ContributorRole.Supervisor:
       return i18n.t('registration:contributors.remove_supervisor');
     default:
       return i18n.t('registration:contributors.remove_contributor');
@@ -42,13 +42,13 @@ export const getRemoveContributorText = (contributorRole: ContributorRole | stri
 
 export const getAddSelfAsContributorText = (contributorRole: ContributorRole | string) => {
   switch (contributorRole) {
-    case ContributorRole.CREATOR:
+    case ContributorRole.Creator:
       return i18n.t('registration:contributors.add_self_as_author');
-    case ContributorRole.EDITOR:
+    case ContributorRole.Editor:
       return i18n.t('registration:contributors.add_self_as_editor');
-    case ContributorRole.SUPERVISOR:
-      return i18n.t('registration:contributors.add_supervisor');
+    case ContributorRole.Supervisor:
+      return i18n.t('registration:contributors.add_self_as_supervisor');
     default:
-      return i18n.t('registration:contributors.add_self_as_contributor'); //tom?
+      return i18n.t('registration:contributors.add_self_as_contributor');
   }
 };

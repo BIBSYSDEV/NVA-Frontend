@@ -2,6 +2,7 @@ import { MenuItem, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 import Modal from '../../../components/Modal';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
@@ -9,6 +10,10 @@ import { ContributorRole } from '../../../types/contributor.types';
 import { getAddContributorText } from '../../../utils/validation/registration/contributorTranslations';
 import { AddContributorModalContent } from './components/AddContributorModalContent';
 import { CreateContributorModalContent } from './components/CreateContributorModalContent';
+
+const StyledTextField = styled(TextField)`
+  max-width: 15rem;
+`;
 
 interface AddContributorModalProps {
   onAuthorSelected: (author: Authority, role: ContributorRole) => void;
@@ -67,21 +72,22 @@ const AddContributorModal = ({
       maxWidth="md"
       dataTestId="contributor-modal">
       {contributorRoles.length > 1 && (
-        <TextField
+        <StyledTextField
           value={selectedContributorRole}
           onChange={(event) => {
             const role = (event.target.value as ContributorRole) ?? '';
             setSelectedContributorRole(role);
           }}
+          fullWidth
           select
-          label="Type"
+          label={t('contributors.select_contributor_type')}
           variant="outlined">
           {contributorRoles.map((role) => (
             <MenuItem key={role} value={role}>
-              {role}
+              {t(`contributors.types.${role}`)}
             </MenuItem>
           ))}
-        </TextField>
+        </StyledTextField>
       )}
       {selectedContributorRole &&
         (createNewAuthor ? (

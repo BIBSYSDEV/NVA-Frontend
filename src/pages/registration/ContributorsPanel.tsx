@@ -29,7 +29,7 @@ const ContributorsPanel = () => {
     // Ensure all contributors has a role by setting Creator role as default
     const contributorsWithRole = contributorsRef.current.map((contributor) => ({
       ...contributor,
-      role: contributor.role ?? ContributorRole.CREATOR,
+      role: contributor.role ?? ContributorRole.Creator,
     }));
     setFieldValue(ContributorFieldNames.CONTRIBUTORS, contributorsWithRole);
   }, [setFieldValue]);
@@ -42,32 +42,32 @@ const ContributorsPanel = () => {
             <>
               {publicationContext.type === PublicationType.DEGREE ? (
                 <>
-                  <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.CREATOR]} />
-                  <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.SUPERVISOR]} />
+                  <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
+                  <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Supervisor]} />
                   <Contributors
                     push={push}
                     replace={replace}
                     contributorRoles={Object.values(ContributorRole).filter(
-                      (role) => role !== ContributorRole.CREATOR && role !== ContributorRole.SUPERVISOR
+                      (role) => role !== ContributorRole.Creator && role !== ContributorRole.Supervisor
                     )}
                   />
                 </>
               ) : publicationInstance.type === BookType.ANTHOLOGY ? (
                 <>
-                  <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.EDITOR]} />
+                  <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Editor]} />
                   <Contributors
                     push={push}
                     replace={replace}
-                    contributorRoles={Object.values(ContributorRole).filter((role) => role !== ContributorRole.EDITOR)}
+                    contributorRoles={Object.values(ContributorRole).filter((role) => role !== ContributorRole.Editor)}
                   />
                 </>
               ) : (
                 <>
-                  <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.CREATOR]} />
+                  <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
                   <Contributors
                     push={push}
                     replace={replace}
-                    contributorRoles={Object.values(ContributorRole).filter((role) => role !== ContributorRole.CREATOR)}
+                    contributorRoles={Object.values(ContributorRole).filter((role) => role !== ContributorRole.Creator)}
                   />
                 </>
               )}
