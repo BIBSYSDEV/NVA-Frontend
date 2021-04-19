@@ -73,9 +73,7 @@ const resourceErrorMessage = {
     field: i18n.t('registration:resource_type.number_of_pages'),
     limit: 1,
   }),
-  peerReviewRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('registration:resource_type.peer_review'),
-  }),
+
   publisherRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:publisher'),
   }),
@@ -96,7 +94,7 @@ export const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/g; // ISBN without hyphens
 
 // Common Fields
 const isbnListField = Yup.array().of(Yup.string().matches(isbnRegex, resourceErrorMessage.isbnInvalid));
-const peerReviewedField = Yup.boolean().required(resourceErrorMessage.peerReviewRequired);
+const peerReviewedField = Yup.boolean();
 const pagesMonographField = Yup.object()
   .nullable()
   .shape({
@@ -164,7 +162,11 @@ const journalPublicationInstance = Yup.object().shape({
 });
 
 const journalPublicationContext = Yup.object().shape({
-  title: Yup.string().required(resourceErrorMessage.journalRequired),
+  title: Yup.string().when('$publicationInstanceType', {
+    is: JournalType.CORRIGENDUM,
+    then: Yup.string(),
+    otherwise: Yup.string().required(resourceErrorMessage.journalRequired),
+  }),
 });
 
 export const journalReference = baseReference.shape({

@@ -133,6 +133,7 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
               },
               peerReviewed: true,
               volume: true,
+              corrigendumFor: true,
             },
           },
         },
@@ -184,12 +185,13 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
           },
         },
       };
-    default:
+    case PublicationType.CHAPTER:
       return {
         entityDescription: {
           reference: {
             publicationContext: {
               type: true,
+              linkedContext: true,
             },
             publicationInstance: {
               type: true,
@@ -197,6 +199,8 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
           },
         },
       };
+    default:
+      return {};
   }
 };
 
