@@ -15,6 +15,7 @@ import { Registration } from '../../../../types/registration.types';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
 import AuthorityList from '../../../user/authority/AuthorityList';
+import { getAddSelfAsContributorText } from '../../../../utils/validation/registration/contributorTranslations';
 
 const StyledTextField = styled(TextField)`
   margin-bottom: 1rem;
@@ -57,7 +58,7 @@ interface AddContributorModalContentProps {
   addSelfAsAuthor: () => void;
   handleCloseModal: () => void;
   openNewAuthorModal: () => void;
-  contributorRole?: ContributorRole;
+  contributorRoles: ContributorRole[];
   initialSearchTerm?: string;
 }
 
@@ -66,7 +67,7 @@ export const AddContributorModalContent = ({
   addSelfAsAuthor,
   handleCloseModal,
   openNewAuthorModal,
-  contributorRole,
+  contributorRoles,
   initialSearchTerm = '',
 }: AddContributorModalContentProps) => {
   const { t } = useTranslation('registration');
@@ -82,6 +83,7 @@ export const AddContributorModalContent = ({
   } = values;
 
   const isSelfAddedAsAuthor = contributors.some((contributor) => contributor.identity.id === user?.authority?.id);
+  const contributorRole = contributorRoles.length === 1 ? contributorRoles[0] : 'Contributor';
 
   return (
     <StyledBackgroundDiv backgroundColor={lightTheme.palette.background.paper}>
@@ -134,9 +136,7 @@ export const AddContributorModalContent = ({
         </StyledCreateButton>
         {!isSelfAddedAsAuthor && (
           <StyledAddSelfButton color="primary" data-testid="button-add-self-author" onClick={addSelfAsAuthor}>
-            {contributorRole === ContributorRole.EDITOR
-              ? t('contributors.add_self_as_editor')
-              : t('contributors.add_self_as_author')}
+            {getAddSelfAsContributorText(contributorRole)}
           </StyledAddSelfButton>
         )}
       </StyledDialogActions>

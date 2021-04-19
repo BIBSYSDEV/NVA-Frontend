@@ -1,3 +1,4 @@
+import { MenuItem, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -10,10 +11,10 @@ import { AddContributorModalContent } from './components/AddContributorModalCont
 import { CreateContributorModalContent } from './components/CreateContributorModalContent';
 
 interface AddContributorModalProps {
-  onAuthorSelected: (author: Authority) => void;
+  onAuthorSelected: (author: Authority, role: ContributorRole) => void;
   open: boolean;
   toggleModal: () => void;
-  contributorRole?: ContributorRole;
+  contributorRoles: ContributorRole[];
   initialSearchTerm?: string;
 }
 
@@ -21,29 +22,35 @@ const AddContributorModal = ({
   onAuthorSelected,
   toggleModal,
   open,
-  contributorRole = ContributorRole.CREATOR,
+  contributorRoles,
   initialSearchTerm,
 }: AddContributorModalProps) => {
   const { t } = useTranslation('registration');
   const [createNewAuthor, setCreateNewAuthor] = useState(false);
   const user = useSelector((store: RootStore) => store.user);
+  const [selectedContributorRole, setSelectedContributorRole] = useState(
+    contributorRoles.length === 1 ? contributorRoles[0] : ''
+  );
 
   const addAuthor = (author: Authority) => {
-    toggleModal();
-    onAuthorSelected(author);
+    onAuthorSelected(author, selectedContributorRole as ContributorRole);
+    handleCloseModal();
   };
 
   const addSelfAsAuthor = () => {
-    toggleModal();
     if (user?.authority) {
-      onAuthorSelected(user.authority);
+      onAuthorSelected(user.authority, selectedContributorRole as ContributorRole);
     }
+    handleCloseModal();
   };
 
   const handleCloseModal = () => {
     toggleModal();
+    setSelectedContributorRole('');
     setCreateNewAuthor(false);
   };
+
+  const contributorRole = contributorRoles.length === 1 ? contributorRoles[0] : 'Contributor';
 
   return (
     <Modal
@@ -59,18 +66,36 @@ const AddContributorModal = ({
       fullWidth
       maxWidth="md"
       dataTestId="contributor-modal">
-      {createNewAuthor ? (
-        <CreateContributorModalContent addAuthor={addAuthor} handleCloseModal={handleCloseModal} />
-      ) : (
-        <AddContributorModalContent
-          addAuthor={addAuthor}
-          addSelfAsAuthor={addSelfAsAuthor}
-          contributorRole={contributorRole}
-          handleCloseModal={handleCloseModal}
-          openNewAuthorModal={() => setCreateNewAuthor(true)}
-          initialSearchTerm={initialSearchTerm}
-        />
+      {contributorRoles.length > 1 && (
+        <TextField
+          value={selectedContributorRole}
+          onChange={(event) => {
+            const role = (event.target.value as ContributorRole) ?? '';
+            setSelectedContributorRole(role);
+          }}
+          select
+          label="Type"
+          variant="outlined">
+          {contributorRoles.map((role) => (
+            <MenuItem key={role} value={role}>
+              {role}
+            </MenuItem>
+          ))}
+        </TextField>
       )}
+      {selectedContributorRole &&
+        (createNewAuthor ? (
+          <CreateContributorModalContent addAuthor={addAuthor} handleCloseModal={handleCloseModal} />
+        ) : (
+          <AddContributorModalContent
+            addAuthor={addAuthor}
+            addSelfAsAuthor={addSelfAsAuthor}
+            contributorRoles={contributorRoles}
+            handleCloseModal={handleCloseModal}
+            openNewAuthorModal={() => setCreateNewAuthor(true)}
+            initialSearchTerm={initialSearchTerm}
+          />
+        ))}
     </Modal>
   );
 };

@@ -39,3 +39,16 @@ export const getRemoveContributorText = (contributorRole: ContributorRole | stri
       return i18n.t('registration:contributors.remove_contributor');
   }
 };
+
+export const getAddSelfAsContributorText = (contributorRole: ContributorRole | string) => {
+  switch (contributorRole) {
+    case ContributorRole.CREATOR:
+      return i18n.t('registration:contributors.add_self_as_author');
+    case ContributorRole.EDITOR:
+      return i18n.t('registration:contributors.add_self_as_editor');
+    case ContributorRole.SUPERVISOR:
+      return i18n.t('registration:contributors.add_supervisor');
+    default:
+      return i18n.t('registration:contributors.add_self_as_contributor'); //tom?
+  }
+};

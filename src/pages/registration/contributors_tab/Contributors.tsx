@@ -95,7 +95,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     setOpenContributorModal(true);
   };
 
-  const onAuthorSelected = (authority: Authority) => {
+  const onAuthorSelected = (authority: Authority, role: ContributorRole) => {
     if (relevantContributors.some((contributor) => contributor.identity.id === authority.id)) {
       dispatch(setNotification(t('contributors.contributor_already_added'), NotificationVariant.Info));
       return;
@@ -116,14 +116,14 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           type: BackendTypeNames.ORGANIZATION,
           id: unitUri,
         })),
-        role: contributorRoles[0],
+        role,
         sequence: relevantContributors.length + 1,
       };
       push(newContributor);
     } else {
       const verifiedContributor: Contributor = {
         ...relevantContributors[unverifiedContributor.index],
-        role: contributorRoles[0],
+        role,
         identity,
       };
       replace(unverifiedContributor.index, verifiedContributor);
@@ -162,7 +162,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
 
         {addContributorButton}
         <AddContributorModal
-          contributorRole={contributorRoles[0]} // TODO (next task)
+          contributorRoles={contributorRoles}
           initialSearchTerm={unverifiedContributor?.name}
           open={openContributorModal}
           toggleModal={() => setOpenContributorModal(!openContributorModal)}
