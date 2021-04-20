@@ -82,6 +82,7 @@ const App = () => {
 
     if (USE_MOCK_DATA) {
       setUser(mockUser);
+      setIsLoading({ userAttributes: false, userRoles: false, userAuthority: false });
     } else {
       getUser();
     }
