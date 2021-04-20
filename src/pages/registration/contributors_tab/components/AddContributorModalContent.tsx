@@ -26,22 +26,18 @@ const StyledBackgroundDiv = styled(BackgroundDiv)`
 
 const StyledDialogActions = styled.div`
   display: grid;
-  grid-template-areas: 'close create add-self verify';
+  grid-template-areas: 'create add-self verify';
   justify-content: end;
   gap: 1rem;
   margin-top: 1rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-areas: 'add-self verify' 'close create';
+    grid-template-areas: 'add-self verify' 'create';
     justify-content: center;
   }
 `;
 
 const StyledVerifyButton = styled(Button)`
   grid-area: verify;
-`;
-
-const StyledCloseButton = styled(Button)`
-  grid-area: close;
 `;
 
 const StyledCreateButton = styled(Button)`
@@ -108,45 +104,12 @@ export const AddContributorModalContent = ({
       {isLoadingAuthorities ? (
         <PageSpinner />
       ) : authorities && authorities.length > 0 && debouncedSearchTerm ? (
-        authorities.length > 6 ? (
-          <>
-            <StyledDialogActions>
-              <StyledVerifyButton
-                color="secondary"
-                data-testid="connect-author-button"
-                disabled={!selectedAuthor}
-                onClick={() => selectedAuthor && addAuthor(selectedAuthor)}
-                size="large"
-                variant="contained">
-                {initialSearchTerm ? t('contributors.verify_person') : t('common:add')}
-              </StyledVerifyButton>
-              <StyledCloseButton onClick={handleCloseModal}>{t('common:close')}</StyledCloseButton>
-              <StyledCreateButton color="primary" data-testid="button-create-new-author" onClick={openNewAuthorModal}>
-                {t('contributors.create_new_author')}
-              </StyledCreateButton>
-              {!isSelfAddedAsAuthor && (
-                <StyledAddSelfButton color="primary" data-testid="button-add-self-author" onClick={addSelfAsAuthor}>
-                  {contributorRole === ContributorRole.EDITOR
-                    ? t('contributors.add_self_as_editor')
-                    : t('contributors.add_self_as_author')}
-                </StyledAddSelfButton>
-              )}
-            </StyledDialogActions>
-            <AuthorityList
-              authorities={authorities}
-              selectedArpId={selectedAuthor?.id}
-              onSelectAuthority={setSelectedAuthor}
-              searchTerm={debouncedSearchTerm}
-            />
-          </>
-        ) : (
-          <AuthorityList
-            authorities={authorities}
-            selectedArpId={selectedAuthor?.id}
-            onSelectAuthority={setSelectedAuthor}
-            searchTerm={debouncedSearchTerm}
-          />
-        )
+        <AuthorityList
+          authorities={authorities}
+          selectedArpId={selectedAuthor?.id}
+          onSelectAuthority={setSelectedAuthor}
+          searchTerm={debouncedSearchTerm}
+        />
       ) : (
         debouncedSearchTerm && <Typography>{t('common:no_hits')}</Typography>
       )}
@@ -161,7 +124,6 @@ export const AddContributorModalContent = ({
           variant="contained">
           {initialSearchTerm ? t('contributors.verify_person') : t('common:add')}
         </StyledVerifyButton>
-        <StyledCloseButton onClick={handleCloseModal}>{t('common:close')}</StyledCloseButton>
         <StyledCreateButton color="primary" data-testid="button-create-new-author" onClick={openNewAuthorModal}>
           {t('contributors.create_new_author')}
         </StyledCreateButton>
