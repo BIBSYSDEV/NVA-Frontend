@@ -12,7 +12,6 @@ import { CreateContributorModalContent } from './components/CreateContributorMod
 
 const StyledModalContent = styled.div`
   min-height: 90vh;
-  max-height: 90vh;
 `;
 
 interface AddContributorModalProps {

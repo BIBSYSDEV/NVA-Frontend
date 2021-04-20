@@ -13,6 +13,10 @@ const StyledTableRow = styled(TableRow)`
   cursor: pointer;
 `;
 
+const StyledTableCell = styled(TableCell)`
+  min-width: 15rem;
+`;
+
 interface AuthorityListProps {
   authorities: Authority[];
   searchTerm?: string;
@@ -39,11 +43,13 @@ const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, selectedArp
                 <TableCell id="selected-heading" padding="checkbox">
                   {t('common:selected')}
                 </TableCell>
-                <TableCell data-testid="author-name-column">{t('name')}</TableCell>
-                <TableCell data-testid="author-last-registration-column">
+                <StyledTableCell data-testid="author-name-column">{t('name')}</StyledTableCell>
+                <StyledTableCell data-testid="author-last-registration-column">
                   {t('profile:authority.example_publication')}
-                </TableCell>
-                <TableCell data-testid="author-organizations-column">{t('profile:heading.affiliations')}</TableCell>
+                </StyledTableCell>
+                <StyledTableCell data-testid="author-organizations-column">
+                  {t('profile:heading.affiliations')}
+                </StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
