@@ -51,10 +51,11 @@ const AddContributorModal = ({
 
   const handleCloseModal = () => {
     toggleModal();
-    setSelectedContributorRole('');
+    if (contributorRoles.length > 1) {
+      setSelectedContributorRole('');
+    }
     setCreateNewAuthor(false);
   };
-
   const contributorRole = contributorRoles.length === 1 ? contributorRoles[0] : 'Contributor';
 
   return (

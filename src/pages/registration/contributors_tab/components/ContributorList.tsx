@@ -11,6 +11,7 @@ interface ContributorListProps {
   onDelete: (index: number) => void;
   onMoveContributor: (newSequence: number, oldSequence: number) => void;
   openContributorModal: (unverifiedContributor: UnverifiedContributor) => void;
+  showContributorRole?: boolean;
 }
 
 export const ContributorList = ({
@@ -18,6 +19,7 @@ export const ContributorList = ({
   onDelete,
   onMoveContributor,
   openContributorModal,
+  showContributorRole = false,
 }: ContributorListProps) => {
   const { t } = useTranslation('registration');
   const [contributorToRemove, setContributorToRemove] = useState<Contributor | null>(null);
@@ -36,6 +38,7 @@ export const ContributorList = ({
           onRemoveContributorClick={() => setContributorToRemove(contributor)}
           openContributorModal={openContributorModal}
           contributorsLength={contributors.length}
+          showContributorRole={showContributorRole}
         />
       ))}
       {contributorToRemove && (

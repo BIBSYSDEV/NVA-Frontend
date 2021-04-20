@@ -103,6 +103,7 @@ interface ContributorCardProps {
   onRemoveContributorClick: () => void;
   openContributorModal: (unverifiedContributor: UnverifiedContributor) => void;
   contributorsLength: number;
+  showContributorRole: boolean;
 }
 
 export const ContributorCard = ({
@@ -111,6 +112,7 @@ export const ContributorCard = ({
   onRemoveContributorClick,
   openContributorModal,
   contributorsLength,
+  showContributorRole,
 }: ContributorCardProps) => {
   const { t } = useTranslation('registration');
   const {
@@ -207,7 +209,7 @@ export const ContributorCard = ({
           />
         </StyledRightAlignedWrapper>
         <StyledCorrespondingWrapper>
-          {contributorsLength > 1 ? (
+          {showContributorRole ? (
             <Typography variant="subtitle2" component="p">
               {contributor.role}
             </Typography>

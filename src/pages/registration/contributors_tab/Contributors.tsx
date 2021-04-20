@@ -158,6 +158,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           onDelete={handleOnRemove}
           onMoveContributor={handleMoveContributor}
           openContributorModal={handleOpenContributorModal}
+          showContributorRole={contributorRoles.length > 1}
         />
 
         {addContributorButton}
