@@ -70,16 +70,18 @@ const App = () => {
       if (feideUser) {
         if (feideUser.error) {
           dispatch(setNotification(feideUser.error, NotificationVariant.Error));
+          setIsLoading({ userAttributes: false, userRoles: false, userAuthority: false });
         } else if (feideUser) {
           dispatch(setUser(feideUser));
         }
         setIsLoading((state) => ({ ...state, userAttributes: false }));
+      } else {
+        setIsLoading({ userAttributes: false, userRoles: false, userAuthority: false });
       }
     };
 
     if (USE_MOCK_DATA) {
       setUser(mockUser);
-      setIsLoading({ userAttributes: false, userRoles: false, userAuthority: false });
     } else {
       getUser();
     }
@@ -88,6 +90,7 @@ const App = () => {
   useEffect(() => {
     // Fetch logged in user's roles
     const getRoles = async (userId: string) => {
+      setIsLoading((state) => ({ ...state, userRoles: true }));
       const institutionUser = await getInstitutionUser(userId);
       if (institutionUser) {
         if (institutionUser.error) {
@@ -110,6 +113,7 @@ const App = () => {
       const fetchAuthority = async () => {
         const filteredAuthorities = matchingAuthorities.filter((auth) => auth.feideids.some((id) => id === user.id));
         if (filteredAuthorities.length === 1) {
+          setIsLoading((state) => ({ ...state, userAuthority: true }));
           // Use exsisting authority
           const existingArpId = filteredAuthorities[0].id;
           const existingAuthority = await getAuthority(existingArpId);
@@ -146,7 +150,7 @@ const App = () => {
       <Helmet defaultTitle={t('common:page_title')} titleTemplate={`%s - ${t('common:page_title')}`}>
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
-      {Object.values(isLoading).some((isLoading) => isLoading) ? (
+      {Object.values(isLoading).some((isLoading) => isLoading) || isLoadingMatchingAuthorities ? (
         <PageSpinner />
       ) : (
         <BrowserRouter>
