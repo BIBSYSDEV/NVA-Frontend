@@ -23,9 +23,9 @@ import {
   getAddContributorText,
   getContributorHeading,
 } from '../../../utils/validation/registration/contributorTranslations';
-import AddContributorModal from './AddContributorModal';
 import lightTheme from '../../../themes/lightTheme';
 import { ContributorList } from './components/ContributorList';
+import { AddContributorModal } from './AddContributorModal';
 
 const StyledButton = styled(Button)`
   margin: 1rem 0rem;

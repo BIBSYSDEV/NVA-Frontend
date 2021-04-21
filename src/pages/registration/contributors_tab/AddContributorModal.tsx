@@ -27,7 +27,7 @@ interface AddContributorModalProps {
   initialSearchTerm?: string;
 }
 
-const AddContributorModal = ({
+export const AddContributorModal = ({
   onContributorSelected,
   toggleModal,
   open,
@@ -110,5 +110,3 @@ const AddContributorModal = ({
     </Modal>
   );
 };
-
-export default AddContributorModal;
