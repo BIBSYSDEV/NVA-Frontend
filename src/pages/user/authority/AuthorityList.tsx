@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import TextTruncate from 'react-text-truncate';
 import styled from 'styled-components';
-import { Radio, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
+import {
+  Radio,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip,
+  Typography,
+} from '@material-ui/core';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { Skeleton } from '@material-ui/lab';
 import BackgroundDiv from '../../../components/BackgroundDiv';
 import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
@@ -14,7 +27,10 @@ const StyledTableRow = styled(TableRow)`
 `;
 
 const StyledTableCell = styled(TableCell)`
-  min-width: 15rem;
+  min-width: 12rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    min-width: auto;
+  }
 `;
 
 interface AuthorityListProps {
@@ -94,6 +110,10 @@ const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, selectedArp
   );
 };
 
+const StyledTooltip = styled(Tooltip)`
+  padding-top: 0.5rem;
+`;
+
 interface LastAlmaRegistrationCellProps {
   authority: Authority;
 }
@@ -101,13 +121,34 @@ interface LastAlmaRegistrationCellProps {
 const LastAlmaRegistrationCell = ({ authority }: LastAlmaRegistrationCellProps) => {
   const { t } = useTranslation('profile');
   const [almaPublication, isLoadingAlmaPublication] = useFetchLastRegistrationFromAlma(authority.id, authority.name);
+  const [canBeTruncated, setCanBeTruncated] = useState(false);
+  const [showFullText, setShowFullText] = useState(false);
+
+  const toggleFullText = () => setShowFullText(!showFullText);
 
   return (
     <>
       {isLoadingAlmaPublication ? (
-        <Skeleton width="70%" />
+        <Skeleton />
       ) : almaPublication?.title ? (
-        <Typography>{almaPublication.title}</Typography>
+        <>
+          <Typography>
+            <TextTruncate
+              element="span"
+              line={showFullText ? false : 1}
+              truncateText=" [...]"
+              text={almaPublication.title}
+              onTruncated={() => setCanBeTruncated(true)}
+            />
+            {canBeTruncated && (
+              <StyledTooltip
+                title={showFullText ? t<string>('common:title_minimize') : t<string>('common:title_expand')}
+                onClick={toggleFullText}>
+                {showFullText ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+              </StyledTooltip>
+            )}
+          </Typography>
+        </>
       ) : (
         <i>{t('authority.no_registrations_found')}</i>
       )}
