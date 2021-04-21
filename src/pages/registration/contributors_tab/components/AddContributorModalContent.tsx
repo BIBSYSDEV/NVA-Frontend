@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Button, TextField, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
-import { PageSpinner } from '../../../../components/PageSpinner';
+import ListSkeleton from '../../../../components/ListSkeleton';
 import { RootStore } from '../../../../redux/reducers/rootReducer';
 import lightTheme from '../../../../themes/lightTheme';
 import { Authority } from '../../../../types/authority.types';
@@ -26,22 +26,18 @@ const StyledBackgroundDiv = styled(BackgroundDiv)`
 
 const StyledDialogActions = styled.div`
   display: grid;
-  grid-template-areas: 'close create add-self verify';
+  grid-template-areas: 'create add-self verify';
   justify-content: end;
   gap: 1rem;
   margin-top: 1rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-areas: 'add-self verify' 'close create';
+    grid-template-areas: 'add-self verify' 'create';
     justify-content: center;
   }
 `;
 
 const StyledVerifyButton = styled(Button)`
   grid-area: verify;
-`;
-
-const StyledCloseButton = styled(Button)`
-  grid-area: close;
 `;
 
 const StyledCreateButton = styled(Button)`
@@ -106,7 +102,7 @@ export const AddContributorModalContent = ({
       />
 
       {isLoadingAuthorities ? (
-        <PageSpinner />
+        <ListSkeleton arrayLength={3} minWidth={100} height={80} />
       ) : authorities && authorities.length > 0 && debouncedSearchTerm ? (
         <AuthorityList
           authorities={authorities}
@@ -128,7 +124,6 @@ export const AddContributorModalContent = ({
           variant="contained">
           {initialSearchTerm ? t('contributors.verify_person') : t('common:add')}
         </StyledVerifyButton>
-        <StyledCloseButton onClick={handleCloseModal}>{t('common:close')}</StyledCloseButton>
         <StyledCreateButton color="primary" data-testid="button-create-new-author" onClick={openNewAuthorModal}>
           {t('contributors.create_new_author')}
         </StyledCreateButton>
