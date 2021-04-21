@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Button, TextField, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
-import { PageSpinner } from '../../../../components/PageSpinner';
+import ListSkeleton from '../../../../components/ListSkeleton';
 import { RootStore } from '../../../../redux/reducers/rootReducer';
 import lightTheme from '../../../../themes/lightTheme';
 import { Authority } from '../../../../types/authority.types';
@@ -102,7 +102,7 @@ export const AddContributorModalContent = ({
       />
 
       {isLoadingAuthorities ? (
-        <PageSpinner />
+        <ListSkeleton arrayLength={3} minWidth={100} height={80} />
       ) : authorities && authorities.length > 0 && debouncedSearchTerm ? (
         <AuthorityList
           authorities={authorities}
