@@ -38,41 +38,39 @@ const ContributorsPanel = () => {
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
-          {({ push, replace }: FieldArrayRenderProps) => (
-            <>
-              {publicationContext.type === PublicationType.DEGREE ? (
-                <>
-                  <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
-                  <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Supervisor]} />
-                  <Contributors
-                    push={push}
-                    replace={replace}
-                    contributorRoles={Object.values(ContributorRole).filter(
-                      (role) => role !== ContributorRole.Creator && role !== ContributorRole.Supervisor
-                    )}
-                  />
-                </>
-              ) : publicationInstance.type === BookType.ANTHOLOGY ? (
-                <>
-                  <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Editor]} />
-                  <Contributors
-                    push={push}
-                    replace={replace}
-                    contributorRoles={Object.values(ContributorRole).filter((role) => role !== ContributorRole.Editor)}
-                  />
-                </>
-              ) : (
-                <>
-                  <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
-                  <Contributors
-                    push={push}
-                    replace={replace}
-                    contributorRoles={Object.values(ContributorRole).filter((role) => role !== ContributorRole.Creator)}
-                  />
-                </>
-              )}
-            </>
-          )}
+          {({ push, replace }: FieldArrayRenderProps) =>
+            publicationContext.type === PublicationType.DEGREE ? (
+              <>
+                <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
+                <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Supervisor]} />
+                <Contributors
+                  push={push}
+                  replace={replace}
+                  contributorRoles={Object.values(ContributorRole).filter(
+                    (role) => role !== ContributorRole.Creator && role !== ContributorRole.Supervisor
+                  )}
+                />
+              </>
+            ) : publicationInstance.type === BookType.ANTHOLOGY ? (
+              <>
+                <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Editor]} />
+                <Contributors
+                  push={push}
+                  replace={replace}
+                  contributorRoles={Object.values(ContributorRole).filter((role) => role !== ContributorRole.Editor)}
+                />
+              </>
+            ) : (
+              <>
+                <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
+                <Contributors
+                  push={push}
+                  replace={replace}
+                  contributorRoles={Object.values(ContributorRole).filter((role) => role !== ContributorRole.Creator)}
+                />
+              </>
+            )
+          }
         </FieldArray>
       </BackgroundDiv>
       {!!contributorsTouched && typeof contributorsError === 'string' && (
