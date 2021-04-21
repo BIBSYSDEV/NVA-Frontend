@@ -19,7 +19,7 @@ const StyledTextField = styled(TextField)`
 `;
 
 interface AddContributorModalProps {
-  onAuthorSelected: (author: Authority, role: ContributorRole) => void;
+  onContributorSelected: (authority: Authority, role: ContributorRole) => void;
   open: boolean;
   toggleModal: () => void;
   contributorRoles: ContributorRole[];
@@ -27,27 +27,27 @@ interface AddContributorModalProps {
 }
 
 const AddContributorModal = ({
-  onAuthorSelected,
+  onContributorSelected,
   toggleModal,
   open,
   contributorRoles,
   initialSearchTerm,
 }: AddContributorModalProps) => {
   const { t } = useTranslation('registration');
-  const [createNewAuthor, setCreateNewAuthor] = useState(false);
+  const [createNewContributor, setCreateNewContributor] = useState(false);
   const user = useSelector((store: RootStore) => store.user);
   const [selectedContributorRole, setSelectedContributorRole] = useState(
     contributorRoles.length === 1 ? contributorRoles[0] : ''
   );
 
-  const addAuthor = (author: Authority) => {
-    onAuthorSelected(author, selectedContributorRole as ContributorRole);
+  const addContributor = (authority: Authority) => {
+    onContributorSelected(authority, selectedContributorRole as ContributorRole);
     handleCloseModal();
   };
 
-  const addSelfAsAuthor = () => {
+  const addSelfAsContributor = () => {
     if (user?.authority) {
-      onAuthorSelected(user.authority, selectedContributorRole as ContributorRole);
+      onContributorSelected(user.authority, selectedContributorRole as ContributorRole);
     }
     handleCloseModal();
   };
@@ -57,14 +57,14 @@ const AddContributorModal = ({
     if (contributorRoles.length > 1) {
       setSelectedContributorRole('');
     }
-    setCreateNewAuthor(false);
+    setCreateNewContributor(false);
   };
   const contributorRole = contributorRoles.length === 1 ? contributorRoles[0] : 'Contributor';
 
   return (
     <Modal
       headingText={
-        createNewAuthor
+        createNewContributor
           ? getCreateContributorText(contributorRole)
           : initialSearchTerm
           ? t('contributors.verify_person')
@@ -94,15 +94,15 @@ const AddContributorModal = ({
         </StyledTextField>
       )}
       {selectedContributorRole &&
-        (createNewAuthor ? (
-          <CreateContributorModalContent addAuthor={addAuthor} handleCloseModal={handleCloseModal} />
+        (createNewContributor ? (
+          <CreateContributorModalContent addContributor={addContributor} handleCloseModal={handleCloseModal} />
         ) : (
           <AddContributorModalContent
-            addAuthor={addAuthor}
-            addSelfAsAuthor={addSelfAsAuthor}
+            addContributor={addContributor}
+            addSelfAsContributor={addSelfAsContributor}
             contributorRoles={contributorRoles}
             handleCloseModal={handleCloseModal}
-            openNewAuthorModal={() => setCreateNewAuthor(true)}
+            openNewContributorModal={() => setCreateNewContributor(true)}
             initialSearchTerm={initialSearchTerm}
           />
         ))}

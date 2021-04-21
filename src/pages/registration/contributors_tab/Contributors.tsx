@@ -95,7 +95,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     setOpenContributorModal(true);
   };
 
-  const onAuthorSelected = (authority: Authority, role: ContributorRole) => {
+  const onContributorSelected = (authority: Authority, role: ContributorRole) => {
     if (relevantContributors.some((contributor) => contributor.identity.id === authority.id)) {
       dispatch(setNotification(t('contributors.contributor_already_added'), NotificationVariant.Info));
       return;
@@ -167,7 +167,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           initialSearchTerm={unverifiedContributor?.name}
           open={openContributorModal}
           toggleModal={() => setOpenContributorModal(!openContributorModal)}
-          onAuthorSelected={onAuthorSelected}
+          onContributorSelected={onContributorSelected}
         />
       </MuiThemeProvider>
     </div>

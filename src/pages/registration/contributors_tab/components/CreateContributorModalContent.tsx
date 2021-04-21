@@ -20,11 +20,14 @@ const StyledBackgroundDiv = styled(BackgroundDiv)`
 `;
 
 interface CreateContributorModalContentProps {
-  addAuthor: (author: Authority) => void;
+  addContributor: (authority: Authority) => void;
   handleCloseModal: () => void;
 }
 
-export const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: CreateContributorModalContentProps) => {
+export const CreateContributorModalContent = ({
+  addContributor,
+  handleCloseModal,
+}: CreateContributorModalContentProps) => {
   const [readMore, setReadMore] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation('common');
@@ -38,7 +41,7 @@ export const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: C
     if (createdAuthority?.error) {
       dispatch(setNotification(createdAuthority.error, NotificationVariant.Error));
     } else {
-      addAuthor(createdAuthority);
+      addContributor(createdAuthority);
     }
     handleCloseModal();
   };

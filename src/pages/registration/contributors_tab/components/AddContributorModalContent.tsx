@@ -57,24 +57,24 @@ const StyledAddSelfButton = styled(Button)`
 `;
 
 interface AddContributorModalContentProps {
-  addAuthor: (selectedAuthor: Authority) => void;
-  addSelfAsAuthor: () => void;
+  addContributor: (selectedAuthority: Authority) => void;
+  addSelfAsContributor: () => void;
   handleCloseModal: () => void;
-  openNewAuthorModal: () => void;
+  openNewContributorModal: () => void;
   contributorRoles: ContributorRole[];
   initialSearchTerm?: string;
 }
 
 export const AddContributorModalContent = ({
-  addAuthor,
-  addSelfAsAuthor,
+  addContributor,
+  addSelfAsContributor,
   handleCloseModal,
-  openNewAuthorModal,
+  openNewContributorModal,
   contributorRoles,
   initialSearchTerm = '',
 }: AddContributorModalContentProps) => {
   const { t } = useTranslation('registration');
-  const [selectedAuthor, setSelectedAuthor] = useState<Authority | null>(null);
+  const [selectedAuthority, setSelectedAuthority] = useState<Authority | null>(null);
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const debouncedSearchTerm = useDebounce(searchTerm);
   const [authorities, isLoadingAuthorities] = useFetchAuthorities(debouncedSearchTerm);
@@ -85,7 +85,7 @@ export const AddContributorModalContent = ({
     entityDescription: { contributors },
   } = values;
 
-  const isSelfAddedAsAuthor = contributors.some((contributor) => contributor.identity.id === user?.authority?.id);
+  const isSelfAdded = contributors.some((contributor) => contributor.identity.id === user?.authority?.id);
   const contributorRole = contributorRoles.length === 1 ? contributorRoles[0] : 'Contributor';
 
   return (
@@ -115,8 +115,8 @@ export const AddContributorModalContent = ({
       ) : authorities && authorities.length > 0 && debouncedSearchTerm ? (
         <AuthorityList
           authorities={authorities}
-          selectedArpId={selectedAuthor?.id}
-          onSelectAuthority={setSelectedAuthor}
+          selectedArpId={selectedAuthority?.id}
+          onSelectAuthority={setSelectedAuthority}
           searchTerm={debouncedSearchTerm}
         />
       ) : (
@@ -127,18 +127,18 @@ export const AddContributorModalContent = ({
         <StyledVerifyButton
           color="secondary"
           data-testid="connect-author-button"
-          disabled={!selectedAuthor}
-          onClick={() => selectedAuthor && addAuthor(selectedAuthor)}
+          disabled={!selectedAuthority}
+          onClick={() => selectedAuthority && addContributor(selectedAuthority)}
           size="large"
           variant="contained">
           {initialSearchTerm ? t('contributors.verify_person') : t('common:add')}
         </StyledVerifyButton>
         <StyledCloseButton onClick={handleCloseModal}>{t('common:close')}</StyledCloseButton>
-        <StyledCreateButton color="primary" data-testid="button-create-new-author" onClick={openNewAuthorModal}>
+        <StyledCreateButton color="primary" data-testid="button-create-new-author" onClick={openNewContributorModal}>
           {getCreateContributorText(contributorRole)}
         </StyledCreateButton>
-        {!isSelfAddedAsAuthor && (
-          <StyledAddSelfButton color="primary" data-testid="button-add-self-author" onClick={addSelfAsAuthor}>
+        {!isSelfAdded && (
+          <StyledAddSelfButton color="primary" data-testid="button-add-self-author" onClick={addSelfAsContributor}>
             {getAddSelfAsContributorText(contributorRole)}
           </StyledAddSelfButton>
         )}
