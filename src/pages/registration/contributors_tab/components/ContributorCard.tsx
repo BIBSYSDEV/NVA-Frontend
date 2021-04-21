@@ -211,7 +211,7 @@ export const ContributorCard = ({
         <StyledCorrespondingWrapper>
           {showContributorRole ? (
             <Typography variant="subtitle2" component="p">
-              {contributor.role}
+              {t(`contributors.types.${contributor.role}`)}
             </Typography>
           ) : (
             <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
