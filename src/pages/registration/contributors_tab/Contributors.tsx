@@ -130,7 +130,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     }
   };
 
-  const contributorRole = contributorRoles.length === 1 ? contributorRoles[0] : 'Contributor';
+  const contributorRole = contributorRoles.length === 1 ? contributorRoles[0] : 'OtherContributor';
 
   const addContributorButton = (
     <StyledButton
@@ -164,6 +164,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         {addContributorButton}
         <AddContributorModal
           contributorRoles={contributorRoles}
+          contributorRole={contributorRole}
           initialSearchTerm={unverifiedContributor?.name}
           open={openContributorModal}
           toggleModal={() => setOpenContributorModal(!openContributorModal)}

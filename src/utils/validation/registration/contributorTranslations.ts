@@ -1,7 +1,7 @@
 import i18n from '../../../translations/i18n';
 import { ContributorRole } from '../../../types/contributor.types';
 
-export const getAddContributorText = (contributorRole: ContributorRole | string) => {
+export const getAddContributorText = (contributorRole: string) => {
   switch (contributorRole) {
     case ContributorRole.Creator:
       return i18n.t('registration:contributors.add_author');
@@ -14,7 +14,7 @@ export const getAddContributorText = (contributorRole: ContributorRole | string)
   }
 };
 
-export const getContributorHeading = (contributorRole: ContributorRole | string) => {
+export const getContributorHeading = (contributorRole: string) => {
   switch (contributorRole) {
     case ContributorRole.Creator:
       return i18n.t('registration:contributors.authors');
@@ -27,7 +27,7 @@ export const getContributorHeading = (contributorRole: ContributorRole | string)
   }
 };
 
-export const getRemoveContributorText = (contributorRole: ContributorRole | string) => {
+export const getRemoveContributorText = (contributorRole: string) => {
   switch (contributorRole) {
     case ContributorRole.Creator:
       return i18n.t('registration:contributors.remove_author');
@@ -40,7 +40,7 @@ export const getRemoveContributorText = (contributorRole: ContributorRole | stri
   }
 };
 
-export const getAddSelfAsContributorText = (contributorRole: ContributorRole | string) => {
+export const getAddSelfAsContributorText = (contributorRole: string) => {
   switch (contributorRole) {
     case ContributorRole.Creator:
       return i18n.t('registration:contributors.add_self_as_author');
@@ -53,7 +53,7 @@ export const getAddSelfAsContributorText = (contributorRole: ContributorRole | s
   }
 };
 
-export const getCreateContributorText = (contributorRole: ContributorRole | string) => {
+export const getCreateContributorText = (contributorRole: string) => {
   switch (contributorRole) {
     case ContributorRole.Creator:
       return i18n.t('registration:contributors.create_new_author');

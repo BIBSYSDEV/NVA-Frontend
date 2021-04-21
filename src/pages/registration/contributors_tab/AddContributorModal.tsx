@@ -23,6 +23,7 @@ interface AddContributorModalProps {
   open: boolean;
   toggleModal: () => void;
   contributorRoles: ContributorRole[];
+  contributorRole: string;
   initialSearchTerm?: string;
 }
 
@@ -31,6 +32,7 @@ const AddContributorModal = ({
   toggleModal,
   open,
   contributorRoles,
+  contributorRole,
   initialSearchTerm,
 }: AddContributorModalProps) => {
   const { t } = useTranslation('registration');
@@ -59,7 +61,6 @@ const AddContributorModal = ({
     }
     setCreateNewContributor(false);
   };
-  const contributorRole = contributorRoles.length === 1 ? contributorRoles[0] : 'Contributor';
 
   return (
     <Modal
@@ -100,7 +101,7 @@ const AddContributorModal = ({
           <AddContributorModalContent
             addContributor={addContributor}
             addSelfAsContributor={addSelfAsContributor}
-            contributorRoles={contributorRoles}
+            contributorRole={contributorRole}
             handleCloseModal={handleCloseModal}
             openNewContributorModal={() => setCreateNewContributor(true)}
             initialSearchTerm={initialSearchTerm}

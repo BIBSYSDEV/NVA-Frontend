@@ -10,7 +10,6 @@ import { PageSpinner } from '../../../../components/PageSpinner';
 import { RootStore } from '../../../../redux/reducers/rootReducer';
 import lightTheme from '../../../../themes/lightTheme';
 import { Authority } from '../../../../types/authority.types';
-import { ContributorRole } from '../../../../types/contributor.types';
 import { Registration } from '../../../../types/registration.types';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
@@ -61,7 +60,7 @@ interface AddContributorModalContentProps {
   addSelfAsContributor: () => void;
   handleCloseModal: () => void;
   openNewContributorModal: () => void;
-  contributorRoles: ContributorRole[];
+  contributorRole: string;
   initialSearchTerm?: string;
 }
 
@@ -70,7 +69,7 @@ export const AddContributorModalContent = ({
   addSelfAsContributor,
   handleCloseModal,
   openNewContributorModal,
-  contributorRoles,
+  contributorRole,
   initialSearchTerm = '',
 }: AddContributorModalContentProps) => {
   const { t } = useTranslation('registration');
@@ -86,7 +85,6 @@ export const AddContributorModalContent = ({
   } = values;
 
   const isSelfAdded = contributors.some((contributor) => contributor.identity.id === user?.authority?.id);
-  const contributorRole = contributorRoles.length === 1 ? contributorRoles[0] : 'Contributor';
 
   return (
     <StyledBackgroundDiv backgroundColor={lightTheme.palette.background.paper}>
