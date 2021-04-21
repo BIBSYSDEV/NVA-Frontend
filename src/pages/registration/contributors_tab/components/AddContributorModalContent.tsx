@@ -137,7 +137,7 @@ export const AddContributorModalContent = ({
         <StyledCreateButton color="primary" data-testid="button-create-new-author" onClick={openNewContributorModal}>
           {getCreateContributorText(contributorRole)}
         </StyledCreateButton>
-        {!isSelfAdded && (
+        {!isSelfAdded && !initialSearchTerm && (
           <StyledAddSelfButton color="primary" data-testid="button-add-self-author" onClick={addSelfAsContributor}>
             {getAddSelfAsContributorText(contributorRole)}
           </StyledAddSelfButton>
