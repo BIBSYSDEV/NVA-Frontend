@@ -15,7 +15,10 @@ import { Registration } from '../../../../types/registration.types';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
 import AuthorityList from '../../../user/authority/AuthorityList';
-import { getAddSelfAsContributorText } from '../../../../utils/validation/registration/contributorTranslations';
+import {
+  getAddSelfAsContributorText,
+  getCreateContributorText,
+} from '../../../../utils/validation/registration/contributorTranslations';
 
 const StyledTextField = styled(TextField)`
   margin-bottom: 1rem;
@@ -132,7 +135,7 @@ export const AddContributorModalContent = ({
         </StyledVerifyButton>
         <StyledCloseButton onClick={handleCloseModal}>{t('common:close')}</StyledCloseButton>
         <StyledCreateButton color="primary" data-testid="button-create-new-author" onClick={openNewAuthorModal}>
-          {t('contributors.create_new_author')}
+          {getCreateContributorText(contributorRole)}
         </StyledCreateButton>
         {!isSelfAddedAsAuthor && (
           <StyledAddSelfButton color="primary" data-testid="button-add-self-author" onClick={addSelfAsAuthor}>

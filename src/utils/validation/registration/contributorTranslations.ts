@@ -52,3 +52,16 @@ export const getAddSelfAsContributorText = (contributorRole: ContributorRole | s
       return i18n.t('registration:contributors.add_self_as_contributor');
   }
 };
+
+export const getCreateContributorText = (contributorRole: ContributorRole | string) => {
+  switch (contributorRole) {
+    case ContributorRole.Creator:
+      return i18n.t('registration:contributors.create_new_author');
+    case ContributorRole.Editor:
+      return i18n.t('registration:contributors.create_new_editor');
+    case ContributorRole.Supervisor:
+      return i18n.t('registration:contributors.create_new_supervisor');
+    default:
+      return i18n.t('registration:contributors.create_new_contributor');
+  }
+};

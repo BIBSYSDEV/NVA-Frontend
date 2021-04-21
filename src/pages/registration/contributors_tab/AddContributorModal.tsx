@@ -7,7 +7,10 @@ import Modal from '../../../components/Modal';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
 import { ContributorRole } from '../../../types/contributor.types';
-import { getAddContributorText } from '../../../utils/validation/registration/contributorTranslations';
+import {
+  getAddContributorText,
+  getCreateContributorText,
+} from '../../../utils/validation/registration/contributorTranslations';
 import { AddContributorModalContent } from './components/AddContributorModalContent';
 import { CreateContributorModalContent } from './components/CreateContributorModalContent';
 
@@ -62,7 +65,7 @@ const AddContributorModal = ({
     <Modal
       headingText={
         createNewAuthor
-          ? t('contributors.create_new_author')
+          ? getCreateContributorText(contributorRole)
           : initialSearchTerm
           ? t('contributors.verify_person')
           : getAddContributorText(contributorRole)

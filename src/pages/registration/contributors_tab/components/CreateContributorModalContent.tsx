@@ -98,11 +98,11 @@ export const CreateContributorModalContent = ({ addAuthor, handleCloseModal }: C
               <ButtonWithProgress
                 data-testid="button-create-authority"
                 type="submit"
-                color="primary"
+                color="secondary"
                 variant="contained"
                 isLoading={isLoading}
                 disabled={isSubmitting}>
-                {t('profile:authority.create_authority')}
+                {t('common:create')}
               </ButtonWithProgress>
             </DialogActions>
           </Form>
