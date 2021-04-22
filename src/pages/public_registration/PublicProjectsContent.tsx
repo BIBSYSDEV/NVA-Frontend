@@ -1,13 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Chip, MuiThemeProvider, Typography } from '@material-ui/core';
+import { MuiThemeProvider, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import lightTheme from '../../themes/lightTheme';
-import { ResearchProject } from '../../types/project.types';
+import { CristinProject, ResearchProject } from '../../types/project.types';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { Skeleton } from '@material-ui/lab';
 
-const StyledProjectChip = styled(Chip)`
-  margin: 0.25rem;
-  background: #ff8888;
+const StyledProjectRow = styled.div`
+  background: ${({ theme }) => theme.palette.background.default};
+  padding: 1rem;
 `;
 
 interface PublicProjectsContentProps {
@@ -25,22 +27,23 @@ export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) 
 
       <MuiThemeProvider theme={lightTheme}>
         {projects.map((project) => (
-          <StyledProjectChip
-            key={project.id}
-            label={
-              <Typography>
-                {project.name}
-                {project.grants && project.grants.length > 0 && (
-                  <span>
-                    {' '}
-                    ({t('description.financed_by')}: {project.grants.map((grant) => grant.source).join(', ')})
-                  </span>
-                )}
-              </Typography>
-            }
-          />
+          <ProjectRow key={project.id} project={project} />
         ))}
       </MuiThemeProvider>
     </>
+  );
+};
+
+interface ProjectRowProps {
+  project: ResearchProject;
+}
+
+const ProjectRow = ({ project }: ProjectRowProps) => {
+  const [fetchedProject, isLoadingProject] = useFetch<CristinProject>(project.id, true); // TODO: remove auth
+
+  return (
+    <StyledProjectRow>
+      {isLoadingProject ? <Skeleton /> : fetchedProject ? <Typography>{fetchedProject.title}</Typography> : null}
+    </StyledProjectRow>
   );
 };
