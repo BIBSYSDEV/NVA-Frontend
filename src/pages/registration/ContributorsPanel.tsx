@@ -36,13 +36,17 @@ const ContributorsPanel = () => {
 
   return (
     <>
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
-          {({ push, replace }: FieldArrayRenderProps) =>
-            publicationContext.type === PublicationType.DEGREE ? (
-              <>
+      <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
+        {({ push, replace }: FieldArrayRenderProps) =>
+          publicationContext.type === PublicationType.DEGREE ? (
+            <>
+              <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
                 <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
+              </BackgroundDiv>
+              <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
                 <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Supervisor]} />
+              </BackgroundDiv>
+              <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
                 <Contributors
                   push={push}
                   replace={replace}
@@ -50,29 +54,37 @@ const ContributorsPanel = () => {
                     (role) => role !== ContributorRole.Creator && role !== ContributorRole.Supervisor
                   )}
                 />
-              </>
-            ) : publicationInstance.type === BookType.ANTHOLOGY ? (
-              <>
+              </BackgroundDiv>
+            </>
+          ) : publicationInstance.type === BookType.ANTHOLOGY ? (
+            <>
+              <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
                 <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Editor]} />
+              </BackgroundDiv>
+              <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
                 <Contributors
                   push={push}
                   replace={replace}
                   contributorRoles={Object.values(ContributorRole).filter((role) => role !== ContributorRole.Editor)}
                 />
-              </>
-            ) : (
-              <>
+              </BackgroundDiv>
+            </>
+          ) : (
+            <>
+              <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
                 <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
+              </BackgroundDiv>
+              <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
                 <Contributors
                   push={push}
                   replace={replace}
                   contributorRoles={Object.values(ContributorRole).filter((role) => role !== ContributorRole.Creator)}
                 />
-              </>
-            )
-          }
-        </FieldArray>
-      </BackgroundDiv>
+              </BackgroundDiv>
+            </>
+          )
+        }
+      </FieldArray>
       {!!contributorsTouched && typeof contributorsError === 'string' && (
         <FormHelperText error>
           <ErrorMessage name={ContributorFieldNames.CONTRIBUTORS} />
