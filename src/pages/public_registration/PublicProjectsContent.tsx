@@ -2,15 +2,19 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Chip, MuiThemeProvider, Typography } from '@material-ui/core';
 import styled from 'styled-components';
-import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import lightTheme from '../../themes/lightTheme';
+import { ResearchProject } from '../../types/project.types';
 
 const StyledProjectChip = styled(Chip)`
   margin: 0.25rem;
   background: #ff8888;
 `;
 
-const PublicProjectsContent = ({ registration }: PublicRegistrationContentProps) => {
+interface PublicProjectsContentProps {
+  projects: ResearchProject[];
+}
+
+export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) => {
   const { t } = useTranslation('registration');
 
   return (
@@ -20,7 +24,7 @@ const PublicProjectsContent = ({ registration }: PublicRegistrationContentProps)
       </Typography>
 
       <MuiThemeProvider theme={lightTheme}>
-        {registration.projects.map((project) => (
+        {projects.map((project) => (
           <StyledProjectChip
             key={project.id}
             label={
@@ -40,5 +44,3 @@ const PublicProjectsContent = ({ registration }: PublicRegistrationContentProps)
     </>
   );
 };
-
-export default PublicProjectsContent;
