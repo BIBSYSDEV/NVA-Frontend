@@ -34,6 +34,9 @@ const ContributorsPanel = () => {
     setFieldValue(ContributorFieldNames.CONTRIBUTORS, contributorsWithRole);
   }, [setFieldValue]);
 
+  // Creator should not be selectable for other contributors
+  const selectableContributorRoles = Object.values(ContributorRole).filter((role) => role !== ContributorRole.Creator);
+
   return (
     <>
       <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
@@ -50,9 +53,7 @@ const ContributorsPanel = () => {
                 <Contributors
                   push={push}
                   replace={replace}
-                  contributorRoles={Object.values(ContributorRole).filter(
-                    (role) => role !== ContributorRole.Creator && role !== ContributorRole.Supervisor
-                  )}
+                  contributorRoles={selectableContributorRoles.filter((role) => role !== ContributorRole.Supervisor)}
                 />
               </BackgroundDiv>
             </>
@@ -65,7 +66,7 @@ const ContributorsPanel = () => {
                 <Contributors
                   push={push}
                   replace={replace}
-                  contributorRoles={Object.values(ContributorRole).filter((role) => role !== ContributorRole.Editor)}
+                  contributorRoles={selectableContributorRoles.filter((role) => role !== ContributorRole.Editor)}
                 />
               </BackgroundDiv>
             </>
@@ -75,11 +76,7 @@ const ContributorsPanel = () => {
                 <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
               </BackgroundDiv>
               <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-                <Contributors
-                  push={push}
-                  replace={replace}
-                  contributorRoles={Object.values(ContributorRole).filter((role) => role !== ContributorRole.Creator)}
-                />
+                <Contributors push={push} replace={replace} contributorRoles={selectableContributorRoles} />
               </BackgroundDiv>
             </>
           )
