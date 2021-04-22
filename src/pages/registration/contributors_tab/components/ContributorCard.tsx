@@ -67,6 +67,7 @@ const StyledVerifiedSection = styled.div`
 
 const StyledCorrespondingWrapper = styled.div`
   grid-area: corresponding;
+  margin-bottom: 0.5rem;
 `;
 
 const StyledDangerButton = styled(DangerButton)`
