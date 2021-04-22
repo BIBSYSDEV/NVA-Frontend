@@ -20,13 +20,13 @@ export const useFetch = <T>(url: string, withAuthentication = false): [T | undef
         ? await authenticatedApiRequest<T>({ url, cancelToken })
         : await apiRequest<T>({ url, cancelToken });
       if (fetchedData) {
-        setIsLoading(false);
         if (fetchedData.error) {
           dispatch(setNotification('Kunne ikke hente ' + url, NotificationVariant.Error)); // TODO: i18n
         } else if (fetchedData.data) {
           setData(fetchedData.data);
         }
       }
+      setIsLoading(false);
     };
     if (url) {
       fetchData();

@@ -6,10 +6,21 @@ import lightTheme from '../../themes/lightTheme';
 import { CristinProject, ResearchProject } from '../../types/project.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { Skeleton } from '@material-ui/lab';
+import { getAffiliationLabel } from '../../utils/institutions-helpers';
 
 const StyledProjectRow = styled.div`
-  background: ${({ theme }) => theme.palette.background.default};
   padding: 1rem;
+  > {
+    margin: 1rem;
+  }
+`;
+
+const StyledProjectContent = styled.div`
+  background: ${({ theme }) => theme.palette.background.default};
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  column-gap: 1rem;
+  align-items: center;
 `;
 
 interface PublicProjectsContentProps {
@@ -40,10 +51,28 @@ interface ProjectRowProps {
 
 const ProjectRow = ({ project }: ProjectRowProps) => {
   const [fetchedProject, isLoadingProject] = useFetch<CristinProject>(project.id, true); // TODO: remove auth
+  const institutionName = fetchedProject && getAffiliationLabel(fetchedProject.coordinatingInstitution.name); // TODO: rename function
+  const projectManager = fetchedProject?.contributors.find((contributor) => contributor.type === 'ProjectManager');
+  const projectManagerName = [projectManager?.identity.firstName, projectManager?.identity.lastName].join(' ');
+  const dateInterval =
+    fetchedProject &&
+    [
+      new Date(fetchedProject.startDate).toLocaleDateString(),
+      new Date(fetchedProject.endDate).toLocaleDateString() ?? 'Nå', //TODO
+    ].join(' - ');
 
   return (
     <StyledProjectRow>
-      {isLoadingProject ? <Skeleton /> : fetchedProject ? <Typography>{fetchedProject.title}</Typography> : null}
+      {isLoadingProject ? (
+        <Skeleton />
+      ) : fetchedProject ? (
+        <StyledProjectContent>
+          <Typography variant="subtitle2">{fetchedProject.title}</Typography>
+          <Typography variant="body1">{institutionName}</Typography>
+          <Typography variant="body1">{projectManagerName}</Typography>
+          <Typography variant="body1">{dateInterval}</Typography>
+        </StyledProjectContent>
+      ) : null}
     </StyledProjectRow>
   );
 };
