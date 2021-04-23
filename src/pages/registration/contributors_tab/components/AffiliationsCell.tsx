@@ -20,7 +20,8 @@ import { BackendTypeNames } from '../../../../types/publication_types/commonRegi
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import useIsMobile from '../../../../utils/hooks/useIsMobile';
-import { getAffiliationLabel, getMostSpecificUnit } from '../../../../utils/institutions-helpers';
+import { getMostSpecificUnit } from '../../../../utils/institutions-helpers';
+import { getLanguageString } from '../../../../utils/translation-helpers';
 
 const StyledAffiliationsCell = styled.div`
   grid-area: affiliation;
@@ -92,7 +93,7 @@ const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Affiliati
     if (affiliationToVerify) {
       // Verify affiliation
       const affiliationIndex = updatedAffiliations.findIndex(
-        (affiliation) => affiliation.labels && getAffiliationLabel(affiliation.labels) === affiliationToVerify
+        (affiliation) => affiliation.labels && getLanguageString(affiliation.labels) === affiliationToVerify
       );
       updatedAffiliations[affiliationIndex] = addedAffiliation;
     } else {
@@ -117,15 +118,13 @@ const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Affiliati
           ) : (
             affiliation.labels && (
               <>
-                <Typography>"{getAffiliationLabel(affiliation.labels)}"</Typography>
+                <Typography>"{getLanguageString(affiliation.labels)}"</Typography>
                 <Button
                   color="primary"
                   startIcon={<WarningIcon />}
                   variant="outlined"
                   data-testid="button-set-unverified-affiliation"
-                  onClick={() =>
-                    affiliation.labels && verifyAffiliationOnClick(getAffiliationLabel(affiliation.labels))
-                  }>
+                  onClick={() => affiliation.labels && verifyAffiliationOnClick(getLanguageString(affiliation.labels))}>
                   {t('contributors.verify_affiliation')}
                 </Button>
               </>

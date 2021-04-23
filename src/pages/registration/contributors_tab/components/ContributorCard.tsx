@@ -15,8 +15,8 @@ import lightTheme from '../../../../themes/lightTheme';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
-import { getRemoveContributorText } from '../../../../utils/validation/registration/contributorTranslations';
 import AffiliationsCell from './AffiliationsCell';
+import { getRemoveContributorText } from '../../../../utils/translation-helpers';
 
 const StyledCheckIcon = styled(CheckIcon)`
   color: ${({ theme }) => theme.palette.success.main};
