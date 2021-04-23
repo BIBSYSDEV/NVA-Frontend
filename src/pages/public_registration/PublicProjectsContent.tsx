@@ -52,12 +52,13 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
   const institutionName = fetchedProject && getAffiliationLabel(fetchedProject.coordinatingInstitution.name); // TODO: rename function
   const projectManager = fetchedProject?.contributors.find((contributor) => contributor.type === 'ProjectManager');
   const projectManagerName = [projectManager?.identity.firstName, projectManager?.identity.lastName].join(' ');
-  const dateInterval =
-    fetchedProject &&
-    [
-      new Date(fetchedProject.startDate).toLocaleDateString(),
-      new Date(fetchedProject.endDate).toLocaleDateString() ?? 'Nå', //TODO
-    ].join(' - ');
+
+  const startDate = fetchedProject?.startDate && new Date(fetchedProject.startDate);
+  const endDate = fetchedProject?.endDate && new Date(fetchedProject.endDate);
+  const dateInterval = [
+    startDate && !isNaN(startDate.valueOf()) ? startDate.toLocaleDateString() : '?',
+    endDate && !isNaN(endDate.valueOf()) ? endDate.toLocaleDateString() : '?',
+  ].join(' - ');
 
   return (
     <StyledProjectRow>
