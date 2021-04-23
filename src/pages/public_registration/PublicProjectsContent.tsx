@@ -60,7 +60,11 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
 
   return (
     <StyledProjectRow>
-      {isLoadingProject ? <Skeleton /> : <Typography variant="subtitle2">{fetchedProject?.title}</Typography>}
+      {isLoadingProject ? (
+        <Skeleton />
+      ) : (
+        <Typography variant="subtitle2">{fetchedProject?.title ?? project.name}</Typography>
+      )}
       <Divider component="span" orientation="vertical" />
       {isLoadingProject ? <Skeleton /> : <Typography variant="body1">{institutionName}</Typography>}
       <Divider component="span" orientation="vertical" />
@@ -68,14 +72,14 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
       <Divider component="span" orientation="vertical" />
       {isLoadingProject ? (
         <Skeleton />
-      ) : (
+      ) : fetchedProject ? (
         <div>
           <Typography variant="body1">{dateInterval}</Typography>
           <Typography variant="body1">
             {t('public_page.participants', { count: fetchedProject?.contributors.length })}
           </Typography>
         </div>
-      )}
+      ) : null}
     </StyledProjectRow>
   );
 };
