@@ -16,7 +16,7 @@ const StyledProjectRow = styled.div`
 
 const StyledProjectContent = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
   column-gap: 1rem;
   align-items: center;
 `;
