@@ -51,15 +51,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   const dispatch = useDispatch();
   const { t } = useTranslation('registration');
   const user = useSelector((store: RootStore) => store.user);
-  const {
-    identifier,
-    owner,
-    status,
-    entityDescription: { reference },
-    doi,
-    doiRequest,
-    publisher,
-  } = registration;
+  const { identifier, owner, status, doi, doiRequest, publisher } = registration;
 
   const [messageToCurator, setMessageToCurator] = useState('');
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
@@ -201,6 +193,18 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             {t('edit_registration')}
           </Button>
 
+          {!hasNvaDoi && (
+            <ButtonWithProgress
+              variant="outlined"
+              color="secondary"
+              endIcon={<LocalOfferIcon />}
+              isLoading={isLoading === LoadingName.RequestDoi}
+              data-testid="button-toggle-request-doi"
+              onClick={() => (isPublishedRegistration ? toggleRequestDoiModal() : sendDoiRequest())}>
+              {isPublishedRegistration ? t('public_page.request_doi') : t('public_page.reserve_doi')}
+            </ButtonWithProgress>
+          )}
+
           {isCurator && isPublishedRegistration && doiRequest?.status === DoiRequestStatus.Requested && (
             <>
               <ButtonWithProgress
@@ -224,18 +228,6 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
                 {t('common:create_doi')}
               </ButtonWithProgress>
             </>
-          )}
-
-          {!hasNvaDoi && (
-            <ButtonWithProgress
-              variant={reference.doi || !isPublishedRegistration ? 'outlined' : 'contained'}
-              color="secondary"
-              endIcon={<LocalOfferIcon />}
-              isLoading={isLoading === LoadingName.RequestDoi}
-              data-testid="button-toggle-request-doi"
-              onClick={() => (isPublishedRegistration ? toggleRequestDoiModal() : sendDoiRequest())}>
-              {isPublishedRegistration ? t('public_page.request_doi') : t('public_page.reserve_doi')}
-            </ButtonWithProgress>
           )}
         </StyledButtonsContainer>
 
