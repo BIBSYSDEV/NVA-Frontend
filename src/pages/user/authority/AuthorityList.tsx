@@ -46,7 +46,7 @@ const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, selectedArp
   return (
     <>
       {searchTerm && (
-        <Typography variant="subtitle2" component="p">
+        <Typography variant="subtitle1" component="p">
           {t('search_summary', { count: authorities?.length ?? 0, searchTerm })}:
         </Typography>
       )}
