@@ -23,9 +23,9 @@ import {
   getAddContributorText,
   getContributorHeading,
 } from '../../../utils/validation/registration/contributorTranslations';
-import AddContributorModal from './AddContributorModal';
 import lightTheme from '../../../themes/lightTheme';
 import { ContributorList } from './components/ContributorList';
+import { AddContributorModal } from './AddContributorModal';
 
 const StyledButton = styled(Button)`
   margin: 1rem 0rem;
@@ -33,10 +33,10 @@ const StyledButton = styled(Button)`
 `;
 
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
-  contributorRole?: ContributorRole;
+  contributorRoles: ContributorRole[];
 }
 
-export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, replace }: ContributorsProps) => {
+export const Contributors = ({ contributorRoles, push, replace }: ContributorsProps) => {
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
@@ -47,8 +47,12 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
   const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
   const isMobile = useIsMobile();
 
-  const relevantContributors = contributors.filter((contributor) => contributor.role === contributorRole);
-  const otherContributors = contributors.filter((contributor) => contributor.role !== contributorRole);
+  const relevantContributors = contributors.filter((contributor) =>
+    contributorRoles.some((role) => role === contributor.role)
+  );
+  const otherContributors = contributors.filter(
+    (contributor) => !contributorRoles.some((role) => role === contributor.role)
+  );
 
   const handleOnRemove = (indexToRemove: number) => {
     const nextRelevantContributors = relevantContributors
@@ -76,7 +80,7 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
         : relevantContributors.findIndex((c) => c.sequence === newSequence);
 
     const orderedContributors =
-      newIndex > 0 ? (move(relevantContributors, oldIndex, newIndex) as Contributor[]) : relevantContributors;
+      newIndex >= 0 ? (move(relevantContributors, oldIndex, newIndex) as Contributor[]) : relevantContributors;
 
     // Ensure incrementing sequence values
     const newContributors = orderedContributors.map((contributor, index) => ({
@@ -91,7 +95,7 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
     setOpenContributorModal(true);
   };
 
-  const onAuthorSelected = (authority: Authority) => {
+  const onContributorSelected = (authority: Authority, role: ContributorRole) => {
     if (relevantContributors.some((contributor) => contributor.identity.id === authority.id)) {
       dispatch(setNotification(t('contributors.contributor_already_added'), NotificationVariant.Info));
       return;
@@ -112,62 +116,59 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
           type: BackendTypeNames.ORGANIZATION,
           id: unitUri,
         })),
-        role: contributorRole,
+        role,
         sequence: relevantContributors.length + 1,
       };
       push(newContributor);
     } else {
       const verifiedContributor: Contributor = {
         ...relevantContributors[unverifiedContributor.index],
-        role: contributorRole,
+        role,
         identity,
       };
       replace(unverifiedContributor.index, verifiedContributor);
     }
   };
 
+  const contributorRole = contributorRoles.length === 1 ? contributorRoles[0] : 'OtherContributor';
+
+  const addContributorButton = (
+    <StyledButton
+      onClick={() => {
+        setOpenContributorModal(true);
+        setUnverifiedContributor(null);
+      }}
+      variant="contained"
+      color={contributorRoles.length === 1 ? 'secondary' : 'default'}
+      startIcon={<AddIcon />}
+      data-testid={`add-${contributorRole}`}>
+      {getAddContributorText(contributorRole)}
+    </StyledButton>
+  );
+
   return (
-    <div data-testid={`contributors-${contributorRole}`}>
+    <div data-testid={contributorRole}>
       <Typography variant="h2">{getContributorHeading(contributorRole)}</Typography>
       <MuiThemeProvider theme={lightTheme}>
-        {((isMobile && relevantContributors.length >= 2) || (!isMobile && relevantContributors.length >= 5)) && (
-          <StyledButton
-            onClick={() => {
-              setOpenContributorModal(true);
-              setUnverifiedContributor(null);
-            }}
-            variant="contained"
-            color="secondary"
-            startIcon={<AddIcon />}
-            data-testid={`add-contributor-${contributorRole}`}>
-            {getAddContributorText(contributorRole)}
-          </StyledButton>
-        )}
+        {((isMobile && relevantContributors.length >= 2) || (!isMobile && relevantContributors.length >= 5)) &&
+          addContributorButton}
 
         <ContributorList
           contributors={relevantContributors}
           onDelete={handleOnRemove}
           onMoveContributor={handleMoveContributor}
           openContributorModal={handleOpenContributorModal}
+          showContributorRole={contributorRoles.length > 1}
         />
 
-        <StyledButton
-          onClick={() => {
-            setOpenContributorModal(true);
-            setUnverifiedContributor(null);
-          }}
-          variant="contained"
-          color="secondary"
-          startIcon={<AddIcon />}
-          data-testid={`add-contributor-${contributorRole}`}>
-          {getAddContributorText(contributorRole)}
-        </StyledButton>
+        {addContributorButton}
         <AddContributorModal
+          contributorRoles={contributorRoles}
           contributorRole={contributorRole}
           initialSearchTerm={unverifiedContributor?.name}
           open={openContributorModal}
           toggleModal={() => setOpenContributorModal(!openContributorModal)}
-          onAuthorSelected={onAuthorSelected}
+          onContributorSelected={onContributorSelected}
         />
       </MuiThemeProvider>
     </div>

@@ -10,11 +10,14 @@ import ListSkeleton from '../../../../components/ListSkeleton';
 import { RootStore } from '../../../../redux/reducers/rootReducer';
 import lightTheme from '../../../../themes/lightTheme';
 import { Authority } from '../../../../types/authority.types';
-import { ContributorRole } from '../../../../types/contributor.types';
 import { Registration } from '../../../../types/registration.types';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
 import AuthorityList from '../../../user/authority/AuthorityList';
+import {
+  getAddSelfAsContributorText,
+  getCreateContributorText,
+} from '../../../../utils/validation/registration/contributorTranslations';
 
 const StyledTextField = styled(TextField)`
   margin-bottom: 1rem;
@@ -49,24 +52,24 @@ const StyledAddSelfButton = styled(Button)`
 `;
 
 interface AddContributorModalContentProps {
-  addAuthor: (selectedAuthor: Authority) => void;
-  addSelfAsAuthor: () => void;
+  addContributor: (selectedAuthority: Authority) => void;
+  addSelfAsContributor: () => void;
   handleCloseModal: () => void;
-  openNewAuthorModal: () => void;
-  contributorRole?: ContributorRole;
+  openNewContributorModal: () => void;
+  contributorRole: string;
   initialSearchTerm?: string;
 }
 
 export const AddContributorModalContent = ({
-  addAuthor,
-  addSelfAsAuthor,
+  addContributor,
+  addSelfAsContributor,
   handleCloseModal,
-  openNewAuthorModal,
+  openNewContributorModal,
   contributorRole,
   initialSearchTerm = '',
 }: AddContributorModalContentProps) => {
   const { t } = useTranslation('registration');
-  const [selectedAuthor, setSelectedAuthor] = useState<Authority | null>(null);
+  const [selectedAuthority, setSelectedAuthority] = useState<Authority | null>(null);
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const debouncedSearchTerm = useDebounce(searchTerm);
   const [authorities, isLoadingAuthorities] = useFetchAuthorities(debouncedSearchTerm);
@@ -77,7 +80,7 @@ export const AddContributorModalContent = ({
     entityDescription: { contributors },
   } = values;
 
-  const isSelfAddedAsAuthor = contributors.some((contributor) => contributor.identity.id === user?.authority?.id);
+  const isSelfAdded = contributors.some((contributor) => contributor.identity.id === user?.authority?.id);
 
   return (
     <StyledBackgroundDiv backgroundColor={lightTheme.palette.background.paper}>
@@ -106,8 +109,8 @@ export const AddContributorModalContent = ({
       ) : authorities && authorities.length > 0 && debouncedSearchTerm ? (
         <AuthorityList
           authorities={authorities}
-          selectedArpId={selectedAuthor?.id}
-          onSelectAuthority={setSelectedAuthor}
+          selectedArpId={selectedAuthority?.id}
+          onSelectAuthority={setSelectedAuthority}
           searchTerm={debouncedSearchTerm}
         />
       ) : (
@@ -118,20 +121,18 @@ export const AddContributorModalContent = ({
         <StyledVerifyButton
           color="secondary"
           data-testid="connect-author-button"
-          disabled={!selectedAuthor}
-          onClick={() => selectedAuthor && addAuthor(selectedAuthor)}
+          disabled={!selectedAuthority}
+          onClick={() => selectedAuthority && addContributor(selectedAuthority)}
           size="large"
           variant="contained">
           {initialSearchTerm ? t('contributors.verify_person') : t('common:add')}
         </StyledVerifyButton>
-        <StyledCreateButton color="primary" data-testid="button-create-new-author" onClick={openNewAuthorModal}>
-          {t('contributors.create_new_author')}
+        <StyledCreateButton color="primary" data-testid="button-create-new-author" onClick={openNewContributorModal}>
+          {getCreateContributorText(contributorRole)}
         </StyledCreateButton>
-        {!isSelfAddedAsAuthor && (
-          <StyledAddSelfButton color="primary" data-testid="button-add-self-author" onClick={addSelfAsAuthor}>
-            {contributorRole === ContributorRole.EDITOR
-              ? t('contributors.add_self_as_editor')
-              : t('contributors.add_self_as_author')}
+        {!isSelfAdded && !initialSearchTerm && (
+          <StyledAddSelfButton color="primary" data-testid="button-add-self-author" onClick={addSelfAsContributor}>
+            {getAddSelfAsContributorText(contributorRole)}
           </StyledAddSelfButton>
         )}
       </StyledDialogActions>
