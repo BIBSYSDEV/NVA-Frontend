@@ -9,14 +9,12 @@ import { Skeleton } from '@material-ui/lab';
 import { getAffiliationLabel } from '../../utils/institutions-helpers';
 
 const StyledProjectRow = styled.div`
+  background: ${({ theme }) => theme.palette.background.default};
   padding: 1rem;
-  > {
-    margin: 1rem;
-  }
+  margin-top: 1rem;
 `;
 
 const StyledProjectContent = styled.div`
-  background: ${({ theme }) => theme.palette.background.default};
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   column-gap: 1rem;
@@ -64,7 +62,12 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
   return (
     <StyledProjectRow>
       {isLoadingProject ? (
-        <Skeleton />
+        <StyledProjectContent>
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+        </StyledProjectContent>
       ) : fetchedProject ? (
         <StyledProjectContent>
           <Typography variant="subtitle2">{fetchedProject.title}</Typography>
