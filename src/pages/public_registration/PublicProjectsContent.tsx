@@ -48,6 +48,7 @@ interface ProjectRowProps {
 }
 
 const ProjectRow = ({ project }: ProjectRowProps) => {
+  const { t } = useTranslation('registration');
   const [fetchedProject, isLoadingProject] = useFetch<CristinProject>(project.id, true); // TODO: remove auth
   const institutionName = fetchedProject && getAffiliationLabel(fetchedProject.coordinatingInstitution.name); // TODO: rename function
   const projectManager = fetchedProject?.contributors.find((contributor) => contributor.type === 'ProjectManager');
@@ -74,7 +75,12 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
           <Typography variant="subtitle2">{fetchedProject.title}</Typography>
           <Typography variant="body1">{institutionName}</Typography>
           <Typography variant="body1">{projectManagerName}</Typography>
-          <Typography variant="body1">{dateInterval}</Typography>
+          <div>
+            <Typography variant="body1">{dateInterval}</Typography>
+            <Typography variant="body1">
+              {t('public_page.participants', { count: fetchedProject.contributors.length })}
+            </Typography>
+          </div>
         </StyledProjectContent>
       ) : null}
     </StyledProjectRow>
