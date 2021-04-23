@@ -21,7 +21,12 @@ export const useFetch = <T>(url: string, withAuthentication = false): [T | undef
         : await apiRequest<T>({ url, cancelToken });
       if (fetchedData) {
         if (fetchedData.error) {
-          dispatch(setNotification('Kunne ikke hente ' + url, NotificationVariant.Error)); // TODO: i18n
+          dispatch(
+            setNotification(
+              t('error.fetch', { resource: url, interpolation: { escapeValue: false } }),
+              NotificationVariant.Error
+            )
+          );
         } else if (fetchedData.data) {
           setData(fetchedData.data);
         }
