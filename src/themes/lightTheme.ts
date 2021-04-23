@@ -121,6 +121,11 @@ const lightTheme = createMuiTheme({
     MuiAppBar: {
       root: { background: Color.Header },
     },
+    MuiButton: {
+      outlinedSecondary: {
+        color: Color.PrimaryText,
+      },
+    },
     MuiCard: {
       root: {
         backgroundColor: Color.Box,
