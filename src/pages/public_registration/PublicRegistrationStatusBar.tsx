@@ -161,16 +161,14 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
         />
       )}
       <StyledBackgroundDiv backgroundColor="#FFEED6" data-testid="public-registration-status">
-        <div>
-          {!isPublishedRegistration && registrationIsValid && (
-            <>
-              <Typography variant="h4" component="h1">
-                Klar for publisering
-              </Typography>
-              <Typography paragraph>Se over utkast før du publiserer.</Typography>
-            </>
-          )}
-        </div>
+        {!isPublishedRegistration && registrationIsValid && (
+          <>
+            <Typography variant="h4" component="h1">
+              {t('public_page.ready_to_be_published')}
+            </Typography>
+            <Typography paragraph>{t('public_page.ready_to_be_published_description')}</Typography>
+          </>
+        )}
         <StyledButtonsContainer>
           {status === RegistrationStatus.DRAFT && (
             <ButtonWithProgress
