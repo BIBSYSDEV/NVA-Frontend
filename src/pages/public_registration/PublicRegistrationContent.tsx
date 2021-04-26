@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import deepmerge from 'deepmerge';
 import { emptyRegistration, Registration } from '../../types/registration.types';
-import PublicRegistrationAuthors from './PublicRegistrationAuthors';
 import PublicFilesContent from './PublicFilesContent';
 import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
 import { RegistrationPageHeader } from '../../components/PageHeader';
@@ -12,6 +11,7 @@ import lightTheme from '../../themes/lightTheme';
 import PublicSummaryContent from './PublicSummaryContent';
 import PublicProjectsContent from './PublicProjectsContent';
 import PublicGeneralContent from './PublicGeneralContent';
+import { PublicRegistrationContributors } from './PublicRegistrationContributors';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   padding: 2rem 5rem;
@@ -42,7 +42,12 @@ const PublicRegistrationContent = ({ registration, refetchRegistration }: Public
       <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
       <RegistrationPageHeader>{mainTitle || `[${t('common:missing_title')}]`}</RegistrationPageHeader>
       <div>
-        {contributors && <PublicRegistrationAuthors contributors={contributors} />}
+        {contributors && (
+          <PublicRegistrationContributors
+            contributors={contributors}
+            registrationType={registration.entityDescription.reference.publicationInstance.type}
+          />
+        )}
 
         <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
           <PublicGeneralContent registration={registration} />

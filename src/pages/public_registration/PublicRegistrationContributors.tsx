@@ -1,10 +1,11 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { IconButton, Link, Typography } from '@material-ui/core';
 import AffiliationHierarchy from '../../components/institution/AffiliationHierarchy';
 import OrcidLogo from '../../resources/images/orcid_logo.svg';
-import { Contributor } from '../../types/contributor.types';
+import { Contributor, ContributorRole } from '../../types/contributor.types';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
+import { BookType } from '../../types/publicationFieldNames';
 
 const StyledAuthor = styled.span`
   margin-right: 1rem;
@@ -27,17 +28,31 @@ const StyledPublicRegistrationAuthors = styled.div`
   margin-bottom: 1rem;
 `;
 
-interface PublicRegistrationAuthorsProps {
+interface PublicRegistrationContributorsProps {
   contributors: Contributor[];
+  registrationType: string;
 }
 
-const PublicRegistrationAuthors: FC<PublicRegistrationAuthorsProps> = ({ contributors }) => {
+export const PublicRegistrationContributors = ({
+  contributors,
+  registrationType,
+}: PublicRegistrationContributorsProps) => {
   const distinctUnits = getDistinctContributorUnits(contributors);
+
+  const relevantContributors =
+    registrationType === BookType.ANTHOLOGY
+      ? contributors.filter((contributor) => contributor.role === ContributorRole.Editor)
+      : contributors.filter((contributor) => contributor.role === ContributorRole.Creator);
+
+  const otherContributors =
+    registrationType === BookType.ANTHOLOGY
+      ? contributors.filter((contributor) => contributor.role !== ContributorRole.Editor)
+      : contributors.filter((contributor) => contributor.role !== ContributorRole.Creator);
 
   return (
     <StyledPublicRegistrationAuthors>
       <Typography>
-        {contributors.map((contributor, index) => {
+        {relevantContributors.map((contributor, index) => {
           const {
             identity: { id, name, orcId },
           } = contributor;
@@ -80,5 +95,3 @@ const PublicRegistrationAuthors: FC<PublicRegistrationAuthorsProps> = ({ contrib
     </StyledPublicRegistrationAuthors>
   );
 };
-
-export default PublicRegistrationAuthors;
