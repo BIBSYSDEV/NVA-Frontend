@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
 import useFetchDepartment from '../../utils/hooks/useFetchDepartment';
@@ -9,19 +10,24 @@ const StyledTypography = styled(Typography)`
   font-weight: bold;
 `;
 
+const ErrorTypography = styled(Typography)`
+  font-style: italic;
+`;
+
 interface AffiliationHierarchyProps {
   unitUri: string;
   commaSeparated?: boolean; // Comma separated or line breaks
   boldTopLevel?: boolean; // Only relevant if commaSeparated=false
 }
 
-export const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({
+export const AffiliationHierarchy = ({
   unitUri,
   commaSeparated = false,
   boldTopLevel = true,
-}) => {
+}: AffiliationHierarchyProps) => {
   const [department, isLoadingDepartment] = useFetchDepartment(unitUri);
   const unitHierarchyNames = getUnitHierarchyNames(unitUri, department);
+  const { t } = useTranslation('feedback');
 
   return isLoadingDepartment ? (
     <AffiliationSkeleton commaSeparated={commaSeparated} />
@@ -29,7 +35,7 @@ export const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({
     <i>
       <Typography>{unitHierarchyNames.join(', ')}</Typography>
     </i>
-  ) : (
+  ) : department ? (
     <div>
       {unitHierarchyNames.map((unitName, index) =>
         index === 0 && boldTopLevel ? (
@@ -39,6 +45,10 @@ export const AffiliationHierarchy: FC<AffiliationHierarchyProps> = ({
         )
       )}
     </div>
+  ) : (
+    <ErrorTypography>
+      [{t('error.get_affiliation_name')} {unitUri}]
+    </ErrorTypography>
   );
 };
 
