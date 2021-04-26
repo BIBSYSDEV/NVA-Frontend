@@ -23,6 +23,7 @@ import { getRegistrationPath } from '../../utils/urlPaths';
 import { getFirstErrorTab, getTabErrors, TabErrors } from '../../utils/formik-helpers';
 import { ErrorList } from '../registration/ErrorList';
 import BackgroundDiv from '../../components/BackgroundDiv';
+import lightTheme from '../../themes/lightTheme';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   margin-bottom: 2rem;
@@ -160,7 +161,9 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           }
         />
       )}
-      <StyledBackgroundDiv backgroundColor="#FFEED6" data-testid="public-registration-status">
+      <StyledBackgroundDiv
+        backgroundColor={lightTheme.palette.background.statusBar}
+        data-testid="public-registration-status">
         {!isPublishedRegistration && registrationIsValid && (
           <>
             <Typography variant="h4" component="h1">
