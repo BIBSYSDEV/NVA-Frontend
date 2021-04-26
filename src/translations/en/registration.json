@@ -100,13 +100,15 @@
     "go_back_to_wizard": "Go back to form",
     "in_progess": "In progress",
     "message_to_curator": "Message to curator",
+    "minimize_contributors": "Minimize contributors",
     "not_published": "Not published",
     "preview": "Preview",
     "preview_unavailable": "Preview not available. Open file in suited program.",
     "published": "Published",
     "reserve_doi": "Reserve a DOI",
     "request_doi": "Request a DOI",
-    "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications. You will receive an email when the request has been evaluated."
+    "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications. You will receive an email when the request has been evaluated.",
+    "show_all_contributors": "Show all contributors (+{{count}})"
   },
   "validation_errors": "Validation errors",
   "registration": {

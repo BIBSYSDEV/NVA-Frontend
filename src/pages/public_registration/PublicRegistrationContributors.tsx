@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Button, IconButton, Link, Typography } from '@material-ui/core';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AffiliationHierarchy from '../../components/institution/AffiliationHierarchy';
 import OrcidLogo from '../../resources/images/orcid_logo.svg';
 import { Contributor, ContributorRole } from '../../types/contributor.types';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
 import { BookType } from '../../types/publicationFieldNames';
+import { useTranslation } from 'react-i18next';
 
 const StyledAuthor = styled.span`
   margin-right: 1rem;
@@ -37,6 +40,7 @@ export const PublicRegistrationContributors = ({
   contributors,
   registrationType,
 }: PublicRegistrationContributorsProps) => {
+  const { t } = useTranslation('registration');
   const [showAll, setShowAll] = useState(false);
   const toggleShowAll = () => setShowAll(!showAll);
 
@@ -52,13 +56,23 @@ export const PublicRegistrationContributors = ({
       : contributors.filter((contributor) => contributor.role !== ContributorRole.Creator);
   const otherContributorsToShow = showAll ? otherContributors : [];
 
+  const hiddenContributorsCount = useRef(showAll ? 0 : contributors.length - mainContributorsToShow.length);
   const distinctUnits = getDistinctContributorUnits([...mainContributorsToShow, ...otherContributorsToShow]);
 
   return (
     <StyledPublicRegistrationAuthors>
       <ContributorsRow contributors={mainContributorsToShow} distinctUnits={distinctUnits} />
       {showAll && <ContributorsRow contributors={otherContributorsToShow} distinctUnits={distinctUnits} />}
-      <Button onClick={toggleShowAll}>{showAll ? 'Minimer' : 'Vis alle'}</Button>
+      {hiddenContributorsCount.current > 0 && (
+        <Button
+          startIcon={showAll ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+          onClick={toggleShowAll}
+          variant="outlined">
+          {showAll
+            ? t('public_page.minimize_contributors')
+            : t('public_page.show_all_contributors', { count: hiddenContributorsCount.current })}
+        </Button>
+      )}
 
       <StyledAffiliationsContainer>
         {distinctUnits.map((unitUri, index) => (
