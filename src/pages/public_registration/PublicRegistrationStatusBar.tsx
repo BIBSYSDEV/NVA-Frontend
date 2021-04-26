@@ -169,8 +169,13 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             <Typography variant="h4" component="h1">
               {t('public_page.ready_to_be_published')}
             </Typography>
-            <Typography paragraph>{t('public_page.ready_to_be_published_description')}</Typography>
+            <Typography gutterBottom>{t('public_page.ready_to_be_published_description')}</Typography>
           </>
+        )}
+        {isPublishedRegistration && (
+          <Typography variant="h4" component="h1" gutterBottom>
+            {t('public_page.published')}
+          </Typography>
         )}
         <StyledButtonsContainer>
           {status === RegistrationStatus.DRAFT && (
