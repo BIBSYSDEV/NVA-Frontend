@@ -104,6 +104,7 @@
     "preview": "Preview",
     "preview_unavailable": "Preview not available. Open file in suited program.",
     "published": "Published",
+    "published_date": "Published: {{date}}",
     "ready_to_be_published": "Ready to be published",
     "ready_to_be_published_description": "Review content before publishing.",
     "reserve_doi": "Reserve a DOI",

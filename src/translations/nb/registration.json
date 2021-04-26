@@ -104,6 +104,7 @@
     "preview": "Forhåndsvisning",
     "preview_unavailable": "Forhåndsvisning ikke tilgjengelig. Åpne filen i egnet program.",
     "published": "Publisert",
+    "published_date": "Publisert: {{date}}",
     "ready_to_be_published": "Klar for publisering",
     "ready_to_be_published_description": "Se over utkast før du publiserer.",
     "reserve_doi": "Reserver en DOI",
