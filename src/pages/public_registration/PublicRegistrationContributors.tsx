@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { IconButton, Link, Typography } from '@material-ui/core';
+import { Button, IconButton, Link, Typography } from '@material-ui/core';
 import AffiliationHierarchy from '../../components/institution/AffiliationHierarchy';
 import OrcidLogo from '../../resources/images/orcid_logo.svg';
 import { Contributor, ContributorRole } from '../../types/contributor.types';
@@ -37,53 +37,29 @@ export const PublicRegistrationContributors = ({
   contributors,
   registrationType,
 }: PublicRegistrationContributorsProps) => {
-  const distinctUnits = getDistinctContributorUnits(contributors);
+  const [showAll, setShowAll] = useState(false);
+  const toggleShowAll = () => setShowAll(!showAll);
 
-  const relevantContributors =
+  const mainContributors =
     registrationType === BookType.ANTHOLOGY
       ? contributors.filter((contributor) => contributor.role === ContributorRole.Editor)
       : contributors.filter((contributor) => contributor.role === ContributorRole.Creator);
+  const mainContributorsToShow = showAll ? mainContributors : mainContributors.slice(0, 5);
 
   const otherContributors =
     registrationType === BookType.ANTHOLOGY
       ? contributors.filter((contributor) => contributor.role !== ContributorRole.Editor)
       : contributors.filter((contributor) => contributor.role !== ContributorRole.Creator);
+  const otherContributorsToShow = showAll ? otherContributors : [];
+
+  const distinctUnits = getDistinctContributorUnits([...mainContributorsToShow, ...otherContributorsToShow]);
 
   return (
     <StyledPublicRegistrationAuthors>
-      <Typography>
-        {relevantContributors.map((contributor, index) => {
-          const {
-            identity: { id, name, orcId },
-          } = contributor;
-          const affiliationIndexes = contributor.affiliations
-            ?.map((affiliation) => affiliation.id && distinctUnits.indexOf(affiliation.id) + 1)
-            .filter((affiliationIndex) => affiliationIndex)
-            .sort();
+      <ContributorsRow contributors={mainContributorsToShow} distinctUnits={distinctUnits} />
+      {showAll && <ContributorsRow contributors={otherContributorsToShow} distinctUnits={distinctUnits} />}
+      <Button onClick={toggleShowAll}>{showAll ? 'Minimer' : 'Vis alle'}</Button>
 
-          return (
-            <StyledAuthor key={index}>
-              {id ? (
-                <Link
-                  href={`/user?id=${encodeURIComponent(id)}`}
-                  data-testid={`presentation-author-link-${encodeURIComponent(id)}`}>
-                  {name}
-                </Link>
-              ) : (
-                name
-              )}
-              <sup>
-                {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
-                {orcId && (
-                  <IconButton size="small" href={orcId}>
-                    <img src={OrcidLogo} height="20" alt="orcid" />
-                  </IconButton>
-                )}
-              </sup>
-            </StyledAuthor>
-          );
-        })}
-      </Typography>
       <StyledAffiliationsContainer>
         {distinctUnits.map((unitUri, index) => (
           <StyedAffiliationWithIndex key={unitUri}>
@@ -93,5 +69,48 @@ export const PublicRegistrationContributors = ({
         ))}
       </StyledAffiliationsContainer>
     </StyledPublicRegistrationAuthors>
+  );
+};
+
+interface ContributorsRowProps {
+  contributors: Contributor[];
+  distinctUnits: any;
+}
+
+const ContributorsRow = ({ contributors, distinctUnits }: ContributorsRowProps) => {
+  return (
+    <Typography>
+      {contributors.map((contributor, index) => {
+        const {
+          identity: { id, name, orcId },
+        } = contributor;
+        const affiliationIndexes = contributor.affiliations
+          ?.map((affiliation) => affiliation.id && distinctUnits.indexOf(affiliation.id) + 1)
+          .filter((affiliationIndex) => affiliationIndex)
+          .sort();
+
+        return (
+          <StyledAuthor key={index}>
+            {id ? (
+              <Link
+                href={`/user?id=${encodeURIComponent(id)}`}
+                data-testid={`presentation-author-link-${encodeURIComponent(id)}`}>
+                {name}
+              </Link>
+            ) : (
+              name
+            )}
+            <sup>
+              {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
+              {orcId && (
+                <IconButton size="small" href={orcId}>
+                  <img src={OrcidLogo} height="20" alt="orcid" />
+                </IconButton>
+              )}
+            </sup>
+          </StyledAuthor>
+        );
+      })}
+    </Typography>
   );
 };
