@@ -9,8 +9,8 @@ import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
 import { RegistrationPageHeader } from '../../components/PageHeader';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
-import PublicSummaryContent from './PublicSummaryContent';
 import PublicGeneralContent from './PublicGeneralContent';
+import { PublicSummaryContent } from './PublicSummaryContent';
 import { PublicProjectsContent } from './PublicProjectsContent';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
@@ -36,7 +36,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
   registration = deepmerge(emptyRegistration, registration);
 
   const {
-    entityDescription: { contributors, mainTitle },
+    entityDescription: { contributors, mainTitle, abstract, description, tags },
     projects,
   } = registration;
 
@@ -55,9 +55,11 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           <PublicFilesContent registration={registration} />
         </StyledBackgroundDiv>
 
-        <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-          <PublicSummaryContent registration={registration} />
-        </StyledBackgroundDiv>
+        {(abstract || description || tags.length > 0) && (
+          <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+            <PublicSummaryContent registration={registration} />
+          </StyledBackgroundDiv>
+        )}
 
         {projects?.length > 0 && (
           <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
