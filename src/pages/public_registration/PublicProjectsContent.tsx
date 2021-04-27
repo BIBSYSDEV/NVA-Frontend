@@ -1,12 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Divider, MuiThemeProvider, Typography } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
 import styled from 'styled-components';
 import lightTheme from '../../themes/lightTheme';
 import { CristinProject, ResearchProject } from '../../types/project.types';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { Skeleton } from '@material-ui/lab';
-import { getAffiliationLabel } from '../../utils/institutions-helpers';
+import { getLanguageString } from '../../utils/translation-helpers';
 
 const StyledProjectRow = styled.div`
   background: ${({ theme }) => theme.palette.background.default};
@@ -47,7 +47,7 @@ interface ProjectRowProps {
 const ProjectRow = ({ project }: ProjectRowProps) => {
   const { t } = useTranslation('registration');
   const [fetchedProject, isLoadingProject] = useFetch<CristinProject>(project.id, true); // TODO: remove auth
-  const institutionName = fetchedProject && getAffiliationLabel(fetchedProject.coordinatingInstitution.name); // TODO: rename function
+  const institutionName = fetchedProject && getLanguageString(fetchedProject.coordinatingInstitution.name);
   const projectManager = fetchedProject?.contributors.find((contributor) => contributor.type === 'ProjectManager');
   const projectManagerName = [projectManager?.identity.firstName, projectManager?.identity.lastName].join(' ');
 
