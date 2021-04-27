@@ -11,8 +11,9 @@ import { BookType } from '../../types/publicationFieldNames';
 import { useTranslation } from 'react-i18next';
 
 const StyledMainContributorsRow = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
 `;
 
 const StyledAffiliationsContainer = styled.div`
@@ -49,7 +50,7 @@ export const PublicRegistrationContributors = ({
     registrationType === BookType.ANTHOLOGY
       ? contributors.filter((contributor) => contributor.role === ContributorRole.Editor)
       : contributors.filter((contributor) => contributor.role === ContributorRole.Creator);
-  const mainContributorsToShow = showAll ? mainContributors : mainContributors.slice(0, 5);
+  const mainContributorsToShow = showAll ? mainContributors : mainContributors.slice(0, 10);
 
   const otherContributors =
     registrationType === BookType.ANTHOLOGY
