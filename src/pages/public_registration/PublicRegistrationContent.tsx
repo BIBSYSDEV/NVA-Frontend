@@ -10,8 +10,8 @@ import { RegistrationPageHeader } from '../../components/PageHeader';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
 import PublicSummaryContent from './PublicSummaryContent';
-import PublicProjectsContent from './PublicProjectsContent';
 import PublicGeneralContent from './PublicGeneralContent';
+import { PublicProjectsContent } from './PublicProjectsContent';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   padding: 2rem 5rem;
@@ -29,13 +29,16 @@ export interface PublicRegistrationProps extends PublicRegistrationContentProps 
   refetchRegistration: () => void;
 }
 
-const PublicRegistrationContent = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
+export const PublicRegistrationContent = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
   const { t } = useTranslation('registration');
 
   // Registration can lack some fields if it's newly created
   registration = deepmerge(emptyRegistration, registration);
 
-  const { contributors, mainTitle } = registration.entityDescription;
+  const {
+    entityDescription: { contributors, mainTitle },
+    projects,
+  } = registration;
 
   return (
     <>
@@ -56,12 +59,12 @@ const PublicRegistrationContent = ({ registration, refetchRegistration }: Public
           <PublicSummaryContent registration={registration} />
         </StyledBackgroundDiv>
 
-        <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-          <PublicProjectsContent registration={registration} />
-        </StyledBackgroundDiv>
+        {projects?.length > 0 && (
+          <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
+            <PublicProjectsContent projects={registration.projects} />
+          </StyledBackgroundDiv>
+        )}
       </div>
     </>
   );
 };
-
-export default PublicRegistrationContent;
