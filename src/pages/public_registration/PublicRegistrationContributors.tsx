@@ -10,8 +10,9 @@ import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
 import { BookType } from '../../types/publicationFieldNames';
 import { useTranslation } from 'react-i18next';
 
-const StyledAuthor = styled.span`
-  margin-right: 1rem;
+const StyledMainContributorsRow = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const StyledAffiliationsContainer = styled.div`
@@ -61,18 +62,20 @@ export const PublicRegistrationContributors = ({
 
   return (
     <StyledPublicRegistrationAuthors>
-      <ContributorsRow contributors={mainContributorsToShow} distinctUnits={distinctUnits} />
+      <StyledMainContributorsRow>
+        <ContributorsRow contributors={mainContributorsToShow} distinctUnits={distinctUnits} />
+        {hiddenContributorsCount.current > 0 && (
+          <Button
+            startIcon={showAll ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            onClick={toggleShowAll}
+            variant="outlined">
+            {showAll
+              ? t('public_page.minimize_contributors')
+              : t('public_page.show_all_contributors', { count: hiddenContributorsCount.current })}
+          </Button>
+        )}
+      </StyledMainContributorsRow>
       {showAll && <ContributorsRow contributors={otherContributorsToShow} distinctUnits={distinctUnits} />}
-      {hiddenContributorsCount.current > 0 && (
-        <Button
-          startIcon={showAll ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          onClick={toggleShowAll}
-          variant="outlined">
-          {showAll
-            ? t('public_page.minimize_contributors')
-            : t('public_page.show_all_contributors', { count: hiddenContributorsCount.current })}
-        </Button>
-      )}
 
       <StyledAffiliationsContainer>
         {distinctUnits.map((unitUri, index) => (
@@ -86,6 +89,15 @@ export const PublicRegistrationContributors = ({
   );
 };
 
+const StyledContributorsRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+
+  > :not(:first-child) {
+    margin-left: 1rem;
+  }
+`;
+
 interface ContributorsRowProps {
   contributors: Contributor[];
   distinctUnits: any;
@@ -93,7 +105,7 @@ interface ContributorsRowProps {
 
 const ContributorsRow = ({ contributors, distinctUnits }: ContributorsRowProps) => {
   return (
-    <Typography>
+    <StyledContributorsRow>
       {contributors.map((contributor, index) => {
         const {
           identity: { id, name, orcId },
@@ -104,7 +116,7 @@ const ContributorsRow = ({ contributors, distinctUnits }: ContributorsRowProps) 
           .sort();
 
         return (
-          <StyledAuthor key={index}>
+          <Typography key={index}>
             {id ? (
               <Link
                 href={`/user?id=${encodeURIComponent(id)}`}
@@ -122,9 +134,9 @@ const ContributorsRow = ({ contributors, distinctUnits }: ContributorsRowProps) 
                 </IconButton>
               )}
             </sup>
-          </StyledAuthor>
+          </Typography>
         );
       })}
-    </Typography>
+    </StyledContributorsRow>
   );
 };
