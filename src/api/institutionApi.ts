@@ -1,6 +1,6 @@
 import { CancelToken } from 'axios';
 import { InstitutionUnitBase, RecursiveInstitutionUnit } from '../types/institution.types';
-import { getLanguageCodeForInstitution } from '../utils/institutions-helpers';
+import { getPreferredLanguageCode } from '../utils/translation-helpers';
 import { apiRequest } from './apiRequest';
 
 export enum InstitutionApiPaths {
@@ -10,7 +10,7 @@ export enum InstitutionApiPaths {
 
 export const getInstitutions = async (cancelToken?: CancelToken) =>
   await apiRequest<InstitutionUnitBase[]>({
-    url: `${InstitutionApiPaths.INSTITUTIONS}?language=${getLanguageCodeForInstitution()}`,
+    url: `${InstitutionApiPaths.INSTITUTIONS}?language=${getPreferredLanguageCode()}`,
     method: 'GET',
     cancelToken,
   });
@@ -19,7 +19,7 @@ export const getDepartment = async (departmentUri: string, cancelToken?: CancelT
   await apiRequest<RecursiveInstitutionUnit>({
     url: `${InstitutionApiPaths.DEPARTMENTS}?uri=${encodeURIComponent(
       departmentUri
-    )}&language=${getLanguageCodeForInstitution()}`,
+    )}&language=${getPreferredLanguageCode()}`,
     method: 'GET',
     cancelToken,
   });
