@@ -105,7 +105,7 @@ const StyledContributorsList = styled.ul`
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-end;
 
   > :not(:first-child) {
     margin-left: 1rem;
@@ -143,22 +143,21 @@ const ContributorsRow = ({ contributors, distinctUnits, otherCount }: Contributo
             ) : (
               name
             )}
-            <sup>
-              {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
-              {orcId && (
-                <IconButton size="small" href={orcId}>
-                  <img src={OrcidLogo} height="20" alt="orcid" />
-                </IconButton>
-              )}
-            </sup>
+            {(orcId || (affiliationIndexes && affiliationIndexes.length > 0)) && (
+              <sup>
+                {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
+                {orcId && (
+                  <IconButton size="small" href={orcId}>
+                    <img src={OrcidLogo} height="20" alt="orcid" />
+                  </IconButton>
+                )}
+              </sup>
+            )}
           </Typography>
         );
       })}
       {otherCount && otherCount > 0 && (
-        <Typography>
-          {t('public_page.other_contributors', { count: otherCount })}
-          <sup></sup>
-        </Typography>
+        <Typography component="li">{t('public_page.other_contributors', { count: otherCount })}</Typography>
       )}
     </StyledContributorsList>
   );
