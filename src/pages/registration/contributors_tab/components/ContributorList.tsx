@@ -4,7 +4,7 @@ import { Typography } from '@material-ui/core';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import { ContributorCard } from './ContributorCard';
-import { getRemoveContributorText } from '../../../../utils/validation/registration/contributorTranslations';
+import { getRemoveContributorText } from '../../../../utils/translation-helpers';
 
 interface ContributorListProps {
   contributors: Contributor[];

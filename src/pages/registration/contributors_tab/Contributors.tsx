@@ -19,13 +19,10 @@ import { BackendTypeNames } from '../../../types/publication_types/commonRegistr
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import useIsMobile from '../../../utils/hooks/useIsMobile';
-import {
-  getAddContributorText,
-  getContributorHeading,
-} from '../../../utils/validation/registration/contributorTranslations';
 import lightTheme from '../../../themes/lightTheme';
 import { ContributorList } from './components/ContributorList';
 import { AddContributorModal } from './AddContributorModal';
+import { getAddContributorText, getContributorHeading } from '../../../utils/translation-helpers';
 
 const StyledButton = styled(Button)`
   margin: 1rem 0rem;

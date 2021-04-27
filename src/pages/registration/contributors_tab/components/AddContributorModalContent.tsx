@@ -14,10 +14,7 @@ import { Registration } from '../../../../types/registration.types';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
 import AuthorityList from '../../../user/authority/AuthorityList';
-import {
-  getAddSelfAsContributorText,
-  getCreateContributorText,
-} from '../../../../utils/validation/registration/contributorTranslations';
+import { getCreateContributorText, getAddSelfAsContributorText } from '../../../../utils/translation-helpers';
 
 const StyledTextField = styled(TextField)`
   margin-bottom: 1rem;

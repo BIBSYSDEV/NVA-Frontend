@@ -8,8 +8,8 @@ import useFetchRegistration from '../../utils/hooks/useFetchRegistration';
 import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
 import NotFound from '../errorpages/NotFound';
 import NotPublished from '../errorpages/NotPublished';
-import PublicRegistrationContent from './PublicRegistrationContent';
 import { PageSpinner } from '../../components/PageSpinner';
+import { PublicRegistrationContent } from './PublicRegistrationContent';
 
 const PublicRegistration: FC = () => {
   const { identifier } = useParams<{ identifier: string }>();

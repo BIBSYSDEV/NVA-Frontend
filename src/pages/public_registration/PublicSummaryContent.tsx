@@ -1,36 +1,53 @@
 import React from 'react';
-import { Chip, MuiThemeProvider, Typography } from '@material-ui/core';
+import { Chip, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import lightTheme from '../../themes/lightTheme';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
-const StyledSummaryContent = styled.div`
-  display: grid;
-  grid-template-areas: 'abstract tags';
-  grid-template-columns: 4fr 1fr;
-  grid-column-gap: 2rem;
+export const PublicSummaryContent = ({ registration }: PublicRegistrationContentProps) => {
+  const { t } = useTranslation('registration');
 
-  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
-    grid-template-areas: 'abstract' 'tags';
-    grid-template-columns: 1fr;
-    grid-row-gap: 1rem;
-  }
-`;
+  const { abstract, description, tags } = registration.entityDescription;
 
-const AbstractDiv = styled.div`
-  grid-area: abstract;
-`;
+  return (
+    <>
+      {abstract && (
+        <>
+          <Typography variant="h4" component="h2">
+            {t('description.abstract')}
+          </Typography>
+          <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
+            {abstract}
+          </Typography>
+        </>
+      )}
+      {description && (
+        <>
+          <Typography variant="h4" component="h2">
+            {t('description.description')}
+          </Typography>
+          <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
+            {description}
+          </Typography>
+        </>
+      )}
 
-const TagsDiv = styled.div`
-  grid-area: tags;
-`;
+      {tags.length > 0 && <TagsList title={t('description.keywords')} values={tags} />}
+    </>
+  );
+};
 
 const StyledTagsList = styled.div`
   display: flex;
+  align-items: center;
+`;
+
+const StyledTags = styled.div`
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
   flex-wrap: wrap;
   > div {
-    margin-bottom: 0.5rem;
     :not(:last-child) {
       margin-right: 0.5rem;
     }
@@ -39,47 +56,24 @@ const StyledTagsList = styled.div`
 
 const StyledChip = styled(Chip)`
   background: ${({ theme }) => theme.palette.section.light};
+  color: ${({ theme }) => theme.palette.text.primary};
+  margin: 0.25rem 0;
 `;
 
-const PublicSummaryContent = ({ registration }: PublicRegistrationContentProps) => {
-  const { t } = useTranslation('registration');
+interface TagsListProps {
+  title: string;
+  values: string[];
+}
 
-  const { abstract, description, tags } = registration.entityDescription;
-
-  return (
-    <StyledSummaryContent>
-      <AbstractDiv>
-        {abstract && (
-          <>
-            <Typography variant="h4" component="h2" gutterBottom>
-              {t('description.abstract')}
-            </Typography>
-            <Typography paragraph>{abstract}</Typography>
-          </>
-        )}
-        {description && (
-          <>
-            <Typography variant="h4" component="h2" gutterBottom>
-              {t('description.description')}
-            </Typography>
-            <Typography>{description}</Typography>
-          </>
-        )}
-      </AbstractDiv>
-      <TagsDiv>
-        <Typography variant="h4" component="h2" gutterBottom>
-          {t('description.keywords')}
-        </Typography>
-        <StyledTagsList>
-          <MuiThemeProvider theme={lightTheme}>
-            {tags.map((tag) => (
-              <StyledChip key={tag} label={tag} />
-            ))}
-          </MuiThemeProvider>
-        </StyledTagsList>
-      </TagsDiv>
-    </StyledSummaryContent>
-  );
-};
-
-export default PublicSummaryContent;
+const TagsList = ({ title, values }: TagsListProps) => (
+  <StyledTagsList>
+    <Typography variant="subtitle2" component="h2">
+      {title}
+    </Typography>
+    <StyledTags>
+      {values.map((value) => (
+        <StyledChip key={value} label={value} />
+      ))}
+    </StyledTags>
+  </StyledTagsList>
+);
