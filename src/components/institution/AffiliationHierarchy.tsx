@@ -31,20 +31,22 @@ export const AffiliationHierarchy = ({
 
   return isLoadingDepartment ? (
     <AffiliationSkeleton commaSeparated={commaSeparated} />
-  ) : commaSeparated ? (
-    <i>
-      <Typography>{unitHierarchyNames.join(', ')}</Typography>
-    </i>
   ) : department ? (
-    <div>
-      {unitHierarchyNames.map((unitName, index) =>
-        index === 0 && boldTopLevel ? (
-          <StyledTypography key={unitName}>{unitName}</StyledTypography>
-        ) : (
-          <Typography key={unitName}>{unitName}</Typography>
-        )
-      )}
-    </div>
+    commaSeparated ? (
+      <i>
+        <Typography>{unitHierarchyNames.join(', ')}</Typography>
+      </i>
+    ) : (
+      <div>
+        {unitHierarchyNames.map((unitName, index) =>
+          index === 0 && boldTopLevel ? (
+            <StyledTypography key={unitName}>{unitName}</StyledTypography>
+          ) : (
+            <Typography key={unitName}>{unitName}</Typography>
+          )
+        )}
+      </div>
+    )
   ) : (
     <ErrorTypography>
       [{t('error.get_affiliation_name')} {unitUri}]
