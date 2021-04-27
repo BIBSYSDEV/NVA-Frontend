@@ -114,7 +114,7 @@ const StyledContributorsList = styled.ul`
 
 interface ContributorsRowProps {
   contributors: Contributor[];
-  distinctUnits: any;
+  distinctUnits: string[];
   otherCount?: number;
 }
 
