@@ -10,10 +10,13 @@ import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
 import { BookType } from '../../types/publicationFieldNames';
 import { useTranslation } from 'react-i18next';
 
-const StyledMainContributorsRow = styled.div`
+const StyledContributorsGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr auto;
   align-items: start;
+  grid-template-columns: 1fr auto;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const StyledAffiliationsContainer = styled.div`
@@ -63,12 +66,15 @@ export const PublicRegistrationContributors = ({
 
   return (
     <StyledPublicRegistrationAuthors>
-      <StyledMainContributorsRow>
-        <ContributorsRow
-          contributors={mainContributorsToShow}
-          distinctUnits={distinctUnits}
-          otherCount={showAll ? undefined : hiddenContributorsCount.current}
-        />
+      <StyledContributorsGrid>
+        <div>
+          <ContributorsRow
+            contributors={mainContributorsToShow}
+            distinctUnits={distinctUnits}
+            otherCount={showAll ? undefined : hiddenContributorsCount.current}
+          />
+          {showAll && <ContributorsRow contributors={otherContributorsToShow} distinctUnits={distinctUnits} />}
+        </div>
         {hiddenContributorsCount.current > 0 && (
           <Button
             startIcon={showAll ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -79,8 +85,7 @@ export const PublicRegistrationContributors = ({
               : t('public_page.show_all_contributors', { count: hiddenContributorsCount.current })}
           </Button>
         )}
-        {showAll && <ContributorsRow contributors={otherContributorsToShow} distinctUnits={distinctUnits} />}
-      </StyledMainContributorsRow>
+      </StyledContributorsGrid>
 
       <StyledAffiliationsContainer>
         {distinctUnits.map((unitUri, index) => (
