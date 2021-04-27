@@ -1,8 +1,5 @@
-import i18n from '../translations/i18n';
 import { Contributor } from '../types/contributor.types';
 import { FormikInstitutionUnit, InstitutionUnitBase, RecursiveInstitutionUnit } from '../types/institution.types';
-import { LanguageCodes } from '../types/language.types';
-import { LanguageString } from '../types/publication_types/commonRegistration.types';
 
 // Exclude institutions on any level (root, subunit, subunit of subunit, etc) that has a matching id in excludeIds
 export const filterInstitutions = (
@@ -32,25 +29,6 @@ export const getDistinctContributorUnits = (contributors: Contributor[]) => {
     .filter((affiliation) => !!affiliation?.id)
     .map((unit) => unit?.id) as string[];
   return [...new Set(unitIds)];
-};
-
-// Map from three letter language to two ("nob" -> "no")
-export const getLanguageCodeForInstitution = () => {
-  const currentLanguage = i18n.language;
-  if (currentLanguage === LanguageCodes.NORWEGIAN_BOKMAL || currentLanguage === LanguageCodes.NORWEGIAN_NYNORSK) {
-    return 'nb';
-  } else {
-    return 'en';
-  }
-};
-
-// Get label based on selected language
-export const getAffiliationLabel = (labels: LanguageString) => {
-  const preferredLanguageCode = getLanguageCodeForInstitution();
-  if (Object.keys(labels).includes(preferredLanguageCode)) {
-    return labels[preferredLanguageCode];
-  }
-  return Object.values(labels)[0];
 };
 
 // Returns top-down unit names: ["Level1", "Level2", (etc.)]

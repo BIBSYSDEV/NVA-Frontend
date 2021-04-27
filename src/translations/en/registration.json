@@ -101,6 +101,8 @@
     "in_progess": "In progress",
     "message_to_curator": "Message to curator",
     "not_published": "Not published",
+    "participants": "{{count}} participant",
+    "participants_plural": "{{count}} participants",
     "preview": "Preview",
     "preview_unavailable": "Preview not available. Open file in suited program.",
     "published": "Published",
