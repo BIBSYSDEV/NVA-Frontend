@@ -58,13 +58,17 @@ export const PublicRegistrationContributors = ({
       : contributors.filter((contributor) => contributor.role !== ContributorRole.Creator);
   const otherContributorsToShow = showAll ? otherContributors : [];
 
-  const hiddenContributorsCount = useRef(showAll ? 0 : contributors.length - mainContributorsToShow.length);
+  const hiddenContributorsCount = useRef(contributors.length - mainContributorsToShow.length);
   const distinctUnits = getDistinctContributorUnits([...mainContributorsToShow, ...otherContributorsToShow]);
 
   return (
     <StyledPublicRegistrationAuthors>
       <StyledMainContributorsRow>
-        <ContributorsRow contributors={mainContributorsToShow} distinctUnits={distinctUnits} />
+        <ContributorsRow
+          contributors={mainContributorsToShow}
+          distinctUnits={distinctUnits}
+          otherCount={showAll ? undefined : hiddenContributorsCount.current}
+        />
         {hiddenContributorsCount.current > 0 && (
           <Button
             startIcon={showAll ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -75,8 +79,8 @@ export const PublicRegistrationContributors = ({
               : t('public_page.show_all_contributors', { count: hiddenContributorsCount.current })}
           </Button>
         )}
+        {showAll && <ContributorsRow contributors={otherContributorsToShow} distinctUnits={distinctUnits} />}
       </StyledMainContributorsRow>
-      {showAll && <ContributorsRow contributors={otherContributorsToShow} distinctUnits={distinctUnits} />}
 
       <StyledAffiliationsContainer>
         {distinctUnits.map((unitUri, index) => (
@@ -96,6 +100,7 @@ const StyledContributorsList = styled.ul`
   padding: 0;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
 
   > :not(:first-child) {
     margin-left: 1rem;
@@ -105,40 +110,51 @@ const StyledContributorsList = styled.ul`
 interface ContributorsRowProps {
   contributors: Contributor[];
   distinctUnits: any;
+  otherCount?: number;
 }
 
-const ContributorsRow = ({ contributors, distinctUnits }: ContributorsRowProps) => (
-  <StyledContributorsList>
-    {contributors.map((contributor, index) => {
-      const {
-        identity: { id, name, orcId },
-      } = contributor;
-      const affiliationIndexes = contributor.affiliations
-        ?.map((affiliation) => affiliation.id && distinctUnits.indexOf(affiliation.id) + 1)
-        .filter((affiliationIndex) => affiliationIndex)
-        .sort();
+const ContributorsRow = ({ contributors, distinctUnits, otherCount }: ContributorsRowProps) => {
+  const { t } = useTranslation('registration');
 
-      return (
-        <Typography key={index} component="li">
-          {id ? (
-            <Link
-              href={`/user?id=${encodeURIComponent(id)}`}
-              data-testid={`presentation-author-link-${encodeURIComponent(id)}`}>
-              {name}
-            </Link>
-          ) : (
-            name
-          )}
-          <sup>
-            {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
-            {orcId && (
-              <IconButton size="small" href={orcId}>
-                <img src={OrcidLogo} height="20" alt="orcid" />
-              </IconButton>
+  return (
+    <StyledContributorsList>
+      {contributors.map((contributor, index) => {
+        const {
+          identity: { id, name, orcId },
+        } = contributor;
+        const affiliationIndexes = contributor.affiliations
+          ?.map((affiliation) => affiliation.id && distinctUnits.indexOf(affiliation.id) + 1)
+          .filter((affiliationIndex) => affiliationIndex)
+          .sort();
+
+        return (
+          <Typography key={index} component="li">
+            {id ? (
+              <Link
+                href={`/user?id=${encodeURIComponent(id)}`}
+                data-testid={`presentation-author-link-${encodeURIComponent(id)}`}>
+                {name}
+              </Link>
+            ) : (
+              name
             )}
-          </sup>
+            <sup>
+              {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
+              {orcId && (
+                <IconButton size="small" href={orcId}>
+                  <img src={OrcidLogo} height="20" alt="orcid" />
+                </IconButton>
+              )}
+            </sup>
+          </Typography>
+        );
+      })}
+      {otherCount && otherCount > 0 && (
+        <Typography>
+          {t('public_page.other_contributors', { count: otherCount })}
+          <sup></sup>
         </Typography>
-      );
-    })}
-  </StyledContributorsList>
-);
+      )}
+    </StyledContributorsList>
+  );
+};
