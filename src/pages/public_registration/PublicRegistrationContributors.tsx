@@ -90,7 +90,10 @@ export const PublicRegistrationContributors = ({
   );
 };
 
-const StyledContributorsRow = styled.div`
+const StyledContributorsList = styled.ul`
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-wrap: wrap;
 
@@ -104,40 +107,38 @@ interface ContributorsRowProps {
   distinctUnits: any;
 }
 
-const ContributorsRow = ({ contributors, distinctUnits }: ContributorsRowProps) => {
-  return (
-    <StyledContributorsRow>
-      {contributors.map((contributor, index) => {
-        const {
-          identity: { id, name, orcId },
-        } = contributor;
-        const affiliationIndexes = contributor.affiliations
-          ?.map((affiliation) => affiliation.id && distinctUnits.indexOf(affiliation.id) + 1)
-          .filter((affiliationIndex) => affiliationIndex)
-          .sort();
+const ContributorsRow = ({ contributors, distinctUnits }: ContributorsRowProps) => (
+  <StyledContributorsList>
+    {contributors.map((contributor, index) => {
+      const {
+        identity: { id, name, orcId },
+      } = contributor;
+      const affiliationIndexes = contributor.affiliations
+        ?.map((affiliation) => affiliation.id && distinctUnits.indexOf(affiliation.id) + 1)
+        .filter((affiliationIndex) => affiliationIndex)
+        .sort();
 
-        return (
-          <Typography key={index}>
-            {id ? (
-              <Link
-                href={`/user?id=${encodeURIComponent(id)}`}
-                data-testid={`presentation-author-link-${encodeURIComponent(id)}`}>
-                {name}
-              </Link>
-            ) : (
-              name
+      return (
+        <Typography key={index} component="li">
+          {id ? (
+            <Link
+              href={`/user?id=${encodeURIComponent(id)}`}
+              data-testid={`presentation-author-link-${encodeURIComponent(id)}`}>
+              {name}
+            </Link>
+          ) : (
+            name
+          )}
+          <sup>
+            {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
+            {orcId && (
+              <IconButton size="small" href={orcId}>
+                <img src={OrcidLogo} height="20" alt="orcid" />
+              </IconButton>
             )}
-            <sup>
-              {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
-              {orcId && (
-                <IconButton size="small" href={orcId}>
-                  <img src={OrcidLogo} height="20" alt="orcid" />
-                </IconButton>
-              )}
-            </sup>
-          </Typography>
-        );
-      })}
-    </StyledContributorsRow>
-  );
-};
+          </sup>
+        </Typography>
+      );
+    })}
+  </StyledContributorsList>
+);
