@@ -49,7 +49,7 @@ export const AffiliationHierarchy = ({
     )
   ) : (
     <ErrorTypography>
-      [{t('error.get_affiliation_name')} {unitUri}]
+      [{t('error.get_affiliation_name', { unitUri, interpolation: { escapeValue: false } })}]
     </ErrorTypography>
   );
 };
