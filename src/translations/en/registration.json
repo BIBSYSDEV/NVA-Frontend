@@ -106,6 +106,9 @@
     "preview": "Preview",
     "preview_unavailable": "Preview not available. Open file in suited program.",
     "published": "Published",
+    "published_date": "Published: {{date}}",
+    "ready_to_be_published": "Ready to be published",
+    "ready_to_be_published_description": "Review content before publishing.",
     "reserve_doi": "Reserve a DOI",
     "request_doi": "Request a DOI",
     "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications. You will receive an email when the request has been evaluated."
