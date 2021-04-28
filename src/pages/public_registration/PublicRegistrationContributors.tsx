@@ -78,9 +78,7 @@ export const PublicRegistrationContributors = ({
             startIcon={showAll ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             onClick={toggleShowAll}
             variant="outlined">
-            {showAll
-              ? t('public_page.minimize_contributors')
-              : t('public_page.show_all_contributors', { count: hiddenContributorsCount.current })}
+            {showAll ? t('common:show_fewer') : t('common:show_all')}
           </Button>
         )}
       </StyledContributorsGrid>
