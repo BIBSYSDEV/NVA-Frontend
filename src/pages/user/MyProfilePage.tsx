@@ -18,6 +18,7 @@ import { UserLanguage } from './UserLanguage';
 import { UserOrcid } from './UserOrcid';
 import { UserRoles } from './UserRoles';
 import { UserAffiliations } from './UserAffiliations';
+import { setExternalOrcid } from '../../redux/actions/orcidActions';
 
 const StyledUserPage = styled.div`
   display: grid;
@@ -54,10 +55,18 @@ const MyProfilePage = () => {
   const history = useHistory();
 
   useEffect(() => {
-    const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token') || '';
+    const fetchOrcidInfo = async (accessToken: string) => {
+      const orcidInfoResponse = await getOrcidInfo(accessToken);
+      const orcidId = orcidInfoResponse.data.id;
+      if (orcidId) {
+        dispatch(setExternalOrcid(orcidId));
+        history.push(UrlPathTemplate.MyProfile);
+      }
+    };
+
+    const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token');
     if (orcidAccessToken) {
-      dispatch(getOrcidInfo(orcidAccessToken));
-      history.push(UrlPathTemplate.MyProfile);
+      fetchOrcidInfo(orcidAccessToken);
     }
   }, [dispatch, location.hash, history]);
 

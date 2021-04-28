@@ -101,17 +101,16 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       <Typography variant="h2">{t('orcid.orcid')}</Typography>
       {listOfOrcids?.length > 0 ? (
         listOfOrcids.map((orcid: string) => {
-          const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
           return (
             <StyledOrcidLine key={orcid} data-testid="orcid-line">
               <StyledLine>
                 <StyledLabel>{t('orcid.your_orcid')}:</StyledLabel>
-                <IconButton size="small" href={orcidLink} key={orcid}>
+                <IconButton size="small" href={orcid} key={orcid}>
                   <img src={orcidIcon} height="20" alt="orcid" />
                 </IconButton>
-                <MuiLink href={orcidLink} target="_blank" rel="noopener noreferrer">
+                <MuiLink href={orcid} target="_blank" rel="noopener noreferrer">
                   <StyledContent data-testid="orcid-info">
-                    <Typography>{orcidLink}</Typography>
+                    <Typography>{orcid}</Typography>
                   </StyledContent>
                 </MuiLink>
               </StyledLine>
