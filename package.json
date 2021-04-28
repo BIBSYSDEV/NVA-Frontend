@@ -8,7 +8,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "4.0.0-alpha.57",
     "@material-ui/pickers": "^3.3.10",
-    "@material-ui/styles": "^4.11.3",
+    "@material-ui/styles": "^4.11.4",
     "@uppy/aws-s3-multipart": "^1.8.15",
     "@uppy/core": "^1.17.0",
     "@uppy/dashboard": "^1.18.0",
