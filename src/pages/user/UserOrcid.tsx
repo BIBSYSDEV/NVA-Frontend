@@ -136,7 +136,12 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
               <IconButton size="small" href={orcid} key={orcid}>
                 <img src={orcidIcon} height="20" alt="orcid" />
               </IconButton>
-              <Typography component={MuiLink} href={orcid} target="_blank" rel="noopener noreferrer">
+              <Typography
+                data-testid="orcid-info"
+                component={MuiLink}
+                href={orcid}
+                target="_blank"
+                rel="noopener noreferrer">
                 {orcid}
               </Typography>
             </StyledLine>
