@@ -19,16 +19,12 @@ const StyledContributorsGrid = styled.div`
   }
 `;
 
-const StyledAffiliationsContainer = styled.div`
+const StyledAffiliationsList = styled.ul`
   margin-top: 0.5rem;
   padding-left: 1rem;
-
-  > div:not(:first-child) {
-    margin-top: 0.2rem;
-  }
 `;
 
-const StyedAffiliationWithIndex = styled.div`
+const StyedAffiliationListItem = styled.li`
   display: flex;
 `;
 
@@ -87,14 +83,14 @@ export const PublicRegistrationContributors = ({
         )}
       </StyledContributorsGrid>
 
-      <StyledAffiliationsContainer>
+      <StyledAffiliationsList>
         {distinctUnits.map((unitUri, index) => (
-          <StyedAffiliationWithIndex key={unitUri}>
+          <StyedAffiliationListItem key={unitUri}>
             <sup>{index + 1}</sup>
             <AffiliationHierarchy key={unitUri} unitUri={unitUri} commaSeparated />
-          </StyedAffiliationWithIndex>
+          </StyedAffiliationListItem>
         ))}
-      </StyledAffiliationsContainer>
+      </StyledAffiliationsList>
     </StyledPublicRegistrationAuthors>
   );
 };
