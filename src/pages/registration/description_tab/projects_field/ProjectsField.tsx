@@ -13,7 +13,7 @@ import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import { useFetchProjects } from '../../../../utils/hooks/useFetchProjects';
 import { convertToCristinProject, convertToResearchProject } from './projectHelpers';
-import { getAffiliationLabel } from '../../../../utils/institutions-helpers';
+import { getLanguageString } from '../../../../utils/translation-helpers';
 
 const StyledProjectChip = styled(Chip)`
   height: auto;
@@ -67,7 +67,7 @@ export const ProjectsField = () => {
                 <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
               </Typography>
               <Typography variant="body2" color="textSecondary">
-                {getAffiliationLabel(option.coordinatingInstitution.name)}
+                {getLanguageString(option.coordinatingInstitution.name)}
               </Typography>
             </StyledFlexColumn>
           )}

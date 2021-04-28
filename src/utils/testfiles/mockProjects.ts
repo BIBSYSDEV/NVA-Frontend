@@ -1,3 +1,4 @@
+import { LanguageValues } from '../../types/language.types';
 import { CristinProject, ProjectSearchResponse } from '../../types/project.types';
 
 export const mockProject: CristinProject = {
@@ -10,7 +11,7 @@ export const mockProject: CristinProject = {
     },
   ],
   title: 'Natur og identitet - internasjonal forskerkonferanse',
-  language: 'https://lexvo.org/id/iso639-3/nno',
+  language: LanguageValues.ENGLISH,
   alternativeTitles: [
     {
       en: 'Nature and Identity - international research symposium',
@@ -89,7 +90,7 @@ const mockProjects: CristinProject[] = [
       },
     ],
     title: 'Ornitologisk kartlegging i og ved Semsøyene naturreservat',
-    language: 'https://lexvo.org/id/iso639-3/nno',
+    language: LanguageValues.ENGLISH,
     alternativeTitles: [
       {
         en: 'Ornithological taxonomy at Semsøyene Islands Nature Preserve',
@@ -133,7 +134,7 @@ const mockProjects: CristinProject[] = [
       },
     ],
     title: 'Naturbasert avløpsteknologi',
-    language: 'https://lexvo.org/id/iso639-3/nno',
+    language: LanguageValues.ENGLISH,
     alternativeTitles: [
       {
         en: 'Natural Treatment Systems',
@@ -177,7 +178,7 @@ const mockProjects: CristinProject[] = [
       },
     ],
     title: 'Tørking og duggpunktbestemmelse av naturgass',
-    language: 'https://lexvo.org/id/iso639-3/nno',
+    language: LanguageValues.ENGLISH,
     alternativeTitles: [
       {
         en: 'Natural Gas dehydration and Dewpointing',
@@ -253,7 +254,7 @@ const mockProjects: CristinProject[] = [
       },
     ],
     title: 'Antikkens syn på mennesket og naturen',
-    language: 'https://lexvo.org/id/iso639-3/nno',
+    language: LanguageValues.ENGLISH,
     alternativeTitles: [
       {
         en: 'The View of Man and Nature in Greek Culture',

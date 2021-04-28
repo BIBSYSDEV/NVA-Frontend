@@ -40,10 +40,6 @@ const StyledSaveNextButtonsContainer = styled.div`
   grid-column-gap: 1rem;
 `;
 
-const StyledBackButton = styled(Button)`
-  color: ${({ theme }) => theme.palette.text.primary};
-`;
-
 const StyledSupportButtonContainer = styled.div`
   grid-area: support-button;
 `;
@@ -97,7 +93,7 @@ export const RegistrationFormActions = ({
       <StyledActionsContainer>
         {tabNumber > RegistrationTab.Description && (
           <StyledBackButtonContainer>
-            <StyledBackButton
+            <Button
               color="secondary"
               variant="outlined"
               data-testid="button-previous-tab"
@@ -106,7 +102,7 @@ export const RegistrationFormActions = ({
               {tabNumber === RegistrationTab.ResourceType && t('heading.description')}
               {tabNumber === RegistrationTab.Contributors && t('heading.resource_type')}
               {tabNumber === RegistrationTab.FilesAndLicenses && t('heading.contributors')}
-            </StyledBackButton>
+            </Button>
           </StyledBackButtonContainer>
         )}
         <StyledSupportButtonContainer>
