@@ -143,7 +143,7 @@ const ContributorsRow = ({ contributors, distinctUnits, otherCount }: Contributo
               <sup>
                 {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
                 {orcId && (
-                  <IconButton size="small" href={orcId}>
+                  <IconButton size="small" href={orcId} target="_blank">
                     <img src={OrcidLogo} height="20" alt="orcid" />
                   </IconButton>
                 )}
