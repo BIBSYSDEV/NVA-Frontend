@@ -25,13 +25,13 @@ import { User } from '../../types/user.types';
 import DangerButton from '../../components/DangerButton';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { Skeleton } from '@material-ui/lab';
 
 const StyledOrcidLine = styled.div`
   display: grid;
   grid-template-areas: 'text button';
   grid-template-columns: 2fr 1fr;
   align-items: center;
-  margin-top: 1rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     grid-template-areas: 'text' 'button';
     grid-template-columns: 1fr;
@@ -57,6 +57,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   const listOfOrcids = user.authority ? user.authority.orcids : [];
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [isAddingOrcid, setIsAddingOrcid] = useState(false);
   const [isRemovingOrcid, setIsRemovingOrcid] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -72,6 +73,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
 
   useEffect(() => {
     const addOrcid = async (accessToken: string) => {
+      setIsAddingOrcid(true);
       const orcidInfoResponse = await getOrcidInfo(accessToken);
       const orcidId = orcidInfoResponse.data.id;
       // TODO: error else
@@ -88,9 +90,9 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
             dispatch(setAuthorityData(updatedAuthority));
           }
         }
-
         history.push(UrlPathTemplate.MyProfile);
       }
+      setIsAddingOrcid(false);
     };
 
     const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token');
@@ -124,7 +126,9 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   return (
     <Card>
       <Typography variant="h2">{t('orcid.orcid')}</Typography>
-      {listOfOrcids?.length > 0 ? (
+      {isAddingOrcid ? (
+        <Skeleton width="50%" />
+      ) : listOfOrcids.length > 0 ? (
         listOfOrcids.map((orcid: string) => (
           <StyledOrcidLine key={orcid} data-testid="orcid-line">
             <StyledLine>
