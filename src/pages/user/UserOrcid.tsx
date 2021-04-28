@@ -9,7 +9,11 @@ import OrcidModalContent from './OrcidModalContent';
 import Card from '../../components/Card';
 import { Button, IconButton, Typography } from '@material-ui/core';
 import ConfirmDialog from '../../components/ConfirmDialog';
-import { removeQualifierIdFromAuthority, AuthorityQualifiers } from '../../api/authorityApi';
+import {
+  removeQualifierIdFromAuthority,
+  AuthorityQualifiers,
+  addQualifierIdForAuthority,
+} from '../../api/authorityApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { setAuthorityData } from '../../redux/actions/userActions';
@@ -17,9 +21,11 @@ import { setExternalOrcid } from '../../redux/actions/orcidActions';
 import Modal from '../../components/Modal';
 import { Link as MuiLink } from '@material-ui/core';
 import { StyledNormalTextPreWrapped } from '../../components/styled/Wrappers';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { User } from '../../types/user.types';
 import DangerButton from '../../components/DangerButton';
+import { getOrcidInfo } from '../../api/external/orcidApi';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 
 const StyledOrcidLine = styled.div`
   display: grid;
@@ -64,6 +70,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   const [isRemovingOrcid, setIsRemovingOrcid] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
+  const history = useHistory();
 
   const toggleModal = () => {
     setOpenModal(!openModal);
@@ -72,6 +79,34 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   const toggleConfirmDialog = () => {
     setOpenConfirmDialog(!openConfirmDialog);
   };
+
+  useEffect(() => {
+    const addOrcid = async (accessToken: string) => {
+      const orcidInfoResponse = await getOrcidInfo(accessToken);
+      const orcidId = orcidInfoResponse.data.id;
+      if (orcidId && user.authority && !user.authority.orcids.includes(orcidId)) {
+        if (!user.authority?.orcids.includes(orcidId)) {
+          const updatedAuthority = await addQualifierIdForAuthority(
+            user.authority.id,
+            AuthorityQualifiers.ORCID,
+            orcidId
+          );
+          if (updatedAuthority?.error) {
+            dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
+          } else {
+            dispatch(setAuthorityData(updatedAuthority));
+          }
+        }
+
+        history.push(UrlPathTemplate.MyProfile);
+      }
+    };
+
+    const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token');
+    if (orcidAccessToken) {
+      addOrcid(orcidAccessToken);
+    }
+  }, [dispatch, user.authority, location.hash, history]);
 
   useEffect(() => {
     const orcidError = new URLSearchParams(location.hash.replace('#', '?')).get('error');
