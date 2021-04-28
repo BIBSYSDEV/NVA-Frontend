@@ -3,11 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { Button, IconButton, Typography } from '@material-ui/core';
+import { Link as MuiLink } from '@material-ui/core';
+import { useHistory, useLocation } from 'react-router-dom';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { ORCID_BASE_URL } from '../../utils/constants';
 import OrcidModalContent from './OrcidModalContent';
 import Card from '../../components/Card';
-import { Button, IconButton, Typography } from '@material-ui/core';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import {
   removeQualifierIdFromAuthority,
@@ -18,9 +20,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import Modal from '../../components/Modal';
-import { Link as MuiLink } from '@material-ui/core';
 import { StyledNormalTextPreWrapped } from '../../components/styled/Wrappers';
-import { useHistory, useLocation } from 'react-router-dom';
 import { User } from '../../types/user.types';
 import DangerButton from '../../components/DangerButton';
 import { getOrcidInfo } from '../../api/external/orcidApi';
@@ -46,15 +46,6 @@ const StyledLine = styled.div`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-`;
-
-const StyledContent = styled.div`
-  flex: 1;
-`;
-
-const StyledLabel = styled(Typography)`
-  width: 6rem;
-  min-width: 6rem;
 `;
 
 interface UserOrcidProps {
@@ -134,47 +125,42 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
     <Card>
       <Typography variant="h2">{t('orcid.orcid')}</Typography>
       {listOfOrcids?.length > 0 ? (
-        listOfOrcids.map((orcid: string) => {
-          return (
-            <StyledOrcidLine key={orcid} data-testid="orcid-line">
-              <StyledLine>
-                <StyledLabel>{t('orcid.your_orcid')}:</StyledLabel>
-                <IconButton size="small" href={orcid} key={orcid}>
-                  <img src={orcidIcon} height="20" alt="orcid" />
-                </IconButton>
-                <MuiLink href={orcid} target="_blank" rel="noopener noreferrer">
-                  <StyledContent data-testid="orcid-info">
-                    <Typography>{orcid}</Typography>
-                  </StyledContent>
+        listOfOrcids.map((orcid: string) => (
+          <StyledOrcidLine key={orcid} data-testid="orcid-line">
+            <StyledLine>
+              <IconButton size="small" href={orcid} key={orcid}>
+                <img src={orcidIcon} height="20" alt="orcid" />
+              </IconButton>
+              <Typography component={MuiLink} href={orcid} target="_blank" rel="noopener noreferrer">
+                {orcid}
+              </Typography>
+            </StyledLine>
+
+            <StyledButton
+              data-testid="button-confirm-delete-orcid"
+              onClick={toggleConfirmDialog}
+              startIcon={<DeleteIcon />}
+              variant="outlined"
+              color="secondary">
+              {t('common:remove')}
+            </StyledButton>
+
+            <ConfirmDialog
+              open={openConfirmDialog}
+              title={t('orcid.remove_connection')}
+              onAccept={() => removeOrcid(orcid)}
+              onCancel={toggleConfirmDialog}
+              isLoading={isRemovingOrcid}
+              dataTestId="confirm-remove-orcid-connection-dialog">
+              <StyledNormalTextPreWrapped>
+                {t('orcid.remove_connection_info')}{' '}
+                <MuiLink href={ORCID_BASE_URL} target="_blank" rel="noopener noreferrer">
+                  {ORCID_BASE_URL}
                 </MuiLink>
-              </StyledLine>
-
-              <StyledButton
-                data-testid="button-confirm-delete-orcid"
-                onClick={toggleConfirmDialog}
-                startIcon={<DeleteIcon />}
-                variant="outlined"
-                color="secondary">
-                {t('common:remove')}
-              </StyledButton>
-
-              <ConfirmDialog
-                open={openConfirmDialog}
-                title={t('orcid.remove_connection')}
-                onAccept={() => removeOrcid(orcid)}
-                onCancel={toggleConfirmDialog}
-                isLoading={isRemovingOrcid}
-                dataTestId="confirm-remove-orcid-connection-dialog">
-                <StyledNormalTextPreWrapped>
-                  {t('orcid.remove_connection_info')}{' '}
-                  <MuiLink href={ORCID_BASE_URL} target="_blank" rel="noopener noreferrer">
-                    {ORCID_BASE_URL}
-                  </MuiLink>
-                </StyledNormalTextPreWrapped>
-              </ConfirmDialog>
-            </StyledOrcidLine>
-          );
-        })
+              </StyledNormalTextPreWrapped>
+            </ConfirmDialog>
+          </StyledOrcidLine>
+        ))
       ) : (
         <>
           <Typography paragraph>{t('orcid.orcid_description')}</Typography>
