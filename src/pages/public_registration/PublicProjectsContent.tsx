@@ -46,7 +46,7 @@ interface ProjectRowProps {
 
 const ProjectRow = ({ project }: ProjectRowProps) => {
   const { t } = useTranslation('registration');
-  const [fetchedProject, isLoadingProject] = useFetch<CristinProject>(project.id, true); // TODO: remove auth
+  const [fetchedProject, isLoadingProject] = useFetch<CristinProject>(project.id);
   const institutionName = fetchedProject && getLanguageString(fetchedProject.coordinatingInstitution.name);
   const projectManager = fetchedProject?.contributors.find((contributor) => contributor.type === 'ProjectManager');
   const projectManagerName = [projectManager?.identity.firstName, projectManager?.identity.lastName].join(' ');
