@@ -17,7 +17,6 @@ import {
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { setAuthorityData } from '../../redux/actions/userActions';
-import { setExternalOrcid } from '../../redux/actions/orcidActions';
 import Modal from '../../components/Modal';
 import { Link as MuiLink } from '@material-ui/core';
 import { StyledNormalTextPreWrapped } from '../../components/styled/Wrappers';
@@ -124,7 +123,6 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
     if (updatedAuthority.error) {
       dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
     } else if (updatedAuthority) {
-      dispatch(setExternalOrcid(''));
       dispatch(setAuthorityData(updatedAuthority));
       dispatch(setNotification(t('feedback:success.delete_identifier')));
     }
