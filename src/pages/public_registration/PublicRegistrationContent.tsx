@@ -36,7 +36,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
   registration = deepmerge(emptyRegistration, registration);
 
   const {
-    entityDescription: { contributors, mainTitle, abstract, description, tags },
+    entityDescription: { contributors, mainTitle, abstract, description, tags, reference },
     projects,
   } = registration;
 
@@ -48,7 +48,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
         {contributors && (
           <PublicRegistrationContributors
             contributors={contributors}
-            registrationType={registration.entityDescription.reference.publicationInstance.type}
+            registrationType={reference.publicationInstance.type}
           />
         )}
 
