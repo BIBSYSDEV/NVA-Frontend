@@ -69,7 +69,9 @@ export const PublicRegistrationContributors = ({
             distinctUnits={distinctUnits}
             otherCount={showAll ? undefined : hiddenContributorsCount.current}
           />
-          {showAll && <ContributorsRow contributors={otherContributorsToShow} distinctUnits={distinctUnits} showRole />}
+          {showAll && otherContributorsToShow.length > 0 && (
+            <ContributorsRow contributors={otherContributorsToShow} distinctUnits={distinctUnits} isOtherContributors />
+          )}
         </div>
         {hiddenContributorsCount.current > 0 && (
           <Button
@@ -111,15 +113,21 @@ const StyledContributorsList = styled.ul`
 interface ContributorsRowProps {
   contributors: Contributor[];
   distinctUnits: string[];
-  showRole?: boolean;
+  isOtherContributors?: boolean;
   otherCount?: number;
 }
 
-const ContributorsRow = ({ contributors, distinctUnits, showRole = false, otherCount }: ContributorsRowProps) => {
+const ContributorsRow = ({
+  contributors,
+  distinctUnits,
+  isOtherContributors = false,
+  otherCount,
+}: ContributorsRowProps) => {
   const { t } = useTranslation('registration');
 
   return (
     <StyledContributorsList>
+      {isOtherContributors && <Typography component="li">{t('heading.contributors')}:</Typography>}
       {contributors.map((contributor, index) => {
         const {
           identity: { id, name, orcId },
@@ -140,7 +148,7 @@ const ContributorsRow = ({ contributors, distinctUnits, showRole = false, otherC
             ) : (
               name
             )}
-            {showRole && ` (${t(`contributors.types.${contributor.role}`)})`}
+            {isOtherContributors && ` (${t(`contributors.types.${contributor.role}`)})`}
             {(orcId || (affiliationIndexes && affiliationIndexes.length > 0)) && (
               <sup>
                 {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
