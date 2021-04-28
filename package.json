@@ -67,7 +67,7 @@
     "extends": "@istanbuljs/nyc-config-typescript"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.9.4",
+    "@cypress/code-coverage": "^3.9.5",
     "@cypress/instrument-cra": "^1.4.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/history": "^4.7.8",
