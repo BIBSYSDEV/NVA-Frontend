@@ -76,22 +76,23 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       setIsAddingOrcid(true);
       const orcidInfoResponse = await getOrcidInfo(accessToken);
       const orcidId = orcidInfoResponse.data.id;
-      // TODO: error else
-      if (orcidId && user.authority && !user.authority.orcids.includes(orcidId)) {
-        if (!user.authority?.orcids.includes(orcidId)) {
-          const updatedAuthority = await addQualifierIdForAuthority(
-            user.authority.id,
-            AuthorityQualifiers.ORCID,
-            orcidId
-          );
-          if (updatedAuthority?.error) {
-            dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
-          } else {
-            dispatch(setAuthorityData(updatedAuthority));
-          }
+
+      if (!orcidId) {
+        dispatch(setNotification(t('feedback:error.get_orcid', NotificationVariant.Error)));
+      } else if (user.authority && !user.authority.orcids.includes(orcidId)) {
+        const updatedAuthority = await addQualifierIdForAuthority(
+          user.authority.id,
+          AuthorityQualifiers.ORCID,
+          orcidId
+        );
+        if (updatedAuthority?.error) {
+          dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
+        } else {
+          dispatch(setAuthorityData(updatedAuthority));
         }
-        history.push(UrlPathTemplate.MyProfile);
       }
+
+      history.push(UrlPathTemplate.MyProfile);
       setIsAddingOrcid(false);
     };
 
@@ -99,7 +100,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
     if (orcidAccessToken) {
       addOrcid(orcidAccessToken);
     }
-  }, [dispatch, user.authority, location.hash, history]);
+  }, [t, dispatch, user.authority, location.hash, history]);
 
   useEffect(() => {
     const orcidError = new URLSearchParams(location.hash.replace('#', '?')).get('error');
