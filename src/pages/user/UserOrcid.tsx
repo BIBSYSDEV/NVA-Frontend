@@ -83,6 +83,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
     const addOrcid = async (accessToken: string) => {
       const orcidInfoResponse = await getOrcidInfo(accessToken);
       const orcidId = orcidInfoResponse.data.id;
+      // TODO: error else
       if (orcidId && user.authority && !user.authority.orcids.includes(orcidId)) {
         if (!user.authority?.orcids.includes(orcidId)) {
           const updatedAuthority = await addQualifierIdForAuthority(
