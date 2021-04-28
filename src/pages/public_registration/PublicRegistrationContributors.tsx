@@ -69,7 +69,7 @@ export const PublicRegistrationContributors = ({
             distinctUnits={distinctUnits}
             otherCount={showAll ? undefined : hiddenContributorsCount.current}
           />
-          {showAll && <ContributorsRow contributors={otherContributorsToShow} distinctUnits={distinctUnits} />}
+          {showAll && <ContributorsRow contributors={otherContributorsToShow} distinctUnits={distinctUnits} showRole />}
         </div>
         {hiddenContributorsCount.current > 0 && (
           <Button
@@ -111,10 +111,11 @@ const StyledContributorsList = styled.ul`
 interface ContributorsRowProps {
   contributors: Contributor[];
   distinctUnits: string[];
+  showRole?: boolean;
   otherCount?: number;
 }
 
-const ContributorsRow = ({ contributors, distinctUnits, otherCount }: ContributorsRowProps) => {
+const ContributorsRow = ({ contributors, distinctUnits, showRole = false, otherCount }: ContributorsRowProps) => {
   const { t } = useTranslation('registration');
 
   return (
@@ -139,6 +140,7 @@ const ContributorsRow = ({ contributors, distinctUnits, otherCount }: Contributo
             ) : (
               name
             )}
+            {showRole && ` (${t(`contributors.types.${contributor.role}`)})`}
             {(orcId || (affiliationIndexes && affiliationIndexes.length > 0)) && (
               <sup>
                 {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
