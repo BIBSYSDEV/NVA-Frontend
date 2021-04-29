@@ -119,12 +119,12 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       push(newContributor);
     } else {
       const relevantContributor = relevantContributors[unverifiedContributor.index];
-      const relevantAffiliations = relevantContributor.affiliations;
+      const relevantAffiliations = relevantContributor.affiliations ?? [];
       const existingOrgunitIds = authority.orgunitids.map((unitUri) => ({
         type: BackendTypeNames.ORGANIZATION,
         id: unitUri,
       }));
-      relevantAffiliations?.push(...existingOrgunitIds);
+      relevantAffiliations.push(...existingOrgunitIds);
 
       const verifiedContributor: Contributor = {
         ...relevantContributor,
