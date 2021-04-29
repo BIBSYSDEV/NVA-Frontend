@@ -130,7 +130,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       {isAddingOrcid ? (
         <Skeleton width="50%" />
       ) : listOfOrcids.length > 0 ? (
-        listOfOrcids.map((orcid: string) => (
+        listOfOrcids.map((orcid) => (
           <StyledOrcidLine key={orcid} data-testid="orcid-line">
             <StyledLine>
               <IconButton size="small" href={orcid} key={orcid}>
