@@ -101,6 +101,8 @@
     "in_progess": "Under behandling",
     "message_to_curator": "Melding til kurator",
     "not_published": "Ikke publisert",
+    "other_contributors": "(+{{count}} annen)",
+    "other_contributors_plural": "(+{{count}} andre)",
     "participants": "{{count}} deltaker",
     "participants_plural": "{{count}} deltakere",
     "preview": "Forhåndsvisning",
