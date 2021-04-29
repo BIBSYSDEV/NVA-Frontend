@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import deepmerge from 'deepmerge';
 import { emptyRegistration, Registration } from '../../types/registration.types';
-import PublicRegistrationAuthors from './PublicRegistrationAuthors';
 import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
 import { RegistrationPageHeader } from '../../components/PageHeader';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
 import PublicGeneralContent from './PublicGeneralContent';
+import { PublicRegistrationContributors } from './PublicRegistrationContributors';
 import { PublicSummaryContent } from './PublicSummaryContent';
 import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicFilesContent } from './PublicFilesContent';
@@ -36,7 +36,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
   registration = deepmerge(emptyRegistration, registration);
 
   const {
-    entityDescription: { contributors, mainTitle, abstract, description, tags },
+    entityDescription: { contributors, mainTitle, abstract, description, tags, reference },
     projects,
     fileSet,
   } = registration;
@@ -46,7 +46,12 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
       <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
       <RegistrationPageHeader>{mainTitle || `[${t('common:missing_title')}]`}</RegistrationPageHeader>
       <div>
-        {contributors && <PublicRegistrationAuthors contributors={contributors} />}
+        {contributors && (
+          <PublicRegistrationContributors
+            contributors={contributors}
+            registrationType={reference.publicationInstance.type}
+          />
+        )}
 
         <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
           <PublicGeneralContent registration={registration} />
