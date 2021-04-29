@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Button, MuiThemeProvider, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
 import { setNotification } from '../../../redux/actions/notificationActions';
+import lightTheme from '../../../themes/lightTheme';
 import { Authority } from '../../../types/authority.types';
 import {
   Contributor,
@@ -19,10 +20,9 @@ import { BackendTypeNames } from '../../../types/publication_types/commonRegistr
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import useIsMobile from '../../../utils/hooks/useIsMobile';
-import lightTheme from '../../../themes/lightTheme';
-import { ContributorList } from './components/ContributorList';
-import { AddContributorModal } from './AddContributorModal';
 import { getAddContributorText, getContributorHeading } from '../../../utils/translation-helpers';
+import { AddContributorModal } from './AddContributorModal';
+import { ContributorList } from './components/ContributorList';
 
 const StyledButton = styled(Button)`
   margin: 1rem 0rem;
@@ -118,10 +118,19 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       };
       push(newContributor);
     } else {
+      const relevantContributor = relevantContributors[unverifiedContributor.index];
+      const relevantAffiliations = relevantContributor.affiliations ?? [];
+      const existingOrgunitIds = authority.orgunitids.map((unitUri) => ({
+        type: BackendTypeNames.ORGANIZATION,
+        id: unitUri,
+      }));
+      relevantAffiliations.push(...existingOrgunitIds);
+
       const verifiedContributor: Contributor = {
-        ...relevantContributors[unverifiedContributor.index],
+        ...relevantContributor,
         role,
         identity,
+        affiliations: relevantAffiliations,
       };
       replace(unverifiedContributor.index, verifiedContributor);
     }
