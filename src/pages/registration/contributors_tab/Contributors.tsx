@@ -41,7 +41,7 @@ interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replac
   contributorRoles: ContributorRole[];
 }
 
-const contributorsPerPage = 2;
+const contributorsPerPage = 5;
 
 export const Contributors = ({ contributorRoles, push, replace }: ContributorsProps) => {
   const { t } = useTranslation('registration');
@@ -52,15 +52,15 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   } = values;
   const [openContributorModal, setOpenContributorModal] = useState(false);
   const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1); // Pagination pages are 1-indexed :/
   const isMobile = useIsMobile();
 
   const relevantContributors = contributors.filter((contributor) =>
     contributorRoles.some((role) => role === contributor.role)
   );
   const contributorsToShow = relevantContributors.slice(
-    contributorsPerPage * currentPage,
-    contributorsPerPage * (currentPage + 1)
+    contributorsPerPage * (currentPage - 1),
+    contributorsPerPage * currentPage
   );
   const otherContributors = contributors.filter(
     (contributor) => !contributorRoles.some((role) => role === contributor.role)
@@ -73,9 +73,9 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     const nextContributors = [...nextRelevantContributors, ...otherContributors];
     setFieldValue(ContributorFieldNames.CONTRIBUTORS, nextContributors);
 
-    const maxPage = Math.ceil(nextContributors.length / contributorsPerPage);
-    if (currentPage > maxPage - 1) {
-      setCurrentPage(maxPage - 1);
+    const maxValidPage = Math.ceil(nextContributors.length / contributorsPerPage);
+    if (currentPage > maxValidPage) {
+      setCurrentPage(maxValidPage);
     }
 
     if (nextContributors.length === 0) {
@@ -137,8 +137,8 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         sequence: relevantContributors.length + 1,
       };
       push(newContributor);
-      const maxPage = Math.ceil((relevantContributors.length + 1) / contributorsPerPage);
-      setCurrentPage(maxPage - 1);
+      const maxValidPage = Math.ceil((relevantContributors.length + 1) / contributorsPerPage);
+      setCurrentPage(maxValidPage);
     } else {
       const relevantContributor = relevantContributors[unverifiedContributor.index];
       const relevantAffiliations = relevantContributor.affiliations ?? [];
@@ -206,8 +206,8 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           size="large"
           shape="rounded"
           getItemAriaLabel={paginationTranslationProps}
-          onChange={(_, page) => setCurrentPage(page - 1)}
-          page={currentPage + 1}
+          onChange={(_, page) => setCurrentPage(page)}
+          page={currentPage}
           count={Math.ceil(relevantContributors.length / contributorsPerPage)}
         />
       )}
