@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import deepmerge from 'deepmerge';
 import { emptyRegistration, Registration } from '../../types/registration.types';
-import PublicFilesContent from './PublicFilesContent';
 import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
 import { RegistrationPageHeader } from '../../components/PageHeader';
 import BackgroundDiv from '../../components/BackgroundDiv';
@@ -12,6 +11,7 @@ import PublicGeneralContent from './PublicGeneralContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
 import { PublicSummaryContent } from './PublicSummaryContent';
 import { PublicProjectsContent } from './PublicProjectsContent';
+import { PublicFilesContent } from './PublicFilesContent';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   padding: 2rem 5rem;
@@ -38,6 +38,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
   const {
     entityDescription: { contributors, mainTitle, abstract, description, tags, reference },
     projects,
+    fileSet,
   } = registration;
 
   return (
@@ -56,9 +57,11 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           <PublicGeneralContent registration={registration} />
         </StyledBackgroundDiv>
 
-        <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-          <PublicFilesContent registration={registration} />
-        </StyledBackgroundDiv>
+        {fileSet.files.length > 0 && (
+          <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.light}>
+            <PublicFilesContent registration={registration} />
+          </StyledBackgroundDiv>
+        )}
 
         {(abstract || description || tags.length > 0) && (
           <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.main}>
@@ -68,7 +71,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
 
         {projects?.length > 0 && (
           <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-            <PublicProjectsContent projects={registration.projects} />
+            <PublicProjectsContent projects={projects} />
           </StyledBackgroundDiv>
         )}
       </div>
