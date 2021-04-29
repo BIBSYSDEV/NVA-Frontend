@@ -49,7 +49,7 @@ const mockSingleAuthorityResponse: Authority = {
 
 const mockSingleAuthorityResponseWithOrcid: Authority = {
   ...mockSingleAuthorityResponse,
-  orcids: ['0000-0001-2345-6789'],
+  orcids: ['https://sandbox.orcid.org/0000-0001-2345-6789'],
   orgunitids: [...mockSingleAuthorityResponse.orgunitids, 'https://api.cristin.no/v2/units/194.65.20.10'],
 };
 

@@ -7,12 +7,10 @@ import WorkIcon from '@material-ui/icons/Work';
 import { Helmet } from 'react-helmet';
 import Card from '../../components/Card';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
-import NormalText from '../../components/NormalText';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { SearchFieldName } from '../../types/search.types';
-import { ORCID_BASE_URL } from '../../utils/constants';
 import useFetchAuthority from '../../utils/hooks/useFetchAuthority';
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
 import SearchResults from '../search/SearchResults';
@@ -66,21 +64,18 @@ const PublicProfile = () => {
                   </StyledTextContainer>
                 </StyledLine>
               )}
-              {authority.orcids.map((orcid: string) => {
-                const orcidLink = `${ORCID_BASE_URL}/${orcid}`;
-                return (
-                  <StyledLine key={orcid}>
-                    <IconButton size="small" href={orcidLink} key={orcid}>
-                      <img src={orcidIcon} height="20" alt="orcid" />
-                    </IconButton>
-                    <StyledTextContainer>
-                      <MuiLink href={orcidLink} target="_blank" rel="noopener noreferrer">
-                        <NormalText>{orcidLink}</NormalText>
-                      </MuiLink>
-                    </StyledTextContainer>
-                  </StyledLine>
-                );
-              })}
+              {authority.orcids.map((orcid) => (
+                <StyledLine key={orcid}>
+                  <IconButton size="small" href={orcid}>
+                    <img src={orcidIcon} height="20" alt="orcid" />
+                  </IconButton>
+                  <StyledTextContainer>
+                    <Typography component={MuiLink} href={orcid} target="_blank" rel="noopener noreferrer">
+                      {orcid}
+                    </Typography>
+                  </StyledTextContainer>
+                </StyledLine>
+              ))}
             </Card>
             {registrations && (
               <StyledRegistrations>
