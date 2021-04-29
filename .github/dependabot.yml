@@ -1,0 +1,39 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    timezone: Europe/Oslo
+  open-pull-requests-limit: 20
+  ignore:
+  - dependency-name: "@material-ui/styles"
+    versions:
+    - 4.11.4
+  - dependency-name: "@material-ui/lab"
+    versions:
+    - 4.0.0-alpha.58
+  - dependency-name: "@date-io/date-fns"
+    versions:
+    - 2.10.6
+  - dependency-name: "@uppy/dashboard"
+    versions:
+    - 1.18.0
+  - dependency-name: "@uppy/aws-s3-multipart"
+    versions:
+    - 1.8.15
+  - dependency-name: "@uppy/locales"
+    versions:
+    - 1.18.0
+  - dependency-name: "@uppy/react"
+    versions:
+    - 1.11.6
+  - dependency-name: styled-components
+    versions:
+    - 5.2.2
+  - dependency-name: "@cypress/code-coverage"
+    versions:
+    - 3.9.3
+  - dependency-name: faker
+    versions:
+    - 5.5.1
