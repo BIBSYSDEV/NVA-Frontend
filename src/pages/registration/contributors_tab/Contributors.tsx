@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, MuiThemeProvider, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
+import { Pagination } from '@material-ui/lab';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { Authority } from '../../../types/authority.types';
 import {
@@ -29,9 +30,18 @@ const StyledButton = styled(Button)`
   border-radius: 1rem;
 `;
 
+const StyledPagination = styled(Pagination)`
+  margin-top: 1rem;
+  > ul {
+    justify-content: center;
+  }
+`;
+
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
   contributorRoles: ContributorRole[];
 }
+
+const contributorsPerPage = 5;
 
 export const Contributors = ({ contributorRoles, push, replace }: ContributorsProps) => {
   const { t } = useTranslation('registration');
@@ -42,10 +52,15 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   } = values;
   const [openContributorModal, setOpenContributorModal] = useState(false);
   const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
+  const [currentPage, setCurrentPage] = useState(0);
   const isMobile = useIsMobile();
 
   const relevantContributors = contributors.filter((contributor) =>
     contributorRoles.some((role) => role === contributor.role)
+  );
+  const contributorsToShow = relevantContributors.slice(
+    contributorsPerPage * currentPage,
+    contributorsPerPage * currentPage + contributorsPerPage
   );
   const otherContributors = contributors.filter(
     (contributor) => !contributorRoles.some((role) => role === contributor.role)
@@ -147,18 +162,17 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     <div data-testid={contributorRole}>
       <Typography variant="h2">{getContributorHeading(contributorRole)}</Typography>
       <MuiThemeProvider theme={lightTheme}>
-        {((isMobile && relevantContributors.length >= 2) || (!isMobile && relevantContributors.length >= 5)) &&
+        {((isMobile && contributorsToShow.length >= 2) || (!isMobile && contributorsToShow.length >= 5)) &&
           addContributorButton}
 
         <ContributorList
-          contributors={relevantContributors}
+          contributors={contributorsToShow}
           onDelete={handleOnRemove}
           onMoveContributor={handleMoveContributor}
           openContributorModal={handleOpenContributorModal}
           showContributorRole={contributorRoles.length > 1}
         />
 
-        {addContributorButton}
         <AddContributorModal
           contributorRoles={contributorRoles}
           contributorRole={contributorRole}
@@ -168,6 +182,17 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           onContributorSelected={onContributorSelected}
         />
       </MuiThemeProvider>
+      {relevantContributors.length > contributorsPerPage && (
+        <StyledPagination
+          variant="outlined"
+          shape="rounded"
+          color="primary"
+          count={Math.ceil(relevantContributors.length / contributorsPerPage)}
+          onChange={(_, page) => setCurrentPage(page - 1)}
+          size="large"
+        />
+      )}
+      {addContributorButton}
     </div>
   );
 };
