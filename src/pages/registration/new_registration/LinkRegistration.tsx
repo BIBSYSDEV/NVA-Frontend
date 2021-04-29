@@ -36,7 +36,7 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
     if (!doi) {
       return;
     }
-    history.push(getRegistrationPath(doi.identifier), { isNewRegistration: true });
+    history.push(getRegistrationPath(doi.identifier), { highestValidatedTab: -1 });
   };
 
   const handleSearch = async (doiUrl: string) => {

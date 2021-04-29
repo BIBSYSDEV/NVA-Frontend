@@ -29,29 +29,59 @@ const ContributorsPanel = () => {
     // Ensure all contributors has a role by setting Creator role as default
     const contributorsWithRole = contributorsRef.current.map((contributor) => ({
       ...contributor,
-      role: contributor.role ?? ContributorRole.CREATOR,
+      role: contributor.role ?? ContributorRole.Creator,
     }));
     setFieldValue(ContributorFieldNames.CONTRIBUTORS, contributorsWithRole);
   }, [setFieldValue]);
 
+  // Creator should not be selectable for other contributors
+  const selectableContributorRoles = Object.values(ContributorRole).filter((role) => role !== ContributorRole.Creator);
+
   return (
     <>
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
-          {({ push, replace }: FieldArrayRenderProps) =>
-            publicationContext.type === PublicationType.DEGREE ? (
-              <>
-                <Contributors push={push} replace={replace} />
-                <Contributors contributorRole={ContributorRole.SUPERVISOR} push={push} replace={replace} />
-              </>
-            ) : publicationInstance.type === BookType.ANTHOLOGY ? (
-              <Contributors contributorRole={ContributorRole.EDITOR} push={push} replace={replace} />
-            ) : (
-              <Contributors push={push} replace={replace} />
-            )
-          }
-        </FieldArray>
-      </BackgroundDiv>
+      <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
+        {({ push, replace }: FieldArrayRenderProps) =>
+          publicationContext.type === PublicationType.DEGREE ? (
+            <>
+              <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+                <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
+              </BackgroundDiv>
+              <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
+                <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Supervisor]} />
+              </BackgroundDiv>
+              <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
+                <Contributors
+                  push={push}
+                  replace={replace}
+                  contributorRoles={selectableContributorRoles.filter((role) => role !== ContributorRole.Supervisor)}
+                />
+              </BackgroundDiv>
+            </>
+          ) : publicationInstance.type === BookType.ANTHOLOGY ? (
+            <>
+              <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+                <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Editor]} />
+              </BackgroundDiv>
+              <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
+                <Contributors
+                  push={push}
+                  replace={replace}
+                  contributorRoles={selectableContributorRoles.filter((role) => role !== ContributorRole.Editor)}
+                />
+              </BackgroundDiv>
+            </>
+          ) : (
+            <>
+              <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+                <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
+              </BackgroundDiv>
+              <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
+                <Contributors push={push} replace={replace} contributorRoles={selectableContributorRoles} />
+              </BackgroundDiv>
+            </>
+          )
+        }
+      </FieldArray>
       {!!contributorsTouched && typeof contributorsError === 'string' && (
         <FormHelperText error>
           <ErrorMessage name={ContributorFieldNames.CONTRIBUTORS} />

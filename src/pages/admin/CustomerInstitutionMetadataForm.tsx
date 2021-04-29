@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
+import { Typography } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 
-import Heading from '../../components/Heading';
 import {
   CustomerInstitution,
   emptyCustomerInstitution,
@@ -69,8 +69,8 @@ export const CustomerInstitutionMetadataForm = ({
   };
 
   return (
-    <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-      <Heading>{t('common:institution')}</Heading>
+    <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
+      <Typography variant="h2">{t('common:institution')}</Typography>
       <Formik
         enableReinitialize
         initialValues={{ ...emptyCustomerInstitution, ...customerInstitution }}

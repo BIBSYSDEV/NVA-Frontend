@@ -15,6 +15,7 @@ export enum LanguageCodes {
   SWEDISH = 'swe',
   GERMAN = 'ger',
   OTHER = 'mis',
+  Undefined = 'und',
 }
 
 export enum LanguageValues {

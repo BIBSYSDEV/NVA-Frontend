@@ -4,13 +4,14 @@ import { Typography } from '@material-ui/core';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import { ContributorCard } from './ContributorCard';
-import { getRemoveContributorText } from '../../../../utils/validation/registration/contributorTranslations';
+import { getRemoveContributorText } from '../../../../utils/translation-helpers';
 
 interface ContributorListProps {
   contributors: Contributor[];
   onDelete: (index: number) => void;
   onMoveContributor: (newSequence: number, oldSequence: number) => void;
   openContributorModal: (unverifiedContributor: UnverifiedContributor) => void;
+  showContributorRole?: boolean;
 }
 
 export const ContributorList = ({
@@ -18,6 +19,7 @@ export const ContributorList = ({
   onDelete,
   onMoveContributor,
   openContributorModal,
+  showContributorRole = false,
 }: ContributorListProps) => {
   const { t } = useTranslation('registration');
   const [contributorToRemove, setContributorToRemove] = useState<Contributor | null>(null);
@@ -35,6 +37,8 @@ export const ContributorList = ({
           onMoveContributor={onMoveContributor}
           onRemoveContributorClick={() => setContributorToRemove(contributor)}
           openContributorModal={openContributorModal}
+          contributorsLength={contributors.length}
+          showContributorRole={showContributorRole}
         />
       ))}
       {contributorToRemove && (

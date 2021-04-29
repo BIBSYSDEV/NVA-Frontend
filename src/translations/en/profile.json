@@ -42,8 +42,7 @@
     "orcid_description": "To connect your ORCID iD, sign into ORCID. Or register to create your ORCID iD and connect. It makes it easier to identify you.",
     "remove_connection": "Remove connection to ORCID",
     "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Unit's access to read your ORCID, you have to go to your profile.",
-    "skip_this_step": "Skip (can be configured later)",
-    "your_orcid": "Your ORCID"
+    "skip_this_step": "Skip (can be configured later)"
   },
   "public_profile": "Public profile",
   "roles": {

@@ -3,20 +3,14 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Tabs, Typography } from '@material-ui/core';
+import { useLocation } from 'react-router-dom';
 
 import { Registration, RegistrationTab } from '../../types/registration.types';
-import {
-  mergeTouchedFields,
-  touchedContributorTabFields,
-  touchedDescriptionTabFields,
-  touchedFilesTabFields,
-  touchedResourceTabFields,
-  getTabErrors,
-  getFirstErrorTab,
-} from '../../utils/formik-helpers';
+import { getTabErrors, getFirstErrorTab, getTouchedTabFields, mergeTouchedFields } from '../../utils/formik-helpers';
 import { ErrorList } from './ErrorList';
 import { RequiredDescription } from '../../components/RequiredDescription';
 import { LinkTab } from '../../components/LinkTab';
+import { RegistrationLocationState } from './RegistrationForm';
 
 const StyledTabs = styled(Tabs)`
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
@@ -26,9 +20,6 @@ const StyledTabs = styled(Tabs)`
   }
 `;
 
-const noTouchedTab = -1;
-type HighestTouchedTab = RegistrationTab | typeof noTouchedTab;
-
 interface RegistrationFormTabsProps {
   setTabNumber: (newTab: RegistrationTab) => void;
   tabNumber: RegistrationTab;
@@ -37,6 +28,7 @@ interface RegistrationFormTabsProps {
 export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFormTabsProps) => {
   const { t } = useTranslation('registration');
   const { errors, touched, values, setTouched } = useFormikContext<Registration>();
+  const locationState = useLocation<RegistrationLocationState>().state;
 
   const valuesRef = useRef(values);
   useEffect(() => {
@@ -48,40 +40,23 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
     touchedRef.current = touched;
   }, [touched]);
 
-  const highestPreviouslyTouchedTabRef = useRef<HighestTouchedTab>(noTouchedTab);
-
   useEffect(() => {
-    // Touch all fields for each tab
-    const tabFields = {
-      [RegistrationTab.Description]: () => touchedDescriptionTabFields,
-      [RegistrationTab.ResourceType]: () =>
-        touchedResourceTabFields(valuesRef.current.entityDescription.reference.publicationContext.type),
-      [RegistrationTab.Contributors]: () =>
-        touchedContributorTabFields(valuesRef.current.entityDescription.contributors),
-      [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(valuesRef.current.fileSet.files),
-    };
+    const highestValidatedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
 
-    if (tabNumber > highestPreviouslyTouchedTabRef.current) {
-      // Avoid setting tabs to touched all the time
-      if (tabNumber > highestPreviouslyTouchedTabRef.current) {
-        highestPreviouslyTouchedTabRef.current = tabNumber;
-      }
+    if (tabNumber > highestValidatedTab) {
+      locationState.highestValidatedTab = tabNumber;
 
-      // Set all fields on previous tabs to touched
-      const fieldsToTouchOnMount = [touchedRef.current];
-      for (let thisTab = RegistrationTab.Description; thisTab < tabNumber; thisTab++) {
-        fieldsToTouchOnMount.push(tabFields[thisTab]());
-      }
-      const mergedFieldsOnMount = mergeTouchedFields(fieldsToTouchOnMount);
-      setTouched(mergedFieldsOnMount);
+      // Set fields on previous tabs to touched
+      const touchedFieldsOnMount = getTouchedTabFields(tabNumber - 1, valuesRef.current);
+      setTouched(touchedFieldsOnMount);
     }
 
     // Set fields on current tab to touched
     return () => {
-      const mergedFieldsOnUnmount = mergeTouchedFields([touchedRef.current, tabFields[tabNumber]()]);
-      setTouched(mergedFieldsOnUnmount);
+      const touchedFieldsOnUnmount = getTouchedTabFields(tabNumber, valuesRef.current);
+      setTouched(mergeTouchedFields([touchedRef.current, touchedFieldsOnUnmount]));
     };
-  }, [setTouched, tabNumber]);
+  }, [setTouched, tabNumber, locationState]);
 
   const tabErrors = getTabErrors(valuesRef.current, errors, touched);
 

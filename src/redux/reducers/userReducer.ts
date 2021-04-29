@@ -1,6 +1,5 @@
 import { Affiliation, RoleName, User } from '../../types/user.types';
 import { AuthActions, LOGOUT_SUCCESS } from '../actions/authActions';
-import { OrcidActions, SET_EXTERNAL_ORCID } from '../actions/orcidActions';
 import {
   SET_AUTHORITY_DATA,
   SET_POSSIBLE_AUTHORITIES,
@@ -11,7 +10,7 @@ import {
 
 export const userReducer = (
   state: User | null = null,
-  action: UserActions | OrcidActions | AuthActions
+  action: UserActions | AuthActions
 ): User | Partial<User> | null => {
   switch (action.type) {
     case SET_USER_SUCCESS: {
@@ -50,11 +49,7 @@ export const userReducer = (
         isCurator: !!state?.customerId && action.roles.some((role) => role === RoleName.CURATOR),
         isEditor: !!state?.customerId && action.roles.some((role) => role === RoleName.EDITOR),
       };
-    case SET_EXTERNAL_ORCID:
-      return {
-        ...state,
-        externalOrcid: action.orcid,
-      };
+
     case SET_AUTHORITY_DATA:
       return {
         ...state,
