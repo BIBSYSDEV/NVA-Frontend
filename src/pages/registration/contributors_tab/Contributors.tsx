@@ -60,7 +60,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   );
   const contributorsToShow = relevantContributors.slice(
     contributorsPerPage * currentPage,
-    contributorsPerPage * currentPage + contributorsPerPage
+    contributorsPerPage * (currentPage + 1)
   );
   const otherContributors = contributors.filter(
     (contributor) => !contributorRoles.some((role) => role === contributor.role)
