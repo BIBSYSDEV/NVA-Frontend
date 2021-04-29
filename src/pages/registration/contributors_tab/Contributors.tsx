@@ -20,7 +20,7 @@ import { BackendTypeNames } from '../../../types/publication_types/commonRegistr
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import useIsMobile from '../../../utils/hooks/useIsMobile';
-import lightTheme from '../../../themes/lightTheme';
+import lightTheme, { paginationTranslationProps } from '../../../themes/lightTheme';
 import { ContributorList } from './components/ContributorList';
 import { AddContributorModal } from './AddContributorModal';
 import { getAddContributorText, getContributorHeading } from '../../../utils/translation-helpers';
@@ -185,11 +185,12 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       {relevantContributors.length > contributorsPerPage && (
         <StyledPagination
           variant="outlined"
-          shape="rounded"
           color="primary"
-          count={Math.ceil(relevantContributors.length / contributorsPerPage)}
-          onChange={(_, page) => setCurrentPage(page - 1)}
           size="large"
+          shape="rounded"
+          getItemAriaLabel={paginationTranslationProps}
+          onChange={(_, page) => setCurrentPage(page - 1)}
+          count={Math.ceil(relevantContributors.length / contributorsPerPage)}
         />
       )}
       {addContributorButton}
