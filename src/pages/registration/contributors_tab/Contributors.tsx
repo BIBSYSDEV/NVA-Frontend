@@ -41,7 +41,7 @@ interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replac
   contributorRoles: ContributorRole[];
 }
 
-const contributorsPerPage = 5;
+const contributorsPerPage = 2;
 
 export const Contributors = ({ contributorRoles, push, replace }: ContributorsProps) => {
   const { t } = useTranslation('registration');
@@ -132,6 +132,8 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         sequence: relevantContributors.length + 1,
       };
       push(newContributor);
+      const maxPage = Math.ceil((relevantContributors.length + 1) / contributorsPerPage);
+      setCurrentPage(maxPage - 1);
     } else {
       const relevantContributor = relevantContributors[unverifiedContributor.index];
       const relevantAffiliations = relevantContributor.affiliations ?? [];
@@ -200,6 +202,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           shape="rounded"
           getItemAriaLabel={paginationTranslationProps}
           onChange={(_, page) => setCurrentPage(page - 1)}
+          page={currentPage + 1}
           count={Math.ceil(relevantContributors.length / contributorsPerPage)}
         />
       )}
