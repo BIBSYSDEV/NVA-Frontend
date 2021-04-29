@@ -8,16 +8,16 @@ import { getRemoveContributorText } from '../../../../utils/translation-helpers'
 
 interface ContributorListProps {
   contributors: Contributor[];
-  contributorsLength: number;
   onDelete: (index: number) => void;
   onMoveContributor: (newSequence: number, oldSequence: number) => void;
   openContributorModal: (unverifiedContributor: UnverifiedContributor) => void;
+  contributorsLength?: number; // Can be different than contributors.length if paging is used
   showContributorRole?: boolean;
 }
 
 export const ContributorList = ({
   contributors,
-  contributorsLength,
+  contributorsLength = contributors.length,
   onDelete,
   onMoveContributor,
   openContributorModal,
