@@ -11,7 +11,7 @@ interface ContributorListProps {
   onDelete: (index: number) => void;
   onMoveContributor: (newSequence: number, oldSequence: number) => void;
   openContributorModal: (unverifiedContributor: UnverifiedContributor) => void;
-  contributorsLength?: number; // Can be different than contributors.length if paging is used
+  contributorsLength?: number; // Can be bigger than contributors.length if parent uses paging
   showContributorRole?: boolean;
 }
 
