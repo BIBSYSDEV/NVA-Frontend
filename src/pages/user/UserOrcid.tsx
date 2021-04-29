@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Button, IconButton, Typography } from '@material-ui/core';
-import { Link as MuiLink } from '@material-ui/core';
+import { Button, IconButton, Typography, Link as MuiLink } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
 import { useHistory, useLocation } from 'react-router-dom';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { ORCID_BASE_URL } from '../../utils/constants';
@@ -25,7 +25,6 @@ import { User } from '../../types/user.types';
 import DangerButton from '../../components/DangerButton';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { Skeleton } from '@material-ui/lab';
 
 const StyledOrcidLine = styled.div`
   display: grid;
@@ -91,7 +90,6 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
           dispatch(setAuthorityData(updatedAuthority));
         }
       }
-
       history.push(UrlPathTemplate.MyProfile);
       setIsAddingOrcid(false);
     };
@@ -133,7 +131,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         listOfOrcids.map((orcid) => (
           <StyledOrcidLine key={orcid} data-testid="orcid-line">
             <StyledLine>
-              <IconButton size="small" href={orcid} key={orcid}>
+              <IconButton size="small" href={orcid}>
                 <img src={orcidIcon} height="20" alt="orcid" />
               </IconButton>
               <Typography
