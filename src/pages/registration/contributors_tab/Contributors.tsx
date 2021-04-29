@@ -73,6 +73,11 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     const nextContributors = [...nextRelevantContributors, ...otherContributors];
     setFieldValue(ContributorFieldNames.CONTRIBUTORS, nextContributors);
 
+    const maxPage = Math.ceil(nextContributors.length / contributorsPerPage);
+    if (currentPage > maxPage - 1) {
+      setCurrentPage(maxPage - 1);
+    }
+
     if (nextContributors.length === 0) {
       // Ensure field is set to touched even if it's empty
       setFieldTouched(ContributorFieldNames.CONTRIBUTORS);
