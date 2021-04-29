@@ -68,6 +68,8 @@
   "selected": "Valgt",
   "send": "Send",
   "show": "Vis",
+  "show_all": "Vis alle",
+  "show_fewer": "Vis færre",
   "size": "Størrelse",
   "skip_to_main_content": "Hopp til hovedinnhold",
   "skip_to_schema": "Hopp til skjema",

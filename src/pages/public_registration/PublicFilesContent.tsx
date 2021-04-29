@@ -80,7 +80,7 @@ const StyledPreviewAccordion = styled(Accordion)`
 
 const maxFileSize = 10000000; //10 MB
 
-const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) => {
+export const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('common');
   const publiclyAvailableFiles = registration.fileSet.files.filter((file) => !file.administrativeAgreement);
 
@@ -204,5 +204,3 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
     </StyledFileRow>
   );
 };
-
-export default PublicFilesContent;

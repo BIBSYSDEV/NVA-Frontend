@@ -24,7 +24,6 @@ export interface User {
   createdDate?: string;
   cristinId?: string;
   email: string;
-  externalOrcid: string;
   name: string;
   customerId?: string;
   familyName: string;
