@@ -180,6 +180,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           onMoveContributor={handleMoveContributor}
           openContributorModal={handleOpenContributorModal}
           showContributorRole={contributorRoles.length > 1}
+          contributorsLength={relevantContributors.length}
         />
 
         <AddContributorModal
