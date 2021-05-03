@@ -60,7 +60,7 @@ const PrivacyPolicy = () => {
             <TableBody>
               {[...Array(5)].map((_, index) => (
                 <TableRow key={index}>
-                  <TableCell>{t(`purpose.table.row${index}.col0`)}</TableCell>
+                  <TableCell scope="row">{t(`purpose.table.row${index}.col0`)}</TableCell>
                   <TableCell>{t(`purpose.table.row${index}.col1`)}</TableCell>
                   <TableCell>{t(`purpose.table.row${index}.col2`)}</TableCell>
                 </TableRow>
@@ -110,7 +110,7 @@ const PrivacyPolicy = () => {
             <TableBody>
               {[...Array(3)].map((_, index) => (
                 <TableRow key={index}>
-                  <TableCell>{t(`registered_personal_data.table.user_data.row${index}.col0`)}</TableCell>
+                  <TableCell scope="row">{t(`registered_personal_data.table.user_data.row${index}.col0`)}</TableCell>
                   <TableCell>{t(`registered_personal_data.table.user_data.row${index}.col1`)}</TableCell>
                   <TableCell>{t(`registered_personal_data.table.user_data.row${index}.col2`)}</TableCell>
                 </TableRow>
@@ -132,7 +132,9 @@ const PrivacyPolicy = () => {
             <TableBody>
               {[...Array(4)].map((_, index) => (
                 <TableRow key={index}>
-                  <TableCell>{t(`registered_personal_data.table.techincal_user_data.row${index}.col0`)}</TableCell>
+                  <TableCell scope="row">
+                    {t(`registered_personal_data.table.techincal_user_data.row${index}.col0`)}
+                  </TableCell>
                   <TableCell>{t(`registered_personal_data.table.techincal_user_data.row${index}.col1`)}</TableCell>
                   <TableCell>{t(`registered_personal_data.table.techincal_user_data.row${index}.col2`)}</TableCell>
                 </TableRow>
@@ -154,7 +156,9 @@ const PrivacyPolicy = () => {
             <TableBody>
               {[...Array(2)].map((_, index) => (
                 <TableRow key={index}>
-                  <TableCell>{t(`registered_personal_data.table.other_user_data.row${index}.col0`)}</TableCell>
+                  <TableCell scope="row">
+                    {t(`registered_personal_data.table.other_user_data.row${index}.col0`)}
+                  </TableCell>
                   <TableCell>{t(`registered_personal_data.table.other_user_data.row${index}.col1`)}</TableCell>
                   <TableCell>{t(`registered_personal_data.table.other_user_data.row${index}.col2`)}</TableCell>
                 </TableRow>
