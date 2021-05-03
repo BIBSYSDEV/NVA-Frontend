@@ -3,6 +3,10 @@ import { PaletteColor, PaletteColorOptions, SimplePaletteColorOptions } from '@m
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
 import { Color } from './colors';
+import '@fontsource/barlow/400.css';
+import '@fontsource/barlow/500.css';
+import '@fontsource/barlow/700.css';
+import '@fontsource/crimson-text/400.css';
 
 // Extend Palette type to allow custom colors
 declare module '@material-ui/core/styles/createPalette' {
@@ -34,7 +38,7 @@ declare module '@material-ui/core/styles/createPalette' {
 }
 
 enum Font {
-  Barlow = 'Barlow,  sans-serif',
+  Barlow = 'Barlow, sans-serif',
   Crimson = 'Crimson Text, serif',
 }
 
