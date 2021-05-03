@@ -11,11 +11,13 @@ interface ContributorListProps {
   onDelete: (index: number) => void;
   onMoveContributor: (newSequence: number, oldSequence: number) => void;
   openContributorModal: (unverifiedContributor: UnverifiedContributor) => void;
+  contributorsLength?: number; // Can be bigger than contributors.length if parent uses paging
   showContributorRole?: boolean;
 }
 
 export const ContributorList = ({
   contributors,
+  contributorsLength = contributors.length,
   onDelete,
   onMoveContributor,
   openContributorModal,
@@ -37,7 +39,7 @@ export const ContributorList = ({
           onMoveContributor={onMoveContributor}
           onRemoveContributorClick={() => setContributorToRemove(contributor)}
           openContributorModal={openContributorModal}
-          contributorsLength={contributors.length}
+          contributorsLength={contributorsLength}
           showContributorRole={showContributorRole}
         />
       ))}

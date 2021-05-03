@@ -47,7 +47,7 @@ const StyledContributorSection = styled.div`
 
 const StyledSequenceTextField = styled(TextField)`
   grid-area: sequence;
-  width: 3rem;
+  width: 3.6rem;
   margin: -1rem 1rem 0 0;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     margin: -1rem 0 0 1rem;

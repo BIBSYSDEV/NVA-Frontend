@@ -242,3 +242,14 @@ export const datePickerTranslationProps = {
   cancelLabel: i18n.t('common:cancel'),
   okLabel: i18n.t('common:select'),
 };
+
+export const paginationTranslationProps = (type: string, page: number) => {
+  if (type === 'previous') {
+    return i18n.t('common:go_to_previous_page');
+  } else if (type === 'next') {
+    return i18n.t('common:go_to_next_page');
+  } else if (type === 'page') {
+    return i18n.t('common:go_to_page', { page });
+  }
+  return '';
+};
