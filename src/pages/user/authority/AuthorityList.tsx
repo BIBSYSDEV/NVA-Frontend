@@ -54,6 +54,9 @@ const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, selectedArp
       <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
         <TableContainer>
           <Table size="medium">
+            <caption>
+              <Typography variant="srOnly">{t('registration:contributors.authors')}</Typography>
+            </caption>
             <TableHead>
               <TableRow>
                 <TableCell id="selected-heading" padding="checkbox">
