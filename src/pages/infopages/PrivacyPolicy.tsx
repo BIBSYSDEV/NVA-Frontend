@@ -50,6 +50,9 @@ const PrivacyPolicy = () => {
         <Typography paragraph>{t('purpose.paragraph')}</Typography>
         <TableContainer>
           <Table size="small">
+            <caption>
+              <Typography variant="srOnly">{t('purpose.heading')}</Typography>
+            </caption>
             <TableHead>
               <TableRow>
                 <TableCell>{t('purpose.table.header.col0')}</TableCell>
@@ -100,6 +103,9 @@ const PrivacyPolicy = () => {
         <Typography variant="h3">{t('registered_personal_data.table.user_data.heading')}</Typography>
         <TableContainer>
           <Table size="small">
+            <caption>
+              <Typography variant="srOnly">{t('registered_personal_data.table.user_data.heading')}</Typography>
+            </caption>
             <TableHead>
               <TableRow>
                 <TableCell>{t('registered_personal_data.table.header.col0')}</TableCell>
@@ -122,6 +128,11 @@ const PrivacyPolicy = () => {
         <Typography variant="h3">{t('registered_personal_data.table.techincal_user_data.heading')}</Typography>
         <TableContainer>
           <Table size="small">
+            <caption>
+              <Typography variant="srOnly">
+                {t('registered_personal_data.table.techincal_user_data.heading')}
+              </Typography>
+            </caption>
             <TableHead>
               <TableRow>
                 <TableCell>{t('registered_personal_data.table.header.col0')}</TableCell>
@@ -146,6 +157,9 @@ const PrivacyPolicy = () => {
         <Typography variant="h3">{t('registered_personal_data.table.other_user_data.heading')}</Typography>
         <TableContainer>
           <Table size="small">
+            <caption>
+              <Typography variant="srOnly">{t('registered_personal_data.table.other_user_data.heading')}</Typography>
+            </caption>
             <TableHead>
               <TableRow>
                 <TableCell>{t('registered_personal_data.table.header.col0')}</TableCell>
@@ -190,6 +204,9 @@ const PrivacyPolicy = () => {
         <Typography>{t('disclosure_of_data.paragraph3.intro')}</Typography>
         <TableContainer>
           <Table size="small">
+            <caption>
+              <Typography variant="srOnly">{t('disclosure_of_data.paragraph3.table.caption')}</Typography>
+            </caption>
             <TableHead>
               <TableRow>
                 <TableCell>{t('disclosure_of_data.paragraph3.table.header.col0')}</TableCell>
@@ -211,6 +228,9 @@ const PrivacyPolicy = () => {
         <Typography>{t('disclosure_of_data.paragraph6.intro')}</Typography>
         <TableContainer>
           <Table size="small">
+            <caption>
+              <Typography variant="srOnly">{t('disclosure_of_data.paragraph6.table.caption')}</Typography>
+            </caption>
             <TableHead>
               <TableRow>
                 <TableCell>{t('disclosure_of_data.paragraph6.table.header.col0')}</TableCell>

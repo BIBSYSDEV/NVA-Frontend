@@ -31,6 +31,7 @@
     "paragraph2": "The service is run on servers in the EU/EEA.",
     "paragraph3": {
       "intro": "Your personal data will be disclosed to Unit, which is the service provider, and to its subcontractors:",
+      "caption": "Overview of subcontractors which may receive personal data",
       "table": {
         "header": {
           "col0": "Subcontractor",
@@ -55,6 +56,7 @@
     "paragraph6": {
       "intro": "See the following table for the service's integrations:",
       "table": {
+        "caption": "Overview of integrations",
         "header": {
           "col0": "Integration",
           "col1": "Purpose",
