@@ -3,6 +3,8 @@ import { PaletteColor, PaletteColorOptions, SimplePaletteColorOptions } from '@m
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
 import { Color } from './colors';
+
+// Fonts
 import '@fontsource/barlow/400.css';
 import '@fontsource/barlow/500.css';
 import '@fontsource/barlow/700.css';
