@@ -45,6 +45,7 @@ export const CustomerInstitutionAdminsForm = ({
             userList={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)}
             roleToRemove={RoleName.INSTITUTION_ADMIN}
             refetchUsers={refetchInstitutionUsers}
+            tableCaption={t('profile:roles.institution_admins')}
           />
           <StyledNewButton
             color="secondary"
@@ -68,6 +69,7 @@ export const CustomerInstitutionAdminsForm = ({
             users={users}
             closeModal={toggleOpenAddAdminModal}
             refetchUsers={refetchInstitutionUsers}
+            tableCaption={t('users.add_institution_admin')}
           />
         </Modal>
       </MuiThemeProvider>

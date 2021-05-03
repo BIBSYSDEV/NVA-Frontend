@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -31,19 +31,21 @@ const StyledTypography = styled(Typography)`
 
 interface UserListProps {
   userList: InstitutionUser[];
+  tableCaption: string;
   roleToRemove?: RoleName;
   roleToAdd?: RoleName;
   refetchUsers?: () => void;
   alwaysShowPagination?: boolean; // If false, show pagination only if more elements than minimum rows per page
 }
 
-const UserList: FC<UserListProps> = ({
+const UserList = ({
   userList,
+  tableCaption,
   roleToRemove,
   roleToAdd,
   refetchUsers,
   alwaysShowPagination = false,
-}) => {
+}: UserListProps) => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
@@ -97,6 +99,9 @@ const UserList: FC<UserListProps> = ({
       ) : (
         <>
           <StyledTable size="small">
+            <caption>
+              <Typography variant="srOnly">{tableCaption}</Typography>
+            </caption>
             <TableHead>
               <TableRow>
                 <TableCell>
