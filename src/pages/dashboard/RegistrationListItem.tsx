@@ -40,7 +40,7 @@ const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) =
   const { t } = useTranslation('publicationTypes');
   const registrationId = registration.id.split('/').pop() as string;
 
-  const focusedContributors = [...registration.contributors].splice(0, 5);
+  const focusedContributors = registration.contributors.slice(0, 5);
   const countRestContributors = registration.contributors.length - focusedContributors.length;
 
   return (
