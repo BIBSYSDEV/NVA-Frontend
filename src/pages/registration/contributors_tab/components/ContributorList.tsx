@@ -32,9 +32,9 @@ export const ContributorList = ({
 
   return (
     <>
-      {contributors.map((contributor) => (
+      {contributors.map((contributor, index) => (
         <ContributorCard
-          key={contributor.identity.id || contributor.identity.name}
+          key={index}
           contributor={contributor}
           onMoveContributor={onMoveContributor}
           onRemoveContributorClick={() => setContributorToRemove(contributor)}
