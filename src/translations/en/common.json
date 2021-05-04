@@ -67,6 +67,8 @@
   "search_placeholder": "Name Nameson",
   "search_summary": "{{count}} result for \"{{searchTerm}}\"",
   "search_summary_plural": "{{count}} results for \"{{searchTerm}}\"",
+  "search_summary_simple": "{{count}} hit",
+  "search_summary_simple_plural": "{{count}} hits",
   "select": "Select",
   "selected": "Selected",
   "send": "Send",

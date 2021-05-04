@@ -21,9 +21,8 @@ const SearchResults = ({ searchResult, searchTerm }: SearchResultsProps) => {
 
   return (
     <StyledSearchResults data-testid="search-results">
-      {searchTerm && (
-        <Typography variant="subtitle1">{t('search_summary', { count: searchResult.total, searchTerm })}:</Typography>
-      )}
+      <Typography variant="subtitle1">{t('search_summary_simple', { count: searchResult.total })}:</Typography>
+
       <List>
         {registrations &&
           registrations.map((registration) => (
