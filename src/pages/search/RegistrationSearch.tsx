@@ -1,21 +1,31 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TablePagination, Typography } from '@material-ui/core';
+import { useLocation } from 'react-router-dom';
 import ListSkeleton from '../../components/ListSkeleton';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
 import SearchResults from './SearchResults';
+import { SearchFieldName } from '../../types/search.types';
 
 interface RegistrationSearchProps {
-  searchTerm?: string;
   noHitsText?: string;
 }
 
-const RegistrationSearch = ({ searchTerm, noHitsText }: RegistrationSearchProps) => {
+const RegistrationSearch = ({ noHitsText }: RegistrationSearchProps) => {
   const { t } = useTranslation('common');
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[1]);
   const [page, setPage] = useState(0);
-  const [searchResults, isLoadingSearch] = useSearchRegistrations({ searchTerm }, rowsPerPage, page * rowsPerPage);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const queryParam = params.get('query') ?? '';
+  const typeParam = params.get('type') ?? '';
+
+  const [searchResults, isLoadingSearch] = useSearchRegistrations(
+    { searchTerm: queryParam, properties: [{ fieldName: SearchFieldName.Subtype, value: typeParam }] },
+    rowsPerPage,
+    page * rowsPerPage
+  );
 
   return (
     <>
@@ -23,7 +33,7 @@ const RegistrationSearch = ({ searchTerm, noHitsText }: RegistrationSearchProps)
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : searchResults && searchResults.hits.length > 0 ? (
         <>
-          <SearchResults searchResult={searchResults} searchTerm={searchTerm} />
+          <SearchResults searchResult={searchResults} searchTerm={queryParam} />
           <TablePagination
             data-testid="search-pagination"
             rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}

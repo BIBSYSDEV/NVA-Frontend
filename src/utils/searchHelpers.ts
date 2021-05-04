@@ -15,16 +15,24 @@ enum Operator {
   OR = ' OR ',
 }
 
-const createSearchTermFilter = (searchTerm?: string) => (searchTerm ? `"*${searchTerm}*"` : '');
+const createSearchTermFilter = (searchTerm?: string) => {
+  if (!searchTerm) {
+    return '';
+  }
+  return `"*${searchTerm}*"`;
+};
 
-const createPropertyFilter = (properties?: PropertySearch[], canMatchAnyProperty?: boolean) =>
-  properties && properties.length > 0
-    ? `(${properties
-        .map(
-          ({ fieldName, value }) => `${fieldName}:"${Array.isArray(value) ? value.join(`"${Operator.OR}"`) : value}"`
-        )
-        .join(canMatchAnyProperty ? Operator.OR : Operator.AND)})`
-    : '';
+const createPropertyFilter = (properties?: PropertySearch[], canMatchAnyProperty?: boolean) => {
+  const propertiesWithValues = properties?.filter(({ fieldName, value }) => fieldName && value);
+  if (!propertiesWithValues || propertiesWithValues.length === 0) {
+    return '';
+  }
+  const propertyFilter = `(${propertiesWithValues
+    .map(({ fieldName, value }) => `${fieldName}:"${Array.isArray(value) ? value.join(`"${Operator.OR}"`) : value}"`)
+    .join(canMatchAnyProperty ? Operator.OR : Operator.AND)})`;
+
+  return propertyFilter;
+};
 
 export const createSearchQuery = (searchConfig: SearchConfig) => {
   const textSearch = createSearchTermFilter(searchConfig.searchTerm);

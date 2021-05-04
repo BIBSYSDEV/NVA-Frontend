@@ -35,7 +35,7 @@ const SearchPage = () => {
       <StyledSearch>
         <SearchBar handleSearch={handleSearch} initialSearchTerm={searchQuery} />
         <RegistrationFilters />
-        <RegistrationSearch searchTerm={searchQuery} />
+        <RegistrationSearch />
       </StyledSearch>
     </StyledPageWrapperWithMaxWidth>
   );
