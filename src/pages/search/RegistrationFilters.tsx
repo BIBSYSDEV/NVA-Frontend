@@ -1,30 +1,63 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
+import { ListSubheader, MenuItem, TextField } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
+import styled from 'styled-components';
+import { BookType, ChapterType, DegreeType, JournalType, ReportType } from '../../types/publicationFieldNames';
 
-import { BookType, DegreeType, JournalType } from '../../types/publicationFieldNames';
-
-const registrationTypes = [JournalType.ARTICLE, DegreeType.MASTER, BookType.ANTHOLOGY];
+const StyledSelect = styled(TextField)`
+  margin-top: 0rem;
+  margin-bottom: 1rem;
+  width: 11rem;
+`;
 
 export const RegistrationFilters = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('publicationTypes');
   const history = useHistory();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
 
   const onClickType = (type: string) => {
-    params.set('type', type);
+    if (type) {
+      params.set('type', type);
+    } else {
+      params.delete('type');
+    }
     history.push({ search: params.toString() });
   };
 
   return (
     <>
-      {registrationTypes.map((type) => (
-        <Button key={type} disabled={params.get('type') === type} variant="outlined" onClick={() => onClickType(type)}>
-          {t(`publicationTypes:${type}`)}
-        </Button>
-      ))}
+      <StyledSelect
+        defaultValue={params.get('type')}
+        variant="outlined"
+        label={t('common:registration_type')}
+        select
+        onChange={(event) => onClickType(event.target.value)}>
+        <MenuItem value="">
+          <em>{t('common:none')}</em>
+        </MenuItem>
+        <ListSubheader disableSticky>{t('Journal')}</ListSubheader>
+        {Object.values(JournalType).map((type) => (
+          <MenuItem value={type}>{t(`${type}`)}</MenuItem>
+        ))}
+        <ListSubheader>{t('Book')}</ListSubheader>
+        {Object.values(BookType).map((type) => (
+          <MenuItem value={type}>{t(`${type}`)}</MenuItem>
+        ))}
+        <ListSubheader>{t('Report')}</ListSubheader>
+        {Object.values(ReportType).map((type) => (
+          <MenuItem value={type}>{t(`${type}`)}</MenuItem>
+        ))}
+        <ListSubheader>{t('Degree')}</ListSubheader>
+        {Object.values(DegreeType).map((type) => (
+          <MenuItem value={type}>{t(`${type}`)}</MenuItem>
+        ))}
+        <ListSubheader>{t('Chapter')}</ListSubheader>
+        {Object.values(ChapterType).map((type) => (
+          <MenuItem value={type}>{t(`${type}`)}</MenuItem>
+        ))}
+      </StyledSelect>
     </>
   );
 };
