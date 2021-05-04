@@ -25,29 +25,25 @@ const StyledFilterRow = styled.div`
   }
 `;
 
+export enum RegistrationSearchParamKey {
+  Query = 'query',
+  Type = 'type',
+}
+
 export const SearchBar = () => {
   const { t } = useTranslation('publicationTypes');
   const history = useHistory();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const paramQuery = params.get('query') ?? '';
-  const paramType = params.get('type') ?? '';
+  const paramQuery = params.get(RegistrationSearchParamKey.Query) ?? '';
+  const paramType = params.get(RegistrationSearchParamKey.Type) ?? '';
   const [searchTerm, setSearchTerm] = useState(paramQuery);
 
-  const onClickSearch = () => {
-    if (searchTerm) {
-      params.set('query', searchTerm);
+  const updateSearchParam = (key: string, value?: string) => {
+    if (value) {
+      params.set(key, value);
     } else {
-      params.delete('query');
-    }
-    history.push({ search: params.toString() });
-  };
-
-  const onClickType = (type: string) => {
-    if (type) {
-      params.set('type', type);
-    } else {
-      params.delete('type');
+      params.delete(key);
     }
     history.push({ search: params.toString() });
   };
@@ -57,7 +53,7 @@ export const SearchBar = () => {
       onSubmit={(event) => {
         event.preventDefault();
         event.stopPropagation();
-        onClickSearch();
+        updateSearchParam(RegistrationSearchParamKey.Query, searchTerm);
       }}>
       <StyledTextField
         id="search-field"
@@ -85,7 +81,7 @@ export const SearchBar = () => {
           variant="filled"
           label={t('common:registration_type')}
           select
-          onChange={(event) => onClickType(event.target.value)}>
+          onChange={(event) => updateSearchParam(RegistrationSearchParamKey.Type, event.target.value)}>
           <MenuItem value="">
             <em>{t('common:none')}</em>
           </MenuItem>

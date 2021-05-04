@@ -7,6 +7,7 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
 import SearchResults from './SearchResults';
 import { SearchFieldName } from '../../types/search.types';
+import { RegistrationSearchParamKey } from '../../components/SearchBar';
 
 interface RegistrationSearchProps {
   noHitsText?: string;
@@ -18,8 +19,8 @@ const RegistrationSearch = ({ noHitsText }: RegistrationSearchProps) => {
   const [page, setPage] = useState(0);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const queryParam = params.get('query') ?? '';
-  const typeParam = params.get('type') ?? '';
+  const queryParam = params.get(RegistrationSearchParamKey.Query) ?? '';
+  const typeParam = params.get(RegistrationSearchParamKey.Type) ?? '';
 
   const [searchResults, isLoadingSearch] = useSearchRegistrations(
     { searchTerm: queryParam, properties: [{ fieldName: SearchFieldName.Subtype, value: typeParam }] },
