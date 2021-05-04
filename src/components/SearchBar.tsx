@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
 import { ListSubheader, MenuItem, TextField, Typography, IconButton } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-
-import SearchIcon from '@material-ui/icons/Search';
 import { JournalType, BookType, ReportType, DegreeType, ChapterType } from '../types/publicationFieldNames';
-
-const StyledTextField = styled(TextField)`
-  margin-bottom: 1rem;
-`;
 
 const StyledSelect = styled(TextField)`
   margin-top: 0rem;
@@ -55,7 +50,7 @@ export const SearchBar = () => {
         event.stopPropagation();
         updateSearchParam(RegistrationSearchParamKey.Query, searchTerm);
       }}>
-      <StyledTextField
+      <TextField
         id="search-field"
         data-testid="search-field"
         autoFocus
@@ -91,25 +86,25 @@ export const SearchBar = () => {
               {t(type)}
             </MenuItem>
           ))}
-          <ListSubheader>{t('Book')}</ListSubheader>
+          <ListSubheader disableSticky>{t('Book')}</ListSubheader>
           {Object.values(BookType).map((type) => (
             <MenuItem key={type} value={type}>
               {t(type)}
             </MenuItem>
           ))}
-          <ListSubheader>{t('Report')}</ListSubheader>
+          <ListSubheader disableSticky>{t('Report')}</ListSubheader>
           {Object.values(ReportType).map((type) => (
             <MenuItem key={type} value={type}>
               {t(type)}
             </MenuItem>
           ))}
-          <ListSubheader>{t('Degree')}</ListSubheader>
+          <ListSubheader disableSticky>{t('Degree')}</ListSubheader>
           {Object.values(DegreeType).map((type) => (
             <MenuItem key={type} value={type}>
               {t(type)}
             </MenuItem>
           ))}
-          <ListSubheader>{t('Chapter')}</ListSubheader>
+          <ListSubheader disableSticky>{t('Chapter')}</ListSubheader>
           {Object.values(ChapterType).map((type) => (
             <MenuItem key={type} value={type}>
               {t(type)}
