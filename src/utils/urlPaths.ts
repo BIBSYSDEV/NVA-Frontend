@@ -27,9 +27,6 @@ export const getRegistrationPath = (identifier?: string) =>
     ? UrlPathTemplate.Registration.replace(':identifier?', encodeURIComponent(identifier))
     : UrlPathTemplate.Registration.replace('/:identifier?', '');
 
-export const getSearchPath = (searchTerm: string) =>
-  `${UrlPathTemplate.Search}?query=${encodeURIComponent(searchTerm)}`;
-
 export const getUserPath = (authorityId: string) => `${UrlPathTemplate.User}?id=${encodeURIComponent(authorityId)}`;
 
 export const getAdminInstitutionPath = (id: string) =>

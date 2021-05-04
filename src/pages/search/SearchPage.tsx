@@ -1,11 +1,11 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { PageHeader } from '../../components/PageHeader';
 import SearchBar from '../../components/SearchBar';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
-import { getSearchPath } from '../../utils/urlPaths';
+import { RegistrationFilters } from './RegistrationFilters';
 import RegistrationSearch from './RegistrationSearch';
 
 const StyledSearch = styled.div`
@@ -13,23 +13,29 @@ const StyledSearch = styled.div`
   justify-items: center;
 `;
 
-const SearchPage: FC = () => {
+const SearchPage = () => {
   const { t } = useTranslation('common');
   const history = useHistory();
-  const searchTerm = new URLSearchParams(history.location.search).get('query') ?? '';
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const searchQuery = params.get('query') ?? '';
 
   const handleSearch = (searchTerm: string) => {
     if (searchTerm.length) {
-      history.push(getSearchPath(searchTerm));
+      params.set('query', searchTerm);
+    } else {
+      params.delete('query');
     }
+    history.push({ search: params.toString() });
   };
 
   return (
     <StyledPageWrapperWithMaxWidth>
       <PageHeader backPath="/">{t('registrations')}</PageHeader>
       <StyledSearch>
-        <SearchBar handleSearch={handleSearch} initialSearchTerm={searchTerm} />
-        <RegistrationSearch searchTerm={searchTerm} />
+        <SearchBar handleSearch={handleSearch} initialSearchTerm={searchQuery} />
+        <RegistrationFilters />
+        <RegistrationSearch searchTerm={searchQuery} />
       </StyledSearch>
     </StyledPageWrapperWithMaxWidth>
   );
