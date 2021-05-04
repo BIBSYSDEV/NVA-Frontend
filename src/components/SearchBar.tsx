@@ -1,29 +1,63 @@
-import React, { useState, FC } from 'react';
+import React, { useState } from 'react';
+import { ListSubheader, MenuItem, TextField, Typography, IconButton } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { IconButton, TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
+import { JournalType, BookType, ReportType, DegreeType, ChapterType } from '../types/publicationFieldNames';
 
 const StyledTextField = styled(TextField)`
   margin-bottom: 1rem;
 `;
 
-interface SearchBarProps {
-  handleSearch: (searchTerm: string) => void;
-  initialSearchTerm?: string;
-}
+const StyledSelect = styled(TextField)`
+  margin-top: 0rem;
+  width: 13rem;
+`;
 
-const SearchBar: FC<SearchBarProps> = ({ handleSearch, initialSearchTerm = '' }) => {
-  const { t } = useTranslation('common');
-  const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
+const StyledFilterRow = styled.div`
+  display: flex;
+  align-items: center;
+
+  > :not(:first-child) {
+    margin-left: 1rem;
+  }
+`;
+
+export const SearchBar = () => {
+  const { t } = useTranslation('publicationTypes');
+  const history = useHistory();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const paramQuery = params.get('query') ?? '';
+  const paramType = params.get('type') ?? '';
+  const [searchTerm, setSearchTerm] = useState(paramQuery);
+
+  const onClickSearch = () => {
+    if (searchTerm) {
+      params.set('query', searchTerm);
+    } else {
+      params.delete('query');
+    }
+    history.push({ search: params.toString() });
+  };
+
+  const onClickType = (type: string) => {
+    if (type) {
+      params.set('type', type);
+    } else {
+      params.delete('type');
+    }
+    history.push({ search: params.toString() });
+  };
 
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
         event.stopPropagation();
-        handleSearch(searchTerm);
+        onClickSearch();
       }}>
       <StyledTextField
         id="search-field"
@@ -31,7 +65,7 @@ const SearchBar: FC<SearchBarProps> = ({ handleSearch, initialSearchTerm = '' })
         autoFocus
         fullWidth
         variant="outlined"
-        label={t('search')}
+        label={t('common:search')}
         onChange={(event) => setSearchTerm(event.target.value)}
         value={searchTerm}
         InputProps={{
@@ -42,8 +76,51 @@ const SearchBar: FC<SearchBarProps> = ({ handleSearch, initialSearchTerm = '' })
           ),
         }}
       />
+      <StyledFilterRow>
+        <Typography variant="subtitle2" component="p">
+          {t('common:filter')}:
+        </Typography>
+        <StyledSelect
+          value={paramType}
+          variant="filled"
+          label={t('common:registration_type')}
+          select
+          onChange={(event) => onClickType(event.target.value)}>
+          <MenuItem value="">
+            <em>{t('common:none')}</em>
+          </MenuItem>
+          <ListSubheader disableSticky>{t('Journal')}</ListSubheader>
+          {Object.values(JournalType).map((type) => (
+            <MenuItem key={type} value={type}>
+              {t(type)}
+            </MenuItem>
+          ))}
+          <ListSubheader>{t('Book')}</ListSubheader>
+          {Object.values(BookType).map((type) => (
+            <MenuItem key={type} value={type}>
+              {t(type)}
+            </MenuItem>
+          ))}
+          <ListSubheader>{t('Report')}</ListSubheader>
+          {Object.values(ReportType).map((type) => (
+            <MenuItem key={type} value={type}>
+              {t(type)}
+            </MenuItem>
+          ))}
+          <ListSubheader>{t('Degree')}</ListSubheader>
+          {Object.values(DegreeType).map((type) => (
+            <MenuItem key={type} value={type}>
+              {t(type)}
+            </MenuItem>
+          ))}
+          <ListSubheader>{t('Chapter')}</ListSubheader>
+          {Object.values(ChapterType).map((type) => (
+            <MenuItem key={type} value={type}>
+              {t(type)}
+            </MenuItem>
+          ))}
+        </StyledSelect>
+      </StyledFilterRow>
     </form>
   );
 };
-
-export default SearchBar;
