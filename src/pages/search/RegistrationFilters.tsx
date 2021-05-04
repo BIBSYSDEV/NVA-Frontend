@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListSubheader, MenuItem, TextField } from '@material-ui/core';
+import { ListSubheader, MenuItem, TextField, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
@@ -7,8 +7,16 @@ import { BookType, ChapterType, DegreeType, JournalType, ReportType } from '../.
 
 const StyledSelect = styled(TextField)`
   margin-top: 0rem;
-  margin-bottom: 1rem;
-  width: 11rem;
+  width: 13rem;
+`;
+
+const StyledFilterRow = styled.div`
+  display: flex;
+  align-items: center;
+
+  > :not(:first-child) {
+    margin-left: 1rem;
+  }
 `;
 
 export const RegistrationFilters = () => {
@@ -16,6 +24,7 @@ export const RegistrationFilters = () => {
   const history = useHistory();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+  const paramType = params.get('type') ?? '';
 
   const onClickType = (type: string) => {
     if (type) {
@@ -27,10 +36,13 @@ export const RegistrationFilters = () => {
   };
 
   return (
-    <>
+    <StyledFilterRow>
+      <Typography variant="subtitle2" component="p">
+        {t('common:filter')}:
+      </Typography>
       <StyledSelect
-        defaultValue={params.get('type')}
-        variant="outlined"
+        value={paramType}
+        variant="filled"
         label={t('common:registration_type')}
         select
         onChange={(event) => onClickType(event.target.value)}>
@@ -39,25 +51,35 @@ export const RegistrationFilters = () => {
         </MenuItem>
         <ListSubheader disableSticky>{t('Journal')}</ListSubheader>
         {Object.values(JournalType).map((type) => (
-          <MenuItem value={type}>{t(`${type}`)}</MenuItem>
+          <MenuItem key={type} value={type}>
+            {t(type)}
+          </MenuItem>
         ))}
         <ListSubheader>{t('Book')}</ListSubheader>
         {Object.values(BookType).map((type) => (
-          <MenuItem value={type}>{t(`${type}`)}</MenuItem>
+          <MenuItem key={type} value={type}>
+            {t(type)}
+          </MenuItem>
         ))}
         <ListSubheader>{t('Report')}</ListSubheader>
         {Object.values(ReportType).map((type) => (
-          <MenuItem value={type}>{t(`${type}`)}</MenuItem>
+          <MenuItem key={type} value={type}>
+            {t(type)}
+          </MenuItem>
         ))}
         <ListSubheader>{t('Degree')}</ListSubheader>
         {Object.values(DegreeType).map((type) => (
-          <MenuItem value={type}>{t(`${type}`)}</MenuItem>
+          <MenuItem key={type} value={type}>
+            {t(type)}
+          </MenuItem>
         ))}
         <ListSubheader>{t('Chapter')}</ListSubheader>
         {Object.values(ChapterType).map((type) => (
-          <MenuItem value={type}>{t(`${type}`)}</MenuItem>
+          <MenuItem key={type} value={type}>
+            {t(type)}
+          </MenuItem>
         ))}
       </StyledSelect>
-    </>
+    </StyledFilterRow>
   );
 };
