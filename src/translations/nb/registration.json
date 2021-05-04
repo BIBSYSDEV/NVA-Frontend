@@ -117,9 +117,7 @@
   },
   "validation_errors": "Valideringsfeil",
   "registration": {
-    "latest_registrations": "Nye registreringer",
     "link_to_resource": "DOI til ressurs",
-    "no_published_registrations_yet": "Det finnes ingen publiserte registreringer enda",
     "start_registration": "Start registrering",
     "start_with_link_to_resource_description": "Lenke til original versjon hvis ressursen allerede er publisert på Internett med en DOI",
     "start_with_link_to_resource_title": "Start med lenke til original versjon",

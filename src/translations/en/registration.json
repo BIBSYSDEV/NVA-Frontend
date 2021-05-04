@@ -117,9 +117,7 @@
   },
   "validation_errors": "Validation errors",
   "registration": {
-    "latest_registrations": "Recently added",
     "link_to_resource": "DOI to resource",
-    "no_published_registrations_yet": "There are no published registrations yet",
     "start_registration": "Start registration",
     "start_with_link_to_resource_description": "Link to original version if the resource already has been published on the Internet with a DOI",
     "start_with_link_to_resource_title": "Start with link to original version",

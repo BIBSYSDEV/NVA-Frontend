@@ -11,10 +11,9 @@ const StyledSearchResults = styled.div`
 
 interface SearchResultsProps {
   searchResult: SearchResult;
-  searchTerm?: string;
 }
 
-const SearchResults = ({ searchResult, searchTerm }: SearchResultsProps) => {
+const SearchResults = ({ searchResult }: SearchResultsProps) => {
   const { t } = useTranslation('common');
 
   const registrations = searchResult.hits;

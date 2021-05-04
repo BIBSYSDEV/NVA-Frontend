@@ -34,7 +34,7 @@ const RegistrationSearch = ({ noHitsText }: RegistrationSearchProps) => {
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : searchResults && searchResults.hits.length > 0 ? (
         <>
-          <SearchResults searchResult={searchResults} searchTerm={queryParam} />
+          <SearchResults searchResult={searchResults} />
           <TablePagination
             data-testid="search-pagination"
             rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
