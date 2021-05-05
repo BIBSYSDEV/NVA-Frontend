@@ -34,7 +34,7 @@ declare module '@material-ui/core/styles/createPalette' {
 }
 
 enum Font {
-  Barlow = 'Barlow,  sans-serif',
+  Barlow = 'Barlow, sans-serif',
   Crimson = 'Crimson Text, serif',
 }
 
