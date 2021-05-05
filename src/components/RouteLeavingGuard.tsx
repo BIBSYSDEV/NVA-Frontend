@@ -1,6 +1,6 @@
-import React, { useEffect, useState, FC } from 'react';
-import { Prompt, useHistory } from 'react-router-dom';
 import { Location } from 'history';
+import React, { FC, useEffect, useState } from 'react';
+import { Prompt, useHistory } from 'react-router-dom';
 import ConfirmDialog from './ConfirmDialog';
 import NormalText from './NormalText';
 
@@ -31,6 +31,12 @@ const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({ modalDescription, modal
     setShowModal(false);
     setConfirmedNavigation(true);
   };
+
+  useEffect(() => {
+    if (shouldBlockNavigation) {
+      window.onbeforeunload = () => true;
+    }
+  }, [shouldBlockNavigation]);
 
   useEffect(() => {
     if (confirmedNavigation && nextLocation) {
