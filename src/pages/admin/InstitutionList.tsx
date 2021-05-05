@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
@@ -13,7 +13,6 @@ import {
   Typography,
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
-import NormalText from '../../components/NormalText';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { getAdminInstitutionPath } from '../../utils/urlPaths';
 
@@ -41,12 +40,15 @@ interface InstitutionListProps {
   institutions: CustomerInstitution[];
 }
 
-const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
+const InstitutionList = ({ institutions }: InstitutionListProps) => {
   const { t } = useTranslation('common');
 
   return (
     <TableContainer>
       <StyledTable data-testid="customer-institutions-list">
+        <caption>
+          <Typography variant="srOnly">{t('admin:admin_institutions')}</Typography>
+        </caption>
         <TableHead>
           <TableRow>
             <TableCell>
@@ -62,10 +64,10 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
           {institutions.map((institution) => (
             <StyledTableRow key={institution.identifier}>
               <TableCell component="th" scope="row">
-                <NormalText>{institution.name}</NormalText>
+                <Typography>{institution.name}</Typography>
               </TableCell>
               <StyledSmallCell>
-                <NormalText>{new Date(institution.createdDate).toLocaleDateString()}</NormalText>
+                <Typography>{new Date(institution.createdDate).toLocaleDateString()}</Typography>
               </StyledSmallCell>
               <TableCell>
                 <Button
@@ -75,7 +77,7 @@ const InstitutionList: FC<InstitutionListProps> = ({ institutions }) => {
                   component={RouterLink}
                   data-testid={`edit-institution-${institution.shortName}`}
                   to={getAdminInstitutionPath(institution.id)}>
-                  <NormalText>{t('edit')}</NormalText>
+                  <Typography>{t('edit')}</Typography>
                 </Button>
               </TableCell>
             </StyledTableRow>

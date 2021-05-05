@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, MouseEvent, useState } from 'react';
+import React, { ChangeEvent, MouseEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
@@ -45,7 +45,7 @@ interface RegistrationListProps {
   refetchRegistrations: () => void;
 }
 
-const RegistrationList: FC<RegistrationListProps> = ({ registrations, refetchRegistrations }) => {
+const RegistrationList = ({ registrations, refetchRegistrations }: RegistrationListProps) => {
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -84,6 +84,9 @@ const RegistrationList: FC<RegistrationListProps> = ({ registrations, refetchReg
     <>
       <TableContainer>
         <Table>
+          <caption>
+            <Typography variant="srOnly">{t('workLists:my_registrations')}</Typography>
+          </caption>
           <TableHead>
             <TableRow>
               <TableCell data-testid="header-registration-title">
