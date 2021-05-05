@@ -36,6 +36,13 @@ const MyInstitutionUsersPage = () => {
     setAutoAssignCreators(!autoAssignCreators);
   };
 
+  const roleToAddTitle =
+    roleToAdd === RoleName.INSTITUTION_ADMIN
+      ? t('users.add_institution_admin')
+      : roleToAdd === RoleName.CURATOR
+      ? t('users.add_curator')
+      : t('users.add_editor');
+
   return (
     <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('users.user_administration')}</PageHeader>
@@ -53,6 +60,7 @@ const MyInstitutionUsersPage = () => {
               userList={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)}
               roleToRemove={RoleName.INSTITUTION_ADMIN}
               refetchUsers={fetchInstitutionUsers}
+              tableCaption={t('profile:roles.institution_admins')}
             />
           )}
           <StyledNewButton
@@ -78,6 +86,7 @@ const MyInstitutionUsersPage = () => {
               userList={filterUsersByRole(users, RoleName.CURATOR)}
               roleToRemove={RoleName.CURATOR}
               refetchUsers={fetchInstitutionUsers}
+              tableCaption={t('profile:roles.curators')}
             />
           )}
           <StyledNewButton
@@ -103,6 +112,7 @@ const MyInstitutionUsersPage = () => {
               userList={filterUsersByRole(users, RoleName.EDITOR)}
               roleToRemove={RoleName.EDITOR}
               refetchUsers={fetchInstitutionUsers}
+              tableCaption={t('profile:roles.editors')}
             />
           )}
           <StyledNewButton
@@ -132,19 +142,14 @@ const MyInstitutionUsersPage = () => {
           <Modal
             open={true}
             onClose={() => setRoleToAdd(undefined)}
-            headingText={
-              roleToAdd === RoleName.INSTITUTION_ADMIN
-                ? t('users.add_institution_admin')
-                : roleToAdd === RoleName.CURATOR
-                ? t('users.add_curator')
-                : t('users.add_editor')
-            }
+            headingText={roleToAddTitle}
             dataTestId="add-role-modal">
             <AddRoleModalContent
               role={roleToAdd}
               users={users}
               closeModal={() => setRoleToAdd(undefined)}
               refetchUsers={fetchInstitutionUsers}
+              tableCaption={roleToAddTitle}
             />
           </Modal>
         )}
