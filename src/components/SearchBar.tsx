@@ -36,7 +36,7 @@ export const SearchBar = () => {
   const paramType = params.get(RegistrationSearchParamKey.Type) ?? '';
   const [searchTerm, setSearchTerm] = useState(paramQuery);
 
-  const updateSearchParam = (key: string, value?: string) => {
+  const updateSearchParam = (key: RegistrationSearchParamKey, value?: string) => {
     if (value) {
       params.set(key, value);
     } else {

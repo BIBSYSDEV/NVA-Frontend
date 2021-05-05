@@ -29,19 +29,21 @@ const RegistrationSearch = () => {
       ) : (
         <>
           <SearchResults searchResult={searchResults} />
-          <TablePagination
-            data-testid="search-pagination"
-            rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-            component="div"
-            count={searchResults.total}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={(_, newPage) => setPage(newPage)}
-            onChangeRowsPerPage={(event) => {
-              setRowsPerPage(parseInt(event.target.value));
-              setPage(0);
-            }}
-          />
+          {searchResults.hits.length > 0 && (
+            <TablePagination
+              data-testid="search-pagination"
+              rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+              component="div"
+              count={searchResults.total}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={(_, newPage) => setPage(newPage)}
+              onChangeRowsPerPage={(event) => {
+                setRowsPerPage(parseInt(event.target.value));
+                setPage(0);
+              }}
+            />
+          )}
         </>
       )}
     </>
