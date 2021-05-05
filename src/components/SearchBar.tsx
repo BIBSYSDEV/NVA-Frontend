@@ -12,6 +12,8 @@ const StyledSelect = styled(TextField)`
 `;
 
 const StyledFilterRow = styled.div`
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
 

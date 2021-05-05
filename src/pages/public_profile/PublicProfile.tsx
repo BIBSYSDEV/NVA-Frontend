@@ -13,8 +13,8 @@ import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { SearchFieldName } from '../../types/search.types';
 import useFetchAuthority from '../../utils/hooks/useFetchAuthority';
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
-import SearchResults from '../search/SearchResults';
 import { PageSpinner } from '../../components/PageSpinner';
+import { SearchResults } from '../search/SearchResults';
 
 const StyledLine = styled.div`
   display: flex;

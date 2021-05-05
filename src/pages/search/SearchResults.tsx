@@ -5,31 +5,31 @@ import { List, Typography } from '@material-ui/core';
 import { SearchResult } from '../../types/search.types';
 import RegistrationListItem from '../dashboard/RegistrationListItem';
 
-const StyledSearchResults = styled.div`
-  padding-bottom: 1rem;
+const StyledTypography = styled(Typography)`
+  font-weight: 600;
 `;
 
 interface SearchResultsProps {
   searchResult: SearchResult;
 }
 
-const SearchResults = ({ searchResult }: SearchResultsProps) => {
+export const SearchResults = ({ searchResult }: SearchResultsProps) => {
   const { t } = useTranslation('common');
 
   const registrations = searchResult.hits;
 
   return (
-    <StyledSearchResults data-testid="search-results">
-      <Typography variant="subtitle1">{t('search_summary_simple', { count: searchResult.total })}:</Typography>
+    <div data-testid="search-results">
+      <StyledTypography variant="subtitle1">
+        {registrations.length === 0 ? t('no_hits') : t('search_summary_simple', { count: searchResult.total })}
+      </StyledTypography>
 
-      <List>
+      <List disablePadding>
         {registrations &&
           registrations.map((registration) => (
             <RegistrationListItem key={registration.id} registration={registration} />
           ))}
       </List>
-    </StyledSearchResults>
+    </div>
   );
 };
-
-export default SearchResults;
