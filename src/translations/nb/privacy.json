@@ -32,6 +32,7 @@
     "paragraph3": {
       "intro": "Dine personopplysninger blir utlevert til Unit som er leverandør av tjenesten, og til dennes underleverandører:",
       "table": {
+        "caption": "Oversikt over underleverandører som kan motta personopplysninger",
         "header": {
           "col0": "Underleverandør",
           "col1": "Funksjon"
@@ -55,6 +56,7 @@
     "paragraph6": {
       "intro": "Se følgende tabell for tjenestens integrasjoner:",
       "table": {
+        "caption": "Oversikt over integrasjoner",
         "header": {
           "col0": "Integrasjon",
           "col1": "Formål",

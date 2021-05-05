@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
@@ -51,7 +51,7 @@ export const Header = () => {
   const user = useSelector((store: RootStore) => store.user);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -60,7 +60,7 @@ export const Header = () => {
       <StyledNav>
         {user && (
           <StyledBurgerMenu>
-            <IconButton onClick={handleClick}>
+            <IconButton onClick={handleClick} title={t('common:menu')}>
               <MenuIcon />
             </IconButton>
             <MobileMenu anchorEl={anchorEl} onClose={() => setAnchorEl(null)} />

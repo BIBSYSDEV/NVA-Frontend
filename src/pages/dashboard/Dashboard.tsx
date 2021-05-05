@@ -160,7 +160,7 @@ const Dashboard = () => {
         </StyledCollapse>
         <StyledButtonWrapper>
           <Button color="secondary" variant="contained" data-testid="button-read-more" onClick={toggleReadMore}>
-            {t(readMore ? 'read_less' : 'read_more')}
+            {t(readMore ? 'read_less_about_nva' : 'read_more_about_nva')}
           </Button>
         </StyledButtonWrapper>
       </StyledDescriptionDiv>

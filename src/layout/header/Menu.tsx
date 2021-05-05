@@ -66,7 +66,7 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
         endIcon={anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}>
         <Typography noWrap>{menuButtonLabel}</Typography>
       </StyledMenuButton>
-      <StyledMobileMenuButton onClick={handleClickMenuAnchor}>
+      <StyledMobileMenuButton onClick={handleClickMenuAnchor} title={menuButtonLabel}>
         <AccountCircle />
       </StyledMobileMenuButton>
       <MuiMenu

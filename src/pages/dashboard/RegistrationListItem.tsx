@@ -40,7 +40,7 @@ const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) =
   const { t } = useTranslation('publicationTypes');
   const registrationId = registration.id.split('/').pop() as string;
 
-  const focusedContributors = [...registration.contributors].splice(0, 5);
+  const focusedContributors = registration.contributors.slice(0, 5);
   const countRestContributors = registration.contributors.length - focusedContributors.length;
 
   return (
@@ -69,7 +69,7 @@ const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) =
         </StyledContributors>
 
         <Typography>
-          <TextTruncate line={3} truncateText=" [...]" text={registration.abstract} />
+          <TextTruncate line={3} element="span" truncateText=" [...]" text={registration.abstract} />
         </Typography>
         <StyledMetadata>
           {registration.publicationDate && (
