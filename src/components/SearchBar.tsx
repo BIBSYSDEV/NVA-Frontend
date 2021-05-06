@@ -6,6 +6,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { JournalType, BookType, ReportType, DegreeType, ChapterType } from '../types/publicationFieldNames';
 import { SearchFieldName } from '../types/search.types';
+import { Field, FieldProps, Form, Formik, useFormikContext } from 'formik';
 
 const StyledSelect = styled(TextField)`
   margin-top: 0rem;
@@ -28,6 +29,27 @@ export enum RegistrationSearchParamKey {
   Type = 'type',
 }
 
+enum Operator {
+  Equals,
+  Includes,
+}
+
+interface SearchValues {
+  query: string;
+  advanced: AdvancedFilter[];
+}
+
+interface AdvancedFilter {
+  field: string;
+  operator: Operator;
+  value: string;
+}
+
+const intialSearchValues: SearchValues = {
+  query: '',
+  advanced: [],
+};
+
 export const SearchBar = () => {
   const { t } = useTranslation('publicationTypes');
   const history = useHistory();
@@ -48,79 +70,84 @@ export const SearchBar = () => {
   };
 
   return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        updateSearchParam(RegistrationSearchParamKey.Query, searchTerm);
+    <Formik
+      initialValues={intialSearchValues}
+      onSubmit={(values) => {
+        console.log('submit', values);
       }}>
-      <TextField
-        id="search-field"
-        data-testid="search-field"
-        autoFocus
-        fullWidth
-        variant="outlined"
-        label={t('common:search')}
-        onChange={(event) => setSearchTerm(event.target.value)}
-        value={searchTerm}
-        InputProps={{
-          endAdornment: (
-            <IconButton type="submit" data-testid="search-button" title={t('search')}>
-              <SearchIcon />
-            </IconButton>
-          ),
-        }}
-      />
-      <StyledFilterRow>
-        <Typography variant="subtitle2" component="p">
-          {t('common:filter')}:
-        </Typography>
-        <StyledSelect
-          value={paramType}
-          variant="filled"
-          label={t('common:registration_type')}
-          select
-          onChange={(event) => updateSearchParam(RegistrationSearchParamKey.Type, event.target.value)}>
-          <MenuItem value="">
-            <em>{t('common:none')}</em>
-          </MenuItem>
-          <ListSubheader disableSticky>{t('Journal')}</ListSubheader>
-          {Object.values(JournalType).map((type) => (
-            <MenuItem key={type} value={type}>
-              {t(type)}
+      <Form>
+        <Field name="query">
+          {({ field }: FieldProps<string>) => (
+            <TextField
+              {...field}
+              id={field.name}
+              data-testid="search-field"
+              autoFocus
+              fullWidth
+              variant="outlined"
+              label={t('common:search')}
+              InputProps={{
+                endAdornment: (
+                  <IconButton type="submit" data-testid="search-button" title={t('search')}>
+                    <SearchIcon />
+                  </IconButton>
+                ),
+              }}
+            />
+          )}
+        </Field>
+
+        <StyledFilterRow>
+          <Typography variant="subtitle2" component="p">
+            {t('common:filter')}:
+          </Typography>
+          <StyledSelect
+            value={paramType}
+            variant="filled"
+            label={t('common:registration_type')}
+            select
+            onChange={(event) => updateSearchParam(RegistrationSearchParamKey.Type, event.target.value)}>
+            <MenuItem value="">
+              <em>{t('common:none')}</em>
             </MenuItem>
-          ))}
-          <ListSubheader disableSticky>{t('Book')}</ListSubheader>
-          {Object.values(BookType).map((type) => (
-            <MenuItem key={type} value={type}>
-              {t(type)}
-            </MenuItem>
-          ))}
-          <ListSubheader disableSticky>{t('Report')}</ListSubheader>
-          {Object.values(ReportType).map((type) => (
-            <MenuItem key={type} value={type}>
-              {t(type)}
-            </MenuItem>
-          ))}
-          <ListSubheader disableSticky>{t('Degree')}</ListSubheader>
-          {Object.values(DegreeType).map((type) => (
-            <MenuItem key={type} value={type}>
-              {t(type)}
-            </MenuItem>
-          ))}
-          <ListSubheader disableSticky>{t('Chapter')}</ListSubheader>
-          {Object.values(ChapterType).map((type) => (
-            <MenuItem key={type} value={type}>
-              {t(type)}
-            </MenuItem>
-          ))}
-        </StyledSelect>
-        <Button onClick={() => setShowAdvancedSearch(!showAdvancedSearch)}>Avansert søk</Button>
-      </StyledFilterRow>
-      <Collapse in={showAdvancedSearch}>
-        <AdvancedSearch params={params} />
-      </Collapse>
-    </form>
+            <ListSubheader disableSticky>{t('Journal')}</ListSubheader>
+            {Object.values(JournalType).map((type) => (
+              <MenuItem key={type} value={type}>
+                {t(type)}
+              </MenuItem>
+            ))}
+            <ListSubheader disableSticky>{t('Book')}</ListSubheader>
+            {Object.values(BookType).map((type) => (
+              <MenuItem key={type} value={type}>
+                {t(type)}
+              </MenuItem>
+            ))}
+            <ListSubheader disableSticky>{t('Report')}</ListSubheader>
+            {Object.values(ReportType).map((type) => (
+              <MenuItem key={type} value={type}>
+                {t(type)}
+              </MenuItem>
+            ))}
+            <ListSubheader disableSticky>{t('Degree')}</ListSubheader>
+            {Object.values(DegreeType).map((type) => (
+              <MenuItem key={type} value={type}>
+                {t(type)}
+              </MenuItem>
+            ))}
+            <ListSubheader disableSticky>{t('Chapter')}</ListSubheader>
+            {Object.values(ChapterType).map((type) => (
+              <MenuItem key={type} value={type}>
+                {t(type)}
+              </MenuItem>
+            ))}
+          </StyledSelect>
+          <Button onClick={() => setShowAdvancedSearch(!showAdvancedSearch)}>Avansert søk</Button>
+        </StyledFilterRow>
+        <Collapse in={showAdvancedSearch}>
+          <AdvancedSearch params={params} />
+        </Collapse>
+      </Form>
+    </Formik>
   );
 };
 
@@ -136,25 +163,25 @@ interface AdvancedSearchProps {
 
 const AdvancedSearch = ({ params }: AdvancedSearchProps) => {
   const history = useHistory();
-  const [filters, setFilters] = useState(''); //TODO default value
+  const { values, setFieldValue } = useFormikContext<SearchValues>();
 
-  console.log(filters);
+  const addAdvancedFilter = () => {
+    const newAdvanced: AdvancedFilter[] = [...values.advanced, { field: '', operator: Operator.Includes, value: '' }];
+    setFieldValue('advanced', newAdvanced);
+  };
+
   return (
     <>
-      <AdvancedSearchRow
-        updateFilter={(newFilter) => {
-          setFilters(newFilter);
-        }}
-        filter={filters}
-      />
-
+      {values.advanced.map((_, index) => (
+        <AdvancedSearchRow key={index} index={index} />
+      ))}
+      <Button variant="outlined" onClick={addAdvancedFilter}>
+        Legg til filter
+      </Button>
       <Button
         variant="contained"
         onClick={() => {
-          const [newKey, newValue] = filters.split('=');
-          const newParams = params;
-          newParams.set(newKey, newValue);
-          history.push({ search: newParams.toString() });
+          console.log('SØK', values);
         }}>
         SØK
       </Button>
@@ -162,56 +189,44 @@ const AdvancedSearch = ({ params }: AdvancedSearchProps) => {
   );
 };
 
-enum Operator {
-  Equals,
-  Includes,
-}
-
 interface AdvancedSearchRowProps {
-  updateFilter: (newFilter: string) => void;
-  filter: string;
+  index: number;
 }
 
-const AdvancedSearchRow = ({ updateFilter, filter }: AdvancedSearchRowProps) => {
-  const [field, setField] = useState(SearchFieldName.Title);
-  const [operator, setOperator] = useState(
-    (filter.match(/\*/g) || []).length === 2 ? Operator.Includes : Operator.Equals
-  );
-  const [value, setValue] = useState('');
-
-  useEffect(() => {
-    if (value) {
-      const newFilter = operator === Operator.Equals ? `${field}="${value}"` : `${field}="*${value}*"`;
-      updateFilter(newFilter);
-    }
-  }, [updateFilter, value, field, operator]);
+const AdvancedSearchRow = ({ index }: AdvancedSearchRowProps) => {
+  const { values, setFieldValue } = useFormikContext<SearchValues>();
 
   return (
     <StyledAdvancedSearchRow>
-      <TextField
-        select
-        variant="outlined"
-        label="Felt"
-        value={field}
-        onChange={(event) => setField(event.target.value as SearchFieldName)}>
-        <MenuItem value={SearchFieldName.Title}>{SearchFieldName.Title}</MenuItem>
-        <MenuItem value={SearchFieldName.Abstract}>{SearchFieldName.Abstract}</MenuItem>
-      </TextField>
-      <TextField
-        select
-        variant="outlined"
-        label="Operator"
-        value={operator}
-        onChange={(event) => setOperator((event.target.value as unknown) as Operator)}>
-        <MenuItem value={Operator.Equals}>Er lik</MenuItem>
-        <MenuItem value={Operator.Includes}>Inneholder</MenuItem>
-      </TextField>
-      <TextField
-        variant="outlined"
-        label="Verdi"
-        InputLabelProps={{ shrink: true }}
-        value={value}
-        onChange={(event) => setValue(event.target.value)}></TextField>
+      <Field name={`advanced[${index}].field`}>
+        {({ field }: FieldProps<string>) => (
+          <TextField {...field} select variant="outlined" label="Felt">
+            <MenuItem value={SearchFieldName.Title}>{SearchFieldName.Title}</MenuItem>
+            <MenuItem value={SearchFieldName.Abstract}>{SearchFieldName.Abstract}</MenuItem>
+          </TextField>
+        )}
+      </Field>
+      <Field name={`advanced[${index}].operator`}>
+        {({ field }: FieldProps<string>) => (
+          <TextField {...field} select variant="outlined" label="Operator">
+            <MenuItem value={Operator.Equals}>Er lik</MenuItem>
+            <MenuItem value={Operator.Includes}>Inneholder</MenuItem>
+          </TextField>
+        )}
+      </Field>
+      <Field name={`advanced[${index}].value`}>
+        {({ field }: FieldProps<string>) => (
+          <TextField {...field} variant="outlined" label="Verdi" InputLabelProps={{ shrink: true }} />
+        )}
+      </Field>
+      <Button
+        onClick={() => {
+          const advancedCopy = [...values.advanced];
+          advancedCopy.splice(index, 1);
+          setFieldValue('advanced', advancedCopy);
+        }}>
+        Fjern filter
+      </Button>
     </StyledAdvancedSearchRow>
   );
 };
