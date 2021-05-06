@@ -59,4 +59,6 @@ export enum SearchFieldName {
   ContributorId = 'contributors.id',
   Id = 'id',
   Subtype = 'reference.publicationInstance.type',
+  Title = 'title',
+  Abstract = 'abstract',
 }
