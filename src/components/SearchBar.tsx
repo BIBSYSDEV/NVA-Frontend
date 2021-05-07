@@ -192,7 +192,13 @@ const AdvancedSearchRow = ({ index, remove }: AdvancedSearchRowProps) => {
       </Field>
       <Field name={`properties[${index}].operator`}>
         {({ field }: FieldProps<string>) => (
-          <TextField {...field} select variant="outlined" label="Operator">
+          <TextField
+            {...field}
+            select
+            SelectProps={{ displayEmpty: true }}
+            InputLabelProps={{ shrink: true }}
+            variant="outlined"
+            label="Operator">
             <MenuItem value={ExpressionStatement.Includes}>Inneholder</MenuItem>
             <MenuItem value={ExpressionStatement.Excludes}>Inneholder ikke</MenuItem>
           </TextField>

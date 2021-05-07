@@ -1,6 +1,6 @@
 export enum ExpressionStatement {
-  Excludes,
-  Includes,
+  Excludes = 'NOT',
+  Includes = '',
 }
 
 export interface PropertySearch {
@@ -35,14 +35,12 @@ const createPropertyFilter = (properties?: PropertySearch[], canMatchAnyProperty
     return '';
   }
 
-  //TODO: prefix with NOT if operator=excludes
-
-  const propertyFilter = `(${propertiesWithValues
-    .map(({ fieldName, value }) => {
+  const propertyFilter = propertiesWithValues
+    .map(({ fieldName, value, operator }) => {
       const valueString = Array.isArray(value) ? value.join(Operator.OR) : value;
-      return `${fieldName}:${valueString}`;
+      return `${operator}(${fieldName}:${valueString})`;
     })
-    .join(canMatchAnyProperty ? Operator.OR : Operator.AND)})`;
+    .join(canMatchAnyProperty ? Operator.OR : Operator.AND);
 
   return propertyFilter;
 };
