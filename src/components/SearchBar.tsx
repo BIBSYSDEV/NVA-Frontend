@@ -30,7 +30,6 @@ export const SearchBar = () => {
   const history = useHistory();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const [showAdvancedSearch, setShowAdvancedSearch] = useState(true);
 
   const query = params.get('query');
   const filters = query?.split('AND').map((a) => a.trim());
@@ -41,14 +40,19 @@ export const SearchBar = () => {
 
   const intialSearchValues: SearchConfig = {
     searchTerm: textFilter,
-    properties: propertyFilters?.map((a) => {
-      const operator = a.startsWith('NOT') ? ExpressionStatement.Excludes : ExpressionStatement.Includes;
-      const formattedVal = a.startsWith('NOT') ? a.replace('NOT', '') : a;
-      const formatted2 = formattedVal.slice(1, formattedVal.length - 1);
-      const [fieldName, value] = formatted2.split(':');
-      return { fieldName, value, operator };
-    }),
+    properties:
+      propertyFilters?.map((a) => {
+        const operator = a.startsWith('NOT') ? ExpressionStatement.Excludes : ExpressionStatement.Includes;
+        const formattedVal = a.startsWith('NOT') ? a.replace('NOT', '') : a;
+        const formatted2 = formattedVal.slice(1, formattedVal.length - 1);
+        const [fieldName, value] = formatted2.split(':');
+        return { fieldName, value, operator };
+      }) ?? [],
   };
+
+  const [showAdvancedSearch, setShowAdvancedSearch] = useState(
+    intialSearchValues?.properties && intialSearchValues.properties.length > 0
+  );
 
   return (
     <Formik
