@@ -25,11 +25,6 @@ const StyledFilterRow = styled.div`
   }
 `;
 
-const intialSearchValues: SearchConfig = {
-  searchTerm: '',
-  properties: [],
-};
-
 export const SearchBar = () => {
   const { t } = useTranslation('publicationTypes');
   const history = useHistory();
@@ -37,9 +32,27 @@ export const SearchBar = () => {
   const params = new URLSearchParams(location.search);
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(true);
 
+  const query = params.get('query');
+  const filters = query?.split('AND').map((a) => a.trim());
+  const textFilter = filters
+    ?.find((f) => f.match(/\*/g)?.length === 2 && !f.includes('(') && !f.includes(')'))
+    ?.replaceAll('*', '');
+  const propertyFilters = textFilter ? filters?.slice(1) : filters;
+
+  const intialSearchValues: SearchConfig = {
+    searchTerm: textFilter,
+    properties: propertyFilters?.map((a) => {
+      const operator = a.startsWith('NOT') ? ExpressionStatement.Excludes : ExpressionStatement.Includes;
+      const formattedVal = a.startsWith('NOT') ? a.replace('NOT', '') : a;
+      const formatted2 = formattedVal.slice(1, formattedVal.length - 1);
+      const [fieldName, value] = formatted2.split(':');
+      return { fieldName, value, operator };
+    }),
+  };
+
   return (
     <Formik
-      initialValues={intialSearchValues} // TODO: get values from URL
+      initialValues={intialSearchValues}
       onSubmit={(values) => {
         const queryString = createSearchQuery(values);
         params.set('query', queryString);
