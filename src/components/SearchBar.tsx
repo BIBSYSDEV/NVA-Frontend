@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ListSubheader, MenuItem, TextField, Typography, IconButton, Button, Collapse } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, useFormikContext } from 'formik';
 import { JournalType, BookType, ReportType, DegreeType, ChapterType } from '../types/publicationFieldNames';
 import { SearchFieldName } from '../types/search.types';
-import { Field, FieldProps, Form, Formik, useFormikContext } from 'formik';
-import { createSearchQuery } from '../utils/searchHelpers';
+import { createSearchQuery, ExpressionStatement, PropertySearch, SearchConfig } from '../utils/searchHelpers';
 
 const StyledSelect = styled(TextField)`
   margin-top: 0rem;
@@ -25,30 +25,9 @@ const StyledFilterRow = styled.div`
   }
 `;
 
-export enum RegistrationSearchParamKey {
-  Query = 'query',
-  Type = 'type',
-}
-
-enum Operator {
-  Equals,
-  Includes,
-}
-
-interface SearchValues {
-  query: string;
-  advanced: AdvancedFilter[];
-}
-
-interface AdvancedFilter {
-  field: string;
-  operator: Operator;
-  value: string;
-}
-
-const intialSearchValues: SearchValues = {
-  query: '',
-  advanced: [],
+const intialSearchValues: SearchConfig = {
+  searchTerm: '',
+  properties: [],
 };
 
 export const SearchBar = () => {
@@ -60,21 +39,14 @@ export const SearchBar = () => {
 
   return (
     <Formik
-      initialValues={intialSearchValues}
+      initialValues={intialSearchValues} // TODO: get values from URL
       onSubmit={(values) => {
-        const queryString = createSearchQuery({
-          searchTerm: values.query,
-          properties: values.advanced.map((advance) => ({
-            fieldName: advance.field,
-            value: advance.value,
-            wildcard: advance.operator === Operator.Includes,
-          })),
-        });
-        params.set(RegistrationSearchParamKey.Query, queryString);
+        const queryString = createSearchQuery(values);
+        params.set('query', queryString);
         history.push({ search: params.toString() });
       }}>
       <Form>
-        <Field name="query">
+        <Field name="searchTerm">
           {({ field }: FieldProps<string>) => (
             <TextField
               {...field}
@@ -94,56 +66,71 @@ export const SearchBar = () => {
             />
           )}
         </Field>
+        <FieldArray name="properties">
+          {({ push, remove, form: { submitForm } }: FieldArrayRenderProps) => (
+            <>
+              <StyledFilterRow>
+                <Typography variant="subtitle2" component="p">
+                  {t('common:filter')}:
+                </Typography>
 
-        <StyledFilterRow>
-          <Typography variant="subtitle2" component="p">
-            {t('common:filter')}:
-          </Typography>
-          {/* <StyledSelect
-            value={paramType}
-            variant="filled"
-            label={t('common:registration_type')}
-            select
-            onChange={(event) => updateSearchParam(SearchFieldName.Subtype, event.target.value)}>
-            <MenuItem value="">
-              <em>{t('common:none')}</em>
-            </MenuItem>
-            <ListSubheader disableSticky>{t('Journal')}</ListSubheader>
-            {Object.values(JournalType).map((type) => (
-              <MenuItem key={type} value={type}>
-                {t(type)}
-              </MenuItem>
-            ))}
-            <ListSubheader disableSticky>{t('Book')}</ListSubheader>
-            {Object.values(BookType).map((type) => (
-              <MenuItem key={type} value={type}>
-                {t(type)}
-              </MenuItem>
-            ))}
-            <ListSubheader disableSticky>{t('Report')}</ListSubheader>
-            {Object.values(ReportType).map((type) => (
-              <MenuItem key={type} value={type}>
-                {t(type)}
-              </MenuItem>
-            ))}
-            <ListSubheader disableSticky>{t('Degree')}</ListSubheader>
-            {Object.values(DegreeType).map((type) => (
-              <MenuItem key={type} value={type}>
-                {t(type)}
-              </MenuItem>
-            ))}
-            <ListSubheader disableSticky>{t('Chapter')}</ListSubheader>
-            {Object.values(ChapterType).map((type) => (
-              <MenuItem key={type} value={type}>
-                {t(type)}
-              </MenuItem>
-            ))}
-          </StyledSelect> */}
-          <Button onClick={() => setShowAdvancedSearch(!showAdvancedSearch)}>Avansert søk</Button>
-        </StyledFilterRow>
-        <Collapse in={showAdvancedSearch}>
-          <AdvancedSearch />
-        </Collapse>
+                <StyledSelect
+                  value={undefined}
+                  variant="filled"
+                  label={t('common:registration_type')}
+                  select
+                  onChange={(event) => {
+                    const newPropertyFilter: PropertySearch = {
+                      fieldName: SearchFieldName.Subtype,
+                      value: event.target.value,
+                      operator: ExpressionStatement.Includes,
+                    };
+                    push(newPropertyFilter);
+                    submitForm();
+                  }}>
+                  <MenuItem value="">
+                    <em>{t('common:none')}</em>
+                  </MenuItem>
+                  <ListSubheader disableSticky>{t('Journal')}</ListSubheader>
+                  {Object.values(JournalType).map((type) => (
+                    <MenuItem key={type} value={type}>
+                      {t(type)}
+                    </MenuItem>
+                  ))}
+                  <ListSubheader disableSticky>{t('Book')}</ListSubheader>
+                  {Object.values(BookType).map((type) => (
+                    <MenuItem key={type} value={type}>
+                      {t(type)}
+                    </MenuItem>
+                  ))}
+                  <ListSubheader disableSticky>{t('Report')}</ListSubheader>
+                  {Object.values(ReportType).map((type) => (
+                    <MenuItem key={type} value={type}>
+                      {t(type)}
+                    </MenuItem>
+                  ))}
+                  <ListSubheader disableSticky>{t('Degree')}</ListSubheader>
+                  {Object.values(DegreeType).map((type) => (
+                    <MenuItem key={type} value={type}>
+                      {t(type)}
+                    </MenuItem>
+                  ))}
+                  <ListSubheader disableSticky>{t('Chapter')}</ListSubheader>
+                  {Object.values(ChapterType).map((type) => (
+                    <MenuItem key={type} value={type}>
+                      {t(type)}
+                    </MenuItem>
+                  ))}
+                </StyledSelect>
+
+                <Button onClick={() => setShowAdvancedSearch(!showAdvancedSearch)}>Avansert søk</Button>
+              </StyledFilterRow>
+              <Collapse in={showAdvancedSearch}>
+                <AdvancedSearch push={push} remove={remove} />
+              </Collapse>
+            </>
+          )}
+        </FieldArray>
       </Form>
     </Formik>
   );
@@ -151,26 +138,31 @@ export const SearchBar = () => {
 
 const StyledAdvancedSearchRow = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 5fr 1fr;
+  grid-template-columns: 1fr 1fr 4fr 1fr;
   gap: 1rem;
 `;
 
-const AdvancedSearch = () => {
-  const { values, setFieldValue } = useFormikContext<SearchValues>();
+interface AdvancedSearchProps {
+  push: (obj: PropertySearch) => void;
+  remove: (index: number) => void;
+}
+
+const AdvancedSearch = ({ push, remove }: AdvancedSearchProps) => {
+  const { values } = useFormikContext<SearchConfig>();
 
   const addAdvancedFilter = () => {
-    const newAdvanced: AdvancedFilter[] = [
-      ...values.advanced,
-      { field: SearchFieldName.Title, operator: Operator.Includes, value: '' },
-    ];
-    setFieldValue('advanced', newAdvanced);
+    const newAdvanced: PropertySearch = {
+      fieldName: SearchFieldName.Title,
+      operator: ExpressionStatement.Includes,
+      value: '',
+    };
+    push(newAdvanced);
   };
 
   return (
     <>
-      {values.advanced.map((_, index) => (
-        <AdvancedSearchRow key={index} index={index} />
-      ))}
+      {values.properties &&
+        values.properties.map((_, index) => <AdvancedSearchRow key={index} index={index} remove={remove} />)}
       <Button variant="outlined" onClick={addAdvancedFilter}>
         Legg til filter
       </Button>
@@ -183,14 +175,13 @@ const AdvancedSearch = () => {
 
 interface AdvancedSearchRowProps {
   index: number;
+  remove: (index: number) => void;
 }
 
-const AdvancedSearchRow = ({ index }: AdvancedSearchRowProps) => {
-  const { values, setFieldValue } = useFormikContext<SearchValues>();
-
+const AdvancedSearchRow = ({ index, remove }: AdvancedSearchRowProps) => {
   return (
     <StyledAdvancedSearchRow>
-      <Field name={`advanced[${index}].field`}>
+      <Field name={`properties[${index}].fieldName`}>
         {({ field }: FieldProps<string>) => (
           <TextField {...field} select variant="outlined" label="Felt">
             <MenuItem value={SearchFieldName.Title}>{SearchFieldName.Title}</MenuItem>
@@ -199,24 +190,22 @@ const AdvancedSearchRow = ({ index }: AdvancedSearchRowProps) => {
           </TextField>
         )}
       </Field>
-      <Field name={`advanced[${index}].operator`}>
+      <Field name={`properties[${index}].operator`}>
         {({ field }: FieldProps<string>) => (
           <TextField {...field} select variant="outlined" label="Operator">
-            <MenuItem value={Operator.Equals}>Er lik</MenuItem>
-            <MenuItem value={Operator.Includes}>Inneholder</MenuItem>
+            <MenuItem value={ExpressionStatement.Includes}>Inneholder</MenuItem>
+            <MenuItem value={ExpressionStatement.Excludes}>Inneholder ikke</MenuItem>
           </TextField>
         )}
       </Field>
-      <Field name={`advanced[${index}].value`}>
+      <Field name={`properties[${index}].value`}>
         {({ field }: FieldProps<string>) => (
           <TextField {...field} variant="outlined" label="Verdi" InputLabelProps={{ shrink: true }} />
         )}
       </Field>
       <Button
         onClick={() => {
-          const advancedCopy = [...values.advanced];
-          advancedCopy.splice(index, 1);
-          setFieldValue('advanced', advancedCopy);
+          remove(index);
         }}>
         Fjern filter
       </Button>

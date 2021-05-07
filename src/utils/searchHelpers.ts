@@ -1,8 +1,14 @@
-interface PropertySearch {
+export enum ExpressionStatement {
+  Excludes,
+  Includes,
+}
+
+export interface PropertySearch {
   fieldName: string;
   value: string | string[]; // Can check for one or multiple values
-  wildcard?: boolean;
+  operator?: ExpressionStatement;
 }
+
 export interface SearchConfig {
   searchTerm?: string;
   properties?: PropertySearch[];
@@ -28,17 +34,12 @@ const createPropertyFilter = (properties?: PropertySearch[], canMatchAnyProperty
   if (!propertiesWithValues || propertiesWithValues.length === 0) {
     return '';
   }
-  const propertyFilter = `(${propertiesWithValues
-    .map(({ fieldName, value, wildcard }) => {
-      let valueString = '';
-      if (Array.isArray(value)) {
-        valueString = wildcard
-          ? value.map((v) => `"*${v}*"`).join(Operator.OR)
-          : value.map((v) => `"${v}"`).join(Operator.OR);
-      } else {
-        valueString = wildcard ? `"*${value}*"` : `"${value}"`;
-      }
 
+  //TODO: prefix with NOT if operator=excludes
+
+  const propertyFilter = `(${propertiesWithValues
+    .map(({ fieldName, value }) => {
+      const valueString = Array.isArray(value) ? value.join(Operator.OR) : value;
       return `${fieldName}:${valueString}`;
     })
     .join(canMatchAnyProperty ? Operator.OR : Operator.AND)})`;

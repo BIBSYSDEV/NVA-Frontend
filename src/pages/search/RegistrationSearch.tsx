@@ -5,7 +5,6 @@ import ListSkeleton from '../../components/ListSkeleton';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
 import { SearchFieldName, SearchResult } from '../../types/search.types';
-import { RegistrationSearchParamKey } from '../../components/SearchBar';
 import { SearchResults } from './SearchResults';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { SearchApiPaths } from '../../api/searchApi';
@@ -15,8 +14,8 @@ const RegistrationSearch = () => {
   const [page, setPage] = useState(0);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const queryParam = params.get(RegistrationSearchParamKey.Query) ?? '';
-  const typeParam = params.get(RegistrationSearchParamKey.Type) ?? '';
+  // const queryParam = params.get(RegistrationSearchParamKey.Query) ?? '';
+  // const typeParam = params.get(RegistrationSearchParamKey.Type) ?? '';
 
   // const [searchResults, isLoadingSearch] = useSearchRegistrations(
   //   { searchTerm: queryParam, properties: [{ fieldName: SearchFieldName.Subtype, value: typeParam }] },
