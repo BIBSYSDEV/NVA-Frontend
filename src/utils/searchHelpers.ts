@@ -1,6 +1,7 @@
 interface PropertySearch {
   fieldName: string;
   value: string | string[]; // Can check for one or multiple values
+  wildcard?: boolean;
 }
 export interface SearchConfig {
   searchTerm?: string;
@@ -19,7 +20,7 @@ const createSearchTermFilter = (searchTerm?: string) => {
   if (!searchTerm) {
     return '';
   }
-  return `"*${searchTerm}*"`;
+  return `*${searchTerm}*`;
 };
 
 const createPropertyFilter = (properties?: PropertySearch[], canMatchAnyProperty?: boolean) => {
@@ -28,7 +29,18 @@ const createPropertyFilter = (properties?: PropertySearch[], canMatchAnyProperty
     return '';
   }
   const propertyFilter = `(${propertiesWithValues
-    .map(({ fieldName, value }) => `${fieldName}:"${Array.isArray(value) ? value.join(`"${Operator.OR}"`) : value}"`)
+    .map(({ fieldName, value, wildcard }) => {
+      let valueString = '';
+      if (Array.isArray(value)) {
+        valueString = wildcard
+          ? value.map((v) => `"*${v}*"`).join(Operator.OR)
+          : value.map((v) => `"${v}"`).join(Operator.OR);
+      } else {
+        valueString = wildcard ? `"*${value}*"` : `"${value}"`;
+      }
+
+      return `${fieldName}:${valueString}`;
+    })
     .join(canMatchAnyProperty ? Operator.OR : Operator.AND)})`;
 
   return propertyFilter;

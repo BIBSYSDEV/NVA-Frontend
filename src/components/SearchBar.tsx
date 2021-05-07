@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { JournalType, BookType, ReportType, DegreeType, ChapterType } from '../types/publicationFieldNames';
 import { SearchFieldName } from '../types/search.types';
 import { Field, FieldProps, Form, Formik, useFormikContext } from 'formik';
+import { createSearchQuery } from '../utils/searchHelpers';
 
 const StyledSelect = styled(TextField)`
   margin-top: 0rem;
@@ -55,25 +56,22 @@ export const SearchBar = () => {
   const history = useHistory();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const paramQuery = params.get(RegistrationSearchParamKey.Query) ?? '';
-  const paramType = params.get(RegistrationSearchParamKey.Type) ?? '';
-  const [searchTerm, setSearchTerm] = useState(paramQuery);
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(true);
-
-  const updateSearchParam = (key: RegistrationSearchParamKey, value?: string) => {
-    if (value) {
-      params.set(key, value);
-    } else {
-      params.delete(key);
-    }
-    history.push({ search: params.toString() });
-  };
 
   return (
     <Formik
       initialValues={intialSearchValues}
       onSubmit={(values) => {
-        console.log('submit', values);
+        const queryString = createSearchQuery({
+          searchTerm: values.query,
+          properties: values.advanced.map((advance) => ({
+            fieldName: advance.field,
+            value: advance.value,
+            wildcard: advance.operator === Operator.Includes,
+          })),
+        });
+        params.set(RegistrationSearchParamKey.Query, queryString);
+        history.push({ search: params.toString() });
       }}>
       <Form>
         <Field name="query">
@@ -101,12 +99,12 @@ export const SearchBar = () => {
           <Typography variant="subtitle2" component="p">
             {t('common:filter')}:
           </Typography>
-          <StyledSelect
+          {/* <StyledSelect
             value={paramType}
             variant="filled"
             label={t('common:registration_type')}
             select
-            onChange={(event) => updateSearchParam(RegistrationSearchParamKey.Type, event.target.value)}>
+            onChange={(event) => updateSearchParam(SearchFieldName.Subtype, event.target.value)}>
             <MenuItem value="">
               <em>{t('common:none')}</em>
             </MenuItem>
@@ -140,11 +138,11 @@ export const SearchBar = () => {
                 {t(type)}
               </MenuItem>
             ))}
-          </StyledSelect>
+          </StyledSelect> */}
           <Button onClick={() => setShowAdvancedSearch(!showAdvancedSearch)}>Avansert søk</Button>
         </StyledFilterRow>
         <Collapse in={showAdvancedSearch}>
-          <AdvancedSearch params={params} />
+          <AdvancedSearch />
         </Collapse>
       </Form>
     </Formik>
@@ -157,16 +155,14 @@ const StyledAdvancedSearchRow = styled.div`
   gap: 1rem;
 `;
 
-interface AdvancedSearchProps {
-  params: URLSearchParams;
-}
-
-const AdvancedSearch = ({ params }: AdvancedSearchProps) => {
-  const history = useHistory();
+const AdvancedSearch = () => {
   const { values, setFieldValue } = useFormikContext<SearchValues>();
 
   const addAdvancedFilter = () => {
-    const newAdvanced: AdvancedFilter[] = [...values.advanced, { field: '', operator: Operator.Includes, value: '' }];
+    const newAdvanced: AdvancedFilter[] = [
+      ...values.advanced,
+      { field: SearchFieldName.Title, operator: Operator.Includes, value: '' },
+    ];
     setFieldValue('advanced', newAdvanced);
   };
 
@@ -178,11 +174,7 @@ const AdvancedSearch = ({ params }: AdvancedSearchProps) => {
       <Button variant="outlined" onClick={addAdvancedFilter}>
         Legg til filter
       </Button>
-      <Button
-        variant="contained"
-        onClick={() => {
-          console.log('SØK', values);
-        }}>
+      <Button variant="contained" type="submit">
         SØK
       </Button>
     </>
@@ -203,6 +195,7 @@ const AdvancedSearchRow = ({ index }: AdvancedSearchRowProps) => {
           <TextField {...field} select variant="outlined" label="Felt">
             <MenuItem value={SearchFieldName.Title}>{SearchFieldName.Title}</MenuItem>
             <MenuItem value={SearchFieldName.Abstract}>{SearchFieldName.Abstract}</MenuItem>
+            <MenuItem value={SearchFieldName.Subtype}>{SearchFieldName.Subtype}</MenuItem>
           </TextField>
         )}
       </Field>
