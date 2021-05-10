@@ -7,7 +7,13 @@ import styled from 'styled-components';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, useFormikContext } from 'formik';
 import { JournalType, BookType, ReportType, DegreeType, ChapterType } from '../types/publicationFieldNames';
 import { SearchFieldName } from '../types/search.types';
-import { createSearchQuery, ExpressionStatement, PropertySearch, SearchConfig } from '../utils/searchHelpers';
+import {
+  createSearchQuery,
+  ExpressionStatement,
+  getFormValuesFromUrl,
+  PropertySearch,
+  SearchConfig,
+} from '../utils/searchHelpers';
 
 const StyledSelect = styled(TextField)`
   margin-top: 0rem;
@@ -30,33 +36,15 @@ export const SearchBar = () => {
   const history = useHistory();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-
-  const query = params.get('query');
-  const filters = query?.split('AND').map((a) => a.trim());
-  const textFilter = filters
-    ?.find((f) => f.match(/\*/g)?.length === 2 && !f.includes('(') && !f.includes(')'))
-    ?.replaceAll('*', '');
-  const propertyFilters = textFilter ? filters?.slice(1) : filters;
-
-  const intialSearchValues: SearchConfig = {
-    searchTerm: textFilter,
-    properties:
-      propertyFilters?.map((a) => {
-        const operator = a.startsWith('NOT') ? ExpressionStatement.Excludes : ExpressionStatement.Includes;
-        const formattedVal = a.startsWith('NOT') ? a.replace('NOT', '') : a;
-        const formatted2 = formattedVal.slice(1, formattedVal.length - 1);
-        const [fieldName, value] = formatted2.split(':');
-        return { fieldName, value, operator };
-      }) ?? [],
-  };
+  const initialValues = getFormValuesFromUrl(params);
 
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(
-    intialSearchValues?.properties && intialSearchValues.properties.length > 0
+    initialValues.properties && initialValues.properties.length > 0
   );
 
   return (
     <Formik
-      initialValues={intialSearchValues}
+      initialValues={initialValues}
       onSubmit={(values) => {
         const queryString = createSearchQuery(values);
         params.set('query', queryString);

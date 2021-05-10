@@ -54,3 +54,30 @@ export const createSearchQuery = (searchConfig: SearchConfig) => {
     .join(searchConfig.canMatchAnySubquery ? Operator.OR : Operator.AND);
   return searchQuery;
 };
+
+export const getFormValuesFromUrl = (params: URLSearchParams): SearchConfig => {
+  const query = params.get('query');
+  const filters = query?.split('AND').map((a) => a.trim());
+  const textFilter = filters
+    ?.find((f) => f.match(/\*/g)?.length === 2 && !f.includes('(') && !f.includes(')')) // Text query will have two asterisks and no parentheses
+    ?.replaceAll('*', '');
+  const propertyFilters = textFilter ? filters?.slice(1) : filters;
+
+  const intialSearchValues: SearchConfig = {
+    searchTerm: textFilter ?? '',
+    properties:
+      propertyFilters?.map((propertyFilter) => {
+        // Find what to test for (contains, does not contain, etc)
+        const operator = propertyFilter.startsWith('NOT') ? ExpressionStatement.Excludes : ExpressionStatement.Includes;
+        // Remove operator from text
+        const formattedPropertyFilter = propertyFilter.startsWith('NOT')
+          ? propertyFilter.replace('NOT', '')
+          : propertyFilter;
+        // Remove parentheses
+        const filter = formattedPropertyFilter.slice(1, formattedPropertyFilter.length - 1);
+        const [fieldName, value] = filter.split(':');
+        return { fieldName, value, operator };
+      }) ?? [],
+  };
+  return intialSearchValues;
+};
