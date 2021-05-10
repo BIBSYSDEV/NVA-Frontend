@@ -15,6 +15,7 @@ import useFetchAuthority from '../../utils/hooks/useFetchAuthority';
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
 import { PageSpinner } from '../../components/PageSpinner';
 import { SearchResults } from '../search/SearchResults';
+import { ExpressionStatement } from '../../utils/searchHelpers';
 
 const StyledLine = styled.div`
   display: flex;
@@ -38,7 +39,7 @@ const PublicProfile = () => {
 
   const [authority, isLoadingUser] = useFetchAuthority(arpId);
   const [registrations, isLoadingRegistrations] = useSearchRegistrations({
-    properties: [{ fieldName: SearchFieldName.ContributorId, value: arpId }],
+    properties: [{ fieldName: SearchFieldName.ContributorId, value: arpId, operator: ExpressionStatement.Equals }],
   });
 
   return (

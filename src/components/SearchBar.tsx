@@ -88,7 +88,7 @@ export const SearchBar = () => {
                     const newPropertyFilter: PropertySearch = {
                       fieldName: SearchFieldName.Subtype,
                       value: event.target.value,
-                      operator: ExpressionStatement.Includes,
+                      operator: ExpressionStatement.Equals,
                     };
                     push(newPropertyFilter);
                     submitForm();
@@ -158,7 +158,7 @@ const AdvancedSearch = ({ push, remove }: AdvancedSearchProps) => {
   const addAdvancedFilter = () => {
     const newAdvanced: PropertySearch = {
       fieldName: SearchFieldName.Title,
-      operator: ExpressionStatement.Includes,
+      operator: ExpressionStatement.Contains,
       value: '',
     };
     push(newAdvanced);
@@ -204,8 +204,10 @@ const AdvancedSearchRow = ({ index, remove }: AdvancedSearchRowProps) => {
             InputLabelProps={{ shrink: true }}
             variant="outlined"
             label="Operator">
-            <MenuItem value={ExpressionStatement.Includes}>Inneholder</MenuItem>
-            <MenuItem value={ExpressionStatement.Excludes}>Inneholder ikke</MenuItem>
+            <MenuItem value={ExpressionStatement.Contains}>Inneholder</MenuItem>
+            <MenuItem value={ExpressionStatement.NotContaining}>Inneholder ikke</MenuItem>
+            <MenuItem value={ExpressionStatement.Equals}>Er lik</MenuItem>
+            <MenuItem value={ExpressionStatement.NotEqual}>Er ikke lik</MenuItem>
           </TextField>
         )}
       </Field>
@@ -214,12 +216,7 @@ const AdvancedSearchRow = ({ index, remove }: AdvancedSearchRowProps) => {
           <TextField {...field} variant="outlined" label="Verdi" InputLabelProps={{ shrink: true }} />
         )}
       </Field>
-      <Button
-        onClick={() => {
-          remove(index);
-        }}>
-        Fjern filter
-      </Button>
+      <Button onClick={() => remove(index)}>Fjern filter</Button>
     </StyledAdvancedSearchRow>
   );
 };

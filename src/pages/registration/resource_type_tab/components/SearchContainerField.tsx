@@ -16,6 +16,7 @@ import { displayDate } from '../../../../utils/date-helpers';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import useSearchRegistrations from '../../../../utils/hooks/useSearchRegistrations';
 import { getRegistrationPath } from '../../../../utils/urlPaths';
+import { ExpressionStatement } from '../../../../utils/searchHelpers';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -32,12 +33,14 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
 
   const [searchContainerOptions, isLoadingSearchContainerOptions] = useSearchRegistrations({
     searchTerm: debouncedSearchTerm,
-    properties: [{ fieldName: SearchFieldName.Subtype, value: props.searchSubtypes }],
+    properties: [
+      { fieldName: SearchFieldName.Subtype, value: props.searchSubtypes, operator: ExpressionStatement.Equals },
+    ],
   });
 
   const currentIdentifier = getIn(values, props.fieldName)?.split('/').pop() ?? '';
   const [selectedContainerSearch, isLoadingSelectedContainer] = useSearchRegistrations({
-    properties: [{ fieldName: SearchFieldName.Id, value: currentIdentifier }],
+    properties: [{ fieldName: SearchFieldName.Id, value: currentIdentifier, operator: ExpressionStatement.Equals }],
   });
   const selectedContainer =
     currentIdentifier && selectedContainerSearch?.hits && selectedContainerSearch.hits.length === 1
