@@ -20,9 +20,9 @@ const RegistrationSearch = () => {
 
   return (
     <>
-      {isLoadingSearch || !searchResults ? (
+      {isLoadingSearch ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
-      ) : (
+      ) : searchResults ? (
         <>
           <SearchResults searchResult={searchResults} />
           {searchResults.hits.length > 0 && (
@@ -41,7 +41,7 @@ const RegistrationSearch = () => {
             />
           )}
         </>
-      )}
+      ) : null}
     </>
   );
 };
