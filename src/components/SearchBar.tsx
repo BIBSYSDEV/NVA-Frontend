@@ -10,7 +10,7 @@ import { SearchFieldName } from '../types/search.types';
 import {
   createSearchQuery,
   ExpressionStatement,
-  getFormValuesFromUrl,
+  createSearchConfigFromSearchParams,
   PropertySearch,
   SearchConfig,
 } from '../utils/searchHelpers';
@@ -36,7 +36,7 @@ export const SearchBar = () => {
   const history = useHistory();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const initialValues = getFormValuesFromUrl(params);
+  const initialValues = createSearchConfigFromSearchParams(params);
 
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(
     initialValues.properties && initialValues.properties.length > 0

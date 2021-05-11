@@ -61,7 +61,7 @@ export const createSearchQuery = (searchConfig: SearchConfig) => {
   return searchQuery;
 };
 
-export const getFormValuesFromUrl = (params: URLSearchParams): SearchConfig => {
+export const createSearchConfigFromSearchParams = (params: URLSearchParams): SearchConfig => {
   const query = params.get('query');
   const filters = query?.split('AND').map((a) => a.trim());
 
