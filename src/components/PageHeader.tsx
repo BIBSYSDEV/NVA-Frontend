@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
 import styled from 'styled-components';
-import { IconButton, Button, Tooltip, Typography, TypographyProps } from '@material-ui/core';
+import { Button, IconButton, Tooltip, Typography, TypographyProps } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import { Helmet } from 'react-helmet';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
 const StyledHeader = styled.div`
@@ -22,7 +22,7 @@ const StyledIconButton = styled(IconButton)`
 `;
 
 const StyledTruncatableHeading = styled.div<{ canBeTruncated: boolean }>`
-  padding-bottom: 0.3rem;
+  padding: 1rem 0 0.3rem 0;
   border-bottom: 3px solid;
   align-items: center;
   display: grid;
@@ -39,9 +39,10 @@ export interface PageHeaderProps extends TypographyProps {
   backPath?: string;
   children: string;
   htmlTitle?: string;
+  showBackButton?: boolean;
 }
 
-export const PageHeader = ({ backPath, children, htmlTitle, ...props }: PageHeaderProps) => {
+export const PageHeader = ({ backPath, children, htmlTitle, showBackButton, ...props }: PageHeaderProps) => {
   const { t } = useTranslation('common');
   const history = useHistory();
   const [showFullText, setShowFullText] = useState(false);
@@ -64,9 +65,11 @@ export const PageHeader = ({ backPath, children, htmlTitle, ...props }: PageHead
       <Helmet>
         <title>{htmlTitle ?? children}</title>
       </Helmet>
-      <Button data-testid="navigate-back-button" startIcon={<ArrowBackIcon />} variant="text" onClick={onBackClick}>
-        {t('back')}
-      </Button>
+      {showBackButton && (
+        <Button data-testid="navigate-back-button" startIcon={<ArrowBackIcon />} variant="text" onClick={onBackClick}>
+          {t('back')}
+        </Button>
+      )}
       <StyledTruncatableHeading canBeTruncated={canBeTruncated}>
         <Typography variant="h1" {...props}>
           <TextTruncate
