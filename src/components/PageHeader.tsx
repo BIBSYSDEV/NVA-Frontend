@@ -70,16 +70,16 @@ export const PageHeader = ({ backPath, children, details, htmlTitle, showBackBut
       <Helmet>
         <title>{htmlTitle ?? children}</title>
       </Helmet>
+      {showBackButton && (
+        <Button data-testid="navigate-back-button" startIcon={<ArrowBackIcon />} variant="text" onClick={onBackClick}>
+          {t('back')}
+        </Button>
+      )}
       {details && (
         <>
           <StyledOverline variant="overline">{details?.publicationType}</StyledOverline>
           <StyledOverline variant="overline">{details?.publicationYear}</StyledOverline>
         </>
-      )}
-      {showBackButton && (
-        <Button data-testid="navigate-back-button" startIcon={<ArrowBackIcon />} variant="text" onClick={onBackClick}>
-          {t('back')}
-        </Button>
       )}
       <StyledTruncatableHeading canBeTruncated={canBeTruncated}>
         <Typography variant="h1" {...props}>
