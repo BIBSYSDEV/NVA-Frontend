@@ -16,6 +16,10 @@ const StyledHeader = styled.div`
   word-break: break-word;
 `;
 
+const StyledOverline = styled(Typography)`
+  padding-right: 1rem;
+`;
+
 const StyledIconButton = styled(IconButton)`
   background-color: ${({ theme }) => theme.palette.section.light};
   color: ${({ theme }) => theme.palette.section.megaDark};
@@ -38,11 +42,12 @@ const StyledTruncatableHeading = styled.div<{ canBeTruncated: boolean }>`
 export interface PageHeaderProps extends TypographyProps {
   backPath?: string;
   children: string;
+  details?: { publicationType: string; publicationYear: string };
   htmlTitle?: string;
   showBackButton?: boolean;
 }
 
-export const PageHeader = ({ backPath, children, htmlTitle, showBackButton, ...props }: PageHeaderProps) => {
+export const PageHeader = ({ backPath, children, details, htmlTitle, showBackButton, ...props }: PageHeaderProps) => {
   const { t } = useTranslation('common');
   const history = useHistory();
   const [showFullText, setShowFullText] = useState(false);
@@ -65,6 +70,12 @@ export const PageHeader = ({ backPath, children, htmlTitle, showBackButton, ...p
       <Helmet>
         <title>{htmlTitle ?? children}</title>
       </Helmet>
+      {details && (
+        <>
+          <StyledOverline variant="overline">{details?.publicationType}</StyledOverline>
+          <StyledOverline variant="overline">{details?.publicationYear}</StyledOverline>
+        </>
+      )}
       {showBackButton && (
         <Button data-testid="navigate-back-button" startIcon={<ArrowBackIcon />} variant="text" onClick={onBackClick}>
           {t('back')}
