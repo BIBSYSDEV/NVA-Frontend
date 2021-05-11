@@ -160,9 +160,9 @@ const ContributorsRow = ({
           </Typography>
         );
       })}
-      {otherCount && otherCount > 0 && (
+      {otherCount && otherCount > 0 ? (
         <Typography component="li">{t('public_page.other_contributors', { count: otherCount })}</Typography>
-      )}
+      ) : null}
     </StyledContributorsList>
   );
 };
