@@ -84,7 +84,7 @@ export const SearchBar = () => {
                 </Typography>
 
                 <StyledSelect
-                  defaultValue={''}
+                  defaultValue=""
                   variant="filled"
                   label={t('common:registration_type')}
                   select
@@ -95,6 +95,7 @@ export const SearchBar = () => {
                       operator: ExpressionStatement.Equals,
                     };
                     push(newPropertyFilter);
+                    setShowAdvancedSearch(true);
                     submitForm();
                   }}>
                   <MenuItem value="">

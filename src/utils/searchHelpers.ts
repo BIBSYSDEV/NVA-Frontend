@@ -79,10 +79,11 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams): Sea
       const formattedPropertyFilter = isNegated ? propertyFilter.replace('NOT', '') : propertyFilter;
       // Remove parentheses
       const filter = formattedPropertyFilter.slice(1, formattedPropertyFilter.length - 1);
-      const isExactMatch = filter.match(/\*/g)?.length === 2;
-      // Remove wildcards
-      const formattedFilter = isExactMatch ? filter.replaceAll('*', '') : filter;
-      const [fieldName, value] = formattedFilter.split(':');
+      const [fieldName, filterValue] = filter.split(':');
+
+      // Remove * and "
+      const isExactMatch = filterValue.startsWith('"') && filterValue.endsWith('"');
+      const value = filterValue.slice(1, filterValue.length - 1);
 
       const operator =
         isNegated && isExactMatch
