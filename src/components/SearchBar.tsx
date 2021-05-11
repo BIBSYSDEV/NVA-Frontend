@@ -47,7 +47,11 @@ export const SearchBar = () => {
       initialValues={initialValues}
       onSubmit={(values) => {
         const queryString = createSearchQuery(values);
-        params.set('query', queryString);
+        if (queryString) {
+          params.set('query', queryString);
+        } else {
+          params.delete('query');
+        }
         history.push({ search: params.toString() });
       }}>
       <Form>
@@ -80,7 +84,7 @@ export const SearchBar = () => {
                 </Typography>
 
                 <StyledSelect
-                  value={undefined}
+                  defaultValue={''}
                   variant="filled"
                   label={t('common:registration_type')}
                   select
