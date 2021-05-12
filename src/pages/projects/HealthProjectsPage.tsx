@@ -37,6 +37,7 @@ const HealthProjectsPage = () => {
     }
     const institution_responsible_idfacet = webParams.get('institution_responsible_idfacet');
     if (institution_responsible_idfacet) {
+      // TODO: can have multiple values...
       apiParams.append('fq', `institution_responsible_idfacet:${institution_responsible_idfacet}*`);
     }
     const newUrl = new URL(`https://app.cristin.no/ws/ajax/getHealth?${apiParams.toString()}`);
