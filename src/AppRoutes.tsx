@@ -22,6 +22,7 @@ const MyMessages = lazy(() => import('./pages/messages/MyMessages'));
 const WorklistPage = lazy(() => import('./pages/worklist/WorklistPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 const Login = lazy(() => import('./layout/Login'));
+const HealthProjectsPage = lazy(() => import('./pages/projects/HealthProjectsPage'));
 
 export const AppRoutes = () => {
   const user = useSelector((store: RootStore) => store.user);
@@ -36,6 +37,7 @@ export const AppRoutes = () => {
         <Route exact path={UrlPathTemplate.Search} component={SearchPage} />
         <Route exact path={UrlPathTemplate.Login} component={Login} />
         <Route exact path={UrlPathTemplate.Logout} component={Logout} />
+        <Route exact path="/health" component={HealthProjectsPage} />
 
         {user && (
           <>
