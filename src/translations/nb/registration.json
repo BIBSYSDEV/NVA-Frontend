@@ -96,6 +96,7 @@
   },
   "new_registration": "Ny registrering",
   "public_page": {
+    "about_registration": "Om registreringen",
     "error_description": "For å publisere må du rette følgende feil:",
     "go_back_to_wizard": "Gå tilbake til skjema",
     "in_progess": "Under behandling",

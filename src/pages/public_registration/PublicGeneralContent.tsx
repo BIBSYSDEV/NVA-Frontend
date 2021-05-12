@@ -1,47 +1,28 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
-import { PublicRegistrationContentProps } from './PublicRegistrationContent';
-import { BookPublicationContext, BookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
-import {
-  ChapterPublicationContext,
-  ChapterPublicationInstance,
-} from '../../types/publication_types/chapterRegistration.types';
-import {
-  DegreePublicationContext,
-  DegreePublicationInstance,
-} from '../../types/publication_types/degreeRegistration.types';
+import { LanguageCodes, registrationLanguages } from '../../types/language.types';
+import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
+import { ChapterPublicationContext } from '../../types/publication_types/chapterRegistration.types';
+import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import {
   JournalPublicationContext,
   JournalPublicationInstance,
 } from '../../types/publication_types/journalRegistration.types';
-import {
-  ReportPublicationContext,
-  ReportPublicationInstance,
-} from '../../types/publication_types/reportRegistration.types';
-import { displayDate } from '../../utils/date-helpers';
+import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
+import { JournalType } from '../../types/publicationFieldNames';
 import { getNpiDiscipline } from '../../utils/npiDisciplines';
-import { isJournal, isBook, isDegree, isReport, isChapter } from '../../utils/registration-helpers';
+import { isBook, isChapter, isDegree, isJournal, isReport } from '../../utils/registration-helpers';
 import PublicDoi from './PublicDoi';
 import {
-  PublicLinkedContextContent,
   PublicJournalContent,
+  PublicLinkedContextContent,
   PublicPublisherContent,
   PublicSeriesContent,
 } from './PublicPublicationContext';
-import {
-  PublicPublicationInstanceJournal,
-  PublicPublicationInstanceBook,
-  PublicPublicationInstanceDegree,
-  PublicPublicationInstanceReport,
-  PublicPublicationInstanceChapter,
-  PublicIsbnContent,
-} from './PublicPublicationInstance';
-import styled from 'styled-components';
-import { LanguageCodes, registrationLanguages } from '../../types/language.types';
+import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import RegistrationSummary from './RegistrationSummary';
-import { JournalType } from '../../types/publicationFieldNames';
-import { BookRegistration, ReportRegistration } from '../../types/registration.types';
 
 const StyledContent = styled.div`
   display: grid;
@@ -64,6 +45,10 @@ const StyledGroup1 = styled.div`
   grid-area: group1;
 `;
 
+const StyledPublicDoi = styled.div`
+  margin-top: 1.5rem;
+`;
+
 const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
   const {
@@ -76,16 +61,15 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
   return (
     <StyledContent>
       <StyledGroup0>
-        <Typography variant="h4" component="h2">
-          {t(`publicationTypes:${publicationInstance.type}`)}
-        </Typography>
-        <Typography>{displayDate(date)}</Typography>
+        <Typography variant="subtitle2">{t('public_page.about_registration')}</Typography>
 
-        <PublicDoi registration={registration} />
+        {(publicationInstance as JournalPublicationInstance).peerReviewed && (
+          <Typography>{t('resource_type.peer_reviewed')}</Typography>
+        )}
 
         {language && (
           <Typography>
-            {t('description.primary_language')}:{' '}
+            {t('common:language')}:{' '}
             {t(
               `languages:${
                 registrationLanguages.find((registrationLanguage) => registrationLanguage.value === language)?.id ??
@@ -94,13 +78,19 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
             )}
           </Typography>
         )}
+
+        <StyledPublicDoi>
+          <PublicDoi registration={registration} />
+        </StyledPublicDoi>
         {npiSubjectHeading && (
           <Typography>
             {t('description.npi_disciplines')}: {getNpiDiscipline(npiSubjectHeading)?.name}
           </Typography>
         )}
+      </StyledGroup0>
 
-        {isJournal(registration) ? (
+      <StyledGroup1>
+        {/* {isJournal(registration) ? (
           <PublicPublicationInstanceJournal publicationInstance={publicationInstance as JournalPublicationInstance} />
         ) : isBook(registration) ? (
           <>
@@ -120,10 +110,7 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
           </>
         ) : isChapter(registration) ? (
           <PublicPublicationInstanceChapter publicationInstance={publicationInstance as ChapterPublicationInstance} />
-        ) : null}
-      </StyledGroup0>
-
-      <StyledGroup1>
+        ) : null} */}
         {isJournal(registration) ? (
           <>
             {publicationInstance.type === JournalType.CORRIGENDUM && (
@@ -132,7 +119,7 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
                 <RegistrationSummary id={(publicationInstance as JournalPublicationInstance).corrigendumFor} />
               </>
             )}
-            <PublicJournalContent publicationContext={publicationContext as JournalPublicationContext} />
+            <PublicJournalContent date={date} publicationContext={publicationContext as JournalPublicationContext} />
           </>
         ) : isBook(registration) ? (
           <>

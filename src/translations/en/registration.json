@@ -96,6 +96,7 @@
   },
   "new_registration": "New registration",
   "public_page": {
+    "about_registration": "About this registration",
     "error_description": "To publish you must fix the following errors:",
     "go_back_to_wizard": "Go back to form",
     "in_progess": "In progress",
