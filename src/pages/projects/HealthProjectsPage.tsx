@@ -1,5 +1,6 @@
-import { Button, Divider, Typography } from '@material-ui/core';
-import React, { Fragment, useEffect, useState } from 'react';
+import { Button, Divider, List, ListItem, ListItemText, Typography } from '@material-ui/core';
+import { Pagination } from '@material-ui/lab';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
@@ -9,12 +10,21 @@ const url = new URL(
   'https://app.cristin.no/ws/ajax/getHealth?facet.field=health_project_type_idfacet&facet.field=category_idfacet&facet.field=institution_coordinating_idfacet&facet.field=institution_responsible_idfacet&facet.field=hrcs_category_idfacet&facet.field=hrcs_activity_idfacet&facet.field=infrastructure_category_idfacet&facet.field.empty=infrastructure_category_idfacet&facet=on&&fq=type:project&sort=score%20desc&page=1&rows=10'
 );
 
+const rowsPerPage = 10;
+
 const HealthProjectsPage = () => {
   const history = useHistory();
+  const [page, setPage] = useState(1);
   const [apiUrl, setApiUrl] = useState(url);
   const searchParams = new URLSearchParams(history.location.search);
 
   const [healthProjects] = useFetch<any>(apiUrl.toString());
+
+  useEffect(() => {
+    apiUrl.searchParams.set('page', page.toString());
+    const newUrl = new URL(`https://app.cristin.no/ws/ajax/getHealth${apiUrl.search}`);
+    setApiUrl(newUrl);
+  }, [page]);
 
   useEffect(() => {
     const webParams = new URLSearchParams(history.location.search);
@@ -33,6 +43,7 @@ const HealthProjectsPage = () => {
     setApiUrl(newUrl);
   }, [history.location.search]);
 
+  const hitsCount = healthProjects ? healthProjects['total-count'] : 0;
   return (
     <StyledPageWrapperWithMaxWidth>
       <PageHeader backPath="/">Helseprosjekt</PageHeader>
@@ -51,7 +62,7 @@ const HealthProjectsPage = () => {
                     searchParams.set('institution_coordinating_idfacet', keyValues[0]);
                     history.push({ search: searchParams.toString() });
                   }}>
-                  {keyValues[1]} : {value}
+                  {keyValues[1]} ({value})
                 </Button>
               );
             })}
@@ -68,23 +79,33 @@ const HealthProjectsPage = () => {
                     searchParams.set('institution_responsible_idfacet', keyValues[0]);
                     history.push({ search: searchParams.toString() });
                   }}>
-                  {keyValues[1]} : {value}
+                  {keyValues[1]} ({value})
                 </Button>
               );
             })}
-          <Divider /> <Divider />
-          <ul>
+          <Divider />
+          <Typography variant="h3">{hitsCount} treff</Typography>
+          <List>
             {healthProjects.results.map((result: any, index: number) => (
-              <li key={index}>
-                <Typography>
-                  {result.title_norwegian} ({result.unit_name_bokmal[0]})
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  {result.unit_name_bokmal[0]}
-                </Typography>
-              </li>
+              <ListItem divider key={index}>
+                <ListItemText disableTypography>
+                  <Typography>{result.title_norwegian}</Typography>
+                  <Typography variant="body2" gutterBottom>
+                    {result.unit_name_bokmal[0]}
+                  </Typography>
+                </ListItemText>
+              </ListItem>
             ))}
-          </ul>
+          </List>
+          <Pagination
+            variant="outlined"
+            color="primary"
+            size="large"
+            shape="rounded"
+            onChange={(_, newPage) => setPage(newPage)}
+            page={page}
+            count={Math.ceil(hitsCount / rowsPerPage)}
+          />
         </>
       )}
     </StyledPageWrapperWithMaxWidth>
