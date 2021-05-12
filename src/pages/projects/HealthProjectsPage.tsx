@@ -1,5 +1,5 @@
 import { Button, Divider, Typography } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
@@ -72,12 +72,19 @@ const HealthProjectsPage = () => {
                 </Button>
               );
             })}
-          <Divider />
-          {healthProjects.results.map((result: any, index: number) => (
-            <Typography key={index}>
-              {result.title_norwegian} ({result.unit_name_bokmal[0]})
-            </Typography>
-          ))}
+          <Divider /> <Divider />
+          <ul>
+            {healthProjects.results.map((result: any, index: number) => (
+              <li key={index}>
+                <Typography>
+                  {result.title_norwegian} ({result.unit_name_bokmal[0]})
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                  {result.unit_name_bokmal[0]}
+                </Typography>
+              </li>
+            ))}
+          </ul>
         </>
       )}
     </StyledPageWrapperWithMaxWidth>
