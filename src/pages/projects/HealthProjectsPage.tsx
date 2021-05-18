@@ -77,6 +77,9 @@ const HealthProjectsPage = () => {
         <>
           <Autocomplete
             options={coordinatinInstitutions}
+            defaultValue={coordinatinInstitutions.find(
+              (i) => i.id === searchParams.get('institution_coordinating_idfacet')
+            )}
             getOptionLabel={(option) => `${option.norName} (${option.count})`}
             getOptionSelected={(option, value) => option.id === value.id}
             onChange={(_, value) => {
@@ -100,6 +103,9 @@ const HealthProjectsPage = () => {
 
           <Autocomplete
             options={responsibleInstitutions}
+            defaultValue={responsibleInstitutions.filter((a) =>
+              searchParams.getAll('institution_responsible_idfacet').includes(a.id)
+            )}
             multiple
             getOptionLabel={(option) => `${option.norName} (${option.count})`}
             onChange={(_, value) => {
