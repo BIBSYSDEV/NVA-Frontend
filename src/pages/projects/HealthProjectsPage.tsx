@@ -13,11 +13,26 @@ interface Facet {
   count: number;
 }
 
+const apiQueryParamKey = 'fq';
+const coordinatingInstitutionKey = 'institution_coordinating_idfacet';
+const responsibleInstitutionKey = 'institution_responsible_idfacet';
+
+const apiBaseUrl = 'https://app.cristin.no/ws/ajax/getHealth';
+
 const url = new URL(
-  'https://app.cristin.no/ws/ajax/getHealth?facet.field=health_project_type_idfacet&facet.field=category_idfacet&facet.field=institution_coordinating_idfacet&facet.field=institution_responsible_idfacet&facet.field=hrcs_category_idfacet&facet.field=hrcs_activity_idfacet&facet.field=infrastructure_category_idfacet&facet.field.empty=infrastructure_category_idfacet&facet=on&&fq=type:project&sort=score%20desc&page=1&rows=10'
+  `${apiBaseUrl}?facet.field=health_project_type_idfacet&facet.field=category_idfacet&facet.field=institution_coordinating_idfacet&facet.field=institution_responsible_idfacet&facet.field=hrcs_category_idfacet&facet.field=hrcs_activity_idfacet&facet.field=infrastructure_category_idfacet&facet.field.empty=infrastructure_category_idfacet&facet=on&&fq=type:project&sort=score%20desc&page=1&rows=10`
 );
 
 const rowsPerPage = 10;
+
+const getFacets = (values: any[]) => {
+  const facets = values.map(([key, value]) => {
+    const keys = key.split('##');
+    const facet: Facet = { id: keys[0], norName: keys[1], engName: keys[2], count: value as number };
+    return facet;
+  });
+  return facets;
+};
 
 const HealthProjectsPage = () => {
   const history = useHistory();
@@ -26,45 +41,35 @@ const HealthProjectsPage = () => {
   const searchParams = new URLSearchParams(history.location.search);
 
   const [healthProjects] = useFetch<any>(apiUrl.toString());
-
-  const coordinatinInstitutions = Object.entries(healthProjects?.facets.institution_coordinating_idfacet ?? []).map(
-    ([key, value]) => {
-      const keys = key.split('##');
-      const f: Facet = { id: keys[0], norName: keys[1], engName: keys[2], count: value as number };
-      return f;
-    }
+  const coordinatinInstitutions = getFacets(
+    Object.entries(healthProjects?.facets.institution_coordinating_idfacet ?? [])
   );
-
-  const responsibleInstitutions = Object.entries(healthProjects?.facets.institution_responsible_idfacet ?? []).map(
-    ([key, value]) => {
-      const keys = key.split('##');
-      const f: Facet = { id: keys[0], norName: keys[1], engName: keys[2], count: value as number };
-      return f;
-    }
+  const responsibleInstitutions = getFacets(
+    Object.entries(healthProjects?.facets.institution_responsible_idfacet ?? [])
   );
 
   useEffect(() => {
     apiUrl.searchParams.set('page', page.toString());
-    const newUrl = new URL(`https://app.cristin.no/ws/ajax/getHealth${apiUrl.search}`);
+    const newUrl = new URL(`${apiBaseUrl}${apiUrl.search}`);
     setApiUrl(newUrl);
   }, [page]);
 
   useEffect(() => {
     const webParams = new URLSearchParams(history.location.search);
     const apiParams = apiUrl.searchParams;
-    apiParams.delete('fq');
-    apiParams.append('fq', 'type:project');
-    const institution_coordinating_idfacet = webParams.get('institution_coordinating_idfacet');
-    if (institution_coordinating_idfacet) {
-      apiParams.append('fq', `institution_coordinating_idfacet:${institution_coordinating_idfacet}*`);
+    apiParams.delete(apiQueryParamKey);
+    apiParams.append(apiQueryParamKey, 'type:project');
+    const coordinatingInstitutionId = webParams.get(coordinatingInstitutionKey);
+    if (coordinatingInstitutionId) {
+      apiParams.append(apiQueryParamKey, `${coordinatingInstitutionKey}:${coordinatingInstitutionId}*`);
     }
-    const institution_responsible_idfacets = webParams.getAll('institution_responsible_idfacet');
-    if (institution_responsible_idfacets) {
-      institution_responsible_idfacets.forEach((element) => {
-        apiParams.append('fq', `institution_responsible_idfacet:${element}*`);
+    const responsibleInstitutionIds = webParams.getAll(responsibleInstitutionKey);
+    if (responsibleInstitutionIds) {
+      responsibleInstitutionIds.forEach((id) => {
+        apiParams.append(apiQueryParamKey, `${responsibleInstitutionKey}:${id}*`);
       });
     }
-    const newUrl = new URL(`https://app.cristin.no/ws/ajax/getHealth?${apiParams.toString()}`);
+    const newUrl = new URL(`${apiBaseUrl}?${apiParams.toString()}`);
     setApiUrl(newUrl);
   }, [history.location.search]);
 
@@ -77,16 +82,14 @@ const HealthProjectsPage = () => {
         <>
           <Autocomplete
             options={coordinatinInstitutions}
-            defaultValue={coordinatinInstitutions.find(
-              (i) => i.id === searchParams.get('institution_coordinating_idfacet')
-            )}
+            defaultValue={coordinatinInstitutions.find((i) => i.id === searchParams.get(coordinatingInstitutionKey))}
             getOptionLabel={(option) => `${option.norName} (${option.count})`}
             getOptionSelected={(option, value) => option.id === value.id}
             onChange={(_, value) => {
               if (value?.id) {
-                searchParams.set('institution_coordinating_idfacet', value.id);
+                searchParams.set(coordinatingInstitutionKey, value.id);
               } else {
-                searchParams.delete('institution_coordinating_idfacet');
+                searchParams.delete(coordinatingInstitutionKey);
               }
               history.push({ search: searchParams.toString() });
             }}
@@ -104,16 +107,16 @@ const HealthProjectsPage = () => {
           <Autocomplete
             options={responsibleInstitutions}
             defaultValue={responsibleInstitutions.filter((a) =>
-              searchParams.getAll('institution_responsible_idfacet').includes(a.id)
+              searchParams.getAll(responsibleInstitutionKey).includes(a.id)
             )}
             multiple
             getOptionLabel={(option) => `${option.norName} (${option.count})`}
             onChange={(_, value) => {
-              searchParams.delete('institution_responsible_idfacet');
+              searchParams.delete(responsibleInstitutionKey);
               if (value) {
                 const ids = value.map((val) => val.id);
                 ids.forEach((id) => {
-                  searchParams.append('institution_responsible_idfacet', id);
+                  searchParams.append(responsibleInstitutionKey, id);
                 });
               }
               history.push({ search: searchParams.toString() });
