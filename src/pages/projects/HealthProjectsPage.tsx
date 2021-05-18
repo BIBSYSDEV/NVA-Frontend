@@ -1,10 +1,17 @@
-import { Button, Divider, List, ListItem, ListItemText, Typography } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
+import { Divider, List, ListItem, ListItemText, TextField, Typography } from '@material-ui/core';
+import { Autocomplete, Pagination } from '@material-ui/lab';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { useFetch } from '../../utils/hooks/useFetch';
+
+interface Facet {
+  id: string;
+  engName: string;
+  norName: string;
+  count: number;
+}
 
 const url = new URL(
   'https://app.cristin.no/ws/ajax/getHealth?facet.field=health_project_type_idfacet&facet.field=category_idfacet&facet.field=institution_coordinating_idfacet&facet.field=institution_responsible_idfacet&facet.field=hrcs_category_idfacet&facet.field=hrcs_activity_idfacet&facet.field=infrastructure_category_idfacet&facet.field.empty=infrastructure_category_idfacet&facet=on&&fq=type:project&sort=score%20desc&page=1&rows=10'
@@ -19,6 +26,22 @@ const HealthProjectsPage = () => {
   const searchParams = new URLSearchParams(history.location.search);
 
   const [healthProjects] = useFetch<any>(apiUrl.toString());
+
+  const coordinatinInstitutions = Object.entries(healthProjects?.facets.institution_coordinating_idfacet ?? []).map(
+    ([key, value]) => {
+      const keys = key.split('##');
+      const f: Facet = { id: keys[0], norName: keys[1], engName: keys[2], count: value as number };
+      return f;
+    }
+  );
+
+  const responsibleInstitutions = Object.entries(healthProjects?.facets.institution_responsible_idfacet ?? []).map(
+    ([key, value]) => {
+      const keys = key.split('##');
+      const f: Facet = { id: keys[0], norName: keys[1], engName: keys[2], count: value as number };
+      return f;
+    }
+  );
 
   useEffect(() => {
     apiUrl.searchParams.set('page', page.toString());
@@ -35,57 +58,72 @@ const HealthProjectsPage = () => {
     if (institution_coordinating_idfacet) {
       apiParams.append('fq', `institution_coordinating_idfacet:${institution_coordinating_idfacet}*`);
     }
-    const institution_responsible_idfacet = webParams.get('institution_responsible_idfacet');
-    if (institution_responsible_idfacet) {
-      // TODO: can have multiple values...
-      apiParams.append('fq', `institution_responsible_idfacet:${institution_responsible_idfacet}*`);
+    const institution_responsible_idfacets = webParams.getAll('institution_responsible_idfacet');
+    if (institution_responsible_idfacets) {
+      institution_responsible_idfacets.forEach((element) => {
+        apiParams.append('fq', `institution_responsible_idfacet:${element}*`);
+      });
     }
     const newUrl = new URL(`https://app.cristin.no/ws/ajax/getHealth?${apiParams.toString()}`);
     setApiUrl(newUrl);
   }, [history.location.search]);
 
   const hitsCount = healthProjects ? healthProjects['total-count'] : 0;
+
   return (
     <StyledPageWrapperWithMaxWidth>
       <PageHeader backPath="/">Helseprosjekt</PageHeader>
       {healthProjects && (
         <>
-          <Typography variant="h2">Koordinerende Institusjon</Typography>
-          {Object.entries(healthProjects.facets.institution_coordinating_idfacet)
-            .slice(0, 5)
-            .map(([key, value]) => {
-              const keyValues = key.split('##');
+          <Autocomplete
+            options={coordinatinInstitutions}
+            getOptionLabel={(option) => `${option.norName} (${option.count})`}
+            getOptionSelected={(option, value) => option.id === value.id}
+            onChange={(_, value) => {
+              if (value?.id) {
+                searchParams.set('institution_coordinating_idfacet', value.id);
+              } else {
+                searchParams.delete('institution_coordinating_idfacet');
+              }
+              history.push({ search: searchParams.toString() });
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                data-testid="registration-tag-field"
+                label="Koordinerende Institusjon"
+                variant="filled"
+                fullWidth
+              />
+            )}
+          />
 
-              return (
-                <Button
-                  key={key}
-                  onClick={() => {
-                    searchParams.set('institution_coordinating_idfacet', keyValues[0]);
-                    history.push({ search: searchParams.toString() });
-                  }}>
-                  {keyValues[1]} ({value})
-                </Button>
-              );
-            })}
-          <Typography variant="h2">Forskningsansvarlig Institusjon</Typography>
-          {Object.entries(healthProjects.facets.institution_responsible_idfacet)
-            .slice(0, 5)
-            .map(([key, value]) => {
-              const keyValues = key.split('##');
-
-              return (
-                <Button
-                  key={key}
-                  onClick={() => {
-                    searchParams.set('institution_responsible_idfacet', keyValues[0]);
-                    history.push({ search: searchParams.toString() });
-                  }}>
-                  {keyValues[1]} ({value})
-                </Button>
-              );
-            })}
+          <Autocomplete
+            options={responsibleInstitutions}
+            multiple
+            getOptionLabel={(option) => `${option.norName} (${option.count})`}
+            onChange={(_, value) => {
+              searchParams.delete('institution_responsible_idfacet');
+              if (value) {
+                const ids = value.map((val) => val.id);
+                ids.forEach((id) => {
+                  searchParams.append('institution_responsible_idfacet', id);
+                });
+              }
+              history.push({ search: searchParams.toString() });
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                data-testid="registration-tag-field"
+                label="Ansvarlig Institusjoner"
+                variant="filled"
+                fullWidth
+              />
+            )}
+          />
           <Divider />
-          <Typography variant="h3">{hitsCount} treff</Typography>
+          <Typography variant="h3">{hitsCount} treff:</Typography>
           <List>
             {healthProjects.results.map((result: any, index: number) => (
               <ListItem divider key={index}>
