@@ -22,11 +22,13 @@ export const PublicJournalContent = ({ date, publicationContext }: PublicJournal
   return title ? (
     <>
       {url ? (
-        <Typography component={Link} href={url} target="_blank" rel="noopener noreferrer">
+        <Typography variant="subtitle2" component={Link} href={url} target="_blank" rel="noopener noreferrer">
           {title}
         </Typography>
       ) : (
-        <Typography>{title}</Typography>
+        <Typography variant="subtitle2" component="p">
+          {title}
+        </Typography>
       )}
 
       <Typography>{displayDate(date)}</Typography>
@@ -51,7 +53,9 @@ export const PublicPublisherContent = ({
 
   return publisher ? (
     <>
-      <Typography variant="h3">{t('common:publisher')}</Typography>
+      <Typography variant="subtitle2" component="p">
+        {t('common:publisher')}
+      </Typography>
       {url ? (
         <Typography component={Link} href={url} target="_blank" rel="noopener noreferrer">
           {publisher}
@@ -85,7 +89,9 @@ export const PublicSeriesContent = ({ seriesTitle }: { seriesTitle: string }) =>
 
   return seriesTitle ? (
     <>
-      <Typography variant="h3">{t('resource_type.series')}</Typography>
+      <Typography variant="subtitle2" component="p">
+        {t('resource_type.series')}
+      </Typography>
       <Typography>{seriesTitle}</Typography>
     </>
   ) : null;

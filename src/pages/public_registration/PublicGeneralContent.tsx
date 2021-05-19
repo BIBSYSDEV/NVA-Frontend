@@ -79,7 +79,9 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
   return (
     <StyledContent>
       <StyledGroup0>
-        <Typography variant="subtitle2">{t('public_page.about_registration')}</Typography>
+        <Typography variant="subtitle2" component="p">
+          {t('public_page.about_registration')}
+        </Typography>
 
         {(publicationInstance as JournalPublicationInstance).peerReviewed && (
           <Typography>{t('resource_type.peer_reviewed')}</Typography>
