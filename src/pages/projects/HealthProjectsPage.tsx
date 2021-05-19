@@ -1,4 +1,4 @@
-import { Divider, List, ListItem, ListItemText, TextField, Typography } from '@material-ui/core';
+import { List, ListItem, ListItemText, TextField, Typography } from '@material-ui/core';
 import { Autocomplete, Pagination } from '@material-ui/lab';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -39,7 +39,7 @@ const HealthProjectsPage = () => {
   const searchParams = new URLSearchParams(history.location.search);
 
   const [healthProjects] = useFetch<any>(apiUrl ? apiUrl.toString() : '');
-  const coordinatinInstitutions = getFacets(
+  const coordinatingInstitutions = getFacets(
     Object.entries(healthProjects?.facets.institution_coordinating_idfacet ?? [])
   );
   const responsibleInstitutions = getFacets(
@@ -75,10 +75,10 @@ const HealthProjectsPage = () => {
       {healthProjects && (
         <>
           <Autocomplete
-            options={coordinatinInstitutions}
-            defaultValue={coordinatinInstitutions.find((i) => i.id === searchParams.get(coordinatingInstitutionKey))}
+            options={coordinatingInstitutions}
+            value={coordinatingInstitutions.find((i) => i.id === searchParams.get(coordinatingInstitutionKey)) ?? null}
             getOptionLabel={(option) => `${option.norName} (${option.count})`}
-            getOptionSelected={(option, value) => option.id === value.id}
+            getOptionSelected={(option, value) => option.id === value?.id}
             onChange={(_, value) => {
               if (value?.id) {
                 searchParams.set(coordinatingInstitutionKey, value.id);
@@ -87,22 +87,12 @@ const HealthProjectsPage = () => {
               }
               history.push({ search: searchParams.toString() });
             }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                data-testid="registration-tag-field"
-                label="Koordinerende Institusjon"
-                variant="filled"
-                fullWidth
-              />
-            )}
+            renderInput={(params) => <TextField {...params} label="Koordinerende Institusjon" variant="filled" />}
           />
 
           <Autocomplete
             options={responsibleInstitutions}
-            defaultValue={responsibleInstitutions.filter((a) =>
-              searchParams.getAll(responsibleInstitutionKey).includes(a.id)
-            )}
+            value={responsibleInstitutions.filter((a) => searchParams.getAll(responsibleInstitutionKey).includes(a.id))}
             multiple
             getOptionLabel={(option) => `${option.norName} (${option.count})`}
             onChange={(_, value) => {
@@ -116,16 +106,9 @@ const HealthProjectsPage = () => {
               history.push({ search: searchParams.toString() });
             }}
             renderInput={(params) => (
-              <TextField
-                {...params}
-                data-testid="registration-tag-field"
-                label="Ansvarlig Institusjoner"
-                variant="filled"
-                fullWidth
-              />
+              <TextField {...params} label="Ansvarlig Institusjoner" variant="filled" margin="normal" />
             )}
           />
-          <Divider />
           <Typography variant="h3">{hitsCount} treff:</Typography>
           <List>
             {healthProjects.results.map((result: any, index: number) => (
