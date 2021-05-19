@@ -155,7 +155,12 @@ const lightTheme = createMuiTheme({
     },
     MuiLink: {
       root: {
-        color: Color.Link,
+        color: Color.PrimaryText,
+      },
+      underlineHover: {
+        textUnderlineOffset: '0.5rem',
+        textDecoration: 'underline',
+        textDecorationColor: Color.SecondaryMain,
       },
     },
     MuiTab: {
