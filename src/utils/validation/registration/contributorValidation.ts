@@ -22,22 +22,22 @@ export const contributorsValidationSchema = Yup.array().when(
       return Yup.array()
         .of(contributorValidationSchema)
         .test('author-test', contributorErrorMessage.authorRequired, (contributors) =>
-          hasRole(contributors, ContributorRole.CREATOR)
+          hasRole(contributors, ContributorRole.Creator)
         )
         .test('supervisor-test', contributorErrorMessage.supervisorRequired, (contributors) =>
-          hasRole(contributors, ContributorRole.SUPERVISOR)
+          hasRole(contributors, ContributorRole.Supervisor)
         );
     } else if (publicationInstanceType === BookType.ANTHOLOGY) {
       return Yup.array()
         .of(contributorValidationSchema)
         .test('editor-test', contributorErrorMessage.editorRequired, (contributors) =>
-          hasRole(contributors, ContributorRole.EDITOR)
+          hasRole(contributors, ContributorRole.Editor)
         );
     } else {
       return Yup.array()
         .of(contributorValidationSchema)
         .test('author-test', contributorErrorMessage.authorRequired, (contributors) =>
-          hasRole(contributors, ContributorRole.CREATOR)
+          hasRole(contributors, ContributorRole.Creator)
         );
     }
   }

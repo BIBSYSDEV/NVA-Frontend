@@ -36,7 +36,7 @@ const SearchBar: FC<SearchBarProps> = ({ handleSearch, initialSearchTerm = '' })
         value={searchTerm}
         InputProps={{
           endAdornment: (
-            <IconButton type="submit" data-testid="search-button">
+            <IconButton type="submit" data-testid="search-button" title={t('search')}>
               <SearchIcon />
             </IconButton>
           ),

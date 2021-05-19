@@ -4,20 +4,24 @@ import { Typography } from '@material-ui/core';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import { ContributorCard } from './ContributorCard';
-import { getRemoveContributorText } from '../../../../utils/validation/registration/contributorTranslations';
+import { getRemoveContributorText } from '../../../../utils/translation-helpers';
 
 interface ContributorListProps {
   contributors: Contributor[];
   onDelete: (index: number) => void;
   onMoveContributor: (newSequence: number, oldSequence: number) => void;
   openContributorModal: (unverifiedContributor: UnverifiedContributor) => void;
+  contributorsLength?: number; // Can be bigger than contributors.length if parent uses paging
+  showContributorRole?: boolean;
 }
 
 export const ContributorList = ({
   contributors,
+  contributorsLength = contributors.length,
   onDelete,
   onMoveContributor,
   openContributorModal,
+  showContributorRole = false,
 }: ContributorListProps) => {
   const { t } = useTranslation('registration');
   const [contributorToRemove, setContributorToRemove] = useState<Contributor | null>(null);
@@ -28,13 +32,15 @@ export const ContributorList = ({
 
   return (
     <>
-      {contributors.map((contributor) => (
+      {contributors.map((contributor, index) => (
         <ContributorCard
-          key={contributor.identity.id || contributor.identity.name}
+          key={index}
           contributor={contributor}
           onMoveContributor={onMoveContributor}
           onRemoveContributorClick={() => setContributorToRemove(contributor)}
           openContributorModal={openContributorModal}
+          contributorsLength={contributorsLength}
+          showContributorRole={showContributorRole}
         />
       ))}
       {contributorToRemove && (

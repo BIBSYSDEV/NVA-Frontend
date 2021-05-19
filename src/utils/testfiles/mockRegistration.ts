@@ -58,7 +58,7 @@ export const mockRegistration: JournalRegistration = {
           id: '901790000000',
           name: 'Test User',
         },
-        role: ContributorRole.CREATOR,
+        role: ContributorRole.Creator,
         sequence: 1,
       },
       {
@@ -76,7 +76,7 @@ export const mockRegistration: JournalRegistration = {
           type: BackendTypeNames.IDENTITY,
           name: 'Osteloff, Oddny',
         },
-        role: ContributorRole.CREATOR,
+        role: ContributorRole.Creator,
         sequence: 2,
       },
     ],

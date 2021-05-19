@@ -1,17 +1,17 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
 import deepmerge from 'deepmerge';
-import { emptyRegistration, Registration } from '../../types/registration.types';
-import PublicRegistrationAuthors from './PublicRegistrationAuthors';
-import PublicFilesContent from './PublicFilesContent';
-import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
-import { RegistrationPageHeader } from '../../components/PageHeader';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 import BackgroundDiv from '../../components/BackgroundDiv';
+import { RegistrationPageHeader } from '../../components/PageHeader';
 import lightTheme from '../../themes/lightTheme';
-import PublicSummaryContent from './PublicSummaryContent';
-import PublicProjectsContent from './PublicProjectsContent';
+import { emptyRegistration, Registration } from '../../types/registration.types';
+import { PublicFilesContent } from './PublicFilesContent';
 import PublicGeneralContent from './PublicGeneralContent';
+import { PublicProjectsContent } from './PublicProjectsContent';
+import { PublicRegistrationContributors } from './PublicRegistrationContributors';
+import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
+import { PublicSummaryContent } from './PublicSummaryContent';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   padding: 2rem 5rem;
@@ -29,39 +29,58 @@ export interface PublicRegistrationProps extends PublicRegistrationContentProps 
   refetchRegistration: () => void;
 }
 
-const PublicRegistrationContent = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
+export const PublicRegistrationContent = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
   const { t } = useTranslation('registration');
 
   // Registration can lack some fields if it's newly created
   registration = deepmerge(emptyRegistration, registration);
 
-  const { contributors, mainTitle } = registration.entityDescription;
+  const {
+    entityDescription: { contributors, date, mainTitle, abstract, description, tags, reference },
+    projects,
+    fileSet,
+  } = registration;
 
   return (
     <>
       <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
-      <RegistrationPageHeader>{mainTitle || `[${t('common:missing_title')}]`}</RegistrationPageHeader>
+      <RegistrationPageHeader
+        details={{
+          publicationType: t(`publicationTypes:${reference.publicationInstance.type}`),
+          publicationYear: date.year,
+        }}>
+        {mainTitle || `[${t('common:missing_title')}]`}
+      </RegistrationPageHeader>
       <div>
-        {contributors && <PublicRegistrationAuthors contributors={contributors} />}
+        {contributors && (
+          <PublicRegistrationContributors
+            contributors={contributors}
+            registrationType={reference.publicationInstance.type}
+          />
+        )}
 
         <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
           <PublicGeneralContent registration={registration} />
         </StyledBackgroundDiv>
 
-        <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-          <PublicFilesContent registration={registration} />
-        </StyledBackgroundDiv>
+        {fileSet.files.length > 0 && (
+          <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.light}>
+            <PublicFilesContent registration={registration} />
+          </StyledBackgroundDiv>
+        )}
 
-        <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-          <PublicSummaryContent registration={registration} />
-        </StyledBackgroundDiv>
+        {(abstract || description || tags.length > 0) && (
+          <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+            <PublicSummaryContent registration={registration} />
+          </StyledBackgroundDiv>
+        )}
 
-        <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-          <PublicProjectsContent registration={registration} />
-        </StyledBackgroundDiv>
+        {projects?.length > 0 && (
+          <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
+            <PublicProjectsContent projects={projects} />
+          </StyledBackgroundDiv>
+        )}
       </div>
     </>
   );
 };
-
-export default PublicRegistrationContent;

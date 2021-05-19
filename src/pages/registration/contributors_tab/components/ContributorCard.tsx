@@ -15,8 +15,8 @@ import lightTheme from '../../../../themes/lightTheme';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
-import { getRemoveContributorText } from '../../../../utils/validation/registration/contributorTranslations';
 import AffiliationsCell from './AffiliationsCell';
+import { getRemoveContributorText } from '../../../../utils/translation-helpers';
 
 const StyledCheckIcon = styled(CheckIcon)`
   color: ${({ theme }) => theme.palette.success.main};
@@ -47,7 +47,7 @@ const StyledContributorSection = styled.div`
 
 const StyledSequenceTextField = styled(TextField)`
   grid-area: sequence;
-  width: 3rem;
+  width: 3.6rem;
   margin: -1rem 1rem 0 0;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     margin: -1rem 0 0 1rem;
@@ -67,6 +67,7 @@ const StyledVerifiedSection = styled.div`
 
 const StyledCorrespondingWrapper = styled.div`
   grid-area: corresponding;
+  margin-bottom: 0.5rem;
 `;
 
 const StyledDangerButton = styled(DangerButton)`
@@ -102,6 +103,8 @@ interface ContributorCardProps {
   onMoveContributor: (newSequence: number, oldSequence: number) => void;
   onRemoveContributorClick: () => void;
   openContributorModal: (unverifiedContributor: UnverifiedContributor) => void;
+  contributorsLength: number;
+  showContributorRole: boolean;
 }
 
 export const ContributorCard = ({
@@ -109,6 +112,8 @@ export const ContributorCard = ({
   onMoveContributor,
   onRemoveContributorClick,
   openContributorModal,
+  contributorsLength,
+  showContributorRole,
 }: ContributorCardProps) => {
   const { t } = useTranslation('registration');
   const {
@@ -124,9 +129,7 @@ export const ContributorCard = ({
       c.role === contributor.role
   );
   const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${contributorIndex}]`;
-  const { setFieldValue } = useFormikContext<Registration>();
   const [sequenceValue, setSequenceValue] = useState(`${contributor.sequence}`);
-  const numberOfContributorsWithSameRole = contributors.filter((c) => c.role === contributor.role).length;
 
   useEffect(() => {
     // Ensure sequence field is updated
@@ -172,7 +175,7 @@ export const ContributorCard = ({
         </StyledVerifiedSection>
         <StyledRightAlignedWrapper>
           <StyledArrowSection>
-            {contributor.sequence < numberOfContributorsWithSameRole && (
+            {contributor.sequence < contributorsLength && (
               <Tooltip title={t<string>('contributors.move_down')}>
                 <StyledArrowButton
                   color="secondary"
@@ -207,28 +210,21 @@ export const ContributorCard = ({
           />
         </StyledRightAlignedWrapper>
         <StyledCorrespondingWrapper>
-          <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
-            {({ field }: FieldProps) => (
-              <FormControlLabel
-                data-testid="author-corresponding-checkbox"
-                control={
-                  <Checkbox
-                    checked={!!field.value}
-                    color="default"
-                    {...field}
-                    // TODO: Remove this block when backend has removed validation for email field
-                    onChange={(event) => {
-                      field.onChange(event);
-                      if (event.target.checked) {
-                        setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.EMAIL}`, 'NO_EMAIL');
-                      }
-                    }}
-                  />
-                }
-                label={t('contributors.corresponding')}
-              />
-            )}
-          </Field>
+          {showContributorRole ? (
+            <Typography variant="subtitle2" component="p">
+              {t(`contributors.types.${contributor.role}`)}
+            </Typography>
+          ) : (
+            <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
+              {({ field }: FieldProps) => (
+                <FormControlLabel
+                  data-testid="author-corresponding-checkbox"
+                  control={<Checkbox checked={!!field.value} color="default" {...field} />}
+                  label={t('contributors.corresponding')}
+                />
+              )}
+            </Field>
+          )}
         </StyledCorrespondingWrapper>
       </StyledContributorSection>
       {contributor.identity && (

@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, MuiThemeProvider, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
+import { Pagination } from '@material-ui/lab';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { Authority } from '../../../types/authority.types';
 import {
@@ -19,24 +20,30 @@ import { BackendTypeNames } from '../../../types/publication_types/commonRegistr
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import useIsMobile from '../../../utils/hooks/useIsMobile';
-import {
-  getAddContributorText,
-  getContributorHeading,
-} from '../../../utils/validation/registration/contributorTranslations';
-import AddContributorModal from './AddContributorModal';
-import lightTheme from '../../../themes/lightTheme';
+import lightTheme, { paginationTranslationProps } from '../../../themes/lightTheme';
 import { ContributorList } from './components/ContributorList';
+import { AddContributorModal } from './AddContributorModal';
+import { getAddContributorText, getContributorHeading } from '../../../utils/translation-helpers';
 
 const StyledButton = styled(Button)`
   margin: 1rem 0rem;
   border-radius: 1rem;
 `;
 
+const StyledPagination = styled(Pagination)`
+  margin-top: 1rem;
+  > ul {
+    justify-content: center;
+  }
+`;
+
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
-  contributorRole?: ContributorRole;
+  contributorRoles: ContributorRole[];
 }
 
-export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, replace }: ContributorsProps) => {
+const contributorsPerPage = 5;
+
+export const Contributors = ({ contributorRoles, push, replace }: ContributorsProps) => {
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
@@ -45,10 +52,19 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
   } = values;
   const [openContributorModal, setOpenContributorModal] = useState(false);
   const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
+  const [currentPage, setCurrentPage] = useState(1); // Pagination pages are 1-indexed :/
   const isMobile = useIsMobile();
 
-  const relevantContributors = contributors.filter((contributor) => contributor.role === contributorRole);
-  const otherContributors = contributors.filter((contributor) => contributor.role !== contributorRole);
+  const relevantContributors = contributors.filter((contributor) =>
+    contributorRoles.some((role) => role === contributor.role)
+  );
+  const contributorsToShow = relevantContributors.slice(
+    contributorsPerPage * (currentPage - 1),
+    contributorsPerPage * currentPage
+  );
+  const otherContributors = contributors.filter(
+    (contributor) => !contributorRoles.some((role) => role === contributor.role)
+  );
 
   const handleOnRemove = (indexToRemove: number) => {
     const nextRelevantContributors = relevantContributors
@@ -56,6 +72,11 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
       .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
     const nextContributors = [...nextRelevantContributors, ...otherContributors];
     setFieldValue(ContributorFieldNames.CONTRIBUTORS, nextContributors);
+
+    const maxValidPage = Math.ceil(nextContributors.length / contributorsPerPage);
+    if (currentPage > maxValidPage) {
+      setCurrentPage(maxValidPage);
+    }
 
     if (nextContributors.length === 0) {
       // Ensure field is set to touched even if it's empty
@@ -76,7 +97,7 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
         : relevantContributors.findIndex((c) => c.sequence === newSequence);
 
     const orderedContributors =
-      newIndex > 0 ? (move(relevantContributors, oldIndex, newIndex) as Contributor[]) : relevantContributors;
+      newIndex >= 0 ? (move(relevantContributors, oldIndex, newIndex) as Contributor[]) : relevantContributors;
 
     // Ensure incrementing sequence values
     const newContributors = orderedContributors.map((contributor, index) => ({
@@ -91,7 +112,7 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
     setOpenContributorModal(true);
   };
 
-  const onAuthorSelected = (authority: Authority) => {
+  const onContributorSelected = (authority: Authority, role: ContributorRole) => {
     if (relevantContributors.some((contributor) => contributor.identity.id === authority.id)) {
       dispatch(setNotification(t('contributors.contributor_already_added'), NotificationVariant.Info));
       return;
@@ -112,64 +133,85 @@ export const Contributors = ({ contributorRole = ContributorRole.CREATOR, push, 
           type: BackendTypeNames.ORGANIZATION,
           id: unitUri,
         })),
-        role: contributorRole,
+        role,
         sequence: relevantContributors.length + 1,
       };
       push(newContributor);
+      const maxValidPage = Math.ceil((relevantContributors.length + 1) / contributorsPerPage);
+      setCurrentPage(maxValidPage);
     } else {
+      const relevantContributor = relevantContributors[unverifiedContributor.index];
+      const relevantAffiliations = relevantContributor.affiliations ?? [];
+      const existingOrgunitIds = authority.orgunitids.map((unitUri) => ({
+        type: BackendTypeNames.ORGANIZATION,
+        id: unitUri,
+      }));
+      relevantAffiliations.push(...existingOrgunitIds);
+
       const verifiedContributor: Contributor = {
-        ...relevantContributors[unverifiedContributor.index],
-        role: contributorRole,
+        ...relevantContributor,
+        role,
         identity,
+        affiliations: relevantAffiliations,
       };
       replace(unverifiedContributor.index, verifiedContributor);
     }
   };
 
+  const contributorRole = contributorRoles.length === 1 ? contributorRoles[0] : 'OtherContributor';
+
+  const addContributorButton = (
+    <StyledButton
+      onClick={() => {
+        setOpenContributorModal(true);
+        setUnverifiedContributor(null);
+      }}
+      variant="contained"
+      color={contributorRoles.length === 1 ? 'secondary' : 'default'}
+      startIcon={<AddIcon />}
+      data-testid={`add-${contributorRole}`}>
+      {getAddContributorText(contributorRole)}
+    </StyledButton>
+  );
+
   return (
-    <div data-testid={`contributors-${contributorRole}`}>
+    <div data-testid={contributorRole}>
       <Typography variant="h2">{getContributorHeading(contributorRole)}</Typography>
       <MuiThemeProvider theme={lightTheme}>
-        {((isMobile && relevantContributors.length >= 2) || (!isMobile && relevantContributors.length >= 5)) && (
-          <StyledButton
-            onClick={() => {
-              setOpenContributorModal(true);
-              setUnverifiedContributor(null);
-            }}
-            variant="contained"
-            color="secondary"
-            startIcon={<AddIcon />}
-            data-testid={`add-contributor-${contributorRole}`}>
-            {getAddContributorText(contributorRole)}
-          </StyledButton>
-        )}
+        {((isMobile && contributorsToShow.length >= 2) || (!isMobile && contributorsToShow.length >= 5)) &&
+          addContributorButton}
 
         <ContributorList
-          contributors={relevantContributors}
+          contributors={contributorsToShow}
           onDelete={handleOnRemove}
           onMoveContributor={handleMoveContributor}
           openContributorModal={handleOpenContributorModal}
+          showContributorRole={contributorRoles.length > 1}
+          contributorsLength={relevantContributors.length}
         />
 
-        <StyledButton
-          onClick={() => {
-            setOpenContributorModal(true);
-            setUnverifiedContributor(null);
-          }}
-          variant="contained"
-          color="secondary"
-          startIcon={<AddIcon />}
-          data-testid={`add-contributor-${contributorRole}`}>
-          {getAddContributorText(contributorRole)}
-        </StyledButton>
         <AddContributorModal
+          contributorRoles={contributorRoles}
           contributorRole={contributorRole}
           initialSearchTerm={unverifiedContributor?.name}
           open={openContributorModal}
           toggleModal={() => setOpenContributorModal(!openContributorModal)}
-          onAuthorSelected={onAuthorSelected}
+          onContributorSelected={onContributorSelected}
         />
       </MuiThemeProvider>
+      {relevantContributors.length > contributorsPerPage && (
+        <StyledPagination
+          variant="outlined"
+          color="primary"
+          size="large"
+          shape="rounded"
+          getItemAriaLabel={paginationTranslationProps}
+          onChange={(_, page) => setCurrentPage(page)}
+          page={currentPage}
+          count={Math.ceil(relevantContributors.length / contributorsPerPage)}
+        />
+      )}
+      {addContributorButton}
     </div>
   );
 };

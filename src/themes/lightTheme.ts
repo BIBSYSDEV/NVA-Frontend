@@ -17,6 +17,7 @@ declare module '@material-ui/core/styles/createPalette' {
 
   interface TypeBackground {
     footer: string;
+    statusBar: string;
   }
 
   interface ExtendedPalette extends PaletteColor {
@@ -33,7 +34,7 @@ declare module '@material-ui/core/styles/createPalette' {
 }
 
 enum Font {
-  Barlow = 'Barlow,  sans-serif',
+  Barlow = 'Barlow, sans-serif',
   Crimson = 'Crimson Text, serif',
 }
 
@@ -75,6 +76,7 @@ const lightTheme = createMuiTheme({
     background: {
       default: Color.White,
       footer: Color.Footer,
+      statusBar: Color.SecondaryMegaLight,
     },
     section: {
       megaLight: Color.BlueMegaLight,
@@ -106,9 +108,12 @@ const lightTheme = createMuiTheme({
       fontSize: '1.25rem',
       fontWeight: 700,
     },
-
+    overline: {
+      fontSize: '0.8rem',
+    },
     subtitle2: {
-      fontWeight: 700,
+      fontSize: '1.25rem',
+      fontWeight: 400,
     },
   },
   overrides: {
@@ -119,6 +124,16 @@ const lightTheme = createMuiTheme({
     },
     MuiAppBar: {
       root: { background: Color.Header },
+    },
+    MuiButton: {
+      outlinedSecondary: {
+        color: Color.PrimaryText,
+      },
+      containedSecondary: {
+        '&:disabled': {
+          background: Color.SecondaryLight,
+        },
+      },
     },
     MuiCard: {
       root: {
@@ -228,4 +243,15 @@ export const autocompleteTranslationProps = {
 export const datePickerTranslationProps = {
   cancelLabel: i18n.t('common:cancel'),
   okLabel: i18n.t('common:select'),
+};
+
+export const paginationTranslationProps = (type: string, page: number) => {
+  if (type === 'previous') {
+    return i18n.t('common:go_to_previous_page');
+  } else if (type === 'next') {
+    return i18n.t('common:go_to_next_page');
+  } else if (type === 'page') {
+    return i18n.t('common:go_to_page', { page });
+  }
+  return '';
 };
