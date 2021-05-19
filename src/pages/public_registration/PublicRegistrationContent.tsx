@@ -1,17 +1,17 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
 import deepmerge from 'deepmerge';
-import { emptyRegistration, Registration } from '../../types/registration.types';
-import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
-import { RegistrationPageHeader } from '../../components/PageHeader';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 import BackgroundDiv from '../../components/BackgroundDiv';
+import { RegistrationPageHeader } from '../../components/PageHeader';
 import lightTheme from '../../themes/lightTheme';
-import PublicGeneralContent from './PublicGeneralContent';
-import { PublicRegistrationContributors } from './PublicRegistrationContributors';
-import { PublicSummaryContent } from './PublicSummaryContent';
-import { PublicProjectsContent } from './PublicProjectsContent';
+import { emptyRegistration, Registration } from '../../types/registration.types';
 import { PublicFilesContent } from './PublicFilesContent';
+import PublicGeneralContent from './PublicGeneralContent';
+import { PublicProjectsContent } from './PublicProjectsContent';
+import { PublicRegistrationContributors } from './PublicRegistrationContributors';
+import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
+import { PublicSummaryContent } from './PublicSummaryContent';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   padding: 2rem 5rem;
@@ -36,7 +36,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
   registration = deepmerge(emptyRegistration, registration);
 
   const {
-    entityDescription: { contributors, mainTitle, abstract, description, tags, reference },
+    entityDescription: { contributors, date, mainTitle, abstract, description, tags, reference },
     projects,
     fileSet,
   } = registration;
@@ -44,7 +44,13 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
   return (
     <>
       <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
-      <RegistrationPageHeader>{mainTitle || `[${t('common:missing_title')}]`}</RegistrationPageHeader>
+      <RegistrationPageHeader
+        details={{
+          publicationType: t(`publicationTypes:${reference.publicationInstance.type}`),
+          publicationYear: date.year,
+        }}>
+        {mainTitle || `[${t('common:missing_title')}]`}
+      </RegistrationPageHeader>
       <div>
         {contributors && (
           <PublicRegistrationContributors
