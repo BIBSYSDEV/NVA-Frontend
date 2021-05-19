@@ -18,10 +18,8 @@ const coordinatingInstitutionKey = 'institution_coordinating_idfacet';
 const responsibleInstitutionKey = 'institution_responsible_idfacet';
 
 const apiBaseUrl = 'https://app.cristin.no/ws/ajax/getHealth';
-
-const url = new URL(
-  `${apiBaseUrl}?facet.field=health_project_type_idfacet&facet.field=category_idfacet&facet.field=institution_coordinating_idfacet&facet.field=institution_responsible_idfacet&facet.field=hrcs_category_idfacet&facet.field=hrcs_activity_idfacet&facet.field=infrastructure_category_idfacet&facet.field.empty=infrastructure_category_idfacet&facet=on&&fq=type:project&sort=score%20desc&page=1&rows=10`
-);
+const apiBaseSearchParam =
+  '?facet.field=health_project_type_idfacet&facet.field=category_idfacet&facet.field=institution_coordinating_idfacet&facet.field=institution_responsible_idfacet&facet.field=hrcs_category_idfacet&facet.field=hrcs_activity_idfacet&facet.field=infrastructure_category_idfacet&facet.field.empty=infrastructure_category_idfacet&facet=on&&fq=type:project&sort=score%20desc&page=1&rows=10';
 
 const rowsPerPage = 10;
 
@@ -37,10 +35,10 @@ const getFacets = (values: any[]) => {
 const HealthProjectsPage = () => {
   const history = useHistory();
   const [page, setPage] = useState(1);
-  const [apiUrl, setApiUrl] = useState(url);
+  const [apiUrl, setApiUrl] = useState<URL>();
   const searchParams = new URLSearchParams(history.location.search);
 
-  const [healthProjects] = useFetch<any>(apiUrl.toString());
+  const [healthProjects] = useFetch<any>(apiUrl ? apiUrl.toString() : '');
   const coordinatinInstitutions = getFacets(
     Object.entries(healthProjects?.facets.institution_coordinating_idfacet ?? [])
   );
@@ -49,14 +47,8 @@ const HealthProjectsPage = () => {
   );
 
   useEffect(() => {
-    apiUrl.searchParams.set('page', page.toString());
-    const newUrl = new URL(`${apiBaseUrl}${apiUrl.search}`);
-    setApiUrl(newUrl);
-  }, [page]);
-
-  useEffect(() => {
     const webParams = new URLSearchParams(history.location.search);
-    const apiParams = apiUrl.searchParams;
+    const apiParams = new URLSearchParams(apiBaseSearchParam);
     apiParams.delete(apiQueryParamKey);
     apiParams.append(apiQueryParamKey, 'type:project');
     const coordinatingInstitutionId = webParams.get(coordinatingInstitutionKey);
@@ -69,9 +61,11 @@ const HealthProjectsPage = () => {
         apiParams.append(apiQueryParamKey, `${responsibleInstitutionKey}:${id}*`);
       });
     }
-    const newUrl = new URL(`${apiBaseUrl}?${apiParams.toString()}`);
-    setApiUrl(newUrl);
-  }, [history.location.search]);
+    apiParams.set('page', page.toString());
+
+    const newApiUrl = new URL(`${apiBaseUrl}?${apiParams.toString()}`);
+    setApiUrl(newApiUrl);
+  }, [history.location.search, page]);
 
   const hitsCount = healthProjects ? healthProjects['total-count'] : 0;
 
