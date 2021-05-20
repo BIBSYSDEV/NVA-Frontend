@@ -1,6 +1,6 @@
 import { List, ListItem, ListItemText, TextField, Typography } from '@material-ui/core';
 import { Autocomplete, Pagination } from '@material-ui/lab';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
@@ -14,12 +14,13 @@ interface Facet {
 }
 
 const apiQueryParamKey = 'fq';
+const typeKey = 'type';
 const coordinatingInstitutionKey = 'institution_coordinating_idfacet';
 const responsibleInstitutionKey = 'institution_responsible_idfacet';
 
 const apiBaseUrl = 'https://app.cristin.no/ws/ajax/getHealth';
 const apiBaseSearchParam =
-  '?facet.field=health_project_type_idfacet&facet.field=category_idfacet&facet.field=institution_coordinating_idfacet&facet.field=institution_responsible_idfacet&facet.field=hrcs_category_idfacet&facet.field=hrcs_activity_idfacet&facet.field=infrastructure_category_idfacet&facet.field.empty=infrastructure_category_idfacet&facet=on&&fq=type:project&sort=score%20desc&page=1&rows=10';
+  '?facet.field=health_project_type_idfacet&facet.field=category_idfacet&facet.field=institution_coordinating_idfacet&facet.field=institution_responsible_idfacet&facet.field=hrcs_category_idfacet&facet.field=hrcs_activity_idfacet&facet.field=infrastructure_category_idfacet&facet.field.empty=infrastructure_category_idfacet&facet=on&&sort=score%20desc&page=1&rows=10';
 
 const rowsPerPage = 10;
 
@@ -38,7 +39,13 @@ const HealthProjectsPage = () => {
   const [apiUrl, setApiUrl] = useState<URL>();
   const searchParams = new URLSearchParams(history.location.search);
 
+  const [typeOverview] = useFetch<any>('https://app.cristin.no/ws/ajax/getHealth?facet.field=type&facet=on&rows=1');
   const [healthProjects] = useFetch<any>(apiUrl ? apiUrl.toString() : '');
+
+  const types = useMemo(
+    () => (typeOverview ? Object.entries(typeOverview.facets.type).map(([name, count]) => ({ name, count })) : []),
+    [typeOverview]
+  );
   const coordinatingInstitutions = getFacets(
     Object.entries(healthProjects?.facets.institution_coordinating_idfacet ?? [])
   );
@@ -50,7 +57,12 @@ const HealthProjectsPage = () => {
     const webParams = new URLSearchParams(history.location.search);
     const apiParams = new URLSearchParams(apiBaseSearchParam);
     apiParams.delete(apiQueryParamKey);
-    apiParams.append(apiQueryParamKey, 'type:project');
+
+    if (types.length > 0) {
+      const typeParam = webParams.get(typeKey) ?? types[0].name;
+      apiParams.append(apiQueryParamKey, `type:${typeParam}`);
+    }
+
     const coordinatingInstitutionId = webParams.get(coordinatingInstitutionKey);
     if (coordinatingInstitutionId) {
       apiParams.append(apiQueryParamKey, `${coordinatingInstitutionKey}:${coordinatingInstitutionId}*`);
@@ -65,7 +77,7 @@ const HealthProjectsPage = () => {
 
     const newApiUrl = new URL(`${apiBaseUrl}?${apiParams.toString()}`);
     setApiUrl(newApiUrl);
-  }, [history.location.search, page]);
+  }, [history.location.search, page, types]);
 
   const hitsCount = healthProjects ? healthProjects['total-count'] : 0;
 
@@ -74,6 +86,20 @@ const HealthProjectsPage = () => {
       <PageHeader backPath="/">Helseprosjekt</PageHeader>
       {healthProjects && (
         <>
+          <Autocomplete
+            options={types}
+            value={types.find((t) => t.name === searchParams.get(typeKey)) ?? types[0]}
+            getOptionLabel={(option) => `${option.name} (${option.count})`}
+            onChange={(_, value) => {
+              if (value?.name && value.name !== types[0].name) {
+                searchParams.set(typeKey, value.name);
+              } else {
+                searchParams.delete(typeKey);
+              }
+              history.push({ search: searchParams.toString() });
+            }}
+            renderInput={(params) => <TextField {...params} label="Type" variant="filled" />}
+          />
           <Autocomplete
             options={coordinatingInstitutions}
             value={coordinatingInstitutions.find((i) => i.id === searchParams.get(coordinatingInstitutionKey)) ?? null}
