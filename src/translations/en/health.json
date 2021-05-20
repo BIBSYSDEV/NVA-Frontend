@@ -1,0 +1,13 @@
+{
+  "category_idfacet": "Shared cost/Commisioned Project",
+  "health_project_type_idfacet": "Health project type",
+  "hrcs_activity_idfacet": "HRCS Research activities",
+  "hrcs_category_idfacet": "HRCS Health categories",
+  "infrastructure": "Biobank",
+  "infrastructure_category_idfacet": "$t(infrastructure)",
+  "infrastructure_material_idfacet": "Material type",
+  "institution_coordinating_idfacet": "Coordinating institution",
+  "institution_idfacet": "Biobank type",
+  "institution_responsible_idfacet": "Responsible institution",
+  "project": "Health project"
+}

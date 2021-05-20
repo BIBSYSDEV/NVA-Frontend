@@ -25,6 +25,7 @@ import commonNb from './nb/common.json';
 import disciplinesNb from './nb/disciplines.json';
 import feedbackNb from './nb/feedback.json';
 import formikValuesNb from './nb/formikValues.json';
+import healthNb from './nb/health.json';
 import institutionNb from './nb/institution.json';
 import languagesNb from './nb/languages.json';
 import licensesNb from './nb/licenses.json';
@@ -63,6 +64,7 @@ i18n.use(LanguageDetector).init({
       disciplines: disciplinesNb,
       feedback: feedbackNb,
       formikValues: formikValuesNb,
+      health: healthNb,
       institution: institutionNb,
       languages: languagesNb,
       licenses: licensesNb,
@@ -82,6 +84,7 @@ i18n.use(LanguageDetector).init({
     'disciplines',
     'feedback',
     'formikValues',
+    'health',
     'infopages',
     'institution',
     'languages',

@@ -1,6 +1,7 @@
 import { List, ListItem, ListItemText, TextField, Typography } from '@material-ui/core';
 import { Autocomplete, Pagination } from '@material-ui/lab';
 import React, { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
@@ -10,6 +11,8 @@ interface FacetsResponse {
   facets: {
     type: {
       [name: string]: number;
+      // project: number;
+      // infrastructure: number;
     };
   };
 }
@@ -33,12 +36,23 @@ interface FacetObject {
 
 const apiQueryParamKey = 'fq';
 const typeKey = 'type';
-const coordinatingInstitutionKey = 'institution_coordinating_idfacet';
-const responsibleInstitutionKey = 'institution_responsible_idfacet';
 
 const apiBaseUrl = 'https://app.cristin.no/ws/ajax/getHealth';
 const apiBaseSearchParam =
-  '?facet.field=health_project_type_idfacet&facet.field=category_idfacet&facet.field=institution_coordinating_idfacet&facet.field=institution_responsible_idfacet&facet.field=hrcs_category_idfacet&facet.field=hrcs_activity_idfacet&facet.field=infrastructure_category_idfacet&facet.field.empty=infrastructure_category_idfacet&facet=on&&sort=score%20desc&page=1&rows=10';
+  '?facet.field.empty=infrastructure_category_idfacet&facet=on&&sort=score%20desc&page=1&rows=10';
+
+const facetFields = {
+  project: [
+    'health_project_type_idfacet',
+    'category_idfacet',
+    'institution_coordinating_idfacet',
+    'institution_responsible_idfacet',
+    'hrcs_category_idfacet',
+    'hrcs_activity_idfacet',
+    'infrastructure_category_idfacet',
+  ],
+  infrastructure: ['institution_idfacet', 'category_idfacet', 'infrastructure_material_idfacet'],
+};
 
 const rowsPerPage = 10;
 
@@ -52,6 +66,7 @@ const getFacets = (values: any[]) => {
 };
 
 const HealthProjectsPage = () => {
+  const { t } = useTranslation('health');
   const history = useHistory();
   const [page, setPage] = useState(1);
   const [apiUrl, setApiUrl] = useState<URL>();
@@ -64,34 +79,32 @@ const HealthProjectsPage = () => {
     () => (typeOverview ? Object.entries(typeOverview.facets.type).map(([name, count]) => ({ name, count })) : []),
     [typeOverview]
   );
-  const coordinatingInstitutions = getFacets(
-    Object.entries(healthProjects?.facets.institution_coordinating_idfacet ?? [])
-  );
-  const responsibleInstitutions = getFacets(
-    Object.entries(healthProjects?.facets.institution_responsible_idfacet ?? [])
-  );
+
+  const filters = healthProjects
+    ? Object.entries(healthProjects.facets).map(([key, values]) => ({ key, values: getFacets(Object.entries(values)) }))
+    : [];
 
   useEffect(() => {
     const webParams = new URLSearchParams(history.location.search);
     const apiParams = new URLSearchParams(apiBaseSearchParam);
     apiParams.delete(apiQueryParamKey);
 
+    apiParams.set('page', page.toString());
+
     if (types.length > 0) {
       const typeParam = webParams.get(typeKey) ?? types[0].name;
       apiParams.append(apiQueryParamKey, `type:${typeParam}`);
+
+      const facets = typeParam === 'infrastructure' ? facetFields.infrastructure : facetFields.project;
+
+      for (const facet of facets) {
+        apiParams.append('facet.field', facet);
+      }
     }
 
-    const coordinatingInstitutionId = webParams.get(coordinatingInstitutionKey);
-    if (coordinatingInstitutionId) {
-      apiParams.append(apiQueryParamKey, `${coordinatingInstitutionKey}:${coordinatingInstitutionId}*`);
+    for (const [key, value] of webParams.entries()) {
+      apiParams.append(apiQueryParamKey, `${key}:${value}*`);
     }
-    const responsibleInstitutionIds = webParams.getAll(responsibleInstitutionKey);
-    if (responsibleInstitutionIds) {
-      responsibleInstitutionIds.forEach((id) => {
-        apiParams.append(apiQueryParamKey, `${responsibleInstitutionKey}:${id}*`);
-      });
-    }
-    apiParams.set('page', page.toString());
 
     const newApiUrl = new URL(`${apiBaseUrl}?${apiParams.toString()}`);
     setApiUrl(newApiUrl);
@@ -101,13 +114,13 @@ const HealthProjectsPage = () => {
 
   return (
     <StyledPageWrapperWithMaxWidth>
-      <PageHeader backPath="/">Helseprosjekt</PageHeader>
+      <PageHeader backPath="/">{t('project')}</PageHeader>
       {healthProjects && (
         <>
           <Autocomplete
             options={types}
             value={types.find((t) => t.name === searchParams.get(typeKey)) ?? types[0]}
-            getOptionLabel={(option) => `${option.name} (${option.count})`}
+            getOptionLabel={(option) => `${t(option.name)} (${option.count})`}
             onChange={(_, value) => {
               if (value?.name && value.name !== types[0].name) {
                 searchParams.set(typeKey, value.name);
@@ -116,43 +129,27 @@ const HealthProjectsPage = () => {
               }
               history.push({ search: searchParams.toString() });
             }}
-            renderInput={(params) => <TextField {...params} label="Type" variant="filled" />}
+            renderInput={(params) => <TextField {...params} label="Type" variant="outlined" />}
           />
-          <Autocomplete
-            options={coordinatingInstitutions}
-            value={coordinatingInstitutions.find((i) => i.id === searchParams.get(coordinatingInstitutionKey)) ?? null}
-            getOptionLabel={(option) => `${option.norName} (${option.count})`}
-            getOptionSelected={(option, value) => option.id === value?.id}
-            onChange={(_, value) => {
-              if (value?.id) {
-                searchParams.set(coordinatingInstitutionKey, value.id);
-              } else {
-                searchParams.delete(coordinatingInstitutionKey);
-              }
-              history.push({ search: searchParams.toString() });
-            }}
-            renderInput={(params) => <TextField {...params} label="Koordinerende Institusjon" variant="filled" />}
-          />
+          {filters.map((filter) => (
+            <Autocomplete
+              key={filter.key}
+              options={filter.values}
+              value={filter.values.find((i) => i.id === searchParams.get(filter.key)) ?? null}
+              getOptionLabel={(option) => `${option.norName} (${option.count})`}
+              getOptionSelected={(option, value) => option.id === value?.id}
+              onChange={(_, value) => {
+                if (value?.id) {
+                  searchParams.set(filter.key, value.id);
+                } else {
+                  searchParams.delete(filter.key);
+                }
+                history.push({ search: searchParams.toString() });
+              }}
+              renderInput={(params) => <TextField {...params} label={t(filter.key)} variant="filled" />}
+            />
+          ))}
 
-          <Autocomplete
-            options={responsibleInstitutions}
-            value={responsibleInstitutions.filter((a) => searchParams.getAll(responsibleInstitutionKey).includes(a.id))}
-            multiple
-            getOptionLabel={(option) => `${option.norName} (${option.count})`}
-            onChange={(_, value) => {
-              searchParams.delete(responsibleInstitutionKey);
-              if (value) {
-                const ids = value.map((val) => val.id);
-                ids.forEach((id) => {
-                  searchParams.append(responsibleInstitutionKey, id);
-                });
-              }
-              history.push({ search: searchParams.toString() });
-            }}
-            renderInput={(params) => (
-              <TextField {...params} label="Ansvarlig Institusjoner" variant="filled" margin="normal" />
-            )}
-          />
           <Typography variant="h3">{hitsCount} treff:</Typography>
           <List>
             {healthProjects.results.map((result: any, index: number) => (
