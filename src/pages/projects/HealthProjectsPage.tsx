@@ -6,7 +6,25 @@ import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { useFetch } from '../../utils/hooks/useFetch';
 
-interface Facet {
+interface FacetsResponse {
+  facets: {
+    type: {
+      [name: string]: number;
+    };
+  };
+}
+
+interface HealthResponse {
+  'total-count': number;
+  results: any[];
+  facets: {
+    [name: string]: {
+      [key: string]: number;
+    };
+  };
+}
+
+interface FacetObject {
   id: string;
   engName: string;
   norName: string;
@@ -27,7 +45,7 @@ const rowsPerPage = 10;
 const getFacets = (values: any[]) => {
   const facets = values.map(([key, value]) => {
     const keys = key.split('##');
-    const facet: Facet = { id: keys[0], norName: keys[1], engName: keys[2], count: value as number };
+    const facet: FacetObject = { id: keys[0], norName: keys[1], engName: keys[2], count: value as number };
     return facet;
   });
   return facets;
@@ -39,8 +57,8 @@ const HealthProjectsPage = () => {
   const [apiUrl, setApiUrl] = useState<URL>();
   const searchParams = new URLSearchParams(history.location.search);
 
-  const [typeOverview] = useFetch<any>('https://app.cristin.no/ws/ajax/getHealth?facet.field=type&facet=on&rows=1');
-  const [healthProjects] = useFetch<any>(apiUrl ? apiUrl.toString() : '');
+  const [typeOverview] = useFetch<FacetsResponse>(`${apiBaseUrl}?facet.field=type&facet=on&rows=1`);
+  const [healthProjects] = useFetch<HealthResponse>(apiUrl ? apiUrl.toString() : '');
 
   const types = useMemo(
     () => (typeOverview ? Object.entries(typeOverview.facets.type).map(([name, count]) => ({ name, count })) : []),
