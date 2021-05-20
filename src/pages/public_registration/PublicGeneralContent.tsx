@@ -63,10 +63,6 @@ const StyledGroup1 = styled.div`
   grid-area: group1;
 `;
 
-const StyledPublicDoi = styled.div`
-  margin-top: 1.5rem;
-`;
-
 const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
   const {
@@ -99,14 +95,13 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
           </Typography>
         )}
 
-        <StyledPublicDoi>
-          <PublicDoi registration={registration} />
-        </StyledPublicDoi>
         {npiSubjectHeading && (
           <Typography>
             {t('description.npi_disciplines')}: {getNpiDiscipline(npiSubjectHeading)?.name}
           </Typography>
         )}
+
+        <PublicDoi registration={registration} />
       </StyledGroup0>
 
       <StyledGroup1>
