@@ -122,12 +122,11 @@ const HealthProjectsPage = () => {
             value={types.find((t) => t.name === searchParams.get(typeKey)) ?? types[0]}
             getOptionLabel={(option) => `${t(option.name)} (${option.count})`}
             onChange={(_, value) => {
+              const newSearchParams = new URLSearchParams();
               if (value?.name && value.name !== types[0].name) {
-                searchParams.set(typeKey, value.name);
-              } else {
-                searchParams.delete(typeKey);
+                newSearchParams.set(typeKey, value.name);
               }
-              history.push({ search: searchParams.toString() });
+              history.push({ search: newSearchParams.toString() });
             }}
             renderInput={(params) => <TextField {...params} label="Type" variant="outlined" />}
           />
@@ -152,7 +151,7 @@ const HealthProjectsPage = () => {
 
           <Typography variant="h3">{hitsCount} treff:</Typography>
           <List>
-            {healthProjects.results.map((result: any, index: number) => (
+            {healthProjects.results.map((result, index) => (
               <ListItem divider key={index}>
                 <ListItemText disableTypography>
                   <Typography>{result.title_norwegian}</Typography>
