@@ -5,7 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
+import { LanguageCodes } from '../../types/language.types';
+import { LanguageString } from '../../types/publication_types/commonRegistration.types';
 import { useFetch } from '../../utils/hooks/useFetch';
+import { getLanguageString } from '../../utils/translation-helpers';
 
 interface FacetsResponse {
   facets: {
@@ -14,7 +17,7 @@ interface FacetsResponse {
 }
 
 interface Result {
-  title_english: string;
+  title_general: string;
   title_norwegian: string;
   unit_name_english: string[];
   unit_name_bokmal: string[];
@@ -34,8 +37,7 @@ interface HealthResponse {
 
 interface FacetObject {
   id: string;
-  engName: string;
-  norName: string;
+  title: LanguageString;
   count: number;
 }
 
@@ -63,14 +65,14 @@ const getFacets = (values: FacetData) => {
   const facetsEntries = Object.entries(values);
   const facets = facetsEntries.map(([key, value]) => {
     const keys = key.split('##');
-    const facet: FacetObject = { id: keys[0], norName: keys[1], engName: keys[2], count: value };
+    const facet: FacetObject = { id: keys[0], title: { nb: keys[1], en: keys[2] }, count: value };
     return facet;
   });
   return facets;
 };
 
 const HealthProjectsPage = () => {
-  const { t } = useTranslation('health');
+  const { t, i18n } = useTranslation('health');
   const history = useHistory();
   const [page, setPage] = useState(1);
   const [apiUrl, setApiUrl] = useState<URL>();
@@ -139,7 +141,7 @@ const HealthProjectsPage = () => {
               key={filter.key}
               options={filter.values}
               value={filter.values.find((i) => i.id === searchParams.get(filter.key)) ?? null}
-              getOptionLabel={(option) => `${option.norName} (${option.count})`}
+              getOptionLabel={(option) => `${getLanguageString(option.title)} (${option.count})`}
               getOptionSelected={(option, value) => option.id === value?.id}
               onChange={(_, value) => {
                 if (value?.id) {
@@ -158,9 +160,13 @@ const HealthProjectsPage = () => {
             {healthProjects.results.map((result, index) => (
               <ListItem divider key={index}>
                 <ListItemText disableTypography>
-                  <Typography>{result.title_norwegian}</Typography>
+                  <Typography>
+                    {i18n.language === LanguageCodes.NORWEGIAN_BOKMAL ? result.title_norwegian : result.title_general}
+                  </Typography>
                   <Typography variant="body2" gutterBottom>
-                    {result.unit_name_bokmal[0]}
+                    {i18n.language === LanguageCodes.NORWEGIAN_BOKMAL
+                      ? result.unit_name_bokmal
+                      : result.unit_name_english}
                   </Typography>
                 </ListItemText>
               </ListItem>
