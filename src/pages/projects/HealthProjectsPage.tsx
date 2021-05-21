@@ -9,21 +9,26 @@ import { useFetch } from '../../utils/hooks/useFetch';
 
 interface FacetsResponse {
   facets: {
-    type: {
-      [name: string]: number;
-      // project: number;
-      // infrastructure: number;
-    };
+    type: FacetData;
   };
+}
+
+interface Result {
+  title_english: string;
+  title_norwegian: string;
+  unit_name_english: string[];
+  unit_name_bokmal: string[];
+}
+
+interface FacetData {
+  [key: string]: number;
 }
 
 interface HealthResponse {
   'total-count': number;
-  results: any[];
+  results: Result[];
   facets: {
-    [name: string]: {
-      [key: string]: number;
-    };
+    [name: string]: FacetData;
   };
 }
 
@@ -34,12 +39,12 @@ interface FacetObject {
   count: number;
 }
 
+const rowsPerPage = 10;
 const apiQueryParamKey = 'fq';
 const typeKey = 'type';
 
 const apiBaseUrl = 'https://app.cristin.no/ws/ajax/getHealth';
-const apiBaseSearchParam =
-  '?facet.field.empty=infrastructure_category_idfacet&facet=on&&sort=score%20desc&page=1&rows=10';
+const apiBaseSearchParam = `?facet.field.empty=infrastructure_category_idfacet&facet=on&&sort=score%20desc&rows=${rowsPerPage}`;
 
 const facetFields = {
   project: [
@@ -54,12 +59,11 @@ const facetFields = {
   infrastructure: ['institution_idfacet', 'category_idfacet', 'infrastructure_material_idfacet'],
 };
 
-const rowsPerPage = 10;
-
-const getFacets = (values: any[]) => {
-  const facets = values.map(([key, value]) => {
+const getFacets = (values: FacetData) => {
+  const facetsEntries = Object.entries(values);
+  const facets = facetsEntries.map(([key, value]) => {
     const keys = key.split('##');
-    const facet: FacetObject = { id: keys[0], norName: keys[1], engName: keys[2], count: value as number };
+    const facet: FacetObject = { id: keys[0], norName: keys[1], engName: keys[2], count: value };
     return facet;
   });
   return facets;
@@ -81,7 +85,7 @@ const HealthProjectsPage = () => {
   );
 
   const filters = healthProjects
-    ? Object.entries(healthProjects.facets).map(([key, values]) => ({ key, values: getFacets(Object.entries(values)) }))
+    ? Object.entries(healthProjects.facets).map(([key, values]) => ({ key, values: getFacets(values) }))
     : [];
 
   useEffect(() => {
