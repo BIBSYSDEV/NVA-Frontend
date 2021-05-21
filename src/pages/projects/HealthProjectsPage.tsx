@@ -3,6 +3,7 @@ import { Autocomplete, Pagination } from '@material-ui/lab';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { LanguageCodes } from '../../types/language.types';
@@ -41,6 +42,12 @@ interface FacetObject {
   count: number;
 }
 
+interface ExportHealth {
+  results: any[];
+}
+
+const exportBaseUrl = 'https://app.cristin.no/ws/ajax/getExportHealth';
+
 const rowsPerPage = 10;
 const apiQueryParamKey = 'fq';
 const typeKey = 'type';
@@ -76,15 +83,35 @@ const HealthProjectsPage = () => {
   const history = useHistory();
   const [page, setPage] = useState(1);
   const [apiUrl, setApiUrl] = useState<URL>();
+  const [exportUrl, setExportUrl] = useState<URL>();
   const searchParams = new URLSearchParams(history.location.search);
 
   const [typeOverview] = useFetch<FacetsResponse>(`${apiBaseUrl}?facet.field=type&facet=on&rows=1`);
   const [healthProjects] = useFetch<HealthResponse>(apiUrl ? apiUrl.toString() : '');
+  const [exportHealth, isLoadingExport] = useFetch<ExportHealth>(exportUrl?.toString() ?? '');
 
   const types = useMemo(
     () => (typeOverview ? Object.entries(typeOverview.facets.type).map(([name, count]) => ({ name, count })) : []),
     [typeOverview]
   );
+  const typeValue = types.find((t) => t.name === searchParams.get(typeKey)) ?? types[0];
+
+  useEffect(() => {
+    if (exportUrl && exportHealth) {
+      const headings = Object.keys(exportHealth.results[0]).join(';');
+      const items = exportHealth.results.map((result) => Object.values(result).join(';'));
+      const csv = [headings, ...items].join('\n');
+      const csvContent = `data:text/csv;charset=utf-8,${csv}`;
+      const encodedUri = encodeURI(csvContent);
+
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      const fileName = typeValue.name === 'infrastructure' ? t('infrastructures') : t('projects');
+      link.setAttribute('download', `${fileName.replaceAll(' ', '_')}.csv`);
+      link.click();
+      setExportUrl(undefined);
+    }
+  }, [t, exportHealth, exportUrl, typeValue]);
 
   const filters = healthProjects
     ? Object.entries(healthProjects.facets).map(([key, values]) => ({ key, values: getFacets(values) }))
@@ -125,7 +152,7 @@ const HealthProjectsPage = () => {
         <>
           <Autocomplete
             options={types}
-            value={types.find((t) => t.name === searchParams.get(typeKey)) ?? types[0]}
+            value={typeValue}
             getOptionLabel={(option) => `${t(option.name)} (${option.count})`}
             onChange={(_, value) => {
               const newSearchParams = new URLSearchParams();
@@ -181,6 +208,20 @@ const HealthProjectsPage = () => {
             page={page}
             count={Math.ceil(hitsCount / rowsPerPage)}
           />
+          <ButtonWithProgress
+            variant="outlined"
+            color="default"
+            isLoading={isLoadingExport}
+            onClick={() => {
+              if (healthProjects) {
+                const exportSearchParams = new URLSearchParams(apiUrl?.search);
+                exportSearchParams.set('rows', healthProjects['total-count'] + '');
+                const exportUrl = new URL(`${exportBaseUrl}?${exportSearchParams.toString()}`);
+                setExportUrl(exportUrl);
+              }
+            }}>
+            Eksporter til csv
+          </ButtonWithProgress>
         </>
       )}
     </StyledPageWrapperWithMaxWidth>

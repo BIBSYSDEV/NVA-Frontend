@@ -9,6 +9,7 @@ import commonEn from './en/common.json';
 import disciplinesEn from './en/disciplines.json';
 import feedbackEn from './en/feedback.json';
 import formikValuesEn from './en/formikValues.json';
+import healthEn from './en/health.json';
 import institutionEn from './en/institution.json';
 import languagesEn from './en/languages.json';
 import licensesEn from './en/licenses.json';
@@ -47,6 +48,7 @@ i18n.use(LanguageDetector).init({
       disciplines: disciplinesEn,
       feedback: feedbackEn,
       formikValues: formikValuesEn,
+      health: healthEn,
       institution: institutionEn,
       languages: languagesEn,
       licenses: licensesEn,

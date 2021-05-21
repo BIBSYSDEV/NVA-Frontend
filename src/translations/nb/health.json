@@ -4,10 +4,12 @@
   "hrcs_activity_idfacet": "HRCS forskningsaktivitet",
   "hrcs_category_idfacet": "HRCS helsekategori",
   "infrastructure": "Biobank",
+  "infrastructures": "Biobanker",
   "infrastructure_category_idfacet": "$t(infrastructure)",
   "infrastructure_material_idfacet": "Type materiale",
   "institution_coordinating_idfacet": "Koordinerende institusjon",
   "institution_idfacet": "Biobanktype",
   "institution_responsible_idfacet": "Forskningsansvarlig institusjon",
-  "project": "Helseprosjekt"
+  "project": "Helseprosjekt",
+  "projects": "Helseprosjekter"
 }
