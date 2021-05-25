@@ -21,12 +21,16 @@ export const PublicJournalContent = ({ date, publicationContext }: PublicJournal
 
   return title ? (
     <>
+      <Typography variant="overline" component="p">
+        {t('resource_type.journal')}
+      </Typography>
+
       {url ? (
-        <Typography variant="overline" component={Link} href={url} target="_blank" rel="noopener noreferrer">
+        <Typography component={Link} href={url} target="_blank" rel="noopener noreferrer">
           {title}
         </Typography>
       ) : (
-        <Typography variant="overline">{title}</Typography>
+        <Typography>{title}</Typography>
       )}
 
       <Typography>{displayDate(date)}</Typography>
