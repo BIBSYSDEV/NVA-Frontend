@@ -66,6 +66,16 @@ const darkTheme = createMuiTheme({
         color: Color.Black,
       },
     },
+    MuiLink: {
+      root: {
+        color: Color.BlueMegaLight,
+      },
+      underlineHover: {
+        textUnderlineOffset: '0.5rem',
+        textDecoration: 'underline',
+        textDecorationColor: Color.SecondaryMain,
+      },
+    },
     MuiListItem: {
       ...lightTheme.overrides?.MuiListItem,
       root: {

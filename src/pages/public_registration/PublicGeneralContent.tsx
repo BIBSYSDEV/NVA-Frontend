@@ -1,7 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
-import { PublicRegistrationContentProps } from './PublicRegistrationContent';
+import { LanguageCodes, registrationLanguages } from '../../types/language.types';
 import { BookPublicationContext, BookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
 import {
   ChapterPublicationContext,
@@ -19,29 +20,27 @@ import {
   ReportPublicationContext,
   ReportPublicationInstance,
 } from '../../types/publication_types/reportRegistration.types';
-import { displayDate } from '../../utils/date-helpers';
+import { JournalType } from '../../types/publicationFieldNames';
+import { BookRegistration, ReportRegistration } from '../../types/registration.types';
 import { getNpiDiscipline } from '../../utils/npiDisciplines';
-import { isJournal, isBook, isDegree, isReport, isChapter } from '../../utils/registration-helpers';
+import { isBook, isChapter, isDegree, isJournal, isReport } from '../../utils/registration-helpers';
 import PublicDoi from './PublicDoi';
 import {
-  PublicLinkedContextContent,
   PublicJournalContent,
+  PublicLinkedContextContent,
   PublicPublisherContent,
   PublicSeriesContent,
 } from './PublicPublicationContext';
 import {
-  PublicPublicationInstanceJournal,
-  PublicPublicationInstanceBook,
-  PublicPublicationInstanceDegree,
-  PublicPublicationInstanceReport,
-  PublicPublicationInstanceChapter,
   PublicIsbnContent,
+  PublicPublicationInstanceBook,
+  PublicPublicationInstanceChapter,
+  PublicPublicationInstanceDegree,
+  PublicPublicationInstanceJournal,
+  PublicPublicationInstanceReport,
 } from './PublicPublicationInstance';
-import styled from 'styled-components';
-import { LanguageCodes, registrationLanguages } from '../../types/language.types';
+import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import RegistrationSummary from './RegistrationSummary';
-import { JournalType } from '../../types/publicationFieldNames';
-import { BookRegistration, ReportRegistration } from '../../types/registration.types';
 
 const StyledContent = styled.div`
   display: grid;
@@ -76,16 +75,15 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
   return (
     <StyledContent>
       <StyledGroup0>
-        <Typography variant="h4" component="h2">
-          {t(`publicationTypes:${publicationInstance.type}`)}
-        </Typography>
-        <Typography>{displayDate(date)}</Typography>
+        <Typography variant="overline">{t('public_page.about_registration')}</Typography>
 
-        <PublicDoi registration={registration} />
+        {(publicationInstance as JournalPublicationInstance).peerReviewed && (
+          <Typography>{t('resource_type.peer_reviewed')}</Typography>
+        )}
 
         {language && (
           <Typography>
-            {t('description.primary_language')}:{' '}
+            {t('common:language')}:{' '}
             {t(
               `languages:${
                 registrationLanguages.find((registrationLanguage) => registrationLanguage.value === language)?.id ??
@@ -94,63 +92,57 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
             )}
           </Typography>
         )}
+
         {npiSubjectHeading && (
           <Typography>
             {t('description.npi_disciplines')}: {getNpiDiscipline(npiSubjectHeading)?.name}
           </Typography>
         )}
 
-        {isJournal(registration) ? (
-          <PublicPublicationInstanceJournal publicationInstance={publicationInstance as JournalPublicationInstance} />
-        ) : isBook(registration) ? (
-          <>
-            <PublicPublicationInstanceBook publicationInstance={publicationInstance as BookPublicationInstance} />
-            <PublicIsbnContent
-              isbnList={(registration as BookRegistration).entityDescription.reference.publicationContext.isbnList}
-            />
-          </>
-        ) : isDegree(registration) ? (
-          <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
-        ) : isReport(registration) ? (
-          <>
-            <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
-            <PublicIsbnContent
-              isbnList={(registration as ReportRegistration).entityDescription.reference.publicationContext.isbnList}
-            />
-          </>
-        ) : isChapter(registration) ? (
-          <PublicPublicationInstanceChapter publicationInstance={publicationInstance as ChapterPublicationInstance} />
-        ) : null}
+        <PublicDoi registration={registration} />
       </StyledGroup0>
 
       <StyledGroup1>
         {isJournal(registration) ? (
           <>
+            <PublicJournalContent date={date} publicationContext={publicationContext as JournalPublicationContext} />
+            <PublicPublicationInstanceJournal publicationInstance={publicationInstance as JournalPublicationInstance} />
             {publicationInstance.type === JournalType.CORRIGENDUM && (
               <>
                 <Typography variant="h3">{t('resource_type.original_article')}</Typography>
                 <RegistrationSummary id={(publicationInstance as JournalPublicationInstance).corrigendumFor} />
               </>
             )}
-            <PublicJournalContent publicationContext={publicationContext as JournalPublicationContext} />
           </>
         ) : isBook(registration) ? (
           <>
             <PublicPublisherContent publicationContext={publicationContext as BookPublicationContext} />
             <PublicSeriesContent seriesTitle={(publicationContext as BookPublicationContext).seriesTitle} />
+            <PublicPublicationInstanceBook publicationInstance={publicationInstance as BookPublicationInstance} />
+            <PublicIsbnContent
+              isbnList={(registration as BookRegistration).entityDescription.reference.publicationContext.isbnList}
+            />
           </>
         ) : isDegree(registration) ? (
           <>
             <PublicPublisherContent publicationContext={publicationContext as DegreePublicationContext} />
             <PublicSeriesContent seriesTitle={(publicationContext as DegreePublicationContext).seriesTitle} />
+            <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
           </>
         ) : isReport(registration) ? (
           <>
             <PublicPublisherContent publicationContext={publicationContext as ReportPublicationContext} />
             <PublicSeriesContent seriesTitle={(publicationContext as ReportPublicationContext).seriesTitle} />
+            <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
+            <PublicIsbnContent
+              isbnList={(registration as ReportRegistration).entityDescription.reference.publicationContext.isbnList}
+            />
           </>
         ) : isChapter(registration) ? (
-          <PublicLinkedContextContent publicationContext={publicationContext as ChapterPublicationContext} />
+          <>
+            <PublicLinkedContextContent publicationContext={publicationContext as ChapterPublicationContext} />
+            <PublicPublicationInstanceChapter publicationInstance={publicationInstance as ChapterPublicationInstance} />
+          </>
         ) : null}
       </StyledGroup1>
     </StyledContent>

@@ -1,13 +1,17 @@
 import React from 'react';
-import { Link, Typography } from '@material-ui/core';
-import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { DoiRequestStatus, Registration } from '../../types/registration.types';
+import styled from 'styled-components';
+import { Link, Typography } from '@material-ui/core';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import { DoiRequestStatus, Registration } from '../../types/registration.types';
 
 const StyledDraftSpan = styled.span`
   margin-left: 0.5rem;
+`;
+
+const StyledPublicDoi = styled.div`
+  margin-top: 1.5rem;
 `;
 
 export interface PublicDoiProps {
@@ -28,15 +32,17 @@ const PublicDoi = ({ registration }: PublicDoiProps) => {
   const isDraftDoi = nvaDoi && !hasApprovedDoiRequest && canSeeDraftDoi;
 
   return doiToPresent ? (
-    <Typography
-      component={Link}
-      data-testid="doi-presentation"
-      href={doiToPresent}
-      target="_blank"
-      rel="noopener noreferrer">
-      {doiToPresent}
-      {isDraftDoi && <StyledDraftSpan>({t('public_page.in_progess')})</StyledDraftSpan>}
-    </Typography>
+    <StyledPublicDoi>
+      <Typography
+        component={Link}
+        data-testid="doi-presentation"
+        href={doiToPresent}
+        target="_blank"
+        rel="noopener noreferrer">
+        {doiToPresent}
+        {isDraftDoi && <StyledDraftSpan>({t('public_page.in_progess')})</StyledDraftSpan>}
+      </Typography>
+    </StyledPublicDoi>
   ) : null;
 };
 
