@@ -158,7 +158,6 @@ const lightTheme = createMuiTheme({
         color: Color.PrimaryText,
       },
       underlineHover: {
-        textUnderlineOffset: '0.5rem',
         textDecoration: 'underline',
         textDecorationColor: Color.SecondaryMain,
       },
