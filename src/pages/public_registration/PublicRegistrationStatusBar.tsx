@@ -176,6 +176,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           <Typography variant="h4" component="h1" gutterBottom>
             {t('public_page.published_date', {
               date: registration.publishedDate ? new Date(registration.publishedDate).toLocaleDateString() : '',
+              interpolation: { escapeValue: false },
             })}
           </Typography>
         )}
