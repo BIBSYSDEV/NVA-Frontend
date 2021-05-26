@@ -1,21 +1,30 @@
 import React from 'react';
-import { Link, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
-import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
-import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
+import { Link, Typography } from '@material-ui/core';
 import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
 import { ChapterPublicationContext } from '../../types/publication_types/chapterRegistration.types';
+import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
+import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
+import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
+import { levelMap, RegistrationDate } from '../../types/registration.types';
+import { displayDate } from '../../utils/date-helpers';
 import RegistrationSummary from './RegistrationSummary';
-import { levelMap } from '../../types/registration.types';
 
-export const PublicJournalContent = ({ publicationContext }: { publicationContext: JournalPublicationContext }) => {
+interface PublicJournalContentProps {
+  date: RegistrationDate;
+  publicationContext: JournalPublicationContext;
+}
+
+export const PublicJournalContent = ({ date, publicationContext }: PublicJournalContentProps) => {
   const { t } = useTranslation('registration');
   const { onlineIssn, printIssn, title, url, level } = publicationContext;
 
   return title ? (
     <>
-      <Typography variant="h3">{t('resource_type.journal')}</Typography>
+      <Typography variant="overline" component="p">
+        {t('resource_type.journal')}
+      </Typography>
+
       {url ? (
         <Typography component={Link} href={url} target="_blank" rel="noopener noreferrer">
           {title}
@@ -23,6 +32,9 @@ export const PublicJournalContent = ({ publicationContext }: { publicationContex
       ) : (
         <Typography>{title}</Typography>
       )}
+
+      <Typography>{displayDate(date)}</Typography>
+
       {onlineIssn && (
         <Typography>
           {t('resource_type.issn')}: {[onlineIssn, printIssn].filter((issn) => issn).join(', ')}
@@ -43,7 +55,9 @@ export const PublicPublisherContent = ({
 
   return publisher ? (
     <>
-      <Typography variant="h3">{t('common:publisher')}</Typography>
+      <Typography variant="overline" component="p">
+        {t('common:publisher')}
+      </Typography>
       {url ? (
         <Typography component={Link} href={url} target="_blank" rel="noopener noreferrer">
           {publisher}
@@ -77,7 +91,7 @@ export const PublicSeriesContent = ({ seriesTitle }: { seriesTitle: string }) =>
 
   return seriesTitle ? (
     <>
-      <Typography variant="h3">{t('resource_type.series')}</Typography>
+      <Typography variant="overline">{t('resource_type.series')}</Typography>
       <Typography>{seriesTitle}</Typography>
     </>
   ) : null;
