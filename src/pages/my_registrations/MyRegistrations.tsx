@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
@@ -32,7 +32,7 @@ enum Tab {
   Unpublished,
 }
 
-const MyRegistrations: FC = () => {
+const MyRegistrations = () => {
   const { t } = useTranslation('workLists');
   const user = useSelector((store: RootStore) => store.user);
   const [selectedTab, setSelectedTab] = useState(Tab.Unpublished);

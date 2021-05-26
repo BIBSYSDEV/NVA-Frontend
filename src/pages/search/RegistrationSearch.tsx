@@ -5,17 +5,18 @@ import ListSkeleton from '../../components/ListSkeleton';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
 import SearchResults from './SearchResults';
+import { SearchConfig } from '../../utils/searchHelpers';
 
 interface RegistrationSearchProps {
-  searchTerm?: string;
+  searchConfig?: SearchConfig;
   noHitsText?: string;
 }
 
-const RegistrationSearch = ({ searchTerm, noHitsText }: RegistrationSearchProps) => {
+export const RegistrationSearch = ({ searchConfig, noHitsText }: RegistrationSearchProps) => {
   const { t } = useTranslation('common');
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[1]);
   const [page, setPage] = useState(0);
-  const [searchResults, isLoadingSearch] = useSearchRegistrations({ searchTerm }, rowsPerPage, page * rowsPerPage);
+  const [searchResults, isLoadingSearch] = useSearchRegistrations(searchConfig, rowsPerPage, page * rowsPerPage);
 
   return (
     <>
@@ -23,7 +24,7 @@ const RegistrationSearch = ({ searchTerm, noHitsText }: RegistrationSearchProps)
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : searchResults && searchResults.hits.length > 0 ? (
         <>
-          <SearchResults searchResult={searchResults} searchTerm={searchTerm} />
+          <SearchResults searchResult={searchResults} searchTerm={searchConfig?.searchTerm} />
           <TablePagination
             data-testid="search-pagination"
             rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
@@ -44,5 +45,3 @@ const RegistrationSearch = ({ searchTerm, noHitsText }: RegistrationSearchProps)
     </>
   );
 };
-
-export default RegistrationSearch;
