@@ -1,8 +1,8 @@
 import { Location } from 'history';
 import React, { useEffect, useState } from 'react';
 import { Prompt, useHistory } from 'react-router-dom';
+import { Typography } from '@material-ui/core';
 import ConfirmDialog from './ConfirmDialog';
-import NormalText from './NormalText';
 
 interface RouteLeavingGuardProps {
   modalDescription: string;
@@ -61,7 +61,7 @@ export const RouteLeavingGuard = ({
         onAccept={handleConfirmNavigationClick}
         onCancel={() => setShowModal(false)}
         dataTestId="confirm-leaving-registration-form-dialog">
-        <NormalText>{modalDescription}</NormalText>
+        <Typography>{modalDescription}</Typography>
       </ConfirmDialog>
     </>
   );
