@@ -8,7 +8,6 @@ import styled from 'styled-components';
 import { useUppy } from '@uppy/react';
 import { RegistrationPageHeader } from '../../components/PageHeader';
 import { PageSpinner } from '../../components/PageSpinner';
-import RouteLeavingGuard from '../../components/RouteLeavingGuard';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { emptyRegistration, Registration, RegistrationTab } from '../../types/registration.types';
 import useFetchRegistration from '../../utils/hooks/useFetchRegistration';
@@ -22,6 +21,7 @@ import { RegistrationFormContent } from './RegistrationFormContent';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
 import { getTouchedTabFields } from '../../utils/formik-helpers';
 import { SkipLink } from '../../components/SkipLink';
+import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 
 const StyledRegistration = styled.div`
   width: 100%;

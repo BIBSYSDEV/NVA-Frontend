@@ -1,5 +1,5 @@
 import { Location } from 'history';
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Prompt, useHistory } from 'react-router-dom';
 import ConfirmDialog from './ConfirmDialog';
 import NormalText from './NormalText';
@@ -9,7 +9,12 @@ interface RouteLeavingGuardProps {
   modalHeading: string;
   shouldBlockNavigation: boolean;
 }
-const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({ modalDescription, modalHeading, shouldBlockNavigation }) => {
+
+export const RouteLeavingGuard = ({
+  modalDescription,
+  modalHeading,
+  shouldBlockNavigation,
+}: RouteLeavingGuardProps) => {
   const [showModal, setShowModal] = useState(false);
   const [nextLocation, setNextLocation] = useState<Location>();
   const [confirmedNavigation, setConfirmedNavigation] = useState(false);
@@ -35,6 +40,9 @@ const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({ modalDescription, modal
   useEffect(() => {
     if (shouldBlockNavigation) {
       window.onbeforeunload = () => true;
+      return () => {
+        window.onbeforeunload = () => undefined;
+      };
     }
   }, [shouldBlockNavigation]);
 
@@ -58,5 +66,3 @@ const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({ modalDescription, modal
     </>
   );
 };
-
-export default RouteLeavingGuard;
