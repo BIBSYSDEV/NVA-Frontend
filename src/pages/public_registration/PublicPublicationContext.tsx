@@ -91,7 +91,9 @@ export const PublicSeriesContent = ({ seriesTitle }: { seriesTitle: string }) =>
 
   return seriesTitle ? (
     <>
-      <Typography variant="overline">{t('resource_type.series')}</Typography>
+      <Typography variant="overline" component="p">
+        {t('resource_type.series')}
+      </Typography>
       <Typography>{seriesTitle}</Typography>
     </>
   ) : null;
