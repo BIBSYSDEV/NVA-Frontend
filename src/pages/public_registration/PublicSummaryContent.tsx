@@ -67,7 +67,7 @@ interface TagsListProps {
 
 const TagsList = ({ title, values }: TagsListProps) => (
   <StyledTagsList>
-    <Typography variant="subtitle2" component="h2">
+    <Typography variant="overline" component="h2">
       {title}
     </Typography>
     <StyledTags>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Divider, MuiThemeProvider, Typography } from '@material-ui/core';
+import { Divider, Link, MuiThemeProvider, Typography } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import styled from 'styled-components';
 import lightTheme from '../../themes/lightTheme';
@@ -57,13 +57,16 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
     startDate && !isNaN(startDate.valueOf()) ? startDate.toLocaleDateString() : '?',
     endDate && !isNaN(endDate.valueOf()) ? endDate.toLocaleDateString() : '?',
   ].join(' - ');
+  const projectTitle = fetchedProject?.title ?? project.name;
 
   return (
     <StyledProjectRow>
       {isLoadingProject ? (
         <Skeleton />
       ) : (
-        <Typography variant="subtitle2">{fetchedProject?.title ?? project.name}</Typography>
+        <Typography variant="subtitle2" component="h3">
+          {fetchedProject?.id ? <Link href={fetchedProject.id}>{projectTitle}</Link> : projectTitle}
+        </Typography>
       )}
       <Divider component="span" orientation="vertical" />
       {isLoadingProject ? <Skeleton /> : <Typography variant="body1">{institutionName}</Typography>}

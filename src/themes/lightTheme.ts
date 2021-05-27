@@ -112,7 +112,7 @@ const lightTheme = createMuiTheme({
       fontSize: '0.8rem',
     },
     subtitle2: {
-      fontSize: '0.8rem',
+      fontSize: '0.875rem',
       fontWeight: 700,
     },
   },
