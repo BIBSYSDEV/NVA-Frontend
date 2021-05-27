@@ -7,6 +7,7 @@ import lightTheme from '../../themes/lightTheme';
 import { CristinProject, ResearchProject } from '../../types/project.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getLanguageString } from '../../utils/translation-helpers';
+import { getProjectPath } from '../../utils/urlPaths';
 
 const StyledProjectRow = styled.div`
   background: ${({ theme }) => theme.palette.background.default};
@@ -16,6 +17,10 @@ const StyledProjectRow = styled.div`
   grid-template-columns: 2fr auto 1fr auto 1fr auto 1fr;
   column-gap: 1rem;
   align-items: center;
+`;
+
+const StyledProjectTitle = styled(Typography)`
+  font-weight: 500;
 `;
 
 interface PublicProjectsContentProps {
@@ -64,9 +69,9 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
       {isLoadingProject ? (
         <Skeleton />
       ) : (
-        <Typography variant="subtitle2" component="h3">
-          {fetchedProject?.id ? <Link href={fetchedProject.id}>{projectTitle}</Link> : projectTitle}
-        </Typography>
+        <StyledProjectTitle variant="body1" variantMapping={{ body1: 'h3' }}>
+          {fetchedProject?.id ? <Link href={getProjectPath(fetchedProject.id)}>{projectTitle}</Link> : projectTitle}
+        </StyledProjectTitle>
       )}
       <Divider component="span" orientation="vertical" />
       {isLoadingProject ? <Skeleton /> : <Typography variant="body1">{institutionName}</Typography>}
