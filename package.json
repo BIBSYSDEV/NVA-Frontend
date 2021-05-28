@@ -11,7 +11,7 @@
     "@material-ui/lab": "4.0.0-alpha.58",
     "@material-ui/pickers": "^3.3.10",
     "@material-ui/styles": "^4.11.4",
-    "@uppy/aws-s3-multipart": "^1.8.15",
+    "@uppy/aws-s3-multipart": "^1.8.16",
     "@uppy/core": "^1.18.1",
     "@uppy/dashboard": "^1.19.1",
     "@uppy/locales": "^1.19.0",
