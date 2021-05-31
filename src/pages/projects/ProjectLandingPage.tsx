@@ -9,6 +9,7 @@ import {
   getProjectManagerName,
   getProjectPeriod,
 } from '../registration/description_tab/projects_field/projectHelpers';
+import { useTranslation } from 'react-i18next';
 
 const StyledGeneralInfoBox = styled.div`
   margin-bottom: 1rem;
@@ -40,6 +41,8 @@ interface ProjectLandingPageProps {
 }
 
 export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
+  const { t } = useTranslation('project');
+
   return (
     <>
       <PageHeader>{project.title}</PageHeader>
@@ -47,25 +50,25 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
       <StyledGeneralInfoBox>
         <div>
           <Typography variant="overline" component="h2">
-            Prosjekteier
+            {t('project_owner')}
           </Typography>
           <Typography>{getProjectName(project) ?? '-'}</Typography>
           <Typography variant="overline" component="h2">
-            Prosjektleder
+            {t('project_manager')}
           </Typography>
           <Typography>{getProjectManagerName(project) ?? '-'}</Typography>
           <Typography variant="overline" component="h2">
-            Prosjektperiode
+            {t('period')}
           </Typography>
           <Typography>{getProjectPeriod(project) ?? '-'}</Typography>
         </div>
         <div>
           <Typography variant="overline" component="h2">
-            Kategori og disiplin
+            {t('category_and_discipline')}
           </Typography>
           <Typography>-</Typography>
           <Typography variant="overline" component="h2">
-            Finansiering
+            {t('financing')}
           </Typography>
           <Typography>-</Typography>
         </div>
@@ -74,7 +77,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
       <StyledAccordion square elevation={0}>
         <StyledAccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
           <Typography variant="h3" color="primary">
-            Vitenskapelig sammendrag
+            {t('scientific_summary')}
           </Typography>
         </StyledAccordionSummary>
       </StyledAccordion>
@@ -82,7 +85,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
       <StyledAccordion square elevation={0}>
         <StyledAccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
           <Typography variant="h3" color="primary">
-            Prosjektdeltakere
+            {t('project_participants')}
           </Typography>
         </StyledAccordionSummary>
       </StyledAccordion>
@@ -90,7 +93,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
       <StyledAccordion square elevation={0}>
         <StyledAccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
           <Typography variant="h3" color="primary">
-            Resultater
+            {t('results')}
           </Typography>
         </StyledAccordionSummary>
       </StyledAccordion>
