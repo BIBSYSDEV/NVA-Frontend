@@ -92,8 +92,8 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(`${PublicationsApiPaths.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
 
   // PROJECT
-  mock.onGet(new RegExp(`${ProjectsApiPaths.PROJECT}?title=*`)).reply(200, mockProjectSearch);
-  mock.onGet(new RegExp(`${ProjectsApiPaths.PROJECT}/`)).reply(200, mockProject);
+  mock.onGet(new RegExp(`${ProjectsApiPaths.PROJECT}/1`)).reply(200, mockProject);
+  mock.onGet(new RegExp(`${ProjectsApiPaths.PROJECT}/*`)).reply(200, mockProjectSearch);
 
   // PUBLICATION CHANNEL
   mock.onPost(new RegExp(`${API_URL}${PublicationChannelApiPaths.SEARCH}`)).reply(200, mockNsdPublisers);
