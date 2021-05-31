@@ -27,7 +27,9 @@ export const getProjectName = (project?: CristinProject) =>
 
 export const getProjectManagerName = (project?: CristinProject) => {
   const projectManager = project?.contributors.find((contributor) => contributor.type === 'ProjectManager');
-  const projectManagerName = [projectManager?.identity.firstName, projectManager?.identity.lastName].join(' ');
+  const projectManagerName = projectManager
+    ? `${projectManager.identity.firstName} ${projectManager.identity.lastName}`
+    : '';
   return projectManagerName;
 };
 

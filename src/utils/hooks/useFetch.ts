@@ -6,7 +6,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { apiRequest, authenticatedApiRequest } from '../../api/apiRequest';
 
-export const useFetch = <T>(requestUrl: string | null, withAuthentication = false): [T | undefined, boolean] => {
+export const useFetch = <T>(requestUrl: string, withAuthentication = false): [T | undefined, boolean] => {
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
   const [data, setData] = useState<T>();

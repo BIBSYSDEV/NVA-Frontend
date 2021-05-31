@@ -1,7 +1,8 @@
-import { Accordion, AccordionSummary, Typography } from '@material-ui/core';
 import React from 'react';
 import styled from 'styled-components';
+import { Accordion, AccordionSummary, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { useTranslation } from 'react-i18next';
 import { PageHeader } from '../../components/PageHeader';
 import { CristinProject } from '../../types/project.types';
 import {
@@ -9,7 +10,6 @@ import {
   getProjectManagerName,
   getProjectPeriod,
 } from '../registration/description_tab/projects_field/projectHelpers';
-import { useTranslation } from 'react-i18next';
 
 const StyledGeneralInfoBox = styled.div`
   margin-bottom: 1rem;
@@ -19,7 +19,6 @@ const StyledGeneralInfoBox = styled.div`
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
     grid-template-columns: 1fr;
-    grid-row-gap: 1rem;
   }
 `;
 
@@ -76,7 +75,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
 
       <StyledAccordion square elevation={0}>
         <StyledAccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
-          <Typography variant="h3" color="primary">
+          <Typography variant="h3" component="h2" color="primary">
             {t('scientific_summary')}
           </Typography>
         </StyledAccordionSummary>
@@ -84,7 +83,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
 
       <StyledAccordion square elevation={0}>
         <StyledAccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
-          <Typography variant="h3" color="primary">
+          <Typography variant="h3" component="h2" color="primary">
             {t('project_participants')}
           </Typography>
         </StyledAccordionSummary>
@@ -92,7 +91,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
 
       <StyledAccordion square elevation={0}>
         <StyledAccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
-          <Typography variant="h3" color="primary">
+          <Typography variant="h3" component="h2" color="primary">
             {t('results')}
           </Typography>
         </StyledAccordionSummary>

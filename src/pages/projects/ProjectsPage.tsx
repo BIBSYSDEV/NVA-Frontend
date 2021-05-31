@@ -8,7 +8,7 @@ import { ProjectLandingPage } from './ProjectLandingPage';
 
 const ProjectsPage = () => {
   const location = useLocation();
-  const projectId = new URLSearchParams(location.search).get('id');
+  const projectId = new URLSearchParams(location.search).get('id') ?? '';
   const [project, isLoadingProject] = useFetch<CristinProject>(projectId);
 
   return (
