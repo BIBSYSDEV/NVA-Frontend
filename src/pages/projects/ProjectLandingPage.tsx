@@ -11,6 +11,7 @@ import {
 } from '../registration/description_tab/projects_field/projectHelpers';
 
 const StyledGeneralInfoBox = styled.div`
+  margin-bottom: 1rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 1rem;
@@ -23,12 +24,15 @@ const StyledGeneralInfoBox = styled.div`
 
 const StyledAccordion = styled(Accordion)`
   border-top: 3px solid;
-  padding: 1rem;
-  background: white;
+  background: ${({ theme }) => theme.palette.background.default};
 
   :last-child {
     border-bottom: 3px solid;
   }
+`;
+
+const StyledAccordionSummary = styled(AccordionSummary)`
+  padding: 1rem 0 1rem 0;
 `;
 
 interface ProjectLandingPageProps {
@@ -68,27 +72,27 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
       </StyledGeneralInfoBox>
 
       <StyledAccordion square elevation={0}>
-        <AccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
+        <StyledAccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
           <Typography variant="h3" color="primary">
             Vitenskapelig sammendrag
           </Typography>
-        </AccordionSummary>
+        </StyledAccordionSummary>
       </StyledAccordion>
 
       <StyledAccordion square elevation={0}>
-        <AccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
+        <StyledAccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
           <Typography variant="h3" color="primary">
             Prosjektdeltakere
           </Typography>
-        </AccordionSummary>
+        </StyledAccordionSummary>
       </StyledAccordion>
 
       <StyledAccordion square elevation={0}>
-        <AccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
+        <StyledAccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
           <Typography variant="h3" color="primary">
             Resultater
           </Typography>
-        </AccordionSummary>
+        </StyledAccordionSummary>
       </StyledAccordion>
     </>
   );
