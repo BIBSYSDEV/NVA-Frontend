@@ -18,7 +18,7 @@
     "@uppy/react": "^1.11.9",
     "aws-amplify": "^4.0.3",
     "axios": "^0.21.1",
-    "date-fns": "^2.21.3",
+    "date-fns": "^2.22.1",
     "deepmerge": "^4.2.2",
     "formik": "^2.2.6",
     "i18next": "^20.3.1",
@@ -69,7 +69,7 @@
     "extends": "@istanbuljs/nyc-config-typescript"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.9.5",
+    "@cypress/code-coverage": "^3.9.6",
     "@cypress/instrument-cra": "^1.4.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/history": "^4.7.8",
