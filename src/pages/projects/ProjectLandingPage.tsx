@@ -44,7 +44,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
 
   return (
     <>
-      <PageHeader>{project.title}</PageHeader>
+      <PageHeader superHeader={t('project')}>{project.title}</PageHeader>
 
       <StyledGeneralInfoBox>
         <div>

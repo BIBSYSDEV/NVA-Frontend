@@ -22,6 +22,10 @@ const StyledBackgroundDiv = styled(BackgroundDiv)`
   }
 `;
 
+const StyledYearSpan = styled.span`
+  padding-left: 1rem;
+`;
+
 export interface PublicRegistrationContentProps {
   registration: Registration;
 }
@@ -45,10 +49,12 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
     <>
       <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
       <RegistrationPageHeader
-        details={{
-          publicationType: t(`publicationTypes:${reference.publicationInstance.type}`),
-          publicationYear: date.year,
-        }}>
+        superHeader={
+          <>
+            <span>{t(`publicationTypes:${reference.publicationInstance.type}`)}</span>
+            <StyledYearSpan>{date.year}</StyledYearSpan>
+          </>
+        }>
         {mainTitle || `[${t('common:missing_title')}]`}
       </RegistrationPageHeader>
       <div>
