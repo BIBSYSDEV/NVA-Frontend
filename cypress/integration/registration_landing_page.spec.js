@@ -18,4 +18,16 @@ describe('User opens Landing Page for Registration', () => {
 
     cy.get('[data-testid=public-registration-status]').should('not.exist');
   });
+
+  it('Project should have a link to Landing Page for Project', () => {
+    cy.visit('/registration/123/public');
+    cy.get('[data-testid=project-title]').should('be.visible');
+    cy.get('[data-testid=project-title] > a').click({ force: true });
+
+    cy.url().should('include', '/project');
+    cy.get('[data-testid=general-info]').should('be.visible');
+    cy.get('[data-testid=participants-accordion]').should('be.visible');
+    cy.get('[data-testid=results-accordion]').should('be.visible');
+    cy.get('[data-testid=scientific-summary-accordion]').should('be.visible');
+  });
 });
