@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import BackgroundDiv from '../../components/BackgroundDiv';
-import { RegistrationPageHeader } from '../../components/PageHeader';
+import { ItalicPageHeader } from '../../components/PageHeader';
 import lightTheme from '../../themes/lightTheme';
 import { emptyRegistration, Registration } from '../../types/registration.types';
 import { PublicFilesContent } from './PublicFilesContent';
@@ -48,7 +48,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
   return (
     <>
       <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
-      <RegistrationPageHeader
+      <ItalicPageHeader
         superHeader={
           <>
             <span>{t(`publicationTypes:${reference.publicationInstance.type}`)}</span>
@@ -56,7 +56,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           </>
         }>
         {mainTitle || `[${t('common:missing_title')}]`}
-      </RegistrationPageHeader>
+      </ItalicPageHeader>
       <div>
         {contributors && (
           <PublicRegistrationContributors

@@ -102,11 +102,11 @@ export const PageHeader = ({
   );
 };
 
-const StyledRegistrationPageHeader = styled(PageHeader)`
+const StyledItalicPageHeader = styled(PageHeader)`
   font-weight: 700;
   font-style: italic;
 `;
 
-export const RegistrationPageHeader = (props: PageHeaderProps) => (
-  <StyledRegistrationPageHeader variant="h2" variantMapping={{ h2: 'h1' }} {...props} />
+export const ItalicPageHeader = (props: PageHeaderProps) => (
+  <StyledItalicPageHeader variant="h2" variantMapping={{ h2: 'h1' }} {...props} />
 );
