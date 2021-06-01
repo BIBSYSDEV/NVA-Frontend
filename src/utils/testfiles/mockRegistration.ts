@@ -145,4 +145,4 @@ export const mockMessages: SupportRequest[] = [
   },
 ];
 
-export const mockPublishedRegistration = { ...mockRegistration, identifier: 123, status: RegistrationStatus.PUBLISHED };
+export const mockPublishedRegistration = { ...mockRegistration, status: RegistrationStatus.PUBLISHED };

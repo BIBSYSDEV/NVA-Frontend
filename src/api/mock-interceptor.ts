@@ -2,7 +2,7 @@ import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Authority } from '../types/authority.types';
 import OrcidResponse from '../types/orcid.types';
-import { emptyRegistration, RegistrationStatus } from '../types/registration.types';
+import { emptyRegistration } from '../types/registration.types';
 import { API_URL, ORCID_USER_INFO_URL } from '../utils/constants';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
 import mockNtnuResponse from '../utils/testfiles/institutions/institution_ntnu.json';
@@ -27,7 +27,7 @@ import { PublicationChannelApiPaths } from './publicationChannelApi';
 import { PublicationsApiPaths } from './registrationApi';
 import { RoleApiPaths } from './roleApi';
 import { SearchApiPaths } from './searchApi';
-import { mockMessages, mockRegistration } from '../utils/testfiles/mockRegistration';
+import { mockMessages, mockPublishedRegistration, mockRegistration } from '../utils/testfiles/mockRegistration';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -86,9 +86,7 @@ export const interceptRequestsOnMock = () => {
   mock
     .onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/4327439`))
     .reply(200, { ...emptyRegistration, owner: 'tu@unit.no' });
-  mock
-    .onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/123`))
-    .reply(200, { ...mockRegistration, status: RegistrationStatus.PUBLISHED });
+  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/123`)).reply(200, mockPublishedRegistration);
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/*`)).reply(200, mockRegistration);
 
   // lookup DOI
