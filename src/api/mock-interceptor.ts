@@ -2,7 +2,7 @@ import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Authority } from '../types/authority.types';
 import OrcidResponse from '../types/orcid.types';
-import { emptyRegistration } from '../types/registration.types';
+import { emptyRegistration, RegistrationStatus } from '../types/registration.types';
 import { API_URL, ORCID_USER_INFO_URL } from '../utils/constants';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
 import mockNtnuResponse from '../utils/testfiles/institutions/institution_ntnu.json';
@@ -86,6 +86,9 @@ export const interceptRequestsOnMock = () => {
   mock
     .onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/4327439`))
     .reply(200, { ...emptyRegistration, owner: 'tu@unit.no' });
+  mock
+    .onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/123`))
+    .reply(200, { ...mockRegistration, status: RegistrationStatus.PUBLISHED });
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/*`)).reply(200, mockRegistration);
 
   // lookup DOI
