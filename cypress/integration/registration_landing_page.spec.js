@@ -6,7 +6,7 @@ const {
 } = dataTestId;
 
 describe('User opens Landing Page for Registration', () => {
-  beforeEach('Given that the user is logged in as Creator:', () => {
+  beforeEach(() => {
     cy.visit('/');
   });
 
