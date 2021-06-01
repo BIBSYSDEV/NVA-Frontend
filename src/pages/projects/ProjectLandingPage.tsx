@@ -10,6 +10,7 @@ import {
   getProjectManagerName,
   getProjectPeriod,
 } from '../registration/description_tab/projects_field/projectHelpers';
+import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledGeneralInfoBox = styled.div`
   margin-bottom: 1rem;
@@ -46,7 +47,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
     <>
       <PageHeader>{project.title}</PageHeader>
 
-      <StyledGeneralInfoBox>
+      <StyledGeneralInfoBox data-testid={dataTestId.projectLandingPage.generalInfoBox}>
         <div>
           <Typography variant="overline" component="h2">
             {t('project_owner')}
@@ -73,7 +74,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
         </div>
       </StyledGeneralInfoBox>
 
-      <StyledAccordion square elevation={0}>
+      <StyledAccordion square elevation={0} data-testid={dataTestId.projectLandingPage.scientificSummaryAccordion}>
         <StyledAccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
           <Typography variant="h3" component="h2" color="primary">
             {t('scientific_summary')}
@@ -81,7 +82,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
         </StyledAccordionSummary>
       </StyledAccordion>
 
-      <StyledAccordion square elevation={0}>
+      <StyledAccordion square elevation={0} data-testid={dataTestId.projectLandingPage.participantsAccordion}>
         <StyledAccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
           <Typography variant="h3" component="h2" color="primary">
             {t('project_participants')}
@@ -89,7 +90,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
         </StyledAccordionSummary>
       </StyledAccordion>
 
-      <StyledAccordion square elevation={0}>
+      <StyledAccordion square elevation={0} data-testid={dataTestId.projectLandingPage.resultsAccordion}>
         <StyledAccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
           <Typography variant="h3" component="h2" color="primary">
             {t('results')}

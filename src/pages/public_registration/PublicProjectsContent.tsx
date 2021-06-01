@@ -12,6 +12,7 @@ import {
   getProjectName,
   getProjectPeriod,
 } from '../registration/description_tab/projects_field/projectHelpers';
+import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledProjectRow = styled.div`
   background: ${({ theme }) => theme.palette.background.default};
@@ -37,7 +38,7 @@ export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) 
   return (
     <>
       <Typography variant="h4" component="h2" gutterBottom>
-        {t('registration:description.project_association')}
+        {t('description.project_association')}
       </Typography>
 
       <MuiThemeProvider theme={lightTheme}>
@@ -63,7 +64,10 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
       {isLoadingProject ? (
         <Skeleton />
       ) : (
-        <StyledProjectTitle variant="body1" variantMapping={{ body1: 'h3' }}>
+        <StyledProjectTitle
+          variant="body1"
+          variantMapping={{ body1: 'h3' }}
+          data-testid={dataTestId.registrationLandingPage.projectTitle}>
           {fetchedProject?.id ? <Link href={getProjectPath(fetchedProject.id)}>{projectTitle}</Link> : projectTitle}
         </StyledProjectTitle>
       )}
