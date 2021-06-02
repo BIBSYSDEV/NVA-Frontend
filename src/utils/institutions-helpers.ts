@@ -23,12 +23,14 @@ export const getMostSpecificUnit = (values: FormikInstitutionUnit): InstitutionU
 };
 
 // Find distinct unit URIs for a set of contributors' affiliations
+const unitIdToIgnore = 'https://api.cristin.no/v2/units/0.0.0.0';
 export const getDistinctContributorUnits = (contributors: Contributor[]) => {
   const unitIds = contributors
     .flatMap((contributor) => contributor.affiliations)
     .filter((affiliation) => !!affiliation?.id)
     .map((unit) => unit?.id) as string[];
-  return [...new Set(unitIds)];
+  const distinctUnitIds = [...new Set(unitIds)].filter((id) => id !== unitIdToIgnore);
+  return distinctUnitIds;
 };
 
 // Returns top-down unit names: ["Level1", "Level2", (etc.)]
