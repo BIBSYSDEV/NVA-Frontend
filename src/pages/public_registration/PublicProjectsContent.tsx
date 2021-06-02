@@ -1,12 +1,17 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Divider, MuiThemeProvider, Typography } from '@material-ui/core';
+import { Divider, Link, MuiThemeProvider, Typography } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import styled from 'styled-components';
 import lightTheme from '../../themes/lightTheme';
 import { CristinProject, ResearchProject } from '../../types/project.types';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { getLanguageString } from '../../utils/translation-helpers';
+import { getProjectPath } from '../../utils/urlPaths';
+import {
+  getProjectManagerName,
+  getProjectName,
+  getProjectPeriod,
+} from '../registration/description_tab/projects_field/projectHelpers';
 
 const StyledProjectRow = styled.div`
   background: ${({ theme }) => theme.palette.background.default};
@@ -16,6 +21,10 @@ const StyledProjectRow = styled.div`
   grid-template-columns: 2fr auto 1fr auto 1fr auto 1fr;
   column-gap: 1rem;
   align-items: center;
+`;
+
+const StyledProjectTitle = styled(Typography)`
+  font-weight: 500;
 `;
 
 interface PublicProjectsContentProps {
@@ -47,34 +56,31 @@ interface ProjectRowProps {
 const ProjectRow = ({ project }: ProjectRowProps) => {
   const { t } = useTranslation('registration');
   const [fetchedProject, isLoadingProject] = useFetch<CristinProject>(project.id);
-  const institutionName = fetchedProject && getLanguageString(fetchedProject.coordinatingInstitution.name);
-  const projectManager = fetchedProject?.contributors.find((contributor) => contributor.type === 'ProjectManager');
-  const projectManagerName = [projectManager?.identity.firstName, projectManager?.identity.lastName].join(' ');
-
-  const startDate = fetchedProject?.startDate && new Date(fetchedProject.startDate);
-  const endDate = fetchedProject?.endDate && new Date(fetchedProject.endDate);
-  const dateInterval = [
-    startDate && !isNaN(startDate.valueOf()) ? startDate.toLocaleDateString() : '?',
-    endDate && !isNaN(endDate.valueOf()) ? endDate.toLocaleDateString() : '?',
-  ].join(' - ');
+  const projectTitle = fetchedProject?.title ?? project.name;
 
   return (
     <StyledProjectRow>
       {isLoadingProject ? (
         <Skeleton />
       ) : (
-        <Typography variant="subtitle2">{fetchedProject?.title ?? project.name}</Typography>
+        <StyledProjectTitle variant="body1" variantMapping={{ body1: 'h3' }}>
+          {fetchedProject?.id ? <Link href={getProjectPath(fetchedProject.id)}>{projectTitle}</Link> : projectTitle}
+        </StyledProjectTitle>
       )}
       <Divider component="span" orientation="vertical" />
-      {isLoadingProject ? <Skeleton /> : <Typography variant="body1">{institutionName}</Typography>}
+      {isLoadingProject ? <Skeleton /> : <Typography variant="body1">{getProjectName(fetchedProject)}</Typography>}
       <Divider component="span" orientation="vertical" />
-      {isLoadingProject ? <Skeleton /> : <Typography variant="body1">{projectManagerName}</Typography>}
+      {isLoadingProject ? (
+        <Skeleton />
+      ) : (
+        <Typography variant="body1">{getProjectManagerName(fetchedProject)}</Typography>
+      )}
       <Divider component="span" orientation="vertical" />
       {isLoadingProject ? (
         <Skeleton />
       ) : fetchedProject ? (
         <div>
-          <Typography variant="body1">{dateInterval}</Typography>
+          <Typography variant="body1">{getProjectPeriod(fetchedProject)}</Typography>
           <Typography variant="body1">
             {t('public_page.participants', { count: fetchedProject?.contributors.length })}
           </Typography>
