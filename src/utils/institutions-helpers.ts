@@ -27,10 +27,9 @@ const unitIdToIgnore = 'https://api.cristin.no/v2/units/0.0.0.0';
 export const getDistinctContributorUnits = (contributors: Contributor[]) => {
   const unitIds = contributors
     .flatMap((contributor) => contributor.affiliations)
-    .filter((affiliation) => !!affiliation?.id)
+    .filter((affiliation) => !!affiliation?.id && affiliation.id !== unitIdToIgnore)
     .map((unit) => unit?.id) as string[];
-  const distinctUnitIds = [...new Set(unitIds)].filter((id) => id !== unitIdToIgnore);
-  return distinctUnitIds;
+  return [...new Set(unitIds)];
 };
 
 // Returns top-down unit names: ["Level1", "Level2", (etc.)]
