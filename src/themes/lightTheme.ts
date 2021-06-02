@@ -116,6 +116,9 @@ const lightTheme = createMuiTheme({
       fontSize: '0.875rem',
       fontWeight: 700,
     },
+    caption: {
+      fontSize: '0.875rem',
+    },
   },
   overrides: {
     MuiAccordion: {

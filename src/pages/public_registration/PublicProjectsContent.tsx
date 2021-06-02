@@ -13,14 +13,35 @@ import {
   getProjectPeriod,
 } from '../registration/description_tab/projects_field/projectHelpers';
 
-const StyledProjectRow = styled.div`
-  background: ${({ theme }) => theme.palette.background.default};
-  padding: 0.5rem 1rem;
-  margin-top: 1rem;
+const StyledProjectGrid = styled.div`
   display: grid;
+  grid-template-areas: 'title . institution . manager . info';
   grid-template-columns: 2fr auto 1fr auto 1fr auto 1fr;
   column-gap: 1rem;
   align-items: center;
+  padding: 0 1rem;
+`;
+
+const StyledProjectRow = styled(StyledProjectGrid)`
+  padding: 0.5rem 1rem;
+  background: ${({ theme }) => theme.palette.background.default};
+  margin-bottom: 1rem;
+`;
+
+const StyledTitleHeading = styled(Typography)`
+  grid-area: title;
+`;
+
+const StyledInstitutionHeading = styled(Typography)`
+  grid-area: institution;
+`;
+
+const StyledManagerHeading = styled(Typography)`
+  grid-area: manager;
+`;
+
+const StyledInfoHeading = styled(Typography)`
+  grid-area: info;
 `;
 
 const StyledProjectTitle = styled(Typography)`
@@ -32,7 +53,7 @@ interface PublicProjectsContentProps {
 }
 
 export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation('project');
 
   return (
     <>
@@ -40,6 +61,12 @@ export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) 
         {t('registration:description.project_association')}
       </Typography>
 
+      <StyledProjectGrid>
+        <StyledTitleHeading variant="caption">{t('common:title')}</StyledTitleHeading>
+        <StyledInstitutionHeading variant="caption">{t('common:institution')}</StyledInstitutionHeading>
+        <StyledManagerHeading variant="caption">{t('project_manager')}</StyledManagerHeading>
+        <StyledInfoHeading variant="caption">{t('project_info')}</StyledInfoHeading>
+      </StyledProjectGrid>
       <MuiThemeProvider theme={lightTheme}>
         {projects.map((project) => (
           <ProjectRow key={project.id} project={project} />
