@@ -11,6 +11,7 @@ export enum UrlPathTemplate {
   MyRegistrations = '/my-registrations',
   NewRegistration = '/registration',
   PrivacyPolicy = '/privacy-policy',
+  Projects = '/projects',
   Registration = '/registration/:identifier?',
   RegistrationLandingPage = '/registration/:identifier/public',
   Search = '/search',
@@ -34,3 +35,5 @@ export const getUserPath = (authorityId: string) => `${UrlPathTemplate.User}?id=
 
 export const getAdminInstitutionPath = (id: string) =>
   `${UrlPathTemplate.AdminInstitutions}?id=${encodeURIComponent(id)}`;
+
+export const getProjectPath = (id: string) => `${UrlPathTemplate.Projects}?id=${encodeURIComponent(id)}`;

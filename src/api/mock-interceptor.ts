@@ -13,7 +13,7 @@ import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_respons
 import { mockRoles } from '../utils/testfiles/mock_feide_user';
 import { mockCustomerInstitution, mockCustomerInstitutions } from '../utils/testfiles/mockCustomerInstitutions';
 import mockMyRegistrations from '../utils/testfiles/my_registrations.json';
-import { mockProjectSearch } from '../utils/testfiles/mockProjects';
+import { mockProject, mockProjectSearch } from '../utils/testfiles/mockProjects';
 import mockPublishedRegistrations from '../utils/testfiles/published_registrations.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import { mockSearchResults } from '../utils/testfiles/search_results';
@@ -92,6 +92,7 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(`${PublicationsApiPaths.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
 
   // PROJECT
+  mock.onGet(new RegExp(`${ProjectsApiPaths.PROJECT}/1`)).reply(200, mockProject);
   mock.onGet(new RegExp(`${ProjectsApiPaths.PROJECT}/*`)).reply(200, mockProjectSearch);
 
   // PUBLICATION CHANNEL
