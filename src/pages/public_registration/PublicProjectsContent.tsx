@@ -15,33 +15,25 @@ import {
 
 const StyledProjectGrid = styled.div`
   display: grid;
-  grid-template-areas: 'title . institution . manager . info';
   grid-template-columns: 2fr auto 1fr auto 1fr auto 1fr;
   column-gap: 1rem;
   align-items: center;
+`;
+
+const StyledHeadingRow = styled(StyledProjectGrid)`
   padding: 0 1rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    display: none;
+  }
 `;
 
 const StyledProjectRow = styled(StyledProjectGrid)`
   padding: 0.5rem 1rem;
   background: ${({ theme }) => theme.palette.background.default};
   margin-bottom: 1rem;
-`;
-
-const StyledTitleHeading = styled(Typography)`
-  grid-area: title;
-`;
-
-const StyledInstitutionHeading = styled(Typography)`
-  grid-area: institution;
-`;
-
-const StyledManagerHeading = styled(Typography)`
-  grid-area: manager;
-`;
-
-const StyledInfoHeading = styled(Typography)`
-  grid-area: info;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const StyledProjectTitle = styled(Typography)`
@@ -61,12 +53,15 @@ export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) 
         {t('registration:description.project_association')}
       </Typography>
 
-      <StyledProjectGrid>
-        <StyledTitleHeading variant="caption">{t('common:title')}</StyledTitleHeading>
-        <StyledInstitutionHeading variant="caption">{t('common:institution')}</StyledInstitutionHeading>
-        <StyledManagerHeading variant="caption">{t('project_manager')}</StyledManagerHeading>
-        <StyledInfoHeading variant="caption">{t('project_info')}</StyledInfoHeading>
-      </StyledProjectGrid>
+      <StyledHeadingRow>
+        <Typography variant="caption">{t('common:title')}</Typography>
+        <span />
+        <Typography variant="caption">{t('common:institution')}</Typography>
+        <span />
+        <Typography variant="caption">{t('project_manager')}</Typography>
+        <span />
+        <Typography variant="caption">{t('project_info')}</Typography>
+      </StyledHeadingRow>
       <MuiThemeProvider theme={lightTheme}>
         {projects.map((project) => (
           <ProjectRow key={project.id} project={project} />
