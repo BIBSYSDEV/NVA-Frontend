@@ -37,6 +37,8 @@ interface PublicRegistrationContributorsProps {
   registrationType: string;
 }
 
+const unitIdToIgnore = 'https://api.cristin.no/v2/units/0.0.0.0';
+
 export const PublicRegistrationContributors = ({
   contributors,
   registrationType,
@@ -58,7 +60,9 @@ export const PublicRegistrationContributors = ({
   const otherContributorsToShow = showAll ? otherContributors : [];
 
   const hiddenContributorsCount = useRef(contributors.length - mainContributorsToShow.length);
-  const distinctUnits = getDistinctContributorUnits([...mainContributorsToShow, ...otherContributorsToShow]);
+  const distinctUnits = getDistinctContributorUnits([...mainContributorsToShow, ...otherContributorsToShow]).filter(
+    (id) => id !== unitIdToIgnore
+  );
 
   return (
     <StyledPublicRegistrationAuthors>
