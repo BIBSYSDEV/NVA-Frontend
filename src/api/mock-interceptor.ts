@@ -86,7 +86,9 @@ export const interceptRequestsOnMock = () => {
   mock
     .onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/4327439`))
     .reply(200, { ...emptyRegistration, owner: 'tu@unit.no' });
-  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/123`)).reply(200, mockPublishedRegistration);
+  mock
+    .onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/${mockPublishedRegistration.identifier}`))
+    .reply(200, mockPublishedRegistration);
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/*`)).reply(200, mockRegistration);
 
   // lookup DOI
