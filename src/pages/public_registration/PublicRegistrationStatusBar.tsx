@@ -27,7 +27,7 @@ import lightTheme from '../../themes/lightTheme';
 import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 `;
 
 const StyledButtonsContainer = styled.div`

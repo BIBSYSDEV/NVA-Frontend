@@ -34,11 +34,15 @@ export const getProjectManagerName = (project?: CristinProject) => {
 };
 
 export const getProjectPeriod = (project?: CristinProject) => {
-  const startDate = project?.startDate && new Date(project.startDate);
-  const endDate = project?.endDate && new Date(project.endDate);
+  if (!project) {
+    return '';
+  }
+  const startDate = new Date(project.startDate);
+  const endDate = project.endDate && new Date(project.endDate);
   const dateInterval = [
-    startDate && !isNaN(startDate.valueOf()) ? startDate.toLocaleDateString() : '?',
+    startDate.toLocaleDateString(),
     endDate && !isNaN(endDate.valueOf()) ? endDate.toLocaleDateString() : '?',
   ].join(' - ');
+
   return dateInterval;
 };

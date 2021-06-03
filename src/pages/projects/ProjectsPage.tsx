@@ -13,7 +13,7 @@ const ProjectsPage = () => {
 
   return (
     <StyledPageWrapperWithMaxWidth>
-      {isLoadingProject ? <PageSpinner /> : project ? <ProjectLandingPage project={project} /> : null}
+      {isLoadingProject ? <PageSpinner /> : project && <ProjectLandingPage project={project} />}
     </StyledPageWrapperWithMaxWidth>
   );
 };

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Accordion, AccordionSummary, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useTranslation } from 'react-i18next';
-import { PageHeader } from '../../components/PageHeader';
+import { ItalicPageHeader } from '../../components/PageHeader';
 import { CristinProject } from '../../types/project.types';
 import {
   getProjectName,
@@ -45,7 +45,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
 
   return (
     <>
-      <PageHeader>{project.title}</PageHeader>
+      <ItalicPageHeader superHeader={t('project')}>{project.title}</ItalicPageHeader>
 
       <StyledGeneralInfoBox data-testid={dataTestId.projectLandingPage.generalInfoBox}>
         <div>
