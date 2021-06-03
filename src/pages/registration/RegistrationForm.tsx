@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useUppy } from '@uppy/react';
-import { RegistrationPageHeader } from '../../components/PageHeader';
+import { ItalicPageHeader } from '../../components/PageHeader';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -97,9 +97,9 @@ const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
               modalHeading={t('modal_unsaved_changes_heading')}
               shouldBlockNavigation={dirty}
             />
-            <RegistrationPageHeader>
+            <ItalicPageHeader>
               {values.entityDescription.mainTitle || `[${t('common:missing_title')}]`}
-            </RegistrationPageHeader>
+            </ItalicPageHeader>
             <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
             <RegistrationFormContent tabNumber={tabNumber} uppy={uppy} />
             <RegistrationFormActions

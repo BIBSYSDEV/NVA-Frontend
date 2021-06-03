@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import BackgroundDiv from '../../components/BackgroundDiv';
-import { RegistrationPageHeader } from '../../components/PageHeader';
+import { ItalicPageHeader } from '../../components/PageHeader';
 import lightTheme from '../../themes/lightTheme';
 import { emptyRegistration, Registration } from '../../types/registration.types';
 import { PublicFilesContent } from './PublicFilesContent';
@@ -20,6 +20,10 @@ const StyledBackgroundDiv = styled(BackgroundDiv)`
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.md}px`}) {
     padding: 1rem 2rem;
   }
+`;
+
+const StyledYearSpan = styled.span`
+  padding-left: 1rem;
 `;
 
 export interface PublicRegistrationContentProps {
@@ -44,13 +48,15 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
   return (
     <>
       <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
-      <RegistrationPageHeader
-        details={{
-          publicationType: t(`publicationTypes:${reference.publicationInstance.type}`),
-          publicationYear: date.year,
-        }}>
+      <ItalicPageHeader
+        superHeader={
+          <>
+            <span>{t(`publicationTypes:${reference.publicationInstance.type}`)}</span>
+            <StyledYearSpan>{date.year}</StyledYearSpan>
+          </>
+        }>
         {mainTitle || `[${t('common:missing_title')}]`}
-      </RegistrationPageHeader>
+      </ItalicPageHeader>
       <div>
         {contributors && (
           <PublicRegistrationContributors
