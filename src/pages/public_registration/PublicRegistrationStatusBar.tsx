@@ -26,7 +26,7 @@ import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 `;
 
 const StyledButtonsContainer = styled.div`
