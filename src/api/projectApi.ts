@@ -10,7 +10,7 @@ export const searchProjectsByTitle = async (query: string, cancelToken?: CancelT
   await apiRequest<ProjectSearchResponse>({
     url: ProjectsApiPaths.PROJECT,
     params: {
-      title: query,
+      query,
     },
     cancelToken,
   });
