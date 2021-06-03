@@ -1,5 +1,5 @@
 import { dataTestId } from '../../src/utils/dataTestIds';
-
+import { mockPublishedRegistration } from '../../src/utils/testfiles/mockRegistration';
 const {
   registrationLandingPage: { projectTitle, status },
   projectLandingPage: { generalInfoBox, participantsAccordion, resultsAccordion, scientificSummaryAccordion },
@@ -26,7 +26,7 @@ describe('User opens Landing Page for Registration', () => {
   });
 
   it('Project should have a link to Landing Page for Project', () => {
-    cy.visit('/registration/123/public');
+    cy.visit(`/registration/${mockPublishedRegistration.identifier}/public`);
     cy.get(`[data-testid=${projectTitle}]`).should('be.visible');
     cy.get(`[data-testid=${projectTitle}] > a`).click({ force: true });
 
