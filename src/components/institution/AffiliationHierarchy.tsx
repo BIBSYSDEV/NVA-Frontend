@@ -28,6 +28,7 @@ export const AffiliationHierarchy = ({
   const [department, isLoadingDepartment] = useFetchDepartment(unitUri);
   const unitHierarchyNames = getUnitHierarchyNames(unitUri, department);
   const { t } = useTranslation('feedback');
+
   return isLoadingDepartment ? (
     <AffiliationSkeleton commaSeparated={commaSeparated} />
   ) : department ? (
