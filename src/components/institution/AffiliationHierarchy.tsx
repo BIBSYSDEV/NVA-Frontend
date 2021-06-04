@@ -28,7 +28,6 @@ export const AffiliationHierarchy = ({
   const [department, isLoadingDepartment] = useFetchDepartment(unitUri);
   const unitHierarchyNames = getUnitHierarchyNames(unitUri, department);
   const { t } = useTranslation('feedback');
-
   return isLoadingDepartment ? (
     <AffiliationSkeleton commaSeparated={commaSeparated} />
   ) : department ? (
@@ -40,9 +39,9 @@ export const AffiliationHierarchy = ({
       <div>
         {unitHierarchyNames.map((unitName, index) =>
           index === 0 && boldTopLevel ? (
-            <StyledTypography key={unitName}>{unitName}</StyledTypography>
+            <StyledTypography key={unitName + index}>{unitName}</StyledTypography>
           ) : (
-            <Typography key={unitName}>{unitName}</Typography>
+            <Typography key={unitName + index}>{unitName}</Typography>
           )
         )}
       </div>
