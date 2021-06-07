@@ -54,7 +54,7 @@ Runs cypress tests.
 
 Alternatively:
 
-1. Set environment variable: `REACT_APP_USE_MOCK=true`
+1. Set environment variable in `.env`: `REACT_APP_USE_MOCK=true`
 2. `npm start`
 3. `npx cypress run` or `npx cypress open`
 
