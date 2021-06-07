@@ -2,7 +2,7 @@ import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import React, { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { MenuItem, MuiThemeProvider, TextField, Typography } from '@material-ui/core';
+import { Button, MenuItem, MuiThemeProvider, TextField, Typography } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
@@ -11,6 +11,7 @@ import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { DatePickerField } from './description_tab/DatePickerField';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
+import { VocabularyField } from './description_tab/VocabularyField';
 
 const DateAndLanguageWrapper = styled.div`
   display: grid;
@@ -106,6 +107,7 @@ const DescriptionPanel = () => {
             />
           )}
         </Field>
+        <VocabularyField />
       </BackgroundDiv>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DateAndLanguageWrapper>
