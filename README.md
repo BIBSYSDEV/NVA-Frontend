@@ -52,14 +52,11 @@ The build is minified and the filenames include the hashes.
 
 Runs cypress tests.
 
-Note: On Windows the `test:cypress` script must be edited in order to work:
+Alternatively:
 
-```diff
-- "test:cypress": "REACT_APP_USE_MOCK=true start-server-and-test http://localhost:3000",
-+ "test:cypress": "set REACT_APP_USE_MOCK=true && start-server-and-test http://localhost:3000",
-```
-
-Alternatively, one can run the Cypress tests in watch mode by starting tha app with mock data, and run `npx cypress open`.
+1. Set environment variable: `REACT_APP_USE_MOCK=true`
+2. `npm start`
+3. `npx cypress run` or `npx cypress open`
 
 #### `npm run test:react`
 
