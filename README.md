@@ -27,7 +27,6 @@ Info about all environment variables are listed in the table below. Note that yo
 | REACT_APP_ORCID_BASE_URL               | `https://sandbox.orcid.org`                  | Base URL to ORCID integration.                                                           |
 | REACT_APP_ORCID_REDIRECT_URI           | `http://localhost:3000/my-profile`           | Callback URI for successfull connection to ORCID.                                        |
 | REACT_APP_ORCID_CLIENT_ID              | `APP-XXXXXXXXX`                              | Value can be found by logging in to the Parameter Store in AWS or ORCID Admin dashboard. |
-| REACT_APP_ORCID_CLIENT_SECRET          | `XXXXXXXXX`                                  | Value can be found by logging in to the Parameter Store in AWS or ORCID Admin dashboard. |
 
 ## Generate code coverage
 
