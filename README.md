@@ -8,8 +8,10 @@ To run this app, you need to add a set of environment variables to a `.env` file
 
 A minimal working example for `.env` that uses a simplistic set of (incomplete) mock data looks as follows:
 
-    REACT_APP_API_URL=https://api.dev.nva.aws.unit.no
-    REACT_APP_USE_MOCK=true
+```markdown
+REACT_APP_API_URL=https://api.dev.nva.aws.unit.no
+REACT_APP_USE_MOCK=true
+```
 
 Info about all environment variables are listed in the table below. Note that you must be authorized to retrieve some of these values if you don't want to use mock data.
 
@@ -28,6 +30,41 @@ Info about all environment variables are listed in the table below. Note that yo
 | REACT_APP_ORCID_REDIRECT_URI           | `http://localhost:3000/my-profile`           | Callback URI for successfull connection to ORCID.                                        |
 | REACT_APP_ORCID_CLIENT_ID              | `APP-XXXXXXXXX`                              | Value can be found by logging in to the Parameter Store in AWS or ORCID Admin dashboard. |
 
+## Available Scripts
+
+### `npm start`
+
+Runs the app in the development mode.
+
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.
+
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.
+
+### Testing
+
+#### `npm run test:cypress`
+
+Runs cypress tests.
+
+Note: On Windows the `test:cypress` script must be edited in order to work:
+
+```diff
+-      "test:cypress": "REACT_APP_USE_MOCK=true start-server-and-test http://localhost:3000",
++      "test:cypress": "set REACT_APP_USE_MOCK=true && start-server-and-test  http://localhost:3000",
+```
+
+Alternatively, one can run the Cypress tests in watch mode by starting tha app with mock data, and run `npx cypress open`.
+
+#### `npm run test:react`
+
+Runs React testing library tests
+
 ## Generate code coverage
 
 `npx nyc report`
@@ -41,31 +78,3 @@ Generate your desired structure of the object/list. (Example: generateProjectLis
 Navigate to the folder your test file is in.
 
 Run `npx tsc && npx ts-node generateProjectList` to generate.
-
-## Available Scripts
-
-### `npm start`
-
-Runs the app in the development mode.
-
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-### `npm run test:cypress`
-
-Runs cypress tests
-
-### `npm run test:react`
-
-Runs React testing library tests
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.
-
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.
-
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
