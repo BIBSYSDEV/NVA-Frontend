@@ -21,7 +21,8 @@ export const VocabularyField = () => {
   return (
     <>
       <Autocomplete
-        id="hrcs1"
+        id="hrcs-activities"
+        aria-labelledby="hrcs-activities-label"
         options={hrcsActivityOptions}
         getOptionLabel={(option) => getLanguageString(option.label)}
         renderOption={(option) => {
@@ -32,7 +33,8 @@ export const VocabularyField = () => {
         renderInput={(params) => <TextField {...params} label={t('description.hrcs_activities')} variant="filled" />}
       />
       <Autocomplete
-        id="hrcs2"
+        id="hrcs-categories"
+        aria-labelledby="hrcs-categories-label"
         options={hrcsCategoryOptions}
         getOptionLabel={(option) => getLanguageString(option.label)}
         multiple
