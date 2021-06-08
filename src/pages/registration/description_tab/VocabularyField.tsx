@@ -1,4 +1,4 @@
-import { Button, MenuItem, TextField, Typography } from '@material-ui/core';
+import { Button, Menu, MenuItem, TextField, Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -6,11 +6,6 @@ import styled from 'styled-components';
 import { hrcsActivities } from '../../../resources/vocabularies/hrcsActivities';
 import { hrcsCategories } from '../../../resources/vocabularies/hrcsCategories';
 import { getLanguageString } from '../../../utils/translation-helpers';
-
-const StyledTextField = styled(TextField)`
-  width: 15rem;
-  margin-bottom: 1rem;
-`;
 
 const StyledOptionText = styled(Typography)<{ indentations: number }>`
   ${({ indentations }) => `
@@ -27,7 +22,7 @@ enum Vocabulary {
 export const VocabularyField = () => {
   const { t } = useTranslation('registration');
 
-  const [showNewVocabularyDropdown, setShowNewVocabularyDropdown] = useState(false);
+  const [newVocabularyAnchor, setNewVocabularyAnchor] = useState<null | HTMLElement>(null);
 
   const [visibleVocabularies, setVisibleVocabularies] = useState({
     [Vocabulary.HrcsActivity]: false,
@@ -41,27 +36,27 @@ export const VocabularyField = () => {
       {visibleVocabularies.hrcsActivity && <HrcsActivityAutocomplete />}
       {visibleVocabularies.hrcsCategory && <HrcsCategoryAutocomplete />}
 
-      {showNewVocabularyDropdown && (
-        <StyledTextField
-          variant="filled"
-          defaultValue=""
-          label="Velg vokabular"
-          select
-          onChange={(event) => {
-            const selectedVocabulary = event.target.value;
-            setVisibleVocabularies({ ...visibleVocabularies, [selectedVocabulary]: true });
-            setShowNewVocabularyDropdown(false);
-          }}>
+      {newVocabularyAnchor && (
+        <Menu
+          anchorEl={newVocabularyAnchor}
+          keepMounted
+          open={Boolean(newVocabularyAnchor)}
+          onClose={() => setNewVocabularyAnchor(null)}>
           {addableVocabularies.map((vocabulary) => (
-            <MenuItem key={vocabulary} value={vocabulary}>
+            <MenuItem
+              key={vocabulary}
+              onClick={() => {
+                setVisibleVocabularies({ ...visibleVocabularies, [vocabulary]: true });
+                setNewVocabularyAnchor(null);
+              }}>
               {vocabulary}
             </MenuItem>
           ))}
-        </StyledTextField>
+        </Menu>
       )}
-      <br />
-      {addableVocabularies.length > 0 && !showNewVocabularyDropdown && (
-        <Button variant="outlined" onClick={() => setShowNewVocabularyDropdown(true)}>
+
+      {addableVocabularies.length > 0 && (
+        <Button variant="outlined" onClick={(event) => setNewVocabularyAnchor(event.currentTarget)}>
           Legg til vokabular
         </Button>
       )}
