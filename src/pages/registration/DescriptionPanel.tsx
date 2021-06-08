@@ -2,7 +2,7 @@ import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import React, { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Button, MenuItem, MuiThemeProvider, TextField, Typography } from '@material-ui/core';
+import { MenuItem, MuiThemeProvider, TextField, Typography } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
