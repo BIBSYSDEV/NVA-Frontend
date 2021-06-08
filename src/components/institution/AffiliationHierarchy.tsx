@@ -40,9 +40,9 @@ export const AffiliationHierarchy = ({
       <div>
         {unitHierarchyNames.map((unitName, index) =>
           index === 0 && boldTopLevel ? (
-            <StyledTypography key={unitName}>{unitName}</StyledTypography>
+            <StyledTypography key={unitName + index}>{unitName}</StyledTypography>
           ) : (
-            <Typography key={unitName}>{unitName}</Typography>
+            <Typography key={unitName + index}>{unitName}</Typography>
           )
         )}
       </div>

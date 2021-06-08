@@ -27,7 +27,7 @@ import { PublicationChannelApiPaths } from './publicationChannelApi';
 import { PublicationsApiPaths } from './registrationApi';
 import { RoleApiPaths } from './roleApi';
 import { SearchApiPaths } from './searchApi';
-import { mockMessages, mockRegistration } from '../utils/testfiles/mockRegistration';
+import { mockMessages, mockPublishedRegistration, mockRegistration } from '../utils/testfiles/mockRegistration';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -86,6 +86,9 @@ export const interceptRequestsOnMock = () => {
   mock
     .onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/4327439`))
     .reply(200, { ...emptyRegistration, owner: 'tu@unit.no' });
+  mock
+    .onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/${mockPublishedRegistration.identifier}`))
+    .reply(200, mockPublishedRegistration);
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/*`)).reply(200, mockRegistration);
 
   // lookup DOI

@@ -80,7 +80,9 @@ export const PublicLinkedContextContent = ({
 
   return (
     <>
-      <Typography variant="h3">{t('resource_type.chapter.published_in')}</Typography>
+      <Typography variant="overline" component="p">
+        {t('resource_type.chapter.published_in')}
+      </Typography>
       <RegistrationSummary id={linkedContext} />
     </>
   );

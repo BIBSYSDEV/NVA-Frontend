@@ -6,10 +6,9 @@ import { Registration } from '../../../../types/registration.types';
 
 interface PeerReviewProps {
   fieldName: string;
-  label: string;
 }
 
-const PeerReview = ({ fieldName, label }: PeerReviewProps) => {
+const PeerReview = ({ fieldName }: PeerReviewProps) => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 
@@ -19,7 +18,7 @@ const PeerReview = ({ fieldName, label }: PeerReviewProps) => {
         <>
           <div>
             <Typography variant="h5" color="primary" component="p">
-              {label}
+              {t('resource_type.peer_review')}
             </Typography>
           </div>
           <FormControl data-testid="peer-review-field">
@@ -28,11 +27,11 @@ const PeerReview = ({ fieldName, label }: PeerReviewProps) => {
               onChange={(event) => setFieldValue(name, event.target.value === 'true')}>
               <FormControlLabel
                 control={<Radio color="primary" data-testid="peer_review-true" value="true" />}
-                label={<Typography>{t('resource_type.is_peer_reviewed')}</Typography>}
+                label={<Typography>{t('common:yes')}</Typography>}
               />
               <FormControlLabel
                 control={<Radio color="primary" data-testid="peer_review-false" value="false" />}
-                label={<Typography>{t('resource_type.is_not_peer_reviewed')}</Typography>}
+                label={<Typography>{t('common:no')}</Typography>}
               />
             </RadioGroup>
           </FormControl>
