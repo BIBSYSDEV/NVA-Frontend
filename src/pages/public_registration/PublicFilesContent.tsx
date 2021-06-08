@@ -15,6 +15,7 @@ import { NotificationVariant } from '../../types/notification.types';
 import ButtonWithProgress from '../../components/ButtonWithProgress';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { PreviewFile } from './preview_file/PreviewFile';
+import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledFileRowContainer = styled.div`
   > :not(:last-child) {
@@ -166,7 +167,7 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
           </Typography>
         ) : !currentFileUrl ? (
           <ButtonWithProgress
-            data-testid="button-download-file"
+            data-testid={dataTestId.registrationLandingPage.downloadFileButton}
             variant="contained"
             color="secondary"
             fullWidth
