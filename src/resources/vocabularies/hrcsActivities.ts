@@ -1,6 +1,6 @@
-import { VocabularyResponse } from '../../types/vocabulary.types';
+import { VocabularyData } from '../../types/vocabulary.types';
 
-export const hrcsActivities: VocabularyResponse = {
+export const hrcsActivities: VocabularyData = {
   '@context': {
     '@vocab': 'http://www.w3.org/2004/02/skos/core#',
     id: '@id',

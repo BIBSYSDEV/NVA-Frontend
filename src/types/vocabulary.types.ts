@@ -8,7 +8,7 @@ interface Category {
   subcategories?: Category[];
 }
 
-export interface VocabularyResponse {
+export interface VocabularyData {
   '@context': any;
   categories: Category[];
 }
