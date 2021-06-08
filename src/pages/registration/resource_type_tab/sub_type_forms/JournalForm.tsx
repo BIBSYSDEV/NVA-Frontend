@@ -45,7 +45,7 @@ const JournalForm = () => {
           <SearchContainerField
             fieldName={ResourceFieldNames.CORRIGENDUM_FOR}
             searchSubtypes={[JournalType.ARTICLE, JournalType.SHORT_COMMUNICATION]}
-            label={t('resource_type.original_article')}
+            label={t('resource_type.original_article_title')}
             placeholder={t('resource_type.search_for_original_article')}
             dataTestId="article-search-field"
           />
@@ -134,7 +134,7 @@ const JournalForm = () => {
         publicationInstance.type === JournalType.SHORT_COMMUNICATION) && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-            <PeerReview fieldName={ResourceFieldNames.PEER_REVIEW} label={t('resource_type.peer_review')} />
+            <PeerReview fieldName={ResourceFieldNames.PEER_REVIEW} />
           </BackgroundDiv>
           <NviValidation
             isPeerReviewed={publicationInstance.peerReviewed}
