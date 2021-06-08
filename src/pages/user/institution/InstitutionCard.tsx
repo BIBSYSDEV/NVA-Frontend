@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -49,7 +49,7 @@ interface InstitutionCardProps {
   setInstitutionIdToRemove: (orgunitId: string) => void;
 }
 
-const InstitutionCard: FC<InstitutionCardProps> = ({ orgunitId, setInstitutionIdToRemove }) => {
+const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: InstitutionCardProps) => {
   const { t } = useTranslation('common');
   const [openEditForm, setOpenEditForm] = useState(false);
   const dispatch = useDispatch();
