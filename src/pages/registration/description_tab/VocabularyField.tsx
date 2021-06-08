@@ -1,8 +1,8 @@
 import { TextField, Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import styled from 'styled-components';
-import { hrcsData } from '../../../resources/vocabularies/hrcs';
-import { hrcsHealthData } from '../../../resources/vocabularies/hrcsHealth';
+import { hrcsActivities } from '../../../resources/vocabularies/hrcsActivities';
+import { hrcsCategories } from '../../../resources/vocabularies/hrcsCategories';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 const StyledOptionText = styled(Typography)<{ indents: number }>`
@@ -13,14 +13,14 @@ const StyledOptionText = styled(Typography)<{ indents: number }>`
 `;
 
 export const VocabularyField = () => {
-  const hrcsOptions = hrcsData.categories.map((c) => [c, ...(c.subcategories ?? [])]).flat();
-  const hrcsHealthOptions = hrcsHealthData.categories;
+  const hrcsActivityOptions = hrcsActivities.categories.map((c) => [c, ...(c.subcategories ?? [])]).flat();
+  const hrcsCategoryOptions = hrcsCategories.categories;
 
   return (
     <>
       <Autocomplete
         id="hrcs1"
-        options={hrcsOptions}
+        options={hrcsActivityOptions}
         getOptionLabel={(option) => getLanguageString(option.label)}
         renderOption={(option) => {
           const indentsCount = option.identifier.split('.').length - 1;
@@ -31,10 +31,10 @@ export const VocabularyField = () => {
       />
       <Autocomplete
         id="hrcs2"
-        options={hrcsHealthOptions}
+        options={hrcsCategoryOptions}
         getOptionLabel={(option) => getLanguageString(option.label)}
         multiple
-        renderInput={(params) => <TextField {...params} label="HRCS Health" variant="filled" />}
+        renderInput={(params) => <TextField {...params} label="HRCS Category" variant="filled" />}
       />
     </>
   );

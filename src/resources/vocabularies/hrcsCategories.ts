@@ -1,6 +1,6 @@
 import { VocabularyResponse } from '../../types/vocabulary.types';
 
-export const hrcsHealthData: VocabularyResponse = {
+export const hrcsCategories: VocabularyResponse = {
   '@context': {
     '@vocab': 'http://www.w3.org/2004/02/skos/core#',
     id: '@id',
