@@ -6,7 +6,10 @@ import { hrcsHealthData } from '../../../resources/vocabularies/hrcsHealth';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 const StyledOptionText = styled(Typography)<{ indents: number }>`
-  padding-left: ${({ indents }) => indents * 1.5}rem;
+  ${({ indents }) => `
+    padding-left: ${indents * 1.5}rem;
+    font-weight: ${indents === 0 ? 500 : 400};
+    `}
 `;
 
 export const VocabularyField = () => {
@@ -21,11 +24,7 @@ export const VocabularyField = () => {
         getOptionLabel={(option) => getLanguageString(option.label)}
         renderOption={(option) => {
           const indentsCount = option.identifier.split('.').length - 1;
-          return (
-            <StyledOptionText noWrap indents={indentsCount}>
-              {getLanguageString(option.label)}
-            </StyledOptionText>
-          );
+          return <StyledOptionText indents={indentsCount}>{getLanguageString(option.label)}</StyledOptionText>;
         }}
         multiple
         renderInput={(params) => <TextField {...params} label="HRCS Activity" variant="filled" />}
