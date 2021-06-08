@@ -9,6 +9,7 @@ import OrcidLogo from '../../resources/images/orcid_logo.svg';
 import { Contributor, ContributorRole } from '../../types/contributor.types';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
 import { BookType } from '../../types/publicationFieldNames';
+import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledContributorsGrid = styled.div`
   display: grid;
@@ -134,13 +135,14 @@ const ContributorsRow = ({
           ?.map((affiliation) => affiliation.id && distinctUnits.indexOf(affiliation.id) + 1)
           .filter((affiliationIndex) => affiliationIndex)
           .sort();
+        const encodedId = id ? encodeURIComponent(id) : '';
 
         return (
           <Typography key={index} component="li">
             {id ? (
               <Link
-                href={`/user?id=${encodeURIComponent(id)}`}
-                data-testid={`presentation-author-link-${encodeURIComponent(id)}`}>
+                href={`/user?id=${encodedId}`}
+                data-testid={dataTestId.registrationLandingPage.authorLink(encodedId)}>
                 {name}
               </Link>
             ) : (

@@ -12,15 +12,29 @@ import {
   getProjectName,
   getProjectPeriod,
 } from '../registration/description_tab/projects_field/projectHelpers';
+import { dataTestId } from '../../utils/dataTestIds';
 
-const StyledProjectRow = styled.div`
-  background: ${({ theme }) => theme.palette.background.default};
-  padding: 0.5rem 1rem;
-  margin-top: 1rem;
+const StyledProjectGrid = styled.div`
   display: grid;
   grid-template-columns: 2fr auto 1fr auto 1fr auto 1fr;
   column-gap: 1rem;
   align-items: center;
+`;
+
+const StyledHeadingRow = styled(StyledProjectGrid)`
+  padding: 0 1rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    display: none;
+  }
+`;
+
+const StyledProjectRow = styled(StyledProjectGrid)`
+  padding: 0.5rem 1rem;
+  background: ${({ theme }) => theme.palette.background.default};
+  margin-bottom: 1rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const StyledProjectTitle = styled(Typography)`
@@ -32,14 +46,23 @@ interface PublicProjectsContentProps {
 }
 
 export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation('project');
 
   return (
     <>
       <Typography variant="h4" component="h2" gutterBottom>
-        {t('registration:description.project_association')}
+        {t('description.project_association')}
       </Typography>
 
+      <StyledHeadingRow>
+        <Typography variant="caption">{t('common:title')}</Typography>
+        <span />
+        <Typography variant="caption">{t('common:institution')}</Typography>
+        <span />
+        <Typography variant="caption">{t('project_manager')}</Typography>
+        <span />
+        <Typography variant="caption">{t('project_info')}</Typography>
+      </StyledHeadingRow>
       <MuiThemeProvider theme={lightTheme}>
         {projects.map((project) => (
           <ProjectRow key={project.id} project={project} />
@@ -63,7 +86,10 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
       {isLoadingProject ? (
         <Skeleton />
       ) : (
-        <StyledProjectTitle variant="body1" variantMapping={{ body1: 'h3' }}>
+        <StyledProjectTitle
+          variant="body1"
+          variantMapping={{ body1: 'h3' }}
+          data-testid={dataTestId.registrationLandingPage.projectTitle}>
           {fetchedProject?.id ? <Link href={getProjectPath(fetchedProject.id)}>{projectTitle}</Link> : projectTitle}
         </StyledProjectTitle>
       )}

@@ -63,24 +63,24 @@ describe('User opens registration form and can see validation errors', () => {
     cy.contains('testament').click({ force: true });
     cy.get('[data-testid=journal-search-field] p.Mui-error').should('not.exist');
 
-    cy.get('[data-testid=volume-field]').click({ force: true }).type('-1');
-    cy.get('[data-testid=issue-field]').click({ force: true }).type('-1');
-    cy.get('[data-testid=pages-from-field]').click({ force: true }).type('-1');
-    cy.get('[data-testid=pages-to-field]').click({ force: true }).type('-2');
-    cy.get('[data-testid=article-number-field]').click({ force: true }).type('-1');
+    cy.get('[data-testid=volume-field] input').type('-1');
+    cy.get('[data-testid=issue-field] input').type('-1');
+    cy.get('[data-testid=pages-from-field] input').type('-1');
+    cy.get('[data-testid=pages-to-field] input').type('-2');
+    cy.get('[data-testid=article-number-field] input').type('-1');
     cy.get('[data-testid=volume-field] p.Mui-error').should('be.visible');
     cy.get('[data-testid=issue-field] p.Mui-error').should('be.visible');
     cy.get('[data-testid=pages-from-field] p.Mui-error').should('be.visible');
     cy.get('[data-testid=pages-to-field] p.Mui-error').should('be.visible');
     cy.get('[data-testid=article-number-field] p.Mui-error').should('be.visible');
-    cy.get('[data-testid=volume-field]').click({ force: true }).type('{backspace}{backspace}1');
-    cy.get('[data-testid=issue-field]').click({ force: true }).type('{backspace}{backspace}1');
-    cy.get('[data-testid=pages-from-field]').click({ force: true }).type('{backspace}{backspace}2');
-    cy.get('[data-testid=pages-to-field]').click({ force: true }).type('{backspace}{backspace}1');
+    cy.get('[data-testid=volume-field] input').type('{backspace}{backspace}1');
+    cy.get('[data-testid=issue-field] input').type('{backspace}{backspace}1');
+    cy.get('[data-testid=pages-from-field] input').type('{backspace}{backspace}2');
+    cy.get('[data-testid=pages-to-field] input').type('{backspace}{backspace}1');
     cy.get('[data-testid=pages-from-field] p.Mui-error').should('be.visible');
     cy.get('[data-testid=pages-to-field] p.Mui-error').should('be.visible');
-    cy.get('[data-testid=pages-to-field]').click({ force: true }).type('0');
-    cy.get('[data-testid=article-number-field]').click({ force: true }).type('{backspace}{backspace}1');
+    cy.get('[data-testid=pages-to-field] input').type('0');
+    cy.get('[data-testid=article-number-field] input').type('{backspace}{backspace}1');
 
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
