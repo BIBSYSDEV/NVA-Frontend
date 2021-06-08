@@ -1,5 +1,6 @@
 import { TextField, Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { hrcsActivities } from '../../../resources/vocabularies/hrcsActivities';
 import { hrcsCategories } from '../../../resources/vocabularies/hrcsCategories';
@@ -13,6 +14,7 @@ const StyledOptionText = styled(Typography)<{ indents: number }>`
 `;
 
 export const VocabularyField = () => {
+  const { t } = useTranslation('registration');
   const hrcsActivityOptions = hrcsActivities.categories.map((c) => [c, ...(c.subcategories ?? [])]).flat();
   const hrcsCategoryOptions = hrcsCategories.categories;
 
@@ -27,14 +29,14 @@ export const VocabularyField = () => {
           return <StyledOptionText indents={indentsCount}>{getLanguageString(option.label)}</StyledOptionText>;
         }}
         multiple
-        renderInput={(params) => <TextField {...params} label="HRCS Activity" variant="filled" />}
+        renderInput={(params) => <TextField {...params} label={t('description.hrcs_activities')} variant="filled" />}
       />
       <Autocomplete
         id="hrcs2"
         options={hrcsCategoryOptions}
         getOptionLabel={(option) => getLanguageString(option.label)}
         multiple
-        renderInput={(params) => <TextField {...params} label="HRCS Category" variant="filled" />}
+        renderInput={(params) => <TextField {...params} label={t('description.hrcs_categories')} variant="filled" />}
       />
     </>
   );

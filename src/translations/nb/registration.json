@@ -59,6 +59,8 @@
     "description": "Beskrivelse",
     "description_of_content": "Beskrivelse av innhold, hvis relevant",
     "financed_by": "Finansiert av",
+    "hrcs_activities": "HRCS-aktiviteter",
+    "hrcs_categories": "HRCS-kategorier",
     "npi_disciplines": "Fagfelt i Norsk publiseringsindikator",
     "primary_language": "Hovedspråk for innhold",
     "project_association": "Prosjekttilknytning",
