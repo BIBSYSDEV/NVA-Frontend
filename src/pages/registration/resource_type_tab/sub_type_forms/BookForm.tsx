@@ -64,7 +64,7 @@ const BookForm = () => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
         <StyledSection>
           <StyledPeerReview>
-            <PeerReview fieldName={ResourceFieldNames.PEER_REVIEW} label={t('resource_type.peer_review')} />
+            <PeerReview fieldName={ResourceFieldNames.PEER_REVIEW} />
           </StyledPeerReview>
           <StyledTextBook>
             <div>
