@@ -12,6 +12,7 @@ import { Registration } from '../../types/registration.types';
 import { DatePickerField } from './description_tab/DatePickerField';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { VocabularyField } from './description_tab/VocabularyField';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 
 const DateAndLanguageWrapper = styled.div`
   display: grid;
@@ -107,7 +108,9 @@ const DescriptionPanel = () => {
             />
           )}
         </Field>
-        <VocabularyField />
+        <BetaFunctionality>
+          <VocabularyField />
+        </BetaFunctionality>
       </BackgroundDiv>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DateAndLanguageWrapper>
