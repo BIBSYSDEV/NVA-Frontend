@@ -14,9 +14,10 @@ const StyledOptionText = styled(Typography)<{ indentations: number }>`
     `}
 `;
 
+// Values should be similar to i18n keys
 enum Vocabulary {
-  HrcsActivity = 'hrcsActivity',
-  HrcsCategory = 'hrcsCategory',
+  HrcsActivity = 'hrcs_activities',
+  HrcsCategory = 'hrcs_categories',
 }
 
 export const VocabularyField = () => {
@@ -33,8 +34,8 @@ export const VocabularyField = () => {
 
   return (
     <>
-      {visibleVocabularies.hrcsActivity && <HrcsActivityAutocomplete />}
-      {visibleVocabularies.hrcsCategory && <HrcsCategoryAutocomplete />}
+      {visibleVocabularies.hrcs_activities && <HrcsActivityAutocomplete />}
+      {visibleVocabularies.hrcs_categories && <HrcsCategoryAutocomplete />}
 
       {newVocabularyAnchor && (
         <Menu
@@ -49,7 +50,7 @@ export const VocabularyField = () => {
                 setVisibleVocabularies({ ...visibleVocabularies, [vocabulary]: true });
                 setNewVocabularyAnchor(null);
               }}>
-              {vocabulary}
+              {t(`description.${vocabulary}`)}
             </MenuItem>
           ))}
         </Menu>
@@ -57,7 +58,7 @@ export const VocabularyField = () => {
 
       {addableVocabularies.length > 0 && (
         <Button variant="outlined" onClick={(event) => setNewVocabularyAnchor(event.currentTarget)}>
-          Legg til vokabular
+          {t('description.add_vocabulary')}
         </Button>
       )}
     </>

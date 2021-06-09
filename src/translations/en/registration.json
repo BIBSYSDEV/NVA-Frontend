@@ -53,6 +53,7 @@
     "verified": "Verified"
   },
   "description": {
+    "add_vocabulary": "Add vocabulary",
     "abstract": "Abstract",
     "connect_project": "Connect to project",
     "date_published": "Date published",

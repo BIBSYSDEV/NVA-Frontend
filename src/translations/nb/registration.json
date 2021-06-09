@@ -53,6 +53,7 @@
     "verified": "Verifisert"
   },
   "description": {
+    "add_vocabulary": "Legg til vokabular",
     "abstract": "Sammendrag",
     "connect_project": "Koble til prosjekt",
     "date_published": "Publiseringsdato",
