@@ -59,6 +59,8 @@
     "description": "Description",
     "description_of_content": "Description of content, if relevant",
     "financed_by": "Financed by",
+    "hrcs_activities": "HRCS activities",
+    "hrcs_categories": "HRCS categories",
     "npi_disciplines": "Scientific field in Norwegian publication indicator",
     "primary_language": "Primary language for content",
     "project_association": "Project association",
