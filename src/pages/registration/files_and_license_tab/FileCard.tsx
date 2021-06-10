@@ -1,11 +1,10 @@
-import { ErrorMessage, Field, FieldProps } from 'formik';
+import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import prettyBytes from 'pretty-bytes';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
 import {
-  Checkbox,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -32,24 +31,6 @@ import ConfirmDialog from '../../../components/ConfirmDialog';
 
 const StyledDescription = styled(Typography)`
   font-style: italic;
-`;
-
-const StyledFormControl = styled(FormControl)`
-  width: 30%;
-  margin-top: 1rem;
-
-  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
-    width: 100%;
-  }
-`;
-
-const StyledFileInfo = styled.div`
-  display: flex;
-  justify-content: space-between;
-
-  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
-    flex-direction: column;
-  }
 `;
 
 const StyledSelect = styled(TextField)`
@@ -89,6 +70,13 @@ const StyledTypography = styled(Typography)`
   overflow-wrap: break-word;
 `;
 
+const StyledCardContent = styled.div`
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  column-gap: 1rem;
+`;
+
 interface FileCardProps {
   file: File;
   removeFile: () => void;
@@ -98,6 +86,7 @@ interface FileCardProps {
 
 const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileCardProps) => {
   const { t, i18n } = useTranslation('registration');
+  const { setFieldValue } = useFormikContext();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
 
@@ -109,45 +98,50 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
       </StyledDescription>
 
       {baseFieldName && (
-        <>
-          <Field name={`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`}>
-            {({ field }: FieldProps) => (
+        <StyledCardContent>
+          <FormControl>
+            <FormLabel component="legend">{t('files_and_license.select_version')}</FormLabel>
+            <RadioGroup
+              onChange={(event) => {
+                // TODO: set touched?
+                const newValue = event.target.value;
+                if (newValue === 'administrative') {
+                  setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`, true);
+                  setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`, false);
+                } else {
+                  setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`, false);
+                  setFieldValue(
+                    `${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`,
+                    event.target.value === 'published'
+                  );
+                }
+              }}>
               <FormControlLabel
-                control={<Checkbox {...field} color="primary" checked={field.value} />}
+                value="accepted"
+                control={<Radio color="primary" checked={!file.publisherAuthority && !file.administrativeAgreement} />}
+                label={t('files_and_license.accepted_version')}
+              />
+              <FormControlLabel
+                value="published"
+                control={<Radio color="primary" checked={file.publisherAuthority && !file.administrativeAgreement} />}
+                label={t('files_and_license.published_version')}
+              />
+              <FormControlLabel
+                value="administrative"
+                control={<Radio color="primary" checked={file.administrativeAgreement} />}
                 label={t('files_and_license.administrative_contract')}
               />
-            )}
-          </Field>
+            </RadioGroup>
+          </FormControl>
 
-          {!file.administrativeAgreement && (
-            <StyledFileInfo>
-              <Field name={`${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`}>
-                {({ field, form }: FieldProps) => (
-                  <StyledFormControl>
-                    <FormLabel component="legend">{t('files_and_license.select_version')}</FormLabel>
-                    <RadioGroup
-                      {...field}
-                      onChange={(event) => form.setFieldValue(field.name, event.target.value === 'published')}>
-                      <FormControlLabel
-                        value="accepted"
-                        control={<Radio color="primary" checked={field.value !== null && !field.value} />}
-                        label={t('files_and_license.accepted_version')}
-                      />
-                      <FormControlLabel
-                        value="published"
-                        control={<Radio color="primary" checked={field.value} />}
-                        label={t('files_and_license.published_version')}
-                      />
-                    </RadioGroup>
-                  </StyledFormControl>
-                )}
-              </Field>
-
-              <StyledFormControl>
+          <div>
+            {!file.administrativeAgreement && (
+              <>
                 <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
                   <Field name={`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`}>
                     {({ field, form, meta: { error, touched } }: FieldProps) => (
                       <KeyboardDatePicker
+                        fullWidth
                         id={field.name}
                         {...datePickerTranslationProps}
                         DialogProps={{
@@ -174,9 +168,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                     )}
                   </Field>
                 </MuiPickersUtilsProvider>
-              </StyledFormControl>
 
-              <StyledFormControl>
                 <StyledVerticalAlign>
                   <Field name={`${baseFieldName}.${SpecificFileFieldNames.LICENSE}`}>
                     {({ field, form, meta: { error, touched } }: FieldProps) => (
@@ -237,10 +229,10 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                     </IconButton>
                   </Tooltip>
                 </StyledVerticalAlign>
-              </StyledFormControl>
-            </StyledFileInfo>
-          )}
-        </>
+              </>
+            )}
+          </div>
+        </StyledCardContent>
       )}
 
       <StyledActions>
