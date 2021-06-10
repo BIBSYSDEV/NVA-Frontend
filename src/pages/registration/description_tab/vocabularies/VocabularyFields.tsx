@@ -14,12 +14,19 @@ const StyledAddButton = styled(Button)`
 
 const StyledRemoveButton = styled(DangerButton)`
   margin-top: 1rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    margin-top: 0.5rem;
+  }
 `;
 
 const StyledVocabularyRow = styled.div`
   display: grid;
   grid-template-columns: 5fr 1fr;
   column-gap: 2rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 interface VocabularyConfig {
