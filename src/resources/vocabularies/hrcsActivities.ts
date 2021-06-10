@@ -1,5 +1,6 @@
 import { VocabularyData } from '../../types/vocabulary.types';
 
+// https://github.com/brinxmat/hrcs-skos/blob/main/src/hrcs_activity.json
 export const hrcsActivities: VocabularyData = {
   '@context': {
     '@vocab': 'http://www.w3.org/2004/02/skos/core#',
@@ -8,60 +9,42 @@ export const hrcsActivities: VocabularyData = {
     categories: '@graph',
     HrcsConcept: 'Concept',
     subcategories: 'narrower',
-    label: {
-      '@id': 'prefLabel',
-      '@container': '@language',
-    },
+    label: { '@id': 'prefLabel', '@container': '@language' },
     identifier: 'http://purl.org/dc/terms/identifier',
   },
   categories: [
     {
-      id: 'https://nva.unit.no/hrcs/1',
+      id: 'https://nva.unit.no/hrcs/activity/1',
       type: 'HrcsConcept',
       identifier: '1',
-      label: {
-        en: 'Underpinning Research',
-        nb: 'Underbyggende Forskning',
-      },
+      label: { en: 'Underpinning Research', nb: 'Underbyggende Forskning' },
       subcategories: [
         {
-          id: 'https://nva.unit.no/hrcs/1.1',
+          id: 'https://nva.unit.no/hrcs/activity/1.1',
           type: 'HrcsConcept',
           identifier: '1.1',
-          label: {
-            en: 'Normal biological development and functioning',
-            nb: 'Normal biologisk utvikling og funksjon',
-          },
+          label: { en: 'Normal biological development and functioning', nb: 'Normal biologisk utvikling og funksjon' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/1.2',
+          id: 'https://nva.unit.no/hrcs/activity/1.2',
           type: 'HrcsConcept',
           identifier: '1.2',
-          label: {
-            en: 'Psychological and socioeconomic processes',
-            nb: 'Psykologiske og sosioøkonomiske prosesser',
-          },
+          label: { en: 'Psychological and socioeconomic processes', nb: 'Psykologiske og sosioøkonomiske prosesser' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/1.3',
+          id: 'https://nva.unit.no/hrcs/activity/1.3',
           type: 'HrcsConcept',
           identifier: '1.3',
-          label: {
-            en: 'Chemical and physical sciences',
-            nb: 'Kjemiske og fysiske vitenskaper',
-          },
+          label: { en: 'Chemical and physical sciences', nb: 'Kjemiske og fysiske vitenskaper' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/1.4',
+          id: 'https://nva.unit.no/hrcs/activity/1.4',
           type: 'HrcsConcept',
           identifier: '1.4',
-          label: {
-            en: 'Methodologies and measurements',
-            nb: 'Metodologi og målinger',
-          },
+          label: { en: 'Methodologies and measurements', nb: 'Metodologi og målinger' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/1.5',
+          id: 'https://nva.unit.no/hrcs/activity/1.5',
           type: 'HrcsConcept',
           identifier: '1.5',
           label: {
@@ -72,34 +55,25 @@ export const hrcsActivities: VocabularyData = {
       ],
     },
     {
-      id: 'https://nva.unit.no/hrcs/2',
+      id: 'https://nva.unit.no/hrcs/activity/2',
       type: 'HrcsConcept',
       identifier: '2',
-      label: {
-        en: 'Aetiology',
-        nb: 'Årsaksforhold',
-      },
+      label: { en: 'Aetiology', nb: 'Årsaksforhold' },
       subcategories: [
         {
-          id: 'https://nva.unit.no/hrcs/2.1',
+          id: 'https://nva.unit.no/hrcs/activity/2.1',
           type: 'HrcsConcept',
           identifier: '2.1',
-          label: {
-            en: 'Biological and endogenous factors',
-            nb: 'Biologiske og indre faktorer',
-          },
+          label: { en: 'Biological and endogenous factors', nb: 'Biologiske og indre faktorer' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/2.2',
+          id: 'https://nva.unit.no/hrcs/activity/2.2',
           type: 'HrcsConcept',
           identifier: '2.2',
-          label: {
-            en: 'Factors relating to physical environment',
-            nb: 'Faktorer knyttet til fysisk miljø',
-          },
+          label: { en: 'Factors relating to physical environment', nb: 'Faktorer knyttet til fysisk miljø' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/2.3',
+          id: 'https://nva.unit.no/hrcs/activity/2.3',
           type: 'HrcsConcept',
           identifier: '2.3',
           label: {
@@ -108,7 +82,7 @@ export const hrcsActivities: VocabularyData = {
           },
         },
         {
-          id: 'https://nva.unit.no/hrcs/2.4',
+          id: 'https://nva.unit.no/hrcs/activity/2.4',
           type: 'HrcsConcept',
           identifier: '2.4',
           label: {
@@ -117,7 +91,7 @@ export const hrcsActivities: VocabularyData = {
           },
         },
         {
-          id: 'https://nva.unit.no/hrcs/2.5',
+          id: 'https://nva.unit.no/hrcs/activity/2.5',
           type: 'HrcsConcept',
           identifier: '2.5',
           label: {
@@ -126,18 +100,15 @@ export const hrcsActivities: VocabularyData = {
           },
         },
         {
-          id: 'https://nva.unit.no/hrcs/2.6',
+          id: 'https://nva.unit.no/hrcs/activity/2.6',
           type: 'HrcsConcept',
           identifier: '2.6',
-          label: {
-            en: 'Resources and infrastructure (aetiology) ',
-            nb: 'Ressurser og infrastruktur (årsaksforhold)',
-          },
+          label: { en: 'Resources and infrastructure (aetiology) ', nb: 'Ressurser og infrastruktur (årsaksforhold)' },
         },
       ],
     },
     {
-      id: 'https://nva.unit.no/hrcs/3',
+      id: 'https://nva.unit.no/hrcs/activity/3',
       type: 'HrcsConcept',
       identifier: '3',
       label: {
@@ -146,7 +117,7 @@ export const hrcsActivities: VocabularyData = {
       },
       subcategories: [
         {
-          id: 'https://nva.unit.no/hrcs/3.1',
+          id: 'https://nva.unit.no/hrcs/activity/3.1',
           type: 'HrcsConcept',
           identifier: '3.1',
           label: {
@@ -155,7 +126,7 @@ export const hrcsActivities: VocabularyData = {
           },
         },
         {
-          id: 'https://nva.unit.no/hrcs/3.2',
+          id: 'https://nva.unit.no/hrcs/activity/3.2',
           type: 'HrcsConcept',
           identifier: '3.2',
           label: {
@@ -164,25 +135,19 @@ export const hrcsActivities: VocabularyData = {
           },
         },
         {
-          id: 'https://nva.unit.no/hrcs/3.3',
+          id: 'https://nva.unit.no/hrcs/activity/3.3',
           type: 'HrcsConcept',
           identifier: '3.3',
-          label: {
-            en: 'Nutrition and chemoprevention',
-            nb: 'Ernæring og kjemoprevensjon',
-          },
+          label: { en: 'Nutrition and chemoprevention', nb: 'Ernæring og kjemoprevensjon' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/3.4',
+          id: 'https://nva.unit.no/hrcs/activity/3.4',
           type: 'HrcsConcept',
           identifier: '3.4',
-          label: {
-            en: 'Vaccines',
-            nb: 'Vaksiner',
-          },
+          label: { en: 'Vaccines', nb: 'Vaksiner' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/3.5',
+          id: 'https://nva.unit.no/hrcs/activity/3.5',
           type: 'HrcsConcept',
           identifier: '3.5',
           label: {
@@ -193,16 +158,13 @@ export const hrcsActivities: VocabularyData = {
       ],
     },
     {
-      id: 'https://nva.unit.no/hrcs/4',
+      id: 'https://nva.unit.no/hrcs/activity/4',
       type: 'HrcsConcept',
       identifier: '4',
-      label: {
-        en: 'Detection, Screening and Diagnosis',
-        nb: 'Påvising, screening og diagnose',
-      },
+      label: { en: 'Detection, Screening and Diagnosis', nb: 'Påvising, screening og diagnose' },
       subcategories: [
         {
-          id: 'https://nva.unit.no/hrcs/4.1',
+          id: 'https://nva.unit.no/hrcs/activity/4.1',
           type: 'HrcsConcept',
           identifier: '4.1',
           label: {
@@ -211,34 +173,25 @@ export const hrcsActivities: VocabularyData = {
           },
         },
         {
-          id: 'https://nva.unit.no/hrcs/4.2',
+          id: 'https://nva.unit.no/hrcs/activity/4.2',
           type: 'HrcsConcept',
           identifier: '4.2',
-          label: {
-            en: 'Evaluation of markers and technologies',
-            nb: 'Evaluering av markører og teknologier',
-          },
+          label: { en: 'Evaluation of markers and technologies', nb: 'Evaluering av markører og teknologier' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/4.3',
+          id: 'https://nva.unit.no/hrcs/activity/4.3',
           type: 'HrcsConcept',
           identifier: '4.3',
-          label: {
-            en: 'Influences and impact',
-            nb: 'Innflytelse og påvirkningskraft',
-          },
+          label: { en: 'Influences and impact', nb: 'Innflytelse og påvirkningskraft' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/4.4',
+          id: 'https://nva.unit.no/hrcs/activity/4.4',
           type: 'HrcsConcept',
           identifier: '4.4',
-          label: {
-            en: 'Population screening',
-            nb: 'Befolkningsundersøkelser',
-          },
+          label: { en: 'Population screening', nb: 'Befolkningsundersøkelser' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/4.5',
+          id: 'https://nva.unit.no/hrcs/activity/4.5',
           type: 'HrcsConcept',
           identifier: '4.5',
           label: {
@@ -249,7 +202,7 @@ export const hrcsActivities: VocabularyData = {
       ],
     },
     {
-      id: 'https://nva.unit.no/hrcs/5',
+      id: 'https://nva.unit.no/hrcs/activity/5',
       type: 'HrcsConcept',
       identifier: '5',
       label: {
@@ -258,79 +211,55 @@ export const hrcsActivities: VocabularyData = {
       },
       subcategories: [
         {
-          id: 'https://nva.unit.no/hrcs/5.1',
+          id: 'https://nva.unit.no/hrcs/activity/5.1',
           type: 'HrcsConcept',
           identifier: '5.1',
-          label: {
-            en: 'Pharmaceuticals',
-            nb: 'Legemidler',
-          },
+          label: { en: 'Pharmaceuticals', nb: 'Legemidler' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/5.2',
+          id: 'https://nva.unit.no/hrcs/activity/5.2',
           type: 'HrcsConcept',
           identifier: '5.2',
-          label: {
-            en: 'Cellular and gene therapies',
-            nb: 'Celle- og genterapi',
-          },
+          label: { en: 'Cellular and gene therapies', nb: 'Celle- og genterapi' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/5.3',
+          id: 'https://nva.unit.no/hrcs/activity/5.3',
           type: 'HrcsConcept',
           identifier: '5.3',
-          label: {
-            en: 'Medical devices',
-            nb: 'Medisinsk utstyr',
-          },
+          label: { en: 'Medical devices', nb: 'Medisinsk utstyr' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/5.4',
+          id: 'https://nva.unit.no/hrcs/activity/5.4',
           type: 'HrcsConcept',
           identifier: '5.4',
-          label: {
-            en: 'Surgery',
-            nb: 'Kirurgi',
-          },
+          label: { en: 'Surgery', nb: 'Kirurgi' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/5.5',
+          id: 'https://nva.unit.no/hrcs/activity/5.5',
           type: 'HrcsConcept',
           identifier: '5.5',
-          label: {
-            en: 'Radiotherapy',
-            nb: 'Strålebehandling',
-          },
+          label: { en: 'Radiotherapy', nb: 'Strålebehandling' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/5.6',
+          id: 'https://nva.unit.no/hrcs/activity/5.6',
           type: 'HrcsConcept',
           identifier: '5.6',
-          label: {
-            en: 'Psychological and behavioural',
-            nb: 'Psykologiske og atferdsmessige',
-          },
+          label: { en: 'Psychological and behavioural', nb: 'Psykologiske og atferdsmessige' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/5.7',
+          id: 'https://nva.unit.no/hrcs/activity/5.7',
           type: 'HrcsConcept',
           identifier: '5.7',
-          label: {
-            en: 'Physical',
-            nb: 'Fysiske',
-          },
+          label: { en: 'Physical', nb: 'Fysiske' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/5.8',
+          id: 'https://nva.unit.no/hrcs/activity/5.8',
           type: 'HrcsConcept',
           identifier: '5.8',
-          label: {
-            en: 'Complementary',
-            nb: 'Alternativ behandling',
-          },
+          label: { en: 'Complementary', nb: 'Alternativ behandling' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/5.9',
+          id: 'https://nva.unit.no/hrcs/activity/5.9',
           type: 'HrcsConcept',
           identifier: '5.9',
           label: {
@@ -341,7 +270,7 @@ export const hrcsActivities: VocabularyData = {
       ],
     },
     {
-      id: 'https://nva.unit.no/hrcs/6',
+      id: 'https://nva.unit.no/hrcs/activity/6',
       type: 'HrcsConcept',
       identifier: '6',
       label: {
@@ -350,79 +279,55 @@ export const hrcsActivities: VocabularyData = {
       },
       subcategories: [
         {
-          id: 'https://nva.unit.no/hrcs/6.1',
+          id: 'https://nva.unit.no/hrcs/activity/6.1',
           type: 'HrcsConcept',
           identifier: '6.1',
-          label: {
-            en: 'Pharmaceuticals',
-            nb: 'Legemidler',
-          },
+          label: { en: 'Pharmaceuticals', nb: 'Legemidler' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/6.2',
+          id: 'https://nva.unit.no/hrcs/activity/6.2',
           type: 'HrcsConcept',
           identifier: '6.2',
-          label: {
-            en: 'Cellular and gene therapies',
-            nb: 'Celle- og genterapi',
-          },
+          label: { en: 'Cellular and gene therapies', nb: 'Celle- og genterapi' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/6.3',
+          id: 'https://nva.unit.no/hrcs/activity/6.3',
           type: 'HrcsConcept',
           identifier: '6.3',
-          label: {
-            en: 'Medical devices',
-            nb: 'Medisinsk utstyr',
-          },
+          label: { en: 'Medical devices', nb: 'Medisinsk utstyr' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/6.4',
+          id: 'https://nva.unit.no/hrcs/activity/6.4',
           type: 'HrcsConcept',
           identifier: '6.4',
-          label: {
-            en: 'Surgery',
-            nb: 'Kirurgi',
-          },
+          label: { en: 'Surgery', nb: 'Kirurgi' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/6.5',
+          id: 'https://nva.unit.no/hrcs/activity/6.5',
           type: 'HrcsConcept',
           identifier: '6.5',
-          label: {
-            en: 'Radiotherapy',
-            nb: 'Strålebehandling',
-          },
+          label: { en: 'Radiotherapy', nb: 'Strålebehandling' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/6.6',
+          id: 'https://nva.unit.no/hrcs/activity/6.6',
           type: 'HrcsConcept',
           identifier: '6.6',
-          label: {
-            en: 'Psychological and behavioural',
-            nb: 'Psykologiske og atferdsmessige',
-          },
+          label: { en: 'Psychological and behavioural', nb: 'Psykologiske og atferdsmessige' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/6.7',
+          id: 'https://nva.unit.no/hrcs/activity/6.7',
           type: 'HrcsConcept',
           identifier: '6.7',
-          label: {
-            en: 'Physical',
-            nb: 'Fysiske',
-          },
+          label: { en: 'Physical', nb: 'Fysiske' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/6.8',
+          id: 'https://nva.unit.no/hrcs/activity/6.8',
           type: 'HrcsConcept',
           identifier: '6.8',
-          label: {
-            en: 'Complementary',
-            nb: 'Alternativ behandling',
-          },
+          label: { en: 'Complementary', nb: 'Alternativ behandling' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/6.9',
+          id: 'https://nva.unit.no/hrcs/activity/6.9',
           type: 'HrcsConcept',
           identifier: '6.9',
           label: {
@@ -433,43 +338,31 @@ export const hrcsActivities: VocabularyData = {
       ],
     },
     {
-      id: 'https://nva.unit.no/hrcs/7',
+      id: 'https://nva.unit.no/hrcs/activity/7',
       type: 'HrcsConcept',
       identifier: '7',
-      label: {
-        en: 'Management of Diseases and Conditions',
-        nb: 'Håndtering av sykdommer og tilstander',
-      },
+      label: { en: 'Management of Diseases and Conditions', nb: 'Håndtering av sykdommer og tilstander' },
       subcategories: [
         {
-          id: 'https://nva.unit.no/hrcs/7.1',
+          id: 'https://nva.unit.no/hrcs/activity/7.1',
           type: 'HrcsConcept',
           identifier: '7.1',
-          label: {
-            en: 'Individual care needs',
-            nb: 'Individuelle omsorgsbehov',
-          },
+          label: { en: 'Individual care needs', nb: 'Individuelle omsorgsbehov' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/7.2',
+          id: 'https://nva.unit.no/hrcs/activity/7.2',
           type: 'HrcsConcept',
           identifier: '7.2',
-          label: {
-            en: 'End of life care',
-            nb: 'Omsorg ved livets slutt',
-          },
+          label: { en: 'End of life care', nb: 'Omsorg ved livets slutt' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/7.3',
+          id: 'https://nva.unit.no/hrcs/activity/7.3',
           type: 'HrcsConcept',
           identifier: '7.3',
-          label: {
-            en: 'Management and decision making',
-            nb: 'Håndtering og beslutningstaking',
-          },
+          label: { en: 'Management and decision making', nb: 'Håndtering og beslutningstaking' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/7.4',
+          id: 'https://nva.unit.no/hrcs/activity/7.4',
           type: 'HrcsConcept',
           identifier: '7.4',
           label: {
@@ -480,52 +373,37 @@ export const hrcsActivities: VocabularyData = {
       ],
     },
     {
-      id: 'https://nva.unit.no/hrcs/8',
+      id: 'https://nva.unit.no/hrcs/activity/8',
       type: 'HrcsConcept',
       identifier: '8',
-      label: {
-        en: 'Health and Social Care Services Research',
-        nb: 'Helse- og sosialtjenesteforskning',
-      },
+      label: { en: 'Health and Social Care Services Research', nb: 'Helse- og sosialtjenesteforskning' },
       subcategories: [
         {
-          id: 'https://nva.unit.no/hrcs/8.1',
+          id: 'https://nva.unit.no/hrcs/activity/8.1',
           type: 'HrcsConcept',
           identifier: '8.1',
-          label: {
-            en: 'Organisation and delivery of services',
-            nb: 'Organisering og levering av tjenester',
-          },
+          label: { en: 'Organisation and delivery of services', nb: 'Organisering og levering av tjenester' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/8.2',
+          id: 'https://nva.unit.no/hrcs/activity/8.2',
           type: 'HrcsConcept',
           identifier: '8.2',
-          label: {
-            en: 'Health and welfare economics',
-            nb: 'Helse- og velferdsøkonomi',
-          },
+          label: { en: 'Health and welfare economics', nb: 'Helse- og velferdsøkonomi' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/8.3',
+          id: 'https://nva.unit.no/hrcs/activity/8.3',
           type: 'HrcsConcept',
           identifier: '8.3',
-          label: {
-            en: 'Policy, ethics and research governance',
-            nb: 'Politikk, etikk og god vitenskapelig praksis',
-          },
+          label: { en: 'Policy, ethics and research governance', nb: 'Politikk, etikk og god vitenskapelig praksis' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/8.4',
+          id: 'https://nva.unit.no/hrcs/activity/8.4',
           type: 'HrcsConcept',
           identifier: '8.4',
-          label: {
-            en: 'Research design and methodologies',
-            nb: 'Forskningsdesign og metodologi',
-          },
+          label: { en: 'Research design and methodologies', nb: 'Forskningsdesign og metodologi' },
         },
         {
-          id: 'https://nva.unit.no/hrcs/8.5',
+          id: 'https://nva.unit.no/hrcs/activity/8.5',
           type: 'HrcsConcept',
           identifier: '8.5',
           label: {
