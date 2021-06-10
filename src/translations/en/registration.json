@@ -53,7 +53,10 @@
     "verified": "Verified"
   },
   "description": {
+    "add_vocabulary": "Add vocabulary",
     "abstract": "Abstract",
+    "confirm_remove_vocabulary_text": "Are you sure you want to remove vocabulary for {{vocabulary}}?",
+    "confirm_remove_vocabulary_title": "Remove vocabulary?",
     "connect_project": "Connect to project",
     "date_published": "Date published",
     "description": "Description",
@@ -65,6 +68,7 @@
     "primary_language": "Primary language for content",
     "project_association": "Project association",
     "project_id": "Project ID",
+    "remove_vocabulary": "Remove vocabulary",
     "search_for_npi_discipline": "Search for scientific field",
     "search_for_project": "Search in Norwegian project catalogs",
     "keywords": "Keywords",

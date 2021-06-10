@@ -20,4 +20,11 @@ export const dataTestId = {
     sendDoiButton: 'button-send-doi-request',
     status: 'public-registration-status',
   },
+  registrationWizard: {
+    description: {
+      addVocabularyButton: 'add-vocabulary-button',
+      vocabularyMenuItem: (vocabulary: string) => `vocabulary-menu-item-${vocabulary}`,
+      vocabularyRow: (vocabulary: string) => `vocabulary-row-${vocabulary}`,
+    },
+  },
 };

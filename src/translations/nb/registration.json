@@ -53,7 +53,10 @@
     "verified": "Verifisert"
   },
   "description": {
+    "add_vocabulary": "Legg til vokabular",
     "abstract": "Sammendrag",
+    "confirm_remove_vocabulary_text": "Er du sikker på at du ønsker å fjerne vokabular for {{vocabulary}}?",
+    "confirm_remove_vocabulary_title": "Fjern vokabular?",
     "connect_project": "Koble til prosjekt",
     "date_published": "Publiseringsdato",
     "description": "Beskrivelse",
@@ -65,6 +68,7 @@
     "primary_language": "Hovedspråk for innhold",
     "project_association": "Prosjekttilknytning",
     "project_id": "Prosjekt-ID",
+    "remove_vocabulary": "Fjern vokabular",
     "search_for_npi_discipline": "Søk etter fagfelt",
     "search_for_project": "Søk i norske prosjektkataloger",
     "keywords": "Nøkkelord",
