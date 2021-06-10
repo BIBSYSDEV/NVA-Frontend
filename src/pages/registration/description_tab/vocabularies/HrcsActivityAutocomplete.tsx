@@ -12,6 +12,9 @@ const StyledOptionText = styled(Typography)<{ indentations: number }>`
     `}
 `;
 
+const hrcsActivitiesId = 'hrcs-activities';
+const hrcsActivitiesLabel = `${hrcsActivitiesId}-label`;
+
 export const HrcsActivityAutocomplete = () => {
   const { t } = useTranslation('registration');
 
@@ -25,8 +28,8 @@ export const HrcsActivityAutocomplete = () => {
 
   return (
     <Autocomplete
-      id="hrcs-activities"
-      aria-labelledby="hrcs-activities-label"
+      id={hrcsActivitiesId}
+      aria-labelledby={hrcsActivitiesLabel}
       options={hrcsActivityOptions}
       getOptionLabel={(option) => getLanguageString(option.label)}
       renderOption={(option) => {

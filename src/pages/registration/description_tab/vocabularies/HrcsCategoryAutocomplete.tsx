@@ -4,6 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { hrcsCategories } from '../../../../resources/vocabularies/hrcsCategories';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
+const hrcsCategoriesId = 'hrcs-categories';
+const hrcsCategoriesLabel = `${hrcsCategoriesId}-label`;
+
 export const HrcsCategoryAutocomplete = () => {
   const { t } = useTranslation('registration');
 
@@ -11,8 +14,8 @@ export const HrcsCategoryAutocomplete = () => {
 
   return (
     <Autocomplete
-      id="hrcs-categories"
-      aria-labelledby="hrcs-categories-label"
+      id={hrcsCategoriesId}
+      aria-labelledby={hrcsCategoriesLabel}
       options={hrcsCategoryOptions}
       getOptionLabel={(option) => getLanguageString(option.label)}
       multiple
