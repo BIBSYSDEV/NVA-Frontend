@@ -8,6 +8,7 @@ import ConfirmDialog from '../../../../components/ConfirmDialog';
 import DangerButton from '../../../../components/DangerButton';
 import { HrcsActivityAutocomplete } from './HrcsActivityAutocomplete';
 import { HrcsCategoryAutocomplete } from './HrcsCategoryAutocomplete';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 const StyledAddButton = styled(Button)`
   margin-top: 1rem;
@@ -60,9 +61,11 @@ export const VocabularyFields = () => {
       {visibleVocabularies.map((vocabulary) => {
         const VocabularyInputComponent = vocabularyConfig[vocabulary].component;
         return (
-          <StyledVocabularyRow key={vocabulary}>
+          <StyledVocabularyRow
+            key={vocabulary}
+            data-testid={dataTestId.registrationWizard.description.vocabularyRow(vocabulary)}>
             <VocabularyInputComponent />
-            <StyledRemoveButton startIcon={<RemoveCircleIcon />} onClick={() => setVocabularyToRemove(vocabulary)}>
+            <StyledRemoveButton startIcon={<RemoveCircleIcon />}>
               {t('description.remove_vocabulary')}
             </StyledRemoveButton>
           </StyledVocabularyRow>
@@ -79,8 +82,7 @@ export const VocabularyFields = () => {
             );
             setVocabularyToRemove('');
           }}
-          onCancel={() => setVocabularyToRemove('')}
-          dataTestId="confirm-remove-vocabulary-dialog">
+          onCancel={() => setVocabularyToRemove('')}>
           <Typography>
             {t('description.confirm_remove_vocabulary_text', {
               vocabulary: t(vocabularyConfig[vocabularyToRemove].i18nKey),
@@ -98,6 +100,7 @@ export const VocabularyFields = () => {
           {addableVocabularies.map((vocabulary) => (
             <MenuItem
               key={vocabulary}
+              data-testid={dataTestId.registrationWizard.description.vocabularyMenuItem(vocabulary)}
               onClick={() => {
                 setVisibleVocabularies([...visibleVocabularies, vocabulary]);
                 setNewVocabularyAnchor(null);
@@ -109,7 +112,10 @@ export const VocabularyFields = () => {
       )}
 
       {addableVocabularies.length > 0 && (
-        <StyledAddButton onClick={(event) => setNewVocabularyAnchor(event.currentTarget)} startIcon={<AddIcon />}>
+        <StyledAddButton
+          data-testid={dataTestId.registrationWizard.description.addVocabularyButton}
+          onClick={(event) => setNewVocabularyAnchor(event.currentTarget)}
+          startIcon={<AddIcon />}>
           {t('description.add_vocabulary')}
         </StyledAddButton>
       )}
