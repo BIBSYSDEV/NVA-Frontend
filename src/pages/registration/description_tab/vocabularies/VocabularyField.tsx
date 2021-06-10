@@ -12,11 +12,14 @@ const StyledAddButton = styled(Button)`
   margin-top: 1rem;
 `;
 
+const StyledRemoveButton = styled(DangerButton)`
+  margin-top: 1rem;
+`;
+
 const StyledVocabularyRow = styled.div`
   display: grid;
   grid-template-columns: 5fr 1fr;
   column-gap: 2rem;
-  align-items: center;
 `;
 
 interface VocabularyConfig {
@@ -49,11 +52,15 @@ export const VocabularyField = () => {
         return (
           <StyledVocabularyRow key={vocabulary}>
             <VocabularyInputComponent />
-            <DangerButton
+            <StyledRemoveButton
               startIcon={<RemoveCircleIcon />}
-              onClick={() => setVisibleVocabularies(visibleVocabularies.filter((v) => v !== vocabulary))}>
+              onClick={() =>
+                setVisibleVocabularies(
+                  visibleVocabularies.filter((visibleVocabulary) => visibleVocabulary !== vocabulary)
+                )
+              }>
               {t('description.remove_vocabulary')}
-            </DangerButton>
+            </StyledRemoveButton>
           </StyledVocabularyRow>
         );
       })}
