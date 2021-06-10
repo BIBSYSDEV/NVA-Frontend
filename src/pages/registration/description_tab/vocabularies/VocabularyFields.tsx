@@ -26,19 +26,20 @@ interface VocabularyConfig {
   [key: string]: { i18nKey: string; component: () => JSX.Element };
 }
 
+// Specify which vocabularies to show, and their i18n key and component
 const vocabularyConfig: VocabularyConfig = {
   hrcsActivity: {
-    i18nKey: 'hrcs_activities',
+    i18nKey: 'description.hrcs_activities',
     component: HrcsActivityAutocomplete,
   },
   hrcsCategory: {
-    i18nKey: 'hrcs_categories',
+    i18nKey: 'description.hrcs_categories',
     component: HrcsCategoryAutocomplete,
   },
 };
 const vocabularies = Object.keys(vocabularyConfig);
 
-export const VocabularyField = () => {
+export const VocabularyFields = () => {
   const { t } = useTranslation('registration');
   const [newVocabularyAnchor, setNewVocabularyAnchor] = useState<null | HTMLElement>(null);
   const [visibleVocabularies, setVisibleVocabularies] = useState<string[]>([]);
@@ -78,7 +79,7 @@ export const VocabularyField = () => {
                 setVisibleVocabularies([...visibleVocabularies, vocabulary]);
                 setNewVocabularyAnchor(null);
               }}>
-              {t(`description.${vocabularyConfig[vocabulary].i18nKey}`)}
+              {t(vocabularyConfig[vocabulary].i18nKey)}
             </MenuItem>
           ))}
         </Menu>

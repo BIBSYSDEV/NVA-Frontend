@@ -16,7 +16,11 @@ export const HrcsActivityAutocomplete = () => {
   const { t } = useTranslation('registration');
 
   const hrcsActivityOptions = hrcsActivities.categories
-    .map((category) => [category, ...(category.subcategories ?? [])])
+    .map((category) => {
+      const { subcategories, ...mainCategory } = category;
+      const subCategories = category.subcategories ?? [];
+      return [mainCategory, ...subCategories];
+    })
     .flat();
 
   return (
