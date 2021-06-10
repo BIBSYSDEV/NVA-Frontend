@@ -59,6 +59,21 @@ const StyledCardContent = styled.div`
   display: grid;
   grid-template-columns: 2fr 3fr;
   column-gap: 1rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const StyledInputRow = styled.div`
+  display: grid;
+  grid-template-columns: 7fr 1fr;
+  column-gap: 1rem;
+  align-items: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    grid-template-columns: 4fr 1fr;
+  }
 `;
 
 interface FileCardProps {
@@ -87,7 +102,6 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
             <FormLabel component="legend">{t('files_and_license.select_version')}</FormLabel>
             <RadioGroup
               onChange={(event) => {
-                // TODO: set touched?
                 const newValue = event.target.value;
                 if (newValue === 'administrative') {
                   setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`, true);
@@ -128,7 +142,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
           <div>
             {!file.administrativeAgreement && (
               <>
-                <StyledVerticalAlign>
+                <StyledInputRow>
                   <Field name={`${baseFieldName}.${SpecificFileFieldNames.LICENSE}`}>
                     {({ field, meta: { error, touched } }: FieldProps) => (
                       <TextField
@@ -180,43 +194,45 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                     )}
                   </Field>
                   <Tooltip title={t<string>('common:help')}>
-                    <IconButton size="small" data-testid="button-toggle-license-modal" onClick={toggleLicenseModal}>
-                      <HelpIcon />
+                    <IconButton data-testid="button-toggle-license-modal" onClick={toggleLicenseModal}>
+                      <HelpIcon fontSize="large" />
                     </IconButton>
                   </Tooltip>
-                </StyledVerticalAlign>
+                </StyledInputRow>
 
-                <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
-                  <Field name={`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`}>
-                    {({ field, meta: { error, touched } }: FieldProps) => (
-                      <KeyboardDatePicker
-                        fullWidth
-                        id={field.name}
-                        {...datePickerTranslationProps}
-                        DialogProps={{
-                          'aria-labelledby': `${field.name}-label`,
-                          'aria-label': t('files_and_license.embargo_date'),
-                        }}
-                        KeyboardButtonProps={{
-                          'aria-labelledby': `${field.name}-label`,
-                        }}
-                        leftArrowButtonProps={{ 'aria-label': t('common:previous') }}
-                        rightArrowButtonProps={{ 'aria-label': t('common:next') }}
-                        data-testid="uploaded-file-embargo-date"
-                        inputVariant="filled"
-                        label={t('files_and_license.embargo_date')}
-                        {...field}
-                        onChange={(value) => setFieldValue(field.name, value)}
-                        value={field.value ?? null}
-                        disablePast
-                        autoOk
-                        format={'dd.MM.yyyy'}
-                        error={!!error && touched}
-                        helperText={<ErrorMessage name={field.name} />}
-                      />
-                    )}
-                  </Field>
-                </MuiPickersUtilsProvider>
+                <StyledInputRow>
+                  <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
+                    <Field name={`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`}>
+                      {({ field, meta: { error, touched } }: FieldProps) => (
+                        <KeyboardDatePicker
+                          fullWidth
+                          id={field.name}
+                          {...datePickerTranslationProps}
+                          DialogProps={{
+                            'aria-labelledby': `${field.name}-label`,
+                            'aria-label': t('files_and_license.embargo_date'),
+                          }}
+                          KeyboardButtonProps={{
+                            'aria-labelledby': `${field.name}-label`,
+                          }}
+                          leftArrowButtonProps={{ 'aria-label': t('common:previous') }}
+                          rightArrowButtonProps={{ 'aria-label': t('common:next') }}
+                          data-testid="uploaded-file-embargo-date"
+                          inputVariant="filled"
+                          label={t('files_and_license.embargo_date')}
+                          {...field}
+                          onChange={(value) => setFieldValue(field.name, value)}
+                          value={field.value ?? null}
+                          disablePast
+                          autoOk
+                          format={'dd.MM.yyyy'}
+                          error={!!error && touched}
+                          helperText={<ErrorMessage name={field.name} />}
+                        />
+                      )}
+                    </Field>
+                  </MuiPickersUtilsProvider>
+                </StyledInputRow>
               </>
             )}
           </div>
