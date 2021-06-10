@@ -19,30 +19,28 @@ const StyledVocabularyRow = styled.div`
   align-items: center;
 `;
 
-enum VocabularyType {
-  HrcsActivity = 'hrcsActivity',
-  HrcsCategory = 'hrcsCategory',
+interface VocabularyConfig {
+  [key: string]: { i18nKey: string; component: () => JSX.Element };
 }
 
-const vocabularyConfig = {
-  [VocabularyType.HrcsActivity]: {
+const vocabularyConfig: VocabularyConfig = {
+  hrcsActivity: {
     i18nKey: 'hrcs_activities',
     component: HrcsActivityAutocomplete,
   },
-  [VocabularyType.HrcsCategory]: {
+  hrcsCategory: {
     i18nKey: 'hrcs_categories',
     component: HrcsCategoryAutocomplete,
   },
 };
+const vocabularies = Object.keys(vocabularyConfig);
 
 export const VocabularyField = () => {
   const { t } = useTranslation('registration');
   const [newVocabularyAnchor, setNewVocabularyAnchor] = useState<null | HTMLElement>(null);
-  const [visibleVocabularies, setVisibleVocabularies] = useState<VocabularyType[]>([]);
+  const [visibleVocabularies, setVisibleVocabularies] = useState<string[]>([]);
 
-  const addableVocabularies = Object.values(VocabularyType).filter(
-    (vocabulary) => !visibleVocabularies.includes(vocabulary)
-  );
+  const addableVocabularies = vocabularies.filter((vocabulary) => !visibleVocabularies.includes(vocabulary));
 
   return (
     <>
