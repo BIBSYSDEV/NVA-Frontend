@@ -19,46 +19,46 @@ const StyledVocabularyRow = styled.div`
   align-items: center;
 `;
 
-// Values should be similar to i18n keys
-enum Vocabulary {
-  HrcsActivity = 'hrcs_activities',
-  HrcsCategory = 'hrcs_categories',
+enum VocabularyType {
+  HrcsActivity = 'hrcsActivity',
+  HrcsCategory = 'hrcsCategory',
 }
+
+const vocabularyConfig = {
+  [VocabularyType.HrcsActivity]: {
+    i18nKey: 'hrcs_activities',
+    component: HrcsActivityAutocomplete,
+  },
+  [VocabularyType.HrcsCategory]: {
+    i18nKey: 'hrcs_categories',
+    component: HrcsCategoryAutocomplete,
+  },
+};
 
 export const VocabularyField = () => {
   const { t } = useTranslation('registration');
-
   const [newVocabularyAnchor, setNewVocabularyAnchor] = useState<null | HTMLElement>(null);
+  const [visibleVocabularies, setVisibleVocabularies] = useState<VocabularyType[]>([]);
 
-  const [visibleVocabularies, setVisibleVocabularies] = useState({
-    [Vocabulary.HrcsActivity]: false,
-    [Vocabulary.HrcsCategory]: false,
-  });
-
-  const addableVocabularies = Object.values(Vocabulary).filter((vocabulary) => !visibleVocabularies[vocabulary]);
+  const addableVocabularies = Object.values(VocabularyType).filter(
+    (vocabulary) => !visibleVocabularies.includes(vocabulary)
+  );
 
   return (
     <>
-      {visibleVocabularies.hrcs_activities && (
-        <StyledVocabularyRow>
-          <HrcsActivityAutocomplete />
-          <DangerButton
-            startIcon={<RemoveCircleIcon />}
-            onClick={() => setVisibleVocabularies({ ...visibleVocabularies, [Vocabulary.HrcsActivity]: false })}>
-            {t('description.remove_vocabulary')}
-          </DangerButton>
-        </StyledVocabularyRow>
-      )}
-      {visibleVocabularies.hrcs_categories && (
-        <StyledVocabularyRow>
-          <HrcsCategoryAutocomplete />
-          <DangerButton
-            startIcon={<RemoveCircleIcon />}
-            onClick={() => setVisibleVocabularies({ ...visibleVocabularies, [Vocabulary.HrcsCategory]: false })}>
-            {t('description.remove_vocabulary')}
-          </DangerButton>
-        </StyledVocabularyRow>
-      )}
+      {visibleVocabularies.map((vocabulary) => {
+        const VocabularyInputComponent = vocabularyConfig[vocabulary].component;
+        return (
+          <StyledVocabularyRow key={vocabulary}>
+            <VocabularyInputComponent />
+            <DangerButton
+              startIcon={<RemoveCircleIcon />}
+              onClick={() => setVisibleVocabularies(visibleVocabularies.filter((v) => v !== vocabulary))}>
+              {t('description.remove_vocabulary')}
+            </DangerButton>
+          </StyledVocabularyRow>
+        );
+      })}
 
       {newVocabularyAnchor && (
         <Menu
@@ -70,10 +70,10 @@ export const VocabularyField = () => {
             <MenuItem
               key={vocabulary}
               onClick={() => {
-                setVisibleVocabularies({ ...visibleVocabularies, [vocabulary]: true });
+                setVisibleVocabularies([...visibleVocabularies, vocabulary]);
                 setNewVocabularyAnchor(null);
               }}>
-              {t(`description.${vocabulary}`)}
+              {t(`description.${vocabularyConfig[vocabulary].i18nKey}`)}
             </MenuItem>
           ))}
         </Menu>
