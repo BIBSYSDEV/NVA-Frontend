@@ -34,6 +34,7 @@ export const ProjectsField = () => {
           aria-labelledby={`${field.name}-label`}
           data-testid="project-search-field"
           options={projects}
+          filterOptions={(options) => options}
           getOptionLabel={(option) => option.title}
           onInputChange={(_, newInputValue, reason) => {
             if (reason !== 'reset') {
