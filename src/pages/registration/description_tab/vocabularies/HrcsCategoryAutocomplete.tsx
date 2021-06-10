@@ -16,7 +16,6 @@ export const HrcsCategoryAutocomplete = () => {
       options={hrcsCategoryOptions}
       getOptionLabel={(option) => getLanguageString(option.label)}
       multiple
-      data-testid="asddas"
       renderInput={(params) => <TextField {...params} label={t('description.hrcs_categories')} variant="filled" />}
     />
   );
