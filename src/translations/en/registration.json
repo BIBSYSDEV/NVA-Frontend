@@ -74,7 +74,8 @@
   "edit_registration": "Edit registration",
   "files_and_license": {
     "accepted_version": "Accepted version",
-    "administrative_contract": "Author agreement or other file to be saved but not published",
+    "administrative_agreement": "Only for registrator and curator",
+    "administrative_agreement_description": "Author agreement or other documentation",
     "conditions_for_using_file": "Conditions for using the file",
     "embargo_date": "Not openly available before",
     "files": "Files",

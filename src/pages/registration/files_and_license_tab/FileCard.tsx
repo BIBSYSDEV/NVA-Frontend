@@ -33,17 +33,6 @@ const StyledDescription = styled(Typography)`
   font-style: italic;
 `;
 
-const StyledSelect = styled(TextField)`
-  .MuiSelect-root {
-    /* Ensure input height isn't expanded due to image content */
-    height: 1.1875rem;
-  }
-`;
-
-const StyledLicenseImage = styled.img`
-  width: 40%;
-`;
-
 const StyledLicenseOptionImage = styled.img`
   width: 70%;
 `;
@@ -59,11 +48,6 @@ const StyledLicenseOptionName = styled(Typography)`
 const StyledVerticalAlign = styled.div`
   display: flex;
   align-items: center;
-  margin-top: -0.25rem;
-`;
-
-const StyledActions = styled.div`
-  margin-top: 1rem;
 `;
 
 const StyledTypography = styled(Typography)`
@@ -71,7 +55,7 @@ const StyledTypography = styled(Typography)`
 `;
 
 const StyledCardContent = styled.div`
-  margin-top: 1rem;
+  margin: 1rem 0;
   display: grid;
   grid-template-columns: 2fr 3fr;
   column-gap: 1rem;
@@ -129,7 +113,14 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
               <FormControlLabel
                 value="administrative"
                 control={<Radio color="primary" checked={file.administrativeAgreement} />}
-                label={t('files_and_license.administrative_contract')}
+                label={
+                  <>
+                    <Typography>{t('files_and_license.administrative_agreement')}</Typography>
+                    <Typography variant="body2">
+                      {t('files_and_license.administrative_agreement_description')}
+                    </Typography>
+                  </>
+                }
               />
             </RadioGroup>
           </FormControl>
@@ -137,42 +128,10 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
           <div>
             {!file.administrativeAgreement && (
               <>
-                <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
-                  <Field name={`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`}>
-                    {({ field, form, meta: { error, touched } }: FieldProps) => (
-                      <KeyboardDatePicker
-                        fullWidth
-                        id={field.name}
-                        {...datePickerTranslationProps}
-                        DialogProps={{
-                          'aria-labelledby': `${field.name}-label`,
-                          'aria-label': t('files_and_license.embargo_date'),
-                        }}
-                        KeyboardButtonProps={{
-                          'aria-labelledby': `${field.name}-label`,
-                        }}
-                        leftArrowButtonProps={{ 'aria-label': t('common:previous') }}
-                        rightArrowButtonProps={{ 'aria-label': t('common:next') }}
-                        data-testid="uploaded-file-embargo-date"
-                        inputVariant="filled"
-                        label={t('files_and_license.embargo_date')}
-                        {...field}
-                        onChange={(value) => form.setFieldValue(field.name, value)}
-                        value={field.value ?? null}
-                        disablePast
-                        autoOk
-                        format={'dd.MM.yyyy'}
-                        error={!!error && touched}
-                        helperText={<ErrorMessage name={field.name} />}
-                      />
-                    )}
-                  </Field>
-                </MuiPickersUtilsProvider>
-
                 <StyledVerticalAlign>
                   <Field name={`${baseFieldName}.${SpecificFileFieldNames.LICENSE}`}>
-                    {({ field, form, meta: { error, touched } }: FieldProps) => (
-                      <StyledSelect
+                    {({ field, meta: { error, touched } }: FieldProps) => (
+                      <TextField
                         id={field.name}
                         data-testid="uploaded-file-select-license"
                         select
@@ -182,10 +141,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                             const selectedLicense = licenses.find((license) => license.identifier === option);
                             return selectedLicense ? (
                               <StyledVerticalAlign>
-                                <StyledLicenseImage
-                                  src={selectedLicense.buttonImage}
-                                  alt={selectedLicense.identifier}
-                                />
+                                <img src={selectedLicense.buttonImage} alt={selectedLicense.identifier} />
                                 <StyledLicenseName>{option}</StyledLicenseName>
                               </StyledVerticalAlign>
                             ) : null;
@@ -198,7 +154,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                         label={t('files_and_license.conditions_for_using_file')}
                         required
                         onChange={({ target: { value } }) =>
-                          form.setFieldValue(field.name, {
+                          setFieldValue(field.name, {
                             type: 'License',
                             identifier: value as LicenseNames,
                             labels: { nb: value },
@@ -220,7 +176,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                             </ListItemText>
                           </MenuItem>
                         ))}
-                      </StyledSelect>
+                      </TextField>
                     )}
                   </Field>
                   <Tooltip title={t<string>('common:help')}>
@@ -229,21 +185,51 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                     </IconButton>
                   </Tooltip>
                 </StyledVerticalAlign>
+
+                <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
+                  <Field name={`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`}>
+                    {({ field, meta: { error, touched } }: FieldProps) => (
+                      <KeyboardDatePicker
+                        fullWidth
+                        id={field.name}
+                        {...datePickerTranslationProps}
+                        DialogProps={{
+                          'aria-labelledby': `${field.name}-label`,
+                          'aria-label': t('files_and_license.embargo_date'),
+                        }}
+                        KeyboardButtonProps={{
+                          'aria-labelledby': `${field.name}-label`,
+                        }}
+                        leftArrowButtonProps={{ 'aria-label': t('common:previous') }}
+                        rightArrowButtonProps={{ 'aria-label': t('common:next') }}
+                        data-testid="uploaded-file-embargo-date"
+                        inputVariant="filled"
+                        label={t('files_and_license.embargo_date')}
+                        {...field}
+                        onChange={(value) => setFieldValue(field.name, value)}
+                        value={field.value ?? null}
+                        disablePast
+                        autoOk
+                        format={'dd.MM.yyyy'}
+                        error={!!error && touched}
+                        helperText={<ErrorMessage name={field.name} />}
+                      />
+                    )}
+                  </Field>
+                </MuiPickersUtilsProvider>
               </>
             )}
           </div>
         </StyledCardContent>
       )}
 
-      <StyledActions>
-        <DangerButton
-          variant="contained"
-          data-testid="button-remove-file"
-          startIcon={<DeleteIcon />}
-          onClick={toggleOpenConfirmDialog}>
-          {t('files_and_license.remove_file')}
-        </DangerButton>
-      </StyledActions>
+      <DangerButton
+        variant="contained"
+        data-testid="button-remove-file"
+        startIcon={<DeleteIcon />}
+        onClick={toggleOpenConfirmDialog}>
+        {t('files_and_license.remove_file')}
+      </DangerButton>
 
       <ConfirmDialog
         open={openConfirmDialog}
