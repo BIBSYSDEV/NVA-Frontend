@@ -43,6 +43,7 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
         aria-labelledby={`${dataTestId}-label`}
         popupIcon={null}
         options={publishers}
+        filterOptions={(options) => options}
         onBlur={() => setFieldTouched(errorFieldName)}
         onInputChange={(_, newInputValue) => handleNewSearchTerm(newInputValue)}
         value={value}
