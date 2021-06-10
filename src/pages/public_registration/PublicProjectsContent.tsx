@@ -51,7 +51,7 @@ export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) 
   return (
     <>
       <Typography variant="h4" component="h2" gutterBottom>
-        {t('description.project_association')}
+        {t('registration:description.project_association')}
       </Typography>
 
       <StyledHeadingRow>
