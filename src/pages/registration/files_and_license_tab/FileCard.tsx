@@ -37,17 +37,16 @@ const StyledLicenseOptionImage = styled.img`
   width: 70%;
 `;
 
-const StyledLicenseName = styled(Typography)`
-  margin-left: 0.5rem;
-`;
-
 const StyledLicenseOptionName = styled(Typography)`
   margin-left: -1.5rem;
 `;
 
-const StyledVerticalAlign = styled.div`
+const StyledLicenseValue = styled.div`
   display: flex;
   align-items: center;
+  p:last-child {
+    margin-left: 0.75rem;
+  }
 `;
 
 const StyledTypography = styled(Typography)`
@@ -154,10 +153,10 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                           renderValue: (option: any) => {
                             const selectedLicense = licenses.find((license) => license.identifier === option);
                             return selectedLicense ? (
-                              <StyledVerticalAlign>
+                              <StyledLicenseValue>
                                 <img src={selectedLicense.buttonImage} alt={selectedLicense.identifier} />
-                                <StyledLicenseName>{option}</StyledLicenseName>
-                              </StyledVerticalAlign>
+                                <Typography>{option}</Typography>
+                              </StyledLicenseValue>
                             ) : null;
                           },
                         }}
