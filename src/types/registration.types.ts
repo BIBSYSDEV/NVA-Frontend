@@ -105,6 +105,7 @@ export interface BaseEntityDescription extends BackendType {
   mainTitle: string;
   npiSubjectHeading: string;
   tags: string[];
+  controlledKeywords: string[];
 }
 
 export interface Registration extends BaseRegistration {
