@@ -9,6 +9,9 @@ import DangerButton from '../../../../components/DangerButton';
 import { HrcsActivityAutocomplete } from './HrcsActivityAutocomplete';
 import { HrcsCategoryAutocomplete } from './HrcsCategoryAutocomplete';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
+import { Registration } from '../../../../types/registration.types';
+import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 
 const StyledAddButton = styled(Button)`
   margin-top: 1rem;
@@ -31,17 +34,26 @@ const StyledVocabularyRow = styled.div`
   }
 `;
 
+export interface VocabularyComponentProps {
+  selectedIds: string[];
+  addValue: (value: string) => void;
+  removeValue: () => void;
+  clear: () => void;
+}
+
 interface VocabularyConfig {
-  [key: string]: { i18nKey: string; component: () => JSX.Element };
+  [key: string]: { baseId: string; i18nKey: string; component: (props: VocabularyComponentProps) => JSX.Element };
 }
 
 // Specify which vocabularies to show, and their i18n key and component
 const vocabularyConfig: VocabularyConfig = {
   hrcsActivity: {
+    baseId: 'https://nva.unit.no/hrcs/activity/',
     i18nKey: 'description.hrcs_activities',
     component: HrcsActivityAutocomplete,
   },
   hrcsCategory: {
+    baseId: 'https://nva.unit.no/hrcs/category/',
     i18nKey: 'description.hrcs_categories',
     component: HrcsCategoryAutocomplete,
   },
@@ -50,6 +62,12 @@ const vocabularies = Object.keys(vocabularyConfig);
 
 export const VocabularyFields = () => {
   const { t } = useTranslation('registration');
+  const {
+    setFieldValue,
+    values: {
+      entityDescription: { controlledKeywords },
+    },
+  } = useFormikContext<Registration>();
   const [newVocabularyAnchor, setNewVocabularyAnchor] = useState<null | HTMLElement>(null);
   const [visibleVocabularies, setVisibleVocabularies] = useState<string[]>([]);
   const [vocabularyToRemove, setVocabularyToRemove] = useState('');
@@ -58,25 +76,40 @@ export const VocabularyFields = () => {
 
   return (
     <>
-      {visibleVocabularies.map((vocabulary) => {
-        const VocabularyInputComponent = vocabularyConfig[vocabulary].component;
-        return (
-          <StyledVocabularyRow
-            key={vocabulary}
-            data-testid={dataTestId.registrationWizard.description.vocabularyRow(vocabulary)}>
-            <VocabularyInputComponent />
-            <StyledRemoveButton startIcon={<RemoveCircleIcon />}>
-              {t('description.remove_vocabulary')}
-            </StyledRemoveButton>
-          </StyledVocabularyRow>
-        );
-      })}
+      <FieldArray name={DescriptionFieldNames.CONTROLLED_KEYWORDS}>
+        {({ name, remove, push }: FieldArrayRenderProps) => (
+          <>
+            {visibleVocabularies.map((vocabulary, index) => {
+              const VocabularyComponent = vocabularyConfig[vocabulary].component;
+              const selectedIds = controlledKeywords.filter((keyword) =>
+                keyword.startsWith(vocabularyConfig[vocabulary].baseId)
+              );
+              return (
+                <StyledVocabularyRow
+                  key={vocabulary}
+                  data-testid={dataTestId.registrationWizard.description.vocabularyRow(vocabulary)}>
+                  <VocabularyComponent
+                    selectedIds={selectedIds}
+                    addValue={push}
+                    removeValue={() => remove(index)}
+                    clear={() => setFieldValue(name, [])}
+                  />
+                  <StyledRemoveButton startIcon={<RemoveCircleIcon />}>
+                    {t('description.remove_vocabulary')}
+                  </StyledRemoveButton>
+                </StyledVocabularyRow>
+              );
+            })}
+          </>
+        )}
+      </FieldArray>
 
       {vocabularyToRemove && (
         <ConfirmDialog
           open={!!vocabularyToRemove}
           title={t('description.confirm_remove_vocabulary_title')}
           onAccept={() => {
+            setFieldValue(DescriptionFieldNames.CONTROLLED_KEYWORDS, []);
             setVisibleVocabularies(
               visibleVocabularies.filter((visibleVocabulary) => visibleVocabulary !== vocabularyToRemove)
             );

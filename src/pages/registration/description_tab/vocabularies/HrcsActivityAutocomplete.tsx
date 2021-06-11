@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { hrcsActivities } from '../../../../resources/vocabularies/hrcsActivities';
 import { getLanguageString } from '../../../../utils/translation-helpers';
+import { VocabularyComponentProps } from './VocabularyFields';
 
 const StyledOptionText = styled(Typography)<{ indentations: number }>`
   ${({ indentations }) => `
@@ -15,7 +16,7 @@ const StyledOptionText = styled(Typography)<{ indentations: number }>`
 const hrcsActivitiesId = 'hrcs-activities';
 const hrcsActivitiesLabel = `${hrcsActivitiesId}-label`;
 
-export const HrcsActivityAutocomplete = () => {
+export const HrcsActivityAutocomplete = ({ selectedIds, addValue, removeValue, clear }: VocabularyComponentProps) => {
   const { t } = useTranslation('registration');
 
   const hrcsActivityOptions = hrcsActivities.categories
@@ -25,13 +26,24 @@ export const HrcsActivityAutocomplete = () => {
       return [mainCategory, ...subCategories];
     })
     .flat();
+  const selectedOptions = hrcsActivityOptions.filter((option) => selectedIds.includes(option.id));
 
   return (
     <Autocomplete
       id={hrcsActivitiesId}
       aria-labelledby={hrcsActivitiesLabel}
       options={hrcsActivityOptions}
+      value={selectedOptions}
       getOptionLabel={(option) => getLanguageString(option.label)}
+      onChange={(event, value, reason, selectedValue) => {
+        if (reason === 'select-option' && selectedValue) {
+          addValue(selectedValue.option.id);
+        } else if (reason === 'remove-option') {
+          removeValue();
+        } else if (reason === 'clear') {
+          clear();
+        }
+      }}
       renderOption={(option) => {
         const indentsCount = option.identifier.split('.').length - 1;
         return <StyledOptionText indentations={indentsCount}>{getLanguageString(option.label)}</StyledOptionText>;
