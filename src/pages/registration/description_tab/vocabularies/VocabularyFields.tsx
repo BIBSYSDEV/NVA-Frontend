@@ -116,8 +116,9 @@ export const VocabularyFields = () => {
           open={!!vocabularyToRemove}
           title={t('description.confirm_remove_vocabulary_title')}
           onAccept={() => {
-            // setFieldValue(DescriptionFieldNames.CONTROLLED_KEYWORDS, []);
-            // TODO Remove only relevant values
+            const { baseId } = vocabularyConfig[vocabularyToRemove];
+            const updatedValues = controlledKeywords.filter((keyword) => !keyword.startsWith(baseId));
+            setFieldValue(DescriptionFieldNames.CONTROLLED_KEYWORDS, updatedValues);
 
             setVisibleVocabularies(
               visibleVocabularies.filter((visibleVocabulary) => visibleVocabulary !== vocabularyToRemove)
