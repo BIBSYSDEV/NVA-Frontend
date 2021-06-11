@@ -68,9 +68,14 @@ export const VocabularyFields = () => {
       entityDescription: { controlledKeywords },
     },
   } = useFormikContext<Registration>();
-  const [newVocabularyAnchor, setNewVocabularyAnchor] = useState<null | HTMLElement>(null);
-  const [visibleVocabularies, setVisibleVocabularies] = useState<string[]>([]);
+
+  // Open vacabularies with values by default
+  const defaultVisibleVocabualaries = Object.entries(vocabularyConfig)
+    .filter(([_, value]) => controlledKeywords.some((key) => key.startsWith(value.baseId)))
+    .map(([key, _]) => key);
+  const [visibleVocabularies, setVisibleVocabularies] = useState(defaultVisibleVocabualaries);
   const [vocabularyToRemove, setVocabularyToRemove] = useState('');
+  const [newVocabularyAnchor, setNewVocabularyAnchor] = useState<null | HTMLElement>(null);
 
   const addableVocabularies = vocabularies.filter((vocabulary) => !visibleVocabularies.includes(vocabulary));
 
@@ -94,7 +99,9 @@ export const VocabularyFields = () => {
                     removeValue={() => remove(index)}
                     clear={() => setFieldValue(name, [])}
                   />
-                  <StyledRemoveButton startIcon={<RemoveCircleIcon />}>
+                  <StyledRemoveButton
+                    startIcon={<RemoveCircleIcon />}
+                    onClick={() => setVocabularyToRemove(vocabulary)}>
                     {t('description.remove_vocabulary')}
                   </StyledRemoveButton>
                 </StyledVocabularyRow>
@@ -109,7 +116,9 @@ export const VocabularyFields = () => {
           open={!!vocabularyToRemove}
           title={t('description.confirm_remove_vocabulary_title')}
           onAccept={() => {
-            setFieldValue(DescriptionFieldNames.CONTROLLED_KEYWORDS, []);
+            // setFieldValue(DescriptionFieldNames.CONTROLLED_KEYWORDS, []);
+            // TODO Remove only relevant values
+
             setVisibleVocabularies(
               visibleVocabularies.filter((visibleVocabulary) => visibleVocabulary !== vocabularyToRemove)
             );
