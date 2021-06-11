@@ -6,12 +6,13 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import ConfirmDialog from '../../../../components/ConfirmDialog';
 import DangerButton from '../../../../components/DangerButton';
-import { HrcsActivityAutocomplete } from './HrcsActivityAutocomplete';
-import { HrcsCategoryAutocomplete } from './HrcsCategoryAutocomplete';
+import { HrcsActivityInput } from './HrcsActivityInput';
+import { HrcsCategoryInput } from './HrcsCategoryInput';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { Registration } from '../../../../types/registration.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
+import { VocabularyComponentProps } from './VocabularyAutocomplete';
 
 const StyledAddButton = styled(Button)`
   margin-top: 1rem;
@@ -34,13 +35,6 @@ const StyledVocabularyRow = styled.div`
   }
 `;
 
-export interface VocabularyComponentProps {
-  selectedIds: string[];
-  addValue: (value: string) => void;
-  removeValue: (value: string) => void;
-  clear: () => void;
-}
-
 interface VocabularyConfig {
   [key: string]: { baseId: string; i18nKey: string; component: (props: VocabularyComponentProps) => JSX.Element };
 }
@@ -50,12 +44,12 @@ const vocabularyConfig: VocabularyConfig = {
   hrcsActivity: {
     baseId: 'https://nva.unit.no/hrcs/activity/',
     i18nKey: 'description.hrcs_activities',
-    component: HrcsActivityAutocomplete,
+    component: HrcsActivityInput,
   },
   hrcsCategory: {
     baseId: 'https://nva.unit.no/hrcs/category/',
     i18nKey: 'description.hrcs_categories',
-    component: HrcsCategoryAutocomplete,
+    component: HrcsCategoryInput,
   },
 };
 const vocabularies = Object.keys(vocabularyConfig);
