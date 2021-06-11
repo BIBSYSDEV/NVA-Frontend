@@ -37,7 +37,7 @@ const StyledVocabularyRow = styled.div`
 export interface VocabularyComponentProps {
   selectedIds: string[];
   addValue: (value: string) => void;
-  removeValue: () => void;
+  removeValue: (value: string) => void;
   clear: () => void;
 }
 
@@ -84,11 +84,12 @@ export const VocabularyFields = () => {
       <FieldArray name={DescriptionFieldNames.CONTROLLED_KEYWORDS}>
         {({ name, remove, push }: FieldArrayRenderProps) => (
           <>
-            {visibleVocabularies.map((vocabulary, index) => {
+            {visibleVocabularies.map((vocabulary) => {
               const VocabularyComponent = vocabularyConfig[vocabulary].component;
               const selectedIds = controlledKeywords.filter((keyword) =>
                 keyword.startsWith(vocabularyConfig[vocabulary].baseId)
               );
+
               return (
                 <StyledVocabularyRow
                   key={vocabulary}
@@ -96,8 +97,13 @@ export const VocabularyFields = () => {
                   <VocabularyComponent
                     selectedIds={selectedIds}
                     addValue={push}
-                    removeValue={() => remove(index)}
-                    clear={() => setFieldValue(name, [])}
+                    removeValue={(valueToRemove) => remove(controlledKeywords.indexOf(valueToRemove))}
+                    clear={() =>
+                      setFieldValue(
+                        name,
+                        controlledKeywords.filter((keyword) => !selectedIds.includes(keyword))
+                      )
+                    }
                   />
                   <StyledRemoveButton
                     startIcon={<RemoveCircleIcon />}

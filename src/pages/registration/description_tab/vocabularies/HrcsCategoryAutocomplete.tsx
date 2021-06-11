@@ -24,8 +24,8 @@ export const HrcsCategoryAutocomplete = ({ selectedIds, addValue, removeValue, c
       onChange={(event, value, reason, selectedValue) => {
         if (reason === 'select-option' && selectedValue) {
           addValue(selectedValue.option.id);
-        } else if (reason === 'remove-option') {
-          removeValue();
+        } else if (reason === 'remove-option' && selectedValue) {
+          removeValue(selectedValue.option.id);
         } else if (reason === 'clear') {
           clear();
         }
