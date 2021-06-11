@@ -10,6 +10,8 @@ import { BookEntityDescription } from './publication_types/bookRegistration.type
 import { ReportEntityDescription } from './publication_types/reportRegistration.types';
 import { BackendTypeNames } from './publication_types/commonRegistration.types';
 import { ChapterEntityDescription } from './publication_types/chapterRegistration.types';
+import { Contributor } from './contributor.types';
+import { LanguageValues } from './language.types';
 
 export enum RegistrationStatus {
   DELETED = 'DRAFT_FOR_DELETION',
@@ -92,6 +94,17 @@ interface BaseRegistration extends BackendType, RegistrationFileSet {
   readonly doiRequest?: DoiRequest;
   readonly publisher: RegistrationPublisher;
   projects: ResearchProject[];
+}
+
+export interface BaseEntityDescription extends BackendType {
+  abstract: string;
+  contributors: Contributor[];
+  date: RegistrationDate;
+  description: string;
+  language: LanguageValues;
+  mainTitle: string;
+  npiSubjectHeading: string;
+  tags: string[];
 }
 
 export interface Registration extends BaseRegistration {
