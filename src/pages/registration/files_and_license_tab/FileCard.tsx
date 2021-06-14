@@ -38,10 +38,6 @@ const StyledLicenseOptionImage = styled.img`
   width: 70%;
 `;
 
-const StyledLicenseOptionName = styled(Typography)`
-  margin-left: -1.5rem;
-`;
-
 const StyledLicenseValue = styled.div`
   display: flex;
   align-items: center;
@@ -74,6 +70,10 @@ const StyledInputRow = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     grid-template-columns: 4fr 1fr;
   }
+`;
+
+const StyledAdministrativeContract = styled(FormControlLabel)`
+  margin-top: 2rem;
 `;
 
 interface FileCardProps {
@@ -123,7 +123,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
 
             <Field name={`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`}>
               {({ field }: FieldProps) => (
-                <FormControlLabel
+                <StyledAdministrativeContract
                   control={<Checkbox {...field} color="primary" checked={field.value} />}
                   label={t('files_and_license.administrative_contract')}
                 />
@@ -211,7 +211,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                           <StyledLicenseOptionImage src={license.buttonImage} alt={license.identifier} />
                         </ListItemIcon>
                         <ListItemText>
-                          <StyledLicenseOptionName>{license.identifier}</StyledLicenseOptionName>
+                          <Typography>{license.identifier}</Typography>
                         </ListItemText>
                       </MenuItem>
                     ))}

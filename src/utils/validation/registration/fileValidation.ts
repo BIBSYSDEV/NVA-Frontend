@@ -34,12 +34,10 @@ export const fileValidationSchema = Yup.object().shape({
             .typeError(fileErrorMessage.embargoDateInvalid),
         }),
     }),
-  publisherAuthority: Yup.boolean()
-    .nullable()
-    .when('administrativeAgreement', {
-      is: false,
-      then: Yup.boolean().required(fileErrorMessage.fileVersionRequired),
-    }),
+  publisherAuthority: Yup.boolean().when('administrativeAgreement', {
+    is: false,
+    then: Yup.boolean().nullable().required(fileErrorMessage.fileVersionRequired),
+  }),
   license: Yup.object()
     .nullable()
     .when('administrativeAgreement', {
