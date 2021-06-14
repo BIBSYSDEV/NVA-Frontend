@@ -43,7 +43,7 @@ const StyledLicenseOptionImage = styled.img`
 const StyledLicenseValue = styled.div`
   display: flex;
   align-items: center;
-  p:last-child {
+  span:last-child {
     margin-left: 0.75rem;
   }
 `;
@@ -78,6 +78,11 @@ const StyledAdministrativeContract = styled(FormControlLabel)`
   margin-top: 2rem;
 `;
 
+const StyledActionsContainer = styled.div`
+  display: flex;
+  justify-content: end;
+`;
+
 interface FileCardProps {
   file: File;
   removeFile: () => void;
@@ -85,7 +90,7 @@ interface FileCardProps {
   toggleLicenseModal?: () => void;
 }
 
-const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileCardProps) => {
+export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileCardProps) => {
   const { t, i18n } = useTranslation('registration');
   const { setFieldValue } = useFormikContext();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
@@ -195,7 +200,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                         return selectedLicense ? (
                           <StyledLicenseValue>
                             <img src={selectedLicense.buttonImage} alt={selectedLicense.identifier} />
-                            <Typography>{option}</Typography>
+                            <span>{option}</span>
                           </StyledLicenseValue>
                         ) : null;
                       },
@@ -242,14 +247,15 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
           </div>
         </StyledCardContent>
       )}
-
-      <DangerButton
-        variant="contained"
-        data-testid="button-remove-file"
-        startIcon={<DeleteIcon />}
-        onClick={toggleOpenConfirmDialog}>
-        {t('files_and_license.remove_file')}
-      </DangerButton>
+      <StyledActionsContainer>
+        <DangerButton
+          variant="contained"
+          data-testid="button-remove-file"
+          startIcon={<DeleteIcon />}
+          onClick={toggleOpenConfirmDialog}>
+          {t('files_and_license.remove_file')}
+        </DangerButton>
+      </StyledActionsContainer>
 
       <ConfirmDialog
         open={openConfirmDialog}
@@ -264,5 +270,3 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
     </BackgroundDiv>
   );
 };
-
-export default FileCard;

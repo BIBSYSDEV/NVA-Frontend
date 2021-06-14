@@ -83,7 +83,6 @@
     "embargo_date": "Åpen tilgang utsatt til",
     "embargo_date_helper_text": "Filen er låst fram til datoen",
     "files": "Filer",
-    "license": "Lisens",
     "licenses": "Lisenser",
     "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
     "publicly_available": "Offentlig tilgjengelig",
