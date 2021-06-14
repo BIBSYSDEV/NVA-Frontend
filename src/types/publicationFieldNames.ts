@@ -70,6 +70,7 @@ export enum ResourceFieldNames {
 
 export enum DescriptionFieldNames {
   ABSTRACT = 'entityDescription.abstract',
+  CONTROLLED_KEYWORDS = 'entityDescription.controlledKeywords',
   DATE = 'entityDescription.date',
   DESCRIPTION = 'entityDescription.description',
   LANGUAGE = 'entityDescription.language',

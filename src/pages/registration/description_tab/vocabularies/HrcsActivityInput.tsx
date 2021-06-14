@@ -1,9 +1,9 @@
-import { TextField, Typography } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
+import { Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { hrcsActivities } from '../../../../resources/vocabularies/hrcsActivities';
 import { getLanguageString } from '../../../../utils/translation-helpers';
+import { VocabularyAutocomplete, VocabularyComponentProps } from './VocabularyAutocomplete';
 
 const StyledOptionText = styled(Typography)<{ indentations: number }>`
   ${({ indentations }) => `
@@ -12,10 +12,7 @@ const StyledOptionText = styled(Typography)<{ indentations: number }>`
     `}
 `;
 
-const hrcsActivitiesId = 'hrcs-activities';
-const hrcsActivitiesLabel = `${hrcsActivitiesId}-label`;
-
-export const HrcsActivityAutocomplete = () => {
+export const HrcsActivityInput = (props: VocabularyComponentProps) => {
   const { t } = useTranslation('registration');
 
   const hrcsActivityOptions = hrcsActivities.categories
@@ -27,17 +24,15 @@ export const HrcsActivityAutocomplete = () => {
     .flat();
 
   return (
-    <Autocomplete
-      id={hrcsActivitiesId}
-      aria-labelledby={hrcsActivitiesLabel}
+    <VocabularyAutocomplete
+      {...props}
       options={hrcsActivityOptions}
-      getOptionLabel={(option) => getLanguageString(option.label)}
+      id="hrcs-activities"
+      label={t('description.hrcs_activities')}
       renderOption={(option) => {
         const indentsCount = option.identifier.split('.').length - 1;
         return <StyledOptionText indentations={indentsCount}>{getLanguageString(option.label)}</StyledOptionText>;
       }}
-      multiple
-      renderInput={(params) => <TextField {...params} label={t('description.hrcs_activities')} variant="filled" />}
     />
   );
 };

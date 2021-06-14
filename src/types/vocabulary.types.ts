@@ -1,6 +1,6 @@
 import { LanguageString } from './publication_types/commonRegistration.types';
 
-interface Category {
+export interface Category {
   type: 'HrcsConcept';
   id: string;
   identifier: string;
