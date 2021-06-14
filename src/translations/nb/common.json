@@ -10,6 +10,7 @@
   "create_doi": "Opprett DOI",
   "created_date": "Opprettet",
   "date": "Dato",
+  "date_format": "dd.mm.åååå",
   "delete": "Slett",
   "delivered_by": "Levert av",
   "details": "Detaljer",
