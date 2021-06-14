@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
 import {
+  Checkbox,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -97,143 +98,132 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
 
       {baseFieldName && (
         <StyledCardContent>
-          <FormControl>
-            <FormLabel component="legend">{t('files_and_license.select_version')}</FormLabel>
-            <RadioGroup
-              onChange={(event) => {
-                const newValue = event.target.value;
-                if (newValue === 'administrative') {
-                  setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`, true);
-                  setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`, false);
-                } else {
-                  setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`, false);
-                  setFieldValue(
-                    `${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`,
-                    event.target.value === 'published'
-                  );
-                }
-              }}>
-              <FormControlLabel
-                value="accepted"
-                control={<Radio color="primary" checked={!file.publisherAuthority && !file.administrativeAgreement} />}
-                label={t('files_and_license.accepted_version')}
-              />
-              <FormControlLabel
-                value="published"
-                control={<Radio color="primary" checked={file.publisherAuthority && !file.administrativeAgreement} />}
-                label={t('files_and_license.published_version')}
-              />
-              <FormControlLabel
-                value="administrative"
-                control={<Radio color="primary" checked={file.administrativeAgreement} />}
-                label={
-                  <>
-                    <Typography>{t('files_and_license.administrative_agreement')}</Typography>
-                    <Typography variant="body2">
-                      {t('files_and_license.administrative_agreement_description')}
-                    </Typography>
-                  </>
-                }
-              />
-            </RadioGroup>
-          </FormControl>
-
           <div>
-            {!file.administrativeAgreement && (
-              <>
-                <StyledInputRow>
-                  <Field name={`${baseFieldName}.${SpecificFileFieldNames.LICENSE}`}>
-                    {({ field, meta: { error, touched } }: FieldProps) => (
-                      <TextField
-                        id={field.name}
-                        data-testid="uploaded-file-select-license"
-                        select
-                        fullWidth
-                        SelectProps={{
-                          renderValue: (option: any) => {
-                            const selectedLicense = licenses.find((license) => license.identifier === option);
-                            return selectedLicense ? (
-                              <StyledLicenseValue>
-                                <img src={selectedLicense.buttonImage} alt={selectedLicense.identifier} />
-                                <Typography>{option}</Typography>
-                              </StyledLicenseValue>
-                            ) : null;
-                          },
-                        }}
-                        variant="filled"
-                        value={field.value?.identifier || ''}
-                        error={!!error && touched}
-                        helperText={<ErrorMessage name={field.name} />}
-                        label={t('files_and_license.conditions_for_using_file')}
-                        required
-                        onChange={({ target: { value } }) =>
-                          setFieldValue(field.name, {
-                            type: 'License',
-                            identifier: value as LicenseNames,
-                            labels: { nb: value },
-                          })
-                        }>
-                        {licenses.map((license) => (
-                          <MenuItem
-                            data-testid="license-item"
-                            key={license.identifier}
-                            value={license.identifier}
-                            divider
-                            ContainerProps={{ 'aria-label': t('files_and_license.conditions_for_using_file') }}
-                            dense>
-                            <ListItemIcon>
-                              <StyledLicenseOptionImage src={license.buttonImage} alt={license.identifier} />
-                            </ListItemIcon>
-                            <ListItemText>
-                              <StyledLicenseOptionName>{license.identifier}</StyledLicenseOptionName>
-                            </ListItemText>
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    )}
-                  </Field>
-                  <Tooltip title={t<string>('common:help')}>
-                    <IconButton data-testid="button-toggle-license-modal" onClick={toggleLicenseModal}>
-                      <HelpIcon fontSize="large" />
-                    </IconButton>
-                  </Tooltip>
-                </StyledInputRow>
+            <Field name={`${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`}>
+              {({ field, form }: FieldProps) => (
+                <FormControl disabled={file.administrativeAgreement}>
+                  <FormLabel component="legend">{t('files_and_license.select_version')}</FormLabel>
+                  <RadioGroup
+                    {...field}
+                    onChange={(event) => form.setFieldValue(field.name, event.target.value === 'published')}>
+                    <FormControlLabel
+                      value="accepted"
+                      control={<Radio color="primary" checked={field.value !== null && !field.value} />}
+                      label={t('files_and_license.accepted_version')}
+                    />
+                    <FormControlLabel
+                      value="published"
+                      control={<Radio color="primary" checked={field.value} />}
+                      label={t('files_and_license.published_version')}
+                    />
+                  </RadioGroup>
+                </FormControl>
+              )}
+            </Field>
 
-                <StyledInputRow>
-                  <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
-                    <Field name={`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`}>
-                      {({ field, meta: { error, touched } }: FieldProps) => (
-                        <KeyboardDatePicker
-                          fullWidth
-                          id={field.name}
-                          {...datePickerTranslationProps}
-                          DialogProps={{
-                            'aria-labelledby': `${field.name}-label`,
-                            'aria-label': t('files_and_license.embargo_date'),
-                          }}
-                          KeyboardButtonProps={{
-                            'aria-labelledby': `${field.name}-label`,
-                          }}
-                          leftArrowButtonProps={{ 'aria-label': t('common:previous') }}
-                          rightArrowButtonProps={{ 'aria-label': t('common:next') }}
-                          data-testid="uploaded-file-embargo-date"
-                          inputVariant="filled"
-                          label={t('files_and_license.embargo_date')}
-                          {...field}
-                          onChange={(value) => setFieldValue(field.name, value)}
-                          value={field.value ?? null}
-                          disablePast
-                          autoOk
-                          format={'dd.MM.yyyy'}
-                          error={!!error && touched}
-                          helperText={<ErrorMessage name={field.name} />}
-                        />
-                      )}
-                    </Field>
-                  </MuiPickersUtilsProvider>
-                </StyledInputRow>
-              </>
-            )}
+            <Field name={`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`}>
+              {({ field }: FieldProps) => (
+                <FormControlLabel
+                  control={<Checkbox {...field} color="primary" checked={field.value} />}
+                  label={t('files_and_license.administrative_contract')}
+                />
+              )}
+            </Field>
+          </div>
+          <div>
+            <StyledInputRow>
+              <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
+                <Field name={`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`}>
+                  {({ field, meta: { error, touched } }: FieldProps) => (
+                    <KeyboardDatePicker
+                      fullWidth
+                      id={field.name}
+                      {...datePickerTranslationProps}
+                      DialogProps={{
+                        'aria-labelledby': `${field.name}-label`,
+                        'aria-label': t('files_and_license.embargo_date'),
+                      }}
+                      KeyboardButtonProps={{
+                        'aria-labelledby': `${field.name}-label`,
+                      }}
+                      leftArrowButtonProps={{ 'aria-label': t('common:previous') }}
+                      rightArrowButtonProps={{ 'aria-label': t('common:next') }}
+                      data-testid="uploaded-file-embargo-date"
+                      inputVariant="filled"
+                      label={t('files_and_license.embargo_date')}
+                      {...field}
+                      onChange={(value) => setFieldValue(field.name, value)}
+                      value={field.value ?? null}
+                      disablePast
+                      autoOk
+                      format={'dd.MM.yyyy'}
+                      error={!!error && touched}
+                      helperText={<ErrorMessage name={field.name} />}
+                      disabled={file.administrativeAgreement}
+                    />
+                  )}
+                </Field>
+              </MuiPickersUtilsProvider>
+            </StyledInputRow>
+
+            <StyledInputRow>
+              <Field name={`${baseFieldName}.${SpecificFileFieldNames.LICENSE}`}>
+                {({ field, meta: { error, touched } }: FieldProps) => (
+                  <TextField
+                    id={field.name}
+                    data-testid="uploaded-file-select-license"
+                    select
+                    fullWidth
+                    SelectProps={{
+                      renderValue: (option: any) => {
+                        const selectedLicense = licenses.find((license) => license.identifier === option);
+                        return selectedLicense ? (
+                          <StyledLicenseValue>
+                            <img src={selectedLicense.buttonImage} alt={selectedLicense.identifier} />
+                            <Typography>{option}</Typography>
+                          </StyledLicenseValue>
+                        ) : null;
+                      },
+                    }}
+                    variant="filled"
+                    value={field.value?.identifier || ''}
+                    error={!!error && touched}
+                    helperText={<ErrorMessage name={field.name} />}
+                    label={t('files_and_license.conditions_for_using_file')}
+                    required
+                    onChange={({ target: { value } }) =>
+                      setFieldValue(field.name, {
+                        type: 'License',
+                        identifier: value as LicenseNames,
+                        labels: { nb: value },
+                      })
+                    }
+                    disabled={file.administrativeAgreement}>
+                    {licenses.map((license) => (
+                      <MenuItem
+                        data-testid="license-item"
+                        key={license.identifier}
+                        value={license.identifier}
+                        divider
+                        ContainerProps={{ 'aria-label': t('files_and_license.conditions_for_using_file') }}
+                        dense>
+                        <ListItemIcon>
+                          <StyledLicenseOptionImage src={license.buttonImage} alt={license.identifier} />
+                        </ListItemIcon>
+                        <ListItemText>
+                          <StyledLicenseOptionName>{license.identifier}</StyledLicenseOptionName>
+                        </ListItemText>
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                )}
+              </Field>
+              <Tooltip title={t<string>('common:help')}>
+                <IconButton data-testid="button-toggle-license-modal" onClick={toggleLicenseModal}>
+                  <HelpIcon fontSize="large" />
+                </IconButton>
+              </Tooltip>
+            </StyledInputRow>
           </div>
         </StyledCardContent>
       )}

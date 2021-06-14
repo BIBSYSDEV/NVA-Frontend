@@ -78,8 +78,7 @@
   "edit_registration": "Endre registrering",
   "files_and_license": {
     "accepted_version": "Akseptert versjon",
-    "administrative_agreement": "Kun for registrator og kurator",
-    "administrative_agreement_description": "Forfatteravtale eller annen dokumentasjon",
+    "administrative_contract": "Denne fila er en forfatteravtale eller annen dokumentasjon som ikke skal være åpent tilgjengelig",
     "conditions_for_using_file": "Betingelser for bruk av fil",
     "embargo_date": "Ikke åpent tilgjengelig før",
     "files": "Filer",
