@@ -1,3 +1,5 @@
+import { dataTestId } from '../../src/utils/dataTestIds';
+
 describe('User opens registration form and can see validation errors', () => {
   before('Given that the user is logged in as Creator:', () => {
     cy.visit('/');
@@ -231,8 +233,12 @@ describe('User opens registration form and can see validation errors', () => {
         cy.get('p.Mui-error').should('not.exist');
       });
 
-    cy.get('[data-testid=nav-tabpanel-files-and-license]').within(() =>
-      cy.get('[data-testid=error-tab]').should('not.exist')
-    );
+    cy.get('[data-testid=nav-tabpanel-files-and-license]').within(() => {
+      cy.get('[data-testid=error-tab]').should('be.visible');
+    });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.files.version}]`).within(() => {
+      cy.get('input').eq(0).click();
+    });
+    cy.get('[data-testid=error-tab]').should('not.exist');
   });
 });

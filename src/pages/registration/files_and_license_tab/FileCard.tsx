@@ -30,6 +30,7 @@ import { File, LicenseNames, licenses } from '../../../types/file.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
 import ConfirmDialog from '../../../components/ConfirmDialog';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 const StyledDescription = styled(Typography)`
   font-style: italic;
@@ -102,7 +103,10 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
           <div>
             <Field name={`${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`}>
               {({ field, form, meta: { error, touched } }: FieldProps) => (
-                <FormControl required disabled={file.administrativeAgreement}>
+                <FormControl
+                  data-testid={dataTestId.registrationWizard.files.version}
+                  required
+                  disabled={file.administrativeAgreement}>
                   <FormLabel component="legend">{t('files_and_license.version')}</FormLabel>
                   <RadioGroup
                     {...field}
@@ -126,6 +130,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
             <Field name={`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`}>
               {({ field }: FieldProps) => (
                 <StyledAdministrativeContract
+                  data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
                   control={<Checkbox {...field} color="primary" checked={field.value} />}
                   label={t('files_and_license.administrative_contract')}
                 />

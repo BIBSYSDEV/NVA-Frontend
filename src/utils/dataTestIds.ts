@@ -26,5 +26,9 @@ export const dataTestId = {
       vocabularyMenuItem: (vocabulary: string) => `vocabulary-menu-item-${vocabulary}`,
       vocabularyRow: (vocabulary: string) => `vocabulary-row-${vocabulary}`,
     },
+    files: {
+      administrativeAgreement: 'administrative-agreement-checkbox',
+      version: 'version-radios',
+    },
   },
 };
