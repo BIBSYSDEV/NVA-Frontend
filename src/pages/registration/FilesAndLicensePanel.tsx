@@ -12,8 +12,8 @@ import { NotificationVariant } from '../../types/notification.types';
 import { FileFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { autoHideNotificationDuration } from '../../utils/constants';
-import FileCard from './files_and_license_tab/FileCard';
 import FileUploader from './files_and_license_tab/FileUploader';
+import { FileCard } from './files_and_license_tab/FileCard';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   display: flex;
@@ -81,7 +81,7 @@ const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                 <Typography variant="h2">{t('files_and_license.files')}</Typography>
                 {files.map((file, index) => (
                   <FileCard
-                    key={index}
+                    key={file.identifier}
                     file={file}
                     removeFile={() => {
                       const remainingFiles = uppy

@@ -10,6 +10,7 @@
   "create_doi": "Create DOI",
   "created_date": "Created",
   "date": "Date",
+  "date_format": "dd.mm.yyyy",
   "delete": "Delete",
   "delivered_by": "Delivered by",
   "details": "Details",
