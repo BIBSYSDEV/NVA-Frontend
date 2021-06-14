@@ -8,6 +8,7 @@ import {
   Checkbox,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   FormLabel,
   IconButton,
   ListItemText,
@@ -20,7 +21,7 @@ import {
 } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DeleteIcon from '@material-ui/icons/Delete';
-import HelpIcon from '@material-ui/icons/Help';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import BackgroundDiv from '../../../components/BackgroundDiv';
 import DangerButton from '../../../components/DangerButton';
@@ -63,8 +64,8 @@ const StyledCardContent = styled.div`
 
 const StyledInputRow = styled.div`
   display: grid;
-  grid-template-columns: 7fr 1fr;
-  column-gap: 1rem;
+  grid-template-columns: 10fr 1fr;
+  column-gap: 0.5rem;
   align-items: center;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
@@ -100,9 +101,9 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
         <StyledCardContent>
           <div>
             <Field name={`${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`}>
-              {({ field, form }: FieldProps) => (
-                <FormControl disabled={file.administrativeAgreement}>
-                  <FormLabel component="legend">{t('files_and_license.select_version')}</FormLabel>
+              {({ field, form, meta: { error, touched } }: FieldProps) => (
+                <FormControl required disabled={file.administrativeAgreement}>
+                  <FormLabel component="legend">{t('files_and_license.version')}</FormLabel>
                   <RadioGroup
                     {...field}
                     onChange={(event) => form.setFieldValue(field.name, event.target.value === 'published')}>
@@ -117,6 +118,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                       label={t('files_and_license.published_version')}
                     />
                   </RadioGroup>
+                  {error && touched && <FormHelperText error>{error}</FormHelperText>}
                 </FormControl>
               )}
             </Field>
@@ -130,6 +132,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
               )}
             </Field>
           </div>
+
           <div>
             <StyledInputRow>
               <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
@@ -156,9 +159,16 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
                       value={field.value ?? null}
                       disablePast
                       autoOk
+                      placeholder={t('common:date_format')}
                       format={'dd.MM.yyyy'}
                       error={!!error && touched}
-                      helperText={<ErrorMessage name={field.name} />}
+                      helperText={
+                        error && touched ? (
+                          <ErrorMessage name={field.name} />
+                        ) : (
+                          t('files_and_license.embargo_date_helper_text')
+                        )
+                      }
                       disabled={file.administrativeAgreement}
                     />
                   )}
@@ -220,7 +230,7 @@ const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileC
               </Field>
               <Tooltip title={t<string>('common:help')}>
                 <IconButton data-testid="button-toggle-license-modal" onClick={toggleLicenseModal}>
-                  <HelpIcon fontSize="large" />
+                  <HelpOutlineIcon fontSize="large" />
                 </IconButton>
               </Tooltip>
             </StyledInputRow>

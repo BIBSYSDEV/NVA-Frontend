@@ -79,8 +79,9 @@
   "files_and_license": {
     "accepted_version": "Accepted version",
     "administrative_contract": "This file is an author agreement or other documentation that should not be openly available",
-    "conditions_for_using_file": "Conditions for using the file",
-    "embargo_date": "Not openly available before",
+    "conditions_for_using_file": "Terms of use",
+    "embargo_date": "Open access delayed to",
+    "embargo_date_helper_text": "File is locked until given date",
     "files": "Files",
     "license": "License",
     "licenses": "Licenses",
@@ -89,7 +90,7 @@
     "published_version": "Published version",
     "remove_file": "Remove file",
     "remove_file_description": "Do you want to remove {{fileName}}?",
-    "select_version": "Select version",
+    "version": "Version",
     "title": "File name",
     "uploaded_size": "Uploaded {{size}}"
   },
