@@ -11,7 +11,7 @@ import { DoiField } from '../components/DoiField';
 import IsbnListField from '../components/IsbnListField';
 import { NpiDisciplineField } from '../components/NpiDisciplineField';
 import NviValidation from '../components/NviValidation';
-import PeerReview from '../components/PeerReview';
+import { PeerReviewedField } from '../components/PeerReviewedField';
 import PublisherField from '../components/PublisherField';
 import SeriesField from '../components/SeriesField';
 import TotalPagesField from '../components/TotalPagesField';
@@ -64,7 +64,7 @@ const BookForm = () => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
         <StyledSection>
           <StyledPeerReview>
-            <PeerReview fieldName={ResourceFieldNames.PEER_REVIEW} />
+            <PeerReviewedField />
           </StyledPeerReview>
           <StyledTextBook>
             <div>

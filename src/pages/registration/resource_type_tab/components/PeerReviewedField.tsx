@@ -3,17 +3,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@material-ui/core';
 import { Registration } from '../../../../types/registration.types';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 
-interface PeerReviewProps {
-  fieldName: string;
-}
-
-const PeerReview = ({ fieldName }: PeerReviewProps) => {
+export const PeerReviewedField = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 
   return (
-    <Field name={fieldName}>
+    <Field name={ResourceFieldNames.PEER_REVIEW}>
       {({ field: { name, value } }: FieldProps) => (
         <>
           <div>
@@ -40,5 +37,3 @@ const PeerReview = ({ fieldName }: PeerReviewProps) => {
     </Field>
   );
 };
-
-export default PeerReview;
