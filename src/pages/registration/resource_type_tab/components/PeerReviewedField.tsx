@@ -13,14 +13,12 @@ export const PeerReviewedField = () => {
     <Field name={ResourceFieldNames.PEER_REVIEW}>
       {({ field: { name, value } }: FieldProps<boolean | null>) => (
         <>
-          <div>
-            <Typography variant="h5" color="primary" component="p">
-              {t('resource_type.peer_review')}
-            </Typography>
-          </div>
+          <Typography variant="h5" color="primary" component="p">
+            {t('resource_type.peer_review')}
+          </Typography>
           <FormControl data-testid="peer-review-field">
             <RadioGroup
-              value={value ? 'true' : 'false'}
+              value={value === null || value === undefined ? '' : value ? 'true' : 'false'}
               onChange={(event) => setFieldValue(name, event.target.value === 'true')}>
               <FormControlLabel
                 control={<Radio color="primary" data-testid="peer_review-true" value="true" />}
