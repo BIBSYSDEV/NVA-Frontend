@@ -5,7 +5,7 @@ import { PagesRange, emptyPagesRange } from './pages.types';
 export interface ChapterPublicationInstance {
   type: ChapterType | '';
   pages: PagesRange;
-  peerReviewed: boolean;
+  peerReviewed: boolean | null;
 }
 
 export interface ChapterPublicationContext {
@@ -25,7 +25,7 @@ export interface ChapterPublicationContext {
 export const emptyChapterPublicationInstance: ChapterPublicationInstance = {
   type: '',
   pages: emptyPagesRange,
-  peerReviewed: false,
+  peerReviewed: null,
 };
 
 interface ChapterReference extends BackendType {

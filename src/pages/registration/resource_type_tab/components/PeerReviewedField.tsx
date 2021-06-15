@@ -11,7 +11,7 @@ export const PeerReviewedField = () => {
 
   return (
     <Field name={ResourceFieldNames.PEER_REVIEW}>
-      {({ field: { name, value } }: FieldProps) => (
+      {({ field: { name, value } }: FieldProps<boolean | null>) => (
         <>
           <div>
             <Typography variant="h5" color="primary" component="p">

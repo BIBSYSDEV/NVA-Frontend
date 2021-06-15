@@ -100,7 +100,7 @@ const BookForm = () => {
       )}
       {type === BookType.MONOGRAPH && (
         <NviValidation
-          isPeerReviewed={peerReviewed}
+          isPeerReviewed={!!peerReviewed}
           isRated={!!publicationContext?.level}
           isTextbook={!!textbookContent}
           dataTestId="nvi_book"

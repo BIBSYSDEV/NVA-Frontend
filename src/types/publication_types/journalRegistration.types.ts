@@ -9,7 +9,7 @@ export interface JournalPublicationInstance {
   articleNumber: string;
   issue: string;
   pages: PagesRange;
-  peerReviewed: boolean;
+  peerReviewed: boolean | null;
   volume: string;
   corrigendumFor: string;
 }
@@ -40,7 +40,7 @@ export const emptyJournalPublicationInstance: JournalPublicationInstance = {
   articleNumber: '',
   issue: '',
   pages: emptyPagesRange,
-  peerReviewed: false,
+  peerReviewed: null,
   volume: '',
   corrigendumFor: '',
 };

@@ -137,7 +137,7 @@ const JournalForm = () => {
             <PeerReviewedField />
           </BackgroundDiv>
           <NviValidation
-            isPeerReviewed={publicationInstance.peerReviewed}
+            isPeerReviewed={!!publicationInstance.peerReviewed}
             isRated={!!publicationContext?.level}
             dataTestId="nvi_journal"
           />
