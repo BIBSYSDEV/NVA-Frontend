@@ -14,13 +14,6 @@ export const invalidIsbnErrorMessage = i18n.t('feedback:validation.has_invalid_f
 });
 
 const resourceErrorMessage = {
-  articleNumberInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:resource_type.article_number'),
-  }),
-  articleNumberMustBeBigger: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('registration:resource_type.article_number'),
-    limit: 0,
-  }),
   corrigendumForRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.original_article'),
   }),
@@ -135,11 +128,7 @@ export const baseReference = Yup.object().shape({
 const journalPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(JournalType)).required(resourceErrorMessage.typeRequired),
   peerReviewed: peerReviewedField,
-  articleNumber: Yup.number()
-    .typeError(resourceErrorMessage.articleNumberInvalid)
-    .min(0, resourceErrorMessage.articleNumberMustBeBigger)
-    .transform(emptyStringToNull)
-    .nullable(),
+  articleNumber: Yup.string(),
   volume: Yup.number()
     .typeError(resourceErrorMessage.volumeInvalid)
     .min(0, resourceErrorMessage.volumeMustBeBigger)
