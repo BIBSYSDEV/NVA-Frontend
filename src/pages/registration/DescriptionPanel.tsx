@@ -86,7 +86,16 @@ const DescriptionPanel = () => {
               freeSolo
               multiple
               options={[]}
-              onChange={(_: ChangeEvent<unknown>, value: string[] | string) => setFieldValue(field.name, value)}
+              autoSelect
+              onChange={(_: ChangeEvent<unknown>, value: string[]) => {
+                const newValues = value
+                  .map((item) => item.split(','))
+                  .flat()
+                  .map((item) => item.trim())
+                  .filter((item) => item);
+                const uniqueValues = [...new Set(newValues)];
+                setFieldValue(field.name, uniqueValues);
+              }}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -95,14 +104,6 @@ const DescriptionPanel = () => {
                   helperText={t('description.keywords_helper')}
                   variant="filled"
                   fullWidth
-                  onBlur={(event) => {
-                    const value = event.target.value;
-                    const tags = value
-                      .split(/[|,;]+/)
-                      .map((value: string) => value.trim())
-                      .filter((tag) => tag !== '');
-                    setFieldValue(field.name, [...field.value, ...tags]);
-                  }}
                 />
               )}
             />
