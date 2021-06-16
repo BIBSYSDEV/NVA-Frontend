@@ -16,6 +16,7 @@ import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInsti
 import { filterUsersByRole } from '../../utils/role-helpers';
 import { AddRoleModalContent } from './AddRoleModalContent';
 import UserList from './UserList';
+import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledContainer = styled.div`
   margin-bottom: 2rem;
@@ -48,7 +49,7 @@ const MyInstitutionUsersPage = () => {
       <PageHeader>{t('users.user_administration')}</PageHeader>
       <Card>
         {/* Admins */}
-        <StyledContainer>
+        <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersAdministrators}>
           <Typography variant="h3" component="h2">
             {t('profile:roles.institution_admins')}
           </Typography>
@@ -74,7 +75,7 @@ const MyInstitutionUsersPage = () => {
         </StyledContainer>
 
         {/* Curators */}
-        <StyledContainer>
+        <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersCurators}>
           <Typography variant="h3" component="h2">
             {t('profile:roles.curators')}
           </Typography>
@@ -100,7 +101,7 @@ const MyInstitutionUsersPage = () => {
         </StyledContainer>
 
         {/* Editors */}
-        <StyledContainer>
+        <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersEditors}>
           <Typography variant="h3" component="h2">
             {t('profile:roles.editors')}
           </Typography>
@@ -125,7 +126,7 @@ const MyInstitutionUsersPage = () => {
           </StyledNewButton>
         </StyledContainer>
 
-        <StyledContainer>
+        <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersCreators}>
           <Typography variant="h3" component="h2">
             {t('profile:roles.creator')}
           </Typography>

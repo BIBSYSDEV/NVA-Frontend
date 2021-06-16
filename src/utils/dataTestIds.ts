@@ -34,4 +34,10 @@ export const dataTestId = {
       peerReviewed: 'peer-review-field',
     },
   },
+  myInstitutionUsersPage: {
+    usersAdministrators: 'users-administrators',
+    usersCurators: 'users-curators',
+    usersEditors: 'users-editors',
+    usersCreators: 'users-creators',
+  },
 };
