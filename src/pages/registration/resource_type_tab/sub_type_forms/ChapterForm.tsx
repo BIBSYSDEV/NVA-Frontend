@@ -12,7 +12,7 @@ import { BookType, ChapterType, ResourceFieldNames } from '../../../../types/pub
 import { ChapterRegistration } from '../../../../types/registration.types';
 import { DoiField } from '../components/DoiField';
 import NviValidation from '../components/NviValidation';
-import PeerReview from '../components/PeerReview';
+import { PeerReviewedField } from '../components/PeerReviewedField';
 import SearchContainerField from '../components/SearchContainerField';
 
 const StyledDiv = styled(StyledCenterAlignedContentWrapper)`
@@ -115,7 +115,7 @@ const ChapterForm = () => {
       {publicationInstance.type === ChapterType.BOOK && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-            <PeerReview fieldName={ResourceFieldNames.PEER_REVIEW} />
+            <PeerReviewedField />
           </BackgroundDiv>
 
           <NviValidation

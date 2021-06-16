@@ -10,7 +10,7 @@ import { JournalRegistration } from '../../../../types/registration.types';
 import { DoiField } from '../components/DoiField';
 import JournalField from '../components/JournalField';
 import NviValidation from '../components/NviValidation';
-import PeerReview from '../components/PeerReview';
+import { PeerReviewedField } from '../components/PeerReviewedField';
 import SearchContainerField from '../components/SearchContainerField';
 
 const StyledArticleDetail = styled.div`
@@ -134,10 +134,10 @@ const JournalForm = () => {
         publicationInstance.type === JournalType.SHORT_COMMUNICATION) && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-            <PeerReview fieldName={ResourceFieldNames.PEER_REVIEW} />
+            <PeerReviewedField />
           </BackgroundDiv>
           <NviValidation
-            isPeerReviewed={publicationInstance.peerReviewed}
+            isPeerReviewed={!!publicationInstance.peerReviewed}
             isRated={!!publicationContext?.level}
             dataTestId="nvi_journal"
           />

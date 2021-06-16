@@ -5,14 +5,14 @@ import { PagesMonograph, emptyPagesMonograph } from './pages.types';
 export interface BookPublicationInstance {
   type: BookType | '';
   pages: PagesMonograph | null;
-  peerReviewed: boolean;
+  peerReviewed: boolean | null;
   textbookContent?: boolean;
 }
 
 export const emptyBookPublicationInstance: BookPublicationInstance = {
   type: '',
   pages: emptyPagesMonograph,
-  peerReviewed: false,
+  peerReviewed: null,
   textbookContent: false,
 };
 

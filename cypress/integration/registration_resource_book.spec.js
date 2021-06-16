@@ -1,3 +1,5 @@
+import { dataTestId } from '../../src/utils/dataTestIds';
+
 describe('Registration: Resource type: Book', () => {
   beforeEach(() => {
     cy.visit('/');
@@ -37,9 +39,9 @@ describe('Registration: Resource type: Book', () => {
     // choose peer review value and show NVI status
     cy.get('[data-testid=nvi_book]').get('[data-testid=nvi_fail]');
     cy.get('[data-testid=is-textbook-checkbox]').click({ force: true });
-    cy.get('[data-testid=peer_review-true]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).eq(0).click();
     cy.get('[data-testid=nvi_book]').get('[data-testid=nvi_success]');
-    cy.get('[data-testid=peer_review-false]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).eq(1).click();
     cy.get('[data-testid=nvi_book]').get('[data-testid=nvi_fail_no_peer_review]');
 
     // fill out number of pages field

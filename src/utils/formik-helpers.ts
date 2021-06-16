@@ -181,6 +181,7 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
               pages: {
                 pages: true,
               },
+              peerReviewed: true,
             },
           },
         },
@@ -195,6 +196,7 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
             },
             publicationInstance: {
               type: true,
+              peerReviewed: true,
             },
           },
         },
