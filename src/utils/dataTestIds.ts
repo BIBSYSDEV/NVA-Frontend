@@ -31,4 +31,10 @@ export const dataTestId = {
       version: 'version-radios',
     },
   },
+  myInstitutionUsersPage: {
+    usersAdministrators: 'users-administrators',
+    usersCurators: 'users-curators',
+    usersEditors: 'users-editors',
+    usersCreators: 'users-creators',
+  },
 };
