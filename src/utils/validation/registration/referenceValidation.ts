@@ -90,7 +90,7 @@ export const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/g; // ISBN without hyphens
 // Common Fields
 const isbnListField = Yup.array().of(Yup.string().matches(isbnRegex, resourceErrorMessage.isbnInvalid));
 const peerReviewedField = Yup.boolean().when('$publicationInstanceType', {
-  is: (value: any) => value === JournalType.ARTICLE || value === BookType.MONOGRAPH || value === ChapterType.BOOK,
+  is: (value: string) => value === JournalType.ARTICLE || value === BookType.MONOGRAPH || value === ChapterType.BOOK,
   then: Yup.boolean().nullable().required(resourceErrorMessage.peerReviewedRequired),
 });
 
