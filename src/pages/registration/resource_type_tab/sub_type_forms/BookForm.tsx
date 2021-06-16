@@ -81,13 +81,12 @@ const BookForm = () => {
         </StyledSection>
       </BackgroundDiv>
 
-      {(type === BookType.ANTHOLOGY || type === BookType.MONOGRAPH) && (
-        <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-          <Typography variant="h5">{t('resource_type.series')}</Typography>
-          <Typography>{t('resource_type.series_info')}</Typography>
-          <SeriesField />
-        </BackgroundDiv>
-      )}
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
+        <Typography variant="h5">{t('resource_type.series')}</Typography>
+        <Typography>{t('resource_type.series_info')}</Typography>
+        <SeriesField />
+      </BackgroundDiv>
+
       {type === BookType.MONOGRAPH && (
         <NviValidation
           isPeerReviewed={!!peerReviewed}
