@@ -5,6 +5,7 @@ import { FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@m
 import { Registration } from '../../../../types/registration.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { FormHelperText } from '@material-ui/core';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 export const PeerReviewedField = () => {
   const { t } = useTranslation('registration');
@@ -17,16 +18,16 @@ export const PeerReviewedField = () => {
           <Typography variant="h5" color="primary" component="p">
             {t('resource_type.peer_review')}
           </Typography>
-          <FormControl data-testid="peer-review-field">
+          <FormControl data-testid={dataTestId.registrationWizard.resourceType.peerReviewed}>
             <RadioGroup
               value={value === true ? 'true' : value === false ? 'false' : ''}
               onChange={(event) => setFieldValue(name, event.target.value === 'true')}>
               <FormControlLabel
-                control={<Radio color="primary" data-testid="peer_review-true" value="true" />}
+                control={<Radio color="primary" value="true" />}
                 label={<Typography>{t('common:yes')}</Typography>}
               />
               <FormControlLabel
-                control={<Radio color="primary" data-testid="peer_review-false" value="false" />}
+                control={<Radio color="primary" value="false" />}
                 label={<Typography>{t('common:no')}</Typography>}
               />
             </RadioGroup>

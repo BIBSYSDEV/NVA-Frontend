@@ -30,5 +30,8 @@ export const dataTestId = {
       administrativeAgreement: 'administrative-agreement-checkbox',
       version: 'version-radios',
     },
+    resourceType: {
+      peerReviewed: 'peer-review-field',
+    },
   },
 };
