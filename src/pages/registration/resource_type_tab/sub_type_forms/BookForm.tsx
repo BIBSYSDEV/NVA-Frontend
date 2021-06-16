@@ -19,20 +19,10 @@ import TotalPagesField from '../components/TotalPagesField';
 const StyledSection = styled.div`
   display: grid;
   gap: 1rem;
-  grid-template-areas: 'peer-review text-book';
   grid-template-columns: 1fr 2fr;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-areas: 'peer-review' 'text-book';
     grid-template-columns: 1fr;
   }
-`;
-
-const StyledPeerReview = styled.div`
-  grid-area: peer-review;
-`;
-
-const StyledTextBook = styled.div`
-  grid-area: text-book;
 `;
 
 const BookForm = () => {
@@ -63,15 +53,15 @@ const BookForm = () => {
 
       <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
         <StyledSection>
-          <StyledPeerReview>
-            <PeerReviewedField />
-          </StyledPeerReview>
-          <StyledTextBook>
+          {type === BookType.MONOGRAPH && (
             <div>
-              <Typography variant="h5" component="p">
-                {t('resource_type.is_book_a_textbook')}
-              </Typography>
+              <PeerReviewedField />
             </div>
+          )}
+          <div>
+            <Typography variant="h5" component="p">
+              {t('resource_type.is_book_a_textbook')}
+            </Typography>
             <Field name={ResourceFieldNames.TEXTBOOK_CONTENT}>
               {({ field }: FieldProps) => (
                 <FormControlLabel
@@ -87,7 +77,7 @@ const BookForm = () => {
                 />
               )}
             </Field>
-          </StyledTextBook>
+          </div>
         </StyledSection>
       </BackgroundDiv>
 

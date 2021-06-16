@@ -1,9 +1,10 @@
-import { Field, FieldProps, useFormikContext } from 'formik';
+import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@material-ui/core';
 import { Registration } from '../../../../types/registration.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { FormHelperText } from '@material-ui/core';
 
 export const PeerReviewedField = () => {
   const { t } = useTranslation('registration');
@@ -18,7 +19,7 @@ export const PeerReviewedField = () => {
           </Typography>
           <FormControl data-testid="peer-review-field">
             <RadioGroup
-              value={value === null || value === undefined ? '' : value ? 'true' : 'false'}
+              value={value === true ? 'true' : value === false ? 'false' : ''}
               onChange={(event) => setFieldValue(name, event.target.value === 'true')}>
               <FormControlLabel
                 control={<Radio color="primary" data-testid="peer_review-true" value="true" />}
@@ -29,6 +30,7 @@ export const PeerReviewedField = () => {
                 label={<Typography>{t('common:no')}</Typography>}
               />
             </RadioGroup>
+            <ErrorMessage name={name} render={(message) => <FormHelperText error>{message}</FormHelperText>} />
           </FormControl>
         </>
       )}
