@@ -23,7 +23,7 @@ const StyledGeneralInfoBox = styled.div`
   }
 `;
 
-const StyledAccordion = styled(Accordion)`
+export const StyledAccordion = styled(Accordion)`
   border-top: 3px solid;
   background: ${({ theme }) => theme.palette.background.default};
 

@@ -1,26 +1,19 @@
+import { AccordionDetails, AccordionSummary, Typography } from '@material-ui/core';
 import deepmerge from 'deepmerge';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import BackgroundDiv from '../../components/BackgroundDiv';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { ItalicPageHeader } from '../../components/PageHeader';
-import lightTheme from '../../themes/lightTheme';
 import { emptyRegistration, Registration } from '../../types/registration.types';
+import { dataTestId } from '../../utils/dataTestIds';
+import { StyledAccordion } from '../projects/ProjectLandingPage';
 import { PublicFilesContent } from './PublicFilesContent';
 import PublicGeneralContent from './PublicGeneralContent';
 import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
 import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
 import { PublicSummaryContent } from './PublicSummaryContent';
-
-const StyledBackgroundDiv = styled(BackgroundDiv)`
-  padding: 2rem 5rem;
-  max-width: 100vw;
-
-  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.md}px`}) {
-    padding: 1rem 2rem;
-  }
-`;
 
 const StyledYearSpan = styled.span`
   padding-left: 1rem;
@@ -65,26 +58,49 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           />
         )}
 
-        <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
-          <PublicGeneralContent registration={registration} />
-        </StyledBackgroundDiv>
+        <PublicGeneralContent registration={registration} />
 
         {fileSet.files.length > 0 && (
-          <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-            <PublicFilesContent registration={registration} />
-          </StyledBackgroundDiv>
+          <StyledAccordion square elevation={0} defaultExpanded>
+            <AccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
+              <Typography variant="h3" component="h2" color="primary">
+                {t('files_and_license.files')}
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <PublicFilesContent registration={registration} />
+            </AccordionDetails>
+          </StyledAccordion>
         )}
 
         {(abstract || description || tags.length > 0) && (
-          <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-            <PublicSummaryContent registration={registration} />
-          </StyledBackgroundDiv>
+          <StyledAccordion square elevation={0} defaultExpanded>
+            <AccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
+              <Typography variant="h3" component="h2" color="primary">
+                {t('description.abstract')}
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div>
+                <PublicSummaryContent registration={registration} />
+              </div>
+            </AccordionDetails>
+          </StyledAccordion>
         )}
 
         {projects?.length > 0 && (
-          <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-            <PublicProjectsContent projects={projects} />
-          </StyledBackgroundDiv>
+          <StyledAccordion square elevation={0} defaultExpanded>
+            <AccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
+              <Typography variant="h3" component="h2" color="primary">
+                {t('description.project_association')}
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div>
+                <PublicProjectsContent projects={projects} />
+              </div>
+            </AccordionDetails>
+          </StyledAccordion>
         )}
       </div>
     </>
