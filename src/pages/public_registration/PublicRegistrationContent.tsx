@@ -72,9 +72,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
             data-testid={dataTestId.registrationLandingPage.abstractAccordion}
             defaultExpanded
             heading={t('description.abstract')}>
-            <div>
-              <PublicSummaryContent registration={registration} />
-            </div>
+            <PublicSummaryContent registration={registration} />
           </LandingPageAccordion>
         )}
 
@@ -83,9 +81,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
             data-testid={dataTestId.registrationLandingPage.projectsAccordion}
             defaultExpanded
             heading={t('description.project_association')}>
-            <div>
-              <PublicProjectsContent projects={projects} />
-            </div>
+            <PublicProjectsContent projects={projects} />
           </LandingPageAccordion>
         )}
       </div>

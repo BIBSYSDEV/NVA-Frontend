@@ -21,6 +21,7 @@ const StyledAccordionSummary = styled(AccordionSummary)`
 `;
 
 const StyledAccordionDetails = styled(AccordionDetails)`
+  display: block;
   padding: 0;
   margin-bottom: 1rem;
 `;
