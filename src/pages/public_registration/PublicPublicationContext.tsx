@@ -88,7 +88,7 @@ export const PublicLinkedContextContent = ({
   );
 };
 
-export const PublicSeriesContent = ({ seriesTitle }: { seriesTitle: string }) => {
+export const PublicSeriesContent = ({ seriesTitle, seriesNumber }: { seriesTitle: string; seriesNumber?: string }) => {
   const { t } = useTranslation('registration');
 
   return seriesTitle ? (
@@ -97,6 +97,9 @@ export const PublicSeriesContent = ({ seriesTitle }: { seriesTitle: string }) =>
         {t('resource_type.series')}
       </Typography>
       <Typography>{seriesTitle}</Typography>
+      <Typography>
+        {t('common:number')}: {seriesNumber}
+      </Typography>
     </>
   ) : null;
 };
