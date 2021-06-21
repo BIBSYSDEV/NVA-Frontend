@@ -1,9 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Divider, Link, MuiThemeProvider, Typography } from '@material-ui/core';
+import { Divider, Link, Typography } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import styled from 'styled-components';
-import lightTheme from '../../themes/lightTheme';
 import { CristinProject, ResearchProject } from '../../types/project.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getProjectPath } from '../../utils/urlPaths';
@@ -30,7 +29,7 @@ const StyledHeadingRow = styled(StyledProjectGrid)`
 
 const StyledProjectRow = styled(StyledProjectGrid)`
   padding: 0.5rem 1rem;
-  background: ${({ theme }) => theme.palette.background.default};
+  background: ${({ theme }) => theme.palette.section.megaLight};
   margin-bottom: 1rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     grid-template-columns: 1fr;
@@ -59,11 +58,10 @@ export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) 
         <span />
         <Typography variant="caption">{t('project_info')}</Typography>
       </StyledHeadingRow>
-      <MuiThemeProvider theme={lightTheme}>
-        {projects.map((project) => (
-          <ProjectRow key={project.id} project={project} />
-        ))}
-      </MuiThemeProvider>
+
+      {projects.map((project) => (
+        <ProjectRow key={project.id} project={project} />
+      ))}
     </>
   );
 };

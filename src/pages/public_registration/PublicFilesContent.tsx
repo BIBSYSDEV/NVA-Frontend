@@ -25,6 +25,8 @@ const StyledFileRowContainer = styled.div`
 `;
 
 const StyledFileRow = styled.div`
+  padding: 1rem;
+  background: ${({ theme }) => theme.palette.section.megaLight};
   display: grid;
   grid-template-areas:
     'name     size    version license download'
@@ -32,7 +34,6 @@ const StyledFileRow = styled.div`
   grid-template-columns: 5fr 1fr 2fr 2fr 2fr;
   column-gap: 1rem;
   align-items: center;
-  background: ${({ theme }) => theme.palette.common.white};
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
     grid-template-areas:

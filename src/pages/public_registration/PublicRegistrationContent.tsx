@@ -61,7 +61,11 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
         <PublicGeneralContent registration={registration} />
 
         {fileSet.files.length > 0 && (
-          <StyledAccordion square elevation={0} defaultExpanded>
+          <StyledAccordion
+            square
+            elevation={0}
+            defaultExpanded
+            data-testid={dataTestId.registrationLandingPage.filesAccordion}>
             <AccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
               <Typography variant="h3" component="h2" color="primary">
                 {t('files_and_license.files')}
@@ -74,7 +78,11 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
         )}
 
         {(abstract || description || tags.length > 0) && (
-          <StyledAccordion square elevation={0} defaultExpanded>
+          <StyledAccordion
+            square
+            elevation={0}
+            defaultExpanded
+            data-testid={dataTestId.registrationLandingPage.abstractAccordion}>
             <AccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
               <Typography variant="h3" component="h2" color="primary">
                 {t('description.abstract')}
@@ -89,7 +97,11 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
         )}
 
         {projects?.length > 0 && (
-          <StyledAccordion square elevation={0} defaultExpanded>
+          <StyledAccordion
+            square
+            elevation={0}
+            defaultExpanded
+            data-testid={dataTestId.registrationLandingPage.projectsAccordion}>
             <AccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
               <Typography variant="h3" component="h2" color="primary">
                 {t('description.project_association')}
