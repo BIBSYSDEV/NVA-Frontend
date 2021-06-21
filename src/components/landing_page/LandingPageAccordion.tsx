@@ -10,11 +10,14 @@ const StyledLandingPageAccordion = styled(Accordion)`
     border-bottom: 3px solid;
   }
 
-  margin: 0 !important;
+  &.MuiAccordion-root.Mui-expanded {
+    margin: 0;
+  }
 `;
 
 const StyledAccordionSummary = styled(AccordionSummary)`
   padding: 1rem 1rem 1rem 0;
+
   .MuiAccordionSummary-content {
     margin: 0;
   }
