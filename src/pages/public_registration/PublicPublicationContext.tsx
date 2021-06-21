@@ -97,9 +97,11 @@ export const PublicSeriesContent = ({ seriesTitle, seriesNumber }: { seriesTitle
         {t('resource_type.series')}
       </Typography>
       <Typography>{seriesTitle}</Typography>
-      <Typography>
-        {t('common:number')}: {seriesNumber}
-      </Typography>
+      {seriesNumber && (
+        <Typography>
+          {t('common:number')}: {seriesNumber}
+        </Typography>
+      )}
     </>
   ) : null;
 };
