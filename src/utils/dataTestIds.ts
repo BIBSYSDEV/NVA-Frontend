@@ -32,6 +32,8 @@ export const dataTestId = {
     },
     resourceType: {
       peerReviewed: 'peer-review-field',
+      seriesField: 'series-search-field',
+      seriesNumber: 'series-number-field',
     },
   },
   myInstitutionUsersPage: {
