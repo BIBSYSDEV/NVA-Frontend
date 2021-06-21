@@ -1,19 +1,17 @@
-import { AccordionDetails, AccordionSummary, Typography } from '@material-ui/core';
 import deepmerge from 'deepmerge';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { ItalicPageHeader } from '../../components/PageHeader';
 import { emptyRegistration, Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { StyledAccordion } from '../projects/ProjectLandingPage';
 import { PublicFilesContent } from './PublicFilesContent';
 import PublicGeneralContent from './PublicGeneralContent';
 import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
 import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
 import { PublicSummaryContent } from './PublicSummaryContent';
+import { LandingPageAccordion } from '../../components/LandingPageAccordion';
 
 const StyledYearSpan = styled.span`
   padding-left: 1rem;
@@ -61,58 +59,34 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
         <PublicGeneralContent registration={registration} />
 
         {fileSet.files.length > 0 && (
-          <StyledAccordion
-            square
-            elevation={0}
+          <LandingPageAccordion
+            data-testid={dataTestId.registrationLandingPage.filesAccordion}
             defaultExpanded
-            data-testid={dataTestId.registrationLandingPage.filesAccordion}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
-              <Typography variant="h3" component="h2" color="primary">
-                {t('files_and_license.files')}
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <PublicFilesContent registration={registration} />
-            </AccordionDetails>
-          </StyledAccordion>
+            heading={t('files_and_license.files')}>
+            <PublicFilesContent registration={registration} />
+          </LandingPageAccordion>
         )}
 
         {(abstract || description || tags.length > 0) && (
-          <StyledAccordion
-            square
-            elevation={0}
+          <LandingPageAccordion
+            data-testid={dataTestId.registrationLandingPage.abstractAccordion}
             defaultExpanded
-            data-testid={dataTestId.registrationLandingPage.abstractAccordion}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
-              <Typography variant="h3" component="h2" color="primary">
-                {t('description.abstract')}
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <div>
-                <PublicSummaryContent registration={registration} />
-              </div>
-            </AccordionDetails>
-          </StyledAccordion>
+            heading={t('description.abstract')}>
+            <div>
+              <PublicSummaryContent registration={registration} />
+            </div>
+          </LandingPageAccordion>
         )}
 
         {projects?.length > 0 && (
-          <StyledAccordion
-            square
-            elevation={0}
+          <LandingPageAccordion
+            data-testid={dataTestId.registrationLandingPage.projectsAccordion}
             defaultExpanded
-            data-testid={dataTestId.registrationLandingPage.projectsAccordion}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
-              <Typography variant="h3" component="h2" color="primary">
-                {t('description.project_association')}
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <div>
-                <PublicProjectsContent projects={projects} />
-              </div>
-            </AccordionDetails>
-          </StyledAccordion>
+            heading={t('description.project_association')}>
+            <div>
+              <PublicProjectsContent projects={projects} />
+            </div>
+          </LandingPageAccordion>
         )}
       </div>
     </>

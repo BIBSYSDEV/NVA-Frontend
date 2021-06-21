@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Accordion, AccordionSummary, Typography } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { ItalicPageHeader } from '../../components/PageHeader';
 import { CristinProject } from '../../types/project.types';
@@ -11,6 +10,7 @@ import {
   getProjectPeriod,
 } from '../registration/description_tab/projects_field/projectHelpers';
 import { dataTestId } from '../../utils/dataTestIds';
+import { LandingPageAccordion } from '../../components/LandingPageAccordion';
 
 const StyledGeneralInfoBox = styled.div`
   margin-bottom: 1rem;
@@ -21,19 +21,6 @@ const StyledGeneralInfoBox = styled.div`
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
     grid-template-columns: 1fr;
   }
-`;
-
-export const StyledAccordion = styled(Accordion)`
-  border-top: 3px solid;
-  background: ${({ theme }) => theme.palette.background.default};
-
-  :last-child {
-    border-bottom: 3px solid;
-  }
-`;
-
-const StyledAccordionSummary = styled(AccordionSummary)`
-  padding: 1rem 0 1rem 0;
 `;
 
 interface ProjectLandingPageProps {
@@ -74,29 +61,17 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
         </div>
       </StyledGeneralInfoBox>
 
-      <StyledAccordion square elevation={0} data-testid={dataTestId.projectLandingPage.scientificSummaryAccordion}>
-        <StyledAccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
-          <Typography variant="h3" component="h2" color="primary">
-            {t('scientific_summary')}
-          </Typography>
-        </StyledAccordionSummary>
-      </StyledAccordion>
+      <LandingPageAccordion
+        heading={t('scientific_summary')}
+        data-testid={dataTestId.projectLandingPage.scientificSummaryAccordion}></LandingPageAccordion>
 
-      <StyledAccordion square elevation={0} data-testid={dataTestId.projectLandingPage.participantsAccordion}>
-        <StyledAccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
-          <Typography variant="h3" component="h2" color="primary">
-            {t('project_participants')}
-          </Typography>
-        </StyledAccordionSummary>
-      </StyledAccordion>
+      <LandingPageAccordion
+        data-testid={dataTestId.projectLandingPage.participantsAccordion}
+        heading={t('project_participants')}></LandingPageAccordion>
 
-      <StyledAccordion square elevation={0} data-testid={dataTestId.projectLandingPage.resultsAccordion}>
-        <StyledAccordionSummary expandIcon={<ExpandMoreIcon color="primary" />}>
-          <Typography variant="h3" component="h2" color="primary">
-            {t('results')}
-          </Typography>
-        </StyledAccordionSummary>
-      </StyledAccordion>
+      <LandingPageAccordion
+        data-testid={dataTestId.projectLandingPage.resultsAccordion}
+        heading={t('results')}></LandingPageAccordion>
     </>
   );
 };
