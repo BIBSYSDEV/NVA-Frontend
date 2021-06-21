@@ -18,15 +18,12 @@ import { PreviewFile } from './preview_file/PreviewFile';
 import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledFileRowContainer = styled.div`
-  width: 100%;
   > :not(:last-child) {
     margin-bottom: 1rem;
   }
 `;
 
 const StyledFileRow = styled.div`
-  padding: 1rem;
-  background: ${({ theme }) => theme.palette.section.megaLight};
   display: grid;
   grid-template-areas:
     'name     size    version license download'
@@ -34,6 +31,8 @@ const StyledFileRow = styled.div`
   grid-template-columns: 5fr 1fr 2fr 2fr 2fr;
   column-gap: 1rem;
   align-items: center;
+  padding: 1rem;
+  background: ${({ theme }) => theme.palette.section.megaLight};
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
     grid-template-areas:
