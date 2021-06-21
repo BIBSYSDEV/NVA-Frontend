@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
 import { LanguageCodes, registrationLanguages } from '../../types/language.types';
 import { BookPublicationContext, BookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
@@ -41,27 +40,7 @@ import {
 } from './PublicPublicationInstance';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import RegistrationSummary from './RegistrationSummary';
-
-const StyledContent = styled.div`
-  display: grid;
-  grid-template-areas: 'group0 group1';
-  grid-template-columns: 1fr 1fr;
-  grid-column-gap: 1rem;
-
-  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
-    grid-template-areas: 'group0' 'group1';
-    grid-template-columns: 1fr;
-    grid-row-gap: 1rem;
-  }
-`;
-
-const StyledGroup0 = styled.div`
-  grid-area: group0;
-`;
-
-const StyledGroup1 = styled.div`
-  grid-area: group1;
-`;
+import { StyledGeneralInfo } from '../../components/landing_page/SyledGeneralInfo';
 
 const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
@@ -73,8 +52,8 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
   } = registration.entityDescription;
 
   return (
-    <StyledContent>
-      <StyledGroup0>
+    <StyledGeneralInfo>
+      <div>
         <Typography variant="overline">{t('public_page.about_registration')}</Typography>
 
         {(publicationInstance as JournalPublicationInstance).peerReviewed && (
@@ -100,9 +79,9 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
         )}
 
         <PublicDoi registration={registration} />
-      </StyledGroup0>
+      </div>
 
-      <StyledGroup1>
+      <div>
         {isJournal(registration) ? (
           <>
             <PublicJournalContent date={date} publicationContext={publicationContext as JournalPublicationContext} />
@@ -146,8 +125,8 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
             <PublicPublicationInstanceChapter publicationInstance={publicationInstance as ChapterPublicationInstance} />
           </>
         ) : null}
-      </StyledGroup1>
-    </StyledContent>
+      </div>
+    </StyledGeneralInfo>
   );
 };
 

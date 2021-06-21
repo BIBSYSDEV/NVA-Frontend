@@ -14,7 +14,7 @@ const StyledLandingPageAccordion = styled(Accordion)`
 `;
 
 const StyledAccordionSummary = styled(AccordionSummary)`
-  padding: 1rem 0 1rem 0;
+  padding: 1rem 1rem 1rem 0;
   .MuiAccordionSummary-content {
     margin: 0;
   }

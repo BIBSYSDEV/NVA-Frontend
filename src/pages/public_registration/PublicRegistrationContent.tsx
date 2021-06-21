@@ -11,7 +11,7 @@ import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
 import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
 import { PublicSummaryContent } from './PublicSummaryContent';
-import { LandingPageAccordion } from '../../components/LandingPageAccordion';
+import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 
 const StyledYearSpan = styled.span`
   padding-left: 1rem;
