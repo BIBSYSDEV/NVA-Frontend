@@ -88,7 +88,7 @@ export const PublicLinkedContextContent = ({
   );
 };
 
-export const PublicSeriesContent = ({ seriesTitle, seriesNumber }: { seriesTitle: string; seriesNumber?: string }) => {
+export const PublicSeriesContent = ({ seriesTitle, seriesNumber }: { seriesTitle: string; seriesNumber: string }) => {
   const { t } = useTranslation('registration');
 
   return seriesTitle ? (
