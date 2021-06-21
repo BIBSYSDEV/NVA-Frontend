@@ -9,7 +9,7 @@ import PublicationChannelSearch from './PublicationChannelSearch';
 import { TextField } from '@material-ui/core';
 import { dataTestId } from '../../../../utils/dataTestIds';
 
-const SeriesField = () => {
+export const SeriesFields = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 
@@ -46,5 +46,3 @@ const SeriesField = () => {
     </>
   );
 };
-
-export default SeriesField;
