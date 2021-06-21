@@ -5,16 +5,19 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const StyledLandingPageAccordion = styled(Accordion)`
   background: ${({ theme }) => theme.palette.background.default};
-  margin: 0 !important;
+  border-top: 3px solid;
   :last-child {
     border-bottom: 3px solid;
   }
+
+  margin: 0 !important;
 `;
 
 const StyledAccordionSummary = styled(AccordionSummary)`
-  border-top: 3px solid;
-  margin: 0 !important;
   padding: 1rem 0 1rem 0;
+  .MuiAccordionSummary-content {
+    margin: 0;
+  }
 `;
 
 const StyledAccordionDetails = styled(AccordionDetails)`
