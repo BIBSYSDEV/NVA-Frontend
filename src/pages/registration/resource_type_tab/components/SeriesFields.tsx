@@ -1,11 +1,11 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { TextField } from '@material-ui/core';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { mapLevel, publicationContextToPublisher } from './resource-helpers';
 import PublicationChannelSearch from './PublicationChannelSearch';
-import { TextField } from '@material-ui/core';
 import { dataTestId } from '../../../../utils/dataTestIds';
 
 export const SeriesFields = () => {
