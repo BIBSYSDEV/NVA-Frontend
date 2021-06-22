@@ -5,9 +5,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const StyledLandingPageAccordion = styled(Accordion)`
   background: ${({ theme }) => theme.palette.background.default};
-  border-top: 3px solid;
+  border-top: 1px solid;
   :last-child {
-    border-bottom: 3px solid;
+    border-bottom: 1px solid;
   }
 
   &.MuiAccordion-root.Mui-expanded {
@@ -26,7 +26,7 @@ const StyledAccordionSummary = styled(AccordionSummary)`
 const StyledAccordionDetails = styled(AccordionDetails)`
   display: block;
   padding: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 `;
 
 interface LandingPageAccordionProps extends Pick<AccordionProps, 'defaultExpanded'> {
