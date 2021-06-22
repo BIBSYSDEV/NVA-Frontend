@@ -1,22 +1,20 @@
 import React from 'react';
-import { Field, FieldProps, useFormikContext } from 'formik';
+import { Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { mapLevel, publicationContextToPublisher } from './resource-helpers';
-import { Registration } from '../../../../types/registration.types';
 import PublicationChannelSearch from './PublicationChannelSearch';
 import { TextField } from '@material-ui/core';
 import { dataTestId } from '../../../../utils/dataTestIds';
 
 export const SeriesFields = () => {
   const { t } = useTranslation('registration');
-  const { setFieldValue } = useFormikContext<Registration>();
 
   return (
     <>
       <Field name={ResourceFieldNames.SERIES_TITLE}>
-        {({ field: { name, value } }: FieldProps<string>) => (
+        {({ field: { name, value }, form: { setFieldValue } }: FieldProps<string>) => (
           <PublicationChannelSearch
             dataTestId={dataTestId.registrationWizard.resourceType.seriesField}
             publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
