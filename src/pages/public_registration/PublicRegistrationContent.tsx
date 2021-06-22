@@ -42,12 +42,12 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
       <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
       <ItalicPageHeader
         superHeader={{
-          title: (
+          title: reference.publicationInstance.type ? (
             <>
               <span>{t(`publicationTypes:${reference.publicationInstance.type}`)}</span>
               <StyledYearSpan>{date.year}</StyledYearSpan>
             </>
-          ),
+          ) : null,
           icon: <MenuBookIcon />,
         }}>
         {mainTitle || `[${t('common:missing_title')}]`}
