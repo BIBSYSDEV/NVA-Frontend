@@ -53,7 +53,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
         {mainTitle || `[${t('common:missing_title')}]`}
       </ItalicPageHeader>
       <div>
-        {contributors && (
+        {contributors.length > 0 && (
           <PublicRegistrationContributors
             contributors={contributors}
             registrationType={reference.publicationInstance.type}
