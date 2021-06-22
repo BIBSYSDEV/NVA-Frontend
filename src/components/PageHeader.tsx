@@ -13,7 +13,7 @@ import { ReactNode } from 'react';
 
 const StyledHeader = styled.div`
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   word-break: break-word;
 `;
 
@@ -23,7 +23,7 @@ const StyledIconButton = styled(IconButton)`
 `;
 
 const StyledTruncatableHeading = styled.div<{ canBeTruncated: boolean }>`
-  padding-bottom: 1rem;
+  padding-bottom: 1.5rem;
   border-bottom: 3px solid;
   align-items: center;
   display: grid;
