@@ -23,7 +23,7 @@ const StyledIconButton = styled(IconButton)`
 `;
 
 const StyledTruncatableHeading = styled.div<{ canBeTruncated: boolean }>`
-  padding-bottom: 0.3rem;
+  padding-bottom: 1rem;
   border-bottom: 3px solid;
   align-items: center;
   display: grid;
@@ -79,7 +79,11 @@ export const PageHeader = ({
           {t('back')}
         </Button>
       )}
-      {superHeader && <Typography variant="overline">{superHeader}</Typography>}
+      {superHeader && (
+        <Typography variant="overline" paragraph>
+          {superHeader}
+        </Typography>
+      )}
       <StyledTruncatableHeading canBeTruncated={canBeTruncated}>
         <Typography variant="h1" {...props}>
           <TextTruncate

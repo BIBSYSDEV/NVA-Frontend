@@ -26,7 +26,7 @@ const StyledAccordionSummary = styled(AccordionSummary)`
 const StyledAccordionDetails = styled(AccordionDetails)`
   display: block;
   padding: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 `;
 
 interface LandingPageAccordionProps extends Pick<AccordionProps, 'defaultExpanded'> {
