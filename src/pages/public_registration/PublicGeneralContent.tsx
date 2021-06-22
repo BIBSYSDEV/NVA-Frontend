@@ -19,7 +19,7 @@ import {
   ReportPublicationContext,
   ReportPublicationInstance,
 } from '../../types/publication_types/reportRegistration.types';
-import { JournalType } from '../../types/publicationFieldNames';
+import { DegreeType, JournalType } from '../../types/publicationFieldNames';
 import { BookRegistration, ReportRegistration } from '../../types/registration.types';
 import { getNpiDiscipline } from '../../utils/npiDisciplines';
 import { isBook, isChapter, isDegree, isJournal, isReport } from '../../utils/registration-helpers';
@@ -98,7 +98,10 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
         ) : isBook(registration) ? (
           <>
             <PublicPublisherContent publicationContext={publicationContext as BookPublicationContext} />
-            <PublicSeriesContent seriesTitle={(publicationContext as BookPublicationContext).seriesTitle} />
+            <PublicSeriesContent
+              seriesTitle={(publicationContext as BookPublicationContext).seriesTitle}
+              seriesNumber={(publicationContext as BookPublicationContext).seriesNumber}
+            />
             <PublicPublicationInstanceBook publicationInstance={publicationInstance as BookPublicationInstance} />
             <PublicIsbnContent
               isbnList={(registration as BookRegistration).entityDescription.reference.publicationContext.isbnList}
@@ -107,13 +110,21 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
         ) : isDegree(registration) ? (
           <>
             <PublicPublisherContent publicationContext={publicationContext as DegreePublicationContext} />
-            <PublicSeriesContent seriesTitle={(publicationContext as DegreePublicationContext).seriesTitle} />
+            {publicationInstance.type === DegreeType.PHD && (
+              <PublicSeriesContent
+                seriesTitle={(publicationContext as DegreePublicationContext).seriesTitle}
+                seriesNumber={(publicationContext as DegreePublicationContext).seriesNumber}
+              />
+            )}
             <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
           </>
         ) : isReport(registration) ? (
           <>
             <PublicPublisherContent publicationContext={publicationContext as ReportPublicationContext} />
-            <PublicSeriesContent seriesTitle={(publicationContext as ReportPublicationContext).seriesTitle} />
+            <PublicSeriesContent
+              seriesTitle={(publicationContext as ReportPublicationContext).seriesTitle}
+              seriesNumber={(publicationContext as ReportPublicationContext).seriesNumber}
+            />
             <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
             <PublicIsbnContent
               isbnList={(registration as ReportRegistration).entityDescription.reference.publicationContext.isbnList}

@@ -13,7 +13,7 @@ import { NpiDisciplineField } from '../components/NpiDisciplineField';
 import NviValidation from '../components/NviValidation';
 import { PeerReviewedField } from '../components/PeerReviewedField';
 import PublisherField from '../components/PublisherField';
-import SeriesField from '../components/SeriesField';
+import { SeriesFields } from '../components/SeriesFields';
 import TotalPagesField from '../components/TotalPagesField';
 
 const StyledSection = styled.div`
@@ -84,7 +84,7 @@ const BookForm = () => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
         <Typography variant="h5">{t('resource_type.series')}</Typography>
         <Typography>{t('resource_type.series_info')}</Typography>
-        <SeriesField />
+        <SeriesFields />
       </BackgroundDiv>
 
       {type === BookType.MONOGRAPH && (
