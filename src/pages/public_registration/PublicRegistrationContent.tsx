@@ -2,25 +2,16 @@ import deepmerge from 'deepmerge';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import BackgroundDiv from '../../components/BackgroundDiv';
 import { ItalicPageHeader } from '../../components/PageHeader';
-import lightTheme from '../../themes/lightTheme';
 import { emptyRegistration, Registration } from '../../types/registration.types';
+import { dataTestId } from '../../utils/dataTestIds';
 import { PublicFilesContent } from './PublicFilesContent';
 import PublicGeneralContent from './PublicGeneralContent';
 import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
 import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
 import { PublicSummaryContent } from './PublicSummaryContent';
-
-const StyledBackgroundDiv = styled(BackgroundDiv)`
-  padding: 2rem 5rem;
-  max-width: 100vw;
-
-  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.md}px`}) {
-    padding: 1rem 2rem;
-  }
-`;
+import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 
 const StyledYearSpan = styled.span`
   padding-left: 1rem;
@@ -65,26 +56,33 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           />
         )}
 
-        <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
-          <PublicGeneralContent registration={registration} />
-        </StyledBackgroundDiv>
+        <PublicGeneralContent registration={registration} />
 
         {fileSet.files.length > 0 && (
-          <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.light}>
+          <LandingPageAccordion
+            data-testid={dataTestId.registrationLandingPage.filesAccordion}
+            defaultExpanded
+            heading={t('files_and_license.files')}>
             <PublicFilesContent registration={registration} />
-          </StyledBackgroundDiv>
+          </LandingPageAccordion>
         )}
 
         {(abstract || description || tags.length > 0) && (
-          <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+          <LandingPageAccordion
+            data-testid={dataTestId.registrationLandingPage.abstractAccordion}
+            defaultExpanded
+            heading={t('description.abstract')}>
             <PublicSummaryContent registration={registration} />
-          </StyledBackgroundDiv>
+          </LandingPageAccordion>
         )}
 
         {projects?.length > 0 && (
-          <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
+          <LandingPageAccordion
+            data-testid={dataTestId.registrationLandingPage.projectsAccordion}
+            defaultExpanded
+            heading={t('description.project_association')}>
             <PublicProjectsContent projects={projects} />
-          </StyledBackgroundDiv>
+          </LandingPageAccordion>
         )}
       </div>
     </>
