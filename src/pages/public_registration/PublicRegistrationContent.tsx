@@ -12,6 +12,7 @@ import { PublicRegistrationContributors } from './PublicRegistrationContributors
 import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
 import { PublicSummaryContent } from './PublicSummaryContent';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
 
 const StyledYearSpan = styled.span`
   padding-left: 1rem;
@@ -40,12 +41,15 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
     <>
       <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
       <ItalicPageHeader
-        superHeader={
-          <>
-            <span>{t(`publicationTypes:${reference.publicationInstance.type}`)}</span>
-            <StyledYearSpan>{date.year}</StyledYearSpan>
-          </>
-        }>
+        superHeader={{
+          title: (
+            <>
+              <span>{t(`publicationTypes:${reference.publicationInstance.type}`)}</span>
+              <StyledYearSpan>{date.year}</StyledYearSpan>
+            </>
+          ),
+          icon: <MenuBookIcon />,
+        }}>
         {mainTitle || `[${t('common:missing_title')}]`}
       </ItalicPageHeader>
       <div>

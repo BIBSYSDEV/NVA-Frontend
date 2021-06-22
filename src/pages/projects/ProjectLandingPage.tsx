@@ -1,5 +1,6 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
+import AccountTreeIcon from '@material-ui/icons/AccountTree';
 import { useTranslation } from 'react-i18next';
 import { ItalicPageHeader } from '../../components/PageHeader';
 import { CristinProject } from '../../types/project.types';
@@ -21,7 +22,9 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
 
   return (
     <>
-      <ItalicPageHeader superHeader={t('project')}>{project.title}</ItalicPageHeader>
+      <ItalicPageHeader superHeader={{ title: t('project'), icon: <AccountTreeIcon /> }}>
+        {project.title}
+      </ItalicPageHeader>
 
       <StyledGeneralInfo data-testid={dataTestId.projectLandingPage.generalInfoBox}>
         <div>

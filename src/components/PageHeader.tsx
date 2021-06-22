@@ -10,6 +10,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { UrlPathTemplate } from '../utils/urlPaths';
 import { ReactNode } from 'react';
+import { Icon } from '@material-ui/core';
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -39,9 +40,12 @@ const StyledTruncatableHeading = styled.div<{ canBeTruncated: boolean }>`
 export interface PageHeaderProps extends TypographyProps {
   backPath?: string;
   children: string;
-  superHeader?: string | ReactNode;
   htmlTitle?: string;
   showBackButton?: boolean;
+  superHeader?: {
+    title: string | ReactNode;
+    icon?: ReactNode;
+  };
 }
 
 export const PageHeader = ({
@@ -80,9 +84,12 @@ export const PageHeader = ({
         </Button>
       )}
       {superHeader && (
-        <Typography variant="overline" paragraph>
-          {superHeader}
-        </Typography>
+        <>
+          {superHeader.icon && <Icon color="primary">{superHeader.icon}</Icon>}
+          <Typography variant="overline" paragraph color="primary">
+            {superHeader.title}
+          </Typography>
+        </>
       )}
       <StyledTruncatableHeading canBeTruncated={canBeTruncated}>
         <Typography variant="h1" {...props}>
