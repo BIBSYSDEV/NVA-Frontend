@@ -31,7 +31,7 @@ const StyedAffiliationListItem = styled.li`
 
 const StyledPublicRegistrationAuthors = styled.div`
   padding-bottom: 1rem;
-  border-bottom: 3px solid;
+  border-bottom: 1px solid;
   margin-bottom: 1rem;
 `;
 

@@ -10,7 +10,6 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { UrlPathTemplate } from '../utils/urlPaths';
 import { ReactNode } from 'react';
-import { Icon } from '@material-ui/core';
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -25,7 +24,7 @@ const StyledIconButton = styled(IconButton)`
 
 const StyledTruncatableHeading = styled.div<{ canBeTruncated: boolean }>`
   padding-bottom: 1.5rem;
-  border-bottom: 3px solid;
+  border-bottom: 2px solid;
   align-items: center;
   display: grid;
   grid-template-columns: ${({ canBeTruncated }) => (canBeTruncated ? '1fr auto' : '1fr')};
@@ -35,6 +34,10 @@ const StyledTruncatableHeading = styled.div<{ canBeTruncated: boolean }>`
     display: block;
     width: 100%;
   }
+`;
+
+const StyledSuperHeader = styled.div`
+  color: ${({ theme }) => theme.palette.section.megaDark};
 `;
 
 export interface PageHeaderProps extends TypographyProps {
@@ -84,12 +87,12 @@ export const PageHeader = ({
         </Button>
       )}
       {superHeader && (
-        <>
-          {superHeader.icon && <Icon color="primary">{superHeader.icon}</Icon>}
-          <Typography variant="overline" paragraph color="primary">
+        <StyledSuperHeader>
+          {superHeader.icon}
+          <Typography variant="overline" paragraph color="inherit">
             {superHeader.title}
           </Typography>
-        </>
+        </StyledSuperHeader>
       )}
       <StyledTruncatableHeading canBeTruncated={canBeTruncated}>
         <Typography variant="h1" {...props}>
