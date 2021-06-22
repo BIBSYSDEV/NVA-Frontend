@@ -23,7 +23,7 @@ const StyledIconButton = styled(IconButton)`
 `;
 
 const StyledTruncatableHeading = styled.div<{ canBeTruncated: boolean }>`
-  padding-bottom: 1.5rem;
+  padding-bottom: 1rem;
   border-bottom: 2px solid;
   align-items: center;
   display: grid;
