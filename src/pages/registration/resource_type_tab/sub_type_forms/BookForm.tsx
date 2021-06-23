@@ -14,7 +14,7 @@ import NviValidation from '../components/NviValidation';
 import { PeerReviewedField } from '../components/PeerReviewedField';
 import PublisherField from '../components/PublisherField';
 import { SeriesFields } from '../components/SeriesFields';
-import TotalPagesField from '../components/TotalPagesField';
+import { TotalPagesField } from '../components/TotalPagesField';
 
 const StyledSection = styled.div`
   display: grid;

@@ -6,15 +6,10 @@ import { TextField } from '@material-ui/core';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 
 const StyledTextField = styled(TextField)`
-  display: inline;
   width: fit-content;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    display: grid;
-    width: auto;
-  }
 `;
 
-const TotalPagesField = () => {
+export const TotalPagesField = () => {
   const { t } = useTranslation('registration');
 
   return (
@@ -34,5 +29,3 @@ const TotalPagesField = () => {
     </Field>
   );
 };
-
-export default TotalPagesField;
