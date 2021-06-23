@@ -13,7 +13,7 @@ import { ReactNode } from 'react';
 
 const StyledHeader = styled.div`
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   word-break: break-word;
 `;
 
@@ -23,8 +23,8 @@ const StyledIconButton = styled(IconButton)`
 `;
 
 const StyledTruncatableHeading = styled.div<{ canBeTruncated: boolean }>`
-  padding-bottom: 0.3rem;
-  border-bottom: 3px solid;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid;
   align-items: center;
   display: grid;
   grid-template-columns: ${({ canBeTruncated }) => (canBeTruncated ? '1fr auto' : '1fr')};
@@ -36,12 +36,19 @@ const StyledTruncatableHeading = styled.div<{ canBeTruncated: boolean }>`
   }
 `;
 
+const StyledSuperHeader = styled.div`
+  color: ${({ theme }) => theme.palette.section.megaDark};
+`;
+
 export interface PageHeaderProps extends TypographyProps {
   backPath?: string;
   children: string;
-  superHeader?: string | ReactNode;
   htmlTitle?: string;
   showBackButton?: boolean;
+  superHeader?: {
+    title: string | ReactNode;
+    icon?: ReactNode;
+  };
 }
 
 export const PageHeader = ({
@@ -79,7 +86,14 @@ export const PageHeader = ({
           {t('back')}
         </Button>
       )}
-      {superHeader && <Typography variant="overline">{superHeader}</Typography>}
+      {superHeader && (
+        <StyledSuperHeader>
+          {superHeader.icon}
+          <Typography variant="overline" paragraph color="inherit">
+            {superHeader.title}
+          </Typography>
+        </StyledSuperHeader>
+      )}
       <StyledTruncatableHeading canBeTruncated={canBeTruncated}>
         <Typography variant="h1" {...props}>
           <TextTruncate

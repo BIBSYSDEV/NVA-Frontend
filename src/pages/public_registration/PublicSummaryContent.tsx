@@ -13,9 +13,6 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
     <>
       {abstract && (
         <>
-          <Typography variant="h4" component="h2">
-            {t('description.abstract')}
-          </Typography>
           <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
             {abstract}
           </Typography>
@@ -23,7 +20,7 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
       )}
       {description && (
         <>
-          <Typography variant="h4" component="h2">
+          <Typography variant="overline" component="h3" color="primary">
             {t('description.description')}
           </Typography>
           <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
@@ -77,7 +74,7 @@ interface TagsListProps {
 
 const TagsList = ({ title, values }: TagsListProps) => (
   <StyledTagsList>
-    <Typography variant="overline" component="h2">
+    <Typography variant="overline" component="h3" color="primary">
       {title}
     </Typography>
     <StyledTags>

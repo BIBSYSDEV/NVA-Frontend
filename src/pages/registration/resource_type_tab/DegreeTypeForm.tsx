@@ -28,7 +28,7 @@ const DegreeTypeForm = ({ onChangeSubType }: DegreeTypeFormProps) => {
         </StyledSelectWrapper>
       </BackgroundDiv>
 
-      {subType && <DegreeForm />}
+      {subType && <DegreeForm subType={subType} />}
     </>
   );
 };
