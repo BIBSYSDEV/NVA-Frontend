@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 const StyledTextField = styled(TextField)`
   width: fit-content;
@@ -17,7 +18,7 @@ export const TotalPagesField = () => {
       {({ field, meta: { touched, error } }: FieldProps) => (
         <StyledTextField
           id={field.name}
-          data-testid="pages-field"
+          data-testid={dataTestId.registrationWizard.resourceType.pagesField}
           variant="filled"
           label={t('resource_type.number_of_pages')}
           {...field}
