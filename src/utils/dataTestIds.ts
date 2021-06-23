@@ -34,6 +34,7 @@ export const dataTestId = {
       version: 'version-radios',
     },
     resourceType: {
+      pagesField: 'pages-field',
       peerReviewed: 'peer-review-field',
       seriesField: 'series-search-field',
       seriesNumber: 'series-number-field',

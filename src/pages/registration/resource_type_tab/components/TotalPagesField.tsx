@@ -4,17 +4,13 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 const StyledTextField = styled(TextField)`
-  display: inline;
   width: fit-content;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    display: grid;
-    width: auto;
-  }
 `;
 
-const TotalPagesField = () => {
+export const TotalPagesField = () => {
   const { t } = useTranslation('registration');
 
   return (
@@ -22,7 +18,7 @@ const TotalPagesField = () => {
       {({ field, meta: { touched, error } }: FieldProps) => (
         <StyledTextField
           id={field.name}
-          data-testid="pages-field"
+          data-testid={dataTestId.registrationWizard.resourceType.pagesField}
           variant="filled"
           label={t('resource_type.number_of_pages')}
           {...field}
@@ -34,5 +30,3 @@ const TotalPagesField = () => {
     </Field>
   );
 };
-
-export default TotalPagesField;

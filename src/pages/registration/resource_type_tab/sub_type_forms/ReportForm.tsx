@@ -8,7 +8,7 @@ import { DoiField } from '../components/DoiField';
 import IsbnListField from '../components/IsbnListField';
 import PublisherField from '../components/PublisherField';
 import { SeriesFields } from '../components/SeriesFields';
-import TotalPagesField from '../components/TotalPagesField';
+import { TotalPagesField } from '../components/TotalPagesField';
 
 const StyledSection = styled.div`
   display: grid;

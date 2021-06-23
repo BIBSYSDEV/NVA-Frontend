@@ -7,6 +7,7 @@ import { DoiField } from '../components/DoiField';
 import PublisherField from '../components/PublisherField';
 import { SeriesFields } from '../components/SeriesFields';
 import { DegreeType } from '../../../../types/publicationFieldNames';
+import { TotalPagesField } from '../components/TotalPagesField';
 
 interface DegreeFormProps {
   subType: DegreeType;
@@ -20,6 +21,7 @@ const DegreeForm = ({ subType }: DegreeFormProps) => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DoiField />
         <PublisherField />
+        <TotalPagesField />
       </BackgroundDiv>
 
       {subType === DegreeType.PHD && (
