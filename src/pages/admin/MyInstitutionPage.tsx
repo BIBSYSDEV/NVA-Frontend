@@ -17,12 +17,12 @@ import {
   emptyCustomerInstitution,
 } from '../../types/customerInstitution.types';
 import { NotificationVariant } from '../../types/notification.types';
-import { useFetchCustomerInstitution } from '../../utils/hooks/useFetchCustomerInstitution';
 import { myInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
 import { CustomerInstitutionTextField } from './customerInstitutionFields/CustomerInstitutionTextField';
 import { SelectInstitutionField } from './customerInstitutionFields/SelectInstitutionField';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
+import { useFetch } from '../../utils/hooks/useFetch';
 
 const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
   margin-top: 2rem;
@@ -32,9 +32,11 @@ const MyCustomerInstitutionPage = () => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
   const { user } = useSelector((store: RootStore) => store);
-  const [customerInstitution, isLoadingCustomerInstitution, handleSetCustomerInstitution] = useFetchCustomerInstitution(
-    user?.customerId ?? ''
-  );
+  const [customerInstitution, isLoadingCustomerInstitution] = useFetch<CustomerInstitution>({
+    url: user?.customerId ?? '',
+    errorMessage: t('feedback:error.get_customer'),
+    withAuthentication: true,
+  });
 
   const handleSubmit = async (values: CustomerInstitution) => {
     const updateCustomerResponse = await updateCustomerInstitution(values);
@@ -42,7 +44,6 @@ const MyCustomerInstitutionPage = () => {
       if (updateCustomerResponse.error) {
         dispatch(setNotification(t('feedback:error.update_customer'), NotificationVariant.Error));
       } else if (updateCustomerResponse.data) {
-        handleSetCustomerInstitution(updateCustomerResponse.data);
         dispatch(setNotification(t('feedback:success.update_customer')));
       }
     }

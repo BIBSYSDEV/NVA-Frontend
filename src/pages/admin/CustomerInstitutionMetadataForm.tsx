@@ -30,13 +30,11 @@ const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
 
 interface CustomerInstitutionMetadataFormProps {
   customerInstitution: CustomerInstitution;
-  handleSetCustomerInstitution: (customerInstitution: CustomerInstitution) => void;
   editMode: boolean;
 }
 
 export const CustomerInstitutionMetadataForm = ({
   customerInstitution,
-  handleSetCustomerInstitution,
   editMode,
 }: CustomerInstitutionMetadataFormProps) => {
   const { t } = useTranslation('admin');
@@ -51,7 +49,6 @@ export const CustomerInstitutionMetadataForm = ({
           dispatch(setNotification(t('feedback:error.create_customer'), NotificationVariant.Error));
         } else if (createCustomerResponse.data) {
           history.push(getAdminInstitutionPath(createCustomerResponse.data.id));
-          handleSetCustomerInstitution(createCustomerResponse.data);
           dispatch(setNotification(t('feedback:success.created_customer')));
         }
       }
@@ -61,7 +58,6 @@ export const CustomerInstitutionMetadataForm = ({
         if (updateCustomerResponse.error) {
           dispatch(setNotification(t('feedback:error.update_customer'), NotificationVariant.Error));
         } else if (updateCustomerResponse.data) {
-          handleSetCustomerInstitution(updateCustomerResponse.data);
           dispatch(setNotification(t('feedback:success.update_customer')));
         }
       }
