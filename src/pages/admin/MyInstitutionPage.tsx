@@ -22,7 +22,7 @@ import { CustomerInstitutionTextField } from './customerInstitutionFields/Custom
 import { SelectInstitutionField } from './customerInstitutionFields/SelectInstitutionField';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
-import { useFetch } from '../../utils/hooks/useFetch';
+import { isErrorStatus, isSuccessStatus, useFetch } from '../../utils/hooks/useFetch';
 
 const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
   margin-top: 2rem;
@@ -40,12 +40,10 @@ const MyCustomerInstitutionPage = () => {
 
   const handleSubmit = async (values: CustomerInstitution) => {
     const updateCustomerResponse = await updateCustomerInstitution(values);
-    if (updateCustomerResponse) {
-      if (updateCustomerResponse.error) {
-        dispatch(setNotification(t('feedback:error.update_customer'), NotificationVariant.Error));
-      } else if (updateCustomerResponse.data) {
-        dispatch(setNotification(t('feedback:success.update_customer')));
-      }
+    if (isErrorStatus(updateCustomerResponse.status)) {
+      dispatch(setNotification(t('feedback:error.update_customer'), NotificationVariant.Error));
+    } else if (isSuccessStatus(updateCustomerResponse.status)) {
+      dispatch(setNotification(t('feedback:success.update_customer')));
     }
   };
 

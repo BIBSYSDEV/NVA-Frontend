@@ -12,6 +12,9 @@ interface UseFetchConfig {
   withAuthentication?: boolean;
 }
 
+export const isErrorStatus = (status: number) => status >= 400 && status <= 599;
+export const isSuccessStatus = (status: number) => status >= 200 && status <= 299;
+
 export const useFetch = <T>({
   url,
   errorMessage,
@@ -41,12 +44,10 @@ export const useFetch = <T>({
         ? await authenticatedApiRequest2<T>({ url, cancelToken })
         : await apiRequest2<T>({ url, cancelToken });
 
-      if (fetchedData) {
-        if (fetchedData.status >= 400 && fetchedData.status <= 599) {
-          showErrorNotification();
-        } else if (fetchedData.status >= 200 && fetchedData.status <= 299 && fetchedData.data) {
-          setData(fetchedData.data);
-        }
+      if (isErrorStatus(fetchedData.status)) {
+        showErrorNotification();
+      } else if (isSuccessStatus(fetchedData.status) && fetchedData.data) {
+        setData(fetchedData.data);
       }
     } catch {
       showErrorNotification();
