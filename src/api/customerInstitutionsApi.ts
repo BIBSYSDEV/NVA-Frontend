@@ -6,16 +6,6 @@ export enum CustomerInstitutionApiPaths {
   CUSTOMER_INSTITUTION = '/customer',
 }
 
-interface CustomerInstitutionsResponse {
-  customers: CustomerInstitution[];
-}
-
-export const getAllCustomerInstitutions = async (cancelToken?: CancelToken) =>
-  await authenticatedApiRequest<CustomerInstitutionsResponse>({
-    url: CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION,
-    cancelToken,
-  });
-
 export const getCustomerInstitution = async (customerId: string, cancelToken?: CancelToken) =>
   await authenticatedApiRequest<CustomerInstitution>({
     url: customerId,

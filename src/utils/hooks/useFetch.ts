@@ -23,26 +23,36 @@ export const useFetch = <T>({
   const [isLoading, setIsLoading] = useState(false);
   const cancelToken = useCancelToken();
 
+  const showErrorNotification = useCallback(
+    () =>
+      dispatch(
+        setNotification(
+          errorMessage ?? t('error.fetch', { resource: url, interpolation: { escapeValue: false } }),
+          NotificationVariant.Error
+        )
+      ),
+    [dispatch, t, errorMessage, url]
+  );
+
   const fetchData = useCallback(async () => {
     setIsLoading(true);
-    const fetchedData = withAuthentication
-      ? await authenticatedApiRequest2<T>({ url, cancelToken })
-      : await apiRequest2<T>({ url, cancelToken });
+    try {
+      const fetchedData = withAuthentication
+        ? await authenticatedApiRequest2<T>({ url, cancelToken })
+        : await apiRequest2<T>({ url, cancelToken });
 
-    if (fetchedData) {
-      if (fetchedData.status >= 400 && fetchedData.status <= 599) {
-        dispatch(
-          setNotification(
-            errorMessage ?? t('error.fetch', { resource: url, interpolation: { escapeValue: false } }),
-            NotificationVariant.Error
-          )
-        );
-      } else if (fetchedData.data) {
-        setData(fetchedData.data);
+      if (fetchedData) {
+        if (fetchedData.status >= 400 && fetchedData.status <= 599) {
+          showErrorNotification();
+        } else if (fetchedData.status >= 200 && fetchedData.status <= 299 && fetchedData.data) {
+          setData(fetchedData.data);
+        }
       }
+    } catch {
+      showErrorNotification();
     }
     setIsLoading(false);
-  }, [dispatch, t, cancelToken, withAuthentication, errorMessage, url]);
+  }, [showErrorNotification, cancelToken, withAuthentication, url]);
 
   useEffect(() => {
     if (url) {
