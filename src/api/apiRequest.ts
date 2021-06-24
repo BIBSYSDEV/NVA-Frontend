@@ -1,4 +1,4 @@
-import Axios, { AxiosRequestConfig } from 'axios';
+import Axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import { getIdToken } from './userApi';
 import { StatusCode } from '../utils/constants';
@@ -46,3 +46,18 @@ export const apiRequest = async <T>(axiosRequestConfig: AxiosRequestConfig): Pro
     return Axios.isCancel(error) ? null : { error: true };
   }
 };
+
+export const authenticatedApiRequest2 = async <T>(
+  axiosRequestConfig: AxiosRequestConfig
+): Promise<AxiosResponse<T>> => {
+  const idToken = await getIdToken();
+  axiosRequestConfig.headers = {
+    ...axiosRequestConfig.headers,
+    Authorization: `Bearer ${idToken}`,
+  };
+
+  return await apiRequest2(axiosRequestConfig);
+};
+
+export const apiRequest2 = async <T>(axiosRequestConfig: AxiosRequestConfig): Promise<AxiosResponse<T>> =>
+  await Axios(axiosRequestConfig);

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import useCancelToken from './useCancelToken';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { apiRequest, authenticatedApiRequest } from '../../api/apiRequest';
+import { apiRequest2, authenticatedApiRequest2 } from '../../api/apiRequest';
 
 export const useFetch = <T>(requestUrl: string, withAuthentication = false): [T | undefined, boolean] => {
   const dispatch = useDispatch();
@@ -17,11 +17,11 @@ export const useFetch = <T>(requestUrl: string, withAuthentication = false): [T 
     async (url: string) => {
       setIsLoading(true);
       const fetchedData = withAuthentication
-        ? await authenticatedApiRequest<T>({ url, cancelToken })
-        : await apiRequest<T>({ url, cancelToken });
+        ? await authenticatedApiRequest2<T>({ url, cancelToken })
+        : await apiRequest2<T>({ url, cancelToken });
 
       if (fetchedData) {
-        if (fetchedData.error) {
+        if (fetchedData.status >= 400 && fetchedData.status <= 599) {
           dispatch(
             setNotification(
               t('error.fetch', { resource: url, interpolation: { escapeValue: false } }),
