@@ -11,7 +11,7 @@ import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { SearchFieldName } from '../../types/search.types';
-import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
+import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RegistrationSearch } from '../search/RegistrationSearch';
 import { Authority } from '../../types/authority.types';

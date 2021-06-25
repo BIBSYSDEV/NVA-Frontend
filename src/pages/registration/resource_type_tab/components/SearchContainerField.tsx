@@ -14,7 +14,7 @@ import { SearchFieldName, SearchPublicationContext } from '../../../../types/sea
 import { API_URL } from '../../../../utils/constants';
 import { displayDate } from '../../../../utils/date-helpers';
 import useDebounce from '../../../../utils/hooks/useDebounce';
-import useSearchRegistrations from '../../../../utils/hooks/useSearchRegistrations';
+import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistrations';
 import { getRegistrationPath } from '../../../../utils/urlPaths';
 
 interface SearchContainerFieldProps {
