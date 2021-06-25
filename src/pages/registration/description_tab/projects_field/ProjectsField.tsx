@@ -8,12 +8,13 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { autocompleteTranslationProps } from '../../../../themes/lightTheme';
-import { ResearchProject } from '../../../../types/project.types';
+import { ProjectSearchResponse, ResearchProject } from '../../../../types/project.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import useDebounce from '../../../../utils/hooks/useDebounce';
-import { useFetchProjects } from '../../../../utils/hooks/useFetchProjects';
 import { convertToCristinProject, convertToResearchProject } from './projectHelpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
+import { ProjectsApiPaths } from '../../../../api/projectApi';
+import { useFetch } from '../../../../utils/hooks/useFetch';
 
 const StyledProjectChip = styled(Chip)`
   height: auto;
@@ -23,7 +24,10 @@ export const ProjectsField = () => {
   const { t } = useTranslation('registration');
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
-  const [projects, isLoadingProjects] = useFetchProjects(debouncedSearchTerm);
+  const [projects, isLoadingProjects] = useFetch<ProjectSearchResponse>({
+    url: debouncedSearchTerm ? `${ProjectsApiPaths.PROJECT}?query=${encodeURIComponent(debouncedSearchTerm)}` : '',
+    errorMessage: t('fedback:error.get_project'),
+  });
 
   return (
     <Field name={DescriptionFieldNames.PROJECTS}>
@@ -33,7 +37,7 @@ export const ProjectsField = () => {
           id={field.name}
           aria-labelledby={`${field.name}-label`}
           data-testid="project-search-field"
-          options={projects}
+          options={projects?.hits ?? []}
           filterOptions={(options) => options}
           getOptionLabel={(option) => option.title}
           onInputChange={(_, newInputValue, reason) => {
