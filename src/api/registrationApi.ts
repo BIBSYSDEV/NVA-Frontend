@@ -1,6 +1,6 @@
 import Axios, { CancelToken } from 'axios';
 import i18n from '../translations/i18n';
-import { DoiRequestStatus, Registration, RegistrationPreview } from '../types/registration.types';
+import { DoiRequestStatus, Registration } from '../types/registration.types';
 import { RegistrationFileSet } from '../types/file.types';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
@@ -59,16 +59,6 @@ export const publishRegistration = async (identifier: string) =>
   await authenticatedApiRequest({
     url: `${PublicationsApiPaths.PUBLICATION}/${identifier}/publish`,
     method: 'PUT',
-  });
-
-interface MyRegistrationsResponse {
-  publications?: RegistrationPreview[]; // "publications" key is absent if user has no registrations
-}
-
-export const getMyRegistrations = async (cancelToken?: CancelToken) =>
-  authenticatedApiRequest<MyRegistrationsResponse>({
-    url: PublicationsApiPaths.PUBLICATIONS_BY_OWNER,
-    cancelToken,
   });
 
 export const getRegistrationByDoi = async (doiUrl: string) => {

@@ -9,7 +9,7 @@ import { useFetch } from './useFetch';
 import { getPreferredLanguageCode } from '../translation-helpers';
 import { setInstitutions } from '../../redux/actions/institutionActions';
 
-// This hook is used to fetch all top-level institutions
+// This hook is used to fetch all top-level institutions and put them in Redux, to avoid fetching same data many times
 export const useFetchInstitutions = (): [InstitutionUnitBase[], boolean] => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation('feedback');
