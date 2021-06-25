@@ -21,12 +21,6 @@ export const getAuthority = async (arpId: string, cancelToken?: CancelToken) =>
     cancelToken,
   });
 
-export const getAuthorities = async (name: string, cancelToken?: CancelToken) =>
-  await apiRequest<Authority[]>({
-    url: `${AuthorityApiPaths.PERSON}?name=${encodeURIComponent(name)}`,
-    cancelToken,
-  });
-
 export const createAuthority = async (firstName: string, lastName: string, feideId?: string, cristinId?: string) => {
   const url = AuthorityApiPaths.PERSON;
 

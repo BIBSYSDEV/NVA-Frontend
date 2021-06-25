@@ -38,8 +38,8 @@ export const useFetch = <T>({
   );
 
   const fetchData = useCallback(async () => {
-    setIsLoading(true);
     try {
+      setIsLoading(true);
       const fetchedData = withAuthentication
         ? await authenticatedApiRequest2<T>({ url, cancelToken })
         : await apiRequest2<T>({ url, cancelToken });
@@ -51,8 +51,9 @@ export const useFetch = <T>({
       }
     } catch {
       showErrorNotification();
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, [showErrorNotification, cancelToken, withAuthentication, url]);
 
   useEffect(() => {

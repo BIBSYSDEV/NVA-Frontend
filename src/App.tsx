@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
-import { addQualifierIdForAuthority, AuthorityQualifiers, getAuthority } from './api/authorityApi';
+import { addQualifierIdForAuthority, AuthorityApiPaths, AuthorityQualifiers, getAuthority } from './api/authorityApi';
 import { getInstitutionUser } from './api/roleApi';
 import { getCurrentUserAttributes } from './api/userApi';
 import { AppRoutes } from './AppRoutes';
@@ -21,11 +21,11 @@ import { NotificationVariant } from './types/notification.types';
 import { InstitutionUser } from './types/user.types';
 import { awsConfig } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
-import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { PageSpinner } from './components/PageSpinner';
 import { LanguageCodes } from './types/language.types';
 import { SkipLink } from './components/SkipLink';
+import { useFetch } from './utils/hooks/useFetch';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -54,7 +54,10 @@ const App = () => {
   const { t, i18n } = useTranslation('feedback');
   const user = useSelector((store: RootStore) => store.user);
   const [isLoading, setIsLoading] = useState({ userAttributes: true, userRoles: true, userAuthority: true });
-  const [matchingAuthorities, isLoadingMatchingAuthorities] = useFetchAuthorities(user?.name ?? '');
+  const [matchingAuthorities, isLoadingMatchingAuthorities] = useFetch<Authority[]>({
+    url: user?.name ? `${AuthorityApiPaths.PERSON}?name=${encodeURIComponent(user.name)}` : '',
+    errorMessage: t('feedback:error.get_authorities'),
+  });
 
   useEffect(() => {
     // Setup aws-amplify

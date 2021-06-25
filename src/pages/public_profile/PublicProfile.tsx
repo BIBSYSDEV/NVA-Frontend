@@ -11,10 +11,11 @@ import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { SearchFieldName } from '../../types/search.types';
-import useFetchAuthority from '../../utils/hooks/useFetchAuthority';
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RegistrationSearch } from '../search/RegistrationSearch';
+import { Authority } from '../../types/authority.types';
+import { useFetch } from '../../utils/hooks/useFetch';
 
 const StyledLine = styled.div`
   display: flex;
@@ -36,7 +37,10 @@ const PublicProfile = () => {
   const history = useHistory();
   const arpId = new URLSearchParams(history.location.search).get('id') ?? '';
 
-  const [authority, isLoadingUser] = useFetchAuthority(arpId);
+  const [authority, isLoadingUser] = useFetch<Authority>({
+    url: arpId,
+    errorMessage: t('feedback:error.get_authority'),
+  });
   const [registrations, isLoadingRegistrations] = useSearchRegistrations({
     properties: [{ fieldName: SearchFieldName.ContributorId, value: arpId }],
   });
