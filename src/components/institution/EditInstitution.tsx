@@ -7,7 +7,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import InstitutionSelector from '../../pages/user/institution/InstitutionSelector';
 import { FormikInstitutionUnit, FormikInstitutionUnitFieldNames } from '../../types/institution.types';
 import { useFetchDepartment } from '../../utils/hooks/useFetchDepartment';
-import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
+import { useFetchInstitutions } from '../../utils/hooks/useFetchInstitutions';
 import { convertToInstitution } from '../../utils/institutions-helpers';
 import InstitutionAutocomplete from './InstitutionAutocomplete';
 import { StyledButtonContainer } from './AddInstitution';
