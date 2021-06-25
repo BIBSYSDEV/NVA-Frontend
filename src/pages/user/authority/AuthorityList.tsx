@@ -20,7 +20,9 @@ import BackgroundDiv from '../../../components/BackgroundDiv';
 import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
 import lightTheme from '../../../themes/lightTheme';
 import { Authority } from '../../../types/authority.types';
-import useFetchLastRegistrationFromAlma from '../../../utils/hooks/useFetchLastRegistration';
+import { AlmaApiPaths } from '../../../api/almaApi';
+import { AlmaRegistration } from '../../../types/registration.types';
+import { useFetch } from '../../../utils/hooks/useFetch';
 
 const StyledTableRow = styled(TableRow)`
   cursor: pointer;
@@ -128,7 +130,16 @@ interface LastAlmaRegistrationCellProps {
 
 const LastAlmaRegistrationCell = ({ authority }: LastAlmaRegistrationCellProps) => {
   const { t } = useTranslation('profile');
-  const [almaPublication, isLoadingAlmaPublication] = useFetchLastRegistrationFromAlma(authority.id, authority.name);
+
+  const systemControlNumber = authority.id.split('/').pop();
+  const [almaPublication, isLoadingAlmaPublication] = useFetch<AlmaRegistration>({
+    url:
+      systemControlNumber && authority.name
+        ? encodeURI(`${AlmaApiPaths.ALMA}/?scn=${systemControlNumber}&creatorname=${authority.name}`)
+        : '',
+    errorMessage: t('feedback:error.get_last_registration'),
+  });
+
   const [canBeTruncated, setCanBeTruncated] = useState(false);
   const [showFullText, setShowFullText] = useState(false);
 

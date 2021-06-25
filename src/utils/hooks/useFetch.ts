@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -49,10 +50,11 @@ export const useFetch = <T>({
       } else if (isSuccessStatus(fetchedData.status) && fetchedData.data) {
         setData(fetchedData.data);
       }
-    } catch {
-      showErrorNotification();
-    } finally {
       setIsLoading(false);
+    } catch (error) {
+      if (!Axios.isCancel(error)) {
+        showErrorNotification();
+      }
     }
   }, [showErrorNotification, cancelToken, withAuthentication, url]);
 
