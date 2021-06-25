@@ -19,7 +19,7 @@ export const useFetch = <T>({
   url,
   errorMessage,
   withAuthentication = false,
-}: UseFetchConfig): [T | undefined, boolean] => {
+}: UseFetchConfig): [T | undefined, boolean, () => void] => {
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
   const [data, setData] = useState<T>();
@@ -61,5 +61,5 @@ export const useFetch = <T>({
     }
   }, [dispatch, t, fetchData, url]);
 
-  return [data, isLoading];
+  return [data, isLoading, fetchData];
 };

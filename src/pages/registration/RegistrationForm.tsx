@@ -11,7 +11,6 @@ import { PageSpinner } from '../../components/PageSpinner';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { emptyRegistration, Registration, RegistrationTab } from '../../types/registration.types';
-import useFetchRegistration from '../../utils/hooks/useFetchRegistration';
 import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
@@ -22,6 +21,8 @@ import { RegistrationFormContent } from './RegistrationFormContent';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
 import { getTouchedTabFields } from '../../utils/formik-helpers';
 import { SkipLink } from '../../components/SkipLink';
+import { PublicationsApiPaths } from '../../api/registrationApi';
+import { useFetch } from '../../utils/hooks/useFetch';
 
 const StyledRegistration = styled.div`
   width: 100%;
@@ -44,7 +45,10 @@ const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const uppy = useUppy(createUppy());
   const highestValidatedTab =
     useLocation<RegistrationLocationState>().state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
-  const [registration, isLoadingRegistration, refetchRegistration] = useFetchRegistration(identifier);
+  const [registration, isLoadingRegistration, refetchRegistration] = useFetch<Registration>({
+    url: `${PublicationsApiPaths.PUBLICATION}/${identifier}`,
+    errorMessage: t('feedback:error.get_registration'),
+  });
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
   const isValidOwner = userIsRegistrationOwner(user, registration);

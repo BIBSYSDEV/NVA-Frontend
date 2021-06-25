@@ -4,7 +4,7 @@ import { DoiRequestStatus, Registration, RegistrationPreview } from '../types/re
 import { RegistrationFileSet } from '../types/file.types';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
-import { apiRequest, authenticatedApiRequest } from './apiRequest';
+import { authenticatedApiRequest } from './apiRequest';
 import { RoleName } from '../types/user.types';
 import { MessageType, SupportRequest } from '../types/publication_types/messages.types';
 
@@ -53,31 +53,6 @@ export const updateRegistration = async (registration: Registration) => {
   } catch {
     return { error: i18n.t('feedback:error.update_registration') };
   }
-};
-
-export const getRegistrations = async (cancelToken?: CancelToken) => {
-  const url = PublicationsApiPaths.PUBLICATION;
-
-  try {
-    const response = await Axios.get(url, { cancelToken });
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      return { error: i18n.t('feedback:error.get_registrations') };
-    }
-  } catch (error) {
-    if (!Axios.isCancel(error)) {
-      return { error: i18n.t('feedback:error.get_registrations') };
-    }
-  }
-};
-
-export const getRegistration = async (id: string, cancelToken?: CancelToken) => {
-  const url = `${PublicationsApiPaths.PUBLICATION}/${id}`;
-  return apiRequest<Registration>({
-    url,
-    cancelToken,
-  });
 };
 
 export const publishRegistration = async (identifier: string) =>
