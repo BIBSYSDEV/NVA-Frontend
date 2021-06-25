@@ -69,11 +69,11 @@
     "extends": "@istanbuljs/nyc-config-typescript"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.9.6",
+    "@cypress/code-coverage": "^3.9.7",
     "@cypress/instrument-cra": "^1.4.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/history": "^4.7.8",
-    "@types/node": "^15.12.3",
+    "@types/node": "^15.12.4",
     "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.8",
     "@types/react-helmet": "^6.1.1",

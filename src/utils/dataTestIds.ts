@@ -6,12 +6,15 @@ export const dataTestId = {
     scientificSummaryAccordion: 'scientific-summary-accordion',
   },
   registrationLandingPage: {
+    abstractAccordion: 'abstract-accordion',
     authorLink: (id: string) => `presentation-author-link-${id}`,
     backToWizard: 'back-to-wizard-button',
     createDoiButton: 'button-create-doi',
+    doiMessageField: 'request-doi-message',
     downloadFileButton: 'button-download-file',
     editButton: 'button-edit-registration',
-    doiMessageField: 'request-doi-message',
+    filesAccordion: 'files-accordion',
+    projectsAccordion: 'projects-accordion',
     projectTitle: 'project-title',
     publishButton: 'button-publish-registration',
     rejectDoiButton: 'button-reject-doi',
@@ -32,6 +35,8 @@ export const dataTestId = {
     },
     resourceType: {
       peerReviewed: 'peer-review-field',
+      seriesField: 'series-search-field',
+      seriesNumber: 'series-number-field',
     },
   },
   myInstitutionUsersPage: {
