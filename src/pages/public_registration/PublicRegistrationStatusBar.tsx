@@ -24,9 +24,10 @@ import { getFirstErrorTab, getTabErrors, TabErrors } from '../../utils/formik-he
 import { ErrorList } from '../registration/ErrorList';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
+import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 `;
 
 const StyledButtonsContainer = styled.div`
@@ -155,7 +156,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
               variant="contained"
               href={`${editRegistrationUrl}?tab=${firstErrorTab}`}
               endIcon={<EditIcon />}
-              data-testid="back-to-wizard-button">
+              data-testid={dataTestId.registrationLandingPage.backToWizard}>
               {t('public_page.go_back_to_wizard')}
             </Button>
           }
@@ -163,7 +164,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
       )}
       <StyledBackgroundDiv
         backgroundColor={lightTheme.palette.background.statusBar}
-        data-testid="public-registration-status">
+        data-testid={dataTestId.registrationLandingPage.status}>
         {!isPublishedRegistration && registrationIsValid && (
           <>
             <Typography variant="h4" component="h1">
@@ -176,6 +177,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           <Typography variant="h4" component="h1" gutterBottom>
             {t('public_page.published_date', {
               date: registration.publishedDate ? new Date(registration.publishedDate).toLocaleDateString() : '',
+              interpolation: { escapeValue: false },
             })}
           </Typography>
         )}
@@ -183,7 +185,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           {status === RegistrationStatus.DRAFT && (
             <ButtonWithProgress
               disabled={!!isLoading || !registrationIsValid}
-              data-testid="button-publish-registration"
+              data-testid={dataTestId.registrationLandingPage.publishButton}
               color="secondary"
               endIcon={<CloudUploadIcon />}
               onClick={onClickPublish}
@@ -197,7 +199,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             variant="outlined"
             color="secondary"
             endIcon={<EditIcon />}
-            data-testid="button-edit-registration">
+            data-testid={dataTestId.registrationLandingPage.editButton}>
             {t('edit_registration')}
           </Button>
 
@@ -207,7 +209,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
               color="secondary"
               endIcon={<LocalOfferIcon />}
               isLoading={isLoading === LoadingName.RequestDoi}
-              data-testid="button-toggle-request-doi"
+              data-testid={dataTestId.registrationLandingPage.requestDoiButton}
               onClick={() => (isPublishedRegistration ? toggleRequestDoiModal() : sendDoiRequest())}>
               {isPublishedRegistration ? t('public_page.request_doi') : t('public_page.reserve_doi')}
             </ButtonWithProgress>
@@ -218,7 +220,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
               <ButtonWithProgress
                 color="secondary"
                 variant="contained"
-                data-testid="button-reject-doi"
+                data-testid={dataTestId.registrationLandingPage.rejectDoiButton}
                 endIcon={<CloseIcon />}
                 onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Rejected)}
                 isLoading={isLoading === LoadingName.RejectDoi}
@@ -228,7 +230,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
               <ButtonWithProgress
                 color="secondary"
                 variant="contained"
-                data-testid="button-create-doi"
+                data-testid={dataTestId.registrationLandingPage.createDoiButton}
                 endIcon={<CheckIcon />}
                 onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Approved)}
                 isLoading={isLoading === LoadingName.ApproveDoi}
@@ -244,14 +246,14 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             open={openRequestDoiModal}
             onClose={toggleRequestDoiModal}
             headingText={t('public_page.request_doi')}
-            dataTestId="request-doi-modal">
+            dataTestId={dataTestId.registrationLandingPage.requestDoiModal}>
             <Typography>{t('public_page.request_doi_description')}</Typography>
             <TextField
               variant="outlined"
               multiline
               rows="4"
               fullWidth
-              data-testid="request-doi-message"
+              data-testid={dataTestId.registrationLandingPage.doiMessageField}
               label={t('public_page.message_to_curator')}
               onChange={(event) => setMessageToCurator(event.target.value)}
             />
@@ -260,7 +262,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
               <ButtonWithProgress
                 variant="contained"
                 color="primary"
-                data-testid="button-send-doi-request"
+                data-testid={dataTestId.registrationLandingPage.sendDoiButton}
                 onClick={sendDoiRequest}
                 isLoading={isLoading === LoadingName.RequestDoi}>
                 {t('common:send')}

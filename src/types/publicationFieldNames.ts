@@ -63,6 +63,7 @@ export enum ResourceFieldNames {
   PUBLICATION_CONTEXT_TITLE = 'entityDescription.reference.publicationContext.title',
   PUBLICATION_CONTEXT_PUBLISHER = 'entityDescription.reference.publicationContext.publisher',
   PUBLICATION_CONTEXT_TYPE = 'entityDescription.reference.publicationContext.type',
+  SERIES_NUMBER = 'entityDescription.reference.publicationContext.seriesNumber',
   SERIES_TITLE = 'entityDescription.reference.publicationContext.seriesTitle',
   SUB_TYPE = 'entityDescription.reference.publicationInstance.type',
   VOLUME = 'entityDescription.reference.publicationInstance.volume',
@@ -70,6 +71,7 @@ export enum ResourceFieldNames {
 
 export enum DescriptionFieldNames {
   ABSTRACT = 'entityDescription.abstract',
+  CONTROLLED_KEYWORDS = 'entityDescription.controlledKeywords',
   DATE = 'entityDescription.date',
   DESCRIPTION = 'entityDescription.description',
   LANGUAGE = 'entityDescription.language',

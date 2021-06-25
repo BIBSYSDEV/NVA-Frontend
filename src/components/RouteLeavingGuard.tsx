@@ -1,15 +1,20 @@
 import { Location } from 'history';
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Prompt, useHistory } from 'react-router-dom';
+import { Typography } from '@material-ui/core';
 import ConfirmDialog from './ConfirmDialog';
-import NormalText from './NormalText';
 
 interface RouteLeavingGuardProps {
   modalDescription: string;
   modalHeading: string;
   shouldBlockNavigation: boolean;
 }
-const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({ modalDescription, modalHeading, shouldBlockNavigation }) => {
+
+export const RouteLeavingGuard = ({
+  modalDescription,
+  modalHeading,
+  shouldBlockNavigation,
+}: RouteLeavingGuardProps) => {
   const [showModal, setShowModal] = useState(false);
   const [nextLocation, setNextLocation] = useState<Location>();
   const [confirmedNavigation, setConfirmedNavigation] = useState(false);
@@ -35,6 +40,9 @@ const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({ modalDescription, modal
   useEffect(() => {
     if (shouldBlockNavigation) {
       window.onbeforeunload = () => true;
+      return () => {
+        window.onbeforeunload = () => undefined;
+      };
     }
   }, [shouldBlockNavigation]);
 
@@ -53,10 +61,8 @@ const RouteLeavingGuard: FC<RouteLeavingGuardProps> = ({ modalDescription, modal
         onAccept={handleConfirmNavigationClick}
         onCancel={() => setShowModal(false)}
         dataTestId="confirm-leaving-registration-form-dialog">
-        <NormalText>{modalDescription}</NormalText>
+        <Typography>{modalDescription}</Typography>
       </ConfirmDialog>
     </>
   );
 };
-
-export default RouteLeavingGuard;

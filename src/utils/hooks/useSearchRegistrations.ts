@@ -9,7 +9,7 @@ import { createSearchQuery, SearchConfig } from '../searchHelpers';
 import useCancelToken from './useCancelToken';
 
 const useSearchRegistrations = (
-  searchConfig: SearchConfig,
+  searchConfig?: SearchConfig,
   numberOfResults?: number,
   searchAfter?: number
 ): [SearchResult | undefined, boolean] => {
@@ -18,7 +18,7 @@ const useSearchRegistrations = (
   const cancelToken = useCancelToken();
   const [isLoading, setIsLoading] = useState(true);
   const [searchResults, setSearchResults] = useState<SearchResult>();
-  const searchQuery = createSearchQuery(searchConfig);
+  const searchQuery = createSearchQuery(searchConfig ?? {});
 
   useEffect(() => {
     const handleSearchRegistrations = async () => {

@@ -7,8 +7,8 @@ import lightTheme from '../../../../themes/lightTheme';
 import { DoiField } from '../components/DoiField';
 import IsbnListField from '../components/IsbnListField';
 import PublisherField from '../components/PublisherField';
-import SeriesField from '../components/SeriesField';
-import TotalPagesField from '../components/TotalPagesField';
+import { SeriesFields } from '../components/SeriesFields';
+import { TotalPagesField } from '../components/TotalPagesField';
 
 const StyledSection = styled.div`
   display: grid;
@@ -41,7 +41,7 @@ const ReportForm = () => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
         <Typography variant="h5">{t('resource_type.series')}</Typography>
         <Typography>{t('resource_type.series_info')}</Typography>
-        <SeriesField />
+        <SeriesFields />
       </BackgroundDiv>
     </>
   );

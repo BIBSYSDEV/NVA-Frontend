@@ -109,11 +109,15 @@ const lightTheme = createMuiTheme({
       fontWeight: 700,
     },
     overline: {
-      fontSize: '0.8rem',
+      fontSize: '0.75rem',
+      fontWeight: 600,
     },
     subtitle2: {
-      fontSize: '1.25rem',
-      fontWeight: 400,
+      fontSize: '0.875rem',
+      fontWeight: 700,
+    },
+    caption: {
+      fontSize: '0.875rem',
     },
   },
   overrides: {
@@ -155,7 +159,11 @@ const lightTheme = createMuiTheme({
     },
     MuiLink: {
       root: {
-        color: Color.Link,
+        color: Color.PrimaryText,
+      },
+      underlineHover: {
+        textDecoration: 'underline',
+        textDecorationColor: Color.SecondaryMain,
       },
     },
     MuiTab: {

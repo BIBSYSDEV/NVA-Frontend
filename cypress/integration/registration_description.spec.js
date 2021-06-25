@@ -1,4 +1,4 @@
-import { mockProject } from '../../src/utils/testfiles/mockProjects';
+import { mockProjectSearch } from '../../src/utils/testfiles/mockProjects';
 
 describe('Registration: Description', () => {
   beforeEach(() => {
@@ -13,11 +13,13 @@ describe('Registration: Description', () => {
 
     cy.startRegistrationWithDoi();
 
-    cy.get('[data-testid=project-search-field] input').click({ force: true }).type(mockProject.title.substring(0, 4));
-    cy.get(`[data-testid="project-option-${mockProject.id}"]`).click({ force: true });
-    cy.get(`[data-testid="project-chip-${mockProject.id}"]`).should('exist');
+    const projectToAdd = mockProjectSearch.hits[1];
 
-    cy.get(`[data-testid="project-chip-${mockProject.id}"]`).children().eq(1).click({ force: true });
-    cy.get(`[data-testid="project-chip-${mockProject.id}"]`).should('not.exist');
+    cy.get('[data-testid=project-search-field] input').click({ force: true }).type(projectToAdd.title.substring(0, 4));
+    cy.get(`[data-testid="project-option-${projectToAdd.id}"]`).click({ force: true });
+    cy.get(`[data-testid="project-chip-${projectToAdd.id}"]`).should('exist');
+
+    cy.get(`[data-testid="project-chip-${projectToAdd.id}"]`).children().eq(1).click({ force: true });
+    cy.get(`[data-testid="project-chip-${projectToAdd.id}"]`).should('not.exist');
   });
 });

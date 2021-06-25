@@ -58,7 +58,7 @@ export interface CristinProject {
   alternativeTitles: LanguageString[];
   language: string;
   startDate: string;
-  endDate: string;
+  endDate?: string;
   coordinatingInstitution: CoordinatingInstitution;
   contributors: ProjectContributor[];
 }

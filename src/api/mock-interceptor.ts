@@ -13,7 +13,7 @@ import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_respons
 import { mockRoles } from '../utils/testfiles/mock_feide_user';
 import { mockCustomerInstitution, mockCustomerInstitutions } from '../utils/testfiles/mockCustomerInstitutions';
 import mockMyRegistrations from '../utils/testfiles/my_registrations.json';
-import { mockProjectSearch } from '../utils/testfiles/mockProjects';
+import { mockProject, mockProjectSearch } from '../utils/testfiles/mockProjects';
 import mockPublishedRegistrations from '../utils/testfiles/published_registrations.json';
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import { mockSearchResults } from '../utils/testfiles/search_results';
@@ -27,7 +27,7 @@ import { PublicationChannelApiPaths } from './publicationChannelApi';
 import { PublicationsApiPaths } from './registrationApi';
 import { RoleApiPaths } from './roleApi';
 import { SearchApiPaths } from './searchApi';
-import { mockMessages, mockRegistration } from '../utils/testfiles/mockRegistration';
+import { mockMessages, mockPublishedRegistration, mockRegistration } from '../utils/testfiles/mockRegistration';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -86,12 +86,16 @@ export const interceptRequestsOnMock = () => {
   mock
     .onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/4327439`))
     .reply(200, { ...emptyRegistration, owner: 'tu@unit.no' });
+  mock
+    .onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/${mockPublishedRegistration.identifier}`))
+    .reply(200, mockPublishedRegistration);
   mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/*`)).reply(200, mockRegistration);
 
   // lookup DOI
   mock.onPost(new RegExp(`${PublicationsApiPaths.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
 
   // PROJECT
+  mock.onGet(new RegExp(`${ProjectsApiPaths.PROJECT}/1`)).reply(200, mockProject);
   mock.onGet(new RegExp(`${ProjectsApiPaths.PROJECT}/*`)).reply(200, mockProjectSearch);
 
   // PUBLICATION CHANNEL

@@ -113,7 +113,7 @@ export interface File extends BackendType {
   size: number;
   mimeType: string;
   administrativeAgreement: boolean;
-  publisherAuthority: boolean;
+  publisherAuthority: boolean | null;
   embargoDate: Date | null;
   license: License | null;
 }
@@ -125,7 +125,7 @@ export const emptyFile: File = {
   size: 0,
   mimeType: '',
   administrativeAgreement: false,
-  publisherAuthority: false,
+  publisherAuthority: null,
   embargoDate: null,
   license: null,
 };

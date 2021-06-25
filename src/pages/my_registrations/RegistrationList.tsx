@@ -80,6 +80,8 @@ const RegistrationList = ({ registrations, refetchRegistrations }: RegistrationL
     }
   };
 
+  const registrationsOnPage = registrations.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+
   return (
     <>
       <TableContainer>
@@ -104,7 +106,7 @@ const RegistrationList = ({ registrations, refetchRegistrations }: RegistrationL
             </TableRow>
           </TableHead>
           <TableBody>
-            {registrations.map((registration) => (
+            {registrationsOnPage.map((registration) => (
               <StyledTableRow key={registration.identifier}>
                 <TableCell component="th" scope="row" data-testid={`registration-title-${registration.identifier}`}>
                   <Typography>{registration.mainTitle ?? <i>[{t('common:missing_title')}]</i>}</Typography>

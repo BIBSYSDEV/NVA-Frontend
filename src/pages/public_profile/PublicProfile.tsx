@@ -13,8 +13,8 @@ import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { SearchFieldName } from '../../types/search.types';
 import useFetchAuthority from '../../utils/hooks/useFetchAuthority';
 import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
-import SearchResults from '../search/SearchResults';
 import { PageSpinner } from '../../components/PageSpinner';
+import { RegistrationSearch } from '../search/RegistrationSearch';
 
 const StyledLine = styled.div`
   display: flex;
@@ -80,7 +80,11 @@ const PublicProfile = () => {
             {registrations && (
               <StyledRegistrations>
                 <Typography variant="h2">{t('common:registrations')}</Typography>
-                <SearchResults searchResult={registrations} />
+                <RegistrationSearch
+                  searchConfig={{
+                    properties: [{ fieldName: SearchFieldName.ContributorId, value: arpId }],
+                  }}
+                />
               </StyledRegistrations>
             )}
           </>

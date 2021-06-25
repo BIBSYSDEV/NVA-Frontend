@@ -61,6 +61,7 @@ const SearchContainerField = (props: SearchContainerFieldProps) => {
               aria-labelledby={`${field.name}-label`}
               popupIcon={null}
               options={options}
+              filterOptions={(options) => options}
               onBlur={() => setFieldTouched(field.name)}
               onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
               getOptionSelected={(option, value) => option.id === value.id}

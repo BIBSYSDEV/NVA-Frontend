@@ -9,15 +9,12 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { UrlPathTemplate } from '../utils/urlPaths';
+import { ReactNode } from 'react';
 
 const StyledHeader = styled.div`
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   word-break: break-word;
-`;
-
-const StyledOverline = styled(Typography)`
-  padding-right: 1rem;
 `;
 
 const StyledIconButton = styled(IconButton)`
@@ -26,8 +23,8 @@ const StyledIconButton = styled(IconButton)`
 `;
 
 const StyledTruncatableHeading = styled.div<{ canBeTruncated: boolean }>`
-  padding: 1rem 0 0.3rem 0;
-  border-bottom: 3px solid;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid;
   align-items: center;
   display: grid;
   grid-template-columns: ${({ canBeTruncated }) => (canBeTruncated ? '1fr auto' : '1fr')};
@@ -39,15 +36,29 @@ const StyledTruncatableHeading = styled.div<{ canBeTruncated: boolean }>`
   }
 `;
 
+const StyledSuperHeader = styled.div`
+  color: ${({ theme }) => theme.palette.section.megaDark};
+`;
+
 export interface PageHeaderProps extends TypographyProps {
   backPath?: string;
   children: string;
-  details?: { publicationType: string; publicationYear: string };
   htmlTitle?: string;
   showBackButton?: boolean;
+  superHeader?: {
+    title: string | ReactNode;
+    icon?: ReactNode;
+  };
 }
 
-export const PageHeader = ({ backPath, children, details, htmlTitle, showBackButton, ...props }: PageHeaderProps) => {
+export const PageHeader = ({
+  backPath,
+  children,
+  superHeader,
+  htmlTitle,
+  showBackButton,
+  ...props
+}: PageHeaderProps) => {
   const { t } = useTranslation('common');
   const history = useHistory();
   const [showFullText, setShowFullText] = useState(false);
@@ -75,11 +86,13 @@ export const PageHeader = ({ backPath, children, details, htmlTitle, showBackBut
           {t('back')}
         </Button>
       )}
-      {details && (
-        <>
-          <StyledOverline variant="overline">{details?.publicationType}</StyledOverline>
-          <StyledOverline variant="overline">{details?.publicationYear}</StyledOverline>
-        </>
+      {superHeader && (
+        <StyledSuperHeader>
+          {superHeader.icon}
+          <Typography variant="overline" paragraph color="inherit">
+            {superHeader.title}
+          </Typography>
+        </StyledSuperHeader>
       )}
       <StyledTruncatableHeading canBeTruncated={canBeTruncated}>
         <Typography variant="h1" {...props}>
@@ -103,11 +116,11 @@ export const PageHeader = ({ backPath, children, details, htmlTitle, showBackBut
   );
 };
 
-const StyledRegistrationPageHeader = styled(PageHeader)`
+const StyledItalicPageHeader = styled(PageHeader)`
   font-weight: 700;
   font-style: italic;
 `;
 
-export const RegistrationPageHeader = (props: PageHeaderProps) => (
-  <StyledRegistrationPageHeader variant="h2" variantMapping={{ h2: 'h1' }} {...props} />
+export const ItalicPageHeader = (props: PageHeaderProps) => (
+  <StyledItalicPageHeader variant="h2" variantMapping={{ h2: 'h1' }} {...props} />
 );
