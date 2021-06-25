@@ -30,27 +30,6 @@ export const getInstitutionUser = async (username: string, cancelToken?: CancelT
   }
 };
 
-export const getUsersForInstitution = async (customerId: string, cancelToken?: CancelToken) => {
-  const url = `${RoleApiPaths.INSTITUTION_USERS}?institution=${encodeURIComponent(customerId)}`;
-
-  try {
-    const idToken = await getIdToken();
-    const headers = {
-      Authorization: `Bearer ${idToken}`,
-    };
-    const response = await Axios.get(url, { headers, cancelToken });
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      return { error: i18n.t('feedback:error.get_users_for_institution') };
-    }
-  } catch (error) {
-    if (!Axios.isCancel(error)) {
-      return { error: i18n.t('feedback:error.get_users_for_institution') };
-    }
-  }
-};
-
 export const addRoleToUser = async (username: string, rolename: RoleName, cancelToken?: CancelToken) => {
   try {
     const existingUser = await getInstitutionUser(username, cancelToken);

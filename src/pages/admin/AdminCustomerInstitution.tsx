@@ -4,11 +4,12 @@ import styled from 'styled-components';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { CustomerInstitution, emptyCustomerInstitution } from '../../types/customerInstitution.types';
-import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';
 import { PageSpinner } from '../../components/PageSpinner';
 import { CustomerInstitutionAdminsForm } from './CustomerInstitutionAdminsForm';
 import { CustomerInstitutionMetadataForm } from './CustomerInstitutionMetadataForm';
 import { useFetch } from '../../utils/hooks/useFetch';
+import { InstitutionUser } from '../../types/user.types';
+import { RoleApiPaths } from '../../api/roleApi';
 
 const StyledCustomerInstitution = styled.section`
   display: flex;
@@ -27,7 +28,10 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
     errorMessage: t('feedback:error.get_customer'),
     withAuthentication: true,
   });
-  const [users, isLoadingUsers, refetchInstitutionUsers] = useFetchUsersForInstitution(editMode ? customerId : '');
+  const [users, isLoadingUsers, refetchInstitutionUsers] = useFetch<InstitutionUser[]>({
+    url: customerId ? `${RoleApiPaths.INSTITUTION_USERS}?institution=${encodeURIComponent(customerId)}` : '',
+    errorMessage: t('feedback:error.get_users_for_institution'),
+  });
 
   return (
     <StyledPageWrapperWithMaxWidth>
@@ -46,7 +50,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
             />
             {editMode && (
               <CustomerInstitutionAdminsForm
-                users={users}
+                users={users ?? []}
                 refetchInstitutionUsers={refetchInstitutionUsers}
                 isLoadingUsers={isLoadingUsers}
               />
