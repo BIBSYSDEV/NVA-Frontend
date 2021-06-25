@@ -6,7 +6,7 @@ import { Button, CircularProgress, Typography } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import InstitutionSelector from '../../pages/user/institution/InstitutionSelector';
 import { FormikInstitutionUnit, FormikInstitutionUnitFieldNames } from '../../types/institution.types';
-import useFetchDepartment from '../../utils/hooks/useFetchDepartment';
+import { useFetchDepartment } from '../../utils/hooks/useFetchDepartment';
 import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
 import { convertToInstitution } from '../../utils/institutions-helpers';
 import InstitutionAutocomplete from './InstitutionAutocomplete';

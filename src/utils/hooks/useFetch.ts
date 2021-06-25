@@ -50,11 +50,12 @@ export const useFetch = <T>({
       } else if (isSuccessStatus(fetchedData.status) && fetchedData.data) {
         setData(fetchedData.data);
       }
-      setIsLoading(false);
     } catch (error) {
       if (!Axios.isCancel(error)) {
         showErrorNotification();
       }
+    } finally {
+      setIsLoading(false);
     }
   }, [showErrorNotification, cancelToken, withAuthentication, url]);
 
