@@ -3,7 +3,7 @@ import i18n from '../translations/i18n';
 import { Authority } from '../types/authority.types';
 import { StatusCode } from '../utils/constants';
 import { AuthorityApiPath } from './apiPaths';
-import { apiRequest } from './apiRequest';
+import { apiRequest, authenticatedApiRequest } from './apiRequest';
 import { getIdToken } from './userApi';
 
 export enum AuthorityQualifiers {
@@ -86,51 +86,20 @@ export const updateQualifierIdForAuthority = async (
   qualifier: AuthorityQualifiers,
   identifier: string,
   updatedIdentifier: string
-) => {
-  const url = `${arpId}/identifiers/${qualifier}/update`;
-
-  const error = i18n.t('feedback:error.update_authority', { qualifier: i18n.t(`common:${qualifier}`) });
-
-  try {
-    const idToken = await getIdToken();
-    const headers = {
-      Authorization: `Bearer ${idToken}`,
-    };
-
-    const response = await Axios.put(url, { identifier, updatedIdentifier }, { headers });
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      return { error };
-    }
-  } catch {
-    return { error };
-  }
-};
+) =>
+  await authenticatedApiRequest<Authority>({
+    url: `${arpId}/identifiers/${qualifier}/update`,
+    method: 'PUT',
+    data: { identifier, updatedIdentifier },
+  });
 
 export const removeQualifierIdFromAuthority = async (
   arpId: string,
   qualifier: AuthorityQualifiers,
   identifier: string
-) => {
-  const url = `${arpId}/identifiers/${qualifier}/delete`;
-
-  const error = i18n.t('feedback:error.delete_identifier', { qualifier: i18n.t(`common:${qualifier}`) });
-
-  try {
-    const idToken = await getIdToken();
-    const headers = {
-      Authorization: `Bearer ${idToken}`,
-    };
-
-    const response = await Axios.delete(url, { data: { identifier }, headers });
-
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      return { error };
-    }
-  } catch {
-    return { error };
-  }
-};
+) =>
+  await authenticatedApiRequest<Authority>({
+    url: `${arpId}/identifiers/${qualifier}/delete`,
+    method: 'DELETE',
+    data: { identifier },
+  });
