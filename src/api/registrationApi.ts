@@ -4,7 +4,7 @@ import { DoiRequestStatus, Registration } from '../types/registration.types';
 import { RegistrationFileSet } from '../types/file.types';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
-import { authenticatedApiRequest2 as authenticatedApiRequest } from './apiRequest';
+import { authenticatedApiRequest } from './apiRequest';
 import { MessageType } from '../types/publication_types/messages.types';
 
 export enum PublicationsApiPaths {

@@ -15,22 +15,6 @@ interface CompletedApiResponse<T> {
 // A cancelled request should return null
 type ApiResponse<T> = CompletedApiResponse<T> | null;
 
-export const authenticatedApiRequest = async <T>(axiosRequestConfig: AxiosRequestConfig): Promise<ApiResponse<T>> => {
-  try {
-    const idToken = await getIdToken();
-    axiosRequestConfig.headers = {
-      ...axiosRequestConfig.headers,
-      Authorization: `Bearer ${idToken}`,
-    };
-  } catch {
-    return {
-      error: true,
-    };
-  }
-
-  return await apiRequest(axiosRequestConfig);
-};
-
 export const apiRequest = async <T>(axiosRequestConfig: AxiosRequestConfig): Promise<ApiResponse<T>> => {
   try {
     const response = await Axios(axiosRequestConfig);
@@ -47,9 +31,7 @@ export const apiRequest = async <T>(axiosRequestConfig: AxiosRequestConfig): Pro
   }
 };
 
-export const authenticatedApiRequest2 = async <T>(
-  axiosRequestConfig: AxiosRequestConfig
-): Promise<AxiosResponse<T>> => {
+export const authenticatedApiRequest = async <T>(axiosRequestConfig: AxiosRequestConfig): Promise<AxiosResponse<T>> => {
   const idToken = await getIdToken();
   axiosRequestConfig.headers = {
     ...axiosRequestConfig.headers,

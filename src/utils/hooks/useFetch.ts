@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import useCancelToken from './useCancelToken';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { apiRequest2, authenticatedApiRequest2 } from '../../api/apiRequest';
+import { apiRequest2, authenticatedApiRequest } from '../../api/apiRequest';
 import { isErrorStatus, isSuccessStatus } from '../constants';
 
 interface UseFetchConfig {
@@ -40,7 +40,7 @@ export const useFetch = <T>({
     try {
       setIsLoading(true);
       const fetchedData = withAuthentication
-        ? await authenticatedApiRequest2<T>({ url, cancelToken })
+        ? await authenticatedApiRequest<T>({ url, cancelToken })
         : await apiRequest2<T>({ url, cancelToken });
 
       if (isErrorStatus(fetchedData.status)) {
