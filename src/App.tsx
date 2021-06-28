@@ -133,10 +133,15 @@ const App = () => {
                 AuthorityQualifiers.ORGUNIT_ID,
                 user.cristinId
               );
-              if (authorityWithOrgId?.error) {
-                dispatch(setNotification(authorityWithOrgId.error, NotificationVariant.Error));
-              } else {
-                currentAuthority = authorityWithOrgId as Authority;
+              if (isErrorStatus(authorityWithOrgId.status)) {
+                dispatch(
+                  setNotification(
+                    t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+                    NotificationVariant.Error
+                  )
+                );
+              } else if (isSuccessStatus(authorityWithOrgId.status)) {
+                currentAuthority = authorityWithOrgId.data;
               }
             }
             dispatch(setAuthorityData(currentAuthority));

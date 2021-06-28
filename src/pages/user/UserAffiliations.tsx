@@ -84,15 +84,20 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
     }
 
     if (user.authority) {
-      const updatedAuthority = await addQualifierIdForAuthority(
+      const updateAuthorityResponse = await addQualifierIdForAuthority(
         user.authority.id,
         AuthorityQualifiers.ORGUNIT_ID,
         newUnitId
       );
-      if (updatedAuthority.error) {
-        dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
-      } else if (updatedAuthority) {
-        dispatch(setAuthorityData(updatedAuthority));
+      if (isErrorStatus(updateAuthorityResponse.status)) {
+        dispatch(
+          setNotification(
+            t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+            NotificationVariant.Error
+          )
+        );
+      } else if (isSuccessStatus(updateAuthorityResponse.status)) {
+        dispatch(setAuthorityData(updateAuthorityResponse.data));
         dispatch(setNotification(t('feedback:success.added_affiliation'), NotificationVariant.Success));
       }
     }

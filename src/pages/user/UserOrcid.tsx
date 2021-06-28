@@ -79,15 +79,20 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       if (!orcidId) {
         dispatch(setNotification(t('feedback:error.get_orcid', NotificationVariant.Error)));
       } else if (user.authority && !user.authority.orcids.includes(orcidId)) {
-        const updatedAuthority = await addQualifierIdForAuthority(
+        const updateAuthorityResponse = await addQualifierIdForAuthority(
           user.authority.id,
           AuthorityQualifiers.ORCID,
           orcidId
         );
-        if (updatedAuthority?.error) {
-          dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
-        } else {
-          dispatch(setAuthorityData(updatedAuthority));
+        if (isErrorStatus(updateAuthorityResponse.status)) {
+          dispatch(
+            setNotification(
+              t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORCID}`) }),
+              NotificationVariant.Error
+            )
+          );
+        } else if (isSuccessStatus(updateAuthorityResponse.status)) {
+          dispatch(setAuthorityData(updateAuthorityResponse.data));
         }
       }
       history.push(UrlPathTemplate.MyProfile);
