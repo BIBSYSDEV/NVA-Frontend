@@ -14,7 +14,7 @@ import useDebounce from '../../../../utils/hooks/useDebounce';
 import { convertToCristinProject, convertToResearchProject } from './projectHelpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { useFetch } from '../../../../utils/hooks/useFetch';
-import { ProjectsApiPaths } from '../../../../api/apiPaths';
+import { ProjectsApiPath } from '../../../../api/apiPaths';
 
 const StyledProjectChip = styled(Chip)`
   height: auto;
@@ -25,7 +25,7 @@ export const ProjectsField = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
   const [projects, isLoadingProjects] = useFetch<ProjectSearchResponse>({
-    url: debouncedSearchTerm ? `${ProjectsApiPaths.PROJECT}?query=${encodeURIComponent(debouncedSearchTerm)}` : '',
+    url: debouncedSearchTerm ? `${ProjectsApiPath.Project}?query=${encodeURIComponent(debouncedSearchTerm)}` : '',
     errorMessage: t('fedback:error.get_project'),
   });
 

@@ -17,7 +17,7 @@ import { AddRoleModalContent } from './AddRoleModalContent';
 import UserList from './UserList';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { RoleApiPaths } from '../../api/apiPaths';
+import { RoleApiPath } from '../../api/apiPaths';
 
 const StyledContainer = styled.div`
   margin-bottom: 2rem;
@@ -31,7 +31,7 @@ const MyInstitutionUsersPage = () => {
   const { t } = useTranslation('admin');
   const user = useSelector((store: RootStore) => store.user);
   const [institutionUsers, isLoading, fetchInstitutionUsers] = useFetch<InstitutionUser[]>({
-    url: user?.customerId ? `${RoleApiPaths.INSTITUTION_USERS}?institution=${encodeURIComponent(user.customerId)}` : '',
+    url: user?.customerId ? `${RoleApiPath.InstitutionUsers}?institution=${encodeURIComponent(user.customerId)}` : '',
     errorMessage: t('feedback:error.get_users_for_institution'),
   });
   const users = institutionUsers ?? [];

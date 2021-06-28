@@ -1,7 +1,7 @@
 import { Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { PublicationsApiPaths } from '../../api/apiPaths';
+import { PublicationsApiPath } from '../../api/apiPaths';
 import ListSkeleton from '../../components/ListSkeleton';
 import { SupportRequest } from '../../types/publication_types/messages.types';
 import { RoleName } from '../../types/user.types';
@@ -15,7 +15,7 @@ interface MessagesOverviewProps {
 export const MessagesOverview = ({ role }: MessagesOverviewProps) => {
   const { t } = useTranslation('workLists');
   const [supportRequestsResponse, isLoadingSupportRequests, fetchSupportRequests] = useFetch<SupportRequest[]>({
-    url: `${PublicationsApiPaths.MESSAGES}?role=${role}`,
+    url: `${PublicationsApiPath.Messages}?role=${role}`,
     errorMessage: t('feedback:error.get_messages'),
     withAuthentication: true,
   });

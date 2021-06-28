@@ -3,10 +3,10 @@ import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
 import { RoleName, InstitutionUser, UserRole } from '../types/user.types';
-import { RoleApiPaths } from './apiPaths';
+import { RoleApiPath } from './apiPaths';
 
 export const getInstitutionUser = async (username: string, cancelToken?: CancelToken) => {
-  const url = `${RoleApiPaths.USERS}/${encodeURIComponent(username)}`;
+  const url = `${RoleApiPath.Users}/${encodeURIComponent(username)}`;
 
   try {
     const idToken = await getIdToken();
@@ -81,7 +81,7 @@ export const removeRoleFromUser = async (username: string, rolename: RoleName, c
 };
 
 const updateUserRoles = async (institutionUser: InstitutionUser, cancelToken?: CancelToken) => {
-  const url = `${RoleApiPaths.USERS}/${encodeURIComponent(institutionUser.username)}`;
+  const url = `${RoleApiPath.Users}/${encodeURIComponent(institutionUser.username)}`;
   try {
     const idToken = await getIdToken();
     const headers = {

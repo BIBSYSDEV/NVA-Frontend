@@ -2,7 +2,7 @@ import Axios, { CancelToken } from 'axios';
 import i18n from '../translations/i18n';
 import { Authority } from '../types/authority.types';
 import { StatusCode } from '../utils/constants';
-import { AuthorityApiPaths } from './apiPaths';
+import { AuthorityApiPath } from './apiPaths';
 import { apiRequest } from './apiRequest';
 import { getIdToken } from './userApi';
 
@@ -19,7 +19,7 @@ export const getAuthority = async (arpId: string, cancelToken?: CancelToken) =>
   });
 
 export const createAuthority = async (firstName: string, lastName: string, feideId?: string, cristinId?: string) => {
-  const url = AuthorityApiPaths.PERSON;
+  const url = AuthorityApiPath.Person;
 
   const error = i18n.t('feedback:error.create_authority');
 

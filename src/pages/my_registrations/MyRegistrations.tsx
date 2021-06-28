@@ -18,7 +18,7 @@ import { MyRegistrationsResponse, RegistrationStatus } from '../../types/registr
 import { getUserPath } from '../../utils/urlPaths';
 import RegistrationList from './RegistrationList';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { PublicationsApiPaths } from '../../api/apiPaths';
+import { PublicationsApiPath } from '../../api/apiPaths';
 
 const StyledContainer = styled.div`
   width: 100%;
@@ -38,7 +38,7 @@ const MyRegistrations = () => {
   const user = useSelector((store: RootStore) => store.user);
   const [selectedTab, setSelectedTab] = useState(Tab.Unpublished);
   const [myRegistrationsResponse, isLoading, refetchRegistrations] = useFetch<MyRegistrationsResponse>({
-    url: PublicationsApiPaths.PUBLICATIONS_BY_OWNER,
+    url: PublicationsApiPath.RegistrationsByOwner,
     errorMessage: t('feedback:error.get_registrations'),
     withAuthentication: true,
   });

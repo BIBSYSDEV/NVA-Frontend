@@ -22,7 +22,7 @@ import { RegistrationFormTabs } from './RegistrationFormTabs';
 import { getTouchedTabFields } from '../../utils/formik-helpers';
 import { SkipLink } from '../../components/SkipLink';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { PublicationsApiPaths } from '../../api/apiPaths';
+import { PublicationsApiPath } from '../../api/apiPaths';
 
 const StyledRegistration = styled.div`
   width: 100%;
@@ -46,7 +46,7 @@ const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const highestValidatedTab =
     useLocation<RegistrationLocationState>().state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
   const [registration, isLoadingRegistration, refetchRegistration] = useFetch<Registration>({
-    url: `${PublicationsApiPaths.PUBLICATION}/${identifier}`,
+    url: `${PublicationsApiPath.Registration}/${identifier}`,
     errorMessage: t('feedback:error.get_registration'),
   });
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');

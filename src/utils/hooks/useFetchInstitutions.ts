@@ -7,7 +7,7 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { useFetch } from './useFetch';
 import { getPreferredLanguageCode } from '../translation-helpers';
 import { setInstitutions } from '../../redux/actions/institutionActions';
-import { InstitutionApiPaths } from '../../api/apiPaths';
+import { InstitutionApiPath } from '../../api/apiPaths';
 
 // This hook is used to fetch all top-level institutions and put them in Redux, to avoid fetching same data many times
 export const useFetchInstitutions = (): [InstitutionUnitBase[], boolean] => {
@@ -18,7 +18,7 @@ export const useFetchInstitutions = (): [InstitutionUnitBase[], boolean] => {
   const shouldFetchInstitutions = institutionsState.items.length === 0 || institutionsState.language !== i18n.language;
 
   const [institutions, isLoading] = useFetch<InstitutionUnitBase[]>({
-    url: shouldFetchInstitutions ? `${InstitutionApiPaths.INSTITUTIONS}?language=${getPreferredLanguageCode()}` : '',
+    url: shouldFetchInstitutions ? `${InstitutionApiPath.Institutions}?language=${getPreferredLanguageCode()}` : '',
     errorMessage: t('error.get_institutions'),
   });
 

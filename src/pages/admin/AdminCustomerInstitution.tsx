@@ -9,7 +9,7 @@ import { CustomerInstitutionAdminsForm } from './CustomerInstitutionAdminsForm';
 import { CustomerInstitutionMetadataForm } from './CustomerInstitutionMetadataForm';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { InstitutionUser } from '../../types/user.types';
-import { RoleApiPaths } from '../../api/apiPaths';
+import { RoleApiPath } from '../../api/apiPaths';
 
 const StyledCustomerInstitution = styled.section`
   display: flex;
@@ -29,7 +29,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
     withAuthentication: true,
   });
   const [users, isLoadingUsers, refetchInstitutionUsers] = useFetch<InstitutionUser[]>({
-    url: customerId ? `${RoleApiPaths.INSTITUTION_USERS}?institution=${encodeURIComponent(customerId)}` : '',
+    url: customerId ? `${RoleApiPath.InstitutionUsers}?institution=${encodeURIComponent(customerId)}` : '',
     errorMessage: t('feedback:error.get_users_for_institution'),
   });
 

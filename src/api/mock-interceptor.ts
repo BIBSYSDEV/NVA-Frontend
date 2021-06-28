@@ -20,15 +20,15 @@ import { mockSearchResults } from '../utils/testfiles/search_results';
 import { threeMockSearchResults } from '../utils/testfiles/three_search_results';
 import { mockMessages, mockPublishedRegistration, mockRegistration } from '../utils/testfiles/mockRegistration';
 import {
-  SearchApiPaths,
-  FileApiPaths,
-  PublicationsApiPaths,
-  ProjectsApiPaths,
-  PublicationChannelApiPaths,
-  AuthorityApiPaths,
-  CustomerInstitutionApiPaths,
-  InstitutionApiPaths,
-  RoleApiPaths,
+  SearchApiPath,
+  FileApiPath,
+  PublicationsApiPath,
+  ProjectsApiPath,
+  PublicationChannelApiPath,
+  AuthorityApiPath,
+  CustomerInstitutionApiPath,
+  InstitutionApiPath,
+  RoleApiPath,
 } from './apiPaths';
 
 const mockOrcidResponse: OrcidResponse = {
@@ -65,107 +65,99 @@ export const interceptRequestsOnMock = () => {
   const mock = new MockAdapter(Axios);
 
   // SEARCH
-  mock.onGet(new RegExp(`${SearchApiPaths.REGISTRATIONS}/*`)).replyOnce(200, mockSearchResults);
-  mock.onGet(new RegExp(`${SearchApiPaths.REGISTRATIONS}/*`)).reply(200, threeMockSearchResults);
+  mock.onGet(new RegExp(`${SearchApiPath.Registrations}/*`)).replyOnce(200, mockSearchResults);
+  mock.onGet(new RegExp(`${SearchApiPath.Registrations}/*`)).reply(200, threeMockSearchResults);
 
   // File
-  mock.onGet(new RegExp(FileApiPaths.DOWNLOAD)).reply(200, mockDownload);
-  mock.onPost(new RegExp(FileApiPaths.CREATE)).reply(200, mockCreateUpload);
-  mock.onPost(new RegExp(FileApiPaths.PREPARE)).reply(200, mockPrepareUpload);
-  mock.onPost(new RegExp(FileApiPaths.COMPLETE)).reply(200, mockCompleteUpload);
+  mock.onGet(new RegExp(FileApiPath.Download)).reply(200, mockDownload);
+  mock.onPost(new RegExp(FileApiPath.Create)).reply(200, mockCreateUpload);
+  mock.onPost(new RegExp(FileApiPath.Prepare)).reply(200, mockPrepareUpload);
+  mock.onPost(new RegExp(FileApiPath.Complete)).reply(200, mockCompleteUpload);
 
   // PUBLICATION LIST
-  mock.onGet(PublicationsApiPaths.PUBLICATION).reply(200, mockPublishedRegistrations);
+  mock.onGet(PublicationsApiPath.Registration).reply(200, mockPublishedRegistrations);
 
   //MY PUBLICATIONS
-  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATIONS_BY_OWNER}/*`)).reply(200, mockMyRegistrations);
+  mock.onGet(new RegExp(`${PublicationsApiPath.RegistrationsByOwner}/*`)).reply(200, mockMyRegistrations);
 
   //MY MESSAGES
-  mock.onGet(new RegExp(`${PublicationsApiPaths.MESSAGES}`)).reply(200, mockMessages);
+  mock.onGet(new RegExp(`${PublicationsApiPath.Messages}`)).reply(200, mockMessages);
 
   //PUBLICATION
-  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/new`)).reply(200, emptyRegistration);
+  mock.onGet(new RegExp(`${PublicationsApiPath.Registration}/new`)).reply(200, emptyRegistration);
   mock
-    .onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/4327439`))
+    .onGet(new RegExp(`${PublicationsApiPath.Registration}/4327439`))
     .reply(200, { ...emptyRegistration, owner: 'tu@unit.no' });
   mock
-    .onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/${mockPublishedRegistration.identifier}`))
+    .onGet(new RegExp(`${PublicationsApiPath.Registration}/${mockPublishedRegistration.identifier}`))
     .reply(200, mockPublishedRegistration);
-  mock.onGet(new RegExp(`${PublicationsApiPaths.PUBLICATION}/*`)).reply(200, mockRegistration);
+  mock.onGet(new RegExp(`${PublicationsApiPath.Registration}/*`)).reply(200, mockRegistration);
 
   // lookup DOI
-  mock.onPost(new RegExp(`${PublicationsApiPaths.DOI_LOOKUP}/*`)).reply(200, mockDoiLookupResponse);
+  mock.onPost(new RegExp(`${PublicationsApiPath.DoiLookup}/*`)).reply(200, mockDoiLookupResponse);
 
   // PROJECT
-  mock.onGet(new RegExp(`${ProjectsApiPaths.PROJECT}/1`)).reply(200, mockProject);
-  mock.onGet(new RegExp(`${ProjectsApiPaths.PROJECT}/*`)).reply(200, mockProjectSearch);
+  mock.onGet(new RegExp(`${ProjectsApiPath.Project}/1`)).reply(200, mockProject);
+  mock.onGet(new RegExp(`${ProjectsApiPath.Project}/*`)).reply(200, mockProjectSearch);
 
   // PUBLICATION CHANNEL
-  mock.onPost(new RegExp(`${API_URL}${PublicationChannelApiPaths.SEARCH}`)).reply(200, mockNsdPublisers);
+  mock.onPost(new RegExp(`${API_URL}${PublicationChannelApiPath.Search}`)).reply(200, mockNsdPublisers);
 
   // ORCID
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
 
   // Authority Registry
-  mock.onGet(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}\\?name=*`)).reply(200, mockAuthoritiesResponse);
+  mock.onGet(new RegExp(`${API_URL}${AuthorityApiPath.Person}\\?name=*`)).reply(200, mockAuthoritiesResponse);
   mock
-    .onGet(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}\\?name=tu@unit.no`))
+    .onGet(new RegExp(`${API_URL}${AuthorityApiPath.Person}\\?name=tu@unit.no`))
     .reply(200, mockSingleAuthorityResponse);
   mock
-    .onGet(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}\\?arpId=901790000000`))
+    .onGet(new RegExp(`${API_URL}${AuthorityApiPath.Person}\\?arpId=901790000000`))
     .reply(200, mockSingleAuthorityResponse);
 
   // update authority
   mock
-    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/*/update`))
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPath.Person}/901790000000/identifiers/*/update`))
     .replyOnce(200, mockSingleAuthorityResponse);
   mock
-    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/add`))
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPath.Person}/901790000000/identifiers/orgunitid/add`))
     .replyOnce(200, mockSingleAuthorityResponse);
   mock
-    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orcid/add`))
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPath.Person}/901790000000/identifiers/orcid/add`))
     .reply(200, mockSingleAuthorityResponseWithOrcid);
   mock
-    .onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/add`))
+    .onPost(new RegExp(`${API_URL}${AuthorityApiPath.Person}/901790000000/identifiers/orgunitid/add`))
     .reply(200, mockSingleAuthorityResponseWithOrcid);
 
   // Remove orgunitid from Authority
   mock
-    .onDelete(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/901790000000/identifiers/orgunitid/delete`))
+    .onDelete(new RegExp(`${API_URL}${AuthorityApiPath.Person}/901790000000/identifiers/orgunitid/delete`))
     .reply(200, mockSingleAuthorityResponse);
 
   // create authority
-  mock.onPost(new RegExp(`${API_URL}${AuthorityApiPaths.PERSON}/*`)).reply(200, mockSingleAuthorityResponse);
+  mock.onPost(new RegExp(`${API_URL}${AuthorityApiPath.Person}/*`)).reply(200, mockSingleAuthorityResponse);
 
   //memberinstitutions
-  mock
-    .onGet(new RegExp(`${API_URL}${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}`))
-    .replyOnce(200, mockCustomerInstitutions);
-  mock
-    .onGet(new RegExp(`${API_URL}${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}/*`))
-    .reply(200, mockCustomerInstitution);
-  mock
-    .onPut(new RegExp(`${API_URL}${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}/*`))
-    .reply(200, mockCustomerInstitution);
-  mock
-    .onPost(new RegExp(`${API_URL}${CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION}`))
-    .reply(201, mockCustomerInstitution);
+  mock.onGet(new RegExp(`${API_URL}${CustomerInstitutionApiPath.Customer}`)).replyOnce(200, mockCustomerInstitutions);
+  mock.onGet(new RegExp(`${API_URL}${CustomerInstitutionApiPath.Customer}/*`)).reply(200, mockCustomerInstitution);
+  mock.onPut(new RegExp(`${API_URL}${CustomerInstitutionApiPath.Customer}/*`)).reply(200, mockCustomerInstitution);
+  mock.onPost(new RegExp(`${API_URL}${CustomerInstitutionApiPath.Customer}`)).reply(201, mockCustomerInstitution);
 
   // Institution Registry
-  mock.onGet(new RegExp(`${API_URL}${InstitutionApiPaths.INSTITUTIONS}`)).reply(200, mockInstitutionResponse);
+  mock.onGet(new RegExp(`${API_URL}${InstitutionApiPath.Institutions}`)).reply(200, mockInstitutionResponse);
   mock
-    .onGet(new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=.*194&language=.*`))
+    .onGet(new RegExp(`${API_URL}${InstitutionApiPath.Departments}\\?uri=.*194&language=.*`))
     .reply(200, mockNtnuResponse);
   mock
-    .onGet(new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=.*194.65.20.10&language=.*`))
+    .onGet(new RegExp(`${API_URL}${InstitutionApiPath.Departments}\\?uri=.*194.65.20.10&language=.*`))
     .reply(200, mockNtnuSubunitResponse);
   mock
-    .onGet(new RegExp(`${API_URL}${InstitutionApiPaths.DEPARTMENTS}\\?uri=.*150.4.1.0&language=.*`))
+    .onGet(new RegExp(`${API_URL}${InstitutionApiPath.Departments}\\?uri=.*150.4.1.0&language=.*`))
     .reply(200, mockSchoolOfSportDepartment);
 
   // Roles
-  mock.onGet(new RegExp(`${API_URL}${RoleApiPaths.INSTITUTION_USERS}/*`)).reply(200, []);
-  mock.onGet(new RegExp(`${API_URL}${RoleApiPaths.USERS}/*`)).reply(200, mockRoles);
+  mock.onGet(new RegExp(`${API_URL}${RoleApiPath.InstitutionUsers}/*`)).reply(200, []);
+  mock.onGet(new RegExp(`${API_URL}${RoleApiPath.Users}/*`)).reply(200, mockRoles);
 
   mock.onAny().reply(function (config) {
     throw new Error('Could not find mock for ' + config.url);

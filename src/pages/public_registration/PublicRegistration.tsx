@@ -11,13 +11,13 @@ import NotPublished from '../errorpages/NotPublished';
 import { PageSpinner } from '../../components/PageSpinner';
 import { PublicRegistrationContent } from './PublicRegistrationContent';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { PublicationsApiPaths } from '../../api/apiPaths';
+import { PublicationsApiPath } from '../../api/apiPaths';
 
 const PublicRegistration = () => {
   const { t } = useTranslation();
   const { identifier } = useParams<{ identifier: string }>();
   const [registration, isLoadingRegistration, refetchRegistration] = useFetch<Registration>({
-    url: `${PublicationsApiPaths.PUBLICATION}/${identifier}`,
+    url: `${PublicationsApiPath.Registration}/${identifier}`,
     errorMessage: t('feedback:error.get_registration'),
   });
   const user = useSelector((store: RootStore) => store.user);

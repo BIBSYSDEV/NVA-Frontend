@@ -4,10 +4,10 @@ import { UppyFile } from '@uppy/core';
 import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
-import { FileApiPaths } from './apiPaths';
+import { FileApiPath } from './apiPaths';
 
 export const downloadFile = async (registrationId: string, fileId: string) => {
-  const url = `${FileApiPaths.DOWNLOAD}/${registrationId}/files/${fileId}`;
+  const url = `${FileApiPath.Download}/${registrationId}/files/${fileId}`;
   try {
     const idToken = await getIdToken();
     const response = await Axios.get(url, { headers: { Authorization: `Bearer ${idToken}` } });
@@ -17,7 +17,7 @@ export const downloadFile = async (registrationId: string, fileId: string) => {
       return { error: i18n.t('feedback:error.download_file') };
     }
   } catch {
-    const publicUrl = `${FileApiPaths.PUBLIC_DOWNLOAD}/${registrationId}/files/${fileId}`;
+    const publicUrl = `${FileApiPath.PublicDownload}/${registrationId}/files/${fileId}`;
     const response = await Axios.get(publicUrl);
     if (response.status === StatusCode.OK) {
       return response.data.presignedDownloadUrl;
@@ -34,7 +34,7 @@ export const abortMultipartUpload = async (uploadId: string, key: string) => {
   };
 
   const idToken = await getIdToken();
-  const response = await Axios.post(FileApiPaths.ABORT, payload, {
+  const response = await Axios.post(FileApiPath.Abort, payload, {
     headers: {
       Authorization: `Bearer ${idToken}`,
     },
@@ -50,7 +50,7 @@ export const completeMultipartUpload = async (uploadId: string, key: string, par
   };
 
   const idToken = await getIdToken();
-  const response = await Axios.post(FileApiPaths.COMPLETE, payload, {
+  const response = await Axios.post(FileApiPath.Complete, payload, {
     headers: {
       Authorization: `Bearer ${idToken}`,
     },
@@ -66,7 +66,7 @@ export const createMultipartUpload = async (file: UppyFile) => {
   };
 
   const idToken = await getIdToken();
-  const response = await Axios.post(FileApiPaths.CREATE, payload, {
+  const response = await Axios.post(FileApiPath.Create, payload, {
     headers: {
       Authorization: `Bearer ${idToken}`,
     },
@@ -81,7 +81,7 @@ export const listParts = async (uploadId: string, key: string) => {
   };
 
   const idToken = await getIdToken();
-  const response = await Axios.post(FileApiPaths.LIST_PARTS, payload, {
+  const response = await Axios.post(FileApiPath.ListParts, payload, {
     headers: {
       Authorization: `Bearer ${idToken}`,
     },
@@ -98,7 +98,7 @@ export const prepareUploadPart = async (uploadId: string, key: string, body: Blo
   };
 
   const idToken = await getIdToken();
-  const response = await Axios.post(FileApiPaths.PREPARE, payload, {
+  const response = await Axios.post(FileApiPath.Prepare, payload, {
     headers: {
       Authorization: `Bearer ${idToken}`,
     },

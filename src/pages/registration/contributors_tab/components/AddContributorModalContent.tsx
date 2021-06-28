@@ -15,7 +15,7 @@ import useDebounce from '../../../../utils/hooks/useDebounce';
 import AuthorityList from '../../../user/authority/AuthorityList';
 import { getCreateContributorText, getAddSelfAsContributorText } from '../../../../utils/translation-helpers';
 import { useFetch } from '../../../../utils/hooks/useFetch';
-import { AuthorityApiPaths } from '../../../../api/apiPaths';
+import { AuthorityApiPath } from '../../../../api/apiPaths';
 
 const StyledTextField = styled(TextField)`
   margin-bottom: 1rem;
@@ -71,7 +71,7 @@ export const AddContributorModalContent = ({
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const debouncedSearchTerm = useDebounce(searchTerm);
   const [authorities, isLoadingAuthorities] = useFetch<Authority[]>({
-    url: searchTerm ? `${AuthorityApiPaths.PERSON}?name=${encodeURIComponent(debouncedSearchTerm)}` : '',
+    url: searchTerm ? `${AuthorityApiPath.Person}?name=${encodeURIComponent(debouncedSearchTerm)}` : '',
     errorMessage: t('feedback:error.get_authorities'),
   });
 

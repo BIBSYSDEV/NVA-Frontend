@@ -22,7 +22,7 @@ import lightTheme from '../../../themes/lightTheme';
 import { Authority } from '../../../types/authority.types';
 import { AlmaRegistration } from '../../../types/registration.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
-import { AlmaApiPaths } from '../../../api/apiPaths';
+import { AlmaApiPath } from '../../../api/apiPaths';
 
 const StyledTableRow = styled(TableRow)`
   cursor: pointer;
@@ -135,7 +135,7 @@ const LastAlmaRegistrationCell = ({ authority }: LastAlmaRegistrationCellProps) 
   const [almaPublication, isLoadingAlmaPublication] = useFetch<AlmaRegistration>({
     url:
       systemControlNumber && authority.name
-        ? encodeURI(`${AlmaApiPaths.ALMA}/?scn=${systemControlNumber}&creatorname=${authority.name}`)
+        ? encodeURI(`${AlmaApiPath.Alma}/?scn=${systemControlNumber}&creatorname=${authority.name}`)
         : '',
     errorMessage: t('feedback:error.get_last_registration'),
   });

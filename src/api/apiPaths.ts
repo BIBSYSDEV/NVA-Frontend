@@ -1,52 +1,52 @@
-export enum AlmaApiPaths {
-  ALMA = '/alma',
+export enum AlmaApiPath {
+  Alma = '/alma',
 }
 
-export enum AuthorityApiPaths {
-  PERSON = '/person',
+export enum AuthorityApiPath {
+  Person = '/person',
 }
 
-export enum CustomerInstitutionApiPaths {
-  CUSTOMER_INSTITUTION = '/customer',
+export enum CustomerInstitutionApiPath {
+  Customer = '/customer',
 }
 
-export enum FileApiPaths {
-  ABORT = '/upload/abort',
-  COMPLETE = '/upload/complete',
-  CREATE = '/upload/create',
-  DOWNLOAD = '/download',
-  LIST_PARTS = '/upload/listparts',
-  PREPARE = '/upload/prepare',
-  PUBLIC_DOWNLOAD = '/download/public',
+export enum FileApiPath {
+  Abort = '/upload/abort',
+  Complete = '/upload/complete',
+  Create = '/upload/create',
+  Download = '/download',
+  ListParts = '/upload/listparts',
+  Prepare = '/upload/prepare',
+  PublicDownload = '/download/public',
 }
 
-export enum InstitutionApiPaths {
-  INSTITUTIONS = '/institution/institutions',
-  DEPARTMENTS = '/institution/departments',
+export enum InstitutionApiPath {
+  Institutions = '/institution/institutions',
+  Departments = '/institution/departments',
 }
 
-export enum ProjectsApiPaths {
-  PROJECT = '/project',
+export enum ProjectsApiPath {
+  Project = '/project',
 }
 
-export enum PublicationChannelApiPaths {
-  SEARCH = '/channel/search',
+export enum PublicationChannelApiPath {
+  Search = '/channel/search',
 }
 
-export enum PublicationsApiPaths {
-  PUBLICATION = '/publication',
-  PUBLICATIONS_BY_OWNER = '/publication/by-owner',
-  DOI_LOOKUP = '/doi-fetch',
-  DOI_REQUEST = '/publication/doirequest',
-  UPDATE_DOI_REQUEST = '/publication/update-doi-request',
-  MESSAGES = '/publication/messages',
+export enum PublicationsApiPath {
+  Registration = '/publication',
+  RegistrationsByOwner = '/publication/by-owner',
+  DoiLookup = '/doi-fetch',
+  DoiRequest = '/publication/doirequest',
+  UpdateDoiRequest = '/publication/update-doi-request',
+  Messages = '/publication/messages',
 }
 
-export enum RoleApiPaths {
-  INSTITUTION_USERS = '/users-roles/institutions/users',
-  USERS = '/users-roles/users',
+export enum RoleApiPath {
+  InstitutionUsers = '/users-roles/institutions/users',
+  Users = '/users-roles/users',
 }
 
-export enum SearchApiPaths {
-  REGISTRATIONS = '/search/resources',
+export enum SearchApiPath {
+  Registrations = '/search/resources',
 }

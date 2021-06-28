@@ -10,12 +10,12 @@ import InstitutionList from './InstitutionList';
 import { PageSpinner } from '../../components/PageSpinner';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { CustomerInstitutionsResponse } from '../../types/customerInstitution.types';
-import { CustomerInstitutionApiPaths } from '../../api/apiPaths';
+import { CustomerInstitutionApiPath } from '../../api/apiPaths';
 
 export const AdminCustomerInstitutions = () => {
   const { t } = useTranslation('admin');
   const [customerInstitutions, isLoadingCustomerInstitutions] = useFetch<CustomerInstitutionsResponse>({
-    url: CustomerInstitutionApiPaths.CUSTOMER_INSTITUTION,
+    url: CustomerInstitutionApiPath.Customer,
     withAuthentication: true,
     errorMessage: t('feedback:error.get_customers'),
   });

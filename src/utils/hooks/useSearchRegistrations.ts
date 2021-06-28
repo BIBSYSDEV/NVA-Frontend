@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { SearchApiPaths } from '../../api/apiPaths';
+import { SearchApiPath } from '../../api/apiPaths';
 import { SearchResult } from '../../types/search.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../constants';
 import { createSearchQuery, SearchConfig } from '../searchHelpers';
@@ -14,8 +14,8 @@ export const useSearchRegistrations = (
   const searchQuery = createSearchQuery(searchConfig ?? {});
 
   const url = searchQuery
-    ? `${SearchApiPaths.REGISTRATIONS}?query=${searchQuery}&results=${numberOfResults}&from=${searchAfter}`
-    : `${SearchApiPaths.REGISTRATIONS}?results=${numberOfResults}&from=${searchAfter}`;
+    ? `${SearchApiPath.Registrations}?query=${searchQuery}&results=${numberOfResults}&from=${searchAfter}`
+    : `${SearchApiPath.Registrations}?results=${numberOfResults}&from=${searchAfter}`;
 
   const fetchRegistrations = useFetch<SearchResult>({ url, errorMessage: t('error.search') });
 

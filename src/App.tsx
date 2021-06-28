@@ -26,7 +26,7 @@ import { PageSpinner } from './components/PageSpinner';
 import { LanguageCodes } from './types/language.types';
 import { SkipLink } from './components/SkipLink';
 import { useFetch } from './utils/hooks/useFetch';
-import { AuthorityApiPaths } from './api/apiPaths';
+import { AuthorityApiPath } from './api/apiPaths';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -56,7 +56,7 @@ const App = () => {
   const user = useSelector((store: RootStore) => store.user);
   const [isLoading, setIsLoading] = useState({ userAttributes: true, userRoles: true, userAuthority: true });
   const [matchingAuthorities, isLoadingMatchingAuthorities] = useFetch<Authority[]>({
-    url: user?.name ? `${AuthorityApiPaths.PERSON}?name=${encodeURIComponent(user.name)}` : '',
+    url: user?.name ? `${AuthorityApiPath.Person}?name=${encodeURIComponent(user.name)}` : '',
     errorMessage: t('feedback:error.get_authorities'),
   });
 
