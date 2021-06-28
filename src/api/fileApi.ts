@@ -1,30 +1,31 @@
-import Axios from 'axios';
 import { AwsS3Part } from '@uppy/aws-s3-multipart';
 import { UppyFile } from '@uppy/core';
-import i18n from '../translations/i18n';
-import { StatusCode } from '../utils/constants';
-import { getIdToken } from './userApi';
+import { isSuccessStatus } from '../utils/constants';
 import { FileApiPath } from './apiPaths';
+import { apiRequest, authenticatedApiRequest } from './apiRequest';
+
+interface DownloadFileResponse {
+  presignedDownloadUrl: string;
+}
 
 export const downloadFile = async (registrationId: string, fileId: string) => {
-  const url = `${FileApiPath.Download}/${registrationId}/files/${fileId}`;
   try {
-    const idToken = await getIdToken();
-    const response = await Axios.get(url, { headers: { Authorization: `Bearer ${idToken}` } });
-    if (response.status === StatusCode.OK) {
-      return response.data.presignedDownloadUrl;
-    } else {
-      return { error: i18n.t('feedback:error.download_file') };
+    const authenticatedResponse = await authenticatedApiRequest<DownloadFileResponse>({
+      url: `${FileApiPath.Download}/${registrationId}/files/${fileId}`,
+    });
+    if (isSuccessStatus(authenticatedResponse.status)) {
+      return authenticatedResponse.data.presignedDownloadUrl;
     }
   } catch {
-    const publicUrl = `${FileApiPath.PublicDownload}/${registrationId}/files/${fileId}`;
-    const response = await Axios.get(publicUrl);
-    if (response.status === StatusCode.OK) {
-      return response.data.presignedDownloadUrl;
-    } else {
-      return { error: i18n.t('feedback:error.download_file') };
+    const publicDownloadResponse = await apiRequest<DownloadFileResponse>({
+      url: `${FileApiPath.PublicDownload}/${registrationId}/files/${fileId}`,
+    });
+    if (isSuccessStatus(publicDownloadResponse.status)) {
+      return publicDownloadResponse.data.presignedDownloadUrl;
     }
   }
+
+  return null;
 };
 
 export const abortMultipartUpload = async (uploadId: string, key: string) => {
@@ -33,13 +34,12 @@ export const abortMultipartUpload = async (uploadId: string, key: string) => {
     key,
   };
 
-  const idToken = await getIdToken();
-  const response = await Axios.post(FileApiPath.Abort, payload, {
-    headers: {
-      Authorization: `Bearer ${idToken}`,
-    },
+  const completeResponse = await authenticatedApiRequest<any>({
+    url: FileApiPath.Abort,
+    method: 'POST',
+    data: payload,
   });
-  return response.data;
+  return completeResponse.data;
 };
 
 export const completeMultipartUpload = async (uploadId: string, key: string, parts: AwsS3Part[]) => {
@@ -49,13 +49,12 @@ export const completeMultipartUpload = async (uploadId: string, key: string, par
     parts,
   };
 
-  const idToken = await getIdToken();
-  const response = await Axios.post(FileApiPath.Complete, payload, {
-    headers: {
-      Authorization: `Bearer ${idToken}`,
-    },
+  const completeResponse = await authenticatedApiRequest<any>({
+    url: FileApiPath.Complete,
+    method: 'POST',
+    data: payload,
   });
-  return response.data;
+  return completeResponse.data;
 };
 export const createMultipartUpload = async (file: UppyFile) => {
   const payload = {
@@ -65,13 +64,12 @@ export const createMultipartUpload = async (file: UppyFile) => {
     mimetype: file.data.type,
   };
 
-  const idToken = await getIdToken();
-  const response = await Axios.post(FileApiPath.Create, payload, {
-    headers: {
-      Authorization: `Bearer ${idToken}`,
-    },
+  const createResponse = await authenticatedApiRequest<any>({
+    url: FileApiPath.Create,
+    method: 'POST',
+    data: payload,
   });
-  return response.data;
+  return createResponse.data;
 };
 
 export const listParts = async (uploadId: string, key: string) => {
@@ -80,13 +78,12 @@ export const listParts = async (uploadId: string, key: string) => {
     key,
   };
 
-  const idToken = await getIdToken();
-  const response = await Axios.post(FileApiPath.ListParts, payload, {
-    headers: {
-      Authorization: `Bearer ${idToken}`,
-    },
+  const listPartsResponse = await authenticatedApiRequest<any>({
+    url: FileApiPath.ListParts,
+    method: 'POST',
+    data: payload,
   });
-  return response.data;
+  return listPartsResponse.data;
 };
 
 export const prepareUploadPart = async (uploadId: string, key: string, body: Blob, number: number) => {
@@ -97,11 +94,10 @@ export const prepareUploadPart = async (uploadId: string, key: string, body: Blo
     number,
   };
 
-  const idToken = await getIdToken();
-  const response = await Axios.post(FileApiPath.Prepare, payload, {
-    headers: {
-      Authorization: `Bearer ${idToken}`,
-    },
+  const prepareResponse = await authenticatedApiRequest<any>({
+    url: FileApiPath.Prepare,
+    method: 'POST',
+    data: payload,
   });
-  return response.data;
+  return prepareResponse.data;
 };

@@ -114,18 +114,18 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
   const handleDownload = useCallback(
     async (manuallyTriggered = true) => {
       setIsLoadingFile(true);
-      const downloadedFile = await downloadFile(registrationId, file.identifier);
-      if (!downloadedFile || downloadedFile?.error) {
-        dispatch(setNotification(downloadedFile.error, NotificationVariant.Error));
+      const downloadedFileUrl = await downloadFile(registrationId, file.identifier);
+      if (!downloadedFileUrl) {
+        dispatch(setNotification(t('feedback:error.download_file'), NotificationVariant.Error));
       } else {
-        setCurrentFileUrl(downloadedFile);
+        setCurrentFileUrl(downloadedFileUrl);
         if (manuallyTriggered) {
-          window.open(downloadedFile, '_blank');
+          window.open(downloadedFileUrl, '_blank');
         }
       }
       setIsLoadingFile(false);
     },
-    [dispatch, registrationId, file.identifier]
+    [t, dispatch, registrationId, file.identifier]
   );
 
   useEffect(() => {
