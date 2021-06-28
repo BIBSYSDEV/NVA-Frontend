@@ -1,9 +1,6 @@
-import Axios, { CancelToken } from 'axios';
-import i18n from '../translations/i18n';
-import { DoiRequestStatus, Registration } from '../types/registration.types';
+import { CancelToken } from 'axios';
+import { Doi, DoiRequestStatus, Registration } from '../types/registration.types';
 import { RegistrationFileSet } from '../types/file.types';
-import { StatusCode } from '../utils/constants';
-import { getIdToken } from './userApi';
 import { authenticatedApiRequest } from './apiRequest';
 import { MessageType } from '../types/publication_types/messages.types';
 
@@ -16,43 +13,19 @@ export enum PublicationsApiPaths {
   MESSAGES = '/publication/messages',
 }
 
-export const createRegistration = async (partialPublication?: RegistrationFileSet) => {
-  try {
-    const idToken = await getIdToken();
-    const response = await Axios.post(PublicationsApiPaths.PUBLICATION, partialPublication, {
-      headers: { Authorization: `Bearer ${idToken}` },
-    });
-    if (response.status === StatusCode.CREATED) {
-      return response.data;
-    } else {
-      return { error: i18n.t('feedback:error.create_registration') };
-    }
-  } catch {
-    return { error: i18n.t('feedback:error.create_registration') };
-  }
-};
+export const createRegistration = async (partialRegistration?: RegistrationFileSet) =>
+  await authenticatedApiRequest<Registration>({
+    url: PublicationsApiPaths.PUBLICATION,
+    method: 'POST',
+    data: partialRegistration,
+  });
 
-export const updateRegistration = async (registration: Registration) => {
-  const { identifier } = registration;
-  if (!identifier) {
-    return { error: i18n.t('feedback:error.update_registration') };
-  }
-  const idToken = await getIdToken();
-  try {
-    const response = await Axios.put(`${PublicationsApiPaths.PUBLICATION}/${identifier}`, registration, {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      return { error: i18n.t('feedback:error.update_registration') };
-    }
-  } catch {
-    return { error: i18n.t('feedback:error.update_registration') };
-  }
-};
+export const updateRegistration = async (registration: Registration) =>
+  await authenticatedApiRequest<Registration>({
+    url: `${PublicationsApiPaths.PUBLICATION}/${registration.identifier}`,
+    method: 'PUT',
+    data: registration,
+  });
 
 export const publishRegistration = async (identifier: string) =>
   await authenticatedApiRequest({
@@ -60,32 +33,15 @@ export const publishRegistration = async (identifier: string) =>
     method: 'PUT',
   });
 
-export const getRegistrationByDoi = async (doiUrl: string) => {
-  try {
-    const idToken = await getIdToken();
-    const response = await Axios.post(
-      `${PublicationsApiPaths.DOI_LOOKUP}/`,
-      { doiUrl },
-      {
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-          Accept: 'application/vnd.citationstyles.csl+json',
-        },
-      }
-    );
-
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      return null;
-    }
-  } catch (error) {
-    return { error };
-  }
-};
+export const getRegistrationByDoi = async (doiUrl: string) =>
+  await authenticatedApiRequest<Doi>({
+    url: `${PublicationsApiPaths.DOI_LOOKUP}/`,
+    data: { doiUrl },
+    method: 'POST',
+  });
 
 export const deleteRegistration = async (identifier: string) =>
-  authenticatedApiRequest({
+  await authenticatedApiRequest({
     url: `${PublicationsApiPaths.PUBLICATION}/${identifier}`,
     method: 'DELETE',
   });

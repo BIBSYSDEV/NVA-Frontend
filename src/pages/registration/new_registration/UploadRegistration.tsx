@@ -20,6 +20,7 @@ import { BackendTypeNames } from '../../../types/publication_types/commonRegistr
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { createUppy } from '../../../utils/uppy/uppy-config';
 import UploadedFileRow from './UploadedFileRow';
+import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
   border-color: ${({ theme }) => theme.palette.secondary.main};
@@ -46,12 +47,12 @@ const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => 
         files: uploadedFiles,
       },
     };
-    const registration = await createRegistration(registrationPayload);
-    if (registration?.identifier) {
-      history.push(getRegistrationPath(registration.identifier), { highestValidatedTab: -1 });
-    } else {
-      setIsLoading(false);
+    const createRegistrationResponse = await createRegistration(registrationPayload);
+    if (isErrorStatus(createRegistrationResponse.status)) {
       dispatch(setNotification(t('feedback:error.create_registration'), NotificationVariant.Error));
+      setIsLoading(false);
+    } else if (isSuccessStatus(createRegistrationResponse.status)) {
+      history.push(getRegistrationPath(createRegistrationResponse.data.identifier), { highestValidatedTab: -1 });
     }
   };
 
