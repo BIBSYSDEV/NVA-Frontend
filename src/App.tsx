@@ -20,7 +20,7 @@ import { Authority } from './types/authority.types';
 import { NotificationVariant } from './types/notification.types';
 import { InstitutionUser } from './types/user.types';
 import { awsConfig } from './utils/aws-config';
-import { USE_MOCK_DATA } from './utils/constants';
+import { isErrorStatus, isSuccessStatus, USE_MOCK_DATA } from './utils/constants';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { PageSpinner } from './components/PageSpinner';
 import { LanguageCodes } from './types/language.types';
@@ -120,12 +120,12 @@ const App = () => {
           setIsLoading((state) => ({ ...state, userAuthority: true }));
           // Use exsisting authority
           const existingArpId = filteredAuthorities[0].id;
-          const existingAuthority = await getAuthority(existingArpId);
-          if (existingAuthority?.error) {
+          const existingAuthorityResponse = await getAuthority(existingArpId);
+          if (isErrorStatus(existingAuthorityResponse.status)) {
             dispatch(setNotification(t('error.get_authority'), NotificationVariant.Error));
-          } else if (existingAuthority?.data) {
-            let currentAuthority = existingAuthority.data;
-            if (user.cristinId && !existingAuthority.data.orgunitids.includes(user.cristinId)) {
+          } else if (isSuccessStatus(existingAuthorityResponse.status) && existingAuthorityResponse.data) {
+            let currentAuthority = existingAuthorityResponse.data;
+            if (user.cristinId && !existingAuthorityResponse.data.orgunitids.includes(user.cristinId)) {
               // Add cristinId to Authority's orgunitids
               const authorityWithOrgId = await addQualifierIdForAuthority(
                 existingArpId,
