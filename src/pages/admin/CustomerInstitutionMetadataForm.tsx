@@ -23,7 +23,7 @@ import { SelectInstitutionField } from './customerInstitutionFields/SelectInstit
 import { getAdminInstitutionPath } from '../../utils/urlPaths';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
-import { isErrorStatus, isSuccessStatus } from '../../utils/hooks/useFetch';
+import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 
 const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
   margin-top: 2rem;

@@ -22,7 +22,8 @@ import { CustomerInstitutionTextField } from './customerInstitutionFields/Custom
 import { SelectInstitutionField } from './customerInstitutionFields/SelectInstitutionField';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
-import { isErrorStatus, isSuccessStatus, useFetch } from '../../utils/hooks/useFetch';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 
 const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
   margin-top: 2rem;

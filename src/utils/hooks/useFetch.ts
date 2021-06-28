@@ -6,15 +6,13 @@ import useCancelToken from './useCancelToken';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { apiRequest2, authenticatedApiRequest2 } from '../../api/apiRequest';
+import { isErrorStatus, isSuccessStatus } from '../constants';
 
 interface UseFetchConfig {
   url: string;
   errorMessage?: string;
   withAuthentication?: boolean;
 }
-
-export const isErrorStatus = (status: number) => status >= 400 && status <= 599;
-export const isSuccessStatus = (status: number) => status >= 200 && status <= 299;
 
 export const useFetch = <T>({
   url,
