@@ -9,8 +9,8 @@ import { getAdminInstitutionPath } from '../../utils/urlPaths';
 import InstitutionList from './InstitutionList';
 import { PageSpinner } from '../../components/PageSpinner';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { CustomerInstitutionApiPaths } from '../../api/customerInstitutionsApi';
 import { CustomerInstitutionsResponse } from '../../types/customerInstitution.types';
+import { CustomerInstitutionApiPaths } from '../../api/apiPaths';
 
 export const AdminCustomerInstitutions = () => {
   const { t } = useTranslation('admin');

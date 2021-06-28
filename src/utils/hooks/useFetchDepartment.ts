@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { InstitutionApiPaths } from '../../api/institutionApi';
+import { InstitutionApiPaths } from '../../api/apiPaths';
 import { RecursiveInstitutionUnit } from '../../types/institution.types';
 import { getPreferredLanguageCode } from '../translation-helpers';
 import { useFetch } from './useFetch';

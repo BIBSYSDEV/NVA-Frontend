@@ -14,8 +14,8 @@ import { Registration } from '../../../../types/registration.types';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import AuthorityList from '../../../user/authority/AuthorityList';
 import { getCreateContributorText, getAddSelfAsContributorText } from '../../../../utils/translation-helpers';
-import { AuthorityApiPaths } from '../../../../api/authorityApi';
 import { useFetch } from '../../../../utils/hooks/useFetch';
+import { AuthorityApiPaths } from '../../../../api/apiPaths';
 
 const StyledTextField = styled(TextField)`
   margin-bottom: 1rem;

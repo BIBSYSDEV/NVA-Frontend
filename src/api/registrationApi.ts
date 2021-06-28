@@ -3,15 +3,7 @@ import { Doi, DoiRequestStatus, Registration } from '../types/registration.types
 import { RegistrationFileSet } from '../types/file.types';
 import { authenticatedApiRequest } from './apiRequest';
 import { MessageType } from '../types/publication_types/messages.types';
-
-export enum PublicationsApiPaths {
-  PUBLICATION = '/publication',
-  PUBLICATIONS_BY_OWNER = '/publication/by-owner',
-  DOI_LOOKUP = '/doi-fetch',
-  DOI_REQUEST = '/publication/doirequest',
-  UPDATE_DOI_REQUEST = '/publication/update-doi-request',
-  MESSAGES = '/publication/messages',
-}
+import { PublicationsApiPaths } from './apiPaths';
 
 export const createRegistration = async (partialRegistration?: RegistrationFileSet) =>
   await authenticatedApiRequest<Registration>({

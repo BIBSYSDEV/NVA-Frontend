@@ -13,8 +13,8 @@ import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import useDebounce from '../../../../utils/hooks/useDebounce';
 import { convertToCristinProject, convertToResearchProject } from './projectHelpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
-import { ProjectsApiPaths } from '../../../../api/projectApi';
 import { useFetch } from '../../../../utils/hooks/useFetch';
+import { ProjectsApiPaths } from '../../../../api/apiPaths';
 
 const StyledProjectChip = styled(Chip)`
   height: auto;

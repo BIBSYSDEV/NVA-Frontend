@@ -17,8 +17,8 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { MyRegistrationsResponse, RegistrationStatus } from '../../types/registration.types';
 import { getUserPath } from '../../utils/urlPaths';
 import RegistrationList from './RegistrationList';
-import { PublicationsApiPaths } from '../../api/registrationApi';
 import { useFetch } from '../../utils/hooks/useFetch';
+import { PublicationsApiPaths } from '../../api/apiPaths';
 
 const StyledContainer = styled.div`
   width: 100%;

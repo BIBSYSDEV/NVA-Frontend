@@ -18,16 +18,18 @@ import mockPublishedRegistrations from '../utils/testfiles/published_registratio
 import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
 import { mockSearchResults } from '../utils/testfiles/search_results';
 import { threeMockSearchResults } from '../utils/testfiles/three_search_results';
-import { AuthorityApiPaths } from './authorityApi';
-import { CustomerInstitutionApiPaths } from './customerInstitutionsApi';
-import { FileApiPaths } from './fileApi';
-import { InstitutionApiPaths } from './institutionApi';
-import { ProjectsApiPaths } from './projectApi';
-import { PublicationChannelApiPaths } from './publicationChannelApi';
-import { PublicationsApiPaths } from './registrationApi';
-import { RoleApiPaths } from './roleApi';
-import { SearchApiPaths } from './searchApi';
 import { mockMessages, mockPublishedRegistration, mockRegistration } from '../utils/testfiles/mockRegistration';
+import {
+  SearchApiPaths,
+  FileApiPaths,
+  PublicationsApiPaths,
+  ProjectsApiPaths,
+  PublicationChannelApiPaths,
+  AuthorityApiPaths,
+  CustomerInstitutionApiPaths,
+  InstitutionApiPaths,
+  RoleApiPaths,
+} from './apiPaths';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',

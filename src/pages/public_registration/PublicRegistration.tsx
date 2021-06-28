@@ -11,7 +11,7 @@ import NotPublished from '../errorpages/NotPublished';
 import { PageSpinner } from '../../components/PageSpinner';
 import { PublicRegistrationContent } from './PublicRegistrationContent';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { PublicationsApiPaths } from '../../api/registrationApi';
+import { PublicationsApiPaths } from '../../api/apiPaths';
 
 const PublicRegistration = () => {
   const { t } = useTranslation();

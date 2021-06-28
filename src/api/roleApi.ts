@@ -3,11 +3,7 @@ import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
 import { RoleName, InstitutionUser, UserRole } from '../types/user.types';
-
-export enum RoleApiPaths {
-  INSTITUTION_USERS = '/users-roles/institutions/users',
-  USERS = '/users-roles/users',
-}
+import { RoleApiPaths } from './apiPaths';
 
 export const getInstitutionUser = async (username: string, cancelToken?: CancelToken) => {
   const url = `${RoleApiPaths.USERS}/${encodeURIComponent(username)}`;

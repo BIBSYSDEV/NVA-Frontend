@@ -21,8 +21,8 @@ import { RegistrationFormContent } from './RegistrationFormContent';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
 import { getTouchedTabFields } from '../../utils/formik-helpers';
 import { SkipLink } from '../../components/SkipLink';
-import { PublicationsApiPaths } from '../../api/registrationApi';
 import { useFetch } from '../../utils/hooks/useFetch';
+import { PublicationsApiPaths } from '../../api/apiPaths';
 
 const StyledRegistration = styled.div`
   width: 100%;

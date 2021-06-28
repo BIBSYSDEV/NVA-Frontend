@@ -2,10 +2,7 @@ import { PublicationTableNumber } from '../utils/constants';
 import { apiRequest } from './apiRequest';
 import { Publisher } from '../types/registration.types';
 import { CancelToken } from 'axios';
-
-export enum PublicationChannelApiPaths {
-  SEARCH = '/channel/search',
-}
+import { PublicationChannelApiPaths } from './apiPaths';
 
 interface PublisherSearchResponse {
   results: Publisher[];

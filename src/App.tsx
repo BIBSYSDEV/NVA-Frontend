@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
-import { addQualifierIdForAuthority, AuthorityApiPaths, AuthorityQualifiers, getAuthority } from './api/authorityApi';
+import { addQualifierIdForAuthority, AuthorityQualifiers, getAuthority } from './api/authorityApi';
 import { getInstitutionUser } from './api/roleApi';
 import { getCurrentUserAttributes } from './api/userApi';
 import { AppRoutes } from './AppRoutes';
@@ -26,6 +26,7 @@ import { PageSpinner } from './components/PageSpinner';
 import { LanguageCodes } from './types/language.types';
 import { SkipLink } from './components/SkipLink';
 import { useFetch } from './utils/hooks/useFetch';
+import { AuthorityApiPaths } from './api/apiPaths';
 
 const StyledApp = styled.div`
   min-height: 100vh;

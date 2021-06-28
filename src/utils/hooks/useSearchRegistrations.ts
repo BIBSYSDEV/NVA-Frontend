@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { SearchApiPaths } from '../../api/searchApi';
+import { SearchApiPaths } from '../../api/apiPaths';
 import { SearchResult } from '../../types/search.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../constants';
 import { createSearchQuery, SearchConfig } from '../searchHelpers';

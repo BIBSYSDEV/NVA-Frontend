@@ -20,9 +20,9 @@ import BackgroundDiv from '../../../components/BackgroundDiv';
 import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
 import lightTheme from '../../../themes/lightTheme';
 import { Authority } from '../../../types/authority.types';
-import { AlmaApiPaths } from '../../../api/almaApi';
 import { AlmaRegistration } from '../../../types/registration.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
+import { AlmaApiPaths } from '../../../api/apiPaths';
 
 const StyledTableRow = styled(TableRow)`
   cursor: pointer;

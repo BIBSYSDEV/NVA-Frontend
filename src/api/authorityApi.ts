@@ -2,12 +2,9 @@ import Axios, { CancelToken } from 'axios';
 import i18n from '../translations/i18n';
 import { Authority } from '../types/authority.types';
 import { StatusCode } from '../utils/constants';
+import { AuthorityApiPaths } from './apiPaths';
 import { apiRequest } from './apiRequest';
 import { getIdToken } from './userApi';
-
-export enum AuthorityApiPaths {
-  PERSON = '/person',
-}
 
 export enum AuthorityQualifiers {
   FEIDE_ID = 'feideid',

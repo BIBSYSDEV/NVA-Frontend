@@ -9,7 +9,7 @@ import { CustomerInstitutionAdminsForm } from './CustomerInstitutionAdminsForm';
 import { CustomerInstitutionMetadataForm } from './CustomerInstitutionMetadataForm';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { InstitutionUser } from '../../types/user.types';
-import { RoleApiPaths } from '../../api/roleApi';
+import { RoleApiPaths } from '../../api/apiPaths';
 
 const StyledCustomerInstitution = styled.section`
   display: flex;

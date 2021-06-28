@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import { InstitutionUnitBase } from '../../types/institution.types';
-import { InstitutionApiPaths } from '../../api/institutionApi';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { useFetch } from './useFetch';
 import { getPreferredLanguageCode } from '../translation-helpers';
 import { setInstitutions } from '../../redux/actions/institutionActions';
+import { InstitutionApiPaths } from '../../api/apiPaths';
 
 // This hook is used to fetch all top-level institutions and put them in Redux, to avoid fetching same data many times
 export const useFetchInstitutions = (): [InstitutionUnitBase[], boolean] => {

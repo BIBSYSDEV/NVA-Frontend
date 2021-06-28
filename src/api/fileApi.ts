@@ -4,16 +4,7 @@ import { UppyFile } from '@uppy/core';
 import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
-
-export enum FileApiPaths {
-  ABORT = '/upload/abort',
-  COMPLETE = '/upload/complete',
-  CREATE = '/upload/create',
-  DOWNLOAD = '/download',
-  LIST_PARTS = '/upload/listparts',
-  PREPARE = '/upload/prepare',
-  PUBLIC_DOWNLOAD = '/download/public',
-}
+import { FileApiPaths } from './apiPaths';
 
 export const downloadFile = async (registrationId: string, fileId: string) => {
   const url = `${FileApiPaths.DOWNLOAD}/${registrationId}/files/${fileId}`;

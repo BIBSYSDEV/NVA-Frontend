@@ -16,8 +16,8 @@ import { filterUsersByRole } from '../../utils/role-helpers';
 import { AddRoleModalContent } from './AddRoleModalContent';
 import UserList from './UserList';
 import { dataTestId } from '../../utils/dataTestIds';
-import { RoleApiPaths } from '../../api/roleApi';
 import { useFetch } from '../../utils/hooks/useFetch';
+import { RoleApiPaths } from '../../api/apiPaths';
 
 const StyledContainer = styled.div`
   margin-bottom: 2rem;

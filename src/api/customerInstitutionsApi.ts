@@ -1,10 +1,7 @@
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import { CancelToken } from 'axios';
 import { authenticatedApiRequest } from './apiRequest';
-
-export enum CustomerInstitutionApiPaths {
-  CUSTOMER_INSTITUTION = '/customer',
-}
+import { CustomerInstitutionApiPaths } from './apiPaths';
 
 export const createCustomerInstitution = async (customer: CustomerInstitution, cancelToken?: CancelToken) =>
   await authenticatedApiRequest<CustomerInstitution>({
