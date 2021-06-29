@@ -25,13 +25,13 @@ export const useFetch = <T>({
   const [isLoading, setIsLoading] = useState(false);
   const cancelToken = useCancelToken();
 
-  const mounted = useRef(false);
+  const mountedRef = useRef(false);
   useEffect(() => {
-    mounted.current = true;
+    mountedRef.current = true;
     return () => {
-      mounted.current = false;
+      mountedRef.current = false;
     };
-  });
+  }, []);
 
   const showErrorNotification = useCallback(
     () =>
@@ -61,7 +61,7 @@ export const useFetch = <T>({
         showErrorNotification();
       }
     } finally {
-      if (mounted.current) {
+      if (mountedRef.current) {
         setIsLoading(false);
       }
     }

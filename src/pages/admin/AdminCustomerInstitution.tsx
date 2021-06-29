@@ -31,6 +31,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
   const [users, isLoadingUsers, refetchInstitutionUsers] = useFetch<InstitutionUser[]>({
     url: customerId ? `${RoleApiPath.InstitutionUsers}?institution=${encodeURIComponent(customerId)}` : '',
     errorMessage: t('feedback:error.get_users_for_institution'),
+    withAuthentication: true,
   });
 
   return (
