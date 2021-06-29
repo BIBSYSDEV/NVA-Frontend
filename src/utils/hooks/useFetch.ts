@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useCancelToken from './useCancelToken';
@@ -25,6 +25,14 @@ export const useFetch = <T>({
   const [isLoading, setIsLoading] = useState(false);
   const cancelToken = useCancelToken();
 
+  const mounted = useRef(false);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  });
+
   const showErrorNotification = useCallback(
     () =>
       dispatch(
@@ -48,10 +56,12 @@ export const useFetch = <T>({
       } else if (isSuccessStatus(fetchedData.status) && fetchedData.data) {
         setData(fetchedData.data);
       }
-      setIsLoading(false);
     } catch (error) {
       if (!Axios.isCancel(error)) {
         showErrorNotification();
+      }
+    } finally {
+      if (mounted.current) {
         setIsLoading(false);
       }
     }
@@ -61,7 +71,7 @@ export const useFetch = <T>({
     if (url) {
       fetchData();
     }
-  }, [dispatch, t, fetchData, url]);
+  }, [fetchData, url]);
 
   return [data, isLoading, fetchData];
 };
