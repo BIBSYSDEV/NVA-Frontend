@@ -17,4 +17,7 @@ export const authenticatedApiRequest = async <T>(axiosRequestConfig: AxiosReques
 };
 
 export const apiRequest = async <T>(axiosRequestConfig: AxiosRequestConfig): Promise<AxiosResponse<T>> =>
-  await Axios(axiosRequestConfig);
+  await Axios({
+    ...axiosRequestConfig,
+    validateStatus: () => true, // Handle response status codes instead of catching errors
+  });
