@@ -72,11 +72,11 @@ const RegistrationList = ({ registrations, refetchRegistrations }: RegistrationL
     const deleteRegistrationResponse = await deleteRegistration(registrationToDelete.identifier);
     if (isErrorStatus(deleteRegistrationResponse.status)) {
       dispatch(setNotification(t('feedback:error.delete_registration'), NotificationVariant.Error));
+      setIsDeleting(false);
     } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
       dispatch(setNotification(t('feedback:success.delete_registration'), NotificationVariant.Success));
       refetchRegistrations();
     }
-    setIsDeleting(false);
   };
 
   const registrationsOnPage = registrations.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
