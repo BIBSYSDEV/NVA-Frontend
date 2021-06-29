@@ -29,6 +29,7 @@ import {
   CustomerInstitutionApiPath,
   InstitutionApiPath,
   RoleApiPath,
+  AlmaApiPath,
 } from './apiPaths';
 
 const mockOrcidResponse: OrcidResponse = {
@@ -158,6 +159,9 @@ export const interceptRequestsOnMock = () => {
   // Roles
   mock.onGet(new RegExp(`${API_URL}${RoleApiPath.InstitutionUsers}/*`)).reply(200, []);
   mock.onGet(new RegExp(`${API_URL}${RoleApiPath.Users}/*`)).reply(200, mockRoles);
+
+  // Alma registrations
+  mock.onGet(new RegExp(`${API_URL}${AlmaApiPath.Alma}/*`)).reply(200, undefined);
 
   mock.onAny().reply(function (config) {
     throw new Error('Could not find mock for ' + config.url);
