@@ -47,6 +47,6 @@ describe('Registration', () => {
   });
 
   it('The user should not be able to go to the registration page for registration if not logged in', () => {
-    cy.get('[data-testid=404]').should('be.visible');
+    cy.get('[data-testid=forbidden]').should('be.visible');
   });
 });
