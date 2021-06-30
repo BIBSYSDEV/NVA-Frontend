@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { ResourceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
@@ -7,7 +7,7 @@ import { publicationContextToPublisher, formatPublicationContextWithPublisher } 
 import { Registration } from '../../../../types/registration.types';
 import PublicationChannelSearch from './PublicationChannelSearch';
 
-const PublisherField: FC = () => {
+const PublisherField = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 

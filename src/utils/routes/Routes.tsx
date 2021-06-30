@@ -1,4 +1,4 @@
-import React, { FC, ComponentType, ReactNode } from 'react';
+import React, { ComponentType, ReactNode } from 'react';
 import { RouteProps } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -8,13 +8,13 @@ interface LoggedInRouteProps extends RouteProps {
   component: ComponentType<ReactNode>;
 }
 
-export const LoggedInRoute: FC<LoggedInRouteProps> = ({ component, ...rest }) => {
+export const LoggedInRoute = ({ component, ...rest }: LoggedInRouteProps) => {
   const { user } = useSelector((store: RootStore) => store);
 
   return <PrivateRoute {...rest} component={component} isAuthorized={!!user} />;
 };
 
-export const CreatorRoute: FC<LoggedInRouteProps> = ({ component, ...rest }) => {
+export const CreatorRoute = ({ component, ...rest }: LoggedInRouteProps) => {
   const user = useSelector((store: RootStore) => store.user);
 
   return (
@@ -26,19 +26,19 @@ export const CreatorRoute: FC<LoggedInRouteProps> = ({ component, ...rest }) => 
   );
 };
 
-export const CuratorRoute: FC<LoggedInRouteProps> = ({ component, ...rest }) => {
+export const CuratorRoute = ({ component, ...rest }: LoggedInRouteProps) => {
   const user = useSelector((store: RootStore) => store.user);
 
   return <PrivateRoute {...rest} component={component} isAuthorized={!!user && !!user.customerId && user.isCurator} />;
 };
 
-export const AppAdminRoute: FC<LoggedInRouteProps> = ({ component, ...rest }) => {
+export const AppAdminRoute = ({ component, ...rest }: LoggedInRouteProps) => {
   const user = useSelector((store: RootStore) => store.user);
 
   return <PrivateRoute {...rest} component={component} isAuthorized={!!user && !!user.customerId && user.isAppAdmin} />;
 };
 
-export const InstitutionAdminRoute: FC<LoggedInRouteProps> = ({ component, ...rest }) => {
+export const InstitutionAdminRoute = ({ component, ...rest }: LoggedInRouteProps) => {
   const user = useSelector((store: RootStore) => store.user);
 
   return (

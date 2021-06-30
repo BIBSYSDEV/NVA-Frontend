@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -16,7 +16,7 @@ const StyledText = styled(NormalText)`
   margin-top: 1rem;
 `;
 
-const Logout: FC = () => {
+const Logout = () => {
   const { t } = useTranslation('authorization');
 
   return (

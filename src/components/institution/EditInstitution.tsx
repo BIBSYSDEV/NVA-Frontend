@@ -1,5 +1,5 @@
 import { Field, FieldProps, Form, Formik } from 'formik';
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Button, CircularProgress, Typography } from '@material-ui/core';
@@ -26,7 +26,7 @@ interface EditInstitutionProps {
   onSubmit: (values: FormikInstitutionUnit) => void;
 }
 
-const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCancel, onSubmit }) => {
+const EditInstitution = ({ initialInstitutionId, onCancel, onSubmit }: EditInstitutionProps) => {
   const { t } = useTranslation('common');
   const [institutions, isLoadingInstitutions] = useFetchInstitutions();
   const [department, isLoadingDepartment] = useFetchDepartment(convertToInstitution(initialInstitutionId));

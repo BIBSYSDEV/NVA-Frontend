@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import Heading from '../../components/Heading';
@@ -17,7 +17,7 @@ const StyledText = styled(NormalText)`
   margin-top: 1rem;
 `;
 
-const NotPublished: FC = () => {
+const NotPublished = () => {
   const { t } = useTranslation('authorization');
 
   return (

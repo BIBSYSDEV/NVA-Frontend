@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -26,7 +26,7 @@ interface UrlParams {
   identifier: string;
 }
 
-const EditRegistration: FC = () => {
+const EditRegistration = () => {
   const { t } = useTranslation('registration');
   const { identifier } = useParams<UrlParams>();
   const [expanded, setExpanded] = useState<PanelName | false>(false);

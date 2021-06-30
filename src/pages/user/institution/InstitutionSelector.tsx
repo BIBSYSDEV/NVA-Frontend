@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { Field, FieldProps } from 'formik';
@@ -18,7 +18,7 @@ interface InstitutionSelectorProps {
   label?: string;
 }
 
-const InstitutionSelector: FC<InstitutionSelectorProps> = ({ units, fieldNamePrefix = '', label }) => {
+const InstitutionSelector = ({ units, fieldNamePrefix = '', label }: InstitutionSelectorProps) => {
   return (
     <StyledInstitutionSelector>
       <Field name={`${fieldNamePrefix}.subunit`}>

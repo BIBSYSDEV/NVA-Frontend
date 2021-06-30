@@ -1,4 +1,4 @@
-import React, { useState, FC } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -14,7 +14,7 @@ interface SearchBarProps {
   initialSearchTerm?: string;
 }
 
-const SearchBar: FC<SearchBarProps> = ({ handleSearch, initialSearchTerm = '' }) => {
+const SearchBar = ({ handleSearch, initialSearchTerm = '' }: SearchBarProps) => {
   const { t } = useTranslation('common');
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
 

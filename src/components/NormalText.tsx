@@ -1,11 +1,11 @@
-import React, { FC, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { Typography } from '@material-ui/core';
 
 interface NormalTextProps {
   children: ReactNode;
 }
 
-const NormalText: FC<NormalTextProps> = ({ children, ...props }) => (
+const NormalText = ({ children, ...props }: NormalTextProps) => (
   <Typography variant="body1" {...props}>
     {children}
   </Typography>
