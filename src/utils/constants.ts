@@ -3,7 +3,6 @@ import { NotificationVariant } from '../types/notification.types';
 export const USE_MOCK_DATA = process.env.REACT_APP_USE_MOCK === 'true';
 
 export const ROWS_PER_PAGE_OPTIONS = [5, 10, 25];
-export const MINIMUM_SEARCH_CHARACTERS = 3;
 export const DEBOUNCE_INTERVAL_INPUT = 1000;
 
 export const ORCID_BASE_URL = process.env.REACT_APP_ORCID_BASE_URL;
