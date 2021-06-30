@@ -7,7 +7,7 @@ import { Button, IconButton, Typography, Link as MuiLink } from '@material-ui/co
 import { Skeleton } from '@material-ui/lab';
 import { useHistory, useLocation } from 'react-router-dom';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
-import { ORCID_BASE_URL } from '../../utils/constants';
+import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../utils/constants';
 import OrcidModalContent from './OrcidModalContent';
 import Card from '../../components/Card';
 import ConfirmDialog from '../../components/ConfirmDialog';
@@ -79,15 +79,20 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       if (!orcidId) {
         dispatch(setNotification(t('feedback:error.get_orcid', NotificationVariant.Error)));
       } else if (user.authority && !user.authority.orcids.includes(orcidId)) {
-        const updatedAuthority = await addQualifierIdForAuthority(
+        const updateAuthorityResponse = await addQualifierIdForAuthority(
           user.authority.id,
           AuthorityQualifiers.ORCID,
           orcidId
         );
-        if (updatedAuthority?.error) {
-          dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
-        } else {
-          dispatch(setAuthorityData(updatedAuthority));
+        if (isErrorStatus(updateAuthorityResponse.status)) {
+          dispatch(
+            setNotification(
+              t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORCID}`) }),
+              NotificationVariant.Error
+            )
+          );
+        } else if (isSuccessStatus(updateAuthorityResponse.status)) {
+          dispatch(setAuthorityData(updateAuthorityResponse.data));
         }
       }
       history.push(UrlPathTemplate.MyProfile);
@@ -112,12 +117,21 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       return;
     }
     setIsRemovingOrcid(true);
-    const updatedAuthority = await removeQualifierIdFromAuthority(user.authority.id, AuthorityQualifiers.ORCID, id);
-    if (updatedAuthority.error) {
-      dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
-    } else if (updatedAuthority) {
-      dispatch(setAuthorityData(updatedAuthority));
-      dispatch(setNotification(t('feedback:success.delete_identifier')));
+    const updateAuthorityResponse = await removeQualifierIdFromAuthority(
+      user.authority.id,
+      AuthorityQualifiers.ORCID,
+      id
+    );
+    if (isErrorStatus(updateAuthorityResponse.status)) {
+      dispatch(
+        setNotification(
+          t('feedback:error.delete_identifier', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+          NotificationVariant.Error
+        )
+      );
+    } else if (isSuccessStatus(updateAuthorityResponse.status)) {
+      dispatch(setAuthorityData(updateAuthorityResponse.data));
+      dispatch(setNotification(t('feedback:success.delete_affiliation')));
     }
     toggleConfirmDialog();
   };

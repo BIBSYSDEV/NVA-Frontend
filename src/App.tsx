@@ -20,12 +20,13 @@ import { Authority } from './types/authority.types';
 import { NotificationVariant } from './types/notification.types';
 import { InstitutionUser } from './types/user.types';
 import { awsConfig } from './utils/aws-config';
-import { USE_MOCK_DATA } from './utils/constants';
-import useFetchAuthorities from './utils/hooks/useFetchAuthorities';
+import { isErrorStatus, isSuccessStatus, USE_MOCK_DATA } from './utils/constants';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { PageSpinner } from './components/PageSpinner';
 import { LanguageCodes } from './types/language.types';
 import { SkipLink } from './components/SkipLink';
+import { useFetch } from './utils/hooks/useFetch';
+import { AuthorityApiPath } from './api/apiPaths';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -54,7 +55,10 @@ const App = () => {
   const { t, i18n } = useTranslation('feedback');
   const user = useSelector((store: RootStore) => store.user);
   const [isLoading, setIsLoading] = useState({ userAttributes: true, userRoles: true, userAuthority: true });
-  const [matchingAuthorities, isLoadingMatchingAuthorities] = useFetchAuthorities(user?.name ?? '');
+  const [matchingAuthorities, isLoadingMatchingAuthorities] = useFetch<Authority[]>({
+    url: user?.name ? `${AuthorityApiPath.Person}?name=${encodeURIComponent(user.name)}` : '',
+    errorMessage: t('feedback:error.get_authorities'),
+  });
 
   useEffect(() => {
     // Setup aws-amplify
@@ -117,22 +121,27 @@ const App = () => {
           setIsLoading((state) => ({ ...state, userAuthority: true }));
           // Use exsisting authority
           const existingArpId = filteredAuthorities[0].id;
-          const existingAuthority = await getAuthority(existingArpId);
-          if (existingAuthority?.error) {
+          const existingAuthorityResponse = await getAuthority(existingArpId);
+          if (isErrorStatus(existingAuthorityResponse.status)) {
             dispatch(setNotification(t('error.get_authority'), NotificationVariant.Error));
-          } else if (existingAuthority?.data) {
-            let currentAuthority = existingAuthority.data;
-            if (user.cristinId && !existingAuthority.data.orgunitids.includes(user.cristinId)) {
+          } else if (isSuccessStatus(existingAuthorityResponse.status) && existingAuthorityResponse.data) {
+            let currentAuthority = existingAuthorityResponse.data;
+            if (user.cristinId && !existingAuthorityResponse.data.orgunitids.includes(user.cristinId)) {
               // Add cristinId to Authority's orgunitids
               const authorityWithOrgId = await addQualifierIdForAuthority(
                 existingArpId,
                 AuthorityQualifiers.ORGUNIT_ID,
                 user.cristinId
               );
-              if (authorityWithOrgId?.error) {
-                dispatch(setNotification(authorityWithOrgId.error, NotificationVariant.Error));
-              } else {
-                currentAuthority = authorityWithOrgId as Authority;
+              if (isErrorStatus(authorityWithOrgId.status)) {
+                dispatch(
+                  setNotification(
+                    t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+                    NotificationVariant.Error
+                  )
+                );
+              } else if (isSuccessStatus(authorityWithOrgId.status)) {
+                currentAuthority = authorityWithOrgId.data;
               }
             }
             dispatch(setAuthorityData(currentAuthority));

@@ -3,14 +3,10 @@ import i18n from '../translations/i18n';
 import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
 import { RoleName, InstitutionUser, UserRole } from '../types/user.types';
-
-export enum RoleApiPaths {
-  INSTITUTION_USERS = '/users-roles/institutions/users',
-  USERS = '/users-roles/users',
-}
+import { RoleApiPath } from './apiPaths';
 
 export const getInstitutionUser = async (username: string, cancelToken?: CancelToken) => {
-  const url = `${RoleApiPaths.USERS}/${encodeURIComponent(username)}`;
+  const url = `${RoleApiPath.Users}/${encodeURIComponent(username)}`;
 
   try {
     const idToken = await getIdToken();
@@ -26,27 +22,6 @@ export const getInstitutionUser = async (username: string, cancelToken?: CancelT
   } catch (error) {
     if (!Axios.isCancel(error)) {
       return { error: i18n.t('feedback:error.get_roles') };
-    }
-  }
-};
-
-export const getUsersForInstitution = async (customerId: string, cancelToken?: CancelToken) => {
-  const url = `${RoleApiPaths.INSTITUTION_USERS}?institution=${encodeURIComponent(customerId)}`;
-
-  try {
-    const idToken = await getIdToken();
-    const headers = {
-      Authorization: `Bearer ${idToken}`,
-    };
-    const response = await Axios.get(url, { headers, cancelToken });
-    if (response.status === StatusCode.OK) {
-      return response.data;
-    } else {
-      return { error: i18n.t('feedback:error.get_users_for_institution') };
-    }
-  } catch (error) {
-    if (!Axios.isCancel(error)) {
-      return { error: i18n.t('feedback:error.get_users_for_institution') };
     }
   }
 };
@@ -106,7 +81,7 @@ export const removeRoleFromUser = async (username: string, rolename: RoleName, c
 };
 
 const updateUserRoles = async (institutionUser: InstitutionUser, cancelToken?: CancelToken) => {
-  const url = `${RoleApiPaths.USERS}/${encodeURIComponent(institutionUser.username)}`;
+  const url = `${RoleApiPath.Users}/${encodeURIComponent(institutionUser.username)}`;
   try {
     const idToken = await getIdToken();
     const headers = {

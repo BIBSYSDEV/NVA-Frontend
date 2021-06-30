@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { PublicationTableNumber } from '../constants';
+import { isErrorStatus, isSuccessStatus, PublicationTableNumber } from '../constants';
 import { Publisher } from '../../types/registration.types';
 import { getPublishers } from '../../api/publicationChannelApi';
 import useDebounce from './useDebounce';
@@ -27,14 +27,12 @@ const useFetchPublishers = (
     const fetchPublishers = async () => {
       setIsLoading(true);
       const fetchedPublishersResponse = await getPublishers(debouncedSearchTerm, publicationTable, cancelToken);
-      if (fetchedPublishersResponse) {
-        if (fetchedPublishersResponse.error) {
-          dispatch(setNotification(t('error.get_publishers'), NotificationVariant.Error));
-        } else if (fetchedPublishersResponse.data) {
-          setPublishers(fetchedPublishersResponse.data.results);
-        }
-        setIsLoading(false);
+      if (isErrorStatus(fetchedPublishersResponse.status)) {
+        dispatch(setNotification(t('error.get_publishers'), NotificationVariant.Error));
+      } else if (isSuccessStatus(fetchedPublishersResponse.status) && fetchedPublishersResponse.data) {
+        setPublishers(fetchedPublishersResponse.data.results);
       }
+      setIsLoading(false);
     };
     if (debouncedSearchTerm) {
       fetchPublishers();

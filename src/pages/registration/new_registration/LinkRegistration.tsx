@@ -15,6 +15,7 @@ import { Doi } from '../../../types/registration.types';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import { getRegistrationPath } from '../../../utils/urlPaths';
+import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
   border-color: ${({ theme }) => theme.palette.primary.main};
@@ -43,14 +44,16 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
     setNoHit(false);
     setDoi(null);
 
-    const doiRegistration = await getRegistrationByDoi(doiUrl);
-    if (doiRegistration?.error) {
+    const doiRegistrationResponse = await getRegistrationByDoi(doiUrl);
+    if (isErrorStatus(doiRegistrationResponse.status)) {
       setNoHit(true);
       dispatch(setNotification(t('feedback:error.get_doi'), NotificationVariant.Error));
-    } else if (!doiRegistration) {
-      setNoHit(true);
-    } else {
-      setDoi(doiRegistration);
+    } else if (isSuccessStatus(doiRegistrationResponse.status)) {
+      if (doiRegistrationResponse.data) {
+        setDoi(doiRegistrationResponse.data);
+      } else {
+        setNoHit(true);
+      }
     }
   };
 

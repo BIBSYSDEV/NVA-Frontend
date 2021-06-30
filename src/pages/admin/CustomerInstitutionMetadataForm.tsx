@@ -23,6 +23,7 @@ import { SelectInstitutionField } from './customerInstitutionFields/SelectInstit
 import { getAdminInstitutionPath } from '../../utils/urlPaths';
 import BackgroundDiv from '../../components/BackgroundDiv';
 import lightTheme from '../../themes/lightTheme';
+import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 
 const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
   margin-top: 2rem;
@@ -30,13 +31,11 @@ const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
 
 interface CustomerInstitutionMetadataFormProps {
   customerInstitution: CustomerInstitution;
-  handleSetCustomerInstitution: (customerInstitution: CustomerInstitution) => void;
   editMode: boolean;
 }
 
 export const CustomerInstitutionMetadataForm = ({
   customerInstitution,
-  handleSetCustomerInstitution,
   editMode,
 }: CustomerInstitutionMetadataFormProps) => {
   const { t } = useTranslation('admin');
@@ -46,24 +45,18 @@ export const CustomerInstitutionMetadataForm = ({
   const handleSubmit = async (values: CustomerInstitution) => {
     if (!editMode) {
       const createCustomerResponse = await createCustomerInstitution(values);
-      if (createCustomerResponse) {
-        if (createCustomerResponse.error) {
-          dispatch(setNotification(t('feedback:error.create_customer'), NotificationVariant.Error));
-        } else if (createCustomerResponse.data) {
-          history.push(getAdminInstitutionPath(createCustomerResponse.data.id));
-          handleSetCustomerInstitution(createCustomerResponse.data);
-          dispatch(setNotification(t('feedback:success.created_customer')));
-        }
+      if (isErrorStatus(createCustomerResponse.status)) {
+        dispatch(setNotification(t('feedback:error.create_customer'), NotificationVariant.Error));
+      } else if (isSuccessStatus(createCustomerResponse.status)) {
+        history.push(getAdminInstitutionPath(createCustomerResponse.data.id));
+        dispatch(setNotification(t('feedback:success.created_customer')));
       }
     } else {
       const updateCustomerResponse = await updateCustomerInstitution(values);
-      if (updateCustomerResponse) {
-        if (updateCustomerResponse.error) {
-          dispatch(setNotification(t('feedback:error.update_customer'), NotificationVariant.Error));
-        } else if (updateCustomerResponse.data) {
-          handleSetCustomerInstitution(updateCustomerResponse.data);
-          dispatch(setNotification(t('feedback:success.update_customer')));
-        }
+      if (isErrorStatus(updateCustomerResponse.status)) {
+        dispatch(setNotification(t('feedback:error.update_customer'), NotificationVariant.Error));
+      } else if (isSuccessStatus(updateCustomerResponse.status)) {
+        dispatch(setNotification(t('feedback:success.update_customer')));
       }
     }
   };

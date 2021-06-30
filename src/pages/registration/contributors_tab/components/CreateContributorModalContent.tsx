@@ -14,6 +14,7 @@ import { emptyNewContributor } from '../../../../types/contributor.types';
 import { NotificationVariant } from '../../../../types/notification.types';
 import { newContributorValidationSchema } from '../../../../utils/validation/newContributorValidation';
 import ButtonWithProgress from '../../../../components/ButtonWithProgress';
+import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   padding: 0;
@@ -37,12 +38,13 @@ export const CreateContributorModalContent = ({
 
   const handleSubmit = async (values: FormikValues) => {
     setIsLoading(true);
-    const createdAuthority = await createAuthority(values.firstName, values.lastName);
-    if (createdAuthority?.error) {
-      dispatch(setNotification(createdAuthority.error, NotificationVariant.Error));
-    } else {
-      addContributor(createdAuthority);
+    const createAuthorityResponse = await createAuthority(values.firstName, values.lastName);
+    if (isErrorStatus(createAuthorityResponse.status)) {
+      dispatch(setNotification(t('feedback:error.create_authority'), NotificationVariant.Error));
+    } else if (isSuccessStatus(createAuthorityResponse.status)) {
+      addContributor(createAuthorityResponse.data);
     }
+
     handleCloseModal();
   };
 

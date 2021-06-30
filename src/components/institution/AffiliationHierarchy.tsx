@@ -2,9 +2,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
-import useFetchDepartment from '../../utils/hooks/useFetchDepartment';
 import { getUnitHierarchyNames } from '../../utils/institutions-helpers';
 import { AffiliationSkeleton } from './AffiliationSkeleton';
+import { useFetchDepartment } from '../../utils/hooks/useFetchDepartment';
 
 const StyledTypography = styled(Typography)`
   font-weight: bold;

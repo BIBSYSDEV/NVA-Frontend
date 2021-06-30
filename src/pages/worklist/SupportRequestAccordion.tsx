@@ -14,6 +14,7 @@ import { MessageCollection, MessageType } from '../../types/publication_types/me
 import { Registration } from '../../types/registration.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { MessageList } from './MessageList';
+import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 
 const StyledAccordion = styled(Accordion)`
   width: 100%;
@@ -70,17 +71,15 @@ export const SupportRequestAccordion = ({
 }: SupportRequestAccordionProps) => {
   const { t } = useTranslation('workLists');
   const dispatch = useDispatch();
-  const identifier = registration.identifier;
+  const { identifier } = registration;
 
   const onClickSendMessage = async (message: string) => {
-    const updatedDoiRequestWithMessage = await addMessage(identifier, message, messageCollection.messageType);
-    if (updatedDoiRequestWithMessage) {
-      if (updatedDoiRequestWithMessage.error) {
-        dispatch(setNotification(t('feedback:error.send_message'), NotificationVariant.Error));
-      } else {
-        dispatch(setNotification(t('feedback:success.send_message'), NotificationVariant.Success));
-        fetchSupportRequests();
-      }
+    const updateDoiRequestResponse = await addMessage(identifier, message, messageCollection.messageType);
+    if (isErrorStatus(updateDoiRequestResponse.status)) {
+      dispatch(setNotification(t('feedback:error.send_message'), NotificationVariant.Error));
+    } else if (isSuccessStatus(updateDoiRequestResponse.status)) {
+      dispatch(setNotification(t('feedback:success.send_message'), NotificationVariant.Success));
+      fetchSupportRequests();
     }
   };
 

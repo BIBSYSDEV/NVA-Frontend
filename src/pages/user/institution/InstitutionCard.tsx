@@ -17,6 +17,7 @@ import { FormikInstitutionUnit } from '../../../types/institution.types';
 import { NotificationVariant } from '../../../types/notification.types';
 import { getMostSpecificUnit } from '../../../utils/institutions-helpers';
 import DangerButton from '../../../components/DangerButton';
+import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
 const StyledCard = styled(Card)`
   display: grid;
@@ -70,16 +71,21 @@ const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: InstitutionCar
       return;
     }
 
-    const updatedAuthority = await updateQualifierIdForAuthority(
+    const updateAuthorityResponse = await updateQualifierIdForAuthority(
       user.authority.id,
       AuthorityQualifiers.ORGUNIT_ID,
       initialInstitution,
       newUnitId
     );
-    if (updatedAuthority.error) {
-      dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
-    } else if (updatedAuthority) {
-      dispatch(setAuthorityData(updatedAuthority));
+    if (isErrorStatus(updateAuthorityResponse.status)) {
+      dispatch(
+        setNotification(
+          t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+          NotificationVariant.Error
+        )
+      );
+    } else if (isSuccessStatus(updateAuthorityResponse.status)) {
+      dispatch(setAuthorityData(updateAuthorityResponse.data));
       dispatch(setNotification(t('feedback:success.added_affiliation')));
     }
   };

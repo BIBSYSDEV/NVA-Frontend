@@ -24,6 +24,9 @@ export enum StatusCode {
   CONFLICT = 409,
 }
 
+export const isErrorStatus = (status: number) => status >= 400 && status <= 599;
+export const isSuccessStatus = (status: number) => status >= 200 && status <= 299;
+
 export enum PublicationTableNumber {
   PUBLISHERS = 850,
   PUBLICATION_CHANNELS = 851,

@@ -12,9 +12,10 @@ import lightTheme from '../../../../themes/lightTheme';
 import { Authority } from '../../../../types/authority.types';
 import { Registration } from '../../../../types/registration.types';
 import useDebounce from '../../../../utils/hooks/useDebounce';
-import useFetchAuthorities from '../../../../utils/hooks/useFetchAuthorities';
 import AuthorityList from '../../../user/authority/AuthorityList';
 import { getCreateContributorText, getAddSelfAsContributorText } from '../../../../utils/translation-helpers';
+import { useFetch } from '../../../../utils/hooks/useFetch';
+import { AuthorityApiPath } from '../../../../api/apiPaths';
 
 const StyledTextField = styled(TextField)`
   margin-bottom: 1rem;
@@ -69,7 +70,11 @@ export const AddContributorModalContent = ({
   const [selectedAuthority, setSelectedAuthority] = useState<Authority | null>(null);
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const debouncedSearchTerm = useDebounce(searchTerm);
-  const [authorities, isLoadingAuthorities] = useFetchAuthorities(debouncedSearchTerm);
+  const [authorities, isLoadingAuthorities] = useFetch<Authority[]>({
+    url: searchTerm ? `${AuthorityApiPath.Person}?name=${encodeURIComponent(debouncedSearchTerm)}` : '',
+    errorMessage: t('feedback:error.get_authorities'),
+  });
+
   const user = useSelector((store: RootStore) => store.user);
 
   const { values } = useFormikContext<Registration>();

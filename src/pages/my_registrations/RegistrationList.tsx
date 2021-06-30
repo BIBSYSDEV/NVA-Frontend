@@ -24,6 +24,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { RegistrationPreview, RegistrationStatus } from '../../types/registration.types';
 import { getRegistrationLandingPagePath, getRegistrationPath } from '../../utils/urlPaths';
+import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};
@@ -69,14 +70,12 @@ const RegistrationList = ({ registrations, refetchRegistrations }: RegistrationL
     }
     setIsDeleting(true);
     const deleteRegistrationResponse = await deleteRegistration(registrationToDelete.identifier);
-    if (deleteRegistrationResponse) {
-      if (deleteRegistrationResponse.error) {
-        dispatch(setNotification(t('feedback:error.delete_registration'), NotificationVariant.Error));
-      } else {
-        dispatch(setNotification(t('feedback:success.delete_registration'), NotificationVariant.Success));
-        refetchRegistrations();
-      }
+    if (isErrorStatus(deleteRegistrationResponse.status)) {
+      dispatch(setNotification(t('feedback:error.delete_registration'), NotificationVariant.Error));
       setIsDeleting(false);
+    } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
+      dispatch(setNotification(t('feedback:success.delete_registration'), NotificationVariant.Success));
+      refetchRegistrations();
     }
   };
 
