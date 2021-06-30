@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
 
@@ -12,7 +12,7 @@ interface HeadingProps {
   children: ReactNode;
 }
 
-const Heading: FC<HeadingProps> = ({ children, ...props }) => (
+const Heading = ({ children, ...props }: HeadingProps) => (
   <StyledTypography variant="h2" {...props}>
     {children}
   </StyledTypography>

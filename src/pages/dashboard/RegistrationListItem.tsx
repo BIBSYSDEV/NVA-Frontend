@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
@@ -36,7 +36,7 @@ interface RegistrationListItemProps {
   registration: SearchRegistration;
 }
 
-const RegistrationListItem: FC<RegistrationListItemProps> = ({ registration }) => {
+const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
   const { t } = useTranslation('publicationTypes');
   const registrationId = registration.id.split('/').pop() as string;
 

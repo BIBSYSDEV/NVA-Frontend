@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { ButtonProps, Button } from '@material-ui/core';
 
@@ -25,7 +25,7 @@ interface TabButtonProps extends ButtonProps {
   isSelected: boolean;
 }
 
-const TabButton: FC<TabButtonProps> = ({ isSelected, ...props }) => {
+const TabButton = ({ isSelected, ...props }: TabButtonProps) => {
   return (
     <StyledTabButton isSelected={isSelected} {...props}>
       {props.children}

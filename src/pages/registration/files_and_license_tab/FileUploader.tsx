@@ -1,4 +1,4 @@
-import React, { useEffect, FC } from 'react';
+import React, { useEffect } from 'react';
 import { File, emptyFile, Uppy } from '../../../types/file.types';
 import UppyDashboard from '../../../components/UppyDashboard';
 
@@ -7,7 +7,7 @@ interface FileUploaderProps {
   uppy: Uppy;
 }
 
-const FileUploader: FC<FileUploaderProps> = ({ addFile, uppy }) => {
+const FileUploader = ({ addFile, uppy }: FileUploaderProps) => {
   useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
       uppy.on('upload-success', (file, response) => {

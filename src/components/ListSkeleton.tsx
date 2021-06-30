@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Skeleton } from '@material-ui/lab';
 import { getRandomWidthPercent } from '../utils/skeleton-helpers';
 
@@ -9,7 +9,7 @@ interface ListSkeletonProps {
   maxWidth?: number;
 }
 
-const ListSkeleton: FC<ListSkeletonProps> = ({ arrayLength, height, minWidth, maxWidth }) => {
+const ListSkeleton = ({ arrayLength, height, minWidth, maxWidth }: ListSkeletonProps) => {
   const widthsRef = useRef(
     Array.from({ length: arrayLength ?? 3 }, () => getRandomWidthPercent(minWidth ?? 10, maxWidth ?? 100))
   );

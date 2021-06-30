@@ -1,5 +1,5 @@
 import { getIn, useFormikContext } from 'formik';
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { MuiThemeProvider, TextFieldProps, Typography } from '@material-ui/core';
 import { Autocomplete, AutocompleteProps } from '@material-ui/lab';
@@ -20,7 +20,7 @@ interface PublicationChannelSearchProps
   dataTestId: string;
 }
 
-const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
+const PublicationChannelSearch = ({
   publicationTable,
   placeholder,
   errorFieldName,
@@ -29,7 +29,7 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
   value,
   dataTestId,
   required,
-}) => {
+}: PublicationChannelSearchProps) => {
   const { t } = useTranslation('registration');
   const { setFieldTouched, errors, touched } = useFormikContext<Registration>();
   const [publishers, isLoadingPublishers, handleNewSearchTerm] = useFetchPublishers(publicationTable);

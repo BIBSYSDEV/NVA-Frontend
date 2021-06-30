@@ -1,4 +1,4 @@
-import React, { ReactNode, FC } from 'react';
+import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Link as MuiLink } from '@material-ui/core';
 import styled from 'styled-components';
@@ -28,14 +28,7 @@ interface LabelTextLineProps {
   linkText?: string;
 }
 
-const LabelTextLine: FC<LabelTextLineProps> = ({
-  label,
-  children,
-  dataTestId,
-  externalLink,
-  internalLink,
-  linkText,
-}) => (
+const LabelTextLine = ({ label, children, dataTestId, externalLink, internalLink, linkText }: LabelTextLineProps) => (
   <StyledLine>
     <StyledLabel>{label}:</StyledLabel>
     {externalLink && (

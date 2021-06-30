@@ -9,7 +9,7 @@ const StyledNotFoundWrapper = styled(StyledPageWrapperWithMaxWidth)`
   padding-top: 4rem;
 `;
 
-const NotFound: React.FC = () => {
+const NotFound = () => {
   const { t } = useTranslation('feedback');
 
   return (
