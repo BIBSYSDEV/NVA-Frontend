@@ -7,7 +7,6 @@ import AddIcon from '@material-ui/icons/Add';
 import Card from '../../components/Card';
 import ListSkeleton from '../../components/ListSkeleton';
 import Modal from '../../components/Modal';
-import NormalText from '../../components/NormalText';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -137,7 +136,7 @@ const MyInstitutionUsersPage = () => {
             {t('profile:roles.creator')}
           </Typography>
           <Divider />
-          <NormalText>{t('users.creator_info')}</NormalText>
+          <Typography>{t('users.creator_info')}</Typography>
           <FormControlLabel
             control={<Checkbox disabled checked={autoAssignCreators} data-testid="checkbox-assign-creators" />}
             onChange={handleCheckAutoAssignCreators}

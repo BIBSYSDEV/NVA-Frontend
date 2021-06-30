@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
-import { StyledNormalTextPreWrapped } from '../../../../components/styled/Wrappers';
+import { StyledTypographyPreWrapped } from '../../../../components/styled/Wrappers';
 import lightTheme from '../../../../themes/lightTheme';
 
 interface NviValidationProps {
@@ -19,21 +19,21 @@ const NviValidation = ({ dataTestId, isPeerReviewed, isRated, isTextbook }: NviV
       {!isTextbook ? (
         isPeerReviewed ? (
           isRated ? (
-            <StyledNormalTextPreWrapped data-testid="nvi_success">
+            <StyledTypographyPreWrapped data-testid="nvi_success">
               {t('resource_type.nvi_success')}
-            </StyledNormalTextPreWrapped>
+            </StyledTypographyPreWrapped>
           ) : (
-            <StyledNormalTextPreWrapped data-testid="nvi_fail_not_rated">
+            <StyledTypographyPreWrapped data-testid="nvi_fail_not_rated">
               {t('resource_type.nvi_fail_not_rated')}
-            </StyledNormalTextPreWrapped>
+            </StyledTypographyPreWrapped>
           )
         ) : (
-          <StyledNormalTextPreWrapped data-testid="nvi_fail_no_peer_review">
+          <StyledTypographyPreWrapped data-testid="nvi_fail_no_peer_review">
             {t('resource_type.nvi_fail_no_peer_review')}
-          </StyledNormalTextPreWrapped>
+          </StyledTypographyPreWrapped>
         )
       ) : (
-        <StyledNormalTextPreWrapped data-testid="nvi_fail">{t('resource_type.nvi_fail')}</StyledNormalTextPreWrapped>
+        <StyledTypographyPreWrapped data-testid="nvi_fail">{t('resource_type.nvi_fail')}</StyledTypographyPreWrapped>
       )}
     </BackgroundDiv>
   );

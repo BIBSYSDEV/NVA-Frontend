@@ -1,31 +1,22 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { Link as MuiLink } from '@material-ui/core';
-import Heading from '../components/Heading';
-import NormalText from '../components/NormalText';
-import { StyledPageWrapperWithMaxWidth } from '../components/styled/Wrappers';
+import { Link as MuiLink, Typography } from '@material-ui/core';
+import { StyledCenteredContent } from '../components/styled/Wrappers';
 import { UrlPathTemplate } from '../utils/urlPaths';
-
-const StyledBackgroundDiv = styled(StyledPageWrapperWithMaxWidth)`
-  text-align: center;
-`;
-
-const StyledText = styled(NormalText)`
-  margin-top: 1rem;
-`;
 
 const Logout = () => {
   const { t } = useTranslation('authorization');
 
   return (
-    <StyledBackgroundDiv>
-      <Heading>{t('logged_out')}</Heading>
+    <StyledCenteredContent>
+      <Typography variant="h2" component="h1" paragraph>
+        {t('logged_out')}
+      </Typography>
       <MuiLink component={Link} to={UrlPathTemplate.Home}>
-        <StyledText>{t('back_to_home')}</StyledText>
+        <Typography>{t('back_to_home')}</Typography>
       </MuiLink>
-    </StyledBackgroundDiv>
+    </StyledCenteredContent>
   );
 };
 

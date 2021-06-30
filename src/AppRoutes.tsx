@@ -58,10 +58,13 @@ export const AppRoutes = () => {
 
             {/* AppAdminRoutes */}
             <AppAdminRoute exact path={UrlPathTemplate.AdminInstitutions} component={AdminCustomerInstitutionsPage} />
+
+            {/* NotFound for authenticated users */}
+            <Route path={UrlPathTemplate.Wildcard} component={NotFound} />
           </>
         )}
 
-        {/* NotFound must be last, otherwise it will catch all routes */}
+        {/* NotFound for unauthenticated users */}
         <Route path={UrlPathTemplate.Wildcard} component={NotFound} />
       </Switch>
     </Suspense>

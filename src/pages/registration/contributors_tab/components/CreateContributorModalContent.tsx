@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Button, Collapse, DialogActions, TextField } from '@material-ui/core';
 import { createAuthority } from '../../../../api/authorityApi';
 import BackgroundDiv from '../../../../components/BackgroundDiv';
-import { StyledNormalTextPreWrapped, StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
+import { StyledTypographyPreWrapped, StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import lightTheme from '../../../../themes/lightTheme';
 import { Authority } from '../../../../types/authority.types';
@@ -57,9 +57,9 @@ export const CreateContributorModalContent = ({
         {({ isSubmitting }) => (
           <Form noValidate>
             <Collapse in={readMore} collapsedHeight="4.5rem">
-              <StyledNormalTextPreWrapped>
+              <StyledTypographyPreWrapped>
                 {t('registration:contributors.create_new_author_description')}
-              </StyledNormalTextPreWrapped>
+              </StyledTypographyPreWrapped>
             </Collapse>
             <StyledRightAlignedWrapper>
               <Button color="primary" data-testid="button-read-more" onClick={toggleReadMore}>
