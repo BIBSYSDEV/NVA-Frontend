@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import Heading from '../../components/Heading';
-import NormalText from '../../components/NormalText';
 import { Link } from 'react-router-dom';
-import { Link as MuiLink } from '@material-ui/core';
+import { Link as MuiLink, Typography } from '@material-ui/core';
+import Heading from '../../components/Heading';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 
 const StyledNotFoundWrapper = styled.div`
@@ -13,7 +12,7 @@ const StyledNotFoundWrapper = styled.div`
   padding-top: 4rem;
 `;
 
-const StyledText = styled(NormalText)`
+const StyledText = styled(Typography)`
   margin-top: 1rem;
 `;
 

@@ -2,9 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Link as MuiLink } from '@material-ui/core';
+import { Link as MuiLink, Typography } from '@material-ui/core';
 import Heading from '../components/Heading';
-import NormalText from '../components/NormalText';
 import { StyledPageWrapperWithMaxWidth } from '../components/styled/Wrappers';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
@@ -12,7 +11,7 @@ const StyledBackgroundDiv = styled(StyledPageWrapperWithMaxWidth)`
   text-align: center;
 `;
 
-const StyledText = styled(NormalText)`
+const StyledText = styled(Typography)`
   margin-top: 1rem;
 `;
 

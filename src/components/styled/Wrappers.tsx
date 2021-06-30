@@ -1,5 +1,5 @@
+import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
-import NormalText from '../NormalText';
 
 export const StyledRightAlignedWrapper = styled.div`
   display: flex;
@@ -11,7 +11,7 @@ export const StyledCenterAlignedContentWrapper = styled.div`
   justify-content: center;
 `;
 
-export const StyledNormalTextPreWrapped = styled(NormalText)`
+export const StyledTypographyPreWrapped = styled(Typography)`
   white-space: pre-wrap;
 `;
 

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Button, Radio, Typography } from '@material-ui/core';
 import { createAuthority } from '../../../api/authorityApi';
 import ButtonWithProgress from '../../../components/ButtonWithProgress';
-import { StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
+import { StyledTypographyPreWrapped } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { NotificationVariant } from '../../../types/notification.types';
@@ -37,7 +37,7 @@ const StyledLabel = styled(Typography)`
   display: inline-grid;
 `;
 
-const StyledDescription = styled(StyledNormalTextPreWrapped)`
+const StyledDescription = styled(StyledTypographyPreWrapped)`
   grid-area: description;
   margin-left: 0.7rem;
 `;
