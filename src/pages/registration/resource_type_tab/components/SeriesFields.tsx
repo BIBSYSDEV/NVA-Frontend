@@ -5,7 +5,7 @@ import { TextField } from '@material-ui/core';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { mapLevel, publicationContextToPublisher } from './resource-helpers';
-import PublicationChannelSearch from './PublicationChannelSearch';
+import { PublicationChannelSearch } from './PublicationChannelSearch';
 import { dataTestId } from '../../../../utils/dataTestIds';
 
 export const SeriesFields = () => {

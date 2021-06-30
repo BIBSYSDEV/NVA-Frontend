@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { MuiThemeProvider, TextFieldProps, Typography } from '@material-ui/core';
 import { Autocomplete, AutocompleteProps } from '@material-ui/lab';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
+import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
-import lightTheme, { autocompleteTranslationProps } from '../../../../themes/lightTheme';
+import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
 import { Publisher, Registration } from '../../../../types/registration.types';
 import { PublicationTableNumber } from '../../../../utils/constants';
-import useFetchPublishers from '../../../../utils/hooks/useFetchPublishers';
+import { useFetchPublishers } from '../../../../utils/hooks/useFetchPublishers';
 
 interface PublicationChannelSearchProps
   extends Pick<TextFieldProps, 'label' | 'placeholder' | 'required'>,
@@ -20,7 +20,7 @@ interface PublicationChannelSearchProps
   dataTestId: string;
 }
 
-const PublicationChannelSearch = ({
+export const PublicationChannelSearch = ({
   publicationTable,
   placeholder,
   errorFieldName,
@@ -75,5 +75,3 @@ const PublicationChannelSearch = ({
     </MuiThemeProvider>
   );
 };
-
-export default PublicationChannelSearch;

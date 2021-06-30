@@ -6,9 +6,9 @@ import { ThemeProvider } from 'styled-components';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { StylesProvider, ThemeProvider as MUIThemeProvider } from '@material-ui/styles';
 import { interceptRequestsOnMock } from './api/mock-interceptor';
-import App from './App';
-import store from './redux/store';
-import mainTheme from './themes/lightTheme';
+import { App } from './App';
+import { store } from './redux/store';
+import { lightTheme } from './themes/lightTheme';
 import i18n from './translations/i18n';
 import { USE_MOCK_DATA } from './utils/constants';
 
@@ -32,8 +32,8 @@ ReactDOM.render(
   <I18nextProvider i18n={i18n}>
     <Provider store={store}>
       <StylesProvider injectFirst>
-        <ThemeProvider theme={mainTheme}>
-          <MUIThemeProvider theme={mainTheme}>
+        <ThemeProvider theme={lightTheme}>
+          <MUIThemeProvider theme={lightTheme}>
             <CssBaseline />
             <App />
           </MUIThemeProvider>

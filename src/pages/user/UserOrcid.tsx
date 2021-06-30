@@ -8,9 +8,9 @@ import { Skeleton } from '@material-ui/lab';
 import { useHistory, useLocation } from 'react-router-dom';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../utils/constants';
-import OrcidModalContent from './OrcidModalContent';
-import Card from '../../components/Card';
-import ConfirmDialog from '../../components/ConfirmDialog';
+import { OrcidModalContent } from './OrcidModalContent';
+import { Card } from '../../components/Card';
+import { ConfirmDialog } from '../../components/ConfirmDialog';
 import {
   removeQualifierIdFromAuthority,
   AuthorityQualifiers,
@@ -19,10 +19,10 @@ import {
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { setAuthorityData } from '../../redux/actions/userActions';
-import Modal from '../../components/Modal';
+import { Modal } from '../../components/Modal';
 import { StyledTypographyPreWrapped } from '../../components/styled/Wrappers';
 import { User } from '../../types/user.types';
-import DangerButton from '../../components/DangerButton';
+import { DangerButton } from '../../components/DangerButton';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 

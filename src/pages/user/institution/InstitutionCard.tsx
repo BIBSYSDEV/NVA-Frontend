@@ -6,9 +6,9 @@ import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { AuthorityQualifiers, updateQualifierIdForAuthority } from '../../../api/authorityApi';
-import Card from '../../../components/Card';
-import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
-import EditInstitution from '../../../components/institution/EditInstitution';
+import { Card } from '../../../components/Card';
+import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
+import { EditInstitution } from '../../../components/institution/EditInstitution';
 import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
@@ -16,7 +16,7 @@ import { RootStore } from '../../../redux/reducers/rootReducer';
 import { FormikInstitutionUnit } from '../../../types/institution.types';
 import { NotificationVariant } from '../../../types/notification.types';
 import { getMostSpecificUnit } from '../../../utils/institutions-helpers';
-import DangerButton from '../../../components/DangerButton';
+import { DangerButton } from '../../../components/DangerButton';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
 const StyledCard = styled(Card)`
@@ -50,7 +50,7 @@ interface InstitutionCardProps {
   setInstitutionIdToRemove: (orgunitId: string) => void;
 }
 
-const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: InstitutionCardProps) => {
+export const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: InstitutionCardProps) => {
   const { t } = useTranslation('common');
   const [openEditForm, setOpenEditForm] = useState(false);
   const dispatch = useDispatch();
@@ -124,5 +124,3 @@ const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: InstitutionCar
     </StyledCard>
   );
 };
-
-export default InstitutionCard;

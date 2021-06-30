@@ -2,7 +2,7 @@ import { Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { PublicationsApiPath } from '../../api/apiPaths';
-import ListSkeleton from '../../components/ListSkeleton';
+import { ListSkeleton } from '../../components/ListSkeleton';
 import { SupportRequest } from '../../types/publication_types/messages.types';
 import { RoleName } from '../../types/user.types';
 import { useFetch } from '../../utils/hooks/useFetch';

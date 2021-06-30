@@ -1,8 +1,8 @@
 import { useFormikContext } from 'formik';
 import React from 'react';
-import BackgroundDiv from '../../components/BackgroundDiv';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../components/styled/Wrappers';
-import lightTheme from '../../themes/lightTheme';
+import { lightTheme } from '../../themes/lightTheme';
 import { emptyBookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
 import { emptyChapterPublicationInstance } from '../../types/publication_types/chapterRegistration.types';
 import { emptyDegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
@@ -15,12 +15,12 @@ import {
   ResourceFieldNames,
 } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
-import BookTypeForm from './resource_type_tab/BookTypeForm';
-import ChapterTypeForm from './resource_type_tab/ChapterTypeForm';
-import SelectTypeField from './resource_type_tab/components/SelectTypeField';
-import DegreeTypeForm from './resource_type_tab/DegreeTypeForm';
-import JournalTypeForm from './resource_type_tab/JournalTypeForm';
-import ReportTypeForm from './resource_type_tab/ReportTypeForm';
+import { BookTypeForm } from './resource_type_tab/BookTypeForm';
+import { ChapterTypeForm } from './resource_type_tab/ChapterTypeForm';
+import { SelectTypeField } from './resource_type_tab/components/SelectTypeField';
+import { DegreeTypeForm } from './resource_type_tab/DegreeTypeForm';
+import { JournalTypeForm } from './resource_type_tab/JournalTypeForm';
+import { ReportTypeForm } from './resource_type_tab/ReportTypeForm';
 import { isJournalTypeWithPeerReview } from '../../utils/registration-helpers';
 
 export const ResourceTypePanel = () => {

@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Authority } from '../types/authority.types';
-import OrcidResponse from '../types/orcid.types';
+import { OrcidResponse } from '../types/orcid.types';
 import { emptyRegistration } from '../types/registration.types';
 import { API_URL, ORCID_USER_INFO_URL } from '../utils/constants';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';

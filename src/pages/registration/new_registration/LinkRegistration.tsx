@@ -9,8 +9,8 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { useDispatch } from 'react-redux';
 
 import { getRegistrationByDoi } from '../../../api/registrationApi';
-import LinkRegistrationForm from './LinkRegistrationForm';
-import RegistrationAccordion from './RegistrationAccordion';
+import { LinkRegistrationForm } from './LinkRegistrationForm';
+import { RegistrationAccordion } from './RegistrationAccordion';
 import { Doi } from '../../../types/registration.types';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
@@ -26,7 +26,7 @@ interface LinkRegistrationProps {
   onChange: (event: ChangeEvent<unknown>, isExpanded: boolean) => void;
 }
 
-const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
+export const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
   const { t } = useTranslation('common');
   const [doi, setDoi] = useState<Doi | null>(null);
   const [noHit, setNoHit] = useState(false);
@@ -92,5 +92,3 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
     </StyledRegistrationAccorion>
   );
 };
-
-export default LinkRegistration;

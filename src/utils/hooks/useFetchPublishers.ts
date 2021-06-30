@@ -3,13 +3,13 @@ import { useDispatch } from 'react-redux';
 import { isErrorStatus, isSuccessStatus, PublicationTableNumber } from '../constants';
 import { Publisher } from '../../types/registration.types';
 import { getPublishers } from '../../api/publicationChannelApi';
-import useDebounce from './useDebounce';
-import useCancelToken from './useCancelToken';
+import { useDebounce } from './useDebounce';
+import { useCancelToken } from './useCancelToken';
 import { NotificationVariant } from '../../types/notification.types';
 import { useTranslation } from 'react-i18next';
 import { setNotification } from '../../redux/actions/notificationActions';
 
-const useFetchPublishers = (
+export const useFetchPublishers = (
   publicationTable: PublicationTableNumber,
   initialSearchTerm = ''
 ): [Publisher[], boolean, (searchTerm: string) => void] => {
@@ -43,5 +43,3 @@ const useFetchPublishers = (
 
   return [publishers, isLoading, handleNewSearchTerm];
 };
-
-export default useFetchPublishers;

@@ -3,15 +3,15 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
-import BackgroundDiv from '../../../../components/BackgroundDiv';
-import lightTheme from '../../../../themes/lightTheme';
+import { BackgroundDiv } from '../../../../components/BackgroundDiv';
+import { lightTheme } from '../../../../themes/lightTheme';
 import { JournalType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { JournalRegistration } from '../../../../types/registration.types';
 import { DoiField } from '../components/DoiField';
-import JournalField from '../components/JournalField';
-import NviValidation from '../components/NviValidation';
+import { JournalField } from '../components/JournalField';
+import { NviValidation } from '../components/NviValidation';
 import { PeerReviewedField } from '../components/PeerReviewedField';
-import SearchContainerField from '../components/SearchContainerField';
+import { SearchContainerField } from '../components/SearchContainerField';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -29,7 +29,7 @@ const StyledLabel = styled(Typography)`
   justify-self: center;
 `;
 
-const JournalForm = () => {
+export const JournalForm = () => {
   const { t } = useTranslation('registration');
   const { values } = useFormikContext<JournalRegistration>();
   const {
@@ -146,5 +146,3 @@ const JournalForm = () => {
     </>
   );
 };
-
-export default JournalForm;

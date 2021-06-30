@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
 import { RegistrationTab } from '../../types/registration.types';
-import BackgroundDiv from '../../components/BackgroundDiv';
-import lightTheme from '../../themes/lightTheme';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { lightTheme } from '../../themes/lightTheme';
 import { TabErrors } from '../../utils/formik-helpers';
 
 const StyledTabHeading = styled(Typography)`

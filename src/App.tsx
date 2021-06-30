@@ -11,8 +11,8 @@ import { getCurrentUserAttributes } from './api/userApi';
 import { AppRoutes } from './AppRoutes';
 import { Footer } from './layout/Footer';
 import { Header } from './layout/header/Header';
-import Notifier from './layout/Notifier';
-import AuthorityOrcidModal from './pages/user/authority/AuthorityOrcidModal';
+import { Notifier } from './layout/Notifier';
+import { AuthorityOrcidModal } from './pages/user/authority/AuthorityOrcidModal';
 import { setNotification } from './redux/actions/notificationActions';
 import { setAuthorityData, setPossibleAuthorities, setRoles, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
@@ -50,7 +50,7 @@ const getLanguageTagValue = (language: string) => {
   return 'no';
 };
 
-const App = () => {
+export const App = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation('feedback');
   const user = useSelector((store: RootStore) => store.user);
@@ -181,5 +181,3 @@ const App = () => {
     </>
   );
 };
-
-export default App;

@@ -36,7 +36,7 @@ interface RegistrationListItemProps {
   registration: SearchRegistration;
 }
 
-const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
+export const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
   const { t } = useTranslation('publicationTypes');
   const registrationId = registration.id.split('/').pop() as string;
 
@@ -89,5 +89,3 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
     </ListItem>
   );
 };
-
-export default RegistrationListItem;

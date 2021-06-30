@@ -4,14 +4,14 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, DialogActions } from '@material-ui/core';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../../api/authorityApi';
-import ButtonWithProgress from '../../../components/ButtonWithProgress';
+import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
 import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import { User } from '../../../types/user.types';
-import AuthorityList from './AuthorityList';
-import NewAuthorityCard from './NewAuthorityCard';
+import { AuthorityList } from './AuthorityList';
+import { NewAuthorityCard } from './NewAuthorityCard';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
 const StyledAuthorityContainer = styled.div`

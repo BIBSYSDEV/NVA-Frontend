@@ -25,12 +25,8 @@ interface TabButtonProps extends ButtonProps {
   isSelected: boolean;
 }
 
-const TabButton = ({ isSelected, ...props }: TabButtonProps) => {
-  return (
-    <StyledTabButton isSelected={isSelected} {...props}>
-      {props.children}
-    </StyledTabButton>
-  );
-};
-
-export default TabButton;
+export const TabButton = ({ isSelected, ...props }: TabButtonProps) => (
+  <StyledTabButton isSelected={isSelected} {...props}>
+    {props.children}
+  </StyledTabButton>
+);

@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import ButtonWithProgress from './ButtonWithProgress';
+import { ButtonWithProgress } from './ButtonWithProgress';
 
 const StyledDialogContentText = styled.div`
   min-width: 35rem;
@@ -21,7 +21,7 @@ interface ConfirmDialogProps {
   dataTestId?: string;
 }
 
-const ConfirmDialog = ({
+export const ConfirmDialog = ({
   children,
   open,
   title,
@@ -49,5 +49,3 @@ const ConfirmDialog = ({
     </Dialog>
   );
 };
-
-export default ConfirmDialog;

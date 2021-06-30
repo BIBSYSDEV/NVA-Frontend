@@ -9,7 +9,7 @@ interface ListSkeletonProps {
   maxWidth?: number;
 }
 
-const ListSkeleton = ({ arrayLength, height, minWidth, maxWidth }: ListSkeletonProps) => {
+export const ListSkeleton = ({ arrayLength, height, minWidth, maxWidth }: ListSkeletonProps) => {
   const widthsRef = useRef(
     Array.from({ length: arrayLength ?? 3 }, () => getRandomWidthPercent(minWidth ?? 10, maxWidth ?? 100))
   );
@@ -22,5 +22,3 @@ const ListSkeleton = ({ arrayLength, height, minWidth, maxWidth }: ListSkeletonP
     </>
   );
 };
-
-export default ListSkeleton;

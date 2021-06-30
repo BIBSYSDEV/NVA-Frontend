@@ -1,10 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
-import BackgroundDiv from '../../../../components/BackgroundDiv';
-import lightTheme from '../../../../themes/lightTheme';
+import { BackgroundDiv } from '../../../../components/BackgroundDiv';
+import { lightTheme } from '../../../../themes/lightTheme';
 import { DoiField } from '../components/DoiField';
-import PublisherField from '../components/PublisherField';
+import { PublisherField } from '../components/PublisherField';
 import { SeriesFields } from '../components/SeriesFields';
 import { DegreeType } from '../../../../types/publicationFieldNames';
 import { TotalPagesField } from '../components/TotalPagesField';
@@ -13,7 +13,7 @@ interface DegreeFormProps {
   subType: DegreeType;
 }
 
-const DegreeForm = ({ subType }: DegreeFormProps) => {
+export const DegreeForm = ({ subType }: DegreeFormProps) => {
   const { t } = useTranslation('registration');
 
   return (
@@ -34,5 +34,3 @@ const DegreeForm = ({ subType }: DegreeFormProps) => {
     </>
   );
 };
-
-export default DegreeForm;

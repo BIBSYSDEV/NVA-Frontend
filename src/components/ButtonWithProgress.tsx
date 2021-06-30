@@ -12,7 +12,7 @@ interface ButtonWithProgressProps extends ButtonProps {
   isLoading: boolean;
 }
 
-const ButtonWithProgress = ({ disabled, isLoading, ...props }: ButtonWithProgressProps) => (
+export const ButtonWithProgress = ({ disabled, isLoading, ...props }: ButtonWithProgressProps) => (
   <Button color="primary" disabled={disabled || isLoading} variant="contained" {...props}>
     {props.children}
     {isLoading && (
@@ -22,5 +22,3 @@ const ButtonWithProgress = ({ disabled, isLoading, ...props }: ButtonWithProgres
     )}
   </Button>
 );
-
-export default ButtonWithProgress;

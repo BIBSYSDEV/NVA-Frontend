@@ -35,10 +35,8 @@ const StyledRegistrationAccordion = styled(Accordion)`
   }
 `;
 
-const RegistrationAccordion = ({ children, ...props }: AccordionProps) => (
+export const RegistrationAccordion = ({ children, ...props }: AccordionProps) => (
   <StyledRegistrationAccordion variant="outlined" square {...props}>
     {children}
   </StyledRegistrationAccordion>
 );
-
-export default RegistrationAccordion;

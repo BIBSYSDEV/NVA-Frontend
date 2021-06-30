@@ -7,7 +7,7 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
 import NotFound from '../errorpages/NotFound';
-import NotPublished from '../errorpages/NotPublished';
+import { NotPublished } from '../errorpages/NotPublished';
 import { PageSpinner } from '../../components/PageSpinner';
 import { PublicRegistrationContent } from './PublicRegistrationContent';
 import { useFetch } from '../../utils/hooks/useFetch';

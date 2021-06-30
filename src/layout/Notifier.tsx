@@ -6,7 +6,7 @@ import { removeNotification } from '../redux/actions/notificationActions';
 import { RootStore } from '../redux/reducers/rootReducer';
 import { autoHideNotificationDuration } from '../utils/constants';
 
-const Notifier = () => {
+export const Notifier = () => {
   const notification = useSelector((store: RootStore) => store.notification);
   const dispatch = useDispatch();
 
@@ -34,5 +34,3 @@ const Notifier = () => {
     </Snackbar>
   ) : null;
 };
-
-export default Notifier;

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { List, Typography } from '@material-ui/core';
 import { SearchResult } from '../../types/search.types';
-import RegistrationListItem from '../dashboard/RegistrationListItem';
+import { RegistrationListItem } from '../dashboard/RegistrationListItem';
 
 const StyledSearchResults = styled.div`
   padding-bottom: 1rem;
@@ -14,7 +14,7 @@ interface SearchResultsProps {
   searchTerm?: string;
 }
 
-const SearchResults = ({ searchResult, searchTerm }: SearchResultsProps) => {
+export const SearchResults = ({ searchResult, searchTerm }: SearchResultsProps) => {
   const { t } = useTranslation('common');
 
   const registrations = searchResult.hits;
@@ -33,5 +33,3 @@ const SearchResults = ({ searchResult, searchTerm }: SearchResultsProps) => {
     </StyledSearchResults>
   );
 };
-
-export default SearchResults;

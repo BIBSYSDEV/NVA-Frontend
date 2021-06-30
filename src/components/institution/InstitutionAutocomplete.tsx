@@ -15,7 +15,7 @@ interface InstitutionAutocompleteProps
   id: string;
 }
 
-const InstitutionAutocomplete = ({
+export const InstitutionAutocomplete = ({
   disabled,
   error,
   helperText,
@@ -75,5 +75,3 @@ const InstitutionAutocomplete = ({
     />
   );
 };
-
-export default InstitutionAutocomplete;

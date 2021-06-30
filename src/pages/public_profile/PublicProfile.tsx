@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { IconButton, Link as MuiLink, Typography } from '@material-ui/core';
 import WorkIcon from '@material-ui/icons/Work';
 import { Helmet } from 'react-helmet';
-import Card from '../../components/Card';
+import { Card } from '../../components/Card';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';

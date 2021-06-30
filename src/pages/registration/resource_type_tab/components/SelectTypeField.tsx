@@ -10,7 +10,7 @@ interface SelectTypeFieldProps {
   onChangeType?: (value: string) => void;
 }
 
-const SelectTypeField = ({
+export const SelectTypeField = ({
   fieldName,
   options,
   dataTestId = 'publication-instance-type',
@@ -43,5 +43,3 @@ const SelectTypeField = ({
     </Field>
   );
 };
-
-export default SelectTypeField;
