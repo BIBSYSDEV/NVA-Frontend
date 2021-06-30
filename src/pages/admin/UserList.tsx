@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { removeRoleFromUser, updateUser } from '../../api/roleApi';
+import { updateUser } from '../../api/roleApi';
 import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { DangerButton } from '../../components/DangerButton';
@@ -74,15 +74,22 @@ export const UserList = ({
   const handleRemoveRoleFromUser = async () => {
     if (roleToRemove && removeRoleForUser) {
       setUpdatedRoleForUsers((state) => [...state, removeRoleForUser]);
-      const response = await removeRoleFromUser(removeRoleForUser, roleToRemove);
-      if (response) {
-        if (response.error) {
-          setUpdatedRoleForUsers((state) => state.filter((user) => user !== removeRoleForUser));
-          dispatch(setNotification(t('feedback:error.remove_role'), NotificationVariant.Error));
-        } else {
-          dispatch(setNotification(t('feedback:success.removed_role')));
-          refetchUsers?.();
-        }
+
+      const existingUser = userList.find((user) => user.username === removeRoleForUser);
+      if (!existingUser) {
+        return;
+      }
+      const newUser: InstitutionUser = {
+        ...existingUser,
+        roles: existingUser.roles.filter((role) => role.rolename !== roleToRemove),
+      };
+      const updateUserResponse = await updateUser(removeRoleForUser, newUser);
+      if (isErrorStatus(updateUserResponse.status)) {
+        setUpdatedRoleForUsers((state) => state.filter((user) => user !== removeRoleForUser));
+        dispatch(setNotification(t('feedback:error.remove_role'), NotificationVariant.Error));
+      } else if (isSuccessStatus(updateUserResponse.status)) {
+        dispatch(setNotification(t('feedback:success.removed_role')));
+        refetchUsers?.();
       }
     }
     setRemoveRoleForUser('');
