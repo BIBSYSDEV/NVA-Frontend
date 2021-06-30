@@ -22,7 +22,7 @@ export const useFetch = <T>({
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
   const [data, setData] = useState<T>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(!!url);
   const cancelToken = useCancelToken();
 
   const mountedRef = useRef(false);

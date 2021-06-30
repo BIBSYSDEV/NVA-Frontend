@@ -78,7 +78,6 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   };
 
   const initialValues = registration ? deepmerge(emptyRegistration, registration) : emptyRegistration;
-
   return isLoadingRegistration ? (
     <PageSpinner />
   ) : !isValidOwner && !isValidCurator ? (
