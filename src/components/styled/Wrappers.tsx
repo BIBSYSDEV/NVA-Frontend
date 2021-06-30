@@ -1,15 +1,6 @@
 import styled from 'styled-components';
 import NormalText from '../NormalText';
 
-export const StyledInformationWrapper = styled.div`
-  width: 60%;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    width: 90%;
-  }
-  padding-top: 4rem;
-  padding-bottom: 1rem;
-`;
-
 export const StyledRightAlignedWrapper = styled.div`
   display: flex;
   justify-content: flex-end;

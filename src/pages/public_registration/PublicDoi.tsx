@@ -14,7 +14,7 @@ const StyledPublicDoi = styled.div`
   margin-top: 1.5rem;
 `;
 
-export interface PublicDoiProps {
+interface PublicDoiProps {
   registration: Registration;
 }
 

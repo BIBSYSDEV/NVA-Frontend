@@ -36,7 +36,7 @@ import publicationTypesNb from './nb/publicationTypes.json';
 import registrationNb from './nb/registration.json';
 import workListsNb from './nb/workLists.json';
 
-export const fallbackLanguage = LanguageCodes.NORWEGIAN_BOKMAL;
+const fallbackLanguage = LanguageCodes.NORWEGIAN_BOKMAL;
 
 i18n.use(LanguageDetector).init({
   resources: {
