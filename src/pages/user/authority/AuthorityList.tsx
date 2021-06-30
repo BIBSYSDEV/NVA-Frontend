@@ -16,9 +16,9 @@ import {
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { Skeleton } from '@material-ui/lab';
-import BackgroundDiv from '../../../components/BackgroundDiv';
-import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
-import lightTheme from '../../../themes/lightTheme';
+import { BackgroundDiv } from '../../../components/BackgroundDiv';
+import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
+import { lightTheme } from '../../../themes/lightTheme';
 import { Authority } from '../../../types/authority.types';
 import { AlmaRegistration } from '../../../types/registration.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
@@ -42,7 +42,7 @@ interface AuthorityListProps {
   selectedArpId?: string;
 }
 
-const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, selectedArpId }: AuthorityListProps) => {
+export const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, selectedArpId }: AuthorityListProps) => {
   const { t } = useTranslation('common');
 
   return (
@@ -128,7 +128,7 @@ interface LastAlmaRegistrationCellProps {
   authority: Authority;
 }
 
-const LastAlmaRegistrationCell = ({ authority }: LastAlmaRegistrationCellProps) => {
+export const LastAlmaRegistrationCell = ({ authority }: LastAlmaRegistrationCellProps) => {
   const { t } = useTranslation('profile');
 
   const systemControlNumber = authority.id.split('/').pop();
@@ -173,5 +173,3 @@ const LastAlmaRegistrationCell = ({ authority }: LastAlmaRegistrationCellProps) 
     </>
   );
 };
-
-export default AuthorityList;

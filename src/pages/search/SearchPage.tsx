@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { PageHeader } from '../../components/PageHeader';
-import SearchBar from '../../components/SearchBar';
+import { SearchBar } from '../../components/SearchBar';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { getSearchPath } from '../../utils/urlPaths';
 import { RegistrationSearch } from './RegistrationSearch';

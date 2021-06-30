@@ -23,7 +23,7 @@ import { DegreeType, JournalType } from '../../types/publicationFieldNames';
 import { BookRegistration, ReportRegistration } from '../../types/registration.types';
 import { getNpiDiscipline } from '../../utils/npiDisciplines';
 import { isBook, isChapter, isDegree, isJournal, isReport } from '../../utils/registration-helpers';
-import PublicDoi from './PublicDoi';
+import { PublicDoi } from './PublicDoi';
 import {
   PublicJournalContent,
   PublicLinkedContextContent,
@@ -39,10 +39,10 @@ import {
   PublicPublicationInstanceReport,
 } from './PublicPublicationInstance';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
-import RegistrationSummary from './RegistrationSummary';
+import { RegistrationSummary } from './RegistrationSummary';
 import { StyledGeneralInfo } from '../../components/landing_page/SyledGeneralInfo';
 
-const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
+export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
   const {
     date,
@@ -140,5 +140,3 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
     </StyledGeneralInfo>
   );
 };
-
-export default PublicGeneralContent;

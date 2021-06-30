@@ -1,14 +1,14 @@
 import { FormHelperText } from '@material-ui/core';
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import React, { useEffect, useRef } from 'react';
-import BackgroundDiv from '../../components/BackgroundDiv';
-import lightTheme from '../../themes/lightTheme';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { lightTheme } from '../../themes/lightTheme';
 import { ContributorRole } from '../../types/contributor.types';
 import { BookType, ContributorFieldNames, PublicationType } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { Contributors } from './contributors_tab/Contributors';
 
-const ContributorsPanel = () => {
+export const ContributorsPanel = () => {
   const {
     values: {
       entityDescription: {
@@ -90,5 +90,3 @@ const ContributorsPanel = () => {
     </>
   );
 };
-
-export default ContributorsPanel;

@@ -11,10 +11,8 @@ const StyledCard = styled(MaterialCard)`
   margin-bottom: 1rem;
 `;
 
-const Card = ({ children, ...props }: CardProps) => (
+export const Card = ({ children, ...props }: CardProps) => (
   <StyledCard variant="outlined" {...props}>
     {children}
   </StyledCard>
 );
-
-export default Card;

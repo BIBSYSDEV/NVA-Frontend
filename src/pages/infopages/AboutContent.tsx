@@ -3,7 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Link as MuiLink, Typography } from '@material-ui/core';
 import { ContactInformation } from '../../utils/constants';
 
-const AboutContent = () => {
+export const AboutContent = () => {
   const { t } = useTranslation('about');
 
   return (
@@ -28,5 +28,3 @@ const AboutContent = () => {
     </>
   );
 };
-
-export default AboutContent;

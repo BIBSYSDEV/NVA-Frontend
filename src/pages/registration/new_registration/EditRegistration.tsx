@@ -4,9 +4,9 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { PageHeader } from '../../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../../components/styled/Wrappers';
-import RegistrationForm from '../RegistrationForm';
-import LinkRegistration from './LinkRegistration';
-import UploadRegistration from './UploadRegistration';
+import { RegistrationForm } from '../RegistrationForm';
+import { LinkRegistration } from './LinkRegistration';
+import { UploadRegistration } from './UploadRegistration';
 
 const StyledEditRegistration = styled.div`
   margin-top: 2rem;

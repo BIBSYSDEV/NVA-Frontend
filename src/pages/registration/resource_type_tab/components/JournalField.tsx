@@ -5,9 +5,9 @@ import { ResourceFieldNames, contextTypeBaseFieldName } from '../../../../types/
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { publicationContextToPublisher, formatPublicationContextWithTitle } from './resource-helpers';
 import { Registration } from '../../../../types/registration.types';
-import PublicationChannelSearch from './PublicationChannelSearch';
+import { PublicationChannelSearch } from './PublicationChannelSearch';
 
-const JournalField = () => {
+export const JournalField = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 
@@ -31,5 +31,3 @@ const JournalField = () => {
     </Field>
   );
 };
-
-export default JournalField;

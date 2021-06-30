@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PageSpinner } from './PageSpinner';
 
-const DelayedFallback = () => {
+export const DelayedFallback = () => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -13,4 +13,3 @@ const DelayedFallback = () => {
 
   return show ? <PageSpinner /> : null;
 };
-export default DelayedFallback;

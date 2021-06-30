@@ -5,15 +5,15 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, Collapse, DialogActions, TextField } from '@material-ui/core';
 import { createAuthority } from '../../../../api/authorityApi';
-import BackgroundDiv from '../../../../components/BackgroundDiv';
+import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { StyledTypographyPreWrapped, StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/actions/notificationActions';
-import lightTheme from '../../../../themes/lightTheme';
+import { lightTheme } from '../../../../themes/lightTheme';
 import { Authority } from '../../../../types/authority.types';
 import { emptyNewContributor } from '../../../../types/contributor.types';
 import { NotificationVariant } from '../../../../types/notification.types';
 import { newContributorValidationSchema } from '../../../../utils/validation/newContributorValidation';
-import ButtonWithProgress from '../../../../components/ButtonWithProgress';
+import { ButtonWithProgress } from '../../../../components/ButtonWithProgress';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`

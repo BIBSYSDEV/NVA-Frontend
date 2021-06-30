@@ -14,7 +14,7 @@ interface SearchBarProps {
   initialSearchTerm?: string;
 }
 
-const SearchBar = ({ handleSearch, initialSearchTerm = '' }: SearchBarProps) => {
+export const SearchBar = ({ handleSearch, initialSearchTerm = '' }: SearchBarProps) => {
   const { t } = useTranslation('common');
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
 
@@ -45,5 +45,3 @@ const SearchBar = ({ handleSearch, initialSearchTerm = '' }: SearchBarProps) => 
     </form>
   );
 };
-
-export default SearchBar;

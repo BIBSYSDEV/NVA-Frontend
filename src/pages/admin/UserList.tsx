@@ -6,9 +6,9 @@ import { Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typo
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { addRoleToUser, removeRoleFromUser } from '../../api/roleApi';
-import ButtonWithProgress from '../../components/ButtonWithProgress';
-import ConfirmDialog from '../../components/ConfirmDialog';
-import DangerButton from '../../components/DangerButton';
+import { ButtonWithProgress } from '../../components/ButtonWithProgress';
+import { ConfirmDialog } from '../../components/ConfirmDialog';
+import { DangerButton } from '../../components/DangerButton';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { InstitutionUser, RoleName } from '../../types/user.types';
@@ -38,7 +38,7 @@ interface UserListProps {
   alwaysShowPagination?: boolean; // If false, show pagination only if more elements than minimum rows per page
 }
 
-const UserList = ({
+export const UserList = ({
   userList,
   tableCaption,
   roleToRemove,
@@ -183,5 +183,3 @@ const UserList = ({
     </>
   );
 };
-
-export default UserList;

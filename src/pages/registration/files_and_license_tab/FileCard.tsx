@@ -23,13 +23,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DeleteIcon from '@material-ui/icons/Delete';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import BackgroundDiv from '../../../components/BackgroundDiv';
-import DangerButton from '../../../components/DangerButton';
-import lightTheme, { datePickerTranslationProps } from '../../../themes/lightTheme';
+import { BackgroundDiv } from '../../../components/BackgroundDiv';
+import { DangerButton } from '../../../components/DangerButton';
+import { lightTheme, datePickerTranslationProps } from '../../../themes/lightTheme';
 import { File, LicenseNames, licenses } from '../../../types/file.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
-import ConfirmDialog from '../../../components/ConfirmDialog';
+import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { dataTestId } from '../../../utils/dataTestIds';
 
 const StyledDescription = styled(Typography)`

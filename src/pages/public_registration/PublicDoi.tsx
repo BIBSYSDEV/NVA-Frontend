@@ -18,7 +18,7 @@ interface PublicDoiProps {
   registration: Registration;
 }
 
-const PublicDoi = ({ registration }: PublicDoiProps) => {
+export const PublicDoi = ({ registration }: PublicDoiProps) => {
   const { t } = useTranslation('registration');
   const user = useSelector((store: RootStore) => store.user);
 
@@ -45,5 +45,3 @@ const PublicDoi = ({ registration }: PublicDoiProps) => {
     </StyledPublicDoi>
   ) : null;
 };
-
-export default PublicDoi;

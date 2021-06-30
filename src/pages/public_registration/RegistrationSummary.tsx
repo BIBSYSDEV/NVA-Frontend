@@ -8,7 +8,8 @@ import { SearchFieldName } from '../../types/search.types';
 interface RegistrationSummaryProps {
   id: string;
 }
-const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
+
+export const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
   const [searchContainer, isLoadingSearchContainer] = useSearchRegistrations({
     properties: [{ fieldName: SearchFieldName.Id, value: id?.split('/').pop() ?? '' }],
   });
@@ -26,5 +27,3 @@ const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
     )
   );
 };
-
-export default RegistrationSummary;

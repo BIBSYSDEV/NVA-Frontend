@@ -15,7 +15,7 @@ import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
-import Forbidden from '../errorpages/Forbidden';
+import { Forbidden } from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
 import { RegistrationFormContent } from './RegistrationFormContent';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
@@ -38,7 +38,7 @@ interface RegistrationFormProps {
   identifier: string;
 }
 
-const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
+export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
   const history = useHistory();
@@ -117,5 +117,3 @@ const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     </StyledRegistration>
   );
 };
-
-export default RegistrationForm;

@@ -15,14 +15,14 @@ import {
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { createCustomerInstitution, updateCustomerInstitution } from '../../api/customerInstitutionsApi';
-import ButtonWithProgress from '../../components/ButtonWithProgress';
+import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { customerInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
 import { CustomerInstitutionTextField } from './customerInstitutionFields/CustomerInstitutionTextField';
 import { SelectInstitutionField } from './customerInstitutionFields/SelectInstitutionField';
 import { getAdminInstitutionPath } from '../../utils/urlPaths';
-import BackgroundDiv from '../../components/BackgroundDiv';
-import lightTheme from '../../themes/lightTheme';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { lightTheme } from '../../themes/lightTheme';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 
 const StyledButtonContainer = styled(StyledRightAlignedWrapper)`

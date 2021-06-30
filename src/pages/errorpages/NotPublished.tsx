@@ -5,7 +5,7 @@ import { Link as MuiLink, Typography } from '@material-ui/core';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { StyledCenteredContent } from '../../components/styled/Wrappers';
 
-const NotPublished = () => {
+export const NotPublished = () => {
   const { t } = useTranslation('authorization');
 
   return (
@@ -19,5 +19,3 @@ const NotPublished = () => {
     </StyledCenteredContent>
   );
 };
-
-export default NotPublished;

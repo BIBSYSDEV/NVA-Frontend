@@ -27,7 +27,14 @@ interface LabelTextLineProps {
   linkText?: string;
 }
 
-const LabelTextLine = ({ label, children, dataTestId, externalLink, internalLink, linkText }: LabelTextLineProps) => (
+export const LabelTextLine = ({
+  label,
+  children,
+  dataTestId,
+  externalLink,
+  internalLink,
+  linkText,
+}: LabelTextLineProps) => (
   <StyledLine>
     <StyledLabel>{label}:</StyledLabel>
     {externalLink && (
@@ -47,5 +54,3 @@ const LabelTextLine = ({ label, children, dataTestId, externalLink, internalLink
     {children && <StyledContent data-testid={dataTestId}>{children}</StyledContent>}
   </StyledLine>
 );
-
-export default LabelTextLine;

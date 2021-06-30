@@ -53,5 +53,3 @@ export const AffiliationHierarchy = ({
     </ErrorTypography>
   );
 };
-
-export default AffiliationHierarchy;

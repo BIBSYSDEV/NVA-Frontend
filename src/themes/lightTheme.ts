@@ -38,7 +38,7 @@ enum Font {
   Crimson = 'Crimson Text, serif',
 }
 
-const lightTheme = createMuiTheme({
+export const lightTheme = createMuiTheme({
   breakpoints: {
     values: {
       xs: 0,
@@ -236,8 +236,6 @@ const lightTheme = createMuiTheme({
     },
   },
 });
-
-export default lightTheme;
 
 // Default props in theme are not supported for components still in /lab
 export const autocompleteTranslationProps = {

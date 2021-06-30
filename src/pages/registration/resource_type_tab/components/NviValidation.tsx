@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import BackgroundDiv from '../../../../components/BackgroundDiv';
+import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { StyledTypographyPreWrapped } from '../../../../components/styled/Wrappers';
-import lightTheme from '../../../../themes/lightTheme';
+import { lightTheme } from '../../../../themes/lightTheme';
 
 interface NviValidationProps {
   dataTestId: string;
@@ -11,7 +11,7 @@ interface NviValidationProps {
   isTextbook?: boolean;
 }
 
-const NviValidation = ({ dataTestId, isPeerReviewed, isRated, isTextbook }: NviValidationProps) => {
+export const NviValidation = ({ dataTestId, isPeerReviewed, isRated, isTextbook }: NviValidationProps) => {
   const { t } = useTranslation('registration');
 
   return (
@@ -38,5 +38,3 @@ const NviValidation = ({ dataTestId, isPeerReviewed, isRated, isTextbook }: NviV
     </BackgroundDiv>
   );
 };
-
-export default NviValidation;

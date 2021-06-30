@@ -2,7 +2,7 @@ import React, { ComponentType, ReactNode } from 'react';
 import { RouteProps } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import PrivateRoute from './PrivateRoute';
+import { PrivateRoute } from './PrivateRoute';
 
 interface LoggedInRouteProps extends RouteProps {
   component: ComponentType<ReactNode>;

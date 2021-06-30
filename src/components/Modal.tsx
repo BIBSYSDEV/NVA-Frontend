@@ -66,7 +66,7 @@ interface ModalProps extends Partial<DialogProps> {
   onClose?: () => void;
 }
 
-const Modal = ({
+export const Modal = ({
   children,
   dataTestId,
   headingIcon,
@@ -117,5 +117,3 @@ const Modal = ({
     </Dialog>
   );
 };
-
-export default Modal;

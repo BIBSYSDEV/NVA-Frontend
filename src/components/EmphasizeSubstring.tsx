@@ -5,7 +5,7 @@ interface EmphasizeSubstringProps {
   emphasized: string;
 }
 
-const EmphasizeSubstring = ({ text, emphasized }: EmphasizeSubstringProps) => {
+export const EmphasizeSubstring = ({ text, emphasized }: EmphasizeSubstringProps) => {
   const indexOfMatch = text.toLocaleLowerCase().indexOf(emphasized.toLocaleLowerCase());
   const textParts =
     indexOfMatch === -1
@@ -30,5 +30,3 @@ const EmphasizeSubstring = ({ text, emphasized }: EmphasizeSubstringProps) => {
     </>
   );
 };
-
-export default EmphasizeSubstring;

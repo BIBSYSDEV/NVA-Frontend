@@ -1,18 +1,18 @@
 import { useFormikContext } from 'formik';
 import React from 'react';
-import BackgroundDiv from '../../../components/BackgroundDiv';
+import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
-import lightTheme from '../../../themes/lightTheme';
+import { lightTheme } from '../../../themes/lightTheme';
 import { ChapterType, ResourceFieldNames } from '../../../types/publicationFieldNames';
 import { ChapterRegistration } from '../../../types/registration.types';
-import SelectTypeField from './components/SelectTypeField';
-import ChapterForm from './sub_type_forms/ChapterForm';
+import { SelectTypeField } from './components/SelectTypeField';
+import { ChapterForm } from './sub_type_forms/ChapterForm';
 
 interface ChapterTypeFormProps {
   onChangeSubType: (type: string) => void;
 }
 
-const JournalTypeForm = ({ onChangeSubType }: ChapterTypeFormProps) => {
+export const ChapterTypeForm = ({ onChangeSubType }: ChapterTypeFormProps) => {
   const { values } = useFormikContext<ChapterRegistration>();
   const subtype = values.entityDescription.reference.publicationInstance.type;
 
@@ -32,5 +32,3 @@ const JournalTypeForm = ({ onChangeSubType }: ChapterTypeFormProps) => {
     </>
   );
 };
-
-export default JournalTypeForm;

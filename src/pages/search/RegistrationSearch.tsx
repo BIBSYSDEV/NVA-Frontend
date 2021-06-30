@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TablePagination, Typography } from '@material-ui/core';
-import ListSkeleton from '../../components/ListSkeleton';
+import { ListSkeleton } from '../../components/ListSkeleton';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
-import SearchResults from './SearchResults';
+import { SearchResults } from './SearchResults';
 import { SearchConfig } from '../../utils/searchHelpers';
 
 interface RegistrationSearchProps {

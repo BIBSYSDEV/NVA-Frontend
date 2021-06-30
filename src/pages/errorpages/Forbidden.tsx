@@ -5,7 +5,7 @@ import { Link as MuiLink, Typography } from '@material-ui/core';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { StyledCenteredContent } from '../../components/styled/Wrappers';
 
-const Forbidden = () => {
+export const Forbidden = () => {
   const { t } = useTranslation('authorization');
 
   return (
@@ -20,5 +20,3 @@ const Forbidden = () => {
     </StyledCenteredContent>
   );
 };
-
-export default Forbidden;

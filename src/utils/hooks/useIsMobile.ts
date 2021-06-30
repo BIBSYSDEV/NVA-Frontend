@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import lightTheme from '../../themes/lightTheme';
+import { lightTheme } from '../../themes/lightTheme';
 
-const useIsMobile = () => {
+export const useIsMobile = () => {
   const [width, setWidth] = useState(window.innerWidth);
   const isMobile = width < lightTheme.breakpoints.values.md;
 
@@ -13,5 +13,3 @@ const useIsMobile = () => {
 
   return isMobile;
 };
-
-export default useIsMobile;

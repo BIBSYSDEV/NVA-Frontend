@@ -8,14 +8,14 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import CheckIcon from '@material-ui/icons/CheckCircleSharp';
 import DeleteIcon from '@material-ui/icons/RemoveCircleSharp';
 import WarningIcon from '@material-ui/icons/Warning';
-import BackgroundDiv from '../../../../components/BackgroundDiv';
-import DangerButton from '../../../../components/DangerButton';
+import { BackgroundDiv } from '../../../../components/BackgroundDiv';
+import { DangerButton } from '../../../../components/DangerButton';
 import { StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
-import lightTheme from '../../../../themes/lightTheme';
+import { lightTheme } from '../../../../themes/lightTheme';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
-import AffiliationsCell from './AffiliationsCell';
+import { AffiliationsCell } from './AffiliationsCell';
 import { getRemoveContributorText } from '../../../../utils/translation-helpers';
 
 const StyledCheckIcon = styled(CheckIcon)`

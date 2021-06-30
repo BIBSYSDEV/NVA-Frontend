@@ -4,19 +4,19 @@ import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
-import Card from '../../components/Card';
-import ListSkeleton from '../../components/ListSkeleton';
+import { Card } from '../../components/Card';
+import { ListSkeleton } from '../../components/ListSkeleton';
 import { PageHeader } from '../../components/PageHeader';
 import {
   StyledCenterAlignedContentWrapper,
   StyledPageWrapperWithMaxWidth,
   StyledRightAlignedWrapper,
 } from '../../components/styled/Wrappers';
-import TabButton from '../../components/TabButton';
+import { TabButton } from '../../components/TabButton';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { MyRegistrationsResponse, RegistrationStatus } from '../../types/registration.types';
 import { getUserPath } from '../../utils/urlPaths';
-import RegistrationList from './RegistrationList';
+import { RegistrationList } from './RegistrationList';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { PublicationsApiPath } from '../../api/apiPaths';
 

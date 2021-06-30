@@ -9,7 +9,7 @@ import { NotificationVariant } from '../../../../types/notification.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { invalidIsbnErrorMessage, isbnRegex } from '../../../../utils/validation/registration/referenceValidation';
 
-const IsbnListField = () => {
+export const IsbnListField = () => {
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
 
@@ -63,5 +63,3 @@ const IsbnListField = () => {
     </Field>
   );
 };
-
-export default IsbnListField;

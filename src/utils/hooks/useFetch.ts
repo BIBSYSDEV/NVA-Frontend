@@ -2,7 +2,7 @@ import Axios from 'axios';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import useCancelToken from './useCancelToken';
+import { useCancelToken } from './useCancelToken';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { apiRequest, authenticatedApiRequest } from '../../api/apiRequest';

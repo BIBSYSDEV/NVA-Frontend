@@ -7,12 +7,12 @@ import styled from 'styled-components';
 import { Button, Collapse, Typography } from '@material-ui/core';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import SearchIcon from '@material-ui/icons/Search';
-import BackgroundDiv from '../../components/BackgroundDiv';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import lightTheme from '../../themes/lightTheme';
+import { lightTheme } from '../../themes/lightTheme';
 import { LOGIN_REDIRECT_PATH_KEY } from '../../utils/constants';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import AboutContent from '../infopages/AboutContent';
+import { AboutContent } from '../infopages/AboutContent';
 
 const StyledDashboard = styled.div`
   display: grid;

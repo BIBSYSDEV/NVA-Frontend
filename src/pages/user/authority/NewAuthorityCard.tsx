@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, Radio, Typography } from '@material-ui/core';
 import { createAuthority } from '../../../api/authorityApi';
-import ButtonWithProgress from '../../../components/ButtonWithProgress';
+import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
 import { StyledTypographyPreWrapped } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
@@ -63,7 +63,7 @@ interface NewAuthorityCardProps {
   onClickCancel: () => void;
 }
 
-const NewAuthorityCard = ({ onClickCancel, user }: NewAuthorityCardProps) => {
+export const NewAuthorityCard = ({ onClickCancel, user }: NewAuthorityCardProps) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation('profile');
@@ -117,5 +117,3 @@ const NewAuthorityCard = ({ onClickCancel, user }: NewAuthorityCardProps) => {
     </StyledBoxContent>
   );
 };
-
-export default NewAuthorityCard;

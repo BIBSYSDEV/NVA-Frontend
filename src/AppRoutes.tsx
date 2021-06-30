@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import DelayedFallback from './components/DelayedFallback';
+import { DelayedFallback } from './components/DelayedFallback';
 import { RootStore } from './redux/reducers/rootReducer';
 import { AppAdminRoute, CreatorRoute, CuratorRoute, InstitutionAdminRoute, LoggedInRoute } from './utils/routes/Routes';
 import { UrlPathTemplate } from './utils/urlPaths';
@@ -58,9 +58,6 @@ export const AppRoutes = () => {
 
             {/* AppAdminRoutes */}
             <AppAdminRoute exact path={UrlPathTemplate.AdminInstitutions} component={AdminCustomerInstitutionsPage} />
-
-            {/* NotFound for authenticated users */}
-            <Route path={UrlPathTemplate.Wildcard} component={NotFound} />
           </>
         )}
 
