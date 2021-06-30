@@ -4,6 +4,7 @@ import { StatusCode } from '../utils/constants';
 import { getIdToken } from './userApi';
 import { RoleName, InstitutionUser, UserRole } from '../types/user.types';
 import { RoleApiPath } from './apiPaths';
+import { authenticatedApiRequest } from './apiRequest';
 
 export const getInstitutionUser = async (username: string, cancelToken?: CancelToken) => {
   const url = `${RoleApiPath.Users}/${encodeURIComponent(username)}`;
@@ -24,6 +25,16 @@ export const getInstitutionUser = async (username: string, cancelToken?: CancelT
       return { error: i18n.t('feedback:error.get_roles') };
     }
   }
+
+  // return await authenticatedApiRequest<InstitutionUser>({ url: `${RoleApiPath.Users}/${username}` }); // error: t('feedback:error.get_roles')
+};
+
+export const updateUser = async (username: string, newUser: InstitutionUser) => {
+  return await authenticatedApiRequest<InstitutionUser>({
+    url: `${RoleApiPath.Users}/${username}`,
+    method: 'PUT',
+    data: newUser,
+  });
 };
 
 export const addRoleToUser = async (username: string, rolename: RoleName, cancelToken?: CancelToken) => {
