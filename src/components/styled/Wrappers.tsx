@@ -40,3 +40,7 @@ export const StyledPageWrapper = styled.div`
 export const StyledPageWrapperWithMaxWidth = styled(StyledPageWrapper)`
   max-width: ${({ theme }) => theme.breakpoints.values.lg + 'px'};
 `;
+
+export const StyledCenteredContent = styled.div`
+  margin-top: 4rem;
+`;

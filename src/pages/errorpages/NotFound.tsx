@@ -1,21 +1,17 @@
+import { Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import Heading from '../../components/Heading';
-import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
-
-const StyledNotFoundWrapper = styled(StyledPageWrapperWithMaxWidth)`
-  text-align: center;
-  padding-top: 4rem;
-`;
+import { StyledCenteredContent } from '../../components/styled/Wrappers';
 
 const NotFound = () => {
   const { t } = useTranslation('feedback');
 
   return (
-    <StyledNotFoundWrapper data-testid="404">
-      <Heading>{t('error.404_page')}</Heading>
-    </StyledNotFoundWrapper>
+    <StyledCenteredContent data-testid="404">
+      <Typography variant="h3" component="h1">
+        {t('error.404_page')}
+      </Typography>
+    </StyledCenteredContent>
   );
 };
 
