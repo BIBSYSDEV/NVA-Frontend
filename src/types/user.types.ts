@@ -42,6 +42,7 @@ export interface User {
 }
 
 export interface UserRole {
+  type: 'Role';
   rolename: RoleName;
 }
 
