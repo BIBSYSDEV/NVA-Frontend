@@ -70,17 +70,12 @@ export const App = () => {
     // Fetch attributes of authenticated user
     const getUser = async () => {
       const feideUser = await getCurrentUserAttributes();
-      if (feideUser) {
-        if (feideUser.error) {
-          dispatch(setNotification(feideUser.error, NotificationVariant.Error));
-          setIsLoading({ userAttributes: false, userRoles: false, userAuthority: false });
-        } else if (feideUser) {
-          dispatch(setUser(feideUser));
-        }
-        setIsLoading((state) => ({ ...state, userAttributes: false }));
-      } else {
+      if (!feideUser) {
         setIsLoading({ userAttributes: false, userRoles: false, userAuthority: false });
+      } else {
+        dispatch(setUser(feideUser));
       }
+      setIsLoading((state) => ({ ...state, userAttributes: false }));
     };
 
     if (USE_MOCK_DATA) {

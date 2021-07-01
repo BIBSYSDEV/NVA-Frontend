@@ -1,7 +1,6 @@
 import { Auth } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
 import { CognitoUserSession } from 'amazon-cognito-identity-js';
-import i18n from '../translations/i18n';
 import { USE_MOCK_DATA, AMPLIFY_REDIRECTED_KEY } from '../utils/constants';
 
 export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> => {
@@ -34,7 +33,7 @@ export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> =>
         return await getCurrentUserAttributes(retryNumber + 1);
       } else {
         window.location.search = ''; // Avoid infinite error loop if code parameter gets stuck in URL
-        return { error: i18n.t('feedback:error.get_user') };
+        return null;
       }
     }
   }
