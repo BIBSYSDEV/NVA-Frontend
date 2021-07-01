@@ -18,7 +18,6 @@ import { setAuthorityData, setPossibleAuthorities, setRoles, setUser } from './r
 import { RootStore } from './redux/reducers/rootReducer';
 import { Authority } from './types/authority.types';
 import { NotificationVariant } from './types/notification.types';
-import { InstitutionUser } from './types/user.types';
 import { awsConfig } from './utils/aws-config';
 import { isErrorStatus, isSuccessStatus, USE_MOCK_DATA } from './utils/constants';
 import { mockUser } from './utils/testfiles/mock_feide_user';
@@ -96,22 +95,20 @@ export const App = () => {
     // Fetch logged in user's roles
     const getRoles = async (userId: string) => {
       setIsLoading((state) => ({ ...state, userRoles: true }));
-      const institutionUser = await getInstitutionUser(userId);
-      if (institutionUser) {
-        if (institutionUser.error) {
-          dispatch(setNotification(institutionUser.error, NotificationVariant.Error));
-        } else {
-          const roles = (institutionUser as InstitutionUser).roles.map((role) => role.rolename);
-          dispatch(setRoles(roles));
-        }
-        setIsLoading((state) => ({ ...state, userRoles: false }));
+      const institutionUserResponse = await getInstitutionUser(userId);
+      if (isErrorStatus(institutionUserResponse.status)) {
+        dispatch(setNotification(t('feedback:error.get_roles'), NotificationVariant.Error));
+      } else if (isSuccessStatus(institutionUserResponse.status)) {
+        const roles = institutionUserResponse.data.roles.map((role) => role.rolename);
+        dispatch(setRoles(roles));
       }
+      setIsLoading((state) => ({ ...state, userRoles: false }));
     };
 
     if (user?.id && !user.roles) {
       getRoles(user.id);
     }
-  }, [dispatch, user]);
+  }, [dispatch, t, user]);
 
   useEffect(() => {
     if (matchingAuthorities && user && !user.authority && !user.possibleAuthorities) {
