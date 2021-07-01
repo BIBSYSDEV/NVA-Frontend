@@ -13,7 +13,7 @@
     "@material-ui/styles": "^4.11.4",
     "@uppy/aws-s3-multipart": "^1.8.17",
     "@uppy/core": "^1.19.1",
-    "@uppy/dashboard": "^1.20.1",
+    "@uppy/dashboard": "^1.20.2",
     "@uppy/locales": "^1.20.1",
     "@uppy/react": "^1.11.10",
     "aws-amplify": "^4.1.2",
