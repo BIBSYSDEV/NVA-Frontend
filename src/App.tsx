@@ -6,7 +6,6 @@ import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { addQualifierIdForAuthority, AuthorityQualifiers, getAuthority } from './api/authorityApi';
-import { getInstitutionUser } from './api/roleApi';
 import { getCurrentUserAttributes } from './api/userApi';
 import { AppRoutes } from './AppRoutes';
 import { Footer } from './layout/Footer';
@@ -25,7 +24,8 @@ import { PageSpinner } from './components/PageSpinner';
 import { LanguageCodes } from './types/language.types';
 import { SkipLink } from './components/SkipLink';
 import { useFetch } from './utils/hooks/useFetch';
-import { AuthorityApiPath } from './api/apiPaths';
+import { AuthorityApiPath, RoleApiPath } from './api/apiPaths';
+import { InstitutionUser } from './types/user.types';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -58,6 +58,11 @@ export const App = () => {
     url: user?.name ? `${AuthorityApiPath.Person}?name=${encodeURIComponent(user.name)}` : '',
     errorMessage: t('feedback:error.get_authorities'),
   });
+  const [institutionUser] = useFetch<InstitutionUser>({
+    url: user?.id && !user.roles ? `${RoleApiPath.Users}/${encodeURIComponent(user.id)}` : '',
+    errorMessage: t('feedback:error.get_roles'),
+    withAuthentication: true,
+  });
 
   useEffect(() => {
     // Setup aws-amplify
@@ -88,23 +93,12 @@ export const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    // Fetch logged in user's roles
-    const getRoles = async (userId: string) => {
-      setIsLoading((state) => ({ ...state, userRoles: true }));
-      const institutionUserResponse = await getInstitutionUser(userId);
-      if (isErrorStatus(institutionUserResponse.status)) {
-        dispatch(setNotification(t('feedback:error.get_roles'), NotificationVariant.Error));
-      } else if (isSuccessStatus(institutionUserResponse.status)) {
-        const roles = institutionUserResponse.data.roles.map((role) => role.rolename);
-        dispatch(setRoles(roles));
-      }
+    if (user && !user.roles && institutionUser) {
+      const roles = institutionUser.roles.map((role) => role.rolename);
+      dispatch(setRoles(roles));
       setIsLoading((state) => ({ ...state, userRoles: false }));
-    };
-
-    if (user?.id && !user.roles) {
-      getRoles(user.id);
     }
-  }, [dispatch, t, user]);
+  }, [dispatch, institutionUser, user]);
 
   useEffect(() => {
     if (matchingAuthorities && user && !user.authority && !user.possibleAuthorities) {
