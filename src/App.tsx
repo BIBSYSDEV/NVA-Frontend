@@ -71,6 +71,7 @@ export const App = () => {
     const getUser = async () => {
       const feideUser = await getCurrentUserAttributes();
       if (!feideUser) {
+        // User is not authenticated
         setIsLoading({ userAttributes: false, userRoles: false, userAuthority: false });
       } else {
         dispatch(setUser(feideUser));
