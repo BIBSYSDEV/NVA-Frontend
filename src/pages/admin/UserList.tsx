@@ -165,6 +165,7 @@ const UserList = ({
                 setRowsPerPage(parseInt(event.target.value));
                 setPage(0);
               }}
+              data-testid={`user-pagination-${roleToAdd}`}
             />
           )}
           {roleToRemove && (
