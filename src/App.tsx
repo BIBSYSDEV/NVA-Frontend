@@ -53,12 +53,12 @@ export const App = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation('feedback');
   const user = useSelector((store: RootStore) => store.user);
-  const [isLoading, setIsLoading] = useState({ userAttributes: true, userRoles: true, userAuthority: true });
+  const [isLoading, setIsLoading] = useState({ userAttributes: true, userAuthority: true });
   const [matchingAuthorities, isLoadingMatchingAuthorities] = useFetch<Authority[]>({
     url: user?.name ? `${AuthorityApiPath.Person}?name=${encodeURIComponent(user.name)}` : '',
     errorMessage: t('feedback:error.get_authorities'),
   });
-  const [institutionUser] = useFetch<InstitutionUser>({
+  const [institutionUser, isLoadingInstitutionUser] = useFetch<InstitutionUser>({
     url: user?.id && !user.roles ? `${RoleApiPath.Users}/${encodeURIComponent(user.id)}` : '',
     errorMessage: t('feedback:error.get_roles'),
     withAuthentication: true,
@@ -77,7 +77,7 @@ export const App = () => {
       const feideUser = await getCurrentUserAttributes();
       if (!feideUser) {
         // User is not authenticated
-        setIsLoading({ userAttributes: false, userRoles: false, userAuthority: false });
+        setIsLoading({ userAttributes: false, userAuthority: false });
       } else {
         dispatch(setUser(feideUser));
       }
@@ -86,7 +86,7 @@ export const App = () => {
 
     if (USE_MOCK_DATA) {
       setUser(mockUser);
-      setIsLoading({ userAttributes: false, userRoles: false, userAuthority: false });
+      setIsLoading({ userAttributes: false, userAuthority: false });
     } else {
       getUser();
     }
@@ -96,7 +96,6 @@ export const App = () => {
     if (user && !user.roles && institutionUser) {
       const roles = institutionUser.roles.map((role) => role.rolename);
       dispatch(setRoles(roles));
-      setIsLoading((state) => ({ ...state, userRoles: false }));
     }
   }, [dispatch, institutionUser, user]);
 
@@ -147,7 +146,9 @@ export const App = () => {
       <Helmet defaultTitle={t('common:page_title')} titleTemplate={`%s - ${t('common:page_title')}`}>
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
-      {Object.values(isLoading).some((isLoading) => isLoading) || isLoadingMatchingAuthorities ? (
+      {Object.values(isLoading).some((isLoading) => isLoading) ||
+      isLoadingMatchingAuthorities ||
+      isLoadingInstitutionUser ? (
         <PageSpinner />
       ) : (
         <BrowserRouter>
