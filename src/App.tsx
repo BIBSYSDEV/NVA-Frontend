@@ -6,7 +6,6 @@ import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { addQualifierIdForAuthority, AuthorityQualifiers, getAuthority } from './api/authorityApi';
-import { getInstitutionUser } from './api/roleApi';
 import { getCurrentUserAttributes } from './api/userApi';
 import { AppRoutes } from './AppRoutes';
 import { Footer } from './layout/Footer';
@@ -25,7 +24,8 @@ import { PageSpinner } from './components/PageSpinner';
 import { LanguageCodes } from './types/language.types';
 import { SkipLink } from './components/SkipLink';
 import { useFetch } from './utils/hooks/useFetch';
-import { AuthorityApiPath } from './api/apiPaths';
+import { AuthorityApiPath, RoleApiPath } from './api/apiPaths';
+import { InstitutionUser } from './types/user.types';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -53,10 +53,15 @@ export const App = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation('feedback');
   const user = useSelector((store: RootStore) => store.user);
-  const [isLoading, setIsLoading] = useState({ userAttributes: true, userRoles: true, userAuthority: true });
+  const [isLoading, setIsLoading] = useState({ userAttributes: true, userAuthority: true });
   const [matchingAuthorities, isLoadingMatchingAuthorities] = useFetch<Authority[]>({
     url: user?.name ? `${AuthorityApiPath.Person}?name=${encodeURIComponent(user.name)}` : '',
     errorMessage: t('feedback:error.get_authorities'),
+  });
+  const [institutionUser, isLoadingInstitutionUser] = useFetch<InstitutionUser>({
+    url: user?.id && !user.roles ? `${RoleApiPath.Users}/${encodeURIComponent(user.id)}` : '',
+    errorMessage: t('feedback:error.get_roles'),
+    withAuthentication: true,
   });
 
   useEffect(() => {
@@ -70,45 +75,29 @@ export const App = () => {
     // Fetch attributes of authenticated user
     const getUser = async () => {
       const feideUser = await getCurrentUserAttributes();
-      if (feideUser) {
-        if (feideUser.error) {
-          dispatch(setNotification(feideUser.error, NotificationVariant.Error));
-          setIsLoading({ userAttributes: false, userRoles: false, userAuthority: false });
-        } else if (feideUser) {
-          dispatch(setUser(feideUser));
-        }
-        setIsLoading((state) => ({ ...state, userAttributes: false }));
+      if (!feideUser) {
+        // User is not authenticated
+        setIsLoading({ userAttributes: false, userAuthority: false });
       } else {
-        setIsLoading({ userAttributes: false, userRoles: false, userAuthority: false });
+        dispatch(setUser(feideUser));
       }
+      setIsLoading((state) => ({ ...state, userAttributes: false }));
     };
 
     if (USE_MOCK_DATA) {
       setUser(mockUser);
-      setIsLoading({ userAttributes: false, userRoles: false, userAuthority: false });
+      setIsLoading({ userAttributes: false, userAuthority: false });
     } else {
       getUser();
     }
   }, [dispatch]);
 
   useEffect(() => {
-    // Fetch logged in user's roles
-    const getRoles = async (userId: string) => {
-      setIsLoading((state) => ({ ...state, userRoles: true }));
-      const institutionUserResponse = await getInstitutionUser(userId);
-      if (isErrorStatus(institutionUserResponse.status)) {
-        dispatch(setNotification(t('feedback:error.get_roles'), NotificationVariant.Error));
-      } else if (isSuccessStatus(institutionUserResponse.status)) {
-        const roles = institutionUserResponse.data.roles.map((role) => role.rolename);
-        dispatch(setRoles(roles));
-      }
-      setIsLoading((state) => ({ ...state, userRoles: false }));
-    };
-
-    if (user?.id && !user.roles) {
-      getRoles(user.id);
+    if (user && !user.roles && institutionUser) {
+      const roles = institutionUser.roles.map((role) => role.rolename);
+      dispatch(setRoles(roles));
     }
-  }, [dispatch, t, user]);
+  }, [dispatch, institutionUser, user]);
 
   useEffect(() => {
     if (matchingAuthorities && user && !user.authority && !user.possibleAuthorities) {
@@ -157,7 +146,9 @@ export const App = () => {
       <Helmet defaultTitle={t('common:page_title')} titleTemplate={`%s - ${t('common:page_title')}`}>
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
-      {Object.values(isLoading).some((isLoading) => isLoading) || isLoadingMatchingAuthorities ? (
+      {Object.values(isLoading).some((isLoading) => isLoading) ||
+      isLoadingMatchingAuthorities ||
+      isLoadingInstitutionUser ? (
         <PageSpinner />
       ) : (
         <BrowserRouter>
