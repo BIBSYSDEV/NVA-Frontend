@@ -6,7 +6,7 @@ import { Button } from '@material-ui/core';
 
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { Menu } from './Menu';
-import ButtonWithProgress from '../../components/ButtonWithProgress';
+import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { AMPLIFY_REDIRECTED_KEY } from '../../utils/constants';
 

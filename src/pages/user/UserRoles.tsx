@@ -7,7 +7,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import FindInPageIcon from '@material-ui/icons/FindInPage';
 import AllInboxIcon from '@material-ui/icons/AllInbox';
 import CreateIcon from '@material-ui/icons/Create';
-import Card from '../../components/Card';
+import { Card } from '../../components/Card';
 import { User } from '../../types/user.types';
 import { IconLabelTextLine } from '../../components/IconLabelTextLine';
 

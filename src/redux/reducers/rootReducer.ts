@@ -12,7 +12,7 @@ export interface RootStore {
   user: User | null;
 }
 
-export default combineReducers({
+export const rootReducer = combineReducers({
   institutions: institutionReducer,
   notification: notificationReducer,
   user: userReducer,

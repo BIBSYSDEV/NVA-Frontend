@@ -8,7 +8,7 @@ import { JournalPublicationContext } from '../../types/publication_types/journal
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
 import { levelMap, RegistrationDate } from '../../types/registration.types';
 import { displayDate } from '../../utils/date-helpers';
-import RegistrationSummary from './RegistrationSummary';
+import { RegistrationSummary } from './RegistrationSummary';
 
 interface PublicJournalContentProps {
   date: RegistrationDate;

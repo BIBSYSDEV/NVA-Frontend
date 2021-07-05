@@ -12,7 +12,7 @@ const StyledDashboard = styled.div`
 const uploaderMaxWidthPx = 10000;
 const uploaderMaxHeightPx = 200;
 
-const UppyDashboard = (props: DashboardProps) => (
+export const UppyDashboard = (props: DashboardProps) => (
   <StyledDashboard>
     <Dashboard
       proudlyDisplayPoweredByUppy={false}
@@ -25,5 +25,3 @@ const UppyDashboard = (props: DashboardProps) => (
     />
   </StyledDashboard>
 );
-
-export default UppyDashboard;

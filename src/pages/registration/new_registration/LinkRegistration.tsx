@@ -9,12 +9,13 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { useDispatch } from 'react-redux';
 
 import { getRegistrationByDoi } from '../../../api/registrationApi';
-import LinkRegistrationForm from './LinkRegistrationForm';
-import RegistrationAccordion from './RegistrationAccordion';
+import { LinkRegistrationForm } from './LinkRegistrationForm';
+import { RegistrationAccordion } from './RegistrationAccordion';
 import { Doi } from '../../../types/registration.types';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import { getRegistrationPath } from '../../../utils/urlPaths';
+import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
   border-color: ${({ theme }) => theme.palette.primary.main};
@@ -25,7 +26,7 @@ interface LinkRegistrationProps {
   onChange: (event: ChangeEvent<unknown>, isExpanded: boolean) => void;
 }
 
-const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
+export const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
   const { t } = useTranslation('common');
   const [doi, setDoi] = useState<Doi | null>(null);
   const [noHit, setNoHit] = useState(false);
@@ -43,14 +44,16 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
     setNoHit(false);
     setDoi(null);
 
-    const doiRegistration = await getRegistrationByDoi(doiUrl);
-    if (doiRegistration?.error) {
+    const doiRegistrationResponse = await getRegistrationByDoi(doiUrl);
+    if (isErrorStatus(doiRegistrationResponse.status)) {
       setNoHit(true);
       dispatch(setNotification(t('feedback:error.get_doi'), NotificationVariant.Error));
-    } else if (!doiRegistration) {
-      setNoHit(true);
-    } else {
-      setDoi(doiRegistration);
+    } else if (isSuccessStatus(doiRegistrationResponse.status)) {
+      if (doiRegistrationResponse.data) {
+        setDoi(doiRegistrationResponse.data);
+      } else {
+        setNoHit(true);
+      }
     }
   };
 
@@ -89,5 +92,3 @@ const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
     </StyledRegistrationAccorion>
   );
 };
-
-export default LinkRegistration;

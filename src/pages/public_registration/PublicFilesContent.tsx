@@ -12,7 +12,7 @@ import { File, licenses } from '../../types/file.types';
 import { downloadFile } from '../../api/fileApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import ButtonWithProgress from '../../components/ButtonWithProgress';
+import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { PreviewFile } from './preview_file/PreviewFile';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -114,18 +114,18 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
   const handleDownload = useCallback(
     async (manuallyTriggered = true) => {
       setIsLoadingFile(true);
-      const downloadedFile = await downloadFile(registrationId, file.identifier);
-      if (!downloadedFile || downloadedFile?.error) {
-        dispatch(setNotification(downloadedFile.error, NotificationVariant.Error));
+      const downloadedFileUrl = await downloadFile(registrationId, file.identifier);
+      if (!downloadedFileUrl) {
+        dispatch(setNotification(t('feedback:error.download_file'), NotificationVariant.Error));
       } else {
-        setCurrentFileUrl(downloadedFile);
+        setCurrentFileUrl(downloadedFileUrl);
         if (manuallyTriggered) {
-          window.open(downloadedFile, '_blank');
+          window.open(downloadedFileUrl, '_blank');
         }
       }
       setIsLoadingFile(false);
     },
-    [dispatch, registrationId, file.identifier]
+    [t, dispatch, registrationId, file.identifier]
   );
 
   useEffect(() => {

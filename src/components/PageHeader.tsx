@@ -40,7 +40,7 @@ const StyledSuperHeader = styled.div`
   color: ${({ theme }) => theme.palette.section.megaDark};
 `;
 
-export interface PageHeaderProps extends TypographyProps {
+interface PageHeaderProps extends TypographyProps {
   backPath?: string;
   children: string;
   htmlTitle?: string;

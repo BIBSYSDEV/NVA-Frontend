@@ -175,22 +175,28 @@ describe('User opens registration form and can see validation errors', () => {
   });
 
   it('The User should be able to see validation errors on contributors tab', () => {
-    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-contributors]').click();
     cy.get('p.Mui-error').should('be.visible');
     cy.get('[data-testid=nav-tabpanel-contributors]').within(() => cy.get('[data-testid=error-tab]').should('exist'));
 
     // Add author
-    cy.get('[data-testid=add-Creator]').first().click({ force: true });
-    cy.get('[data-testid=search-field] input').first().click({ force: true }).type('test');
+    cy.get('[data-testid=add-Creator]').first().click();
+    cy.get('[data-testid=contributor-modal]').should('be.visible');
+    cy.get('[data-testid=search-field] input').type('test');
     cy.get('[data-testid=author-radio-button]').first().click({ force: true });
-    cy.get('[data-testid=connect-author-button]').click({ force: true });
+    cy.get('[data-testid=author-radio-button]').first().click({ force: true });
+    cy.get('[data-testid=connect-author-button]').click();
+    cy.get('[data-testid=contributor-modal]').should('not.exist');
     cy.get('p.Mui-error').should('be.visible');
 
     // Add supervisor
-    cy.get('[data-testid=add-Supervisor]').first().click({ force: true });
-    cy.get('[data-testid=search-field] input').last().click({ force: true }).type('test');
+    cy.get('[data-testid=add-Supervisor]').first().click();
+    cy.get('[data-testid=contributor-modal]').should('be.visible');
+    cy.get('[data-testid=search-field] input').type('test');
     cy.get('[data-testid=author-radio-button]').last().click({ force: true });
-    cy.get('[data-testid=connect-author-button]').click({ force: true });
+    cy.get('[data-testid=author-radio-button]').last().click({ force: true });
+    cy.get('[data-testid=connect-author-button]').click();
+    cy.get('[data-testid=contributor-modal]').should('not.exist');
     cy.get('p.Mui-error').should('not.exist');
 
     cy.get('[data-testid=nav-tabpanel-contributors]').within(() =>

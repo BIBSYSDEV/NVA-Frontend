@@ -5,16 +5,16 @@ import TextTruncate from 'react-text-truncate';
 import { MuiThemeProvider, Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
+import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
-import lightTheme, { autocompleteTranslationProps } from '../../../../themes/lightTheme';
+import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
 import { RegistrationSubtype } from '../../../../types/publicationFieldNames';
 import { levelMap, Registration } from '../../../../types/registration.types';
 import { SearchFieldName, SearchPublicationContext } from '../../../../types/search.types';
 import { API_URL } from '../../../../utils/constants';
 import { displayDate } from '../../../../utils/date-helpers';
-import useDebounce from '../../../../utils/hooks/useDebounce';
-import useSearchRegistrations from '../../../../utils/hooks/useSearchRegistrations';
+import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistrations';
 import { getRegistrationPath } from '../../../../utils/urlPaths';
 
 interface SearchContainerFieldProps {
@@ -25,7 +25,7 @@ interface SearchContainerFieldProps {
   dataTestId: string;
 }
 
-const SearchContainerField = (props: SearchContainerFieldProps) => {
+export const SearchContainerField = (props: SearchContainerFieldProps) => {
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -118,7 +118,7 @@ interface SelectedContainerSummaryProps {
   publicationContext: SearchPublicationContext;
 }
 
-const SelectedContainerSummary = ({ publicationContext }: SelectedContainerSummaryProps) => {
+export const SelectedContainerSummary = ({ publicationContext }: SelectedContainerSummaryProps) => {
   const { t } = useTranslation('registration');
   const { publisher, title, url, onlineIssn, printIssn, level } = publicationContext;
   const levelValue = level ? levelMap[level] : null;
@@ -153,5 +153,3 @@ const SelectedContainerSummary = ({ publicationContext }: SelectedContainerSumma
     </>
   );
 };
-
-export default SearchContainerField;

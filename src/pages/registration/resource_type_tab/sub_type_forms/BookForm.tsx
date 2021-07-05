@@ -3,16 +3,16 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Checkbox, FormControlLabel, MuiThemeProvider, Typography } from '@material-ui/core';
-import BackgroundDiv from '../../../../components/BackgroundDiv';
-import lightTheme from '../../../../themes/lightTheme';
+import { BackgroundDiv } from '../../../../components/BackgroundDiv';
+import { lightTheme } from '../../../../themes/lightTheme';
 import { BookType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookRegistration } from '../../../../types/registration.types';
 import { DoiField } from '../components/DoiField';
-import IsbnListField from '../components/IsbnListField';
+import { IsbnListField } from '../components/IsbnListField';
 import { NpiDisciplineField } from '../components/NpiDisciplineField';
-import NviValidation from '../components/NviValidation';
+import { NviValidation } from '../components/NviValidation';
 import { PeerReviewedField } from '../components/PeerReviewedField';
-import PublisherField from '../components/PublisherField';
+import { PublisherField } from '../components/PublisherField';
 import { SeriesFields } from '../components/SeriesFields';
 import { TotalPagesField } from '../components/TotalPagesField';
 
@@ -25,7 +25,7 @@ const StyledSection = styled.div`
   }
 `;
 
-const BookForm = () => {
+export const BookForm = () => {
   const { t } = useTranslation('registration');
   const { values } = useFormikContext<BookRegistration>();
   const {
@@ -98,5 +98,3 @@ const BookForm = () => {
     </>
   );
 };
-
-export default BookForm;

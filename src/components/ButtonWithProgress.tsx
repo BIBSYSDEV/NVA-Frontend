@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Button, CircularProgress, ButtonProps } from '@material-ui/core';
 import styled from 'styled-components';
 
@@ -12,7 +12,7 @@ interface ButtonWithProgressProps extends ButtonProps {
   isLoading: boolean;
 }
 
-const ButtonWithProgress: FC<ButtonWithProgressProps> = ({ disabled, isLoading, ...props }) => (
+export const ButtonWithProgress = ({ disabled, isLoading, ...props }: ButtonWithProgressProps) => (
   <Button color="primary" disabled={disabled || isLoading} variant="contained" {...props}>
     {props.children}
     {isLoading && (
@@ -22,5 +22,3 @@ const ButtonWithProgress: FC<ButtonWithProgressProps> = ({ disabled, isLoading, 
     )}
   </Button>
 );
-
-export default ButtonWithProgress;

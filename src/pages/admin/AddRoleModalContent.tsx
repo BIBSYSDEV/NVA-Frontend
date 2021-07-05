@@ -4,7 +4,7 @@ import { Button, TextField, DialogActions, InputAdornment, Typography } from '@m
 import SearchIcon from '@material-ui/icons/Search';
 
 import { RoleName, InstitutionUser } from '../../types/user.types';
-import UserList from './UserList';
+import { UserList } from './UserList';
 
 interface AddRoleModalContentProps {
   role: RoleName;

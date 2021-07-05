@@ -16,14 +16,6 @@ export interface SearchResult {
   total: number;
 }
 
-export interface LatestRegistration {
-  identifier: string;
-  createdDate: string;
-  modifiedDate: string;
-  mainTitle: string;
-  owner: string;
-}
-
 export type SearchPublicationContext = Partial<
   JournalPublicationContext &
     BookPublicationContext &

@@ -7,6 +7,7 @@ import { addMessage } from '../../api/registrationApi';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { MessageType } from '../../types/publication_types/messages.types';
+import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 
 interface SupportModalContentProps {
   closeModal: () => void;
@@ -19,13 +20,11 @@ export const SupportModalContent = ({ closeModal }: SupportModalContentProps) =>
 
   const sendMessage = async (message: string) => {
     const messageResponse = await addMessage(identifier, message, MessageType.Support);
-    if (messageResponse) {
-      if (messageResponse.error) {
-        dispatch(setNotification(t('error.send_message')));
-      } else {
-        dispatch(setNotification(t('success.send_message')));
-        closeModal();
-      }
+    if (isErrorStatus(messageResponse.status)) {
+      dispatch(setNotification(t('error.send_message')));
+    } else if (isSuccessStatus(messageResponse.status)) {
+      dispatch(setNotification(t('success.send_message')));
+      closeModal();
     }
   };
 

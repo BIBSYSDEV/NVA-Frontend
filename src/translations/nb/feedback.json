@@ -1,6 +1,6 @@
 {
   "error": {
-    "404_page": "Beklager, men vi kan ikke finne siden du ser etter. (Http feilkode 404)",
+    "404_page": "Beklager, men vi kan ikke finne siden du ser etter",
     "add_role": "Kunne ikke legge til rolle",
     "an_error_occurred": "En feil oppstod",
     "create_authority": "Kunne ikke opprette autoritet",

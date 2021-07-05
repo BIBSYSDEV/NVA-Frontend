@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { RegistrationTab } from '../../types/registration.types';
-import DescriptionPanel from './DescriptionPanel';
-import ContributorsPanel from './ContributorsPanel';
-import FilesAndLicensePanel from './FilesAndLicensePanel';
+import { DescriptionPanel } from './DescriptionPanel';
+import { ContributorsPanel } from './ContributorsPanel';
+import { FilesAndLicensePanel } from './FilesAndLicensePanel';
 import { Uppy } from '../../types/file.types';
 import { ResourceTypePanel } from './ResourceTypePanel';
 
