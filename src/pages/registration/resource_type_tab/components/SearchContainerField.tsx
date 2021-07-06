@@ -118,7 +118,7 @@ interface SelectedContainerSummaryProps {
   publicationContext: SearchPublicationContext;
 }
 
-export const SelectedContainerSummary = ({ publicationContext }: SelectedContainerSummaryProps) => {
+const SelectedContainerSummary = ({ publicationContext }: SelectedContainerSummaryProps) => {
   const { t } = useTranslation('registration');
   const { publisher, title, url, onlineIssn, printIssn, level } = publicationContext;
   const levelValue = level ? levelMap[level] : null;

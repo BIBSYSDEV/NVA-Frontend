@@ -128,7 +128,7 @@ interface LastAlmaRegistrationCellProps {
   authority: Authority;
 }
 
-export const LastAlmaRegistrationCell = ({ authority }: LastAlmaRegistrationCellProps) => {
+const LastAlmaRegistrationCell = ({ authority }: LastAlmaRegistrationCellProps) => {
   const { t } = useTranslation('profile');
 
   const systemControlNumber = authority.id.split('/').pop();

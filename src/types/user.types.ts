@@ -41,7 +41,7 @@ export interface User {
   orgNumber: string;
 }
 
-export interface UserRole {
+interface UserRole {
   type: 'Role';
   rolename: RoleName;
 }
