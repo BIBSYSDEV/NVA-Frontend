@@ -4,12 +4,13 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, Radio, Typography } from '@material-ui/core';
 import { createAuthority } from '../../../api/authorityApi';
-import ButtonWithProgress from '../../../components/ButtonWithProgress';
-import { StyledNormalTextPreWrapped } from '../../../components/styled/Wrappers';
+import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
+import { StyledTypographyPreWrapped } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import { User } from '../../../types/user.types';
+import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
 const StyledBoxContent = styled.div`
   display: grid;
@@ -36,7 +37,7 @@ const StyledLabel = styled(Typography)`
   display: inline-grid;
 `;
 
-const StyledDescription = styled(StyledNormalTextPreWrapped)`
+const StyledDescription = styled(StyledTypographyPreWrapped)`
   grid-area: description;
   margin-left: 0.7rem;
 `;
@@ -62,7 +63,7 @@ interface NewAuthorityCardProps {
   onClickCancel: () => void;
 }
 
-const NewAuthorityCard = ({ onClickCancel, user }: NewAuthorityCardProps) => {
+export const NewAuthorityCard = ({ onClickCancel, user }: NewAuthorityCardProps) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation('profile');
@@ -71,14 +72,15 @@ const NewAuthorityCard = ({ onClickCancel, user }: NewAuthorityCardProps) => {
 
   const handleCreateAuthority = async () => {
     setIsLoading(true);
-    const authority = await createAuthority(givenName, familyName, id, user.cristinId);
-    if (authority?.error) {
-      dispatch(setNotification(authority.error, NotificationVariant.Error));
+    const createAuthorityResponse = await createAuthority(givenName, familyName, id, user.cristinId);
+    if (isErrorStatus(createAuthorityResponse.status)) {
+      dispatch(setNotification(t('feedback:error.create_authority'), NotificationVariant.Error));
       onClickCancel();
-    } else {
-      dispatch(setAuthorityData(authority));
+    } else if (isSuccessStatus(createAuthorityResponse.status)) {
+      dispatch(setAuthorityData(createAuthorityResponse.data));
       dispatch(setNotification(t('feedback:success.created_authority')));
     }
+
     setIsLoading(false);
   };
 
@@ -115,5 +117,3 @@ const NewAuthorityCard = ({ onClickCancel, user }: NewAuthorityCardProps) => {
     </StyledBoxContent>
   );
 };
-
-export default NewAuthorityCard;

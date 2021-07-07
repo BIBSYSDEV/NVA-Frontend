@@ -1,3 +1,5 @@
+import { dataTestId } from '../../src/utils/dataTestIds';
+
 describe('User opens registration form and can see validation errors', () => {
   before('Given that the user is logged in as Creator:', () => {
     cy.visit('/');
@@ -51,7 +53,7 @@ describe('User opens registration form and can see validation errors', () => {
 
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
-    cy.get('p.Mui-error').should('have.length', 1);
+    cy.get('p.Mui-error').should('have.length', 2);
 
     // Publisher (publicationContext) field
     cy.get('[data-testid=journal-search-field] input').click({ force: true }).type('test');
@@ -63,24 +65,25 @@ describe('User opens registration form and can see validation errors', () => {
     cy.contains('testament').click({ force: true });
     cy.get('[data-testid=journal-search-field] p.Mui-error').should('not.exist');
 
-    cy.get('[data-testid=volume-field]').click({ force: true }).type('-1');
-    cy.get('[data-testid=issue-field]').click({ force: true }).type('-1');
-    cy.get('[data-testid=pages-from-field]').click({ force: true }).type('-1');
-    cy.get('[data-testid=pages-to-field]').click({ force: true }).type('-2');
-    cy.get('[data-testid=article-number-field]').click({ force: true }).type('-1');
+    cy.get('[data-testid=volume-field] input').type('-1');
+    cy.get('[data-testid=issue-field] input').type('-1');
+    cy.get('[data-testid=pages-from-field] input').type('-1');
+    cy.get('[data-testid=pages-to-field] input').type('-2');
+    cy.get('[data-testid=article-number-field] input').type('-1');
     cy.get('[data-testid=volume-field] p.Mui-error').should('be.visible');
     cy.get('[data-testid=issue-field] p.Mui-error').should('be.visible');
     cy.get('[data-testid=pages-from-field] p.Mui-error').should('be.visible');
     cy.get('[data-testid=pages-to-field] p.Mui-error').should('be.visible');
-    cy.get('[data-testid=article-number-field] p.Mui-error').should('be.visible');
-    cy.get('[data-testid=volume-field]').click({ force: true }).type('{backspace}{backspace}1');
-    cy.get('[data-testid=issue-field]').click({ force: true }).type('{backspace}{backspace}1');
-    cy.get('[data-testid=pages-from-field]').click({ force: true }).type('{backspace}{backspace}2');
-    cy.get('[data-testid=pages-to-field]').click({ force: true }).type('{backspace}{backspace}1');
+    cy.get('[data-testid=article-number-field] p.Mui-error').should('not.exist');
+    cy.get('[data-testid=volume-field] input').type('{backspace}{backspace}1');
+    cy.get('[data-testid=issue-field] input').type('{backspace}{backspace}1');
+    cy.get('[data-testid=pages-from-field] input').type('{backspace}{backspace}2');
+    cy.get('[data-testid=pages-to-field] input').type('{backspace}{backspace}1');
     cy.get('[data-testid=pages-from-field] p.Mui-error').should('be.visible');
     cy.get('[data-testid=pages-to-field] p.Mui-error').should('be.visible');
-    cy.get('[data-testid=pages-to-field]').click({ force: true }).type('0');
-    cy.get('[data-testid=article-number-field]').click({ force: true }).type('{backspace}{backspace}1');
+    cy.get('[data-testid=pages-to-field] input').type('0');
+    cy.get('[data-testid=article-number-field] input').type('{backspace}{backspace}1');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).eq(0).click();
 
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
@@ -97,7 +100,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
     cy.get('[data-testid=publication-instance-type] p.Mui-error').should('not.exist');
-    cy.get('p.Mui-error').should('have.length', 2);
+    cy.get('p.Mui-error').should('have.length', 3);
 
     // publicationContext
     cy.get('[data-testid=publisher-search-field] input').click({ force: true }).type('test');
@@ -119,6 +122,8 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=pages-field] input').clear().type('1a');
     cy.get('[data-testid=pages-field] p.Mui-error').should('be.visible');
     cy.get('[data-testid=pages-field] input').clear().type('20');
+
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).eq(0).click();
 
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
@@ -170,22 +175,28 @@ describe('User opens registration form and can see validation errors', () => {
   });
 
   it('The User should be able to see validation errors on contributors tab', () => {
-    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-contributors]').click();
     cy.get('p.Mui-error').should('be.visible');
     cy.get('[data-testid=nav-tabpanel-contributors]').within(() => cy.get('[data-testid=error-tab]').should('exist'));
 
     // Add author
-    cy.get('[data-testid=add-Creator]').first().click({ force: true });
-    cy.get('[data-testid=search-field] input').first().click({ force: true }).type('test');
+    cy.get('[data-testid=add-Creator]').first().click();
+    cy.get('[data-testid=contributor-modal]').should('be.visible');
+    cy.get('[data-testid=search-field] input').type('test');
     cy.get('[data-testid=author-radio-button]').first().click({ force: true });
-    cy.get('[data-testid=connect-author-button]').click({ force: true });
+    cy.get('[data-testid=author-radio-button]').first().click({ force: true });
+    cy.get('[data-testid=connect-author-button]').click();
+    cy.get('[data-testid=contributor-modal]').should('not.exist');
     cy.get('p.Mui-error').should('be.visible');
 
     // Add supervisor
-    cy.get('[data-testid=add-Supervisor]').first().click({ force: true });
-    cy.get('[data-testid=search-field] input').last().click({ force: true }).type('test');
+    cy.get('[data-testid=add-Supervisor]').first().click();
+    cy.get('[data-testid=contributor-modal]').should('be.visible');
+    cy.get('[data-testid=search-field] input').type('test');
     cy.get('[data-testid=author-radio-button]').last().click({ force: true });
-    cy.get('[data-testid=connect-author-button]').click({ force: true });
+    cy.get('[data-testid=author-radio-button]').last().click({ force: true });
+    cy.get('[data-testid=connect-author-button]').click();
+    cy.get('[data-testid=contributor-modal]').should('not.exist');
     cy.get('p.Mui-error').should('not.exist');
 
     cy.get('[data-testid=nav-tabpanel-contributors]').within(() =>
@@ -231,8 +242,12 @@ describe('User opens registration form and can see validation errors', () => {
         cy.get('p.Mui-error').should('not.exist');
       });
 
-    cy.get('[data-testid=nav-tabpanel-files-and-license]').within(() =>
-      cy.get('[data-testid=error-tab]').should('not.exist')
-    );
+    cy.get('[data-testid=nav-tabpanel-files-and-license]').within(() => {
+      cy.get('[data-testid=error-tab]').should('be.visible');
+    });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.files.version}]`).within(() => {
+      cy.get('input').eq(0).click();
+    });
+    cy.get('[data-testid=error-tab]').should('not.exist');
   });
 });

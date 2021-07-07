@@ -1,11 +1,11 @@
-import React, { FC } from 'react';
+import React from 'react';
 
 interface EmphasizeSubstringProps {
   text: string;
   emphasized: string;
 }
 
-const EmphasizeSubstring: FC<EmphasizeSubstringProps> = ({ text, emphasized }) => {
+export const EmphasizeSubstring = ({ text, emphasized }: EmphasizeSubstringProps) => {
   const indexOfMatch = text.toLocaleLowerCase().indexOf(emphasized.toLocaleLowerCase());
   const textParts =
     indexOfMatch === -1
@@ -30,5 +30,3 @@ const EmphasizeSubstring: FC<EmphasizeSubstringProps> = ({ text, emphasized }) =
     </>
   );
 };
-
-export default EmphasizeSubstring;

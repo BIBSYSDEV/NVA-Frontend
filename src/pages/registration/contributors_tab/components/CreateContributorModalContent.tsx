@@ -5,15 +5,16 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, Collapse, DialogActions, TextField } from '@material-ui/core';
 import { createAuthority } from '../../../../api/authorityApi';
-import BackgroundDiv from '../../../../components/BackgroundDiv';
-import { StyledNormalTextPreWrapped, StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
+import { BackgroundDiv } from '../../../../components/BackgroundDiv';
+import { StyledTypographyPreWrapped, StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/actions/notificationActions';
-import lightTheme from '../../../../themes/lightTheme';
+import { lightTheme } from '../../../../themes/lightTheme';
 import { Authority } from '../../../../types/authority.types';
 import { emptyNewContributor } from '../../../../types/contributor.types';
 import { NotificationVariant } from '../../../../types/notification.types';
 import { newContributorValidationSchema } from '../../../../utils/validation/newContributorValidation';
-import ButtonWithProgress from '../../../../components/ButtonWithProgress';
+import { ButtonWithProgress } from '../../../../components/ButtonWithProgress';
+import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   padding: 0;
@@ -37,12 +38,13 @@ export const CreateContributorModalContent = ({
 
   const handleSubmit = async (values: FormikValues) => {
     setIsLoading(true);
-    const createdAuthority = await createAuthority(values.firstName, values.lastName);
-    if (createdAuthority?.error) {
-      dispatch(setNotification(createdAuthority.error, NotificationVariant.Error));
-    } else {
-      addContributor(createdAuthority);
+    const createAuthorityResponse = await createAuthority(values.firstName, values.lastName);
+    if (isErrorStatus(createAuthorityResponse.status)) {
+      dispatch(setNotification(t('feedback:error.create_authority'), NotificationVariant.Error));
+    } else if (isSuccessStatus(createAuthorityResponse.status)) {
+      addContributor(createAuthorityResponse.data);
     }
+
     handleCloseModal();
   };
 
@@ -55,9 +57,9 @@ export const CreateContributorModalContent = ({
         {({ isSubmitting }) => (
           <Form noValidate>
             <Collapse in={readMore} collapsedHeight="4.5rem">
-              <StyledNormalTextPreWrapped>
+              <StyledTypographyPreWrapped>
                 {t('registration:contributors.create_new_author_description')}
-              </StyledNormalTextPreWrapped>
+              </StyledTypographyPreWrapped>
             </Collapse>
             <StyledRightAlignedWrapper>
               <Button color="primary" data-testid="button-read-more" onClick={toggleReadMore}>

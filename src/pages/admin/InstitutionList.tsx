@@ -40,7 +40,7 @@ interface InstitutionListProps {
   institutions: CustomerInstitution[];
 }
 
-const InstitutionList = ({ institutions }: InstitutionListProps) => {
+export const InstitutionList = ({ institutions }: InstitutionListProps) => {
   const { t } = useTranslation('common');
 
   return (
@@ -87,5 +87,3 @@ const InstitutionList = ({ institutions }: InstitutionListProps) => {
     </TableContainer>
   );
 };
-
-export default InstitutionList;

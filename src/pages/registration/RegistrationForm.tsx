@@ -6,22 +6,23 @@ import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useUppy } from '@uppy/react';
-import { RegistrationPageHeader } from '../../components/PageHeader';
+import { ItalicPageHeader } from '../../components/PageHeader';
 import { PageSpinner } from '../../components/PageSpinner';
-import RouteLeavingGuard from '../../components/RouteLeavingGuard';
+import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { emptyRegistration, Registration, RegistrationTab } from '../../types/registration.types';
-import useFetchRegistration from '../../utils/hooks/useFetchRegistration';
 import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
-import Forbidden from '../errorpages/Forbidden';
+import { Forbidden } from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
 import { RegistrationFormContent } from './RegistrationFormContent';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
 import { getTouchedTabFields } from '../../utils/formik-helpers';
 import { SkipLink } from '../../components/SkipLink';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { PublicationsApiPath } from '../../api/apiPaths';
 
 const StyledRegistration = styled.div`
   width: 100%;
@@ -37,14 +38,17 @@ interface RegistrationFormProps {
   identifier: string;
 }
 
-const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
+export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const user = useSelector((store: RootStore) => store.user);
   const { t } = useTranslation('registration');
   const history = useHistory();
   const uppy = useUppy(createUppy());
   const highestValidatedTab =
     useLocation<RegistrationLocationState>().state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
-  const [registration, isLoadingRegistration, refetchRegistration] = useFetchRegistration(identifier);
+  const [registration, isLoadingRegistration, refetchRegistration] = useFetch<Registration>({
+    url: `${PublicationsApiPath.Registration}/${identifier}`,
+    errorMessage: t('feedback:error.get_registration'),
+  });
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
   const isValidOwner = userIsRegistrationOwner(user, registration);
@@ -74,7 +78,6 @@ const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   };
 
   const initialValues = registration ? deepmerge(emptyRegistration, registration) : emptyRegistration;
-
   return isLoadingRegistration ? (
     <PageSpinner />
   ) : !isValidOwner && !isValidCurator ? (
@@ -97,9 +100,9 @@ const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
               modalHeading={t('modal_unsaved_changes_heading')}
               shouldBlockNavigation={dirty}
             />
-            <RegistrationPageHeader>
+            <ItalicPageHeader>
               {values.entityDescription.mainTitle || `[${t('common:missing_title')}]`}
-            </RegistrationPageHeader>
+            </ItalicPageHeader>
             <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
             <RegistrationFormContent tabNumber={tabNumber} uppy={uppy} />
             <RegistrationFormActions
@@ -113,5 +116,3 @@ const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     </StyledRegistration>
   );
 };
-
-export default RegistrationForm;

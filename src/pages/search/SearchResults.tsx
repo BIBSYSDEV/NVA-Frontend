@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { List, Typography } from '@material-ui/core';
 import { SearchResult } from '../../types/search.types';
-import RegistrationListItem from '../dashboard/RegistrationListItem';
+import { RegistrationListItem } from '../dashboard/RegistrationListItem';
 
 const StyledTypography = styled(Typography)`
   font-weight: 600;

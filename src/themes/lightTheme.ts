@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core';
 import { PaletteColor, PaletteColorOptions, SimplePaletteColorOptions } from '@material-ui/core/styles/createPalette';
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
@@ -38,7 +38,7 @@ enum Font {
   Crimson = 'Crimson Text, serif',
 }
 
-const lightTheme = createMuiTheme({
+export const lightTheme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
@@ -109,11 +109,15 @@ const lightTheme = createMuiTheme({
       fontWeight: 700,
     },
     overline: {
-      fontSize: '0.8rem',
+      fontSize: '0.75rem',
+      fontWeight: 600,
     },
     subtitle2: {
-      fontSize: '1.25rem',
-      fontWeight: 400,
+      fontSize: '0.875rem',
+      fontWeight: 700,
+    },
+    caption: {
+      fontSize: '0.875rem',
     },
   },
   overrides: {
@@ -155,7 +159,11 @@ const lightTheme = createMuiTheme({
     },
     MuiLink: {
       root: {
-        color: Color.Link,
+        color: Color.PrimaryText,
+      },
+      underlineHover: {
+        textDecoration: 'underline',
+        textDecorationColor: Color.SecondaryMain,
       },
     },
     MuiTab: {
@@ -228,8 +236,6 @@ const lightTheme = createMuiTheme({
     },
   },
 });
-
-export default lightTheme;
 
 // Default props in theme are not supported for components still in /lab
 export const autocompleteTranslationProps = {

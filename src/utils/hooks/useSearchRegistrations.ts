@@ -1,43 +1,23 @@
-import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { searchRegistrations } from '../../api/searchApi';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
+import { SearchApiPath } from '../../api/apiPaths';
 import { SearchResult } from '../../types/search.types';
+import { ROWS_PER_PAGE_OPTIONS } from '../constants';
 import { createSearchQuery, SearchConfig } from '../searchHelpers';
-import useCancelToken from './useCancelToken';
+import { useFetch } from './useFetch';
 
-const useSearchRegistrations = (
-  searchConfig: SearchConfig,
-  numberOfResults?: number,
-  searchAfter?: number
-): [SearchResult | undefined, boolean] => {
-  const dispatch = useDispatch();
+export const useSearchRegistrations = (
+  searchConfig?: SearchConfig,
+  numberOfResults = ROWS_PER_PAGE_OPTIONS[1],
+  searchAfter = 0
+) => {
   const { t } = useTranslation('feedback');
-  const cancelToken = useCancelToken();
-  const [isLoading, setIsLoading] = useState(true);
-  const [searchResults, setSearchResults] = useState<SearchResult>();
-  const searchQuery = createSearchQuery(searchConfig);
+  const searchQuery = createSearchQuery(searchConfig ?? {});
 
-  useEffect(() => {
-    const handleSearchRegistrations = async () => {
-      setIsLoading(true);
-      const response = await searchRegistrations(searchQuery, numberOfResults, searchAfter, cancelToken);
-      if (response) {
-        if (response.error) {
-          dispatch(setNotification(t('error.search'), NotificationVariant.Error));
-        } else if (response.data) {
-          setSearchResults(response.data);
-        }
-        setIsLoading(false);
-      }
-    };
+  const url = searchQuery
+    ? `${SearchApiPath.Registrations}?query=${searchQuery}&results=${numberOfResults}&from=${searchAfter}`
+    : `${SearchApiPath.Registrations}?results=${numberOfResults}&from=${searchAfter}`;
 
-    handleSearchRegistrations();
-  }, [t, dispatch, cancelToken, searchQuery, numberOfResults, searchAfter]);
+  const fetchRegistrations = useFetch<SearchResult>({ url, errorMessage: t('error.search') });
 
-  return [searchResults, isLoading];
+  return fetchRegistrations;
 };
-
-export default useSearchRegistrations;

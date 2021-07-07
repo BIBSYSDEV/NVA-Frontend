@@ -13,9 +13,6 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
     <>
       {abstract && (
         <>
-          <Typography variant="h4" component="h2">
-            {t('description.abstract')}
-          </Typography>
           <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
             {abstract}
           </Typography>
@@ -23,7 +20,7 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
       )}
       {description && (
         <>
-          <Typography variant="h4" component="h2">
+          <Typography variant="overline" component="h3" color="primary">
             {t('description.description')}
           </Typography>
           <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
@@ -38,12 +35,16 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
 };
 
 const StyledTagsList = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1rem;
   align-items: center;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const StyledTags = styled.div`
-  margin-left: 1rem;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -56,8 +57,14 @@ const StyledTags = styled.div`
 
 const StyledChip = styled(Chip)`
   background: ${({ theme }) => theme.palette.section.light};
-  color: ${({ theme }) => theme.palette.text.primary};
   margin: 0.25rem 0;
+  padding: 0.25rem;
+  height: auto;
+`;
+
+const StyledChipLabel = styled(Typography)`
+  white-space: normal;
+  color: ${({ theme }) => theme.palette.text.primary};
 `;
 
 interface TagsListProps {
@@ -67,12 +74,12 @@ interface TagsListProps {
 
 const TagsList = ({ title, values }: TagsListProps) => (
   <StyledTagsList>
-    <Typography variant="subtitle2" component="h2">
+    <Typography variant="overline" component="h3" color="primary">
       {title}
     </Typography>
     <StyledTags>
       {values.map((value) => (
-        <StyledChip key={value} label={value} />
+        <StyledChip key={value} label={<StyledChipLabel>{value}</StyledChipLabel>} />
       ))}
     </StyledTags>
   </StyledTagsList>

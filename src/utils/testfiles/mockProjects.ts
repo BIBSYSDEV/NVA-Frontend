@@ -2,19 +2,19 @@ import { LanguageValues } from '../../types/language.types';
 import { CristinProject, ProjectSearchResponse } from '../../types/project.types';
 
 export const mockProject: CristinProject = {
-  id: 'https://api.dev.nva.aws.unit.no/project/404031',
+  id: 'https://api.dev.nva.aws.unit.no/project/1',
   type: 'Project',
   identifier: [
     {
       type: 'CristinIdentifier',
-      value: '404031',
+      value: '1',
     },
   ],
-  title: 'Natur og identitet - internasjonal forskerkonferanse',
+  title: 'A dummy project',
   language: LanguageValues.ENGLISH,
   alternativeTitles: [
     {
-      en: 'Nature and Identity - international research symposium',
+      en: 'A dummy project',
     },
   ],
   startDate: '2001-01-01T00:00:00Z',
@@ -32,8 +32,8 @@ export const mockProject: CristinProject = {
       identity: {
         id: 'https://api.cristin.no/v2/persons/328549',
         type: 'Person',
-        firstName: 'Kirsti Pedersen',
-        lastName: 'Gurholt',
+        firstName: 'Name',
+        lastName: 'Nameson',
       },
       affiliation: {
         id: 'https://api.cristin.no/v2/institutions/186',
@@ -64,8 +64,8 @@ export const mockProject: CristinProject = {
       identity: {
         id: 'https://api.cristin.no/v2/persons/325305',
         type: 'Person',
-        firstName: 'Stein Roar',
-        lastName: 'Mathisen',
+        firstName: 'Peder',
+        lastName: 'Pedersen',
       },
       affiliation: {
         id: 'https://api.cristin.no/v2/institutions/186',
@@ -111,8 +111,8 @@ const mockProjects: CristinProject[] = [
         identity: {
           id: 'https://api.cristin.no/v2/persons/319749',
           type: 'Person',
-          firstName: 'Per Arne',
-          lastName: 'Åsheim',
+          firstName: 'Kari',
+          lastName: 'Karisen',
         },
         affiliation: {
           id: 'https://api.cristin.no/v2/institutions/222',
@@ -199,8 +199,8 @@ const mockProjects: CristinProject[] = [
         identity: {
           id: 'https://api.cristin.no/v2/persons/43310',
           type: 'Person',
-          firstName: 'May-Britt',
-          lastName: 'Hägg',
+          firstName: 'Guri',
+          lastName: 'Malla',
         },
         affiliation: {
           id: 'https://api.cristin.no/v2/institutions/222',
@@ -215,8 +215,8 @@ const mockProjects: CristinProject[] = [
         identity: {
           id: 'https://api.cristin.no/v2/persons/26002',
           type: 'Person',
-          firstName: 'Lars Erik',
-          lastName: 'Øi',
+          firstName: 'Sopp',
+          lastName: 'Soppesen',
         },
         affiliation: {
           id: 'https://api.cristin.no/v2/institutions/222',
@@ -231,8 +231,8 @@ const mockProjects: CristinProject[] = [
         identity: {
           id: 'https://api.cristin.no/v2/persons/26022',
           type: 'Person',
-          firstName: 'Bernt',
-          lastName: 'Lie',
+          firstName: 'Ost',
+          lastName: 'Loff',
         },
         affiliation: {
           id: 'https://api.cristin.no/v2/institutions/222',
@@ -275,8 +275,8 @@ const mockProjects: CristinProject[] = [
         identity: {
           id: 'https://api.cristin.no/v2/persons/319632',
           type: 'Person',
-          firstName: 'Ole Martin',
-          lastName: 'Høystad',
+          firstName: 'Knut',
+          lastName: 'Kebab',
         },
         affiliation: {
           id: 'https://api.cristin.no/v2/institutions/222',

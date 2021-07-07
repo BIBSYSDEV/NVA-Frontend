@@ -4,13 +4,15 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { MenuItem, MuiThemeProvider, TextField, Typography } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import BackgroundDiv from '../../components/BackgroundDiv';
-import lightTheme from '../../themes/lightTheme';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { lightTheme } from '../../themes/lightTheme';
 import { LanguageCodes, registrationLanguages } from '../../types/language.types';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { DatePickerField } from './description_tab/DatePickerField';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
+import { VocabularyFields } from './description_tab/vocabularies/VocabularyFields';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 
 const DateAndLanguageWrapper = styled.div`
   display: grid;
@@ -23,7 +25,7 @@ const DateAndLanguageWrapper = styled.div`
   }
 `;
 
-const DescriptionPanel = () => {
+export const DescriptionPanel = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 
@@ -84,7 +86,16 @@ const DescriptionPanel = () => {
               freeSolo
               multiple
               options={[]}
-              onChange={(_: ChangeEvent<unknown>, value: string[] | string) => setFieldValue(field.name, value)}
+              autoSelect
+              onChange={(_: ChangeEvent<unknown>, value: string[]) => {
+                const newValues = value
+                  .map((item) => item.split(','))
+                  .flat()
+                  .map((item) => item.trim())
+                  .filter((item) => item);
+                const uniqueValues = [...new Set(newValues)];
+                setFieldValue(field.name, uniqueValues);
+              }}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -93,19 +104,14 @@ const DescriptionPanel = () => {
                   helperText={t('description.keywords_helper')}
                   variant="filled"
                   fullWidth
-                  onBlur={(event) => {
-                    const value = event.target.value;
-                    const tags = value
-                      .split(/[|,;]+/)
-                      .map((value: string) => value.trim())
-                      .filter((tag) => tag !== '');
-                    setFieldValue(field.name, [...field.value, ...tags]);
-                  }}
                 />
               )}
             />
           )}
         </Field>
+        <BetaFunctionality>
+          <VocabularyFields />
+        </BetaFunctionality>
       </BackgroundDiv>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DateAndLanguageWrapper>
@@ -149,5 +155,3 @@ const DescriptionPanel = () => {
     </>
   );
 };
-
-export default DescriptionPanel;

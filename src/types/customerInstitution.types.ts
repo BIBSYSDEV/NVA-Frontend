@@ -46,3 +46,7 @@ export enum CustomerInstitutionFieldNames {
 export interface CustomerList {
   customers: CustomerInstitution[];
 }
+
+export interface CustomerInstitutionsResponse {
+  customers: CustomerInstitution[];
+}

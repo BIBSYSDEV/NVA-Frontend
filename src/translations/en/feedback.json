@@ -1,6 +1,6 @@
 {
   "error": {
-    "404_page": "The page you requested could not be found. (Http error code 404)",
+    "404_page": "The page you requested could not be found",
     "add_role": "Could not add role",
     "an_error_occurred": "An error occurred",
     "create_authority": "Could not create authority",
@@ -29,7 +29,6 @@
     "get_registration": "Could not get registration",
     "get_roles": "Could not get roles",
     "get_session": "Invalid session. Please log in again.",
-    "get_user": "Failed to get user",
     "get_users_for_institution": "Could not get users",
     "institution_mismatch": "This user belongs to another institution",
     "login": "Login failed",

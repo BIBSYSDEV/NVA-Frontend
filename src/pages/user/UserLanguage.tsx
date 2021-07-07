@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { MenuItem, TextField, Typography } from '@material-ui/core';
-import Card from '../../components/Card';
+import { Card } from '../../components/Card';
 import { pageLanguages } from '../../types/language.types';
 
 const StyledSelect = styled(TextField)`

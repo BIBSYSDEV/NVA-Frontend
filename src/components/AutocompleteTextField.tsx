@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { CircularProgress, TextField, TextFieldProps } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
@@ -17,12 +17,12 @@ interface AutocompleteTextFieldProps
   errorMessage?: string;
 }
 
-export const AutocompleteTextField: FC<AutocompleteTextFieldProps> = ({
+export const AutocompleteTextField = ({
   isLoading,
   showSearchIcon,
   errorMessage,
   ...params
-}) => (
+}: AutocompleteTextFieldProps) => (
   <TextField
     {...params}
     variant="filled"

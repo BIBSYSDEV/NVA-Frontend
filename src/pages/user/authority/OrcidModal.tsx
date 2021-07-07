@@ -1,15 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import OrcidModalContent from '../OrcidModalContent';
-import Modal from '../../../components/Modal';
+import { OrcidModalContent } from '../OrcidModalContent';
+import { Modal } from '../../../components/Modal';
 import orcidLogo from '../../../resources/images/orcid_logo.svg';
 
 interface OrcidModalProps {
   closeModal: () => void;
 }
 
-const OrcidModal = ({ closeModal }: OrcidModalProps) => {
+export const OrcidModal = ({ closeModal }: OrcidModalProps) => {
   const { t } = useTranslation('common');
 
   return (
@@ -24,5 +24,3 @@ const OrcidModal = ({ closeModal }: OrcidModalProps) => {
     </Modal>
   );
 };
-
-export default OrcidModal;

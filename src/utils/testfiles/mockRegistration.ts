@@ -13,7 +13,7 @@ export const mockRegistration: JournalRegistration = {
   modifiedDate: new Date(2020, 2).toISOString(),
   owner: 'tu@unit.no',
   status: RegistrationStatus.DRAFT,
-  projects: [],
+  projects: [{ type: 'ResearchProject', id: 'https://api.dev.nva.aws.unit.no/project/1', name: 'A dummy project' }],
   publisher: { id: mockCustomerInstitution.id },
   fileSet: {
     type: BackendTypeNames.FILE_SET,
@@ -40,6 +40,7 @@ export const mockRegistration: JournalRegistration = {
     description:
       'Morbi sed neque egestas, egestas lacus ac, tincidunt metus. Donec quis ipsum vulputate, tempus nisi vulputate, commodo orci. Suspendisse blandit condimentum ex quis egestas. Ut rhoncus eros non condimentum mattis. Ut lectus nisi, molestie sit amet hendrerit ut, mollis vel odio. In a risus tellus. Morbi rutrum augue metus, ut malesuada ex posuere vitae. Nam nec rhoncus turpis.',
     tags: ['Ost', 'Loff', 'Majones'],
+    controlledKeywords: [],
     language: LanguageValues.ENGLISH,
     npiSubjectHeading: 'Medisin og helsefag',
     date: {
@@ -144,3 +145,5 @@ export const mockMessages: SupportRequest[] = [
     ],
   },
 ];
+
+export const mockPublishedRegistration = { ...mockRegistration, identifier: 123, status: RegistrationStatus.PUBLISHED };

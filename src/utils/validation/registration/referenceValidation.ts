@@ -14,13 +14,6 @@ export const invalidIsbnErrorMessage = i18n.t('feedback:validation.has_invalid_f
 });
 
 const resourceErrorMessage = {
-  articleNumberInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:resource_type.article_number'),
-  }),
-  articleNumberMustBeBigger: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('registration:resource_type.article_number'),
-    limit: 0,
-  }),
   corrigendumForRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.original_article'),
   }),
@@ -73,7 +66,9 @@ const resourceErrorMessage = {
     field: i18n.t('registration:resource_type.number_of_pages'),
     limit: 1,
   }),
-
+  peerReviewedRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.peer_reviewed'),
+  }),
   publisherRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:publisher'),
   }),
@@ -94,7 +89,11 @@ export const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/g; // ISBN without hyphens
 
 // Common Fields
 const isbnListField = Yup.array().of(Yup.string().matches(isbnRegex, resourceErrorMessage.isbnInvalid));
-const peerReviewedField = Yup.boolean();
+const peerReviewedField = Yup.boolean().when('$publicationInstanceType', {
+  is: (value: string) => value === JournalType.ARTICLE || value === BookType.MONOGRAPH || value === ChapterType.BOOK,
+  then: Yup.boolean().nullable().required(resourceErrorMessage.peerReviewedRequired),
+});
+
 const pagesMonographField = Yup.object()
   .nullable()
   .shape({
@@ -135,11 +134,7 @@ export const baseReference = Yup.object().shape({
 const journalPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(JournalType)).required(resourceErrorMessage.typeRequired),
   peerReviewed: peerReviewedField,
-  articleNumber: Yup.number()
-    .typeError(resourceErrorMessage.articleNumberInvalid)
-    .min(0, resourceErrorMessage.articleNumberMustBeBigger)
-    .transform(emptyStringToNull)
-    .nullable(),
+  articleNumber: Yup.string(),
   volume: Yup.number()
     .typeError(resourceErrorMessage.volumeInvalid)
     .min(0, resourceErrorMessage.volumeMustBeBigger)
@@ -225,6 +220,7 @@ export const degreeReference = baseReference.shape({
 const chapterPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(ChapterType)).required(resourceErrorMessage.typeRequired),
   pages: pagesRangeField,
+  peerReviewed: peerReviewedField,
 });
 
 const chapterPublicationContext = Yup.object().shape({

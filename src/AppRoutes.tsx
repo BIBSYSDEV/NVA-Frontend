@@ -1,8 +1,6 @@
 import React, { lazy, Suspense } from 'react';
-import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import DelayedFallback from './components/DelayedFallback';
-import { RootStore } from './redux/reducers/rootReducer';
+import { DelayedFallback } from './components/DelayedFallback';
 import { AppAdminRoute, CreatorRoute, CuratorRoute, InstitutionAdminRoute, LoggedInRoute } from './utils/routes/Routes';
 import { UrlPathTemplate } from './utils/urlPaths';
 
@@ -14,6 +12,7 @@ const PublicRegistration = lazy(() => import('./pages/public_registration/Public
 const MyProfilePage = lazy(() => import('./pages/user/MyProfilePage'));
 const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
 const PrivacyPolicy = lazy(() => import('./pages/infopages/PrivacyPolicy'));
+const ProjectsPage = lazy(() => import('./pages/projects/ProjectsPage'));
 const PublicProfile = lazy(() => import('./pages/public_profile/PublicProfile'));
 const AdminCustomerInstitutionsPage = lazy(() => import('./pages/admin/AdminCustomerInstitutionsPage'));
 const MyInstitutionPage = lazy(() => import('./pages/admin/MyInstitutionPage'));
@@ -24,8 +23,6 @@ const Logout = lazy(() => import('./layout/Logout'));
 const Login = lazy(() => import('./layout/Login'));
 
 export const AppRoutes = () => {
-  const user = useSelector((store: RootStore) => store.user);
-
   return (
     <Suspense fallback={<DelayedFallback />}>
       <Switch>
@@ -33,33 +30,30 @@ export const AppRoutes = () => {
         <Route exact path={UrlPathTemplate.PrivacyPolicy} component={PrivacyPolicy} />
         <Route exact path={UrlPathTemplate.User} component={PublicProfile} />
         <Route exact path={UrlPathTemplate.RegistrationLandingPage} component={PublicRegistration} />
+        <Route exact path={UrlPathTemplate.Projects} component={ProjectsPage} />
         <Route exact path={UrlPathTemplate.Search} component={SearchPage} />
         <Route exact path={UrlPathTemplate.Login} component={Login} />
         <Route exact path={UrlPathTemplate.Logout} component={Logout} />
 
-        {user && (
-          <>
-            {/* LoggedInRoute */}
-            <LoggedInRoute exact path={UrlPathTemplate.MyProfile} component={MyProfilePage} />
+        {/* LoggedInRoute */}
+        <LoggedInRoute exact path={UrlPathTemplate.MyProfile} component={MyProfilePage} />
 
-            {/* CreatorRoutes */}
-            <CreatorRoute exact path={UrlPathTemplate.Registration} component={EditRegistration} />
-            <CreatorRoute exact path={UrlPathTemplate.MyRegistrations} component={MyRegistrations} />
-            <CreatorRoute exact path={UrlPathTemplate.MyMessages} component={MyMessages} />
+        {/* CreatorRoutes */}
+        <CreatorRoute exact path={UrlPathTemplate.Registration} component={EditRegistration} />
+        <CreatorRoute exact path={UrlPathTemplate.MyRegistrations} component={MyRegistrations} />
+        <CreatorRoute exact path={UrlPathTemplate.MyMessages} component={MyMessages} />
 
-            {/* CuratorRoutes */}
-            <CuratorRoute exact path={UrlPathTemplate.Worklist} component={WorklistPage} />
+        {/* CuratorRoutes */}
+        <CuratorRoute exact path={UrlPathTemplate.Worklist} component={WorklistPage} />
 
-            {/* InstitutionAdminRoutes */}
-            <InstitutionAdminRoute exact path={UrlPathTemplate.MyInstitution} component={MyInstitutionPage} />
-            <InstitutionAdminRoute exact path={UrlPathTemplate.MyInstitutionUsers} component={MyInstitutionUsersPage} />
+        {/* InstitutionAdminRoutes */}
+        <InstitutionAdminRoute exact path={UrlPathTemplate.MyInstitution} component={MyInstitutionPage} />
+        <InstitutionAdminRoute exact path={UrlPathTemplate.MyInstitutionUsers} component={MyInstitutionUsersPage} />
 
-            {/* AppAdminRoutes */}
-            <AppAdminRoute exact path={UrlPathTemplate.AdminInstitutions} component={AdminCustomerInstitutionsPage} />
-          </>
-        )}
+        {/* AppAdminRoutes */}
+        <AppAdminRoute exact path={UrlPathTemplate.AdminInstitutions} component={AdminCustomerInstitutionsPage} />
 
-        {/* NotFound must be last, otherwise it will catch all routes */}
+        {/* Wildcard path must be last, otherwise it will catch all routes */}
         <Route path={UrlPathTemplate.Wildcard} component={NotFound} />
       </Switch>
     </Suspense>

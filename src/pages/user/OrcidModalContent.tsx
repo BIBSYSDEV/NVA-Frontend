@@ -11,7 +11,7 @@ interface OrcidModalContentProps {
   cancelText?: string;
 }
 
-const OrcidModalContent = ({ cancelFunction, cancelText }: OrcidModalContentProps) => {
+export const OrcidModalContent = ({ cancelFunction, cancelText }: OrcidModalContentProps) => {
   const { t } = useTranslation('profile');
   const history = useHistory();
 
@@ -40,5 +40,3 @@ const OrcidModalContent = ({ cancelFunction, cancelText }: OrcidModalContentProp
     </>
   );
 };
-
-export default OrcidModalContent;

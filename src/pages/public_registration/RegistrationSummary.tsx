@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Typography } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
-import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
+import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SearchFieldName } from '../../types/search.types';
 import { ExpressionStatement } from '../../utils/searchHelpers';
@@ -10,7 +10,7 @@ interface RegistrationSummaryProps {
   id: string;
 }
 
-const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
+export const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
   const [searchContainer, isLoadingSearchContainer] = useSearchRegistrations({
     properties: [
       { fieldName: SearchFieldName.Id, value: id?.split('/').pop() ?? '', operator: ExpressionStatement.Equals },
@@ -30,5 +30,3 @@ const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
     )
   );
 };
-
-export default RegistrationSummary;

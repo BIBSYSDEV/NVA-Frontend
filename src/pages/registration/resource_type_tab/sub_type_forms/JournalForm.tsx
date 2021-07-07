@@ -3,15 +3,15 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
-import BackgroundDiv from '../../../../components/BackgroundDiv';
-import lightTheme from '../../../../themes/lightTheme';
+import { BackgroundDiv } from '../../../../components/BackgroundDiv';
+import { lightTheme } from '../../../../themes/lightTheme';
 import { JournalType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { JournalRegistration } from '../../../../types/registration.types';
 import { DoiField } from '../components/DoiField';
-import JournalField from '../components/JournalField';
-import NviValidation from '../components/NviValidation';
-import PeerReview from '../components/PeerReview';
-import SearchContainerField from '../components/SearchContainerField';
+import { JournalField } from '../components/JournalField';
+import { NviValidation } from '../components/NviValidation';
+import { PeerReviewedField } from '../components/PeerReviewedField';
+import { SearchContainerField } from '../components/SearchContainerField';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -29,7 +29,7 @@ const StyledLabel = styled(Typography)`
   justify-self: center;
 `;
 
-const JournalForm = () => {
+export const JournalForm = () => {
   const { t } = useTranslation('registration');
   const { values } = useFormikContext<JournalRegistration>();
   const {
@@ -45,7 +45,7 @@ const JournalForm = () => {
           <SearchContainerField
             fieldName={ResourceFieldNames.CORRIGENDUM_FOR}
             searchSubtypes={[JournalType.ARTICLE, JournalType.SHORT_COMMUNICATION]}
-            label={t('resource_type.original_article')}
+            label={t('resource_type.original_article_title')}
             placeholder={t('resource_type.search_for_original_article')}
             dataTestId="article-search-field"
           />
@@ -134,10 +134,10 @@ const JournalForm = () => {
         publicationInstance.type === JournalType.SHORT_COMMUNICATION) && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-            <PeerReview fieldName={ResourceFieldNames.PEER_REVIEW} label={t('resource_type.peer_review')} />
+            <PeerReviewedField />
           </BackgroundDiv>
           <NviValidation
-            isPeerReviewed={publicationInstance.peerReviewed}
+            isPeerReviewed={!!publicationInstance.peerReviewed}
             isRated={!!publicationContext?.level}
             dataTestId="nvi_journal"
           />
@@ -146,5 +146,3 @@ const JournalForm = () => {
     </>
   );
 };
-
-export default JournalForm;

@@ -4,16 +4,16 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { FormHelperText, Typography } from '@material-ui/core';
 import { UppyFile } from '@uppy/core';
-import BackgroundDiv from '../../components/BackgroundDiv';
-import Modal from '../../components/Modal';
-import lightTheme from '../../themes/lightTheme';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { Modal } from '../../components/Modal';
+import { lightTheme } from '../../themes/lightTheme';
 import { File, licenses, Uppy } from '../../types/file.types';
 import { NotificationVariant } from '../../types/notification.types';
 import { FileFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { autoHideNotificationDuration } from '../../utils/constants';
-import FileCard from './files_and_license_tab/FileCard';
-import FileUploader from './files_and_license_tab/FileUploader';
+import { FileUploader } from './files_and_license_tab/FileUploader';
+import { FileCard } from './files_and_license_tab/FileCard';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   display: flex;
@@ -33,7 +33,7 @@ interface FilesAndLicensePanelProps {
   uppy: Uppy;
 }
 
-const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
+export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation('registration');
   const { values, setFieldTouched, errors, touched } = useFormikContext<Registration>();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
@@ -81,7 +81,7 @@ const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                 <Typography variant="h2">{t('files_and_license.files')}</Typography>
                 {files.map((file, index) => (
                   <FileCard
-                    key={index}
+                    key={file.identifier}
                     file={file}
                     removeFile={() => {
                       const remainingFiles = uppy
@@ -130,5 +130,3 @@ const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     </>
   );
 };
-
-export default FilesAndLicensePanel;

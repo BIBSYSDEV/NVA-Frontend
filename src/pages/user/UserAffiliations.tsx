@@ -8,17 +8,18 @@ import {
   AuthorityQualifiers,
   removeQualifierIdFromAuthority,
 } from '../../api/authorityApi';
-import Card from '../../components/Card';
-import ConfirmDialog from '../../components/ConfirmDialog';
-import AddInstitution from '../../components/institution/AddInstitution';
+import { Card } from '../../components/Card';
+import { ConfirmDialog } from '../../components/ConfirmDialog';
+import { AddInstitution } from '../../components/institution/AddInstitution';
 import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { FormikInstitutionUnit } from '../../types/institution.types';
 import { NotificationVariant } from '../../types/notification.types';
 import { getMostSpecificUnit } from '../../utils/institutions-helpers';
-import InstitutionCard from './institution/InstitutionCard';
+import { InstitutionCard } from './institution/InstitutionCard';
 import { User } from '../../types/user.types';
+import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 
 interface UserInstituionProps {
   user: User;
@@ -46,17 +47,23 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
       return;
     }
     setIsRemovingInstitution(true);
-    const updatedAuthority = await removeQualifierIdFromAuthority(
+    const updateAuthorityResponse = await removeQualifierIdFromAuthority(
       user.authority.id,
       AuthorityQualifiers.ORGUNIT_ID,
       institutionIdToRemove
     );
-    if (updatedAuthority.error) {
-      dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
-    } else if (updatedAuthority) {
-      dispatch(setAuthorityData(updatedAuthority));
+    if (isErrorStatus(updateAuthorityResponse.status)) {
+      dispatch(
+        setNotification(
+          t('feedback:error.delete_identifier', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+          NotificationVariant.Error
+        )
+      );
+    } else if (isSuccessStatus(updateAuthorityResponse.status)) {
+      dispatch(setAuthorityData(updateAuthorityResponse.data));
       dispatch(setNotification(t('feedback:success.delete_affiliation')));
     }
+
     setInstitutionIdToRemove('');
     setIsRemovingInstitution(false);
   };
@@ -77,15 +84,20 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
     }
 
     if (user.authority) {
-      const updatedAuthority = await addQualifierIdForAuthority(
+      const updateAuthorityResponse = await addQualifierIdForAuthority(
         user.authority.id,
         AuthorityQualifiers.ORGUNIT_ID,
         newUnitId
       );
-      if (updatedAuthority.error) {
-        dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
-      } else if (updatedAuthority) {
-        dispatch(setAuthorityData(updatedAuthority));
+      if (isErrorStatus(updateAuthorityResponse.status)) {
+        dispatch(
+          setNotification(
+            t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+            NotificationVariant.Error
+          )
+        );
+      } else if (isSuccessStatus(updateAuthorityResponse.status)) {
+        dispatch(setAuthorityData(updateAuthorityResponse.data));
         dispatch(setNotification(t('feedback:success.added_affiliation'), NotificationVariant.Success));
       }
     }

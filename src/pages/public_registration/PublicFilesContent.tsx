@@ -12,9 +12,10 @@ import { File, licenses } from '../../types/file.types';
 import { downloadFile } from '../../api/fileApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import ButtonWithProgress from '../../components/ButtonWithProgress';
+import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { PreviewFile } from './preview_file/PreviewFile';
+import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledFileRowContainer = styled.div`
   > :not(:last-child) {
@@ -31,7 +32,7 @@ const StyledFileRow = styled.div`
   column-gap: 1rem;
   align-items: center;
   padding: 1rem;
-  background: ${({ theme }) => theme.palette.common.white};
+  background: ${({ theme }) => theme.palette.section.megaLight};
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
     grid-template-areas:
@@ -81,26 +82,19 @@ const StyledPreviewAccordion = styled(Accordion)`
 const maxFileSize = 10000000; //10 MB
 
 export const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) => {
-  const { t } = useTranslation('common');
   const publiclyAvailableFiles = registration.fileSet.files.filter((file) => !file.administrativeAgreement);
 
   return (
-    <>
-      <Typography variant="h4" component="h2" gutterBottom>
-        {t('registration:files_and_license.files')}
-      </Typography>
-
-      <StyledFileRowContainer>
-        {publiclyAvailableFiles.map((file, index) => (
-          <FileRow
-            key={file.identifier}
-            file={file}
-            registrationId={registration.identifier}
-            openPreviewByDefault={index === 0 && publiclyAvailableFiles[0].size < maxFileSize}
-          />
-        ))}
-      </StyledFileRowContainer>
-    </>
+    <StyledFileRowContainer>
+      {publiclyAvailableFiles.map((file, index) => (
+        <FileRow
+          key={file.identifier}
+          file={file}
+          registrationId={registration.identifier}
+          openPreviewByDefault={index === 0 && publiclyAvailableFiles[0].size < maxFileSize}
+        />
+      ))}
+    </StyledFileRowContainer>
   );
 };
 
@@ -120,18 +114,18 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
   const handleDownload = useCallback(
     async (manuallyTriggered = true) => {
       setIsLoadingFile(true);
-      const downloadedFile = await downloadFile(registrationId, file.identifier);
-      if (!downloadedFile || downloadedFile?.error) {
-        dispatch(setNotification(downloadedFile.error, NotificationVariant.Error));
+      const downloadedFileUrl = await downloadFile(registrationId, file.identifier);
+      if (!downloadedFileUrl) {
+        dispatch(setNotification(t('feedback:error.download_file'), NotificationVariant.Error));
       } else {
-        setCurrentFileUrl(downloadedFile);
+        setCurrentFileUrl(downloadedFileUrl);
         if (manuallyTriggered) {
-          window.open(downloadedFile, '_blank');
+          window.open(downloadedFileUrl, '_blank');
         }
       }
       setIsLoadingFile(false);
     },
-    [dispatch, registrationId, file.identifier]
+    [t, dispatch, registrationId, file.identifier]
   );
 
   useEffect(() => {
@@ -166,7 +160,7 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
           </Typography>
         ) : !currentFileUrl ? (
           <ButtonWithProgress
-            data-testid="button-download-file"
+            data-testid={dataTestId.registrationLandingPage.downloadFileButton}
             variant="contained"
             color="secondary"
             fullWidth

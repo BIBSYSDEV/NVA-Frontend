@@ -5,15 +5,15 @@ import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import RemoveIcon from '@material-ui/icons/Remove';
-import BackgroundDiv from '../../../../components/BackgroundDiv';
+import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { StyledCenterAlignedContentWrapper } from '../../../../components/styled/Wrappers';
-import lightTheme from '../../../../themes/lightTheme';
+import { lightTheme } from '../../../../themes/lightTheme';
 import { BookType, ChapterType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { ChapterRegistration } from '../../../../types/registration.types';
 import { DoiField } from '../components/DoiField';
-import NviValidation from '../components/NviValidation';
-import PeerReview from '../components/PeerReview';
-import SearchContainerField from '../components/SearchContainerField';
+import { NviValidation } from '../components/NviValidation';
+import { PeerReviewedField } from '../components/PeerReviewedField';
+import { SearchContainerField } from '../components/SearchContainerField';
 
 const StyledDiv = styled(StyledCenterAlignedContentWrapper)`
   gap: 1rem;
@@ -45,7 +45,7 @@ const StyledPageNumberField = styled(TextField)`
   }
 `;
 
-const ChapterForm = () => {
+export const ChapterForm = () => {
   const { t } = useTranslation('registration');
 
   const { values } = useFormikContext<ChapterRegistration>();
@@ -115,7 +115,7 @@ const ChapterForm = () => {
       {publicationInstance.type === ChapterType.BOOK && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-            <PeerReview fieldName={ResourceFieldNames.PEER_REVIEW} label={t('resource_type.peer_review')} />
+            <PeerReviewedField />
           </BackgroundDiv>
 
           <NviValidation
@@ -128,5 +128,3 @@ const ChapterForm = () => {
     </>
   );
 };
-
-export default ChapterForm;

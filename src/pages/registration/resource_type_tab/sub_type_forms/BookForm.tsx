@@ -3,39 +3,29 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Checkbox, FormControlLabel, MuiThemeProvider, Typography } from '@material-ui/core';
-import BackgroundDiv from '../../../../components/BackgroundDiv';
-import lightTheme from '../../../../themes/lightTheme';
+import { BackgroundDiv } from '../../../../components/BackgroundDiv';
+import { lightTheme } from '../../../../themes/lightTheme';
 import { BookType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookRegistration } from '../../../../types/registration.types';
 import { DoiField } from '../components/DoiField';
-import IsbnListField from '../components/IsbnListField';
+import { IsbnListField } from '../components/IsbnListField';
 import { NpiDisciplineField } from '../components/NpiDisciplineField';
-import NviValidation from '../components/NviValidation';
-import PeerReview from '../components/PeerReview';
-import PublisherField from '../components/PublisherField';
-import SeriesField from '../components/SeriesField';
-import TotalPagesField from '../components/TotalPagesField';
+import { NviValidation } from '../components/NviValidation';
+import { PeerReviewedField } from '../components/PeerReviewedField';
+import { PublisherField } from '../components/PublisherField';
+import { SeriesFields } from '../components/SeriesFields';
+import { TotalPagesField } from '../components/TotalPagesField';
 
 const StyledSection = styled.div`
   display: grid;
   gap: 1rem;
-  grid-template-areas: 'peer-review text-book';
   grid-template-columns: 1fr 2fr;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-areas: 'peer-review' 'text-book';
     grid-template-columns: 1fr;
   }
 `;
 
-const StyledPeerReview = styled.div`
-  grid-area: peer-review;
-`;
-
-const StyledTextBook = styled.div`
-  grid-area: text-book;
-`;
-
-const BookForm = () => {
+export const BookForm = () => {
   const { t } = useTranslation('registration');
   const { values } = useFormikContext<BookRegistration>();
   const {
@@ -63,15 +53,15 @@ const BookForm = () => {
 
       <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
         <StyledSection>
-          <StyledPeerReview>
-            <PeerReview fieldName={ResourceFieldNames.PEER_REVIEW} label={t('resource_type.peer_review')} />
-          </StyledPeerReview>
-          <StyledTextBook>
+          {type === BookType.MONOGRAPH && (
             <div>
-              <Typography variant="h5" component="p">
-                {t('resource_type.is_book_a_textbook')}
-              </Typography>
+              <PeerReviewedField />
             </div>
+          )}
+          <div>
+            <Typography variant="h5" component="p">
+              {t('resource_type.is_book_a_textbook')}
+            </Typography>
             <Field name={ResourceFieldNames.TEXTBOOK_CONTENT}>
               {({ field }: FieldProps) => (
                 <FormControlLabel
@@ -87,20 +77,19 @@ const BookForm = () => {
                 />
               )}
             </Field>
-          </StyledTextBook>
+          </div>
         </StyledSection>
       </BackgroundDiv>
 
-      {(type === BookType.ANTHOLOGY || type === BookType.MONOGRAPH) && (
-        <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-          <Typography variant="h5">{t('resource_type.series')}</Typography>
-          <Typography>{t('resource_type.series_info')}</Typography>
-          <SeriesField />
-        </BackgroundDiv>
-      )}
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
+        <Typography variant="h5">{t('resource_type.series')}</Typography>
+        <Typography>{t('resource_type.series_info')}</Typography>
+        <SeriesFields />
+      </BackgroundDiv>
+
       {type === BookType.MONOGRAPH && (
         <NviValidation
-          isPeerReviewed={peerReviewed}
+          isPeerReviewed={!!peerReviewed}
           isRated={!!publicationContext?.level}
           isTextbook={!!textbookContent}
           dataTestId="nvi_book"
@@ -109,5 +98,3 @@ const BookForm = () => {
     </>
   );
 };
-
-export default BookForm;

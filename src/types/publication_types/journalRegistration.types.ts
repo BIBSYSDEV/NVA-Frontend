@@ -1,7 +1,6 @@
-import { BackendType, RegistrationDate } from '../registration.types';
+import { BackendType, BaseEntityDescription } from '../registration.types';
 import { PublicationType, JournalType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
-import { Contributor } from '../contributor.types';
 import { BackendTypeNames, emptyDate } from './commonRegistration.types';
 import { emptyPagesRange, PagesRange } from './pages.types';
 
@@ -10,7 +9,7 @@ export interface JournalPublicationInstance {
   articleNumber: string;
   issue: string;
   pages: PagesRange;
-  peerReviewed: boolean;
+  peerReviewed: boolean | null;
   volume: string;
   corrigendumFor: string;
 }
@@ -32,16 +31,8 @@ interface JournalReference extends BackendType {
   publicationInstance: JournalPublicationInstance;
 }
 
-export interface JournalEntityDescription extends BackendType {
-  abstract: string;
-  contributors: Contributor[];
-  date: RegistrationDate;
-  description: string;
-  language: LanguageValues;
-  mainTitle: string;
-  npiSubjectHeading: string;
+export interface JournalEntityDescription extends BaseEntityDescription {
   reference: JournalReference;
-  tags: string[];
 }
 
 export const emptyJournalPublicationInstance: JournalPublicationInstance = {
@@ -49,7 +40,7 @@ export const emptyJournalPublicationInstance: JournalPublicationInstance = {
   articleNumber: '',
   issue: '',
   pages: emptyPagesRange,
-  peerReviewed: false,
+  peerReviewed: null,
   volume: '',
   corrigendumFor: '',
 };
@@ -82,4 +73,5 @@ export const emptyRegistrationEntityDescription: JournalEntityDescription = {
   npiSubjectHeading: '',
   reference: emptyReference,
   tags: [],
+  controlledKeywords: [],
 };

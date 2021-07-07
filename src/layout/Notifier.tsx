@@ -1,4 +1,4 @@
-import React, { FC, SyntheticEvent } from 'react';
+import React, { SyntheticEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Fade, Snackbar, SnackbarCloseReason } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
@@ -6,7 +6,7 @@ import { removeNotification } from '../redux/actions/notificationActions';
 import { RootStore } from '../redux/reducers/rootReducer';
 import { autoHideNotificationDuration } from '../utils/constants';
 
-const Notifier: FC = () => {
+export const Notifier = () => {
   const notification = useSelector((store: RootStore) => store.notification);
   const dispatch = useDispatch();
 
@@ -34,5 +34,3 @@ const Notifier: FC = () => {
     </Snackbar>
   ) : null;
 };
-
-export default Notifier;

@@ -46,7 +46,7 @@ export const PublicPublicationInstanceJournal = ({
   return (
     <>
       <Typography>{fieldTexts.join(', ')}</Typography>
-      <PublicPeerReviewed peerReviewed={peerReviewed} />
+      <PublicPeerReviewed peerReviewed={!!peerReviewed} />
     </>
   );
 };
@@ -62,7 +62,7 @@ export const PublicPublicationInstanceBook = ({
   return (
     <>
       <PublicTotalPagesContent pages={pages} />
-      <PublicPeerReviewed peerReviewed={peerReviewed} />
+      <PublicPeerReviewed peerReviewed={!!peerReviewed} />
       {textbookContent && <Typography>{t('resource_type.text_book')}</Typography>}
     </>
   );
@@ -99,7 +99,7 @@ export const PublicPublicationInstanceChapter = ({
   return (
     <>
       {pagesInterval && <Typography>{pagesInterval}</Typography>}
-      <PublicPeerReviewed peerReviewed={peerReviewed} />
+      <PublicPeerReviewed peerReviewed={!!peerReviewed} />
     </>
   );
 };

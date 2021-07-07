@@ -18,12 +18,13 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import { deleteRegistration } from '../../api/registrationApi';
-import ConfirmDialog from '../../components/ConfirmDialog';
-import DangerButton from '../../components/DangerButton';
+import { ConfirmDialog } from '../../components/ConfirmDialog';
+import { DangerButton } from '../../components/DangerButton';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { RegistrationPreview, RegistrationStatus } from '../../types/registration.types';
 import { getRegistrationLandingPagePath, getRegistrationPath } from '../../utils/urlPaths';
+import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 
 const StyledTableRow = styled(TableRow)`
   background-color: ${(props) => props.theme.palette.box.main};
@@ -45,7 +46,7 @@ interface RegistrationListProps {
   refetchRegistrations: () => void;
 }
 
-const RegistrationList = ({ registrations, refetchRegistrations }: RegistrationListProps) => {
+export const RegistrationList = ({ registrations, refetchRegistrations }: RegistrationListProps) => {
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -69,16 +70,16 @@ const RegistrationList = ({ registrations, refetchRegistrations }: RegistrationL
     }
     setIsDeleting(true);
     const deleteRegistrationResponse = await deleteRegistration(registrationToDelete.identifier);
-    if (deleteRegistrationResponse) {
-      if (deleteRegistrationResponse.error) {
-        dispatch(setNotification(t('feedback:error.delete_registration'), NotificationVariant.Error));
-      } else {
-        dispatch(setNotification(t('feedback:success.delete_registration'), NotificationVariant.Success));
-        refetchRegistrations();
-      }
+    if (isErrorStatus(deleteRegistrationResponse.status)) {
+      dispatch(setNotification(t('feedback:error.delete_registration'), NotificationVariant.Error));
       setIsDeleting(false);
+    } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
+      dispatch(setNotification(t('feedback:success.delete_registration'), NotificationVariant.Success));
+      refetchRegistrations();
     }
   };
+
+  const registrationsOnPage = registrations.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
 
   return (
     <>
@@ -104,7 +105,7 @@ const RegistrationList = ({ registrations, refetchRegistrations }: RegistrationL
             </TableRow>
           </TableHead>
           <TableBody>
-            {registrations.map((registration) => (
+            {registrationsOnPage.map((registration) => (
               <StyledTableRow key={registration.identifier}>
                 <TableCell component="th" scope="row" data-testid={`registration-title-${registration.identifier}`}>
                   <Typography>{registration.mainTitle ?? <i>[{t('common:missing_title')}]</i>}</Typography>
@@ -162,8 +163,8 @@ const RegistrationList = ({ registrations, refetchRegistrations }: RegistrationL
         count={registrations.length}
         rowsPerPage={rowsPerPage}
         page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
       />
       <ConfirmDialog
         open={!!showDeleteModal}
@@ -183,5 +184,3 @@ const RegistrationList = ({ registrations, refetchRegistrations }: RegistrationL
     </>
   );
 };
-
-export default RegistrationList;

@@ -1,8 +1,8 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core';
 import { Color } from './colors';
-import lightTheme from './lightTheme';
+import { lightTheme } from './lightTheme';
 
-const darkTheme = createMuiTheme({
+export const darkTheme = createTheme({
   ...lightTheme,
   palette: {
     ...lightTheme.palette,
@@ -66,6 +66,16 @@ const darkTheme = createMuiTheme({
         color: Color.Black,
       },
     },
+    MuiLink: {
+      root: {
+        color: Color.BlueMegaLight,
+      },
+      underlineHover: {
+        textUnderlineOffset: '0.5rem',
+        textDecoration: 'underline',
+        textDecorationColor: Color.SecondaryMain,
+      },
+    },
     MuiListItem: {
       ...lightTheme.overrides?.MuiListItem,
       root: {
@@ -75,5 +85,3 @@ const darkTheme = createMuiTheme({
     },
   },
 });
-
-export default darkTheme;

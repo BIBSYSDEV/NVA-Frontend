@@ -1,19 +1,6 @@
 import { Contributor } from '../types/contributor.types';
 import { FormikInstitutionUnit, InstitutionUnitBase, RecursiveInstitutionUnit } from '../types/institution.types';
 
-// Exclude institutions on any level (root, subunit, subunit of subunit, etc) that has a matching id in excludeIds
-export const filterInstitutions = (
-  institutions: RecursiveInstitutionUnit[],
-  excludeIds: string[]
-): RecursiveInstitutionUnit[] => {
-  return institutions.filter((institution: RecursiveInstitutionUnit) => {
-    if (institution.subunits) {
-      institution.subunits = filterInstitutions(institution.subunits, excludeIds);
-    }
-    return !excludeIds.includes(institution.id);
-  });
-};
-
 // Find the most specific unit in hierarchy
 export const getMostSpecificUnit = (values: FormikInstitutionUnit): InstitutionUnitBase => {
   if (values.subunit) {
@@ -23,10 +10,11 @@ export const getMostSpecificUnit = (values: FormikInstitutionUnit): InstitutionU
 };
 
 // Find distinct unit URIs for a set of contributors' affiliations
+const unitIdToIgnore = 'https://api.cristin.no/v2/units/0.0.0.0';
 export const getDistinctContributorUnits = (contributors: Contributor[]) => {
   const unitIds = contributors
     .flatMap((contributor) => contributor.affiliations)
-    .filter((affiliation) => !!affiliation?.id)
+    .filter((affiliation) => !!affiliation?.id && affiliation.id !== unitIdToIgnore)
     .map((unit) => unit?.id) as string[];
   return [...new Set(unitIds)];
 };

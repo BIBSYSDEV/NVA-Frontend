@@ -2,9 +2,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
-import Card from '../../components/Card';
-import IconLabelTextLine from '../../components/IconLabelTextLine';
+import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
+import PeopleIcon from '@material-ui/icons/People';
+import FindInPageIcon from '@material-ui/icons/FindInPage';
+import AllInboxIcon from '@material-ui/icons/AllInbox';
+import CreateIcon from '@material-ui/icons/Create';
+import { Card } from '../../components/Card';
 import { User } from '../../types/user.types';
+import { IconLabelTextLine } from '../../components/IconLabelTextLine';
 
 const StyledTypography = styled(Typography)`
   color: ${({ theme }) => theme.palette.error.main};
@@ -38,11 +43,10 @@ export const UserRoles = ({ user }: UserRolesProps) => {
           </Typography>
         </>
       )}
-
       {isAppAdmin && (
         <IconLabelTextLine
           dataTestId="user-role-app-admin"
-          icon="settings_applications"
+          icon={<SettingsApplicationsIcon />}
           label={t('roles.app_admin')}
           text={t('roles.app_admin_description')}
         />
@@ -50,7 +54,7 @@ export const UserRoles = ({ user }: UserRolesProps) => {
       {isInstitutionAdmin && (
         <IconLabelTextLine
           dataTestId="user-role-institution-admin"
-          icon="people"
+          icon={<PeopleIcon />}
           label={t('roles.institution_admin')}
           text={t('roles.institution_admin_description')}
         />
@@ -58,7 +62,7 @@ export const UserRoles = ({ user }: UserRolesProps) => {
       {isEditor && (
         <IconLabelTextLine
           dataTestId="user-role-editor"
-          icon="find_in_page"
+          icon={<FindInPageIcon />}
           label={t('roles.editor')}
           text={t('roles.editor_description')}
         />
@@ -66,7 +70,7 @@ export const UserRoles = ({ user }: UserRolesProps) => {
       {isCurator && (
         <IconLabelTextLine
           dataTestId="user-role-curator"
-          icon="all_inbox"
+          icon={<AllInboxIcon />}
           label={t('roles.curator')}
           text={t('roles.curator_description')}
         />
@@ -74,7 +78,7 @@ export const UserRoles = ({ user }: UserRolesProps) => {
       {isCreator && (
         <IconLabelTextLine
           dataTestId="user-role-creator"
-          icon="create"
+          icon={<CreateIcon />}
           label={t('roles.creator')}
           text={t('roles.creator_description')}
         />

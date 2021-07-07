@@ -4,14 +4,15 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, DialogActions } from '@material-ui/core';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../../api/authorityApi';
-import ButtonWithProgress from '../../../components/ButtonWithProgress';
+import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
 import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import { User } from '../../../types/user.types';
-import AuthorityList from './AuthorityList';
-import NewAuthorityCard from './NewAuthorityCard';
+import { AuthorityList } from './AuthorityList';
+import { NewAuthorityCard } from './NewAuthorityCard';
+import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
 const StyledAuthorityContainer = styled.div`
   min-width: 20rem;
@@ -49,18 +50,33 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
         AuthorityQualifiers.FEIDE_ID,
         user.id
       );
-      if (updatedAuthorityWithFeide.error) {
-        dispatch(setNotification(updatedAuthorityWithFeide.error, NotificationVariant.Error));
-        setIsUpdatingAuthority(false);
-      } else if (user.cristinId && !updatedAuthorityWithFeide.orgunitids.includes(user.cristinId)) {
-        const updatedAuthorityWithCristinId = await addQualifierIdForAuthority(
-          selectedArpId,
-          AuthorityQualifiers.ORGUNIT_ID,
-          user.cristinId
+      if (isErrorStatus(updatedAuthorityWithFeide.status)) {
+        dispatch(
+          setNotification(
+            t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+            NotificationVariant.Error
+          )
         );
-        dispatch(setAuthorityData(updatedAuthorityWithCristinId));
-      } else {
-        dispatch(setAuthorityData(updatedAuthorityWithFeide));
+      } else if (isSuccessStatus(updatedAuthorityWithFeide.status)) {
+        if (user.cristinId && !updatedAuthorityWithFeide.data.orgunitids.includes(user.cristinId)) {
+          const updatedAuthorityWithCristinId = await addQualifierIdForAuthority(
+            selectedArpId,
+            AuthorityQualifiers.ORGUNIT_ID,
+            user.cristinId
+          );
+          if (isErrorStatus(updatedAuthorityWithCristinId.status)) {
+            dispatch(
+              setNotification(
+                t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+                NotificationVariant.Error
+              )
+            );
+          } else if (isSuccessStatus(updatedAuthorityWithCristinId.status)) {
+            dispatch(setAuthorityData(updatedAuthorityWithCristinId.data));
+          }
+        } else {
+          dispatch(setAuthorityData(updatedAuthorityWithFeide.data));
+        }
       }
     }
   };
