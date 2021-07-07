@@ -9,8 +9,26 @@ import { getSearchPath } from '../../utils/urlPaths';
 import { RegistrationSearch } from './RegistrationSearch';
 
 const StyledSearch = styled.div`
-  width: 85%;
-  justify-items: center;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  grid-template-areas: '. searchbar' 'filters results';
+  column-gap: 2rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'searchbar' 'filters' 'results';
+  }
+`;
+const StyledSearchBar = styled(SearchBar)`
+  grid-area: searchbar;
+`;
+
+const StyledFilters = styled.div`
+  grid-area: filters;
+`;
+
+const StyledRegistrationSearch = styled(RegistrationSearch)`
+  grid-area: results;
 `;
 
 const SearchPage = () => {
@@ -28,8 +46,9 @@ const SearchPage = () => {
     <StyledPageWrapperWithMaxWidth>
       <PageHeader backPath="/">{t('registrations')}</PageHeader>
       <StyledSearch>
-        <SearchBar handleSearch={handleSearch} initialSearchTerm={searchTerm} />
-        <RegistrationSearch searchConfig={{ searchTerm }} />
+        <StyledFilters>{/* TODO */}</StyledFilters>
+        <StyledSearchBar handleSearch={handleSearch} initialSearchTerm={searchTerm} />
+        <StyledRegistrationSearch searchConfig={{ searchTerm }} />
       </StyledSearch>
     </StyledPageWrapperWithMaxWidth>
   );

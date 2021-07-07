@@ -44,7 +44,7 @@ export const RegistrationListItem = ({ registration }: RegistrationListItemProps
   const countRestContributors = registration.contributors.length - focusedContributors.length;
 
   return (
-    <ListItem divider>
+    <ListItem divider disableGutters>
       <ListItemText disableTypography data-testid="result-list-item">
         <Typography variant="h4">
           <MuiLink component={Link} to={getRegistrationLandingPagePath(registrationId)}>
