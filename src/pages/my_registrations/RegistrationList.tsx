@@ -163,8 +163,8 @@ export const RegistrationList = ({ registrations, refetchRegistrations }: Regist
         count={registrations.length}
         rowsPerPage={rowsPerPage}
         page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
       />
       <ConfirmDialog
         open={!!showDeleteModal}
