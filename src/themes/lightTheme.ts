@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core';
 import { PaletteColor, PaletteColorOptions, SimplePaletteColorOptions } from '@material-ui/core/styles/createPalette';
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
@@ -38,7 +38,7 @@ enum Font {
   Crimson = 'Crimson Text, serif',
 }
 
-export const lightTheme = createMuiTheme({
+export const lightTheme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
