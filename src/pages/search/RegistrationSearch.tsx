@@ -32,8 +32,8 @@ export const RegistrationSearch = ({ searchConfig, noHitsText }: RegistrationSea
             count={searchResults.total}
             rowsPerPage={rowsPerPage}
             page={page}
-            onChangePage={(_, newPage) => setPage(newPage)}
-            onChangeRowsPerPage={(event) => {
+            onPageChange={(_, newPage) => setPage(newPage)}
+            onRowsPerPageChange={(event) => {
               setRowsPerPage(parseInt(event.target.value));
               setPage(0);
             }}

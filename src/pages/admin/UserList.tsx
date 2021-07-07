@@ -169,8 +169,8 @@ export const UserList = ({
               count={userList.length}
               rowsPerPage={rowsPerPage}
               page={validPage}
-              onChangePage={(_, newPage) => setPage(newPage)}
-              onChangeRowsPerPage={(event) => {
+              onPageChange={(_, newPage) => setPage(newPage)}
+              onRowsPerPageChange={(event) => {
                 setRowsPerPage(parseInt(event.target.value));
                 setPage(0);
               }}
