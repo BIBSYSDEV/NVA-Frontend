@@ -155,7 +155,7 @@ const Dashboard = () => {
         </StyledShortDescription>
       </StyledTaglineDiv>
       <StyledDescriptionDiv backgroundColor={lightTheme.palette.section.megaDark}>
-        <StyledCollapse in={readMore} collapsedHeight="0rem">
+        <StyledCollapse in={readMore} collapsedSize="0rem">
           <AboutContent />
         </StyledCollapse>
         <StyledButtonWrapper>
