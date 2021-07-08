@@ -1,32 +1,25 @@
-import { ListItem, Collapse, List, ListItemText } from '@material-ui/core';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import { useState } from 'react';
+import { ListItem, ListSubheader } from '@material-ui/core';
+
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { useIsMobile } from '../../../utils/hooks/useIsMobile';
+import { JournalType } from '../../../types/publicationFieldNames';
+import { BaseFilterItem } from './BaseFilterItem';
 
 const StyledIndentedListItem = styled(ListItem)`
   padding-left: 2rem;
 `;
 
 export const RegistrationTypeFilter = () => {
-  const isMobile = useIsMobile();
-  const [isOpen, setIsOpen] = useState(!isMobile);
-  const toggleOpen = () => setIsOpen(!isOpen);
+  const { t } = useTranslation('publicationTypes');
 
   return (
-    <>
-      <ListItem button onClick={toggleOpen}>
-        <ListItemText primary="Registration Type" />
-        {isOpen ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={isOpen} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <StyledIndentedListItem button>
-            <ListItemText primary="Artikkel i tidsskrift" />
-          </StyledIndentedListItem>
-        </List>
-      </Collapse>
-    </>
+    <BaseFilterItem title="Registration Type">
+      <ListSubheader disableSticky>{t('Journal')}</ListSubheader>
+      {Object.values(JournalType).map((type) => (
+        <StyledIndentedListItem key={type} button>
+          {t(type)}
+        </StyledIndentedListItem>
+      ))}
+    </BaseFilterItem>
   );
 };
