@@ -32,6 +32,12 @@ const StyledMetadata = styled.div`
   }
 `;
 
+const StyledRegistrationTitle = styled(Typography)`
+  font-size: 1rem;
+  font-weight: 600;
+  font-style: italic;
+`;
+
 interface RegistrationListItemProps {
   registration: SearchRegistration;
 }
@@ -46,14 +52,14 @@ export const RegistrationListItem = ({ registration }: RegistrationListItemProps
   return (
     <ListItem divider disableGutters>
       <ListItemText disableTypography data-testid="result-list-item">
-        <Typography variant="h4">
+        <StyledRegistrationTitle>
           <MuiLink component={Link} to={getRegistrationLandingPagePath(registrationId)}>
             {registration.title}
           </MuiLink>
-        </Typography>
+        </StyledRegistrationTitle>
         <StyledContributors>
           {focusedContributors.map((contributor, index) => (
-            <Typography key={index}>
+            <Typography key={index} variant="body2">
               {contributor.id ? (
                 <MuiLink component={Link} to={getUserPath(contributor.id)}>
                   {contributor.name}
@@ -64,7 +70,7 @@ export const RegistrationListItem = ({ registration }: RegistrationListItemProps
             </Typography>
           ))}
           {countRestContributors > 0 && (
-            <Typography>({t('common:x_others', { count: countRestContributors })})</Typography>
+            <Typography variant="body2">({t('common:x_others', { count: countRestContributors })})</Typography>
           )}
         </StyledContributors>
 

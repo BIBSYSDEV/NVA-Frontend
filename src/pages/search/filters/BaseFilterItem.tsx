@@ -26,7 +26,7 @@ export const BaseFilterItem = ({ title, children }: BaseFilterItemProps) => {
   return (
     <>
       <ListItem button onClick={toggleOpen}>
-        <ListItemText primary={title} />
+        <ListItemText>{title}</ListItemText>
         {isOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
