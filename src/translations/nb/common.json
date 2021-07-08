@@ -70,6 +70,7 @@
   "search_summary": "{{count}} treff for \"{{searchTerm}}\"",
   "search_summary_plural": "{{count}} treff for \"{{searchTerm}}\"",
   "select": "Velg",
+  "select_filters": "Velg filtre for å snevre inn søket:",
   "selected": "Valgt",
   "send": "Send",
   "show": "Vis",

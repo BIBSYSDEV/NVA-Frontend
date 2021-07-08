@@ -12,7 +12,7 @@ export const RegistrationTypeFilter = () => {
   const { t } = useTranslation('publicationTypes');
 
   return (
-    <BaseFilterItem title="Type">
+    <BaseFilterItem title={t('common:type')}>
       <ListSubheader disableSticky>{t('Journal')}</ListSubheader>
       {Object.values(JournalType).map((type) => (
         <StyledIndentedListItem key={type} button>

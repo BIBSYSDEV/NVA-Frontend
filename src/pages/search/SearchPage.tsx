@@ -1,4 +1,4 @@
-import { List } from '@material-ui/core';
+import { List, Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -12,8 +12,8 @@ import { RegistrationSearch } from './RegistrationSearch';
 
 const StyledSearch = styled.div`
   display: grid;
-  grid-template-columns: 1fr 4fr;
-  grid-template-areas: '. searchbar' 'filters results';
+  grid-template-columns: 2fr 7fr;
+  grid-template-areas: 'filters searchbar' 'filters results';
   column-gap: 2rem;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
@@ -33,6 +33,10 @@ const StyledRegistrationSearch = styled(RegistrationSearch)`
   grid-area: results;
 `;
 
+const StyledFilterHelperText = styled(Typography)`
+  font-weight: 500;
+`;
+
 const SearchPage = () => {
   const { t } = useTranslation('common');
   const history = useHistory();
@@ -49,6 +53,7 @@ const SearchPage = () => {
       <PageHeader backPath="/">{t('registrations')}</PageHeader>
       <StyledSearch>
         <StyledFilters>
+          <StyledFilterHelperText>{t('select_filters')}</StyledFilterHelperText>
           <RegistrationTypeFilter />
         </StyledFilters>
         <StyledSearchBar handleSearch={handleSearch} initialSearchTerm={searchTerm} />

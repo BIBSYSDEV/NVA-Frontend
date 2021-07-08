@@ -1,4 +1,4 @@
-import { ListItem, Collapse, List, ListItemText } from '@material-ui/core';
+import { ListItem, Collapse, List, ListItemText, Typography } from '@material-ui/core';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { ReactNode, useState } from 'react';
@@ -11,6 +11,10 @@ const StyledCollapsableList = styled(List)`
   .MuiListSubheader-root {
     line-height: 1.5rem;
   }
+`;
+
+const StyledTitle = styled(Typography)`
+  font-weight: 600;
 `;
 
 interface BaseFilterItemProps {
@@ -26,7 +30,9 @@ export const BaseFilterItem = ({ title, children }: BaseFilterItemProps) => {
   return (
     <>
       <ListItem button onClick={toggleOpen}>
-        <ListItemText>{title}</ListItemText>
+        <ListItemText disableTypography>
+          <StyledTitle>{title}</StyledTitle>
+        </ListItemText>
         {isOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
