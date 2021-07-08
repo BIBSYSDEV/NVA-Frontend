@@ -12,9 +12,9 @@ import { RegistrationSearch } from './RegistrationSearch';
 
 const StyledSearch = styled.div`
   display: grid;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1fr 4fr;
   grid-template-areas: '. searchbar' 'filters results';
-  column-gap: 3rem;
+  column-gap: 2rem;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     grid-template-columns: 1fr;
