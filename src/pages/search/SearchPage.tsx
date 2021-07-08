@@ -1,3 +1,4 @@
+import { List } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -6,13 +7,14 @@ import { PageHeader } from '../../components/PageHeader';
 import { SearchBar } from '../../components/SearchBar';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { getSearchPath } from '../../utils/urlPaths';
+import { RegistrationTypeFilter } from './filters/RegistrationTypeFilter';
 import { RegistrationSearch } from './RegistrationSearch';
 
 const StyledSearch = styled.div`
   display: grid;
   grid-template-columns: 1fr 5fr;
   grid-template-areas: '. searchbar' 'filters results';
-  column-gap: 2rem;
+  column-gap: 3rem;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     grid-template-columns: 1fr;
@@ -23,7 +25,7 @@ const StyledSearchBar = styled(SearchBar)`
   grid-area: searchbar;
 `;
 
-const StyledFilters = styled.div`
+const StyledFilters = styled(List)`
   grid-area: filters;
 `;
 
@@ -46,7 +48,9 @@ const SearchPage = () => {
     <StyledPageWrapperWithMaxWidth>
       <PageHeader backPath="/">{t('registrations')}</PageHeader>
       <StyledSearch>
-        <StyledFilters>{/* TODO */}</StyledFilters>
+        <StyledFilters>
+          <RegistrationTypeFilter />
+        </StyledFilters>
         <StyledSearchBar handleSearch={handleSearch} initialSearchTerm={searchTerm} />
         <StyledRegistrationSearch searchConfig={{ searchTerm }} />
       </StyledSearch>
