@@ -56,7 +56,7 @@ export const CreateContributorModalContent = ({
         onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form noValidate>
-            <Collapse in={readMore} collapsedHeight="4.5rem">
+            <Collapse in={readMore} collapsedSize="4.5rem">
               <StyledTypographyPreWrapped>
                 {t('registration:contributors.create_new_author_description')}
               </StyledTypographyPreWrapped>
