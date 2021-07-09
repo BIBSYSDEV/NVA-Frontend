@@ -54,7 +54,10 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams): Sea
 
     return {
       fieldName,
-      value,
+      value:
+        value.startsWith('"') && value.endsWith('"')
+          ? value.substring(1, value.length - 1) // Remove surrounding "
+          : value,
     };
   });
 
