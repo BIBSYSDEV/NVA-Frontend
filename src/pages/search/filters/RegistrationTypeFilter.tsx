@@ -6,8 +6,9 @@ import { BookType, ChapterType, DegreeType, JournalType, ReportType } from '../.
 import { SearchConfig } from '../../../utils/searchHelpers';
 import { BaseFilterItem } from './BaseFilterItem';
 
-const StyledIndentedListItem = styled(ListItem)`
+const StyledIndentedListItem = styled(ListItem)<{ isSelected?: boolean }>`
   padding-left: 1.5rem;
+  ${({ isSelected }) => isSelected && `border: 2px solid;`}
 `;
 
 export const RegistrationTypeFilter = () => {
@@ -29,31 +30,31 @@ export const RegistrationTypeFilter = () => {
     <BaseFilterItem title={t('common:type')}>
       <ListSubheader disableSticky>{t('Journal')}</ListSubheader>
       {Object.values(JournalType).map((type) => (
-        <StyledIndentedListItem key={type} button onClick={() => updateFilter(type)}>
+        <StyledIndentedListItem key={type} button onClick={() => updateFilter(type)} isSelected={type === currentValue}>
           {t(type)}
         </StyledIndentedListItem>
       ))}
       <ListSubheader disableSticky>{t('Book')}</ListSubheader>
       {Object.values(BookType).map((type) => (
-        <StyledIndentedListItem key={type} button onClick={() => updateFilter(type)}>
+        <StyledIndentedListItem key={type} button onClick={() => updateFilter(type)} isSelected={type === currentValue}>
           {t(type)}
         </StyledIndentedListItem>
       ))}
       <ListSubheader disableSticky>{t('Report')}</ListSubheader>
       {Object.values(ReportType).map((type) => (
-        <StyledIndentedListItem key={type} button onClick={() => updateFilter(type)}>
+        <StyledIndentedListItem key={type} button onClick={() => updateFilter(type)} isSelected={type === currentValue}>
           {t(type)}
         </StyledIndentedListItem>
       ))}
       <ListSubheader disableSticky>{t('Degree')}</ListSubheader>
       {Object.values(DegreeType).map((type) => (
-        <StyledIndentedListItem key={type} button onClick={() => updateFilter(type)}>
+        <StyledIndentedListItem key={type} button onClick={() => updateFilter(type)} isSelected={type === currentValue}>
           {t(type)}
         </StyledIndentedListItem>
       ))}
       <ListSubheader disableSticky>{t('Chapter')}</ListSubheader>
       {Object.values(ChapterType).map((type) => (
-        <StyledIndentedListItem key={type} button onClick={() => updateFilter(type)}>
+        <StyledIndentedListItem key={type} button onClick={() => updateFilter(type)} isSelected={type === currentValue}>
           {t(type)}
         </StyledIndentedListItem>
       ))}
