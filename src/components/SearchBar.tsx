@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
 import { IconButton, TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { Field, FieldProps } from 'formik';
@@ -10,11 +9,11 @@ const StyledTextField = styled(TextField)`
   margin-top: 0;
 `;
 
-export const SearchBar = (props: unknown) => {
+export const SearchBar = () => {
   const { t } = useTranslation('search');
 
   return (
-    <Field name="searchTerm" {...props}>
+    <Field name="searchTerm">
       {({ field }: FieldProps<string>) => (
         <StyledTextField
           {...field}

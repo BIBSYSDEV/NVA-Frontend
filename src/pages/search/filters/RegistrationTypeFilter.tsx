@@ -3,6 +3,7 @@ import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { BookType, ChapterType, DegreeType, JournalType, ReportType } from '../../../types/publicationFieldNames';
+import { SearchFieldName } from '../../../types/search.types';
 import { SearchConfig } from '../../../utils/searchHelpers';
 import { BaseFilterItem } from './BaseFilterItem';
 
@@ -15,11 +16,11 @@ export const RegistrationTypeFilter = () => {
   const { t } = useTranslation('publicationTypes');
   const { setFieldValue, submitForm, values } = useFormikContext<SearchConfig>();
 
-  const currentValue = (values.properties && values.properties.length && values.properties[0].value) ?? '';
+  const currentValue = (values.properties?.length && values.properties[0].value) ?? '';
 
   const updateFilter = (type: string) => {
     const newFilter = {
-      fieldName: 'publicationType',
+      fieldName: SearchFieldName.Subtype,
       value: currentValue !== type ? type : '',
     };
     setFieldValue('properties[0]', newFilter);

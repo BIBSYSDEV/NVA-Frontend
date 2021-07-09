@@ -43,7 +43,7 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams): Sea
   const query = params.get('query');
   const filters = query?.split('AND').map((a) => a.trim());
   if (!filters) {
-    return {};
+    return { searchTerm: '', properties: [] };
   }
 
   const searchTermIndex = filters?.findIndex((filter) => filter && !filter.startsWith('(') && !filter.endsWith(')'));

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { List, Typography } from '@material-ui/core';
+import { Divider, List, Typography } from '@material-ui/core';
 import { SearchResult } from '../../types/search.types';
 import { RegistrationListItem } from '../dashboard/RegistrationListItem';
 
@@ -20,7 +20,8 @@ export const SearchResults = ({ searchResult }: SearchResultsProps) => {
 
   return (
     <StyledSearchResults data-testid="search-results">
-      <Typography variant="subtitle1">{t('hits', { count: searchResult.total })}</Typography>
+      <Typography variant="subtitle1">{t('hits', { count: searchResult.total })}:</Typography>
+      <Divider />
       <List>
         {registrations &&
           registrations.map((registration) => (

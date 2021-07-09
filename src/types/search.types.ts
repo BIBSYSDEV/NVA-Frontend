@@ -50,5 +50,5 @@ export interface SearchRegistration {
 export enum SearchFieldName {
   ContributorId = 'contributors.id',
   Id = 'id',
-  Subtype = 'reference.publicationInstance.type',
+  Subtype = 'publicationType',
 }

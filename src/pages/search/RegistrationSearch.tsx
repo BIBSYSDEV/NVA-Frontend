@@ -4,18 +4,12 @@ import { TablePagination, Typography } from '@material-ui/core';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { SearchResults } from './SearchResults';
-import { SearchConfig } from '../../utils/searchHelpers';
 import { useLocation } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
 import { SearchResult } from '../../types/search.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 
-interface RegistrationSearchProps {
-  searchConfig?: SearchConfig;
-  noHitsText?: string;
-}
-
-export const RegistrationSearch = ({ searchConfig, noHitsText, ...props }: RegistrationSearchProps) => {
+export const RegistrationSearch = () => {
   const { t } = useTranslation('common');
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[1]);
   const [page, setPage] = useState(0);
@@ -30,7 +24,7 @@ export const RegistrationSearch = ({ searchConfig, noHitsText, ...props }: Regis
   const [searchResults, isLoadingSearch] = useFetch<SearchResult>({ url });
 
   return (
-    <div {...props}>
+    <div>
       {isLoadingSearch ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : searchResults && searchResults.hits.length > 0 ? (
@@ -51,7 +45,7 @@ export const RegistrationSearch = ({ searchConfig, noHitsText, ...props }: Regis
           />
         </>
       ) : (
-        <Typography>{noHitsText ? noHitsText : t('no_hits')}</Typography>
+        <Typography>{t('no_hits')}</Typography>
       )}
     </div>
   );
