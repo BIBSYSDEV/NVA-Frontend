@@ -14,8 +14,10 @@ import { RegistrationSearch } from './RegistrationSearch';
 const StyledSearch = styled.div`
   display: grid;
   grid-template-columns: 2fr 7fr;
+  grid-template-rows: auto 1fr;
   grid-template-areas: 'filters searchbar' 'filters results';
   column-gap: 2rem;
+  row-gap: 1rem;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     grid-template-columns: 1fr;
