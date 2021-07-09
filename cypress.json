@@ -1,5 +1,6 @@
 {
   "baseUrl": "http://localhost:3000",
   "projectId": "1rrqbw",
-  "video": false
+  "video": false,
+  "watchForFileChanges": false
 }
