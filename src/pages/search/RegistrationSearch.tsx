@@ -3,9 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { TablePagination, Typography } from '@material-ui/core';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
-import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { SearchResults } from './SearchResults';
-import { createSearchConfigFromSearchParams, SearchConfig } from '../../utils/searchHelpers';
+import { SearchConfig } from '../../utils/searchHelpers';
 import { useLocation } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
 import { SearchResult } from '../../types/search.types';
@@ -20,7 +19,6 @@ export const RegistrationSearch = ({ searchConfig, noHitsText, ...props }: Regis
   const { t } = useTranslation('common');
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[1]);
   const [page, setPage] = useState(0);
-  // const [searchResults, isLoadingSearch] = useSearchRegistrations(searchConfig, rowsPerPage, page * rowsPerPage);
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
