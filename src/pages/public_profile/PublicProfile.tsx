@@ -84,7 +84,11 @@ const PublicProfile = () => {
             {registrations && (
               <StyledRegistrations>
                 <Typography variant="h2">{t('common:registrations')}</Typography>
-                <SearchResults searchResult={registrations} />
+                {registrations.total > 0 ? (
+                  <SearchResults searchResult={registrations} />
+                ) : (
+                  <Typography>{t('common:no_hits')}</Typography>
+                )}
               </StyledRegistrations>
             )}
           </>
