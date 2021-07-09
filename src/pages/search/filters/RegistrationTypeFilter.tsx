@@ -28,7 +28,7 @@ export const RegistrationTypeFilter = () => {
   };
 
   return (
-    <BaseFilterItem title={t('registration_type')}>
+    <BaseFilterItem title={t('search:registration_type')}>
       <ListSubheader disableSticky>{t('Journal')}</ListSubheader>
       {Object.values(JournalType).map((type) => (
         <StyledIndentedListItem
