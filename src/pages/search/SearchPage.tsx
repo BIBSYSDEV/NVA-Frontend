@@ -1,3 +1,4 @@
+import { List, Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -6,11 +7,34 @@ import { PageHeader } from '../../components/PageHeader';
 import { SearchBar } from '../../components/SearchBar';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { getSearchPath } from '../../utils/urlPaths';
+import { RegistrationTypeFilter } from './filters/RegistrationTypeFilter';
 import { RegistrationSearch } from './RegistrationSearch';
 
 const StyledSearch = styled.div`
-  width: 85%;
-  justify-items: center;
+  display: grid;
+  grid-template-columns: 2fr 7fr;
+  grid-template-areas: 'filters searchbar' 'filters results';
+  column-gap: 2rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'searchbar' 'filters' 'results';
+  }
+`;
+const StyledSearchBar = styled(SearchBar)`
+  grid-area: searchbar;
+`;
+
+const StyledFilters = styled(List)`
+  grid-area: filters;
+`;
+
+const StyledRegistrationSearch = styled(RegistrationSearch)`
+  grid-area: results;
+`;
+
+const StyledFilterHelperText = styled(Typography)`
+  font-weight: 500;
 `;
 
 const SearchPage = () => {
@@ -28,8 +52,12 @@ const SearchPage = () => {
     <StyledPageWrapperWithMaxWidth>
       <PageHeader backPath="/">{t('registrations')}</PageHeader>
       <StyledSearch>
-        <SearchBar handleSearch={handleSearch} initialSearchTerm={searchTerm} />
-        <RegistrationSearch searchConfig={{ searchTerm }} />
+        <StyledFilters>
+          <StyledFilterHelperText>{t('select_filters')}</StyledFilterHelperText>
+          <RegistrationTypeFilter />
+        </StyledFilters>
+        <StyledSearchBar handleSearch={handleSearch} initialSearchTerm={searchTerm} />
+        <StyledRegistrationSearch searchConfig={{ searchTerm }} />
       </StyledSearch>
     </StyledPageWrapperWithMaxWidth>
   );

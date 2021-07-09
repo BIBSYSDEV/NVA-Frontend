@@ -6,7 +6,7 @@ import { IconButton, TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
 const StyledTextField = styled(TextField)`
-  margin-bottom: 1rem;
+  margin-top: 0;
 `;
 
 interface SearchBarProps {
@@ -14,12 +14,13 @@ interface SearchBarProps {
   initialSearchTerm?: string;
 }
 
-export const SearchBar = ({ handleSearch, initialSearchTerm = '' }: SearchBarProps) => {
+export const SearchBar = ({ handleSearch, initialSearchTerm = '', ...props }: SearchBarProps) => {
   const { t } = useTranslation('common');
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
 
   return (
     <form
+      {...props}
       onSubmit={(event) => {
         event.preventDefault();
         event.stopPropagation();

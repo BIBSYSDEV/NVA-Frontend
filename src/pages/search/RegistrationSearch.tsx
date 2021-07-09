@@ -12,14 +12,14 @@ interface RegistrationSearchProps {
   noHitsText?: string;
 }
 
-export const RegistrationSearch = ({ searchConfig, noHitsText }: RegistrationSearchProps) => {
+export const RegistrationSearch = ({ searchConfig, noHitsText, ...props }: RegistrationSearchProps) => {
   const { t } = useTranslation('common');
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[1]);
   const [page, setPage] = useState(0);
   const [searchResults, isLoadingSearch] = useSearchRegistrations(searchConfig, rowsPerPage, page * rowsPerPage);
 
   return (
-    <>
+    <div {...props}>
       {isLoadingSearch ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : searchResults && searchResults.hits.length > 0 ? (
@@ -42,6 +42,6 @@ export const RegistrationSearch = ({ searchConfig, noHitsText }: RegistrationSea
       ) : (
         <Typography>{noHitsText ? noHitsText : t('no_hits')}</Typography>
       )}
-    </>
+    </div>
   );
 };
