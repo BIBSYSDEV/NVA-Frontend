@@ -1,6 +1,7 @@
 {
   "hits": "{{count}} treff",
   "hits_plural": "{{count}} treff",
+  "registration_type": "Registreringstype",
   "search": "Søk",
   "search_help": "Søk etter eksakte treff på ord, eller bruk * for å treffe alle varianter som innehar deler av strofen. Eks: \"Applikasjon\" eller \"App*\"",
   "select_filters": "Velg filtre for å snevre inn søket:"
