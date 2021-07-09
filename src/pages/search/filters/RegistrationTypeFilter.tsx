@@ -12,14 +12,20 @@ const StyledIndentedListItem = styled(ListItem)`
 
 export const RegistrationTypeFilter = () => {
   const { t } = useTranslation('publicationTypes');
-  const { setFieldValue, submitForm } = useFormikContext<SearchConfig>();
+  const { setFieldValue, submitForm, values } = useFormikContext<SearchConfig>();
+
+  const currentValue = values.properties && values.properties[0].value;
 
   const updateFilter = (type: string) => {
-    const newFilter = {
-      fieldName: 'publicationType',
-      value: type,
-    };
-    setFieldValue('properties[0]', newFilter);
+    if (currentValue !== type) {
+      const newFilter = {
+        fieldName: 'publicationType',
+        value: type,
+      };
+      setFieldValue('properties[0]', newFilter);
+    } else {
+      setFieldValue('properties[0]', '');
+    }
     submitForm();
   };
 
