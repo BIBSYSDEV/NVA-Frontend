@@ -15,23 +15,52 @@ enum Operator {
   OR = ' OR ',
 }
 
-const createSearchTermFilter = (searchTerm?: string) => (searchTerm ? `"*${searchTerm}*"` : '');
+const createSearchTermFilter = (searchTerm?: string) => searchTerm;
 
-const createPropertyFilter = (properties?: PropertySearch[], canMatchAnyProperty?: boolean) =>
-  properties && properties.length > 0
-    ? `(${properties
-        .map(
-          ({ fieldName, value }) => `${fieldName}:"${Array.isArray(value) ? value.join(`"${Operator.OR}"`) : value}"`
-        )
-        .join(canMatchAnyProperty ? Operator.OR : Operator.AND)})`
-    : '';
+const createPropertyFilter = (properties?: PropertySearch[]) => {
+  const propertiesWithValues = properties?.filter(({ fieldName, value }) => fieldName && value);
+  if (!propertiesWithValues || propertiesWithValues.length === 0) {
+    return '';
+  }
+
+  const propertyFilter = propertiesWithValues
+    .map(({ fieldName, value }) => {
+      const valueString = Array.isArray(value) ? value.join(Operator.OR) : value;
+      return `(${fieldName}:${valueString})`;
+    })
+    .join(Operator.AND);
+
+  return propertyFilter;
+};
 
 export const createSearchQuery = (searchConfig: SearchConfig) => {
   const textSearch = createSearchTermFilter(searchConfig.searchTerm);
-  const propertySearch = createPropertyFilter(searchConfig.properties, searchConfig.canMatchAnyProperty);
+  const propertySearch = createPropertyFilter(searchConfig.properties);
 
-  const searchQuery = [textSearch, propertySearch]
-    .filter((search) => !!search)
-    .join(searchConfig.canMatchAnySubquery ? Operator.OR : Operator.AND);
+  const searchQuery = [textSearch, propertySearch].filter((search) => !!search).join(Operator.AND);
   return searchQuery;
+};
+
+export const createSearchConfigFromSearchParams = (params: URLSearchParams): SearchConfig => {
+  const query = params.get('query');
+  const filters = query?.split('AND').map((a) => a.trim());
+  if (!filters) {
+    return {};
+  }
+
+  const searchTermIndex = filters?.findIndex((filter) => filter && !filter.startsWith('(') && !filter.endsWith(')'));
+  const searchTerm = searchTermIndex !== undefined ? filters.splice(searchTermIndex, 1)[0] : '';
+
+  const properties: PropertySearch[] = filters.map((filter) => {
+    // Remove parentheses
+    const formattedFilter = filter.substring(1, filter.length - 1);
+    const [fieldName, value] = formattedFilter.split(':');
+
+    return {
+      fieldName,
+      value,
+    };
+  });
+
+  return { searchTerm, properties };
 };

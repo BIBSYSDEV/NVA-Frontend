@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { PageHeader } from '../../components/PageHeader';
 import { SearchBar } from '../../components/SearchBar';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
+import { createSearchConfigFromSearchParams } from '../../utils/searchHelpers';
 import { getSearchPath } from '../../utils/urlPaths';
 import { RegistrationTypeFilter } from './filters/RegistrationTypeFilter';
 import { RegistrationSearch } from './RegistrationSearch';
@@ -40,11 +41,15 @@ const StyledFilterHelperText = styled(Typography)`
 const SearchPage = () => {
   const { t } = useTranslation('common');
   const history = useHistory();
-  const searchTerm = new URLSearchParams(history.location.search).get('query') ?? '';
+  const params = new URLSearchParams(history.location.search);
+  // const searchTerm = new URLSearchParams(history.location.search).get('query') ?? '';
+
+  const searchParams = createSearchConfigFromSearchParams(params);
+  console.log(searchParams);
 
   const handleSearch = (searchTerm: string) => {
-    if (searchTerm.length) {
-      history.push(getSearchPath(searchTerm));
+    if (searchParams.searchTerm) {
+      history.push(getSearchPath(searchParams.searchTerm));
     }
   };
 
@@ -56,8 +61,8 @@ const SearchPage = () => {
           <StyledFilterHelperText>{t('select_filters')}</StyledFilterHelperText>
           <RegistrationTypeFilter />
         </StyledFilters>
-        <StyledSearchBar handleSearch={handleSearch} initialSearchTerm={searchTerm} />
-        <StyledRegistrationSearch searchConfig={{ searchTerm }} />
+        <StyledSearchBar handleSearch={handleSearch} initialSearchTerm={searchParams.searchTerm} />
+        <StyledRegistrationSearch searchConfig={{ searchTerm: searchParams.searchTerm }} />
       </StyledSearch>
     </StyledPageWrapperWithMaxWidth>
   );

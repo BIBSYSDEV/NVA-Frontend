@@ -5,7 +5,11 @@ import { ListSkeleton } from '../../components/ListSkeleton';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { SearchResults } from './SearchResults';
-import { SearchConfig } from '../../utils/searchHelpers';
+import { createSearchConfigFromSearchParams, SearchConfig } from '../../utils/searchHelpers';
+import { useLocation } from 'react-router-dom';
+import { SearchApiPath } from '../../api/apiPaths';
+import { SearchResult } from '../../types/search.types';
+import { useFetch } from '../../utils/hooks/useFetch';
 
 interface RegistrationSearchProps {
   searchConfig?: SearchConfig;
@@ -16,7 +20,16 @@ export const RegistrationSearch = ({ searchConfig, noHitsText, ...props }: Regis
   const { t } = useTranslation('common');
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[1]);
   const [page, setPage] = useState(0);
-  const [searchResults, isLoadingSearch] = useSearchRegistrations(searchConfig, rowsPerPage, page * rowsPerPage);
+  // const [searchResults, isLoadingSearch] = useSearchRegistrations(searchConfig, rowsPerPage, page * rowsPerPage);
+
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  params.set('results', rowsPerPage.toString());
+  params.set('from', (page * rowsPerPage).toString());
+  const paramsString = params.toString();
+
+  const url = `${SearchApiPath.Registrations}?${paramsString}`;
+  const [searchResults, isLoadingSearch] = useFetch<SearchResult>({ url });
 
   return (
     <div {...props}>
