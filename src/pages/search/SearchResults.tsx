@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { List, Typography } from '@material-ui/core';
+import { Divider, List, Typography } from '@material-ui/core';
 import { SearchResult } from '../../types/search.types';
 import { RegistrationListItem } from '../dashboard/RegistrationListItem';
 
@@ -11,19 +11,17 @@ const StyledSearchResults = styled.div`
 
 interface SearchResultsProps {
   searchResult: SearchResult;
-  searchTerm?: string;
 }
 
-export const SearchResults = ({ searchResult, searchTerm }: SearchResultsProps) => {
-  const { t } = useTranslation('common');
+export const SearchResults = ({ searchResult }: SearchResultsProps) => {
+  const { t } = useTranslation('search');
 
   const registrations = searchResult.hits;
 
   return (
     <StyledSearchResults data-testid="search-results">
-      {searchTerm && (
-        <Typography variant="subtitle1">{t('search_summary', { count: searchResult.total, searchTerm })}</Typography>
-      )}
+      <Typography variant="subtitle1">{t('hits', { count: searchResult.total })}:</Typography>
+      <Divider />
       <List>
         {registrations &&
           registrations.map((registration) => (
