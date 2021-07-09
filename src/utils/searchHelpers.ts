@@ -21,8 +21,8 @@ const createPropertyFilter = (properties?: PropertySearch[]) => {
 
   const propertyFilter = propertiesWithValues
     .map(({ fieldName, value }) => {
-      const valueString = Array.isArray(value) ? value.join(Operator.OR) : value;
-      return `(${fieldName}:"${valueString}")`;
+      const valueString = Array.isArray(value) ? value.map((v) => `"${v}"`).join(Operator.OR) : `"${value}"`;
+      return `(${fieldName}:${valueString})`;
     })
     .join(Operator.AND);
 
