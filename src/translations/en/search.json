@@ -1,0 +1,7 @@
+{
+  "hits": "{{count}} hit",
+  "hits_plural": "{{count}} hits",
+  "search": "Search",
+  "search_help": "Search for exact word matches, or use * to get all occurrences containing the string. Ex: \"Application\" or \"App*\"",
+  "select_filters": "Select filters to narrow down search:"
+}

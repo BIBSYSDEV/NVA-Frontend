@@ -64,7 +64,7 @@ const SearchPage = () => {
         <Form>
           <StyledSearch>
             <StyledFilters>
-              <StyledFilterHelperText>{t('select_filters')}</StyledFilterHelperText>
+              <StyledFilterHelperText>{t('search:select_filters')}</StyledFilterHelperText>
               <RegistrationTypeFilter />
             </StyledFilters>
             <StyledSearchBar />

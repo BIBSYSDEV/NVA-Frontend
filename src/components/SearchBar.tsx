@@ -11,7 +11,7 @@ const StyledTextField = styled(TextField)`
 `;
 
 export const SearchBar = (props: unknown) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('search');
 
   return (
     <Field name="searchTerm" {...props}>
@@ -24,6 +24,7 @@ export const SearchBar = (props: unknown) => {
           fullWidth
           variant="outlined"
           label={t('search')}
+          helperText={t('search_help')}
           InputProps={{
             endAdornment: (
               <IconButton type="submit" data-testid="search-button" title={t('search')}>

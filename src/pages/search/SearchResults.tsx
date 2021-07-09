@@ -14,7 +14,7 @@ interface SearchResultsProps {
 }
 
 export const SearchResults = ({ searchResult }: SearchResultsProps) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('search');
 
   const registrations = searchResult.hits;
 
