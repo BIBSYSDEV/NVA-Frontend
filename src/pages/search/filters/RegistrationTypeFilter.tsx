@@ -15,7 +15,6 @@ const StyledIndentedListItem = styled(ListItem)<{ $isSelected: boolean }>`
 export const RegistrationTypeFilter = () => {
   const { t } = useTranslation('publicationTypes');
   const { setFieldValue, submitForm, values } = useFormikContext<SearchConfig>();
-
   const currentValue = (values.properties?.length && values.properties[0].value) ?? '';
 
   const updateFilter = (type: string) => {
