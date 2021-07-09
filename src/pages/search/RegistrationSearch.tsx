@@ -20,8 +20,10 @@ export const RegistrationSearch = () => {
   params.set('from', (page * rowsPerPage).toString());
   const paramsString = params.toString();
 
-  const url = `${SearchApiPath.Registrations}?${paramsString}`;
-  const [searchResults, isLoadingSearch] = useFetch<SearchResult>({ url });
+  const [searchResults, isLoadingSearch] = useFetch<SearchResult>({
+    url: `${SearchApiPath.Registrations}?${paramsString}`,
+    errorMessage: t('feedback:error.search'),
+  });
 
   return (
     <div>

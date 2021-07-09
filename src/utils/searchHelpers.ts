@@ -13,8 +13,6 @@ enum Operator {
   OR = ' OR ',
 }
 
-const createSearchTermFilter = (searchTerm?: string) => searchTerm;
-
 const createPropertyFilter = (properties?: PropertySearch[]) => {
   const propertiesWithValues = properties?.filter(({ fieldName, value }) => fieldName && value);
   if (!propertiesWithValues || propertiesWithValues.length === 0) {
@@ -24,7 +22,7 @@ const createPropertyFilter = (properties?: PropertySearch[]) => {
   const propertyFilter = propertiesWithValues
     .map(({ fieldName, value }) => {
       const valueString = Array.isArray(value) ? value.join(Operator.OR) : value;
-      return `(${fieldName}:${valueString})`;
+      return `(${fieldName}:"${valueString}")`;
     })
     .join(Operator.AND);
 
@@ -32,7 +30,7 @@ const createPropertyFilter = (properties?: PropertySearch[]) => {
 };
 
 export const createSearchQuery = (searchConfig: SearchConfig) => {
-  const textSearch = createSearchTermFilter(searchConfig.searchTerm);
+  const textSearch = searchConfig.searchTerm;
   const propertySearch = createPropertyFilter(searchConfig.properties);
 
   const searchQuery = [textSearch, propertySearch].filter((search) => !!search).join(Operator.AND);
