@@ -24,6 +24,7 @@
   "go_to_page": "Gå til side {{page}}",
   "go_to_previous_page": "Gå til forrige side",
   "help": "Hjelp",
+  "hits": "{{count}} treff",
   "information": "Informasjon",
   "institution": "Institusjon",
   "institutions": "Institusjoner",

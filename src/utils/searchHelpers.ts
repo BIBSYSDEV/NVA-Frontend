@@ -5,8 +5,6 @@ interface PropertySearch {
 export interface SearchConfig {
   searchTerm?: string;
   properties?: PropertySearch[];
-  canMatchAnyProperty?: boolean; // Whether to use "OR" or "AND" operator for each property check
-  canMatchAnySubquery?: boolean; // Whether to use "OR" or "AND" operator for each subquery
 }
 
 // Since these Operators will be used in joins they must be enclosed by whitespaces
@@ -49,7 +47,7 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams): Sea
   }
 
   const searchTermIndex = filters?.findIndex((filter) => filter && !filter.startsWith('(') && !filter.endsWith(')'));
-  const searchTerm = searchTermIndex !== undefined ? filters.splice(searchTermIndex, 1)[0] : '';
+  const searchTerm = searchTermIndex >= 0 ? filters.splice(searchTermIndex, 1)[0] : '';
 
   const properties: PropertySearch[] = filters.map((filter) => {
     // Remove parentheses

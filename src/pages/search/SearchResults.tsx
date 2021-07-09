@@ -11,19 +11,16 @@ const StyledSearchResults = styled.div`
 
 interface SearchResultsProps {
   searchResult: SearchResult;
-  searchTerm?: string;
 }
 
-export const SearchResults = ({ searchResult, searchTerm }: SearchResultsProps) => {
+export const SearchResults = ({ searchResult }: SearchResultsProps) => {
   const { t } = useTranslation('common');
 
   const registrations = searchResult.hits;
 
   return (
     <StyledSearchResults data-testid="search-results">
-      {searchTerm && (
-        <Typography variant="subtitle1">{t('search_summary', { count: searchResult.total, searchTerm })}</Typography>
-      )}
+      <Typography variant="subtitle1">{t('hits', { count: searchResult.total })}</Typography>
       <List>
         {registrations &&
           registrations.map((registration) => (

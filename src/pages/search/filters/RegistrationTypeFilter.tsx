@@ -14,18 +14,14 @@ export const RegistrationTypeFilter = () => {
   const { t } = useTranslation('publicationTypes');
   const { setFieldValue, submitForm, values } = useFormikContext<SearchConfig>();
 
-  const currentValue = values.properties && values.properties[0].value;
+  const currentValue = (values.properties && values.properties.length && values.properties[0].value) ?? '';
 
   const updateFilter = (type: string) => {
-    if (currentValue !== type) {
-      const newFilter = {
-        fieldName: 'publicationType',
-        value: type,
-      };
-      setFieldValue('properties[0]', newFilter);
-    } else {
-      setFieldValue('properties[0]', '');
-    }
+    const newFilter = {
+      fieldName: 'publicationType',
+      value: currentValue !== type ? type : '',
+    };
+    setFieldValue('properties[0]', newFilter);
     submitForm();
   };
 
