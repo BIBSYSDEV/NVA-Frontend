@@ -4,6 +4,15 @@ import { LanguageValues } from '../language.types';
 import { BackendTypeNames, emptyDate } from './commonRegistration.types';
 import { emptyPagesRange, PagesRange } from './pages.types';
 
+export enum JournalArticleContentType {
+  ResearchArticle = 'Research article',
+  ReviewArticle = 'Review article',
+  CaseReport = 'Case report',
+  StudyProtocol = 'Study protocol',
+  ProfessionalArticle = 'Professional article',
+  PopularScienceArticle = 'Popular science article',
+}
+
 export interface JournalPublicationInstance {
   type: JournalType | '';
   articleNumber: string;
@@ -12,6 +21,7 @@ export interface JournalPublicationInstance {
   peerReviewed: boolean | null;
   volume: string;
   corrigendumFor: string;
+  content: JournalArticleContentType | null;
 }
 
 export interface JournalPublicationContext {
@@ -43,6 +53,7 @@ export const emptyJournalPublicationInstance: JournalPublicationInstance = {
   peerReviewed: null,
   volume: '',
   corrigendumFor: '',
+  content: null,
 };
 
 const emptyPublicationContext: JournalPublicationContext = {
