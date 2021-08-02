@@ -23,6 +23,7 @@ export const ContentTypeField = ({ options, extendedOnChange }: ContentTypeField
             data-testid={dataTestId.registrationWizard.resourceType.contentField}
             select
             variant="filled"
+            value={field.value ?? ''}
             onChange={(event) => {
               field.onChange(event);
               extendedOnChange?.(event.target.value);

@@ -142,7 +142,7 @@ export const JournalForm = () => {
                   value !== JournalArticleContentType.ResearchArticle &&
                   value !== JournalArticleContentType.ReviewArticle
                 ) {
-                  setFieldValue(ResourceFieldNames.PEER_REVIEW, false);
+                  setFieldValue(ResourceFieldNames.PEER_REVIEW, null);
                 }
               }}
             />
