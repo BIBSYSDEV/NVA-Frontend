@@ -3,6 +3,7 @@ import { Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface ContentTypeFieldProps {
   options: string[];
@@ -17,7 +18,7 @@ export const ContentTypeField = ({ options }: ContentTypeFieldProps) => {
         <StyledSelectWrapper>
           <TextField
             id={field.name}
-            // data-testid={dataTestId}
+            data-testid={dataTestId.registrationWizard.resourceType.contentField}
             select
             variant="filled"
             {...field}
@@ -27,7 +28,7 @@ export const ContentTypeField = ({ options }: ContentTypeFieldProps) => {
             error={!!error && touched}
             helperText={<ErrorMessage name={field.name} />}>
             {options.map((option) => (
-              <MenuItem value={option} key={option} /* data-testid={`${dataTestId}-${typeValue}`}*/>
+              <MenuItem value={option} key={option}>
                 {t(`resource_type.content_types.${option}`)}
               </MenuItem>
             ))}
