@@ -43,7 +43,9 @@ export const darkTheme = createTheme({
       },
     },
     MuiFormLabel: {
+      ...lightTheme.overrides?.MuiFormLabel,
       root: {
+        ...lightTheme.overrides?.MuiFormLabel?.root,
         '&.Mui-disabled': {
           color: Color.Black,
         },

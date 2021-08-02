@@ -8,12 +8,16 @@ import {
   ReportType,
 } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
+import { JournalArticleContentType } from '../../../types/publication_types/journalRegistration.types';
 
 export const invalidIsbnErrorMessage = i18n.t('feedback:validation.has_invalid_format', {
   field: i18n.t('registration:resource_type.isbn'),
 });
 
 const resourceErrorMessage = {
+  contentRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.content'),
+  }),
   corrigendumForRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.original_article'),
   }),
@@ -154,6 +158,10 @@ const journalPublicationInstance = Yup.object().shape({
         .url(resourceErrorMessage.corrigendumForInvalid)
         .required(resourceErrorMessage.corrigendumForRequired),
     }),
+  content: Yup.string()
+    .nullable()
+    .oneOf(Object.values(JournalArticleContentType), resourceErrorMessage.contentRequired)
+    .required(resourceErrorMessage.contentRequired),
 });
 
 const journalPublicationContext = Yup.object().shape({
