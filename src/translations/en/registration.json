@@ -138,6 +138,14 @@
       "published_in": "Published in",
       "search_for_anthology": "Search for the anthology where the chapter is published"
     },
+    "content_types": {
+      "Case report": "Case report",
+      "Popular science article": "Popular science article",
+      "Professional article": "Professional article",
+      "Research article": "Research article",
+      "Review article": "Review article",
+      "Study protocol": "Study protocol"
+    },
     "is_book_a_textbook": "Is the book a textbook?",
     "is_book_a_textbook_confirm": "Yes, the book is a textbook",
     "isbn": "ISBN",

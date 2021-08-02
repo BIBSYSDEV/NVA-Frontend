@@ -9,7 +9,7 @@ interface ContentTypeFieldProps {
 }
 
 export const ContentTypeField = ({ options }: ContentTypeFieldProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('registration');
 
   return (
     <Field name={ResourceFieldNames.CONTENT}>
@@ -21,14 +21,14 @@ export const ContentTypeField = ({ options }: ContentTypeFieldProps) => {
             select
             variant="filled"
             {...field}
-            label={t('INNHOLD')}
+            label={t('resource_type.content')}
             fullWidth
             required
             error={!!error && touched}
             helperText={<ErrorMessage name={field.name} />}>
             {options.map((option) => (
               <MenuItem value={option} key={option} /* data-testid={`${dataTestId}-${typeValue}`}*/>
-                {t(option)}
+                {t(`resource_type.content_types.${option}`)}
               </MenuItem>
             ))}
           </TextField>
