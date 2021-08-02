@@ -7,9 +7,10 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface ContentTypeFieldProps {
   options: string[];
+  extendedOnChange?: (value: string) => void;
 }
 
-export const ContentTypeField = ({ options }: ContentTypeFieldProps) => {
+export const ContentTypeField = ({ options, extendedOnChange }: ContentTypeFieldProps) => {
   const { t } = useTranslation('registration');
 
   return (
@@ -17,11 +18,15 @@ export const ContentTypeField = ({ options }: ContentTypeFieldProps) => {
       {({ field, meta: { error, touched } }: FieldProps) => (
         <StyledSelectWrapper>
           <TextField
+            {...field}
             id={field.name}
             data-testid={dataTestId.registrationWizard.resourceType.contentField}
             select
             variant="filled"
-            {...field}
+            onChange={(event) => {
+              field.onChange(event);
+              extendedOnChange?.(event.target.value);
+            }}
             label={t('resource_type.content')}
             fullWidth
             required

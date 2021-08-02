@@ -33,7 +33,7 @@ const StyledLabel = styled(Typography)`
 
 export const JournalForm = () => {
   const { t } = useTranslation('registration');
-  const { values } = useFormikContext<JournalRegistration>();
+  const { values, setFieldValue } = useFormikContext<JournalRegistration>();
   const {
     reference: { publicationContext, publicationInstance },
   } = values.entityDescription;
@@ -135,7 +135,17 @@ export const JournalForm = () => {
       {publicationInstance.type === JournalType.ARTICLE && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-            <ContentTypeField options={Object.values(JournalArticleContentType)} />
+            <ContentTypeField
+              options={Object.values(JournalArticleContentType)}
+              extendedOnChange={(value) => {
+                if (
+                  value !== JournalArticleContentType.ResearchArticle &&
+                  value !== JournalArticleContentType.ReviewArticle
+                ) {
+                  setFieldValue(ResourceFieldNames.PEER_REVIEW, false);
+                }
+              }}
+            />
             {(publicationInstance.content === JournalArticleContentType.ResearchArticle ||
               publicationInstance.content === JournalArticleContentType.ReviewArticle) && <PeerReviewedField />}
           </BackgroundDiv>
