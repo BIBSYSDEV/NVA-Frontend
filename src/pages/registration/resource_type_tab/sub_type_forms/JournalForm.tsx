@@ -136,7 +136,8 @@ export const JournalForm = () => {
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
             <ContentTypeField options={Object.values(JournalArticleContentType)} />
-            <PeerReviewedField />
+            {(publicationInstance.content === JournalArticleContentType.ResearchArticle ||
+              publicationInstance.content === JournalArticleContentType.ReviewArticle) && <PeerReviewedField />}
           </BackgroundDiv>
           <NviValidation
             isPeerReviewed={!!publicationInstance.peerReviewed}
