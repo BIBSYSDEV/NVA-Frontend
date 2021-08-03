@@ -39,6 +39,11 @@ const StyledRadioGroup = styled.div`
     grid-template-columns: 1fr;
     row-gap: 0.5rem;
   }
+
+  legend {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
 `;
 
 const StyledLabel = styled(Typography)`
