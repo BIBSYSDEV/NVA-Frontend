@@ -49,7 +49,7 @@ export const JournalForm = () => {
         {publicationInstance.type === JournalType.CORRIGENDUM ? (
           <SearchContainerField
             fieldName={ResourceFieldNames.CORRIGENDUM_FOR}
-            searchSubtypes={[JournalType.ARTICLE, JournalType.SHORT_COMMUNICATION]}
+            searchSubtypes={[JournalType.ARTICLE]}
             label={t('resource_type.original_article_title')}
             placeholder={t('resource_type.search_for_original_article')}
             dataTestId="article-search-field"

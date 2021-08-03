@@ -21,7 +21,6 @@ import { SelectTypeField } from './resource_type_tab/components/SelectTypeField'
 import { DegreeTypeForm } from './resource_type_tab/DegreeTypeForm';
 import { JournalTypeForm } from './resource_type_tab/JournalTypeForm';
 import { ReportTypeForm } from './resource_type_tab/ReportTypeForm';
-import { isJournalTypeWithPeerReview } from '../../utils/registration-helpers';
 
 export const ResourceTypePanel = () => {
   const { values, setTouched, setFieldValue, touched } = useFormikContext<Registration>();
@@ -59,9 +58,11 @@ export const ResourceTypePanel = () => {
   };
 
   const onChangeSubType = (newInstanceType: string) => {
-    const newValues = isJournalTypeWithPeerReview(newInstanceType)
-      ? { ...values.entityDescription.reference.publicationInstance, type: newInstanceType }
-      : { ...values.entityDescription.reference.publicationInstance, type: newInstanceType, peerReviewed: undefined };
+    const newValues = {
+      ...values.entityDescription.reference.publicationInstance,
+      type: newInstanceType,
+      peerReviewed: undefined,
+    };
 
     setFieldValue(instanceTypeBaseFieldName, newValues, false);
   };
