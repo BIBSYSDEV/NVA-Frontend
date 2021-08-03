@@ -10,19 +10,19 @@ import {
   RadioGroup,
   Typography,
 } from '@material-ui/core';
-import { Registration } from '../../../../types/registration.types';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { dataTestId } from '../../../../utils/dataTestIds';
+import { Registration } from '../../../../../types/registration.types';
+import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
+import { dataTestId } from '../../../../../utils/dataTestIds';
 
-export const PeerReviewedField = () => {
+export const OriginalResearchField = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 
   return (
-    <Field name={ResourceFieldNames.PEER_REVIEW}>
+    <Field name={ResourceFieldNames.OriginalResearch}>
       {({ field: { name, value } }: FieldProps<boolean | null>) => (
-        <FormControl data-testid={dataTestId.registrationWizard.resourceType.peerReviewed} required>
-          <FormLabel component="legend">{t('resource_type.peer_review')}</FormLabel>
+        <FormControl data-testid={dataTestId.registrationWizard.resourceType.originalResearchField} required>
+          <FormLabel component="legend">{t('resource_type.presents_original_research_label')}</FormLabel>
           <RadioGroup
             value={value === true ? 'true' : value === false ? 'false' : ''}
             onChange={(event) => setFieldValue(name, event.target.value === 'true')}>

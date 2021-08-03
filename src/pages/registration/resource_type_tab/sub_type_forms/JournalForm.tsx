@@ -10,14 +10,13 @@ import { JournalRegistration } from '../../../../types/registration.types';
 import { DoiField } from '../components/DoiField';
 import { JournalField } from '../components/JournalField';
 import { NviValidation } from '../components/NviValidation';
-import { PeerReviewedField } from '../components/PeerReviewedField';
 import { SearchContainerField } from '../components/SearchContainerField';
 import { ContentTypeField } from '../components/ContentTypeField';
 import {
   JournalArticleContentType,
   journalArticleContentTypes,
 } from '../../../../types/publication_types/journalRegistration.types';
-import { OriginalResearchField } from '../components/OriginalResearchField';
+import { NviFields } from '../components/nvi_fields/NviFields';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -26,23 +25,6 @@ const StyledArticleDetail = styled.div`
   align-content: center;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     grid-template-areas: 'volume' 'issue' 'from' 'to' 'or' 'article';
-  }
-`;
-
-const StyledRadioGroup = styled.div`
-  margin-top: 1rem;
-  display: grid;
-  grid-template-columns: auto auto;
-  column-gap: 2rem;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-columns: 1fr;
-    row-gap: 0.5rem;
-  }
-
-  legend {
-    font-size: 1.25rem;
-    font-weight: 700;
   }
 `;
 
@@ -171,12 +153,7 @@ export const JournalForm = () => {
               }}
             />
             {(publicationInstance.content === JournalArticleContentType.ResearchArticle ||
-              publicationInstance.content === JournalArticleContentType.ReviewArticle) && (
-              <StyledRadioGroup>
-                <PeerReviewedField />
-                <OriginalResearchField />
-              </StyledRadioGroup>
-            )}
+              publicationInstance.content === JournalArticleContentType.ReviewArticle) && <NviFields />}
           </BackgroundDiv>
           <NviValidation
             isPeerReviewed={!!publicationInstance.peerReviewed}

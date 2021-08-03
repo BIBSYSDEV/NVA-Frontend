@@ -12,7 +12,7 @@ import { BookType, ChapterType, ResourceFieldNames } from '../../../../types/pub
 import { ChapterRegistration } from '../../../../types/registration.types';
 import { DoiField } from '../components/DoiField';
 import { NviValidation } from '../components/NviValidation';
-import { PeerReviewedField } from '../components/PeerReviewedField';
+import { PeerReviewedField } from '../components/nvi_fields/PeerReviewedField';
 import { SearchContainerField } from '../components/SearchContainerField';
 
 const StyledDiv = styled(StyledCenterAlignedContentWrapper)`
