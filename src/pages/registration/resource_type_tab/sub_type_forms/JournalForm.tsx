@@ -33,7 +33,7 @@ const StyledRadioGroup = styled.div`
   margin-top: 1rem;
   display: grid;
   grid-template-columns: auto auto;
-  column-gap: 1rem;
+  column-gap: 2rem;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     grid-template-columns: 1fr;
@@ -54,7 +54,7 @@ const StyledLabel = styled(Typography)`
 
 export const JournalForm = () => {
   const { t } = useTranslation('registration');
-  const { values, setFieldValue } = useFormikContext<JournalRegistration>();
+  const { values, setFieldValue, setFieldTouched } = useFormikContext<JournalRegistration>();
   const {
     reference: { publicationContext, publicationInstance },
   } = values.entityDescription;
@@ -165,6 +165,8 @@ export const JournalForm = () => {
                 ) {
                   setFieldValue(ResourceFieldNames.PEER_REVIEW, null);
                   setFieldValue(ResourceFieldNames.OriginalResearch, null);
+                  setFieldTouched(ResourceFieldNames.PEER_REVIEW, false);
+                  setFieldTouched(ResourceFieldNames.OriginalResearch, false);
                 }
               }}
             />
