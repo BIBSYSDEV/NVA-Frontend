@@ -138,6 +138,15 @@
       "published_in": "Publisert i",
       "search_for_anthology": "Søk etter antologien hvor kapittelet er publisert"
     },
+    "content": "Innhold",
+    "journal_content_types": {
+      "Case report": "Kauistikk",
+      "Popular science article": "Popularvitenskapelig artikkel",
+      "Professional article": "Fagartikkel",
+      "Research article": "Forskningsartikkel",
+      "Review article": "Oversiktsartikkel",
+      "Study protocol": "Studieprotokoll"
+    },
     "is_book_a_textbook": "Er boken en lærebok?",
     "is_book_a_textbook_confirm": "Ja, boken er en lærebok",
     "isbn": "ISBN",

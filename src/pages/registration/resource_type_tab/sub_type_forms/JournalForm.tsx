@@ -12,6 +12,11 @@ import { JournalField } from '../components/JournalField';
 import { NviValidation } from '../components/NviValidation';
 import { PeerReviewedField } from '../components/PeerReviewedField';
 import { SearchContainerField } from '../components/SearchContainerField';
+import { ContentTypeField } from '../components/ContentTypeField';
+import {
+  JournalArticleContentType,
+  journalArticleContentTypes,
+} from '../../../../types/publication_types/journalRegistration.types';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -31,7 +36,7 @@ const StyledLabel = styled(Typography)`
 
 export const JournalForm = () => {
   const { t } = useTranslation('registration');
-  const { values } = useFormikContext<JournalRegistration>();
+  const { values, setFieldValue } = useFormikContext<JournalRegistration>();
   const {
     reference: { publicationContext, publicationInstance },
   } = values.entityDescription;
@@ -130,11 +135,22 @@ export const JournalForm = () => {
         </StyledArticleDetail>
       </BackgroundDiv>
 
-      {(publicationInstance.type === JournalType.ARTICLE ||
-        publicationInstance.type === JournalType.SHORT_COMMUNICATION) && (
+      {publicationInstance.type === JournalType.ARTICLE && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-            <PeerReviewedField />
+            <ContentTypeField
+              options={journalArticleContentTypes}
+              extendedOnChange={(value) => {
+                if (
+                  value !== JournalArticleContentType.ResearchArticle &&
+                  value !== JournalArticleContentType.ReviewArticle
+                ) {
+                  setFieldValue(ResourceFieldNames.PEER_REVIEW, null);
+                }
+              }}
+            />
+            {(publicationInstance.content === JournalArticleContentType.ResearchArticle ||
+              publicationInstance.content === JournalArticleContentType.ReviewArticle) && <PeerReviewedField />}
           </BackgroundDiv>
           <NviValidation
             isPeerReviewed={!!publicationInstance.peerReviewed}

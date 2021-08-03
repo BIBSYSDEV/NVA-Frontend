@@ -1,4 +1,5 @@
 import { dataTestId } from '../../src/utils/dataTestIds';
+import { JournalArticleContentType } from '../../src/types/publication_types/journalRegistration.types';
 
 describe('User opens registration form and can see validation errors', () => {
   before('Given that the user is logged in as Creator:', () => {
@@ -83,6 +84,12 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=pages-to-field] p.Mui-error').should('be.visible');
     cy.get('[data-testid=pages-to-field] input').type('0');
     cy.get('[data-testid=article-number-field] input').type('{backspace}{backspace}1');
+
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}] p.Mui-error`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}]`).click();
+    cy.get(`[data-value="${JournalArticleContentType.ResearchArticle}"]`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}] p.Mui-error`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).eq(0).click();
 
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
