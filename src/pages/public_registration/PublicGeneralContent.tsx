@@ -52,7 +52,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   } = registration.entityDescription;
 
   const journalPublicationInstance = publicationInstance as JournalPublicationInstance;
-  const { content, peerReviewed } = journalPublicationInstance;
+  const { content, peerReviewed, originalResearch } = journalPublicationInstance;
 
   return (
     <StyledGeneralInfo>
@@ -62,6 +62,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         {content && <Typography>{t(`resource_type.journal_content_types.${content}`)}</Typography>}
 
         {peerReviewed && <Typography>{t('resource_type.peer_reviewed')}</Typography>}
+
+        {originalResearch && <Typography>{t('resource_type.presents_original_research')}</Typography>}
 
         {language && (
           <Typography>

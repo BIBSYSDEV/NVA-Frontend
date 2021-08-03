@@ -33,10 +33,11 @@ const StyledRadioGroup = styled.div`
   margin-top: 1rem;
   display: grid;
   grid-template-columns: auto auto;
-  grid-column-gap: 1rem;
+  column-gap: 1rem;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     grid-template-columns: 1fr;
+    row-gap: 0.5rem;
   }
 `;
 

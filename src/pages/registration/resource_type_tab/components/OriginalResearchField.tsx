@@ -16,7 +16,7 @@ export const OriginalResearchField = () => {
         <>
           <FormControl data-testid={dataTestId.registrationWizard.resourceType.originalResearchField}>
             <Typography variant="h5" color="primary" component="legend">
-              {t('resource_type.presents_original_research')}
+              {t('resource_type.presents_original_research_label')}
             </Typography>
             <RadioGroup
               value={value === true ? 'true' : value === false ? 'false' : ''}
