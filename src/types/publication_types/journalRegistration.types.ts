@@ -3,6 +3,7 @@ import { PublicationType, JournalType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { BackendTypeNames, emptyDate } from './commonRegistration.types';
 import { emptyPagesRange, PagesRange } from './pages.types';
+import i18n from '../../translations/i18n';
 
 export enum JournalArticleContentType {
   ResearchArticle = 'Research article',
@@ -12,6 +13,18 @@ export enum JournalArticleContentType {
   ProfessionalArticle = 'Professional article',
   PopularScienceArticle = 'Popular science article',
 }
+
+export interface ContentTypeOption {
+  value: string;
+  text: string;
+}
+
+export const journalArticleContentTypes: ContentTypeOption[] = Object.values(JournalArticleContentType).map(
+  (value) => ({
+    value,
+    text: i18n.t(`registration:resource_type.journal_content_types.${value}`),
+  })
+);
 
 export interface JournalPublicationInstance {
   type: JournalType | '';

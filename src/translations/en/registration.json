@@ -138,7 +138,8 @@
       "published_in": "Published in",
       "search_for_anthology": "Search for the anthology where the chapter is published"
     },
-    "content_types": {
+    "content": "Content",
+    "journal_content_types": {
       "Case report": "Case report",
       "Popular science article": "Popular science article",
       "Professional article": "Professional article",

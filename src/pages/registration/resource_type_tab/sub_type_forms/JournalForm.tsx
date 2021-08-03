@@ -13,7 +13,10 @@ import { NviValidation } from '../components/NviValidation';
 import { PeerReviewedField } from '../components/PeerReviewedField';
 import { SearchContainerField } from '../components/SearchContainerField';
 import { ContentTypeField } from '../components/ContentTypeField';
-import { JournalArticleContentType } from '../../../../types/publication_types/journalRegistration.types';
+import {
+  JournalArticleContentType,
+  journalArticleContentTypes,
+} from '../../../../types/publication_types/journalRegistration.types';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -136,7 +139,7 @@ export const JournalForm = () => {
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
             <ContentTypeField
-              options={Object.values(JournalArticleContentType)}
+              options={journalArticleContentTypes}
               extendedOnChange={(value) => {
                 if (
                   value !== JournalArticleContentType.ResearchArticle &&

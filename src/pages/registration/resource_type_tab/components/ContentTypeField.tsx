@@ -3,10 +3,11 @@ import { Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { ContentTypeOption } from '../../../../types/publication_types/journalRegistration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface ContentTypeFieldProps {
-  options: string[];
+  options: ContentTypeOption[];
   extendedOnChange?: (value: string) => void;
 }
 
@@ -33,9 +34,9 @@ export const ContentTypeField = ({ options, extendedOnChange }: ContentTypeField
             required
             error={!!error && touched}
             helperText={<ErrorMessage name={field.name} />}>
-            {options.map((option) => (
-              <MenuItem value={option} key={option}>
-                {t(`resource_type.content_types.${option}`)}
+            {options.map(({ value, text }) => (
+              <MenuItem value={value} key={value}>
+                {text}
               </MenuItem>
             ))}
           </TextField>

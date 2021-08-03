@@ -51,15 +51,15 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
     reference: { publicationContext, publicationInstance },
   } = registration.entityDescription;
 
-  const content = (publicationInstance as JournalPublicationInstance).content;
-  const peerReviewed = (publicationInstance as JournalPublicationInstance).peerReviewed;
+  const journalPublicationInstance = publicationInstance as JournalPublicationInstance;
+  const { content, peerReviewed } = journalPublicationInstance;
 
   return (
     <StyledGeneralInfo>
       <div>
         <Typography variant="overline">{t('public_page.about_registration')}</Typography>
 
-        {content && <Typography>{t(`resource_type.content_types.${content}`)}</Typography>}
+        {content && <Typography>{t(`resource_type.journal_content_types.${content}`)}</Typography>}
 
         {peerReviewed && <Typography>{t('resource_type.peer_reviewed')}</Typography>}
 
@@ -88,13 +88,13 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         {isJournal(registration) ? (
           <>
             <PublicJournalContent date={date} publicationContext={publicationContext as JournalPublicationContext} />
-            <PublicPublicationInstanceJournal publicationInstance={publicationInstance as JournalPublicationInstance} />
+            <PublicPublicationInstanceJournal publicationInstance={journalPublicationInstance} />
             {publicationInstance.type === JournalType.CORRIGENDUM && (
               <>
                 <Typography variant="overline" component="p">
                   {t('resource_type.original_article')}
                 </Typography>
-                <RegistrationSummary id={(publicationInstance as JournalPublicationInstance).corrigendumFor} />
+                <RegistrationSummary id={journalPublicationInstance.corrigendumFor} />
               </>
             )}
           </>

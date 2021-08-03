@@ -139,7 +139,7 @@
       "search_for_anthology": "Søk etter antologien hvor kapittelet er publisert"
     },
     "content": "Innhold",
-    "content_types": {
+    "journal_content_types": {
       "Case report": "Kauistikk",
       "Popular science article": "Popularvitenskapelig artikkel",
       "Professional article": "Fagartikkel",
