@@ -1,18 +1,27 @@
 import { TextField, MenuItem } from '@material-ui/core';
-import { Field, FieldProps, ErrorMessage } from 'formik';
+import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { ContentTypeOption } from '../../../../types/publication_types/journalRegistration.types';
+import {
+  ContentTypeOption,
+  JournalArticleContentType,
+} from '../../../../types/publication_types/journalRegistration.types';
+import { Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface ContentTypeFieldProps {
   options: ContentTypeOption[];
-  extendedOnChange?: (value: string) => void;
 }
 
-export const ContentTypeField = ({ options, extendedOnChange }: ContentTypeFieldProps) => {
+export const nviCompatibleContents: string[] = [
+  JournalArticleContentType.ResearchArticle,
+  JournalArticleContentType.ReviewArticle,
+];
+
+export const ContentTypeField = ({ options }: ContentTypeFieldProps) => {
   const { t } = useTranslation('registration');
+  const { setFieldValue, setFieldTouched } = useFormikContext<Registration>();
 
   return (
     <Field name={ResourceFieldNames.CONTENT}>
@@ -27,7 +36,12 @@ export const ContentTypeField = ({ options, extendedOnChange }: ContentTypeField
             value={field.value ?? ''}
             onChange={(event) => {
               field.onChange(event);
-              extendedOnChange?.(event.target.value);
+              if (nviCompatibleContents.includes(event.target.value)) {
+                setFieldValue(ResourceFieldNames.PEER_REVIEW, null);
+                setFieldValue(ResourceFieldNames.OriginalResearch, null);
+                setFieldTouched(ResourceFieldNames.PEER_REVIEW, false);
+                setFieldTouched(ResourceFieldNames.OriginalResearch, false);
+              }
             }}
             label={t('resource_type.content')}
             fullWidth
