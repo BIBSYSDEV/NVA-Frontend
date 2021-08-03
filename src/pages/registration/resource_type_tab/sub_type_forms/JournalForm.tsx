@@ -17,6 +17,7 @@ import {
   JournalArticleContentType,
   journalArticleContentTypes,
 } from '../../../../types/publication_types/journalRegistration.types';
+import { OriginalResearchField } from '../components/OriginalResearchField';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -25,6 +26,17 @@ const StyledArticleDetail = styled.div`
   align-content: center;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     grid-template-areas: 'volume' 'issue' 'from' 'to' 'or' 'article';
+  }
+`;
+
+const StyledRadioGroup = styled.div`
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 1rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-columns: 1fr;
   }
 `;
 
@@ -146,11 +158,17 @@ export const JournalForm = () => {
                   value !== JournalArticleContentType.ReviewArticle
                 ) {
                   setFieldValue(ResourceFieldNames.PEER_REVIEW, null);
+                  setFieldValue(ResourceFieldNames.OriginalResearch, null);
                 }
               }}
             />
             {(publicationInstance.content === JournalArticleContentType.ResearchArticle ||
-              publicationInstance.content === JournalArticleContentType.ReviewArticle) && <PeerReviewedField />}
+              publicationInstance.content === JournalArticleContentType.ReviewArticle) && (
+              <StyledRadioGroup>
+                <PeerReviewedField />
+                <OriginalResearchField />
+              </StyledRadioGroup>
+            )}
           </BackgroundDiv>
           <NviValidation
             isPeerReviewed={!!publicationInstance.peerReviewed}

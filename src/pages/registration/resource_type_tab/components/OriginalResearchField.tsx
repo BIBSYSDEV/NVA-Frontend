@@ -6,17 +6,17 @@ import { Registration } from '../../../../types/registration.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../utils/dataTestIds';
 
-export const PeerReviewedField = () => {
+export const OriginalResearchField = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 
   return (
-    <Field name={ResourceFieldNames.PEER_REVIEW}>
+    <Field name={ResourceFieldNames.OriginalResearch}>
       {({ field: { name, value } }: FieldProps<boolean | null>) => (
         <>
-          <FormControl data-testid={dataTestId.registrationWizard.resourceType.peerReviewed}>
+          <FormControl data-testid={dataTestId.registrationWizard.resourceType.originalResearchField}>
             <Typography variant="h5" color="primary" component="legend">
-              {t('resource_type.peer_review')}
+              {t('resource_type.presents_original_research')}
             </Typography>
             <RadioGroup
               value={value === true ? 'true' : value === false ? 'false' : ''}

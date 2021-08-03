@@ -169,6 +169,7 @@
     "pages_to": "to",
     "peer_review": "Is peer reviewed?",
     "peer_reviewed": "Peer reviewed",
+    "presents_original_research": "Presents new original research?",
     "remove": "Remove",
     "remove_doi": "Remove DOI",
     "remove_doi_text": "You can remove the DOI that was used when starting registration.\nDo you wish to remove connection to the original DOI?",

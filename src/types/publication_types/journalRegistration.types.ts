@@ -35,6 +35,7 @@ export interface JournalPublicationInstance {
   volume: string;
   corrigendumFor: string;
   content: JournalArticleContentType | null;
+  originalResearch: boolean | null;
 }
 
 export interface JournalPublicationContext {
@@ -67,6 +68,7 @@ export const emptyJournalPublicationInstance: JournalPublicationInstance = {
   volume: '',
   corrigendumFor: '',
   content: null,
+  originalResearch: null,
 };
 
 const emptyPublicationContext: JournalPublicationContext = {
