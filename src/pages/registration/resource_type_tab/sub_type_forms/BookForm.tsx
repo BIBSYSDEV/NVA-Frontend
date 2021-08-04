@@ -36,7 +36,7 @@ export const BookForm = () => {
   const {
     reference: {
       publicationContext,
-      publicationInstance: { peerReviewed, type, content },
+      publicationInstance: { peerReviewed, type, contentType },
     },
   } = values.entityDescription;
 
@@ -59,7 +59,7 @@ export const BookForm = () => {
       {type === BookType.MONOGRAPH && (
         <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
           <ContentTypeField options={bookMonographContentTypes} />
-          {nviApplicableContentTypes.includes(content as string) && <NviFields />}
+          {nviApplicableContentTypes.includes(contentType as string) && <NviFields />}
         </BackgroundDiv>
       )}
 
@@ -73,7 +73,7 @@ export const BookForm = () => {
         <NviValidation
           isPeerReviewed={!!peerReviewed}
           isRated={!!publicationContext?.level}
-          isTextbook={nviApplicableContentTypes.includes(content as string)}
+          isTextbook={nviApplicableContentTypes.includes(contentType as string)}
           dataTestId="nvi_book"
         />
       )}

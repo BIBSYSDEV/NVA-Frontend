@@ -65,7 +65,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     const {
       reference: { publicationContext, publicationInstance },
     } = values.entityDescription;
-    const content = 'content' in publicationInstance ? publicationInstance.content : null;
+    const content = 'contentType' in publicationInstance ? publicationInstance.contentType : null;
 
     try {
       validateYupSchema<Registration>(values, registrationValidationSchema, true, {

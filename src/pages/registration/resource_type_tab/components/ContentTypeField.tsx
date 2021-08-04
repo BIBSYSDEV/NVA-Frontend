@@ -16,7 +16,7 @@ export const ContentTypeField = ({ options }: ContentTypeFieldProps) => {
   const { setFieldValue, setFieldTouched } = useFormikContext<Registration>();
 
   return (
-    <Field name={ResourceFieldNames.CONTENT}>
+    <Field name={ResourceFieldNames.ContentType}>
       {({ field, meta: { error, touched } }: FieldProps) => (
         <StyledSelectWrapper>
           <TextField

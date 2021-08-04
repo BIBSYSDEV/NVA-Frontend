@@ -6,7 +6,7 @@ import { BookMonographContentType } from './content.types';
 export interface BookPublicationInstance {
   type: BookType | '';
   pages: PagesMonograph | null;
-  content: BookMonographContentType | null;
+  contentType: BookMonographContentType | null;
   peerReviewed: boolean | null;
   originalResearch: boolean | null;
 }
@@ -14,7 +14,7 @@ export interface BookPublicationInstance {
 export const emptyBookPublicationInstance: BookPublicationInstance = {
   type: '',
   pages: emptyPagesMonograph,
-  content: null,
+  contentType: null,
   peerReviewed: null,
   originalResearch: null,
 };

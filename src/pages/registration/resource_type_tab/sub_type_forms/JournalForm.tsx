@@ -139,7 +139,7 @@ export const JournalForm = () => {
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
             <ContentTypeField options={journalArticleContentTypes} />
-            {nviApplicableContentTypes.includes(publicationInstance.content as string) && <NviFields />}
+            {nviApplicableContentTypes.includes(publicationInstance.contentType as string) && <NviFields />}
           </BackgroundDiv>
           <NviValidation
             isPeerReviewed={!!publicationInstance.peerReviewed}

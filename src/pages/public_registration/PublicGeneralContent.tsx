@@ -52,14 +52,14 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   } = registration.entityDescription;
 
   const journalPublicationInstance = publicationInstance as JournalPublicationInstance;
-  const { content, peerReviewed, originalResearch } = journalPublicationInstance;
+  const { contentType, peerReviewed, originalResearch } = journalPublicationInstance;
 
   return (
     <StyledGeneralInfo>
       <div>
         <Typography variant="overline">{t('public_page.about_registration')}</Typography>
 
-        {content && <Typography>{t(`resource_type.journal_content_types.${content}`)}</Typography>}
+        {contentType && <Typography>{t(`resource_type.journal_content_types.${contentType}`)}</Typography>}
 
         {peerReviewed && <Typography>{t('resource_type.peer_reviewed')}</Typography>}
 
