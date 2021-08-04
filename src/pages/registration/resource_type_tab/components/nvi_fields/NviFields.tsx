@@ -13,6 +13,7 @@ const StyledRadioGroup = styled.div`
     row-gap: 0.5rem;
   }
 
+  // Style label/heading for Radio Group
   legend {
     font-size: 1.25rem;
     font-weight: 700;

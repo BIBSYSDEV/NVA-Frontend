@@ -5,7 +5,7 @@ import { StyledSelectWrapper } from '../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import {
   ContentTypeOption,
-  JournalArticleContentType,
+  nviCompatibleContentTypes,
 } from '../../../../types/publication_types/journalRegistration.types';
 import { Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
@@ -13,11 +13,6 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 interface ContentTypeFieldProps {
   options: ContentTypeOption[];
 }
-
-export const nviCompatibleContents: string[] = [
-  JournalArticleContentType.ResearchArticle,
-  JournalArticleContentType.ReviewArticle,
-];
 
 export const ContentTypeField = ({ options }: ContentTypeFieldProps) => {
   const { t } = useTranslation('registration');
@@ -36,7 +31,7 @@ export const ContentTypeField = ({ options }: ContentTypeFieldProps) => {
             value={field.value ?? ''}
             onChange={(event) => {
               field.onChange(event);
-              if (nviCompatibleContents.includes(event.target.value)) {
+              if (nviCompatibleContentTypes.includes(event.target.value)) {
                 setFieldValue(ResourceFieldNames.PEER_REVIEW, null);
                 setFieldValue(ResourceFieldNames.OriginalResearch, null);
                 setFieldTouched(ResourceFieldNames.PEER_REVIEW, false);

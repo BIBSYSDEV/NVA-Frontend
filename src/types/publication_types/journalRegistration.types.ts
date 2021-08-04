@@ -14,6 +14,11 @@ export enum JournalArticleContentType {
   PopularScienceArticle = 'Popular science article',
 }
 
+export const nviCompatibleContentTypes: string[] = [
+  JournalArticleContentType.ResearchArticle,
+  JournalArticleContentType.ReviewArticle,
+];
+
 export interface ContentTypeOption {
   value: string;
   text: string;
