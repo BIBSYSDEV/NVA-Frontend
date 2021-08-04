@@ -135,6 +135,7 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
               volume: true,
               corrigendumFor: true,
               content: true,
+              originalResearch: true,
             },
           },
         },

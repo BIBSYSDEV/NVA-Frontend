@@ -144,7 +144,7 @@
       "Popular science article": "Popularvitenskapelig artikkel",
       "Professional article": "Fagartikkel",
       "Research article": "Forskningsartikkel",
-      "Review article": "Oversiktsartikkel",
+      "Review article": "Vitenskapelig oversiktsartikkel",
       "Study protocol": "Studieprotokoll"
     },
     "is_book_a_textbook": "Er boken en lærebok?",
@@ -169,6 +169,8 @@
     "pages_to": "til",
     "peer_review": "Er fagfellevurdert?",
     "peer_reviewed": "Fagfellevurdert",
+    "presents_original_research": "Presenterer ny original forskning",
+    "presents_original_research_label": "Presenterer ny original forskning?",
     "remove": "Fjern",
     "remove_doi": "Fjern DOI",
     "remove_doi_text": "Du kan fjerne DOI som ble brukt ved registreringsstart.\nØnsker du å fjerne kobling til original DOI?",

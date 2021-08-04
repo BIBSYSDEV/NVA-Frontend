@@ -45,11 +45,10 @@ export const darkTheme = createTheme({
     MuiFormLabel: {
       ...lightTheme.overrides?.MuiFormLabel,
       root: {
-        ...lightTheme.overrides?.MuiFormLabel?.root,
+        color: Color.White,
+      },
+      filled: {
         '&.Mui-disabled': {
-          color: Color.Black,
-        },
-        '&.Mui-focused:not(.Mui-error)': {
           color: Color.Black,
         },
       },
@@ -66,6 +65,17 @@ export const darkTheme = createTheme({
       root: {
         ...lightTheme.overrides?.MuiInputLabel?.root,
         color: Color.Black,
+        '&.Mui-focused': {
+          color: Color.Black,
+        },
+        '&.Mui-error': {
+          color: Color.ErrorMain,
+        },
+      },
+      asterisk: {
+        '&.Mui-error': {
+          color: Color.ErrorMain,
+        },
       },
     },
     MuiLink: {

@@ -10,13 +10,13 @@ import { JournalRegistration } from '../../../../types/registration.types';
 import { DoiField } from '../components/DoiField';
 import { JournalField } from '../components/JournalField';
 import { NviValidation } from '../components/NviValidation';
-import { PeerReviewedField } from '../components/PeerReviewedField';
 import { SearchContainerField } from '../components/SearchContainerField';
 import { ContentTypeField } from '../components/ContentTypeField';
 import {
-  JournalArticleContentType,
   journalArticleContentTypes,
+  nviCompatibleContentTypes,
 } from '../../../../types/publication_types/journalRegistration.types';
+import { NviFields } from '../components/nvi_fields/NviFields';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -36,7 +36,7 @@ const StyledLabel = styled(Typography)`
 
 export const JournalForm = () => {
   const { t } = useTranslation('registration');
-  const { values, setFieldValue } = useFormikContext<JournalRegistration>();
+  const { values } = useFormikContext<JournalRegistration>();
   const {
     reference: { publicationContext, publicationInstance },
   } = values.entityDescription;
@@ -138,19 +138,8 @@ export const JournalForm = () => {
       {publicationInstance.type === JournalType.ARTICLE && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-            <ContentTypeField
-              options={journalArticleContentTypes}
-              extendedOnChange={(value) => {
-                if (
-                  value !== JournalArticleContentType.ResearchArticle &&
-                  value !== JournalArticleContentType.ReviewArticle
-                ) {
-                  setFieldValue(ResourceFieldNames.PEER_REVIEW, null);
-                }
-              }}
-            />
-            {(publicationInstance.content === JournalArticleContentType.ResearchArticle ||
-              publicationInstance.content === JournalArticleContentType.ReviewArticle) && <PeerReviewedField />}
+            <ContentTypeField options={journalArticleContentTypes} />
+            {nviCompatibleContentTypes.includes(publicationInstance.content as string) && <NviFields />}
           </BackgroundDiv>
           <NviValidation
             isPeerReviewed={!!publicationInstance.peerReviewed}

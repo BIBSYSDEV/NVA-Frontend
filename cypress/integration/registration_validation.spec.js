@@ -87,10 +87,12 @@ describe('User opens registration form and can see validation errors', () => {
 
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}] p.Mui-error`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.originalResearchField}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}]`).click();
     cy.get(`[data-value="${JournalArticleContentType.ResearchArticle}"]`).click();
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}] p.Mui-error`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).eq(0).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.originalResearchField}] input`).eq(1).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}] p.Mui-error`).should('not.exist');
 
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
@@ -107,7 +109,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
     cy.get('[data-testid=publication-instance-type] p.Mui-error').should('not.exist');
-    cy.get('p.Mui-error').should('have.length', 3);
+    cy.get('p.Mui-error').should('have.length', 2);
 
     // publicationContext
     cy.get('[data-testid=publisher-search-field] input').click({ force: true }).type('test');

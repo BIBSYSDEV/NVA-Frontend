@@ -35,6 +35,7 @@ export const dataTestId = {
     },
     resourceType: {
       contentField: 'content-field',
+      originalResearchField: 'original-research-field',
       pagesField: 'pages-field',
       peerReviewed: 'peer-review-field',
       seriesField: 'series-search-field',

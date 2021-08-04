@@ -65,11 +65,14 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     const {
       reference: { publicationContext, publicationInstance },
     } = values.entityDescription;
+    const content = 'content' in publicationInstance ? publicationInstance.content : null;
+
     try {
       validateYupSchema<Registration>(values, registrationValidationSchema, true, {
         publicationContextType: publicationContext.type,
         publicationInstanceType: publicationInstance.type,
         publicationStatus: registration?.status,
+        content,
       });
     } catch (err) {
       return yupToFormErrors(err);

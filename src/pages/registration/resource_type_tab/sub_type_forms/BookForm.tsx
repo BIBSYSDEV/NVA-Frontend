@@ -11,7 +11,7 @@ import { DoiField } from '../components/DoiField';
 import { IsbnListField } from '../components/IsbnListField';
 import { NpiDisciplineField } from '../components/NpiDisciplineField';
 import { NviValidation } from '../components/NviValidation';
-import { PeerReviewedField } from '../components/PeerReviewedField';
+import { PeerReviewedField } from '../components/nvi_fields/PeerReviewedField';
 import { PublisherField } from '../components/PublisherField';
 import { SeriesFields } from '../components/SeriesFields';
 import { TotalPagesField } from '../components/TotalPagesField';

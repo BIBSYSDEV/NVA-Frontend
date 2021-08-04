@@ -14,6 +14,11 @@ export enum JournalArticleContentType {
   PopularScienceArticle = 'Popular science article',
 }
 
+export const nviCompatibleContentTypes: string[] = [
+  JournalArticleContentType.ResearchArticle,
+  JournalArticleContentType.ReviewArticle,
+];
+
 export interface ContentTypeOption {
   value: string;
   text: string;
@@ -35,6 +40,7 @@ export interface JournalPublicationInstance {
   volume: string;
   corrigendumFor: string;
   content: JournalArticleContentType | null;
+  originalResearch: boolean | null;
 }
 
 export interface JournalPublicationContext {
@@ -67,6 +73,7 @@ export const emptyJournalPublicationInstance: JournalPublicationInstance = {
   volume: '',
   corrigendumFor: '',
   content: null,
+  originalResearch: null,
 };
 
 const emptyPublicationContext: JournalPublicationContext = {

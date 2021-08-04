@@ -8,7 +8,10 @@ import {
   ReportType,
 } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
-import { JournalArticleContentType } from '../../../types/publication_types/journalRegistration.types';
+import {
+  JournalArticleContentType,
+  nviCompatibleContentTypes,
+} from '../../../types/publication_types/journalRegistration.types';
 
 export const invalidIsbnErrorMessage = i18n.t('feedback:validation.has_invalid_format', {
   field: i18n.t('registration:resource_type.isbn'),
@@ -40,6 +43,9 @@ const resourceErrorMessage = {
   }),
   linkedContextRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.chapter.published_in'),
+  }),
+  originalResearchRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.presents_original_research'),
   }),
   pageBeginInvalid: i18n.t('feedback:validation.has_invalid_format', {
     field: i18n.t('registration:resource_type.pages_from'),
@@ -93,10 +99,18 @@ export const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/g; // ISBN without hyphens
 
 // Common Fields
 const isbnListField = Yup.array().of(Yup.string().matches(isbnRegex, resourceErrorMessage.isbnInvalid));
-const peerReviewedField = Yup.boolean().when('$publicationInstanceType', {
-  is: (value: string) => value === JournalType.ARTICLE || value === BookType.MONOGRAPH || value === ChapterType.BOOK,
-  then: Yup.boolean().nullable().required(resourceErrorMessage.peerReviewedRequired),
-});
+const peerReviewedField = Yup.boolean()
+  .nullable()
+  .when('$content', {
+    is: (content: string) => nviCompatibleContentTypes.includes(content),
+    then: Yup.boolean().nullable().required(resourceErrorMessage.peerReviewedRequired),
+  });
+const originalResearchField = Yup.boolean()
+  .nullable()
+  .when('$content', {
+    is: (content: string) => nviCompatibleContentTypes.includes(content),
+    then: Yup.boolean().nullable().required(resourceErrorMessage.originalResearchRequired),
+  });
 
 const pagesMonographField = Yup.object()
   .nullable()
@@ -138,6 +152,7 @@ export const baseReference = Yup.object().shape({
 const journalPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(JournalType)).required(resourceErrorMessage.typeRequired),
   peerReviewed: peerReviewedField,
+  originalResearch: originalResearchField,
   articleNumber: Yup.string(),
   volume: Yup.number()
     .typeError(resourceErrorMessage.volumeInvalid)

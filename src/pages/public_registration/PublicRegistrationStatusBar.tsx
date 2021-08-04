@@ -109,11 +109,14 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   };
 
   useEffect(() => {
+    const { publicationInstance, publicationContext } = registration.entityDescription.reference;
+    const content = 'content' in publicationInstance ? publicationInstance.content : null;
     try {
       validateYupSchema<Registration>(registration, registrationValidationSchema, true, {
-        publicationContextType: registration.entityDescription.reference.publicationContext.type,
-        publicationInstanceType: registration.entityDescription.reference.publicationInstance.type,
+        publicationContextType: publicationContext.type,
+        publicationInstanceType: publicationInstance.type,
         publicationStatus: registration.status,
+        content,
       });
     } catch (error) {
       const formErrors = yupToFormErrors(error);
