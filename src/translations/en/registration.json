@@ -133,6 +133,13 @@
   },
   "resource_type": {
     "article_number": "Article number",
+    "book_content_types": {
+      "Academic Monograph": "Academic Monograph",
+      "Encyclopedia": "Encyclopedia",
+      "Non-fiction Monograph": "Non-fiction Monograph",
+      "Popular Science Monograph": "Popular Science Monograph",
+      "Textbook": "Textbook"
+    },
     "chapter": {
       "info_anthology": "The anthology where this chapter is published in must be published in advance",
       "published_in": "Published in",

@@ -183,7 +183,9 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
               pages: {
                 pages: true,
               },
+              content: true,
               peerReviewed: true,
+              originalResearch: true,
             },
           },
         },

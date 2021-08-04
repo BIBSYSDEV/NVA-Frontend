@@ -11,11 +11,15 @@ import { DoiField } from '../components/DoiField';
 import { IsbnListField } from '../components/IsbnListField';
 import { NpiDisciplineField } from '../components/NpiDisciplineField';
 import { NviValidation } from '../components/NviValidation';
-import { PeerReviewedField } from '../components/nvi_fields/PeerReviewedField';
 import { PublisherField } from '../components/PublisherField';
 import { SeriesFields } from '../components/SeriesFields';
 import { TotalPagesField } from '../components/TotalPagesField';
-import { nviCompatibleContentTypes } from '../../../../types/publication_types/journalRegistration.types';
+import { NviFields } from '../components/nvi_fields/NviFields';
+import { ContentTypeField } from '../components/ContentTypeField';
+import {
+  bookMonographContentTypes,
+  nviApplicableContentTypes,
+} from '../../../../types/publication_types/content.types';
 
 const StyledSection = styled.div`
   display: grid;
@@ -52,15 +56,12 @@ export const BookForm = () => {
         </StyledSection>
       </BackgroundDiv>
 
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-        <StyledSection>
-          {type === BookType.MONOGRAPH && (
-            <div>
-              <PeerReviewedField />
-            </div>
-          )}
-        </StyledSection>
-      </BackgroundDiv>
+      {type === BookType.MONOGRAPH && (
+        <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
+          <ContentTypeField options={bookMonographContentTypes} />
+          {nviApplicableContentTypes.includes(content as string) && <NviFields />}
+        </BackgroundDiv>
+      )}
 
       <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
         <Typography variant="h5">{t('resource_type.series')}</Typography>
@@ -72,7 +73,7 @@ export const BookForm = () => {
         <NviValidation
           isPeerReviewed={!!peerReviewed}
           isRated={!!publicationContext?.level}
-          isTextbook={nviCompatibleContentTypes.includes(content as string)}
+          isTextbook={nviApplicableContentTypes.includes(content as string)}
           dataTestId="nvi_book"
         />
       )}

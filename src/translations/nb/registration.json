@@ -133,6 +133,13 @@
   },
   "resource_type": {
     "article_number": "Artikkelnummer",
+    "book_content_types": {
+      "Academic Monograph": "Vitenskapelig monografi",
+      "Encyclopedia": "Oppslagsverk",
+      "Non-fiction Monograph": "Faglig monografi",
+      "Popular Science Monograph": "Popularvitenskapelig monografi",
+      "Textbook": "Lærebok"
+    },
     "chapter": {
       "info_anthology": "Antologien hvor kapittelet er publisert i må være publisert først",
       "published_in": "Publisert i",

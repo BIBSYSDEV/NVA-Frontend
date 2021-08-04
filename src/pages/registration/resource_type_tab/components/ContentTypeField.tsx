@@ -3,10 +3,7 @@ import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import {
-  ContentTypeOption,
-  nviCompatibleContentTypes,
-} from '../../../../types/publication_types/journalRegistration.types';
+import { ContentTypeOption, nviApplicableContentTypes } from '../../../../types/publication_types/content.types';
 import { Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 
@@ -31,7 +28,7 @@ export const ContentTypeField = ({ options }: ContentTypeFieldProps) => {
             value={field.value ?? ''}
             onChange={(event) => {
               field.onChange(event);
-              if (nviCompatibleContentTypes.includes(event.target.value)) {
+              if (nviApplicableContentTypes.includes(event.target.value)) {
                 setFieldValue(ResourceFieldNames.PEER_REVIEW, null);
                 setFieldValue(ResourceFieldNames.OriginalResearch, null);
                 setFieldTouched(ResourceFieldNames.PEER_REVIEW, false);

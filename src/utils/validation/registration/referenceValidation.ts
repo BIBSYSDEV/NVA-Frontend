@@ -9,9 +9,10 @@ import {
 } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
 import {
+  BookMonographContentType,
   JournalArticleContentType,
-  nviCompatibleContentTypes,
-} from '../../../types/publication_types/journalRegistration.types';
+  nviApplicableContentTypes,
+} from '../../../types/publication_types/content.types';
 
 export const invalidIsbnErrorMessage = i18n.t('feedback:validation.has_invalid_format', {
   field: i18n.t('registration:resource_type.isbn'),
@@ -102,13 +103,13 @@ const isbnListField = Yup.array().of(Yup.string().matches(isbnRegex, resourceErr
 const peerReviewedField = Yup.boolean()
   .nullable()
   .when('$content', {
-    is: (content: string) => nviCompatibleContentTypes.includes(content),
+    is: (content: string) => nviApplicableContentTypes.includes(content),
     then: Yup.boolean().nullable().required(resourceErrorMessage.peerReviewedRequired),
   });
 const originalResearchField = Yup.boolean()
   .nullable()
   .when('$content', {
-    is: (content: string) => nviCompatibleContentTypes.includes(content),
+    is: (content: string) => nviApplicableContentTypes.includes(content),
     then: Yup.boolean().nullable().required(resourceErrorMessage.originalResearchRequired),
   });
 
@@ -151,8 +152,6 @@ export const baseReference = Yup.object().shape({
 // Journal
 const journalPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(JournalType)).required(resourceErrorMessage.typeRequired),
-  peerReviewed: peerReviewedField,
-  originalResearch: originalResearchField,
   articleNumber: Yup.string(),
   volume: Yup.number()
     .typeError(resourceErrorMessage.volumeInvalid)
@@ -177,6 +176,8 @@ const journalPublicationInstance = Yup.object().shape({
     .nullable()
     .oneOf(Object.values(JournalArticleContentType), resourceErrorMessage.contentRequired)
     .required(resourceErrorMessage.contentRequired),
+  peerReviewed: peerReviewedField,
+  originalResearch: originalResearchField,
 });
 
 const journalPublicationContext = Yup.object().shape({
@@ -196,7 +197,12 @@ export const journalReference = baseReference.shape({
 const bookPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(BookType)).required(resourceErrorMessage.typeRequired),
   pages: pagesMonographField,
+  content: Yup.string()
+    .nullable()
+    .oneOf(Object.values(BookMonographContentType), resourceErrorMessage.contentRequired)
+    .required(resourceErrorMessage.contentRequired),
   peerReviewed: peerReviewedField,
+  originalResearch: originalResearchField,
 });
 
 const bookPublicationContext = Yup.object().shape({
