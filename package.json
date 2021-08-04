@@ -80,7 +80,7 @@
     "@types/react-redux": "^7.1.18",
     "@types/react-router-dom": "^5.1.8",
     "@types/react-text-truncate": "^0.14.1",
-    "@types/styled-components": "^5.1.11",
+    "@types/styled-components": "^5.1.12",
     "@types/yup": "^0.29.13",
     "axios-mock-adapter": "^1.19.0",
     "cypress": "^8.1.0",
