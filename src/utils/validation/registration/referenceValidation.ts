@@ -8,7 +8,10 @@ import {
   ReportType,
 } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
-import { JournalArticleContentType } from '../../../types/publication_types/journalRegistration.types';
+import {
+  JournalArticleContentType,
+  nviCompatibleContentTypes,
+} from '../../../types/publication_types/journalRegistration.types';
 
 export const invalidIsbnErrorMessage = i18n.t('feedback:validation.has_invalid_format', {
   field: i18n.t('registration:resource_type.isbn'),
@@ -99,15 +102,13 @@ const isbnListField = Yup.array().of(Yup.string().matches(isbnRegex, resourceErr
 const peerReviewedField = Yup.boolean()
   .nullable()
   .when('$content', {
-    is: (content: string) =>
-      content === JournalArticleContentType.ResearchArticle || content === JournalArticleContentType.ReviewArticle,
+    is: (content: string) => nviCompatibleContentTypes.includes(content),
     then: Yup.boolean().nullable().required(resourceErrorMessage.peerReviewedRequired),
   });
 const originalResearchField = Yup.boolean()
   .nullable()
   .when('$content', {
-    is: (content: string) =>
-      content === JournalArticleContentType.ResearchArticle || content === JournalArticleContentType.ReviewArticle,
+    is: (content: string) => nviCompatibleContentTypes.includes(content),
     then: Yup.boolean().nullable().required(resourceErrorMessage.originalResearchRequired),
   });
 
