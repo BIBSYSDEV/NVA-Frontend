@@ -144,6 +144,7 @@ export const JournalForm = () => {
           <NviValidation
             isPeerReviewed={!!publicationInstance.peerReviewed}
             isRated={!!publicationContext?.level}
+            isOriginalResearch={!!publicationInstance.originalResearch}
             dataTestId="nvi_journal"
           />
         </>

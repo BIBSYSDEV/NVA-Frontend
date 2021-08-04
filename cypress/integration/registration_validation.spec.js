@@ -1,5 +1,5 @@
 import { dataTestId } from '../../src/utils/dataTestIds';
-import { JournalArticleContentType } from '../../src/types/publication_types/journalRegistration.types';
+import { JournalArticleContentType } from '../../src/types/publication_types/content.types';
 
 describe('User opens registration form and can see validation errors', () => {
   before('Given that the user is logged in as Creator:', () => {

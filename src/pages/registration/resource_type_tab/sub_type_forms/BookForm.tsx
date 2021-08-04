@@ -36,7 +36,7 @@ export const BookForm = () => {
   const {
     reference: {
       publicationContext,
-      publicationInstance: { peerReviewed, type, contentType },
+      publicationInstance: { peerReviewed, type, contentType, originalResearch },
     },
   } = values.entityDescription;
 
@@ -73,7 +73,7 @@ export const BookForm = () => {
         <NviValidation
           isPeerReviewed={!!peerReviewed}
           isRated={!!publicationContext?.level}
-          isTextbook={nviApplicableContentTypes.includes(contentType as string)}
+          isOriginalResearch={!!originalResearch}
           dataTestId="nvi_book"
         />
       )}

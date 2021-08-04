@@ -8,23 +8,23 @@ interface NviValidationProps {
   dataTestId: string;
   isPeerReviewed: boolean;
   isRated: boolean;
-  isTextbook?: boolean;
+  isOriginalResearch: boolean;
 }
 
-export const NviValidation = ({ dataTestId, isPeerReviewed, isRated, isTextbook }: NviValidationProps) => {
+export const NviValidation = ({ dataTestId, isPeerReviewed, isRated, isOriginalResearch }: NviValidationProps) => {
   const { t } = useTranslation('registration');
 
   return (
     <BackgroundDiv backgroundColor={lightTheme.palette.section.black} data-testid={dataTestId}>
-      {!isTextbook ? (
+      {isRated ? (
         isPeerReviewed ? (
-          isRated ? (
+          isOriginalResearch ? (
             <StyledTypographyPreWrapped data-testid="nvi_success">
               {t('resource_type.nvi_success')}
             </StyledTypographyPreWrapped>
           ) : (
-            <StyledTypographyPreWrapped data-testid="nvi_fail_not_rated">
-              {t('resource_type.nvi_fail_not_rated')}
+            <StyledTypographyPreWrapped data-testid="nvi_fail">
+              {t('resource_type.nvi_fail_not_original_research')}
             </StyledTypographyPreWrapped>
           )
         ) : (
@@ -33,7 +33,9 @@ export const NviValidation = ({ dataTestId, isPeerReviewed, isRated, isTextbook 
           </StyledTypographyPreWrapped>
         )
       ) : (
-        <StyledTypographyPreWrapped data-testid="nvi_fail">{t('resource_type.nvi_fail')}</StyledTypographyPreWrapped>
+        <StyledTypographyPreWrapped data-testid="nvi_fail_not_rated">
+          {t('resource_type.nvi_fail_not_rated')}
+        </StyledTypographyPreWrapped>
       )}
     </BackgroundDiv>
   );
