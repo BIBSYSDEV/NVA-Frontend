@@ -31,11 +31,11 @@ export interface ContentTypeOption {
 export const journalArticleContentTypes: ContentTypeOption[] = Object.values(JournalArticleContentType).map(
   (value) => ({
     value,
-    text: i18n.t(`registration:resource_type.journal_content_types.${value}`),
+    text: i18n.t(`registration:resource_type.content_types.${value}`),
   })
 );
 
 export const bookMonographContentTypes: ContentTypeOption[] = Object.values(BookMonographContentType).map((value) => ({
   value,
-  text: i18n.t(`registration:resource_type.book_content_types.${value}`),
+  text: i18n.t(`registration:resource_type.content_types.${value}`),
 }));

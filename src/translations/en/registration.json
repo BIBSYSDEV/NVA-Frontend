@@ -133,26 +133,24 @@
   },
   "resource_type": {
     "article_number": "Article number",
-    "book_content_types": {
-      "Academic Monograph": "Academic Monograph",
-      "Encyclopedia": "Encyclopedia",
-      "Non-fiction Monograph": "Non-fiction Monograph",
-      "Popular Science Monograph": "Popular Science Monograph",
-      "Textbook": "Textbook"
-    },
     "chapter": {
       "info_anthology": "The anthology where this chapter is published in must be published in advance",
       "published_in": "Published in",
       "search_for_anthology": "Search for the anthology where the chapter is published"
     },
     "content": "Content",
-    "journal_content_types": {
+    "content_types": {
+      "Academic Monograph": "Academic Monograph",
       "Case report": "Case report",
+      "Encyclopedia": "Encyclopedia",
+      "Non-fiction Monograph": "Non-fiction Monograph",
+      "Popular Science Monograph": "Popular Science Monograph",
       "Popular science article": "Popular science article",
       "Professional article": "Professional article",
       "Research article": "Research article",
       "Review article": "Review article",
-      "Study protocol": "Study protocol"
+      "Study protocol": "Study protocol",
+      "Textbook": "Textbook"
     },
     "isbn": "ISBN",
     "isbn_helper": "Press Enter to add ISBN",

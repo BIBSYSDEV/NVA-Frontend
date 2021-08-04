@@ -59,7 +59,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
       <div>
         <Typography variant="overline">{t('public_page.about_registration')}</Typography>
 
-        {contentType && <Typography>{t(`resource_type.journal_content_types.${contentType}`)}</Typography>}
+        {contentType && <Typography>{t(`resource_type.content_types.${contentType}`)}</Typography>}
 
         {peerReviewed && <Typography>{t('resource_type.peer_reviewed')}</Typography>}
 

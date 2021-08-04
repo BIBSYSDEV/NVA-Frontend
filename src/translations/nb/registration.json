@@ -133,26 +133,24 @@
   },
   "resource_type": {
     "article_number": "Artikkelnummer",
-    "book_content_types": {
-      "Academic Monograph": "Vitenskapelig monografi",
-      "Encyclopedia": "Oppslagsverk",
-      "Non-fiction Monograph": "Faglig monografi",
-      "Popular Science Monograph": "Popularvitenskapelig monografi",
-      "Textbook": "Lærebok"
-    },
     "chapter": {
       "info_anthology": "Antologien hvor kapittelet er publisert i må være publisert først",
       "published_in": "Publisert i",
       "search_for_anthology": "Søk etter antologien hvor kapittelet er publisert"
     },
     "content": "Innhold",
-    "journal_content_types": {
+    "content_types": {
+      "Academic Monograph": "Vitenskapelig monografi",
       "Case report": "Kauistikk",
+      "Encyclopedia": "Oppslagsverk",
+      "Non-fiction Monograph": "Faglig monografi",
+      "Popular Science Monograph": "Popularvitenskapelig monografi",
       "Popular science article": "Popularvitenskapelig artikkel",
       "Professional article": "Fagartikkel",
       "Research article": "Forskningsartikkel",
       "Review article": "Vitenskapelig oversiktsartikkel",
-      "Study protocol": "Studieprotokoll"
+      "Study protocol": "Studieprotokoll",
+      "Textbook": "Lærebok"
     },
     "isbn": "ISBN",
     "isbn_helper": "Trykk Enter for å legge til ISBN",
