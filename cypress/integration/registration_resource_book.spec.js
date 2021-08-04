@@ -1,4 +1,5 @@
 import { dataTestId } from '../../src/utils/dataTestIds';
+import { BookMonographContentType } from '../../src/types/publication_types/content.types';
 
 describe('Registration: Resource type: Book', () => {
   beforeEach(() => {
@@ -32,17 +33,22 @@ describe('Registration: Resource type: Book', () => {
     cy.selectNpiDiscipline('Linguistics');
 
     // fill out ISBN_LIST field
-    cy.get('[data-testid=isbn-field] input').type('978-1-78-763271-4').type('{enter}').type('9788202509460');
-    cy.get('[data-testid=is-textbook-checkbox]').click({ force: true });
+    cy.get('[data-testid=isbn-field] input').type('978-1-78-763271-4').type('{enter}').type('9788202509460').blur();
     cy.get('[data-testid=isbn-chip]').should('have.length', 2);
 
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}]`).click();
+    cy.get(`[data-value="${BookMonographContentType.AcademicMonograph}"]`).click();
+
     // choose peer review value and show NVI status
-    cy.get('[data-testid=nvi_book]').get('[data-testid=nvi_fail]');
-    cy.get('[data-testid=is-textbook-checkbox]').click({ force: true });
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).eq(0).click();
-    cy.get('[data-testid=nvi_book]').get('[data-testid=nvi_success]');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).eq(1).click();
-    cy.get('[data-testid=nvi_book]').get('[data-testid=nvi_fail_no_peer_review]');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviFailedPeerReview}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`)
+      .eq(0)
+      .click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviFailedOriginalResearch}]`).should(
+      'be.visible'
+    );
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.originalResearchField}] input`).eq(0).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviSuccess}]`).should('be.visible');
 
     // fill out number of pages field
     cy.get('[data-testid=pages-field] input').type('483');

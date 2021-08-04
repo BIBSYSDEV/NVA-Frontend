@@ -139,16 +139,19 @@
       "search_for_anthology": "Search for the anthology where the chapter is published"
     },
     "content": "Content",
-    "journal_content_types": {
+    "content_types": {
+      "Academic Monograph": "Academic Monograph",
       "Case report": "Case report",
+      "Encyclopedia": "Encyclopedia",
+      "Non-fiction Monograph": "Non-fiction Monograph",
+      "Popular Science Monograph": "Popular Science Monograph",
       "Popular science article": "Popular science article",
       "Professional article": "Professional article",
       "Research article": "Research article",
       "Review article": "Review article",
-      "Study protocol": "Study protocol"
+      "Study protocol": "Study protocol",
+      "Textbook": "Textbook"
     },
-    "is_book_a_textbook": "Is the book a textbook?",
-    "is_book_a_textbook_confirm": "Yes, the book is a textbook",
     "isbn": "ISBN",
     "isbn_helper": "Press Enter to add ISBN",
     "issn": "ISSN",
@@ -157,8 +160,8 @@
     "journal_not_found": "Journal not found?",
     "level": "Level in Norwegian publication indicator",
     "number_of_pages": "Total number of pages",
-    "nvi_fail": "This publication can not be included in the Norwegian Science Index.",
     "nvi_fail_no_peer_review": "This publication can not be incuded in the Norwegian Science Index, since it's not peer reviewed.",
+    "nvi_fail_not_original_research": "This publication can not be included in the Norwegian Science Index, since it's not presenting new original research.",
     "nvi_fail_not_rated": "This publication can not be included in the Norwegian Science Index (NSI), since selected publication channel is not at level 1 or 2. \n\n(The publication channel's level may be changed, so the publication can be included in NSI)",
     "nvi_success": "This publication can be included in the Norwegian Science Index",
     "or": "Or",
@@ -181,8 +184,6 @@
     "series": "Series",
     "series_info": "If the publication is part of a series",
     "subtype": "Subtype",
-    "text_book": "Textbook",
-    "text_book_yes": "Yes, this is a textbook",
     "volume": "Volume"
   },
   "save_draft": "Save draft",

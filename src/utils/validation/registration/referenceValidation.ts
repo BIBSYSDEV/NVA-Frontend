@@ -9,16 +9,17 @@ import {
 } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
 import {
+  BookMonographContentType,
   JournalArticleContentType,
-  nviCompatibleContentTypes,
-} from '../../../types/publication_types/journalRegistration.types';
+  nviApplicableContentTypes,
+} from '../../../types/publication_types/content.types';
 
 export const invalidIsbnErrorMessage = i18n.t('feedback:validation.has_invalid_format', {
   field: i18n.t('registration:resource_type.isbn'),
 });
 
 const resourceErrorMessage = {
-  contentRequired: i18n.t('feedback:validation.is_required', {
+  contentTypeRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.content'),
   }),
   corrigendumForRequired: i18n.t('feedback:validation.is_required', {
@@ -101,14 +102,14 @@ export const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/g; // ISBN without hyphens
 const isbnListField = Yup.array().of(Yup.string().matches(isbnRegex, resourceErrorMessage.isbnInvalid));
 const peerReviewedField = Yup.boolean()
   .nullable()
-  .when('$content', {
-    is: (content: string) => nviCompatibleContentTypes.includes(content),
+  .when('$contentType', {
+    is: (contentType: string) => nviApplicableContentTypes.includes(contentType),
     then: Yup.boolean().nullable().required(resourceErrorMessage.peerReviewedRequired),
   });
 const originalResearchField = Yup.boolean()
   .nullable()
-  .when('$content', {
-    is: (content: string) => nviCompatibleContentTypes.includes(content),
+  .when('$contentType', {
+    is: (contentType: string) => nviApplicableContentTypes.includes(contentType),
     then: Yup.boolean().nullable().required(resourceErrorMessage.originalResearchRequired),
   });
 
@@ -151,8 +152,6 @@ export const baseReference = Yup.object().shape({
 // Journal
 const journalPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(JournalType)).required(resourceErrorMessage.typeRequired),
-  peerReviewed: peerReviewedField,
-  originalResearch: originalResearchField,
   articleNumber: Yup.string(),
   volume: Yup.number()
     .typeError(resourceErrorMessage.volumeInvalid)
@@ -173,10 +172,12 @@ const journalPublicationInstance = Yup.object().shape({
         .url(resourceErrorMessage.corrigendumForInvalid)
         .required(resourceErrorMessage.corrigendumForRequired),
     }),
-  content: Yup.string()
+  contentType: Yup.string()
     .nullable()
-    .oneOf(Object.values(JournalArticleContentType), resourceErrorMessage.contentRequired)
-    .required(resourceErrorMessage.contentRequired),
+    .oneOf(Object.values(JournalArticleContentType), resourceErrorMessage.contentTypeRequired)
+    .required(resourceErrorMessage.contentTypeRequired),
+  peerReviewed: peerReviewedField,
+  originalResearch: originalResearchField,
 });
 
 const journalPublicationContext = Yup.object().shape({
@@ -196,7 +197,12 @@ export const journalReference = baseReference.shape({
 const bookPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(BookType)).required(resourceErrorMessage.typeRequired),
   pages: pagesMonographField,
+  contentType: Yup.string()
+    .nullable()
+    .oneOf(Object.values(BookMonographContentType), resourceErrorMessage.contentTypeRequired)
+    .required(resourceErrorMessage.contentTypeRequired),
   peerReviewed: peerReviewedField,
+  originalResearch: originalResearchField,
 });
 
 const bookPublicationContext = Yup.object().shape({

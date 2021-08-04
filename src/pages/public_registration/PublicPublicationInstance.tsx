@@ -46,15 +46,9 @@ export const PublicPublicationInstanceBook = ({
 }: {
   publicationInstance: BookPublicationInstance;
 }) => {
-  const { t } = useTranslation('registration');
-  const { pages, textbookContent } = publicationInstance;
+  const { pages } = publicationInstance;
 
-  return (
-    <>
-      <PublicTotalPagesContent pages={pages} />
-      {textbookContent && <Typography>{t('resource_type.text_book')}</Typography>}
-    </>
-  );
+  return <PublicTotalPagesContent pages={pages} />;
 };
 
 export const PublicPublicationInstanceDegree = ({

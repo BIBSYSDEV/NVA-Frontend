@@ -121,7 +121,7 @@ export const ChapterForm = () => {
           <NviValidation
             isPeerReviewed={!!publicationInstance.peerReviewed}
             isRated={!!publicationContext?.level}
-            dataTestId="nvi-chapter"
+            isOriginalResearch={false}
           />
         </>
       )}

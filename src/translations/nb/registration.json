@@ -139,16 +139,19 @@
       "search_for_anthology": "Søk etter antologien hvor kapittelet er publisert"
     },
     "content": "Innhold",
-    "journal_content_types": {
+    "content_types": {
+      "Academic Monograph": "Vitenskapelig monografi",
       "Case report": "Kauistikk",
+      "Encyclopedia": "Oppslagsverk",
+      "Non-fiction Monograph": "Faglig monografi",
+      "Popular Science Monograph": "Popularvitenskapelig monografi",
       "Popular science article": "Popularvitenskapelig artikkel",
       "Professional article": "Fagartikkel",
       "Research article": "Forskningsartikkel",
       "Review article": "Vitenskapelig oversiktsartikkel",
-      "Study protocol": "Studieprotokoll"
+      "Study protocol": "Studieprotokoll",
+      "Textbook": "Lærebok"
     },
-    "is_book_a_textbook": "Er boken en lærebok?",
-    "is_book_a_textbook_confirm": "Ja, boken er en lærebok",
     "isbn": "ISBN",
     "isbn_helper": "Trykk Enter for å legge til ISBN",
     "issn": "ISSN",
@@ -157,8 +160,8 @@
     "journal_not_found": "Finner du ikke tidsskriftet?",
     "level": "Nivå i Norsk publiseringsindikator",
     "number_of_pages": "Totalt antall sider",
-    "nvi_fail": "Denne publikasjonen kan ikke inngå i Norsk vitenskapsindeks.",
     "nvi_fail_no_peer_review": "Denne publikasjonen kan ikke inngå i Norsk vitenskapsindeks, da den ikke er fagfellevurdert.",
+    "nvi_fail_not_original_research": "Denne publikasjonen kan ikke inngå i Norsk vitenskapsindeks, da den ikke presenterer ny original forkskning.",
     "nvi_fail_not_rated": "Denne publikasjonen kan ikke inngå i Norsk vitenskapsindeks (NVI), da valgt publiseringskanal ikke er på nivå 1 eller 2. \n\n(Publiseringskanalens nivå kan bli endret, slik at publikasjonen likevel kan inngå i NVI)",
     "nvi_success": "Denne publikasjonen kan inngå i Norsk vitenskapsindeks",
     "or": "Eller",
@@ -181,8 +184,6 @@
     "series": "Serie",
     "series_info": "Hvis publikasjonen inngår i en serie",
     "subtype": "Undertype",
-    "text_book": "Lærebok",
-    "text_book_yes": "Ja, boken er en lærebok",
     "volume": "Volum"
   },
   "save_draft": "Lagre kladd",

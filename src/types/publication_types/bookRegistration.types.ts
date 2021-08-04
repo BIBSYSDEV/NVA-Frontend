@@ -1,19 +1,22 @@
 import { BackendType, BaseEntityDescription } from '../registration.types';
 import { PublicationType, BookType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
+import { BookMonographContentType } from './content.types';
 
 export interface BookPublicationInstance {
   type: BookType | '';
   pages: PagesMonograph | null;
+  contentType: BookMonographContentType | null;
   peerReviewed: boolean | null;
-  textbookContent?: boolean;
+  originalResearch: boolean | null;
 }
 
 export const emptyBookPublicationInstance: BookPublicationInstance = {
   type: '',
   pages: emptyPagesMonograph,
+  contentType: null,
   peerReviewed: null,
-  textbookContent: false,
+  originalResearch: null,
 };
 
 export interface BookPublicationContext {
