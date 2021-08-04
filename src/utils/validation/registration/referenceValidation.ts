@@ -96,16 +96,20 @@ export const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/g; // ISBN without hyphens
 
 // Common Fields
 const isbnListField = Yup.array().of(Yup.string().matches(isbnRegex, resourceErrorMessage.isbnInvalid));
-const peerReviewedField = Yup.boolean().when('$content', {
-  is: (content: string) =>
-    content === JournalArticleContentType.ResearchArticle || content === JournalArticleContentType.ReviewArticle,
-  then: Yup.boolean().nullable().required(resourceErrorMessage.peerReviewedRequired),
-});
-const originalResearchField = Yup.boolean().when('$content', {
-  is: (content: string) =>
-    content === JournalArticleContentType.ResearchArticle || content === JournalArticleContentType.ReviewArticle,
-  then: Yup.boolean().nullable().required(resourceErrorMessage.originalResearchRequired),
-});
+const peerReviewedField = Yup.boolean()
+  .nullable()
+  .when('$content', {
+    is: (content: string) =>
+      content === JournalArticleContentType.ResearchArticle || content === JournalArticleContentType.ReviewArticle,
+    then: Yup.boolean().nullable().required(resourceErrorMessage.peerReviewedRequired),
+  });
+const originalResearchField = Yup.boolean()
+  .nullable()
+  .when('$content', {
+    is: (content: string) =>
+      content === JournalArticleContentType.ResearchArticle || content === JournalArticleContentType.ReviewArticle,
+    then: Yup.boolean().nullable().required(resourceErrorMessage.originalResearchRequired),
+  });
 
 const pagesMonographField = Yup.object()
   .nullable()
