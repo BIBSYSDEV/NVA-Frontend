@@ -145,7 +145,6 @@ export const JournalForm = () => {
             isPeerReviewed={!!publicationInstance.peerReviewed}
             isRated={!!publicationContext?.level}
             isOriginalResearch={!!publicationInstance.originalResearch}
-            dataTestId="nvi_journal"
           />
         </>
       )}

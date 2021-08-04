@@ -74,7 +74,6 @@ export const BookForm = () => {
           isPeerReviewed={!!peerReviewed}
           isRated={!!publicationContext?.level}
           isOriginalResearch={!!originalResearch}
-          dataTestId="nvi_book"
         />
       )}
     </>

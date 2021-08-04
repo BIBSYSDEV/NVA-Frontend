@@ -35,6 +35,10 @@ export const dataTestId = {
     },
     resourceType: {
       contentField: 'content-field',
+      nviFailedOriginalResearch: 'nvi-failed-not-original-research',
+      nviFailedPeerReview: 'nvi-failed-not-peer-reviewed',
+      nviFailedRated: 'nvi-failed-not-rated',
+      nviSuccess: 'nvi-applicable',
       originalResearchField: 'original-research-field',
       pagesField: 'pages-field',
       peerReviewed: 'peer-review-field',

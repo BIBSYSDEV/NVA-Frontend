@@ -40,11 +40,15 @@ describe('Registration: Resource type: Book', () => {
     cy.get(`[data-value="${BookMonographContentType.AcademicMonograph}"]`).click();
 
     // choose peer review value and show NVI status
-    cy.get('[data-testid=nvi_book]').get('[data-testid=nvi_fail]');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).eq(0).click();
-    cy.get('[data-testid=nvi_book]').get('[data-testid=nvi_success]');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).eq(1).click();
-    cy.get('[data-testid=nvi_book]').get('[data-testid=nvi_fail_no_peer_review]');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviFailedPeerReview}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`)
+      .eq(0)
+      .click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviFailedOriginalResearch}]`).should(
+      'be.visible'
+    );
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.originalResearchField}] input`).eq(0).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviSuccess}]`).should('be.visible');
 
     // fill out number of pages field
     cy.get('[data-testid=pages-field] input').type('483');

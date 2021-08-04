@@ -122,7 +122,6 @@ export const ChapterForm = () => {
             isPeerReviewed={!!publicationInstance.peerReviewed}
             isRated={!!publicationContext?.level}
             isOriginalResearch={false}
-            dataTestId="nvi-chapter"
           />
         </>
       )}
