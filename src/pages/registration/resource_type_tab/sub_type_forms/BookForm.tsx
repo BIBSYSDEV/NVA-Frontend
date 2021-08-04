@@ -1,11 +1,11 @@
-import { Field, FieldProps, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Checkbox, FormControlLabel, MuiThemeProvider, Typography } from '@material-ui/core';
+import { MuiThemeProvider, Typography } from '@material-ui/core';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { lightTheme } from '../../../../themes/lightTheme';
-import { BookType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { BookType } from '../../../../types/publicationFieldNames';
 import { BookRegistration } from '../../../../types/registration.types';
 import { DoiField } from '../components/DoiField';
 import { IsbnListField } from '../components/IsbnListField';
@@ -15,6 +15,7 @@ import { PeerReviewedField } from '../components/nvi_fields/PeerReviewedField';
 import { PublisherField } from '../components/PublisherField';
 import { SeriesFields } from '../components/SeriesFields';
 import { TotalPagesField } from '../components/TotalPagesField';
+import { nviCompatibleContentTypes } from '../../../../types/publication_types/journalRegistration.types';
 
 const StyledSection = styled.div`
   display: grid;
@@ -31,7 +32,7 @@ export const BookForm = () => {
   const {
     reference: {
       publicationContext,
-      publicationInstance: { peerReviewed, textbookContent, type },
+      publicationInstance: { peerReviewed, type, content },
     },
   } = values.entityDescription;
 
@@ -58,26 +59,6 @@ export const BookForm = () => {
               <PeerReviewedField />
             </div>
           )}
-          <div>
-            <Typography variant="h5" component="p">
-              {t('resource_type.is_book_a_textbook')}
-            </Typography>
-            <Field name={ResourceFieldNames.TEXTBOOK_CONTENT}>
-              {({ field }: FieldProps) => (
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      data-testid="is-textbook-checkbox"
-                      color="primary"
-                      checked={field.value ?? false}
-                      {...field}
-                    />
-                  }
-                  label={<Typography>{t('resource_type.is_book_a_textbook_confirm')}</Typography>}
-                />
-              )}
-            </Field>
-          </div>
         </StyledSection>
       </BackgroundDiv>
 
@@ -91,7 +72,7 @@ export const BookForm = () => {
         <NviValidation
           isPeerReviewed={!!peerReviewed}
           isRated={!!publicationContext?.level}
-          isTextbook={!!textbookContent}
+          isTextbook={nviCompatibleContentTypes.includes(content as string)}
           dataTestId="nvi_book"
         />
       )}

@@ -49,7 +49,6 @@ export enum ResourceFieldNames {
   CONTENT = 'entityDescription.reference.publicationInstance.content',
   CORRIGENDUM_FOR = 'entityDescription.reference.publicationInstance.corrigendumFor',
   DOI = 'entityDescription.reference.doi',
-  TEXTBOOK_CONTENT = 'entityDescription.reference.publicationInstance.textbookContent',
   ISBN_LIST = 'entityDescription.reference.publicationContext.isbnList',
   ISSUE = 'entityDescription.reference.publicationInstance.issue',
   NPI_SUBJECT_HEADING = 'entityDescription.npiSubjectHeading',

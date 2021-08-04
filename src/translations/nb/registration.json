@@ -147,8 +147,6 @@
       "Review article": "Vitenskapelig oversiktsartikkel",
       "Study protocol": "Studieprotokoll"
     },
-    "is_book_a_textbook": "Er boken en lærebok?",
-    "is_book_a_textbook_confirm": "Ja, boken er en lærebok",
     "isbn": "ISBN",
     "isbn_helper": "Trykk Enter for å legge til ISBN",
     "issn": "ISSN",
@@ -181,8 +179,6 @@
     "series": "Serie",
     "series_info": "Hvis publikasjonen inngår i en serie",
     "subtype": "Undertype",
-    "text_book": "Lærebok",
-    "text_book_yes": "Ja, boken er en lærebok",
     "volume": "Volum"
   },
   "save_draft": "Lagre kladd",
