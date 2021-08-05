@@ -1,11 +1,11 @@
 import { BackendType, BaseEntityDescription } from '../registration.types';
 import { PublicationType, JournalType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
-import { BackendTypeNames, emptyDate, NviApplicablePublicationInstance } from './commonRegistration.types';
+import { BackendTypeNames, emptyDate, NviApplicableBase } from './commonRegistration.types';
 import { emptyPagesRange, PagesRange } from './pages.types';
 import { JournalArticleContentType } from './content.types';
 
-export interface JournalPublicationInstance extends NviApplicablePublicationInstance<JournalArticleContentType> {
+export interface JournalPublicationInstance extends NviApplicableBase<JournalArticleContentType> {
   type: JournalType | '';
   articleNumber: string;
   issue: string;

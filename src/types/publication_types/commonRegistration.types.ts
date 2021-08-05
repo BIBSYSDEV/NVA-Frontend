@@ -15,7 +15,7 @@ export enum BackendTypeNames {
   REFERENCE = 'Reference',
 }
 
-export interface NviApplicablePublicationInstance<T> {
+export interface NviApplicableBase<T> {
   contentType: T | null;
   peerReviewed: boolean | null;
   originalResearch: boolean | null;

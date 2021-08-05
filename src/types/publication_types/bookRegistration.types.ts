@@ -2,9 +2,9 @@ import { BackendType, BaseEntityDescription } from '../registration.types';
 import { PublicationType, BookType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
 import { BookMonographContentType } from './content.types';
-import { NviApplicablePublicationInstance } from './commonRegistration.types';
+import { NviApplicableBase } from './commonRegistration.types';
 
-export interface BookPublicationInstance extends NviApplicablePublicationInstance<BookMonographContentType> {
+export interface BookPublicationInstance extends NviApplicableBase<BookMonographContentType> {
   type: BookType | '';
   pages: PagesMonograph | null;
 }
