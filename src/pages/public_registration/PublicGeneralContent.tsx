@@ -2,7 +2,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
 import { LanguageCodes, registrationLanguages } from '../../types/language.types';
-import { BookPublicationContext, BookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
+import {
+  BookPublicationContext,
+  BookPublicationInstance,
+  BookRegistration,
+} from '../../types/publication_types/bookRegistration.types';
 import {
   ChapterPublicationContext,
   ChapterPublicationInstance,
@@ -18,9 +22,9 @@ import {
 import {
   ReportPublicationContext,
   ReportPublicationInstance,
+  ReportRegistration,
 } from '../../types/publication_types/reportRegistration.types';
 import { DegreeType, JournalType } from '../../types/publicationFieldNames';
-import { BookRegistration, ReportRegistration } from '../../types/registration.types';
 import { getNpiDiscipline } from '../../utils/npiDisciplines';
 import { isBook, isChapter, isDegree, isJournal, isReport } from '../../utils/registration-helpers';
 import { PublicDoi } from './PublicDoi';

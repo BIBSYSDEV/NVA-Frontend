@@ -4,7 +4,7 @@ import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import { lightTheme } from '../../../themes/lightTheme';
 import { ResourceFieldNames, ReportType } from '../../../types/publicationFieldNames';
-import { ReportRegistration } from '../../../types/registration.types';
+import { ReportRegistration } from '../../../types/publication_types/reportRegistration.types';
 import { SelectTypeField } from './components/SelectTypeField';
 import { ReportForm } from './sub_type_forms/ReportForm';
 

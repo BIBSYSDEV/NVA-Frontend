@@ -6,7 +6,6 @@ import { MuiThemeProvider, Typography } from '@material-ui/core';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { lightTheme } from '../../../../themes/lightTheme';
 import { BookType } from '../../../../types/publicationFieldNames';
-import { BookRegistration } from '../../../../types/registration.types';
 import { DoiField } from '../components/DoiField';
 import { IsbnListField } from '../components/IsbnListField';
 import { NpiDisciplineField } from '../components/NpiDisciplineField';
@@ -16,6 +15,7 @@ import { SeriesFields } from '../components/SeriesFields';
 import { TotalPagesField } from '../components/TotalPagesField';
 import { NviFields } from '../components/nvi_fields/NviFields';
 import { bookMonographContentTypes } from '../../../../types/publication_types/content.types';
+import { BookRegistration } from '../../../../types/publication_types/bookRegistration.types';
 
 const StyledSection = styled.div`
   display: grid;

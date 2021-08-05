@@ -1,7 +1,10 @@
-import { BackendType, BaseEntityDescription } from '../registration.types';
+import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
 import { PublicationType, DegreeType } from '../publicationFieldNames';
-
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
+
+export interface DegreeRegistration extends BaseRegistration {
+  entityDescription: DegreeEntityDescription;
+}
 
 export interface DegreePublicationInstance {
   type: DegreeType | '';
@@ -24,8 +27,7 @@ export interface DegreePublicationContext {
   url: string;
 }
 
-interface DegreeReference extends BackendType {
-  doi: string;
+interface DegreeReference extends BaseReference {
   publicationContext: DegreePublicationContext;
   publicationInstance: DegreePublicationInstance;
 }

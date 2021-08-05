@@ -16,7 +16,6 @@ import { setNotification } from '../../../../redux/actions/notificationActions';
 import { Institution } from '../../../../types/contributor.types';
 import { FormikInstitutionUnit } from '../../../../types/institution.types';
 import { NotificationVariant } from '../../../../types/notification.types';
-import { BackendTypeNames } from '../../../../types/publication_types/commonRegistration.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import { useIsMobile } from '../../../../utils/hooks/useIsMobile';
@@ -85,7 +84,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
     }
 
     const addedAffiliation: Institution = {
-      type: BackendTypeNames.ORGANIZATION,
+      type: 'Organization',
       id: mostSpecificUnit.id,
     };
 

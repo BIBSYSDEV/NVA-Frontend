@@ -4,7 +4,7 @@ import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import { lightTheme } from '../../../themes/lightTheme';
 import { ChapterType, ResourceFieldNames } from '../../../types/publicationFieldNames';
-import { ChapterRegistration } from '../../../types/registration.types';
+import { ChapterRegistration } from '../../../types/publication_types/chapterRegistration.types';
 import { SelectTypeField } from './components/SelectTypeField';
 import { ChapterForm } from './sub_type_forms/ChapterForm';
 

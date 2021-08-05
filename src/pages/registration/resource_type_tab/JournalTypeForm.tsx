@@ -4,7 +4,7 @@ import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import { lightTheme } from '../../../themes/lightTheme';
 import { JournalType, ResourceFieldNames } from '../../../types/publicationFieldNames';
-import { JournalRegistration } from '../../../types/registration.types';
+import { JournalRegistration } from '../../../types/publication_types/journalRegistration.types';
 import { SelectTypeField } from './components/SelectTypeField';
 import { JournalForm } from './sub_type_forms/JournalForm';
 

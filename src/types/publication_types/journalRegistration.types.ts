@@ -1,9 +1,12 @@
-import { BackendType, BaseEntityDescription } from '../registration.types';
+import { BaseEntityDescription, BaseReference, BaseRegistration, NviApplicableBase } from '../registration.types';
 import { PublicationType, JournalType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
-import { BackendTypeNames, emptyDate, NviApplicableBase } from './commonRegistration.types';
 import { emptyPagesRange, PagesRange } from './pages.types';
 import { JournalArticleContentType } from './content.types';
+
+export interface JournalRegistration extends BaseRegistration {
+  entityDescription: JournalEntityDescription;
+}
 
 export interface JournalPublicationInstance extends NviApplicableBase<JournalArticleContentType> {
   type: JournalType | '';
@@ -25,8 +28,7 @@ export interface JournalPublicationContext {
   url?: string;
 }
 
-interface JournalReference extends BackendType {
-  doi: string;
+interface JournalReference extends BaseReference {
   publicationContext: JournalPublicationContext;
   publicationInstance: JournalPublicationInstance;
 }
@@ -58,17 +60,22 @@ const emptyPublicationContext: JournalPublicationContext = {
 };
 
 const emptyReference: JournalReference = {
-  type: BackendTypeNames.REFERENCE,
+  type: 'Reference',
   doi: '',
   publicationContext: emptyPublicationContext,
   publicationInstance: emptyJournalPublicationInstance,
 };
 
 export const emptyRegistrationEntityDescription: JournalEntityDescription = {
-  type: BackendTypeNames.ENTITY_DESCRIPTION,
+  type: 'EntityDescription',
   abstract: '',
   contributors: [],
-  date: emptyDate,
+  date: {
+    type: 'PublicationDate',
+    year: '',
+    month: '',
+    day: '',
+  },
   description: '',
   language: LanguageValues.NONE,
   mainTitle: '',

@@ -1,13 +1,13 @@
 import { ContributorRole } from '../../types/contributor.types';
 import { LanguageValues } from '../../types/language.types';
-import { BackendTypeNames } from '../../types/publication_types/commonRegistration.types';
 import { JournalType, PublicationType } from '../../types/publicationFieldNames';
-import { JournalRegistration, RegistrationStatus } from '../../types/registration.types';
+import { RegistrationStatus } from '../../types/registration.types';
 import { mockCustomerInstitution } from './mockCustomerInstitutions';
 import { MessageType, SupportRequest } from '../../types/publication_types/messages.types';
+import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
 
 export const mockRegistration: JournalRegistration = {
-  type: BackendTypeNames.PUBLICATION,
+  type: 'Publication',
   identifier: '12345679',
   createdDate: new Date(2020, 1).toISOString(),
   modifiedDate: new Date(2020, 2).toISOString(),
@@ -16,10 +16,10 @@ export const mockRegistration: JournalRegistration = {
   projects: [{ type: 'ResearchProject', id: 'https://api.dev.nva.aws.unit.no/project/1', name: 'A dummy project' }],
   publisher: { id: mockCustomerInstitution.id },
   fileSet: {
-    type: BackendTypeNames.FILE_SET,
+    type: 'FileSet',
     files: [
       {
-        type: BackendTypeNames.FILE,
+        type: 'File',
         identifier: '3214324',
         name: 'filename.pdf',
         size: 10,
@@ -32,7 +32,7 @@ export const mockRegistration: JournalRegistration = {
     ],
   },
   entityDescription: {
-    type: BackendTypeNames.ENTITY_DESCRIPTION,
+    type: 'EntityDescription',
     mainTitle:
       'Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting',
     abstract:
@@ -44,18 +44,18 @@ export const mockRegistration: JournalRegistration = {
     language: LanguageValues.ENGLISH,
     npiSubjectHeading: 'Medisin og helsefag',
     date: {
-      type: BackendTypeNames.PUBLICATION_DATE,
+      type: 'PublicationDate',
       year: '1980',
       month: '12',
       day: '12',
     },
     contributors: [
       {
-        type: BackendTypeNames.CONTRIBUTOR,
+        type: 'Contributor',
         affiliations: [],
         correspondingAuthor: true,
         identity: {
-          type: BackendTypeNames.IDENTITY,
+          type: 'Identity',
           id: '901790000000',
           name: 'Test User',
         },
@@ -63,10 +63,10 @@ export const mockRegistration: JournalRegistration = {
         sequence: 1,
       },
       {
-        type: BackendTypeNames.CONTRIBUTOR,
+        type: 'Contributor',
         affiliations: [
           {
-            type: BackendTypeNames.ORGANIZATION,
+            type: 'Organization',
             labels: {
               en: 'My institution',
             },
@@ -74,7 +74,7 @@ export const mockRegistration: JournalRegistration = {
         ],
         correspondingAuthor: false,
         identity: {
-          type: BackendTypeNames.IDENTITY,
+          type: 'Identity',
           name: 'Osteloff, Oddny',
         },
         role: ContributorRole.Creator,
@@ -82,12 +82,12 @@ export const mockRegistration: JournalRegistration = {
       },
     ],
     reference: {
-      type: BackendTypeNames.REFERENCE,
+      type: 'Reference',
       doi: '',
       publicationInstance: {
         type: JournalType.Article,
         pages: {
-          type: BackendTypeNames.PAGES_RANGE,
+          type: 'Range',
           begin: '',
           end: '',
         },

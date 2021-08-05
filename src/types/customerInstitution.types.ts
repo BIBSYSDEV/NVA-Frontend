@@ -1,7 +1,5 @@
-import { BackendType } from './registration.types';
-import { BackendTypeNames } from './publication_types/commonRegistration.types';
-
-export interface CustomerInstitution extends Partial<BackendType> {
+export interface CustomerInstitution {
+  type?: 'Customer';
   id: string;
   archiveName: string;
   cname: string;
@@ -17,7 +15,7 @@ export interface CustomerInstitution extends Partial<BackendType> {
 }
 
 export const emptyCustomerInstitution: CustomerInstitution = {
-  type: BackendTypeNames.CUSTOMER,
+  type: 'Customer',
   id: '',
   archiveName: '',
   cname: '',

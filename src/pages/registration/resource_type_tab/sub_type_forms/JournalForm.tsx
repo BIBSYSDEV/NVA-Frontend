@@ -6,13 +6,13 @@ import { TextField, Typography } from '@material-ui/core';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { lightTheme } from '../../../../themes/lightTheme';
 import { JournalType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { JournalRegistration } from '../../../../types/registration.types';
 import { DoiField } from '../components/DoiField';
 import { JournalField } from '../components/JournalField';
 import { NviValidation } from '../components/NviValidation';
 import { SearchContainerField } from '../components/SearchContainerField';
 import { NviFields } from '../components/nvi_fields/NviFields';
 import { journalArticleContentTypes } from '../../../../types/publication_types/content.types';
+import { JournalRegistration } from '../../../../types/publication_types/journalRegistration.types';
 
 const StyledArticleDetail = styled.div`
   display: grid;

@@ -1,22 +1,21 @@
-import { BackendType } from '../registration.types';
-import { BackendTypeNames } from './commonRegistration.types';
-
-export interface PagesRange extends BackendType {
+export interface PagesRange {
+  type: 'Range';
   begin: string;
   end: string;
 }
 
-export interface PagesMonograph extends BackendType {
+export interface PagesMonograph {
+  type: 'MonographPages';
   pages: string;
 }
 
 export const emptyPagesMonograph: PagesMonograph = {
-  type: BackendTypeNames.PAGES_MONOGRAPH,
+  type: 'MonographPages',
   pages: '',
 };
 
 export const emptyPagesRange: PagesRange = {
-  type: BackendTypeNames.PAGES_RANGE,
+  type: 'Range',
   begin: '',
   end: '',
 };

@@ -1,7 +1,6 @@
 import { CustomerInstitution, CustomerList } from '../../types/customerInstitution.types';
 
 export const mockCustomerInstitution: CustomerInstitution = {
-  type: '',
   id: 'https://api.dev.nva.aws.unit.no/customer/1',
   name: 'Norwegian University of Science and Technology',
   identifier: '1',

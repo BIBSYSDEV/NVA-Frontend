@@ -4,7 +4,7 @@ import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import { lightTheme } from '../../../themes/lightTheme';
 import { DegreeType, ResourceFieldNames } from '../../../types/publicationFieldNames';
-import { DegreeRegistration } from '../../../types/registration.types';
+import { DegreeRegistration } from '../../../types/publication_types/degreeRegistration.types';
 import { SelectTypeField } from './components/SelectTypeField';
 import { DegreeForm } from './sub_type_forms/DegreeForm';
 

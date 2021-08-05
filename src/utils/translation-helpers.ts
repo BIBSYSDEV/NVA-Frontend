@@ -1,7 +1,7 @@
 import i18n from '../translations/i18n';
+import { LanguageString } from '../types/common.types';
 import { ContributorRole } from '../types/contributor.types';
 import { LanguageCodes } from '../types/language.types';
-import { LanguageString } from '../types/publication_types/commonRegistration.types';
 
 // Map from three letter language to two ("nob" -> "no")
 export const getPreferredLanguageCode = () => {

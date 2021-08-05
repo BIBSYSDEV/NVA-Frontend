@@ -9,12 +9,12 @@ import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { StyledCenterAlignedContentWrapper } from '../../../../components/styled/Wrappers';
 import { lightTheme } from '../../../../themes/lightTheme';
 import { BookType, ChapterType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { ChapterRegistration } from '../../../../types/registration.types';
 import { DoiField } from '../components/DoiField';
 import { NviValidation } from '../components/NviValidation';
 import { SearchContainerField } from '../components/SearchContainerField';
 import { NviFields } from '../components/nvi_fields/NviFields';
 import { chapterContentTypes } from '../../../../types/publication_types/content.types';
+import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
 
 const StyledDiv = styled(StyledCenterAlignedContentWrapper)`
   gap: 1rem;
