@@ -64,7 +64,7 @@ export const ChapterForm = () => {
 
         <DoiField />
 
-        {publicationInstance.type === ChapterType.Anthology && (
+        {publicationInstance.type === ChapterType.AnthologyChapter && (
           <SearchContainerField
             fieldName={ResourceFieldNames.PUBLICATION_CONTEXT_LINKED_CONTEXT}
             searchSubtypes={[BookType.ANTHOLOGY]}
@@ -113,7 +113,7 @@ export const ChapterForm = () => {
         </StyledPageNumberWrapper>
       </BackgroundDiv>
 
-      {publicationInstance.type === ChapterType.Anthology && (
+      {publicationInstance.type === ChapterType.AnthologyChapter && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
             <NviFields contentTypeOptions={chapterContentTypes} />

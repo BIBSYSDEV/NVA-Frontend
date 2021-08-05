@@ -29,14 +29,19 @@ interface NviFieldsProps {
 }
 
 export const NviFields = ({ contentTypeOptions }: NviFieldsProps) => {
-  const { values } = useFormikContext<Registration>();
-  const { publicationInstance } = values.entityDescription.reference;
-  const contentType = 'contentType' in publicationInstance ? publicationInstance.contentType : '';
+  const {
+    values: {
+      entityDescription: {
+        reference: { publicationInstance },
+      },
+    },
+  } = useFormikContext<Registration>();
+  const contentType = 'contentType' in publicationInstance ? (publicationInstance.contentType as string) : '';
 
   return (
     <>
       <ContentTypeField options={contentTypeOptions} />
-      {nviApplicableContentTypes.includes(contentType as string) && (
+      {nviApplicableContentTypes.includes(contentType) && (
         <StyledRadioGroup>
           <PeerReviewedField />
           <OriginalResearchField />
