@@ -23,7 +23,7 @@ const PublicRegistration = () => {
   const user = useSelector((store: RootStore) => store.user);
 
   const isAllowedToSeePublicRegistration =
-    registration?.status === RegistrationStatus.PUBLISHED ||
+    registration?.status === RegistrationStatus.Published ||
     userIsRegistrationOwner(user, registration) ||
     userIsRegistrationCurator(user, registration);
 

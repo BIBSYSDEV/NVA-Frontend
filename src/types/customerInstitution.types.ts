@@ -32,15 +32,15 @@ export const emptyCustomerInstitution: CustomerInstitution = {
 };
 
 export enum CustomerInstitutionFieldNames {
-  ARCHIVE_NAME = 'archiveName',
-  CNAME = 'cname',
-  CRISTIN_ID = 'cristinId',
-  DISPLAY_NAME = 'displayName',
-  FEIDE_ORGANIZATION_ID = 'feideOrganizationId',
-  IDENTIFIER = 'identifier',
-  INSTITUTION_DNS = 'institutionDns',
-  NAME = 'name',
-  SHORT_NAME = 'shortName',
+  ArchiveName = 'archiveName',
+  CName = 'cname',
+  CristinId = 'cristinId',
+  DisplayName = 'displayName',
+  FeideOrganizationId = 'feideOrganizationId',
+  Identifier = 'identifier',
+  InstitutionDns = 'institutionDns',
+  Name = 'name',
+  ShortName = 'shortName',
 }
 
 export interface CustomerList {

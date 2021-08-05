@@ -65,19 +65,19 @@ const MyCustomerInstitutionPage = () => {
               <Form noValidate>
                 <SelectInstitutionField disabled />
                 <CustomerInstitutionTextField
-                  name={CustomerInstitutionFieldNames.DISPLAY_NAME}
+                  name={CustomerInstitutionFieldNames.DisplayName}
                   label={t('display_name')}
                   required
                   dataTestId="customer-institution-display-name-field"
                 />
                 <CustomerInstitutionTextField
-                  name={CustomerInstitutionFieldNames.SHORT_NAME}
+                  name={CustomerInstitutionFieldNames.ShortName}
                   label={t('short_name')}
                   required
                   dataTestId="customer-institution-short-name-field"
                 />
                 <CustomerInstitutionTextField
-                  name={CustomerInstitutionFieldNames.ARCHIVE_NAME}
+                  name={CustomerInstitutionFieldNames.ArchiveName}
                   label={t('archive_name')}
                   dataTestId="customer-institution-archive-name-field"
                 />

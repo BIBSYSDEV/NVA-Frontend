@@ -45,11 +45,11 @@ const MyRegistrations = () => {
   const registrations = myRegistrationsResponse?.publications ?? [];
 
   const unpublishedRegistrations = registrations
-    .filter((registration) => registration.status === RegistrationStatus.DRAFT)
+    .filter((registration) => registration.status === RegistrationStatus.Draft)
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
   const publishedRegistrations = registrations
-    .filter((registration) => registration.status === RegistrationStatus.PUBLISHED)
+    .filter((registration) => registration.status === RegistrationStatus.Published)
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
   return (

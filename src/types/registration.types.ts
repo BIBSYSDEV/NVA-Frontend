@@ -14,10 +14,10 @@ import { Contributor } from './contributor.types';
 import { LanguageValues } from './language.types';
 
 export enum RegistrationStatus {
-  DELETED = 'DRAFT_FOR_DELETION',
-  DRAFT = 'DRAFT',
-  NEW = 'NEW',
-  PUBLISHED = 'PUBLISHED',
+  Deleted = 'DRAFT_FOR_DELETION',
+  Draft = 'DRAFT',
+  New = 'NEW',
+  Published = 'PUBLISHED',
 }
 
 export enum RegistrationTab {
@@ -28,10 +28,10 @@ export enum RegistrationTab {
 }
 
 export const levelMap: EnumDictionary<string, number | null> = {
-  NO_LEVEL: null,
-  LEVEL_0: 0,
-  LEVEL_1: 1,
-  LEVEL_2: 2,
+  NoLevel: null,
+  Level0: 0,
+  Level1: 1,
+  Level2: 2,
 };
 
 export interface BackendType {
@@ -163,7 +163,7 @@ export const emptyRegistration: Registration = {
   createdDate: '',
   modifiedDate: '',
   owner: '',
-  status: RegistrationStatus.NEW,
+  status: RegistrationStatus.New,
   entityDescription: emptyRegistrationEntityDescription,
   fileSet: {
     type: BackendTypeNames.FILE_SET,

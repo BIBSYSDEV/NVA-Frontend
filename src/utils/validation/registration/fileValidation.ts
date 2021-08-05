@@ -26,7 +26,7 @@ export const fileValidationSchema = Yup.object().shape({
       then: Yup.date()
         .nullable()
         .when('$publicationStatus', {
-          is: RegistrationStatus.PUBLISHED,
+          is: RegistrationStatus.Published,
           then: Yup.date().nullable().typeError(fileErrorMessage.embargoDateInvalid),
           otherwise: Yup.date()
             .nullable()

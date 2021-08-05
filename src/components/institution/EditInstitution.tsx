@@ -38,7 +38,7 @@ export const EditInstitution = ({ initialInstitutionId, onCancel, onSubmit }: Ed
   return (
     <Formik enableReinitialize initialValues={{ unit: initialValue }} onSubmit={onSubmit}>
       <Form noValidate>
-        <Field name={FormikInstitutionUnitFieldNames.UNIT}>
+        <Field name={FormikInstitutionUnitFieldNames.Unit}>
           {({ field: { name, value }, form: { isSubmitting } }: FieldProps) => (
             <StyledInstitutionSearchContainer>
               <InstitutionAutocomplete

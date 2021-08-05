@@ -14,8 +14,8 @@ export interface FormikInstitutionUnit extends Partial<RecursiveInstitutionUnit>
 }
 
 export enum FormikInstitutionUnitFieldNames {
-  SUB_UNIT = 'subunit',
-  UNIT = 'unit',
+  SubUnit = 'subunit',
+  Unit = 'unit',
 }
 
 export interface InstitutionState {
