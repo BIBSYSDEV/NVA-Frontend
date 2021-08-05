@@ -3,7 +3,6 @@ import { PublicationType, JournalType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { emptyPagesRange, PagesRange } from './pages.types';
 import { JournalArticleContentType } from './content.types';
-import { emptyDate } from './commonRegistration.types';
 
 export interface JournalPublicationInstance extends NviApplicableBase<JournalArticleContentType> {
   type: JournalType | '';
@@ -67,7 +66,12 @@ export const emptyRegistrationEntityDescription: JournalEntityDescription = {
   type: 'EntityDescription',
   abstract: '',
   contributors: [],
-  date: emptyDate,
+  date: {
+    type: 'PublicationDate',
+    year: '',
+    month: '',
+    day: '',
+  },
   description: '',
   language: LanguageValues.NONE,
   mainTitle: '',
