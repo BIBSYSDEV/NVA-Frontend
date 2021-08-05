@@ -1,11 +1,11 @@
 import { TextField, MenuItem } from '@material-ui/core';
 import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { StyledSelectWrapper } from '../../../../components/styled/Wrappers';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { ContentTypeOption, nviApplicableContentTypes } from '../../../../types/publication_types/content.types';
-import { Registration } from '../../../../types/registration.types';
-import { dataTestId } from '../../../../utils/dataTestIds';
+import { StyledSelectWrapper } from '../../../../../components/styled/Wrappers';
+import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
+import { ContentTypeOption, nviApplicableContentTypes } from '../../../../../types/publication_types/content.types';
+import { Registration } from '../../../../../types/registration.types';
+import { dataTestId } from '../../../../../utils/dataTestIds';
 
 interface ContentTypeFieldProps {
   options: ContentTypeOption[];

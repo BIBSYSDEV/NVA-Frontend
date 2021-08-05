@@ -1,4 +1,8 @@
+import { useFormikContext } from 'formik';
 import styled from 'styled-components';
+import { ContentTypeOption, nviApplicableContentTypes } from '../../../../../types/publication_types/content.types';
+import { Registration } from '../../../../../types/registration.types';
+import { ContentTypeField } from './ContentTypeField';
 import { OriginalResearchField } from './OriginalResearchField';
 import { PeerReviewedField } from './PeerReviewedField';
 
@@ -20,9 +24,24 @@ const StyledRadioGroup = styled.div`
   }
 `;
 
-export const NviFields = () => (
-  <StyledRadioGroup>
-    <PeerReviewedField />
-    <OriginalResearchField />
-  </StyledRadioGroup>
-);
+interface NviFieldsProps {
+  contentTypeOptions: ContentTypeOption[];
+}
+
+export const NviFields = ({ contentTypeOptions }: NviFieldsProps) => {
+  const { values } = useFormikContext<Registration>();
+  const { publicationInstance } = values.entityDescription.reference;
+  const contentType = 'contentType' in publicationInstance ? publicationInstance.contentType : '';
+
+  return (
+    <>
+      <ContentTypeField options={contentTypeOptions} />
+      {nviApplicableContentTypes.includes(contentType as string) && (
+        <StyledRadioGroup>
+          <PeerReviewedField />
+          <OriginalResearchField />
+        </StyledRadioGroup>
+      )}
+    </>
+  );
+};
