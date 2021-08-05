@@ -1,6 +1,7 @@
 import { BaseEntityDescription } from '../registration.types';
 import { PublicationType, ReportType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
+import { BaseReference } from './commonRegistration.types';
 
 export interface ReportPublicationInstance {
   type: ReportType | '';
@@ -26,9 +27,7 @@ export interface ReportPublicationContext {
   url: string;
 }
 
-interface ReportReference {
-  type: 'Reference';
-  doi: string;
+interface ReportReference extends BaseReference {
   publicationContext: ReportPublicationContext;
   publicationInstance: ReportPublicationInstance;
 }

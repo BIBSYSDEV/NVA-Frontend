@@ -2,7 +2,7 @@ import { BaseEntityDescription } from '../registration.types';
 import { PublicationType, BookType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
 import { BookMonographContentType } from './content.types';
-import { NviApplicableBase } from './commonRegistration.types';
+import { BaseReference, NviApplicableBase } from './commonRegistration.types';
 
 export interface BookPublicationInstance extends NviApplicableBase<BookMonographContentType> {
   type: BookType | '';
@@ -29,9 +29,7 @@ export interface BookPublicationContext {
   url: string;
 }
 
-interface BookReference {
-  type: 'Reference';
-  doi: string;
+interface BookReference extends BaseReference {
   publicationContext: BookPublicationContext;
   publicationInstance: BookPublicationInstance;
 }

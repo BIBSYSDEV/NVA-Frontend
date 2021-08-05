@@ -6,6 +6,11 @@ export interface NviApplicableBase<T> {
   originalResearch: boolean | null;
 }
 
+export interface BaseReference {
+  type: 'Reference';
+  doi: string;
+}
+
 export const emptyDate: RegistrationDate = {
   type: 'PublicationDate',
   year: '',

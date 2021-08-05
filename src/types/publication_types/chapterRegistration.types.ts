@@ -1,6 +1,6 @@
 import { ChapterType, PublicationType } from '../publicationFieldNames';
 import { BaseEntityDescription } from '../registration.types';
-import { NviApplicableBase } from './commonRegistration.types';
+import { BaseReference, NviApplicableBase } from './commonRegistration.types';
 import { ChapterContentType } from './content.types';
 import { PagesRange, emptyPagesRange } from './pages.types';
 
@@ -31,9 +31,7 @@ export const emptyChapterPublicationInstance: ChapterPublicationInstance = {
   originalResearch: null,
 };
 
-interface ChapterReference {
-  type: 'Reference';
-  doi: string;
+interface ChapterReference extends BaseReference {
   publicationContext: ChapterPublicationContext;
   publicationInstance: ChapterPublicationInstance;
 }

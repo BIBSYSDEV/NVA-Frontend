@@ -83,7 +83,7 @@ export interface RegistrationPublisher {
 }
 
 interface BaseRegistration extends RegistrationFileSet {
-  type: any;
+  readonly type: any;
   readonly identifier: string;
   readonly createdDate: string;
   readonly modifiedDate: string;

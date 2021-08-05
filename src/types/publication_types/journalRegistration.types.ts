@@ -1,7 +1,7 @@
 import { BaseEntityDescription } from '../registration.types';
 import { PublicationType, JournalType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
-import { emptyDate, NviApplicableBase } from './commonRegistration.types';
+import { BaseReference, emptyDate, NviApplicableBase } from './commonRegistration.types';
 import { emptyPagesRange, PagesRange } from './pages.types';
 import { JournalArticleContentType } from './content.types';
 
@@ -25,9 +25,7 @@ export interface JournalPublicationContext {
   url?: string;
 }
 
-interface JournalReference {
-  type: 'Reference';
-  doi: string;
+interface JournalReference extends BaseReference {
   publicationContext: JournalPublicationContext;
   publicationInstance: JournalPublicationInstance;
 }
