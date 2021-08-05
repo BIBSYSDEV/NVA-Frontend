@@ -31,7 +31,7 @@ export const DoiField = () => {
   };
 
   const removeDoi = () => {
-    setFieldValue(ResourceFieldNames.DOI, '');
+    setFieldValue(ResourceFieldNames.Doi, '');
     toggleConfirmDialog();
   };
 

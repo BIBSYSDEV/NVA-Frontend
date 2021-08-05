@@ -91,7 +91,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           <>
             <PublicJournalContent date={date} publicationContext={publicationContext as JournalPublicationContext} />
             <PublicPublicationInstanceJournal publicationInstance={journalPublicationInstance} />
-            {publicationInstance.type === JournalType.CORRIGENDUM && (
+            {publicationInstance.type === JournalType.Corrigendum && (
               <>
                 <Typography variant="overline" component="p">
                   {t('resource_type.original_article')}
@@ -115,7 +115,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         ) : isDegree(registration) ? (
           <>
             <PublicPublisherContent publicationContext={publicationContext as DegreePublicationContext} />
-            {publicationInstance.type === DegreeType.PHD && (
+            {publicationInstance.type === DegreeType.Phd && (
               <PublicSeriesContent
                 seriesTitle={(publicationContext as DegreePublicationContext).seriesTitle}
                 seriesNumber={(publicationContext as DegreePublicationContext).seriesNumber}

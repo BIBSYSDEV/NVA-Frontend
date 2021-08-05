@@ -31,19 +31,19 @@ export const ResourceTypePanel = () => {
     setFieldValue(contextTypeBaseFieldName, { type: newPublicationContextType }, false);
 
     switch (newPublicationContextType) {
-      case PublicationType.PUBLICATION_IN_JOURNAL:
+      case PublicationType.PublicationInJournal:
         setFieldValue(instanceTypeBaseFieldName, emptyJournalPublicationInstance, false);
         break;
-      case PublicationType.BOOK:
+      case PublicationType.Book:
         setFieldValue(instanceTypeBaseFieldName, emptyBookPublicationInstance, false);
         break;
-      case PublicationType.REPORT:
+      case PublicationType.Report:
         setFieldValue(instanceTypeBaseFieldName, emptyReportPublicationInstance, false);
         break;
-      case PublicationType.DEGREE:
+      case PublicationType.Degree:
         setFieldValue(instanceTypeBaseFieldName, emptyDegreePublicationInstance, false);
         break;
-      case PublicationType.CHAPTER:
+      case PublicationType.Chapter:
         setFieldValue(instanceTypeBaseFieldName, emptyChapterPublicationInstance, false);
         break;
     }
@@ -73,7 +73,7 @@ export const ResourceTypePanel = () => {
         <StyledSelectWrapper>
           <SelectTypeField
             dataTestId="publication-context-type"
-            fieldName={ResourceFieldNames.PUBLICATION_CONTEXT_TYPE}
+            fieldName={ResourceFieldNames.PubliactionContextType}
             options={Object.values(PublicationType)}
             onChangeType={onChangeType}
           />
@@ -82,11 +82,11 @@ export const ResourceTypePanel = () => {
 
       {publicationContextType && (
         <>
-          {publicationContextType === PublicationType.BOOK && <BookTypeForm onChangeSubType={onChangeSubType} />}
-          {publicationContextType === PublicationType.REPORT && <ReportTypeForm onChangeSubType={onChangeSubType} />}
-          {publicationContextType === PublicationType.DEGREE && <DegreeTypeForm onChangeSubType={onChangeSubType} />}
-          {publicationContextType === PublicationType.CHAPTER && <ChapterTypeForm onChangeSubType={onChangeSubType} />}
-          {publicationContextType === PublicationType.PUBLICATION_IN_JOURNAL && (
+          {publicationContextType === PublicationType.Book && <BookTypeForm onChangeSubType={onChangeSubType} />}
+          {publicationContextType === PublicationType.Report && <ReportTypeForm onChangeSubType={onChangeSubType} />}
+          {publicationContextType === PublicationType.Degree && <DegreeTypeForm onChangeSubType={onChangeSubType} />}
+          {publicationContextType === PublicationType.Chapter && <ChapterTypeForm onChangeSubType={onChangeSubType} />}
+          {publicationContextType === PublicationType.PublicationInJournal && (
             <JournalTypeForm onChangeSubType={onChangeSubType} />
           )}
         </>

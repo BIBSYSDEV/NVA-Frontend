@@ -13,24 +13,24 @@ export const SeriesFields = () => {
 
   return (
     <>
-      <Field name={ResourceFieldNames.SERIES_TITLE}>
+      <Field name={ResourceFieldNames.SeriesTitle}>
         {({ field: { name, value }, form: { setFieldValue } }: FieldProps<string>) => (
           <PublicationChannelSearch
             dataTestId={dataTestId.registrationWizard.resourceType.seriesField}
-            publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
+            publicationTable={PublicationTableNumber.PublicationChannels}
             label={t('common:title')}
             placeholder={t('resource_type.search_for_series')}
             errorFieldName={name}
             setValue={(newValue) => {
               setFieldValue(name, newValue?.title ?? '');
-              setFieldValue(ResourceFieldNames.PUBLICATION_CONTEXT_LEVEL, newValue ? mapLevel(newValue.level) : '');
+              setFieldValue(ResourceFieldNames.PubliactionContextLevel, newValue ? mapLevel(newValue.level) : '');
             }}
             value={publicationContextToPublisher({ title: value })}
           />
         )}
       </Field>
 
-      <Field name={ResourceFieldNames.SERIES_NUMBER}>
+      <Field name={ResourceFieldNames.SeriesNumber}>
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}

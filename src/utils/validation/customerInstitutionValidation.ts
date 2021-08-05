@@ -10,16 +10,16 @@ const customerErrorMessage = {
 };
 
 export const customerInstitutionValidationSchema = Yup.object().shape({
-  [CustomerInstitutionFieldNames.NAME]: Yup.string().required(customerErrorMessage.institutionRequired),
-  [CustomerInstitutionFieldNames.DISPLAY_NAME]: Yup.string().required(customerErrorMessage.displayNameRequired),
-  [CustomerInstitutionFieldNames.SHORT_NAME]: Yup.string().required(customerErrorMessage.shortNameRequired),
-  [CustomerInstitutionFieldNames.ARCHIVE_NAME]: Yup.string(),
-  [CustomerInstitutionFieldNames.FEIDE_ORGANIZATION_ID]: Yup.string().required(customerErrorMessage.feideIdRequired),
+  [CustomerInstitutionFieldNames.Name]: Yup.string().required(customerErrorMessage.institutionRequired),
+  [CustomerInstitutionFieldNames.DisplayName]: Yup.string().required(customerErrorMessage.displayNameRequired),
+  [CustomerInstitutionFieldNames.ShortName]: Yup.string().required(customerErrorMessage.shortNameRequired),
+  [CustomerInstitutionFieldNames.ArchiveName]: Yup.string(),
+  [CustomerInstitutionFieldNames.FeideOrganizationId]: Yup.string().required(customerErrorMessage.feideIdRequired),
 });
 
 export const myInstitutionValidationSchema = Yup.object().shape({
-  [CustomerInstitutionFieldNames.NAME]: Yup.string().required(customerErrorMessage.institutionRequired),
-  [CustomerInstitutionFieldNames.DISPLAY_NAME]: Yup.string().required(customerErrorMessage.displayNameRequired),
-  [CustomerInstitutionFieldNames.SHORT_NAME]: Yup.string().required(customerErrorMessage.shortNameRequired),
-  [CustomerInstitutionFieldNames.ARCHIVE_NAME]: Yup.string(),
+  [CustomerInstitutionFieldNames.Name]: Yup.string().required(customerErrorMessage.institutionRequired),
+  [CustomerInstitutionFieldNames.DisplayName]: Yup.string().required(customerErrorMessage.displayNameRequired),
+  [CustomerInstitutionFieldNames.ShortName]: Yup.string().required(customerErrorMessage.shortNameRequired),
+  [CustomerInstitutionFieldNames.ArchiveName]: Yup.string(),
 });

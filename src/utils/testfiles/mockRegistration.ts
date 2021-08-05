@@ -12,7 +12,7 @@ export const mockRegistration: JournalRegistration = {
   createdDate: new Date(2020, 1).toISOString(),
   modifiedDate: new Date(2020, 2).toISOString(),
   owner: 'tu@unit.no',
-  status: RegistrationStatus.DRAFT,
+  status: RegistrationStatus.Draft,
   projects: [{ type: 'ResearchProject', id: 'https://api.dev.nva.aws.unit.no/project/1', name: 'A dummy project' }],
   publisher: { id: mockCustomerInstitution.id },
   fileSet: {
@@ -85,7 +85,7 @@ export const mockRegistration: JournalRegistration = {
       type: BackendTypeNames.REFERENCE,
       doi: '',
       publicationInstance: {
-        type: JournalType.ARTICLE,
+        type: JournalType.Article,
         pages: {
           type: BackendTypeNames.PAGES_RANGE,
           begin: '',
@@ -100,7 +100,7 @@ export const mockRegistration: JournalRegistration = {
         originalResearch: null,
       },
       publicationContext: {
-        type: PublicationType.PUBLICATION_IN_JOURNAL,
+        type: PublicationType.PublicationInJournal,
         level: null,
         openAccess: false,
         peerReviewed: false,
@@ -148,4 +148,4 @@ export const mockMessages: SupportRequest[] = [
   },
 ];
 
-export const mockPublishedRegistration = { ...mockRegistration, identifier: 123, status: RegistrationStatus.PUBLISHED };
+export const mockPublishedRegistration = { ...mockRegistration, identifier: 123, status: RegistrationStatus.Published };

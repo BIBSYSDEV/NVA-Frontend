@@ -52,7 +52,7 @@ export const BookForm = () => {
         </StyledSection>
       </BackgroundDiv>
 
-      {type === BookType.MONOGRAPH && (
+      {type === BookType.Monograph && (
         <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
           <NviFields contentTypeOptions={bookMonographContentTypes} />
         </BackgroundDiv>
@@ -64,7 +64,7 @@ export const BookForm = () => {
         <SeriesFields />
       </BackgroundDiv>
 
-      {type === BookType.MONOGRAPH && (
+      {type === BookType.Monograph && (
         <NviValidation
           isPeerReviewed={!!peerReviewed}
           isRated={!!publicationContext?.level}

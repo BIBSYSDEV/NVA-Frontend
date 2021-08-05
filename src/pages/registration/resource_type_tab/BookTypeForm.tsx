@@ -21,7 +21,7 @@ export const BookTypeForm = ({ onChangeSubType }: BookTypeFormProps) => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
         <StyledSelectWrapper>
           <SelectTypeField
-            fieldName={ResourceFieldNames.SUB_TYPE}
+            fieldName={ResourceFieldNames.SubType}
             onChangeType={onChangeSubType}
             options={Object.values(BookType)}
           />

@@ -71,7 +71,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       .filter((_, index) => index !== indexToRemove)
       .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
     const nextContributors = [...nextRelevantContributors, ...otherContributors];
-    setFieldValue(ContributorFieldNames.CONTRIBUTORS, nextContributors);
+    setFieldValue(ContributorFieldNames.Contributors, nextContributors);
 
     const maxValidPage = Math.ceil(nextContributors.length / contributorsPerPage);
     if (currentPage > maxValidPage) {
@@ -80,7 +80,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
 
     if (nextContributors.length === 0) {
       // Ensure field is set to touched even if it's empty
-      setFieldTouched(ContributorFieldNames.CONTRIBUTORS);
+      setFieldTouched(ContributorFieldNames.Contributors);
     }
   };
 
@@ -104,7 +104,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       ...contributor,
       sequence: index + 1,
     }));
-    setFieldValue(ContributorFieldNames.CONTRIBUTORS, [...otherContributors, ...newContributors]);
+    setFieldValue(ContributorFieldNames.Contributors, [...otherContributors, ...newContributors]);
   };
 
   const handleOpenContributorModal = (unverifiedContributor: UnverifiedContributor) => {

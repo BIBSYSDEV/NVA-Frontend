@@ -139,7 +139,7 @@ export const RegistrationList = ({ registrations, refetchRegistrations }: Regist
                   </Button>
                 </TableCell>
                 <TableCell>
-                  {registration.status === RegistrationStatus.DRAFT && (
+                  {registration.status === RegistrationStatus.Draft && (
                     <DangerButton
                       variant="outlined"
                       data-testid={`delete-registration-${registration.identifier}`}

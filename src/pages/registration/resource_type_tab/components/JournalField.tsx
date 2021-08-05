@@ -16,11 +16,11 @@ export const JournalField = () => {
       {({ field: { name, value } }: FieldProps) => (
         <PublicationChannelSearch
           dataTestId="journal-search-field"
-          publicationTable={PublicationTableNumber.PUBLICATION_CHANNELS}
+          publicationTable={PublicationTableNumber.PublicationChannels}
           label={t('resource_type.journal')}
           required
           placeholder={t('resource_type.search_for_journal')}
-          errorFieldName={ResourceFieldNames.PUBLICATION_CONTEXT_TITLE}
+          errorFieldName={ResourceFieldNames.PubliactionContextTitle}
           setValue={(newValue) => {
             const contextValues = formatPublicationContextWithTitle(value.type, newValue);
             setFieldValue(name, contextValues);

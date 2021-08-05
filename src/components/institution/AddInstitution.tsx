@@ -39,7 +39,7 @@ export const AddInstitution = ({ onSubmit, onClose }: AddInstitutionProps) => {
   return (
     <Formik initialValues={{}} onSubmit={onSubmit}>
       <Form noValidate>
-        <Field name={FormikInstitutionUnitFieldNames.UNIT}>
+        <Field name={FormikInstitutionUnitFieldNames.Unit}>
           {({ field: { name, value }, form: { setFieldValue, isSubmitting } }: FieldProps) => (
             <StyledInstitutionSearchContainer>
               <InstitutionAutocomplete

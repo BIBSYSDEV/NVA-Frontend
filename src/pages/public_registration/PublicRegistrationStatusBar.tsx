@@ -131,7 +131,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   const isOwner = user && user.isCreator && owner === user.id;
   const isCurator = user && user.isCurator && user.customerId === publisher.id;
   const hasNvaDoi = !!doi || doiRequest;
-  const isPublishedRegistration = registration.status === RegistrationStatus.PUBLISHED;
+  const isPublishedRegistration = registration.status === RegistrationStatus.Published;
   const editRegistrationUrl = getRegistrationPath(identifier);
 
   return isOwner || isCurator ? (
@@ -142,7 +142,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           description={
             <>
               <Typography variant="h4" component="h1">
-                {registration.status === RegistrationStatus.PUBLISHED
+                {registration.status === RegistrationStatus.Published
                   ? t('public_page.published')
                   : t('public_page.not_published')}
               </Typography>
@@ -180,7 +180,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           </Typography>
         )}
         <StyledButtonsContainer>
-          {registration.status === RegistrationStatus.DRAFT && (
+          {registration.status === RegistrationStatus.Draft && (
             <ButtonWithProgress
               disabled={!!isLoading || !registrationIsValid}
               data-testid={dataTestId.registrationLandingPage.publishButton}

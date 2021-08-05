@@ -168,7 +168,7 @@ const journalPublicationInstance = Yup.object().shape({
   corrigendumFor: Yup.string()
     .optional()
     .when('type', {
-      is: JournalType.CORRIGENDUM,
+      is: JournalType.Corrigendum,
       then: Yup.string()
         .url(resourceErrorMessage.corrigendumForInvalid)
         .required(resourceErrorMessage.corrigendumForRequired),
@@ -183,7 +183,7 @@ const journalPublicationInstance = Yup.object().shape({
 
 const journalPublicationContext = Yup.object().shape({
   title: Yup.string().when('$publicationInstanceType', {
-    is: JournalType.CORRIGENDUM,
+    is: JournalType.Corrigendum,
     then: Yup.string(),
     otherwise: Yup.string().required(resourceErrorMessage.journalRequired),
   }),

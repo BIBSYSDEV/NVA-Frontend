@@ -33,7 +33,7 @@ export const DatePickerField = () => {
   );
   const [yearOnly, setYearOnly] = useState(!!year && !month);
 
-  const setYearFieldTouched = () => setFieldTouched(DescriptionFieldNames.PUBLICATION_YEAR);
+  const setYearFieldTouched = () => setFieldTouched(DescriptionFieldNames.PublicationYear);
 
   const updateDateValues = (newDate: Date | null, isYearOnly: boolean) => {
     const updatedDate = {
@@ -43,7 +43,7 @@ export const DatePickerField = () => {
       day: !isYearOnly && newDate ? newDate.getDate() : '',
     };
     setYearFieldTouched();
-    setFieldValue(DescriptionFieldNames.DATE, updatedDate);
+    setFieldValue(DescriptionFieldNames.Date, updatedDate);
   };
 
   const onChangeDate = (newDate: Date | null) => {

@@ -73,7 +73,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
   return (
     <>
-      <FieldArray name={FileFieldNames.FILES}>
+      <FieldArray name={FileFieldNames.Files}>
         {({ name, remove, push }: FieldArrayRenderProps) => (
           <>
             {files.length > 0 && (

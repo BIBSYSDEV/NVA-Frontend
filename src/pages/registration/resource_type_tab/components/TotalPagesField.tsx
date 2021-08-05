@@ -14,7 +14,7 @@ export const TotalPagesField = () => {
   const { t } = useTranslation('registration');
 
   return (
-    <Field name={ResourceFieldNames.PAGES_PAGES}>
+    <Field name={ResourceFieldNames.PagesPages}>
       {({ field, meta: { touched, error } }: FieldProps) => (
         <StyledTextField
           id={field.name}

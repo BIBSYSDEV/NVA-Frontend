@@ -24,7 +24,7 @@ export const DegreeForm = ({ subType }: DegreeFormProps) => {
         <TotalPagesField />
       </BackgroundDiv>
 
-      {subType === DegreeType.PHD && (
+      {subType === DegreeType.Phd && (
         <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
           <Typography variant="h5">{t('resource_type.series')}</Typography>
           <Typography>{t('resource_type.series_info')}</Typography>

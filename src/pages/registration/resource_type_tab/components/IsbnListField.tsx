@@ -14,7 +14,7 @@ export const IsbnListField = () => {
   const dispatch = useDispatch();
 
   return (
-    <Field name={ResourceFieldNames.ISBN_LIST}>
+    <Field name={ResourceFieldNames.IsbnList}>
       {({ field, form: { setFieldValue, setFieldTouched }, meta: { error } }: FieldProps) => (
         <Autocomplete
           id={field.name}

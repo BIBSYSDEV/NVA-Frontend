@@ -125,7 +125,7 @@ export const RegistrationFormActions = ({
                 // Set all fields with error to touched to ensure error messages are shown
                 setTouched(setNestedObjectValues(errors, true));
               }}>
-              {values.status === RegistrationStatus.DRAFT ? t('save_draft') : t('common:save')}
+              {values.status === RegistrationStatus.Draft ? t('save_draft') : t('common:save')}
             </ButtonWithProgress>
             <Button
               color="secondary"

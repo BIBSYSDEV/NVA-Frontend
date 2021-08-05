@@ -16,11 +16,11 @@ export const PublisherField = () => {
       {({ field: { name, value } }: FieldProps) => (
         <PublicationChannelSearch
           dataTestId="publisher-search-field"
-          publicationTable={PublicationTableNumber.PUBLISHERS}
+          publicationTable={PublicationTableNumber.Publishers}
           label={t('common:publisher')}
           required
           placeholder={t('resource_type.search_for_publisher')}
-          errorFieldName={ResourceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
+          errorFieldName={ResourceFieldNames.PubliactionContextPublisher}
           setValue={(newValue) => {
             const contextValues: any = formatPublicationContextWithPublisher(value.type, newValue);
             if (newValue && value.seriesTitle) {
