@@ -1,11 +1,12 @@
 import { ChapterType, PublicationType } from '../publicationFieldNames';
 import { BackendType, BaseEntityDescription } from '../registration.types';
+import { ChapterContentType } from './content.types';
 import { PagesRange, emptyPagesRange } from './pages.types';
 
 export interface ChapterPublicationInstance {
   type: ChapterType | '';
   pages: PagesRange;
-  contentType: any;
+  contentType: ChapterContentType | null;
   peerReviewed: boolean | null;
   originalResearch: boolean | null;
 }

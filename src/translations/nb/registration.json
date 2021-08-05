@@ -140,17 +140,22 @@
     },
     "content": "Innhold",
     "content_types": {
+      "Academic Chapter": "Vitenskapelig kapittel",
       "Academic Monograph": "Vitenskapelig monografi",
       "Case report": "Kauistikk",
       "Encyclopedia": "Oppslagsverk",
+      "Encyclopedia Chapter": "Kapittel i oppslagsverk",
+      "Non-fiction Chapter": "Faglig kapittel",
       "Non-fiction Monograph": "Faglig monografi",
       "Popular Science Monograph": "Popularvitenskapelig monografi",
+      "Popular Science Chapter": "Populærvitenskapelig kapittel",
       "Popular science article": "Popularvitenskapelig artikkel",
       "Professional article": "Fagartikkel",
       "Research article": "Forskningsartikkel",
       "Review article": "Vitenskapelig oversiktsartikkel",
       "Study protocol": "Studieprotokoll",
-      "Textbook": "Lærebok"
+      "Textbook": "Textbook",
+      "Textbook Chapter": "Kapittel i lærebok"
     },
     "isbn": "ISBN",
     "isbn_helper": "Trykk Enter for å legge til ISBN",

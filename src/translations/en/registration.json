@@ -140,17 +140,22 @@
     },
     "content": "Content",
     "content_types": {
+      "Academic Chapter": "Academic chapter",
       "Academic Monograph": "Academic Monograph",
       "Case report": "Case report",
       "Encyclopedia": "Encyclopedia",
+      "Encyclopedia Chapter": "Encyclopedia Chapter",
+      "Non-fiction Chapter": "Non-fiction chapter",
       "Non-fiction Monograph": "Non-fiction Monograph",
       "Popular Science Monograph": "Popular Science Monograph",
+      "Popular Science Chapter": "Popular science chapter",
       "Popular science article": "Popular science article",
       "Professional article": "Professional article",
       "Research article": "Research article",
       "Review article": "Review article",
       "Study protocol": "Study protocol",
-      "Textbook": "Textbook"
+      "Textbook": "Textbook",
+      "Textbook Chapter": "Textbook chapter"
     },
     "isbn": "ISBN",
     "isbn_helper": "Press Enter to add ISBN",
