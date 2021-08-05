@@ -2,13 +2,11 @@ import { BackendType, BaseEntityDescription } from '../registration.types';
 import { PublicationType, BookType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
 import { BookMonographContentType } from './content.types';
+import { NviApplicablePublicationInstance } from './commonRegistration.types';
 
-export interface BookPublicationInstance {
+export interface BookPublicationInstance extends NviApplicablePublicationInstance<BookMonographContentType> {
   type: BookType | '';
   pages: PagesMonograph | null;
-  contentType: BookMonographContentType | null;
-  peerReviewed: boolean | null;
-  originalResearch: boolean | null;
 }
 
 export const emptyBookPublicationInstance: BookPublicationInstance = {

@@ -15,6 +15,12 @@ export enum BackendTypeNames {
   REFERENCE = 'Reference',
 }
 
+export interface NviApplicablePublicationInstance<T> {
+  contentType: T | null;
+  peerReviewed: boolean | null;
+  originalResearch: boolean | null;
+}
+
 export const emptyDate = {
   type: BackendTypeNames.PUBLICATION_DATE,
   year: '',
