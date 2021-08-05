@@ -1,7 +1,10 @@
-import { BaseEntityDescription, BaseReference } from '../registration.types';
+import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
 import { PublicationType, DegreeType } from '../publicationFieldNames';
-
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
+
+export interface DegreeRegistration extends BaseRegistration {
+  entityDescription: DegreeEntityDescription;
+}
 
 export interface DegreePublicationInstance {
   type: DegreeType | '';

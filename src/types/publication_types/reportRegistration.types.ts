@@ -1,6 +1,10 @@
-import { BaseEntityDescription, BaseReference } from '../registration.types';
+import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
 import { PublicationType, ReportType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
+
+export interface ReportRegistration extends BaseRegistration {
+  entityDescription: ReportEntityDescription;
+}
 
 export interface ReportPublicationInstance {
   type: ReportType | '';

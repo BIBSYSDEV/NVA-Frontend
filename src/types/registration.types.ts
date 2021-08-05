@@ -82,7 +82,7 @@ export interface RegistrationPublisher {
   id: string;
 }
 
-interface BaseRegistration extends RegistrationFileSet {
+export interface BaseRegistration extends RegistrationFileSet {
   readonly type: 'Publication';
   readonly identifier: string;
   readonly createdDate: string;
@@ -127,26 +127,6 @@ export interface Registration extends BaseRegistration {
     | BookEntityDescription
     | ReportEntityDescription
     | ChapterEntityDescription;
-}
-
-export interface JournalRegistration extends BaseRegistration {
-  entityDescription: JournalEntityDescription;
-}
-
-export interface DegreeRegistration extends BaseRegistration {
-  entityDescription: DegreeEntityDescription;
-}
-
-export interface BookRegistration extends BaseRegistration {
-  entityDescription: BookEntityDescription;
-}
-
-export interface ReportRegistration extends BaseRegistration {
-  entityDescription: ReportEntityDescription;
-}
-
-export interface ChapterRegistration extends BaseRegistration {
-  entityDescription: ChapterEntityDescription;
 }
 
 export interface RegistrationDate {

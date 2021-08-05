@@ -4,7 +4,7 @@ import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import { lightTheme } from '../../../themes/lightTheme';
 import { BookType, ResourceFieldNames } from '../../../types/publicationFieldNames';
-import { BookRegistration } from '../../../types/registration.types';
+import { BookRegistration } from '../../../types/publication_types/bookRegistration.types';
 import { SelectTypeField } from './components/SelectTypeField';
 import { BookForm } from './sub_type_forms/BookForm';
 

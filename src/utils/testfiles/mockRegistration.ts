@@ -1,9 +1,10 @@
 import { ContributorRole } from '../../types/contributor.types';
 import { LanguageValues } from '../../types/language.types';
 import { JournalType, PublicationType } from '../../types/publicationFieldNames';
-import { JournalRegistration, RegistrationStatus } from '../../types/registration.types';
+import { RegistrationStatus } from '../../types/registration.types';
 import { mockCustomerInstitution } from './mockCustomerInstitutions';
 import { MessageType, SupportRequest } from '../../types/publication_types/messages.types';
+import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
 
 export const mockRegistration: JournalRegistration = {
   type: 'Publication',

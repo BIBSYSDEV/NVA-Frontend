@@ -1,8 +1,12 @@
-import { BaseEntityDescription, BaseReference, NviApplicableBase } from '../registration.types';
+import { BaseEntityDescription, BaseReference, BaseRegistration, NviApplicableBase } from '../registration.types';
 import { PublicationType, JournalType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { emptyPagesRange, PagesRange } from './pages.types';
 import { JournalArticleContentType } from './content.types';
+
+export interface JournalRegistration extends BaseRegistration {
+  entityDescription: JournalEntityDescription;
+}
 
 export interface JournalPublicationInstance extends NviApplicableBase<JournalArticleContentType> {
   type: JournalType | '';

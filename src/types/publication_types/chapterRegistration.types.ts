@@ -1,7 +1,11 @@
 import { ChapterType, PublicationType } from '../publicationFieldNames';
-import { BaseEntityDescription, BaseReference, NviApplicableBase } from '../registration.types';
+import { BaseEntityDescription, BaseReference, BaseRegistration, NviApplicableBase } from '../registration.types';
 import { ChapterContentType } from './content.types';
 import { PagesRange, emptyPagesRange } from './pages.types';
+
+export interface ChapterRegistration extends BaseRegistration {
+  entityDescription: ChapterEntityDescription;
+}
 
 export interface ChapterPublicationInstance extends NviApplicableBase<ChapterContentType> {
   type: ChapterType | '';
