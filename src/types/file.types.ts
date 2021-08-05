@@ -1,8 +1,6 @@
 import { StrictTypes, Uppy as UppyType } from '@uppy/core';
 import * as LicenseImages from '../resources/images/licenses';
 import i18n from '../translations/i18n';
-import { BackendTypeNames } from './publication_types/commonRegistration.types';
-import { BackendType } from './registration.types';
 
 export enum LicenseNames {
   CC = 'CC',
@@ -91,7 +89,8 @@ export const licenses: LicenseInfo[] = [
   },
 ];
 
-interface License extends BackendType {
+interface License {
+  type: 'License';
   identifier: LicenseNames;
   labels: {
     [key: string]: string;
@@ -99,7 +98,8 @@ interface License extends BackendType {
   link: string;
 }
 
-interface FileSet extends BackendType {
+interface FileSet {
+  type: 'FileSet';
   files: File[];
 }
 
@@ -107,7 +107,8 @@ export interface RegistrationFileSet {
   fileSet: FileSet;
 }
 
-export interface File extends BackendType {
+export interface File {
+  type: 'File';
   identifier: string;
   name: string;
   size: number;
@@ -119,7 +120,7 @@ export interface File extends BackendType {
 }
 
 export const emptyFile: File = {
-  type: BackendTypeNames.FILE,
+  type: 'File',
   identifier: '',
   name: '',
   size: 0,

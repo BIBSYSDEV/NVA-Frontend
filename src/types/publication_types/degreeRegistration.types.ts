@@ -1,4 +1,4 @@
-import { BackendType, BaseEntityDescription } from '../registration.types';
+import { BaseEntityDescription } from '../registration.types';
 import { PublicationType, DegreeType } from '../publicationFieldNames';
 
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
@@ -24,7 +24,8 @@ export interface DegreePublicationContext {
   url: string;
 }
 
-interface DegreeReference extends BackendType {
+interface DegreeReference {
+  type: 'Reference';
   doi: string;
   publicationContext: DegreePublicationContext;
   publicationInstance: DegreePublicationInstance;

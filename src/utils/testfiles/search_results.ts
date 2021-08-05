@@ -1,5 +1,4 @@
 import { SearchResult } from '../../types/search.types';
-import { BackendTypeNames } from '../../types/publication_types/commonRegistration.types';
 
 export const mockSearchResults: SearchResult = {
   took: 10,
@@ -8,7 +7,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/32290378-373e-4cca-8f24-d02b92d845ce',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2017',
         month: '8',
         day: '26',
@@ -29,7 +28,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/d90f87c9-fb5b-41ef-8575-584b50102476',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2019',
         month: '8',
         day: '21',
@@ -54,7 +53,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/c01b4fe3-bd3c-4b89-8d3a-4cced90a53e6',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2009',
         month: '8',
         day: '26',
@@ -75,7 +74,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/989047e8-643e-4b31-b16a-915d5124cc25',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2019',
         month: '10',
         day: '26',
@@ -104,7 +103,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/79333552-6646-4497-ac28-845126fd96ed',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2019',
         month: '9',
         day: '16',
@@ -125,7 +124,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/73772750-68a0-40f7-9adc-19d38e067f1a',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2018',
         month: '9',
         day: '16',
@@ -146,7 +145,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/181f6090-c20d-4f6e-ada4-184c22bb9a5d',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2019',
         month: '10',
         day: '16',
@@ -191,7 +190,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/87e92ce7-c401-4952-92fb-5028907a9c0e',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2009',
         month: '9',
         day: '16',
@@ -212,7 +211,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/52e144b4-e896-48c7-bf68-b3c051db5c58',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2019',
         month: '3',
         day: '16',
@@ -233,7 +232,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/36e16624-b92f-416e-830f-bda598e047ab',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2019',
         month: '9',
         day: '12',
@@ -254,7 +253,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/ed863357-3203-48e7-92bc-c8998843d366',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2019',
         month: '2',
         day: '16',
@@ -279,7 +278,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/fc506676-0def-49f9-8d5d-de409956ad06',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2020',
         month: '9',
         day: '16',
@@ -300,7 +299,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/a6d5a4ba-685c-43fd-b2e2-7b2eba8f6288',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2020',
         month: '1',
         day: '16',
@@ -321,7 +320,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/8987043b-67b9-4e46-9717-013c6134654d',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2020',
         month: '1',
         day: '1',
@@ -342,7 +341,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/0dd27154-42a2-4147-aef1-aaa70c065d28',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2020',
         month: '1',
         day: '10',
@@ -363,7 +362,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/5c0e1784-1530-41c3-8b5f-8bf8f4572f3a',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2018',
         month: '1',
         day: '1',
@@ -392,7 +391,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/c5f3f0e9-e48e-4215-b826-03f61790aea0',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2020',
         month: '12',
         day: '1',
@@ -413,7 +412,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/6f82edac-6bce-4e2b-adbe-46707482ac04',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2020',
         month: '1',
         day: '12',
@@ -438,7 +437,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/a20c371f-3569-4bc1-bd3f-35a598bdcdfc',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2018',
         month: '10',
         day: '1',
@@ -459,7 +458,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/e8c16926-eb52-418d-8b54-887943347dbb',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2018',
         month: '3',
         day: '1',
@@ -480,7 +479,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/ea8bc8c1-04dd-4449-b5cb-78c071bcfa9c',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2018',
         month: '10',
         day: '12',
@@ -501,7 +500,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/e3bdb056-289b-4430-b21e-ff944e57ebcb',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2018',
         month: '9',
         day: '10',
@@ -530,7 +529,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/a5fd5ac7-cbda-4a17-b885-db9e159e3acb',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2019',
         month: '9',
         day: '10',
@@ -551,7 +550,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/bb3ed33b-082e-461a-9001-9d2276d1bf79',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2018',
         month: '11',
         day: '10',
@@ -572,7 +571,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/7595f84d-2f4e-40a5-84a1-59a5ff8d9bcf',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2019',
         month: '9',
         day: '10',
@@ -597,7 +596,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/95c6b281-6dd8-4525-80bf-b6d7127ab92d',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2018',
         month: '9',
         day: '25',
@@ -618,7 +617,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/b72315bf-92ed-4626-81ea-8fd2aabd48ef',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2018',
         month: '12',
         day: '10',
@@ -639,7 +638,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/70d340e5-448c-40a7-a80d-3630e4a7872c',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2017',
         month: '9',
         day: '10',
@@ -664,7 +663,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/d66d4683-6bdc-4732-bee2-189fbe7404d3',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2018',
         month: '9',
         day: '10',
@@ -689,7 +688,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/661fd539-3c20-4764-bfc2-009e9cfb043c',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2020',
         month: '9',
         day: '10',
@@ -710,7 +709,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/8559da5f-9d24-4004-ae30-f43f9ef35b1d',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2018',
         month: '5',
         day: '10',
@@ -743,7 +742,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/40a06c82-063d-4c14-945c-17424cc09a77',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2018',
         month: '5',
         day: '6',
@@ -768,7 +767,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/fa37540a-ef9f-4e07-91a7-dfd2a3fca2db',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2019',
         month: '5',
         day: '6',
@@ -789,7 +788,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/9c35a95d-42c7-44e8-81f9-b99ecb5a4d44',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2017',
         month: '5',
         day: '6',
@@ -810,7 +809,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/75cbe42d-e72e-4931-96fd-9dc5ee45bfe9',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2020',
         month: '5',
         day: '6',
@@ -831,7 +830,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/f8ff4270-d888-4b0b-8f26-c770e6534f4b',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2020',
         month: '2',
         day: '6',
@@ -852,7 +851,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/f454a939-53e9-4a72-a9e2-bc6165f4fbb4',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2020',
         month: '4',
         day: '6',
@@ -877,7 +876,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/509c09f6-9bb2-4bdc-b1af-c891f32d722f',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2020',
         month: '5',
         day: '23',
@@ -902,7 +901,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/da0a70b5-2a84-4edc-8fc4-2899bda7b7b0',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2020',
         month: '5',
         day: '25',
@@ -923,7 +922,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/2954cbf7-e012-479e-938a-cc01b9b8c366',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2020',
         month: '7',
         day: '6',
@@ -944,7 +943,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/7e1c7b58-4033-455c-b7e4-92c212f0145c',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2020',
         month: '8',
         day: '6',
@@ -965,7 +964,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/6fe76bdb-0277-433d-b174-daa3d61bf704',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2020',
         month: '5',
         day: '26',
@@ -986,7 +985,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/f79a5f01-fc81-45e8-907b-95cf1fd309a5',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2019',
         month: '5',
         day: '26',
@@ -1015,7 +1014,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/5d1b0915-46c6-432a-9cf5-0fd14cfea3bc',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2018',
         month: '5',
         day: '26',
@@ -1044,7 +1043,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/2bd86ec1-2b83-4da4-9ae8-86dfb59e514d',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2017',
         month: '5',
         day: '26',
@@ -1069,7 +1068,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/e441ebea-5268-48a0-b749-663fa35912af',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2019',
         month: '10',
         day: '26',
@@ -1094,7 +1093,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/088e4e74-ab76-4eb3-b7ad-abaee07b0d67',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2019',
         month: '10',
         day: '20',
@@ -1115,7 +1114,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/bbf1ddd5-a529-424b-bf6d-6a75434e6fc5',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2019',
         month: '10',
         day: '2',
@@ -1140,7 +1139,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/22ba6c5b-dea8-48d9-95f2-3eec4a987522',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2019',
         month: '10',
         day: '12',
@@ -1165,7 +1164,7 @@ export const mockSearchResults: SearchResult = {
     {
       id: 'https://frontend.dev.nva.aws.unit.no/publication/1fc1084b-ea80-4ace-9faa-7f719a184cdd',
       publicationDate: {
-        type: BackendTypeNames.INDEX_DATE,
+        type: 'IndexDate',
         year: '2019',
         month: '10',
         day: '22',

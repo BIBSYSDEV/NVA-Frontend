@@ -1,19 +1,4 @@
-export enum BackendTypeNames {
-  CONTRIBUTOR = 'Contributor',
-  CUSTOMER = 'Customer',
-  ENTITY_DESCRIPTION = 'EntityDescription',
-  FILE = 'File',
-  FILE_SET = 'FileSet',
-  IDENTITY = 'Identity',
-  INDEX_DATE = 'IndexDate',
-  LICENSE = 'License',
-  ORGANIZATION = 'Organization',
-  PAGES_MONOGRAPH = 'MonographPages',
-  PAGES_RANGE = 'Range',
-  PUBLICATION = 'Publication',
-  PUBLICATION_DATE = 'PublicationDate',
-  REFERENCE = 'Reference',
-}
+import { RegistrationDate } from '../registration.types';
 
 export interface NviApplicableBase<T> {
   contentType: T | null;
@@ -21,8 +6,8 @@ export interface NviApplicableBase<T> {
   originalResearch: boolean | null;
 }
 
-export const emptyDate = {
-  type: BackendTypeNames.PUBLICATION_DATE,
+export const emptyDate: RegistrationDate = {
+  type: 'PublicationDate',
   year: '',
   month: '',
   day: '',

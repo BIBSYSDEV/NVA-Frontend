@@ -10,13 +10,12 @@ import { useDispatch } from 'react-redux';
 import { useUppy } from '@uppy/react';
 
 import { RegistrationAccordion } from './RegistrationAccordion';
-import { File } from '../../../types/file.types';
+import { File, RegistrationFileSet } from '../../../types/file.types';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
 import { FileUploader } from '../files_and_license_tab/FileUploader';
-import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { createUppy } from '../../../utils/uppy/uppy-config';
 import { UploadedFileRow } from './UploadedFileRow';
@@ -41,9 +40,9 @@ export const UploadRegistration = ({ expanded, onChange }: UploadRegistrationPro
 
   const createRegistrationWithFiles = async () => {
     setIsLoading(true);
-    const registrationPayload = {
+    const registrationPayload: RegistrationFileSet = {
       fileSet: {
-        type: BackendTypeNames.FILE_SET,
+        type: 'FileSet',
         files: uploadedFiles,
       },
     };

@@ -1,4 +1,4 @@
-import { BackendType, BaseEntityDescription } from '../registration.types';
+import { BaseEntityDescription } from '../registration.types';
 import { PublicationType, BookType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
 import { BookMonographContentType } from './content.types';
@@ -29,7 +29,8 @@ export interface BookPublicationContext {
   url: string;
 }
 
-interface BookReference extends BackendType {
+interface BookReference {
+  type: 'Reference';
   doi: string;
   publicationContext: BookPublicationContext;
   publicationInstance: BookPublicationInstance;

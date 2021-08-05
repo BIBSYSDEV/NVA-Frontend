@@ -8,7 +8,6 @@ import {
 import { DegreeEntityDescription } from './publication_types/degreeRegistration.types';
 import { BookEntityDescription } from './publication_types/bookRegistration.types';
 import { ReportEntityDescription } from './publication_types/reportRegistration.types';
-import { BackendTypeNames } from './publication_types/commonRegistration.types';
 import { ChapterEntityDescription } from './publication_types/chapterRegistration.types';
 import { Contributor } from './contributor.types';
 import { LanguageValues } from './language.types';
@@ -33,10 +32,6 @@ export const levelMap: EnumDictionary<string, number | null> = {
   Level1: 1,
   Level2: 2,
 };
-
-export interface BackendType {
-  type: BackendTypeNames | '';
-}
 
 export interface Publisher {
   type: string;
@@ -87,7 +82,8 @@ export interface RegistrationPublisher {
   id: string;
 }
 
-interface BaseRegistration extends BackendType, RegistrationFileSet {
+interface BaseRegistration extends RegistrationFileSet {
+  type: any;
   readonly identifier: string;
   readonly createdDate: string;
   readonly modifiedDate: string;
@@ -100,7 +96,8 @@ interface BaseRegistration extends BackendType, RegistrationFileSet {
   projects: ResearchProject[];
 }
 
-export interface BaseEntityDescription extends BackendType {
+export interface BaseEntityDescription {
+  type: 'EntityDescription';
   abstract: string;
   contributors: Contributor[];
   date: RegistrationDate;
@@ -141,7 +138,8 @@ export interface ChapterRegistration extends BaseRegistration {
   entityDescription: ChapterEntityDescription;
 }
 
-export interface RegistrationDate extends BackendType {
+export interface RegistrationDate {
+  type: 'PublicationDate' | 'IndexDate';
   year: string;
   month: string;
   day: string;
@@ -158,7 +156,7 @@ export interface Doi {
 }
 
 export const emptyRegistration: Registration = {
-  type: BackendTypeNames.PUBLICATION,
+  type: 'Publication',
   identifier: '',
   createdDate: '',
   modifiedDate: '',
@@ -166,7 +164,7 @@ export const emptyRegistration: Registration = {
   status: RegistrationStatus.New,
   entityDescription: emptyRegistrationEntityDescription,
   fileSet: {
-    type: BackendTypeNames.FILE_SET,
+    type: 'FileSet',
     files: [],
   },
   projects: [],

@@ -7,9 +7,8 @@ import { Checkbox, FormControlLabel, MuiThemeProvider, Typography } from '@mater
 import { DatePickerView, KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { lightTheme, datePickerTranslationProps } from '../../../themes/lightTheme';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
-import { Registration } from '../../../types/registration.types';
+import { Registration, RegistrationDate } from '../../../types/registration.types';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
-import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   margin-left: 0.5rem;
@@ -36,11 +35,11 @@ export const DatePickerField = () => {
   const setYearFieldTouched = () => setFieldTouched(DescriptionFieldNames.PublicationYear);
 
   const updateDateValues = (newDate: Date | null, isYearOnly: boolean) => {
-    const updatedDate = {
-      type: BackendTypeNames.PUBLICATION_DATE,
-      year: newDate ? newDate.getFullYear() : '',
-      month: !isYearOnly && newDate ? newDate.getMonth() + 1 : '',
-      day: !isYearOnly && newDate ? newDate.getDate() : '',
+    const updatedDate: RegistrationDate = {
+      type: 'PublicationDate',
+      year: newDate ? newDate.getFullYear().toString() : '',
+      month: !isYearOnly && newDate ? (newDate.getMonth() + 1).toString() : '',
+      day: !isYearOnly && newDate ? newDate.getDate().toString() : '',
     };
     setYearFieldTouched();
     setFieldValue(DescriptionFieldNames.Date, updatedDate);
