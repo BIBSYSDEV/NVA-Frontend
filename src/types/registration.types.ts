@@ -109,6 +109,17 @@ export interface BaseEntityDescription {
   controlledKeywords: string[];
 }
 
+export interface NviApplicableBase<T> {
+  contentType: T | null;
+  peerReviewed: boolean | null;
+  originalResearch: boolean | null;
+}
+
+export interface BaseReference {
+  type: 'Reference';
+  doi: string;
+}
+
 export interface Registration extends BaseRegistration {
   entityDescription:
     | JournalEntityDescription

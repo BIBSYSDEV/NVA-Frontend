@@ -1,6 +1,5 @@
 import { ChapterType, PublicationType } from '../publicationFieldNames';
-import { BaseEntityDescription } from '../registration.types';
-import { BaseReference, NviApplicableBase } from './commonRegistration.types';
+import { BaseEntityDescription, BaseReference, NviApplicableBase } from '../registration.types';
 import { ChapterContentType } from './content.types';
 import { PagesRange, emptyPagesRange } from './pages.types';
 
