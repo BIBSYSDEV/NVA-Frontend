@@ -200,7 +200,9 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
             },
             publicationInstance: {
               type: true,
+              contentType: true,
               peerReviewed: true,
+              originalResearch: true,
             },
           },
         },

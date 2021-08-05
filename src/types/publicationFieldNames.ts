@@ -35,7 +35,7 @@ export enum DegreeType {
 }
 
 export enum ChapterType {
-  BOOK = 'ChapterArticle',
+  AnthologyChapter = 'ChapterArticle',
 }
 
 export type RegistrationSubtype = JournalType | ReportType | BookType | DegreeType | ChapterType;

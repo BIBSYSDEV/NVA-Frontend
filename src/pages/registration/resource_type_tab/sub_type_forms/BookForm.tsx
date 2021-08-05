@@ -15,11 +15,7 @@ import { PublisherField } from '../components/PublisherField';
 import { SeriesFields } from '../components/SeriesFields';
 import { TotalPagesField } from '../components/TotalPagesField';
 import { NviFields } from '../components/nvi_fields/NviFields';
-import { ContentTypeField } from '../components/ContentTypeField';
-import {
-  bookMonographContentTypes,
-  nviApplicableContentTypes,
-} from '../../../../types/publication_types/content.types';
+import { bookMonographContentTypes } from '../../../../types/publication_types/content.types';
 
 const StyledSection = styled.div`
   display: grid;
@@ -36,7 +32,7 @@ export const BookForm = () => {
   const {
     reference: {
       publicationContext,
-      publicationInstance: { peerReviewed, type, contentType, originalResearch },
+      publicationInstance: { peerReviewed, type, originalResearch },
     },
   } = values.entityDescription;
 
@@ -58,8 +54,7 @@ export const BookForm = () => {
 
       {type === BookType.MONOGRAPH && (
         <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-          <ContentTypeField options={bookMonographContentTypes} />
-          {nviApplicableContentTypes.includes(contentType as string) && <NviFields />}
+          <NviFields contentTypeOptions={bookMonographContentTypes} />
         </BackgroundDiv>
       )}
 

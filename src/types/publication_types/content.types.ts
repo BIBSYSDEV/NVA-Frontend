@@ -17,10 +17,19 @@ export enum BookMonographContentType {
   Encyclopedia = 'Encyclopedia',
 }
 
+export enum ChapterContentType {
+  AcademicChapter = 'Academic Chapter',
+  NonFictionChapter = 'Non-fiction Chapter',
+  PopularScienceChapter = 'Popular Science Chapter',
+  TextbookChapter = 'Textbook Chapter',
+  EncyclopediaChapter = 'Encyclopedia Chapter',
+}
+
 export const nviApplicableContentTypes: string[] = [
   JournalArticleContentType.ResearchArticle,
   JournalArticleContentType.ReviewArticle,
   BookMonographContentType.AcademicMonograph,
+  ChapterContentType.AcademicChapter,
 ];
 
 export interface ContentTypeOption {
@@ -36,6 +45,11 @@ export const journalArticleContentTypes: ContentTypeOption[] = Object.values(Jou
 );
 
 export const bookMonographContentTypes: ContentTypeOption[] = Object.values(BookMonographContentType).map((value) => ({
+  value,
+  text: i18n.t(`registration:resource_type.content_types.${value}`),
+}));
+
+export const chapterContentTypes: ContentTypeOption[] = Object.values(ChapterContentType).map((value) => ({
   value,
   text: i18n.t(`registration:resource_type.content_types.${value}`),
 }));

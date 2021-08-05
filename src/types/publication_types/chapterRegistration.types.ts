@@ -1,11 +1,12 @@
 import { ChapterType, PublicationType } from '../publicationFieldNames';
 import { BackendType, BaseEntityDescription } from '../registration.types';
+import { NviApplicableBase } from './commonRegistration.types';
+import { ChapterContentType } from './content.types';
 import { PagesRange, emptyPagesRange } from './pages.types';
 
-export interface ChapterPublicationInstance {
+export interface ChapterPublicationInstance extends NviApplicableBase<ChapterContentType> {
   type: ChapterType | '';
   pages: PagesRange;
-  peerReviewed: boolean | null;
 }
 
 export interface ChapterPublicationContext {
@@ -25,7 +26,9 @@ export interface ChapterPublicationContext {
 export const emptyChapterPublicationInstance: ChapterPublicationInstance = {
   type: '',
   pages: emptyPagesRange,
+  contentType: null,
   peerReviewed: null,
+  originalResearch: null,
 };
 
 interface ChapterReference extends BackendType {

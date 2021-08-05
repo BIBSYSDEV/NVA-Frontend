@@ -12,8 +12,9 @@ import { BookType, ChapterType, ResourceFieldNames } from '../../../../types/pub
 import { ChapterRegistration } from '../../../../types/registration.types';
 import { DoiField } from '../components/DoiField';
 import { NviValidation } from '../components/NviValidation';
-import { PeerReviewedField } from '../components/nvi_fields/PeerReviewedField';
 import { SearchContainerField } from '../components/SearchContainerField';
+import { NviFields } from '../components/nvi_fields/NviFields';
+import { chapterContentTypes } from '../../../../types/publication_types/content.types';
 
 const StyledDiv = styled(StyledCenterAlignedContentWrapper)`
   gap: 1rem;
@@ -63,7 +64,7 @@ export const ChapterForm = () => {
 
         <DoiField />
 
-        {publicationInstance.type === ChapterType.BOOK && (
+        {publicationInstance.type === ChapterType.AnthologyChapter && (
           <SearchContainerField
             fieldName={ResourceFieldNames.PUBLICATION_CONTEXT_LINKED_CONTEXT}
             searchSubtypes={[BookType.ANTHOLOGY]}
@@ -112,10 +113,10 @@ export const ChapterForm = () => {
         </StyledPageNumberWrapper>
       </BackgroundDiv>
 
-      {publicationInstance.type === ChapterType.BOOK && (
+      {publicationInstance.type === ChapterType.AnthologyChapter && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-            <PeerReviewedField />
+            <NviFields contentTypeOptions={chapterContentTypes} />
           </BackgroundDiv>
 
           <NviValidation

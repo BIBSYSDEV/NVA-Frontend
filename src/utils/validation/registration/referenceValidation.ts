@@ -10,6 +10,7 @@ import {
 import i18n from '../../../translations/i18n';
 import {
   BookMonographContentType,
+  ChapterContentType,
   JournalArticleContentType,
   nviApplicableContentTypes,
 } from '../../../types/publication_types/content.types';
@@ -249,7 +250,12 @@ export const degreeReference = baseReference.shape({
 const chapterPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(ChapterType)).required(resourceErrorMessage.typeRequired),
   pages: pagesRangeField,
+  contentType: Yup.string()
+    .nullable()
+    .oneOf(Object.values(ChapterContentType), resourceErrorMessage.contentTypeRequired)
+    .required(resourceErrorMessage.contentTypeRequired),
   peerReviewed: peerReviewedField,
+  originalResearch: originalResearchField,
 });
 
 const chapterPublicationContext = Yup.object().shape({

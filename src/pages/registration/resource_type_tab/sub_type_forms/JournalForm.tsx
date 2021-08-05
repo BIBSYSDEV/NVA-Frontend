@@ -11,12 +11,8 @@ import { DoiField } from '../components/DoiField';
 import { JournalField } from '../components/JournalField';
 import { NviValidation } from '../components/NviValidation';
 import { SearchContainerField } from '../components/SearchContainerField';
-import { ContentTypeField } from '../components/ContentTypeField';
 import { NviFields } from '../components/nvi_fields/NviFields';
-import {
-  journalArticleContentTypes,
-  nviApplicableContentTypes,
-} from '../../../../types/publication_types/content.types';
+import { journalArticleContentTypes } from '../../../../types/publication_types/content.types';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -138,8 +134,7 @@ export const JournalForm = () => {
       {publicationInstance.type === JournalType.ARTICLE && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-            <ContentTypeField options={journalArticleContentTypes} />
-            {nviApplicableContentTypes.includes(publicationInstance.contentType as string) && <NviFields />}
+            <NviFields contentTypeOptions={journalArticleContentTypes} />
           </BackgroundDiv>
           <NviValidation
             isPeerReviewed={!!publicationInstance.peerReviewed}
