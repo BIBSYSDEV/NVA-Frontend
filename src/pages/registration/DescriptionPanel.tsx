@@ -32,7 +32,7 @@ export const DescriptionPanel = () => {
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
-        <Field name={DescriptionFieldNames.TITLE}>
+        <Field name={DescriptionFieldNames.Title}>
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
               {...field}
@@ -47,7 +47,7 @@ export const DescriptionPanel = () => {
             />
           )}
         </Field>
-        <Field name={DescriptionFieldNames.ABSTRACT}>
+        <Field name={DescriptionFieldNames.Abstract}>
           {({ field }: FieldProps<string>) => (
             <TextField
               {...field}
@@ -61,7 +61,7 @@ export const DescriptionPanel = () => {
             />
           )}
         </Field>
-        <Field name={DescriptionFieldNames.DESCRIPTION}>
+        <Field name={DescriptionFieldNames.Description}>
           {({ field }: FieldProps<string>) => (
             <TextField
               {...field}
@@ -77,7 +77,7 @@ export const DescriptionPanel = () => {
         </Field>
       </BackgroundDiv>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-        <Field name={DescriptionFieldNames.TAGS}>
+        <Field name={DescriptionFieldNames.Tags}>
           {({ field }: FieldProps) => (
             <Autocomplete
               {...field}
@@ -117,7 +117,7 @@ export const DescriptionPanel = () => {
         <DateAndLanguageWrapper>
           <DatePickerField />
 
-          <Field name={DescriptionFieldNames.LANGUAGE}>
+          <Field name={DescriptionFieldNames.Language}>
             {({ field }: FieldProps<string>) => (
               <TextField
                 {...field}

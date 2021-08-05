@@ -128,7 +128,7 @@ export const ContributorCard = ({
       c.identity.name === contributor.identity.name &&
       c.role === contributor.role
   );
-  const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${contributorIndex}]`;
+  const baseFieldName = `${ContributorFieldNames.Contributors}[${contributorIndex}]`;
   const [sequenceValue, setSequenceValue] = useState(`${contributor.sequence}`);
 
   useEffect(() => {
@@ -215,7 +215,7 @@ export const ContributorCard = ({
               {t(`contributors.types.${contributor.role}`)}
             </Typography>
           ) : (
-            <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
+            <Field name={`${baseFieldName}.${SpecificContributorFieldNames.Corresponding}`}>
               {({ field }: FieldProps) => (
                 <FormControlLabel
                   data-testid="author-corresponding-checkbox"

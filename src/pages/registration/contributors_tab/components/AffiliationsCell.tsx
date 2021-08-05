@@ -105,7 +105,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
       }
     }
 
-    setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.AFFILIATIONS}`, updatedAffiliations);
+    setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`, updatedAffiliations);
     toggleAffiliationModal();
   };
 
@@ -179,7 +179,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
         onAccept={() => {
           if (affiliations) {
             setFieldValue(
-              `${baseFieldName}.${SpecificContributorFieldNames.AFFILIATIONS}`,
+              `${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`,
               affiliations.filter((affiliation) => affiliation.id !== affiliationToRemove?.id)
             );
           }

@@ -85,7 +85,7 @@ export const mockRegistration: JournalRegistration = {
       type: BackendTypeNames.REFERENCE,
       doi: '',
       publicationInstance: {
-        type: JournalType.ARTICLE,
+        type: JournalType.Article,
         pages: {
           type: BackendTypeNames.PAGES_RANGE,
           begin: '',
@@ -100,7 +100,7 @@ export const mockRegistration: JournalRegistration = {
         originalResearch: null,
       },
       publicationContext: {
-        type: PublicationType.PUBLICATION_IN_JOURNAL,
+        type: PublicationType.PublicationInJournal,
         level: null,
         openAccess: false,
         peerReviewed: false,

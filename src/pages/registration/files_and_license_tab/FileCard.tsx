@@ -106,7 +106,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
       {baseFieldName && (
         <StyledCardContent>
           <div>
-            <Field name={`${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`}>
+            <Field name={`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`}>
               {({ field, form, meta: { error, touched } }: FieldProps) => (
                 <FormControl
                   data-testid={dataTestId.registrationWizard.files.version}
@@ -132,7 +132,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
               )}
             </Field>
 
-            <Field name={`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`}>
+            <Field name={`${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`}>
               {({ field }: FieldProps) => (
                 <StyledAdministrativeContract
                   data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
@@ -146,7 +146,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
           <div>
             <StyledInputRow>
               <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
-                <Field name={`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`}>
+                <Field name={`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`}>
                   {({ field, meta: { error, touched } }: FieldProps) => (
                     <KeyboardDatePicker
                       fullWidth
@@ -187,7 +187,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
             </StyledInputRow>
 
             <StyledInputRow>
-              <Field name={`${baseFieldName}.${SpecificFileFieldNames.LICENSE}`}>
+              <Field name={`${baseFieldName}.${SpecificFileFieldNames.License}`}>
                 {({ field, meta: { error, touched } }: FieldProps) => (
                   <TextField
                     id={field.name}

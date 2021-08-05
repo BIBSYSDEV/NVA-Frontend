@@ -42,10 +42,10 @@ export const JournalForm = () => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DoiField />
 
-        {publicationInstance.type === JournalType.CORRIGENDUM ? (
+        {publicationInstance.type === JournalType.Corrigendum ? (
           <SearchContainerField
-            fieldName={ResourceFieldNames.CORRIGENDUM_FOR}
-            searchSubtypes={[JournalType.ARTICLE]}
+            fieldName={ResourceFieldNames.CorrigendumFor}
+            searchSubtypes={[JournalType.Article]}
             label={t('resource_type.original_article_title')}
             placeholder={t('resource_type.search_for_original_article')}
             dataTestId="article-search-field"
@@ -55,7 +55,7 @@ export const JournalForm = () => {
         )}
 
         <StyledArticleDetail>
-          <Field name={ResourceFieldNames.VOLUME}>
+          <Field name={ResourceFieldNames.Volume}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 id={field.name}
@@ -69,7 +69,7 @@ export const JournalForm = () => {
             )}
           </Field>
 
-          <Field name={ResourceFieldNames.ISSUE}>
+          <Field name={ResourceFieldNames.Issue}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 id={field.name}
@@ -83,7 +83,7 @@ export const JournalForm = () => {
             )}
           </Field>
 
-          <Field name={ResourceFieldNames.PAGES_FROM}>
+          <Field name={ResourceFieldNames.PagesFrom}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 id={field.name}
@@ -98,7 +98,7 @@ export const JournalForm = () => {
             )}
           </Field>
 
-          <Field name={ResourceFieldNames.PAGES_TO}>
+          <Field name={ResourceFieldNames.PagesTo}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 id={field.name}
@@ -115,7 +115,7 @@ export const JournalForm = () => {
 
           <StyledLabel color="primary">{t('resource_type.or')}</StyledLabel>
 
-          <Field name={ResourceFieldNames.ARTICLE_NUMBER}>
+          <Field name={ResourceFieldNames.ArticleNumber}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 id={field.name}
@@ -131,7 +131,7 @@ export const JournalForm = () => {
         </StyledArticleDetail>
       </BackgroundDiv>
 
-      {publicationInstance.type === JournalType.ARTICLE && (
+      {publicationInstance.type === JournalType.Article && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
             <NviFields contentTypeOptions={journalArticleContentTypes} />

@@ -30,7 +30,7 @@ export const ProjectsField = () => {
   });
 
   return (
-    <Field name={DescriptionFieldNames.PROJECTS}>
+    <Field name={DescriptionFieldNames.Projects}>
       {({ field, form: { setFieldValue } }: FieldProps<ResearchProject[]>) => (
         <Autocomplete
           {...autocompleteTranslationProps}

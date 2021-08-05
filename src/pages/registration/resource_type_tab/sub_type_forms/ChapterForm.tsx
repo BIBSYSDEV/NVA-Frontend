@@ -66,8 +66,8 @@ export const ChapterForm = () => {
 
         {publicationInstance.type === ChapterType.AnthologyChapter && (
           <SearchContainerField
-            fieldName={ResourceFieldNames.PUBLICATION_CONTEXT_LINKED_CONTEXT}
-            searchSubtypes={[BookType.ANTHOLOGY]}
+            fieldName={ResourceFieldNames.PubliactionContextLinkedContext}
+            searchSubtypes={[BookType.Anthology]}
             label={t('resource_type.chapter.published_in')}
             placeholder={t('resource_type.chapter.search_for_anthology')}
             dataTestId="search-anthology-field"
@@ -77,7 +77,7 @@ export const ChapterForm = () => {
 
       <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
         <StyledPageNumberWrapper>
-          <Field name={ResourceFieldNames.PAGES_FROM}>
+          <Field name={ResourceFieldNames.PagesFrom}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <StyledPageNumberField
                 id={field.name}
@@ -96,7 +96,7 @@ export const ChapterForm = () => {
             <RemoveIcon color="primary" />
           </StyledDashIconWrapper>
 
-          <Field name={ResourceFieldNames.PAGES_TO}>
+          <Field name={ResourceFieldNames.PagesTo}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <StyledPageNumberField
                 id={field.name}

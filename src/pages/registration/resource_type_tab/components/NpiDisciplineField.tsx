@@ -18,7 +18,7 @@ export const NpiDisciplineField = () => {
   const { t } = useTranslation('registration');
 
   return (
-    <Field name={ResourceFieldNames.NPI_SUBJECT_HEADING}>
+    <Field name={ResourceFieldNames.NpiSubjectHeading}>
       {({
         field: { name, value },
         form: { setFieldValue, setFieldTouched },

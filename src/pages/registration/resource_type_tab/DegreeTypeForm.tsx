@@ -21,7 +21,7 @@ export const DegreeTypeForm = ({ onChangeSubType }: DegreeTypeFormProps) => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
         <StyledSelectWrapper>
           <SelectTypeField
-            fieldName={ResourceFieldNames.SUB_TYPE}
+            fieldName={ResourceFieldNames.SubType}
             onChangeType={onChangeSubType}
             options={Object.values(DegreeType)}
           />

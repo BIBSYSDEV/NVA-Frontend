@@ -49,13 +49,13 @@ export const PublicRegistrationContributors = ({
   const toggleShowAll = () => setShowAll(!showAll);
 
   const mainContributors =
-    registrationType === BookType.ANTHOLOGY
+    registrationType === BookType.Anthology
       ? contributors.filter((contributor) => contributor.role === ContributorRole.Editor)
       : contributors.filter((contributor) => contributor.role === ContributorRole.Creator);
   const mainContributorsToShow = showAll ? mainContributors : mainContributors.slice(0, 10);
 
   const otherContributors =
-    registrationType === BookType.ANTHOLOGY
+    registrationType === BookType.Anthology
       ? contributors.filter((contributor) => contributor.role !== ContributorRole.Editor)
       : contributors.filter((contributor) => contributor.role !== ContributorRole.Creator);
   const otherContributorsToShow = showAll ? otherContributors : [];

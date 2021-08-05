@@ -31,7 +31,7 @@ export const ContributorsPanel = () => {
       ...contributor,
       role: contributor.role ?? ContributorRole.Creator,
     }));
-    setFieldValue(ContributorFieldNames.CONTRIBUTORS, contributorsWithRole);
+    setFieldValue(ContributorFieldNames.Contributors, contributorsWithRole);
   }, [setFieldValue]);
 
   // Creator should not be selectable for other contributors
@@ -39,9 +39,9 @@ export const ContributorsPanel = () => {
 
   return (
     <>
-      <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
+      <FieldArray name={ContributorFieldNames.Contributors}>
         {({ push, replace }: FieldArrayRenderProps) =>
-          publicationContext.type === PublicationType.DEGREE ? (
+          publicationContext.type === PublicationType.Degree ? (
             <>
               <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
                 <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
@@ -57,7 +57,7 @@ export const ContributorsPanel = () => {
                 />
               </BackgroundDiv>
             </>
-          ) : publicationInstance.type === BookType.ANTHOLOGY ? (
+          ) : publicationInstance.type === BookType.Anthology ? (
             <>
               <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
                 <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Editor]} />
@@ -84,7 +84,7 @@ export const ContributorsPanel = () => {
       </FieldArray>
       {!!contributorsTouched && typeof contributorsError === 'string' && (
         <FormHelperText error>
-          <ErrorMessage name={ContributorFieldNames.CONTRIBUTORS} />
+          <ErrorMessage name={ContributorFieldNames.Contributors} />
         </FormHelperText>
       )}
     </>

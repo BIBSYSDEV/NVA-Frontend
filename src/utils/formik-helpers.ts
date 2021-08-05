@@ -72,15 +72,15 @@ const resourceFieldNames = Object.values(ResourceFieldNames);
 const getAllFileFields = (files: File[]): string[] => {
   const fieldNames: string[] = [];
   if (files.length === 0) {
-    fieldNames.push(FileFieldNames.FILES);
+    fieldNames.push(FileFieldNames.Files);
   } else {
     files.forEach((file, index) => {
-      const baseFieldName = `${FileFieldNames.FILES}[${index}]`;
-      fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`);
+      const baseFieldName = `${FileFieldNames.Files}[${index}]`;
+      fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`);
       if (!file.administrativeAgreement) {
-        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`);
-        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`);
-        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.LICENSE}`);
+        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`);
+        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`);
+        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.License}`);
       }
     });
   }
@@ -88,12 +88,12 @@ const getAllFileFields = (files: File[]): string[] => {
 };
 
 const getAllContributorFields = (contributors: Contributor[]): string[] => {
-  const fieldNames: string[] = [ContributorFieldNames.CONTRIBUTORS];
+  const fieldNames: string[] = [ContributorFieldNames.Contributors];
 
   contributors.forEach((_, index) => {
-    const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${index}]`;
-    fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.SEQUENCE}`);
-    fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`);
+    const baseFieldName = `${ContributorFieldNames.Contributors}[${index}]`;
+    fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.Sequence}`);
+    fieldNames.push(`${baseFieldName}.${SpecificContributorFieldNames.Corresponding}`);
   });
   return fieldNames;
 };
@@ -115,7 +115,7 @@ const touchedDescriptionTabFields: FormikTouched<Registration> = {
 
 const touchedResourceTabFields = (publicationType: PublicationType | ''): FormikTouched<unknown> => {
   switch (publicationType) {
-    case PublicationType.PUBLICATION_IN_JOURNAL:
+    case PublicationType.PublicationInJournal:
       return {
         entityDescription: {
           reference: {
@@ -140,7 +140,7 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
           },
         },
       };
-    case PublicationType.DEGREE:
+    case PublicationType.Degree:
       return {
         entityDescription: {
           reference: {
@@ -154,7 +154,7 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
           },
         },
       };
-    case PublicationType.REPORT:
+    case PublicationType.Report:
       return {
         entityDescription: {
           reference: {
@@ -168,7 +168,7 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
           },
         },
       };
-    case PublicationType.BOOK:
+    case PublicationType.Book:
       return {
         entityDescription: {
           npiSubjectHeading: true,
@@ -190,7 +190,7 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
           },
         },
       };
-    case PublicationType.CHAPTER:
+    case PublicationType.Chapter:
       return {
         entityDescription: {
           reference: {
