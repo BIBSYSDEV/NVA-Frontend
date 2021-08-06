@@ -28,7 +28,7 @@ export const ContentTypeField = ({ options }: ContentTypeFieldProps) => {
             value={field.value ?? ''}
             onChange={(event) => {
               field.onChange(event);
-              if (nviApplicableContentTypes.includes(event.target.value)) {
+              if (!nviApplicableContentTypes.includes(event.target.value)) {
                 setFieldValue(ResourceFieldNames.PEER_REVIEW, null);
                 setFieldValue(ResourceFieldNames.OriginalResearch, null);
                 setFieldTouched(ResourceFieldNames.PEER_REVIEW, false);
