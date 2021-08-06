@@ -62,9 +62,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   }, [history, registration, isValidOwner, isValidCurator]);
 
   const validateForm = (values: Registration): FormikErrors<Registration> => {
-    const {
-      reference: { publicationContext, publicationInstance },
-    } = values.entityDescription;
+    const { publicationContext, publicationInstance } = values.entityDescription.reference;
     const contentType = 'contentType' in publicationInstance ? publicationInstance.contentType : null;
 
     try {
