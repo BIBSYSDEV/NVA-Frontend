@@ -64,7 +64,7 @@ export const ResourceTypePanel = () => {
       peerReviewed: undefined,
     };
 
-    setFieldValue(instanceTypeBaseFieldName, newValues, false);
+    setFieldValue(instanceTypeBaseFieldName, newValues);
   };
 
   return (
