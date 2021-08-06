@@ -61,10 +61,12 @@ export const ResourceTypePanel = () => {
     const newValues = {
       ...values.entityDescription.reference.publicationInstance,
       type: newInstanceType,
-      peerReviewed: undefined,
+      contentType: null,
+      peerReviewed: null,
+      originalResearch: null,
     };
 
-    setFieldValue(instanceTypeBaseFieldName, newValues, false);
+    setFieldValue(instanceTypeBaseFieldName, newValues);
   };
 
   return (

@@ -13,7 +13,7 @@ interface ContentTypeFieldProps {
 
 export const ContentTypeField = ({ options }: ContentTypeFieldProps) => {
   const { t } = useTranslation('registration');
-  const { setFieldValue, setFieldTouched } = useFormikContext<Registration>();
+  const { setFieldValue } = useFormikContext<Registration>();
 
   return (
     <Field name={ResourceFieldNames.ContentType}>
@@ -28,11 +28,9 @@ export const ContentTypeField = ({ options }: ContentTypeFieldProps) => {
             value={field.value ?? ''}
             onChange={(event) => {
               field.onChange(event);
-              if (nviApplicableContentTypes.includes(event.target.value)) {
-                setFieldValue(ResourceFieldNames.PEER_REVIEW, null);
-                setFieldValue(ResourceFieldNames.OriginalResearch, null);
-                setFieldTouched(ResourceFieldNames.PEER_REVIEW, false);
-                setFieldTouched(ResourceFieldNames.OriginalResearch, false);
+              if (!nviApplicableContentTypes.includes(event.target.value)) {
+                setFieldValue(ResourceFieldNames.PEER_REVIEW, null, false);
+                setFieldValue(ResourceFieldNames.OriginalResearch, null, false);
               }
             }}
             label={t('resource_type.content')}
