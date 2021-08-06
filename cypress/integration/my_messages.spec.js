@@ -3,7 +3,6 @@ import { mockMessages } from '../../src/utils/testfiles/mockRegistration';
 
 describe('My messages', () => {
   beforeEach(() => {
-    cy.server();
     cy.visit('/my-profile');
     cy.mocklogin();
     cy.setUserRolesInRedux([RoleName.CREATOR]);

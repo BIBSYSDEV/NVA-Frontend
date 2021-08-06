@@ -1,7 +1,6 @@
 describe('Registration: Contributors', () => {
   beforeEach(() => {
     cy.visit('/');
-    cy.server();
   });
 
   it('The user should be able to open the Add Contributor modal', () => {

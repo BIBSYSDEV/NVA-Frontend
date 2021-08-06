@@ -1,7 +1,6 @@
 describe('Registration: Resource type: Report', () => {
   beforeEach(() => {
     cy.visit('/');
-    cy.server();
   });
 
   it('The user should be able to fill out the form for report type', () => {

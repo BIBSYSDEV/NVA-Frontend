@@ -3,7 +3,6 @@ import { mockProjectSearch } from '../../src/utils/testfiles/mockProjects';
 describe('Registration: Description', () => {
   beforeEach(() => {
     cy.visit('/');
-    cy.server();
   });
 
   it('The user should be able to add and remove projects', () => {

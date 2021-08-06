@@ -4,7 +4,6 @@ import { BookMonographContentType } from '../../src/types/publication_types/cont
 describe('Registration: Resource type: Book', () => {
   beforeEach(() => {
     cy.visit('/');
-    cy.server();
   });
 
   it('The user should be able to fill out the form for book type', () => {
