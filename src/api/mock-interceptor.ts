@@ -56,10 +56,11 @@ const mockSingleAuthorityResponseWithOrcid: Authority = {
   orgunitids: [...mockSingleAuthorityResponse.orgunitids, 'https://api.cristin.no/v2/units/194.65.20.10'],
 };
 
-const mockCreateUpload = { uploadId: 'asd', key: 'sfd' };
-const mockPrepareUpload = { url: 'https://file-upload.com/files/' };
-const mockCompleteUpload = {};
-const mockDownload = { presignedDownloadUrl: 'https://localhost:3000/files/' };
+export const mockFileUploadUrl = 'https://localhost/api/file-upload/';
+const mockCreateUpload = { uploadId: 'upoadId', key: 'key' };
+const mockPrepareUpload = { url: mockFileUploadUrl };
+const mockCompleteUpload = { location: '123-123-123' };
+const mockDownload = { presignedDownloadUrl: 'https://localhost/api/file-download/' };
 
 // AXIOS INTERCEPTOR
 export const interceptRequestsOnMock = () => {
