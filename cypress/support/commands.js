@@ -1,5 +1,6 @@
 import { setRoles } from '../../src/redux/actions/userActions';
 import { setNotification, removeNotification } from '../../src/redux/actions/notificationActions';
+import { mockFileUploadUrl } from '../../src/api/mock-interceptor';
 
 Cypress.Commands.add('mocklogin', () => {
   cy.get('[data-testid=menu-login-button]').click({ force: true });
@@ -48,4 +49,11 @@ Cypress.Commands.add('removeNotificationInRedux', () => {
   cy.window()
     .its('store') // Redux store must be exposed via window.store
     .then((store) => store.dispatch(removeNotification()));
+});
+
+Cypress.Commands.add('mockFileUpload', () => {
+  cy.intercept(
+    { method: 'PUT', url: mockFileUploadUrl },
+    { statusCode: 200, headers: { ETag: Math.floor(Math.random() * 1000).toString() } }
+  );
 });

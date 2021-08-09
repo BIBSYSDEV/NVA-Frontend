@@ -1,5 +1,4 @@
 import 'cypress-file-upload';
-import { mockFileUploadUrl } from '../../src/api/mock-interceptor';
 
 describe('Registration', () => {
   beforeEach(() => {
@@ -33,14 +32,7 @@ describe('Registration', () => {
 
     cy.get('[data-testid=new-registration-file]').click({ force: true });
 
-    // Mock Uppys upload requests to S3 Bucket
-    cy.intercept(
-      {
-        method: 'PUT',
-        url: mockFileUploadUrl,
-      },
-      { statusCode: 200, headers: { ETag: 'etag' } }
-    );
+    cy.mockFileUpload();
 
     cy.get('input[type=file]').attachFile('img.jpg');
     cy.get('[data-testid=uploaded-file]').should('be.visible');

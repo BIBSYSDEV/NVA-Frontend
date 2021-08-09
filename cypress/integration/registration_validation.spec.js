@@ -1,7 +1,6 @@
 import 'cypress-file-upload';
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { JournalArticleContentType, BookMonographContentType } from '../../src/types/publication_types/content.types';
-import { mockFileUploadUrl } from '../../src/api/mock-interceptor';
 
 describe('User opens registration form and can see validation errors', () => {
   before('Given that the user is logged in as Creator:', () => {
@@ -219,14 +218,8 @@ describe('User opens registration form and can see validation errors', () => {
       cy.get('[data-testid=error-tab]').should('exist')
     );
 
-    // Mock Uppys upload requests to S3 Bucket
-    cy.intercept(
-      {
-        method: 'PUT',
-        url: mockFileUploadUrl,
-      },
-      { statusCode: 200, headers: { ETag: 'etag' } }
-    );
+    cy.mockFileUpload();
+
     cy.get('input[type=file]').attachFile('img.jpg');
     cy.get('[data-testid=uploaded-file-card]').should('be.visible');
     cy.get('p.Mui-error').should('not.exist');
