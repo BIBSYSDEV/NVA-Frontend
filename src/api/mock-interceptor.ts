@@ -74,7 +74,6 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(FileApiPath.Create)).reply(200, mockCreateUpload);
   mock.onPost(new RegExp(FileApiPath.Prepare)).reply(200, mockPrepareUpload);
   mock.onPost(new RegExp(FileApiPath.Complete)).reply(200, mockCompleteUpload);
-  mock.onPut('http://localhost:3000/custom/files/prepare').reply(200, '');
 
   // PUBLICATION LIST
   mock.onGet(PublicationsApiPath.Registration).reply(200, mockPublishedRegistrations);
