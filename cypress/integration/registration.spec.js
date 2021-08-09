@@ -45,13 +45,13 @@ describe('Registration', () => {
       (req) => {
         req.reply({
           statusCode: 200,
-          // body: '',
+          body: '',
         });
       }
     );
 
     cy.get('input[type=file]').attachFile('img.jpg');
-    // cy.get('[data-testid=uploaded-file]').should('be.visible');
+    cy.get('[data-testid=uploaded-file]').should('be.visible');
 
     cy.get('[data-testid=registration-file-start-button]').should('be.enabled').click({ force: true });
     cy.get('[data-testid=error-tab]').should('have.length', 0);
