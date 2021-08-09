@@ -57,7 +57,7 @@ const mockSingleAuthorityResponseWithOrcid: Authority = {
 };
 
 const mockCreateUpload = { uploadId: 'asd', key: 'sfd' };
-const mockPrepareUpload = { url: 'https://file-upload.com/files/' };
+const mockPrepareUpload = { url: 'http://localhost:3000/custom/files/prepare' };
 const mockCompleteUpload = {};
 const mockDownload = { presignedDownloadUrl: 'https://localhost:3000/files/' };
 
@@ -74,6 +74,7 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(FileApiPath.Create)).reply(200, mockCreateUpload);
   mock.onPost(new RegExp(FileApiPath.Prepare)).reply(200, mockPrepareUpload);
   mock.onPost(new RegExp(FileApiPath.Complete)).reply(200, mockCompleteUpload);
+  mock.onPut('http://localhost:3000/custom/files/prepare').reply(200, '');
 
   // PUBLICATION LIST
   mock.onGet(PublicationsApiPath.Registration).reply(200, mockPublishedRegistrations);

@@ -1,6 +1,7 @@
+import 'cypress-file-upload';
+
 describe('Registration', () => {
   beforeEach(() => {
-    cy.server();
     cy.visit('/registration');
   });
 
@@ -24,7 +25,7 @@ describe('Registration', () => {
     );
   });
 
-  it('The user should be able to start registration by uploading a file', () => {
+  it.only('The user should be able to start registration by uploading a file', () => {
     cy.mocklogin();
     cy.get('[data-testid=new-registration]').click({ force: true });
     cy.url().should('include', '/registration');
@@ -32,17 +33,27 @@ describe('Registration', () => {
     cy.get('[data-testid=new-registration-file]').click({ force: true });
 
     // Mock Uppys upload requests to S3 Bucket
-    cy.route({
-      method: 'PUT',
-      url: 'https://file-upload.com/files/', // Must match URL set in mock-interceptor, which cannot be imported into a test
-      response: '',
-      headers: { ETag: 'etag' },
-    });
+    // cy.route({
+    //   method: 'PUT',
+    //   url: 'https://file-upload.com/files/', // Must match URL set in mock-interceptor, which cannot be imported into a test
+    //   response: '',
+    //   headers: { ETag: 'etag' },
+    // });
 
-    cy.get('input[type=file]').uploadFile('img.jpg');
-    cy.get('[data-testid=uploaded-file]').should('be.visible');
+    cy.intercept(
+      { method: 'PUT', url: 'http://localhost:3000/custom/files/prepare', headers: { ETag: 'etag' } },
+      (req) => {
+        req.reply({
+          statusCode: 200,
+          // body: '',
+        });
+      }
+    );
 
-    cy.get('[data-testid=registration-file-start-button]').click({ force: true });
+    cy.get('input[type=file]').attachFile('img.jpg');
+    // cy.get('[data-testid=uploaded-file]').should('be.visible');
+
+    cy.get('[data-testid=registration-file-start-button]').should('be.enabled').click({ force: true });
     cy.get('[data-testid=error-tab]').should('have.length', 0);
   });
 
