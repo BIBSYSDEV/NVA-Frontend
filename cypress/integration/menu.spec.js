@@ -5,7 +5,6 @@ const allRoles = Object.values(RoleName);
 
 describe('Menu', () => {
   beforeEach(() => {
-    cy.server();
     cy.visit('/my-profile');
     cy.mocklogin();
   });

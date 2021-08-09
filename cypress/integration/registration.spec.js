@@ -1,3 +1,5 @@
+import 'cypress-file-upload';
+
 describe('Registration', () => {
   beforeEach(() => {
     cy.server();
@@ -39,7 +41,7 @@ describe('Registration', () => {
       headers: { ETag: 'etag' },
     });
 
-    cy.get('input[type=file]').uploadFile('img.jpg');
+    cy.get('input[type=file]').attachFile('img.jpg');
     cy.get('[data-testid=uploaded-file]').should('be.visible');
 
     cy.get('[data-testid=registration-file-start-button]').click({ force: true });

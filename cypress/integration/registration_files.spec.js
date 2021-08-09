@@ -1,3 +1,5 @@
+import 'cypress-file-upload';
+
 describe('Registration: File upload', () => {
   beforeEach(() => {
     cy.visit('/');
@@ -21,7 +23,7 @@ describe('Registration: File upload', () => {
       headers: { ETag: 'etag' },
     });
 
-    cy.get('input[type=file]').uploadFile('img.jpg');
+    cy.get('input[type=file]').attachFile('img.jpg');
     cy.get('[data-testid=uploaded-file-card]').should('be.visible');
   });
 });

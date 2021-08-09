@@ -3,7 +3,6 @@ import { mockMessages } from '../../src/utils/testfiles/mockRegistration';
 
 describe('Worklist', () => {
   beforeEach(() => {
-    cy.server();
     cy.visit('/my-profile');
     cy.mocklogin();
     cy.setUserRolesInRedux([RoleName.CURATOR, RoleName.PUBLISHER]);
