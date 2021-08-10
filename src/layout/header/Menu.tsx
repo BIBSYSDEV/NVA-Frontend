@@ -9,6 +9,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { LanguageSelector } from './LanguageSelector';
+import { useIsMobile } from '../../utils/hooks/useIsMobile';
 
 const StyledMenu = styled.div`
   grid-area: menu;
@@ -51,6 +53,7 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
   const user = useSelector((store: RootStore) => store.user);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const divRef = useRef<any>();
+  const isMobile = useIsMobile();
 
   const handleClickMenuAnchor = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -80,6 +83,12 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
+        {isMobile && (
+          <StyledMenuItem key="language-selector" divider>
+            <LanguageSelector />
+          </StyledMenuItem>
+        )}
+
         {user?.isCurator && (
           <StyledMenuItem key="menu-my-worklist-button" onClick={closeMenu} divider>
             <StyledLink to={UrlPathTemplate.Worklist} data-testid="menu-my-worklist-button">
