@@ -13,6 +13,7 @@ import { getRegistrationPath, UrlPathTemplate } from '../../utils/urlPaths';
 import { Login } from './Login';
 import { Logo } from './Logo';
 import { MobileMenu } from './MobileMenu';
+import { LanguageSelector } from './LanguageSelector';
 
 const StyledNav = styled.nav`
   display: grid;
@@ -36,6 +37,12 @@ const StyledShortcuts = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     display: none;
   }
+`;
+
+const StyledAuth = styled.div`
+  grid-area: auth;
+  justify-self: right;
+  display: flex;
 `;
 
 const StyledBurgerMenu = styled.div`
@@ -92,7 +99,10 @@ export const Header = () => {
             </Button>
           </StyledShortcuts>
         )}
-        <Login />
+        <StyledAuth>
+          <LanguageSelector />
+          <Login />
+        </StyledAuth>
       </StyledNav>
     </AppBar>
   );
