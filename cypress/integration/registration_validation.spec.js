@@ -1,6 +1,6 @@
+import 'cypress-file-upload';
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { JournalArticleContentType, BookMonographContentType } from '../../src/types/publication_types/content.types';
-import 'cypress-file-upload';
 
 describe('User opens registration form and can see validation errors', () => {
   before('Given that the user is logged in as Creator:', () => {
@@ -8,10 +8,6 @@ describe('User opens registration form and can see validation errors', () => {
     cy.mocklogin();
     cy.get('[data-testid=my-registrations]').click({ force: true });
     cy.get('[data-testid=edit-registration-4327439]').click({ force: true });
-  });
-
-  beforeEach(() => {
-    cy.server();
   });
 
   it('The User should be see validation errors for every tab', () => {
@@ -222,13 +218,8 @@ describe('User opens registration form and can see validation errors', () => {
       cy.get('[data-testid=error-tab]').should('exist')
     );
 
-    // Mock Uppys upload requests to S3 Bucket
-    cy.route({
-      method: 'PUT',
-      url: 'https://file-upload.com/files/', // Must match URL set in mock-interceptor, which cannot be imported into a test
-      response: '',
-      headers: { ETag: 'etag' },
-    });
+    cy.mockFileUpload();
+
     cy.get('input[type=file]').attachFile('img.jpg');
     cy.get('[data-testid=uploaded-file-card]').should('be.visible');
     cy.get('p.Mui-error').should('not.exist');
