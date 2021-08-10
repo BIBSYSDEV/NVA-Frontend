@@ -107,7 +107,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
         <StyledCardContent>
           <div>
             <Field name={`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`}>
-              {({ field, form, meta: { error, touched } }: FieldProps) => (
+              {({ field, meta: { error, touched } }: FieldProps) => (
                 <FormControl
                   data-testid={dataTestId.registrationWizard.files.version}
                   required
@@ -115,15 +115,15 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                   <FormLabel component="legend">{t('files_and_license.version')}</FormLabel>
                   <RadioGroup
                     {...field}
-                    onChange={(event) => form.setFieldValue(field.name, event.target.value === 'published')}>
+                    onChange={(event) => setFieldValue(field.name, JSON.parse(event.target.value))}>
                     <FormControlLabel
-                      value="accepted"
-                      control={<Radio color="primary" checked={field.value !== null && !field.value} />}
+                      value={false}
+                      control={<Radio color="primary" />}
                       label={t('files_and_license.accepted_version')}
                     />
                     <FormControlLabel
-                      value="published"
-                      control={<Radio color="primary" checked={field.value} />}
+                      value={true}
+                      control={<Radio color="primary" />}
                       label={t('files_and_license.published_version')}
                     />
                   </RadioGroup>
