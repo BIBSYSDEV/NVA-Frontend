@@ -33,15 +33,27 @@ export const useFetch = <T>({
     };
   }, []);
 
+  // Wrap t and errorMessage in refs to avoid reloading whole page when user changes language
+  const tRef = useRef(t);
+  useEffect(() => {
+    tRef.current = t;
+  }, [t]);
+
+  const errorMessageRef = useRef(errorMessage);
+  useEffect(() => {
+    errorMessageRef.current = errorMessage;
+  }, [errorMessage]);
+
   const showErrorNotification = useCallback(
     () =>
       dispatch(
         setNotification(
-          errorMessage ?? t('error.fetch', { resource: url, interpolation: { escapeValue: false } }),
+          errorMessageRef.current ??
+            tRef.current('error.fetch', { resource: url, interpolation: { escapeValue: false } }),
           NotificationVariant.Error
         )
       ),
-    [dispatch, t, errorMessage, url]
+    [dispatch, url]
   );
 
   const fetchData = useCallback(async () => {

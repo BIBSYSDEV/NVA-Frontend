@@ -1,4 +1,8 @@
 export const dataTestId = {
+  header: {
+    languageButton: 'language-button',
+    languageMenu: 'language-menu',
+  },
   projectLandingPage: {
     generalInfoBox: 'general-info',
     participantsAccordion: 'participants-accordion',

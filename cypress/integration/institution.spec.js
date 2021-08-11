@@ -2,6 +2,8 @@ describe('My profile: Institutions', () => {
   before('Given that the user is logged in:', () => {
     cy.visit('/');
     cy.mocklogin();
+    cy.get('[data-testid=menu]').click({ force: true });
+    cy.get('[data-testid=menu-user-profile-button]').click();
   });
 
   it('The user should be able to add an institution to their profile', () => {

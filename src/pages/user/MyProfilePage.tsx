@@ -9,7 +9,6 @@ import { StyledPageWrapperWithMaxWidth, StyledRightAlignedWrapper } from '../../
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { getUserPath } from '../../utils/urlPaths';
 import { UserInfo } from './UserInfo';
-import { UserLanguage } from './UserLanguage';
 import { UserOrcid } from './UserOrcid';
 import { UserRoles } from './UserRoles';
 import { UserAffiliations } from './UserAffiliations';
@@ -61,7 +60,6 @@ const MyProfilePage = () => {
           </StyledButtonWrapper>
         )}
         <StyledSecondaryUserInfo>
-          <UserLanguage />
           <UserRoles user={user} />
         </StyledSecondaryUserInfo>
 
