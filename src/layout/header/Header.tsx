@@ -13,6 +13,8 @@ import { getRegistrationPath, UrlPathTemplate } from '../../utils/urlPaths';
 import { Login } from './Login';
 import { Logo } from './Logo';
 import { MobileMenu } from './MobileMenu';
+import { LanguageSelector } from './LanguageSelector';
+import { useIsMobile } from '../../utils/hooks/useIsMobile';
 
 const StyledNav = styled.nav`
   display: grid;
@@ -38,6 +40,15 @@ const StyledShortcuts = styled.div`
   }
 `;
 
+const StyledAuth = styled.div`
+  grid-area: auth;
+  justify-self: right;
+  display: flex;
+  > :nth-child(2) {
+    margin-left: 1rem;
+  }
+`;
+
 const StyledBurgerMenu = styled.div`
   grid-area: menu;
   justify-self: left;
@@ -50,6 +61,7 @@ export const Header = () => {
   const { t } = useTranslation('registration');
   const user = useSelector((store: RootStore) => store.user);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const isMobile = useIsMobile();
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -92,7 +104,10 @@ export const Header = () => {
             </Button>
           </StyledShortcuts>
         )}
-        <Login />
+        <StyledAuth>
+          {!isMobile && <LanguageSelector />}
+          <Login />
+        </StyledAuth>
       </StyledNav>
     </AppBar>
   );

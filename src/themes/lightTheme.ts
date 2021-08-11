@@ -223,6 +223,11 @@ export const lightTheme = createTheme({
         },
       },
     },
+    MuiMenuItem: {
+      gutters: {
+        paddingRight: '2rem',
+      },
+    },
   },
   props: {
     MuiTypography: {
