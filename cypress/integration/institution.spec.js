@@ -2,7 +2,7 @@ describe('My profile: Institutions', () => {
   before('Given that the user is logged in:', () => {
     cy.visit('/');
     cy.mocklogin();
-    cy.get('[data-testid=menu]').click();
+    cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-user-profile-button]').click();
   });
 
