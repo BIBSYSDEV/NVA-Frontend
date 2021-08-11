@@ -1,6 +1,6 @@
 describe('User', () => {
   before('Given that the user is logged in:', () => {
-    cy.visit('/');
+    cy.visit('/my-profile');
     cy.mocklogin();
   });
 

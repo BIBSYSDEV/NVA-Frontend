@@ -26,6 +26,7 @@ export const LanguageSelector = () => {
         {i18n.language === LanguageCodes.NORWEGIAN_BOKMAL ? t('languages:nor') : t(`languages:${i18n.language}`)}
       </Button>
       <Menu
+        data-testid={dataTestId.header.languageMenu}
         anchorEl={anchorEl}
         getContentAnchorEl={null}
         keepMounted

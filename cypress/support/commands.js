@@ -1,6 +1,7 @@
 import { setRoles } from '../../src/redux/actions/userActions';
 import { setNotification, removeNotification } from '../../src/redux/actions/notificationActions';
 import { mockFileUploadUrl } from '../../src/api/mock-interceptor';
+import { dataTestId } from '../../src/utils/dataTestIds';
 
 Cypress.Commands.add('mocklogin', () => {
   cy.get('[data-testid=menu-login-button]').click({ force: true });
@@ -9,13 +10,9 @@ Cypress.Commands.add('mocklogin', () => {
   cy.get('[data-testid=modal_next]').click({ force: true });
   cy.get('[data-testid=cancel-connect-to-orcid]').click({ force: true });
 
-  // navigate to profile
-  cy.get('[data-testid=menu]').click({ force: true });
-  cy.get('[data-testid=menu-user-profile-button]').click({ force: true });
-
   // need to set language to english in order to check that the translated values are correct
-  cy.get('[data-testid=language-selector] .MuiSelect-root').click({ force: true });
-  cy.get('[data-testid=user-language-eng]').click({ force: true });
+  cy.get(`[data-testid=${dataTestId.header.languageButton}]`).click();
+  cy.get(`[data-testid=${dataTestId.header.languageMenu}] li`).eq(1).click();
 });
 
 Cypress.Commands.add('startRegistrationWithDoi', () => {
