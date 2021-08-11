@@ -33,9 +33,16 @@ export const useFetch = <T>({
     };
   }, []);
 
-  // Wrap translations in refs to avoid reloading whole page if user changes language
+  // Wrap t and errorMessage in refs to avoid reloading whole page when user changes language
   const tRef = useRef(t);
+  useEffect(() => {
+    tRef.current = t;
+  }, [t]);
+
   const errorMessageRef = useRef(errorMessage);
+  useEffect(() => {
+    errorMessageRef.current = errorMessage;
+  }, [errorMessage]);
 
   const showErrorNotification = useCallback(
     () =>

@@ -1,7 +1,9 @@
 describe('User', () => {
   before('Given that the user is logged in:', () => {
-    cy.visit('/my-profile');
+    cy.visit('/');
     cy.mocklogin();
+    cy.get('[data-testid=menu]').click();
+    cy.get('[data-testid=menu-user-profile-button]').click();
   });
 
   it('The user should be able to see their user details', () => {
