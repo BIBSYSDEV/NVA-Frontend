@@ -25,13 +25,22 @@ export const LanguageSelector = () => {
         onClick={(event) => setAnchorEl(event.currentTarget)}>
         {i18n.language === LanguageCodes.NORWEGIAN_BOKMAL ? t('languages:nor') : t(`languages:${i18n.language}`)}
       </Button>
-      <Menu anchorEl={anchorEl} keepMounted open={!!anchorEl} onClose={() => setAnchorEl(null)}>
+      <Menu
+        anchorEl={anchorEl}
+        getContentAnchorEl={null}
+        keepMounted
+        open={!!anchorEl}
+        onClose={() => setAnchorEl(null)}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}>
         <MenuItem
-          selected={i18n.language === LanguageCodes.NORWEGIAN_BOKMAL}
+          disabled={i18n.language === LanguageCodes.NORWEGIAN_BOKMAL}
           onClick={() => setLanguage(LanguageCodes.NORWEGIAN_BOKMAL)}>
           {t('languages:nor')}
         </MenuItem>
-        <MenuItem selected={i18n.language === LanguageCodes.ENGLISH} onClick={() => setLanguage(LanguageCodes.ENGLISH)}>
+        <MenuItem disabled={i18n.language === LanguageCodes.ENGLISH} onClick={() => setLanguage(LanguageCodes.ENGLISH)}>
           {t('languages:eng')}
         </MenuItem>
       </Menu>
