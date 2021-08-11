@@ -64,7 +64,7 @@ export const PublicRegistrationContributors = ({
   const distinctUnits = getDistinctContributorUnits([...mainContributorsToShow, ...otherContributorsToShow]);
 
   return (
-    <StyledPublicRegistrationAuthors>
+    <StyledPublicRegistrationAuthors data-testid={dataTestId.registrationLandingPage.contributors}>
       <StyledContributorsGrid>
         <div>
           <ContributorsRow

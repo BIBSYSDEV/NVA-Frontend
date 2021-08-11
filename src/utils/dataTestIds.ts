@@ -22,6 +22,16 @@ export const dataTestId = {
     requestDoiModal: 'request-doi-modal',
     sendDoiButton: 'button-send-doi-request',
     status: 'public-registration-status',
+    title: 'public-registration-title',
+    npi: 'public-registration-npi',
+    keywords: 'public-registration-keywords',
+    publicationDate: 'public-registration-publication-date',
+    primaryLanguage: 'public-registration-primary-language',
+    registrationSubtype: 'public-registration-registration-subtype',
+    subtypeFields: 'public-registration-subtype-fields',
+    contributors: 'public-registration-contributors',
+    dioLink: 'public-registration-doi-link',
+    license: 'public-registration-license',
   },
   registrationWizard: {
     description: {
