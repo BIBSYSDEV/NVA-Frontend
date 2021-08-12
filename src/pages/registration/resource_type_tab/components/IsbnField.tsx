@@ -5,12 +5,12 @@ import { TextField } from '@material-ui/core';
 import { IMaskInput } from 'react-imask';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 
-interface CustomProps {
+interface MaskIsbnTextProps {
   onChange: (event: { target: { name: string; value: string } }) => void;
   name: string;
 }
 
-const TextMaskCustom = forwardRef<HTMLElement, CustomProps>(function TextMaskCustom(props, ref) {
+const MaskIsbnText = forwardRef<HTMLElement, MaskIsbnTextProps>((props, ref) => {
   const { onChange, ...other } = props;
   return (
     <IMaskInput
@@ -29,15 +29,18 @@ export const IsbnField = () => {
   return (
     <Field name={`${ResourceFieldNames.IsbnList}[0]`}>
       {/* Support just a single ISBN entry for now */}
-      {({ field, meta: { touched, error } }: FieldProps<string>) => (
+      {({ field, meta }: FieldProps<string>) => (
         <TextField
           {...field}
           label={t('resource_type.isbn')}
           variant="filled"
           InputProps={{
-            inputComponent: TextMaskCustom as any,
+            inputComponent: MaskIsbnText as any,
           }}
-          error={!!error && touched}
+          // Mitigate bug where label wasn't shrunk when ISBN had value, and user came from another tab.
+          // This creates another bug wheher label is not shrunk on focus when lacking value though. :(
+          InputLabelProps={{ shrink: !!field.value }}
+          error={!!meta.error && meta.touched}
           helperText={<ErrorMessage name={field.name} />}
         />
       )}
