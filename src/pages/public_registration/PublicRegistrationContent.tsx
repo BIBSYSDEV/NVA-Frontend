@@ -44,12 +44,17 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
         superHeader={{
           title: reference.publicationInstance.type ? (
             <>
-              <span>{t(`publicationTypes:${reference.publicationInstance.type}`)}</span>
-              <StyledYearSpan>{date.year}</StyledYearSpan>
+              <span data-testid={dataTestId.registrationLandingPage.registrationSubtype}>
+                {t(`publicationTypes:${reference.publicationInstance.type}`)}
+              </span>
+              <StyledYearSpan data-testid={dataTestId.registrationLandingPage.publicationDate}>
+                {date.year}
+              </StyledYearSpan>
             </>
           ) : null,
           icon: <MenuBookIcon />,
-        }}>
+        }}
+        data-testid={dataTestId.registrationLandingPage.title}>
         {mainTitle || `[${t('common:missing_title')}]`}
       </ItalicPageHeader>
       <div>
