@@ -34,7 +34,7 @@ export const dataTestId = {
     registrationSubtype: 'public-registration-registration-subtype',
     subtypeFields: 'public-registration-subtype-fields',
     contributors: 'public-registration-contributors',
-    dioLink: 'public-registration-doi-link',
+    doiLink: 'public-registration-doi-link',
     license: 'public-registration-license',
   },
   registrationWizard: {
