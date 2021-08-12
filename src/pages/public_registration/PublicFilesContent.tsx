@@ -151,6 +151,7 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
         onClick={() => window.open(licenseData?.link)}
         alt={file.license?.identifier}
         src={licenseData?.buttonImage}
+        data-testid={dataTestId.registrationLandingPage.license}
       />
       <StyledDownload>
         {fileEmbargoDate && fileIsEmbargoed ? (
