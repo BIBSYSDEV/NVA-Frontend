@@ -5,6 +5,8 @@ import { RegistrationStatus } from '../../types/registration.types';
 import { mockCustomerInstitution } from './mockCustomerInstitutions';
 import { MessageType, SupportRequest } from '../../types/publication_types/messages.types';
 import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
+import { JournalArticleContentType } from '../../types/publication_types/content.types';
+import { LicenseNames } from '../../types/file.types';
 
 export const mockRegistration: JournalRegistration = {
   type: 'Publication',
@@ -27,7 +29,14 @@ export const mockRegistration: JournalRegistration = {
         administrativeAgreement: false,
         publisherAuthority: false,
         embargoDate: null,
-        license: null,
+        license: {
+          identifier: LicenseNames.CC0,
+          labels: {
+            nb: 'CC0',
+          },
+          type: 'License',
+          link: '',
+        },
       },
     ],
   },
@@ -92,20 +101,21 @@ export const mockRegistration: JournalRegistration = {
           end: '',
         },
         peerReviewed: false,
-        articleNumber: '',
-        issue: '',
-        volume: '',
+        articleNumber: '1',
+        issue: '2',
+        volume: '3',
         corrigendumFor: '',
-        contentType: null,
-        originalResearch: null,
+        contentType: JournalArticleContentType.ResearchArticle,
+        originalResearch: true,
       },
       publicationContext: {
         type: PublicationType.PublicationInJournal,
-        level: null,
+        title: 'International Journal of Human-Computer Interaction',
+        level: 'LEVEL_1',
         openAccess: false,
         peerReviewed: false,
-        title: '',
-        onlineIssn: '',
+        onlineIssn: '1044-7318',
+        url: 'http://www.erlbaum.com/Journals/journals/IJHCI/ijhci.htm',
       },
     },
   },
