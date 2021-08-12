@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Link, Typography } from '@material-ui/core';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { DoiRequestStatus, Registration } from '../../types/registration.types';
+import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledDraftSpan = styled.span`
   margin-left: 0.5rem;
@@ -32,7 +33,7 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
   const isDraftDoi = nvaDoi && !hasApprovedDoiRequest && canSeeDraftDoi;
 
   return doiToPresent ? (
-    <StyledPublicDoi>
+    <StyledPublicDoi data-testid={dataTestId.registrationLandingPage.dioLink}>
       <Typography
         component={Link}
         data-testid="doi-presentation"

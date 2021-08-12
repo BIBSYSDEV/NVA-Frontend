@@ -3,6 +3,7 @@ import { Chip, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
+import { dataTestId } from '../../utils/dataTestIds';
 
 export const PublicSummaryContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
@@ -77,7 +78,7 @@ const TagsList = ({ title, values }: TagsListProps) => (
     <Typography variant="overline" component="h3" color="primary">
       {title}
     </Typography>
-    <StyledTags>
+    <StyledTags data-testid={dataTestId.registrationLandingPage.keywords}>
       {values.map((value) => (
         <StyledChip key={value} label={<StyledChipLabel>{value}</StyledChipLabel>} />
       ))}

@@ -45,6 +45,7 @@ import {
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { RegistrationSummary } from './RegistrationSummary';
 import { StyledGeneralInfo } from '../../components/landing_page/SyledGeneralInfo';
+import { dataTestId } from '../../utils/dataTestIds';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
@@ -70,7 +71,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         {originalResearch && <Typography>{t('resource_type.presents_original_research')}</Typography>}
 
         {language && (
-          <Typography>
+          <Typography data-testid={dataTestId.registrationLandingPage.primaryLanguage}>
             {t('common:language')}:{' '}
             {t(
               `languages:${
@@ -82,7 +83,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         )}
 
         {npiSubjectHeading && (
-          <Typography>
+          <Typography data-testid={dataTestId.registrationLandingPage.npi}>
             {t('description.npi_disciplines')}: {getNpiDiscipline(npiSubjectHeading)?.name}
           </Typography>
         )}
@@ -90,7 +91,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         <PublicDoi registration={registration} />
       </div>
 
-      <div>
+      <div data-testid={dataTestId.registrationLandingPage.subtypeFields}>
         {isJournal(registration) ? (
           <>
             <PublicJournalContent date={date} publicationContext={publicationContext as JournalPublicationContext} />
