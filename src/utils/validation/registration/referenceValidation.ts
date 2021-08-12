@@ -15,9 +15,7 @@ import {
   nviApplicableContentTypes,
 } from '../../../types/publication_types/content.types';
 
-export const invalidIsbnErrorMessage = i18n.t('feedback:validation.has_invalid_format', {
-  field: i18n.t('registration:resource_type.isbn'),
-});
+export const invalidIsbnErrorMessage = i18n.t('feedback:validation.invalid_isbn');
 
 const resourceErrorMessage = {
   contentTypeRequired: i18n.t('feedback:validation.is_required', {
@@ -100,7 +98,7 @@ export const emptyStringToNull = (value: string, originalValue: string) => (orig
 export const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/g; // ISBN without hyphens
 
 // Common Fields
-const isbnListField = Yup.array().of(Yup.string().matches(isbnRegex, resourceErrorMessage.isbnInvalid));
+const isbnListField = Yup.array().of(Yup.string().min(13, resourceErrorMessage.isbnInvalid));
 const peerReviewedField = Yup.boolean()
   .nullable()
   .when('$contentType', {
