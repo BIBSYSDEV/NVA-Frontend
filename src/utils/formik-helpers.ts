@@ -50,6 +50,7 @@ export const getTabErrors = (values: FormikValues, errors: FormikErrors<unknown>
     ),
     [RegistrationTab.FilesAndLicenses]: getErrorMessages(getAllFileFields(values.fileSet.files), errors, touched),
   };
+
   return tabErrors;
 };
 
@@ -161,6 +162,7 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
             publicationContext: {
               type: true,
               publisher: true,
+              isbnList: [true],
             },
             publicationInstance: {
               type: true,
@@ -176,7 +178,7 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
             publicationContext: {
               type: true,
               publisher: true,
-              isbnList: true,
+              isbnList: [true],
             },
             publicationInstance: {
               type: true,

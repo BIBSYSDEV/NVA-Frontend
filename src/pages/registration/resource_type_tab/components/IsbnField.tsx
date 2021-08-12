@@ -27,7 +27,7 @@ export const IsbnField = () => {
   const { t } = useTranslation('registration');
 
   return (
-    <Field name={`${ResourceFieldNames.IsbnList}[0]`}>
+    <Field name={ResourceFieldNames.Isbn}>
       {/* Support just a single ISBN entry for now */}
       {({ field, meta }: FieldProps<string>) => (
         <TextField
