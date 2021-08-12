@@ -33,7 +33,7 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
   const isDraftDoi = nvaDoi && !hasApprovedDoiRequest && canSeeDraftDoi;
 
   return doiToPresent ? (
-    <StyledPublicDoi data-testid={dataTestId.registrationLandingPage.dioLink}>
+    <StyledPublicDoi data-testid={dataTestId.registrationLandingPage.doiLink}>
       <Typography
         component={Link}
         data-testid="doi-presentation"
