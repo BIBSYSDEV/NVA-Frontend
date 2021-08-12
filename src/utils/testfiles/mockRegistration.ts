@@ -29,13 +29,7 @@ export const mockRegistration: JournalRegistration = {
         administrativeAgreement: false,
         publisherAuthority: false,
         embargoDate: null,
-        license: {
-          identifier: LicenseNames.CC0,
-          labels: {
-            nb: 'CC0',
-          },
-          type: 'License',
-          link: '',
+        license: null,
         },
       },
     ],
