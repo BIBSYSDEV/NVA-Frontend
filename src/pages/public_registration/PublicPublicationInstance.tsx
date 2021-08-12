@@ -96,7 +96,11 @@ export const PublicIsbnContent = ({ isbnList }: { isbnList?: string[] }) => {
   const { t } = useTranslation('registration');
   return isbnList ? (
     <Typography>
-      {t('resource_type.isbn')}: {isbnList.join(', ')}
+      {t('resource_type.isbn')}:{' '}
+      {isbnList
+        .filter((isbn) => isbn)
+        .map((isbn) => isbn.replace(/(\d{3})(\d{1})(\d{2})(\d{6})(\d{1})/, '$1-$2-$3-$4-$5'))
+        .join(', ')}
     </Typography>
   ) : null;
 };
