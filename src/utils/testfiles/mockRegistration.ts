@@ -6,7 +6,6 @@ import { mockCustomerInstitution } from './mockCustomerInstitutions';
 import { MessageType, SupportRequest } from '../../types/publication_types/messages.types';
 import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
 import { JournalArticleContentType } from '../../types/publication_types/content.types';
-import { LicenseNames } from '../../types/file.types';
 
 export const mockRegistration: JournalRegistration = {
   type: 'Publication',
@@ -30,89 +29,88 @@ export const mockRegistration: JournalRegistration = {
         publisherAuthority: false,
         embargoDate: null,
         license: null,
-        },
       },
     ],
   },
-  entityDescription: {
-    type: 'EntityDescription',
+entityDescription: {
+  type: 'EntityDescription',
     mainTitle:
-      'Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting',
+  'Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting',
     abstract:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt, ante vitae convallis interdum, ipsum enim tempor dolor, sit amet condimentum lorem neque non sem. Nulla volutpat turpis elit. Nam fringilla sed nisi quis blandit. Nulla porttitor egestas massa, a fringilla nunc. Fusce at ornare urna. Sed luctus odio et velit dignissim, vel suscipit eros maximus. Nullam volutpat velit vel ante vestibulum, vitae accumsan lacus faucibus.\n\nNulla ultrices porta elit non scelerisque. In hac habitasse platea dictumst. Maecenas cursus lacinia magna non ultrices. Proin id porttitor mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vitae tempus nunc. Maecenas eu leo gravida, dictum velit sit amet, faucibus tortor. Nam ut lacus pretium, aliquam risus sed, faucibus enim ',
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt, ante vitae convallis interdum, ipsum enim tempor dolor, sit amet condimentum lorem neque non sem. Nulla volutpat turpis elit. Nam fringilla sed nisi quis blandit. Nulla porttitor egestas massa, a fringilla nunc. Fusce at ornare urna. Sed luctus odio et velit dignissim, vel suscipit eros maximus. Nullam volutpat velit vel ante vestibulum, vitae accumsan lacus faucibus.\n\nNulla ultrices porta elit non scelerisque. In hac habitasse platea dictumst. Maecenas cursus lacinia magna non ultrices. Proin id porttitor mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vitae tempus nunc. Maecenas eu leo gravida, dictum velit sit amet, faucibus tortor. Nam ut lacus pretium, aliquam risus sed, faucibus enim ',
     description:
-      'Morbi sed neque egestas, egestas lacus ac, tincidunt metus. Donec quis ipsum vulputate, tempus nisi vulputate, commodo orci. Suspendisse blandit condimentum ex quis egestas. Ut rhoncus eros non condimentum mattis. Ut lectus nisi, molestie sit amet hendrerit ut, mollis vel odio. In a risus tellus. Morbi rutrum augue metus, ut malesuada ex posuere vitae. Nam nec rhoncus turpis.',
+  'Morbi sed neque egestas, egestas lacus ac, tincidunt metus. Donec quis ipsum vulputate, tempus nisi vulputate, commodo orci. Suspendisse blandit condimentum ex quis egestas. Ut rhoncus eros non condimentum mattis. Ut lectus nisi, molestie sit amet hendrerit ut, mollis vel odio. In a risus tellus. Morbi rutrum augue metus, ut malesuada ex posuere vitae. Nam nec rhoncus turpis.',
     tags: ['Ost', 'Loff', 'Majones'],
-    controlledKeywords: [],
-    language: LanguageValues.ENGLISH,
-    npiSubjectHeading: 'Medisin og helsefag',
-    date: {
-      type: 'PublicationDate',
+      controlledKeywords: [],
+        language: LanguageValues.ENGLISH,
+          npiSubjectHeading: 'Medisin og helsefag',
+            date: {
+    type: 'PublicationDate',
       year: '1980',
-      month: '12',
-      day: '12',
+        month: '12',
+          day: '12',
     },
-    contributors: [
-      {
-        type: 'Contributor',
-        affiliations: [],
-        correspondingAuthor: true,
-        identity: {
-          type: 'Identity',
-          id: '901790000000',
-          name: 'Test User',
-        },
-        role: ContributorRole.Creator,
-        sequence: 1,
+  contributors: [
+    {
+      type: 'Contributor',
+      affiliations: [],
+      correspondingAuthor: true,
+      identity: {
+        type: 'Identity',
+        id: '901790000000',
+        name: 'Test User',
       },
-      {
-        type: 'Contributor',
-        affiliations: [
-          {
-            type: 'Organization',
-            labels: {
-              en: 'My institution',
-            },
+      role: ContributorRole.Creator,
+      sequence: 1,
+    },
+    {
+      type: 'Contributor',
+      affiliations: [
+        {
+          type: 'Organization',
+          labels: {
+            en: 'My institution',
           },
-        ],
-        correspondingAuthor: false,
-        identity: {
-          type: 'Identity',
-          name: 'Osteloff, Oddny',
         },
-        role: ContributorRole.Creator,
-        sequence: 2,
+      ],
+      correspondingAuthor: false,
+      identity: {
+        type: 'Identity',
+        name: 'Osteloff, Oddny',
       },
-    ],
-    reference: {
-      type: 'Reference',
-      doi: '',
-      publicationInstance: {
-        type: JournalType.Article,
-        pages: {
-          type: 'Range',
-          begin: '',
-          end: '',
-        },
-        peerReviewed: false,
-        articleNumber: '1',
-        issue: '2',
-        volume: '3',
-        corrigendumFor: '',
-        contentType: JournalArticleContentType.ResearchArticle,
-        originalResearch: true,
-      },
-      publicationContext: {
-        type: PublicationType.PublicationInJournal,
-        title: 'International Journal of Human-Computer Interaction',
-        level: 'LEVEL_1',
-        openAccess: false,
-        peerReviewed: false,
-        onlineIssn: '1044-7318',
-        url: 'http://www.erlbaum.com/Journals/journals/IJHCI/ijhci.htm',
-      },
+      role: ContributorRole.Creator,
+      sequence: 2,
     },
+  ],
+    reference: {
+    type: 'Reference',
+      doi: '',
+        publicationInstance: {
+      type: JournalType.Article,
+        pages: {
+        type: 'Range',
+          begin: '',
+            end: '',
+        },
+      peerReviewed: false,
+        articleNumber: '1',
+          issue: '2',
+            volume: '3',
+              corrigendumFor: '',
+                contentType: JournalArticleContentType.ResearchArticle,
+                  originalResearch: true,
+      },
+    publicationContext: {
+      type: PublicationType.PublicationInJournal,
+        title: 'International Journal of Human-Computer Interaction',
+          level: 'LEVEL_1',
+            openAccess: false,
+              peerReviewed: false,
+                onlineIssn: '1044-7318',
+                  url: 'http://www.erlbaum.com/Journals/journals/IJHCI/ijhci.htm',
+      },
   },
+},
 };
 
 export const mockMessages: SupportRequest[] = [
