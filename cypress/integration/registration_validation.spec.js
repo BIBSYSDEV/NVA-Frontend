@@ -115,19 +115,22 @@ describe('User opens registration form and can see validation errors', () => {
     cy.selectNpiDiscipline('Linguistics');
     cy.get('[data-testid=publisher-search-field] p').should('not.exist');
 
-    // ISBN and pages
-    cy.get('[data-testid=isbn-field] input').type('9781787632714x').type('{enter}');
-    cy.get('[data-testid=snackbar-warning]').should('be.visible');
-    cy.get('[data-testid=snackbar-warning]').get('button[title=Close]').click({ force: true });
-    cy.get('[data-testid=snackbar-warning]').should('not.exist');
-    cy.get('[data-testid=isbn-field] input').type('invalid-isbn');
-    cy.get('[data-testid=pages-field] input').type('-1');
-    cy.get('[data-testid=snackbar-warning]').should('be.visible');
-    cy.get('[data-testid=isbn-chip]').should('have.length', 0);
-    cy.get('[data-testid=pages-field] p.Mui-error').should('be.visible');
-    cy.get('[data-testid=pages-field] input').clear().type('1a');
-    cy.get('[data-testid=pages-field] p.Mui-error').should('be.visible');
-    cy.get('[data-testid=pages-field] input').clear().type('20');
+    // ISBN
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.isbnField}]`).within(() => {
+      cy.get('input').type('97817876');
+      cy.get('.Mui-error').should('be.visible');
+      cy.get('input').type('32714');
+      cy.get('.Mui-error').should('not.exist');
+    });
+
+    // Pages
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.pagesField}]`).within(() => {
+      cy.get('input').type('-1');
+      cy.get('p.Mui-error').should('be.visible');
+      cy.get('input').clear().type('1a');
+      cy.get('p.Mui-error').should('be.visible');
+      cy.get('input').clear().type('20');
+    });
 
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}]`).click();
     cy.get(`[data-value="${BookMonographContentType.Textbook}"]`).click();

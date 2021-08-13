@@ -49,6 +49,7 @@ export const dataTestId = {
     },
     resourceType: {
       contentField: 'content-field',
+      isbnField: 'isbn-field',
       nviFailedOriginalResearch: 'nvi-failed-not-original-research',
       nviFailedPeerReview: 'nvi-failed-not-peer-reviewed',
       nviFailedRated: 'nvi-failed-not-rated',

@@ -32,8 +32,7 @@ describe('Registration: Resource type: Book', () => {
     cy.selectNpiDiscipline('Linguistics');
 
     // fill out ISBN_LIST field
-    cy.get('[data-testid=isbn-field] input').type('978-1-78-763271-4').type('{enter}').type('9788202509460').blur();
-    cy.get('[data-testid=isbn-chip]').should('have.length', 2);
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.isbnField}] input`).type('978-1-787632714');
 
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}]`).click();
     cy.get(`[data-value="${BookMonographContentType.AcademicMonograph}"]`).click();
