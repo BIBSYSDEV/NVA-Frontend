@@ -3,6 +3,11 @@ export const dataTestId = {
     languageButton: 'language-button',
     languageMenu: 'language-menu',
   },
+  startPage: {
+    newRegistrationButton: 'new-registration-button',
+    readMoreButton: 'button-read-more',
+    searchButton: 'search-button',
+  },
   projectLandingPage: {
     generalInfoBox: 'general-info',
     participantsAccordion: 'participants-accordion',

@@ -13,6 +13,7 @@ import { lightTheme } from '../../themes/lightTheme';
 import { LOGIN_REDIRECT_PATH_KEY } from '../../utils/constants';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { AboutContent } from '../infopages/AboutContent';
+import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledDashboard = styled.div`
   display: grid;
@@ -159,13 +160,17 @@ const Dashboard = () => {
           <AboutContent />
         </StyledCollapse>
         <StyledButtonWrapper>
-          <Button color="secondary" variant="contained" data-testid="button-read-more" onClick={toggleReadMore}>
+          <Button
+            color="secondary"
+            variant="contained"
+            data-testid={dataTestId.startPage.readMoreButton}
+            onClick={toggleReadMore}>
             {t(readMore ? 'read_less_about_nva' : 'read_more_about_nva')}
           </Button>
         </StyledButtonWrapper>
       </StyledDescriptionDiv>
       <StyledLinksContainer>
-        <StyledSearchButton href={UrlPathTemplate.Search}>
+        <StyledSearchButton href={UrlPathTemplate.Search} data-testid={dataTestId.startPage.searchButton}>
           <StyledLinkContent>
             <SearchIcon fontSize="large" />
             <StyledText>
@@ -181,7 +186,8 @@ const Dashboard = () => {
             if (!user) {
               localStorage.setItem(LOGIN_REDIRECT_PATH_KEY, UrlPathTemplate.NewRegistration);
             }
-          }}>
+          }}
+          data-testid={dataTestId.startPage.newRegistrationButton}>
           <StyledLinkContent>
             <PostAddIcon fontSize="large" />
             <StyledText>

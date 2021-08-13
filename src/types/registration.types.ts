@@ -26,11 +26,12 @@ export enum RegistrationTab {
   FilesAndLicenses = 3,
 }
 
+// NB! Keys must match supported values in datamodel
 export const levelMap: EnumDictionary<string, number | null> = {
-  NoLevel: null,
-  Level0: 0,
-  Level1: 1,
-  Level2: 2,
+  NO_LEVEL: null,
+  LEVLE_0: 0,
+  LEVEL_1: 1,
+  LEVEL_2: 2,
 };
 
 export interface Publisher {

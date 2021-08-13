@@ -170,8 +170,13 @@ const journalPublicationInstance = Yup.object().shape({
     }),
   contentType: Yup.string()
     .nullable()
-    .oneOf(Object.values(JournalArticleContentType), resourceErrorMessage.contentTypeRequired)
-    .required(resourceErrorMessage.contentTypeRequired),
+    .when('$publicationInstanceType', {
+      is: JournalType.Article,
+      then: Yup.string()
+        .nullable()
+        .oneOf(Object.values(JournalArticleContentType), resourceErrorMessage.contentTypeRequired)
+        .required(resourceErrorMessage.contentTypeRequired),
+    }),
   peerReviewed: peerReviewedField,
   originalResearch: originalResearchField,
 });
@@ -195,8 +200,13 @@ const bookPublicationInstance = Yup.object().shape({
   pages: pagesMonographField,
   contentType: Yup.string()
     .nullable()
-    .oneOf(Object.values(BookMonographContentType), resourceErrorMessage.contentTypeRequired)
-    .required(resourceErrorMessage.contentTypeRequired),
+    .when('$publicationInstanceType', {
+      is: BookType.Monograph,
+      then: Yup.string()
+        .nullable()
+        .oneOf(Object.values(BookMonographContentType), resourceErrorMessage.contentTypeRequired)
+        .required(resourceErrorMessage.contentTypeRequired),
+    }),
   peerReviewed: peerReviewedField,
   originalResearch: originalResearchField,
 });
@@ -247,8 +257,13 @@ const chapterPublicationInstance = Yup.object().shape({
   pages: pagesRangeField,
   contentType: Yup.string()
     .nullable()
-    .oneOf(Object.values(ChapterContentType), resourceErrorMessage.contentTypeRequired)
-    .required(resourceErrorMessage.contentTypeRequired),
+    .when('$publicationInstanceType', {
+      is: ChapterType.AnthologyChapter,
+      then: Yup.string()
+        .nullable()
+        .oneOf(Object.values(ChapterContentType), resourceErrorMessage.contentTypeRequired)
+        .required(resourceErrorMessage.contentTypeRequired),
+    }),
   peerReviewed: peerReviewedField,
   originalResearch: originalResearchField,
 });
