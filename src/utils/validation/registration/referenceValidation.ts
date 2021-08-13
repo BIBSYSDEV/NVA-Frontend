@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import isbnUtils from 'isbn-utils';
+import { parse as parseIsbn } from 'isbn-utils';
 import {
   BookType,
   ChapterType,
@@ -102,7 +102,7 @@ export const emptyStringToNull = (value: string, originalValue: string) => (orig
 const isbnListField = Yup.array().of(
   Yup.string()
     .min(13, resourceErrorMessage.isbnTooShort)
-    .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !!isbnUtils.parse(isbn ?? '')?.isIsbn13())
+    .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !!parseIsbn(isbn ?? '')?.isIsbn13())
 );
 
 const peerReviewedField = Yup.boolean()

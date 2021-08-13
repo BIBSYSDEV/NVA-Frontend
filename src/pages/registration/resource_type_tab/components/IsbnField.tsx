@@ -21,7 +21,6 @@ const MaskIsbnText = forwardRef<HTMLElement, MaskIsbnTextProps>((props, ref) => 
       {...other}
       mask={isbnFormat}
       onAccept={(value) => onChange({ target: { name: other.name, value: value.replaceAll('-', '') } })}
-      overwrite
     />
   );
 });

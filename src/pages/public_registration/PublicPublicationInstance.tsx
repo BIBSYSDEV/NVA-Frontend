@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
+import { hyphenate as hyphenateIsbn } from 'isbn-utils';
 import { JournalPublicationInstance } from '../../types/publication_types/journalRegistration.types';
 import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
 import { ReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
@@ -99,7 +100,7 @@ export const PublicIsbnContent = ({ isbnList }: { isbnList?: string[] }) => {
       {t('resource_type.isbn')}:{' '}
       {isbnList
         .filter((isbn) => isbn)
-        .map((isbn) => isbn.replace(/(\d{3})(\d{1})(\d{2})(\d{6})(\d{1})/, '$1-$2-$3-$4-$5'))
+        .map((isbn) => hyphenateIsbn(isbn))
         .join(', ')}
     </Typography>
   ) : null;
