@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import isbnUtils from 'isbn-utils';
 import {
   BookType,
   ChapterType,
@@ -35,7 +36,10 @@ const resourceErrorMessage = {
     field: i18n.t('registration:resource_type.issue'),
     limit: 0,
   }),
-  isbnInvalid: i18n.t('feedback:validation.invalid_isbn'),
+  isbnInvalid: i18n.t('feedback:validation.has_invalid_format', {
+    field: i18n.t('registration:resource_type.isbn'),
+  }),
+  isbnTooShort: i18n.t('feedback:validation.isbn_too_short'),
   journalRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.journal'),
   }),
@@ -95,7 +99,12 @@ const resourceErrorMessage = {
 export const emptyStringToNull = (value: string, originalValue: string) => (originalValue === '' ? null : value);
 
 // Common Fields
-const isbnListField = Yup.array().of(Yup.string().min(13, resourceErrorMessage.isbnInvalid));
+const isbnListField = Yup.array().of(
+  Yup.string()
+    .min(13, resourceErrorMessage.isbnTooShort)
+    .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !!isbnUtils.parse(isbn ?? '')?.isIsbn13())
+);
+
 const peerReviewedField = Yup.boolean()
   .nullable()
   .when('$contentType', {
