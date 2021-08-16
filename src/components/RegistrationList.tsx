@@ -36,7 +36,7 @@ interface RegistrationListProps {
 export const RegistrationList = ({ registrations }: RegistrationListProps) => (
   <List>
     {registrations.map((registration) => (
-      <RegistrationListItem registration={registration} />
+      <RegistrationListItem key={registration.id} registration={registration} />
     ))}
   </List>
 );
