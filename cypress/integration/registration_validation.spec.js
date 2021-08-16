@@ -117,7 +117,7 @@ describe('User opens registration form and can see validation errors', () => {
 
     // ISBN
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.isbnField}]`).within(() => {
-      cy.get('input').type('97817876');
+      cy.get('input').type('97817876').blur();
       cy.get('.Mui-error').should('be.visible');
       cy.get('input').type('32714');
       cy.get('.Mui-error').should('not.exist');
