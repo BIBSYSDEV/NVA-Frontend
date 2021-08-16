@@ -66,8 +66,6 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           />
         )}
 
-        <ShareOptions title={mainTitle} description={abstract ?? description ?? ''} />
-
         <PublicGeneralContent registration={registration} />
 
         {fileSet.files.length > 0 && (
@@ -97,6 +95,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           </LandingPageAccordion>
         )}
       </div>
+      <ShareOptions title={mainTitle} description={abstract ?? description ?? ''} />
     </>
   );
 };
