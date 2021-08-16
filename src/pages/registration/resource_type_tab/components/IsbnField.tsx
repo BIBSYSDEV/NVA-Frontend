@@ -8,13 +8,13 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 
 const isbnFormat = '000-0-00-000000-0';
 
-interface MaskIsbnTextProps {
+interface MaskIsbnInputProps {
   onChange: (event: { target: { name: string; value: string } }) => void;
   name: string;
 }
 
 // MUI Mask demo: https://material-ui.com/components/text-fields/#integration-with-3rd-party-input-libraries
-const MaskIsbnText = forwardRef<HTMLElement, MaskIsbnTextProps>((props, ref) => {
+const MaskIsbnInput = forwardRef<HTMLElement, MaskIsbnInputProps>((props, ref) => {
   const { onChange, ...other } = props;
   return (
     <IMaskInput
@@ -35,8 +35,8 @@ export const IsbnField = () => {
           {/* Support just a single ISBN entry for now */}
           {({ field, meta }: FieldProps<string>) => (
             <TextField
-              data-testid={dataTestId.registrationWizard.resourceType.isbnField}
               {...field}
+              data-testid={dataTestId.registrationWizard.resourceType.isbnField}
               onChange={(event) => {
                 if (event.target.value) {
                   field.onChange(event);
@@ -48,7 +48,7 @@ export const IsbnField = () => {
               placeholder={isbnFormat}
               variant="filled"
               InputProps={{
-                inputComponent: MaskIsbnText as any,
+                inputComponent: MaskIsbnInput as any,
               }}
               error={!!meta.error && meta.touched}
               helperText={<ErrorMessage name={field.name} />}
