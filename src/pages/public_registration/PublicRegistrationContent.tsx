@@ -13,6 +13,7 @@ import { PublicRegistrationContributors } from './PublicRegistrationContributors
 import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
 import { PublicSummaryContent } from './PublicSummaryContent';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
+import { ShareOptions } from './ShareOptions';
 
 const StyledYearSpan = styled.span`
   padding-left: 1rem;
@@ -64,6 +65,8 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
             registrationType={reference.publicationInstance.type}
           />
         )}
+
+        <ShareOptions title={mainTitle} description={abstract ?? description ?? ''} />
 
         <PublicGeneralContent registration={registration} />
 
