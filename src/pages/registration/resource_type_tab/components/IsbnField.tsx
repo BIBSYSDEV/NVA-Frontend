@@ -1,4 +1,4 @@
-import { ErrorMessage, Field, FieldProps } from 'formik';
+import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik';
 import React, { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '@material-ui/core';
@@ -29,22 +29,33 @@ export const IsbnField = () => {
   const { t } = useTranslation('registration');
 
   return (
-    <Field name={ResourceFieldNames.Isbn}>
-      {/* Support just a single ISBN entry for now */}
-      {({ field, meta }: FieldProps<string>) => (
-        <TextField
-          data-testid={dataTestId.registrationWizard.resourceType.isbnField}
-          {...field}
-          label={t('resource_type.isbn')}
-          placeholder={isbnFormat}
-          variant="filled"
-          InputProps={{
-            inputComponent: MaskIsbnText as any,
-          }}
-          error={!!meta.error && meta.touched}
-          helperText={<ErrorMessage name={field.name} />}
-        />
+    <FieldArray name={ResourceFieldNames.IsbnList}>
+      {({ remove }: FieldArrayRenderProps) => (
+        <Field name={ResourceFieldNames.Isbn}>
+          {/* Support just a single ISBN entry for now */}
+          {({ field, meta }: FieldProps<string>) => (
+            <TextField
+              data-testid={dataTestId.registrationWizard.resourceType.isbnField}
+              {...field}
+              onChange={(event) => {
+                if (event.target.value) {
+                  field.onChange(event);
+                } else {
+                  remove(0);
+                }
+              }}
+              label={t('resource_type.isbn')}
+              placeholder={isbnFormat}
+              variant="filled"
+              InputProps={{
+                inputComponent: MaskIsbnText as any,
+              }}
+              error={!!meta.error && meta.touched}
+              helperText={<ErrorMessage name={field.name} />}
+            />
+          )}
+        </Field>
       )}
-    </Field>
+    </FieldArray>
   );
 };
