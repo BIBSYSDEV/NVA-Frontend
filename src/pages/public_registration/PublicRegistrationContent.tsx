@@ -2,6 +2,7 @@ import deepmerge from 'deepmerge';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { List } from '@material-ui/core';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import { ItalicPageHeader } from '../../components/PageHeader';
 import { emptyRegistration, Registration } from '../../types/registration.types';
@@ -14,6 +15,10 @@ import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
 import { PublicSummaryContent } from './PublicSummaryContent';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { ShareOptions } from './ShareOptions';
+import { SearchApiPath } from '../../api/apiPaths';
+import { SearchFieldName, SearchResult } from '../../types/search.types';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { RegistrationListItem } from '../dashboard/RegistrationListItem';
 
 const StyledYearSpan = styled.span`
   padding-left: 1rem;
@@ -28,6 +33,11 @@ export interface PublicRegistrationProps extends PublicRegistrationContentProps 
 
 export const PublicRegistrationContent = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
   const { t } = useTranslation('registration');
+
+  const [relatedRegistrations] = useFetch<SearchResult>({
+    url: `${SearchApiPath.Registrations}?query=${registration.identifier} AND NOT (${SearchFieldName.Id}:${registration.identifier})`,
+    errorMessage: t('feedback:error.search'),
+  });
 
   // Registration can lack some fields if it's newly created
   registration = deepmerge(emptyRegistration, registration);
@@ -92,6 +102,19 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
             defaultExpanded
             heading={t('description.project_association')}>
             <PublicProjectsContent projects={projects} />
+          </LandingPageAccordion>
+        )}
+
+        {relatedRegistrations && relatedRegistrations.hits.length > 0 && (
+          <LandingPageAccordion
+            data-testid={dataTestId.registrationLandingPage.relatedRegistrationsAccordion}
+            defaultExpanded
+            heading={t('public_page.related_registrations')}>
+            <List>
+              {relatedRegistrations.hits.map((registration) => (
+                <RegistrationListItem key={registration.id} registration={registration} />
+              ))}
+            </List>
           </LandingPageAccordion>
         )}
       </div>
