@@ -33,19 +33,20 @@ export interface PublicRegistrationProps extends PublicRegistrationContentProps 
 export const PublicRegistrationContent = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
   const { t } = useTranslation('registration');
 
-  const [relatedRegistrations] = useFetch<SearchResult>({
-    url: `${SearchApiPath.Registrations}?query=${registration.identifier} AND NOT (${SearchFieldName.Id}:${registration.identifier})`,
-    errorMessage: t('feedback:error.search'),
-  });
-
   // Registration can lack some fields if it's newly created
   registration = deepmerge(emptyRegistration, registration);
 
   const {
+    identifier,
     entityDescription: { contributors, date, mainTitle, abstract, description, tags, reference },
     projects,
     fileSet,
   } = registration;
+
+  const [relatedRegistrations] = useFetch<SearchResult>({
+    url: `${SearchApiPath.Registrations}?query=${identifier} AND NOT (${SearchFieldName.Id}:${identifier})`,
+    errorMessage: t('feedback:error.search'),
+  });
 
   return (
     <>

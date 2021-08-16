@@ -40,8 +40,6 @@ export enum LanguageValues {
   NONE = '',
 }
 
-export const pageLanguages = [LanguageCodes.NORWEGIAN_BOKMAL, LanguageCodes.ENGLISH];
-
 export const registrationLanguages = [
   { id: LanguageCodes.ENGLISH, value: LanguageValues.ENGLISH },
   { id: LanguageCodes.NORWEGIAN_BOKMAL, value: LanguageValues.NORWEGIAN_BOKMAL },

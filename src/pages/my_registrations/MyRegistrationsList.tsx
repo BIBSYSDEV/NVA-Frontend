@@ -41,12 +41,12 @@ const StyledLabel = styled(StyledTypography)`
   min-width: 12rem;
 `;
 
-interface MyRegistrationListProps {
+interface MyRegistrationsListProps {
   registrations: RegistrationPreview[];
   refetchRegistrations: () => void;
 }
 
-export const MyRegistrationList = ({ registrations, refetchRegistrations }: MyRegistrationListProps) => {
+export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyRegistrationsListProps) => {
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
