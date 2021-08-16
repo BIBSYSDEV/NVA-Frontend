@@ -19,7 +19,7 @@ export const emptyReportPublicationInstance: ReportPublicationInstance = {
 export interface ReportPublicationContext {
   type: PublicationType | '';
   isbnList: string[];
-  level: string | number | null;
+  level: string | null;
   onlineIssn: string;
   openAccess: boolean;
   peerReviewed: boolean;

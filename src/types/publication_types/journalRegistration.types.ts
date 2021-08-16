@@ -19,7 +19,7 @@ export interface JournalPublicationInstance extends NviApplicableBase<JournalArt
 
 export interface JournalPublicationContext {
   type: PublicationType | '';
-  level: string | number | null;
+  level: string | null;
   onlineIssn?: string;
   printIssn?: string;
   openAccess: boolean;
@@ -51,7 +51,7 @@ export const emptyJournalPublicationInstance: JournalPublicationInstance = {
 
 const emptyPublicationContext: JournalPublicationContext = {
   type: '',
-  level: '',
+  level: null,
   onlineIssn: '',
   openAccess: false,
   peerReviewed: false,

@@ -14,7 +14,7 @@ export interface ChapterPublicationInstance extends NviApplicableBase<ChapterCon
 
 export interface ChapterPublicationContext {
   type: PublicationType.Chapter;
-  level: string | number | null;
+  level: string | null;
   onlineIssn: string;
   openAccess: boolean;
   peerReviewed: boolean;
