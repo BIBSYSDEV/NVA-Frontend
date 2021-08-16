@@ -76,6 +76,7 @@
     "author_required": "You need to register at least one author for this registration",
     "editor_required": "You need to register at least one editor for this registration",
     "has_invalid_format": "{{field}} has invalid format",
+    "isbn_too_short": "ISBN must have 13 digits",
     "is_required": "{{field}} is required",
     "minimum_one_file": "You need to upload at least one file for this registration",
     "must_be_bigger_than": "{{field}} cannot be smaller than {{limit}}",

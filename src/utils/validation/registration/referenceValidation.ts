@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { parse as parseIsbn } from 'isbn-utils';
 import {
   BookType,
   ChapterType,
@@ -14,10 +15,6 @@ import {
   JournalArticleContentType,
   nviApplicableContentTypes,
 } from '../../../types/publication_types/content.types';
-
-export const invalidIsbnErrorMessage = i18n.t('feedback:validation.has_invalid_format', {
-  field: i18n.t('registration:resource_type.isbn'),
-});
 
 const resourceErrorMessage = {
   contentTypeRequired: i18n.t('feedback:validation.is_required', {
@@ -39,7 +36,10 @@ const resourceErrorMessage = {
     field: i18n.t('registration:resource_type.issue'),
     limit: 0,
   }),
-  isbnInvalid: invalidIsbnErrorMessage,
+  isbnInvalid: i18n.t('feedback:validation.has_invalid_format', {
+    field: i18n.t('registration:resource_type.isbn'),
+  }),
+  isbnTooShort: i18n.t('feedback:validation.isbn_too_short'),
   journalRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.journal'),
   }),
@@ -97,10 +97,14 @@ const resourceErrorMessage = {
 };
 
 export const emptyStringToNull = (value: string, originalValue: string) => (originalValue === '' ? null : value);
-export const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/g; // ISBN without hyphens
 
 // Common Fields
-const isbnListField = Yup.array().of(Yup.string().matches(isbnRegex, resourceErrorMessage.isbnInvalid));
+const isbnListField = Yup.array().of(
+  Yup.string()
+    .min(13, resourceErrorMessage.isbnTooShort)
+    .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !!parseIsbn(isbn ?? '')?.isIsbn13())
+);
+
 const peerReviewedField = Yup.boolean()
   .nullable()
   .when('$contentType', {

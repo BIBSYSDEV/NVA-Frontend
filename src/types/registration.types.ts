@@ -29,7 +29,7 @@ export enum RegistrationTab {
 // NB! Keys must match supported values in datamodel
 export const levelMap: EnumDictionary<string, number | null> = {
   NO_LEVEL: null,
-  LEVLE_0: 0,
+  LEVEL_0: 0,
   LEVEL_1: 1,
   LEVEL_2: 2,
 };

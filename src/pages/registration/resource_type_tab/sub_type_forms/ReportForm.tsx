@@ -5,10 +5,10 @@ import { Typography } from '@material-ui/core';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { lightTheme } from '../../../../themes/lightTheme';
 import { DoiField } from '../components/DoiField';
-import { IsbnListField } from '../components/IsbnListField';
 import { PublisherField } from '../components/PublisherField';
 import { SeriesFields } from '../components/SeriesFields';
 import { TotalPagesField } from '../components/TotalPagesField';
+import { IsbnField } from '../components/IsbnField';
 
 const StyledSection = styled.div`
   display: grid;
@@ -33,7 +33,7 @@ export const ReportForm = () => {
 
       <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
         <StyledSection>
-          <IsbnListField />
+          <IsbnField />
           <TotalPagesField />
         </StyledSection>
       </BackgroundDiv>
