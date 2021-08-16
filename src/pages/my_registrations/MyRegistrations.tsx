@@ -16,7 +16,7 @@ import { TabButton } from '../../components/TabButton';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { MyRegistrationsResponse, RegistrationStatus } from '../../types/registration.types';
 import { getUserPath } from '../../utils/urlPaths';
-import { RegistrationList } from './RegistrationList';
+import { MyRegistrationList } from './MyRegistrationList';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { PublicationsApiPath } from '../../api/apiPaths';
 
@@ -85,7 +85,7 @@ const MyRegistrations = () => {
           {isLoading ? (
             <ListSkeleton minWidth={100} maxWidth={100} height={100} />
           ) : (
-            <RegistrationList
+            <MyRegistrationList
               registrations={selectedTab === Tab.Unpublished ? unpublishedRegistrations : publishedRegistrations}
               refetchRegistrations={refetchRegistrations}
             />

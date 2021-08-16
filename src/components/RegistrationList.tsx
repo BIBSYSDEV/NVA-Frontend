@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
 import styled from 'styled-components';
-import { Link as MuiLink, ListItem, ListItemText, Typography } from '@material-ui/core';
-import { SearchRegistration } from '../../types/search.types';
-import { displayDate } from '../../utils/date-helpers';
-import { getRegistrationLandingPagePath, getUserPath } from '../../utils/urlPaths';
+import { Link as MuiLink, List, ListItem, ListItemText, Typography } from '@material-ui/core';
+import { SearchRegistration } from '../types/search.types';
+import { displayDate } from '../utils/date-helpers';
+import { getRegistrationLandingPagePath, getUserPath } from '../utils/urlPaths';
 
 const StyledContributors = styled.div`
   display: flex;
@@ -29,11 +29,23 @@ const StyledSuperHeader = styled(Typography)`
   color: ${({ theme }) => theme.palette.section.megaDark};
 `;
 
+interface RegistrationListProps {
+  registrations: SearchRegistration[];
+}
+
+export const RegistrationList = ({ registrations }: RegistrationListProps) => (
+  <List>
+    {registrations.map((registration) => (
+      <RegistrationListItem registration={registration} />
+    ))}
+  </List>
+);
+
 interface RegistrationListItemProps {
   registration: SearchRegistration;
 }
 
-export const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
+const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
   const { t } = useTranslation('publicationTypes');
   const { id, title, abstract, contributors, publicationType, publicationDate } = registration;
 

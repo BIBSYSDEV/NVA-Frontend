@@ -2,7 +2,6 @@ import deepmerge from 'deepmerge';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { List } from '@material-ui/core';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import { ItalicPageHeader } from '../../components/PageHeader';
 import { emptyRegistration, Registration } from '../../types/registration.types';
@@ -18,7 +17,7 @@ import { ShareOptions } from './ShareOptions';
 import { SearchApiPath } from '../../api/apiPaths';
 import { SearchFieldName, SearchResult } from '../../types/search.types';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { RegistrationListItem } from '../dashboard/RegistrationListItem';
+import { RegistrationList } from '../../components/RegistrationList';
 
 const StyledYearSpan = styled.span`
   padding-left: 1rem;
@@ -110,11 +109,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
             data-testid={dataTestId.registrationLandingPage.relatedRegistrationsAccordion}
             defaultExpanded
             heading={t('public_page.related_registrations')}>
-            <List>
-              {relatedRegistrations.hits.map((registration) => (
-                <RegistrationListItem key={registration.id} registration={registration} />
-              ))}
-            </List>
+            <RegistrationList registrations={relatedRegistrations.hits} />
           </LandingPageAccordion>
         )}
       </div>
