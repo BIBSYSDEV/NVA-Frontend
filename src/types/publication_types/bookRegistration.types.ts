@@ -23,7 +23,7 @@ export const emptyBookPublicationInstance: BookPublicationInstance = {
 export interface BookPublicationContext {
   type: PublicationType | '';
   isbnList: string[];
-  level: string | number | null;
+  level: string | null;
   openAccess: boolean;
   peerReviewed: boolean;
   publisher: string;

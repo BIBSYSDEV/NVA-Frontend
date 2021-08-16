@@ -23,7 +23,7 @@ export const SeriesFields = () => {
             errorFieldName={name}
             setValue={(newValue) => {
               setFieldValue(name, newValue?.title ?? '');
-              setFieldValue(ResourceFieldNames.PubliactionContextLevel, newValue ? mapLevel(newValue.level) : '');
+              setFieldValue(ResourceFieldNames.PubliactionContextLevel, newValue ? mapLevel(newValue.level) : null);
             }}
             value={publicationContextToPublisher({ title: value })}
           />
