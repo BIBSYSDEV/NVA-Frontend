@@ -1,6 +1,6 @@
 describe('Search', () => {
   beforeEach(() => {
-    cy.visit('/search');
+    cy.visit('/');
   });
 
   it('The user should see a result-list when searching', () => {
