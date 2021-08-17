@@ -90,7 +90,7 @@ const Dashboard = () => {
         </StyledShortDescription>
       </StyledTaglineDiv>
       <StyledDescriptionDiv backgroundColor={lightTheme.palette.section.megaDark}>
-        <StyledCollapse in={readMore} collapsedSize="0rem">
+        <StyledCollapse in={readMore}>
           <AboutContent />
         </StyledCollapse>
         <StyledButtonWrapper>
