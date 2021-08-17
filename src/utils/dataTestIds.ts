@@ -1,4 +1,8 @@
 export const dataTestId = {
+  footer: {
+    aboutLink: 'about-link',
+    privacyLink: 'privacy-link',
+  },
   header: {
     languageButton: 'language-button',
     languageMenu: 'language-menu',
