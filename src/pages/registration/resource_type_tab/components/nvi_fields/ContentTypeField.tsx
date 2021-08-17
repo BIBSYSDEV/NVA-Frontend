@@ -39,7 +39,10 @@ export const ContentTypeField = ({ options }: ContentTypeFieldProps) => {
             error={!!error && touched}
             helperText={<ErrorMessage name={field.name} />}>
             {options.map(({ value, text }) => (
-              <MenuItem value={value} key={value}>
+              <MenuItem
+                value={value}
+                key={value}
+                data-testid={dataTestId.registrationWizard.resourceType.contentValue(value)}>
                 {text}
               </MenuItem>
             ))}
