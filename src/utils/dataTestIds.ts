@@ -73,4 +73,7 @@ export const dataTestId = {
     usersEditors: 'users-editors',
     usersCreators: 'users-creators',
   },
+  contentField: {
+    contentValue: (value: string) => `content-value-${value.toLowerCase().replace(' ', '-')}`,
+  },
 };
