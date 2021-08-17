@@ -19,7 +19,6 @@ export const SearchBar = () => {
           {...field}
           id={field.name}
           data-testid="search-field"
-          autoFocus
           fullWidth
           variant="outlined"
           label={t('search')}
