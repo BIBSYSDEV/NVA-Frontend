@@ -7,7 +7,6 @@ import { UrlPathTemplate } from './utils/urlPaths';
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
 const MyRegistrations = lazy(() => import('./pages/my_registrations/MyRegistrations'));
-const SearchPage = lazy(() => import('./pages/search/SearchPage'));
 const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
 const MyProfilePage = lazy(() => import('./pages/user/MyProfilePage'));
 const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
@@ -31,7 +30,6 @@ export const AppRoutes = () => {
         <Route exact path={UrlPathTemplate.User} component={PublicProfile} />
         <Route exact path={UrlPathTemplate.RegistrationLandingPage} component={PublicRegistration} />
         <Route exact path={UrlPathTemplate.Projects} component={ProjectsPage} />
-        <Route exact path={UrlPathTemplate.Search} component={SearchPage} />
         <Route exact path={UrlPathTemplate.Login} component={Login} />
         <Route exact path={UrlPathTemplate.Logout} component={Logout} />
 

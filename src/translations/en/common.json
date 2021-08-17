@@ -65,7 +65,6 @@
   "save": "Save",
   "save_and_present": "Save and present",
   "search": "Search",
-  "search_for_publication": "Search for publication",
   "search_placeholder": "Name Nameson",
   "search_summary": "{{count}} result for \"{{searchTerm}}\"",
   "search_summary_plural": "{{count}} results for \"{{searchTerm}}\"",
