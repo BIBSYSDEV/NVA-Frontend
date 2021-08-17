@@ -32,9 +32,6 @@ export const DatePickerField = () => {
   );
   const [yearOnly, setYearOnly] = useState(!!year && !month);
 
-  const setYearFieldTouched = () =>
-    !touched.entityDescription?.date?.year && setFieldTouched(DescriptionFieldNames.PublicationYear);
-
   const updateDateValues = (newDate: Date | null, isYearOnly: boolean) => {
     const updatedDate: RegistrationDate = {
       type: 'PublicationDate',
@@ -82,8 +79,9 @@ export const DatePickerField = () => {
           autoOk
           maxDate={`${new Date().getFullYear() + 5}-12-31`}
           format={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
-          onBlur={setYearFieldTouched}
-          onClose={setYearFieldTouched}
+          onBlur={() =>
+            !touched.entityDescription?.date?.year && setFieldTouched(DescriptionFieldNames.PublicationYear)
+          }
           error={hasError}
           helperText={hasError && errors.entityDescription?.date?.year}
         />
