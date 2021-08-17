@@ -35,6 +35,7 @@ export const dataTestId = {
     publishButton: 'button-publish-registration',
     registrationSubtype: 'public-registration-registration-subtype',
     rejectDoiButton: 'button-reject-doi',
+    relatedRegistrationsAccordion: 'related-registrations-accordion',
     requestDoiButton: 'button-toggle-request-doi',
     requestDoiModal: 'request-doi-modal',
     sendDoiButton: 'button-send-doi-request',

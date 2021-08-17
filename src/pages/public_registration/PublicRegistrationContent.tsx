@@ -14,6 +14,10 @@ import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
 import { PublicSummaryContent } from './PublicSummaryContent';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { ShareOptions } from './ShareOptions';
+import { SearchApiPath } from '../../api/apiPaths';
+import { SearchFieldName, SearchResult } from '../../types/search.types';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { RegistrationList } from '../../components/RegistrationList';
 
 const StyledYearSpan = styled.span`
   padding-left: 1rem;
@@ -33,10 +37,16 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
   registration = deepmerge(emptyRegistration, registration);
 
   const {
+    identifier,
     entityDescription: { contributors, date, mainTitle, abstract, description, tags, reference },
     projects,
     fileSet,
   } = registration;
+
+  const [relatedRegistrations] = useFetch<SearchResult>({
+    url: `${SearchApiPath.Registrations}?query=${identifier} AND NOT (${SearchFieldName.Id}:${identifier})`,
+    errorMessage: t('feedback:error.search'),
+  });
 
   return (
     <>
@@ -92,6 +102,15 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
             defaultExpanded
             heading={t('description.project_association')}>
             <PublicProjectsContent projects={projects} />
+          </LandingPageAccordion>
+        )}
+
+        {relatedRegistrations && relatedRegistrations.hits.length > 0 && (
+          <LandingPageAccordion
+            data-testid={dataTestId.registrationLandingPage.relatedRegistrationsAccordion}
+            defaultExpanded
+            heading={t('public_page.related_registrations')}>
+            <RegistrationList registrations={relatedRegistrations.hits} />
           </LandingPageAccordion>
         )}
       </div>
