@@ -55,6 +55,7 @@ export const dataTestId = {
     },
     resourceType: {
       contentField: 'content-field',
+      contentValue: (value: string) => `content-value-${value.toLowerCase().replace(' ', '-')}`,
       isbnField: 'isbn-field',
       nviFailedOriginalResearch: 'nvi-failed-not-original-research',
       nviFailedPeerReview: 'nvi-failed-not-peer-reviewed',
@@ -72,8 +73,5 @@ export const dataTestId = {
     usersCurators: 'users-curators',
     usersEditors: 'users-editors',
     usersCreators: 'users-creators',
-  },
-  contentField: {
-    contentValue: (value: string) => `content-value-${value.toLowerCase().replace(' ', '-')}`,
   },
 };
