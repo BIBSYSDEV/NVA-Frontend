@@ -11,23 +11,21 @@ const StyledFooter = styled.footer`
   grid-template-areas: 'about logo privacy';
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
+  justify-items: center;
   min-height: 4rem;
   background: ${({ theme }) => theme.palette.background.footer};
 `;
 
-const StyledAboutButtonContainer = styled.div`
+const StyledAboutButton = styled(Button).attrs({ component: Link, to: UrlPathTemplate.About })`
   grid-area: about;
-  justify-self: center;
 `;
 
 const StyledLogoContainer = styled.div`
   grid-area: logo;
-  justify-self: center;
 `;
 
-const StyledPrivacyButtonContainer = styled.div`
+const StyledPrivacyButton = styled(Button).attrs({ component: Link, to: UrlPathTemplate.PrivacyPolicy })`
   grid-area: privacy;
-  justify-self: center;
   word-break: break-all;
 `;
 
@@ -36,24 +34,16 @@ export const Footer = () => {
 
   return (
     <StyledFooter>
-      <StyledAboutButtonContainer>
-        <Button data-testid="about_link" color="primary" component={Link} to={UrlPathTemplate.About}>
-          {t('common:about_nva')}
-        </Button>
-      </StyledAboutButtonContainer>
+      <StyledAboutButton data-testid="about_link" color="primary">
+        {t('common:about_nva')}
+      </StyledAboutButton>
       <StyledLogoContainer>
         <Typography>{t('common:delivered_by')}</Typography>
         <img src={logo} alt="UNIT logo" />
       </StyledLogoContainer>
-      <StyledPrivacyButtonContainer>
-        <Button
-          data-testid="privacy_statement_link"
-          color="primary"
-          component={Link}
-          to={UrlPathTemplate.PrivacyPolicy}>
-          {t('privacy_statement')}
-        </Button>
-      </StyledPrivacyButtonContainer>
+      <StyledPrivacyButton data-testid="privacy_statement_link" color="primary">
+        {t('privacy_statement')}
+      </StyledPrivacyButton>
     </StyledFooter>
   );
 };
