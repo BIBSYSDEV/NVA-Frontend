@@ -5,6 +5,7 @@ import { Button, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { UrlPathTemplate } from '../utils/urlPaths';
 import logo from '../resources/images/unit_logo.png';
+import { dataTestId } from '../utils/dataTestIds';
 
 const StyledFooter = styled.footer`
   display: grid;
@@ -34,14 +35,14 @@ export const Footer = () => {
 
   return (
     <StyledFooter>
-      <StyledAboutButton data-testid="about_link" color="primary">
+      <StyledAboutButton data-testid={dataTestId.footer.aboutLink} color="primary">
         {t('common:about_nva')}
       </StyledAboutButton>
       <StyledLogoContainer>
         <Typography>{t('common:delivered_by')}</Typography>
         <img src={logo} alt="UNIT logo" />
       </StyledLogoContainer>
-      <StyledPrivacyButton data-testid="privacy_statement_link" color="primary">
+      <StyledPrivacyButton data-testid={dataTestId.footer.privacyLink} color="primary">
         {t('privacy_statement')}
       </StyledPrivacyButton>
     </StyledFooter>
