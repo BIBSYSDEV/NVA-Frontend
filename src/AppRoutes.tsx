@@ -4,6 +4,7 @@ import { DelayedFallback } from './components/DelayedFallback';
 import { AppAdminRoute, CreatorRoute, CuratorRoute, InstitutionAdminRoute, LoggedInRoute } from './utils/routes/Routes';
 import { UrlPathTemplate } from './utils/urlPaths';
 
+const AboutPage = lazy(() => import('./pages/infopages/AboutPage'));
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
 const MyRegistrations = lazy(() => import('./pages/my_registrations/MyRegistrations'));
@@ -26,6 +27,7 @@ export const AppRoutes = () => {
     <Suspense fallback={<DelayedFallback />}>
       <Switch>
         <Route exact path={UrlPathTemplate.Home} component={Dashboard} />
+        <Route exact path={UrlPathTemplate.About} component={AboutPage} />
         <Route exact path={UrlPathTemplate.PrivacyPolicy} component={PrivacyPolicy} />
         <Route exact path={UrlPathTemplate.User} component={PublicProfile} />
         <Route exact path={UrlPathTemplate.RegistrationLandingPage} component={PublicRegistration} />

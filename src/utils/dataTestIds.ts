@@ -1,4 +1,8 @@
 export const dataTestId = {
+  footer: {
+    aboutLink: 'about-link',
+    privacyLink: 'privacy-link',
+  },
   header: {
     languageButton: 'language-button',
     languageMenu: 'language-menu',
@@ -53,6 +57,7 @@ export const dataTestId = {
     },
     resourceType: {
       contentField: 'content-field',
+      contentValue: (value: string) => `content-value-${value.toLowerCase().replaceAll(' ', '-')}`,
       isbnField: 'isbn-field',
       nviFailedOriginalResearch: 'nvi-failed-not-original-research',
       nviFailedPeerReview: 'nvi-failed-not-peer-reviewed',
