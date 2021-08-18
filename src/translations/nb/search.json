@@ -3,6 +3,6 @@
   "hits_plural": "{{count}} treff",
   "registration_type": "Registreringstype",
   "search": "Søk",
-  "search_help": "Søk etter eksakte treff på ord, eller bruk * for å treffe alle varianter som innehar deler av strofen. Eks: \"Applikasjon\" eller \"App*\"",
+  "search_help": "Bruk anførselstegn (\"abc\") for eksakte treff, eller jokertegn (*) for å søke etter deler av ord",
   "select_filters": "Velg filtre for å snevre inn søket:"
 }
