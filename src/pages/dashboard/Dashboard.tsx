@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -8,6 +8,8 @@ import { lightTheme } from '../../themes/lightTheme';
 import { AboutContent } from '../infopages/AboutContent';
 import { dataTestId } from '../../utils/dataTestIds';
 import SearchPage from '../search/SearchPage';
+import { useHistory } from 'react-router-dom';
+import { LOGIN_REDIRECT_PATH_KEY } from '../../utils/constants';
 
 const StyledDashboard = styled.div`
   display: grid;
@@ -74,9 +76,18 @@ const StyledButtonWrapper = styled.div`
 
 const Dashboard = () => {
   const { t } = useTranslation('common');
+  const history = useHistory();
   const [readMore, setReadMore] = useState(false);
 
   const toggleReadMore = () => setReadMore(!readMore);
+
+  useEffect(() => {
+    const loginPath = localStorage.getItem(LOGIN_REDIRECT_PATH_KEY);
+    if (loginPath) {
+      localStorage.removeItem(LOGIN_REDIRECT_PATH_KEY);
+      history.push(loginPath);
+    }
+  }, [history]);
 
   return (
     <StyledDashboard>
