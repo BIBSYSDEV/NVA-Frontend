@@ -9,7 +9,7 @@ import { AboutContent } from '../infopages/AboutContent';
 import { dataTestId } from '../../utils/dataTestIds';
 import SearchPage from '../search/SearchPage';
 import { useHistory } from 'react-router-dom';
-import { LOGIN_REDIRECT_PATH_KEY } from '../../utils/constants';
+import { REDIRECT_PATH_KEY } from '../../utils/constants';
 
 const StyledDashboard = styled.div`
   display: grid;
@@ -82,9 +82,9 @@ const Dashboard = () => {
   const toggleReadMore = () => setReadMore(!readMore);
 
   useEffect(() => {
-    const loginPath = localStorage.getItem(LOGIN_REDIRECT_PATH_KEY);
+    const loginPath = localStorage.getItem(REDIRECT_PATH_KEY);
     if (loginPath) {
-      localStorage.removeItem(LOGIN_REDIRECT_PATH_KEY);
+      localStorage.removeItem(REDIRECT_PATH_KEY);
       history.push(loginPath);
     }
   }, [history]);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { UrlPathTemplate } from '../utils/urlPaths';
-import { LOGIN_REDIRECT_PATH_KEY } from '../utils/constants';
+import { REDIRECT_PATH_KEY } from '../utils/constants';
 
 const isPublicPage = (path: string) => {
   if (
@@ -17,9 +17,9 @@ const isPublicPage = (path: string) => {
 };
 
 const Logout = () => {
-  const previousPath = localStorage.getItem(LOGIN_REDIRECT_PATH_KEY);
+  const previousPath = localStorage.getItem(REDIRECT_PATH_KEY);
   const redirectPath = previousPath && isPublicPage(previousPath) ? previousPath : UrlPathTemplate.Home;
-  localStorage.removeItem(LOGIN_REDIRECT_PATH_KEY);
+  localStorage.removeItem(REDIRECT_PATH_KEY);
 
   return <Redirect to={redirectPath} />;
 };
