@@ -52,7 +52,6 @@ const StyledTagline = styled(Typography)`
   font-weight: bold;
   max-width: 40rem;
   grid-area: text-tagline;
-  white-space: pre-wrap;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     font-size: 2rem;
   }
