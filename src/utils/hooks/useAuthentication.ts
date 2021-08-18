@@ -4,6 +4,7 @@ import { USE_MOCK_DATA, FEIDE_IDENTITY_PROVIDER, REDIRECT_PATH_KEY } from '../co
 import { setUser } from '../../redux/actions/userActions';
 import { mockUser } from '../testfiles/mock_feide_user';
 import { logoutSuccess } from '../../redux/actions/authActions';
+import { UrlPathTemplate } from '../urlPaths';
 
 interface UseAuthentication {
   handleLogin: () => void;
@@ -28,6 +29,7 @@ export const useAuthentication = (): UseAuthentication => {
     localStorage.setItem(REDIRECT_PATH_KEY, getCurrentPath());
     if (USE_MOCK_DATA) {
       dispatch(logoutSuccess());
+      window.location.pathname = UrlPathTemplate.Logout;
     } else {
       Auth.signOut();
     }

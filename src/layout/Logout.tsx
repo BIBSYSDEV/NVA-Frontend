@@ -3,14 +3,14 @@ import { Redirect } from 'react-router-dom';
 import { UrlPathTemplate } from '../utils/urlPaths';
 import { REDIRECT_PATH_KEY } from '../utils/constants';
 
-const registrationLandingPagePath = UrlPathTemplate.RegistrationLandingPage.split('/');
+const registrationLandingPageParts = UrlPathTemplate.RegistrationLandingPage.split('/');
 const isPublicPage = (path: string) => {
   if (
     path === UrlPathTemplate.Home ||
     path === UrlPathTemplate.About ||
     path === UrlPathTemplate.PrivacyPolicy ||
     path.startsWith(UrlPathTemplate.User) ||
-    (path.startsWith(`/${registrationLandingPagePath[1]}`) && path.endsWith(`/${registrationLandingPagePath[3]}`))
+    (path.startsWith(`/${registrationLandingPageParts[1]}`) && path.endsWith(`/${registrationLandingPageParts[3]}`))
   ) {
     return true;
   }
