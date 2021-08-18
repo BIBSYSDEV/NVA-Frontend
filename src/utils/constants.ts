@@ -11,6 +11,7 @@ export const ORCID_SIGN_IN_URL = `${ORCID_BASE_URL}/signin?oauth&client_id=${pro
 export const FEIDE_IDENTITY_PROVIDER = 'FeideIdentityProvider';
 
 export const AMPLIFY_REDIRECTED_KEY = 'amplify-redirected-from-hosted-ui';
+export const REDIRECT_PATH_KEY = 'redirect-path';
 
 export const API_URL = process.env.REACT_APP_API_URL;
 
