@@ -44,7 +44,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
   } = registration;
 
   const [relatedRegistrations] = useFetch<SearchResult>({
-    url: `${SearchApiPath.Registrations}?query=${identifier} AND NOT (${SearchFieldName.Id}:${identifier})`,
+    url: `${SearchApiPath.Registrations}?query="${identifier}" AND NOT (${SearchFieldName.Id}:"${identifier}")`,
     errorMessage: t('feedback:error.search'),
   });
 
