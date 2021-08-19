@@ -1,0 +1,44 @@
+version: 0.2
+
+env:
+  parameter-store:
+    CYPRESS_baseurl: CognitoFrontendApplicationUrl
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+      python: 3.x
+    commands:
+      - echo "install cypress dependencies..."
+      - apt-get update
+      - apt-get install -y libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 xvfb jq
+      - npm install cypress-cucumber-preprocessor
+      - npm install uuid
+      - npm install aws-sdk
+      - npm install aws-amplify
+      - npm install
+      - aws sts assume-role --role-arn $ROLE_ARN --role-session-name test > Credentials
+      - export CYPRESS_AWS_ACCESS_KEY_ID=$(cat Credentials | jq -r '.Credentials.AccessKeyId')
+      - export CYPRESS_AWS_SECRET_ACCESS_KEY=$(cat Credentials | jq -r '.Credentials.SecretAccessKey')
+      - export CYPRESS_AWS_SESSION_TOKEN=$(cat Credentials | jq -r '.Credentials.SessionToken')
+  pre_build:
+    commands:
+      - wget https://github.com/BIBSYSDEV/NVA-end-to-end-testing/archive/refs/heads/test-deploy.zip
+      - unzip test-deploy.zip
+      - cd NVA-end-to-end-testing-test-deploy
+  build:
+    commands:
+      - cd test_data
+      - python create_test_data.py
+      - cd ..
+      - npx cypress run
+  post_build:
+    commands:
+      - echo "post_build step"
+artifacts:
+  files:
+    - '**/*'
+cache:
+  paths:
+    - NVA-end-to-end-testing-test-deploy/node_modules/**/*

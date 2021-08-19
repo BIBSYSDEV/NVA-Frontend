@@ -54,6 +54,30 @@ Resources:
       Source:
         Type: CODEPIPELINE
 
+  CodeBuildTestProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      ServiceRole: !GetAtt CodeBuildServiceRole.Arn
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_LARGE
+        Image: aws/codebuild/standard:3.0
+        Type: LINUX_CONTAINER
+        EnvironmentVariables:
+          - Name: S3_BUCKET
+            Type: PLAINTEXT
+            Value: !Ref ArtifactStoreBucket
+          - Name: REACT_APP_USE_MOCK
+            Type: PLAINTEXT
+            Value: !Ref UseMockData
+          - Name: REACT_APP_AWS_REGION
+            Type: PLAINTEXT
+            Value: !Ref 'AWS::Region'
+      Source:
+        Type: CODEPIPELINE
+        BuildSpec: buildspec.test.yml
+
   Pipeline:
     Type: AWS::CodePipeline::Pipeline
     Properties:
@@ -129,6 +153,21 @@ Resources:
                 FunctionName: !Ref InvalidateCloudfrontDistribution
                 UserParameters: !Sub '{"distribution_id": "${CloudfrontDistribution}"}'
               RunOrder: 3
+        - Name: Test
+          Actions:
+            - Name: Test
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: '1'
+              Configuration:
+                ProjectName: !GetAtt CodeBuildTestProject.Arn
+              InputArtifacts:
+                - Name: SourceArtifact
+              OutputArtifacts:
+                - Name: BuildArtifact
+              RunOrder: 4
 
   InvalidateCloudfrontDistribution:
     Type: AWS::Lambda::Function
