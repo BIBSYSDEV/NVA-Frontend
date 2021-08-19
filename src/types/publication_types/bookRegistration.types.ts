@@ -29,6 +29,7 @@ export interface BookPublicationContext {
   publisher: string;
   seriesNumber: string;
   seriesTitle: string;
+  seriesUri: string;
   url: string;
 }
 

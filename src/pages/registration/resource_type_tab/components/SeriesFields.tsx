@@ -3,17 +3,18 @@ import { Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '@material-ui/core';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { PublicationTableNumber } from '../../../../utils/constants';
-import { mapLevel, publicationContextToPublisher } from './resource-helpers';
-import { PublicationChannelSearch } from './PublicationChannelSearch';
+// import { PublicationTableNumber } from '../../../../utils/constants';
+// import { mapLevel, publicationContextToPublisher } from './resource-helpers';
+// import { PublicationChannelSearch } from './PublicationChannelSearch';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { SeriesSearch } from './SeriesSearch';
 
 export const SeriesFields = () => {
   const { t } = useTranslation('registration');
 
   return (
     <>
-      <Field name={ResourceFieldNames.SeriesTitle}>
+      {/* <Field name={ResourceFieldNames.SeriesTitle}>
         {({ field: { name, value }, form: { setFieldValue } }: FieldProps<string>) => (
           <PublicationChannelSearch
             dataTestId={dataTestId.registrationWizard.resourceType.seriesField}
@@ -28,7 +29,9 @@ export const SeriesFields = () => {
             value={publicationContextToPublisher({ title: value })}
           />
         )}
-      </Field>
+      </Field> */}
+
+      <SeriesSearch />
 
       <Field name={ResourceFieldNames.SeriesNumber}>
         {({ field }: FieldProps<string>) => (
