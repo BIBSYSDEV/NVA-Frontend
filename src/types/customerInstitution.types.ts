@@ -1,7 +1,5 @@
-import { BackendType } from './registration.types';
-import { BackendTypeNames } from './publication_types/commonRegistration.types';
-
-export interface CustomerInstitution extends Partial<BackendType> {
+export interface CustomerInstitution {
+  type?: 'Customer';
   id: string;
   archiveName: string;
   cname: string;
@@ -17,7 +15,7 @@ export interface CustomerInstitution extends Partial<BackendType> {
 }
 
 export const emptyCustomerInstitution: CustomerInstitution = {
-  type: BackendTypeNames.CUSTOMER,
+  type: 'Customer',
   id: '',
   archiveName: '',
   cname: '',
@@ -32,17 +30,21 @@ export const emptyCustomerInstitution: CustomerInstitution = {
 };
 
 export enum CustomerInstitutionFieldNames {
-  ARCHIVE_NAME = 'archiveName',
-  CNAME = 'cname',
-  CRISTIN_ID = 'cristinId',
-  DISPLAY_NAME = 'displayName',
-  FEIDE_ORGANIZATION_ID = 'feideOrganizationId',
-  IDENTIFIER = 'identifier',
-  INSTITUTION_DNS = 'institutionDns',
-  NAME = 'name',
-  SHORT_NAME = 'shortName',
+  ArchiveName = 'archiveName',
+  CName = 'cname',
+  CristinId = 'cristinId',
+  DisplayName = 'displayName',
+  FeideOrganizationId = 'feideOrganizationId',
+  Identifier = 'identifier',
+  InstitutionDns = 'institutionDns',
+  Name = 'name',
+  ShortName = 'shortName',
 }
 
 export interface CustomerList {
+  customers: CustomerInstitution[];
+}
+
+export interface CustomerInstitutionsResponse {
   customers: CustomerInstitution[];
 }

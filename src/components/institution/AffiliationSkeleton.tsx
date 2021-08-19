@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Skeleton } from '@material-ui/lab';
 import styled from 'styled-components';
 import { getRandomWidthPercent } from '../../utils/skeleton-helpers';
@@ -7,7 +7,11 @@ const StyledDiv = styled.div`
   width: 100%;
 `;
 
-export const AffiliationSkeleton: FC<{ commaSeparated?: boolean }> = ({ commaSeparated = false }) => {
+interface AffiliationSkeletonProps {
+  commaSeparated?: boolean;
+}
+
+export const AffiliationSkeleton = ({ commaSeparated = false }: AffiliationSkeletonProps) => {
   const widthsRef = useRef({
     long: getRandomWidthPercent(50, 80),
     medium: getRandomWidthPercent(35, 50),

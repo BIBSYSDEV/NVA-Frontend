@@ -1,15 +1,15 @@
 import { getIn, useFormikContext } from 'formik';
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { MuiThemeProvider, TextFieldProps, Typography } from '@material-ui/core';
 import { Autocomplete, AutocompleteProps } from '@material-ui/lab';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
+import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
-import lightTheme, { autocompleteTranslationProps } from '../../../../themes/lightTheme';
+import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
 import { Publisher, Registration } from '../../../../types/registration.types';
 import { PublicationTableNumber } from '../../../../utils/constants';
-import useFetchPublishers from '../../../../utils/hooks/useFetchPublishers';
+import { useFetchPublishers } from '../../../../utils/hooks/useFetchPublishers';
 
 interface PublicationChannelSearchProps
   extends Pick<TextFieldProps, 'label' | 'placeholder' | 'required'>,
@@ -20,7 +20,7 @@ interface PublicationChannelSearchProps
   dataTestId: string;
 }
 
-const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
+export const PublicationChannelSearch = ({
   publicationTable,
   placeholder,
   errorFieldName,
@@ -29,7 +29,7 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
   value,
   dataTestId,
   required,
-}) => {
+}: PublicationChannelSearchProps) => {
   const { t } = useTranslation('registration');
   const { setFieldTouched, errors, touched } = useFormikContext<Registration>();
   const [publishers, isLoadingPublishers, handleNewSearchTerm] = useFetchPublishers(publicationTable);
@@ -75,5 +75,3 @@ const PublicationChannelSearch: FC<PublicationChannelSearchProps> = ({
     </MuiThemeProvider>
   );
 };
-
-export default PublicationChannelSearch;

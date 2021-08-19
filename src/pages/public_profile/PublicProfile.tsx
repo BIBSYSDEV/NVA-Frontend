@@ -5,16 +5,17 @@ import styled from 'styled-components';
 import { IconButton, Link as MuiLink, Typography } from '@material-ui/core';
 import WorkIcon from '@material-ui/icons/Work';
 import { Helmet } from 'react-helmet';
-import Card from '../../components/Card';
+import { Card } from '../../components/Card';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { SearchFieldName } from '../../types/search.types';
-import useFetchAuthority from '../../utils/hooks/useFetchAuthority';
-import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
+import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { PageSpinner } from '../../components/PageSpinner';
-import { RegistrationSearch } from '../search/RegistrationSearch';
+import { Authority } from '../../types/authority.types';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { SearchResults } from '../search/SearchResults';
 
 const StyledLine = styled.div`
   display: flex;
@@ -36,7 +37,10 @@ const PublicProfile = () => {
   const history = useHistory();
   const arpId = new URLSearchParams(history.location.search).get('id') ?? '';
 
-  const [authority, isLoadingUser] = useFetchAuthority(arpId);
+  const [authority, isLoadingUser] = useFetch<Authority>({
+    url: arpId,
+    errorMessage: t('feedback:error.get_authority'),
+  });
   const [registrations, isLoadingRegistrations] = useSearchRegistrations({
     properties: [{ fieldName: SearchFieldName.ContributorId, value: arpId }],
   });
@@ -80,11 +84,11 @@ const PublicProfile = () => {
             {registrations && (
               <StyledRegistrations>
                 <Typography variant="h2">{t('common:registrations')}</Typography>
-                <RegistrationSearch
-                  searchConfig={{
-                    properties: [{ fieldName: SearchFieldName.ContributorId, value: arpId }],
-                  }}
-                />
+                {registrations.total > 0 ? (
+                  <SearchResults searchResult={registrations} />
+                ) : (
+                  <Typography>{t('common:no_hits')}</Typography>
+                )}
               </StyledRegistrations>
             )}
           </>

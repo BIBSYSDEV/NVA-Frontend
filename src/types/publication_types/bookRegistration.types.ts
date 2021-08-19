@@ -1,25 +1,29 @@
-import { BackendType, BaseEntityDescription } from '../registration.types';
+import { BaseEntityDescription, BaseReference, BaseRegistration, NviApplicableBase } from '../registration.types';
 import { PublicationType, BookType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
+import { BookMonographContentType } from './content.types';
 
-export interface BookPublicationInstance {
+export interface BookRegistration extends BaseRegistration {
+  entityDescription: BookEntityDescription;
+}
+
+export interface BookPublicationInstance extends NviApplicableBase<BookMonographContentType> {
   type: BookType | '';
   pages: PagesMonograph | null;
-  peerReviewed: boolean | null;
-  textbookContent?: boolean;
 }
 
 export const emptyBookPublicationInstance: BookPublicationInstance = {
   type: '',
   pages: emptyPagesMonograph,
+  contentType: null,
   peerReviewed: null,
-  textbookContent: false,
+  originalResearch: null,
 };
 
 export interface BookPublicationContext {
   type: PublicationType | '';
   isbnList: string[];
-  level: string | number | null;
+  level: string | null;
   openAccess: boolean;
   peerReviewed: boolean;
   publisher: string;
@@ -28,8 +32,7 @@ export interface BookPublicationContext {
   url: string;
 }
 
-interface BookReference extends BackendType {
-  doi: string;
+interface BookReference extends BaseReference {
   publicationContext: BookPublicationContext;
   publicationInstance: BookPublicationInstance;
 }

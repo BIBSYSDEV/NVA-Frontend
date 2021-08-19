@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Link, Typography } from '@material-ui/core';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { DoiRequestStatus, Registration } from '../../types/registration.types';
+import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledDraftSpan = styled.span`
   margin-left: 0.5rem;
@@ -14,11 +15,11 @@ const StyledPublicDoi = styled.div`
   margin-top: 1.5rem;
 `;
 
-export interface PublicDoiProps {
+interface PublicDoiProps {
   registration: Registration;
 }
 
-const PublicDoi = ({ registration }: PublicDoiProps) => {
+export const PublicDoi = ({ registration }: PublicDoiProps) => {
   const { t } = useTranslation('registration');
   const user = useSelector((store: RootStore) => store.user);
 
@@ -32,7 +33,7 @@ const PublicDoi = ({ registration }: PublicDoiProps) => {
   const isDraftDoi = nvaDoi && !hasApprovedDoiRequest && canSeeDraftDoi;
 
   return doiToPresent ? (
-    <StyledPublicDoi>
+    <StyledPublicDoi data-testid={dataTestId.registrationLandingPage.doiLink}>
       <Typography
         component={Link}
         data-testid="doi-presentation"
@@ -45,5 +46,3 @@ const PublicDoi = ({ registration }: PublicDoiProps) => {
     </StyledPublicDoi>
   ) : null;
 };
-
-export default PublicDoi;

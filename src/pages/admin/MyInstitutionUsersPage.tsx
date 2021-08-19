@@ -4,19 +4,19 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Button, Checkbox, Divider, FormControlLabel, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import Card from '../../components/Card';
-import ListSkeleton from '../../components/ListSkeleton';
-import Modal from '../../components/Modal';
-import NormalText from '../../components/NormalText';
+import { Card } from '../../components/Card';
+import { ListSkeleton } from '../../components/ListSkeleton';
+import { Modal } from '../../components/Modal';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { RoleName } from '../../types/user.types';
-import useFetchUsersForInstitution from '../../utils/hooks/useFetchUsersForInstitution';
+import { InstitutionUser, RoleName } from '../../types/user.types';
 import { filterUsersByRole } from '../../utils/role-helpers';
 import { AddRoleModalContent } from './AddRoleModalContent';
-import UserList from './UserList';
+import { UserList } from './UserList';
 import { dataTestId } from '../../utils/dataTestIds';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { RoleApiPath } from '../../api/apiPaths';
 
 const StyledContainer = styled.div`
   margin-bottom: 2rem;
@@ -29,7 +29,12 @@ const StyledNewButton = styled(Button)`
 const MyInstitutionUsersPage = () => {
   const { t } = useTranslation('admin');
   const user = useSelector((store: RootStore) => store.user);
-  const [users, isLoading, fetchInstitutionUsers] = useFetchUsersForInstitution(user?.customerId ?? '');
+  const [institutionUsers, isLoading, fetchInstitutionUsers] = useFetch<InstitutionUser[]>({
+    url: user?.customerId ? `${RoleApiPath.InstitutionUsers}?institution=${encodeURIComponent(user.customerId)}` : '',
+    errorMessage: t('feedback:error.get_users_for_institution'),
+    withAuthentication: true,
+  });
+  const users = institutionUsers ?? [];
   const [autoAssignCreators, setAutoAssignCreators] = useState(true);
   const [roleToAdd, setRoleToAdd] = useState<RoleName>();
 
@@ -131,7 +136,7 @@ const MyInstitutionUsersPage = () => {
             {t('profile:roles.creator')}
           </Typography>
           <Divider />
-          <NormalText>{t('users.creator_info')}</NormalText>
+          <Typography>{t('users.creator_info')}</Typography>
           <FormControlLabel
             control={<Checkbox disabled checked={autoAssignCreators} data-testid="checkbox-assign-creators" />}
             onChange={handleCheckAutoAssignCreators}

@@ -17,6 +17,7 @@ import profileEn from './en/profile.json';
 import projectEn from './en/project.json';
 import publicationTypesEn from './en/publicationTypes.json';
 import registrationEn from './en/registration.json';
+import searchEn from './en/search.json';
 import workListsEn from './en/workLists.json';
 
 import aboutNb from './nb/about.json';
@@ -34,9 +35,10 @@ import profileNb from './nb/profile.json';
 import projectNb from './nb/project.json';
 import publicationTypesNb from './nb/publicationTypes.json';
 import registrationNb from './nb/registration.json';
+import searchNb from './nb/search.json';
 import workListsNb from './nb/workLists.json';
 
-export const fallbackLanguage = LanguageCodes.NORWEGIAN_BOKMAL;
+const fallbackLanguage = LanguageCodes.NORWEGIAN_BOKMAL;
 
 i18n.use(LanguageDetector).init({
   resources: {
@@ -56,6 +58,7 @@ i18n.use(LanguageDetector).init({
       project: projectEn,
       publicationTypes: publicationTypesEn,
       registration: registrationEn,
+      search: searchEn,
       workLists: workListsEn,
     },
     nob: {
@@ -74,6 +77,7 @@ i18n.use(LanguageDetector).init({
       project: projectNb,
       publicationTypes: publicationTypesNb,
       registration: registrationNb,
+      search: searchNb,
       workLists: workListsNb,
     },
   },

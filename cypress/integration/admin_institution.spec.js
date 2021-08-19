@@ -3,7 +3,6 @@ import { RoleName } from '../../src/types/user.types';
 describe('User administers institutions ', () => {
   beforeEach('Given that the user is logged in as Application administrator:', () => {
     cy.visit('/');
-    cy.server();
     cy.mocklogin();
     cy.setUserRolesInRedux([RoleName.APP_ADMIN]);
     // Open administer institutions page

@@ -23,13 +23,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DeleteIcon from '@material-ui/icons/Delete';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import BackgroundDiv from '../../../components/BackgroundDiv';
-import DangerButton from '../../../components/DangerButton';
-import lightTheme, { datePickerTranslationProps } from '../../../themes/lightTheme';
+import { BackgroundDiv } from '../../../components/BackgroundDiv';
+import { DangerButton } from '../../../components/DangerButton';
+import { lightTheme, datePickerTranslationProps } from '../../../themes/lightTheme';
 import { File, LicenseNames, licenses } from '../../../types/file.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
-import ConfirmDialog from '../../../components/ConfirmDialog';
+import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { dataTestId } from '../../../utils/dataTestIds';
 
 const StyledDescription = styled(Typography)`
@@ -106,8 +106,8 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
       {baseFieldName && (
         <StyledCardContent>
           <div>
-            <Field name={`${baseFieldName}.${SpecificFileFieldNames.PUBLISHER_AUTHORITY}`}>
-              {({ field, form, meta: { error, touched } }: FieldProps) => (
+            <Field name={`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`}>
+              {({ field, meta: { error, touched } }: FieldProps) => (
                 <FormControl
                   data-testid={dataTestId.registrationWizard.files.version}
                   required
@@ -115,15 +115,15 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                   <FormLabel component="legend">{t('files_and_license.version')}</FormLabel>
                   <RadioGroup
                     {...field}
-                    onChange={(event) => form.setFieldValue(field.name, event.target.value === 'published')}>
+                    onChange={(event) => setFieldValue(field.name, JSON.parse(event.target.value))}>
                     <FormControlLabel
-                      value="accepted"
-                      control={<Radio color="primary" checked={field.value !== null && !field.value} />}
+                      value={false}
+                      control={<Radio color="primary" />}
                       label={t('files_and_license.accepted_version')}
                     />
                     <FormControlLabel
-                      value="published"
-                      control={<Radio color="primary" checked={field.value} />}
+                      value={true}
+                      control={<Radio color="primary" />}
                       label={t('files_and_license.published_version')}
                     />
                   </RadioGroup>
@@ -132,7 +132,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
               )}
             </Field>
 
-            <Field name={`${baseFieldName}.${SpecificFileFieldNames.ADMINISTRATIVE_AGREEMENT}`}>
+            <Field name={`${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`}>
               {({ field }: FieldProps) => (
                 <StyledAdministrativeContract
                   data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
@@ -146,7 +146,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
           <div>
             <StyledInputRow>
               <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
-                <Field name={`${baseFieldName}.${SpecificFileFieldNames.EMBARGO_DATE}`}>
+                <Field name={`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`}>
                   {({ field, meta: { error, touched } }: FieldProps) => (
                     <KeyboardDatePicker
                       fullWidth
@@ -187,7 +187,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
             </StyledInputRow>
 
             <StyledInputRow>
-              <Field name={`${baseFieldName}.${SpecificFileFieldNames.LICENSE}`}>
+              <Field name={`${baseFieldName}.${SpecificFileFieldNames.License}`}>
                 {({ field, meta: { error, touched } }: FieldProps) => (
                   <TextField
                     id={field.name}

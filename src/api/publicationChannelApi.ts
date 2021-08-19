@@ -2,10 +2,7 @@ import { PublicationTableNumber } from '../utils/constants';
 import { apiRequest } from './apiRequest';
 import { Publisher } from '../types/registration.types';
 import { CancelToken } from 'axios';
-
-export enum PublicationChannelApiPaths {
-  SEARCH = '/channel/search',
-}
+import { PublicationChannelApiPath } from './apiPaths';
 
 interface PublisherSearchResponse {
   results: Publisher[];
@@ -17,7 +14,7 @@ export const getPublishers = async (
   cancelToken?: CancelToken
 ) =>
   await apiRequest<PublisherSearchResponse>({
-    url: PublicationChannelApiPaths.SEARCH,
+    url: PublicationChannelApiPath.Search,
     method: 'POST',
     data: { searchTerm: `%${searchTerm}%`, tableId: publicationTable },
     cancelToken,

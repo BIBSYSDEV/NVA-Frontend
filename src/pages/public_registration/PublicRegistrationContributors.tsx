@@ -4,7 +4,7 @@ import { Button, IconButton, Link, Typography } from '@material-ui/core';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useTranslation } from 'react-i18next';
-import AffiliationHierarchy from '../../components/institution/AffiliationHierarchy';
+import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import OrcidLogo from '../../resources/images/orcid_logo.svg';
 import { Contributor, ContributorRole } from '../../types/contributor.types';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
@@ -49,13 +49,13 @@ export const PublicRegistrationContributors = ({
   const toggleShowAll = () => setShowAll(!showAll);
 
   const mainContributors =
-    registrationType === BookType.ANTHOLOGY
+    registrationType === BookType.Anthology
       ? contributors.filter((contributor) => contributor.role === ContributorRole.Editor)
       : contributors.filter((contributor) => contributor.role === ContributorRole.Creator);
   const mainContributorsToShow = showAll ? mainContributors : mainContributors.slice(0, 10);
 
   const otherContributors =
-    registrationType === BookType.ANTHOLOGY
+    registrationType === BookType.Anthology
       ? contributors.filter((contributor) => contributor.role !== ContributorRole.Editor)
       : contributors.filter((contributor) => contributor.role !== ContributorRole.Creator);
   const otherContributorsToShow = showAll ? otherContributors : [];
@@ -64,7 +64,7 @@ export const PublicRegistrationContributors = ({
   const distinctUnits = getDistinctContributorUnits([...mainContributorsToShow, ...otherContributorsToShow]);
 
   return (
-    <StyledPublicRegistrationAuthors>
+    <StyledPublicRegistrationAuthors data-testid={dataTestId.registrationLandingPage.contributors}>
       <StyledContributorsGrid>
         <div>
           <ContributorsRow

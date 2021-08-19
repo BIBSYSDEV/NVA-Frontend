@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import ButtonWithProgress from '../../../components/ButtonWithProgress';
+import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
 import { doiValidationSchema, isValidUrl } from '../../../utils/validation/doiSearchValidation';
 
 const StyledForm = styled(Form)`
@@ -32,7 +32,7 @@ interface LinkRegistrationFormProps {
   handleSearch: (doiUrl: string) => Promise<void>;
 }
 
-const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps) => {
+export const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps) => {
   const { t } = useTranslation('registration');
 
   const onSubmit = async (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
@@ -80,5 +80,3 @@ const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps) => {
     </Formik>
   );
 };
-
-export default LinkRegistrationForm;

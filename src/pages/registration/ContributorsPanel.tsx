@@ -1,14 +1,14 @@
 import { FormHelperText } from '@material-ui/core';
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import React, { useEffect, useRef } from 'react';
-import BackgroundDiv from '../../components/BackgroundDiv';
-import lightTheme from '../../themes/lightTheme';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { lightTheme } from '../../themes/lightTheme';
 import { ContributorRole } from '../../types/contributor.types';
 import { BookType, ContributorFieldNames, PublicationType } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { Contributors } from './contributors_tab/Contributors';
 
-const ContributorsPanel = () => {
+export const ContributorsPanel = () => {
   const {
     values: {
       entityDescription: {
@@ -31,7 +31,7 @@ const ContributorsPanel = () => {
       ...contributor,
       role: contributor.role ?? ContributorRole.Creator,
     }));
-    setFieldValue(ContributorFieldNames.CONTRIBUTORS, contributorsWithRole);
+    setFieldValue(ContributorFieldNames.Contributors, contributorsWithRole);
   }, [setFieldValue]);
 
   // Creator should not be selectable for other contributors
@@ -39,9 +39,9 @@ const ContributorsPanel = () => {
 
   return (
     <>
-      <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
+      <FieldArray name={ContributorFieldNames.Contributors}>
         {({ push, replace }: FieldArrayRenderProps) =>
-          publicationContext.type === PublicationType.DEGREE ? (
+          publicationContext.type === PublicationType.Degree ? (
             <>
               <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
                 <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
@@ -57,7 +57,7 @@ const ContributorsPanel = () => {
                 />
               </BackgroundDiv>
             </>
-          ) : publicationInstance.type === BookType.ANTHOLOGY ? (
+          ) : publicationInstance.type === BookType.Anthology ? (
             <>
               <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
                 <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Editor]} />
@@ -84,11 +84,9 @@ const ContributorsPanel = () => {
       </FieldArray>
       {!!contributorsTouched && typeof contributorsError === 'string' && (
         <FormHelperText error>
-          <ErrorMessage name={ContributorFieldNames.CONTRIBUTORS} />
+          <ErrorMessage name={ContributorFieldNames.Contributors} />
         </FormHelperText>
       )}
     </>
   );
 };
-
-export default ContributorsPanel;

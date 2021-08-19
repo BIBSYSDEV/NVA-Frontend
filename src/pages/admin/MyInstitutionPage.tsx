@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import SaveIcon from '@material-ui/icons/Save';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
-import ButtonWithProgress from '../../components/ButtonWithProgress';
-import ListSkeleton from '../../components/ListSkeleton';
+import { ButtonWithProgress } from '../../components/ButtonWithProgress';
+import { ListSkeleton } from '../../components/ListSkeleton';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
@@ -17,12 +17,13 @@ import {
   emptyCustomerInstitution,
 } from '../../types/customerInstitution.types';
 import { NotificationVariant } from '../../types/notification.types';
-import { useFetchCustomerInstitution } from '../../utils/hooks/useFetchCustomerInstitution';
 import { myInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
 import { CustomerInstitutionTextField } from './customerInstitutionFields/CustomerInstitutionTextField';
 import { SelectInstitutionField } from './customerInstitutionFields/SelectInstitutionField';
-import BackgroundDiv from '../../components/BackgroundDiv';
-import lightTheme from '../../themes/lightTheme';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { lightTheme } from '../../themes/lightTheme';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 
 const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
   margin-top: 2rem;
@@ -32,19 +33,18 @@ const MyCustomerInstitutionPage = () => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
   const { user } = useSelector((store: RootStore) => store);
-  const [customerInstitution, isLoadingCustomerInstitution, handleSetCustomerInstitution] = useFetchCustomerInstitution(
-    user?.customerId ?? ''
-  );
+  const [customerInstitution, isLoadingCustomerInstitution] = useFetch<CustomerInstitution>({
+    url: user?.customerId ?? '',
+    errorMessage: t('feedback:error.get_customer'),
+    withAuthentication: true,
+  });
 
   const handleSubmit = async (values: CustomerInstitution) => {
     const updateCustomerResponse = await updateCustomerInstitution(values);
-    if (updateCustomerResponse) {
-      if (updateCustomerResponse.error) {
-        dispatch(setNotification(t('feedback:error.update_customer'), NotificationVariant.Error));
-      } else if (updateCustomerResponse.data) {
-        handleSetCustomerInstitution(updateCustomerResponse.data);
-        dispatch(setNotification(t('feedback:success.update_customer')));
-      }
+    if (isErrorStatus(updateCustomerResponse.status)) {
+      dispatch(setNotification(t('feedback:error.update_customer'), NotificationVariant.Error));
+    } else if (isSuccessStatus(updateCustomerResponse.status)) {
+      dispatch(setNotification(t('feedback:success.update_customer')));
     }
   };
 
@@ -65,19 +65,19 @@ const MyCustomerInstitutionPage = () => {
               <Form noValidate>
                 <SelectInstitutionField disabled />
                 <CustomerInstitutionTextField
-                  name={CustomerInstitutionFieldNames.DISPLAY_NAME}
+                  name={CustomerInstitutionFieldNames.DisplayName}
                   label={t('display_name')}
                   required
                   dataTestId="customer-institution-display-name-field"
                 />
                 <CustomerInstitutionTextField
-                  name={CustomerInstitutionFieldNames.SHORT_NAME}
+                  name={CustomerInstitutionFieldNames.ShortName}
                   label={t('short_name')}
                   required
                   dataTestId="customer-institution-short-name-field"
                 />
                 <CustomerInstitutionTextField
-                  name={CustomerInstitutionFieldNames.ARCHIVE_NAME}
+                  name={CustomerInstitutionFieldNames.ArchiveName}
                   label={t('archive_name')}
                   dataTestId="customer-institution-archive-name-field"
                 />

@@ -6,12 +6,12 @@ import AddIcon from '@material-ui/icons/Add';
 
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import { filterUsersByRole } from '../../utils/role-helpers';
-import UserList from './UserList';
-import Modal from '../../components/Modal';
+import { UserList } from './UserList';
+import { Modal } from '../../components/Modal';
 import { AddRoleModalContent } from './AddRoleModalContent';
-import ListSkeleton from '../../components/ListSkeleton';
-import BackgroundDiv from '../../components/BackgroundDiv';
-import lightTheme from '../../themes/lightTheme';
+import { ListSkeleton } from '../../components/ListSkeleton';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { lightTheme } from '../../themes/lightTheme';
 
 const StyledNewButton = styled(Button)`
   margin-top: 1rem;

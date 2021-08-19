@@ -23,6 +23,7 @@ export const CustomerInstitutionTextField = ({
         label={label}
         required={required}
         fullWidth
+        value={field.value ?? ''}
         variant="filled"
         error={touched && !!error}
         helperText={<ErrorMessage name={field.name} />}

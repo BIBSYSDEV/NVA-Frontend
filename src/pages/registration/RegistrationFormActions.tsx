@@ -9,13 +9,14 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import SaveIcon from '@material-ui/icons/Save';
 import { updateRegistration } from '../../api/registrationApi';
-import ButtonWithProgress from '../../components/ButtonWithProgress';
-import Modal from '../../components/Modal';
+import { ButtonWithProgress } from '../../components/ButtonWithProgress';
+import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
+import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 
 const StyledActionsContainer = styled.div`
   margin-bottom: 1rem;
@@ -70,15 +71,17 @@ export const RegistrationFormActions = ({
 
   const saveRegistration = async (values: Registration) => {
     setIsSaving(true);
-    const updatedRegistration = await updateRegistration(values);
-    if (updatedRegistration?.error) {
-      dispatch(setNotification(updatedRegistration.error, NotificationVariant.Error));
+    const updateRegistrationResponse = await updateRegistration(values);
+    const isSuccess = isSuccessStatus(updateRegistrationResponse.status);
+    if (isErrorStatus(updateRegistrationResponse.status)) {
+      dispatch(setNotification(t('feedback:error.update_registration'), NotificationVariant.Error));
       setIsSaving(false);
-    } else {
+    } else if (isSuccess) {
       refetchRegistration();
       dispatch(setNotification(t('feedback:success.update_registration')));
     }
-    return !updatedRegistration.error;
+
+    return isSuccess;
   };
 
   const onClickSaveAndPresent = async () => {
@@ -122,7 +125,7 @@ export const RegistrationFormActions = ({
                 // Set all fields with error to touched to ensure error messages are shown
                 setTouched(setNestedObjectValues(errors, true));
               }}>
-              {values.status === RegistrationStatus.DRAFT ? t('save_draft') : t('common:save')}
+              {values.status === RegistrationStatus.Draft ? t('save_draft') : t('common:save')}
             </ButtonWithProgress>
             <Button
               color="secondary"

@@ -1,9 +1,9 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { Field, FieldProps } from 'formik';
 import { RecursiveInstitutionUnit } from '../../../types/institution.types';
-import InstitutionAutocomplete from '../../../components/institution/InstitutionAutocomplete';
+import { InstitutionAutocomplete } from '../../../components/institution/InstitutionAutocomplete';
 
 const StyledInstitutionSelector = styled.div`
   width: 30rem;
@@ -18,7 +18,7 @@ interface InstitutionSelectorProps {
   label?: string;
 }
 
-const InstitutionSelector: FC<InstitutionSelectorProps> = ({ units, fieldNamePrefix = '', label }) => {
+export const InstitutionSelector = ({ units, fieldNamePrefix = '', label }: InstitutionSelectorProps) => {
   return (
     <StyledInstitutionSelector>
       <Field name={`${fieldNamePrefix}.subunit`}>
@@ -38,5 +38,3 @@ const InstitutionSelector: FC<InstitutionSelectorProps> = ({ units, fieldNamePre
     </StyledInstitutionSelector>
   );
 };
-
-export default InstitutionSelector;

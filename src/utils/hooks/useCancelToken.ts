@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import Axios, { CancelToken } from 'axios';
 
-const useCancelToken = (): CancelToken => {
+export const useCancelToken = (): CancelToken => {
   const cancelTokenSourceRef = useRef(Axios.CancelToken.source());
 
   // Cancel request on unmount
@@ -9,5 +9,3 @@ const useCancelToken = (): CancelToken => {
 
   return cancelTokenSourceRef.current.token;
 };
-
-export default useCancelToken;

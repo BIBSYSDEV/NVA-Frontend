@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core';
 import { PaletteColor, PaletteColorOptions, SimplePaletteColorOptions } from '@material-ui/core/styles/createPalette';
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
@@ -38,7 +38,7 @@ enum Font {
   Crimson = 'Crimson Text, serif',
 }
 
-const lightTheme = createMuiTheme({
+export const lightTheme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
@@ -223,6 +223,11 @@ const lightTheme = createMuiTheme({
         },
       },
     },
+    MuiMenuItem: {
+      gutters: {
+        paddingRight: '2rem',
+      },
+    },
   },
   props: {
     MuiTypography: {
@@ -236,8 +241,6 @@ const lightTheme = createMuiTheme({
     },
   },
 });
-
-export default lightTheme;
 
 // Default props in theme are not supported for components still in /lab
 export const autocompleteTranslationProps = {

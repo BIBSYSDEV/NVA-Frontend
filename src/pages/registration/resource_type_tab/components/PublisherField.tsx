@@ -1,13 +1,13 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { ResourceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
 import { PublicationTableNumber } from '../../../../utils/constants';
 import { publicationContextToPublisher, formatPublicationContextWithPublisher } from './resource-helpers';
 import { Registration } from '../../../../types/registration.types';
-import PublicationChannelSearch from './PublicationChannelSearch';
+import { PublicationChannelSearch } from './PublicationChannelSearch';
 
-const PublisherField: FC = () => {
+export const PublisherField = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 
@@ -16,11 +16,11 @@ const PublisherField: FC = () => {
       {({ field: { name, value } }: FieldProps) => (
         <PublicationChannelSearch
           dataTestId="publisher-search-field"
-          publicationTable={PublicationTableNumber.PUBLISHERS}
+          publicationTable={PublicationTableNumber.Publishers}
           label={t('common:publisher')}
           required
           placeholder={t('resource_type.search_for_publisher')}
-          errorFieldName={ResourceFieldNames.PUBLICATION_CONTEXT_PUBLISHER}
+          errorFieldName={ResourceFieldNames.PubliactionContextPublisher}
           setValue={(newValue) => {
             const contextValues: any = formatPublicationContextWithPublisher(value.type, newValue);
             if (newValue && value.seriesTitle) {
@@ -36,5 +36,3 @@ const PublisherField: FC = () => {
     </Field>
   );
 };
-
-export default PublisherField;

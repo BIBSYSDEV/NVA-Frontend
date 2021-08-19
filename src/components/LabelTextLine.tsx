@@ -1,8 +1,7 @@
-import React, { ReactNode, FC } from 'react';
+import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { Link as MuiLink } from '@material-ui/core';
+import { Link as MuiLink, Typography } from '@material-ui/core';
 import styled from 'styled-components';
-import NormalText from './NormalText';
 
 const StyledLine = styled.div`
   padding-bottom: 0.5rem;
@@ -10,7 +9,7 @@ const StyledLine = styled.div`
   flex-wrap: wrap;
 `;
 
-const StyledLabel = styled(NormalText)`
+const StyledLabel = styled(Typography)`
   width: 6rem;
   min-width: 6rem;
 `;
@@ -28,32 +27,30 @@ interface LabelTextLineProps {
   linkText?: string;
 }
 
-const LabelTextLine: FC<LabelTextLineProps> = ({
+export const LabelTextLine = ({
   label,
   children,
   dataTestId,
   externalLink,
   internalLink,
   linkText,
-}) => (
+}: LabelTextLineProps) => (
   <StyledLine>
     <StyledLabel>{label}:</StyledLabel>
     {externalLink && (
       <MuiLink href={externalLink} target="_blank" rel="noopener noreferrer">
         <StyledContent data-testid={dataTestId}>
-          <NormalText>{linkText ?? externalLink}</NormalText>
+          <Typography>{linkText ?? externalLink}</Typography>
         </StyledContent>
       </MuiLink>
     )}
     {internalLink && (
       <MuiLink component={Link} to={internalLink}>
         <StyledContent data-testid={dataTestId}>
-          <NormalText>{linkText ?? internalLink}</NormalText>
+          <Typography>{linkText ?? internalLink}</Typography>
         </StyledContent>
       </MuiLink>
     )}
     {children && <StyledContent data-testid={dataTestId}>{children}</StyledContent>}
   </StyledLine>
 );
-
-export default LabelTextLine;

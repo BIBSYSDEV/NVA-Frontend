@@ -8,14 +8,14 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import CheckIcon from '@material-ui/icons/CheckCircleSharp';
 import DeleteIcon from '@material-ui/icons/RemoveCircleSharp';
 import WarningIcon from '@material-ui/icons/Warning';
-import BackgroundDiv from '../../../../components/BackgroundDiv';
-import DangerButton from '../../../../components/DangerButton';
+import { BackgroundDiv } from '../../../../components/BackgroundDiv';
+import { DangerButton } from '../../../../components/DangerButton';
 import { StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
-import lightTheme from '../../../../themes/lightTheme';
+import { lightTheme } from '../../../../themes/lightTheme';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
-import AffiliationsCell from './AffiliationsCell';
+import { AffiliationsCell } from './AffiliationsCell';
 import { getRemoveContributorText } from '../../../../utils/translation-helpers';
 
 const StyledCheckIcon = styled(CheckIcon)`
@@ -128,7 +128,7 @@ export const ContributorCard = ({
       c.identity.name === contributor.identity.name &&
       c.role === contributor.role
   );
-  const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${contributorIndex}]`;
+  const baseFieldName = `${ContributorFieldNames.Contributors}[${contributorIndex}]`;
   const [sequenceValue, setSequenceValue] = useState(`${contributor.sequence}`);
 
   useEffect(() => {
@@ -215,7 +215,7 @@ export const ContributorCard = ({
               {t(`contributors.types.${contributor.role}`)}
             </Typography>
           ) : (
-            <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
+            <Field name={`${baseFieldName}.${SpecificContributorFieldNames.Corresponding}`}>
               {({ field }: FieldProps) => (
                 <FormControlLabel
                   data-testid="author-corresponding-checkbox"

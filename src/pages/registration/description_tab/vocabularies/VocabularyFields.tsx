@@ -4,8 +4,8 @@ import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import ConfirmDialog from '../../../../components/ConfirmDialog';
-import DangerButton from '../../../../components/DangerButton';
+import { ConfirmDialog } from '../../../../components/ConfirmDialog';
+import { DangerButton } from '../../../../components/DangerButton';
 import { HrcsActivityInput } from './HrcsActivityInput';
 import { HrcsCategoryInput } from './HrcsCategoryInput';
 import { dataTestId } from '../../../../utils/dataTestIds';
@@ -75,7 +75,7 @@ export const VocabularyFields = () => {
 
   return (
     <>
-      <FieldArray name={DescriptionFieldNames.CONTROLLED_KEYWORDS}>
+      <FieldArray name={DescriptionFieldNames.ControlledKeywords}>
         {({ name, remove, push }: FieldArrayRenderProps) => (
           <>
             {visibleVocabularies.map((vocabulary) => {
@@ -109,7 +109,7 @@ export const VocabularyFields = () => {
                     title={t('description.confirm_remove_vocabulary_title')}
                     onAccept={() => {
                       const updatedValues = controlledKeywords.filter((keyword) => !keyword.startsWith(baseId));
-                      setFieldValue(DescriptionFieldNames.CONTROLLED_KEYWORDS, updatedValues);
+                      setFieldValue(name, updatedValues);
                       setVisibleVocabularies(
                         visibleVocabularies.filter((visibleVocabulary) => visibleVocabulary !== vocabulary)
                       );

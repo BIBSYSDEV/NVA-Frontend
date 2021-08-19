@@ -1,22 +1,25 @@
-import { BackendType, BaseEntityDescription } from '../registration.types';
+import { BaseEntityDescription, BaseReference, BaseRegistration, NviApplicableBase } from '../registration.types';
 import { PublicationType, JournalType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
-import { BackendTypeNames, emptyDate } from './commonRegistration.types';
 import { emptyPagesRange, PagesRange } from './pages.types';
+import { JournalArticleContentType } from './content.types';
 
-export interface JournalPublicationInstance {
+export interface JournalRegistration extends BaseRegistration {
+  entityDescription: JournalEntityDescription;
+}
+
+export interface JournalPublicationInstance extends NviApplicableBase<JournalArticleContentType> {
   type: JournalType | '';
   articleNumber: string;
   issue: string;
   pages: PagesRange;
-  peerReviewed: boolean | null;
   volume: string;
   corrigendumFor: string;
 }
 
 export interface JournalPublicationContext {
   type: PublicationType | '';
-  level: string | number | null;
+  level: string | null;
   onlineIssn?: string;
   printIssn?: string;
   openAccess: boolean;
@@ -25,8 +28,7 @@ export interface JournalPublicationContext {
   url?: string;
 }
 
-interface JournalReference extends BackendType {
-  doi: string;
+interface JournalReference extends BaseReference {
   publicationContext: JournalPublicationContext;
   publicationInstance: JournalPublicationInstance;
 }
@@ -43,11 +45,13 @@ export const emptyJournalPublicationInstance: JournalPublicationInstance = {
   peerReviewed: null,
   volume: '',
   corrigendumFor: '',
+  contentType: null,
+  originalResearch: null,
 };
 
 const emptyPublicationContext: JournalPublicationContext = {
   type: '',
-  level: '',
+  level: null,
   onlineIssn: '',
   openAccess: false,
   peerReviewed: false,
@@ -56,17 +60,22 @@ const emptyPublicationContext: JournalPublicationContext = {
 };
 
 const emptyReference: JournalReference = {
-  type: BackendTypeNames.REFERENCE,
+  type: 'Reference',
   doi: '',
   publicationContext: emptyPublicationContext,
   publicationInstance: emptyJournalPublicationInstance,
 };
 
 export const emptyRegistrationEntityDescription: JournalEntityDescription = {
-  type: BackendTypeNames.ENTITY_DESCRIPTION,
+  type: 'EntityDescription',
   abstract: '',
   contributors: [],
-  date: emptyDate,
+  date: {
+    type: 'PublicationDate',
+    year: '',
+    month: '',
+    day: '',
+  },
   description: '',
   language: LanguageValues.NONE,
   mainTitle: '',

@@ -1,4 +1,4 @@
-import { LanguageString } from './publication_types/commonRegistration.types';
+import { LanguageString } from './common.types';
 
 export interface Category {
   type: 'HrcsConcept';

@@ -5,15 +5,16 @@ import styled from 'styled-components';
 import { TextField, Typography } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import RemoveIcon from '@material-ui/icons/Remove';
-import BackgroundDiv from '../../../../components/BackgroundDiv';
+import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { StyledCenterAlignedContentWrapper } from '../../../../components/styled/Wrappers';
-import lightTheme from '../../../../themes/lightTheme';
+import { lightTheme } from '../../../../themes/lightTheme';
 import { BookType, ChapterType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { ChapterRegistration } from '../../../../types/registration.types';
 import { DoiField } from '../components/DoiField';
-import NviValidation from '../components/NviValidation';
-import { PeerReviewedField } from '../components/PeerReviewedField';
-import SearchContainerField from '../components/SearchContainerField';
+import { NviValidation } from '../components/NviValidation';
+import { SearchContainerField } from '../components/SearchContainerField';
+import { NviFields } from '../components/nvi_fields/NviFields';
+import { chapterContentTypes } from '../../../../types/publication_types/content.types';
+import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
 
 const StyledDiv = styled(StyledCenterAlignedContentWrapper)`
   gap: 1rem;
@@ -45,7 +46,7 @@ const StyledPageNumberField = styled(TextField)`
   }
 `;
 
-const ChapterForm = () => {
+export const ChapterForm = () => {
   const { t } = useTranslation('registration');
 
   const { values } = useFormikContext<ChapterRegistration>();
@@ -63,10 +64,10 @@ const ChapterForm = () => {
 
         <DoiField />
 
-        {publicationInstance.type === ChapterType.BOOK && (
+        {publicationInstance.type === ChapterType.AnthologyChapter && (
           <SearchContainerField
-            fieldName={ResourceFieldNames.PUBLICATION_CONTEXT_LINKED_CONTEXT}
-            searchSubtypes={[BookType.ANTHOLOGY]}
+            fieldName={ResourceFieldNames.PubliactionContextLinkedContext}
+            searchSubtypes={[BookType.Anthology]}
             label={t('resource_type.chapter.published_in')}
             placeholder={t('resource_type.chapter.search_for_anthology')}
             dataTestId="search-anthology-field"
@@ -76,7 +77,7 @@ const ChapterForm = () => {
 
       <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
         <StyledPageNumberWrapper>
-          <Field name={ResourceFieldNames.PAGES_FROM}>
+          <Field name={ResourceFieldNames.PagesFrom}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <StyledPageNumberField
                 id={field.name}
@@ -95,7 +96,7 @@ const ChapterForm = () => {
             <RemoveIcon color="primary" />
           </StyledDashIconWrapper>
 
-          <Field name={ResourceFieldNames.PAGES_TO}>
+          <Field name={ResourceFieldNames.PagesTo}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <StyledPageNumberField
                 id={field.name}
@@ -112,21 +113,19 @@ const ChapterForm = () => {
         </StyledPageNumberWrapper>
       </BackgroundDiv>
 
-      {publicationInstance.type === ChapterType.BOOK && (
+      {publicationInstance.type === ChapterType.AnthologyChapter && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-            <PeerReviewedField />
+            <NviFields contentTypeOptions={chapterContentTypes} />
           </BackgroundDiv>
 
           <NviValidation
             isPeerReviewed={!!publicationInstance.peerReviewed}
             isRated={!!publicationContext?.level}
-            dataTestId="nvi-chapter"
+            isOriginalResearch={false}
           />
         </>
       )}
     </>
   );
 };
-
-export default ChapterForm;

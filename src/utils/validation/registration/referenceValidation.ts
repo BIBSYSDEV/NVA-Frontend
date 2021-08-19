@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { parse as parseIsbn } from 'isbn-utils';
 import {
   BookType,
   ChapterType,
@@ -8,12 +9,17 @@ import {
   ReportType,
 } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
-
-export const invalidIsbnErrorMessage = i18n.t('feedback:validation.has_invalid_format', {
-  field: i18n.t('registration:resource_type.isbn'),
-});
+import {
+  BookMonographContentType,
+  ChapterContentType,
+  JournalArticleContentType,
+  nviApplicableContentTypes,
+} from '../../../types/publication_types/content.types';
 
 const resourceErrorMessage = {
+  contentTypeRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.content'),
+  }),
   corrigendumForRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.original_article'),
   }),
@@ -30,12 +36,18 @@ const resourceErrorMessage = {
     field: i18n.t('registration:resource_type.issue'),
     limit: 0,
   }),
-  isbnInvalid: invalidIsbnErrorMessage,
+  isbnInvalid: i18n.t('feedback:validation.has_invalid_format', {
+    field: i18n.t('registration:resource_type.isbn'),
+  }),
+  isbnTooShort: i18n.t('feedback:validation.isbn_too_short'),
   journalRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.journal'),
   }),
   linkedContextRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.chapter.published_in'),
+  }),
+  originalResearchRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.presents_original_research'),
   }),
   pageBeginInvalid: i18n.t('feedback:validation.has_invalid_format', {
     field: i18n.t('registration:resource_type.pages_from'),
@@ -85,14 +97,26 @@ const resourceErrorMessage = {
 };
 
 export const emptyStringToNull = (value: string, originalValue: string) => (originalValue === '' ? null : value);
-export const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/g; // ISBN without hyphens
 
 // Common Fields
-const isbnListField = Yup.array().of(Yup.string().matches(isbnRegex, resourceErrorMessage.isbnInvalid));
-const peerReviewedField = Yup.boolean().when('$publicationInstanceType', {
-  is: (value: string) => value === JournalType.ARTICLE || value === BookType.MONOGRAPH || value === ChapterType.BOOK,
-  then: Yup.boolean().nullable().required(resourceErrorMessage.peerReviewedRequired),
-});
+const isbnListField = Yup.array().of(
+  Yup.string()
+    .min(13, resourceErrorMessage.isbnTooShort)
+    .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !!parseIsbn(isbn ?? '')?.isIsbn13())
+);
+
+const peerReviewedField = Yup.boolean()
+  .nullable()
+  .when('$contentType', {
+    is: (contentType: string) => nviApplicableContentTypes.includes(contentType),
+    then: Yup.boolean().nullable().required(resourceErrorMessage.peerReviewedRequired),
+  });
+const originalResearchField = Yup.boolean()
+  .nullable()
+  .when('$contentType', {
+    is: (contentType: string) => nviApplicableContentTypes.includes(contentType),
+    then: Yup.boolean().nullable().required(resourceErrorMessage.originalResearchRequired),
+  });
 
 const pagesMonographField = Yup.object()
   .nullable()
@@ -133,7 +157,6 @@ export const baseReference = Yup.object().shape({
 // Journal
 const journalPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(JournalType)).required(resourceErrorMessage.typeRequired),
-  peerReviewed: peerReviewedField,
   articleNumber: Yup.string(),
   volume: Yup.number()
     .typeError(resourceErrorMessage.volumeInvalid)
@@ -149,16 +172,27 @@ const journalPublicationInstance = Yup.object().shape({
   corrigendumFor: Yup.string()
     .optional()
     .when('type', {
-      is: JournalType.CORRIGENDUM,
+      is: JournalType.Corrigendum,
       then: Yup.string()
         .url(resourceErrorMessage.corrigendumForInvalid)
         .required(resourceErrorMessage.corrigendumForRequired),
     }),
+  contentType: Yup.string()
+    .nullable()
+    .when('$publicationInstanceType', {
+      is: JournalType.Article,
+      then: Yup.string()
+        .nullable()
+        .oneOf(Object.values(JournalArticleContentType), resourceErrorMessage.contentTypeRequired)
+        .required(resourceErrorMessage.contentTypeRequired),
+    }),
+  peerReviewed: peerReviewedField,
+  originalResearch: originalResearchField,
 });
 
 const journalPublicationContext = Yup.object().shape({
   title: Yup.string().when('$publicationInstanceType', {
-    is: JournalType.CORRIGENDUM,
+    is: JournalType.Corrigendum,
     then: Yup.string(),
     otherwise: Yup.string().required(resourceErrorMessage.journalRequired),
   }),
@@ -173,7 +207,17 @@ export const journalReference = baseReference.shape({
 const bookPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(BookType)).required(resourceErrorMessage.typeRequired),
   pages: pagesMonographField,
+  contentType: Yup.string()
+    .nullable()
+    .when('$publicationInstanceType', {
+      is: BookType.Monograph,
+      then: Yup.string()
+        .nullable()
+        .oneOf(Object.values(BookMonographContentType), resourceErrorMessage.contentTypeRequired)
+        .required(resourceErrorMessage.contentTypeRequired),
+    }),
   peerReviewed: peerReviewedField,
+  originalResearch: originalResearchField,
 });
 
 const bookPublicationContext = Yup.object().shape({
@@ -220,7 +264,17 @@ export const degreeReference = baseReference.shape({
 const chapterPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(ChapterType)).required(resourceErrorMessage.typeRequired),
   pages: pagesRangeField,
+  contentType: Yup.string()
+    .nullable()
+    .when('$publicationInstanceType', {
+      is: ChapterType.AnthologyChapter,
+      then: Yup.string()
+        .nullable()
+        .oneOf(Object.values(ChapterContentType), resourceErrorMessage.contentTypeRequired)
+        .required(resourceErrorMessage.contentTypeRequired),
+    }),
   peerReviewed: peerReviewedField,
+  originalResearch: originalResearchField,
 });
 
 const chapterPublicationContext = Yup.object().shape({

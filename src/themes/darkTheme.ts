@@ -1,8 +1,8 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core';
 import { Color } from './colors';
-import lightTheme from './lightTheme';
+import { lightTheme } from './lightTheme';
 
-const darkTheme = createMuiTheme({
+export const darkTheme = createTheme({
   ...lightTheme,
   palette: {
     ...lightTheme.palette,
@@ -43,11 +43,12 @@ const darkTheme = createMuiTheme({
       },
     },
     MuiFormLabel: {
+      ...lightTheme.overrides?.MuiFormLabel,
       root: {
+        color: Color.White,
+      },
+      filled: {
         '&.Mui-disabled': {
-          color: Color.Black,
-        },
-        '&.Mui-focused:not(.Mui-error)': {
           color: Color.Black,
         },
       },
@@ -64,6 +65,17 @@ const darkTheme = createMuiTheme({
       root: {
         ...lightTheme.overrides?.MuiInputLabel?.root,
         color: Color.Black,
+        '&.Mui-focused': {
+          color: Color.Black,
+        },
+        '&.Mui-error': {
+          color: Color.ErrorMain,
+        },
+      },
+      asterisk: {
+        '&.Mui-error': {
+          color: Color.ErrorMain,
+        },
       },
     },
     MuiLink: {
@@ -85,5 +97,3 @@ const darkTheme = createMuiTheme({
     },
   },
 });
-
-export default darkTheme;

@@ -2,7 +2,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
 import { LanguageCodes, registrationLanguages } from '../../types/language.types';
-import { BookPublicationContext, BookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
+import {
+  BookPublicationContext,
+  BookPublicationInstance,
+  BookRegistration,
+} from '../../types/publication_types/bookRegistration.types';
 import {
   ChapterPublicationContext,
   ChapterPublicationInstance,
@@ -18,12 +22,12 @@ import {
 import {
   ReportPublicationContext,
   ReportPublicationInstance,
+  ReportRegistration,
 } from '../../types/publication_types/reportRegistration.types';
 import { DegreeType, JournalType } from '../../types/publicationFieldNames';
-import { BookRegistration, ReportRegistration } from '../../types/registration.types';
 import { getNpiDiscipline } from '../../utils/npiDisciplines';
 import { isBook, isChapter, isDegree, isJournal, isReport } from '../../utils/registration-helpers';
-import PublicDoi from './PublicDoi';
+import { PublicDoi } from './PublicDoi';
 import {
   PublicJournalContent,
   PublicLinkedContextContent,
@@ -39,10 +43,11 @@ import {
   PublicPublicationInstanceReport,
 } from './PublicPublicationInstance';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
-import RegistrationSummary from './RegistrationSummary';
+import { RegistrationSummary } from './RegistrationSummary';
 import { StyledGeneralInfo } from '../../components/landing_page/SyledGeneralInfo';
+import { dataTestId } from '../../utils/dataTestIds';
 
-const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
+export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
   const {
     date,
@@ -51,17 +56,22 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
     reference: { publicationContext, publicationInstance },
   } = registration.entityDescription;
 
+  const journalPublicationInstance = publicationInstance as JournalPublicationInstance;
+  const { contentType, peerReviewed, originalResearch } = journalPublicationInstance;
+
   return (
     <StyledGeneralInfo>
       <div>
         <Typography variant="overline">{t('public_page.about_registration')}</Typography>
 
-        {(publicationInstance as JournalPublicationInstance).peerReviewed && (
-          <Typography>{t('resource_type.peer_reviewed')}</Typography>
-        )}
+        {contentType && <Typography>{t(`resource_type.content_types.${contentType}`)}</Typography>}
+
+        {peerReviewed && <Typography>{t('resource_type.peer_reviewed')}</Typography>}
+
+        {originalResearch && <Typography>{t('resource_type.presents_original_research')}</Typography>}
 
         {language && (
-          <Typography>
+          <Typography data-testid={dataTestId.registrationLandingPage.primaryLanguage}>
             {t('common:language')}:{' '}
             {t(
               `languages:${
@@ -73,7 +83,7 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
         )}
 
         {npiSubjectHeading && (
-          <Typography>
+          <Typography data-testid={dataTestId.registrationLandingPage.npi}>
             {t('description.npi_disciplines')}: {getNpiDiscipline(npiSubjectHeading)?.name}
           </Typography>
         )}
@@ -81,17 +91,17 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
         <PublicDoi registration={registration} />
       </div>
 
-      <div>
+      <div data-testid={dataTestId.registrationLandingPage.subtypeFields}>
         {isJournal(registration) ? (
           <>
             <PublicJournalContent date={date} publicationContext={publicationContext as JournalPublicationContext} />
-            <PublicPublicationInstanceJournal publicationInstance={publicationInstance as JournalPublicationInstance} />
-            {publicationInstance.type === JournalType.CORRIGENDUM && (
+            <PublicPublicationInstanceJournal publicationInstance={journalPublicationInstance} />
+            {publicationInstance.type === JournalType.Corrigendum && (
               <>
                 <Typography variant="overline" component="p">
                   {t('resource_type.original_article')}
                 </Typography>
-                <RegistrationSummary id={(publicationInstance as JournalPublicationInstance).corrigendumFor} />
+                <RegistrationSummary id={journalPublicationInstance.corrigendumFor} />
               </>
             )}
           </>
@@ -110,7 +120,7 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
         ) : isDegree(registration) ? (
           <>
             <PublicPublisherContent publicationContext={publicationContext as DegreePublicationContext} />
-            {publicationInstance.type === DegreeType.PHD && (
+            {publicationInstance.type === DegreeType.Phd && (
               <PublicSeriesContent
                 seriesTitle={(publicationContext as DegreePublicationContext).seriesTitle}
                 seriesNumber={(publicationContext as DegreePublicationContext).seriesNumber}
@@ -140,5 +150,3 @@ const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) 
     </StyledGeneralInfo>
   );
 };
-
-export default PublicGeneralContent;

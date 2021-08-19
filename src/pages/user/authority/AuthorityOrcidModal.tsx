@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import AuthorityModal from './AuthorityModal';
-import OrcidModal from './OrcidModal';
+import { AuthorityModal } from './AuthorityModal';
+import { OrcidModal } from './OrcidModal';
 import { User } from '../../../types/user.types';
 
 enum ModalType {
@@ -14,7 +14,7 @@ interface AuthorityOrcidModalProps {
   user: User;
 }
 
-const AuthorityOrcidModal = ({ user }: AuthorityOrcidModalProps) => {
+export const AuthorityOrcidModal = ({ user }: AuthorityOrcidModalProps) => {
   const [openModal, setOpenModal] = useState(user.authority ? ModalType.NONE : ModalType.AUTHORITY);
 
   const handleNextClick = () => {
@@ -38,5 +38,3 @@ const AuthorityOrcidModal = ({ user }: AuthorityOrcidModalProps) => {
     </>
   );
 };
-
-export default AuthorityOrcidModal;

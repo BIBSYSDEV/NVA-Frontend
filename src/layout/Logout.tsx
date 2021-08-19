@@ -1,32 +1,28 @@
-import React, { FC } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { Link as MuiLink } from '@material-ui/core';
-import Heading from '../components/Heading';
-import NormalText from '../components/NormalText';
-import { StyledPageWrapperWithMaxWidth } from '../components/styled/Wrappers';
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { UrlPathTemplate } from '../utils/urlPaths';
+import { REDIRECT_PATH_KEY } from '../utils/constants';
 
-const StyledBackgroundDiv = styled(StyledPageWrapperWithMaxWidth)`
-  text-align: center;
-`;
+const registrationLandingPageParts = UrlPathTemplate.RegistrationLandingPage.split('/');
+const isPublicPage = (path: string) => {
+  if (
+    path === UrlPathTemplate.Home ||
+    path === UrlPathTemplate.About ||
+    path === UrlPathTemplate.PrivacyPolicy ||
+    path.startsWith(UrlPathTemplate.User) ||
+    (path.startsWith(`/${registrationLandingPageParts[1]}`) && path.endsWith(`/${registrationLandingPageParts[3]}`))
+  ) {
+    return true;
+  }
+  return false;
+};
 
-const StyledText = styled(NormalText)`
-  margin-top: 1rem;
-`;
+const Logout = () => {
+  const previousPath = localStorage.getItem(REDIRECT_PATH_KEY);
+  const redirectPath = previousPath && isPublicPage(previousPath) ? previousPath : UrlPathTemplate.Home;
+  localStorage.removeItem(REDIRECT_PATH_KEY);
 
-const Logout: FC = () => {
-  const { t } = useTranslation('authorization');
-
-  return (
-    <StyledBackgroundDiv>
-      <Heading>{t('logged_out')}</Heading>
-      <MuiLink component={Link} to={UrlPathTemplate.Home}>
-        <StyledText>{t('back_to_home')}</StyledText>
-      </MuiLink>
-    </StyledBackgroundDiv>
-  );
+  return <Redirect to={redirectPath} />;
 };
 
 export default Logout;

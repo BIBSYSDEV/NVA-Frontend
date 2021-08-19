@@ -1,7 +1,6 @@
 describe.skip('Registration: Resource type: Chapter', () => {
   beforeEach(() => {
     cy.visit('/');
-    cy.server();
   });
 
   it('The user should be able to fill out the form for chapter type', () => {

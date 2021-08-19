@@ -1,5 +1,7 @@
 import { setRoles } from '../../src/redux/actions/userActions';
 import { setNotification, removeNotification } from '../../src/redux/actions/notificationActions';
+import { mockFileUploadUrl } from '../../src/api/mock-interceptor';
+import { dataTestId } from '../../src/utils/dataTestIds';
 
 Cypress.Commands.add('mocklogin', () => {
   cy.get('[data-testid=menu-login-button]').click({ force: true });
@@ -8,13 +10,9 @@ Cypress.Commands.add('mocklogin', () => {
   cy.get('[data-testid=modal_next]').click({ force: true });
   cy.get('[data-testid=cancel-connect-to-orcid]').click({ force: true });
 
-  // navigate to profile
-  cy.get('[data-testid=menu]').click({ force: true });
-  cy.get('[data-testid=menu-user-profile-button]').click({ force: true });
-
   // need to set language to english in order to check that the translated values are correct
-  cy.get('[data-testid=language-selector] .MuiSelect-root').click({ force: true });
-  cy.get('[data-testid=user-language-eng]').click({ force: true });
+  cy.get(`[data-testid=${dataTestId.header.languageButton}]`).click({ force: true });
+  cy.get(`[data-testid=${dataTestId.header.languageMenu}] li`).eq(1).click({ force: true });
 });
 
 Cypress.Commands.add('startRegistrationWithDoi', () => {
@@ -50,14 +48,9 @@ Cypress.Commands.add('removeNotificationInRedux', () => {
     .then((store) => store.dispatch(removeNotification()));
 });
 
-// Inspired by: https://github.com/cypress-io/cypress/issues/170#issuecomment-533519550
-Cypress.Commands.add('uploadFile', { prevSubject: true }, (subject, fileName) => {
-  cy.fixture(fileName).then((content) => {
-    const el = subject[0];
-    const testFile = new File([content], fileName);
-    const dataTransfer = new DataTransfer();
-    dataTransfer.items.add(testFile);
-    el.files = dataTransfer.files;
-    cy.wrap(subject).first().trigger('change', { force: true });
-  });
+Cypress.Commands.add('mockFileUpload', () => {
+  cy.intercept(
+    { method: 'PUT', url: mockFileUploadUrl },
+    { statusCode: 200, headers: { ETag: Math.floor(Math.random() * 1000).toString() } }
+  );
 });

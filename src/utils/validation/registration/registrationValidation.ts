@@ -34,7 +34,7 @@ export const registrationValidationSchema = Yup.object().shape({
     description: Yup.string(),
     tags: Yup.array().of(Yup.string()),
     npiSubjectHeading: Yup.string().when('$publicationContextType', {
-      is: PublicationType.BOOK,
+      is: PublicationType.Book,
       then: Yup.string().required(registrationErrorMessage.npiSubjectRequired),
     }),
     date: Yup.object().shape({
@@ -49,23 +49,23 @@ export const registrationValidationSchema = Yup.object().shape({
     contributors: contributorsValidationSchema,
     reference: baseReference
       .when('$publicationContextType', {
-        is: PublicationType.PUBLICATION_IN_JOURNAL,
+        is: PublicationType.PublicationInJournal,
         then: journalReference,
       })
       .when('$publicationContextType', {
-        is: PublicationType.BOOK,
+        is: PublicationType.Book,
         then: bookReference,
       })
       .when('$publicationContextType', {
-        is: PublicationType.REPORT,
+        is: PublicationType.Report,
         then: reportReference,
       })
       .when('$publicationContextType', {
-        is: PublicationType.DEGREE,
+        is: PublicationType.Degree,
         then: degreeReference,
       })
       .when('$publicationContextType', {
-        is: PublicationType.CHAPTER,
+        is: PublicationType.Chapter,
         then: chapterReference,
       }),
   }),

@@ -7,19 +7,18 @@ import { Button, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
 import DeleteIcon from '@material-ui/icons/RemoveCircleSharp';
 import WarningIcon from '@material-ui/icons/Warning';
-import ConfirmDialog from '../../../../components/ConfirmDialog';
-import DangerButton from '../../../../components/DangerButton';
-import AddInstitution from '../../../../components/institution/AddInstitution';
-import AffiliationHierarchy from '../../../../components/institution/AffiliationHierarchy';
-import Modal from '../../../../components/Modal';
+import { ConfirmDialog } from '../../../../components/ConfirmDialog';
+import { DangerButton } from '../../../../components/DangerButton';
+import { AddInstitution } from '../../../../components/institution/AddInstitution';
+import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
+import { Modal } from '../../../../components/Modal';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { Institution } from '../../../../types/contributor.types';
 import { FormikInstitutionUnit } from '../../../../types/institution.types';
 import { NotificationVariant } from '../../../../types/notification.types';
-import { BackendTypeNames } from '../../../../types/publication_types/commonRegistration.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
-import useIsMobile from '../../../../utils/hooks/useIsMobile';
+import { useIsMobile } from '../../../../utils/hooks/useIsMobile';
 import { getMostSpecificUnit } from '../../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
@@ -56,7 +55,7 @@ interface AffiliationsCellProps {
   baseFieldName: string;
 }
 
-const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: AffiliationsCellProps) => {
+export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: AffiliationsCellProps) => {
   const { t } = useTranslation('registration');
   const disptach = useDispatch();
   const { setFieldValue } = useFormikContext<Registration>();
@@ -85,7 +84,7 @@ const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Affiliati
     }
 
     const addedAffiliation: Institution = {
-      type: BackendTypeNames.ORGANIZATION,
+      type: 'Organization',
       id: mostSpecificUnit.id,
     };
 
@@ -105,7 +104,7 @@ const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Affiliati
       }
     }
 
-    setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.AFFILIATIONS}`, updatedAffiliations);
+    setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`, updatedAffiliations);
     toggleAffiliationModal();
   };
 
@@ -179,7 +178,7 @@ const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Affiliati
         onAccept={() => {
           if (affiliations) {
             setFieldValue(
-              `${baseFieldName}.${SpecificContributorFieldNames.AFFILIATIONS}`,
+              `${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`,
               affiliations.filter((affiliation) => affiliation.id !== affiliationToRemove?.id)
             );
           }
@@ -192,5 +191,3 @@ const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Affiliati
     </StyledAffiliationsCell>
   );
 };
-
-export default AffiliationsCell;

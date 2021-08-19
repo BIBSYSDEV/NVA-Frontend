@@ -1,42 +1,43 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import BackgroundDiv from '../../../../components/BackgroundDiv';
-import { StyledNormalTextPreWrapped } from '../../../../components/styled/Wrappers';
-import lightTheme from '../../../../themes/lightTheme';
+import { BackgroundDiv } from '../../../../components/BackgroundDiv';
+import { StyledTypographyPreWrapped } from '../../../../components/styled/Wrappers';
+import { lightTheme } from '../../../../themes/lightTheme';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface NviValidationProps {
-  dataTestId: string;
   isPeerReviewed: boolean;
   isRated: boolean;
-  isTextbook?: boolean;
+  isOriginalResearch: boolean;
 }
 
-const NviValidation = ({ dataTestId, isPeerReviewed, isRated, isTextbook }: NviValidationProps) => {
+export const NviValidation = ({ isPeerReviewed, isRated, isOriginalResearch }: NviValidationProps) => {
   const { t } = useTranslation('registration');
 
   return (
-    <BackgroundDiv backgroundColor={lightTheme.palette.section.black} data-testid={dataTestId}>
-      {!isTextbook ? (
+    <BackgroundDiv backgroundColor={lightTheme.palette.section.black}>
+      {isRated ? (
         isPeerReviewed ? (
-          isRated ? (
-            <StyledNormalTextPreWrapped data-testid="nvi_success">
+          isOriginalResearch ? (
+            <StyledTypographyPreWrapped data-testid={dataTestId.registrationWizard.resourceType.nviSuccess}>
               {t('resource_type.nvi_success')}
-            </StyledNormalTextPreWrapped>
+            </StyledTypographyPreWrapped>
           ) : (
-            <StyledNormalTextPreWrapped data-testid="nvi_fail_not_rated">
-              {t('resource_type.nvi_fail_not_rated')}
-            </StyledNormalTextPreWrapped>
+            <StyledTypographyPreWrapped
+              data-testid={dataTestId.registrationWizard.resourceType.nviFailedOriginalResearch}>
+              {t('resource_type.nvi_fail_not_original_research')}
+            </StyledTypographyPreWrapped>
           )
         ) : (
-          <StyledNormalTextPreWrapped data-testid="nvi_fail_no_peer_review">
+          <StyledTypographyPreWrapped data-testid={dataTestId.registrationWizard.resourceType.nviFailedPeerReview}>
             {t('resource_type.nvi_fail_no_peer_review')}
-          </StyledNormalTextPreWrapped>
+          </StyledTypographyPreWrapped>
         )
       ) : (
-        <StyledNormalTextPreWrapped data-testid="nvi_fail">{t('resource_type.nvi_fail')}</StyledNormalTextPreWrapped>
+        <StyledTypographyPreWrapped data-testid={dataTestId.registrationWizard.resourceType.nviFailedRated}>
+          {t('resource_type.nvi_fail_not_rated')}
+        </StyledTypographyPreWrapped>
       )}
     </BackgroundDiv>
   );
 };
-
-export default NviValidation;

@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { MenuItem, MuiThemeProvider, TextField, Typography } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import BackgroundDiv from '../../components/BackgroundDiv';
-import lightTheme from '../../themes/lightTheme';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { lightTheme } from '../../themes/lightTheme';
 import { LanguageCodes, registrationLanguages } from '../../types/language.types';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
@@ -25,14 +25,14 @@ const DateAndLanguageWrapper = styled.div`
   }
 `;
 
-const DescriptionPanel = () => {
+export const DescriptionPanel = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
-        <Field name={DescriptionFieldNames.TITLE}>
+        <Field name={DescriptionFieldNames.Title}>
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
               {...field}
@@ -47,7 +47,7 @@ const DescriptionPanel = () => {
             />
           )}
         </Field>
-        <Field name={DescriptionFieldNames.ABSTRACT}>
+        <Field name={DescriptionFieldNames.Abstract}>
           {({ field }: FieldProps<string>) => (
             <TextField
               {...field}
@@ -61,7 +61,7 @@ const DescriptionPanel = () => {
             />
           )}
         </Field>
-        <Field name={DescriptionFieldNames.DESCRIPTION}>
+        <Field name={DescriptionFieldNames.Description}>
           {({ field }: FieldProps<string>) => (
             <TextField
               {...field}
@@ -77,7 +77,7 @@ const DescriptionPanel = () => {
         </Field>
       </BackgroundDiv>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-        <Field name={DescriptionFieldNames.TAGS}>
+        <Field name={DescriptionFieldNames.Tags}>
           {({ field }: FieldProps) => (
             <Autocomplete
               {...field}
@@ -117,7 +117,7 @@ const DescriptionPanel = () => {
         <DateAndLanguageWrapper>
           <DatePickerField />
 
-          <Field name={DescriptionFieldNames.LANGUAGE}>
+          <Field name={DescriptionFieldNames.Language}>
             {({ field }: FieldProps<string>) => (
               <TextField
                 {...field}
@@ -155,5 +155,3 @@ const DescriptionPanel = () => {
     </>
   );
 };
-
-export default DescriptionPanel;

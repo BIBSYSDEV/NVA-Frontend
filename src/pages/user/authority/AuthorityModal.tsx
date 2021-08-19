@@ -4,11 +4,11 @@ import { Button, DialogActions } from '@material-ui/core';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 import { ConnectAuthority } from './ConnectAuthority';
-import Modal from '../../../components/Modal';
-import ConfirmDialog from '../../../components/ConfirmDialog';
+import { Modal } from '../../../components/Modal';
+import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { useAuthentication } from '../../../utils/hooks/useAuthentication';
 import { User } from '../../../types/user.types';
-import AuthorityList from './AuthorityList';
+import { AuthorityList } from './AuthorityList';
 
 interface AuthorityModalProps {
   user: User;
@@ -16,7 +16,7 @@ interface AuthorityModalProps {
   closeModal: () => void;
 }
 
-const AuthorityModal = ({ closeModal, handleNextClick, user }: AuthorityModalProps) => {
+export const AuthorityModal = ({ closeModal, handleNextClick, user }: AuthorityModalProps) => {
   const { t } = useTranslation('profile');
   const [openCancelConfirmation, setOpenCancelConfirmation] = useState(false);
   const { handleLogout } = useAuthentication();
@@ -71,5 +71,3 @@ const AuthorityModal = ({ closeModal, handleNextClick, user }: AuthorityModalPro
     </>
   );
 };
-
-export default AuthorityModal;

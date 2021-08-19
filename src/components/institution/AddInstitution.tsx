@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Button, CircularProgress, Typography } from '@material-ui/core';
-import InstitutionSelector from '../../pages/user/institution/InstitutionSelector';
+import { InstitutionSelector } from '../../pages/user/institution/InstitutionSelector';
 import { FormikInstitutionUnit, FormikInstitutionUnitFieldNames } from '../../types/institution.types';
-import useFetchDepartment from '../../utils/hooks/useFetchDepartment';
-import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
-import InstitutionAutocomplete from './InstitutionAutocomplete';
-import ButtonWithProgress from '../ButtonWithProgress';
+import { useFetchDepartment } from '../../utils/hooks/useFetchDepartment';
+import { useFetchInstitutions } from '../../utils/hooks/useFetchInstitutions';
+import { InstitutionAutocomplete } from './InstitutionAutocomplete';
+import { ButtonWithProgress } from '../ButtonWithProgress';
 
 export const StyledButtonContainer = styled.div`
   display: flex;
@@ -30,7 +30,7 @@ interface AddInstitutionProps {
   onClose?: () => void;
 }
 
-const AddInstitution = ({ onSubmit, onClose }: AddInstitutionProps) => {
+export const AddInstitution = ({ onSubmit, onClose }: AddInstitutionProps) => {
   const { t } = useTranslation('common');
   const [institutions, isLoadingInstitutions] = useFetchInstitutions();
   const [selectedInstitutionId, setSelectedInstitutionId] = useState('');
@@ -39,7 +39,7 @@ const AddInstitution = ({ onSubmit, onClose }: AddInstitutionProps) => {
   return (
     <Formik initialValues={{}} onSubmit={onSubmit}>
       <Form noValidate>
-        <Field name={FormikInstitutionUnitFieldNames.UNIT}>
+        <Field name={FormikInstitutionUnitFieldNames.Unit}>
           {({ field: { name, value }, form: { setFieldValue, isSubmitting } }: FieldProps) => (
             <StyledInstitutionSearchContainer>
               <InstitutionAutocomplete
@@ -97,5 +97,3 @@ const AddInstitution = ({ onSubmit, onClose }: AddInstitutionProps) => {
     </Formik>
   );
 };
-
-export default AddInstitution;

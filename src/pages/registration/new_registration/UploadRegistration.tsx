@@ -9,17 +9,17 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useUppy } from '@uppy/react';
 
-import RegistrationAccordion from './RegistrationAccordion';
-import { File } from '../../../types/file.types';
+import { RegistrationAccordion } from './RegistrationAccordion';
+import { File, RegistrationFileSet } from '../../../types/file.types';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
-import ButtonWithProgress from '../../../components/ButtonWithProgress';
-import FileUploader from '../files_and_license_tab/FileUploader';
-import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
+import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
+import { FileUploader } from '../files_and_license_tab/FileUploader';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { createUppy } from '../../../utils/uppy/uppy-config';
-import UploadedFileRow from './UploadedFileRow';
+import { UploadedFileRow } from './UploadedFileRow';
+import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
   border-color: ${({ theme }) => theme.palette.secondary.main};
@@ -30,7 +30,7 @@ interface UploadRegistrationProps {
   onChange: (event: ChangeEvent<unknown>, isExpanded: boolean) => void;
 }
 
-const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => {
+export const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => {
   const { t } = useTranslation('registration');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -40,18 +40,18 @@ const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => 
 
   const createRegistrationWithFiles = async () => {
     setIsLoading(true);
-    const registrationPayload = {
+    const registrationPayload: RegistrationFileSet = {
       fileSet: {
-        type: BackendTypeNames.FILE_SET,
+        type: 'FileSet',
         files: uploadedFiles,
       },
     };
-    const registration = await createRegistration(registrationPayload);
-    if (registration?.identifier) {
-      history.push(getRegistrationPath(registration.identifier), { highestValidatedTab: -1 });
-    } else {
-      setIsLoading(false);
+    const createRegistrationResponse = await createRegistration(registrationPayload);
+    if (isErrorStatus(createRegistrationResponse.status)) {
       dispatch(setNotification(t('feedback:error.create_registration'), NotificationVariant.Error));
+      setIsLoading(false);
+    } else if (isSuccessStatus(createRegistrationResponse.status)) {
+      history.push(getRegistrationPath(createRegistrationResponse.data.identifier), { highestValidatedTab: -1 });
     }
   };
 
@@ -107,5 +107,3 @@ const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => 
     </StyledRegistrationAccorion>
   );
 };
-
-export default UploadRegistration;

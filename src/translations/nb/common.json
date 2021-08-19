@@ -1,4 +1,5 @@
 {
+  "about_nva": "Om NVA",
   "add": "Legg til",
   "admin": "Administrator",
   "all": "Alle",
@@ -41,7 +42,7 @@
   "no_hits": "Ingen treff",
   "number": "Nummer",
   "number_short": "Nr.",
-  "nva_tagline": "NVA \n- Nasjonalt Vitenarkiv",
+  "nva_tagline": "NVA - Nasjonalt Vitenarkiv",
   "of": "av",
   "open": "Åpne",
   "orcid": "ORCID",
@@ -65,7 +66,6 @@
   "save": "Lagre",
   "save_and_present": "Lagre og presenter",
   "search": "Søk",
-  "search_for_publication": "Søk etter publikasjon",
   "search_placeholder": "Navn Navnesen",
   "search_summary": "{{count}} treff for \"{{searchTerm}}\"",
   "search_summary_plural": "{{count}} treff for \"{{searchTerm}}\"",

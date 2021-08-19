@@ -2,13 +2,13 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
-import BackgroundDiv from '../../../../components/BackgroundDiv';
-import lightTheme from '../../../../themes/lightTheme';
+import { BackgroundDiv } from '../../../../components/BackgroundDiv';
+import { lightTheme } from '../../../../themes/lightTheme';
 import { DoiField } from '../components/DoiField';
-import IsbnListField from '../components/IsbnListField';
-import PublisherField from '../components/PublisherField';
+import { PublisherField } from '../components/PublisherField';
 import { SeriesFields } from '../components/SeriesFields';
 import { TotalPagesField } from '../components/TotalPagesField';
+import { IsbnField } from '../components/IsbnField';
 
 const StyledSection = styled.div`
   display: grid;
@@ -21,7 +21,7 @@ const StyledSection = styled.div`
   }
 `;
 
-const ReportForm = () => {
+export const ReportForm = () => {
   const { t } = useTranslation('registration');
 
   return (
@@ -33,7 +33,7 @@ const ReportForm = () => {
 
       <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
         <StyledSection>
-          <IsbnListField />
+          <IsbnField />
           <TotalPagesField />
         </StyledSection>
       </BackgroundDiv>
@@ -46,5 +46,3 @@ const ReportForm = () => {
     </>
   );
 };
-
-export default ReportForm;

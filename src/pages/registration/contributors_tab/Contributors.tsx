@@ -13,14 +13,14 @@ import {
   ContributorRole,
   emptyContributor,
   Identity,
+  Institution,
   UnverifiedContributor,
 } from '../../../types/contributor.types';
 import { NotificationVariant } from '../../../types/notification.types';
-import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
-import useIsMobile from '../../../utils/hooks/useIsMobile';
-import lightTheme, { paginationTranslationProps } from '../../../themes/lightTheme';
+import { useIsMobile } from '../../../utils/hooks/useIsMobile';
+import { lightTheme, paginationTranslationProps } from '../../../themes/lightTheme';
 import { ContributorList } from './components/ContributorList';
 import { AddContributorModal } from './AddContributorModal';
 import { getAddContributorText, getContributorHeading } from '../../../utils/translation-helpers';
@@ -71,7 +71,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       .filter((_, index) => index !== indexToRemove)
       .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
     const nextContributors = [...nextRelevantContributors, ...otherContributors];
-    setFieldValue(ContributorFieldNames.CONTRIBUTORS, nextContributors);
+    setFieldValue(ContributorFieldNames.Contributors, nextContributors);
 
     const maxValidPage = Math.ceil(nextContributors.length / contributorsPerPage);
     if (currentPage > maxValidPage) {
@@ -80,7 +80,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
 
     if (nextContributors.length === 0) {
       // Ensure field is set to touched even if it's empty
-      setFieldTouched(ContributorFieldNames.CONTRIBUTORS);
+      setFieldTouched(ContributorFieldNames.Contributors);
     }
   };
 
@@ -104,7 +104,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       ...contributor,
       sequence: index + 1,
     }));
-    setFieldValue(ContributorFieldNames.CONTRIBUTORS, [...otherContributors, ...newContributors]);
+    setFieldValue(ContributorFieldNames.Contributors, [...otherContributors, ...newContributors]);
   };
 
   const handleOpenContributorModal = (unverifiedContributor: UnverifiedContributor) => {
@@ -119,7 +119,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     }
 
     const identity: Identity = {
-      type: BackendTypeNames.IDENTITY,
+      type: 'Identity',
       id: authority.id,
       orcId: authority.orcids.length > 0 ? authority.orcids[0] : '',
       name: authority.name,
@@ -130,7 +130,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         ...emptyContributor,
         identity,
         affiliations: authority.orgunitids.map((unitUri) => ({
-          type: BackendTypeNames.ORGANIZATION,
+          type: 'Organization',
           id: unitUri,
         })),
         role,
@@ -142,8 +142,8 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     } else {
       const relevantContributor = relevantContributors[unverifiedContributor.index];
       const relevantAffiliations = relevantContributor.affiliations ?? [];
-      const existingOrgunitIds = authority.orgunitids.map((unitUri) => ({
-        type: BackendTypeNames.ORGANIZATION,
+      const existingOrgunitIds: Institution[] = authority.orgunitids.map((unitUri) => ({
+        type: 'Organization',
         id: unitUri,
       }));
       relevantAffiliations.push(...existingOrgunitIds);

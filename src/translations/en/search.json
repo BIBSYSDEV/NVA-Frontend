@@ -1,0 +1,8 @@
+{
+  "hits": "{{count}} hit",
+  "hits_plural": "{{count}} hits",
+  "registration_type": "Registration type",
+  "search": "Search",
+  "search_help": "Use quotes (\"abs\") for exact matches, or wildcard (*) to search for substrings",
+  "select_filters": "Select filters to narrow down search:"
+}

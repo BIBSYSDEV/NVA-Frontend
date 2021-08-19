@@ -18,7 +18,7 @@ const contributorValidationSchema = Yup.object().shape({
 export const contributorsValidationSchema = Yup.array().when(
   ['$publicationContextType', '$publicationInstanceType'],
   (publicationContextType: any, publicationInstanceType: any) => {
-    if (publicationContextType === PublicationType.DEGREE) {
+    if (publicationContextType === PublicationType.Degree) {
       return Yup.array()
         .of(contributorValidationSchema)
         .test('author-test', contributorErrorMessage.authorRequired, (contributors) =>
@@ -27,7 +27,7 @@ export const contributorsValidationSchema = Yup.array().when(
         .test('supervisor-test', contributorErrorMessage.supervisorRequired, (contributors) =>
           hasRole(contributors, ContributorRole.Supervisor)
         );
-    } else if (publicationInstanceType === BookType.ANTHOLOGY) {
+    } else if (publicationInstanceType === BookType.Anthology) {
       return Yup.array()
         .of(contributorValidationSchema)
         .test('editor-test', contributorErrorMessage.editorRequired, (contributors) =>

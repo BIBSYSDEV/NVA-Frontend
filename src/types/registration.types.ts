@@ -8,16 +8,15 @@ import {
 import { DegreeEntityDescription } from './publication_types/degreeRegistration.types';
 import { BookEntityDescription } from './publication_types/bookRegistration.types';
 import { ReportEntityDescription } from './publication_types/reportRegistration.types';
-import { BackendTypeNames } from './publication_types/commonRegistration.types';
 import { ChapterEntityDescription } from './publication_types/chapterRegistration.types';
 import { Contributor } from './contributor.types';
 import { LanguageValues } from './language.types';
 
 export enum RegistrationStatus {
-  DELETED = 'DRAFT_FOR_DELETION',
-  DRAFT = 'DRAFT',
-  NEW = 'NEW',
-  PUBLISHED = 'PUBLISHED',
+  Deleted = 'DRAFT_FOR_DELETION',
+  Draft = 'DRAFT',
+  New = 'NEW',
+  Published = 'PUBLISHED',
 }
 
 export enum RegistrationTab {
@@ -27,16 +26,13 @@ export enum RegistrationTab {
   FilesAndLicenses = 3,
 }
 
+// NB! Keys must match supported values in datamodel
 export const levelMap: EnumDictionary<string, number | null> = {
   NO_LEVEL: null,
   LEVEL_0: 0,
   LEVEL_1: 1,
   LEVEL_2: 2,
 };
-
-export interface BackendType {
-  type: BackendTypeNames | '';
-}
 
 export interface Publisher {
   type: string;
@@ -53,6 +49,10 @@ export interface AlmaRegistration {
   title: string;
 }
 
+export interface MyRegistrationsResponse {
+  publications?: RegistrationPreview[]; // "publications" is undefined if user has no registrations
+}
+
 export interface NpiDiscipline {
   id: string;
   name: string;
@@ -65,7 +65,7 @@ export enum DoiRequestStatus {
   Requested = 'REQUESTED',
 }
 
-export interface DoiRequestMessage {
+interface DoiRequestMessage {
   text: string;
   author: string;
   timestamp: string;
@@ -83,7 +83,8 @@ export interface RegistrationPublisher {
   id: string;
 }
 
-interface BaseRegistration extends BackendType, RegistrationFileSet {
+export interface BaseRegistration extends RegistrationFileSet {
+  readonly type: 'Publication';
   readonly identifier: string;
   readonly createdDate: string;
   readonly modifiedDate: string;
@@ -96,7 +97,8 @@ interface BaseRegistration extends BackendType, RegistrationFileSet {
   projects: ResearchProject[];
 }
 
-export interface BaseEntityDescription extends BackendType {
+export interface BaseEntityDescription {
+  type: 'EntityDescription';
   abstract: string;
   contributors: Contributor[];
   date: RegistrationDate;
@@ -108,6 +110,17 @@ export interface BaseEntityDescription extends BackendType {
   controlledKeywords: string[];
 }
 
+export interface NviApplicableBase<T> {
+  contentType: T | null;
+  peerReviewed: boolean | null;
+  originalResearch: boolean | null;
+}
+
+export interface BaseReference {
+  type: 'Reference';
+  doi: string;
+}
+
 export interface Registration extends BaseRegistration {
   entityDescription:
     | JournalEntityDescription
@@ -117,27 +130,8 @@ export interface Registration extends BaseRegistration {
     | ChapterEntityDescription;
 }
 
-export interface JournalRegistration extends BaseRegistration {
-  entityDescription: JournalEntityDescription;
-}
-
-export interface DegreeRegistration extends BaseRegistration {
-  entityDescription: DegreeEntityDescription;
-}
-
-export interface BookRegistration extends BaseRegistration {
-  entityDescription: BookEntityDescription;
-}
-
-export interface ReportRegistration extends BaseRegistration {
-  entityDescription: ReportEntityDescription;
-}
-
-export interface ChapterRegistration extends BaseRegistration {
-  entityDescription: ChapterEntityDescription;
-}
-
-export interface RegistrationDate extends BackendType {
+export interface RegistrationDate {
+  type: 'PublicationDate' | 'IndexDate';
   year: string;
   month: string;
   day: string;
@@ -154,15 +148,15 @@ export interface Doi {
 }
 
 export const emptyRegistration: Registration = {
-  type: BackendTypeNames.PUBLICATION,
+  type: 'Publication',
   identifier: '',
   createdDate: '',
   modifiedDate: '',
   owner: '',
-  status: RegistrationStatus.NEW,
+  status: RegistrationStatus.New,
   entityDescription: emptyRegistrationEntityDescription,
   fileSet: {
-    type: BackendTypeNames.FILE_SET,
+    type: 'FileSet',
     files: [],
   },
   projects: [],

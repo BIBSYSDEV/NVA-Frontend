@@ -1,6 +1,6 @@
 {
   "error": {
-    "404_page": "Beklager, men vi kan ikke finne siden du ser etter. (Http feilkode 404)",
+    "404_page": "Beklager, men vi kan ikke finne siden du ser etter",
     "add_role": "Kunne ikke legge til rolle",
     "an_error_occurred": "En feil oppstod",
     "create_authority": "Kunne ikke opprette autoritet",
@@ -29,7 +29,6 @@
     "get_registration": "Kunne ikke laste inn registrering",
     "get_roles": "Kunne ikke hente roller",
     "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
-    "get_user": "Kunne ikke hente bruker",
     "get_users_for_institution": "Kunne ikke hente brukere",
     "institution_mismatch": "Denne brukeren tilhører en annen institusjon",
     "login": "Kunne ikke logge inn",
@@ -77,6 +76,7 @@
     "author_required": "Du må ha minst en forfatter på denne registreringen",
     "editor_required": "Du må ha minst en redaktør på denne registreringen",
     "has_invalid_format": "{{field}} har ugyldig format",
+    "isbn_too_short": "ISBN må ha 13 siffer",
     "is_required": "{{field}} er obligatorisk",
     "minimum_one_file": "Du må laste opp minst en fil for denne registreringen",
     "must_be_bigger_than": "{{field}} kan ikke være mindre enn {{limit}}",

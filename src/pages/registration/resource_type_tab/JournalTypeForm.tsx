@@ -1,18 +1,18 @@
 import { useFormikContext } from 'formik';
 import React from 'react';
-import BackgroundDiv from '../../../components/BackgroundDiv';
+import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
-import lightTheme from '../../../themes/lightTheme';
+import { lightTheme } from '../../../themes/lightTheme';
 import { JournalType, ResourceFieldNames } from '../../../types/publicationFieldNames';
-import { JournalRegistration } from '../../../types/registration.types';
-import SelectTypeField from './components/SelectTypeField';
-import JournalForm from './sub_type_forms/JournalForm';
+import { JournalRegistration } from '../../../types/publication_types/journalRegistration.types';
+import { SelectTypeField } from './components/SelectTypeField';
+import { JournalForm } from './sub_type_forms/JournalForm';
 
 interface JournalTypeFormProps {
   onChangeSubType: (type: string) => void;
 }
 
-const JournalTypeForm = ({ onChangeSubType }: JournalTypeFormProps) => {
+export const JournalTypeForm = ({ onChangeSubType }: JournalTypeFormProps) => {
   const { values } = useFormikContext<JournalRegistration>();
   const subType = values.entityDescription.reference.publicationInstance.type;
 
@@ -21,7 +21,7 @@ const JournalTypeForm = ({ onChangeSubType }: JournalTypeFormProps) => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
         <StyledSelectWrapper>
           <SelectTypeField
-            fieldName={ResourceFieldNames.SUB_TYPE}
+            fieldName={ResourceFieldNames.SubType}
             onChangeType={onChangeSubType}
             options={Object.values(JournalType)}
           />
@@ -32,5 +32,3 @@ const JournalTypeForm = ({ onChangeSubType }: JournalTypeFormProps) => {
     </>
   );
 };
-
-export default JournalTypeForm;

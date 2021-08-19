@@ -5,7 +5,7 @@ import i18n from '../translations/i18n';
 import * as Yup from 'yup';
 import { Button, DialogActions, TextField } from '@material-ui/core';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import ButtonWithProgress from './ButtonWithProgress';
+import { ButtonWithProgress } from './ButtonWithProgress';
 
 interface MessageFormProps {
   confirmAction: (message: string) => Promise<unknown> | void;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@material-ui/core';
+import { hyphenate as hyphenateIsbn } from 'isbn-utils';
 import { JournalPublicationInstance } from '../../types/publication_types/journalRegistration.types';
 import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
 import { ReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
@@ -15,18 +16,13 @@ const getPageInterval = (pages: PagesRange) => {
     : '';
 };
 
-const PublicPeerReviewed = ({ peerReviewed }: { peerReviewed: boolean }) => {
-  const { t } = useTranslation('registration');
-  return peerReviewed ? <Typography>{t('resource_type.peer_reviewed')}</Typography> : null;
-};
-
 export const PublicPublicationInstanceJournal = ({
   publicationInstance,
 }: {
   publicationInstance: JournalPublicationInstance;
 }) => {
   const { t } = useTranslation('registration');
-  const { articleNumber, issue, pages, volume, peerReviewed } = publicationInstance;
+  const { articleNumber, issue, pages, volume } = publicationInstance;
   const pagesInterval = getPageInterval(pages);
 
   const fieldTexts = [];
@@ -43,12 +39,7 @@ export const PublicPublicationInstanceJournal = ({
     fieldTexts.push(`${t('resource_type.article_number')} ${articleNumber}`);
   }
 
-  return (
-    <>
-      <Typography>{fieldTexts.join(', ')}</Typography>
-      <PublicPeerReviewed peerReviewed={!!peerReviewed} />
-    </>
-  );
+  return <Typography>{fieldTexts.join(', ')}</Typography>;
 };
 
 export const PublicPublicationInstanceBook = ({
@@ -56,16 +47,9 @@ export const PublicPublicationInstanceBook = ({
 }: {
   publicationInstance: BookPublicationInstance;
 }) => {
-  const { t } = useTranslation('registration');
-  const { pages, peerReviewed, textbookContent } = publicationInstance;
+  const { pages } = publicationInstance;
 
-  return (
-    <>
-      <PublicTotalPagesContent pages={pages} />
-      <PublicPeerReviewed peerReviewed={!!peerReviewed} />
-      {textbookContent && <Typography>{t('resource_type.text_book')}</Typography>}
-    </>
-  );
+  return <PublicTotalPagesContent pages={pages} />;
 };
 
 export const PublicPublicationInstanceDegree = ({
@@ -93,15 +77,10 @@ export const PublicPublicationInstanceChapter = ({
 }: {
   publicationInstance: ChapterPublicationInstance;
 }) => {
-  const { pages, peerReviewed } = publicationInstance;
+  const { pages } = publicationInstance;
   const pagesInterval = getPageInterval(pages);
 
-  return (
-    <>
-      {pagesInterval && <Typography>{pagesInterval}</Typography>}
-      <PublicPeerReviewed peerReviewed={!!peerReviewed} />
-    </>
-  );
+  return <>{pagesInterval && <Typography>{pagesInterval}</Typography>}</>;
 };
 
 const PublicTotalPagesContent = ({ pages }: { pages: PagesMonograph | null }) => {
@@ -118,7 +97,11 @@ export const PublicIsbnContent = ({ isbnList }: { isbnList?: string[] }) => {
   const { t } = useTranslation('registration');
   return isbnList ? (
     <Typography>
-      {t('resource_type.isbn')}: {isbnList.join(', ')}
+      {t('resource_type.isbn')}:{' '}
+      {isbnList
+        .filter((isbn) => isbn)
+        .map((isbn) => hyphenateIsbn(isbn))
+        .join(', ')}
     </Typography>
   ) : null;
 };

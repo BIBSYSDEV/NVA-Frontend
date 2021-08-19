@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { MuiThemeProvider, TextField, Typography } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import ConfirmDialog from '../../../../components/ConfirmDialog';
+import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
-import DangerButton from '../../../../components/DangerButton';
-import lightTheme from '../../../../themes/lightTheme';
+import { DangerButton } from '../../../../components/DangerButton';
+import { lightTheme } from '../../../../themes/lightTheme';
 
 const StyledDoiRow = styled.div`
   display: grid;
@@ -31,7 +31,7 @@ export const DoiField = () => {
   };
 
   const removeDoi = () => {
-    setFieldValue(ResourceFieldNames.DOI, '');
+    setFieldValue(ResourceFieldNames.Doi, '');
     toggleConfirmDialog();
   };
 
