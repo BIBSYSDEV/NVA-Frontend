@@ -1,7 +1,7 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MuiThemeProvider, Typography } from '@material-ui/core';
+import { CircularProgress, MuiThemeProvider, Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
@@ -13,8 +13,17 @@ import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { DangerButton } from '../../../../components/DangerButton';
+import styled from 'styled-components';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
+
+const StyledSeriesRow = styled.div`
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: center;
+`;
 
 interface Journal {
   id: string;
@@ -47,13 +56,12 @@ export const SeriesSearch = () => {
   const options = query && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : [];
 
   return (
-    <MuiThemeProvider theme={lightTheme}>
-      <Field name="entityDescription.reference.publicationContext.seriesUri">
-        {({ field }: FieldProps<string>) => (
-          <>
+    <Field name="entityDescription.reference.publicationContext.seriesUri">
+      {({ field }: FieldProps<string>) => (
+        <StyledSeriesRow>
+          <MuiThemeProvider theme={lightTheme}>
             <Autocomplete
               {...autocompleteTranslationProps}
-              //   {...field}
               id={seriesFieldTestId}
               data-testid={seriesFieldTestId}
               aria-labelledby={`${seriesFieldTestId}-label`}
@@ -66,10 +74,10 @@ export const SeriesSearch = () => {
               onChange={(_, inputValue) => {
                 setFieldValue(field.name, inputValue?.id ?? null);
               }}
+              debug
               loading={isLoadingJournalOptions}
-              getOptionSelected={(option, value) => {
-                return option.id === field.value;
-              }}
+              getOptionSelected={(option) => option.id === field.value}
+              disabled={!!seriesUri}
               getOptionLabel={(option) => option.name}
               renderOption={(option, state) => (
                 <StyledFlexColumn>
@@ -89,13 +97,38 @@ export const SeriesSearch = () => {
                   label={t('common:title')}
                   isLoading={isLoadingJournalOptions}
                   placeholder={t('resource_type.search_for_series')}
-                  showSearchIcon
+                  showSearchIcon={!seriesUri}
                 />
               )}
             />
-          </>
-        )}
-      </Field>
-    </MuiThemeProvider>
+          </MuiThemeProvider>
+          {seriesUri && (
+            <DangerButton variant="contained" onClick={() => setFieldValue(field.name, null)}>
+              Fjern serie
+            </DangerButton>
+          )}
+          {seriesUri &&
+            (isLoadingJournal ? (
+              <CircularProgress />
+            ) : (
+              journal?.[0] && (
+                <div>
+                  <Typography color="primary">
+                    {[
+                      journal[0].printIssn ? `Print ISSN: ${journal[0].printIssn}` : '',
+                      journal[0].onlineIssn ? `Online ISSN: ${journal[0].onlineIssn}` : '',
+                    ]
+                      .filter((issn) => issn)
+                      .join(', ')}
+                  </Typography>
+                  <Typography color="primary">
+                    {t('resource_type.level')}: {journal[0].level}
+                  </Typography>
+                </div>
+              )
+            ))}
+        </StyledSeriesRow>
+      )}
+    </Field>
   );
 };
