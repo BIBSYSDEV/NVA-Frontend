@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CircularProgress, MuiThemeProvider, Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
+import DeleteIcon from '@material-ui/icons/Delete';
+import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
@@ -14,7 +16,6 @@ import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { DangerButton } from '../../../../components/DangerButton';
-import styled from 'styled-components';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
 
@@ -53,6 +54,8 @@ export const SeriesSearch = () => {
     url: seriesUri ?? '',
   });
 
+  const selectedJournal = seriesUri && journal?.[0] ? journal[0] : null;
+
   const options = query && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : [];
 
   return (
@@ -70,11 +73,10 @@ export const SeriesSearch = () => {
               filterOptions={(options) => options}
               inputValue={query}
               onInputChange={(_, newInputValue) => setQuery(newInputValue)}
-              value={seriesUri ? journal?.[0] ?? null : null}
+              value={selectedJournal}
               onChange={(_, inputValue) => {
                 setFieldValue(field.name, inputValue?.id ?? null);
               }}
-              debug
               loading={isLoadingJournalOptions}
               getOptionSelected={(option) => option.id === field.value}
               disabled={!!seriesUri}
@@ -103,26 +105,28 @@ export const SeriesSearch = () => {
             />
           </MuiThemeProvider>
           {seriesUri && (
-            <DangerButton variant="contained" onClick={() => setFieldValue(field.name, null)}>
-              Fjern serie
+            <DangerButton variant="contained" onClick={() => setFieldValue(field.name, null)} endIcon={<DeleteIcon />}>
+              {t('resource_type.remove_series')}
             </DangerButton>
           )}
           {seriesUri &&
             (isLoadingJournal ? (
               <CircularProgress />
             ) : (
-              journal?.[0] && (
+              selectedJournal && (
                 <div>
                   <Typography color="primary">
                     {[
-                      journal[0].printIssn ? `Print ISSN: ${journal[0].printIssn}` : '',
-                      journal[0].onlineIssn ? `Online ISSN: ${journal[0].onlineIssn}` : '',
+                      selectedJournal.printIssn ? `${t('resource_type.print_issn')}: ${selectedJournal.printIssn}` : '',
+                      selectedJournal.onlineIssn
+                        ? `${t('resource_type.online_issn')}: ${selectedJournal.onlineIssn}`
+                        : '',
                     ]
                       .filter((issn) => issn)
                       .join(', ')}
                   </Typography>
                   <Typography color="primary">
-                    {t('resource_type.level')}: {journal[0].level}
+                    {t('resource_type.level')}: {selectedJournal.level}
                   </Typography>
                 </div>
               )
