@@ -16,6 +16,7 @@ import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { DangerButton } from '../../../../components/DangerButton';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
 
@@ -41,13 +42,15 @@ export const SeriesSearch = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue, values } = useFormikContext<Registration>();
 
-  const { seriesUri } = values.entityDescription.reference.publicationContext as BookPublicationContext;
-
-  const [query, setQuery] = useState('');
+  const { seriesUri, seriesTitle } = values.entityDescription.reference.publicationContext as BookPublicationContext;
+  const [query, setQuery] = useState(seriesTitle);
   const debouncedQuery = useDebounce(query);
   const year = values.entityDescription.date.year ?? new Date().getFullYear();
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
-    url: debouncedQuery ? `${PublicationChannelApiPath.JournalSearch}?year=${year}&query=${debouncedQuery}` : '',
+    url:
+      !seriesUri && debouncedQuery
+        ? `${PublicationChannelApiPath.JournalSearch}?year=${year}&query=${debouncedQuery}`
+        : '',
   });
 
   const [journal, isLoadingJournal] = useFetch<Journal[]>({
@@ -71,11 +74,16 @@ export const SeriesSearch = () => {
               popupIcon={null}
               options={options}
               filterOptions={(options) => options}
-              inputValue={query}
-              onInputChange={(_, newInputValue) => setQuery(newInputValue)}
+              inputValue={selectedJournal?.name ?? query}
+              onInputChange={(_, newInputValue, reason) => {
+                if (reason !== 'reset') {
+                  setQuery(newInputValue);
+                }
+              }}
               value={selectedJournal}
               onChange={(_, inputValue) => {
-                setFieldValue(field.name, inputValue?.id ?? null);
+                setFieldValue(field.name, inputValue?.id);
+                setFieldValue(ResourceFieldNames.SeriesTitle, inputValue?.name);
               }}
               loading={isLoadingJournalOptions}
               getOptionSelected={(option) => option.id === field.value}
@@ -105,7 +113,13 @@ export const SeriesSearch = () => {
             />
           </MuiThemeProvider>
           {seriesUri && (
-            <DangerButton variant="contained" onClick={() => setFieldValue(field.name, null)} endIcon={<DeleteIcon />}>
+            <DangerButton
+              variant="contained"
+              onClick={() => {
+                setFieldValue(field.name, null);
+                setFieldValue(ResourceFieldNames.SeriesTitle, null);
+              }}
+              endIcon={<DeleteIcon />}>
               {t('resource_type.remove_series')}
             </DangerButton>
           )}
