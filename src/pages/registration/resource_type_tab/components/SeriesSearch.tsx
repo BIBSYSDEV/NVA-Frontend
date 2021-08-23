@@ -1,7 +1,7 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CircularProgress, MuiThemeProvider, Typography } from '@material-ui/core';
+import { CircularProgress, MuiThemeProvider, TextField, Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import DeleteIcon from '@material-ui/icons/Delete';
 import styled from 'styled-components';
@@ -43,7 +43,7 @@ export const SeriesSearch = () => {
   const { setFieldValue, values } = useFormikContext<Registration>();
 
   const { seriesUri, seriesTitle } = values.entityDescription.reference.publicationContext as BookPublicationContext;
-  const [query, setQuery] = useState(seriesTitle);
+  const [query, setQuery] = useState(seriesTitle ?? '');
   const debouncedQuery = useDebounce(query);
   const year = values.entityDescription.date.year ?? new Date().getFullYear();
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
@@ -65,59 +65,69 @@ export const SeriesSearch = () => {
     <Field name="entityDescription.reference.publicationContext.seriesUri">
       {({ field }: FieldProps<string>) => (
         <StyledSeriesRow>
-          <MuiThemeProvider theme={lightTheme}>
-            <Autocomplete
-              {...autocompleteTranslationProps}
-              id={seriesFieldTestId}
-              data-testid={seriesFieldTestId}
-              aria-labelledby={`${seriesFieldTestId}-label`}
-              popupIcon={null}
-              options={options}
-              filterOptions={(options) => options}
-              inputValue={selectedJournal?.name ?? query}
-              onInputChange={(_, newInputValue, reason) => {
-                if (reason !== 'reset') {
-                  setQuery(newInputValue);
-                }
-              }}
-              value={selectedJournal}
-              onChange={(_, inputValue) => {
-                setFieldValue(field.name, inputValue?.id);
-                setFieldValue(ResourceFieldNames.SeriesTitle, inputValue?.name);
-              }}
-              loading={isLoadingJournalOptions}
-              getOptionSelected={(option) => option.id === field.value}
-              disabled={!!seriesUri}
-              getOptionLabel={(option) => option.name}
-              renderOption={(option, state) => (
-                <StyledFlexColumn>
-                  <Typography variant="subtitle1">
-                    <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
-                  </Typography>
-                  {option.level && (
-                    <Typography variant="body2" color="textSecondary">
-                      {t('resource_type.level')}: {option.level}
-                    </Typography>
-                  )}
-                </StyledFlexColumn>
-              )}
-              renderInput={(params) => (
-                <AutocompleteTextField
-                  {...params}
-                  label={t('common:title')}
-                  isLoading={isLoadingJournalOptions}
-                  placeholder={t('resource_type.search_for_series')}
-                  showSearchIcon={!seriesUri}
-                />
-              )}
+          {seriesUri ? (
+            <TextField
+              variant="filled"
+              value={selectedJournal?.name ?? seriesTitle}
+              label={t('common:title')}
+              disabled
             />
-          </MuiThemeProvider>
+          ) : (
+            <MuiThemeProvider theme={lightTheme}>
+              <Autocomplete
+                {...autocompleteTranslationProps}
+                id={seriesFieldTestId}
+                data-testid={seriesFieldTestId}
+                aria-labelledby={`${seriesFieldTestId}-label`}
+                popupIcon={null}
+                options={options}
+                filterOptions={(options) => options}
+                inputValue={query}
+                onInputChange={(_, newInputValue, reason) => {
+                  if (reason !== 'reset') {
+                    setQuery(newInputValue);
+                  }
+                }}
+                value={selectedJournal}
+                onChange={(_, inputValue) => {
+                  setFieldValue(field.name, inputValue?.id);
+                  setFieldValue(ResourceFieldNames.SeriesTitle, inputValue?.name);
+                }}
+                loading={isLoadingJournalOptions}
+                getOptionSelected={(option) => option.id === field.value}
+                disabled={!!seriesUri}
+                getOptionLabel={(option) => option.name}
+                renderOption={(option, state) => (
+                  <StyledFlexColumn>
+                    <Typography variant="subtitle1">
+                      <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
+                    </Typography>
+                    {option.level && (
+                      <Typography variant="body2" color="textSecondary">
+                        {t('resource_type.level')}: {option.level}
+                      </Typography>
+                    )}
+                  </StyledFlexColumn>
+                )}
+                renderInput={(params) => (
+                  <AutocompleteTextField
+                    {...params}
+                    label={t('common:title')}
+                    isLoading={isLoadingJournalOptions}
+                    placeholder={t('resource_type.search_for_series')}
+                    showSearchIcon={!seriesUri}
+                  />
+                )}
+              />
+            </MuiThemeProvider>
+          )}
           {seriesUri && (
             <DangerButton
               variant="contained"
               onClick={() => {
-                setFieldValue(field.name, null);
-                setFieldValue(ResourceFieldNames.SeriesTitle, null);
+                setFieldValue(field.name, undefined);
+                setFieldValue(ResourceFieldNames.SeriesTitle, '');
+                setQuery('');
               }}
               endIcon={<DeleteIcon />}>
               {t('resource_type.remove_series')}
