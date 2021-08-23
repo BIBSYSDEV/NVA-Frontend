@@ -20,11 +20,29 @@ import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
 
-const StyledSeriesRow = styled.div`
+export const StyledSelectedSeriesContainer = styled.div`
   display: grid;
+  grid-template-areas: 'field button' 'info info';
   grid-template-columns: 1fr auto;
   gap: 1rem;
   align-items: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    grid-template-areas: 'field' 'button' 'info';
+  }
+`;
+
+const StyledTextField = styled(TextField)`
+  grid-area: field;
+`;
+
+const StyledDangerButton = styled(DangerButton)`
+  max-width: 10rem;
+  grid-area: button;
+`;
+
+const StyledSeriesInfo = styled.div`
+  grid-area: info;
 `;
 
 export const SeriesSearch = () => {
@@ -97,14 +115,15 @@ export const SeriesSearch = () => {
       />
     </MuiThemeProvider>
   ) : (
-    <StyledSeriesRow>
-      <TextField
+    <StyledSelectedSeriesContainer>
+      <StyledTextField
         variant="filled"
         value={isLoadingJournal ? seriesTitle : selectedJournal?.name ?? seriesTitle}
         label={t('common:title')}
         disabled
+        multiline
       />
-      <DangerButton
+      <StyledDangerButton
         variant="contained"
         onClick={() => {
           setFieldValue(ResourceFieldNames.SeriesUri, undefined);
@@ -113,9 +132,9 @@ export const SeriesSearch = () => {
         }}
         endIcon={<DeleteIcon />}>
         {t('resource_type.remove_series')}
-      </DangerButton>
+      </StyledDangerButton>
       {isLoadingJournal ? <CircularProgress /> : selectedJournal && <ExternalSeriesInfo journal={selectedJournal} />}
-    </StyledSeriesRow>
+    </StyledSelectedSeriesContainer>
   );
 };
 
@@ -127,7 +146,7 @@ const ExternalSeriesInfo = ({ journal }: SeriesInfoProps) => {
   const { t } = useTranslation('registration');
 
   return (
-    <div>
+    <StyledSeriesInfo>
       <Typography>
         {[
           journal.printIssn ? `${t('resource_type.print_issn')}: ${journal.printIssn}` : '',
@@ -145,6 +164,6 @@ const ExternalSeriesInfo = ({ journal }: SeriesInfoProps) => {
         target="_blank">
         {t('public_page.find_in_channel_registry')}
       </Typography>
-    </div>
+    </StyledSeriesInfo>
   );
 };
