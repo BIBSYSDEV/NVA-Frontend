@@ -1,4 +1,4 @@
-import { Field, FieldProps, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CircularProgress, MuiThemeProvider, TextField, Typography, Link } from '@material-ui/core';
@@ -9,7 +9,7 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
-import { Registration } from '../../../../types/registration.types';
+import { Journal, Registration } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
@@ -26,17 +26,6 @@ const StyledSeriesRow = styled.div`
   gap: 1rem;
   align-items: center;
 `;
-
-interface Journal {
-  id: string;
-  identifier: string;
-  name: string;
-  active: boolean;
-  website: string;
-  level: string;
-  onlineIssn: string;
-  printIssn: string;
-}
 
 export const SeriesSearch = () => {
   const { t } = useTranslation('registration');
@@ -61,87 +50,72 @@ export const SeriesSearch = () => {
 
   const options = query && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : [];
 
-  return (
-    <Field name="entityDescription.reference.publicationContext.seriesUri">
-      {({ field }: FieldProps<string>) => (
-        <StyledSeriesRow>
-          {seriesUri ? (
-            <TextField
-              variant="filled"
-              value={isLoadingJournal ? seriesTitle : selectedJournal?.name ?? seriesTitle}
-              label={t('common:title')}
-              disabled
-            />
-          ) : (
-            <MuiThemeProvider theme={lightTheme}>
-              <Autocomplete
-                {...autocompleteTranslationProps}
-                id={seriesFieldTestId}
-                data-testid={seriesFieldTestId}
-                aria-labelledby={`${seriesFieldTestId}-label`}
-                popupIcon={null}
-                options={options}
-                filterOptions={(options) => options}
-                inputValue={query}
-                onInputChange={(_, newInputValue, reason) => {
-                  if (reason !== 'reset') {
-                    setQuery(newInputValue);
-                  }
-                }}
-                value={selectedJournal}
-                onChange={(_, inputValue) => {
-                  setFieldValue(field.name, inputValue?.id);
-                  setFieldValue(ResourceFieldNames.SeriesTitle, inputValue?.name);
-                }}
-                loading={isLoadingJournalOptions}
-                getOptionSelected={(option) => option.id === field.value}
-                disabled={!!seriesUri}
-                getOptionLabel={(option) => option.name}
-                renderOption={(option, state) => (
-                  <StyledFlexColumn>
-                    <Typography variant="subtitle1">
-                      <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
-                    </Typography>
-                    {option.level && (
-                      <Typography variant="body2" color="textSecondary">
-                        {t('resource_type.level')}: {option.level}
-                      </Typography>
-                    )}
-                  </StyledFlexColumn>
-                )}
-                renderInput={(params) => (
-                  <AutocompleteTextField
-                    {...params}
-                    label={t('common:title')}
-                    isLoading={isLoadingJournalOptions}
-                    placeholder={t('resource_type.search_for_series')}
-                    showSearchIcon={!seriesUri}
-                  />
-                )}
-              />
-            </MuiThemeProvider>
-          )}
-          {seriesUri && (
-            <DangerButton
-              variant="contained"
-              onClick={() => {
-                setFieldValue(field.name, undefined);
-                setFieldValue(ResourceFieldNames.SeriesTitle, '');
-                setQuery('');
-              }}
-              endIcon={<DeleteIcon />}>
-              {t('resource_type.remove_series')}
-            </DangerButton>
-          )}
-          {seriesUri &&
-            (isLoadingJournal ? (
-              <CircularProgress />
-            ) : (
-              selectedJournal && <ExternalSeriesInfo journal={selectedJournal} />
-            ))}
-        </StyledSeriesRow>
-      )}
-    </Field>
+  return !seriesUri ? (
+    <MuiThemeProvider theme={lightTheme}>
+      <Autocomplete
+        {...autocompleteTranslationProps}
+        id={seriesFieldTestId}
+        data-testid={seriesFieldTestId}
+        aria-labelledby={`${seriesFieldTestId}-label`}
+        popupIcon={null}
+        options={options}
+        filterOptions={(options) => options}
+        inputValue={query}
+        onInputChange={(_, newInputValue, reason) => {
+          if (reason !== 'reset') {
+            setQuery(newInputValue);
+          }
+        }}
+        value={selectedJournal}
+        onChange={(_, inputValue) => {
+          setFieldValue(ResourceFieldNames.SeriesUri, inputValue?.id);
+          setFieldValue(ResourceFieldNames.SeriesTitle, inputValue?.name);
+        }}
+        loading={isLoadingJournalOptions}
+        getOptionSelected={(option) => option.id === seriesUri}
+        getOptionLabel={(option) => option.name}
+        renderOption={(option, state) => (
+          <StyledFlexColumn>
+            <Typography variant="subtitle1">
+              <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
+            </Typography>
+            {option.level && (
+              <Typography variant="body2" color="textSecondary">
+                {t('resource_type.level')}: {option.level}
+              </Typography>
+            )}
+          </StyledFlexColumn>
+        )}
+        renderInput={(params) => (
+          <AutocompleteTextField
+            {...params}
+            label={t('common:title')}
+            isLoading={isLoadingJournalOptions}
+            placeholder={t('resource_type.search_for_series')}
+          />
+        )}
+      />
+    </MuiThemeProvider>
+  ) : (
+    <StyledSeriesRow>
+      <TextField
+        variant="filled"
+        value={isLoadingJournal ? seriesTitle : selectedJournal?.name ?? seriesTitle}
+        label={t('common:title')}
+        disabled
+      />
+      <DangerButton
+        variant="contained"
+        onClick={() => {
+          setFieldValue(ResourceFieldNames.SeriesUri, undefined);
+          setFieldValue(ResourceFieldNames.SeriesTitle, '');
+          setQuery('');
+        }}
+        endIcon={<DeleteIcon />}>
+        {t('resource_type.remove_series')}
+      </DangerButton>
+      {isLoadingJournal ? <CircularProgress /> : selectedJournal && <ExternalSeriesInfo journal={selectedJournal} />}
+    </StyledSeriesRow>
   );
 };
 
@@ -167,7 +141,6 @@ const ExternalSeriesInfo = ({ journal }: SeriesInfoProps) => {
       </Typography>
       <Typography
         component={Link}
-        paragraph
         href={`https://dbh.nsd.uib.no/publiseringskanaler/KanalTidsskriftInfo.action?id=${journal.identifier}`}
         target="_blank">
         {t('public_page.find_in_channel_registry')}
