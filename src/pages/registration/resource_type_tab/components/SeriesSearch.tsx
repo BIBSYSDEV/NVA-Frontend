@@ -20,7 +20,7 @@ import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
 
-export const StyledSelectedSeriesContainer = styled.div`
+const StyledSelectedSeriesContainer = styled.div`
   display: grid;
   grid-template-areas: 'field button' 'info info';
   grid-template-columns: 1fr auto;
