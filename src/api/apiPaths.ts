@@ -31,6 +31,7 @@ export enum ProjectsApiPath {
 
 export enum PublicationChannelApiPath {
   Search = '/channel/search',
+  JournalSearch = '/publication-channels/journal',
 }
 
 export enum PublicationsApiPath {

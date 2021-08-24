@@ -1,5 +1,6 @@
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { BookMonographContentType } from '../../src/types/publication_types/content.types';
+import { mockJournalsSearch } from '../../src/utils/testfiles/mockPublishers';
 
 describe('Registration: Resource type: Book', () => {
   beforeEach(() => {
@@ -52,8 +53,17 @@ describe('Registration: Resource type: Book', () => {
     cy.get('[data-testid=pages-field] input').type('483');
 
     // search and select a series
-    cy.get('[data-testid=series-search-field] input').click({ force: true }).type('Test');
-    cy.contains('New Testament Studies').click({ force: true });
-    cy.get('[data-testid=series-search-field] input').should('have.value', 'New Testament Studies');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesField}] input`)
+      .click()
+      .type(mockJournalsSearch[0].name);
+    cy.contains(mockJournalsSearch[0].name).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesField}] textarea`).should(
+      'have.value',
+      mockJournalsSearch[0].name
+    );
+
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.removeSeriesButton}]`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesField}] textarea`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesField}] input`).should('be.visible');
   });
 });

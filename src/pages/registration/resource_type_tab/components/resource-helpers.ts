@@ -43,4 +43,4 @@ export const publicationContextToPublisher = (context: any) => {
   return publisher;
 };
 
-export const mapLevel = (level: string | number | null) => Object.keys(levelMap).find((key) => levelMap[key] === level);
+const mapLevel = (level: string | number | null) => Object.keys(levelMap).find((key) => levelMap[key] === level);

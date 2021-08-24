@@ -9,7 +9,7 @@ export const darkTheme = createTheme({
     type: 'dark',
     primary: { main: Color.BlueMegaLight },
     error: { main: Color.ErrorLight },
-    text: { primary: Color.White },
+    text: { primary: Color.White, disabled: Color.Black },
   },
   overrides: {
     ...lightTheme.overrides,
@@ -24,7 +24,6 @@ export const darkTheme = createTheme({
         },
         '&.Mui-disabled': {
           backgroundColor: 'rgba(255, 255, 255, 0.60)',
-          color: Color.Black,
         },
       },
       underline: {
@@ -46,11 +45,6 @@ export const darkTheme = createTheme({
       ...lightTheme.overrides?.MuiFormLabel,
       root: {
         color: Color.White,
-      },
-      filled: {
-        '&.Mui-disabled': {
-          color: Color.Black,
-        },
       },
     },
     MuiInputBase: {

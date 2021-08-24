@@ -45,6 +45,21 @@ export interface Publisher {
   url: string;
 }
 
+export interface Journal {
+  id: string;
+  identifier: string;
+  name: string;
+  active: boolean;
+  website: string;
+  level: string;
+  onlineIssn: string | null;
+  printIssn: string | null;
+  npiDomain: string;
+  openAccess: boolean | null;
+  language: string | null;
+  publisherId: string | null;
+}
+
 export interface AlmaRegistration {
   title: string;
 }

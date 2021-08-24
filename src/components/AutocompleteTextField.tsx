@@ -13,7 +13,7 @@ interface AutocompleteTextFieldProps
   extends AutocompleteRenderInputParams,
     Pick<TextFieldProps, 'placeholder' | 'label' | 'required'> {
   isLoading: boolean;
-  showSearchIcon: boolean;
+  showSearchIcon?: boolean;
   errorMessage?: string;
 }
 
