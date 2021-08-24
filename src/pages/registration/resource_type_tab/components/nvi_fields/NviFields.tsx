@@ -1,6 +1,6 @@
 import { useFormikContext } from 'formik';
 import styled from 'styled-components';
-import { ContentTypeOption, nviApplicableContentTypes } from '../../../../../types/publication_types/content.types';
+import { nviApplicableContentTypes } from '../../../../../types/publication_types/content.types';
 import { Registration } from '../../../../../types/registration.types';
 import { ContentTypeField } from './ContentTypeField';
 import { OriginalResearchField } from './OriginalResearchField';
@@ -25,10 +25,10 @@ const StyledRadioGroup = styled.div`
 `;
 
 interface NviFieldsProps {
-  contentTypeOptions: ContentTypeOption[];
+  contentTypes: string[];
 }
 
-export const NviFields = ({ contentTypeOptions }: NviFieldsProps) => {
+export const NviFields = ({ contentTypes }: NviFieldsProps) => {
   const {
     values: {
       entityDescription: {
@@ -40,7 +40,7 @@ export const NviFields = ({ contentTypeOptions }: NviFieldsProps) => {
 
   return (
     <>
-      <ContentTypeField options={contentTypeOptions} />
+      <ContentTypeField contentTypes={contentTypes} />
       {nviApplicableContentTypes.includes(contentType) && (
         <StyledRadioGroup>
           <PeerReviewedField />

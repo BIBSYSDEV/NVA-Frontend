@@ -1,5 +1,3 @@
-import i18n from '../../translations/i18n';
-
 export enum JournalArticleContentType {
   ResearchArticle = 'Research article',
   ReviewArticle = 'Review article',
@@ -31,25 +29,3 @@ export const nviApplicableContentTypes: string[] = [
   BookMonographContentType.AcademicMonograph,
   ChapterContentType.AcademicChapter,
 ];
-
-export interface ContentTypeOption {
-  value: string;
-  text: string;
-}
-
-export const journalArticleContentTypes: ContentTypeOption[] = Object.values(JournalArticleContentType).map(
-  (value) => ({
-    value,
-    text: i18n.t(`registration:resource_type.content_types.${value}`),
-  })
-);
-
-export const bookMonographContentTypes: ContentTypeOption[] = Object.values(BookMonographContentType).map((value) => ({
-  value,
-  text: i18n.t(`registration:resource_type.content_types.${value}`),
-}));
-
-export const chapterContentTypes: ContentTypeOption[] = Object.values(ChapterContentType).map((value) => ({
-  value,
-  text: i18n.t(`registration:resource_type.content_types.${value}`),
-}));

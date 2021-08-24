@@ -3,17 +3,22 @@ import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
-import { ContentTypeOption, nviApplicableContentTypes } from '../../../../../types/publication_types/content.types';
+import { nviApplicableContentTypes } from '../../../../../types/publication_types/content.types';
 import { Registration } from '../../../../../types/registration.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 
 interface ContentTypeFieldProps {
-  options: ContentTypeOption[];
+  contentTypes: string[];
 }
 
-export const ContentTypeField = ({ options }: ContentTypeFieldProps) => {
+export const ContentTypeField = ({ contentTypes }: ContentTypeFieldProps) => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
+
+  const contentTypeOptions = contentTypes.map((contentType) => ({
+    value: contentType,
+    text: t(`registration:resource_type.content_types.${contentType}`),
+  }));
 
   return (
     <Field name={ResourceFieldNames.ContentType}>
@@ -38,7 +43,7 @@ export const ContentTypeField = ({ options }: ContentTypeFieldProps) => {
             required
             error={!!error && touched}
             helperText={<ErrorMessage name={field.name} />}>
-            {options.map(({ value, text }) => (
+            {contentTypeOptions.map(({ value, text }) => (
               <MenuItem
                 value={value}
                 key={value}
