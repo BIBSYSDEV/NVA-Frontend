@@ -11,8 +11,8 @@ phases:
       python: 3.x
     commands:
       - echo "install cypress dependencies..."
-      - apt-get update
-      - apt-get install -y libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 xvfb jq
+      #- apt-get update
+      #- apt-get install -y libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 xvfb jq
   pre_build:
     commands:
       - wget https://github.com/BIBSYSDEV/NVA-end-to-end-testing/archive/refs/heads/test-deploy.zip
