@@ -7,7 +7,7 @@ env:
 phases:
   install:
     runtime-versions:
-      nodejs: 10
+      nodejs: 14
       python: 3.x
     commands:
       - echo "install cypress dependencies..."
