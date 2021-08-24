@@ -162,9 +162,11 @@ const ExternalSeriesInfo = ({ journal }: SeriesInfoProps) => {
           .filter((issn) => issn)
           .join(', ')}
       </Typography>
-      <Typography>
-        {t('resource_type.level')}: {journal.level}
-      </Typography>
+      {journal.level && (
+        <Typography>
+          {t('resource_type.level')}: {journal.level}
+        </Typography>
+      )}
       <Typography
         component={Link}
         href={`https://dbh.nsd.uib.no/publiseringskanaler/KanalTidsskriftInfo.action?id=${journal.identifier}`}
