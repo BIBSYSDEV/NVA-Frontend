@@ -117,6 +117,7 @@ export const SeriesSearch = () => {
   ) : (
     <StyledSelectedSeriesContainer>
       <StyledTextField
+        data-testid={seriesFieldTestId}
         variant="filled"
         value={isLoadingJournal ? seriesTitle : selectedJournal?.name ?? seriesTitle}
         label={t('common:title')}
@@ -124,6 +125,7 @@ export const SeriesSearch = () => {
         multiline
       />
       <StyledDangerButton
+        data-testid={dataTestId.registrationWizard.resourceType.removeSeriesButton}
         variant="contained"
         onClick={() => {
           setFieldValue(ResourceFieldNames.SeriesUri, undefined);
