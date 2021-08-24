@@ -13,7 +13,7 @@ import { Journal, Registration } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
+import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { DangerButton } from '../../../../components/DangerButton';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
@@ -48,15 +48,20 @@ const StyledSeriesInfo = styled.div`
 export const SeriesSearch = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue, values } = useFormikContext<Registration>();
+  const {
+    reference: {
+      publicationContext: { seriesUri, seriesTitle },
+    },
+    date: { year },
+  } = values.entityDescription as BookEntityDescription;
 
-  const { seriesUri, seriesTitle } = values.entityDescription.reference.publicationContext as BookPublicationContext;
   const [query, setQuery] = useState(seriesTitle ?? '');
   const debouncedQuery = useDebounce(query);
-  const year = values.entityDescription.date.year ?? new Date().getFullYear();
+  const queryYear = year ? year : new Date().getFullYear();
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
     url:
       !seriesUri && debouncedQuery
-        ? `${PublicationChannelApiPath.JournalSearch}?year=${year}&query=${debouncedQuery}`
+        ? `${PublicationChannelApiPath.JournalSearch}?year=${queryYear}&query=${debouncedQuery}`
         : '',
   });
 
