@@ -15,7 +15,7 @@ export const SearchBar = () => {
 
   return (
     <Field name="searchTerm">
-      {({ field }: FieldProps<string>) => (
+      {({ field, form: { submitForm } }: FieldProps<string>) => (
         <StyledTextField
           {...field}
           id={field.name}
@@ -29,7 +29,10 @@ export const SearchBar = () => {
               <>
                 {field.value && (
                   <IconButton
-                    onClick={() => field.onChange({ target: { value: '', id: field.name } })}
+                    onClick={() => {
+                      field.onChange({ target: { value: '', id: field.name } });
+                      submitForm();
+                    }}
                     title={t('common:clear')}>
                     <ClearIcon />
                   </IconButton>
