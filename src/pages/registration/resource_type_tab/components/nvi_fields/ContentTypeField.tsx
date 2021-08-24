@@ -3,12 +3,17 @@ import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
-import { nviApplicableContentTypes } from '../../../../../types/publication_types/content.types';
+import {
+  BookMonographContentType,
+  ChapterContentType,
+  JournalArticleContentType,
+  nviApplicableContentTypes,
+} from '../../../../../types/publication_types/content.types';
 import { Registration } from '../../../../../types/registration.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 
 interface ContentTypeFieldProps {
-  contentTypes: string[];
+  contentTypes: JournalArticleContentType[] | BookMonographContentType[] | ChapterContentType[];
 }
 
 export const ContentTypeField = ({ contentTypes }: ContentTypeFieldProps) => {
@@ -22,7 +27,7 @@ export const ContentTypeField = ({ contentTypes }: ContentTypeFieldProps) => {
 
   return (
     <Field name={ResourceFieldNames.ContentType}>
-      {({ field, meta: { error, touched } }: FieldProps) => (
+      {({ field, meta: { error, touched } }: FieldProps<string>) => (
         <StyledSelectWrapper>
           <TextField
             {...field}

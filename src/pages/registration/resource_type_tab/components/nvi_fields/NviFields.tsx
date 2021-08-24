@@ -1,6 +1,11 @@
 import { useFormikContext } from 'formik';
 import styled from 'styled-components';
-import { nviApplicableContentTypes } from '../../../../../types/publication_types/content.types';
+import {
+  BookMonographContentType,
+  ChapterContentType,
+  JournalArticleContentType,
+  nviApplicableContentTypes,
+} from '../../../../../types/publication_types/content.types';
 import { Registration } from '../../../../../types/registration.types';
 import { ContentTypeField } from './ContentTypeField';
 import { OriginalResearchField } from './OriginalResearchField';
@@ -25,7 +30,7 @@ const StyledRadioGroup = styled.div`
 `;
 
 interface NviFieldsProps {
-  contentTypes: string[];
+  contentTypes: JournalArticleContentType[] | BookMonographContentType[] | ChapterContentType[];
 }
 
 export const NviFields = ({ contentTypes }: NviFieldsProps) => {
