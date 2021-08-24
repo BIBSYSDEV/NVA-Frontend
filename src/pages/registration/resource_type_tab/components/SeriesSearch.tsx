@@ -60,7 +60,7 @@ export const SeriesSearch = () => {
   const queryYear = year ? year : new Date().getFullYear();
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
     url:
-      !seriesUri && debouncedQuery
+      !seriesUri && debouncedQuery && debouncedQuery === query
         ? `${PublicationChannelApiPath.JournalSearch}?year=${queryYear}&query=${debouncedQuery}`
         : '',
   });
