@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { IconButton, TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
+import ClearIcon from '@material-ui/icons/Clear';
 import { Field, FieldProps } from 'formik';
 
 const StyledTextField = styled(TextField)`
@@ -25,9 +26,18 @@ export const SearchBar = () => {
           helperText={t('search_help')}
           InputProps={{
             endAdornment: (
-              <IconButton type="submit" data-testid="search-button" title={t('search')}>
-                <SearchIcon />
-              </IconButton>
+              <>
+                {field.value && (
+                  <IconButton
+                    onClick={() => field.onChange({ target: { value: '', id: field.name } })}
+                    title={t('common:clear')}>
+                    <ClearIcon />
+                  </IconButton>
+                )}
+                <IconButton type="submit" data-testid="search-button" title={t('search')}>
+                  <SearchIcon />
+                </IconButton>
+              </>
             ),
           }}
         />
