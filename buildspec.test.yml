@@ -13,6 +13,11 @@ phases:
       - echo "install cypress dependencies..."
       - apt-get update
       - apt-get install -y libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 xvfb jq
+  pre_build:
+    commands:
+      - wget https://github.com/BIBSYSDEV/NVA-end-to-end-testing/archive/refs/heads/test-deploy.zip
+      - unzip test-deploy.zip
+      - cd NVA-end-to-end-testing-test-deploy
       - npm install cypress
       - npm install cypress-cucumber-preprocessor
       - npm install uuid
@@ -23,11 +28,6 @@ phases:
       - export CYPRESS_AWS_ACCESS_KEY_ID=$(cat Credentials | jq -r '.Credentials.AccessKeyId')
       - export CYPRESS_AWS_SECRET_ACCESS_KEY=$(cat Credentials | jq -r '.Credentials.SecretAccessKey')
       - export CYPRESS_AWS_SESSION_TOKEN=$(cat Credentials | jq -r '.Credentials.SessionToken')
-  pre_build:
-    commands:
-      - wget https://github.com/BIBSYSDEV/NVA-end-to-end-testing/archive/refs/heads/test-deploy.zip
-      - unzip test-deploy.zip
-      - cd NVA-end-to-end-testing-test-deploy
   build:
     commands:
       - cd test_data
