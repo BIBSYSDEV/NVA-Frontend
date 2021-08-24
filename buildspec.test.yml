@@ -13,6 +13,7 @@ phases:
       - echo "install cypress dependencies..."
       - apt-get update
       - apt-get install -y libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 xvfb jq
+      - npm install cypress
       - npm install cypress-cucumber-preprocessor
       - npm install uuid
       - npm install aws-sdk
