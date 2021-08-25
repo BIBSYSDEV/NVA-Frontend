@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { CircularProgress, Link, Typography } from '@material-ui/core';
+import { Link, Typography } from '@material-ui/core';
 import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
 import { ChapterPublicationContext } from '../../types/publication_types/chapterRegistration.types';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
@@ -10,6 +10,7 @@ import { Journal, levelMap, RegistrationDate } from '../../types/registration.ty
 import { displayDate } from '../../utils/date-helpers';
 import { RegistrationSummary } from './RegistrationSummary';
 import { useFetch } from '../../utils/hooks/useFetch';
+import { ListSkeleton } from '../../components/ListSkeleton';
 
 interface PublicJournalContentProps {
   date: RegistrationDate;
@@ -111,7 +112,7 @@ export const PublicSeriesContent = ({
         {t('resource_type.series')}
       </Typography>
       {isLoadingSeries ? (
-        <CircularProgress />
+        <ListSkeleton />
       ) : (
         series && (
           <>

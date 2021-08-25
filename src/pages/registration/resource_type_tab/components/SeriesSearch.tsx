@@ -1,8 +1,8 @@
 import { useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CircularProgress, MuiThemeProvider, TextField, Typography } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
+import { MuiThemeProvider, TextField, Typography } from '@material-ui/core';
+import { Autocomplete, Skeleton } from '@material-ui/lab';
 import DeleteIcon from '@material-ui/icons/Delete';
 import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
@@ -157,7 +157,7 @@ export const SeriesSearch = () => {
         {t('resource_type.remove_series')}
       </StyledDangerButton>
       {isLoadingJournal ? (
-        <CircularProgress />
+        <Skeleton width={300} />
       ) : (
         selectedJournal?.level && (
           <StyledSeriesInfoTypography>
