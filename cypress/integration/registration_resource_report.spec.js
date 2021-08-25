@@ -40,7 +40,7 @@ describe('Registration: Resource type: Report', () => {
       .type(mockJournalsSearch[0].name);
     cy.contains(mockJournalsSearch[0].name).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesField}] textarea`).should(
-      'have.value',
+      'contain',
       mockJournalsSearch[0].name
     );
   });
