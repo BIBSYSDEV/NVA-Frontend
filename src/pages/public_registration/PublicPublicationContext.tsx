@@ -16,6 +16,9 @@ interface PublicJournalContentProps {
   publicationContext: JournalPublicationContext;
 }
 
+const getChannelRegisterUrl = (id: string) =>
+  `https://dbh.nsd.uib.no/publiseringskanaler/KanalTidsskriftInfo.action?id=${id}`;
+
 export const PublicJournalContent = ({ date, publicationContext }: PublicJournalContentProps) => {
   const { t } = useTranslation('registration');
   const { onlineIssn, printIssn, title, url, level } = publicationContext;
@@ -97,7 +100,10 @@ export const PublicSeriesContent = ({
   const { t } = useTranslation('registration');
 
   const { seriesUri, seriesNumber } = publicationContext;
-  const [series, isLoadingSeries] = useFetch<Journal[]>({ url: seriesUri });
+  const [series, isLoadingSeries] = useFetch<Journal[]>({
+    url: seriesUri,
+    errorMessage: t('feedback:error.get_series'),
+  });
 
   return seriesUri ? (
     <>
@@ -121,10 +127,7 @@ export const PublicSeriesContent = ({
             <Typography>
               {t('resource_type.level')}: {series[0].level}
             </Typography>
-            <Typography
-              component={Link}
-              href={`https://dbh.nsd.uib.no/publiseringskanaler/KanalTidsskriftInfo.action?id=${series[0].identifier}`}
-              target="_blank">
+            <Typography component={Link} href={getChannelRegisterUrl(series[0].identifier)} target="_blank">
               {t('public_page.find_in_channel_registry')}
             </Typography>
             {seriesNumber && (

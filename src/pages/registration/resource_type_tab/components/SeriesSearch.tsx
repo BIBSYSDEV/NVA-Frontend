@@ -67,6 +67,7 @@ export const SeriesSearch = () => {
 
   const [journal, isLoadingJournal] = useFetch<Journal[]>({
     url: seriesUri ?? '',
+    errorMessage: t('feedback:error.get_series'),
   });
 
   const selectedJournal = seriesUri && journal?.[0] ? journal[0] : null;
