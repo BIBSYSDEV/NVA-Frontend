@@ -2,7 +2,7 @@ import { useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MuiThemeProvider, TextField, Typography } from '@material-ui/core';
-import { Autocomplete, Skeleton } from '@material-ui/lab';
+import { Autocomplete } from '@material-ui/lab';
 import DeleteIcon from '@material-ui/icons/Delete';
 import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
@@ -13,12 +13,12 @@ import { Journal, Registration } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { DangerButton } from '../../../../components/DangerButton';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { JournalEntityDescription } from '../../../../types/publication_types/journalRegistration.types';
 
-const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
+const journalFieldTestId = dataTestId.registrationWizard.resourceType.journalField;
 
 const StyledSelectedSeriesContainer = styled.div`
   display: grid;
@@ -37,65 +37,39 @@ const StyledTextField = styled(TextField)`
 `;
 
 const StyledDangerButton = styled(DangerButton)`
-  max-width: 10rem;
+  max-width: 15rem;
   grid-area: button;
 `;
 
-const StyledSeriesInfo = styled.div`
-  grid-area: info;
-`;
-
-export const SeriesSearch = () => {
+export const JournalSearch = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue, values } = useFormikContext<Registration>();
   const {
     reference: {
-      publicationContext: { seriesUri, seriesTitle },
+      publicationContext: { title },
     },
     date: { year },
-  } = values.entityDescription as BookEntityDescription;
+  } = values.entityDescription as JournalEntityDescription;
 
-  const [query, setQuery] = useState(seriesTitle ?? '');
+  const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query);
   const queryYear = year ? year : new Date().getFullYear();
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
     url:
-      !seriesUri && debouncedQuery && debouncedQuery === query
+      !title && debouncedQuery && debouncedQuery === query
         ? `${PublicationChannelApiPath.JournalSearch}?year=${queryYear}&query=${debouncedQuery}`
         : '',
   });
 
-  const [journal, isLoadingJournal] = useFetch<Journal[]>({
-    url: seriesUri ?? '',
-    errorMessage: t('feedback:error.get_series'),
-  });
-
-  const selectedJournal = seriesUri && journal?.[0] ? journal[0] : null;
-
   const options = query && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : [];
 
-  const issnString =
-    selectedJournal?.printIssn || selectedJournal?.onlineIssn
-      ? [
-          selectedJournal.printIssn ? `${t('resource_type.print_issn')}: ${selectedJournal.printIssn}` : '',
-          selectedJournal.onlineIssn ? `${t('resource_type.online_issn')}: ${selectedJournal.onlineIssn}` : '',
-        ]
-          .filter((issn) => issn)
-          .join(', ')
-      : '';
-  const selectedJournalString = selectedJournal
-    ? issnString
-      ? `${selectedJournal.name} (${issnString})`
-      : selectedJournal.name
-    : seriesTitle;
-
-  return !seriesUri ? (
+  return !title ? (
     <MuiThemeProvider theme={lightTheme}>
       <Autocomplete
         {...autocompleteTranslationProps}
-        id={seriesFieldTestId}
-        data-testid={seriesFieldTestId}
-        aria-labelledby={`${seriesFieldTestId}-label`}
+        id={journalFieldTestId}
+        data-testid={journalFieldTestId}
+        aria-labelledby={`${journalFieldTestId}-label`}
         popupIcon={null}
         options={options}
         filterOptions={(options) => options}
@@ -106,8 +80,7 @@ export const SeriesSearch = () => {
           }
         }}
         onChange={(_, inputValue) => {
-          setFieldValue(ResourceFieldNames.SeriesUri, inputValue?.id);
-          setFieldValue(ResourceFieldNames.SeriesTitle, inputValue?.name);
+          setFieldValue(ResourceFieldNames.PubliactionContextTitle, inputValue?.name);
         }}
         loading={isLoadingJournalOptions}
         getOptionLabel={(option) => option.name}
@@ -126,9 +99,9 @@ export const SeriesSearch = () => {
         renderInput={(params) => (
           <AutocompleteTextField
             {...params}
-            label={t('common:title')}
+            label={t('resource_type.journal')}
             isLoading={isLoadingJournalOptions}
-            placeholder={t('resource_type.search_for_series')}
+            placeholder={t('resource_type.search_for_journal')}
           />
         )}
       />
@@ -136,10 +109,10 @@ export const SeriesSearch = () => {
   ) : (
     <StyledSelectedSeriesContainer>
       <StyledTextField
-        data-testid={seriesFieldTestId}
+        data-testid={journalFieldTestId}
         variant="filled"
-        value={selectedJournalString}
-        label={t('common:title')}
+        value={title}
+        label={t('resource_type.journal')}
         disabled
         multiline
       />
@@ -147,26 +120,12 @@ export const SeriesSearch = () => {
         data-testid={dataTestId.registrationWizard.resourceType.removeSeriesButton}
         variant="contained"
         onClick={() => {
-          setFieldValue(ResourceFieldNames.SeriesUri, undefined);
-          setFieldValue(ResourceFieldNames.SeriesTitle, '');
+          setFieldValue(ResourceFieldNames.PubliactionContextTitle, undefined);
           setQuery('');
         }}
         endIcon={<DeleteIcon />}>
-        {t('resource_type.remove_series')}
+        {t('resource_type.remove_journal')}
       </StyledDangerButton>
-      {(isLoadingJournal || selectedJournal?.level) && (
-        <StyledSeriesInfo>
-          {isLoadingJournal ? (
-            <Skeleton width={300} />
-          ) : (
-            selectedJournal?.level && (
-              <Typography>
-                {t('resource_type.level')}: {selectedJournal.level}
-              </Typography>
-            )
-          )}
-        </StyledSeriesInfo>
-      )}
     </StyledSelectedSeriesContainer>
   );
 };

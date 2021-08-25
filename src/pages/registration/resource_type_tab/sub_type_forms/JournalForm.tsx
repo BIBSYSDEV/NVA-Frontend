@@ -7,12 +7,12 @@ import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { lightTheme } from '../../../../themes/lightTheme';
 import { JournalType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { DoiField } from '../components/DoiField';
-import { JournalField } from '../components/JournalField';
 import { NviValidation } from '../components/NviValidation';
 import { SearchContainerField } from '../components/SearchContainerField';
 import { NviFields } from '../components/nvi_fields/NviFields';
 import { JournalArticleContentType } from '../../../../types/publication_types/content.types';
 import { JournalRegistration } from '../../../../types/publication_types/journalRegistration.types';
+import { JournalSearch } from '../components/JournalSearch';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -51,7 +51,7 @@ export const JournalForm = () => {
             dataTestId="article-search-field"
           />
         ) : (
-          <JournalField />
+          <JournalSearch />
         )}
 
         <StyledArticleDetail>

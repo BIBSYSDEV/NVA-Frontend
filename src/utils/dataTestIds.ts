@@ -59,6 +59,7 @@ export const dataTestId = {
       contentField: 'content-field',
       contentValue: (value: string) => `content-value-${value.toLowerCase().replaceAll(' ', '-')}`,
       isbnField: 'isbn-field',
+      journalField: 'journal-search-field',
       nviFailedOriginalResearch: 'nvi-failed-not-original-research',
       nviFailedPeerReview: 'nvi-failed-not-peer-reviewed',
       nviFailedRated: 'nvi-failed-not-rated',
