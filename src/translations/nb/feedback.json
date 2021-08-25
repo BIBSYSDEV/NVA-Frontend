@@ -28,6 +28,7 @@
     "get_registrations": "Kunne ikke laste inn registreringer",
     "get_registration": "Kunne ikke laste inn registrering",
     "get_roles": "Kunne ikke hente roller",
+    "get_series": "Kunne ikke hente serie",
     "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
     "get_users_for_institution": "Kunne ikke hente brukere",
     "institution_mismatch": "Denne brukeren tilhører en annen institusjon",

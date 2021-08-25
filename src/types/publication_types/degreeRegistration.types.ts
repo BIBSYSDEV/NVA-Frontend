@@ -24,6 +24,7 @@ export interface DegreePublicationContext {
   publisher: string;
   seriesNumber: string;
   seriesTitle: string;
+  seriesUri: string;
   url: string;
 }
 

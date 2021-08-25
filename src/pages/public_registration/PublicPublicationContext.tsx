@@ -6,14 +6,19 @@ import { ChapterPublicationContext } from '../../types/publication_types/chapter
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
-import { levelMap, RegistrationDate } from '../../types/registration.types';
+import { Journal, levelMap, RegistrationDate } from '../../types/registration.types';
 import { displayDate } from '../../utils/date-helpers';
 import { RegistrationSummary } from './RegistrationSummary';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { ListSkeleton } from '../../components/ListSkeleton';
 
 interface PublicJournalContentProps {
   date: RegistrationDate;
   publicationContext: JournalPublicationContext;
 }
+
+const getChannelRegisterUrl = (id: string) =>
+  `https://dbh.nsd.uib.no/publiseringskanaler/KanalTidsskriftInfo.action?id=${id}`;
 
 export const PublicJournalContent = ({ date, publicationContext }: PublicJournalContentProps) => {
   const { t } = useTranslation('registration');
@@ -88,19 +93,51 @@ export const PublicLinkedContextContent = ({
   );
 };
 
-export const PublicSeriesContent = ({ seriesTitle, seriesNumber }: { seriesTitle: string; seriesNumber: string }) => {
+export const PublicSeriesContent = ({
+  publicationContext,
+}: {
+  publicationContext: BookPublicationContext | ReportPublicationContext | DegreePublicationContext;
+}) => {
   const { t } = useTranslation('registration');
 
-  return seriesTitle ? (
+  const { seriesUri, seriesNumber } = publicationContext;
+  const [series, isLoadingSeries] = useFetch<Journal[]>({
+    url: seriesUri,
+    errorMessage: t('feedback:error.get_series'),
+  });
+
+  return seriesUri ? (
     <>
       <Typography variant="overline" component="p">
         {t('resource_type.series')}
       </Typography>
-      <Typography>{seriesTitle}</Typography>
-      {seriesNumber && (
-        <Typography>
-          {t('common:number')}: {seriesNumber}
-        </Typography>
+      {isLoadingSeries ? (
+        <ListSkeleton />
+      ) : (
+        series?.[0] && (
+          <>
+            <Typography>{series[0].name}</Typography>
+            <Typography>
+              {[
+                series[0].printIssn ? `${t('resource_type.print_issn')}: ${series[0].printIssn}` : '',
+                series[0].onlineIssn ? `${t('resource_type.online_issn')}: ${series[0].onlineIssn}` : '',
+              ]
+                .filter((issn) => issn)
+                .join(', ')}
+            </Typography>
+            <Typography>
+              {t('resource_type.level')}: {series[0].level}
+            </Typography>
+            <Typography component={Link} href={getChannelRegisterUrl(series[0].identifier)} target="_blank">
+              {t('public_page.find_in_channel_registry')}
+            </Typography>
+            {seriesNumber && (
+              <Typography>
+                {t('resource_type.series_number')}: {seriesNumber}
+              </Typography>
+            )}
+          </>
+        )
       )}
     </>
   ) : null;
