@@ -1,7 +1,7 @@
 import { useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CircularProgress, MuiThemeProvider, TextField, Typography, Link } from '@material-ui/core';
+import { CircularProgress, MuiThemeProvider, TextField, Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import DeleteIcon from '@material-ui/icons/Delete';
 import styled from 'styled-components';
@@ -41,7 +41,7 @@ const StyledDangerButton = styled(DangerButton)`
   grid-area: button;
 `;
 
-const StyledSeriesInfo = styled.div`
+const StyledSeriesInfoTypography = styled(Typography)`
   grid-area: info;
 `;
 
@@ -72,6 +72,21 @@ export const SeriesSearch = () => {
   const selectedJournal = seriesUri && journal?.[0] ? journal[0] : null;
 
   const options = query && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : [];
+
+  const issnString =
+    selectedJournal && (selectedJournal.printIssn || selectedJournal.onlineIssn)
+      ? [
+          selectedJournal.printIssn ? `${t('resource_type.print_issn')}: ${selectedJournal.printIssn}` : '',
+          selectedJournal.onlineIssn ? `${t('resource_type.online_issn')}: ${selectedJournal.onlineIssn}` : '',
+        ]
+          .filter((issn) => issn)
+          .join(', ')
+      : '';
+  const selectedJournalString = selectedJournal
+    ? issnString
+      ? `${selectedJournal.name} (${issnString})`
+      : selectedJournal.name
+    : seriesTitle;
 
   return !seriesUri ? (
     <MuiThemeProvider theme={lightTheme}>
@@ -124,7 +139,7 @@ export const SeriesSearch = () => {
       <StyledTextField
         data-testid={seriesFieldTestId}
         variant="filled"
-        value={isLoadingJournal ? seriesTitle : selectedJournal?.name ?? seriesTitle}
+        value={selectedJournalString}
         label={t('common:title')}
         disabled
         multiline
@@ -140,39 +155,15 @@ export const SeriesSearch = () => {
         endIcon={<DeleteIcon />}>
         {t('resource_type.remove_series')}
       </StyledDangerButton>
-      {isLoadingJournal ? <CircularProgress /> : selectedJournal && <ExternalSeriesInfo journal={selectedJournal} />}
-    </StyledSelectedSeriesContainer>
-  );
-};
-
-interface SeriesInfoProps {
-  journal: Journal;
-}
-
-const ExternalSeriesInfo = ({ journal }: SeriesInfoProps) => {
-  const { t } = useTranslation('registration');
-
-  return (
-    <StyledSeriesInfo>
-      <Typography>
-        {[
-          journal.printIssn ? `${t('resource_type.print_issn')}: ${journal.printIssn}` : '',
-          journal.onlineIssn ? `${t('resource_type.online_issn')}: ${journal.onlineIssn}` : '',
-        ]
-          .filter((issn) => issn)
-          .join(', ')}
-      </Typography>
-      {journal.level && (
-        <Typography>
-          {t('resource_type.level')}: {journal.level}
-        </Typography>
+      {isLoadingJournal ? (
+        <CircularProgress />
+      ) : (
+        selectedJournal?.level && (
+          <StyledSeriesInfoTypography>
+            {t('resource_type.level')}: {selectedJournal.level}
+          </StyledSeriesInfoTypography>
+        )
       )}
-      <Typography
-        component={Link}
-        href={`https://dbh.nsd.uib.no/publiseringskanaler/KanalTidsskriftInfo.action?id=${journal.identifier}`}
-        target="_blank">
-        {t('public_page.find_in_channel_registry')}
-      </Typography>
-    </StyledSeriesInfo>
+    </StyledSelectedSeriesContainer>
   );
 };
