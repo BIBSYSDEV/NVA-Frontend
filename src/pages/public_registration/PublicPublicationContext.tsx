@@ -129,7 +129,7 @@ export const PublicSeriesContent = ({
             </Typography>
             {seriesNumber && (
               <Typography>
-                {t('common:number')}: {seriesNumber}
+                {t('resource_type.series_number')}: {seriesNumber}
               </Typography>
             )}
           </>

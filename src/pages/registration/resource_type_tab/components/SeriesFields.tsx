@@ -20,7 +20,7 @@ export const SeriesFields = () => {
             id={field.name}
             data-testid={dataTestId.registrationWizard.resourceType.seriesNumber}
             variant="filled"
-            label={t('common:number')}
+            label={t('resource_type.series_number')}
           />
         )}
       </Field>
