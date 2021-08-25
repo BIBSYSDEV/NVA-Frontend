@@ -41,7 +41,7 @@ const StyledDangerButton = styled(DangerButton)`
   grid-area: button;
 `;
 
-const StyledSeriesInfoTypography = styled(Typography)`
+const StyledSeriesInfo = styled.div`
   grid-area: info;
 `;
 
@@ -75,7 +75,7 @@ export const SeriesSearch = () => {
   const options = query && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : [];
 
   const issnString =
-    selectedJournal && (selectedJournal.printIssn || selectedJournal.onlineIssn)
+    selectedJournal?.printIssn || selectedJournal?.onlineIssn
       ? [
           selectedJournal.printIssn ? `${t('resource_type.print_issn')}: ${selectedJournal.printIssn}` : '',
           selectedJournal.onlineIssn ? `${t('resource_type.online_issn')}: ${selectedJournal.onlineIssn}` : '',
@@ -156,14 +156,18 @@ export const SeriesSearch = () => {
         endIcon={<DeleteIcon />}>
         {t('resource_type.remove_series')}
       </StyledDangerButton>
-      {isLoadingJournal ? (
-        <Skeleton width={300} />
-      ) : (
-        selectedJournal?.level && (
-          <StyledSeriesInfoTypography>
-            {t('resource_type.level')}: {selectedJournal.level}
-          </StyledSeriesInfoTypography>
-        )
+      {(isLoadingJournal || selectedJournal?.level) && (
+        <StyledSeriesInfo>
+          {isLoadingJournal ? (
+            <Skeleton width={300} />
+          ) : (
+            selectedJournal?.level && (
+              <Typography>
+                {t('resource_type.level')}: {selectedJournal.level}
+              </Typography>
+            )
+          )}
+        </StyledSeriesInfo>
       )}
     </StyledSelectedSeriesContainer>
   );

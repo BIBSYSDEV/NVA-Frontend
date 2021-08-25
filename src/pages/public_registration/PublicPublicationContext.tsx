@@ -114,7 +114,7 @@ export const PublicSeriesContent = ({
       {isLoadingSeries ? (
         <ListSkeleton />
       ) : (
-        series && (
+        series?.[0] && (
           <>
             <Typography>{series[0].name}</Typography>
             <Typography>
