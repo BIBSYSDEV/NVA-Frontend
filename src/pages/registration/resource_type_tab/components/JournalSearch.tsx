@@ -115,7 +115,7 @@ export const JournalSearch = () => {
           <StyledSelectedSeriesContainer>
             <StyledTextField
               data-testid={journalFieldTestId}
-              // variant="filled"
+              variant="filled"
               value={value}
               label={t('resource_type.journal')}
               disabled
