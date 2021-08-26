@@ -17,6 +17,7 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { DangerButton } from '../../../../components/DangerButton';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { JournalEntityDescription } from '../../../../types/publication_types/journalRegistration.types';
+import { getYearQuery } from './resource-helpers';
 
 const journalFieldTestId = dataTestId.registrationWizard.resourceType.journalField;
 
@@ -53,11 +54,10 @@ export const JournalSearch = () => {
 
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query);
-  const queryYear = year ? year : new Date().getFullYear();
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
     url:
       !title && debouncedQuery && debouncedQuery === query
-        ? `${PublicationChannelApiPath.JournalSearch}?year=${queryYear}&query=${debouncedQuery}`
+        ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${debouncedQuery}`
         : '',
   });
 
@@ -115,7 +115,7 @@ export const JournalSearch = () => {
           <StyledSelectedSeriesContainer>
             <StyledTextField
               data-testid={journalFieldTestId}
-              variant="filled"
+              // variant="filled"
               value={value}
               label={t('resource_type.journal')}
               disabled

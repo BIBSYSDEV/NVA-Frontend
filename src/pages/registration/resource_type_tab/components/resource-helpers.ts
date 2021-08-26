@@ -44,3 +44,6 @@ export const publicationContextToPublisher = (context: any) => {
 };
 
 const mapLevel = (level: string | number | null) => Object.keys(levelMap).find((key) => levelMap[key] === level);
+
+export const getYearQuery = (yearValue: string) =>
+  yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear();
