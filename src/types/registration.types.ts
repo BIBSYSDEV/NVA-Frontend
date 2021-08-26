@@ -34,17 +34,6 @@ export const levelMap: EnumDictionary<string, number | null> = {
   LEVEL_2: 2,
 };
 
-export interface Publisher {
-  type: string;
-  title: string;
-  onlineIssn: string;
-  printIssn: string;
-  level: string | number | null;
-  openAccess: boolean;
-  peerReviewed: boolean;
-  url: string;
-}
-
 export interface Journal {
   id: string;
   identifier: string;
@@ -60,7 +49,7 @@ export interface Journal {
   publisherId: string | null;
 }
 
-export interface Publisher2 {
+export interface Publisher {
   id: string;
   identifier: string;
   name: string;

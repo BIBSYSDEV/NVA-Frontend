@@ -8,15 +8,15 @@ import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
-import { Publisher2, Registration } from '../../../../types/registration.types';
+import { Publisher, Registration } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { DangerButton } from '../../../../components/DangerButton';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { getYearQuery } from './resource-helpers';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
+import { getYearQuery } from '../../../../utils/registration-helpers';
 
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
 
@@ -53,11 +53,12 @@ export const PublisherSearch = () => {
 
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query);
-  const [journalOptions, isLoadingJournalOptions] = useFetch<Publisher2[]>({
+  const [journalOptions, isLoadingJournalOptions] = useFetch<Publisher[]>({
     url:
       !publisher && debouncedQuery && debouncedQuery === query
         ? `${PublicationChannelApiPath.PublisherSearch}?year=${getYearQuery(year)}&query=${debouncedQuery}`
         : '',
+    errorMessage: t('feedback:error.get_publishers'),
   });
 
   const options = query && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : [];

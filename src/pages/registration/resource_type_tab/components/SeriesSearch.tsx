@@ -17,7 +17,7 @@ import { BookEntityDescription } from '../../../../types/publication_types/bookR
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { DangerButton } from '../../../../components/DangerButton';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { getYearQuery } from './resource-helpers';
+import { getYearQuery } from '../../../../utils/registration-helpers';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
 

@@ -18,11 +18,6 @@ export const API_URL = process.env.REACT_APP_API_URL;
 export const isErrorStatus = (status: number) => status >= 400 && status <= 599;
 export const isSuccessStatus = (status: number) => status >= 200 && status <= 299;
 
-export enum PublicationTableNumber {
-  Publishers = 850,
-  PublicationChannels = 851,
-}
-
 export const autoHideNotificationDuration = {
   [NotificationVariant.Error]: 9000,
   [NotificationVariant.Info]: 3000,

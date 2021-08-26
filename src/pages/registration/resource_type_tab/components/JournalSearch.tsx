@@ -17,7 +17,7 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { DangerButton } from '../../../../components/DangerButton';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { JournalEntityDescription } from '../../../../types/publication_types/journalRegistration.types';
-import { getYearQuery } from './resource-helpers';
+import { getYearQuery } from '../../../../utils/registration-helpers';
 
 const journalFieldTestId = dataTestId.registrationWizard.resourceType.journalField;
 
