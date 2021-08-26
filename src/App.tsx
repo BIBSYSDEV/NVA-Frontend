@@ -102,7 +102,7 @@ export const App = () => {
   useEffect(() => {
     if (matchingAuthorities && user && !user.authority && !user.possibleAuthorities) {
       const fetchAuthority = async () => {
-        const filteredAuthorities = matchingAuthorities.filter((auth) => auth.feideids.some((id) => id === user.id));
+        const filteredAuthorities = matchingAuthorities.filter((auth) => auth.feideids?.some((id) => id === user.id));
         if (filteredAuthorities.length === 1) {
           setIsLoading((state) => ({ ...state, userAuthority: true }));
           // Use exsisting authority
