@@ -57,12 +57,13 @@ export const SeriesSearch = () => {
 
   const [query, setQuery] = useState(seriesTitle ?? '');
   const debouncedQuery = useDebounce(query);
-  const queryYear = year ? year : new Date().getFullYear();
+  const queryYear = year && Number.isInteger(Number(year)) ? year : new Date().getFullYear();
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
     url:
       !seriesUri && debouncedQuery && debouncedQuery === query
         ? `${PublicationChannelApiPath.JournalSearch}?year=${queryYear}&query=${debouncedQuery}`
         : '',
+    errorMessage: t('feedback:error.get_series'),
   });
 
   const [journal, isLoadingJournal] = useFetch<Journal>({
