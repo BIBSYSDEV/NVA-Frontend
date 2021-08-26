@@ -57,37 +57,32 @@ export const SeriesSearch = () => {
 
   const [query, setQuery] = useState(seriesTitle ?? '');
   const debouncedQuery = useDebounce(query);
-  const queryYear = year ? year : new Date().getFullYear();
+  const queryYear = year && Number.isInteger(Number(year)) ? year : new Date().getFullYear();
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
     url:
       !seriesUri && debouncedQuery && debouncedQuery === query
         ? `${PublicationChannelApiPath.JournalSearch}?year=${queryYear}&query=${debouncedQuery}`
         : '',
+    errorMessage: t('feedback:error.get_series'),
   });
 
-  const [journal, isLoadingJournal] = useFetch<Journal[]>({
+  const [journal, isLoadingJournal] = useFetch<Journal>({
     url: seriesUri ?? '',
     errorMessage: t('feedback:error.get_series'),
   });
 
-  const selectedJournal = seriesUri && journal?.[0] ? journal[0] : null;
-
   const options = query && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : [];
 
   const issnString =
-    selectedJournal?.printIssn || selectedJournal?.onlineIssn
+    journal?.printIssn || journal?.onlineIssn
       ? [
-          selectedJournal.printIssn ? `${t('resource_type.print_issn')}: ${selectedJournal.printIssn}` : '',
-          selectedJournal.onlineIssn ? `${t('resource_type.online_issn')}: ${selectedJournal.onlineIssn}` : '',
+          journal.printIssn ? `${t('resource_type.print_issn')}: ${journal.printIssn}` : '',
+          journal.onlineIssn ? `${t('resource_type.online_issn')}: ${journal.onlineIssn}` : '',
         ]
           .filter((issn) => issn)
           .join(', ')
       : '';
-  const selectedJournalString = selectedJournal
-    ? issnString
-      ? `${selectedJournal.name} (${issnString})`
-      : selectedJournal.name
-    : seriesTitle;
+  const selectedJournalString = journal ? (issnString ? `${journal.name} (${issnString})` : journal.name) : seriesTitle;
 
   return !seriesUri ? (
     <MuiThemeProvider theme={lightTheme}>
@@ -105,7 +100,7 @@ export const SeriesSearch = () => {
             setQuery(newInputValue);
           }
         }}
-        value={selectedJournal}
+        value={journal}
         onChange={(_, inputValue) => {
           setFieldValue(ResourceFieldNames.SeriesUri, inputValue?.id);
           setFieldValue(ResourceFieldNames.SeriesTitle, inputValue?.name);
@@ -156,14 +151,14 @@ export const SeriesSearch = () => {
         endIcon={<DeleteIcon />}>
         {t('resource_type.remove_series')}
       </StyledDangerButton>
-      {(isLoadingJournal || selectedJournal?.level) && (
+      {(isLoadingJournal || journal?.level) && (
         <StyledSeriesInfo>
           {isLoadingJournal ? (
             <Skeleton width={300} />
           ) : (
-            selectedJournal?.level && (
+            journal?.level && (
               <Typography>
-                {t('resource_type.level')}: {selectedJournal.level}
+                {t('resource_type.level')}: {journal.level}
               </Typography>
             )
           )}
