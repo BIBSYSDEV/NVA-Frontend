@@ -124,6 +124,7 @@ export const SeriesSearch = () => {
             label={t('common:title')}
             isLoading={isLoadingJournalOptions}
             placeholder={t('resource_type.search_for_series')}
+            showSearchIcon
           />
         )}
       />

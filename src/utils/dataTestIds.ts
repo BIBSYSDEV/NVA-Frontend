@@ -67,6 +67,8 @@ export const dataTestId = {
       originalResearchField: 'original-research-field',
       pagesField: 'pages-field',
       peerReviewed: 'peer-review-field',
+      publisherField: 'publisher-search-field',
+      removePublisherButton: 'remove-publisher-button',
       removeJournalButton: 'remove-journal-button',
       removeSeriesButton: 'remove-series-button',
       seriesField: 'series-search-field',

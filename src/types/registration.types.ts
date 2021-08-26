@@ -60,6 +60,14 @@ export interface Journal {
   publisherId: string | null;
 }
 
+export interface Publisher2 {
+  id: string;
+  identifier: string;
+  name: string;
+  website: string;
+  active: boolean;
+}
+
 export interface AlmaRegistration {
   title: string;
 }
