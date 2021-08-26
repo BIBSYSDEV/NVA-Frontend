@@ -100,10 +100,6 @@ export const SeriesSearch = () => {
             setQuery(newInputValue);
           }
         }}
-<<<<<<< HEAD
-=======
-        value={journal}
->>>>>>> 681b2e74a22c72a5746591571ada9da007be693f
         onChange={(_, inputValue) => {
           setFieldValue(ResourceFieldNames.SeriesUri, inputValue?.id);
           setFieldValue(ResourceFieldNames.SeriesTitle, inputValue?.name);
