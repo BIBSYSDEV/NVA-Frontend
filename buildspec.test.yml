@@ -34,11 +34,14 @@ phases:
       - python create_test_data.py
       - cd ..
       - npx cypress run
+      - npm run create:html:report
   post_build:
     commands:
       - echo "post_build step"
       - aws s3 cp cypress/screenshots s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/screenshots --recursive
       - aws s3 cp cypress/videos s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/videos --recursive
+      - aws s3 cp TestReport s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/TestReport --recursive
+      - aws s3 cp mochawesome-report s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/mochawesome-report --recursive
 artifacts:
   files:
     - '**/*'
