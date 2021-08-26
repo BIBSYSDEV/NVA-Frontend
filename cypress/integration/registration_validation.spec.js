@@ -1,6 +1,7 @@
 import 'cypress-file-upload';
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { JournalArticleContentType, BookMonographContentType } from '../../src/types/publication_types/content.types';
+import { mockJournalsSearch } from '../../src/utils/testfiles/mockPublishers';
 
 describe('User opens registration form and can see validation errors', () => {
   before('Given that the user is logged in as Creator:', () => {
@@ -53,15 +54,27 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
     cy.get('p.Mui-error').should('have.length', 2);
 
-    // Publisher (publicationContext) field
-    cy.get('[data-testid=journal-search-field] input').click({ force: true }).type('test');
-    cy.contains('testament').click({ force: true });
-    cy.get('[data-testid=journal-search-field] p.Mui-error').should('not.exist');
-    cy.get('[data-testid=journal-search-field] input').clear();
-    cy.get('[data-testid=journal-search-field] p.Mui-error').should('be.visible');
-    cy.get('[data-testid=journal-search-field] input').click({ force: true }).type('test');
-    cy.contains('testament').click({ force: true });
-    cy.get('[data-testid=journal-search-field] p.Mui-error').should('not.exist');
+    // Journal (publicationContext) field
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] input`)
+      .click()
+      .type(mockJournalsSearch[0].name);
+    cy.contains(mockJournalsSearch[0].name).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] textarea`).should(
+      'contain',
+      mockJournalsSearch[0].name
+    );
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] p.Mui-error`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.removeJournalButton}]`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] p.Mui-error`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] input`)
+      .click()
+      .type(mockJournalsSearch[0].name);
+    cy.contains(mockJournalsSearch[0].name).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] textarea`).should(
+      'contain',
+      mockJournalsSearch[0].name
+    );
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] p.Mui-error`).should('not.exist');
 
     cy.get('[data-testid=volume-field] input').type('-1');
     cy.get('[data-testid=issue-field] input').type('-1');

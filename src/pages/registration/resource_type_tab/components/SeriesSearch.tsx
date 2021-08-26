@@ -17,6 +17,7 @@ import { BookEntityDescription } from '../../../../types/publication_types/bookR
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { DangerButton } from '../../../../components/DangerButton';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { getYearQuery } from './resource-helpers';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
 
@@ -57,11 +58,10 @@ export const SeriesSearch = () => {
 
   const [query, setQuery] = useState(seriesTitle ?? '');
   const debouncedQuery = useDebounce(query);
-  const queryYear = year && Number.isInteger(Number(year)) ? year : new Date().getFullYear();
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
     url:
       !seriesUri && debouncedQuery && debouncedQuery === query
-        ? `${PublicationChannelApiPath.JournalSearch}?year=${queryYear}&query=${debouncedQuery}`
+        ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${debouncedQuery}`
         : '',
     errorMessage: t('feedback:error.get_series'),
   });
@@ -100,13 +100,11 @@ export const SeriesSearch = () => {
             setQuery(newInputValue);
           }
         }}
-        value={journal}
         onChange={(_, inputValue) => {
           setFieldValue(ResourceFieldNames.SeriesUri, inputValue?.id);
           setFieldValue(ResourceFieldNames.SeriesTitle, inputValue?.name);
         }}
         loading={isLoadingJournalOptions}
-        getOptionSelected={(option) => option.id === seriesUri}
         getOptionLabel={(option) => option.name}
         renderOption={(option, state) => (
           <StyledFlexColumn>
