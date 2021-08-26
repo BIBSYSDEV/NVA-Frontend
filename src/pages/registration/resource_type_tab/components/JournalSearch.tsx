@@ -123,7 +123,7 @@ export const JournalSearch = () => {
               required
             />
             <StyledDangerButton
-              data-testid={dataTestId.registrationWizard.resourceType.removeSeriesButton}
+              data-testid={dataTestId.registrationWizard.resourceType.removeJournalButton}
               variant="contained"
               onClick={() => {
                 setFieldValue(name, '');

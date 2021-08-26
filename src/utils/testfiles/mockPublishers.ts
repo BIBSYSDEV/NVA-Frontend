@@ -4,8 +4,8 @@ export const mockJournalsSearch: Journal[] = [
   {
     id: 'https://api.dev.nva.aws.unit.no/publication-channels/journal/1/2020',
     identifier: '1',
-    name: 'Series number 1',
-    website: 'http://www.series4.com/',
+    name: 'Journal number 1',
+    website: 'http://www.journal4.com/',
     level: '1',
     active: true,
     onlineIssn: '1111-1111',
@@ -18,8 +18,8 @@ export const mockJournalsSearch: Journal[] = [
   {
     id: 'https://api.dev.nva.aws.unit.no/publication-channels/journal/2/2020',
     identifier: '2',
-    name: 'Series number 2',
-    website: 'http://www.series2.com/',
+    name: 'Journal number 2',
+    website: 'http://www.journal2.com/',
     level: '1',
     active: true,
     onlineIssn: '2222-2222',
@@ -32,8 +32,8 @@ export const mockJournalsSearch: Journal[] = [
   {
     id: 'https://api.dev.nva.aws.unit.no/publication-channels/journal/3/2020',
     identifier: '3',
-    name: 'Series number 3',
-    website: 'http://www.series3.com/',
+    name: 'Journal number 3',
+    website: 'http://www.journal3.com/',
     level: '1',
     active: true,
     onlineIssn: '3333-3333',
