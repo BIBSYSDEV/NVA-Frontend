@@ -37,7 +37,8 @@ phases:
   post_build:
     commands:
       - echo "post_build step"
-      - aws s3 cp cypress/screenshots s3://$S3_BUCKET/cypress/screenshots/$CODEBUILD_BUILD_NUMBER --recursive
+      - aws s3 cp cypress/screenshots s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/screenshots --recursive
+      - aws s3 cp cypress/videos s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/videos --recursive
 artifacts:
   files:
     - '**/*'
