@@ -44,7 +44,7 @@ const StyledDangerButton = styled(DangerButton)`
 
 export const JournalSearch = () => {
   const { t } = useTranslation('registration');
-  const { setFieldValue, values } = useFormikContext<Registration>();
+  const { setFieldValue, setFieldTouched, values } = useFormikContext<Registration>();
   const {
     reference: {
       publicationContext: { title },
@@ -82,6 +82,7 @@ export const JournalSearch = () => {
                   setQuery(newInputValue);
                 }
               }}
+              onBlur={() => (!touched ? setFieldTouched(name) : null)}
               onChange={(_, inputValue) => setFieldValue(name, inputValue?.name)}
               loading={isLoadingJournalOptions}
               getOptionLabel={(option) => option.name}
