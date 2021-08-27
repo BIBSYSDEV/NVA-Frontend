@@ -186,6 +186,7 @@
     "remove_doi": "Fjern DOI",
     "remove_doi_text": "Du kan fjerne DOI som ble brukt ved registreringsstart.\nØnsker du å fjerne kobling til original DOI?",
     "remove_journal": "Fjern tidsskrift",
+    "remove_publisher": "Fjern utgiver",
     "remove_series": "Fjern serie",
     "search_for_journal": "Søk etter tidsskrift",
     "search_for_original_article": "Søk etter original artikkel",

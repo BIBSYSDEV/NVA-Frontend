@@ -17,11 +17,11 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { DangerButton } from '../../../../components/DangerButton';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { JournalEntityDescription } from '../../../../types/publication_types/journalRegistration.types';
-import { getYearQuery } from './resource-helpers';
+import { getYearQuery } from '../../../../utils/registration-helpers';
 
 const journalFieldTestId = dataTestId.registrationWizard.resourceType.journalField;
 
-const StyledSelectedSeriesContainer = styled.div`
+const StyledSelectedJournalContainer = styled.div`
   display: grid;
   grid-template-areas: 'field button';
   grid-template-columns: 1fr auto;
@@ -42,9 +42,9 @@ const StyledDangerButton = styled(DangerButton)`
   grid-area: button;
 `;
 
-export const JournalSearch = () => {
+export const JournalField = () => {
   const { t } = useTranslation('registration');
-  const { setFieldValue, values } = useFormikContext<Registration>();
+  const { setFieldValue, setFieldTouched, values } = useFormikContext<Registration>();
   const {
     reference: {
       publicationContext: { title },
@@ -82,9 +82,8 @@ export const JournalSearch = () => {
                   setQuery(newInputValue);
                 }
               }}
-              onChange={(_, inputValue) => {
-                setFieldValue(name, inputValue?.name);
-              }}
+              onBlur={() => (!touched ? setFieldTouched(name) : null)}
+              onChange={(_, inputValue) => setFieldValue(name, inputValue?.name)}
               loading={isLoadingJournalOptions}
               getOptionLabel={(option) => option.name}
               renderOption={(option, state) => (
@@ -106,13 +105,14 @@ export const JournalSearch = () => {
                   isLoading={isLoadingJournalOptions}
                   placeholder={t('resource_type.search_for_journal')}
                   required
+                  showSearchIcon
                   errorMessage={touched && error ? error : ''}
                 />
               )}
             />
           </MuiThemeProvider>
         ) : (
-          <StyledSelectedSeriesContainer>
+          <StyledSelectedJournalContainer>
             <StyledTextField
               data-testid={journalFieldTestId}
               variant="filled"
@@ -132,7 +132,7 @@ export const JournalSearch = () => {
               endIcon={<DeleteIcon />}>
               {t('resource_type.remove_journal')}
             </StyledDangerButton>
-          </StyledSelectedSeriesContainer>
+          </StyledSelectedJournalContainer>
         )
       }
     </Field>

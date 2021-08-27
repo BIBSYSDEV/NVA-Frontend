@@ -17,7 +17,7 @@ import { BookEntityDescription } from '../../../../types/publication_types/bookR
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { DangerButton } from '../../../../components/DangerButton';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { getYearQuery } from './resource-helpers';
+import { getYearQuery } from '../../../../utils/registration-helpers';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
 
@@ -46,7 +46,7 @@ const StyledSeriesInfo = styled.div`
   grid-area: info;
 `;
 
-export const SeriesSearch = () => {
+export const SeriesField = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue, values } = useFormikContext<Registration>();
   const {
@@ -124,6 +124,7 @@ export const SeriesSearch = () => {
             label={t('common:title')}
             isLoading={isLoadingJournalOptions}
             placeholder={t('resource_type.search_for_series')}
+            showSearchIcon
           />
         )}
       />

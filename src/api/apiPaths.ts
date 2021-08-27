@@ -30,8 +30,8 @@ export enum ProjectsApiPath {
 }
 
 export enum PublicationChannelApiPath {
-  Search = '/channel/search',
   JournalSearch = '/publication-channels/journal',
+  PublisherSearch = '/publication-channels/publisher',
 }
 
 export enum PublicationsApiPath {

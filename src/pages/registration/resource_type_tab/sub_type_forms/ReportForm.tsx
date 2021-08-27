@@ -5,10 +5,10 @@ import { Typography } from '@material-ui/core';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { lightTheme } from '../../../../themes/lightTheme';
 import { DoiField } from '../components/DoiField';
-import { PublisherField } from '../components/PublisherField';
 import { SeriesFields } from '../components/SeriesFields';
 import { TotalPagesField } from '../components/TotalPagesField';
 import { IsbnField } from '../components/IsbnField';
+import { PublisherField } from '../components/PublisherField';
 
 const StyledSection = styled.div`
   display: grid;

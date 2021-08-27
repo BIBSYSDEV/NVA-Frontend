@@ -1,5 +1,6 @@
 import { dataTestId } from '../../src/utils/dataTestIds';
-import { mockJournalsSearch } from '../../src/utils/testfiles/mockPublishers';
+import { mockJournalsSearch } from '../../src/utils/testfiles/mockJournals';
+import { mockPublishersSearch } from '../../src/utils/testfiles/mockPublishers';
 
 describe('Registration: Resource type: Report', () => {
   beforeEach(() => {
@@ -24,9 +25,14 @@ describe('Registration: Resource type: Report', () => {
     cy.get('[data-testid=publication-instance-type-ReportResearch]').click({ force: true });
 
     // search for and select a publisher
-    cy.get('[data-testid=publisher-search-field] input').click({ force: true }).type('Test');
-    cy.contains('Novum Testamentum').click({ force: true });
-    cy.get('[data-testid=publisher-search-field] input').should('have.value', 'Novum Testamentum');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
+      .click()
+      .type(mockPublishersSearch[1].name);
+    cy.contains(mockPublishersSearch[1].name).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] textarea`).should(
+      'contain',
+      mockPublishersSearch[1].name
+    );
 
     // fill out ISBN_LIST field
     cy.get('[data-testid=isbn-field] input').type('978-1-78-763271-4');

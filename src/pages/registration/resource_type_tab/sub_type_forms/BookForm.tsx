@@ -9,13 +9,13 @@ import { BookType } from '../../../../types/publicationFieldNames';
 import { DoiField } from '../components/DoiField';
 import { NpiDisciplineField } from '../components/NpiDisciplineField';
 import { NviValidation } from '../components/NviValidation';
-import { PublisherField } from '../components/PublisherField';
 import { SeriesFields } from '../components/SeriesFields';
 import { TotalPagesField } from '../components/TotalPagesField';
 import { NviFields } from '../components/nvi_fields/NviFields';
 import { BookRegistration } from '../../../../types/publication_types/bookRegistration.types';
 import { IsbnField } from '../components/IsbnField';
 import { BookMonographContentType } from '../../../../types/publication_types/content.types';
+import { PublisherField } from '../components/PublisherField';
 
 const StyledSection = styled.div`
   display: grid;
