@@ -34,7 +34,7 @@ phases:
       - python create_test_data.py
       - cd ..
       - npx cypress run
-      - npm run create:html:report
+      - npm run create:test:reports
   post_build:
     commands:
       - echo "post_build step"
