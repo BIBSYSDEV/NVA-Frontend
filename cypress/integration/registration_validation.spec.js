@@ -1,7 +1,8 @@
 import 'cypress-file-upload';
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { JournalArticleContentType, BookMonographContentType } from '../../src/types/publication_types/content.types';
-import { mockJournalsSearch } from '../../src/utils/testfiles/mockPublishers';
+import { mockJournalsSearch } from '../../src/utils/testfiles/mockJournals';
+import { mockPublishersSearch } from '../../src/utils/testfiles/mockPublishers';
 
 describe('User opens registration form and can see validation errors', () => {
   before('Given that the user is logged in as Creator:', () => {
@@ -122,11 +123,16 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('p.Mui-error').should('have.length', 3);
 
     // publicationContext
-    cy.get('[data-testid=publisher-search-field] input').click({ force: true }).type('test');
-    cy.contains('testament').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
+      .click()
+      .type(mockPublishersSearch[0].name);
+    cy.contains(mockPublishersSearch[0].name).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] p.Mui-error`).should(
+      'not.exist'
+    );
+
     // NPI Subject
     cy.selectNpiDiscipline('Linguistics');
-    cy.get('[data-testid=publisher-search-field] p').should('not.exist');
 
     // ISBN
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.isbnField}]`).within(() => {
@@ -166,9 +172,13 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('p.Mui-error').should('have.length', 1);
 
     // publicationContext
-    cy.get('[data-testid=publisher-search-field] input').click({ force: true }).type('test');
-    cy.contains('testament').click({ force: true });
-    cy.get('[data-testid=publisher-search-field] p').should('not.exist');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
+      .click()
+      .type(mockPublishersSearch[0].name);
+    cy.contains(mockPublishersSearch[0].name).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] p.Mui-error`).should(
+      'not.exist'
+    );
 
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
@@ -188,9 +198,13 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('p.Mui-error').should('have.length', 1);
 
     // publicationContext
-    cy.get('[data-testid=publisher-search-field] input').click({ force: true }).type('test');
-    cy.contains('testament').click({ force: true });
-    cy.get('[data-testid=publisher-search-field] p').should('not.exist');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
+      .click()
+      .type(mockPublishersSearch[0].name);
+    cy.contains(mockPublishersSearch[0].name).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] p.Mui-error`).should(
+      'not.exist'
+    );
 
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
