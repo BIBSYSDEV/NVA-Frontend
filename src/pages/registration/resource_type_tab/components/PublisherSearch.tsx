@@ -53,7 +53,7 @@ export const PublisherSearch = () => {
 
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query);
-  const [journalOptions, isLoadingJournalOptions] = useFetch<Publisher[]>({
+  const [publisherOptions, isLoadingPublisherOptions] = useFetch<Publisher[]>({
     url:
       !publisher && debouncedQuery && debouncedQuery === query
         ? `${PublicationChannelApiPath.PublisherSearch}?year=${getYearQuery(year)}&query=${debouncedQuery}`
@@ -61,7 +61,7 @@ export const PublisherSearch = () => {
     errorMessage: t('feedback:error.get_publishers'),
   });
 
-  const options = query && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : [];
+  const options = query && query === debouncedQuery && !isLoadingPublisherOptions ? publisherOptions ?? [] : [];
 
   return (
     <Field name={ResourceFieldNames.PubliactionContextPublisher}>
@@ -84,7 +84,7 @@ export const PublisherSearch = () => {
               }}
               onBlur={() => (!touched ? setFieldTouched(name) : null)}
               onChange={(_, inputValue) => setFieldValue(name, inputValue?.name)}
-              loading={isLoadingJournalOptions}
+              loading={isLoadingPublisherOptions}
               getOptionLabel={(option) => option.name}
               renderOption={(option, state) => (
                 <Typography variant="subtitle1">
@@ -95,7 +95,7 @@ export const PublisherSearch = () => {
                 <AutocompleteTextField
                   {...params}
                   label={t('common:publisher')}
-                  isLoading={isLoadingJournalOptions}
+                  isLoading={isLoadingPublisherOptions}
                   placeholder={t('resource_type.search_for_publisher')}
                   required
                   showSearchIcon
@@ -116,7 +116,7 @@ export const PublisherSearch = () => {
               required
             />
             <StyledDangerButton
-              data-testid={dataTestId.registrationWizard.resourceType.removeJournalButton}
+              data-testid={dataTestId.registrationWizard.resourceType.removePublisherButton}
               variant="contained"
               onClick={() => {
                 setFieldValue(name, '');
