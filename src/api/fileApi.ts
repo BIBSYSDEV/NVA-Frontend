@@ -86,12 +86,11 @@ export const listParts = async (uploadId: string, key: string) => {
   return listPartsResponse.data;
 };
 
-export const prepareUploadPart = async (uploadId: string, key: string, body: Blob, number: number) => {
+export const prepareUploadPart = async (uploadId: string, key: string, partNumbers: number[]) => {
   const payload = {
     uploadId,
     key,
-    body: JSON.stringify(body),
-    number,
+    partNumbers,
   };
 
   const prepareResponse = await authenticatedApiRequest<any>({

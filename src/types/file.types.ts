@@ -1,4 +1,4 @@
-import { StrictTypes, Uppy as UppyType } from '@uppy/core';
+import { Uppy as UppyType } from '@uppy/core';
 import * as LicenseImages from '../resources/images/licenses';
 import i18n from '../translations/i18n';
 
@@ -131,6 +131,6 @@ export const emptyFile: File = {
   license: null,
 };
 
-export interface Uppy extends UppyType<StrictTypes> {
+export interface Uppy extends UppyType {
   hasUploadSuccessEventListener?: boolean;
 }
