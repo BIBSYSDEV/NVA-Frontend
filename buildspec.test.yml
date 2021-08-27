@@ -38,10 +38,10 @@ phases:
   post_build:
     commands:
       - echo "post_build step"
-      - aws s3 cp cypress/screenshots s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/screenshots --recursive
-      - aws s3 cp cypress/videos s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/videos --recursive
-      - aws s3 cp TestReport s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/TestReport --recursive
-      - aws s3 cp mochawesome-report s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/mochawesome-report --recursive
+      - if [ -d "cypress/screenshots" ]; then aws s3 cp cypress/screenshots s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/screenshots --recursive; fi
+      - if [ -d "cypress/videos" ]; then aws s3 cp cypress/videos s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/videos --recursive; fi
+      - if [ -d "TestReport" ]; then aws s3 cp TestReport s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/TestReport --recursive; fi
+      - if [ -d "mochawesome" ]; then aws s3 cp mochawesome-report s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/mochawesome-report --recursive; fi
 artifacts:
   files:
     - '**/*'
