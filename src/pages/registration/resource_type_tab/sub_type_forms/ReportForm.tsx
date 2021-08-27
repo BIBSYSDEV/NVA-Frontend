@@ -8,7 +8,7 @@ import { DoiField } from '../components/DoiField';
 import { SeriesFields } from '../components/SeriesFields';
 import { TotalPagesField } from '../components/TotalPagesField';
 import { IsbnField } from '../components/IsbnField';
-import { PublisherSearch } from '../components/PublisherSearch';
+import { PublisherField } from '../components/PublisherField';
 
 const StyledSection = styled.div`
   display: grid;
@@ -28,7 +28,7 @@ export const ReportForm = () => {
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DoiField />
-        <PublisherSearch />
+        <PublisherField />
       </BackgroundDiv>
 
       <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>

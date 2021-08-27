@@ -46,7 +46,7 @@ const StyledSeriesInfo = styled.div`
   grid-area: info;
 `;
 
-export const SeriesSearch = () => {
+export const SeriesField = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue, values } = useFormikContext<Registration>();
   const {

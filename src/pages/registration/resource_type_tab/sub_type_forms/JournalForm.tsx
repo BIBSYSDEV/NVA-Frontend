@@ -12,7 +12,7 @@ import { SearchContainerField } from '../components/SearchContainerField';
 import { NviFields } from '../components/nvi_fields/NviFields';
 import { JournalArticleContentType } from '../../../../types/publication_types/content.types';
 import { JournalRegistration } from '../../../../types/publication_types/journalRegistration.types';
-import { JournalSearch } from '../components/JournalSearch';
+import { JournalField } from '../components/JournalField';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -51,7 +51,7 @@ export const JournalForm = () => {
             dataTestId="article-search-field"
           />
         ) : (
-          <JournalSearch />
+          <JournalField />
         )}
 
         <StyledArticleDetail>

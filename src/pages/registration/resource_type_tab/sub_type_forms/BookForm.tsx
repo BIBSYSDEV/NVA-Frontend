@@ -15,7 +15,7 @@ import { NviFields } from '../components/nvi_fields/NviFields';
 import { BookRegistration } from '../../../../types/publication_types/bookRegistration.types';
 import { IsbnField } from '../components/IsbnField';
 import { BookMonographContentType } from '../../../../types/publication_types/content.types';
-import { PublisherSearch } from '../components/PublisherSearch';
+import { PublisherField } from '../components/PublisherField';
 
 const StyledSection = styled.div`
   display: grid;
@@ -40,7 +40,7 @@ export const BookForm = () => {
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DoiField />
-        <PublisherSearch />
+        <PublisherField />
 
         <MuiThemeProvider theme={lightTheme}>
           <NpiDisciplineField />

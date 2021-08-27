@@ -4,14 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { TextField } from '@material-ui/core';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { SeriesSearch } from './SeriesSearch';
+import { SeriesField } from './SeriesField';
 
 export const SeriesFields = () => {
   const { t } = useTranslation('registration');
 
   return (
     <>
-      <SeriesSearch />
+      <SeriesField />
 
       <Field name={ResourceFieldNames.SeriesNumber}>
         {({ field }: FieldProps<string>) => (
