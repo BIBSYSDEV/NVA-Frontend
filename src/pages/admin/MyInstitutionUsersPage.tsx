@@ -43,9 +43,9 @@ const MyInstitutionUsersPage = () => {
   };
 
   const roleToAddTitle =
-    roleToAdd === RoleName.INSTITUTION_ADMIN
+    roleToAdd === RoleName.InstitutionAdmin
       ? t('users.add_institution_admin')
-      : roleToAdd === RoleName.CURATOR
+      : roleToAdd === RoleName.Curator
       ? t('users.add_curator')
       : t('users.add_editor');
 
@@ -63,8 +63,8 @@ const MyInstitutionUsersPage = () => {
             <ListSkeleton maxWidth={25} />
           ) : (
             <UserList
-              userList={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)}
-              roleToRemove={RoleName.INSTITUTION_ADMIN}
+              userList={filterUsersByRole(users, RoleName.InstitutionAdmin)}
+              roleToRemove={RoleName.InstitutionAdmin}
               refetchUsers={fetchInstitutionUsers}
               tableCaption={t('profile:roles.institution_admins')}
             />
@@ -74,7 +74,7 @@ const MyInstitutionUsersPage = () => {
             variant="outlined"
             startIcon={<AddIcon />}
             data-testid="button-add-institution-admin"
-            onClick={() => setRoleToAdd(RoleName.INSTITUTION_ADMIN)}>
+            onClick={() => setRoleToAdd(RoleName.InstitutionAdmin)}>
             {t('users.add_institution_admin')}
           </StyledNewButton>
         </StyledContainer>
@@ -89,8 +89,8 @@ const MyInstitutionUsersPage = () => {
             <ListSkeleton maxWidth={25} />
           ) : (
             <UserList
-              userList={filterUsersByRole(users, RoleName.CURATOR)}
-              roleToRemove={RoleName.CURATOR}
+              userList={filterUsersByRole(users, RoleName.Curator)}
+              roleToRemove={RoleName.Curator}
               refetchUsers={fetchInstitutionUsers}
               tableCaption={t('profile:roles.curators')}
             />
@@ -100,7 +100,7 @@ const MyInstitutionUsersPage = () => {
             variant="outlined"
             startIcon={<AddIcon />}
             data-testid="button-add-curator"
-            onClick={() => setRoleToAdd(RoleName.CURATOR)}>
+            onClick={() => setRoleToAdd(RoleName.Curator)}>
             {t('users.add_curator')}
           </StyledNewButton>
         </StyledContainer>
@@ -115,8 +115,8 @@ const MyInstitutionUsersPage = () => {
             <ListSkeleton maxWidth={25} />
           ) : (
             <UserList
-              userList={filterUsersByRole(users, RoleName.EDITOR)}
-              roleToRemove={RoleName.EDITOR}
+              userList={filterUsersByRole(users, RoleName.Editor)}
+              roleToRemove={RoleName.Editor}
               refetchUsers={fetchInstitutionUsers}
               tableCaption={t('profile:roles.editors')}
             />
@@ -126,7 +126,7 @@ const MyInstitutionUsersPage = () => {
             variant="outlined"
             startIcon={<AddIcon />}
             data-testid="button-add-editor"
-            onClick={() => setRoleToAdd(RoleName.EDITOR)}>
+            onClick={() => setRoleToAdd(RoleName.Editor)}>
             {t('users.add_editor')}
           </StyledNewButton>
         </StyledContainer>

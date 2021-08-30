@@ -32,11 +32,11 @@ export const userReducer = (
         givenName: action.user.given_name,
         familyName: action.user.family_name,
         orgNumber: action.user['custom:orgNumber'],
-        isCreator: !!customerId && roles.some((role) => role === RoleName.CREATOR),
-        isAppAdmin: !!customerId && roles.some((role) => role === RoleName.APP_ADMIN),
-        isInstitutionAdmin: !!customerId && roles.some((role) => role === RoleName.INSTITUTION_ADMIN),
-        isCurator: !!customerId && roles.some((role) => role === RoleName.CURATOR),
-        isEditor: !!customerId && roles.some((role) => role === RoleName.EDITOR),
+        isCreator: !!customerId && roles.some((role) => role === RoleName.Creator),
+        isAppAdmin: !!customerId && roles.some((role) => role === RoleName.AppAdmin),
+        isInstitutionAdmin: !!customerId && roles.some((role) => role === RoleName.InstitutionAdmin),
+        isCurator: !!customerId && roles.some((role) => role === RoleName.Curator),
+        isEditor: !!customerId && roles.some((role) => role === RoleName.Editor),
       };
       return user;
     }

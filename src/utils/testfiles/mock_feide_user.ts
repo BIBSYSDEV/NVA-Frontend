@@ -6,7 +6,7 @@ export const mockUser: FeideUser = {
   'custom:cristinId': 'https://api.cristin.no/v2/institutions/20202',
   'custom:orgName': 'unit',
   'custom:orgNumber': 'NO123456789',
-  'custom:applicationRoles': `${RoleName.CREATOR},${RoleName.INSTITUTION_ADMIN},${RoleName.APP_ADMIN}`,
+  'custom:applicationRoles': `${RoleName.Creator},${RoleName.InstitutionAdmin},${RoleName.AppAdmin}`,
   'custom:commonName': 'Unit',
   'custom:feideId': 'tu@unit.no',
   sub: 'jasdfahkf-341-sdfdsf-12321',
@@ -20,10 +20,10 @@ export const mockUser: FeideUser = {
 
 export const mockRoles: InstitutionUser = {
   roles: [
-    { type: 'Role', rolename: RoleName.APP_ADMIN },
-    { type: 'Role', rolename: RoleName.CREATOR },
-    { type: 'Role', rolename: RoleName.CURATOR },
-    { type: 'Role', rolename: RoleName.INSTITUTION_ADMIN },
+    { type: 'Role', rolename: RoleName.AppAdmin },
+    { type: 'Role', rolename: RoleName.Creator },
+    { type: 'Role', rolename: RoleName.Curator },
+    { type: 'Role', rolename: RoleName.InstitutionAdmin },
   ],
   username: 'tu@unit.no',
   institution: 'https://api.cristin.no/v2/institutions/20202',
