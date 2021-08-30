@@ -35,23 +35,18 @@ describe('Menu', () => {
     cy.get('[data-testid=forbidden]').should('be.visible');
 
     cy.visit('/my-registrations');
-    cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=forbidden]').should('be.visible');
 
     cy.visit('/worklist');
-    cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=forbidden]').should('be.visible');
 
     cy.visit('/my-institution');
-    cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=forbidden]').should('be.visible');
 
     cy.visit('/my-institution-users');
-    cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=forbidden]').should('be.visible');
 
     cy.visit('/admin-institutions');
-    cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=forbidden]').should('be.visible');
   });
 });

@@ -10,7 +10,6 @@ import mockInstitutionResponse from '../utils/testfiles/institutions/institution
 import mockNtnuSubunitResponse from '../utils/testfiles/institutions/institution_subunit_ntnu.json';
 import { mockSchoolOfSportDepartment } from '../utils/testfiles/institutions/school_of_sport_department';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
-import { mockRoles } from '../utils/testfiles/mock_feide_user';
 import { mockCustomerInstitution, mockCustomerInstitutions } from '../utils/testfiles/mockCustomerInstitutions';
 import mockMyRegistrations from '../utils/testfiles/my_registrations.json';
 import { mockProject, mockProjectSearch } from '../utils/testfiles/mockProjects';
@@ -162,7 +161,7 @@ export const interceptRequestsOnMock = () => {
 
   // Roles
   mock.onGet(new RegExp(`${API_URL}${RoleApiPath.InstitutionUsers}/*`)).reply(200, []);
-  mock.onGet(new RegExp(`${API_URL}${RoleApiPath.Users}/*`)).reply(200, mockRoles);
+  // mock.onGet(new RegExp(`${API_URL}${RoleApiPath.Users}/*`)).reply(200, mockRoles);
 
   // Alma registrations
   mock.onGet(new RegExp(`${API_URL}${AlmaApiPath.Alma}/*`)).reply(200, undefined);

@@ -1,11 +1,9 @@
-import { RoleName } from '../../src/types/user.types';
 import { mockMessages } from '../../src/utils/testfiles/mockRegistration';
 
 describe('Worklist', () => {
   beforeEach(() => {
     cy.visit('/my-profile');
     cy.mocklogin();
-    cy.setUserRolesInRedux([RoleName.CURATOR, RoleName.PUBLISHER]);
     cy.get('[data-testid=menu]').click({ force: true });
     cy.get('[data-testid=menu-my-worklist-button]').click({ force: true });
   });
