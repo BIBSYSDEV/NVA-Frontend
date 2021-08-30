@@ -9,20 +9,12 @@ phases:
     runtime-versions:
       nodejs: 14
       python: 3.x
-    commands:
-      - echo "install cypress dependencies..."
-      #- apt-get update
-      #- apt-get install -y libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 xvfb jq
   pre_build:
     commands:
       - wget https://github.com/BIBSYSDEV/NVA-end-to-end-testing/archive/refs/heads/test-deploy.zip
       - unzip test-deploy.zip
       - cd NVA-end-to-end-testing-test-deploy
-      - npm install cypress
-      - npm install cypress-cucumber-preprocessor
-      - npm install uuid
-      - npm install aws-sdk
-      - npm install aws-amplify
+      - npm install cypress cypress-cucumber-preprocessor uuid aws-sdk aws-amplify
       - npm install
       - aws sts assume-role --role-arn $ROLE_ARN --role-session-name test > Credentials
       - export CYPRESS_AWS_ACCESS_KEY_ID=$(cat Credentials | jq -r '.Credentials.AccessKeyId')
@@ -37,7 +29,6 @@ phases:
       - npm run create:test:reports
   post_build:
     commands:
-      - echo "post_build step"
       - if [ -d "cypress/screenshots" ]; then aws s3 cp cypress/screenshots s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/screenshots --recursive; fi
       - if [ -d "cypress/videos" ]; then aws s3 cp cypress/videos s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/videos --recursive; fi
       - if [ -d "TestReport" ]; then aws s3 cp TestReport s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/TestReport --recursive; fi
