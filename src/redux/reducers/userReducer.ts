@@ -1,12 +1,6 @@
 import { Affiliation, RoleName, User } from '../../types/user.types';
 import { AuthActions, LOGOUT_SUCCESS } from '../actions/authActions';
-import {
-  SET_AUTHORITY_DATA,
-  SET_POSSIBLE_AUTHORITIES,
-  SET_ROLES,
-  SET_USER_SUCCESS,
-  UserActions,
-} from '../actions/userActions';
+import { SET_AUTHORITY_DATA, SET_POSSIBLE_AUTHORITIES, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
 
 export const userReducer = (
   state: User | null = null,
@@ -14,6 +8,7 @@ export const userReducer = (
 ): User | Partial<User> | null => {
   switch (action.type) {
     case SET_USER_SUCCESS: {
+      const roles = action.user['custom:applicationRoles'].split(',') as RoleName[];
       const feideAffiliations = action.user['custom:affiliation'];
       const affiliations = feideAffiliations
         ? (feideAffiliations
@@ -22,6 +17,9 @@ export const userReducer = (
             .map((affiliationString) => affiliationString.trim())
             .filter((affiliation) => affiliation) as Affiliation[])
         : [];
+      const customerId = action.user['custom:customerId']?.endsWith('/customer/None')
+        ? ''
+        : action.user['custom:customerId'];
 
       const user: Partial<User> = {
         name: action.user.name,
@@ -29,26 +27,19 @@ export const userReducer = (
         id: action.user['custom:feideId'],
         institution: action.user['custom:orgName'],
         cristinId: action.user['custom:cristinId'] ?? action.user.cristinId,
-        customerId: action.user['custom:customerId']?.endsWith('/customer/None')
-          ? ''
-          : action.user['custom:customerId'],
+        customerId,
         affiliations,
         givenName: action.user.given_name,
         familyName: action.user.family_name,
         orgNumber: action.user['custom:orgNumber'],
+        isCreator: !!customerId && roles.some((role) => role === RoleName.CREATOR),
+        isAppAdmin: !!customerId && roles.some((role) => role === RoleName.APP_ADMIN),
+        isInstitutionAdmin: !!customerId && roles.some((role) => role === RoleName.INSTITUTION_ADMIN),
+        isCurator: !!customerId && roles.some((role) => role === RoleName.CURATOR),
+        isEditor: !!customerId && roles.some((role) => role === RoleName.EDITOR),
       };
       return user;
     }
-    case SET_ROLES:
-      return {
-        ...state,
-        roles: action.roles,
-        isCreator: !!(state?.customerId && action.roles.some((role) => role === RoleName.CREATOR)),
-        isAppAdmin: !!state?.customerId && action.roles.some((role) => role === RoleName.APP_ADMIN),
-        isInstitutionAdmin: !!state?.customerId && action.roles.some((role) => role === RoleName.INSTITUTION_ADMIN),
-        isCurator: !!state?.customerId && action.roles.some((role) => role === RoleName.CURATOR),
-        isEditor: !!state?.customerId && action.roles.some((role) => role === RoleName.EDITOR),
-      };
 
     case SET_AUTHORITY_DATA:
       return {

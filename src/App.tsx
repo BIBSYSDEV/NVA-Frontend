@@ -13,7 +13,7 @@ import { Header } from './layout/header/Header';
 import { Notifier } from './layout/Notifier';
 import { AuthorityOrcidModal } from './pages/user/authority/AuthorityOrcidModal';
 import { setNotification } from './redux/actions/notificationActions';
-import { setAuthorityData, setPossibleAuthorities, setRoles, setUser } from './redux/actions/userActions';
+import { setAuthorityData, setPossibleAuthorities, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { Authority } from './types/authority.types';
 import { NotificationVariant } from './types/notification.types';
@@ -24,8 +24,7 @@ import { PageSpinner } from './components/PageSpinner';
 import { LanguageCodes } from './types/language.types';
 import { SkipLink } from './components/SkipLink';
 import { useFetch } from './utils/hooks/useFetch';
-import { AuthorityApiPath, RoleApiPath } from './api/apiPaths';
-import { InstitutionUser } from './types/user.types';
+import { AuthorityApiPath } from './api/apiPaths';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -58,11 +57,6 @@ export const App = () => {
     url: user?.name ? `${AuthorityApiPath.Person}?name=${encodeURIComponent(user.name)}` : '',
     errorMessage: t('feedback:error.get_authorities'),
   });
-  const [institutionUser, isLoadingInstitutionUser] = useFetch<InstitutionUser>({
-    url: user?.id && !user.roles ? `${RoleApiPath.Users}/${encodeURIComponent(user.id)}` : '',
-    errorMessage: t('feedback:error.get_roles'),
-    withAuthentication: true,
-  });
 
   useEffect(() => {
     // Setup aws-amplify
@@ -91,13 +85,6 @@ export const App = () => {
       getUser();
     }
   }, [dispatch]);
-
-  useEffect(() => {
-    if (user && !user.roles && institutionUser) {
-      const roles = institutionUser.roles.map((role) => role.rolename);
-      dispatch(setRoles(roles));
-    }
-  }, [dispatch, institutionUser, user]);
 
   useEffect(() => {
     if (matchingAuthorities && user && !user.authority && !user.possibleAuthorities) {
@@ -146,9 +133,7 @@ export const App = () => {
       <Helmet defaultTitle={t('common:page_title')} titleTemplate={`%s - ${t('common:page_title')}`}>
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
-      {Object.values(isLoading).some((isLoading) => isLoading) ||
-      isLoadingMatchingAuthorities ||
-      isLoadingInstitutionUser ? (
+      {Object.values(isLoading).some((isLoading) => isLoading) || isLoadingMatchingAuthorities ? (
         <PageSpinner />
       ) : (
         <BrowserRouter>

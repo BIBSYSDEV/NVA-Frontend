@@ -37,7 +37,6 @@ export interface User {
   isEditor: boolean;
   lastLoginDate?: string;
   possibleAuthorities: Authority[];
-  roles: RoleName[];
   orgNumber: string;
 }
 
