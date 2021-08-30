@@ -1,6 +1,12 @@
 import { Affiliation, RoleName, User } from '../../types/user.types';
 import { AuthActions, LOGOUT_SUCCESS } from '../actions/authActions';
-import { SET_AUTHORITY_DATA, SET_POSSIBLE_AUTHORITIES, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
+import {
+  SET_AUTHORITY_DATA,
+  SET_POSSIBLE_AUTHORITIES,
+  SET_ROLES,
+  SET_USER_SUCCESS,
+  UserActions,
+} from '../actions/userActions';
 
 export const userReducer = (
   state: User | null = null,
@@ -40,7 +46,15 @@ export const userReducer = (
       };
       return user;
     }
-
+    case SET_ROLES:
+      return {
+        ...state,
+        isCreator: !!(state?.customerId && action.roles.some((role) => role === RoleName.Creator)),
+        isAppAdmin: !!state?.customerId && action.roles.some((role) => role === RoleName.AppAdmin),
+        isInstitutionAdmin: !!state?.customerId && action.roles.some((role) => role === RoleName.InstitutionAdmin),
+        isCurator: !!state?.customerId && action.roles.some((role) => role === RoleName.Curator),
+        isEditor: !!state?.customerId && action.roles.some((role) => role === RoleName.Editor),
+      };
     case SET_AUTHORITY_DATA:
       return {
         ...state,
