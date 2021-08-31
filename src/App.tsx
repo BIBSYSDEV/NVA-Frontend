@@ -114,30 +114,28 @@ export const App = () => {
       if (authoritiesById.length === 1) {
         const authority = authoritiesById[0];
         dispatch(setAuthorityData(authority));
-        if (user.cristinId && !authority.orgunitids.includes(user.cristinId)) {
-          const addQualifier = async () => {
-            if (user.cristinId) {
-              // Add cristinId to Authority's orgunitids
-              const authorityWithOrgId = await addQualifierIdForAuthority(
-                authority.id,
-                AuthorityQualifiers.ORGUNIT_ID,
-                user.cristinId
+        const addQualifier = async () => {
+          if (user.cristinId && !authority.orgunitids.includes(user.cristinId)) {
+            // Add cristinId to Authority's orgunitids
+            const authorityWithOrgId = await addQualifierIdForAuthority(
+              authority.id,
+              AuthorityQualifiers.ORGUNIT_ID,
+              user.cristinId
+            );
+            if (isErrorStatus(authorityWithOrgId.status)) {
+              dispatch(
+                setNotification(
+                  t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+                  NotificationVariant.Error
+                )
               );
-              if (isErrorStatus(authorityWithOrgId.status)) {
-                dispatch(
-                  setNotification(
-                    t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
-                    NotificationVariant.Error
-                  )
-                );
-                dispatch(setAuthorityData(authorityWithOrgId.data));
-              } else if (isSuccessStatus(authorityWithOrgId.status)) {
-                dispatch(setAuthorityData(authority));
-              }
+              dispatch(setAuthorityData(authority));
+            } else if (isSuccessStatus(authorityWithOrgId.status)) {
+              dispatch(setAuthorityData(authorityWithOrgId.data));
             }
-          };
-          addQualifier();
-        }
+          }
+        };
+        addQualifier();
       } else if (authoritiesById.length > 1) {
         dispatch(setPossibleAuthorities(authoritiesById));
       }
