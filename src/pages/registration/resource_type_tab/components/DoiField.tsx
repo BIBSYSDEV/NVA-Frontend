@@ -48,6 +48,7 @@ export const DoiField = () => {
         label={t('registration.link_to_resource')}
         disabled
         value={doi ?? referenceDoi}
+        multiline
       />
 
       {referenceDoi && (

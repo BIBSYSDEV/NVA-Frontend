@@ -15,7 +15,8 @@ import { mockCustomerInstitution, mockCustomerInstitutions } from '../utils/test
 import mockMyRegistrations from '../utils/testfiles/my_registrations.json';
 import { mockProject, mockProjectSearch } from '../utils/testfiles/mockProjects';
 import mockPublishedRegistrations from '../utils/testfiles/published_registrations.json';
-import mockNsdPublisers from '../utils/testfiles/publishersFromNsd.json';
+import { mockPublishersSearch } from '../utils/testfiles/mockPublishers';
+import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
 import { mockSearchResults } from '../utils/testfiles/search_results';
 import { threeMockSearchResults } from '../utils/testfiles/three_search_results';
 import { mockMessages, mockPublishedRegistration, mockRegistration } from '../utils/testfiles/mockRegistration';
@@ -85,6 +86,10 @@ export const interceptRequestsOnMock = () => {
   //MY MESSAGES
   mock.onGet(new RegExp(`${PublicationsApiPath.Messages}`)).reply(200, mockMessages);
 
+  // PUBLICATION CHANNEL
+  mock.onGet(new RegExp(PublicationChannelApiPath.PublisherSearch)).reply(200, mockPublishersSearch);
+  mock.onGet(new RegExp(PublicationChannelApiPath.JournalSearch)).reply(200, mockJournalsSearch);
+
   //PUBLICATION
   mock.onPost(new RegExp(PublicationsApiPath.Registration)).reply(201, emptyRegistration);
   mock.onGet(new RegExp(`${PublicationsApiPath.Registration}/new`)).reply(200, emptyRegistration);
@@ -102,9 +107,6 @@ export const interceptRequestsOnMock = () => {
   // PROJECT
   mock.onGet(new RegExp(`${ProjectsApiPath.Project}/1`)).reply(200, mockProject);
   mock.onGet(new RegExp(`${ProjectsApiPath.Project}/*`)).reply(200, mockProjectSearch);
-
-  // PUBLICATION CHANNEL
-  mock.onPost(new RegExp(`${API_URL}${PublicationChannelApiPath.Search}`)).reply(200, mockNsdPublisers);
 
   // ORCID
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);

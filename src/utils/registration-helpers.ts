@@ -18,3 +18,6 @@ export const userIsRegistrationOwner = (user: User | null, registration?: Regist
 
 export const userIsRegistrationCurator = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCurator && user.customerId === registration.publisher.id;
+
+export const getYearQuery = (yearValue: string) =>
+  yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear();

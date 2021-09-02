@@ -13,8 +13,8 @@ import { DoiField } from '../components/DoiField';
 import { NviValidation } from '../components/NviValidation';
 import { SearchContainerField } from '../components/SearchContainerField';
 import { NviFields } from '../components/nvi_fields/NviFields';
-import { chapterContentTypes } from '../../../../types/publication_types/content.types';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
+import { ChapterContentType } from '../../../../types/publication_types/content.types';
 
 const StyledDiv = styled(StyledCenterAlignedContentWrapper)`
   gap: 1rem;
@@ -116,7 +116,7 @@ export const ChapterForm = () => {
       {publicationInstance.type === ChapterType.AnthologyChapter && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-            <NviFields contentTypeOptions={chapterContentTypes} />
+            <NviFields contentTypes={Object.values(ChapterContentType)} />
           </BackgroundDiv>
 
           <NviValidation

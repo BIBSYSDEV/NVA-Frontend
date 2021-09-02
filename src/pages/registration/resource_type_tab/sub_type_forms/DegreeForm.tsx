@@ -4,10 +4,10 @@ import { Typography } from '@material-ui/core';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { lightTheme } from '../../../../themes/lightTheme';
 import { DoiField } from '../components/DoiField';
-import { PublisherField } from '../components/PublisherField';
 import { SeriesFields } from '../components/SeriesFields';
 import { DegreeType } from '../../../../types/publicationFieldNames';
 import { TotalPagesField } from '../components/TotalPagesField';
+import { PublisherField } from '../components/PublisherField';
 
 interface DegreeFormProps {
   subType: DegreeType;
