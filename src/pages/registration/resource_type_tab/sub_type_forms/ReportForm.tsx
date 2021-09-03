@@ -1,25 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { lightTheme } from '../../../../themes/lightTheme';
 import { DoiField } from '../components/DoiField';
 import { SeriesFields } from '../components/SeriesFields';
-import { TotalPagesField } from '../components/TotalPagesField';
-import { IsbnField } from '../components/IsbnField';
 import { PublisherField } from '../components/PublisherField';
-
-const StyledSection = styled.div`
-  display: grid;
-  gap: 1rem;
-  grid-template-areas: 'isbn number-of-pages';
-  grid-template-columns: 1fr 2fr;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-areas: 'isbn' 'number-of-pages';
-    grid-template-columns: 1fr;
-  }
-`;
+import { IsbnAndPages } from '../components/isbn_and_pages/IsbnAndPages';
 
 export const ReportForm = () => {
   const { t } = useTranslation('registration');
@@ -32,10 +19,7 @@ export const ReportForm = () => {
       </BackgroundDiv>
 
       <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-        <StyledSection>
-          <IsbnField />
-          <TotalPagesField />
-        </StyledSection>
+        <IsbnAndPages />
       </BackgroundDiv>
 
       <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
