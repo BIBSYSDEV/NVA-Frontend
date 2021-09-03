@@ -3,8 +3,8 @@ import React, { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '@material-ui/core';
 import { IMaskInput } from 'react-imask';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { dataTestId } from '../../../../utils/dataTestIds';
+import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
+import { dataTestId } from '../../../../../utils/dataTestIds';
 
 const isbnFormat = '000-0-00-000000-0';
 
