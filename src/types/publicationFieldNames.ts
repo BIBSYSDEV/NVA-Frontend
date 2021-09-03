@@ -73,7 +73,6 @@ export enum ResourceFieldNames {
 
 export enum DescriptionFieldNames {
   Abstract = 'entityDescription.abstract',
-  ControlledKeywords = 'entityDescription.controlledKeywords',
   Date = 'entityDescription.date',
   Description = 'entityDescription.description',
   Language = 'entityDescription.language',
@@ -81,6 +80,7 @@ export enum DescriptionFieldNames {
   PublicationDay = 'entityDescription.date.day',
   PublicationMonth = 'entityDescription.date.month',
   PublicationYear = 'entityDescription.date.year',
+  Subjects = 'subjects',
   Tags = 'entityDescription.tags',
   Title = 'entityDescription.mainTitle',
 }

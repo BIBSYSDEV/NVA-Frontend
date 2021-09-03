@@ -82,5 +82,4 @@ export const emptyRegistrationEntityDescription: JournalEntityDescription = {
   npiSubjectHeading: '',
   reference: emptyReference,
   tags: [],
-  controlledKeywords: [],
 };

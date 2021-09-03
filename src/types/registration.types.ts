@@ -106,6 +106,7 @@ export interface BaseRegistration extends RegistrationFileSet {
   readonly doi?: string;
   readonly doiRequest?: DoiRequest;
   readonly publisher: RegistrationPublisher;
+  subjects: string[];
   projects: ResearchProject[];
 }
 
@@ -119,7 +120,6 @@ export interface BaseEntityDescription {
   mainTitle: string;
   npiSubjectHeading: string;
   tags: string[];
-  controlledKeywords: string[];
 }
 
 export interface NviApplicableBase<T> {
@@ -173,4 +173,5 @@ export const emptyRegistration: Registration = {
   },
   projects: [],
   publisher: { id: '' },
+  subjects: [],
 };

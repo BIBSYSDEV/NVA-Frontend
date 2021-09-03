@@ -58,14 +58,12 @@ export const VocabularyFields = () => {
   const { t } = useTranslation('registration');
   const {
     setFieldValue,
-    values: {
-      entityDescription: { controlledKeywords },
-    },
+    values: { subjects },
   } = useFormikContext<Registration>();
 
   // Open vacabularies with values by default
   const defaultVisibleVocabualaries = Object.entries(vocabularyConfig)
-    .filter(([_, value]) => controlledKeywords.some((key) => key.startsWith(value.baseId)))
+    .filter(([_, value]) => subjects.some((key) => key.startsWith(value.baseId)))
     .map(([key, _]) => key);
   const [visibleVocabularies, setVisibleVocabularies] = useState(defaultVisibleVocabualaries);
   const [vocabularyToRemove, setVocabularyToRemove] = useState('');
@@ -75,13 +73,13 @@ export const VocabularyFields = () => {
 
   return (
     <>
-      <FieldArray name={DescriptionFieldNames.ControlledKeywords}>
+      <FieldArray name={DescriptionFieldNames.Subjects}>
         {({ name, remove, push }: FieldArrayRenderProps) => (
           <>
             {visibleVocabularies.map((vocabulary) => {
               const { baseId, component, i18nKey } = vocabularyConfig[vocabulary];
               const VocabularyComponent = component;
-              const selectedIds = controlledKeywords.filter((keyword) => keyword.startsWith(baseId));
+              const selectedIds = subjects.filter((keyword) => keyword.startsWith(baseId));
 
               return (
                 <StyledVocabularyRow
@@ -90,11 +88,11 @@ export const VocabularyFields = () => {
                   <VocabularyComponent
                     selectedIds={selectedIds}
                     addValue={push}
-                    removeValue={(valueToRemove) => remove(controlledKeywords.indexOf(valueToRemove))}
+                    removeValue={(valueToRemove) => remove(subjects.indexOf(valueToRemove))}
                     clear={() =>
                       setFieldValue(
                         name,
-                        controlledKeywords.filter((keyword) => !selectedIds.includes(keyword))
+                        subjects.filter((keyword) => !selectedIds.includes(keyword))
                       )
                     }
                   />
@@ -108,7 +106,7 @@ export const VocabularyFields = () => {
                     open={vocabularyToRemove === vocabulary}
                     title={t('description.confirm_remove_vocabulary_title')}
                     onAccept={() => {
-                      const updatedValues = controlledKeywords.filter((keyword) => !keyword.startsWith(baseId));
+                      const updatedValues = subjects.filter((keyword) => !keyword.startsWith(baseId));
                       setFieldValue(name, updatedValues);
                       setVisibleVocabularies(
                         visibleVocabularies.filter((visibleVocabulary) => visibleVocabulary !== vocabulary)
