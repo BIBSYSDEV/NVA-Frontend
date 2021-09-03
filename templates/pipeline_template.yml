@@ -29,6 +29,38 @@ Parameters:
   CloudfrontDistribution:
     Description: Id for Cloudfront Distribution, used to invalidate files to reset cache
     Type: String
+  AppBaseUrl:
+    Type: String
+    Description: Address to NVA application
+    Default: 'http://frontend.sandbox.nva.aws.unit.no/'
+  ApiBaseUrl:
+    Type: String
+    Description: Address to NVA services
+    Default: 'https://api.sandbox.nva.aws.unit.no/'
+  OrcidBaseUrl:
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: Address to ORCID services
+    Default: OrcidBaseUrl
+  OrcidClientID:
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: Clientid for ORCID
+    NoEcho: true
+    Default: REACT_APP_ORCID_CLIENT_ID
+  OrcidClientSecret:
+    Type: String
+    Description: Secret to authenticate for ORCID
+    NoEcho: true
+    Default: '{{resolve:secretsmanager:REACT_APP_ORCID_CLIENT_SECRET:SecretString}}'
+  CognitoIdentityPoolId:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: CognitoIdentityPoolId
+  CognitoUserPoolId:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: CognitoUserPoolId
+  CognitoUserPoolAppClientId:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: CognitoUserPoolAppClientId
+
 
 Resources:
   CodeBuildProject:
@@ -53,6 +85,54 @@ Resources:
             Value: !Ref 'AWS::Region'
       Source:
         Type: CODEPIPELINE
+
+  CodeBuildTestProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      ServiceRole: !GetAtt CodeBuildServiceRole.Arn
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_LARGE
+        Image: aws/codebuild/standard:5.0
+        Type: LINUX_CONTAINER
+        EnvironmentVariables:
+          - Name: S3_BUCKET
+            Type: PLAINTEXT
+            Value: !Ref ArtifactStoreBucket
+          - Name: CYPRESS_AWS_REGION
+            Type: PLAINTEXT
+            Value: !Ref AWS::Region
+          - Name: CYPRESS_AWS_IDENTITY_POOL_ID
+            Type: PLAINTEXT
+            Value: !Ref CognitoIdentityPoolId
+          - Name: CYPRESS_AWS_USER_POOL_ID
+            Type: PLAINTEXT
+            Value: !Ref CognitoUserPoolId
+          - Name: CYPRESS_AWS_CLIENT_ID
+            Type: PLAINTEXT
+            Value: !Ref CognitoUserPoolAppClientId
+          - Name: CYPRESS_REACT_APP_URL
+            Type: PLAINTEXT
+            Value: !Ref AppBaseUrl
+          - Name: CYPRESS_REACT_APP_API_URL
+            Type: PLAINTEXT
+            Value: !Ref ApiBaseUrl
+          - Name: CYPRESS_REACT_APP_ORCID_CLIENT_ID
+            Type: PLAINTEXT
+            Value: !Ref OrcidClientID
+          - Name: CYPRESS_REACT_APP_ORCID_BASE_URL
+            Type: PLAINTEXT
+            Value: !Ref OrcidClientID
+          - Name: CYPRESS_REMOTE
+            Type: PLAINTEXT
+            Value: remote
+          - Name: ROLE_ARN
+            Type: PLAINTEXT
+            Value: !GetAtt CodeBuildServiceRole.Arn
+      Source:
+        Type: CODEPIPELINE
+        BuildSpec: buildspec.test.yml
 
   Pipeline:
     Type: AWS::CodePipeline::Pipeline
@@ -129,6 +209,21 @@ Resources:
                 FunctionName: !Ref InvalidateCloudfrontDistribution
                 UserParameters: !Sub '{"distribution_id": "${CloudfrontDistribution}"}'
               RunOrder: 3
+        - Name: Test
+          Actions:
+            - Name: Test
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: '1'
+              Configuration:
+                ProjectName: !GetAtt CodeBuildTestProject.Arn
+              InputArtifacts:
+                - Name: SourceArtifact
+              OutputArtifacts:
+                - Name: TestArtifact
+              RunOrder: 4
 
   InvalidateCloudfrontDistribution:
     Type: AWS::Lambda::Function
@@ -269,8 +364,11 @@ Resources:
                   - 'codebuild:StartBuild'
                   - 'codebuild:BatchGetBuilds'
                 Effect: Allow
-                Resource: !GetAtt CodeBuildProject.Arn
+                Resource:
+                  - !GetAtt CodeBuildProject.Arn
+                  - !GetAtt CodeBuildTestProject.Arn
               - Action:
+                  - 'ssm:getParameter'
                   - 'ssm:getParameters'
                 Effect: Allow
                 Resource: '*'
@@ -377,6 +475,36 @@ Resources:
                 Action:
                   - 'ssm:GetParameters'
                   - 'secretsmanager:GetSecretValue'
+                Resource: '*'
+        - PolicyName: e2eTest
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                 - 'cognito-idp:AdminGetUser'
+                 - 'cognito-idp:AdminDeleteUser'
+                 - 'cognito-idp:AdminSetUserPassword'
+                 - 'cognito-idp:AdminInitiateAuth'
+                 - 'cognito-idp:AdminCreateUser'
+                 - 'cognito-idp:ListUsers'
+                Resource:
+                 - '*'
+              - Effect: Allow
+                Action:
+                  - 'sts:AssumeRole'
+                Resource:
+                  - '*'
+              - Effect: Allow
+                Action:
+                  - 'ssm:getParameter'
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - 'dynamodb:Scan'
+                  - 'dynamodb:Query'
+                  - 'dynamodb:PutItem'
+                  - 'dynamodb:DeleteItem'
                 Resource: '*'
 
   ArtifactStoreBucket:
