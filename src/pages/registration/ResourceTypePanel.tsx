@@ -63,7 +63,6 @@ export const ResourceTypePanel = () => {
       type: newInstanceType,
       contentType: null,
       peerReviewed: null,
-      originalResearch: null,
     };
 
     setFieldValue(instanceTypeBaseFieldName, newValues);

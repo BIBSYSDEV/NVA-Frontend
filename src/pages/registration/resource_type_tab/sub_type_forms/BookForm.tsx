@@ -32,7 +32,7 @@ export const BookForm = () => {
   const {
     reference: {
       publicationContext,
-      publicationInstance: { peerReviewed, type, originalResearch },
+      publicationInstance: { peerReviewed, type },
     },
   } = values.entityDescription;
 
@@ -65,11 +65,7 @@ export const BookForm = () => {
       </BackgroundDiv>
 
       {type === BookType.Monograph && (
-        <NviValidation
-          isPeerReviewed={!!peerReviewed}
-          isRated={!!publicationContext?.level}
-          isOriginalResearch={!!originalResearch}
-        />
+        <NviValidation isPeerReviewed={!!peerReviewed} isRated={!!publicationContext?.level} />
       )}
     </>
   );

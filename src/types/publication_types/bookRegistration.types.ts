@@ -17,7 +17,6 @@ export const emptyBookPublicationInstance: BookPublicationInstance = {
   pages: emptyPagesMonograph,
   contentType: null,
   peerReviewed: null,
-  originalResearch: null,
 };
 
 export interface BookPublicationContext {

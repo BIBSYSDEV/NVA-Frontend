@@ -8,7 +8,6 @@ import {
 } from '../../../../../types/publication_types/content.types';
 import { Registration } from '../../../../../types/registration.types';
 import { ContentTypeField } from './ContentTypeField';
-import { OriginalResearchField } from './OriginalResearchField';
 import { PeerReviewedField } from './PeerReviewedField';
 
 const StyledRadioGroup = styled.div`
@@ -49,7 +48,6 @@ export const NviFields = ({ contentTypes }: NviFieldsProps) => {
       {nviApplicableContentTypes.includes(contentType) && (
         <StyledRadioGroup>
           <PeerReviewedField />
-          <OriginalResearchField />
         </StyledRadioGroup>
       )}
     </>
