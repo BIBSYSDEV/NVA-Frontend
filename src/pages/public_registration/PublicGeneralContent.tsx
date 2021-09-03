@@ -14,6 +14,7 @@ import {
 import {
   DegreePublicationContext,
   DegreePublicationInstance,
+  DegreeRegistration,
 } from '../../types/publication_types/degreeRegistration.types';
 import {
   JournalPublicationContext,
@@ -116,14 +117,21 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           <>
             <PublicPublisherContent publicationContext={publicationContext as DegreePublicationContext} />
             {publicationInstance.type === DegreeType.Phd && (
-              <PublicSeriesContent publicationContext={publicationContext as DegreePublicationContext} />
+              <>
+                <PublicSeriesContent publicationContext={publicationContext as DegreePublicationContext} />
+                <PublicIsbnContent
+                  isbnList={
+                    (registration as DegreeRegistration).entityDescription.reference.publicationContext.isbnList
+                  }
+                />
+              </>
             )}
             <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
           </>
         ) : isReport(registration) ? (
           <>
             <PublicPublisherContent publicationContext={publicationContext as ReportPublicationContext} />
-            <PublicSeriesContent publicationContext={publicationContext as DegreePublicationContext} />
+            <PublicSeriesContent publicationContext={publicationContext as ReportPublicationContext} />
             <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
             <PublicIsbnContent
               isbnList={(registration as ReportRegistration).entityDescription.reference.publicationContext.isbnList}
