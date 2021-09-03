@@ -46,9 +46,6 @@ const resourceErrorMessage = {
   linkedContextRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.chapter.published_in'),
   }),
-  originalResearchRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('registration:resource_type.presents_original_research'),
-  }),
   pageBeginInvalid: i18n.t('feedback:validation.has_invalid_format', {
     field: i18n.t('registration:resource_type.pages_from'),
   }),
@@ -110,12 +107,6 @@ const peerReviewedField = Yup.boolean()
   .when('$contentType', {
     is: (contentType: string) => nviApplicableContentTypes.includes(contentType),
     then: Yup.boolean().nullable().required(resourceErrorMessage.peerReviewedRequired),
-  });
-const originalResearchField = Yup.boolean()
-  .nullable()
-  .when('$contentType', {
-    is: (contentType: string) => nviApplicableContentTypes.includes(contentType),
-    then: Yup.boolean().nullable().required(resourceErrorMessage.originalResearchRequired),
   });
 
 const pagesMonographField = Yup.object()
@@ -187,7 +178,6 @@ const journalPublicationInstance = Yup.object().shape({
         .required(resourceErrorMessage.contentTypeRequired),
     }),
   peerReviewed: peerReviewedField,
-  originalResearch: originalResearchField,
 });
 
 const journalPublicationContext = Yup.object().shape({
@@ -217,7 +207,6 @@ const bookPublicationInstance = Yup.object().shape({
         .required(resourceErrorMessage.contentTypeRequired),
     }),
   peerReviewed: peerReviewedField,
-  originalResearch: originalResearchField,
 });
 
 const bookPublicationContext = Yup.object().shape({
@@ -274,7 +263,6 @@ const chapterPublicationInstance = Yup.object().shape({
         .required(resourceErrorMessage.contentTypeRequired),
     }),
   peerReviewed: peerReviewedField,
-  originalResearch: originalResearchField,
 });
 
 const chapterPublicationContext = Yup.object().shape({

@@ -50,10 +50,6 @@ describe('Registration: Resource type: Book', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`)
       .eq(0)
       .click({ force: true });
-    // cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviFailedOriginalResearch}]`).should(
-    //   'be.visible'
-    // );
-    // cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.originalResearchField}] input`).eq(0).click();
     // cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviSuccess}]`).should('be.visible');
 
     // fill out number of pages field

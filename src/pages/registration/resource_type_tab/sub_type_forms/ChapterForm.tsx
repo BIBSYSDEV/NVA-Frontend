@@ -119,11 +119,7 @@ export const ChapterForm = () => {
             <NviFields contentTypes={Object.values(ChapterContentType)} />
           </BackgroundDiv>
 
-          <NviValidation
-            isPeerReviewed={!!publicationInstance.peerReviewed}
-            isRated={!!publicationContext?.level}
-            isOriginalResearch={false}
-          />
+          <NviValidation isPeerReviewed={!!publicationInstance.peerReviewed} isRated={!!publicationContext?.level} />
         </>
       )}
     </>

@@ -46,7 +46,6 @@ export const emptyJournalPublicationInstance: JournalPublicationInstance = {
   volume: '',
   corrigendumFor: '',
   contentType: null,
-  originalResearch: null,
 };
 
 const emptyPublicationContext: JournalPublicationContext = {
