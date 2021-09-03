@@ -57,7 +57,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   } = registration.entityDescription;
 
   const journalPublicationInstance = publicationInstance as JournalPublicationInstance;
-  const { contentType, peerReviewed } = journalPublicationInstance;
+  const { contentType, peerReviewed, corrigendumFor } = journalPublicationInstance;
 
   return (
     <StyledGeneralInfo>
@@ -99,7 +99,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
                 <Typography variant="overline" component="p">
                   {t('resource_type.original_article')}
                 </Typography>
-                <RegistrationSummary id={journalPublicationInstance.corrigendumFor} />
+                <RegistrationSummary id={corrigendumFor} />
               </>
             )}
           </>
