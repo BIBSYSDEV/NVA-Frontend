@@ -10,9 +10,19 @@ import {
   RadioGroup,
   Typography,
 } from '@material-ui/core';
+import styled from 'styled-components';
 import { Registration } from '../../../../../types/registration.types';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../../utils/dataTestIds';
+
+const StyledFormControl = styled(FormControl)`
+  margin-top: 1rem;
+`;
+
+const StyledFormLabel = styled(FormLabel)`
+  font-size: 1.25rem;
+  font-weight: 700;
+`;
 
 export const PeerReviewedField = () => {
   const { t } = useTranslation('registration');
@@ -21,8 +31,8 @@ export const PeerReviewedField = () => {
   return (
     <Field name={ResourceFieldNames.PEER_REVIEW}>
       {({ field: { name, value } }: FieldProps<boolean | null>) => (
-        <FormControl data-testid={dataTestId.registrationWizard.resourceType.peerReviewed} required>
-          <FormLabel component="legend">{t('resource_type.peer_review')}</FormLabel>
+        <StyledFormControl data-testid={dataTestId.registrationWizard.resourceType.peerReviewed} required>
+          <StyledFormLabel>{t('resource_type.peer_review')}</StyledFormLabel>
           <RadioGroup
             value={value === true ? 'true' : value === false ? 'false' : ''}
             onChange={(event) => setFieldValue(name, event.target.value === 'true')}>
@@ -36,7 +46,7 @@ export const PeerReviewedField = () => {
             />
           </RadioGroup>
           <ErrorMessage name={name} render={(message) => <FormHelperText error>{message}</FormHelperText>} />
-        </FormControl>
+        </StyledFormControl>
       )}
     </Field>
   );

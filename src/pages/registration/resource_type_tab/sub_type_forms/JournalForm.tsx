@@ -136,11 +136,7 @@ export const JournalForm = () => {
           <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
             <NviFields contentTypes={Object.values(JournalArticleContentType)} />
           </BackgroundDiv>
-          <NviValidation
-            isPeerReviewed={!!publicationInstance.peerReviewed}
-            isRated={!!publicationContext?.level}
-            isOriginalResearch={!!publicationInstance.originalResearch}
-          />
+          <NviValidation isPeerReviewed={!!publicationInstance.peerReviewed} isRated={!!publicationContext?.level} />
         </>
       )}
     </>
