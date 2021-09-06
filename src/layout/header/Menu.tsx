@@ -11,6 +11,7 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { LanguageSelector } from './LanguageSelector';
 import { useIsMobile } from '../../utils/hooks/useIsMobile';
+import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledMenu = styled.div`
   grid-area: menu;
@@ -56,8 +57,8 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
   return (
     <StyledMenu ref={divRef}>
       <StyledMenuButton
+        data-testid={dataTestId.header.menuButton}
         onClick={handleClickMenuAnchor}
-        data-testid="menu"
         endIcon={anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}>
         <Typography noWrap>{menuButtonLabel}</Typography>
       </StyledMenuButton>
@@ -76,14 +77,14 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
           horizontal: 'left',
         }}>
         {isMobile && (
-          <MenuItem key="language-selector" divider>
+          <MenuItem divider>
             <LanguageSelector />
           </MenuItem>
         )}
 
         {user?.isCurator && (
           <MenuItem
-            key="menu-my-worklist-button"
+            data-testid={dataTestId.header.worklistLink}
             onClick={closeMenu}
             divider
             component={StyledLink}
@@ -94,7 +95,8 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
         {(user?.isAppAdmin || user?.isInstitutionAdmin) && [
           user.isAppAdmin && (
             <MenuItem
-              data-testid="menu-admin-institutions-button"
+              key={dataTestId.header.adminInstitutionsLink}
+              data-testid={dataTestId.header.adminInstitutionsLink}
               onClick={closeMenu}
               component={StyledLink}
               to={UrlPathTemplate.AdminInstitutions}>
@@ -103,14 +105,16 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
           ),
           user.isInstitutionAdmin && [
             <MenuItem
-              key="menu-admin-institution-button"
+              key={dataTestId.header.adminInstitutionLink}
+              data-testid={dataTestId.header.adminInstitutionLink}
               onClick={closeMenu}
               component={StyledLink}
               to={UrlPathTemplate.MyInstitution}>
               <Typography>{t('common:my_institution')}</Typography>
             </MenuItem>,
             <MenuItem
-              key="menu-admin-institution-users-button"
+              key={dataTestId.header.adminUsersLink}
+              data-testid={dataTestId.header.adminUsersLink}
               onClick={closeMenu}
               component={StyledLink}
               to={UrlPathTemplate.MyInstitutionUsers}>
@@ -120,14 +124,14 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
           <Divider key="divider" />,
         ]}
         <MenuItem
-          data-testid="menu-user-profile-button"
+          data-testid={dataTestId.header.myProfileLink}
           onClick={closeMenu}
           component={StyledLink}
           to={UrlPathTemplate.MyProfile}>
           <Typography>{t('profile:my_profile')}</Typography>
         </MenuItem>
 
-        <MenuItem data-testid="menu-logout-button" onClick={handleLogout}>
+        <MenuItem data-testid={dataTestId.header.logOutLink} onClick={handleLogout}>
           {t('authorization:logout')}
         </MenuItem>
       </MuiMenu>
