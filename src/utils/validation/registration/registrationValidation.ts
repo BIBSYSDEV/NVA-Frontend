@@ -47,27 +47,22 @@ export const registrationValidationSchema = Yup.object().shape({
     language: Yup.string(),
     projects: Yup.array().of(Yup.object()), // TODO
     contributors: contributorsValidationSchema,
-    reference: baseReference
-      .when('$publicationContextType', {
-        is: PublicationType.PublicationInJournal,
-        then: journalReference,
-      })
-      .when('$publicationContextType', {
-        is: PublicationType.Book,
-        then: bookReference,
-      })
-      .when('$publicationContextType', {
-        is: PublicationType.Report,
-        then: reportReference,
-      })
-      .when('$publicationContextType', {
-        is: PublicationType.Degree,
-        then: degreeReference,
-      })
-      .when('$publicationContextType', {
-        is: PublicationType.Chapter,
-        then: chapterReference,
-      }),
+    reference: Yup.object().when('$publicationContextType', (publicationContextType) => {
+      switch (publicationContextType) {
+        case PublicationType.PublicationInJournal:
+          return journalReference;
+        case PublicationType.Book:
+          return bookReference;
+        case PublicationType.Report:
+          return reportReference;
+        case PublicationType.Degree:
+          return degreeReference;
+        case PublicationType.Chapter:
+          return chapterReference;
+        default:
+          return baseReference;
+      }
+    }),
   }),
   fileSet: Yup.object().shape({
     files: Yup.array().of(fileValidationSchema).min(1, registrationErrorMessage.fileRequired),
