@@ -12,7 +12,5 @@ export const disciplineOptions: NpiDiscipline[] = disciplines
   )
   .flat();
 
-// TODO: when we have a service for getting npiDisciplines by id this must be updated (only id is stored in backend for now)
-export const getNpiDiscipline = (id: string): NpiDiscipline | null => {
-  return disciplineOptions.find((discipline) => discipline.id === id) ?? null;
-};
+export const getNpiDiscipline = (id: string): NpiDiscipline | null =>
+  disciplineOptions.find((discipline) => discipline.id === id) ?? null;

@@ -5,6 +5,7 @@ import { IconButton, TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
 import { Field, FieldProps } from 'formik';
+import { dataTestId } from '../utils/dataTestIds';
 
 const StyledTextField = styled(TextField)`
   margin-top: 0;
@@ -19,7 +20,7 @@ export const SearchBar = () => {
         <StyledTextField
           {...field}
           id={field.name}
-          data-testid="search-field"
+          data-testid={dataTestId.startPage.searchField}
           fullWidth
           variant="outlined"
           label={t('search')}
@@ -37,7 +38,7 @@ export const SearchBar = () => {
                     <ClearIcon />
                   </IconButton>
                 )}
-                <IconButton type="submit" data-testid="search-button" title={t('search')}>
+                <IconButton type="submit" data-testid={dataTestId.startPage.searchButton} title={t('search')}>
                   <SearchIcon />
                 </IconButton>
               </>

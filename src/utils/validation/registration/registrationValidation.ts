@@ -45,7 +45,7 @@ export const registrationValidationSchema = Yup.object().shape({
       day: Yup.number().transform(emptyStringToNull).nullable(),
     }),
     language: Yup.string(),
-    projects: Yup.array().of(Yup.object()), // TODO
+    projects: Yup.array().of(Yup.object()),
     contributors: contributorsValidationSchema,
     reference: Yup.object().when('$publicationContextType', (publicationContextType) => {
       switch (publicationContextType) {

@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
 import { SearchResult } from '../../types/search.types';
 import { useFetch } from '../../utils/hooks/useFetch';
+import { dataTestId } from '../../utils/dataTestIds';
 
 export const RegistrationSearch = () => {
   const { t } = useTranslation('common');
@@ -33,7 +34,7 @@ export const RegistrationSearch = () => {
         <>
           <SearchResults searchResult={searchResults} />
           <TablePagination
-            data-testid="search-pagination"
+            data-testid={dataTestId.startPage.searchPagination}
             rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
             component="div"
             count={searchResults.total}
