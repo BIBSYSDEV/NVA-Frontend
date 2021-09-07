@@ -8,6 +8,7 @@ import { Menu } from './Menu';
 import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { AMPLIFY_REDIRECTED_KEY } from '../../utils/constants';
+import { dataTestId } from '../../utils/dataTestIds';
 
 export const Login = () => {
   const user = useSelector((state: RootStore) => state.user);
@@ -33,7 +34,7 @@ export const Login = () => {
   ) : isLoading ? (
     <ButtonWithProgress isLoading>{t('common:loading')}</ButtonWithProgress>
   ) : (
-    <Button color="primary" variant="contained" onClick={handleLogin} data-testid="menu-login-button">
+    <Button color="primary" variant="contained" onClick={handleLogin} data-testid={dataTestId.header.logInButton}>
       {t('login')}
     </Button>
   );

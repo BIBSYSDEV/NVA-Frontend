@@ -4,8 +4,16 @@ export const dataTestId = {
     privacyLink: 'privacy-link',
   },
   header: {
+    adminUsersLink: 'admin-users-link',
+    adminInstitutionLink: 'admin-institutions-link',
+    adminInstitutionsLink: 'admin-institutions-link',
     languageButton: 'language-button',
     languageMenu: 'language-menu',
+    logInButton: 'log-in-link',
+    logOutLink: 'log-out-link',
+    menuButton: 'menu-button',
+    myProfileLink: 'my-profile-link',
+    worklistLink: 'worklist-link',
   },
   startPage: {
     readMoreButton: 'button-read-more',

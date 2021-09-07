@@ -1,9 +1,11 @@
+import { dataTestId } from '../../src/utils/dataTestIds';
+
 describe('User', () => {
   before('Given that the user is logged in:', () => {
     cy.visit('/');
     cy.mocklogin();
-    cy.get('[data-testid=menu]').click();
-    cy.get('[data-testid=menu-user-profile-button]').click();
+    cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click();
+    cy.get(`[data-testid=${dataTestId.header.myProfileLink}]`).click();
   });
 
   it('The user should be able to see their user details', () => {
@@ -23,7 +25,7 @@ describe('User connects to their Authority', () => {
   });
 
   it('The user should be able to connect to an authority and an orcid on the start page when no authority is connected', () => {
-    cy.get('[data-testid=menu-login-button]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.header.logInButton}]`).click({ force: true });
 
     // connect author
     cy.get('[data-testid=connect-author-modal]').click({ force: true });
