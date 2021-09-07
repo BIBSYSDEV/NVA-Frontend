@@ -72,6 +72,8 @@ export const dataTestId = {
       nviFailedRated: 'nvi-failed-not-rated',
       nviSuccess: 'nvi-applicable',
       pagesField: 'pages-field',
+      pagesFromField: 'pages-from-field',
+      pagesToField: 'pages-to-field',
       peerReviewed: 'peer-review-field',
       publisherField: 'publisher-search-field',
       removePublisherButton: 'remove-publisher-button',

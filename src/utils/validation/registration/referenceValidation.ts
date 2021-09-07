@@ -29,13 +29,6 @@ const resourceErrorMessage = {
   doiInvalid: i18n.t('feedback:validation.has_invalid_format', {
     field: i18n.t('registration:registration.link_to_resource'),
   }),
-  issueInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:resource_type.issue'),
-  }),
-  issueMustBeBigger: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('registration:resource_type.issue'),
-    limit: 0,
-  }),
   isbnInvalid: i18n.t('feedback:validation.has_invalid_format', {
     field: i18n.t('registration:resource_type.isbn'),
   }),
@@ -46,23 +39,9 @@ const resourceErrorMessage = {
   linkedContextRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.chapter.published_in'),
   }),
-  pageBeginInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:resource_type.pages_from'),
-  }),
-  pageBeginMustBeBigger: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('registration:resource_type.pages_from'),
-    limit: 0,
-  }),
   pageBeginMustBeSmallerThanEnd: i18n.t('feedback:validation.must_be_smaller_than', {
     field: i18n.t('registration:resource_type.pages_from'),
     limit: i18n.t('registration:resource_type.pages_to'),
-  }),
-  pageEndInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:resource_type.pages_to'),
-  }),
-  pageEndMustBeBigger: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('registration:resource_type.pages_to'),
-    limit: 0,
   }),
   pageEndMustBeBiggerThanBegin: i18n.t('feedback:validation.must_be_bigger_than', {
     field: i18n.t('registration:resource_type.pages_to'),
@@ -83,13 +62,6 @@ const resourceErrorMessage = {
   }),
   typeRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:type'),
-  }),
-  volumeInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:resource_type.volume'),
-  }),
-  volumeMustBeBigger: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('registration:resource_type.volume'),
-    limit: 0,
   }),
 };
 
@@ -121,20 +93,22 @@ const pagesMonographField = Yup.object()
 const pagesRangeField = Yup.object()
   .nullable()
   .shape({
-    begin: Yup.number()
-      .typeError(resourceErrorMessage.pageBeginInvalid)
-      .min(0, resourceErrorMessage.pageBeginMustBeBigger)
-      .when('end', {
-        is: (value: number) => value && !isNaN(value),
-        then: Yup.number().max(Yup.ref('end'), resourceErrorMessage.pageBeginMustBeSmallerThanEnd),
-      })
-      .transform(emptyStringToNull)
-      .nullable(),
-    end: Yup.number()
-      .typeError(resourceErrorMessage.pageEndInvalid)
-      .min(Yup.ref('begin'), resourceErrorMessage.pageEndMustBeBiggerThanBegin)
-      .transform(emptyStringToNull)
-      .nullable(),
+    begin: Yup.string().test('begin-test', resourceErrorMessage.pageBeginMustBeSmallerThanEnd, function (beginValue) {
+      const beginNumber = parseInt(beginValue ?? '');
+      const endNumber = parseInt(this.parent.end);
+      if (!isNaN(beginNumber) && !isNaN(endNumber)) {
+        return beginNumber <= endNumber;
+      }
+      return true;
+    }),
+    end: Yup.string().test('end-test', resourceErrorMessage.pageEndMustBeBiggerThanBegin, function (endValue) {
+      const beginNumber = parseInt(this.parent.begin);
+      const endNumber = parseInt(endValue ?? '');
+      if (!isNaN(beginNumber) && !isNaN(endNumber)) {
+        return beginNumber <= endNumber;
+      }
+      return true;
+    }),
   });
 const publisherField = Yup.string().required(resourceErrorMessage.publisherRequired);
 
@@ -149,16 +123,8 @@ export const baseReference = Yup.object().shape({
 const journalPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(JournalType)).required(resourceErrorMessage.typeRequired),
   articleNumber: Yup.string(),
-  volume: Yup.number()
-    .typeError(resourceErrorMessage.volumeInvalid)
-    .min(0, resourceErrorMessage.volumeMustBeBigger)
-    .transform(emptyStringToNull)
-    .nullable(),
-  issue: Yup.number()
-    .typeError(resourceErrorMessage.issueInvalid)
-    .min(0, resourceErrorMessage.issueMustBeBigger)
-    .transform(emptyStringToNull)
-    .nullable(),
+  volume: Yup.string(),
+  issue: Yup.string(),
   pages: pagesRangeField,
   corrigendumFor: Yup.string()
     .optional()

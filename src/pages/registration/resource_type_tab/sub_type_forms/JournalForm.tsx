@@ -13,6 +13,7 @@ import { NviFields } from '../components/nvi_fields/NviFields';
 import { JournalArticleContentType } from '../../../../types/publication_types/content.types';
 import { JournalRegistration } from '../../../../types/publication_types/journalRegistration.types';
 import { JournalField } from '../components/JournalField';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -87,7 +88,7 @@ export const JournalForm = () => {
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 id={field.name}
-                data-testid="pages-from-field"
+                data-testid={dataTestId.registrationWizard.resourceType.pagesFromField}
                 variant="filled"
                 label={t('resource_type.pages_from')}
                 {...field}
@@ -102,7 +103,7 @@ export const JournalForm = () => {
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 id={field.name}
-                data-testid="pages-to-field"
+                data-testid={dataTestId.registrationWizard.resourceType.pagesToField}
                 variant="filled"
                 label={t('resource_type.pages_to')}
                 {...field}
