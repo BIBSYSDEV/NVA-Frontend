@@ -17,6 +17,9 @@ export const dataTestId = {
   },
   startPage: {
     readMoreButton: 'button-read-more',
+    searchButton: 'search-button',
+    searchField: 'search-field',
+    searchPagination: 'search-pagination',
   },
   projectLandingPage: {
     generalInfoBox: 'general-info',

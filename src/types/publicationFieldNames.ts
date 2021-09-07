@@ -104,8 +104,5 @@ export enum ContributorFieldNames {
 export enum SpecificContributorFieldNames {
   Affiliations = 'affiliations',
   Corresponding = 'correspondingAuthor',
-  Email = 'email',
-  Id = 'id',
-  Role = 'role', // TODO
   Sequence = 'sequence',
 }

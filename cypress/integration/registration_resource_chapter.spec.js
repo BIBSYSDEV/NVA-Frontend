@@ -1,27 +1,34 @@
-describe.skip('Registration: Resource type: Chapter', () => {
+import { dataTestId } from '../../src/utils/dataTestIds';
+
+describe('Registration: Resource type: Chapter', () => {
   beforeEach(() => {
     cy.visit('/');
   });
 
   it('The user should be able to fill out the form for chapter type', () => {
     cy.mocklogin();
-    cy.get('[data-testid=new-registration]').click({ force: true });
+    cy.get('[data-testid=new-registration]').click();
 
     cy.startRegistrationWithDoi();
 
-    cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-resource-type]').click();
 
     // choose Report type
-    cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' '); //makes the select options open
-    cy.get('[data-testid=publication-instance-type-Chapter]').should('be.visible');
-    cy.get('[data-testid=publication-instance-type-Chapter]').click({ force: true });
+    cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
+    cy.get('[data-testid=publication-context-type-Chapter]').should('be.visible');
+    cy.get('[data-testid=publication-context-type-Chapter]').click();
+    cy.get('[data-testid=publication-context-type-Book]').contains('Book');
 
-    cy.get('[data-testid=publication-instance-type-heading]').contains('Chapter');
+    cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
+    cy.get('[data-testid=publication-instance-type-ChapterArticle]').click();
 
     // fill out number of page-number fields
-    cy.get('[data-testid=chapter-pages-from]').type('1');
-    cy.get('[data-testid=chapter-pages-to]').type('42');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.pagesFromField}]`).type('1');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.pagesToField}]`).type('42');
 
-    cy.get('[data-testid=nvi-chapter]').should('be.visible');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}]`).click();
+    cy.get('[data-testid=content-value-academic-chapter]').click();
+
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).eq(0).click();
   });
 });
