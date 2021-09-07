@@ -1,4 +1,5 @@
 import { RoleName } from '../../src/types/user.types';
+import { dataTestId } from '../../src/utils/dataTestIds';
 
 const noRoles = [];
 const allRoles = Object.values(RoleName);
@@ -11,22 +12,22 @@ describe('Menu', () => {
 
   it('Authorized user should see protected menu options', () => {
     cy.setUserRolesInRedux(allRoles);
-    cy.get('[data-testid=menu]').click({ force: true });
-    cy.get('[data-testid=menu-user-profile-button]').should('be.visible');
+    cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.header.myProfileLink}]`).should('be.visible');
     cy.get('[data-testid=new-registration]').should('be.visible');
     cy.get('[data-testid=my-registrations]').should('be.visible');
-    cy.get('[data-testid=menu-admin-institution-button]').should('be.visible');
-    cy.get('[data-testid=menu-logout-button]').should('be.visible');
+    cy.get(`[data-testid=${dataTestId.header.adminInstitutionLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.header.logOutLink}]`).should('be.visible');
   });
 
   it('Unauthorized user should not see protected menu options', () => {
     cy.setUserRolesInRedux(noRoles);
-    cy.get('[data-testid=menu]').click({ force: true });
-    cy.get('[data-testid=menu-user-profile-button]').should('be.visible');
+    cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.header.myProfileLink}]`).should('be.visible');
     cy.get('[data-testid=new-registration]').should('not.exist');
     cy.get('[data-testid=my-registrations]').should('not.exist');
-    cy.get('[data-testid=menu-admin-institution-button]').should('not.exist');
-    cy.get('[data-testid=menu-logout-button]').should('be.visible');
+    cy.get(`[data-testid=${dataTestId.header.adminInstitutionLink}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.header.logOutLink}]`).should('be.visible');
   });
 
   it('Unauthorized user should see Forbidden page when visiting protected URLs', () => {
