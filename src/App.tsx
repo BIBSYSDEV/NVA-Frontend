@@ -52,6 +52,7 @@ const getLanguageTagValue = (language: string) => {
 
 if (window.location.pathname === UrlPathTemplate.MyProfile && window.location.hash.startsWith('#access_token=')) {
   // Workaround to allow adding orcid for aws-amplify > 4.2.2
+  // Without this the user will be redirected to / for some reason
   window.location.href = window.location.href.replace('#', '?');
 }
 
