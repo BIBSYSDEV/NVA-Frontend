@@ -99,18 +99,18 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       setIsAddingOrcid(false);
     };
 
-    const orcidAccessToken = new URLSearchParams(location.hash.replace('#', '?')).get('access_token');
+    const orcidAccessToken = new URLSearchParams(location.search).get('access_token');
     if (orcidAccessToken) {
       addOrcid(orcidAccessToken);
     }
-  }, [t, dispatch, user.authority, location.hash, history]);
+  }, [t, dispatch, user.authority, location.search, history]);
 
   useEffect(() => {
-    const orcidError = new URLSearchParams(location.hash.replace('#', '?')).get('error');
+    const orcidError = new URLSearchParams(location.search).get('error');
     if (orcidError) {
       dispatch(setNotification(t(`feedback:error.orcid.${orcidError}`), NotificationVariant.Error));
     }
-  }, [location.hash, dispatch, t]);
+  }, [location.search, dispatch, t]);
 
   const removeOrcid = async (id: string) => {
     if (!user.authority) {
