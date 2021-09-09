@@ -1,5 +1,5 @@
 import { TextField, MenuItem } from '@material-ui/core';
-import { useEffect, useState } from 'react';
+import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -24,11 +24,12 @@ const sortOptions = [
 export const SortSelector = () => {
   const history = useHistory();
   const { t } = useTranslation('search');
-  const [selectedSortOption, setSelectedSortOption] = useState(SortOption.PublishedDateDesc);
 
-  useEffect(() => {
+  const updateSortQuery = (event: ChangeEvent<any>) => {
+    const { value } = event.target;
     const params = new URLSearchParams(history.location.search);
-    switch (selectedSortOption) {
+
+    switch (value) {
       case SortOption.PublishedDateDesc:
         params.set('orderBy', 'publishedDate');
         params.set('sortOrder', 'desc');
@@ -43,12 +44,18 @@ export const SortSelector = () => {
         break;
     }
     history.push({ search: params.toString() });
-  }, [history, selectedSortOption]);
+  };
 
   return (
-    <StyledTextField value={selectedSortOption} select label={t('sort_by')} variant="outlined" fullWidth>
+    <StyledTextField
+      select
+      defaultValue={SortOption.ModifiedDateDesc}
+      label={t('sort_by')}
+      variant="outlined"
+      fullWidth
+      onChange={updateSortQuery}>
       {sortOptions.map((option) => (
-        <MenuItem key={option.value} value={option.value} onClick={() => setSelectedSortOption(option.value)}>
+        <MenuItem key={option.value} value={option.value}>
           {t(option.i18nKey)}
         </MenuItem>
       ))}
