@@ -15,6 +15,9 @@ export const REDIRECT_PATH_KEY = 'redirect-path';
 
 export const API_URL = process.env.REACT_APP_API_URL;
 
+export const hrcsActivityBaseId = 'https://nva.unit.no/hrcs/activity/';
+export const hrcsCategoryBaseId = 'https://nva.unit.no/hrcs/category/';
+
 export const isErrorStatus = (status: number) => status >= 400 && status <= 599;
 export const isSuccessStatus = (status: number) => status >= 200 && status <= 299;
 

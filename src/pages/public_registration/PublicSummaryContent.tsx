@@ -7,6 +7,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { hrcsCategories } from '../../resources/vocabularies/hrcsCategories';
 import { hrcsActivityOptions } from '../registration/description_tab/vocabularies/HrcsActivityInput';
+import { hrcsActivityBaseId, hrcsCategoryBaseId } from '../../utils/constants';
 
 export const PublicSummaryContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
@@ -17,14 +18,14 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
   } = registration;
 
   const selectedHrcsActivities = subjects
-    .filter((subjectId) => subjectId.startsWith('https://nva.unit.no/hrcs/activity/'))
+    .filter((subjectId) => subjectId.startsWith(hrcsActivityBaseId))
     .map((activityId) => {
       const matchingActivity = hrcsActivityOptions.find((activity) => activity.id === activityId);
       return matchingActivity ? getLanguageString(matchingActivity.label) : '';
     });
 
   const selectedHrcsCategories = subjects
-    .filter((subjectId) => subjectId.startsWith('https://nva.unit.no/hrcs/category/'))
+    .filter((subjectId) => subjectId.startsWith(hrcsCategoryBaseId))
     .map((categoryId) => {
       const matchingCategory = hrcsCategories.categories.find((category) => category.id === categoryId);
       return matchingCategory ? getLanguageString(matchingCategory.label) : '';

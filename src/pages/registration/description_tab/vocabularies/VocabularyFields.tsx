@@ -13,6 +13,7 @@ import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { Registration } from '../../../../types/registration.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { VocabularyComponentProps } from './VocabularyAutocomplete';
+import { hrcsActivityBaseId, hrcsCategoryBaseId } from '../../../../utils/constants';
 
 const StyledAddButton = styled(Button)`
   margin-top: 1rem;
@@ -42,12 +43,12 @@ interface VocabularyConfig {
 // Specify which vocabularies to show, and their i18n key and component
 const vocabularyConfig: VocabularyConfig = {
   hrcsActivity: {
-    baseId: 'https://nva.unit.no/hrcs/activity/',
+    baseId: hrcsActivityBaseId,
     i18nKey: 'description.hrcs_activities',
     component: HrcsActivityInput,
   },
   hrcsCategory: {
-    baseId: 'https://nva.unit.no/hrcs/category/',
+    baseId: hrcsCategoryBaseId,
     i18nKey: 'description.hrcs_categories',
     component: HrcsCategoryInput,
   },
