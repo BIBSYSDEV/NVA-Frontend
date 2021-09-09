@@ -3,6 +3,7 @@ import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledTextField = styled(TextField)`
   margin-top: 0;
@@ -55,6 +56,7 @@ export const SortSelector = () => {
 
   return (
     <StyledTextField
+      data-testid={dataTestId.startPage.orderBySelect}
       select
       value={selectedSortingValue}
       label={t('sort_by')}
