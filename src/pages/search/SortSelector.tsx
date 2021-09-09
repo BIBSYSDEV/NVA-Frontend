@@ -24,10 +24,17 @@ const sortOptions = [
 export const SortSelector = () => {
   const history = useHistory();
   const { t } = useTranslation('search');
+  const params = new URLSearchParams(history.location.search);
+
+  const selectedSortingValue =
+    params.get('orderBy') === 'publishedDate'
+      ? params.get('sortOrder') === 'desc'
+        ? SortOption.PublishedDateDesc
+        : SortOption.PublishedDateAsc
+      : SortOption.ModifiedDateDesc;
 
   const updateSortQuery = (event: ChangeEvent<any>) => {
     const { value } = event.target;
-    const params = new URLSearchParams(history.location.search);
 
     switch (value) {
       case SortOption.PublishedDateDesc:
@@ -49,7 +56,7 @@ export const SortSelector = () => {
   return (
     <StyledTextField
       select
-      defaultValue={SortOption.ModifiedDateDesc}
+      value={selectedSortingValue}
       label={t('sort_by')}
       variant="outlined"
       fullWidth
