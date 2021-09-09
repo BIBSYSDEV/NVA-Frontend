@@ -8,6 +8,7 @@ import { Field, FieldProps } from 'formik';
 import { dataTestId } from '../utils/dataTestIds';
 
 const StyledTextField = styled(TextField)`
+  grid-area: searchbar;
   margin-top: 0;
 `;
 
