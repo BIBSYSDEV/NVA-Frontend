@@ -4,7 +4,7 @@ import { mockFileUploadUrl } from '../../src/api/mock-interceptor';
 import { dataTestId } from '../../src/utils/dataTestIds';
 
 Cypress.Commands.add('mocklogin', () => {
-  cy.get('[data-testid=menu-login-button]').click({ force: true });
+  cy.get(`[data-testid=${dataTestId.header.logInButton}]`).click({ force: true });
   cy.get('[data-testid=author-radio-button]').eq(1).click({ force: true });
   cy.get('[data-testid=connect-author-button]').click({ force: true });
   cy.get('[data-testid=modal_next]').click({ force: true });

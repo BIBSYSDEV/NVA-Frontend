@@ -58,7 +58,6 @@ export enum ResourceFieldNames {
   PagesType = 'entityDescription.reference.publicationInstance.pages.type',
   PagesPages = 'entityDescription.reference.publicationInstance.pages.pages',
   PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
-  OriginalResearch = 'entityDescription.reference.publicationInstance.originalResearch',
   PubliactionContextLevel = 'entityDescription.reference.publicationContext.level',
   PubliactionContextLinkedContext = 'entityDescription.reference.publicationContext.linkedContext',
   PubliactionContextTitle = 'entityDescription.reference.publicationContext.title',
@@ -105,8 +104,5 @@ export enum ContributorFieldNames {
 export enum SpecificContributorFieldNames {
   Affiliations = 'affiliations',
   Corresponding = 'correspondingAuthor',
-  Email = 'email',
-  Id = 'id',
-  Role = 'role', // TODO
   Sequence = 'sequence',
 }

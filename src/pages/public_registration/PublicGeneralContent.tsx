@@ -14,6 +14,7 @@ import {
 import {
   DegreePublicationContext,
   DegreePublicationInstance,
+  DegreeRegistration,
 } from '../../types/publication_types/degreeRegistration.types';
 import {
   JournalPublicationContext,
@@ -57,7 +58,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   } = registration.entityDescription;
 
   const journalPublicationInstance = publicationInstance as JournalPublicationInstance;
-  const { contentType, peerReviewed, originalResearch } = journalPublicationInstance;
+  const { contentType, peerReviewed, corrigendumFor } = journalPublicationInstance;
 
   return (
     <StyledGeneralInfo>
@@ -67,8 +68,6 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         {contentType && <Typography>{t(`resource_type.content_types.${contentType}`)}</Typography>}
 
         {peerReviewed && <Typography>{t('resource_type.peer_reviewed')}</Typography>}
-
-        {originalResearch && <Typography>{t('resource_type.presents_original_research')}</Typography>}
 
         {language && (
           <Typography data-testid={dataTestId.registrationLandingPage.primaryLanguage}>
@@ -101,7 +100,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
                 <Typography variant="overline" component="p">
                   {t('resource_type.original_article')}
                 </Typography>
-                <RegistrationSummary id={journalPublicationInstance.corrigendumFor} />
+                <RegistrationSummary id={corrigendumFor} />
               </>
             )}
           </>
@@ -118,14 +117,21 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           <>
             <PublicPublisherContent publicationContext={publicationContext as DegreePublicationContext} />
             {publicationInstance.type === DegreeType.Phd && (
-              <PublicSeriesContent publicationContext={publicationContext as DegreePublicationContext} />
+              <>
+                <PublicSeriesContent publicationContext={publicationContext as DegreePublicationContext} />
+                <PublicIsbnContent
+                  isbnList={
+                    (registration as DegreeRegistration).entityDescription.reference.publicationContext.isbnList
+                  }
+                />
+              </>
             )}
             <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
           </>
         ) : isReport(registration) ? (
           <>
             <PublicPublisherContent publicationContext={publicationContext as ReportPublicationContext} />
-            <PublicSeriesContent publicationContext={publicationContext as DegreePublicationContext} />
+            <PublicSeriesContent publicationContext={publicationContext as ReportPublicationContext} />
             <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
             <PublicIsbnContent
               isbnList={(registration as ReportRegistration).entityDescription.reference.publicationContext.isbnList}

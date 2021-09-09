@@ -15,6 +15,7 @@ import { SearchContainerField } from '../components/SearchContainerField';
 import { NviFields } from '../components/nvi_fields/NviFields';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
 import { ChapterContentType } from '../../../../types/publication_types/content.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 const StyledDiv = styled(StyledCenterAlignedContentWrapper)`
   gap: 1rem;
@@ -82,7 +83,7 @@ export const ChapterForm = () => {
               <StyledPageNumberField
                 id={field.name}
                 variant="filled"
-                data-testid="chapter-pages-from"
+                data-testid={dataTestId.registrationWizard.resourceType.pagesFromField}
                 label={t('resource_type.pages_from')}
                 {...field}
                 value={field.value ?? ''}
@@ -100,7 +101,7 @@ export const ChapterForm = () => {
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <StyledPageNumberField
                 id={field.name}
-                data-testid="chapter-pages-to"
+                data-testid={dataTestId.registrationWizard.resourceType.pagesToField}
                 variant="filled"
                 label={t('resource_type.pages_to')}
                 {...field}
@@ -119,11 +120,7 @@ export const ChapterForm = () => {
             <NviFields contentTypes={Object.values(ChapterContentType)} />
           </BackgroundDiv>
 
-          <NviValidation
-            isPeerReviewed={!!publicationInstance.peerReviewed}
-            isRated={!!publicationContext?.level}
-            isOriginalResearch={false}
-          />
+          <NviValidation isPeerReviewed={!!publicationInstance.peerReviewed} isRated={!!publicationContext?.level} />
         </>
       )}
     </>

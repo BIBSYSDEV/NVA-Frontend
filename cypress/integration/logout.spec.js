@@ -1,3 +1,5 @@
+import { dataTestId } from '../../src/utils/dataTestIds';
+
 describe('Logout', () => {
   before('Given that the user is logged in:', () => {
     cy.visit('/');
@@ -5,10 +7,10 @@ describe('Logout', () => {
   });
 
   it('The user should be able to log out', () => {
-    cy.get('[data-testid=menu]').click({ force: true });
-    cy.get('[data-testid=menu-logout-button]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.header.logOutLink}]`).click({ force: true });
 
-    cy.get('[data-testid=menu-login-button]').should('be.visible');
-    cy.get('[data-testid=menu]').should('not.exist');
+    cy.get(`[data-testid=${dataTestId.header.logInButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.header.menuButton}]`).should('not.exist');
   });
 });
