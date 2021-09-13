@@ -1,6 +1,7 @@
 import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
 import { PublicationType, ReportType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
+import { Series } from './bookRegistration.types';
 
 export interface ReportRegistration extends BaseRegistration {
   entityDescription: ReportEntityDescription;
@@ -26,10 +27,7 @@ export interface ReportPublicationContext {
   printIssn: string;
   publisher: string;
   seriesNumber: string;
-  series: {
-    title?: string;
-    id?: string;
-  };
+  series: Series;
   url: string;
 }
 
