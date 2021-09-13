@@ -51,25 +51,23 @@ export const SeriesField = () => {
   const { setFieldValue, values } = useFormikContext<Registration>();
   const {
     reference: {
-      publicationContext: {
-        series: { title, id },
-      },
+      publicationContext: { series },
     },
     date: { year },
   } = values.entityDescription as BookEntityDescription;
 
-  const [query, setQuery] = useState(title ?? '');
+  const [query, setQuery] = useState(series?.title ?? '');
   const debouncedQuery = useDebounce(query);
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
     url:
-      !id && debouncedQuery && debouncedQuery === query
+      !series?.id && debouncedQuery && debouncedQuery === query
         ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${debouncedQuery}`
         : '',
     errorMessage: t('feedback:error.get_series'),
   });
 
   const [journal, isLoadingJournal] = useFetch<Journal>({
-    url: id ?? '',
+    url: series?.id ?? '',
     errorMessage: t('feedback:error.get_series'),
   });
 
@@ -86,7 +84,7 @@ export const SeriesField = () => {
       : '';
   const selectedJournalString = journal ? (issnString ? `${journal.name} (${issnString})` : journal.name) : '';
 
-  return !id ? (
+  return !series?.id ? (
     <MuiThemeProvider theme={lightTheme}>
       <Autocomplete
         {...autocompleteTranslationProps}

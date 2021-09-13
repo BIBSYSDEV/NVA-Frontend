@@ -27,7 +27,7 @@ export interface ReportPublicationContext {
   printIssn: string;
   publisher: string;
   seriesNumber: string;
-  series: Series;
+  series?: Series;
   url: string;
 }
 

@@ -24,7 +24,7 @@ export interface DegreePublicationContext {
   peerReviewed: boolean;
   publisher: string;
   seriesNumber: string;
-  series: Series;
+  series?: Series;
   url: string;
 }
 

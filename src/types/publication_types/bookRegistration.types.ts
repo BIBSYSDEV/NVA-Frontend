@@ -33,7 +33,7 @@ export interface BookPublicationContext {
   peerReviewed: boolean;
   publisher: string;
   seriesNumber: string;
-  series: Series;
+  series?: Series;
   url: string;
 }
 

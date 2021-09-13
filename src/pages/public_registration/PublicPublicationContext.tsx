@@ -100,16 +100,13 @@ export const PublicSeriesContent = ({
 }) => {
   const { t } = useTranslation('registration');
 
-  const {
-    series: { id },
-    seriesNumber,
-  } = publicationContext;
+  const { series, seriesNumber } = publicationContext;
   const [fetchedSeries, isLoadingSeries] = useFetch<Journal>({
-    url: id ?? '',
+    url: series?.id ?? '',
     errorMessage: t('feedback:error.get_series'),
   });
 
-  return id ? (
+  return series?.id ? (
     <>
       <Typography variant="overline" component="p">
         {t('resource_type.series')}
