@@ -26,8 +26,10 @@ export interface ReportPublicationContext {
   printIssn: string;
   publisher: string;
   seriesNumber: string;
-  seriesTitle: string;
-  seriesUri: string;
+  series: {
+    title?: string;
+    id?: string;
+  };
   url: string;
 }
 

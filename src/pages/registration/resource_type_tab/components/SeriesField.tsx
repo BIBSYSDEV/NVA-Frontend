@@ -51,23 +51,25 @@ export const SeriesField = () => {
   const { setFieldValue, values } = useFormikContext<Registration>();
   const {
     reference: {
-      publicationContext: { seriesUri, seriesTitle },
+      publicationContext: {
+        series: { title, id },
+      },
     },
     date: { year },
   } = values.entityDescription as BookEntityDescription;
 
-  const [query, setQuery] = useState(seriesTitle ?? '');
+  const [query, setQuery] = useState(title ?? '');
   const debouncedQuery = useDebounce(query);
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
     url:
-      !seriesUri && debouncedQuery && debouncedQuery === query
+      !id && debouncedQuery && debouncedQuery === query
         ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${debouncedQuery}`
         : '',
     errorMessage: t('feedback:error.get_series'),
   });
 
   const [journal, isLoadingJournal] = useFetch<Journal>({
-    url: seriesUri ?? '',
+    url: id ?? '',
     errorMessage: t('feedback:error.get_series'),
   });
 
@@ -82,9 +84,9 @@ export const SeriesField = () => {
           .filter((issn) => issn)
           .join(', ')
       : '';
-  const selectedJournalString = journal ? (issnString ? `${journal.name} (${issnString})` : journal.name) : seriesTitle;
+  const selectedJournalString = journal ? (issnString ? `${journal.name} (${issnString})` : journal.name) : '';
 
-  return !seriesUri ? (
+  return !id ? (
     <MuiThemeProvider theme={lightTheme}>
       <Autocomplete
         {...autocompleteTranslationProps}
@@ -101,8 +103,8 @@ export const SeriesField = () => {
           }
         }}
         onChange={(_, inputValue) => {
-          setFieldValue(ResourceFieldNames.SeriesUri, inputValue?.id);
-          setFieldValue(ResourceFieldNames.SeriesTitle, inputValue?.name);
+          setFieldValue(ResourceFieldNames.SeriesType, 'Series'); // Ensure type is Series and not UnconfirmedSeries
+          setFieldValue(ResourceFieldNames.SeriesId, inputValue?.id);
         }}
         loading={isLoadingJournalOptions}
         getOptionLabel={(option) => option.name}
@@ -143,8 +145,8 @@ export const SeriesField = () => {
         data-testid={dataTestId.registrationWizard.resourceType.removeSeriesButton}
         variant="contained"
         onClick={() => {
-          setFieldValue(ResourceFieldNames.SeriesUri, undefined);
-          setFieldValue(ResourceFieldNames.SeriesTitle, '');
+          setFieldValue(ResourceFieldNames.SeriesType, 'UnconfirmedSeries');
+          setFieldValue(ResourceFieldNames.SeriesId, '');
           setQuery('');
         }}
         endIcon={<DeleteIcon />}>
