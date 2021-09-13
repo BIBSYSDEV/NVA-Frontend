@@ -12,16 +12,16 @@ const StyledOptionText = styled(Typography)<{ indentations: number }>`
     `}
 `;
 
+export const hrcsActivityOptions = hrcsActivities.categories
+  .map((category) => {
+    const { subcategories, ...mainCategory } = category;
+    const subCategories = category.subcategories ?? [];
+    return [mainCategory, ...subCategories];
+  })
+  .flat();
+
 export const HrcsActivityInput = (props: VocabularyComponentProps) => {
   const { t } = useTranslation('registration');
-
-  const hrcsActivityOptions = hrcsActivities.categories
-    .map((category) => {
-      const { subcategories, ...mainCategory } = category;
-      const subCategories = category.subcategories ?? [];
-      return [mainCategory, ...subCategories];
-    })
-    .flat();
 
   return (
     <VocabularyAutocomplete
