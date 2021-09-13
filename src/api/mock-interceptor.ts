@@ -87,6 +87,7 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(PublicationsApiPath.Messages)).reply(200, mockMessages);
 
   // PUBLICATION CHANNEL
+  mock.onGet(mockJournalsSearch[0].id).reply(200, mockJournalsSearch[0]);
   mock.onGet(new RegExp(PublicationChannelApiPath.PublisherSearch)).reply(200, mockPublishersSearch);
   mock.onGet(new RegExp(PublicationChannelApiPath.JournalSearch)).reply(200, mockJournalsSearch);
 
