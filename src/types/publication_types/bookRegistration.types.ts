@@ -19,6 +19,12 @@ export const emptyBookPublicationInstance: BookPublicationInstance = {
   peerReviewed: null,
 };
 
+export interface Series {
+  type: 'Series' | 'UnconfirmedSeries';
+  id?: string;
+  title?: string;
+}
+
 export interface BookPublicationContext {
   type: PublicationType | '';
   isbnList: string[];
@@ -27,8 +33,7 @@ export interface BookPublicationContext {
   peerReviewed: boolean;
   publisher: string;
   seriesNumber: string;
-  seriesTitle: string;
-  seriesUri: string;
+  series?: Series;
   url: string;
 }
 

@@ -1,6 +1,7 @@
 import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
 import { PublicationType, DegreeType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
+import { Series } from './bookRegistration.types';
 
 export interface DegreeRegistration extends BaseRegistration {
   entityDescription: DegreeEntityDescription;
@@ -23,8 +24,7 @@ export interface DegreePublicationContext {
   peerReviewed: boolean;
   publisher: string;
   seriesNumber: string;
-  seriesTitle: string;
-  seriesUri: string;
+  series?: Series;
   url: string;
 }
 
