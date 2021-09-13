@@ -2,16 +2,6 @@ import { VocabularyData } from '../../types/vocabulary.types';
 
 //https://github.com/brinxmat/hrcs-skos/blob/main/src/hrcs_category.json
 export const hrcsCategories: VocabularyData = {
-  '@context': {
-    '@vocab': 'http://www.w3.org/2004/02/skos/core#',
-    id: '@id',
-    type: '@type',
-    categories: '@graph',
-    HrcsConcept: 'Concept',
-    subcategories: 'narrower',
-    label: { '@id': 'prefLabel', '@container': '@language' },
-    identifier: 'http://purl.org/dc/terms/identifier',
-  },
   categories: [
     {
       id: 'https://nva.unit.no/hrcs/category/000',
