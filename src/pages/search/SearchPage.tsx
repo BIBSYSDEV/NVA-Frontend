@@ -10,30 +10,24 @@ import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers'
 import { createSearchConfigFromSearchParams, createSearchQuery } from '../../utils/searchHelpers';
 import { RegistrationTypeFilter } from './filters/RegistrationTypeFilter';
 import { RegistrationSearch } from './RegistrationSearch';
+import { SortSelector } from './SortSelector';
 
 const StyledSearch = styled.div`
   display: grid;
-  grid-template-columns: 2fr 7fr;
+  grid-template-columns: 2fr 5fr 2fr;
   grid-template-rows: auto 1fr;
-  grid-template-areas: 'filters searchbar' 'filters results';
+  grid-template-areas: 'filters searchbar sorting' 'filters results results';
   column-gap: 2rem;
   row-gap: 1rem;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     grid-template-columns: 1fr;
-    grid-template-areas: 'searchbar' 'filters' 'results';
+    grid-template-areas: 'searchbar' 'sorting' 'filters' 'results';
   }
-`;
-const StyledSearchBar = styled(SearchBar)`
-  grid-area: searchbar;
 `;
 
 const StyledFilters = styled(List)`
   grid-area: filters;
-`;
-
-const StyledRegistrationSearch = styled(RegistrationSearch)`
-  grid-area: results;
 `;
 
 const StyledFilterHelperText = styled(Typography)`
@@ -67,8 +61,9 @@ const SearchPage = () => {
               <StyledFilterHelperText>{t('search:select_filters')}</StyledFilterHelperText>
               <RegistrationTypeFilter />
             </StyledFilters>
-            <StyledSearchBar />
-            <StyledRegistrationSearch />
+            <SearchBar />
+            <SortSelector />
+            <RegistrationSearch />
           </StyledSearch>
         </Form>
       </Formik>

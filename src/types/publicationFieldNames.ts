@@ -63,16 +63,16 @@ export enum ResourceFieldNames {
   PubliactionContextTitle = 'entityDescription.reference.publicationContext.title',
   PubliactionContextPublisher = 'entityDescription.reference.publicationContext.publisher',
   PubliactionContextType = 'entityDescription.reference.publicationContext.type',
+  SeriesId = 'entityDescription.reference.publicationContext.series.id',
   SeriesNumber = 'entityDescription.reference.publicationContext.seriesNumber',
-  SeriesTitle = 'entityDescription.reference.publicationContext.seriesTitle',
-  SeriesUri = 'entityDescription.reference.publicationContext.seriesUri',
+  SeriesTitle = 'entityDescription.reference.publicationContext.series.title',
+  SeriesType = 'entityDescription.reference.publicationContext.series.type',
   SubType = 'entityDescription.reference.publicationInstance.type',
   Volume = 'entityDescription.reference.publicationInstance.volume',
 }
 
 export enum DescriptionFieldNames {
   Abstract = 'entityDescription.abstract',
-  ControlledKeywords = 'entityDescription.controlledKeywords',
   Date = 'entityDescription.date',
   Description = 'entityDescription.description',
   Language = 'entityDescription.language',
@@ -80,6 +80,7 @@ export enum DescriptionFieldNames {
   PublicationDay = 'entityDescription.date.day',
   PublicationMonth = 'entityDescription.date.month',
   PublicationYear = 'entityDescription.date.year',
+  Subjects = 'subjects',
   Tags = 'entityDescription.tags',
   Title = 'entityDescription.mainTitle',
 }

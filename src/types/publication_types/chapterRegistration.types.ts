@@ -20,8 +20,6 @@ export interface ChapterPublicationContext {
   peerReviewed: boolean;
   printIssn: string;
   publisher: string;
-  seriesNumber: string;
-  seriesTitle: string;
   url: string;
   linkedContext: string;
 }

@@ -16,6 +16,7 @@ export const dataTestId = {
     worklistLink: 'worklist-link',
   },
   startPage: {
+    orderBySelect: 'order-by-select',
     readMoreButton: 'button-read-more',
     searchButton: 'search-button',
     searchField: 'search-field',

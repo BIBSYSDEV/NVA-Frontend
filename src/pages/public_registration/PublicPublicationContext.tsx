@@ -100,13 +100,13 @@ export const PublicSeriesContent = ({
 }) => {
   const { t } = useTranslation('registration');
 
-  const { seriesUri, seriesNumber } = publicationContext;
-  const [series, isLoadingSeries] = useFetch<Journal>({
-    url: seriesUri,
+  const { series, seriesNumber } = publicationContext;
+  const [fetchedSeries, isLoadingSeries] = useFetch<Journal>({
+    url: series?.id ?? '',
     errorMessage: t('feedback:error.get_series'),
   });
 
-  return seriesUri ? (
+  return series?.id ? (
     <>
       <Typography variant="overline" component="p">
         {t('resource_type.series')}
@@ -114,21 +114,21 @@ export const PublicSeriesContent = ({
       {isLoadingSeries ? (
         <ListSkeleton />
       ) : (
-        series && (
+        fetchedSeries && (
           <>
-            <Typography>{series.name}</Typography>
+            <Typography>{fetchedSeries.name}</Typography>
             <Typography>
               {[
-                series.printIssn ? `${t('resource_type.print_issn')}: ${series.printIssn}` : '',
-                series.onlineIssn ? `${t('resource_type.online_issn')}: ${series.onlineIssn}` : '',
+                fetchedSeries.printIssn ? `${t('resource_type.print_issn')}: ${fetchedSeries.printIssn}` : '',
+                fetchedSeries.onlineIssn ? `${t('resource_type.online_issn')}: ${fetchedSeries.onlineIssn}` : '',
               ]
                 .filter((issn) => issn)
                 .join(', ')}
             </Typography>
             <Typography>
-              {t('resource_type.level')}: {series.level}
+              {t('resource_type.level')}: {fetchedSeries.level}
             </Typography>
-            <Typography component={Link} href={getChannelRegisterUrl(series.identifier)} target="_blank">
+            <Typography component={Link} href={getChannelRegisterUrl(fetchedSeries.identifier)} target="_blank">
               {t('public_page.find_in_channel_registry')}
             </Typography>
             {seriesNumber && (
