@@ -29,7 +29,7 @@ export const PeerReviewedField = () => {
   const { setFieldValue } = useFormikContext<Registration>();
 
   return (
-    <Field name={ResourceFieldNames.PEER_REVIEW}>
+    <Field name={ResourceFieldNames.PeerReviewed}>
       {({ field: { name, value } }: FieldProps<boolean | null>) => (
         <StyledFormControl data-testid={dataTestId.registrationWizard.resourceType.peerReviewed} required>
           <StyledFormLabel>{t('resource_type.peer_review')}</StyledFormLabel>
