@@ -46,6 +46,7 @@ const StyledSeriesInfo = styled.div`
   grid-area: info;
 `;
 
+// TODO: Reuse <JournalField />?
 export const SeriesField = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue, values } = useFormikContext<Registration>();
@@ -150,6 +151,7 @@ export const SeriesField = () => {
         endIcon={<DeleteIcon />}>
         {t('resource_type.remove_series')}
       </StyledDangerButton>
+
       {(isLoadingJournal || journal?.level) && (
         <StyledSeriesInfo>
           {isLoadingJournal ? (

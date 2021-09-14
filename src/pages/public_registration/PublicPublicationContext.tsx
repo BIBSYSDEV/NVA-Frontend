@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, Typography } from '@material-ui/core';
+import { CircularProgress, Link, Typography } from '@material-ui/core';
 import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
 import { ChapterPublicationContext } from '../../types/publication_types/chapterRegistration.types';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
@@ -22,30 +22,41 @@ const getChannelRegisterUrl = (id: string) =>
 
 export const PublicJournalContent = ({ date, publicationContext }: PublicJournalContentProps) => {
   const { t } = useTranslation('registration');
-  const { onlineIssn, printIssn, title, url, level } = publicationContext;
+  const [journal, isLoadingJournal] = useFetch<Journal>({
+    url: publicationContext.id ?? '',
+    errorMessage: t('feedback:error.get_series'),
+  });
 
-  return title ? (
+  return publicationContext.id ? (
     <>
       <Typography variant="overline" component="p">
         {t('resource_type.journal')}
       </Typography>
 
-      {url ? (
-        <Typography component={Link} href={url} target="_blank" rel="noopener noreferrer">
-          {title}
-        </Typography>
+      {isLoadingJournal ? (
+        <CircularProgress />
       ) : (
-        <Typography>{title}</Typography>
-      )}
+        journal && (
+          <>
+            {journal.website ? (
+              <Typography component={Link} href={journal.website} target="_blank" rel="noopener noreferrer">
+                {journal.name}
+              </Typography>
+            ) : (
+              <Typography>{journal.name}</Typography>
+            )}
 
-      <Typography>{displayDate(date)}</Typography>
+            <Typography>{displayDate(date)}</Typography>
 
-      {onlineIssn && (
-        <Typography>
-          {t('resource_type.issn')}: {[onlineIssn, printIssn].filter((issn) => issn).join(', ')}
-        </Typography>
+            {journal.onlineIssn && (
+              <Typography>
+                {t('resource_type.issn')}: {[journal.onlineIssn, journal.printIssn].filter((issn) => issn).join(', ')}
+              </Typography>
+            )}
+            <PublicLevelContent level={journal.level} />
+          </>
+        )
       )}
-      <PublicLevelContent level={level} />
     </>
   ) : null;
 };

@@ -7,12 +7,12 @@ import {
   ContributorFieldNames,
   DescriptionFieldNames,
   FileFieldNames,
-  PublicationType,
   ResourceFieldNames,
   SpecificContributorFieldNames,
   SpecificFileFieldNames,
 } from '../types/publicationFieldNames';
 import { Registration, RegistrationTab } from '../types/registration.types';
+import { isBook, isChapter, isDegree, isJournal, isReport } from './registration-helpers';
 
 export interface TabErrors {
   [RegistrationTab.Description]: string[];
@@ -114,111 +114,110 @@ const touchedDescriptionTabFields: FormikTouched<Registration> = {
   },
 };
 
-const touchedResourceTabFields = (publicationType: PublicationType | ''): FormikTouched<unknown> => {
-  switch (publicationType) {
-    case PublicationType.PublicationInJournal:
-      return {
-        entityDescription: {
-          reference: {
-            publicationContext: {
-              type: true,
-              title: true,
+const touchedResourceTabFields = (registration: Registration): FormikTouched<unknown> => {
+  if (isJournal(registration)) {
+    return {
+      entityDescription: {
+        reference: {
+          publicationContext: {
+            type: true,
+            id: true,
+          },
+          publicationInstance: {
+            type: true,
+            articleNumber: true,
+            issue: true,
+            pages: {
+              begin: true,
+              end: true,
             },
-            publicationInstance: {
-              type: true,
-              articleNumber: true,
-              issue: true,
-              pages: {
-                begin: true,
-                end: true,
-              },
-              volume: true,
-              corrigendumFor: true,
-              contentType: true,
-              peerReviewed: true,
-            },
+            volume: true,
+            corrigendumFor: true,
+            contentType: true,
+            peerReviewed: true,
           },
         },
-      };
-    case PublicationType.Degree:
-      return {
-        entityDescription: {
-          reference: {
-            publicationContext: {
-              type: true,
-              publisher: true,
-            },
-            publicationInstance: {
-              type: true,
-            },
+      },
+    };
+  } else if (isDegree(registration)) {
+    return {
+      entityDescription: {
+        reference: {
+          publicationContext: {
+            type: true,
+            publisher: true,
+          },
+          publicationInstance: {
+            type: true,
           },
         },
-      };
-    case PublicationType.Report:
-      return {
-        entityDescription: {
-          reference: {
-            publicationContext: {
-              type: true,
-              publisher: true,
-              isbnList: [true],
-            },
-            publicationInstance: {
-              type: true,
-            },
+      },
+    };
+  } else if (isReport(registration)) {
+    return {
+      entityDescription: {
+        reference: {
+          publicationContext: {
+            type: true,
+            publisher: true,
+            isbnList: [true],
+          },
+          publicationInstance: {
+            type: true,
           },
         },
-      };
-    case PublicationType.Book:
-      return {
-        entityDescription: {
-          npiSubjectHeading: true,
-          reference: {
-            publicationContext: {
-              type: true,
-              publisher: true,
-              isbnList: [true],
+      },
+    };
+  } else if (isBook(registration)) {
+    return {
+      entityDescription: {
+        npiSubjectHeading: true,
+        reference: {
+          publicationContext: {
+            type: true,
+            publisher: true,
+            isbnList: [true],
+          },
+          publicationInstance: {
+            type: true,
+            pages: {
+              pages: true,
             },
-            publicationInstance: {
-              type: true,
-              pages: {
-                pages: true,
-              },
-              contentType: true,
-              peerReviewed: true,
-            },
+            contentType: true,
+            peerReviewed: true,
           },
         },
-      };
-    case PublicationType.Chapter:
-      return {
-        entityDescription: {
-          reference: {
-            publicationContext: {
-              type: true,
-              linkedContext: true,
-            },
-            publicationInstance: {
-              type: true,
-              contentType: true,
-              peerReviewed: true,
-            },
+      },
+    };
+  } else if (isChapter(registration)) {
+    return {
+      entityDescription: {
+        reference: {
+          publicationContext: {
+            type: true,
+            linkedContext: true,
+          },
+          publicationInstance: {
+            type: true,
+            contentType: true,
+            peerReviewed: true,
           },
         },
-      };
-    default:
-      return {
-        entityDescription: {
-          reference: {
-            publicationContext: {
-              type: true,
-            },
-            publicationInstance: {
-              type: true,
-            },
+      },
+    };
+  } else {
+    return {
+      entityDescription: {
+        reference: {
+          publicationContext: {
+            type: true,
+          },
+          publicationInstance: {
+            type: true,
           },
         },
-      };
+      },
+    };
   }
 };
 
@@ -253,8 +252,7 @@ export const getTouchedTabFields = (
 ): FormikTouched<Registration> => {
   const tabFields = {
     [RegistrationTab.Description]: () => touchedDescriptionTabFields,
-    [RegistrationTab.ResourceType]: () =>
-      touchedResourceTabFields(values.entityDescription.reference.publicationContext.type),
+    [RegistrationTab.ResourceType]: () => touchedResourceTabFields(values),
     [RegistrationTab.Contributors]: () => touchedContributorTabFields(values.entityDescription.contributors),
     [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(values.fileSet.files),
   };

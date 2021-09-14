@@ -1,13 +1,6 @@
 import * as Yup from 'yup';
 import { parse as parseIsbn } from 'isbn-utils';
-import {
-  BookType,
-  ChapterType,
-  DegreeType,
-  JournalType,
-  PublicationType,
-  ReportType,
-} from '../../../types/publicationFieldNames';
+import { BookType, ChapterType, DegreeType, JournalType, ReportType } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
 import {
   BookMonographContentType,
@@ -115,7 +108,7 @@ const publisherField = Yup.string().required(resourceErrorMessage.publisherRequi
 export const baseReference = Yup.object().shape({
   doi: Yup.string().trim().url(resourceErrorMessage.doiInvalid),
   publicationContext: Yup.object().shape({
-    type: Yup.string().oneOf(Object.values(PublicationType)).required(resourceErrorMessage.typeRequired),
+    // type: Yup.string().oneOf(Object.values(PublicationType)).required(resourceErrorMessage.typeRequired),
   }),
 });
 
@@ -147,7 +140,7 @@ const journalPublicationInstance = Yup.object().shape({
 });
 
 const journalPublicationContext = Yup.object().shape({
-  title: Yup.string().when('$publicationInstanceType', {
+  id: Yup.string().when('$publicationInstanceType', {
     is: JournalType.Corrigendum,
     then: Yup.string(),
     otherwise: Yup.string().required(resourceErrorMessage.journalRequired),

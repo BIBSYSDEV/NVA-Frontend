@@ -102,11 +102,7 @@ export const mockRegistration: JournalRegistration = {
       publicationContext: {
         type: PublicationType.PublicationInJournal,
         title: 'International Journal of Human-Computer Interaction',
-        level: 'LEVEL_1',
-        openAccess: false,
-        peerReviewed: false,
         onlineIssn: '1044-7318',
-        url: 'http://www.erlbaum.com/Journals/journals/IJHCI/ijhci.htm',
       },
     },
   },

@@ -1,5 +1,5 @@
 import { useFormikContext } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../components/styled/Wrappers';
 import { lightTheme } from '../../themes/lightTheme';
@@ -8,27 +8,25 @@ import { emptyChapterPublicationInstance } from '../../types/publication_types/c
 import { emptyDegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
 import { emptyJournalPublicationInstance } from '../../types/publication_types/journalRegistration.types';
 import { emptyReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
-import {
-  contextTypeBaseFieldName,
-  instanceTypeBaseFieldName,
-  PublicationType,
-  ResourceFieldNames,
-} from '../../types/publicationFieldNames';
+import { instanceTypeBaseFieldName, PublicationType } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { BookTypeForm } from './resource_type_tab/BookTypeForm';
 import { ChapterTypeForm } from './resource_type_tab/ChapterTypeForm';
-import { SelectTypeField } from './resource_type_tab/components/SelectTypeField';
 import { DegreeTypeForm } from './resource_type_tab/DegreeTypeForm';
 import { JournalTypeForm } from './resource_type_tab/JournalTypeForm';
 import { ReportTypeForm } from './resource_type_tab/ReportTypeForm';
+import { getMainRegistrationType } from '../../utils/registration-helpers';
+import { useTranslation } from 'react-i18next';
+import { MenuItem, TextField } from '@material-ui/core';
 
 export const ResourceTypePanel = () => {
+  const { t } = useTranslation('common');
   const { values, setTouched, setFieldValue, touched } = useFormikContext<Registration>();
-  const publicationContextType = values.entityDescription.reference.publicationContext.type;
+  const [mainType, setMainType] = useState(getMainRegistrationType(values));
 
   const onChangeType = (newPublicationContextType: string) => {
     // Ensure some values are reset when publication type changes
-    setFieldValue(contextTypeBaseFieldName, { type: newPublicationContextType }, false);
+    setMainType(newPublicationContextType);
 
     switch (newPublicationContextType) {
       case PublicationType.PublicationInJournal:
@@ -72,26 +70,29 @@ export const ResourceTypePanel = () => {
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
         <StyledSelectWrapper>
-          <SelectTypeField
-            dataTestId="publication-context-type"
-            fieldName={ResourceFieldNames.PubliactionContextType}
-            options={Object.values(PublicationType)}
-            onChangeType={onChangeType}
-          />
+          <TextField
+            data-testid="publication-context-type"
+            select
+            variant="filled"
+            fullWidth
+            label={t('type')}
+            required
+            value={mainType}
+            onChange={(event) => onChangeType(event.target.value)}>
+            {Object.values(PublicationType).map((typeValue) => (
+              <MenuItem value={typeValue} key={typeValue} data-testid={`publication-context-type-${typeValue}`}>
+                {t(`publicationTypes:${typeValue}`)}
+              </MenuItem>
+            ))}
+          </TextField>
         </StyledSelectWrapper>
       </BackgroundDiv>
 
-      {publicationContextType && (
-        <>
-          {publicationContextType === PublicationType.Book && <BookTypeForm onChangeSubType={onChangeSubType} />}
-          {publicationContextType === PublicationType.Report && <ReportTypeForm onChangeSubType={onChangeSubType} />}
-          {publicationContextType === PublicationType.Degree && <DegreeTypeForm onChangeSubType={onChangeSubType} />}
-          {publicationContextType === PublicationType.Chapter && <ChapterTypeForm onChangeSubType={onChangeSubType} />}
-          {publicationContextType === PublicationType.PublicationInJournal && (
-            <JournalTypeForm onChangeSubType={onChangeSubType} />
-          )}
-        </>
-      )}
+      {mainType === PublicationType.Book && <BookTypeForm onChangeSubType={onChangeSubType} />}
+      {mainType === PublicationType.Report && <ReportTypeForm onChangeSubType={onChangeSubType} />}
+      {mainType === PublicationType.Degree && <DegreeTypeForm onChangeSubType={onChangeSubType} />}
+      {mainType === PublicationType.Chapter && <ChapterTypeForm onChangeSubType={onChangeSubType} />}
+      {mainType === PublicationType.PublicationInJournal && <JournalTypeForm onChangeSubType={onChangeSubType} />}
     </>
   );
 };

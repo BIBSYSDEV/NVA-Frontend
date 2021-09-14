@@ -2,7 +2,7 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MuiThemeProvider, TextField, Typography } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
+import { Autocomplete, Skeleton } from '@material-ui/lab';
 import DeleteIcon from '@material-ui/icons/Delete';
 import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
@@ -46,25 +46,38 @@ export const JournalField = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue, setFieldTouched, values } = useFormikContext<Registration>();
   const {
-    reference: {
-      publicationContext: { title },
-    },
+    reference: { publicationContext },
     date: { year },
   } = values.entityDescription as JournalEntityDescription;
 
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(publicationContext.title ?? '');
   const debouncedQuery = useDebounce(query);
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
     url:
-      !title && debouncedQuery && debouncedQuery === query
+      !publicationContext.title && debouncedQuery && debouncedQuery === query
         ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${debouncedQuery}`
         : '',
   });
-
   const options = query && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : [];
 
+  const [journal, isLoadingJournal] = useFetch<Journal>({
+    url: publicationContext.id ?? '',
+    errorMessage: t('feedback:error.get_series'),
+  });
+
+  const issnString =
+    journal?.printIssn || journal?.onlineIssn
+      ? [
+          journal.printIssn ? `${t('resource_type.print_issn')}: ${journal.printIssn}` : '',
+          journal.onlineIssn ? `${t('resource_type.online_issn')}: ${journal.onlineIssn}` : '',
+        ]
+          .filter((issn) => issn)
+          .join(', ')
+      : '';
+  const selectedJournalString = journal ? (issnString ? `${journal.name} (${issnString})` : journal.name) : '';
+
   return (
-    <Field name={ResourceFieldNames.PubliactionContextTitle}>
+    <Field name={ResourceFieldNames.PubliactionContextId}>
       {({ field: { value, name }, meta: { error, touched } }: FieldProps<string>) =>
         !value ? (
           <MuiThemeProvider theme={lightTheme}>
@@ -83,7 +96,10 @@ export const JournalField = () => {
                 }
               }}
               onBlur={() => (!touched ? setFieldTouched(name) : null)}
-              onChange={(_, inputValue) => setFieldValue(name, inputValue?.name)}
+              onChange={(_, inputValue) => {
+                setFieldValue(ResourceFieldNames.PubliactionContextType, 'Journal');
+                setFieldValue(name, inputValue?.id);
+              }}
               loading={isLoadingJournalOptions}
               getOptionLabel={(option) => option.name}
               renderOption={(option, state) => (
@@ -106,7 +122,7 @@ export const JournalField = () => {
                   placeholder={t('resource_type.search_for_journal')}
                   required
                   showSearchIcon
-                  errorMessage={touched && error ? error : ''}
+                  errorMessage={touched && !!error ? error : ''}
                 />
               )}
             />
@@ -116,7 +132,7 @@ export const JournalField = () => {
             <StyledTextField
               data-testid={journalFieldTestId}
               variant="filled"
-              value={value}
+              value={selectedJournalString}
               label={t('resource_type.journal')}
               disabled
               multiline
@@ -126,12 +142,22 @@ export const JournalField = () => {
               data-testid={dataTestId.registrationWizard.resourceType.removeJournalButton}
               variant="contained"
               onClick={() => {
+                setFieldValue(ResourceFieldNames.PubliactionContextType, 'UnconfirmedJournal');
                 setFieldValue(name, '');
                 setQuery('');
               }}
               endIcon={<DeleteIcon />}>
               {t('resource_type.remove_journal')}
             </StyledDangerButton>
+            {isLoadingJournal ? (
+              <Skeleton width={300} />
+            ) : (
+              journal?.level && (
+                <Typography>
+                  {t('resource_type.level')}: {journal.level}
+                </Typography>
+              )
+            )}
           </StyledSelectedJournalContainer>
         )
       }
