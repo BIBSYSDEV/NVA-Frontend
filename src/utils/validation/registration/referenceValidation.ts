@@ -107,8 +107,8 @@ const publisherField = Yup.string().required(resourceErrorMessage.publisherRequi
 
 export const baseReference = Yup.object().shape({
   doi: Yup.string().trim().url(resourceErrorMessage.doiInvalid),
-  publicationContext: Yup.object().shape({
-    // type: Yup.string().oneOf(Object.values(PublicationType)).required(resourceErrorMessage.typeRequired),
+  publicationInstance: Yup.object().shape({
+    type: Yup.string().required(resourceErrorMessage.typeRequired),
   }),
 });
 

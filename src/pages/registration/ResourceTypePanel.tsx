@@ -8,7 +8,11 @@ import { emptyChapterPublicationInstance } from '../../types/publication_types/c
 import { emptyDegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
 import { emptyJournalPublicationInstance } from '../../types/publication_types/journalRegistration.types';
 import { emptyReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
-import { instanceTypeBaseFieldName, PublicationType } from '../../types/publicationFieldNames';
+import {
+  contextTypeBaseFieldName,
+  instanceTypeBaseFieldName,
+  PublicationType,
+} from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { BookTypeForm } from './resource_type_tab/BookTypeForm';
 import { ChapterTypeForm } from './resource_type_tab/ChapterTypeForm';
@@ -21,7 +25,7 @@ import { MenuItem, TextField } from '@material-ui/core';
 
 export const ResourceTypePanel = () => {
   const { t } = useTranslation('common');
-  const { values, setTouched, setFieldValue, touched } = useFormikContext<Registration>();
+  const { values, setTouched, setFieldValue, touched, errors } = useFormikContext<Registration>();
   const [mainType, setMainType] = useState(getMainRegistrationType(values));
 
   const onChangeType = (newPublicationContextType: string) => {
@@ -31,20 +35,26 @@ export const ResourceTypePanel = () => {
     switch (newPublicationContextType) {
       case PublicationType.PublicationInJournal:
         setFieldValue(instanceTypeBaseFieldName, emptyJournalPublicationInstance, false);
+        setFieldValue(contextTypeBaseFieldName, { type: 'UnconfirmedJournal' }, false);
         break;
       case PublicationType.Book:
         setFieldValue(instanceTypeBaseFieldName, emptyBookPublicationInstance, false);
+        setFieldValue(contextTypeBaseFieldName, { type: 'UnconfirmedPublisher' }, false);
         break;
       case PublicationType.Report:
         setFieldValue(instanceTypeBaseFieldName, emptyReportPublicationInstance, false);
+        setFieldValue(contextTypeBaseFieldName, { type: 'UnconfirmedPublisher' }, false);
         break;
       case PublicationType.Degree:
         setFieldValue(instanceTypeBaseFieldName, emptyDegreePublicationInstance, false);
+        setFieldValue(contextTypeBaseFieldName, { type: 'UnconfirmedPublisher' }, false);
         break;
       case PublicationType.Chapter:
         setFieldValue(instanceTypeBaseFieldName, emptyChapterPublicationInstance, false);
+        setFieldValue(contextTypeBaseFieldName, { type: 'UnconfirmedPublisher' }, false);
         break;
     }
+
     // Avoid showing potential errors instantly
     setTouched({
       ...touched,
@@ -66,6 +76,9 @@ export const ResourceTypePanel = () => {
     setFieldValue(instanceTypeBaseFieldName, newValues);
   };
 
+  const typeError = errors.entityDescription?.reference?.publicationInstance?.type;
+  const typeTouched = touched.entityDescription?.reference?.publicationInstance?.type;
+
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
@@ -78,6 +91,8 @@ export const ResourceTypePanel = () => {
             label={t('type')}
             required
             value={mainType}
+            error={!!typeError && typeTouched}
+            helperText={!!typeError && typeTouched ? typeError : ''}
             onChange={(event) => onChangeType(event.target.value)}>
             {Object.values(PublicationType).map((typeValue) => (
               <MenuItem value={typeValue} key={typeValue} data-testid={`publication-context-type-${typeValue}`}>

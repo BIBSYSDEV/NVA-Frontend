@@ -18,7 +18,7 @@ export interface JournalPublicationInstance extends NviApplicableBase<JournalArt
 }
 
 export interface JournalPublicationContext {
-  type: 'UnconfirmedJournal' | 'Journal';
+  type: 'UnconfirmedJournal' | 'Journal' | '';
   id?: string;
   title?: string;
   onlineIssn?: string;
@@ -46,7 +46,7 @@ export const emptyJournalPublicationInstance: JournalPublicationInstance = {
 };
 
 const emptyPublicationContext: JournalPublicationContext = {
-  type: 'UnconfirmedJournal',
+  type: '',
 };
 
 const emptyReference: JournalReference = {
