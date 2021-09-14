@@ -71,7 +71,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
 
     try {
       validateYupSchema<Registration>(values, registrationValidationSchema, true, {
-        publicationContextType: getMainRegistrationType(values),
+        publicationContextType: getMainRegistrationType(publicationInstance.type),
         publicationInstanceType: publicationInstance.type,
         publicationStatus: registration?.status,
         contentType,

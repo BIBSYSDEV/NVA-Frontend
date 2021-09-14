@@ -114,7 +114,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     const contentType = 'contentType' in publicationInstance ? publicationInstance.contentType : null;
     try {
       validateYupSchema<Registration>(registration, registrationValidationSchema, true, {
-        publicationContextType: getMainRegistrationType(registration),
+        publicationContextType: getMainRegistrationType(publicationInstance.type),
         publicationInstanceType: publicationInstance.type,
         publicationStatus: registration.status,
         contentType,

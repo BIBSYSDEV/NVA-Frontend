@@ -91,7 +91,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
       </div>
 
       <div data-testid={dataTestId.registrationLandingPage.subtypeFields}>
-        {isJournal(registration) ? (
+        {isJournal(publicationInstance.type) ? (
           <>
             <PublicJournalContent date={date} publicationContext={publicationContext as JournalPublicationContext} />
             <PublicPublicationInstanceJournal publicationInstance={journalPublicationInstance} />
@@ -104,7 +104,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               </>
             )}
           </>
-        ) : isBook(registration) ? (
+        ) : isBook(publicationInstance.type) ? (
           <>
             <PublicPublisherContent publicationContext={publicationContext as BookPublicationContext} />
             <PublicSeriesContent publicationContext={publicationContext as BookPublicationContext} />
@@ -113,7 +113,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               isbnList={(registration as BookRegistration).entityDescription.reference.publicationContext.isbnList}
             />
           </>
-        ) : isDegree(registration) ? (
+        ) : isDegree(publicationInstance.type) ? (
           <>
             <PublicPublisherContent publicationContext={publicationContext as DegreePublicationContext} />
             {publicationInstance.type === DegreeType.Phd && (
@@ -128,7 +128,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             )}
             <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
           </>
-        ) : isReport(registration) ? (
+        ) : isReport(publicationInstance.type) ? (
           <>
             <PublicPublisherContent publicationContext={publicationContext as ReportPublicationContext} />
             <PublicSeriesContent publicationContext={publicationContext as ReportPublicationContext} />
@@ -137,7 +137,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               isbnList={(registration as ReportRegistration).entityDescription.reference.publicationContext.isbnList}
             />
           </>
-        ) : isChapter(registration) ? (
+        ) : isChapter(publicationInstance.type) ? (
           <>
             <PublicLinkedContextContent publicationContext={publicationContext as ChapterPublicationContext} />
             <PublicPublicationInstanceChapter publicationInstance={publicationInstance as ChapterPublicationInstance} />

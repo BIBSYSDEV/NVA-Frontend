@@ -1,5 +1,7 @@
 import { useFormikContext } from 'formik';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { MenuItem, TextField } from '@material-ui/core';
 import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../components/styled/Wrappers';
 import { lightTheme } from '../../themes/lightTheme';
@@ -20,13 +22,13 @@ import { DegreeTypeForm } from './resource_type_tab/DegreeTypeForm';
 import { JournalTypeForm } from './resource_type_tab/JournalTypeForm';
 import { ReportTypeForm } from './resource_type_tab/ReportTypeForm';
 import { getMainRegistrationType } from '../../utils/registration-helpers';
-import { useTranslation } from 'react-i18next';
-import { MenuItem, TextField } from '@material-ui/core';
 
 export const ResourceTypePanel = () => {
   const { t } = useTranslation('common');
   const { values, setTouched, setFieldValue, touched, errors } = useFormikContext<Registration>();
-  const [mainType, setMainType] = useState(getMainRegistrationType(values));
+  const [mainType, setMainType] = useState(
+    getMainRegistrationType(values.entityDescription.reference.publicationInstance.type)
+  );
 
   const onChangeType = (newPublicationContextType: string) => {
     // Ensure some values are reset when publication type changes

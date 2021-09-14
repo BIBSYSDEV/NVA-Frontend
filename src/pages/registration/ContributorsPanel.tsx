@@ -37,7 +37,7 @@ export const ContributorsPanel = () => {
     <>
       <FieldArray name={ContributorFieldNames.Contributors}>
         {({ push, replace }: FieldArrayRenderProps) =>
-          isDegree(values) ? (
+          isDegree(publicationInstance.type) ? (
             <>
               <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
                 <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
