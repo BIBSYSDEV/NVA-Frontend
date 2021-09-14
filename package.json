@@ -72,7 +72,7 @@
     "extends": "@istanbuljs/nyc-config-typescript"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.9.10",
+    "@cypress/code-coverage": "^3.9.11",
     "@cypress/instrument-cra": "^1.4.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/history": "^4.7.9",
@@ -95,10 +95,10 @@
     "faker": "^5.5.3",
     "husky": "^7.0.2",
     "nyc": "^15.1.0",
-    "prettier": "^2.3.2",
+    "prettier": "^2.4.0",
     "pretty-quick": "^3.1.1",
     "start-server-and-test": "^1.14.0",
     "ts-node": "^10.2.1",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.3"
   }
 }
