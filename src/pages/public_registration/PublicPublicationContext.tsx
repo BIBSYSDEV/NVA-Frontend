@@ -1,30 +1,28 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { CircularProgress, Link, Typography } from '@material-ui/core';
+import { Link, Typography } from '@material-ui/core';
 import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
 import { ChapterPublicationContext } from '../../types/publication_types/chapterRegistration.types';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
-import { Journal, levelMap, RegistrationDate } from '../../types/registration.types';
-import { displayDate } from '../../utils/date-helpers';
+import { Journal, levelMap } from '../../types/registration.types';
 import { RegistrationSummary } from './RegistrationSummary';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { ListSkeleton } from '../../components/ListSkeleton';
 
 interface PublicJournalContentProps {
-  date: RegistrationDate;
   publicationContext: JournalPublicationContext;
 }
 
 const getChannelRegisterUrl = (id: string) =>
   `https://dbh.nsd.uib.no/publiseringskanaler/KanalTidsskriftInfo.action?id=${id}`;
 
-export const PublicJournalContent = ({ date, publicationContext }: PublicJournalContentProps) => {
+export const PublicJournalContent = ({ publicationContext }: PublicJournalContentProps) => {
   const { t } = useTranslation('registration');
   const [journal, isLoadingJournal] = useFetch<Journal>({
     url: publicationContext.id ?? '',
-    errorMessage: t('feedback:error.get_series'),
+    errorMessage: t('feedback:error.get_journal'),
   });
 
   return publicationContext.id ? (
@@ -34,7 +32,7 @@ export const PublicJournalContent = ({ date, publicationContext }: PublicJournal
       </Typography>
 
       {isLoadingJournal ? (
-        <CircularProgress />
+        <ListSkeleton height={20} />
       ) : (
         journal && (
           <>
@@ -45,8 +43,6 @@ export const PublicJournalContent = ({ date, publicationContext }: PublicJournal
             ) : (
               <Typography>{journal.name}</Typography>
             )}
-
-            <Typography>{displayDate(date)}</Typography>
 
             {journal.onlineIssn && (
               <Typography>

@@ -47,6 +47,7 @@ import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { RegistrationSummary } from './RegistrationSummary';
 import { StyledGeneralInfo } from '../../components/landing_page/SyledGeneralInfo';
 import { dataTestId } from '../../utils/dataTestIds';
+import { displayDate } from '../../utils/date-helpers';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
@@ -64,6 +65,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
     <StyledGeneralInfo>
       <div>
         <Typography variant="overline">{t('public_page.about_registration')}</Typography>
+
+        <Typography>{displayDate(date)}</Typography>
 
         {contentType && <Typography>{t(`resource_type.content_types.${contentType}`)}</Typography>}
 
@@ -93,7 +96,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
       <div data-testid={dataTestId.registrationLandingPage.subtypeFields}>
         {isJournal(publicationInstance.type) ? (
           <>
-            <PublicJournalContent date={date} publicationContext={publicationContext as JournalPublicationContext} />
+            <PublicJournalContent publicationContext={publicationContext as JournalPublicationContext} />
             <PublicPublicationInstanceJournal publicationInstance={journalPublicationInstance} />
             {publicationInstance.type === JournalType.Corrigendum && (
               <>
