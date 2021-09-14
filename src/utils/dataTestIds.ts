@@ -5,7 +5,7 @@ export const dataTestId = {
   },
   header: {
     adminUsersLink: 'admin-users-link',
-    adminInstitutionLink: 'admin-institutions-link',
+    adminInstitutionLink: 'admin-institution-link',
     adminInstitutionsLink: 'admin-institutions-link',
     languageButton: 'language-button',
     languageMenu: 'language-menu',
