@@ -1,17 +1,36 @@
 import { Registration } from '../types/registration.types';
-import { PublicationType } from '../types/publicationFieldNames';
+import {
+  BookType,
+  ChapterType,
+  DegreeType,
+  JournalType,
+  PublicationType,
+  ReportType,
+} from '../types/publicationFieldNames';
 import { User } from '../types/user.types';
 
-export const isJournal = (registration: Registration): boolean =>
-  registration.entityDescription.reference.publicationContext.type === PublicationType.PublicationInJournal;
-export const isBook = (registration: Registration): boolean =>
-  registration.entityDescription.reference.publicationContext.type === PublicationType.Book;
-export const isDegree = (registration: Registration): boolean =>
-  registration.entityDescription.reference.publicationContext.type === PublicationType.Degree;
-export const isReport = (registration: Registration): boolean =>
-  registration.entityDescription.reference.publicationContext.type === PublicationType.Report;
-export const isChapter = (registration: Registration): boolean =>
-  registration.entityDescription.reference.publicationContext.type === PublicationType.Chapter;
+export const getMainRegistrationType = (instanceType: string) =>
+  isJournal(instanceType)
+    ? PublicationType.PublicationInJournal
+    : isBook(instanceType)
+    ? PublicationType.Book
+    : isDegree(instanceType)
+    ? PublicationType.Degree
+    : isReport(instanceType)
+    ? PublicationType.Report
+    : isChapter(instanceType)
+    ? PublicationType.Chapter
+    : '';
+
+export const isJournal = (instanceType: string) => Object.values(JournalType).some((type) => type === instanceType);
+
+export const isBook = (instanceType: string) => Object.values(BookType).some((type) => type === instanceType);
+
+export const isDegree = (instanceType: string) => Object.values(DegreeType).some((type) => type === instanceType);
+
+export const isReport = (instanceType: string) => Object.values(ReportType).some((type) => type === instanceType);
+
+export const isChapter = (instanceType: string) => Object.values(ChapterType).some((type) => type === instanceType);
 
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCreator && user.id === registration.owner;

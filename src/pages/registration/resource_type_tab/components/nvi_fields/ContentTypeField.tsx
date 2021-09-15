@@ -39,7 +39,7 @@ export const ContentTypeField = ({ contentTypes }: ContentTypeFieldProps) => {
             onChange={(event) => {
               field.onChange(event);
               if (!nviApplicableContentTypes.includes(event.target.value)) {
-                setFieldValue(ResourceFieldNames.PEER_REVIEW, null, false);
+                setFieldValue(ResourceFieldNames.PeerReviewed, null, false);
               }
             }}
             label={t('resource_type.content')}

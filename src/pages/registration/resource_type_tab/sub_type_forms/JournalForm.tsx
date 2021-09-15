@@ -34,9 +34,7 @@ const StyledLabel = styled(Typography)`
 export const JournalForm = () => {
   const { t } = useTranslation('registration');
   const { values } = useFormikContext<JournalRegistration>();
-  const {
-    reference: { publicationContext, publicationInstance },
-  } = values.entityDescription;
+  const { publicationInstance } = values.entityDescription.reference;
 
   return (
     <>
@@ -137,7 +135,7 @@ export const JournalForm = () => {
           <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
             <NviFields contentTypes={Object.values(JournalArticleContentType)} />
           </BackgroundDiv>
-          <NviValidation isPeerReviewed={!!publicationInstance.peerReviewed} isRated={!!publicationContext?.level} />
+          <NviValidation isPeerReviewed={!!publicationInstance.peerReviewed} isRated={false} />
         </>
       )}
     </>

@@ -47,6 +47,7 @@ import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { RegistrationSummary } from './RegistrationSummary';
 import { StyledGeneralInfo } from '../../components/landing_page/SyledGeneralInfo';
 import { dataTestId } from '../../utils/dataTestIds';
+import { displayDate } from '../../utils/date-helpers';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
@@ -64,6 +65,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
     <StyledGeneralInfo>
       <div>
         <Typography variant="overline">{t('public_page.about_registration')}</Typography>
+
+        <Typography>{displayDate(date)}</Typography>
 
         {contentType && <Typography>{t(`resource_type.content_types.${contentType}`)}</Typography>}
 
@@ -91,9 +94,9 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
       </div>
 
       <div data-testid={dataTestId.registrationLandingPage.subtypeFields}>
-        {isJournal(registration) ? (
+        {isJournal(publicationInstance.type) ? (
           <>
-            <PublicJournalContent date={date} publicationContext={publicationContext as JournalPublicationContext} />
+            <PublicJournalContent publicationContext={publicationContext as JournalPublicationContext} />
             <PublicPublicationInstanceJournal publicationInstance={journalPublicationInstance} />
             {publicationInstance.type === JournalType.Corrigendum && (
               <>
@@ -104,7 +107,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               </>
             )}
           </>
-        ) : isBook(registration) ? (
+        ) : isBook(publicationInstance.type) ? (
           <>
             <PublicPublisherContent publicationContext={publicationContext as BookPublicationContext} />
             <PublicSeriesContent publicationContext={publicationContext as BookPublicationContext} />
@@ -113,7 +116,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               isbnList={(registration as BookRegistration).entityDescription.reference.publicationContext.isbnList}
             />
           </>
-        ) : isDegree(registration) ? (
+        ) : isDegree(publicationInstance.type) ? (
           <>
             <PublicPublisherContent publicationContext={publicationContext as DegreePublicationContext} />
             {publicationInstance.type === DegreeType.Phd && (
@@ -128,7 +131,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             )}
             <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
           </>
-        ) : isReport(registration) ? (
+        ) : isReport(publicationInstance.type) ? (
           <>
             <PublicPublisherContent publicationContext={publicationContext as ReportPublicationContext} />
             <PublicSeriesContent publicationContext={publicationContext as ReportPublicationContext} />
@@ -137,7 +140,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               isbnList={(registration as ReportRegistration).entityDescription.reference.publicationContext.isbnList}
             />
           </>
-        ) : isChapter(registration) ? (
+        ) : isChapter(publicationInstance.type) ? (
           <>
             <PublicLinkedContextContent publicationContext={publicationContext as ChapterPublicationContext} />
             <PublicPublicationInstanceChapter publicationInstance={publicationInstance as ChapterPublicationInstance} />

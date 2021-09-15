@@ -4,23 +4,19 @@ import React, { useEffect, useRef } from 'react';
 import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { lightTheme } from '../../themes/lightTheme';
 import { ContributorRole } from '../../types/contributor.types';
-import { BookType, ContributorFieldNames, PublicationType } from '../../types/publicationFieldNames';
+import { BookType, ContributorFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
+import { isDegree } from '../../utils/registration-helpers';
 import { Contributors } from './contributors_tab/Contributors';
 
 export const ContributorsPanel = () => {
+  const { values, errors, touched, setFieldValue } = useFormikContext<Registration>();
   const {
-    values: {
-      entityDescription: {
-        reference: { publicationContext, publicationInstance },
-        contributors,
-      },
+    entityDescription: {
+      reference: { publicationInstance },
+      contributors,
     },
-    errors,
-    touched,
-    setFieldValue,
-  } = useFormikContext<Registration>();
-
+  } = values;
   const contributorsError = errors.entityDescription?.contributors;
   const contributorsTouched = touched.entityDescription?.contributors;
   const contributorsRef = useRef(contributors);
@@ -41,7 +37,7 @@ export const ContributorsPanel = () => {
     <>
       <FieldArray name={ContributorFieldNames.Contributors}>
         {({ push, replace }: FieldArrayRenderProps) =>
-          publicationContext.type === PublicationType.Degree ? (
+          isDegree(publicationInstance.type) ? (
             <>
               <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
                 <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />

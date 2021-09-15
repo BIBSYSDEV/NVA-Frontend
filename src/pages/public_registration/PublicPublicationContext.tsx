@@ -6,46 +6,53 @@ import { ChapterPublicationContext } from '../../types/publication_types/chapter
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
-import { Journal, levelMap, RegistrationDate } from '../../types/registration.types';
-import { displayDate } from '../../utils/date-helpers';
+import { Journal, levelMap } from '../../types/registration.types';
 import { RegistrationSummary } from './RegistrationSummary';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { ListSkeleton } from '../../components/ListSkeleton';
 
 interface PublicJournalContentProps {
-  date: RegistrationDate;
   publicationContext: JournalPublicationContext;
 }
 
 const getChannelRegisterUrl = (id: string) =>
   `https://dbh.nsd.uib.no/publiseringskanaler/KanalTidsskriftInfo.action?id=${id}`;
 
-export const PublicJournalContent = ({ date, publicationContext }: PublicJournalContentProps) => {
+export const PublicJournalContent = ({ publicationContext }: PublicJournalContentProps) => {
   const { t } = useTranslation('registration');
-  const { onlineIssn, printIssn, title, url, level } = publicationContext;
+  const [journal, isLoadingJournal] = useFetch<Journal>({
+    url: publicationContext.id ?? '',
+    errorMessage: t('feedback:error.get_journal'),
+  });
 
-  return title ? (
+  return publicationContext.id ? (
     <>
       <Typography variant="overline" component="p">
         {t('resource_type.journal')}
       </Typography>
 
-      {url ? (
-        <Typography component={Link} href={url} target="_blank" rel="noopener noreferrer">
-          {title}
-        </Typography>
+      {isLoadingJournal ? (
+        <ListSkeleton height={20} />
       ) : (
-        <Typography>{title}</Typography>
-      )}
+        journal && (
+          <>
+            {journal.website ? (
+              <Typography component={Link} href={journal.website} target="_blank" rel="noopener noreferrer">
+                {journal.name}
+              </Typography>
+            ) : (
+              <Typography>{journal.name}</Typography>
+            )}
 
-      <Typography>{displayDate(date)}</Typography>
-
-      {onlineIssn && (
-        <Typography>
-          {t('resource_type.issn')}: {[onlineIssn, printIssn].filter((issn) => issn).join(', ')}
-        </Typography>
+            {journal.onlineIssn && (
+              <Typography>
+                {t('resource_type.issn')}: {[journal.onlineIssn, journal.printIssn].filter((issn) => issn).join(', ')}
+              </Typography>
+            )}
+            <PublicLevelContent level={journal.level} />
+          </>
+        )
       )}
-      <PublicLevelContent level={level} />
     </>
   ) : null;
 };
