@@ -25,6 +25,7 @@
     "get_orcid": "Could not get data from ORCID",
     "get_parent_units": "Could not retrieve institutions",
     "get_project": "Search for projects failed",
+    "get_publisher": "Could not retrieve publisher",
     "get_publishers": "Search for publishers failed",
     "get_registrations": "Could not retrieve registrations",
     "get_registration": "Could not get registration",

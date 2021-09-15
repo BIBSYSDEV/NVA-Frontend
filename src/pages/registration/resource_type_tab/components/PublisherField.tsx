@@ -51,7 +51,7 @@ export const PublisherField = () => {
     date: { year },
   } = values.entityDescription as BookEntityDescription;
 
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(publisher?.name ?? '');
   const debouncedQuery = useDebounce(query);
   const [publisherOptions, isLoadingPublisherOptions] = useFetch<Publisher[]>({
     url:
@@ -63,8 +63,13 @@ export const PublisherField = () => {
 
   const options = query && query === debouncedQuery && !isLoadingPublisherOptions ? publisherOptions ?? [] : [];
 
+  const [fetchedPublisher] = useFetch<Publisher>({
+    url: publisher?.id ?? '',
+    errorMessage: t('feedback:error.get_publisher'),
+  });
+
   return (
-    <Field name={ResourceFieldNames.PubliactionContextPublisher}>
+    <Field name={ResourceFieldNames.PubliactionContextPublisherId}>
       {({ field: { value, name }, meta: { error, touched } }: FieldProps<string>) =>
         !value ? (
           <MuiThemeProvider theme={lightTheme}>
@@ -83,7 +88,10 @@ export const PublisherField = () => {
                 }
               }}
               onBlur={() => (!touched ? setFieldTouched(name) : null)}
-              onChange={(_, inputValue) => setFieldValue(name, inputValue?.name)}
+              onChange={(_, inputValue) => {
+                setFieldValue(ResourceFieldNames.PubliactionContextPublisherType, 'Publisher');
+                setFieldValue(name, inputValue?.id);
+              }}
               loading={isLoadingPublisherOptions}
               getOptionLabel={(option) => option.name}
               renderOption={(option, state) => (
@@ -109,7 +117,7 @@ export const PublisherField = () => {
             <StyledTextField
               data-testid={publisherFieldTestId}
               variant="filled"
-              value={value}
+              value={fetchedPublisher?.name ?? ''}
               label={t('common:publisher')}
               disabled
               multiline

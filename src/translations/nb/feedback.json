@@ -25,6 +25,7 @@
     "get_orcid": "Kunne ikke hente data fra ORCID",
     "get_parent_units": "Kunne ikke hente institusjoner",
     "get_project": "Søk på prosjekt feilet",
+    "get_publisher": "Kunne ikke hente utgiver",
     "get_publishers": "Søk på utgivere feilet",
     "get_registrations": "Kunne ikke laste inn registreringer",
     "get_registration": "Kunne ikke laste inn registrering",

@@ -149,7 +149,7 @@ const touchedResourceTabFields = (instanceType: string): FormikTouched<unknown> 
           reference: {
             publicationContext: {
               type: true,
-              publisher: true,
+              publisher: { id: true },
             },
             publicationInstance: {
               type: true,
@@ -163,7 +163,7 @@ const touchedResourceTabFields = (instanceType: string): FormikTouched<unknown> 
           reference: {
             publicationContext: {
               type: true,
-              publisher: true,
+              publisher: { id: true },
               isbnList: [true],
             },
             publicationInstance: {
@@ -179,7 +179,7 @@ const touchedResourceTabFields = (instanceType: string): FormikTouched<unknown> 
           reference: {
             publicationContext: {
               type: true,
-              publisher: true,
+              publisher: { id: true },
               isbnList: [true],
             },
             publicationInstance: {

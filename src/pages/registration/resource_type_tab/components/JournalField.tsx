@@ -62,7 +62,7 @@ export const JournalField = () => {
 
   const [journal, isLoadingJournal] = useFetch<Journal>({
     url: publicationContext.id ?? '',
-    errorMessage: t('feedback:error.get_series'),
+    errorMessage: t('feedback:error.get_journal'),
   });
 
   const issnString =
