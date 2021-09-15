@@ -30,11 +30,11 @@ export const ResourceTypePanel = () => {
     getMainRegistrationType(values.entityDescription.reference.publicationInstance.type)
   );
 
-  const onChangeType = (newPublicationContextType: string) => {
+  const onChangeType = (newRegistrationMainType: string) => {
     // Ensure some values are reset when publication type changes
-    setMainType(newPublicationContextType);
+    setMainType(newRegistrationMainType);
 
-    switch (newPublicationContextType) {
+    switch (newRegistrationMainType) {
       case PublicationType.PublicationInJournal:
         setFieldValue(instanceTypeBaseFieldName, emptyJournalPublicationInstance, false);
         setFieldValue(contextTypeBaseFieldName, { type: 'UnconfirmedJournal' }, false);

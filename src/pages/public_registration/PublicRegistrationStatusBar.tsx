@@ -26,7 +26,6 @@ import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { lightTheme } from '../../themes/lightTheme';
 import { dataTestId } from '../../utils/dataTestIds';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { getMainRegistrationType } from '../../utils/registration-helpers';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   margin-bottom: 1rem;
@@ -114,7 +113,6 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     const contentType = 'contentType' in publicationInstance ? publicationInstance.contentType : null;
     try {
       validateYupSchema<Registration>(registration, registrationValidationSchema, true, {
-        publicationContextType: getMainRegistrationType(publicationInstance.type),
         publicationInstanceType: publicationInstance.type,
         publicationStatus: registration.status,
         contentType,

@@ -12,6 +12,7 @@ import {
   reportReference,
 } from './referenceValidation';
 import i18n from '../../../translations/i18n';
+import { getMainRegistrationType, isBook } from '../../registration-helpers';
 
 const registrationErrorMessage = {
   titleRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('common:title') }),
@@ -33,10 +34,11 @@ export const registrationValidationSchema = Yup.object().shape({
     abstract: Yup.string(),
     description: Yup.string(),
     tags: Yup.array().of(Yup.string()),
-    npiSubjectHeading: Yup.string().when('$publicationContextType', {
-      is: PublicationType.Book,
-      then: Yup.string().required(registrationErrorMessage.npiSubjectRequired),
-    }),
+    npiSubjectHeading: Yup.string().when('$publicationInstanceType', (publicationInstanceType) =>
+      isBook(publicationInstanceType)
+        ? Yup.string().required(registrationErrorMessage.npiSubjectRequired)
+        : Yup.string()
+    ),
     date: Yup.object().shape({
       year: Yup.number()
         .typeError(registrationErrorMessage.publishedDateInvalid)
@@ -47,8 +49,9 @@ export const registrationValidationSchema = Yup.object().shape({
     language: Yup.string(),
     projects: Yup.array().of(Yup.object()),
     contributors: contributorsValidationSchema,
-    reference: Yup.object().when('$publicationContextType', (publicationContextType) => {
-      switch (publicationContextType) {
+    reference: Yup.object().when('$publicationInstanceType', (publicationInstanceType) => {
+      const mainType = getMainRegistrationType(publicationInstanceType);
+      switch (mainType) {
         case PublicationType.PublicationInJournal:
           return journalReference;
         case PublicationType.Book:

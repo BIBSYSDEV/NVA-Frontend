@@ -11,11 +11,7 @@ import { PageSpinner } from '../../components/PageSpinner';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { emptyRegistration, Registration, RegistrationTab } from '../../types/registration.types';
-import {
-  getMainRegistrationType,
-  userIsRegistrationCurator,
-  userIsRegistrationOwner,
-} from '../../utils/registration-helpers';
+import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
@@ -71,7 +67,6 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
 
     try {
       validateYupSchema<Registration>(values, registrationValidationSchema, true, {
-        publicationContextType: getMainRegistrationType(publicationInstance.type),
         publicationInstanceType: publicationInstance.type,
         publicationStatus: registration?.status,
         contentType,
