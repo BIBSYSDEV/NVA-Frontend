@@ -137,7 +137,7 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
                 data-testid={dataTestId.registrationWizard.resourceType.removePublisherButton}
                 variant="contained"
                 onClick={() => {
-                  setFieldValue(field.name, '');
+                  setFieldValue(field.name, undefined);
                   setSearchTerm('');
                 }}
                 endIcon={<DeleteIcon />}>
