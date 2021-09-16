@@ -31,7 +31,7 @@ import { isBook, isChapter, isDegree, isJournal, isReport } from '../../utils/re
 import { PublicDoi } from './PublicDoi';
 import {
   PublicJournalContent,
-  PublicLinkedContextContent,
+  PublicPartOfContent,
   PublicPublisherContent,
   PublicSeriesContent,
 } from './PublicPublicationContext';
@@ -142,7 +142,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           </>
         ) : isChapter(publicationInstance.type) ? (
           <>
-            <PublicLinkedContextContent publicationContext={publicationContext as ChapterPublicationContext} />
+            <PublicPartOfContent partOf={(publicationContext as ChapterPublicationContext).partOf} />
             <PublicPublicationInstanceChapter publicationInstance={publicationInstance as ChapterPublicationInstance} />
           </>
         ) : null}

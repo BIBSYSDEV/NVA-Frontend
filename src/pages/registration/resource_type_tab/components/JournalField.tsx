@@ -21,7 +21,7 @@ import { getYearQuery } from '../../../../utils/registration-helpers';
 
 const journalFieldTestId = dataTestId.registrationWizard.resourceType.journalField;
 
-const StyledSelectedJournalContainer = styled.div`
+export const StyledSelectedContainer = styled.div`
   display: grid;
   grid-template-areas: 'field button';
   grid-template-columns: 1fr auto;
@@ -128,7 +128,7 @@ export const JournalField = () => {
             />
           </MuiThemeProvider>
         ) : (
-          <StyledSelectedJournalContainer>
+          <StyledSelectedContainer>
             <StyledTextField
               data-testid={journalFieldTestId}
               variant="filled"
@@ -158,7 +158,7 @@ export const JournalField = () => {
                 </Typography>
               )
             )}
-          </StyledSelectedJournalContainer>
+          </StyledSelectedContainer>
         )
       }
     </Field>

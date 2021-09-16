@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Typography } from '@material-ui/core';
 import { BookPublicationContext, ContextPublisher } from '../../types/publication_types/bookRegistration.types';
-import { ChapterPublicationContext } from '../../types/publication_types/chapterRegistration.types';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
@@ -86,20 +85,15 @@ export const PublicPublisherContent = ({ publisher }: { publisher?: ContextPubli
   ) : null;
 };
 
-export const PublicLinkedContextContent = ({
-  publicationContext,
-}: {
-  publicationContext: ChapterPublicationContext;
-}) => {
+export const PublicPartOfContent = ({ partOf }: { partOf: string }) => {
   const { t } = useTranslation('registration');
-  const { linkedContext } = publicationContext;
 
   return (
     <>
       <Typography variant="overline" component="p">
         {t('resource_type.chapter.published_in')}
       </Typography>
-      <RegistrationSummary id={linkedContext} />
+      <RegistrationSummary id={partOf} />
     </>
   );
 };

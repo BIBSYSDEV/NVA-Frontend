@@ -65,11 +65,12 @@ export const ChapterForm = () => {
 
         {publicationInstance.type === ChapterType.AnthologyChapter && (
           <SearchContainerField
-            fieldName={ResourceFieldNames.PubliactionContextLinkedContext}
+            fieldName={ResourceFieldNames.PartOf}
             searchSubtypes={[BookType.Anthology]}
             label={t('resource_type.chapter.published_in')}
             placeholder={t('resource_type.chapter.search_for_anthology')}
-            dataTestId="search-anthology-field"
+            dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
+            removeButtonLabel={t('resource_type.remove_anthology')}
           />
         )}
       </BackgroundDiv>
