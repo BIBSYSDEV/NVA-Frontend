@@ -2,8 +2,10 @@ import { Field, FieldProps, getIn, useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import TextTruncate from 'react-text-truncate';
-import { MuiThemeProvider, Typography } from '@material-ui/core';
+import { MuiThemeProvider, TextField, Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
+import styled from 'styled-components';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
@@ -16,11 +18,24 @@ import { displayDate } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistrations';
 import { getRegistrationPath } from '../../../../utils/urlPaths';
+import { StyledSelectedContainer } from './JournalField';
+import { DangerButton } from '../../../../components/DangerButton';
+import { dataTestId } from '../../../../utils/dataTestIds';
+
+const StyledTextField = styled(TextField)`
+  grid-area: field;
+`;
+
+const StyledDangerButton = styled(DangerButton)`
+  max-width: 15rem;
+  grid-area: button;
+`;
 
 interface SearchContainerFieldProps {
   fieldName: string;
   searchSubtypes: RegistrationSubtype[];
   label: string;
+  removeButtonLabel: string;
   placeholder: string;
   dataTestId: string;
 }
@@ -53,59 +68,84 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
   return (
     <div data-testid={props.dataTestId}>
       <Field name={props.fieldName}>
-        {({ field, meta }: FieldProps<string>) => (
-          <MuiThemeProvider theme={lightTheme}>
-            <Autocomplete
-              {...autocompleteTranslationProps}
-              id={field.name}
-              aria-labelledby={`${field.name}-label`}
-              popupIcon={null}
-              options={options}
-              filterOptions={(options) => options}
-              onBlur={() => setFieldTouched(field.name)}
-              onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
-              getOptionSelected={(option, value) => option.id === value.id}
-              value={selectedContainer}
-              onChange={(_, inputValue) => {
-                if (inputValue) {
-                  // Construct IRI manually, until it is part of the object itself
-                  setFieldValue(field.name, `${API_URL}${getRegistrationPath(inputValue.id)}`);
-                } else {
-                  setSearchTerm('');
+        {({ field, meta }: FieldProps<string>) =>
+          !field.value ? (
+            <MuiThemeProvider theme={lightTheme}>
+              <Autocomplete
+                {...autocompleteTranslationProps}
+                id={field.name}
+                aria-labelledby={`${field.name}-label`}
+                popupIcon={null}
+                options={options}
+                filterOptions={(options) => options}
+                onBlur={() => setFieldTouched(field.name)}
+                onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
+                getOptionSelected={(option, value) => option.id === value.id}
+                value={selectedContainer}
+                onChange={(_, inputValue) => {
+                  if (inputValue) {
+                    // Construct IRI manually, until it is part of the object itself
+                    setFieldValue(field.name, `${API_URL}${getRegistrationPath(inputValue.id)}`);
+                  } else {
+                    setSearchTerm('');
+                    setFieldValue(field.name, '');
+                  }
+                }}
+                loading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
+                getOptionLabel={(option) => option.title}
+                renderOption={(option, state) => {
+                  const optionDate = option.publicationDate.year && displayDate(option.publicationDate);
+                  const optionContributors = option.contributors.map((contributor) => contributor.name).join('; ');
+                  const optionText = [optionDate, optionContributors].filter((string) => string).join(' - ');
+                  return (
+                    <StyledFlexColumn>
+                      <Typography variant="subtitle1">
+                        <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
+                      </Typography>
+                      <Typography component="span" variant="body2" color="textSecondary">
+                        <TextTruncate line={1} truncateText=" [...]" text={optionText} />
+                      </Typography>
+                    </StyledFlexColumn>
+                  );
+                }}
+                disabled={!!field.value}
+                renderInput={(params) => (
+                  <AutocompleteTextField
+                    {...params}
+                    label={props.label}
+                    required
+                    isLoading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
+                    placeholder={props.placeholder}
+                    showSearchIcon
+                    errorMessage={meta.touched && !!meta.error ? meta.error : undefined}
+                  />
+                )}
+              />
+            </MuiThemeProvider>
+          ) : (
+            <StyledSelectedContainer>
+              <StyledTextField
+                data-testid={props.dataTestId}
+                variant="filled"
+                value={selectedContainer?.title ?? ''}
+                label={props.label}
+                disabled
+                multiline
+                required
+              />
+              <StyledDangerButton
+                data-testid={dataTestId.registrationWizard.resourceType.removePublisherButton}
+                variant="contained"
+                onClick={() => {
                   setFieldValue(field.name, '');
-                }
-              }}
-              loading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
-              getOptionLabel={(option) => option.title}
-              renderOption={(option, state) => {
-                const optionDate = option.publicationDate.year && displayDate(option.publicationDate);
-                const optionContributors = option.contributors.map((contributor) => contributor.name).join('; ');
-                const optionText = [optionDate, optionContributors].filter((string) => string).join(' - ');
-                return (
-                  <StyledFlexColumn>
-                    <Typography variant="subtitle1">
-                      <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
-                    </Typography>
-                    <Typography component="span" variant="body2" color="textSecondary">
-                      <TextTruncate line={1} truncateText=" [...]" text={optionText} />
-                    </Typography>
-                  </StyledFlexColumn>
-                );
-              }}
-              renderInput={(params) => (
-                <AutocompleteTextField
-                  {...params}
-                  label={props.label}
-                  required
-                  isLoading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
-                  placeholder={props.placeholder}
-                  showSearchIcon
-                  errorMessage={meta.touched && !!meta.error ? meta.error : undefined}
-                />
-              )}
-            />
-          </MuiThemeProvider>
-        )}
+                  setSearchTerm('');
+                }}
+                endIcon={<DeleteIcon />}>
+                {props.removeButtonLabel}
+              </StyledDangerButton>
+            </StyledSelectedContainer>
+          )
+        }
       </Field>
       {selectedContainer?.reference?.publicationContext && (
         <SelectedContainerSummary publicationContext={selectedContainer.reference.publicationContext} />
@@ -120,7 +160,7 @@ interface SelectedContainerSummaryProps {
 
 const SelectedContainerSummary = ({ publicationContext }: SelectedContainerSummaryProps) => {
   const { t } = useTranslation('registration');
-  const { publisher, title, url, onlineIssn, printIssn, level } = publicationContext;
+  const { publisher, title, onlineIssn, printIssn, level } = publicationContext;
   const levelValue = level ? levelMap[level] : null;
 
   return (
@@ -135,19 +175,14 @@ const SelectedContainerSummary = ({ publicationContext }: SelectedContainerSumma
           {t('common:publisher')}: {publisher}
         </Typography>
       )}
-      {url && (
-        <Typography component="a" href={url}>
-          {url}
-        </Typography>
-      )}
-      {levelValue && (
-        <Typography>
-          {t('resource_type.level')}: {levelValue}
-        </Typography>
-      )}
       {(printIssn || onlineIssn) && (
         <Typography>
           {t('resource_type.issn')}: {[printIssn, onlineIssn].filter((issn) => issn).join(', ')}
+        </Typography>
+      )}
+      {levelValue != null && (
+        <Typography>
+          {t('resource_type.level')}: {levelValue}
         </Typography>
       )}
     </>

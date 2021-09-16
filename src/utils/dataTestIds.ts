@@ -70,6 +70,7 @@ export const dataTestId = {
     resourceType: {
       contentField: 'content-field',
       contentValue: (value: string) => `content-value-${value.toLowerCase().replaceAll(' ', '-')}`,
+      corrigendumForField: 'corrigendum-for-field',
       isbnField: 'isbn-field',
       journalField: 'journal-search-field',
       nviFailedPeerReview: 'nvi-failed-not-peer-reviewed',
@@ -78,6 +79,7 @@ export const dataTestId = {
       pagesField: 'pages-field',
       pagesFromField: 'pages-from-field',
       pagesToField: 'pages-to-field',
+      partOfField: 'part-of-field',
       peerReviewed: 'peer-review-field',
       publisherField: 'publisher-search-field',
       removePublisherButton: 'remove-publisher-button',

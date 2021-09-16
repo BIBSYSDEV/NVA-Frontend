@@ -180,6 +180,8 @@
     "peer_reviewed": "Peer reviewed and presents new original research",
     "print_issn": "Print ISSN",
     "remove": "Remove",
+    "remove_anthology": "Remove anthology",
+    "remove_article": "Remove article",
     "remove_doi": "Remove DOI",
     "remove_doi_text": "You can remove the DOI that was used when starting registration.\nDo you wish to remove connection to the original DOI?",
     "remove_journal": "Remove journal",

@@ -17,20 +17,9 @@ import { DangerButton } from '../../../../components/DangerButton';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { getYearQuery } from '../../../../utils/registration-helpers';
+import { StyledSelectedContainer } from './JournalField';
 
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
-
-const StyledSelectedPublisherContainer = styled.div`
-  display: grid;
-  grid-template-areas: 'field button';
-  grid-template-columns: 1fr auto;
-  gap: 1rem;
-  align-items: center;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    grid-template-areas: 'field' 'button';
-  }
-`;
 
 const StyledTextField = styled(TextField)`
   grid-area: field;
@@ -113,7 +102,7 @@ export const PublisherField = () => {
             />
           </MuiThemeProvider>
         ) : (
-          <StyledSelectedPublisherContainer>
+          <StyledSelectedContainer>
             <StyledTextField
               data-testid={publisherFieldTestId}
               variant="filled"
@@ -133,7 +122,7 @@ export const PublisherField = () => {
               endIcon={<DeleteIcon />}>
               {t('resource_type.remove_publisher')}
             </StyledDangerButton>
-          </StyledSelectedPublisherContainer>
+          </StyledSelectedContainer>
         )
       }
     </Field>
