@@ -41,19 +41,19 @@ export const ResourceTypePanel = () => {
         break;
       case PublicationType.Book:
         setFieldValue(instanceTypeBaseFieldName, emptyBookPublicationInstance, false);
-        setFieldValue(contextTypeBaseFieldName, { type: 'Book' }, false);
+        setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Book }, false);
         break;
       case PublicationType.Report:
         setFieldValue(instanceTypeBaseFieldName, emptyReportPublicationInstance, false);
-        setFieldValue(contextTypeBaseFieldName, { type: 'Report' }, false);
+        setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Report }, false);
         break;
       case PublicationType.Degree:
         setFieldValue(instanceTypeBaseFieldName, emptyDegreePublicationInstance, false);
-        setFieldValue(contextTypeBaseFieldName, { type: 'Degree' }, false);
+        setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Degree }, false);
         break;
       case PublicationType.Chapter:
         setFieldValue(instanceTypeBaseFieldName, emptyChapterPublicationInstance, false);
-        setFieldValue(contextTypeBaseFieldName, { type: 'Chapter' }, false);
+        setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Chapter }, false);
         break;
     }
 

@@ -62,7 +62,7 @@ export const PublicPublisherContent = ({ publisher }: { publisher?: ContextPubli
 
   const [fetchedPublisher, isLoadingPublisher] = useFetch<Publisher>({
     url: publisher?.id ?? '',
-    errorMessage: t('feedback:error.get_journal'),
+    errorMessage: t('feedback:error.get_publisher'),
   });
 
   return publisher ? (
