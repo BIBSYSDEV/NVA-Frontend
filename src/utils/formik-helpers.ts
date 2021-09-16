@@ -199,7 +199,7 @@ const touchedResourceTabFields = (instanceType: string): FormikTouched<unknown> 
           reference: {
             publicationContext: {
               type: true,
-              linkedContext: true,
+              partOf: true,
             },
             publicationInstance: {
               type: true,

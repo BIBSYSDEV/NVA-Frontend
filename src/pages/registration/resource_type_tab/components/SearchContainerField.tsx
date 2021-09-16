@@ -66,7 +66,7 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
       : searchContainerOptions?.hits ?? [];
 
   return (
-    <div data-testid={props.dataTestId}>
+    <>
       <Field name={props.fieldName}>
         {({ field, meta }: FieldProps<string>) =>
           !field.value ? (
@@ -74,6 +74,7 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
               <Autocomplete
                 {...autocompleteTranslationProps}
                 id={field.name}
+                data-testid={props.dataTestId}
                 aria-labelledby={`${field.name}-label`}
                 popupIcon={null}
                 options={options}
@@ -88,7 +89,7 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
                     setFieldValue(field.name, `${API_URL}${getRegistrationPath(inputValue.id)}`);
                   } else {
                     setSearchTerm('');
-                    setFieldValue(field.name, '');
+                    setFieldValue(field.name, undefined);
                   }
                 }}
                 loading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
@@ -150,7 +151,7 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
       {selectedContainer?.reference?.publicationContext && (
         <SelectedContainerSummary publicationContext={selectedContainer.reference.publicationContext} />
       )}
-    </div>
+    </>
   );
 };
 
