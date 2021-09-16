@@ -1,12 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Typography } from '@material-ui/core';
-import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
+import { BookPublicationContext, ContextPublisher } from '../../types/publication_types/bookRegistration.types';
 import { ChapterPublicationContext } from '../../types/publication_types/chapterRegistration.types';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
-import { Journal, levelMap } from '../../types/registration.types';
+import { Journal, levelMap, Publisher } from '../../types/registration.types';
 import { RegistrationSummary } from './RegistrationSummary';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { ListSkeleton } from '../../components/ListSkeleton';
@@ -57,27 +57,31 @@ export const PublicJournalContent = ({ publicationContext }: PublicJournalConten
   ) : null;
 };
 
-export const PublicPublisherContent = ({
-  publicationContext,
-}: {
-  publicationContext: Partial<BookPublicationContext & DegreePublicationContext & ReportPublicationContext>;
-}) => {
+export const PublicPublisherContent = ({ publisher }: { publisher?: ContextPublisher }) => {
   const { t } = useTranslation('registration');
-  const { publisher, url, level } = publicationContext;
+
+  const [fetchedPublisher, isLoadingPublisher] = useFetch<Publisher>({
+    url: publisher?.id ?? '',
+    errorMessage: t('feedback:error.get_publisher'),
+  });
 
   return publisher ? (
     <>
       <Typography variant="overline" component="p">
         {t('common:publisher')}
       </Typography>
-      {url ? (
-        <Typography component={Link} href={url} target="_blank" rel="noopener noreferrer">
-          {publisher}
-        </Typography>
+      {isLoadingPublisher ? (
+        <ListSkeleton height={20} />
       ) : (
-        <Typography>{publisher}</Typography>
+        fetchedPublisher &&
+        (fetchedPublisher.website ? (
+          <Typography component={Link} href={fetchedPublisher.website} target="_blank" rel="noopener noreferrer">
+            {fetchedPublisher.name}
+          </Typography>
+        ) : (
+          <Typography>{fetchedPublisher.name}</Typography>
+        ))
       )}
-      <PublicLevelContent level={level} />
     </>
   ) : null;
 };

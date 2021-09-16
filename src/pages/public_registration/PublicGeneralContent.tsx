@@ -109,7 +109,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           </>
         ) : isBook(publicationInstance.type) ? (
           <>
-            <PublicPublisherContent publicationContext={publicationContext as BookPublicationContext} />
+            <PublicPublisherContent publisher={(publicationContext as BookPublicationContext).publisher} />
             <PublicSeriesContent publicationContext={publicationContext as BookPublicationContext} />
             <PublicPublicationInstanceBook publicationInstance={publicationInstance as BookPublicationInstance} />
             <PublicIsbnContent
@@ -118,7 +118,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           </>
         ) : isDegree(publicationInstance.type) ? (
           <>
-            <PublicPublisherContent publicationContext={publicationContext as DegreePublicationContext} />
+            <PublicPublisherContent publisher={(publicationContext as DegreePublicationContext).publisher} />
             {publicationInstance.type === DegreeType.Phd && (
               <>
                 <PublicSeriesContent publicationContext={publicationContext as DegreePublicationContext} />
@@ -133,7 +133,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           </>
         ) : isReport(publicationInstance.type) ? (
           <>
-            <PublicPublisherContent publicationContext={publicationContext as ReportPublicationContext} />
+            <PublicPublisherContent publisher={(publicationContext as ReportPublicationContext).publisher} />
             <PublicSeriesContent publicationContext={publicationContext as ReportPublicationContext} />
             <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
             <PublicIsbnContent

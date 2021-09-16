@@ -54,7 +54,7 @@ export const JournalField = () => {
   const debouncedQuery = useDebounce(query);
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
     url:
-      !publicationContext.title && debouncedQuery && debouncedQuery === query
+      !publicationContext.id && debouncedQuery && debouncedQuery === query
         ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${debouncedQuery}`
         : '',
   });
@@ -62,7 +62,7 @@ export const JournalField = () => {
 
   const [journal, isLoadingJournal] = useFetch<Journal>({
     url: publicationContext.id ?? '',
-    errorMessage: t('feedback:error.get_series'),
+    errorMessage: t('feedback:error.get_journal'),
   });
 
   const issnString =

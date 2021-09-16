@@ -103,7 +103,10 @@ const pagesRangeField = Yup.object()
       return true;
     }),
   });
-const publisherField = Yup.string().required(resourceErrorMessage.publisherRequired);
+
+const publisherField = Yup.object().shape({
+  id: Yup.string().required(resourceErrorMessage.publisherRequired),
+});
 
 export const baseReference = Yup.object().shape({
   doi: Yup.string().trim().url(resourceErrorMessage.doiInvalid),

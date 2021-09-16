@@ -25,16 +25,18 @@ export interface Series {
   title?: string;
 }
 
+export interface ContextPublisher {
+  type: 'UnconfirmedPublisher' | 'Publisher';
+  name?: string;
+  id?: string;
+}
+
 export interface BookPublicationContext {
   type: PublicationType | '';
   isbnList: string[];
-  level: string | null;
-  openAccess: boolean;
-  peerReviewed: boolean;
-  publisher: string;
+  publisher?: ContextPublisher;
   seriesNumber: string;
   series?: Series;
-  url: string;
 }
 
 interface BookReference extends BaseReference {

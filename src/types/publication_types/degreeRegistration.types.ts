@@ -1,7 +1,7 @@
 import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
 import { PublicationType, DegreeType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
-import { Series } from './bookRegistration.types';
+import { ContextPublisher, Series } from './bookRegistration.types';
 
 export interface DegreeRegistration extends BaseRegistration {
   entityDescription: DegreeEntityDescription;
@@ -20,12 +20,9 @@ export const emptyDegreePublicationInstance: DegreePublicationInstance = {
 export interface DegreePublicationContext {
   type: PublicationType | '';
   isbnList: string[];
-  openAccess: boolean;
-  peerReviewed: boolean;
-  publisher: string;
+  publisher?: ContextPublisher;
   seriesNumber: string;
   series?: Series;
-  url: string;
 }
 
 interface DegreeReference extends BaseReference {
