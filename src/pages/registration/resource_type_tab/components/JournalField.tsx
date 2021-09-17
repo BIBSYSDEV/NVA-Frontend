@@ -99,7 +99,7 @@ export const JournalField = () => {
           value.map((option, index) => (
             <StyledChip
               {...getTagProps({ index })}
-              data-testid={dataTestId.registrationWizard.resourceType.seriesChip}
+              data-testid={dataTestId.registrationWizard.resourceType.journalChip}
               label={
                 <>
                   <Typography variant="subtitle1">
