@@ -28,7 +28,7 @@ const StyledChip = styled(Chip)`
 
 export const JournalField = () => {
   const { t } = useTranslation('registration');
-  const { setFieldValue, values, errors, touched } = useFormikContext<JournalRegistration>();
+  const { setFieldValue, setFieldTouched, values, errors, touched } = useFormikContext<JournalRegistration>();
   const {
     reference: { publicationContext },
     date: { year },
@@ -65,6 +65,11 @@ export const JournalField = () => {
             setQuery(newInputValue);
           }
         }}
+        onBlur={() =>
+          !touched.entityDescription?.reference?.publicationContext?.id
+            ? setFieldTouched(ResourceFieldNames.PubliactionContextId)
+            : null
+        }
         blurOnSelect
         disableClearable={!query}
         value={publicationContext.id && journal ? [journal] : []}
