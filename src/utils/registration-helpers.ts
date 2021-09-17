@@ -8,6 +8,7 @@ import {
   ReportType,
 } from '../types/publicationFieldNames';
 import { User } from '../types/user.types';
+import i18n from '../translations/i18n';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -40,3 +41,21 @@ export const userIsRegistrationCurator = (user: User | null, registration?: Regi
 
 export const getYearQuery = (yearValue: string) =>
   yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear();
+
+const getPublicationChannelIssnString = (onlineIssn?: string | null, printIssn?: string | null) => {
+  const issnString =
+    printIssn || onlineIssn
+      ? [
+          printIssn ? `${i18n.t('registration:resource_type.print_issn')}: ${printIssn}` : '',
+          onlineIssn ? `${i18n.t('registration:resource_type.online_issn')}: ${onlineIssn}` : '',
+        ]
+          .filter((issn) => issn)
+          .join(', ')
+      : '';
+  return issnString;
+};
+
+export const getPublicationChannelString = (title: string, onlineIssn?: string | null, printIssn?: string | null) => {
+  const issnString = getPublicationChannelIssnString(onlineIssn, printIssn);
+  return issnString ? `${title} (${issnString})` : title;
+};

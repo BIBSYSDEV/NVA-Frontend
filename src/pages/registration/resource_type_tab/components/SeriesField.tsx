@@ -1,9 +1,8 @@
 import { useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MuiThemeProvider, TextField, Typography } from '@material-ui/core';
-import { Autocomplete, Skeleton } from '@material-ui/lab';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { Chip, MuiThemeProvider, Typography } from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab';
 import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
@@ -15,38 +14,15 @@ import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { DangerButton } from '../../../../components/DangerButton';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { getYearQuery } from '../../../../utils/registration-helpers';
+import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
 
-const StyledSelectedSeriesContainer = styled.div`
-  display: grid;
-  grid-template-areas: 'field button' 'info info';
-  grid-template-columns: 1fr auto;
-  gap: 1rem;
-  align-items: center;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    grid-template-areas: 'field' 'button' 'info';
-  }
+const StyledChip = styled(Chip)`
+  padding: 2rem 0 2rem 0;
 `;
 
-const StyledTextField = styled(TextField)`
-  grid-area: field;
-`;
-
-const StyledDangerButton = styled(DangerButton)`
-  max-width: 10rem;
-  grid-area: button;
-`;
-
-const StyledSeriesInfo = styled.div`
-  grid-area: info;
-`;
-
-// TODO: Reuse <JournalField />?
 export const SeriesField = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue, values } = useFormikContext<Registration>();
@@ -61,7 +37,7 @@ export const SeriesField = () => {
   const debouncedQuery = useDebounce(query);
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
     url:
-      !series?.id && debouncedQuery && debouncedQuery === query
+      debouncedQuery && debouncedQuery === query
         ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${debouncedQuery}`
         : '',
     errorMessage: t('feedback:error.get_series'),
@@ -72,28 +48,16 @@ export const SeriesField = () => {
     errorMessage: t('feedback:error.get_series'),
   });
 
-  const options = query && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : [];
-
-  const issnString =
-    journal?.printIssn || journal?.onlineIssn
-      ? [
-          journal.printIssn ? `${t('resource_type.print_issn')}: ${journal.printIssn}` : '',
-          journal.onlineIssn ? `${t('resource_type.online_issn')}: ${journal.onlineIssn}` : '',
-        ]
-          .filter((issn) => issn)
-          .join(', ')
-      : '';
-  const selectedJournalString = journal ? (issnString ? `${journal.name} (${issnString})` : journal.name) : '';
-
-  return !series?.id ? (
+  return (
     <MuiThemeProvider theme={lightTheme}>
       <Autocomplete
         {...autocompleteTranslationProps}
+        multiple
         id={seriesFieldTestId}
         data-testid={seriesFieldTestId}
         aria-labelledby={`${seriesFieldTestId}-label`}
         popupIcon={null}
-        options={options}
+        options={debouncedQuery && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : []}
         filterOptions={(options) => options}
         inputValue={query}
         onInputChange={(_, newInputValue, reason) => {
@@ -101,16 +65,28 @@ export const SeriesField = () => {
             setQuery(newInputValue);
           }
         }}
-        onChange={(_, inputValue) => {
-          setFieldValue(ResourceFieldNames.SeriesType, 'Series'); // Ensure type is Series and not UnconfirmedSeries
-          setFieldValue(ResourceFieldNames.SeriesId, inputValue?.id);
+        blurOnSelect
+        disableClearable={!query}
+        value={series?.id && journal ? [journal] : []}
+        onChange={(_, inputValue, reason) => {
+          if (reason === 'select-option') {
+            setFieldValue(ResourceFieldNames.SeriesType, 'Series');
+            setFieldValue(ResourceFieldNames.SeriesId, inputValue.pop()?.id);
+          } else if (reason === 'remove-option') {
+            setFieldValue(ResourceFieldNames.SeriesType, 'UnconfirmedSeries');
+            setFieldValue(ResourceFieldNames.SeriesId, '');
+          }
+          setQuery('');
         }}
-        loading={isLoadingJournalOptions}
+        loading={isLoadingJournalOptions || isLoadingJournal}
         getOptionLabel={(option) => option.name}
         renderOption={(option, state) => (
           <StyledFlexColumn>
             <Typography variant="subtitle1">
-              <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
+              <EmphasizeSubstring
+                text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
+                emphasized={state.inputValue}
+              />
             </Typography>
             {option.level && (
               <Typography variant="body2" color="textSecondary">
@@ -119,52 +95,34 @@ export const SeriesField = () => {
             )}
           </StyledFlexColumn>
         )}
+        renderTags={(value, getTagProps) =>
+          value.map((option, index) => (
+            <StyledChip
+              {...getTagProps({ index })}
+              data-testid={dataTestId.registrationWizard.resourceType.seriesChip}
+              label={
+                <>
+                  <Typography variant="subtitle1">
+                    {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    {t('resource_type.level')}: {option.level}
+                  </Typography>
+                </>
+              }
+            />
+          ))
+        }
         renderInput={(params) => (
           <AutocompleteTextField
             {...params}
             label={t('common:title')}
-            isLoading={isLoadingJournalOptions}
-            placeholder={t('resource_type.search_for_series')}
-            showSearchIcon
+            isLoading={isLoadingJournalOptions || isLoadingJournal}
+            placeholder={!series?.id ? t('resource_type.search_for_series') : ''}
+            showSearchIcon={!series?.id}
           />
         )}
       />
     </MuiThemeProvider>
-  ) : (
-    <StyledSelectedSeriesContainer>
-      <StyledTextField
-        data-testid={seriesFieldTestId}
-        variant="filled"
-        value={selectedJournalString}
-        label={t('common:title')}
-        disabled
-        multiline
-      />
-      <StyledDangerButton
-        data-testid={dataTestId.registrationWizard.resourceType.removeSeriesButton}
-        variant="contained"
-        onClick={() => {
-          setFieldValue(ResourceFieldNames.SeriesType, 'UnconfirmedSeries');
-          setFieldValue(ResourceFieldNames.SeriesId, '');
-          setQuery('');
-        }}
-        endIcon={<DeleteIcon />}>
-        {t('resource_type.remove_series')}
-      </StyledDangerButton>
-
-      {(isLoadingJournal || journal?.level) && (
-        <StyledSeriesInfo>
-          {isLoadingJournal ? (
-            <Skeleton width={300} />
-          ) : (
-            journal?.level && (
-              <Typography>
-                {t('resource_type.level')}: {journal.level}
-              </Typography>
-            )
-          )}
-        </StyledSeriesInfo>
-      )}
-    </StyledSelectedSeriesContainer>
   );
 };
