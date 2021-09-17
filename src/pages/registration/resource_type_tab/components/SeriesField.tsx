@@ -84,6 +84,64 @@ export const SeriesField = () => {
           .join(', ')
       : '';
   const selectedJournalString = journal ? (issnString ? `${journal.name} (${issnString})` : journal.name) : '';
+  const value = journal ? [journal] : [];
+
+  return (
+    <MuiThemeProvider theme={lightTheme}>
+      <Autocomplete
+        {...autocompleteTranslationProps}
+        multiple
+        id={seriesFieldTestId}
+        data-testid={seriesFieldTestId}
+        aria-labelledby={`${seriesFieldTestId}-label`}
+        popupIcon={null}
+        options={options}
+        filterOptions={(options) => options}
+        inputValue={query}
+        onInputChange={(_, newInputValue, reason) => {
+          if (reason !== 'reset') {
+            setQuery(newInputValue);
+          }
+        }}
+        blurOnSelect
+        disableClearable={!query}
+        value={series?.id ? value : []}
+        onChange={(_, inputValue, reason) => {
+          if (reason === 'select-option') {
+            setFieldValue(ResourceFieldNames.SeriesType, 'Series'); // Ensure type is Series and not UnconfirmedSeries
+            setFieldValue(ResourceFieldNames.SeriesId, inputValue.pop()?.id);
+          } else if (reason === 'remove-option') {
+            setFieldValue(ResourceFieldNames.SeriesType, 'UnconfirmedSeries');
+            setFieldValue(ResourceFieldNames.SeriesId, '');
+          }
+          setQuery('');
+        }}
+        loading={isLoadingJournalOptions}
+        getOptionLabel={(option) => option.name}
+        renderOption={(option, state) => (
+          <StyledFlexColumn>
+            <Typography variant="subtitle1">
+              <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
+            </Typography>
+            {option.level && (
+              <Typography variant="body2" color="textSecondary">
+                {t('resource_type.level')}: {option.level}
+              </Typography>
+            )}
+          </StyledFlexColumn>
+        )}
+        renderInput={(params) => (
+          <AutocompleteTextField
+            {...params}
+            label={t('common:title')}
+            isLoading={isLoadingJournalOptions}
+            placeholder={!series?.id ? t('resource_type.search_for_series') : ''}
+            showSearchIcon={!series?.id}
+          />
+        )}
+      />
+    </MuiThemeProvider>
+  );
 
   return !series?.id ? (
     <MuiThemeProvider theme={lightTheme}>
@@ -157,11 +215,7 @@ export const SeriesField = () => {
           {isLoadingJournal ? (
             <Skeleton width={300} />
           ) : (
-            journal?.level && (
-              <Typography>
-                {t('resource_type.level')}: {journal.level}
-              </Typography>
-            )
+            journal?.level && <Typography>{/* {t('resource_type.level')}: {journal.level} */}</Typography>
           )}
         </StyledSeriesInfo>
       )}
