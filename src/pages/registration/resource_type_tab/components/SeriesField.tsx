@@ -23,7 +23,6 @@ const StyledChip = styled(Chip)`
   padding: 2rem 0 2rem 0;
 `;
 
-// TODO: Reuse <JournalField />?
 export const SeriesField = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue, values } = useFormikContext<Registration>();
@@ -71,7 +70,7 @@ export const SeriesField = () => {
         value={series?.id && journal ? [journal] : []}
         onChange={(_, inputValue, reason) => {
           if (reason === 'select-option') {
-            setFieldValue(ResourceFieldNames.SeriesType, 'Series'); // Ensure type is Series and not UnconfirmedSeries
+            setFieldValue(ResourceFieldNames.SeriesType, 'Series');
             setFieldValue(ResourceFieldNames.SeriesId, inputValue.pop()?.id);
           } else if (reason === 'remove-option') {
             setFieldValue(ResourceFieldNames.SeriesType, 'UnconfirmedSeries');
@@ -81,39 +80,38 @@ export const SeriesField = () => {
         }}
         loading={isLoadingJournalOptions || isLoadingJournal}
         getOptionLabel={(option) => option.name}
-        renderOption={(option, state) => {
-          const titleString = getPublicationChannelString(option.name, option.onlineIssn, option.printIssn);
-          return (
-            <StyledFlexColumn>
-              <Typography variant="subtitle1">
-                <EmphasizeSubstring text={titleString} emphasized={state.inputValue} />
-              </Typography>
-              {option.level && (
-                <Typography variant="body2" color="textSecondary">
-                  {t('resource_type.level')}: {option.level}
-                </Typography>
-              )}
-            </StyledFlexColumn>
-          );
-        }}
-        renderTags={(value, getTagProps) =>
-          value.map((option, index) => {
-            const titleString = getPublicationChannelString(option.name, option.onlineIssn, option.printIssn);
-            return (
-              <StyledChip
-                data-testid={dataTestId.registrationWizard.resourceType.seriesChip}
-                label={
-                  <>
-                    <Typography variant="subtitle1">{titleString}</Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {t('resource_type.level')}: {option.level}
-                    </Typography>
-                  </>
-                }
-                {...getTagProps({ index })}
+        renderOption={(option, state) => (
+          <StyledFlexColumn>
+            <Typography variant="subtitle1">
+              <EmphasizeSubstring
+                text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
+                emphasized={state.inputValue}
               />
-            );
-          })
+            </Typography>
+            {option.level && (
+              <Typography variant="body2" color="textSecondary">
+                {t('resource_type.level')}: {option.level}
+              </Typography>
+            )}
+          </StyledFlexColumn>
+        )}
+        renderTags={(value, getTagProps) =>
+          value.map((option, index) => (
+            <StyledChip
+              {...getTagProps({ index })}
+              data-testid={dataTestId.registrationWizard.resourceType.seriesChip}
+              label={
+                <>
+                  <Typography variant="subtitle1">
+                    {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    {t('resource_type.level')}: {option.level}
+                  </Typography>
+                </>
+              }
+            />
+          ))
         }
         renderInput={(params) => (
           <AutocompleteTextField
