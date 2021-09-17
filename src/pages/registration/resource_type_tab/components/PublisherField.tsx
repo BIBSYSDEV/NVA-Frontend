@@ -17,7 +17,7 @@ import { DangerButton } from '../../../../components/DangerButton';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { getYearQuery } from '../../../../utils/registration-helpers';
-import { StyledSelectedContainer } from './JournalField';
+import { StyledSelectedContainer } from './SearchContainerField';
 
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
 

@@ -18,9 +18,20 @@ import { displayDate } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistrations';
 import { getRegistrationPath } from '../../../../utils/urlPaths';
-import { StyledSelectedContainer } from './JournalField';
 import { DangerButton } from '../../../../components/DangerButton';
 import { dataTestId } from '../../../../utils/dataTestIds';
+
+export const StyledSelectedContainer = styled.div`
+  display: grid;
+  grid-template-areas: 'field button';
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    grid-template-areas: 'field' 'button';
+  }
+`;
 
 const StyledTextField = styled(TextField)`
   grid-area: field;
