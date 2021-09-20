@@ -29,7 +29,7 @@ describe('Registration: Resource type: Report', () => {
       .click()
       .type(mockPublishersSearch[1].name);
     cy.contains(mockPublishersSearch[1].name).click();
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] textarea`).should(
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherChip}]`).should(
       'contain',
       mockPublishersSearch[1].name
     );

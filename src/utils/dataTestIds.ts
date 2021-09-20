@@ -82,6 +82,7 @@ export const dataTestId = {
       pagesToField: 'pages-to-field',
       partOfField: 'part-of-field',
       peerReviewed: 'peer-review-field',
+      publisherChip: 'publisher-chip',
       publisherField: 'publisher-search-field',
       removePublisherButton: 'remove-publisher-button',
       seriesChip: 'series-chip',

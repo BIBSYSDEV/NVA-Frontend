@@ -20,6 +20,7 @@
     "get_institution": "Kunne ikke laste inn institusjon",
     "get_institutions": "Kunne ikke laste inn institusjoner",
     "get_journal": "Kunne ikke hente tidsskrift",
+    "get_journals": "Kunne ikke hente tidsskrifter",
     "get_last_registration": "Kunne ikke hente tidligere registrering",
     "get_messages": "Kunne ikke hente meldinger",
     "get_orcid": "Kunne ikke hente data fra ORCID",

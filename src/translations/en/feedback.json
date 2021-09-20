@@ -20,6 +20,7 @@
     "get_institution": "Could not retrieve institution",
     "get_institutions": "Could not retrieve institutions",
     "get_journal": "Could not retrieve journal",
+    "get_journals": "Could not retrieve journals",
     "get_last_registration": "Could not retrieve last registration",
     "get_messages": "Could not retrieve messages",
     "get_orcid": "Could not get data from ORCID",
