@@ -67,16 +67,16 @@ export const JournalField = () => {
                 setQuery(newInputValue);
               }
             }}
-            onBlur={() => (!meta.touched ? setFieldTouched(field.name) : null)}
+            onBlur={() => setFieldTouched(field.name, true, false)}
             blurOnSelect
             disableClearable={!query}
             value={publicationContext.id && journal ? [journal] : []}
             onChange={(_, inputValue, reason) => {
               if (reason === 'select-option') {
-                setFieldValue(ResourceFieldNames.PubliactionContextType, 'Journal');
+                setFieldValue(ResourceFieldNames.PubliactionContextType, 'Journal', false);
                 setFieldValue(field.name, inputValue.pop()?.id);
               } else if (reason === 'remove-option') {
-                setFieldValue(ResourceFieldNames.PubliactionContextType, 'UnconfirmedJournal');
+                setFieldValue(ResourceFieldNames.PubliactionContextType, 'UnconfirmedJournal', false);
                 setFieldValue(field.name, '');
               }
               setQuery('');
