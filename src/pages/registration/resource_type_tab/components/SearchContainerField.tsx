@@ -64,9 +64,7 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
                 aria-labelledby={`${props.dataTestId}-label`}
                 popupIcon={null}
                 options={
-                  debouncedQuery && query === debouncedQuery && !isLoadingSearchContainerOptions
-                    ? searchContainerOptions?.hits ?? []
-                    : []
+                  query === debouncedQuery && !isLoadingSearchContainerOptions ? searchContainerOptions?.hits ?? [] : []
                 }
                 filterOptions={(options) => options}
                 inputValue={query}
