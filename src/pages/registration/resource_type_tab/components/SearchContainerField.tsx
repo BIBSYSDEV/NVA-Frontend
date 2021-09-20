@@ -83,7 +83,7 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
                   if (reason === 'select-option') {
                     setFieldValue(field.name, `${API_URL}${getRegistrationPath(inputValue.pop()?.id)}`);
                   } else if (reason === 'remove-option') {
-                    setFieldValue(field.name, '');
+                    setFieldValue(field.name, undefined);
                   }
                   setQuery('');
                 }}

@@ -29,9 +29,6 @@ const resourceErrorMessage = {
   journalRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.journal'),
   }),
-  linkedContextRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('registration:resource_type.chapter.published_in'),
-  }),
   pageBeginMustBeSmallerThanEnd: i18n.t('feedback:validation.must_be_smaller_than', {
     field: i18n.t('registration:resource_type.pages_from'),
     limit: i18n.t('registration:resource_type.pages_to'),
@@ -46,6 +43,9 @@ const resourceErrorMessage = {
   pagesMustBeBigger: i18n.t('feedback:validation.must_be_bigger_than', {
     field: i18n.t('registration:resource_type.number_of_pages'),
     limit: 1,
+  }),
+  partOfRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.chapter.published_in'),
   }),
   peerReviewedRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.peer_reviewed'),
@@ -228,7 +228,7 @@ const chapterPublicationInstance = Yup.object().shape({
 });
 
 const chapterPublicationContext = Yup.object().shape({
-  linkedContext: Yup.string().required(resourceErrorMessage.linkedContextRequired),
+  partOf: Yup.string().required(resourceErrorMessage.partOfRequired),
 });
 
 export const chapterReference = baseReference.shape({
