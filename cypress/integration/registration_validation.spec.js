@@ -60,18 +60,19 @@ describe('User opens registration form and can see validation errors', () => {
       .click()
       .type(mockJournalsSearch[0].name);
     cy.contains(mockJournalsSearch[0].name).click();
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] textarea`).should(
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalChip}]`).should(
       'contain',
       mockJournalsSearch[0].name
     );
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] p.Mui-error`).should('not.exist');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.removeJournalButton}]`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalChip}] svg`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalChip}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] p.Mui-error`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] input`)
       .click()
       .type(mockJournalsSearch[0].name);
     cy.contains(mockJournalsSearch[0].name).click();
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] textarea`).should(
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalChip}]`).should(
       'contain',
       mockJournalsSearch[0].name
     );
