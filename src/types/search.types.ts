@@ -5,7 +5,7 @@ import { JournalPublicationContext, JournalPublicationInstance } from './publica
 import { ReportPublicationContext, ReportPublicationInstance } from './publication_types/reportRegistration.types';
 import { RegistrationDate, RegistrationPublisher } from './registration.types';
 
-interface SearchResultContributor {
+export interface SearchResultContributor {
   id?: string;
   name: string;
 }
@@ -16,7 +16,7 @@ export interface SearchResult {
   total: number;
 }
 
-export type SearchPublicationContext = Partial<
+type SearchPublicationContext = Partial<
   JournalPublicationContext &
     BookPublicationContext &
     ReportPublicationContext &
@@ -24,7 +24,7 @@ export type SearchPublicationContext = Partial<
     ChapterPublicationContext
 >;
 
-type SearchPublicationINstance = Partial<
+type SearchPublicationInstance = Partial<
   JournalPublicationInstance &
     BookPublicationInstance &
     ReportPublicationInstance &
@@ -42,7 +42,7 @@ export interface SearchRegistration {
   abstract?: string;
   reference?: {
     publicationContext: SearchPublicationContext;
-    publicationInstance: SearchPublicationINstance;
+    publicationInstance: SearchPublicationInstance;
   };
 }
 
