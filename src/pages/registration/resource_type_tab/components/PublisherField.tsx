@@ -1,10 +1,8 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MuiThemeProvider, TextField, Typography } from '@material-ui/core';
+import { Chip, MuiThemeProvider, Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
-import DeleteIcon from '@material-ui/icons/Delete';
-import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
@@ -13,22 +11,11 @@ import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { DangerButton } from '../../../../components/DangerButton';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { getYearQuery } from '../../../../utils/registration-helpers';
-import { StyledSelectedContainer } from './SearchContainerField';
 
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
-
-const StyledTextField = styled(TextField)`
-  grid-area: field;
-`;
-
-const StyledDangerButton = styled(DangerButton)`
-  max-width: 15rem;
-  grid-area: button;
-`;
 
 export const PublisherField = () => {
   const { t } = useTranslation('registration');
@@ -44,87 +31,82 @@ export const PublisherField = () => {
   const debouncedQuery = useDebounce(query);
   const [publisherOptions, isLoadingPublisherOptions] = useFetch<Publisher[]>({
     url:
-      !publisher?.id && debouncedQuery && debouncedQuery === query
+      debouncedQuery && debouncedQuery === query
         ? `${PublicationChannelApiPath.PublisherSearch}?year=${getYearQuery(year)}&query=${debouncedQuery}`
         : '',
     errorMessage: t('feedback:error.get_publishers'),
   });
 
-  const options = query && query === debouncedQuery && !isLoadingPublisherOptions ? publisherOptions ?? [] : [];
-
-  const [fetchedPublisher] = useFetch<Publisher>({
+  const [fetchedPublisher, isLoadingPublisher] = useFetch<Publisher>({
     url: publisher?.id ?? '',
     errorMessage: t('feedback:error.get_publisher'),
   });
 
   return (
-    <Field name={ResourceFieldNames.PubliactionContextPublisherId}>
-      {({ field: { value, name }, meta: { error, touched } }: FieldProps<string>) =>
-        !value ? (
-          <MuiThemeProvider theme={lightTheme}>
-            <Autocomplete
-              {...autocompleteTranslationProps}
-              id={publisherFieldTestId}
-              data-testid={publisherFieldTestId}
-              aria-labelledby={`${publisherFieldTestId}-label`}
-              popupIcon={null}
-              options={options}
-              filterOptions={(options) => options}
-              inputValue={query}
-              onInputChange={(_, newInputValue, reason) => {
-                if (reason !== 'reset') {
-                  setQuery(newInputValue);
-                }
-              }}
-              onBlur={() => (!touched ? setFieldTouched(name) : null)}
-              onChange={(_, inputValue) => {
-                setFieldValue(ResourceFieldNames.PubliactionContextPublisherType, 'Publisher');
-                setFieldValue(name, inputValue?.id);
-              }}
-              loading={isLoadingPublisherOptions}
-              getOptionLabel={(option) => option.name}
-              renderOption={(option, state) => (
-                <Typography variant="subtitle1">
-                  <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
-                </Typography>
-              )}
-              renderInput={(params) => (
-                <AutocompleteTextField
-                  {...params}
-                  label={t('common:publisher')}
-                  isLoading={isLoadingPublisherOptions}
-                  placeholder={t('resource_type.search_for_publisher')}
-                  required
-                  showSearchIcon
-                  errorMessage={touched && error ? error : ''}
+    <MuiThemeProvider theme={lightTheme}>
+      <Field name={ResourceFieldNames.PubliactionContextPublisherId}>
+        {({ field, meta }: FieldProps<string>) => (
+          <Autocomplete
+            {...autocompleteTranslationProps}
+            multiple
+            id={publisherFieldTestId}
+            data-testid={publisherFieldTestId}
+            aria-labelledby={`${publisherFieldTestId}-label`}
+            popupIcon={null}
+            options={
+              debouncedQuery && query === debouncedQuery && !isLoadingPublisherOptions ? publisherOptions ?? [] : []
+            }
+            filterOptions={(options) => options}
+            inputValue={query}
+            onInputChange={(_, newInputValue, reason) => {
+              if (reason !== 'reset') {
+                setQuery(newInputValue);
+              }
+            }}
+            onBlur={() => setFieldTouched(field.name, true, false)}
+            blurOnSelect
+            disableClearable={!query}
+            value={publisher?.id && fetchedPublisher ? [fetchedPublisher] : []}
+            onChange={(_, inputValue, reason) => {
+              if (reason === 'select-option') {
+                setFieldValue(ResourceFieldNames.PubliactionContextPublisherType, 'Publisher', false);
+                setFieldValue(field.name, inputValue.pop()?.id);
+              } else if (reason === 'remove-option') {
+                setFieldValue(ResourceFieldNames.PubliactionContextPublisherType, 'UnconfirmedPublisher', false);
+                setFieldValue(field.name, '');
+              }
+              setQuery('');
+            }}
+            loading={isLoadingPublisherOptions || isLoadingPublisher}
+            getOptionLabel={(option) => option.name}
+            renderOption={(option, state) => (
+              <Typography variant="subtitle1">
+                <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
+              </Typography>
+            )}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
+                <Chip
+                  {...getTagProps({ index })}
+                  data-testid={dataTestId.registrationWizard.resourceType.publisherChip}
+                  label={<Typography variant="subtitle1">{option.name}</Typography>}
                 />
-              )}
-            />
-          </MuiThemeProvider>
-        ) : (
-          <StyledSelectedContainer>
-            <StyledTextField
-              data-testid={publisherFieldTestId}
-              variant="filled"
-              value={fetchedPublisher?.name ?? ''}
-              label={t('common:publisher')}
-              disabled
-              multiline
-              required
-            />
-            <StyledDangerButton
-              data-testid={dataTestId.registrationWizard.resourceType.removePublisherButton}
-              variant="contained"
-              onClick={() => {
-                setFieldValue(name, '');
-                setQuery('');
-              }}
-              endIcon={<DeleteIcon />}>
-              {t('resource_type.remove_publisher')}
-            </StyledDangerButton>
-          </StyledSelectedContainer>
-        )
-      }
-    </Field>
+              ))
+            }
+            renderInput={(params) => (
+              <AutocompleteTextField
+                {...params}
+                required
+                label={t('common:publisher')}
+                isLoading={isLoadingPublisherOptions || isLoadingPublisher}
+                placeholder={!publisher?.id ? t('resource_type.search_for_publisher') : ''}
+                showSearchIcon={!publisher?.id}
+                errorMessage={meta.touched && !!meta.error ? meta.error : ''}
+              />
+            )}
+          />
+        )}
+      </Field>
+    </MuiThemeProvider>
   );
 };

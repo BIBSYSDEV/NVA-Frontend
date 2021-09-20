@@ -41,6 +41,7 @@ export const JournalField = () => {
       debouncedQuery && debouncedQuery === query
         ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${debouncedQuery}`
         : '',
+    errorMessage: t('feedback:error.get_journals'),
   });
 
   const [journal, isLoadingJournal] = useFetch<Journal>({
