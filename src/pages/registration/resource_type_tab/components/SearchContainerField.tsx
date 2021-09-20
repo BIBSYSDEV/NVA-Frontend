@@ -8,8 +8,8 @@ import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
 import { RegistrationSubtype } from '../../../../types/publicationFieldNames';
-import { Registration } from '../../../../types/registration.types';
-import { SearchFieldName } from '../../../../types/search.types';
+import { Registration, RegistrationDate } from '../../../../types/registration.types';
+import { SearchFieldName, SearchResultContributor } from '../../../../types/search.types';
 import { API_URL } from '../../../../utils/constants';
 import { displayDate } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
@@ -93,11 +93,7 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
                       <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {displayDate(option.publicationDate)} -{' '}
-                      {option.contributors
-                        .slice(0, 5)
-                        .map((contributor) => contributor.name)
-                        .join('; ')}
+                      {getDescriptionText(option.publicationDate, option.contributors)}
                     </Typography>
                   </StyledFlexColumn>
                 )}
@@ -110,11 +106,7 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
                         <>
                           <Typography variant="subtitle1">{option.title}</Typography>
                           <Typography variant="body2" color="textSecondary">
-                            {displayDate(option.publicationDate)} -{' '}
-                            {option.contributors
-                              .slice(0, 5)
-                              .map((contributor) => contributor.name)
-                              .join('; ')}
+                            {getDescriptionText(option.publicationDate, option.contributors)}
                           </Typography>
                         </>
                       }
@@ -139,4 +131,14 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
       </MuiThemeProvider>
     </>
   );
+};
+
+const getDescriptionText = (date: RegistrationDate, contributors: SearchResultContributor[]) => {
+  const dateText = displayDate(date);
+  const contributorsText = contributors
+    .slice(0, 5)
+    .map((contributor) => contributor.name)
+    .join('; ');
+
+  return [dateText, contributorsText].filter((text) => text).join(' - ');
 };

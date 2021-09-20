@@ -5,7 +5,7 @@ import { JournalPublicationContext, JournalPublicationInstance } from './publica
 import { ReportPublicationContext, ReportPublicationInstance } from './publication_types/reportRegistration.types';
 import { RegistrationDate, RegistrationPublisher } from './registration.types';
 
-interface SearchResultContributor {
+export interface SearchResultContributor {
   id?: string;
   name: string;
 }
