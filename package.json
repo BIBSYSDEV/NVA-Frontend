@@ -21,7 +21,7 @@
     "date-fns": "^2.24.0",
     "deepmerge": "^4.2.2",
     "formik": "^2.2.9",
-    "i18next": "^20.6.1",
+    "i18next": "^21.0.1",
     "i18next-browser-languagedetector": "^6.1.2",
     "isbn-utils": "^1.1.0",
     "pretty-bytes": "^5.6.0",
