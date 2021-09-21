@@ -6,13 +6,22 @@ import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import { NpiDiscipline } from '../../../../types/registration.types';
-import { disciplineOptions, getNpiDiscipline } from '../../../../utils/npiDisciplines';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import disciplines from '../../../../resources/disciplines.json';
 
 const StyledSearchIcon = styled(SearchIcon)`
   margin-left: 0.5rem;
   color: ${({ theme }) => theme.palette.text.disabled};
 `;
+
+const disciplineOptions: NpiDiscipline[] = disciplines
+  .map((mainDiscipline) =>
+    mainDiscipline.subdomains.map((subDiscipline) => ({
+      mainDisciplineId: mainDiscipline.id,
+      id: subDiscipline.id,
+    }))
+  )
+  .flat();
 
 export const NpiDisciplineField = () => {
   const { t } = useTranslation('registration');
@@ -28,9 +37,9 @@ export const NpiDisciplineField = () => {
           id={name}
           aria-labelledby={`${name}-label`}
           options={disciplineOptions}
-          groupBy={(discipline) => t(`disciplines:${discipline.mainDiscipline}`)}
-          onChange={(_: unknown, value: NpiDiscipline | null) => setFieldValue(name, value?.id ?? '')}
-          value={getNpiDiscipline(value)}
+          groupBy={(discipline) => t(`disciplines:${discipline.mainDisciplineId}`)}
+          onChange={(_, value) => setFieldValue(name, value?.id ?? '')}
+          value={disciplineOptions.find((discipline) => discipline.id === value) ?? null}
           getOptionLabel={(option) => t(`disciplines:${option.id}`)}
           renderInput={(params) => (
             <TextField

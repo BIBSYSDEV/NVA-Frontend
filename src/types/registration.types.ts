@@ -58,8 +58,7 @@ export interface MyRegistrationsResponse {
 
 export interface NpiDiscipline {
   id: string;
-  name: string;
-  mainDiscipline: string;
+  mainDisciplineId: string;
 }
 
 export enum DoiRequestStatus {
