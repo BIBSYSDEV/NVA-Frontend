@@ -1,6 +1,5 @@
 import { RegistrationFileSet } from './file.types';
 import { ResearchProject } from './project.types';
-import { EnumDictionary } from './common.types';
 import {
   JournalEntityDescription,
   emptyRegistrationEntityDescription,
@@ -25,14 +24,6 @@ export enum RegistrationTab {
   Contributors = 2,
   FilesAndLicenses = 3,
 }
-
-// NB! Keys must match supported values in datamodel
-export const levelMap: EnumDictionary<string, number | null> = {
-  NO_LEVEL: null,
-  LEVEL_0: 0,
-  LEVEL_1: 1,
-  LEVEL_2: 2,
-};
 
 export interface Journal {
   id: string;
