@@ -1,5 +1,5 @@
 import { BaseEntityDescription, BaseReference, BaseRegistration, NviApplicableBase } from '../registration.types';
-import { PublicationType, JournalType } from '../publicationFieldNames';
+import { JournalType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { emptyPagesRange, PagesRange } from './pages.types';
 import { JournalArticleContentType } from './content.types';
@@ -18,14 +18,11 @@ export interface JournalPublicationInstance extends NviApplicableBase<JournalArt
 }
 
 export interface JournalPublicationContext {
-  type: PublicationType | '';
-  level: string | null;
+  type: 'UnconfirmedJournal' | 'Journal' | '';
+  id?: string;
+  title?: string;
   onlineIssn?: string;
   printIssn?: string;
-  openAccess: boolean;
-  peerReviewed: boolean;
-  title: string;
-  url?: string;
 }
 
 interface JournalReference extends BaseReference {
@@ -46,17 +43,10 @@ export const emptyJournalPublicationInstance: JournalPublicationInstance = {
   volume: '',
   corrigendumFor: '',
   contentType: null,
-  originalResearch: null,
 };
 
 const emptyPublicationContext: JournalPublicationContext = {
   type: '',
-  level: null,
-  onlineIssn: '',
-  openAccess: false,
-  peerReviewed: false,
-  title: '',
-  url: '',
 };
 
 const emptyReference: JournalReference = {
@@ -82,5 +72,4 @@ export const emptyRegistrationEntityDescription: JournalEntityDescription = {
   npiSubjectHeading: '',
   reference: emptyReference,
   tags: [],
-  controlledKeywords: [],
 };

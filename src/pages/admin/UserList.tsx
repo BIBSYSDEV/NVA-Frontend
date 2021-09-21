@@ -174,7 +174,7 @@ export const UserList = ({
                 setRowsPerPage(parseInt(event.target.value));
                 setPage(0);
               }}
-              data-testid={`user-pagination-${roleToAdd}`}
+              data-testid={`user-pagination-${roleToRemove}`}
             />
           )}
           {roleToRemove && (

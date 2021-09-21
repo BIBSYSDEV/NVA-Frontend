@@ -8,8 +8,14 @@ import { useLocation } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
 import { SearchResult } from '../../types/search.types';
 import { useFetch } from '../../utils/hooks/useFetch';
+import { dataTestId } from '../../utils/dataTestIds';
+import styled from 'styled-components';
 
-export const RegistrationSearch = () => {
+const StyledRegistrationSearch = styled.div`
+  grid-area: results;
+`;
+
+export const RegistrationSearch = (props: unknown) => {
   const { t } = useTranslation('common');
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[1]);
   const [page, setPage] = useState(0);
@@ -26,14 +32,14 @@ export const RegistrationSearch = () => {
   });
 
   return (
-    <div>
+    <StyledRegistrationSearch>
       {isLoadingSearch ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : searchResults && searchResults.hits.length > 0 ? (
         <>
           <SearchResults searchResult={searchResults} />
           <TablePagination
-            data-testid="search-pagination"
+            data-testid={dataTestId.startPage.searchPagination}
             rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
             component="div"
             count={searchResults.total}
@@ -49,6 +55,6 @@ export const RegistrationSearch = () => {
       ) : (
         <Typography>{t('no_hits')}</Typography>
       )}
-    </div>
+    </StyledRegistrationSearch>
   );
 };

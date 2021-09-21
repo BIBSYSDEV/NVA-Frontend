@@ -1,7 +1,8 @@
 import * as Yup from 'yup';
 import { Contributor, ContributorRole } from '../../../types/contributor.types';
-import { BookType, PublicationType } from '../../../types/publicationFieldNames';
+import { BookType } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
+import { isDegree } from '../../registration-helpers';
 
 const contributorErrorMessage = {
   authorRequired: i18n.t('feedback:validation.author_required'),
@@ -16,9 +17,9 @@ const contributorValidationSchema = Yup.object().shape({
 });
 
 export const contributorsValidationSchema = Yup.array().when(
-  ['$publicationContextType', '$publicationInstanceType'],
-  (publicationContextType: any, publicationInstanceType: any) => {
-    if (publicationContextType === PublicationType.Degree) {
+  ['$publicationInstanceType'],
+  (publicationInstanceType) => {
+    if (isDegree(publicationInstanceType)) {
       return Yup.array()
         .of(contributorValidationSchema)
         .test('author-test', contributorErrorMessage.authorRequired, (contributors) =>

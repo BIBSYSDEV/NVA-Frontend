@@ -1,6 +1,8 @@
 import 'cypress-file-upload';
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { JournalArticleContentType, BookMonographContentType } from '../../src/types/publication_types/content.types';
+import { mockJournalsSearch } from '../../src/utils/testfiles/mockJournals';
+import { mockPublishersSearch } from '../../src/utils/testfiles/mockPublishers';
 
 describe('User opens registration form and can see validation errors', () => {
   before('Given that the user is logged in as Creator:', () => {
@@ -53,42 +55,47 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
     cy.get('p.Mui-error').should('have.length', 2);
 
-    // Publisher (publicationContext) field
-    cy.get('[data-testid=journal-search-field] input').click({ force: true }).type('test');
-    cy.contains('testament').click({ force: true });
-    cy.get('[data-testid=journal-search-field] p.Mui-error').should('not.exist');
-    cy.get('[data-testid=journal-search-field] input').clear();
-    cy.get('[data-testid=journal-search-field] p.Mui-error').should('be.visible');
-    cy.get('[data-testid=journal-search-field] input').click({ force: true }).type('test');
-    cy.contains('testament').click({ force: true });
-    cy.get('[data-testid=journal-search-field] p.Mui-error').should('not.exist');
+    // Journal (publicationContext) field
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] input`)
+      .click()
+      .type(mockJournalsSearch[0].name);
+    cy.contains(mockJournalsSearch[0].name).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalChip}]`).should(
+      'contain',
+      mockJournalsSearch[0].name
+    );
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] p.Mui-error`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalChip}] svg`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalChip}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] p.Mui-error`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] input`)
+      .click()
+      .type(mockJournalsSearch[0].name);
+    cy.contains(mockJournalsSearch[0].name).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalChip}]`).should(
+      'contain',
+      mockJournalsSearch[0].name
+    );
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] p.Mui-error`).should('not.exist');
 
-    cy.get('[data-testid=volume-field] input').type('-1');
-    cy.get('[data-testid=issue-field] input').type('-1');
-    cy.get('[data-testid=pages-from-field] input').type('-1');
-    cy.get('[data-testid=pages-to-field] input').type('-2');
-    cy.get('[data-testid=article-number-field] input').type('-1');
-    cy.get('[data-testid=volume-field] p.Mui-error').should('be.visible');
-    cy.get('[data-testid=issue-field] p.Mui-error').should('be.visible');
-    cy.get('[data-testid=pages-from-field] p.Mui-error').should('be.visible');
-    cy.get('[data-testid=pages-to-field] p.Mui-error').should('be.visible');
-    cy.get('[data-testid=article-number-field] p.Mui-error').should('not.exist');
-    cy.get('[data-testid=volume-field] input').type('{backspace}{backspace}1');
-    cy.get('[data-testid=issue-field] input').type('{backspace}{backspace}1');
-    cy.get('[data-testid=pages-from-field] input').type('{backspace}{backspace}2');
-    cy.get('[data-testid=pages-to-field] input').type('{backspace}{backspace}1');
-    cy.get('[data-testid=pages-from-field] p.Mui-error').should('be.visible');
-    cy.get('[data-testid=pages-to-field] p.Mui-error').should('be.visible');
-    cy.get('[data-testid=pages-to-field] input').type('0');
-    cy.get('[data-testid=article-number-field] input').type('{backspace}{backspace}1');
+    // Pages
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.pagesFromField}] input`).type('3');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.pagesToField}] input`).type('1');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.pagesFromField}] p.Mui-error`).should(
+      'be.visible'
+    );
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.pagesToField}] p.Mui-error`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.pagesToField}] input`).type('1');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.pagesFromField}] p.Mui-error`).should(
+      'not.exist'
+    );
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.pagesToField}] p.Mui-error`).should('not.exist');
 
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}] p.Mui-error`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).should('not.exist');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.originalResearchField}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}]`).click();
     cy.get(`[data-value="${JournalArticleContentType.ResearchArticle}"]`).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).eq(0).click();
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.originalResearchField}] input`).eq(1).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}] p.Mui-error`).should('not.exist');
 
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
@@ -109,11 +116,16 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('p.Mui-error').should('have.length', 3);
 
     // publicationContext
-    cy.get('[data-testid=publisher-search-field] input').click({ force: true }).type('test');
-    cy.contains('testament').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
+      .click()
+      .type(mockPublishersSearch[0].name);
+    cy.contains(mockPublishersSearch[0].name).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] p.Mui-error`).should(
+      'not.exist'
+    );
+
     // NPI Subject
     cy.selectNpiDiscipline('Linguistics');
-    cy.get('[data-testid=publisher-search-field] p').should('not.exist');
 
     // ISBN
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.isbnField}]`).within(() => {
@@ -153,9 +165,13 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('p.Mui-error').should('have.length', 1);
 
     // publicationContext
-    cy.get('[data-testid=publisher-search-field] input').click({ force: true }).type('test');
-    cy.contains('testament').click({ force: true });
-    cy.get('[data-testid=publisher-search-field] p').should('not.exist');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
+      .click()
+      .type(mockPublishersSearch[0].name);
+    cy.contains(mockPublishersSearch[0].name).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] p.Mui-error`).should(
+      'not.exist'
+    );
 
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
@@ -175,9 +191,13 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('p.Mui-error').should('have.length', 1);
 
     // publicationContext
-    cy.get('[data-testid=publisher-search-field] input').click({ force: true }).type('test');
-    cy.contains('testament').click({ force: true });
-    cy.get('[data-testid=publisher-search-field] p').should('not.exist');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
+      .click()
+      .type(mockPublishersSearch[0].name);
+    cy.contains(mockPublishersSearch[0].name).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] p.Mui-error`).should(
+      'not.exist'
+    );
 
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')

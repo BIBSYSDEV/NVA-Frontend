@@ -7,12 +7,13 @@ import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { lightTheme } from '../../../../themes/lightTheme';
 import { JournalType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { DoiField } from '../components/DoiField';
-import { JournalField } from '../components/JournalField';
 import { NviValidation } from '../components/NviValidation';
 import { SearchContainerField } from '../components/SearchContainerField';
 import { NviFields } from '../components/nvi_fields/NviFields';
-import { journalArticleContentTypes } from '../../../../types/publication_types/content.types';
+import { JournalArticleContentType } from '../../../../types/publication_types/content.types';
 import { JournalRegistration } from '../../../../types/publication_types/journalRegistration.types';
+import { JournalField } from '../components/JournalField';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 const StyledArticleDetail = styled.div`
   display: grid;
@@ -33,9 +34,7 @@ const StyledLabel = styled(Typography)`
 export const JournalForm = () => {
   const { t } = useTranslation('registration');
   const { values } = useFormikContext<JournalRegistration>();
-  const {
-    reference: { publicationContext, publicationInstance },
-  } = values.entityDescription;
+  const { publicationInstance } = values.entityDescription.reference;
 
   return (
     <>
@@ -48,7 +47,8 @@ export const JournalForm = () => {
             searchSubtypes={[JournalType.Article]}
             label={t('resource_type.original_article_title')}
             placeholder={t('resource_type.search_for_original_article')}
-            dataTestId="article-search-field"
+            dataTestId={dataTestId.registrationWizard.resourceType.corrigendumForField}
+            removeButtonLabel={t('resource_type.remove_article')}
           />
         ) : (
           <JournalField />
@@ -87,7 +87,7 @@ export const JournalForm = () => {
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 id={field.name}
-                data-testid="pages-from-field"
+                data-testid={dataTestId.registrationWizard.resourceType.pagesFromField}
                 variant="filled"
                 label={t('resource_type.pages_from')}
                 {...field}
@@ -102,7 +102,7 @@ export const JournalForm = () => {
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
                 id={field.name}
-                data-testid="pages-to-field"
+                data-testid={dataTestId.registrationWizard.resourceType.pagesToField}
                 variant="filled"
                 label={t('resource_type.pages_to')}
                 {...field}
@@ -134,13 +134,9 @@ export const JournalForm = () => {
       {publicationInstance.type === JournalType.Article && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-            <NviFields contentTypeOptions={journalArticleContentTypes} />
+            <NviFields contentTypes={Object.values(JournalArticleContentType)} />
           </BackgroundDiv>
-          <NviValidation
-            isPeerReviewed={!!publicationInstance.peerReviewed}
-            isRated={!!publicationContext?.level}
-            isOriginalResearch={!!publicationInstance.originalResearch}
-          />
+          <NviValidation isPeerReviewed={!!publicationInstance.peerReviewed} isRated={false} />
         </>
       )}
     </>

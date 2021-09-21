@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
-import { addQualifierIdForAuthority, AuthorityQualifiers, getAuthority } from './api/authorityApi';
+import { addQualifierIdForAuthority, AuthorityQualifiers } from './api/authorityApi';
 import { getCurrentUserAttributes } from './api/userApi';
 import { AppRoutes } from './AppRoutes';
 import { Footer } from './layout/Footer';
@@ -26,6 +26,7 @@ import { SkipLink } from './components/SkipLink';
 import { useFetch } from './utils/hooks/useFetch';
 import { AuthorityApiPath, RoleApiPath } from './api/apiPaths';
 import { InstitutionUser } from './types/user.types';
+import { UrlPathTemplate } from './utils/urlPaths';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -49,15 +50,31 @@ const getLanguageTagValue = (language: string) => {
   return 'no';
 };
 
+if (window.location.pathname === UrlPathTemplate.MyProfile && window.location.hash.startsWith('#access_token=')) {
+  // Workaround to allow adding orcid for aws-amplify > 4.2.2
+  // Without this the user will be redirected to / for some reason
+  window.location.href = window.location.href.replace('#', '?');
+}
+
 export const App = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation('feedback');
   const user = useSelector((store: RootStore) => store.user);
   const [isLoading, setIsLoading] = useState({ userAttributes: true, userAuthority: true });
-  const [matchingAuthorities, isLoadingMatchingAuthorities] = useFetch<Authority[]>({
-    url: user?.name ? `${AuthorityApiPath.Person}?name=${encodeURIComponent(user.name)}` : '',
+
+  const [authoritiesById, isLoadingAuthoritiesById] = useFetch<Authority[]>({
+    url: user?.id ? `${AuthorityApiPath.Person}?feideid=${encodeURIComponent(user.id)}` : '',
     errorMessage: t('feedback:error.get_authorities'),
   });
+
+  const [authoritiesByName, isLoadingAuthoritiesByName] = useFetch<Authority[]>({
+    url:
+      authoritiesById?.length === 0 && user?.name
+        ? `${AuthorityApiPath.Person}?name=${encodeURIComponent(user.name)}`
+        : '',
+    errorMessage: t('feedback:error.get_authorities'),
+  });
+
   const [institutionUser, isLoadingInstitutionUser] = useFetch<InstitutionUser>({
     url: user?.id && !user.roles ? `${RoleApiPath.Users}/${encodeURIComponent(user.id)}` : '',
     errorMessage: t('feedback:error.get_roles'),
@@ -100,46 +117,44 @@ export const App = () => {
   }, [dispatch, institutionUser, user]);
 
   useEffect(() => {
-    if (matchingAuthorities && user && !user.authority && !user.possibleAuthorities) {
-      const fetchAuthority = async () => {
-        const filteredAuthorities = matchingAuthorities.filter((auth) => auth.feideids.some((id) => id === user.id));
-        if (filteredAuthorities.length === 1) {
-          setIsLoading((state) => ({ ...state, userAuthority: true }));
-          // Use exsisting authority
-          const existingArpId = filteredAuthorities[0].id;
-          const existingAuthorityResponse = await getAuthority(existingArpId);
-          if (isErrorStatus(existingAuthorityResponse.status)) {
-            dispatch(setNotification(t('error.get_authority'), NotificationVariant.Error));
-          } else if (isSuccessStatus(existingAuthorityResponse.status) && existingAuthorityResponse.data) {
-            let currentAuthority = existingAuthorityResponse.data;
-            if (user.cristinId && !existingAuthorityResponse.data.orgunitids.includes(user.cristinId)) {
-              // Add cristinId to Authority's orgunitids
-              const authorityWithOrgId = await addQualifierIdForAuthority(
-                existingArpId,
-                AuthorityQualifiers.ORGUNIT_ID,
-                user.cristinId
+    if (authoritiesById && user && !user.authority && !user.possibleAuthorities) {
+      if (authoritiesById.length === 1) {
+        const authority = authoritiesById[0];
+        dispatch(setAuthorityData(authority));
+        const addQualifier = async () => {
+          if (user.cristinId && !authority.orgunitids.includes(user.cristinId)) {
+            // Add cristinId to Authority's orgunitids
+            const authorityWithOrgId = await addQualifierIdForAuthority(
+              authority.id,
+              AuthorityQualifiers.ORGUNIT_ID,
+              user.cristinId
+            );
+            if (isErrorStatus(authorityWithOrgId.status)) {
+              dispatch(
+                setNotification(
+                  t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+                  NotificationVariant.Error
+                )
               );
-              if (isErrorStatus(authorityWithOrgId.status)) {
-                dispatch(
-                  setNotification(
-                    t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
-                    NotificationVariant.Error
-                  )
-                );
-              } else if (isSuccessStatus(authorityWithOrgId.status)) {
-                currentAuthority = authorityWithOrgId.data;
-              }
+              dispatch(setAuthorityData(authority));
+            } else if (isSuccessStatus(authorityWithOrgId.status)) {
+              dispatch(setAuthorityData(authorityWithOrgId.data));
             }
-            dispatch(setAuthorityData(currentAuthority));
           }
-        } else {
-          dispatch(setPossibleAuthorities(matchingAuthorities));
-        }
-        setIsLoading((state) => ({ ...state, userAuthority: false }));
-      };
-      fetchAuthority();
+        };
+        addQualifier();
+      } else if (authoritiesById.length > 1) {
+        dispatch(setPossibleAuthorities(authoritiesById));
+      }
     }
-  }, [dispatch, t, matchingAuthorities, user]);
+    setIsLoading((state) => ({ ...state, userAuthority: false }));
+  }, [dispatch, t, authoritiesById, user]);
+
+  useEffect(() => {
+    if (authoritiesByName && user && !user.authority && !user.possibleAuthorities) {
+      dispatch(setPossibleAuthorities(authoritiesByName));
+    }
+  }, [dispatch, t, authoritiesByName, user]);
 
   return (
     <>
@@ -147,7 +162,8 @@ export const App = () => {
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
       {Object.values(isLoading).some((isLoading) => isLoading) ||
-      isLoadingMatchingAuthorities ||
+      isLoadingAuthoritiesById ||
+      isLoadingAuthoritiesByName ||
       isLoadingInstitutionUser ? (
         <PageSpinner />
       ) : (
@@ -161,9 +177,7 @@ export const App = () => {
             </StyledMainContent>
             <Footer />
           </StyledApp>
-          {user && !isLoadingMatchingAuthorities && (user.authority || user.possibleAuthorities) && (
-            <AuthorityOrcidModal user={user} />
-          )}
+          {user && (user.authority || user.possibleAuthorities) && <AuthorityOrcidModal user={user} />}
         </BrowserRouter>
       )}
     </>

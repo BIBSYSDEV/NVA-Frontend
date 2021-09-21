@@ -12,6 +12,7 @@ import {
   reportReference,
 } from './referenceValidation';
 import i18n from '../../../translations/i18n';
+import { getMainRegistrationType, isBook } from '../../registration-helpers';
 
 const registrationErrorMessage = {
   titleRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('common:title') }),
@@ -33,10 +34,11 @@ export const registrationValidationSchema = Yup.object().shape({
     abstract: Yup.string(),
     description: Yup.string(),
     tags: Yup.array().of(Yup.string()),
-    npiSubjectHeading: Yup.string().when('$publicationContextType', {
-      is: PublicationType.Book,
-      then: Yup.string().required(registrationErrorMessage.npiSubjectRequired),
-    }),
+    npiSubjectHeading: Yup.string().when('$publicationInstanceType', (publicationInstanceType) =>
+      isBook(publicationInstanceType)
+        ? Yup.string().required(registrationErrorMessage.npiSubjectRequired)
+        : Yup.string()
+    ),
     date: Yup.object().shape({
       year: Yup.number()
         .typeError(registrationErrorMessage.publishedDateInvalid)
@@ -45,29 +47,25 @@ export const registrationValidationSchema = Yup.object().shape({
       day: Yup.number().transform(emptyStringToNull).nullable(),
     }),
     language: Yup.string(),
-    projects: Yup.array().of(Yup.object()), // TODO
+    projects: Yup.array().of(Yup.object()),
     contributors: contributorsValidationSchema,
-    reference: baseReference
-      .when('$publicationContextType', {
-        is: PublicationType.PublicationInJournal,
-        then: journalReference,
-      })
-      .when('$publicationContextType', {
-        is: PublicationType.Book,
-        then: bookReference,
-      })
-      .when('$publicationContextType', {
-        is: PublicationType.Report,
-        then: reportReference,
-      })
-      .when('$publicationContextType', {
-        is: PublicationType.Degree,
-        then: degreeReference,
-      })
-      .when('$publicationContextType', {
-        is: PublicationType.Chapter,
-        then: chapterReference,
-      }),
+    reference: Yup.object().when('$publicationInstanceType', (publicationInstanceType) => {
+      const mainType = getMainRegistrationType(publicationInstanceType);
+      switch (mainType) {
+        case PublicationType.PublicationInJournal:
+          return journalReference;
+        case PublicationType.Book:
+          return bookReference;
+        case PublicationType.Report:
+          return reportReference;
+        case PublicationType.Degree:
+          return degreeReference;
+        case PublicationType.Chapter:
+          return chapterReference;
+        default:
+          return baseReference;
+      }
+    }),
   }),
   fileSet: Yup.object().shape({
     files: Yup.array().of(fileValidationSchema).min(1, registrationErrorMessage.fileRequired),

@@ -41,6 +41,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
     entityDescription: { contributors, date, mainTitle, abstract, description, tags, reference },
     projects,
     fileSet,
+    subjects,
   } = registration;
 
   const [relatedRegistrations] = useFetch<SearchResult>({
@@ -87,7 +88,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           </LandingPageAccordion>
         )}
 
-        {(abstract || description || tags.length > 0) && (
+        {(abstract || description || tags.length > 0 || subjects.length > 0) && (
           <LandingPageAccordion
             data-testid={dataTestId.registrationLandingPage.abstractAccordion}
             defaultExpanded

@@ -13,8 +13,9 @@ import { DoiField } from '../components/DoiField';
 import { NviValidation } from '../components/NviValidation';
 import { SearchContainerField } from '../components/SearchContainerField';
 import { NviFields } from '../components/nvi_fields/NviFields';
-import { chapterContentTypes } from '../../../../types/publication_types/content.types';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
+import { ChapterContentType } from '../../../../types/publication_types/content.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 const StyledDiv = styled(StyledCenterAlignedContentWrapper)`
   gap: 1rem;
@@ -50,9 +51,7 @@ export const ChapterForm = () => {
   const { t } = useTranslation('registration');
 
   const { values } = useFormikContext<ChapterRegistration>();
-  const {
-    reference: { publicationContext, publicationInstance },
-  } = values.entityDescription;
+  const { publicationInstance } = values.entityDescription.reference;
 
   return (
     <>
@@ -66,11 +65,12 @@ export const ChapterForm = () => {
 
         {publicationInstance.type === ChapterType.AnthologyChapter && (
           <SearchContainerField
-            fieldName={ResourceFieldNames.PubliactionContextLinkedContext}
+            fieldName={ResourceFieldNames.PartOf}
             searchSubtypes={[BookType.Anthology]}
             label={t('resource_type.chapter.published_in')}
             placeholder={t('resource_type.chapter.search_for_anthology')}
-            dataTestId="search-anthology-field"
+            dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
+            removeButtonLabel={t('resource_type.remove_anthology')}
           />
         )}
       </BackgroundDiv>
@@ -82,7 +82,7 @@ export const ChapterForm = () => {
               <StyledPageNumberField
                 id={field.name}
                 variant="filled"
-                data-testid="chapter-pages-from"
+                data-testid={dataTestId.registrationWizard.resourceType.pagesFromField}
                 label={t('resource_type.pages_from')}
                 {...field}
                 value={field.value ?? ''}
@@ -100,7 +100,7 @@ export const ChapterForm = () => {
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <StyledPageNumberField
                 id={field.name}
-                data-testid="chapter-pages-to"
+                data-testid={dataTestId.registrationWizard.resourceType.pagesToField}
                 variant="filled"
                 label={t('resource_type.pages_to')}
                 {...field}
@@ -116,14 +116,10 @@ export const ChapterForm = () => {
       {publicationInstance.type === ChapterType.AnthologyChapter && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-            <NviFields contentTypeOptions={chapterContentTypes} />
+            <NviFields contentTypes={Object.values(ChapterContentType)} />
           </BackgroundDiv>
 
-          <NviValidation
-            isPeerReviewed={!!publicationInstance.peerReviewed}
-            isRated={!!publicationContext?.level}
-            isOriginalResearch={false}
-          />
+          <NviValidation isPeerReviewed={!!publicationInstance.peerReviewed} isRated={false} />
         </>
       )}
     </>

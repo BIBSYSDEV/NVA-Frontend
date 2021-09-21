@@ -1,38 +1,112 @@
-import React from 'react';
 import { Field, FieldProps, useFormikContext } from 'formik';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ResourceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
-import { PublicationTableNumber } from '../../../../utils/constants';
-import { publicationContextToPublisher, formatPublicationContextWithPublisher } from './resource-helpers';
-import { Registration } from '../../../../types/registration.types';
-import { PublicationChannelSearch } from './PublicationChannelSearch';
+import { Chip, MuiThemeProvider, Typography } from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab';
+import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
+import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
+import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
+import { Publisher, Registration } from '../../../../types/registration.types';
+import { useFetch } from '../../../../utils/hooks/useFetch';
+import { PublicationChannelApiPath } from '../../../../api/apiPaths';
+import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
+import { getYearQuery } from '../../../../utils/registration-helpers';
+
+const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
 
 export const PublisherField = () => {
   const { t } = useTranslation('registration');
-  const { setFieldValue } = useFormikContext<Registration>();
+  const { setFieldValue, setFieldTouched, values } = useFormikContext<Registration>();
+  const {
+    reference: {
+      publicationContext: { publisher },
+    },
+    date: { year },
+  } = values.entityDescription as BookEntityDescription;
+
+  const [query, setQuery] = useState(publisher?.name ?? '');
+  const debouncedQuery = useDebounce(query);
+  const [publisherOptions, isLoadingPublisherOptions] = useFetch<Publisher[]>({
+    url:
+      debouncedQuery && debouncedQuery === query
+        ? `${PublicationChannelApiPath.PublisherSearch}?year=${getYearQuery(year)}&query=${debouncedQuery}`
+        : '',
+    errorMessage: t('feedback:error.get_publishers'),
+  });
+
+  const [fetchedPublisher, isLoadingPublisher] = useFetch<Publisher>({
+    url: publisher?.id ?? '',
+    errorMessage: t('feedback:error.get_publisher'),
+  });
 
   return (
-    <Field name={contextTypeBaseFieldName}>
-      {({ field: { name, value } }: FieldProps) => (
-        <PublicationChannelSearch
-          dataTestId="publisher-search-field"
-          publicationTable={PublicationTableNumber.Publishers}
-          label={t('common:publisher')}
-          required
-          placeholder={t('resource_type.search_for_publisher')}
-          errorFieldName={ResourceFieldNames.PubliactionContextPublisher}
-          setValue={(newValue) => {
-            const contextValues: any = formatPublicationContextWithPublisher(value.type, newValue);
-            if (newValue && value.seriesTitle) {
-              // Keep data from selected series, since this has precedence
-              contextValues.seriesTitle = value.seriesTitle;
-              contextValues.level = value.level;
+    <MuiThemeProvider theme={lightTheme}>
+      <Field name={ResourceFieldNames.PubliactionContextPublisherId}>
+        {({ field, meta }: FieldProps<string>) => (
+          <Autocomplete
+            {...autocompleteTranslationProps}
+            multiple
+            id={publisherFieldTestId}
+            data-testid={publisherFieldTestId}
+            aria-labelledby={`${publisherFieldTestId}-label`}
+            popupIcon={null}
+            options={
+              debouncedQuery && query === debouncedQuery && !isLoadingPublisherOptions ? publisherOptions ?? [] : []
             }
-            setFieldValue(name, contextValues);
-          }}
-          value={publicationContextToPublisher(value)}
-        />
-      )}
-    </Field>
+            filterOptions={(options) => options}
+            inputValue={query}
+            onInputChange={(_, newInputValue, reason) => {
+              if (reason !== 'reset') {
+                setQuery(newInputValue);
+              }
+            }}
+            onBlur={() => setFieldTouched(field.name, true, false)}
+            blurOnSelect
+            disableClearable={!query}
+            value={publisher?.id && fetchedPublisher ? [fetchedPublisher] : []}
+            onChange={(_, inputValue, reason) => {
+              if (reason === 'select-option') {
+                setFieldValue(ResourceFieldNames.PubliactionContextPublisherType, 'Publisher', false);
+                setFieldValue(field.name, inputValue.pop()?.id);
+              } else if (reason === 'remove-option') {
+                setFieldValue(ResourceFieldNames.PubliactionContextPublisherType, 'UnconfirmedPublisher', false);
+                setFieldValue(field.name, '');
+              }
+              setQuery('');
+            }}
+            loading={isLoadingPublisherOptions || isLoadingPublisher}
+            getOptionLabel={(option) => option.name}
+            renderOption={(option, state) => (
+              <Typography variant="subtitle1">
+                <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
+              </Typography>
+            )}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
+                <Chip
+                  {...getTagProps({ index })}
+                  data-testid={dataTestId.registrationWizard.resourceType.publisherChip}
+                  label={<Typography variant="subtitle1">{option.name}</Typography>}
+                />
+              ))
+            }
+            renderInput={(params) => (
+              <AutocompleteTextField
+                {...params}
+                required
+                label={t('common:publisher')}
+                isLoading={isLoadingPublisherOptions || isLoadingPublisher}
+                placeholder={!publisher?.id ? t('resource_type.search_for_publisher') : ''}
+                showSearchIcon={!publisher?.id}
+                errorMessage={meta.touched && !!meta.error ? meta.error : ''}
+              />
+            )}
+          />
+        )}
+      </Field>
+    </MuiThemeProvider>
   );
 };

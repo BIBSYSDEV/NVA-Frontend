@@ -17,19 +17,26 @@ export const emptyBookPublicationInstance: BookPublicationInstance = {
   pages: emptyPagesMonograph,
   contentType: null,
   peerReviewed: null,
-  originalResearch: null,
 };
+
+export interface Series {
+  type: 'Series' | 'UnconfirmedSeries';
+  id?: string;
+  title?: string;
+}
+
+export interface ContextPublisher {
+  type: 'UnconfirmedPublisher' | 'Publisher';
+  name?: string;
+  id?: string;
+}
 
 export interface BookPublicationContext {
   type: PublicationType | '';
   isbnList: string[];
-  level: string | null;
-  openAccess: boolean;
-  peerReviewed: boolean;
-  publisher: string;
+  publisher?: ContextPublisher;
   seriesNumber: string;
-  seriesTitle: string;
-  url: string;
+  series?: Series;
 }
 
 interface BookReference extends BaseReference {

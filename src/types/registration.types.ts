@@ -1,6 +1,5 @@
 import { RegistrationFileSet } from './file.types';
 import { ResearchProject } from './project.types';
-import { EnumDictionary } from './common.types';
 import {
   JournalEntityDescription,
   emptyRegistrationEntityDescription,
@@ -26,23 +25,27 @@ export enum RegistrationTab {
   FilesAndLicenses = 3,
 }
 
-// NB! Keys must match supported values in datamodel
-export const levelMap: EnumDictionary<string, number | null> = {
-  NO_LEVEL: null,
-  LEVEL_0: 0,
-  LEVEL_1: 1,
-  LEVEL_2: 2,
-};
+export interface Journal {
+  id: string;
+  identifier: string;
+  name: string;
+  active: boolean;
+  website: string;
+  level: string;
+  onlineIssn: string | null;
+  printIssn: string | null;
+  npiDomain: string;
+  openAccess: boolean | null;
+  language: string | null;
+  publisherId: string | null;
+}
 
 export interface Publisher {
-  type: string;
-  title: string;
-  onlineIssn: string;
-  printIssn: string;
-  level: string | number | null;
-  openAccess: boolean;
-  peerReviewed: boolean;
-  url: string;
+  id: string;
+  identifier: string;
+  name: string;
+  website: string;
+  active: boolean;
 }
 
 export interface AlmaRegistration {
@@ -94,6 +97,7 @@ export interface BaseRegistration extends RegistrationFileSet {
   readonly doi?: string;
   readonly doiRequest?: DoiRequest;
   readonly publisher: RegistrationPublisher;
+  subjects: string[];
   projects: ResearchProject[];
 }
 
@@ -107,13 +111,11 @@ export interface BaseEntityDescription {
   mainTitle: string;
   npiSubjectHeading: string;
   tags: string[];
-  controlledKeywords: string[];
 }
 
 export interface NviApplicableBase<T> {
   contentType: T | null;
   peerReviewed: boolean | null;
-  originalResearch: boolean | null;
 }
 
 export interface BaseReference {
@@ -161,4 +163,5 @@ export const emptyRegistration: Registration = {
   },
   projects: [],
   publisher: { id: '' },
+  subjects: [],
 };

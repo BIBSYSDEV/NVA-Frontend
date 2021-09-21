@@ -57,22 +57,23 @@ export enum ResourceFieldNames {
   PagesTo = 'entityDescription.reference.publicationInstance.pages.end',
   PagesType = 'entityDescription.reference.publicationInstance.pages.type',
   PagesPages = 'entityDescription.reference.publicationInstance.pages.pages',
-  PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
-  OriginalResearch = 'entityDescription.reference.publicationInstance.originalResearch',
+  PartOf = 'entityDescription.reference.publicationContext.partOf',
+  PeerReviewed = 'entityDescription.reference.publicationInstance.peerReviewed',
+  PubliactionContextId = 'entityDescription.reference.publicationContext.id',
   PubliactionContextLevel = 'entityDescription.reference.publicationContext.level',
-  PubliactionContextLinkedContext = 'entityDescription.reference.publicationContext.linkedContext',
-  PubliactionContextTitle = 'entityDescription.reference.publicationContext.title',
-  PubliactionContextPublisher = 'entityDescription.reference.publicationContext.publisher',
+  PubliactionContextPublisherId = 'entityDescription.reference.publicationContext.publisher.id',
+  PubliactionContextPublisherType = 'entityDescription.reference.publicationContext.publisher.type',
   PubliactionContextType = 'entityDescription.reference.publicationContext.type',
+  SeriesId = 'entityDescription.reference.publicationContext.series.id',
   SeriesNumber = 'entityDescription.reference.publicationContext.seriesNumber',
-  SeriesTitle = 'entityDescription.reference.publicationContext.seriesTitle',
+  SeriesTitle = 'entityDescription.reference.publicationContext.series.title',
+  SeriesType = 'entityDescription.reference.publicationContext.series.type',
   SubType = 'entityDescription.reference.publicationInstance.type',
   Volume = 'entityDescription.reference.publicationInstance.volume',
 }
 
 export enum DescriptionFieldNames {
   Abstract = 'entityDescription.abstract',
-  ControlledKeywords = 'entityDescription.controlledKeywords',
   Date = 'entityDescription.date',
   Description = 'entityDescription.description',
   Language = 'entityDescription.language',
@@ -80,6 +81,7 @@ export enum DescriptionFieldNames {
   PublicationDay = 'entityDescription.date.day',
   PublicationMonth = 'entityDescription.date.month',
   PublicationYear = 'entityDescription.date.year',
+  Subjects = 'subjects',
   Tags = 'entityDescription.tags',
   Title = 'entityDescription.mainTitle',
 }
@@ -104,8 +106,5 @@ export enum ContributorFieldNames {
 export enum SpecificContributorFieldNames {
   Affiliations = 'affiliations',
   Corresponding = 'correspondingAuthor',
-  Email = 'email',
-  Id = 'id',
-  Role = 'role', // TODO
   Sequence = 'sequence',
 }

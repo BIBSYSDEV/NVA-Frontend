@@ -9,6 +9,5 @@ export interface Category {
 }
 
 export interface VocabularyData {
-  '@context': any;
   categories: Category[];
 }

@@ -13,6 +13,7 @@ import {
   SpecificFileFieldNames,
 } from '../types/publicationFieldNames';
 import { Registration, RegistrationTab } from '../types/registration.types';
+import { getMainRegistrationType } from './registration-helpers';
 
 export interface TabErrors {
   [RegistrationTab.Description]: string[];
@@ -114,15 +115,17 @@ const touchedDescriptionTabFields: FormikTouched<Registration> = {
   },
 };
 
-const touchedResourceTabFields = (publicationType: PublicationType | ''): FormikTouched<unknown> => {
-  switch (publicationType) {
+const touchedResourceTabFields = (instanceType: string): FormikTouched<unknown> => {
+  const mainType = getMainRegistrationType(instanceType);
+
+  switch (mainType) {
     case PublicationType.PublicationInJournal:
       return {
         entityDescription: {
           reference: {
             publicationContext: {
               type: true,
-              title: true,
+              id: true,
             },
             publicationInstance: {
               type: true,
@@ -136,7 +139,6 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
               corrigendumFor: true,
               contentType: true,
               peerReviewed: true,
-              originalResearch: true,
             },
           },
         },
@@ -147,7 +149,7 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
           reference: {
             publicationContext: {
               type: true,
-              publisher: true,
+              publisher: { id: true },
             },
             publicationInstance: {
               type: true,
@@ -161,7 +163,7 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
           reference: {
             publicationContext: {
               type: true,
-              publisher: true,
+              publisher: { id: true },
               isbnList: [true],
             },
             publicationInstance: {
@@ -177,7 +179,7 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
           reference: {
             publicationContext: {
               type: true,
-              publisher: true,
+              publisher: { id: true },
               isbnList: [true],
             },
             publicationInstance: {
@@ -187,7 +189,6 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
               },
               contentType: true,
               peerReviewed: true,
-              originalResearch: true,
             },
           },
         },
@@ -198,13 +199,12 @@ const touchedResourceTabFields = (publicationType: PublicationType | ''): Formik
           reference: {
             publicationContext: {
               type: true,
-              linkedContext: true,
+              partOf: true,
             },
             publicationInstance: {
               type: true,
               contentType: true,
               peerReviewed: true,
-              originalResearch: true,
             },
           },
         },
@@ -257,7 +257,7 @@ export const getTouchedTabFields = (
   const tabFields = {
     [RegistrationTab.Description]: () => touchedDescriptionTabFields,
     [RegistrationTab.ResourceType]: () =>
-      touchedResourceTabFields(values.entityDescription.reference.publicationContext.type),
+      touchedResourceTabFields(values.entityDescription.reference.publicationInstance.type),
     [RegistrationTab.Contributors]: () => touchedContributorTabFields(values.entityDescription.contributors),
     [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(values.fileSet.files),
   };

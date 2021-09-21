@@ -1,7 +1,6 @@
 import { useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { MuiThemeProvider, Typography } from '@material-ui/core';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { lightTheme } from '../../../../themes/lightTheme';
@@ -9,30 +8,19 @@ import { BookType } from '../../../../types/publicationFieldNames';
 import { DoiField } from '../components/DoiField';
 import { NpiDisciplineField } from '../components/NpiDisciplineField';
 import { NviValidation } from '../components/NviValidation';
-import { PublisherField } from '../components/PublisherField';
 import { SeriesFields } from '../components/SeriesFields';
-import { TotalPagesField } from '../components/TotalPagesField';
 import { NviFields } from '../components/nvi_fields/NviFields';
-import { bookMonographContentTypes } from '../../../../types/publication_types/content.types';
 import { BookRegistration } from '../../../../types/publication_types/bookRegistration.types';
-import { IsbnField } from '../components/IsbnField';
-
-const StyledSection = styled.div`
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: 1fr 2fr;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-columns: 1fr;
-  }
-`;
+import { BookMonographContentType } from '../../../../types/publication_types/content.types';
+import { PublisherField } from '../components/PublisherField';
+import { IsbnAndPages } from '../components/isbn_and_pages/IsbnAndPages';
 
 export const BookForm = () => {
   const { t } = useTranslation('registration');
   const { values } = useFormikContext<BookRegistration>();
   const {
     reference: {
-      publicationContext,
-      publicationInstance: { peerReviewed, type, originalResearch },
+      publicationInstance: { peerReviewed, type },
     },
   } = values.entityDescription;
 
@@ -46,15 +34,12 @@ export const BookForm = () => {
           <NpiDisciplineField />
         </MuiThemeProvider>
 
-        <StyledSection>
-          <IsbnField />
-          <TotalPagesField />
-        </StyledSection>
+        <IsbnAndPages />
       </BackgroundDiv>
 
       {type === BookType.Monograph && (
         <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-          <NviFields contentTypeOptions={bookMonographContentTypes} />
+          <NviFields contentTypes={Object.values(BookMonographContentType)} />
         </BackgroundDiv>
       )}
 
@@ -64,13 +49,7 @@ export const BookForm = () => {
         <SeriesFields />
       </BackgroundDiv>
 
-      {type === BookType.Monograph && (
-        <NviValidation
-          isPeerReviewed={!!peerReviewed}
-          isRated={!!publicationContext?.level}
-          isOriginalResearch={!!originalResearch}
-        />
-      )}
+      {type === BookType.Monograph && <NviValidation isPeerReviewed={!!peerReviewed} isRated={false} />}
     </>
   );
 };

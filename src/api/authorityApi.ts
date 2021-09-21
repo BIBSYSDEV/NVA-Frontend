@@ -1,20 +1,13 @@
-import { CancelToken } from 'axios';
 import { Authority } from '../types/authority.types';
 import { isSuccessStatus } from '../utils/constants';
 import { AuthorityApiPath } from './apiPaths';
-import { apiRequest, authenticatedApiRequest } from './apiRequest';
+import { authenticatedApiRequest } from './apiRequest';
 
 export enum AuthorityQualifiers {
   FEIDE_ID = 'feideid',
   ORCID = 'orcid',
   ORGUNIT_ID = 'orgunitid',
 }
-
-export const getAuthority = async (arpId: string, cancelToken?: CancelToken) =>
-  await apiRequest<Authority>({
-    url: arpId,
-    cancelToken,
-  });
 
 export const createAuthority = async (firstName: string, lastName: string, feideId?: string, cristinId?: string) => {
   const createAuthorityResponse = await authenticatedApiRequest<Authority>({

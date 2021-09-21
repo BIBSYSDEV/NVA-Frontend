@@ -4,11 +4,32 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { dataTestId } from '../../utils/dataTestIds';
+import { getLanguageString } from '../../utils/translation-helpers';
+import { hrcsCategories } from '../../resources/vocabularies/hrcsCategories';
+import { hrcsActivityOptions } from '../registration/description_tab/vocabularies/HrcsActivityInput';
+import { hrcsActivityBaseId, hrcsCategoryBaseId } from '../../utils/constants';
 
 export const PublicSummaryContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
 
-  const { abstract, description, tags } = registration.entityDescription;
+  const {
+    entityDescription: { abstract, description, tags },
+    subjects,
+  } = registration;
+
+  const selectedHrcsActivities = subjects
+    .filter((subjectId) => subjectId.startsWith(hrcsActivityBaseId))
+    .map((activityId) => {
+      const matchingActivity = hrcsActivityOptions.find((activity) => activity.id === activityId);
+      return matchingActivity ? getLanguageString(matchingActivity.label) : '';
+    });
+
+  const selectedHrcsCategories = subjects
+    .filter((subjectId) => subjectId.startsWith(hrcsCategoryBaseId))
+    .map((categoryId) => {
+      const matchingCategory = hrcsCategories.categories.find((category) => category.id === categoryId);
+      return matchingCategory ? getLanguageString(matchingCategory.label) : '';
+    });
 
   return (
     <>
@@ -31,6 +52,14 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
       )}
 
       {tags.length > 0 && <TagsList title={t('description.keywords')} values={tags} />}
+
+      {selectedHrcsActivities.length > 0 && (
+        <TagsList title={t('description.hrcs_activities')} values={selectedHrcsActivities} />
+      )}
+
+      {selectedHrcsCategories.length > 0 && (
+        <TagsList title={t('description.hrcs_categories')} values={selectedHrcsCategories} />
+      )}
     </>
   );
 };

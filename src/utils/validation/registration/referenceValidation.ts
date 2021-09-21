@@ -1,13 +1,6 @@
 import * as Yup from 'yup';
 import { parse as parseIsbn } from 'isbn-utils';
-import {
-  BookType,
-  ChapterType,
-  DegreeType,
-  JournalType,
-  PublicationType,
-  ReportType,
-} from '../../../types/publicationFieldNames';
+import { BookType, ChapterType, DegreeType, JournalType, ReportType } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
 import {
   BookMonographContentType,
@@ -29,13 +22,6 @@ const resourceErrorMessage = {
   doiInvalid: i18n.t('feedback:validation.has_invalid_format', {
     field: i18n.t('registration:registration.link_to_resource'),
   }),
-  issueInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:resource_type.issue'),
-  }),
-  issueMustBeBigger: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('registration:resource_type.issue'),
-    limit: 0,
-  }),
   isbnInvalid: i18n.t('feedback:validation.has_invalid_format', {
     field: i18n.t('registration:resource_type.isbn'),
   }),
@@ -43,29 +29,9 @@ const resourceErrorMessage = {
   journalRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.journal'),
   }),
-  linkedContextRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('registration:resource_type.chapter.published_in'),
-  }),
-  originalResearchRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('registration:resource_type.presents_original_research'),
-  }),
-  pageBeginInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:resource_type.pages_from'),
-  }),
-  pageBeginMustBeBigger: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('registration:resource_type.pages_from'),
-    limit: 0,
-  }),
   pageBeginMustBeSmallerThanEnd: i18n.t('feedback:validation.must_be_smaller_than', {
     field: i18n.t('registration:resource_type.pages_from'),
     limit: i18n.t('registration:resource_type.pages_to'),
-  }),
-  pageEndInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:resource_type.pages_to'),
-  }),
-  pageEndMustBeBigger: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('registration:resource_type.pages_to'),
-    limit: 0,
   }),
   pageEndMustBeBiggerThanBegin: i18n.t('feedback:validation.must_be_bigger_than', {
     field: i18n.t('registration:resource_type.pages_to'),
@@ -78,6 +44,9 @@ const resourceErrorMessage = {
     field: i18n.t('registration:resource_type.number_of_pages'),
     limit: 1,
   }),
+  partOfRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.chapter.published_in'),
+  }),
   peerReviewedRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.peer_reviewed'),
   }),
@@ -86,13 +55,6 @@ const resourceErrorMessage = {
   }),
   typeRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:type'),
-  }),
-  volumeInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:resource_type.volume'),
-  }),
-  volumeMustBeBigger: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('registration:resource_type.volume'),
-    limit: 0,
   }),
 };
 
@@ -111,12 +73,6 @@ const peerReviewedField = Yup.boolean()
     is: (contentType: string) => nviApplicableContentTypes.includes(contentType),
     then: Yup.boolean().nullable().required(resourceErrorMessage.peerReviewedRequired),
   });
-const originalResearchField = Yup.boolean()
-  .nullable()
-  .when('$contentType', {
-    is: (contentType: string) => nviApplicableContentTypes.includes(contentType),
-    then: Yup.boolean().nullable().required(resourceErrorMessage.originalResearchRequired),
-  });
 
 const pagesMonographField = Yup.object()
   .nullable()
@@ -130,27 +86,32 @@ const pagesMonographField = Yup.object()
 const pagesRangeField = Yup.object()
   .nullable()
   .shape({
-    begin: Yup.number()
-      .typeError(resourceErrorMessage.pageBeginInvalid)
-      .min(0, resourceErrorMessage.pageBeginMustBeBigger)
-      .when('end', {
-        is: (value: number) => value && !isNaN(value),
-        then: Yup.number().max(Yup.ref('end'), resourceErrorMessage.pageBeginMustBeSmallerThanEnd),
-      })
-      .transform(emptyStringToNull)
-      .nullable(),
-    end: Yup.number()
-      .typeError(resourceErrorMessage.pageEndInvalid)
-      .min(Yup.ref('begin'), resourceErrorMessage.pageEndMustBeBiggerThanBegin)
-      .transform(emptyStringToNull)
-      .nullable(),
+    begin: Yup.string().test('begin-test', resourceErrorMessage.pageBeginMustBeSmallerThanEnd, function (beginValue) {
+      const beginNumber = parseInt(beginValue ?? '');
+      const endNumber = parseInt(this.parent.end);
+      if (!isNaN(beginNumber) && !isNaN(endNumber)) {
+        return beginNumber <= endNumber;
+      }
+      return true;
+    }),
+    end: Yup.string().test('end-test', resourceErrorMessage.pageEndMustBeBiggerThanBegin, function (endValue) {
+      const beginNumber = parseInt(this.parent.begin);
+      const endNumber = parseInt(endValue ?? '');
+      if (!isNaN(beginNumber) && !isNaN(endNumber)) {
+        return beginNumber <= endNumber;
+      }
+      return true;
+    }),
   });
-const publisherField = Yup.string().required(resourceErrorMessage.publisherRequired);
+
+const publisherField = Yup.object().shape({
+  id: Yup.string().required(resourceErrorMessage.publisherRequired),
+});
 
 export const baseReference = Yup.object().shape({
   doi: Yup.string().trim().url(resourceErrorMessage.doiInvalid),
-  publicationContext: Yup.object().shape({
-    type: Yup.string().oneOf(Object.values(PublicationType)).required(resourceErrorMessage.typeRequired),
+  publicationInstance: Yup.object().shape({
+    type: Yup.string().required(resourceErrorMessage.typeRequired),
   }),
 });
 
@@ -158,16 +119,8 @@ export const baseReference = Yup.object().shape({
 const journalPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(JournalType)).required(resourceErrorMessage.typeRequired),
   articleNumber: Yup.string(),
-  volume: Yup.number()
-    .typeError(resourceErrorMessage.volumeInvalid)
-    .min(0, resourceErrorMessage.volumeMustBeBigger)
-    .transform(emptyStringToNull)
-    .nullable(),
-  issue: Yup.number()
-    .typeError(resourceErrorMessage.issueInvalid)
-    .min(0, resourceErrorMessage.issueMustBeBigger)
-    .transform(emptyStringToNull)
-    .nullable(),
+  volume: Yup.string(),
+  issue: Yup.string(),
   pages: pagesRangeField,
   corrigendumFor: Yup.string()
     .optional()
@@ -187,11 +140,10 @@ const journalPublicationInstance = Yup.object().shape({
         .required(resourceErrorMessage.contentTypeRequired),
     }),
   peerReviewed: peerReviewedField,
-  originalResearch: originalResearchField,
 });
 
 const journalPublicationContext = Yup.object().shape({
-  title: Yup.string().when('$publicationInstanceType', {
+  id: Yup.string().when('$publicationInstanceType', {
     is: JournalType.Corrigendum,
     then: Yup.string(),
     otherwise: Yup.string().required(resourceErrorMessage.journalRequired),
@@ -217,7 +169,6 @@ const bookPublicationInstance = Yup.object().shape({
         .required(resourceErrorMessage.contentTypeRequired),
     }),
   peerReviewed: peerReviewedField,
-  originalResearch: originalResearchField,
 });
 
 const bookPublicationContext = Yup.object().shape({
@@ -274,11 +225,10 @@ const chapterPublicationInstance = Yup.object().shape({
         .required(resourceErrorMessage.contentTypeRequired),
     }),
   peerReviewed: peerReviewedField,
-  originalResearch: originalResearchField,
 });
 
 const chapterPublicationContext = Yup.object().shape({
-  linkedContext: Yup.string().required(resourceErrorMessage.linkedContextRequired),
+  partOf: Yup.string().required(resourceErrorMessage.partOfRequired),
 });
 
 export const chapterReference = baseReference.shape({

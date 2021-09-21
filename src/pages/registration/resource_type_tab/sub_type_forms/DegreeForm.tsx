@@ -4,10 +4,10 @@ import { Typography } from '@material-ui/core';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { lightTheme } from '../../../../themes/lightTheme';
 import { DoiField } from '../components/DoiField';
-import { PublisherField } from '../components/PublisherField';
 import { SeriesFields } from '../components/SeriesFields';
 import { DegreeType } from '../../../../types/publicationFieldNames';
-import { TotalPagesField } from '../components/TotalPagesField';
+import { PublisherField } from '../components/PublisherField';
+import { IsbnAndPages } from '../components/isbn_and_pages/IsbnAndPages';
 
 interface DegreeFormProps {
   subType: DegreeType;
@@ -21,7 +21,7 @@ export const DegreeForm = ({ subType }: DegreeFormProps) => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DoiField />
         <PublisherField />
-        <TotalPagesField />
+        <IsbnAndPages />
       </BackgroundDiv>
 
       {subType === DegreeType.Phd && (

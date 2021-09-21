@@ -1,5 +1,7 @@
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { BookMonographContentType } from '../../src/types/publication_types/content.types';
+import { mockJournalsSearch } from '../../src/utils/testfiles/mockJournals';
+import { mockPublishersSearch } from '../../src/utils/testfiles/mockPublishers';
 
 describe('Registration: Resource type: Book', () => {
   beforeEach(() => {
@@ -24,9 +26,14 @@ describe('Registration: Resource type: Book', () => {
     cy.get('[data-testid=publication-instance-type-BookMonograph]').click({ force: true });
 
     // search for and select a publisher
-    cy.get('[data-testid=publisher-search-field] input').click({ force: true }).type('Test');
-    cy.contains('Novum Testamentum').click({ force: true });
-    cy.get('[data-testid=publisher-search-field] input').should('have.value', 'Novum Testamentum');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
+      .click()
+      .type(mockPublishersSearch[0].name);
+    cy.contains(mockPublishersSearch[0].name).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherChip}]`).should(
+      'contain',
+      mockPublishersSearch[0].name
+    );
 
     // NPI Subject
     cy.selectNpiDiscipline('Linguistics');
@@ -38,22 +45,27 @@ describe('Registration: Resource type: Book', () => {
     cy.get(`[data-value="${BookMonographContentType.AcademicMonograph}"]`).click();
 
     // choose peer review value and show NVI status
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviFailedPeerReview}]`).should('be.visible');
+    // TODO
+    // cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviFailedPeerReview}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`)
       .eq(0)
       .click({ force: true });
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviFailedOriginalResearch}]`).should(
-      'be.visible'
-    );
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.originalResearchField}] input`).eq(0).click();
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviSuccess}]`).should('be.visible');
+    // cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviSuccess}]`).should('be.visible');
 
     // fill out number of pages field
     cy.get('[data-testid=pages-field] input').type('483');
 
     // search and select a series
-    cy.get('[data-testid=series-search-field] input').click({ force: true }).type('Test');
-    cy.contains('New Testament Studies').click({ force: true });
-    cy.get('[data-testid=series-search-field] input').should('have.value', 'New Testament Studies');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesField}] input`)
+      .click()
+      .type(mockJournalsSearch[2].name);
+    cy.contains(mockJournalsSearch[2].name).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesChip}]`).should(
+      'contain',
+      mockJournalsSearch[2].name
+    );
+
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesChip}] svg`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesChip}]`).should('not.exist');
   });
 });
