@@ -28,10 +28,10 @@ export const NpiDisciplineField = () => {
           id={name}
           aria-labelledby={`${name}-label`}
           options={disciplineOptions}
-          groupBy={(discipline) => discipline.mainDiscipline}
+          groupBy={(discipline) => t(`disciplines:${discipline.mainDiscipline}`)}
           onChange={(_: unknown, value: NpiDiscipline | null) => setFieldValue(name, value?.id ?? '')}
           value={getNpiDiscipline(value)}
-          getOptionLabel={(option) => option.name}
+          getOptionLabel={(option) => t(`disciplines:${option.id}`)}
           renderInput={(params) => (
             <TextField
               {...params}

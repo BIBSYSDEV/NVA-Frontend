@@ -1,12 +1,11 @@
 import disciplines from '../resources/disciplines.json';
-import i18n from '../translations/i18n';
 import { NpiDiscipline } from '../types/registration.types';
 
 export const disciplineOptions: NpiDiscipline[] = disciplines
   .map((mainDiscipline) =>
     mainDiscipline.subdomains.map((subDiscipline) => ({
-      name: i18n.t(`disciplines:${subDiscipline.name}`),
-      mainDiscipline: i18n.t(`disciplines:${mainDiscipline.subjectArea}`),
+      name: subDiscipline.name,
+      mainDiscipline: mainDiscipline.id,
       id: subDiscipline.id,
     }))
   )
