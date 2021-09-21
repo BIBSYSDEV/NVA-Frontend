@@ -29,12 +29,7 @@ import { DegreeType, JournalType } from '../../types/publicationFieldNames';
 import { getNpiDiscipline } from '../../utils/npiDisciplines';
 import { isBook, isChapter, isDegree, isJournal, isReport } from '../../utils/registration-helpers';
 import { PublicDoi } from './PublicDoi';
-import {
-  PublicJournalContent,
-  PublicPartOfContent,
-  PublicPublisherContent,
-  PublicSeriesContent,
-} from './PublicPublicationContext';
+import { PublicJournal, PublicPartOfContent, PublicPublisher, PublicSeries } from './PublicPublicationContext';
 import {
   PublicIsbnContent,
   PublicPublicationInstanceBook,
@@ -96,7 +91,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
       <div data-testid={dataTestId.registrationLandingPage.subtypeFields}>
         {isJournal(publicationInstance.type) ? (
           <>
-            <PublicJournalContent publicationContext={publicationContext as JournalPublicationContext} />
+            <PublicJournal publicationContext={publicationContext as JournalPublicationContext} />
             <PublicPublicationInstanceJournal publicationInstance={journalPublicationInstance} />
             {publicationInstance.type === JournalType.Corrigendum && (
               <>
@@ -109,8 +104,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           </>
         ) : isBook(publicationInstance.type) ? (
           <>
-            <PublicPublisherContent publisher={(publicationContext as BookPublicationContext).publisher} />
-            <PublicSeriesContent publicationContext={publicationContext as BookPublicationContext} />
+            <PublicPublisher publisher={(publicationContext as BookPublicationContext).publisher} />
+            <PublicSeries publicationContext={publicationContext as BookPublicationContext} />
             <PublicPublicationInstanceBook publicationInstance={publicationInstance as BookPublicationInstance} />
             <PublicIsbnContent
               isbnList={(registration as BookRegistration).entityDescription.reference.publicationContext.isbnList}
@@ -118,10 +113,10 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           </>
         ) : isDegree(publicationInstance.type) ? (
           <>
-            <PublicPublisherContent publisher={(publicationContext as DegreePublicationContext).publisher} />
+            <PublicPublisher publisher={(publicationContext as DegreePublicationContext).publisher} />
             {publicationInstance.type === DegreeType.Phd && (
               <>
-                <PublicSeriesContent publicationContext={publicationContext as DegreePublicationContext} />
+                <PublicSeries publicationContext={publicationContext as DegreePublicationContext} />
                 <PublicIsbnContent
                   isbnList={
                     (registration as DegreeRegistration).entityDescription.reference.publicationContext.isbnList
@@ -133,8 +128,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           </>
         ) : isReport(publicationInstance.type) ? (
           <>
-            <PublicPublisherContent publisher={(publicationContext as ReportPublicationContext).publisher} />
-            <PublicSeriesContent publicationContext={publicationContext as ReportPublicationContext} />
+            <PublicPublisher publisher={(publicationContext as ReportPublicationContext).publisher} />
+            <PublicSeries publicationContext={publicationContext as ReportPublicationContext} />
             <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
             <PublicIsbnContent
               isbnList={(registration as ReportRegistration).entityDescription.reference.publicationContext.isbnList}
