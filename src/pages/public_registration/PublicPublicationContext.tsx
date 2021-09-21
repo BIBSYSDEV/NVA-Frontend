@@ -49,7 +49,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
       </Typography>
 
       {isLoadingPublisher ? (
-        <ListSkeleton />
+        <ListSkeleton height={20} />
       ) : (
         fetchedPublisher && (
           <>
@@ -118,7 +118,7 @@ const PublicJournalContent = ({ id }: PublicJournalContentProps) => {
   return id ? (
     <>
       {isLoadingJournal ? (
-        <ListSkeleton />
+        <ListSkeleton height={20} />
       ) : (
         journal && (
           <>
