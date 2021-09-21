@@ -20,11 +20,6 @@ export const ContentTypeField = ({ contentTypes }: ContentTypeFieldProps) => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 
-  const contentTypeOptions = contentTypes.map((contentType) => ({
-    value: contentType,
-    text: t(`registration:resource_type.content_types.${contentType}`),
-  }));
-
   return (
     <Field name={ResourceFieldNames.ContentType}>
       {({ field, meta: { error, touched } }: FieldProps<string>) => (
@@ -47,12 +42,12 @@ export const ContentTypeField = ({ contentTypes }: ContentTypeFieldProps) => {
             required
             error={!!error && touched}
             helperText={<ErrorMessage name={field.name} />}>
-            {contentTypeOptions.map(({ value, text }) => (
+            {contentTypes.map((contentType) => (
               <MenuItem
-                value={value}
-                key={value}
-                data-testid={dataTestId.registrationWizard.resourceType.contentValue(value)}>
-                {text}
+                value={contentType}
+                key={contentType}
+                data-testid={dataTestId.registrationWizard.resourceType.contentValue(contentType)}>
+                {t(`resource_type.content_types.${contentType}`)}
               </MenuItem>
             ))}
           </TextField>
