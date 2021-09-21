@@ -14,8 +14,11 @@ interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
 }
 
-const getChannelRegisterUrl = (id: string) =>
+const getChannelRegisterJournalUrl = (id: string) =>
   `https://dbh.nsd.uib.no/publiseringskanaler/KanalTidsskriftInfo.action?id=${id}`;
+
+const getChannelRegisterPublisherUrl = (id: string) =>
+  `https://dbh.nsd.uib.no/publiseringskanaler/KanalForlagInfo.action?id=${id}`;
 
 export const PublicJournal = ({ publicationContext }: PublicJournalProps) => {
   const { t } = useTranslation('registration');
@@ -31,7 +34,7 @@ export const PublicJournal = ({ publicationContext }: PublicJournalProps) => {
   ) : null;
 };
 
-export const PublicPublisherContent = ({ publisher }: { publisher?: ContextPublisher }) => {
+export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher }) => {
   const { t } = useTranslation('registration');
 
   const [fetchedPublisher, isLoadingPublisher] = useFetch<Publisher>({
@@ -44,17 +47,21 @@ export const PublicPublisherContent = ({ publisher }: { publisher?: ContextPubli
       <Typography variant="overline" component="p">
         {t('common:publisher')}
       </Typography>
+
       {isLoadingPublisher ? (
-        <ListSkeleton height={20} />
+        <ListSkeleton />
       ) : (
-        fetchedPublisher &&
-        (fetchedPublisher.website ? (
-          <Typography component={Link} href={fetchedPublisher.website} target="_blank" rel="noopener noreferrer">
-            {fetchedPublisher.name}
-          </Typography>
-        ) : (
-          <Typography>{fetchedPublisher.name}</Typography>
-        ))
+        fetchedPublisher && (
+          <>
+            <Typography>{fetchedPublisher.name}</Typography>
+            <Typography
+              component={Link}
+              href={getChannelRegisterPublisherUrl(fetchedPublisher.identifier)}
+              target="_blank">
+              {t('public_page.find_in_channel_registry')}
+            </Typography>
+          </>
+        )
       )}
     </>
   ) : null;
@@ -127,7 +134,7 @@ const PublicJournalContent = ({ id }: PublicJournalContentProps) => {
             <Typography>
               {t('resource_type.level')}: {journal.level}
             </Typography>
-            <Typography component={Link} href={getChannelRegisterUrl(journal.identifier)} target="_blank">
+            <Typography component={Link} href={getChannelRegisterJournalUrl(journal.identifier)} target="_blank">
               {t('public_page.find_in_channel_registry')}
             </Typography>
           </>

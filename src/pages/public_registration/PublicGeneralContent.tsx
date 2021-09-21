@@ -29,7 +29,7 @@ import { DegreeType, JournalType } from '../../types/publicationFieldNames';
 import { getNpiDiscipline } from '../../utils/npiDisciplines';
 import { isBook, isChapter, isDegree, isJournal, isReport } from '../../utils/registration-helpers';
 import { PublicDoi } from './PublicDoi';
-import { PublicJournal, PublicPartOfContent, PublicPublisherContent, PublicSeries } from './PublicPublicationContext';
+import { PublicJournal, PublicPartOfContent, PublicPublisher, PublicSeries } from './PublicPublicationContext';
 import {
   PublicIsbnContent,
   PublicPublicationInstanceBook,
@@ -104,7 +104,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           </>
         ) : isBook(publicationInstance.type) ? (
           <>
-            <PublicPublisherContent publisher={(publicationContext as BookPublicationContext).publisher} />
+            <PublicPublisher publisher={(publicationContext as BookPublicationContext).publisher} />
             <PublicSeries publicationContext={publicationContext as BookPublicationContext} />
             <PublicPublicationInstanceBook publicationInstance={publicationInstance as BookPublicationInstance} />
             <PublicIsbnContent
@@ -113,7 +113,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           </>
         ) : isDegree(publicationInstance.type) ? (
           <>
-            <PublicPublisherContent publisher={(publicationContext as DegreePublicationContext).publisher} />
+            <PublicPublisher publisher={(publicationContext as DegreePublicationContext).publisher} />
             {publicationInstance.type === DegreeType.Phd && (
               <>
                 <PublicSeries publicationContext={publicationContext as DegreePublicationContext} />
@@ -128,7 +128,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           </>
         ) : isReport(publicationInstance.type) ? (
           <>
-            <PublicPublisherContent publisher={(publicationContext as ReportPublicationContext).publisher} />
+            <PublicPublisher publisher={(publicationContext as ReportPublicationContext).publisher} />
             <PublicSeries publicationContext={publicationContext as ReportPublicationContext} />
             <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
             <PublicIsbnContent
