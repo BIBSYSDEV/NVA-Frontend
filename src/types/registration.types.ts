@@ -56,11 +56,6 @@ export interface MyRegistrationsResponse {
   publications?: RegistrationPreview[]; // "publications" is undefined if user has no registrations
 }
 
-export interface NpiDiscipline {
-  id: string;
-  mainDisciplineId: string;
-}
-
 export enum DoiRequestStatus {
   Approved = 'APPROVED',
   Rejected = 'REJECTED',

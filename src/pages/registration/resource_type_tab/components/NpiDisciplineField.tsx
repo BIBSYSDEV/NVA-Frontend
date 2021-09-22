@@ -5,7 +5,6 @@ import { TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { ErrorMessage, Field, FieldProps } from 'formik';
-import { NpiDiscipline } from '../../../../types/registration.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import disciplines from '../../../../resources/disciplines.json';
 import { dataTestId } from '../../../../utils/dataTestIds';
@@ -15,7 +14,7 @@ const StyledSearchIcon = styled(SearchIcon)`
   color: ${({ theme }) => theme.palette.text.disabled};
 `;
 
-const disciplineOptions: NpiDiscipline[] = disciplines
+const disciplineOptions = disciplines
   .map((mainDiscipline) =>
     mainDiscipline.subdomains.map((subDiscipline) => ({
       mainDisciplineId: mainDiscipline.id,
