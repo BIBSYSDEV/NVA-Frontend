@@ -126,13 +126,13 @@ export const App = () => {
             // Add cristinId to Authority's orgunitids
             const authorityWithOrgId = await addQualifierIdForAuthority(
               authority.id,
-              AuthorityQualifiers.ORGUNIT_ID,
+              AuthorityQualifiers.OrgUnitId,
               user.cristinId
             );
             if (isErrorStatus(authorityWithOrgId.status)) {
               dispatch(
                 setNotification(
-                  t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+                  t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
                   NotificationVariant.Error
                 )
               );

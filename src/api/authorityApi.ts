@@ -4,9 +4,9 @@ import { AuthorityApiPath } from './apiPaths';
 import { authenticatedApiRequest } from './apiRequest';
 
 export enum AuthorityQualifiers {
-  FEIDE_ID = 'feideid',
-  ORCID = 'orcid',
-  ORGUNIT_ID = 'orgunitid',
+  FeideId = 'feideid',
+  Orcid = 'orcid',
+  OrgUnitId = 'orgunitid',
 }
 
 export const createAuthority = async (firstName: string, lastName: string, feideId?: string, cristinId?: string) => {
@@ -18,17 +18,13 @@ export const createAuthority = async (firstName: string, lastName: string, feide
   if (isSuccessStatus(createAuthorityResponse.status)) {
     const arpId = createAuthorityResponse.data.id;
     if (feideId) {
-      const updateAuthorityResponse = await addQualifierIdForAuthority(arpId, AuthorityQualifiers.FEIDE_ID, feideId);
+      const updateAuthorityResponse = await addQualifierIdForAuthority(arpId, AuthorityQualifiers.FeideId, feideId);
       if (isSuccessStatus(createAuthorityResponse.status)) {
         createAuthorityResponse.data = updateAuthorityResponse.data;
       }
     }
     if (cristinId) {
-      const updateAuthorityResponse = await addQualifierIdForAuthority(
-        arpId,
-        AuthorityQualifiers.ORGUNIT_ID,
-        cristinId
-      );
+      const updateAuthorityResponse = await addQualifierIdForAuthority(arpId, AuthorityQualifiers.OrgUnitId, cristinId);
       if (isSuccessStatus(createAuthorityResponse.status)) {
         createAuthorityResponse.data = updateAuthorityResponse.data;
       }

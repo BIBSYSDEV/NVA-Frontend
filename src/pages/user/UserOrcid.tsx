@@ -80,13 +80,13 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       } else if (user.authority && !user.authority.orcids.includes(orcidId)) {
         const updateAuthorityResponse = await addQualifierIdForAuthority(
           user.authority.id,
-          AuthorityQualifiers.ORCID,
+          AuthorityQualifiers.Orcid,
           orcidId
         );
         if (isErrorStatus(updateAuthorityResponse.status)) {
           dispatch(
             setNotification(
-              t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORCID}`) }),
+              t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.Orcid}`) }),
               NotificationVariant.Error
             )
           );
@@ -118,13 +118,13 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
     setIsRemovingOrcid(true);
     const updateAuthorityResponse = await removeQualifierIdFromAuthority(
       user.authority.id,
-      AuthorityQualifiers.ORCID,
+      AuthorityQualifiers.Orcid,
       id
     );
     if (isErrorStatus(updateAuthorityResponse.status)) {
       dispatch(
         setNotification(
-          t('feedback:error.delete_identifier', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+          t('feedback:error.delete_identifier', { qualifier: t(`common:${AuthorityQualifiers.Orcid}`) }),
           NotificationVariant.Error
         )
       );

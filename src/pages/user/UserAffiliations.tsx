@@ -49,13 +49,13 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
     setIsRemovingInstitution(true);
     const updateAuthorityResponse = await removeQualifierIdFromAuthority(
       user.authority.id,
-      AuthorityQualifiers.ORGUNIT_ID,
+      AuthorityQualifiers.OrgUnitId,
       institutionIdToRemove
     );
     if (isErrorStatus(updateAuthorityResponse.status)) {
       dispatch(
         setNotification(
-          t('feedback:error.delete_identifier', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+          t('feedback:error.delete_identifier', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
           NotificationVariant.Error
         )
       );
@@ -86,13 +86,13 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
     if (user.authority) {
       const updateAuthorityResponse = await addQualifierIdForAuthority(
         user.authority.id,
-        AuthorityQualifiers.ORGUNIT_ID,
+        AuthorityQualifiers.OrgUnitId,
         newUnitId
       );
       if (isErrorStatus(updateAuthorityResponse.status)) {
         dispatch(
           setNotification(
-            t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+            t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
             NotificationVariant.Error
           )
         );

@@ -46,16 +46,16 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
     if (selectedAuthority) {
       setIsUpdatingAuthority(true);
 
-      if (!selectedAuthority?.feideids.includes(user.id)) {
+      if (!selectedAuthority.feideids.includes(user.id)) {
         const updatedAuthorityWithFeide = await addQualifierIdForAuthority(
           selectedArpId,
-          AuthorityQualifiers.FEIDE_ID,
+          AuthorityQualifiers.FeideId,
           user.id
         );
         if (isErrorStatus(updatedAuthorityWithFeide.status)) {
           dispatch(
             setNotification(
-              t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+              t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
               NotificationVariant.Error
             )
           );
@@ -67,13 +67,13 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
       if (user.cristinId && !selectedAuthority.orgunitids.includes(user.cristinId)) {
         const updatedAuthorityWithCristinId = await addQualifierIdForAuthority(
           selectedArpId,
-          AuthorityQualifiers.ORGUNIT_ID,
+          AuthorityQualifiers.OrgUnitId,
           user.cristinId
         );
         if (isErrorStatus(updatedAuthorityWithCristinId.status)) {
           dispatch(
             setNotification(
-              t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+              t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
               NotificationVariant.Error
             )
           );
