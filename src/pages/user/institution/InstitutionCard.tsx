@@ -73,14 +73,14 @@ export const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: Institu
 
     const updateAuthorityResponse = await updateQualifierIdForAuthority(
       user.authority.id,
-      AuthorityQualifiers.ORGUNIT_ID,
+      AuthorityQualifiers.OrgUnitId,
       initialInstitution,
       newUnitId
     );
     if (isErrorStatus(updateAuthorityResponse.status)) {
       dispatch(
         setNotification(
-          t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+          t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
           NotificationVariant.Error
         )
       );
