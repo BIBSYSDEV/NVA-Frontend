@@ -42,12 +42,11 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
 
   const updateAuthorityForUser = async () => {
     let selectedAuthority = user.possibleAuthorities.find((authority) => authority.id === selectedArpId);
-    const hasFeideConnecion = !!selectedAuthority?.feideids.includes(user.id);
 
     if (selectedAuthority) {
       setIsUpdatingAuthority(true);
 
-      if (!hasFeideConnecion) {
+      if (!selectedAuthority?.feideids.includes(user.id)) {
         const updatedAuthorityWithFeide = await addQualifierIdForAuthority(
           selectedArpId,
           AuthorityQualifiers.FEIDE_ID,
