@@ -41,42 +41,48 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
   };
 
   const updateAuthorityForUser = async () => {
-    const selectedAuthority = user.possibleAuthorities.find((authority) => authority.id === selectedArpId);
+    let selectedAuthority = user.possibleAuthorities.find((authority) => authority.id === selectedArpId);
+    const hasFeideConnecion = !!selectedAuthority?.feideids.includes(user.id);
 
     if (selectedAuthority) {
       setIsUpdatingAuthority(true);
-      const updatedAuthorityWithFeide = await addQualifierIdForAuthority(
-        selectedArpId,
-        AuthorityQualifiers.FEIDE_ID,
-        user.id
-      );
-      if (isErrorStatus(updatedAuthorityWithFeide.status)) {
-        dispatch(
-          setNotification(
-            t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
-            NotificationVariant.Error
-          )
+
+      if (!hasFeideConnecion) {
+        const updatedAuthorityWithFeide = await addQualifierIdForAuthority(
+          selectedArpId,
+          AuthorityQualifiers.FEIDE_ID,
+          user.id
         );
-      } else if (isSuccessStatus(updatedAuthorityWithFeide.status)) {
-        if (user.cristinId && !updatedAuthorityWithFeide.data.orgunitids.includes(user.cristinId)) {
-          const updatedAuthorityWithCristinId = await addQualifierIdForAuthority(
-            selectedArpId,
-            AuthorityQualifiers.ORGUNIT_ID,
-            user.cristinId
+        if (isErrorStatus(updatedAuthorityWithFeide.status)) {
+          dispatch(
+            setNotification(
+              t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+              NotificationVariant.Error
+            )
           );
-          if (isErrorStatus(updatedAuthorityWithCristinId.status)) {
-            dispatch(
-              setNotification(
-                t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
-                NotificationVariant.Error
-              )
-            );
-          } else if (isSuccessStatus(updatedAuthorityWithCristinId.status)) {
-            dispatch(setAuthorityData(updatedAuthorityWithCristinId.data));
-          }
-        } else {
-          dispatch(setAuthorityData(updatedAuthorityWithFeide.data));
+        } else if (isSuccessStatus(updatedAuthorityWithFeide.status)) {
+          selectedAuthority = updatedAuthorityWithFeide.data;
         }
+      }
+
+      if (user.cristinId && !selectedAuthority.orgunitids.includes(user.cristinId)) {
+        const updatedAuthorityWithCristinId = await addQualifierIdForAuthority(
+          selectedArpId,
+          AuthorityQualifiers.ORGUNIT_ID,
+          user.cristinId
+        );
+        if (isErrorStatus(updatedAuthorityWithCristinId.status)) {
+          dispatch(
+            setNotification(
+              t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+              NotificationVariant.Error
+            )
+          );
+        } else if (isSuccessStatus(updatedAuthorityWithCristinId.status)) {
+          dispatch(setAuthorityData(updatedAuthorityWithCristinId.data));
+        }
+      } else {
+        dispatch(setAuthorityData(selectedAuthority));
       }
     }
   };
