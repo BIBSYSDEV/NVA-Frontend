@@ -23,11 +23,14 @@ Cypress.Commands.add('startRegistrationWithDoi', () => {
 });
 
 Cypress.Commands.add('selectNpiDiscipline', (npiDiscipline) => {
-  cy.get('[data-testid=search_npi]').click({ force: true }).type(npiDiscipline);
+  cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.scientificSubjectField}]`)
+    .click({ force: true })
+    .type(npiDiscipline);
   cy.contains(npiDiscipline).click({ force: true });
-  cy.get('[data-testid=search_npi]').within(() => {
-    cy.get('input').should('have.value', npiDiscipline);
-  });
+  cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.scientificSubjectField}]`).should(
+    'contain',
+    npiDiscipline
+  );
 });
 
 Cypress.Commands.add('setUserRolesInRedux', (roles) => {

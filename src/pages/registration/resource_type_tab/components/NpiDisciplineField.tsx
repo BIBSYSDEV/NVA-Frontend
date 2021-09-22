@@ -8,6 +8,7 @@ import { ErrorMessage, Field, FieldProps } from 'formik';
 import { NpiDiscipline } from '../../../../types/registration.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import disciplines from '../../../../resources/disciplines.json';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 const StyledSearchIcon = styled(SearchIcon)`
   margin-left: 0.5rem;
@@ -37,10 +38,12 @@ export const NpiDisciplineField = () => {
 
         return (
           <Autocomplete
+            data-testid={dataTestId.registrationWizard.resourceType.scientificSubjectField}
             id={name}
             multiple
             aria-labelledby={`${name}-label`}
             options={disciplineOptions}
+            blurOnSelect
             groupBy={(discipline) => t(`disciplines:${discipline.mainDisciplineId}`)}
             onChange={(_, value) => setFieldValue(name, value.pop()?.id ?? '')}
             value={selectedOption ? [selectedOption] : []}
@@ -49,7 +52,6 @@ export const NpiDisciplineField = () => {
               <TextField
                 {...params}
                 onBlur={() => setFieldTouched(name)}
-                data-testid="search_npi"
                 label={t('description.npi_disciplines')}
                 required
                 fullWidth
