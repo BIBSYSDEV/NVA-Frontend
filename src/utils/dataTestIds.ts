@@ -85,6 +85,7 @@ export const dataTestId = {
       publisherChip: 'publisher-chip',
       publisherField: 'publisher-search-field',
       removePublisherButton: 'remove-publisher-button',
+      scientificSubjectField: 'scientific-subject-field',
       seriesChip: 'series-chip',
       seriesField: 'series-search-field',
       seriesNumber: 'series-number-field',
