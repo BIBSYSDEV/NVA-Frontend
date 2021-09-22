@@ -50,12 +50,11 @@ export const NpiDisciplineField = () => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                onBlur={() => setFieldTouched(name)}
+                onBlur={() => (!touched ? setFieldTouched(name) : null)}
                 label={t('description.npi_disciplines')}
                 required
                 fullWidth
                 variant="filled"
-                autoComplete="false"
                 placeholder={!value ? t('description.search_for_npi_discipline') : ''}
                 error={!!error && touched}
                 helperText={<ErrorMessage name={name} />}
