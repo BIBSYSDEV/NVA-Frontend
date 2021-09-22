@@ -32,37 +32,46 @@ export const NpiDisciplineField = () => {
         field: { name, value },
         form: { setFieldValue, setFieldTouched },
         meta: { error, touched },
-      }: FieldProps<string>) => (
-        <Autocomplete
-          id={name}
-          aria-labelledby={`${name}-label`}
-          options={disciplineOptions}
-          groupBy={(discipline) => t(`disciplines:${discipline.mainDisciplineId}`)}
-          onChange={(_, value) => setFieldValue(name, value?.id ?? '')}
-          value={disciplineOptions.find((discipline) => discipline.id === value) ?? null}
-          getOptionLabel={(option) => t(`disciplines:${option.id}`)}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              onBlur={() => setFieldTouched(name)}
-              data-testid="search_npi"
-              label={t('description.npi_disciplines')}
-              required
-              fullWidth
-              variant="filled"
-              autoComplete="false"
-              placeholder={t('description.search_for_npi_discipline')}
-              error={!!error && touched}
-              helperText={<ErrorMessage name={name} />}
-              InputProps={{
-                ...params.InputProps,
-                startAdornment: <StyledSearchIcon />,
-                endAdornment: <>{params.InputProps.endAdornment}</>,
-              }}
-            />
-          )}
-        />
-      )}
+      }: FieldProps<string>) => {
+        const selectedOption = disciplineOptions.find((discipline) => discipline.id === value);
+
+        return (
+          <Autocomplete
+            id={name}
+            multiple
+            aria-labelledby={`${name}-label`}
+            options={disciplineOptions}
+            groupBy={(discipline) => t(`disciplines:${discipline.mainDisciplineId}`)}
+            onChange={(_, value) => setFieldValue(name, value.pop()?.id ?? '')}
+            value={selectedOption ? [selectedOption] : []}
+            getOptionLabel={(option) => t(`disciplines:${option.id}`)}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                onBlur={() => setFieldTouched(name)}
+                data-testid="search_npi"
+                label={t('description.npi_disciplines')}
+                required
+                fullWidth
+                variant="filled"
+                autoComplete="false"
+                placeholder={!value ? t('description.search_for_npi_discipline') : ''}
+                error={!!error && touched}
+                helperText={<ErrorMessage name={name} />}
+                InputProps={{
+                  ...params.InputProps,
+                  startAdornment: (
+                    <>
+                      {params.InputProps.startAdornment}
+                      {!value && <StyledSearchIcon />}
+                    </>
+                  ),
+                }}
+              />
+            )}
+          />
+        );
+      }}
     </Field>
   );
 };
