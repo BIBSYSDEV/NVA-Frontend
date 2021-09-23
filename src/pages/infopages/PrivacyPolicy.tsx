@@ -1,7 +1,8 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 
@@ -51,7 +52,7 @@ const PrivacyPolicy = () => {
         <TableContainer>
           <Table size="small">
             <caption>
-              <Typography variant="srOnly">{t('purpose.heading')}</Typography>
+              <span style={visuallyHidden}>{t('purpose.heading')}</span>
             </caption>
             <TableHead>
               <TableRow>
@@ -104,7 +105,7 @@ const PrivacyPolicy = () => {
         <TableContainer>
           <Table size="small">
             <caption>
-              <Typography variant="srOnly">{t('registered_personal_data.table.user_data.heading')}</Typography>
+              <span style={visuallyHidden}>{t('registered_personal_data.table.user_data.heading')}</span>
             </caption>
             <TableHead>
               <TableRow>
@@ -129,9 +130,7 @@ const PrivacyPolicy = () => {
         <TableContainer>
           <Table size="small">
             <caption>
-              <Typography variant="srOnly">
-                {t('registered_personal_data.table.techincal_user_data.heading')}
-              </Typography>
+              <span style={visuallyHidden}>{t('registered_personal_data.table.techincal_user_data.heading')}</span>
             </caption>
             <TableHead>
               <TableRow>
@@ -158,7 +157,7 @@ const PrivacyPolicy = () => {
         <TableContainer>
           <Table size="small">
             <caption>
-              <Typography variant="srOnly">{t('registered_personal_data.table.other_user_data.heading')}</Typography>
+              <span style={visuallyHidden}>{t('registered_personal_data.table.other_user_data.heading')}</span>
             </caption>
             <TableHead>
               <TableRow>
@@ -205,7 +204,7 @@ const PrivacyPolicy = () => {
         <TableContainer>
           <Table size="small">
             <caption>
-              <Typography variant="srOnly">{t('disclosure_of_data.paragraph3.table.caption')}</Typography>
+              <span style={visuallyHidden}>{t('disclosure_of_data.paragraph3.table.caption')}</span>
             </caption>
             <TableHead>
               <TableRow>
@@ -229,7 +228,7 @@ const PrivacyPolicy = () => {
         <TableContainer>
           <Table size="small">
             <caption>
-              <Typography variant="srOnly">{t('disclosure_of_data.paragraph6.table.caption')}</Typography>
+              <span style={visuallyHidden}>{t('disclosure_of_data.paragraph6.table.caption')}</span>
             </caption>
             <TableHead>
               <TableRow>

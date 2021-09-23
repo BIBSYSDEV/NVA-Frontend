@@ -1,7 +1,7 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
-import { Link, Typography } from '@material-ui/core';
+import { Link, Typography } from '@mui/material';
 import { MessageForm } from '../../components/MessageForm';
 import { addMessage } from '../../api/registrationApi';
 import { useDispatch } from 'react-redux';

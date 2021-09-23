@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import SaveIcon from '@material-ui/icons/Save';
+import SaveIcon from '@mui/icons-material/Save';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import { ListSkeleton } from '../../components/ListSkeleton';

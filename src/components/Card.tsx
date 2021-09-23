@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Card as MaterialCard, CardProps } from '@material-ui/core';
+import { Card as MaterialCard, CardProps } from '@mui/material';
 
 const StyledCard = styled(MaterialCard)`
   width: 100%;

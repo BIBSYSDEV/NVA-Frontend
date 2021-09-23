@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typography } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { visuallyHidden } from '@mui/utils';
 import { updateUser } from '../../api/roleApi';
 import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
@@ -109,7 +110,7 @@ export const UserList = ({
         <>
           <StyledTable size="small">
             <caption>
-              <Typography variant="srOnly">{tableCaption}</Typography>
+              <span style={visuallyHidden}>{tableCaption}</span>
             </caption>
             <TableHead>
               <TableRow>

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
-import AccountTreeIcon from '@material-ui/icons/AccountTree';
+import { Typography } from '@mui/material';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import { useTranslation } from 'react-i18next';
 import { ItalicPageHeader } from '../../components/PageHeader';
 import { CristinProject } from '../../types/project.types';

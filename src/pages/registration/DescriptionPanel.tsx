@@ -2,8 +2,8 @@ import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import React, { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { MenuItem, MuiThemeProvider, TextField, Typography } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { MenuItem, ThemeProvider, StyledEngineProvider, TextField, Typography } from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
 import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { lightTheme } from '../../themes/lightTheme';
 import { LanguageCodes, registrationLanguages } from '../../types/language.types';
@@ -145,9 +145,11 @@ export const DescriptionPanel = () => {
         <Typography variant="h5" color="primary" component="p">
           {t('description.connect_project')}
         </Typography>
-        <MuiThemeProvider theme={lightTheme}>
-          <ProjectsField />
-        </MuiThemeProvider>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={lightTheme}>
+            <ProjectsField />
+          </ThemeProvider>
+        </StyledEngineProvider>
       </BackgroundDiv>
     </>
   );

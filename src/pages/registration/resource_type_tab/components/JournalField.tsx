@@ -1,8 +1,8 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Chip, MuiThemeProvider, Typography } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
+import { Chip, ThemeProvider, StyledEngineProvider, Typography } from '@mui/material';
+import { Autocomplete } from '@mui/material';
 import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
@@ -50,87 +50,91 @@ export const JournalField = () => {
   });
 
   return (
-    <MuiThemeProvider theme={lightTheme}>
-      <Field name={ResourceFieldNames.PubliactionContextId}>
-        {({ field, meta }: FieldProps<string>) => (
-          <Autocomplete
-            {...autocompleteTranslationProps}
-            multiple
-            id={journalFieldTestId}
-            data-testid={journalFieldTestId}
-            aria-labelledby={`${journalFieldTestId}-label`}
-            popupIcon={null}
-            options={debouncedQuery && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : []}
-            filterOptions={(options) => options}
-            inputValue={query}
-            onInputChange={(_, newInputValue, reason) => {
-              if (reason !== 'reset') {
-                setQuery(newInputValue);
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={lightTheme}>
+        <Field name={ResourceFieldNames.PubliactionContextId}>
+          {({ field, meta }: FieldProps<string>) => (
+            <Autocomplete
+              {...autocompleteTranslationProps}
+              multiple
+              id={journalFieldTestId}
+              data-testid={journalFieldTestId}
+              aria-labelledby={`${journalFieldTestId}-label`}
+              popupIcon={null}
+              options={
+                debouncedQuery && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : []
               }
-            }}
-            onBlur={() => setFieldTouched(field.name, true, false)}
-            blurOnSelect
-            disableClearable={!query}
-            value={publicationContext.id && journal ? [journal] : []}
-            onChange={(_, inputValue, reason) => {
-              if (reason === 'select-option') {
-                setFieldValue(ResourceFieldNames.PubliactionContextType, 'Journal', false);
-                setFieldValue(field.name, inputValue.pop()?.id);
-              } else if (reason === 'remove-option') {
-                setFieldValue(ResourceFieldNames.PubliactionContextType, 'UnconfirmedJournal', false);
-                setFieldValue(field.name, '');
-              }
-              setQuery('');
-            }}
-            loading={isLoadingJournalOptions || isLoadingJournal}
-            getOptionLabel={(option) => option.name}
-            renderOption={(option, state) => (
-              <StyledFlexColumn>
-                <Typography variant="subtitle1">
-                  <EmphasizeSubstring
-                    text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
-                    emphasized={state.inputValue}
-                  />
-                </Typography>
-                {option.level && (
-                  <Typography variant="body2" color="textSecondary">
-                    {t('resource_type.level')}: {option.level}
+              filterOptions={(options) => options}
+              inputValue={query}
+              onInputChange={(_, newInputValue, reason) => {
+                if (reason !== 'reset') {
+                  setQuery(newInputValue);
+                }
+              }}
+              onBlur={() => setFieldTouched(field.name, true, false)}
+              blurOnSelect
+              disableClearable={!query}
+              value={publicationContext.id && journal ? [journal] : []}
+              onChange={(_, inputValue, reason) => {
+                if (reason === 'selectOption') {
+                  setFieldValue(ResourceFieldNames.PubliactionContextType, 'Journal', false);
+                  setFieldValue(field.name, inputValue.pop()?.id);
+                } else if (reason === 'removeOption') {
+                  setFieldValue(ResourceFieldNames.PubliactionContextType, 'UnconfirmedJournal', false);
+                  setFieldValue(field.name, '');
+                }
+                setQuery('');
+              }}
+              loading={isLoadingJournalOptions || isLoadingJournal}
+              getOptionLabel={(option) => option.name}
+              renderOption={(props, option, state) => (
+                <StyledFlexColumn>
+                  <Typography variant="subtitle1">
+                    <EmphasizeSubstring
+                      text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
+                      emphasized={state.inputValue}
+                    />
                   </Typography>
-                )}
-              </StyledFlexColumn>
-            )}
-            renderTags={(value, getTagProps) =>
-              value.map((option, index) => (
-                <StyledChip
-                  {...getTagProps({ index })}
-                  data-testid={dataTestId.registrationWizard.resourceType.journalChip}
-                  label={
-                    <>
-                      <Typography variant="subtitle1">
-                        {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        {t('resource_type.level')}: {option.level}
-                      </Typography>
-                    </>
-                  }
+                  {option.level && (
+                    <Typography variant="body2" color="textSecondary">
+                      {t('resource_type.level')}: {option.level}
+                    </Typography>
+                  )}
+                </StyledFlexColumn>
+              )}
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <StyledChip
+                    {...getTagProps({ index })}
+                    data-testid={dataTestId.registrationWizard.resourceType.journalChip}
+                    label={
+                      <>
+                        <Typography variant="subtitle1">
+                          {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary">
+                          {t('resource_type.level')}: {option.level}
+                        </Typography>
+                      </>
+                    }
+                  />
+                ))
+              }
+              renderInput={(params) => (
+                <AutocompleteTextField
+                  {...params}
+                  required
+                  label={t('resource_type.journal')}
+                  isLoading={isLoadingJournalOptions || isLoadingJournal}
+                  placeholder={!publicationContext.id ? t('resource_type.search_for_journal') : ''}
+                  showSearchIcon={!publicationContext.id}
+                  errorMessage={meta.touched && !!meta.error ? meta.error : ''}
                 />
-              ))
-            }
-            renderInput={(params) => (
-              <AutocompleteTextField
-                {...params}
-                required
-                label={t('resource_type.journal')}
-                isLoading={isLoadingJournalOptions || isLoadingJournal}
-                placeholder={!publicationContext.id ? t('resource_type.search_for_journal') : ''}
-                showSearchIcon={!publicationContext.id}
-                errorMessage={meta.touched && !!meta.error ? meta.error : ''}
-              />
-            )}
-          />
-        )}
-      </Field>
-    </MuiThemeProvider>
+              )}
+            />
+          )}
+        </Field>
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
 };

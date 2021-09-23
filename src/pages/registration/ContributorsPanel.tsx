@@ -1,4 +1,4 @@
-import { FormHelperText } from '@material-ui/core';
+import { FormHelperText } from '@mui/material';
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import React, { useEffect, useRef } from 'react';
 import { BackgroundDiv } from '../../components/BackgroundDiv';

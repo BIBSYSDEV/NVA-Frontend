@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { hrcsActivities } from '../../../../resources/vocabularies/hrcsActivities';
@@ -29,7 +29,7 @@ export const HrcsActivityInput = (props: VocabularyComponentProps) => {
       options={hrcsActivityOptions}
       id="hrcs-activities"
       label={t('description.hrcs_activities')}
-      renderOption={(option) => {
+      renderOption={(props, option) => {
         const indentsCount = option.identifier.split('.').length - 1;
         return <StyledOptionText indentations={indentsCount}>{getLanguageString(option.label)}</StyledOptionText>;
       }}

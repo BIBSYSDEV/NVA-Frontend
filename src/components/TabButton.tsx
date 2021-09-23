@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ButtonProps, Button } from '@material-ui/core';
+import { ButtonProps, Button } from '@mui/material';
 
 const StyledTabButton = styled(({ isSelected, ...rest }) => <Button {...rest} />)`
   display: flex;

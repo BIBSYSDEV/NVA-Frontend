@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Menu, MenuItem } from '@material-ui/core';
-import LanguageIcon from '@material-ui/icons/Language';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import { Button, Menu, MenuItem } from '@mui/material';
+import LanguageIcon from '@mui/icons-material/Language';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { LanguageCodes } from '../../types/language.types';
 import { dataTestId } from '../../utils/dataTestIds';
 
@@ -28,7 +28,6 @@ export const LanguageSelector = () => {
       <Menu
         data-testid={dataTestId.header.languageMenu}
         anchorEl={anchorEl}
-        getContentAnchorEl={null}
         keepMounted
         open={!!anchorEl}
         onClose={() => setAnchorEl(null)}

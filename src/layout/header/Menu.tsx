@@ -2,10 +2,10 @@ import React, { useState, MouseEvent, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button, Menu as MuiMenu, MenuItem, Typography, IconButton, Divider } from '@material-ui/core';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import { Button, Menu as MuiMenu, MenuItem, Typography, IconButton, Divider } from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -68,7 +68,6 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
       <MuiMenu
         anchorEl={anchorEl}
         container={divRef.current}
-        getContentAnchorEl={null}
         keepMounted
         open={!!anchorEl}
         onClose={() => setAnchorEl(null)}

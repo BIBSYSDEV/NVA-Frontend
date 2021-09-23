@@ -1,11 +1,11 @@
-import { createTheme } from '@material-ui/core';
-import { PaletteColor, PaletteColorOptions, SimplePaletteColorOptions } from '@material-ui/core/styles/createPalette';
+import { createTheme } from '@mui/material';
+import { PaletteColor, PaletteColorOptions, SimplePaletteColorOptions } from '@mui/material/styles';
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
 import { Color } from './colors';
 
 // Extend Palette type to allow custom colors
-declare module '@material-ui/core/styles/createPalette' {
+declare module '@mui/material/styles/createPalette' {
   interface Palette {
     box: PaletteColor;
     section: ExtendedPalette;
@@ -120,124 +120,150 @@ export const lightTheme = createTheme({
       fontSize: '0.875rem',
     },
   },
-  overrides: {
+  components: {
     MuiAccordion: {
-      root: {
-        background: Color.Panel,
+      styleOverrides: {
+        root: {
+          background: Color.Panel,
+        },
       },
     },
     MuiAppBar: {
-      root: { background: Color.Header },
+      styleOverrides: {
+        root: { background: Color.Header },
+      },
     },
     MuiButton: {
-      outlinedSecondary: {
-        color: Color.PrimaryText,
-      },
-      containedSecondary: {
-        '&:disabled': {
-          background: Color.SecondaryLight,
+      styleOverrides: {
+        outlinedSecondary: {
+          color: Color.PrimaryText,
+        },
+        containedSecondary: {
+          '&:disabled': {
+            background: Color.SecondaryLight,
+          },
         },
       },
     },
     MuiCard: {
-      root: {
-        backgroundColor: Color.Box,
+      styleOverrides: {
+        root: {
+          backgroundColor: Color.Box,
+        },
       },
     },
     MuiInputBase: {
-      root: {
-        background: Color.White,
+      styleOverrides: {
+        root: {
+          background: Color.White,
 
-        "& div[class*='MuiAutocomplete-tag']": {
-          // TODO: Set this in overrides.MuiAutocomplete.tag when Autocomplete is added to MUI core
-          margin: '0.5rem 0 !important',
-          '&:not(:last-child)': {
-            marginRight: '0.5rem !important',
+          "& div[class*='MuiAutocomplete-tag']": {
+            // TODO: Set this in overrides.MuiAutocomplete.tag when Autocomplete is added to MUI core
+            margin: '0.5rem 0 !important',
+            '&:not(:last-child)': {
+              marginRight: '0.5rem !important',
+            },
           },
         },
       },
     },
     MuiLink: {
-      root: {
-        color: Color.PrimaryText,
-      },
-      underlineHover: {
-        textDecoration: 'underline',
-        textDecorationColor: Color.SecondaryMain,
+      styleOverrides: {
+        root: {
+          color: Color.PrimaryText,
+        },
+        underlineHover: {
+          textDecoration: 'underline',
+          textDecorationColor: Color.SecondaryMain,
+        },
       },
     },
     MuiTab: {
-      wrapper: {
-        flexDirection: 'row-reverse',
-      },
-      labelIcon: {
-        minHeight: undefined,
-        paddingTop: undefined,
-      },
-      textColorPrimary: {
-        '&$selected': {
-          color: Color.PrimaryText,
-          fontWeight: 'bold',
+      styleOverrides: {
+        wrapped: {
+          flexDirection: 'row-reverse',
         },
+        labelIcon: {
+          minHeight: undefined,
+          paddingTop: undefined,
+        },
+        textColorPrimary: {
+          '&$selected': {
+            color: Color.PrimaryText,
+            fontWeight: 'bold',
+          },
+        },
+      },
+    },
+    MuiTablePagination: {
+      defaultProps: {
+        labelRowsPerPage: i18n.t('common:table_pagination.rows_per_page'),
+        labelDisplayedRows: ({ from, to, count }) => getTranslatedLabelForDisplayedRows(from, to, count),
+        backIconButtonProps: { title: i18n.t('common:table_pagination.previous_page') },
+        nextIconButtonProps: { title: i18n.t('common:table_pagination.next_page') },
       },
     },
     MuiTextField: {
-      root: {
-        marginTop: '1rem',
+      styleOverrides: {
+        root: {
+          marginTop: '1rem',
+        },
+      },
+    },
+    MuiTypography: {
+      defaultProps: {
+        color: 'textPrimary',
       },
     },
     MuiFormLabel: {
-      asterisk: {
-        fontWeight: 'bold',
-        color: Color.ErrorMain,
-      },
-      root: {
-        color: Color.Black,
-        '&.Mui-focused': {
-          color: Color.Black,
-        },
-        '&.Mui-error': {
+      styleOverrides: {
+        asterisk: {
+          fontWeight: 'bold',
           color: Color.ErrorMain,
+        },
+        root: {
+          color: Color.Black,
+          '&.Mui-focused': {
+            color: Color.Black,
+          },
+          '&.Mui-error': {
+            color: Color.ErrorMain,
+          },
         },
       },
     },
     MuiFilledInput: {
-      root: {
-        backgroundColor: Color.White,
-        '&.Mui-focused': {
+      styleOverrides: {
+        root: {
           backgroundColor: Color.White,
-        },
-        '&:hover': {
-          backgroundColor: Color.White,
+          '&.Mui-focused': {
+            backgroundColor: Color.White,
+          },
+          '&:hover': {
+            backgroundColor: Color.White,
+          },
         },
       },
     },
     MuiFormHelperText: {
-      root: {
-        color: Color.Black,
-        '&.Mui-error': {
+      styleOverrides: {
+        root: {
           color: Color.Black,
-          backgroundColor: Color.ErrorLight,
-          margin: 0,
-          padding: '0.25rem 0.75rem',
+          '&.Mui-error': {
+            color: Color.Black,
+            backgroundColor: Color.ErrorLight,
+            margin: 0,
+            padding: '0.25rem 0.75rem',
+          },
         },
       },
     },
     MuiMenuItem: {
-      gutters: {
-        paddingRight: '2rem',
+      styleOverrides: {
+        gutters: {
+          paddingRight: '2rem',
+        },
       },
-    },
-  },
-  props: {
-    MuiTypography: {
-      color: 'textPrimary',
-    },
-    MuiTablePagination: {
-      labelRowsPerPage: i18n.t('common:table_pagination.rows_per_page'),
-      labelDisplayedRows: ({ from, to, count }) => getTranslatedLabelForDisplayedRows(from, to, count),
-      backIconButtonText: i18n.t('common:table_pagination.previous_page'),
-      nextIconButtonText: i18n.t('common:table_pagination.next_page'),
     },
   },
 });

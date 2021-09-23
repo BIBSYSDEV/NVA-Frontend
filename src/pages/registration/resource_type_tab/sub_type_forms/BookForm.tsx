@@ -1,7 +1,7 @@
 import { useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { MuiThemeProvider, Typography } from '@material-ui/core';
+import { ThemeProvider, StyledEngineProvider, Typography } from '@mui/material';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { lightTheme } from '../../../../themes/lightTheme';
 import { BookType } from '../../../../types/publicationFieldNames';
@@ -30,9 +30,11 @@ export const BookForm = () => {
         <DoiField />
         <PublisherField />
 
-        <MuiThemeProvider theme={lightTheme}>
-          <NpiDisciplineField />
-        </MuiThemeProvider>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={lightTheme}>
+            <NpiDisciplineField />
+          </ThemeProvider>
+        </StyledEngineProvider>
 
         <IsbnAndPages />
       </BackgroundDiv>

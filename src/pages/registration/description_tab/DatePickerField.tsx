@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import DateFnsUtils from '@date-io/date-fns';
-import { Checkbox, FormControlLabel, MuiThemeProvider, Typography } from '@material-ui/core';
+import { Checkbox, FormControlLabel, ThemeProvider, StyledEngineProvider, Typography } from '@mui/material';
 import { DatePickerView, KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { lightTheme, datePickerTranslationProps } from '../../../themes/lightTheme';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
@@ -59,33 +59,35 @@ export const DatePickerField = () => {
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
-      <MuiThemeProvider theme={lightTheme}>
-        <KeyboardDatePicker
-          id="date-picker"
-          {...datePickerTranslationProps}
-          DialogProps={{ 'aria-labelledby': 'date-picker-label', 'aria-label': t('description.date_published') }}
-          KeyboardButtonProps={{
-            'aria-labelledby': 'date-picker-label',
-          }}
-          leftArrowButtonProps={{ 'aria-label': t('common:previous') }}
-          rightArrowButtonProps={{ 'aria-label': t('common:next') }}
-          data-testid="date-published-field"
-          inputVariant="filled"
-          label={t('description.date_published')}
-          required
-          onChange={onChangeDate}
-          views={views}
-          value={date}
-          autoOk
-          maxDate={`${new Date().getFullYear() + 5}-12-31`}
-          format={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
-          onBlur={() =>
-            !touched.entityDescription?.date?.year && setFieldTouched(DescriptionFieldNames.PublicationYear)
-          }
-          error={hasError}
-          helperText={hasError && errors.entityDescription?.date?.year}
-        />
-      </MuiThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={lightTheme}>
+          <KeyboardDatePicker
+            id="date-picker"
+            {...datePickerTranslationProps}
+            DialogProps={{ 'aria-labelledby': 'date-picker-label', 'aria-label': t('description.date_published') }}
+            KeyboardButtonProps={{
+              'aria-labelledby': 'date-picker-label',
+            }}
+            leftArrowButtonProps={{ 'aria-label': t('common:previous') }}
+            rightArrowButtonProps={{ 'aria-label': t('common:next') }}
+            data-testid="date-published-field"
+            inputVariant="filled"
+            label={t('description.date_published')}
+            required
+            onChange={onChangeDate}
+            views={views}
+            value={date}
+            autoOk
+            maxDate={`${new Date().getFullYear() + 5}-12-31`}
+            format={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
+            onBlur={() =>
+              !touched.entityDescription?.date?.year && setFieldTouched(DescriptionFieldNames.PublicationYear)
+            }
+            error={hasError}
+            helperText={hasError && errors.entityDescription?.date?.year}
+          />
+        </ThemeProvider>
+      </StyledEngineProvider>
       <StyledFormControlLabel
         control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} color="primary" />}
         label={<Typography>{t('description.year_only')}</Typography>}

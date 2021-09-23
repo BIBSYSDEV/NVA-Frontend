@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
 import styled from 'styled-components';
-import { Link as MuiLink, List, ListItem, ListItemText, Typography } from '@material-ui/core';
+import { Link as MuiLink, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { SearchRegistration } from '../types/search.types';
 import { displayDate } from '../utils/date-helpers';
 import { getRegistrationLandingPagePath, getUserPath } from '../utils/urlPaths';

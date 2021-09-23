@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { Menu } from './Menu';

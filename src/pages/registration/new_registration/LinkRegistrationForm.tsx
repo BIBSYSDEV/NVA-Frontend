@@ -2,8 +2,8 @@ import { Field, Formik, Form, FieldProps, FormikHelpers } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { TextField } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
+import { TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
 import { doiValidationSchema, isValidUrl } from '../../../utils/validation/doiSearchValidation';
 

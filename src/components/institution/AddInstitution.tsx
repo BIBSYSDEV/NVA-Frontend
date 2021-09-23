@@ -2,7 +2,7 @@ import { Field, FieldProps, Form, Formik } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Button, CircularProgress, Typography } from '@material-ui/core';
+import { Button, CircularProgress, Typography } from '@mui/material';
 import { InstitutionSelector } from '../../pages/user/institution/InstitutionSelector';
 import { FormikInstitutionUnit, FormikInstitutionUnitFieldNames } from '../../types/institution.types';
 import { useFetchDepartment } from '../../utils/hooks/useFetchDepartment';

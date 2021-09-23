@@ -1,4 +1,4 @@
-import { List, Typography } from '@material-ui/core';
+import { List, Typography } from '@mui/material';
 import { Formik, Form } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

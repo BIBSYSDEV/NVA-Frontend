@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { AppBar, Button, IconButton } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
-import MailIcon from '@material-ui/icons/Mail';
-import MenuIcon from '@material-ui/icons/Menu';
+import { AppBar, Button, IconButton } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import MailIcon from '@mui/icons-material/Mail';
+import MenuIcon from '@mui/icons-material/Menu';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { getRegistrationPath, UrlPathTemplate } from '../../utils/urlPaths';
 import { Login } from './Login';
@@ -68,11 +68,11 @@ export const Header = () => {
   };
 
   return (
-    <AppBar position="static" color="inherit" elevation={0}>
+    <AppBar position="static" elevation={0}>
       <StyledNav>
         {user && (
           <StyledBurgerMenu>
-            <IconButton onClick={handleClick} title={t('common:menu')}>
+            <IconButton onClick={handleClick} title={t('common:menu')} size="large">
               <MenuIcon />
             </IconButton>
             <MobileMenu anchorEl={anchorEl} onClose={() => setAnchorEl(null)} />

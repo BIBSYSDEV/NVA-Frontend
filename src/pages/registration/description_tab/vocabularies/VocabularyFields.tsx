@@ -1,6 +1,6 @@
-import { Button, Menu, MenuItem, Typography } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import { Button, Menu, MenuItem, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';

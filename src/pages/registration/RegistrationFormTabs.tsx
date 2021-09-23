@@ -2,7 +2,7 @@ import { useFormikContext } from 'formik';
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Tabs, Typography } from '@material-ui/core';
+import { Tabs, Typography } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 
 import { Registration, RegistrationTab } from '../../types/registration.types';

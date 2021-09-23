@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Typography } from '@material-ui/core';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import { Typography } from '@mui/material';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { File } from '../../../types/file.types';
 import { DangerButton } from '../../../components/DangerButton';
 

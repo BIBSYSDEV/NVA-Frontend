@@ -18,10 +18,10 @@ import {
   TextField,
   Tooltip,
   Typography,
-} from '@material-ui/core';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import DeleteIcon from '@material-ui/icons/Delete';
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+} from '@mui/material';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import DeleteIcon from '@mui/icons-material/Delete';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { DangerButton } from '../../../components/DangerButton';
@@ -225,7 +225,6 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                         key={license.identifier}
                         value={license.identifier}
                         divider
-                        ContainerProps={{ 'aria-label': t('files_and_license.conditions_for_using_file') }}
                         dense>
                         <ListItemIcon>
                           <StyledLicenseOptionImage src={license.buttonImage} alt={license.identifier} />
@@ -239,7 +238,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                 )}
               </Field>
               <Tooltip title={t<string>('common:help')}>
-                <IconButton data-testid="button-toggle-license-modal" onClick={toggleLicenseModal}>
+                <IconButton data-testid="button-toggle-license-modal" onClick={toggleLicenseModal} size="large">
                   <HelpOutlineIcon fontSize="large" />
                 </IconButton>
               </Tooltip>

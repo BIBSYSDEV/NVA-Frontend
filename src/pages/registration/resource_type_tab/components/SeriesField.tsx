@@ -1,8 +1,8 @@
 import { useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Chip, MuiThemeProvider, Typography } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
+import { Chip, ThemeProvider, StyledEngineProvider, Typography } from '@mui/material';
+import { Autocomplete } from '@mui/material';
 import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
@@ -49,80 +49,82 @@ export const SeriesField = () => {
   });
 
   return (
-    <MuiThemeProvider theme={lightTheme}>
-      <Autocomplete
-        {...autocompleteTranslationProps}
-        multiple
-        id={seriesFieldTestId}
-        data-testid={seriesFieldTestId}
-        aria-labelledby={`${seriesFieldTestId}-label`}
-        popupIcon={null}
-        options={debouncedQuery && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : []}
-        filterOptions={(options) => options}
-        inputValue={query}
-        onInputChange={(_, newInputValue, reason) => {
-          if (reason !== 'reset') {
-            setQuery(newInputValue);
-          }
-        }}
-        blurOnSelect
-        disableClearable={!query}
-        value={series?.id && journal ? [journal] : []}
-        onChange={(_, inputValue, reason) => {
-          if (reason === 'select-option') {
-            setFieldValue(ResourceFieldNames.SeriesType, 'Series');
-            setFieldValue(ResourceFieldNames.SeriesId, inputValue.pop()?.id);
-          } else if (reason === 'remove-option') {
-            setFieldValue(ResourceFieldNames.SeriesType, 'UnconfirmedSeries');
-            setFieldValue(ResourceFieldNames.SeriesId, '');
-          }
-          setQuery('');
-        }}
-        loading={isLoadingJournalOptions || isLoadingJournal}
-        getOptionLabel={(option) => option.name}
-        renderOption={(option, state) => (
-          <StyledFlexColumn>
-            <Typography variant="subtitle1">
-              <EmphasizeSubstring
-                text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
-                emphasized={state.inputValue}
-              />
-            </Typography>
-            {option.level && (
-              <Typography variant="body2" color="textSecondary">
-                {t('resource_type.level')}: {option.level}
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={lightTheme}>
+        <Autocomplete
+          {...autocompleteTranslationProps}
+          multiple
+          id={seriesFieldTestId}
+          data-testid={seriesFieldTestId}
+          aria-labelledby={`${seriesFieldTestId}-label`}
+          popupIcon={null}
+          options={debouncedQuery && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : []}
+          filterOptions={(options) => options}
+          inputValue={query}
+          onInputChange={(_, newInputValue, reason) => {
+            if (reason !== 'reset') {
+              setQuery(newInputValue);
+            }
+          }}
+          blurOnSelect
+          disableClearable={!query}
+          value={series?.id && journal ? [journal] : []}
+          onChange={(_, inputValue, reason) => {
+            if (reason === 'selectOption') {
+              setFieldValue(ResourceFieldNames.SeriesType, 'Series');
+              setFieldValue(ResourceFieldNames.SeriesId, inputValue.pop()?.id);
+            } else if (reason === 'removeOption') {
+              setFieldValue(ResourceFieldNames.SeriesType, 'UnconfirmedSeries');
+              setFieldValue(ResourceFieldNames.SeriesId, '');
+            }
+            setQuery('');
+          }}
+          loading={isLoadingJournalOptions || isLoadingJournal}
+          getOptionLabel={(option) => option.name}
+          renderOption={(props, option, state) => (
+            <StyledFlexColumn>
+              <Typography variant="subtitle1">
+                <EmphasizeSubstring
+                  text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
+                  emphasized={state.inputValue}
+                />
               </Typography>
-            )}
-          </StyledFlexColumn>
-        )}
-        renderTags={(value, getTagProps) =>
-          value.map((option, index) => (
-            <StyledChip
-              {...getTagProps({ index })}
-              data-testid={dataTestId.registrationWizard.resourceType.seriesChip}
-              label={
-                <>
-                  <Typography variant="subtitle1">
-                    {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    {t('resource_type.level')}: {option.level}
-                  </Typography>
-                </>
-              }
+              {option.level && (
+                <Typography variant="body2" color="textSecondary">
+                  {t('resource_type.level')}: {option.level}
+                </Typography>
+              )}
+            </StyledFlexColumn>
+          )}
+          renderTags={(value, getTagProps) =>
+            value.map((option, index) => (
+              <StyledChip
+                {...getTagProps({ index })}
+                data-testid={dataTestId.registrationWizard.resourceType.seriesChip}
+                label={
+                  <>
+                    <Typography variant="subtitle1">
+                      {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {t('resource_type.level')}: {option.level}
+                    </Typography>
+                  </>
+                }
+              />
+            ))
+          }
+          renderInput={(params) => (
+            <AutocompleteTextField
+              {...params}
+              label={t('common:title')}
+              isLoading={isLoadingJournalOptions || isLoadingJournal}
+              placeholder={!series?.id ? t('resource_type.search_for_series') : ''}
+              showSearchIcon={!series?.id}
             />
-          ))
-        }
-        renderInput={(params) => (
-          <AutocompleteTextField
-            {...params}
-            label={t('common:title')}
-            isLoading={isLoadingJournalOptions || isLoadingJournal}
-            placeholder={!series?.id ? t('resource_type.search_for_series') : ''}
-            showSearchIcon={!series?.id}
-          />
-        )}
-      />
-    </MuiThemeProvider>
+          )}
+        />
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
 };

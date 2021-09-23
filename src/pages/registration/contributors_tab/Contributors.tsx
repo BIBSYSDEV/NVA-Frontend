@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, MuiThemeProvider, Typography } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
-import { Pagination } from '@material-ui/lab';
+import { Button, ThemeProvider, StyledEngineProvider, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
+import { Pagination } from '@mui/material';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { Authority } from '../../../types/authority.types';
 import {
@@ -167,7 +167,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         setUnverifiedContributor(null);
       }}
       variant="contained"
-      color={contributorRoles.length === 1 ? 'secondary' : 'default'}
+      color={contributorRoles.length === 1 ? 'secondary' : 'primary'}
       startIcon={<AddIcon />}
       data-testid={`add-${contributorRole}`}>
       {getAddContributorText(contributorRole)}
@@ -177,28 +177,30 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   return (
     <div data-testid={contributorRole}>
       <Typography variant="h2">{getContributorHeading(contributorRole)}</Typography>
-      <MuiThemeProvider theme={lightTheme}>
-        {((isMobile && contributorsToShow.length >= 2) || (!isMobile && contributorsToShow.length >= 5)) &&
-          addContributorButton}
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={lightTheme}>
+          {((isMobile && contributorsToShow.length >= 2) || (!isMobile && contributorsToShow.length >= 5)) &&
+            addContributorButton}
 
-        <ContributorList
-          contributors={contributorsToShow}
-          onDelete={handleOnRemove}
-          onMoveContributor={handleMoveContributor}
-          openContributorModal={handleOpenContributorModal}
-          showContributorRole={contributorRoles.length > 1}
-          contributorsLength={relevantContributors.length}
-        />
+          <ContributorList
+            contributors={contributorsToShow}
+            onDelete={handleOnRemove}
+            onMoveContributor={handleMoveContributor}
+            openContributorModal={handleOpenContributorModal}
+            showContributorRole={contributorRoles.length > 1}
+            contributorsLength={relevantContributors.length}
+          />
 
-        <AddContributorModal
-          contributorRoles={contributorRoles}
-          contributorRole={contributorRole}
-          initialSearchTerm={unverifiedContributor?.name}
-          open={openContributorModal}
-          toggleModal={() => setOpenContributorModal(!openContributorModal)}
-          onContributorSelected={onContributorSelected}
-        />
-      </MuiThemeProvider>
+          <AddContributorModal
+            contributorRoles={contributorRoles}
+            contributorRole={contributorRole}
+            initialSearchTerm={unverifiedContributor?.name}
+            open={openContributorModal}
+            toggleModal={() => setOpenContributorModal(!openContributorModal)}
+            onContributorSelected={onContributorSelected}
+          />
+        </ThemeProvider>
+      </StyledEngineProvider>
       {relevantContributors.length > contributorsPerPage && (
         <StyledPagination
           variant="outlined"

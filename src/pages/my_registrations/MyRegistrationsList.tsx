@@ -13,10 +13,11 @@ import {
   TablePagination,
   TableRow,
   Typography,
-} from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
+} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { visuallyHidden } from '@mui/utils';
 import { deleteRegistration } from '../../api/registrationApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { DangerButton } from '../../components/DangerButton';
@@ -86,7 +87,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
       <TableContainer>
         <Table>
           <caption>
-            <Typography variant="srOnly">{t('workLists:my_registrations')}</Typography>
+            <span style={visuallyHidden}>{t('workLists:my_registrations')}</span>
           </caption>
           <TableHead>
             <TableRow>

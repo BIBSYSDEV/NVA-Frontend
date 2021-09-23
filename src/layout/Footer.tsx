@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { UrlPathTemplate } from '../utils/urlPaths';
 import logo from '../resources/images/unit_logo.png';

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Avatar, AvatarProps, Backdrop, Dialog, DialogProps, DialogTitle, Fade, Typography } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+import { Avatar, AvatarProps, Backdrop, Dialog, DialogProps, DialogTitle, Fade, Typography } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 const StyledPaper = styled.div`
   background-color: ${({ theme }) => theme.palette.background};
@@ -94,7 +94,7 @@ export const Modal = ({
       }}
       PaperProps={{ 'aria-labelledby': 'titleId' }}>
       <StyledHeaderContainer>
-        <StyledDialogTitle disableTypography>
+        <StyledDialogTitle>
           {headingIcon ? (
             <StyledInfoContainer>
               {headingIcon && <StyledAvatar src={headingIcon.src} alt={headingIcon.alt} />}

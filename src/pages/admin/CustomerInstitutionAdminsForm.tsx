@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Button, MuiThemeProvider, Typography } from '@material-ui/core';
+import { Button, ThemeProvider, StyledEngineProvider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@mui/icons-material/Add';
 
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import { filterUsersByRole } from '../../utils/role-helpers';
@@ -58,21 +58,23 @@ export const CustomerInstitutionAdminsForm = ({
         </>
       )}
 
-      <MuiThemeProvider theme={lightTheme}>
-        <Modal
-          open={openAddAdminModal}
-          onClose={toggleOpenAddAdminModal}
-          headingText={t('users.add_institution_admin')}
-          dataTestId="add-role-modal">
-          <AddRoleModalContent
-            role={RoleName.INSTITUTION_ADMIN}
-            users={users}
-            closeModal={toggleOpenAddAdminModal}
-            refetchUsers={refetchInstitutionUsers}
-            tableCaption={t('users.add_institution_admin')}
-          />
-        </Modal>
-      </MuiThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={lightTheme}>
+          <Modal
+            open={openAddAdminModal}
+            onClose={toggleOpenAddAdminModal}
+            headingText={t('users.add_institution_admin')}
+            dataTestId="add-role-modal">
+            <AddRoleModalContent
+              role={RoleName.INSTITUTION_ADMIN}
+              users={users}
+              closeModal={toggleOpenAddAdminModal}
+              refetchUsers={refetchInstitutionUsers}
+              tableCaption={t('users.add_institution_admin')}
+            />
+          </Modal>
+        </ThemeProvider>
+      </StyledEngineProvider>
     </BackgroundDiv>
   );
 };
