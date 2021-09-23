@@ -26,7 +26,6 @@ import {
   ReportRegistration,
 } from '../../types/publication_types/reportRegistration.types';
 import { DegreeType, JournalType } from '../../types/publicationFieldNames';
-import { getNpiDiscipline } from '../../utils/npiDisciplines';
 import { isBook, isChapter, isDegree, isJournal, isReport } from '../../utils/registration-helpers';
 import { PublicDoi } from './PublicDoi';
 import { PublicJournal, PublicPartOfContent, PublicPublisher, PublicSeries } from './PublicPublicationContext';
@@ -81,7 +80,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
 
         {npiSubjectHeading && (
           <Typography data-testid={dataTestId.registrationLandingPage.npi}>
-            {t('description.npi_disciplines')}: {getNpiDiscipline(npiSubjectHeading)?.name}
+            {t('description.npi_disciplines')}: {t(`disciplines:${npiSubjectHeading}`)}
           </Typography>
         )}
 

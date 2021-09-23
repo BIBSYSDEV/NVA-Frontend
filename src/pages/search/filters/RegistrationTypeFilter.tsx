@@ -19,7 +19,7 @@ export const RegistrationTypeFilter = () => {
 
   const updateFilter = (type: string) => {
     const newFilter = {
-      fieldName: SearchFieldName.Subtype,
+      fieldName: SearchFieldName.Type,
       value: currentValue !== type ? type : '',
     };
     setFieldValue('properties[0]', newFilter);

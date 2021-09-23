@@ -37,7 +37,7 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
 
   const [searchContainerOptions, isLoadingSearchContainerOptions] = useSearchRegistrations({
     searchTerm: debouncedQuery,
-    properties: [{ fieldName: SearchFieldName.Subtype, value: props.searchSubtypes }],
+    properties: [{ fieldName: SearchFieldName.Type, value: props.searchSubtypes }],
   });
 
   const currentIdentifier = getIn(values, props.fieldName)?.split('/').pop() ?? '';

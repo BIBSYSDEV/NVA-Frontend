@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Button, Collapse, Typography } from '@material-ui/core';
+import { Button, Collapse, IconButton, Typography } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import CloseIcon from '@material-ui/icons/Close';
 import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { lightTheme } from '../../themes/lightTheme';
 import { AboutContent } from '../infopages/AboutContent';
 import { dataTestId } from '../../utils/dataTestIds';
 import SearchPage from '../search/SearchPage';
-import { useHistory } from 'react-router-dom';
 import { REDIRECT_PATH_KEY } from '../../utils/constants';
 
 const StyledDashboard = styled.div`
@@ -22,12 +23,16 @@ const StyledTaglineDiv = styled(BackgroundDiv)`
   grid-area: tagline;
   margin: 0;
   display: grid;
-  grid-template-areas: '. text-tagline text-tagline .' '. . short-description .';
+  grid-template-areas: '. text-tagline text-tagline close-button' '. . short-description .';
   grid-template-columns: 1fr 1fr 2.5fr 1fr;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    grid-template-areas: 'text-tagline' 'short-description';
+    grid-template-areas: 'text-tagline close-button' 'short-description short-description';
     grid-template-columns: 1fr;
   }
+`;
+
+const StyledCloseButtonWrapper = styled.div`
+  grid-area: close-button;
 `;
 
 const StyledDescriptionDiv = styled(BackgroundDiv)`
@@ -73,9 +78,12 @@ const StyledButtonWrapper = styled.div`
   grid-area: button;
 `;
 
+const showTaglineKey = 'showTagline';
+
 const Dashboard = () => {
   const { t } = useTranslation('common');
   const history = useHistory();
+  const [showBanner, setShowBanner] = useState(localStorage.getItem(showTaglineKey) !== 'false');
   const [readMore, setReadMore] = useState(false);
 
   const toggleReadMore = () => setReadMore(!readMore);
@@ -93,26 +101,41 @@ const Dashboard = () => {
       <Helmet>
         <title>{t('start_page')}</title>
       </Helmet>
-      <StyledTaglineDiv backgroundColor={lightTheme.palette.section.megaDark}>
-        <StyledTagline variant="h1">{t('nva_tagline')}</StyledTagline>
-        <StyledShortDescription variant="h3" variantMapping={{ h3: 'p' }}>
-          {t('about:short_description')}
-        </StyledShortDescription>
-      </StyledTaglineDiv>
-      <StyledDescriptionDiv backgroundColor={lightTheme.palette.section.megaDark}>
-        <StyledCollapse in={readMore}>
-          <AboutContent />
-        </StyledCollapse>
-        <StyledButtonWrapper>
-          <Button
-            color="secondary"
-            variant="contained"
-            data-testid={dataTestId.startPage.readMoreButton}
-            onClick={toggleReadMore}>
-            {t(readMore ? 'read_less_about_nva' : 'read_more_about_nva')}
-          </Button>
-        </StyledButtonWrapper>
-      </StyledDescriptionDiv>
+      {showBanner && (
+        <>
+          <StyledTaglineDiv backgroundColor={lightTheme.palette.section.megaDark}>
+            <StyledTagline variant="h1">{t('nva_tagline')}</StyledTagline>
+            <StyledCloseButtonWrapper>
+              <IconButton
+                color="primary"
+                title={t('close_forever')}
+                onClick={() => {
+                  localStorage.setItem(showTaglineKey, 'false');
+                  setShowBanner(false);
+                }}>
+                <CloseIcon />
+              </IconButton>
+            </StyledCloseButtonWrapper>
+            <StyledShortDescription variant="h3" variantMapping={{ h3: 'p' }}>
+              {t('about:short_description')}
+            </StyledShortDescription>
+          </StyledTaglineDiv>
+          <StyledDescriptionDiv backgroundColor={lightTheme.palette.section.megaDark}>
+            <StyledCollapse in={readMore}>
+              <AboutContent />
+            </StyledCollapse>
+            <StyledButtonWrapper>
+              <Button
+                color="secondary"
+                variant="contained"
+                data-testid={dataTestId.startPage.readMoreButton}
+                onClick={toggleReadMore}>
+                {t(readMore ? 'read_less_about_nva' : 'read_more_about_nva')}
+              </Button>
+            </StyledButtonWrapper>
+          </StyledDescriptionDiv>
+        </>
+      )}
       <SearchPage />
     </StyledDashboard>
   );

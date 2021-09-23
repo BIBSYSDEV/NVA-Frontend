@@ -62,6 +62,7 @@ export const ResourceTypePanel = () => {
       ...touched,
       entityDescription: {
         ...touched.entityDescription,
+        npiSubjectHeading: false,
         reference: {},
       },
     });
