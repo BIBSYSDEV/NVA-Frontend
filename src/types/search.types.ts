@@ -32,11 +32,11 @@ type SearchPublicationInstance = Partial<
     ChapterPublicationInstance
 >;
 export interface SearchRegistration {
+  type: string;
   id: string;
   contributors: SearchResultContributor[];
   owner: string;
   title: string;
-  publicationType: string;
   publisher: RegistrationPublisher;
   publicationDate: RegistrationDate;
   abstract?: string;
@@ -52,5 +52,5 @@ export enum SearchFieldName {
   Id = 'id',
   ModifiedDate = 'modifiedDate',
   PublishedDate = 'publishedDate',
-  Subtype = 'publicationType',
+  Type = 'type',
 }
