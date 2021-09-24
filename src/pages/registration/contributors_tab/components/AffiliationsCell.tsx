@@ -8,7 +8,6 @@ import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import DeleteIcon from '@mui/icons-material/RemoveCircleSharp';
 import WarningIcon from '@mui/icons-material/Warning';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
-import { DangerButton } from '../../../../components/DangerButton';
 import { AddInstitution } from '../../../../components/institution/AddInstitution';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { Modal } from '../../../../components/Modal';
@@ -129,13 +128,14 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
               </>
             )
           )}
-          <DangerButton
+          <Button
+            color="error"
             size="small"
             data-testid={`button-remove-affiliation-${affiliation.id}`}
             startIcon={<DeleteIcon />}
             onClick={() => setAffiliationToRemove(affiliation)}>
             {t('contributors.remove_affiliation')}
-          </DangerButton>
+          </Button>
         </StyledCard>
       ))}
       <StyledAddAffiliationButton

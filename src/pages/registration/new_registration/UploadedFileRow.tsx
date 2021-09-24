@@ -1,10 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { File } from '../../../types/file.types';
-import { DangerButton } from '../../../components/DangerButton';
 
 const StyledFileRow = styled.div`
   display: flex;
@@ -21,13 +20,14 @@ export const UploadedFileRow = ({ file, removeFile }: UploadedFileRowProps) => {
   return (
     <StyledFileRow data-testid="uploaded-file">
       <Typography>{file.name}</Typography>
-      <DangerButton
+      <Button
+        color="error"
         data-testid="button-remove-file"
         variant="outlined"
         startIcon={<RemoveCircleIcon />}
         onClick={removeFile}>
         {t('remove')}
-      </DangerButton>
+      </Button>
     </StyledFileRow>
   );
 };

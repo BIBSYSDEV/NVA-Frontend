@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import {
+  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
@@ -24,7 +25,6 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { DatePicker, LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { BackgroundDiv } from '../../../components/BackgroundDiv';
-import { DangerButton } from '../../../components/DangerButton';
 import { lightTheme, datePickerTranslationProps } from '../../../themes/lightTheme';
 import { File, LicenseNames, licenses } from '../../../types/file.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
@@ -241,13 +241,14 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
         </StyledCardContent>
       )}
       <StyledActionsContainer>
-        <DangerButton
+        <Button
+          color="error"
           variant="contained"
           data-testid="button-remove-file"
           startIcon={<DeleteIcon />}
           onClick={toggleOpenConfirmDialog}>
           {t('files_and_license.remove_file')}
-        </DangerButton>
+        </Button>
       </StyledActionsContainer>
 
       <ConfirmDialog

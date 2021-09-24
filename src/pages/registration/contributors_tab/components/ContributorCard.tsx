@@ -9,7 +9,6 @@ import CheckIcon from '@mui/icons-material/CheckCircleSharp';
 import DeleteIcon from '@mui/icons-material/RemoveCircleSharp';
 import WarningIcon from '@mui/icons-material/Warning';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
-import { DangerButton } from '../../../../components/DangerButton';
 import { StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
 import { lightTheme } from '../../../../themes/lightTheme';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
@@ -68,10 +67,6 @@ const StyledVerifiedSection = styled.div`
 const StyledCorrespondingWrapper = styled.div`
   grid-area: corresponding;
   margin-bottom: 0.5rem;
-`;
-
-const StyledDangerButton = styled(DangerButton)`
-  border-radius: 0;
 `;
 
 const StyledRemoveContributorContainer = styled.div`
@@ -235,13 +230,14 @@ export const ContributorCard = ({
         />
       )}
       <StyledRemoveContributorContainer>
-        <StyledDangerButton
+        <Button
+          color="error"
           data-testid={`button-remove-contributor-${contributor.identity.name}`}
           startIcon={<DeleteIcon />}
           onClick={onRemoveContributorClick}
           variant="contained">
           {getRemoveContributorText(contributor.role)}
-        </StyledDangerButton>
+        </Button>
       </StyledRemoveContributorContainer>
     </StyledBackgroundDiv>
   );

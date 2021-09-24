@@ -22,7 +22,6 @@ import { setAuthorityData } from '../../redux/actions/userActions';
 import { Modal } from '../../components/Modal';
 import { StyledTypographyPreWrapped } from '../../components/styled/Wrappers';
 import { User } from '../../types/user.types';
-import { DangerButton } from '../../components/DangerButton';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 
@@ -37,7 +36,7 @@ const StyledOrcidLine = styled.div`
   }
 `;
 
-const StyledButton = styled(DangerButton)`
+const StyledButton = styled(Button)`
   justify-self: right;
 `;
 
@@ -158,11 +157,11 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
             </StyledLine>
 
             <StyledButton
+              color="error"
               data-testid="button-confirm-delete-orcid"
               onClick={toggleConfirmDialog}
               startIcon={<DeleteIcon />}
-              variant="outlined"
-              color="secondary">
+              variant="outlined">
               {t('common:remove')}
             </StyledButton>
 

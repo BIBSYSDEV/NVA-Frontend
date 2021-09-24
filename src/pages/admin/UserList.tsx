@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
+import { Button, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { visuallyHidden } from '@mui/utils';
 import { updateUser } from '../../api/roleApi';
 import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { DangerButton } from '../../components/DangerButton';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { InstitutionUser, RoleName } from '../../types/user.types';
@@ -135,14 +134,15 @@ export const UserList = ({
                     </TableCell>
                     <TableCell align="right">
                       {roleToRemove && (
-                        <DangerButton
+                        <Button
+                          color="error"
                           variant="outlined"
                           startIcon={<DeleteIcon />}
                           disabled={isLastInstitutionAdmin}
                           data-testid={`button-remove-role-${roleToRemove}-${user.username}`}
                           onClick={() => setRemoveRoleForUser(user.username)}>
                           {t('common:remove')}
-                        </DangerButton>
+                        </Button>
                       )}
                       {roleToAdd && (
                         <ButtonWithProgress

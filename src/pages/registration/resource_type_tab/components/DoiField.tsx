@@ -2,12 +2,11 @@ import { useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { ThemeProvider, StyledEngineProvider, TextField, Typography } from '@mui/material';
+import { ThemeProvider, StyledEngineProvider, TextField, Typography, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
-import { DangerButton } from '../../../../components/DangerButton';
 import { lightTheme } from '../../../../themes/lightTheme';
 
 const StyledDoiRow = styled.div`
@@ -52,9 +51,9 @@ export const DoiField = () => {
       />
 
       {referenceDoi && (
-        <DangerButton variant="contained" endIcon={<DeleteIcon />} onClick={toggleConfirmDialog}>
+        <Button color="error" variant="contained" endIcon={<DeleteIcon />} onClick={toggleConfirmDialog}>
           {t('resource_type.remove_doi')}
-        </DangerButton>
+        </Button>
       )}
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={lightTheme}>

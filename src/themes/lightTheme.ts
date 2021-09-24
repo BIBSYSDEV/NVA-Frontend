@@ -182,9 +182,9 @@ export const lightTheme = createTheme({
     },
     MuiTab: {
       styleOverrides: {
-        // root: {
-        //   flexDirection: 'row-reverse',
-        // },
+        root: {
+          flexDirection: 'row-reverse',
+        },
         labelIcon: {
           minHeight: undefined,
           paddingTop: undefined,

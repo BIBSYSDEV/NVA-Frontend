@@ -16,7 +16,6 @@ import { RootStore } from '../../../redux/reducers/rootReducer';
 import { FormikInstitutionUnit } from '../../../types/institution.types';
 import { NotificationVariant } from '../../../types/notification.types';
 import { getMostSpecificUnit } from '../../../utils/institutions-helpers';
-import { DangerButton } from '../../../components/DangerButton';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
 const StyledCard = styled(Card)`
@@ -112,14 +111,14 @@ export const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: Institu
           onClick={() => setOpenEditForm(true)}>
           {t('edit')}
         </Button>
-        <DangerButton
+        <Button
+          color="error"
           variant="outlined"
-          color="secondary"
           data-testid={`button-delete-institution-${orgunitId}`}
           startIcon={<DeleteIcon />}
           onClick={() => setInstitutionIdToRemove(orgunitId)}>
           {t('remove')}
-        </DangerButton>
+        </Button>
       </StyledButtonContainer>
     </StyledCard>
   );

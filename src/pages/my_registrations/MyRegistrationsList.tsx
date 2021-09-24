@@ -20,7 +20,6 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { visuallyHidden } from '@mui/utils';
 import { deleteRegistration } from '../../api/registrationApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { DangerButton } from '../../components/DangerButton';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { RegistrationPreview, RegistrationStatus } from '../../types/registration.types';
@@ -141,7 +140,8 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                 </TableCell>
                 <TableCell>
                   {registration.status === RegistrationStatus.Draft && (
-                    <DangerButton
+                    <Button
+                      color="error"
                       variant="outlined"
                       data-testid={`delete-registration-${registration.identifier}`}
                       startIcon={<DeleteIcon />}
@@ -150,7 +150,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                         setShowDeleteModal(true);
                       }}>
                       {t('delete')}
-                    </DangerButton>
+                    </Button>
                   )}
                 </TableCell>
               </StyledTableRow>
