@@ -3,7 +3,6 @@ import prettyBytes from 'pretty-bytes';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import DateFnsUtils from '@date-io/date-fns';
 import {
   Checkbox,
   FormControl,
@@ -22,7 +21,8 @@ import {
 import ListItemIcon from '@mui/material/ListItemIcon';
 import DeleteIcon from '@mui/icons-material/Delete';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { DatePicker, LocalizationProvider } from '@mui/lab';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { DangerButton } from '../../../components/DangerButton';
 import { lightTheme, datePickerTranslationProps } from '../../../themes/lightTheme';
@@ -92,7 +92,7 @@ interface FileCardProps {
 
 export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileCardProps) => {
   const { t, i18n } = useTranslation('registration');
-  const { setFieldValue } = useFormikContext();
+  const { setFieldValue, setFieldTouched } = useFormikContext();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
 
@@ -145,45 +145,39 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
 
           <div>
             <StyledInputRow>
-              <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
-                <Field name={`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`}>
-                  {({ field, meta: { error, touched } }: FieldProps) => (
-                    <KeyboardDatePicker
-                      fullWidth
-                      id={field.name}
+              <Field name={`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`}>
+                {({ field, meta: { error, touched } }: FieldProps) => (
+                  <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
+                    <DatePicker
                       {...datePickerTranslationProps}
-                      DialogProps={{
-                        'aria-labelledby': `${field.name}-label`,
-                        'aria-label': t('files_and_license.embargo_date'),
-                      }}
-                      KeyboardButtonProps={{
-                        'aria-labelledby': `${field.name}-label`,
-                      }}
-                      leftArrowButtonProps={{ 'aria-label': t('common:previous') }}
-                      rightArrowButtonProps={{ 'aria-label': t('common:next') }}
-                      data-testid="uploaded-file-embargo-date"
-                      inputVariant="filled"
-                      label={t('files_and_license.embargo_date')}
                       {...field}
-                      onChange={(value) => setFieldValue(field.name, value)}
+                      data-testid="date-published-field"
+                      label={t('description.date_published')}
                       value={field.value ?? null}
-                      disablePast
-                      autoOk
-                      placeholder={t('common:date_format')}
-                      format={'dd.MM.yyyy'}
-                      error={!!error && touched}
-                      helperText={
-                        error && touched ? (
-                          <ErrorMessage name={field.name} />
-                        ) : (
-                          t('files_and_license.embargo_date_helper_text')
-                        )
-                      }
+                      onChange={(value) => setFieldValue(field.name, value)}
+                      inputFormat="dd.MM.yyyy"
+                      maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+                      mask="__.__.____"
                       disabled={file.administrativeAgreement}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="filled"
+                          onBlur={() => !touched && setFieldTouched(field.name)}
+                          error={!!error && touched}
+                          helperText={
+                            error && touched ? (
+                              <ErrorMessage name={field.name} />
+                            ) : (
+                              t('files_and_license.embargo_date_helper_text')
+                            )
+                          }
+                        />
+                      )}
                     />
-                  )}
-                </Field>
-              </MuiPickersUtilsProvider>
+                  </LocalizationProvider>
+                )}
+              </Field>
             </StyledInputRow>
 
             <StyledInputRow>

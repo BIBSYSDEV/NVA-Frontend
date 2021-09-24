@@ -1,3 +1,5 @@
+import { CalendarPickerView } from '@mui/lab';
+import { ParseableDate } from '@mui/lab/internal/pickers/constants/prop-types';
 import { createTheme } from '@mui/material';
 import { PaletteColor, PaletteColorOptions, SimplePaletteColorOptions } from '@mui/material/styles';
 import i18n from '../translations/i18n';
@@ -278,8 +280,25 @@ export const autocompleteTranslationProps = {
 };
 
 export const datePickerTranslationProps = {
-  cancelLabel: i18n.t('common:cancel'),
-  okLabel: i18n.t('common:select'),
+  cancelText: i18n.t('common:cancel'),
+  clearText: i18n.t('common:clear'),
+  getOpenDialogAriaText: (value: ParseableDate<Date | null>) =>
+    value
+      ? i18n.t('registration:description.date_picker.open_dialog', { date: new Date(value).toLocaleDateString() })
+      : i18n.t('registration:description.date_picker.choose_date'),
+  getViewSwitchingButtonText: (currentView: CalendarPickerView) => {
+    switch (currentView) {
+      case 'day':
+      case 'month':
+        return i18n.t('registration:description.date_picker.go_to_year_view');
+      case 'year':
+        return i18n.t('registration:description.date_picker.go_to_calendar_view');
+    }
+  },
+  leftArrowButtonText: i18n.t('registration:description.date_picker.previous_month'),
+  rightArrowButtonText: i18n.t('registration:description.date_picker.next_month'),
+  todayText: i18n.t('registration:description.date_picker.today'),
+  toolbarTitle: i18n.t('registration:description.date_picker.select_date'),
 };
 
 export const paginationTranslationProps = (type: string, page: number) => {
