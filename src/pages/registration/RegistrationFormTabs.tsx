@@ -18,6 +18,7 @@ const StyledTabs = styled(Tabs)`
       justify-content: space-around;
     }
   }
+  max-height: 3.5rem;
 `;
 
 interface RegistrationFormTabsProps {
@@ -66,7 +67,6 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
         onChange={(_, value) => setTabNumber(value)}
         variant="scrollable"
         scrollButtons="auto"
-        textColor="primary"
         indicatorColor="secondary"
         value={tabNumber}>
         <LinkTab

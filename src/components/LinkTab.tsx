@@ -19,7 +19,6 @@ export const LinkTab = ({ error, ...rest }: LinkTabProps) => {
   return (
     <Tab
       {...rest}
-      // tabIndex="0" // TODO
       icon={error ? <StyledErrorIcon data-testid="error-tab" titleAccess={t('validation_errors')} /> : undefined}
     />
   );

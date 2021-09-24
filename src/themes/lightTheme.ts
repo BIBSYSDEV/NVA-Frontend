@@ -185,12 +185,8 @@ export const lightTheme = createTheme({
         root: {
           flexDirection: 'row-reverse',
         },
-        labelIcon: {
-          minHeight: undefined,
-          paddingTop: undefined,
-        },
         textColorPrimary: {
-          '&$selected': {
+          '&.Mui-selected': {
             color: Color.PrimaryText,
             fontWeight: 'bold',
           },
