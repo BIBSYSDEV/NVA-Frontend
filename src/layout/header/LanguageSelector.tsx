@@ -4,8 +4,14 @@ import { Button, Menu, MenuItem } from '@mui/material';
 import LanguageIcon from '@mui/icons-material/Language';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import styled from 'styled-components';
 import { LanguageCodes } from '../../types/language.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { Color } from '../../themes/colors';
+
+const StyledHeaderButton = styled(Button)`
+  color: ${Color.Black};
+`;
 
 export const LanguageSelector = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -18,13 +24,13 @@ export const LanguageSelector = () => {
 
   return (
     <>
-      <Button
+      <StyledHeaderButton
         data-testid={dataTestId.header.languageButton}
         startIcon={<LanguageIcon />}
         endIcon={anchorEl ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         onClick={(event) => setAnchorEl(event.currentTarget)}>
         {i18n.language === LanguageCodes.NORWEGIAN_BOKMAL ? t('languages:nor') : t(`languages:${i18n.language}`)}
-      </Button>
+      </StyledHeaderButton>
       <Menu
         data-testid={dataTestId.header.languageMenu}
         anchorEl={anchorEl}

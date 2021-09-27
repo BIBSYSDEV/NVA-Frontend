@@ -25,11 +25,6 @@ const StyledNav = styled.nav`
   padding: 0 1rem;
   min-height: 4rem;
 
-  button,
-  a {
-    color: ${Color.Black};
-  }
-
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     grid-template-areas: 'menu logo auth';
     grid-template-columns: 1fr 1fr 1fr;
@@ -40,7 +35,9 @@ const StyledShortcuts = styled.div`
   grid-area: shortcuts;
   > * {
     margin-left: 2rem;
+    color: ${Color.Black};
   }
+
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     display: none;
   }

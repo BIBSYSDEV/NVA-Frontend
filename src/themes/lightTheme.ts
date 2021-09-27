@@ -257,6 +257,9 @@ export const lightTheme = createTheme({
     },
     MuiMenuItem: {
       styleOverrides: {
+        root: {
+          color: Color.Black,
+        },
         gutters: {
           paddingRight: '2rem',
         },
