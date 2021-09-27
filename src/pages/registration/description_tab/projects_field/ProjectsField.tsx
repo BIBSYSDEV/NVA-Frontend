@@ -67,14 +67,16 @@ export const ProjectsField = () => {
           getOptionDisabled={(option) => field.value.some((project) => project.id === option.id)}
           loading={isLoadingProjects}
           renderOption={(props, option, state) => (
-            <StyledFlexColumn data-testid={`project-option-${option.id}`}>
-              <Typography variant="subtitle1">
-                <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
-              </Typography>
-              <Typography variant="body2" color="textSecondary">
-                {getLanguageString(option.coordinatingInstitution.name)}
-              </Typography>
-            </StyledFlexColumn>
+            <li {...props}>
+              <StyledFlexColumn data-testid={`project-option-${option.id}`}>
+                <Typography variant="subtitle1">
+                  <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  {getLanguageString(option.coordinatingInstitution.name)}
+                </Typography>
+              </StyledFlexColumn>
+            </li>
           )}
           renderInput={(params) => (
             <AutocompleteTextField

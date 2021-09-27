@@ -82,19 +82,21 @@ export const SeriesField = () => {
           loading={isLoadingJournalOptions || isLoadingJournal}
           getOptionLabel={(option) => option.name}
           renderOption={(props, option, state) => (
-            <StyledFlexColumn>
-              <Typography variant="subtitle1">
-                <EmphasizeSubstring
-                  text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
-                  emphasized={state.inputValue}
-                />
-              </Typography>
-              {option.level && (
-                <Typography variant="body2" color="textSecondary">
-                  {t('resource_type.level')}: {option.level}
+            <li {...props}>
+              <StyledFlexColumn>
+                <Typography variant="subtitle1">
+                  <EmphasizeSubstring
+                    text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
+                    emphasized={state.inputValue}
+                  />
                 </Typography>
-              )}
-            </StyledFlexColumn>
+                {option.level && (
+                  <Typography variant="body2" color="textSecondary">
+                    {t('resource_type.level')}: {option.level}
+                  </Typography>
+                )}
+              </StyledFlexColumn>
+            </li>
           )}
           renderTags={(value, getTagProps) =>
             value.map((option, index) => (

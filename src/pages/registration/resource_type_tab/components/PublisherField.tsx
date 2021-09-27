@@ -81,7 +81,7 @@ export const PublisherField = () => {
               loading={isLoadingPublisherOptions || isLoadingPublisher}
               getOptionLabel={(option) => option.name}
               renderOption={(props, option, state) => (
-                <Typography variant="subtitle1">
+                <Typography {...props} variant="subtitle1" component="li">
                   <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
                 </Typography>
               )}

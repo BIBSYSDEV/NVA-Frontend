@@ -91,14 +91,16 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
                   loading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
                   getOptionLabel={(option) => option.title}
                   renderOption={(props, option, state) => (
-                    <StyledFlexColumn>
-                      <Typography variant="subtitle1">
-                        <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        {getDescriptionText(option.publicationDate, option.contributors)}
-                      </Typography>
-                    </StyledFlexColumn>
+                    <li {...props}>
+                      <StyledFlexColumn>
+                        <Typography variant="subtitle1">
+                          <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary">
+                          {getDescriptionText(option.publicationDate, option.contributors)}
+                        </Typography>
+                      </StyledFlexColumn>
+                    </li>
                   )}
                   renderTags={(value, getTagProps) =>
                     value.map((option, index) => (
