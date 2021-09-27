@@ -15,6 +15,7 @@ import { Logo } from './Logo';
 import { MobileMenu } from './MobileMenu';
 import { LanguageSelector } from './LanguageSelector';
 import { useIsMobile } from '../../utils/hooks/useIsMobile';
+import { Color } from '../../themes/colors';
 
 const StyledNav = styled.nav`
   display: grid;
@@ -23,6 +24,11 @@ const StyledNav = styled.nav`
   align-items: center;
   padding: 0 1rem;
   min-height: 4rem;
+
+  button,
+  a {
+    color: ${Color.Black};
+  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     grid-template-areas: 'menu logo auth';

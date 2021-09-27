@@ -174,8 +174,7 @@ export const lightTheme = createTheme({
         root: {
           color: Color.PrimaryText,
         },
-        underlineHover: {
-          textDecoration: 'underline',
+        underlineAlways: {
           textDecorationColor: Color.SecondaryMain,
         },
       },

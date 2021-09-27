@@ -12,10 +12,9 @@ const StyledTabButton = styled(({ isSelected, ...rest }) => <Button {...rest} />
   font-size: 1.2rem;
   padding-bottom: 0.6rem;
 
-  ${({ isSelected, theme }) =>
+  ${({ isSelected }) =>
     isSelected &&
     `
-    color: ${theme.palette.primary.main};
     padding-bottom: 0.4rem;
     border-bottom: 0.2rem solid;
   `};
@@ -26,7 +25,7 @@ interface TabButtonProps extends ButtonProps {
 }
 
 export const TabButton = ({ isSelected, ...props }: TabButtonProps) => (
-  <StyledTabButton isSelected={isSelected} {...props}>
+  <StyledTabButton isSelected={isSelected} {...props} color={isSelected ? 'primary' : 'inherit'}>
     {props.children}
   </StyledTabButton>
 );
