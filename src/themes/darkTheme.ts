@@ -2,21 +2,17 @@ import { createTheme } from '@mui/material';
 import { Color } from './colors';
 import { lightTheme } from './lightTheme';
 
-export const darkTheme = createTheme({
-  ...lightTheme,
+export const darkTheme = createTheme(lightTheme, {
   palette: {
-    ...lightTheme.palette,
     mode: 'dark',
     primary: { main: Color.BlueMegaLight },
-    error: { main: Color.ErrorLight },
+    error: { main: Color.ErrorMain },
     text: { primary: Color.White, disabled: Color.Black },
   },
   components: {
-    ...lightTheme.components,
     MuiFilledInput: {
       styleOverrides: {
         root: {
-          // ...lightTheme.components?.MuiFilledInput?.root,
           '&.Mui-focused': {
             backgroundColor: Color.BlueLight,
           },
@@ -40,14 +36,12 @@ export const darkTheme = createTheme({
     MuiFormHelperText: {
       styleOverrides: {
         root: {
-          // ...lightTheme.overrides?.MuiFormHelperText?.root,
           color: Color.BlueMegaLight,
         },
       },
     },
     MuiFormLabel: {
       styleOverrides: {
-        ...lightTheme.components?.MuiFormLabel,
         root: {
           color: Color.White,
         },
@@ -55,18 +49,14 @@ export const darkTheme = createTheme({
     },
     MuiInputBase: {
       styleOverrides: {
-        ...lightTheme.components?.MuiInputBase,
         root: {
-          // ...lightTheme.overrides?.MuiInputBase?.root,
           color: Color.Black,
         },
       },
     },
     MuiInputLabel: {
       styleOverrides: {
-        ...lightTheme.components?.MuiInputLabel,
         root: {
-          // ...lightTheme.overrides?.MuiInputLabel?.root,
           color: Color.Black,
           '&.Mui-focused': {
             color: Color.Black,
@@ -96,9 +86,7 @@ export const darkTheme = createTheme({
     },
     MuiListItem: {
       styleOverrides: {
-        ...lightTheme.components?.MuiListItem,
         root: {
-          // ...lightTheme.components?.MuiListItem?.root,
           color: Color.Black,
         },
       },
