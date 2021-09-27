@@ -68,7 +68,7 @@ export const DatePickerField = () => {
             inputFormat={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
             views={yearOnly ? ['year'] : ['year', 'month', 'day']}
             maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
-            mask="__.__.____"
+            mask={yearOnly ? '____' : '__.__.____'}
             renderInput={(params) => (
               <TextField
                 {...params}
