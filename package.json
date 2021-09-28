@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@date-io/date-fns": "^1.3.13",
     "@fontsource/barlow": "^4.5.0",
     "@fontsource/crimson-text": "^4.5.0",
     "@mui/icons-material": "^5.0.1",
