@@ -30,7 +30,7 @@ export const HrcsActivityInput = (props: VocabularyComponentProps) => {
       id="hrcs-activities"
       label={t('description.hrcs_activities')}
       renderOption={(props, option) => {
-        const indentsCount = option.identifier.split('.').length - 1;
+        const indentsCount = option.cristinIdentifier.split('.').length - 1;
         return (
           <li {...props} key={option.id}>
             <StyledOptionText indentations={indentsCount}>{getLanguageString(option.label)}</StyledOptionText>
