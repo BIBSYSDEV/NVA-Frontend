@@ -1,4 +1,4 @@
-import { ListItem, ListSubheader } from '@mui/material';
+import { ListItemButton, ListSubheader } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -7,7 +7,7 @@ import { SearchFieldName } from '../../../types/search.types';
 import { SearchConfig } from '../../../utils/searchHelpers';
 import { BaseFilterItem } from './BaseFilterItem';
 
-const StyledIndentedListItem = styled(ListItem)<{ $isSelected: boolean }>`
+const StyledIndentedListItem = styled(ListItemButton)<{ $isSelected: boolean }>`
   padding-left: 1.5rem;
   ${({ $isSelected }) => $isSelected && `border: 2px solid;`}
 `;
