@@ -34,7 +34,7 @@ export const Login = () => {
   ) : isLoading ? (
     <ButtonWithProgress isLoading>{t('common:loading')}</ButtonWithProgress>
   ) : (
-    <Button color="primary" variant="contained" onClick={handleLogin} data-testid={dataTestId.header.logInButton}>
+    <Button variant="contained" onClick={handleLogin} data-testid={dataTestId.header.logInButton}>
       {t('login')}
     </Button>
   );

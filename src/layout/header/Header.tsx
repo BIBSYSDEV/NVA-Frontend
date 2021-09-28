@@ -15,7 +15,6 @@ import { Logo } from './Logo';
 import { MobileMenu } from './MobileMenu';
 import { LanguageSelector } from './LanguageSelector';
 import { useIsMobile } from '../../utils/hooks/useIsMobile';
-import { Color } from '../../themes/colors';
 
 const StyledNav = styled.nav`
   display: grid;
@@ -35,7 +34,6 @@ const StyledShortcuts = styled.div`
   grid-area: shortcuts;
   > * {
     margin-left: 2rem;
-    color: ${Color.Black};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
@@ -85,6 +83,7 @@ export const Header = () => {
         {user?.isCreator && (
           <StyledShortcuts>
             <Button
+              color="inherit"
               component={RouterLink}
               data-testid="new-registration"
               to={getRegistrationPath()}
@@ -92,6 +91,7 @@ export const Header = () => {
               {t('new_registration')}
             </Button>
             <Button
+              color="inherit"
               component={RouterLink}
               data-testid="my-registrations"
               to={UrlPathTemplate.MyRegistrations}
@@ -99,6 +99,7 @@ export const Header = () => {
               {t('workLists:my_registrations')}
             </Button>
             <Button
+              color="inherit"
               component={RouterLink}
               data-testid="my-messages"
               to={UrlPathTemplate.MyMessages}

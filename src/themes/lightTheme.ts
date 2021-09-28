@@ -132,7 +132,12 @@ export const lightTheme = createTheme({
     },
     MuiAppBar: {
       styleOverrides: {
-        root: { background: Color.Header },
+        root: {
+          background: Color.Header,
+        },
+        colorPrimary: {
+          color: Color.PrimaryText,
+        },
       },
     },
     MuiButton: {

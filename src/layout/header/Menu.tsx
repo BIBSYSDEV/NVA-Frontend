@@ -57,6 +57,7 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
   return (
     <StyledMenu ref={divRef}>
       <StyledMenuButton
+        color="inherit"
         data-testid={dataTestId.header.menuButton}
         onClick={handleClickMenuAnchor}
         endIcon={anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}>
