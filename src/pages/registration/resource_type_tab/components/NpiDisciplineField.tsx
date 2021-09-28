@@ -50,7 +50,7 @@ export const NpiDisciplineField = () => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                onBlur={() => (!touched ? setFieldTouched(name) : null)}
+                onBlur={() => (!touched ? setFieldTouched(name, true, false) : null)}
                 label={t('description.npi_disciplines')}
                 required
                 fullWidth
