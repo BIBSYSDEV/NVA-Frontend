@@ -1,9 +1,9 @@
 import React, { useState, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AccordionActions, AccordionDetails, AccordionSummary, Typography } from '@material-ui/core';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { AccordionActions, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';

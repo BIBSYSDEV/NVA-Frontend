@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
-import { Typography } from '@material-ui/core';
-import SaveIcon from '@material-ui/icons/Save';
+import { Typography } from '@mui/material';
+import SaveIcon from '@mui/icons-material/Save';
 
 import {
   CustomerInstitution,

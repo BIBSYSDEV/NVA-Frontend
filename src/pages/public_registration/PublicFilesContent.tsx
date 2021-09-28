@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import LockIcon from '@material-ui/icons/Lock';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import LockIcon from '@mui/icons-material/Lock';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Accordion, AccordionDetails, AccordionSummary, Button, CircularProgress, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Button, CircularProgress, Typography } from '@mui/material';
 import prettyBytes from 'pretty-bytes';
 import { File, licenses } from '../../types/file.types';
 import { downloadFile } from '../../api/fileApi';

@@ -1,5 +1,5 @@
-import { TextField, TextFieldProps } from '@material-ui/core';
-import { Autocomplete, AutocompleteProps } from '@material-ui/lab';
+import { TextField, TextFieldProps } from '@mui/material';
+import { Autocomplete, AutocompleteProps } from '@mui/material';
 import { Category } from '../../../../types/vocabulary.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
@@ -36,9 +36,9 @@ export const VocabularyAutocomplete = ({
       getOptionLabel={(option) => getLanguageString(option.label)}
       renderOption={renderOption}
       onChange={(event, value, reason, selectedValue) => {
-        if (reason === 'select-option' && selectedValue) {
+        if (reason === 'selectOption' && selectedValue) {
           addValue(selectedValue.option.id);
-        } else if (reason === 'remove-option' && selectedValue) {
+        } else if (reason === 'removeOption' && selectedValue) {
           removeValue(selectedValue.option.id);
         } else if (reason === 'clear') {
           clear();

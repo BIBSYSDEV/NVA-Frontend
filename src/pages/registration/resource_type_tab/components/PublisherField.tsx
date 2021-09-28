@@ -1,8 +1,8 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Chip, MuiThemeProvider, Typography } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
+import { Chip, ThemeProvider, Typography } from '@mui/material';
+import { Autocomplete } from '@mui/material';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
@@ -43,7 +43,7 @@ export const PublisherField = () => {
   });
 
   return (
-    <MuiThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={lightTheme}>
       <Field name={ResourceFieldNames.PubliactionContextPublisherId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
@@ -68,10 +68,10 @@ export const PublisherField = () => {
             disableClearable={!query}
             value={publisher?.id && fetchedPublisher ? [fetchedPublisher] : []}
             onChange={(_, inputValue, reason) => {
-              if (reason === 'select-option') {
+              if (reason === 'selectOption') {
                 setFieldValue(ResourceFieldNames.PubliactionContextPublisherType, 'Publisher', false);
                 setFieldValue(field.name, inputValue.pop()?.id);
-              } else if (reason === 'remove-option') {
+              } else if (reason === 'removeOption') {
                 setFieldValue(ResourceFieldNames.PubliactionContextPublisherType, 'UnconfirmedPublisher', false);
                 setFieldValue(field.name, '');
               }
@@ -79,8 +79,8 @@ export const PublisherField = () => {
             }}
             loading={isLoadingPublisherOptions || isLoadingPublisher}
             getOptionLabel={(option) => option.name}
-            renderOption={(option, state) => (
-              <Typography variant="subtitle1">
+            renderOption={(props, option, state) => (
+              <Typography {...props} variant="subtitle1" component="li">
                 <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
               </Typography>
             )}
@@ -107,6 +107,6 @@ export const PublisherField = () => {
           />
         )}
       </Field>
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 };

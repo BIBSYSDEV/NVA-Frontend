@@ -1,15 +1,7 @@
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  FormControl,
-  FormControlLabel,
-  FormHelperText,
-  FormLabel,
-  Radio,
-  RadioGroup,
-  Typography,
-} from '@material-ui/core';
+import { FormControl, FormControlLabel, FormHelperText, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import styled from 'styled-components';
 import { Registration } from '../../../../../types/registration.types';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';

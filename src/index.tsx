@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
-import { ThemeProvider } from 'styled-components';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { StylesProvider, ThemeProvider as MUIThemeProvider } from '@material-ui/styles';
+import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
+import { StyledEngineProvider, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import { interceptRequestsOnMock } from './api/mock-interceptor';
 import { App } from './App';
 import { store } from './redux/store';
@@ -31,14 +31,14 @@ if ((window as any).Cypress) {
 ReactDOM.render(
   <I18nextProvider i18n={i18n}>
     <Provider store={store}>
-      <StylesProvider injectFirst>
-        <ThemeProvider theme={lightTheme}>
-          <MUIThemeProvider theme={lightTheme}>
+      <StyledEngineProvider injectFirst>
+        <StyledComponentsThemeProvider theme={lightTheme}>
+          <MuiThemeProvider theme={lightTheme}>
             <CssBaseline />
             <App />
-          </MUIThemeProvider>
-        </ThemeProvider>
-      </StylesProvider>
+          </MuiThemeProvider>
+        </StyledComponentsThemeProvider>
+      </StyledEngineProvider>
     </Provider>
   </I18nextProvider>,
   document.getElementById('root')

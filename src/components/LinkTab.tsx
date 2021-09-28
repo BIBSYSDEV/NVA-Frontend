@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Tab, TabProps } from '@material-ui/core';
-import ErrorIcon from '@material-ui/icons/Error';
+import { Tab, TabProps } from '@mui/material';
+import ErrorIcon from '@mui/icons-material/Error';
 import { useTranslation } from 'react-i18next';
 
 const StyledErrorIcon = styled(ErrorIcon)`
@@ -19,7 +19,6 @@ export const LinkTab = ({ error, ...rest }: LinkTabProps) => {
   return (
     <Tab
       {...rest}
-      tabIndex="0" // Allow navigating to tab with both arrows and Tab
       icon={error ? <StyledErrorIcon data-testid="error-tab" titleAccess={t('validation_errors')} /> : undefined}
     />
   );

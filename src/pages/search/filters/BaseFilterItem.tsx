@@ -1,6 +1,6 @@
-import { ListItem, Collapse, List, ListItemText, Typography } from '@material-ui/core';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+import { ListItem, Collapse, List, ListItemText, Typography } from '@mui/material';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 import { ReactNode, useState } from 'react';
 import styled from 'styled-components';
 import { useIsMobile } from '../../../utils/hooks/useIsMobile';

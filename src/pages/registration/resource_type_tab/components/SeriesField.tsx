@@ -1,8 +1,8 @@
 import { useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Chip, MuiThemeProvider, Typography } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
+import { Chip, ThemeProvider, Typography } from '@mui/material';
+import { Autocomplete } from '@mui/material';
 import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
@@ -49,7 +49,7 @@ export const SeriesField = () => {
   });
 
   return (
-    <MuiThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={lightTheme}>
       <Autocomplete
         {...autocompleteTranslationProps}
         multiple
@@ -69,10 +69,10 @@ export const SeriesField = () => {
         disableClearable={!query}
         value={series?.id && journal ? [journal] : []}
         onChange={(_, inputValue, reason) => {
-          if (reason === 'select-option') {
+          if (reason === 'selectOption') {
             setFieldValue(ResourceFieldNames.SeriesType, 'Series');
             setFieldValue(ResourceFieldNames.SeriesId, inputValue.pop()?.id);
-          } else if (reason === 'remove-option') {
+          } else if (reason === 'removeOption') {
             setFieldValue(ResourceFieldNames.SeriesType, 'UnconfirmedSeries');
             setFieldValue(ResourceFieldNames.SeriesId, '');
           }
@@ -80,20 +80,22 @@ export const SeriesField = () => {
         }}
         loading={isLoadingJournalOptions || isLoadingJournal}
         getOptionLabel={(option) => option.name}
-        renderOption={(option, state) => (
-          <StyledFlexColumn>
-            <Typography variant="subtitle1">
-              <EmphasizeSubstring
-                text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
-                emphasized={state.inputValue}
-              />
-            </Typography>
-            {option.level && (
-              <Typography variant="body2" color="textSecondary">
-                {t('resource_type.level')}: {option.level}
+        renderOption={(props, option, state) => (
+          <li {...props}>
+            <StyledFlexColumn>
+              <Typography variant="subtitle1">
+                <EmphasizeSubstring
+                  text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
+                  emphasized={state.inputValue}
+                />
               </Typography>
-            )}
-          </StyledFlexColumn>
+              {option.level && (
+                <Typography variant="body2" color="textSecondary">
+                  {t('resource_type.level')}: {option.level}
+                </Typography>
+              )}
+            </StyledFlexColumn>
+          </li>
         )}
         renderTags={(value, getTagProps) =>
           value.map((option, index) => (
@@ -123,6 +125,6 @@ export const SeriesField = () => {
           />
         )}
       />
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 };

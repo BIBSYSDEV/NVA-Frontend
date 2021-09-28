@@ -58,6 +58,16 @@
     "confirm_remove_vocabulary_text": "Er du sikker på at du ønsker å fjerne vokabular for {{vocabulary}}?",
     "confirm_remove_vocabulary_title": "Fjern vokabular?",
     "connect_project": "Koble til prosjekt",
+    "date_picker": {
+      "choose_date": "Velg dato",
+      "open_dialog": "Velg dato, valgt dato er {{date}}",
+      "go_to_calendar_view": "Visning av år er åpen, bytt til kalendervisning",
+      "go_to_year_view": "Kalendervisning er åpen, bytt til visning av år",
+      "next_month": "Neste måned",
+      "previous_month": "Forrige måned",
+      "select_date": "Velg dato",
+      "today": "I dag"
+    },
     "date_published": "Publiseringsdato",
     "description": "Beskrivelse",
     "description_of_content": "Beskrivelse av innhold, hvis relevant",

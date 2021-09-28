@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Link as MuiLink, Typography } from '@material-ui/core';
+import { Link as MuiLink, Typography } from '@mui/material';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { StyledCenteredContent } from '../../components/styled/Wrappers';
 

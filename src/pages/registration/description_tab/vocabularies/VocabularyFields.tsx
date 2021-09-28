@@ -1,15 +1,14 @@
-import { Button, Menu, MenuItem, Typography } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import { Button, Menu, MenuItem, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
-import { DangerButton } from '../../../../components/DangerButton';
 import { HrcsActivityInput } from './HrcsActivityInput';
 import { HrcsCategoryInput } from './HrcsCategoryInput';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { Registration } from '../../../../types/registration.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { VocabularyComponentProps } from './VocabularyAutocomplete';
@@ -19,7 +18,7 @@ const StyledAddButton = styled(Button)`
   margin-top: 1rem;
 `;
 
-const StyledRemoveButton = styled(DangerButton)`
+const StyledRemoveButton = styled(Button)`
   margin-top: 1rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     margin-top: 0.5rem;
@@ -98,6 +97,7 @@ export const VocabularyFields = () => {
                     }
                   />
                   <StyledRemoveButton
+                    color="error"
                     startIcon={<RemoveCircleIcon />}
                     onClick={() => setVocabularyToRemove(vocabulary)}>
                     {t('description.remove_vocabulary')}

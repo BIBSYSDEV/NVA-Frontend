@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { CircularProgress, TextField, TextFieldProps } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { CircularProgress, TextField, TextFieldProps } from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
 import { autocompleteTranslationProps } from '../../themes/lightTheme';
 import { InstitutionUnitBase } from '../../types/institution.types';
 import { sortInstitutionsAlphabetically } from '../../utils/institutions-helpers';
@@ -37,7 +37,7 @@ export const InstitutionAutocomplete = ({
       disabled={disabled}
       options={sortInstitutionsAlphabetically(institutions)}
       getOptionLabel={(option) => option.name}
-      getOptionSelected={(option, value) => option.id === value.id}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
       value={value}
       filterOptions={(options, state) => {
         const inputValue = state.inputValue.toLowerCase();

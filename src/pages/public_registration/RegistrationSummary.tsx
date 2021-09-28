@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link, Typography } from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
+import { Link, Typography } from '@mui/material';
+import { Skeleton } from '@mui/material';
 import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SearchFieldName } from '../../types/search.types';

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Button, Typography } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import { Button, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import {
   addQualifierIdForAuthority,
   AuthorityQualifiers,

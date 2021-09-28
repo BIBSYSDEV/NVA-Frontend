@@ -12,10 +12,11 @@ import {
   TableRow,
   Tooltip,
   Typography,
-} from '@material-ui/core';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import { Skeleton } from '@material-ui/lab';
+} from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { Skeleton } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import { lightTheme } from '../../../themes/lightTheme';
@@ -57,7 +58,7 @@ export const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, sele
         <TableContainer>
           <Table size="medium">
             <caption>
-              <Typography variant="srOnly">{t('registration:contributors.authors')}</Typography>
+              <span style={visuallyHidden}>{t('registration:contributors.authors')}</span>
             </caption>
             <TableHead>
               <TableRow>
