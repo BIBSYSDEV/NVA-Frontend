@@ -1,7 +1,7 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Chip, ThemeProvider, StyledEngineProvider, Typography } from '@mui/material';
+import { Chip, ThemeProvider, Typography } from '@mui/material';
 import { Autocomplete } from '@mui/material';
 import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
@@ -50,93 +50,89 @@ export const JournalField = () => {
   });
 
   return (
-    <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={lightTheme}>
-        <Field name={ResourceFieldNames.PubliactionContextId}>
-          {({ field, meta }: FieldProps<string>) => (
-            <Autocomplete
-              {...autocompleteTranslationProps}
-              multiple
-              id={journalFieldTestId}
-              data-testid={journalFieldTestId}
-              aria-labelledby={`${journalFieldTestId}-label`}
-              popupIcon={null}
-              options={
-                debouncedQuery && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : []
+    <ThemeProvider theme={lightTheme}>
+      <Field name={ResourceFieldNames.PubliactionContextId}>
+        {({ field, meta }: FieldProps<string>) => (
+          <Autocomplete
+            {...autocompleteTranslationProps}
+            multiple
+            id={journalFieldTestId}
+            data-testid={journalFieldTestId}
+            aria-labelledby={`${journalFieldTestId}-label`}
+            popupIcon={null}
+            options={debouncedQuery && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : []}
+            filterOptions={(options) => options}
+            inputValue={query}
+            onInputChange={(_, newInputValue, reason) => {
+              if (reason !== 'reset') {
+                setQuery(newInputValue);
               }
-              filterOptions={(options) => options}
-              inputValue={query}
-              onInputChange={(_, newInputValue, reason) => {
-                if (reason !== 'reset') {
-                  setQuery(newInputValue);
-                }
-              }}
-              onBlur={() => setFieldTouched(field.name, true, false)}
-              blurOnSelect
-              disableClearable={!query}
-              value={publicationContext.id && journal ? [journal] : []}
-              onChange={(_, inputValue, reason) => {
-                if (reason === 'selectOption') {
-                  setFieldValue(ResourceFieldNames.PubliactionContextType, 'Journal', false);
-                  setFieldValue(field.name, inputValue.pop()?.id);
-                } else if (reason === 'removeOption') {
-                  setFieldValue(ResourceFieldNames.PubliactionContextType, 'UnconfirmedJournal', false);
-                  setFieldValue(field.name, '');
-                }
-                setQuery('');
-              }}
-              loading={isLoadingJournalOptions || isLoadingJournal}
-              getOptionLabel={(option) => option.name}
-              renderOption={(props, option, state) => (
-                <li {...props}>
-                  <StyledFlexColumn>
-                    <Typography variant="subtitle1">
-                      <EmphasizeSubstring
-                        text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
-                        emphasized={state.inputValue}
-                      />
+            }}
+            onBlur={() => setFieldTouched(field.name, true, false)}
+            blurOnSelect
+            disableClearable={!query}
+            value={publicationContext.id && journal ? [journal] : []}
+            onChange={(_, inputValue, reason) => {
+              if (reason === 'selectOption') {
+                setFieldValue(ResourceFieldNames.PubliactionContextType, 'Journal', false);
+                setFieldValue(field.name, inputValue.pop()?.id);
+              } else if (reason === 'removeOption') {
+                setFieldValue(ResourceFieldNames.PubliactionContextType, 'UnconfirmedJournal', false);
+                setFieldValue(field.name, '');
+              }
+              setQuery('');
+            }}
+            loading={isLoadingJournalOptions || isLoadingJournal}
+            getOptionLabel={(option) => option.name}
+            renderOption={(props, option, state) => (
+              <li {...props}>
+                <StyledFlexColumn>
+                  <Typography variant="subtitle1">
+                    <EmphasizeSubstring
+                      text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
+                      emphasized={state.inputValue}
+                    />
+                  </Typography>
+                  {option.level && (
+                    <Typography variant="body2" color="textSecondary">
+                      {t('resource_type.level')}: {option.level}
                     </Typography>
-                    {option.level && (
+                  )}
+                </StyledFlexColumn>
+              </li>
+            )}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
+                <StyledChip
+                  {...getTagProps({ index })}
+                  data-testid={dataTestId.registrationWizard.resourceType.journalChip}
+                  label={
+                    <>
+                      <Typography variant="subtitle1">
+                        {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
+                      </Typography>
                       <Typography variant="body2" color="textSecondary">
                         {t('resource_type.level')}: {option.level}
                       </Typography>
-                    )}
-                  </StyledFlexColumn>
-                </li>
-              )}
-              renderTags={(value, getTagProps) =>
-                value.map((option, index) => (
-                  <StyledChip
-                    {...getTagProps({ index })}
-                    data-testid={dataTestId.registrationWizard.resourceType.journalChip}
-                    label={
-                      <>
-                        <Typography variant="subtitle1">
-                          {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary">
-                          {t('resource_type.level')}: {option.level}
-                        </Typography>
-                      </>
-                    }
-                  />
-                ))
-              }
-              renderInput={(params) => (
-                <AutocompleteTextField
-                  {...params}
-                  required
-                  label={t('resource_type.journal')}
-                  isLoading={isLoadingJournalOptions || isLoadingJournal}
-                  placeholder={!publicationContext.id ? t('resource_type.search_for_journal') : ''}
-                  showSearchIcon={!publicationContext.id}
-                  errorMessage={meta.touched && !!meta.error ? meta.error : ''}
+                    </>
+                  }
                 />
-              )}
-            />
-          )}
-        </Field>
-      </ThemeProvider>
-    </StyledEngineProvider>
+              ))
+            }
+            renderInput={(params) => (
+              <AutocompleteTextField
+                {...params}
+                required
+                label={t('resource_type.journal')}
+                isLoading={isLoadingJournalOptions || isLoadingJournal}
+                placeholder={!publicationContext.id ? t('resource_type.search_for_journal') : ''}
+                showSearchIcon={!publicationContext.id}
+                errorMessage={meta.touched && !!meta.error ? meta.error : ''}
+              />
+            )}
+          />
+        )}
+      </Field>
+    </ThemeProvider>
   );
 };

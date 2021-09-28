@@ -2,7 +2,7 @@ import { useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { ThemeProvider, StyledEngineProvider, TextField, Typography, Button } from '@mui/material';
+import { ThemeProvider, TextField, Typography, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
@@ -55,18 +55,16 @@ export const DoiField = () => {
           {t('resource_type.remove_doi')}
         </Button>
       )}
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={lightTheme}>
-          <ConfirmDialog
-            open={openConfirmDialog}
-            title={t('resource_type.remove_doi')}
-            onAccept={removeDoi}
-            onCancel={toggleConfirmDialog}
-            dataTestId="confirm-delete-doi-dialog">
-            <StyledTypography>{t('resource_type.remove_doi_text')}</StyledTypography>
-          </ConfirmDialog>
-        </ThemeProvider>
-      </StyledEngineProvider>
+      <ThemeProvider theme={lightTheme}>
+        <ConfirmDialog
+          open={openConfirmDialog}
+          title={t('resource_type.remove_doi')}
+          onAccept={removeDoi}
+          onCancel={toggleConfirmDialog}
+          dataTestId="confirm-delete-doi-dialog">
+          <StyledTypography>{t('resource_type.remove_doi_text')}</StyledTypography>
+        </ConfirmDialog>
+      </ThemeProvider>
     </StyledDoiRow>
   ) : null;
 };

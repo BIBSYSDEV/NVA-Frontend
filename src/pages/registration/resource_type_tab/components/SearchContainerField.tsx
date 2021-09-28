@@ -1,6 +1,6 @@
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
 import React, { useState } from 'react';
-import { Chip, ThemeProvider, StyledEngineProvider, Typography } from '@mui/material';
+import { Chip, ThemeProvider, Typography } from '@mui/material';
 import { Autocomplete } from '@mui/material';
 import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
@@ -51,91 +51,85 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
       : null;
 
   return (
-    <>
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={lightTheme}>
-          <Field name={props.fieldName}>
-            {({ field, meta }: FieldProps<string>) => (
-              <>
-                <Autocomplete
-                  {...autocompleteTranslationProps}
-                  multiple
-                  id={props.dataTestId}
-                  data-testid={props.dataTestId}
-                  aria-labelledby={`${props.dataTestId}-label`}
-                  popupIcon={null}
-                  options={
-                    query === debouncedQuery && !isLoadingSearchContainerOptions
-                      ? searchContainerOptions?.hits ?? []
-                      : []
-                  }
-                  filterOptions={(options) => options}
-                  inputValue={query}
-                  onInputChange={(_, newInputValue, reason) => {
-                    if (reason !== 'reset') {
-                      setQuery(newInputValue);
-                    }
-                  }}
-                  onBlur={() => setFieldTouched(field.name, true, false)}
-                  blurOnSelect
-                  disableClearable={!query}
-                  value={field.value && selectedContainer ? [selectedContainer] : []}
-                  onChange={(_, inputValue, reason) => {
-                    if (reason === 'selectOption') {
-                      setFieldValue(field.name, `${API_URL}${getRegistrationPath(inputValue.pop()?.id)}`);
-                    } else if (reason === 'removeOption') {
-                      setFieldValue(field.name, undefined);
-                    }
-                    setQuery('');
-                  }}
-                  loading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
-                  getOptionLabel={(option) => option.title}
-                  renderOption={(props, option, state) => (
-                    <li {...props}>
-                      <StyledFlexColumn>
-                        <Typography variant="subtitle1">
-                          <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
-                        </Typography>
+    <ThemeProvider theme={lightTheme}>
+      <Field name={props.fieldName}>
+        {({ field, meta }: FieldProps<string>) => (
+          <>
+            <Autocomplete
+              {...autocompleteTranslationProps}
+              multiple
+              id={props.dataTestId}
+              data-testid={props.dataTestId}
+              aria-labelledby={`${props.dataTestId}-label`}
+              popupIcon={null}
+              options={
+                query === debouncedQuery && !isLoadingSearchContainerOptions ? searchContainerOptions?.hits ?? [] : []
+              }
+              filterOptions={(options) => options}
+              inputValue={query}
+              onInputChange={(_, newInputValue, reason) => {
+                if (reason !== 'reset') {
+                  setQuery(newInputValue);
+                }
+              }}
+              onBlur={() => setFieldTouched(field.name, true, false)}
+              blurOnSelect
+              disableClearable={!query}
+              value={field.value && selectedContainer ? [selectedContainer] : []}
+              onChange={(_, inputValue, reason) => {
+                if (reason === 'selectOption') {
+                  setFieldValue(field.name, `${API_URL}${getRegistrationPath(inputValue.pop()?.id)}`);
+                } else if (reason === 'removeOption') {
+                  setFieldValue(field.name, undefined);
+                }
+                setQuery('');
+              }}
+              loading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
+              getOptionLabel={(option) => option.title}
+              renderOption={(props, option, state) => (
+                <li {...props}>
+                  <StyledFlexColumn>
+                    <Typography variant="subtitle1">
+                      <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {getDescriptionText(option.publicationDate, option.contributors)}
+                    </Typography>
+                  </StyledFlexColumn>
+                </li>
+              )}
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <StyledChip
+                    {...getTagProps({ index })}
+                    data-testid={dataTestId.registrationWizard.resourceType.journalChip}
+                    label={
+                      <>
+                        <Typography variant="subtitle1">{option.title}</Typography>
                         <Typography variant="body2" color="textSecondary">
                           {getDescriptionText(option.publicationDate, option.contributors)}
                         </Typography>
-                      </StyledFlexColumn>
-                    </li>
-                  )}
-                  renderTags={(value, getTagProps) =>
-                    value.map((option, index) => (
-                      <StyledChip
-                        {...getTagProps({ index })}
-                        data-testid={dataTestId.registrationWizard.resourceType.journalChip}
-                        label={
-                          <>
-                            <Typography variant="subtitle1">{option.title}</Typography>
-                            <Typography variant="body2" color="textSecondary">
-                              {getDescriptionText(option.publicationDate, option.contributors)}
-                            </Typography>
-                          </>
-                        }
-                      />
-                    ))
-                  }
-                  renderInput={(params) => (
-                    <AutocompleteTextField
-                      {...params}
-                      required
-                      label={props.label}
-                      isLoading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
-                      placeholder={!field.value ? props.placeholder : ''}
-                      showSearchIcon={!field.value}
-                      errorMessage={meta.touched && !!meta.error ? meta.error : ''}
-                    />
-                  )}
+                      </>
+                    }
+                  />
+                ))
+              }
+              renderInput={(params) => (
+                <AutocompleteTextField
+                  {...params}
+                  required
+                  label={props.label}
+                  isLoading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
+                  placeholder={!field.value ? props.placeholder : ''}
+                  showSearchIcon={!field.value}
+                  errorMessage={meta.touched && !!meta.error ? meta.error : ''}
                 />
-              </>
-            )}
-          </Field>
-        </ThemeProvider>
-      </StyledEngineProvider>
-    </>
+              )}
+            />
+          </>
+        )}
+      </Field>
+    </ThemeProvider>
   );
 };
 

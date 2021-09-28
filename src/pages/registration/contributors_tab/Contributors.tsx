@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, ThemeProvider, StyledEngineProvider, Typography } from '@mui/material';
+import { Button, ThemeProvider, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import { Pagination } from '@mui/material';
 import { setNotification } from '../../../redux/actions/notificationActions';
@@ -177,30 +177,28 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   return (
     <div data-testid={contributorRole}>
       <Typography variant="h2">{getContributorHeading(contributorRole)}</Typography>
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={lightTheme}>
-          {((isMobile && contributorsToShow.length >= 2) || (!isMobile && contributorsToShow.length >= 5)) &&
-            addContributorButton}
+      <ThemeProvider theme={lightTheme}>
+        {((isMobile && contributorsToShow.length >= 2) || (!isMobile && contributorsToShow.length >= 5)) &&
+          addContributorButton}
 
-          <ContributorList
-            contributors={contributorsToShow}
-            onDelete={handleOnRemove}
-            onMoveContributor={handleMoveContributor}
-            openContributorModal={handleOpenContributorModal}
-            showContributorRole={contributorRoles.length > 1}
-            contributorsLength={relevantContributors.length}
-          />
+        <ContributorList
+          contributors={contributorsToShow}
+          onDelete={handleOnRemove}
+          onMoveContributor={handleMoveContributor}
+          openContributorModal={handleOpenContributorModal}
+          showContributorRole={contributorRoles.length > 1}
+          contributorsLength={relevantContributors.length}
+        />
 
-          <AddContributorModal
-            contributorRoles={contributorRoles}
-            contributorRole={contributorRole}
-            initialSearchTerm={unverifiedContributor?.name}
-            open={openContributorModal}
-            toggleModal={() => setOpenContributorModal(!openContributorModal)}
-            onContributorSelected={onContributorSelected}
-          />
-        </ThemeProvider>
-      </StyledEngineProvider>
+        <AddContributorModal
+          contributorRoles={contributorRoles}
+          contributorRole={contributorRole}
+          initialSearchTerm={unverifiedContributor?.name}
+          open={openContributorModal}
+          toggleModal={() => setOpenContributorModal(!openContributorModal)}
+          onContributorSelected={onContributorSelected}
+        />
+      </ThemeProvider>
       {relevantContributors.length > contributorsPerPage && (
         <StyledPagination
           variant="outlined"
