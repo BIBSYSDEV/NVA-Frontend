@@ -9,6 +9,7 @@ import { lightTheme, datePickerTranslationProps } from '../../../themes/lightThe
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { Registration, RegistrationDate } from '../../../types/registration.types';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   margin-left: 0.5rem;
@@ -57,11 +58,10 @@ export const DatePickerField = () => {
 
   return (
     <>
-      <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
-        <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={lightTheme}>
+        <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
           <DatePicker
             {...datePickerTranslationProps}
-            data-testid="date-published-field"
             label={t('description.date_published')}
             value={date}
             onChange={onChangeDate}
@@ -72,6 +72,7 @@ export const DatePickerField = () => {
             renderInput={(params) => (
               <TextField
                 {...params}
+                data-testid={dataTestId.registrationWizard.description.datePublishedField}
                 variant="filled"
                 required
                 onBlur={() =>
@@ -82,10 +83,10 @@ export const DatePickerField = () => {
               />
             )}
           />
-        </ThemeProvider>
-      </LocalizationProvider>
+        </LocalizationProvider>
+      </ThemeProvider>
       <StyledFormControlLabel
-        control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} color="primary" />}
+        control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} />}
         label={<Typography>{t('description.year_only')}</Typography>}
       />
     </>

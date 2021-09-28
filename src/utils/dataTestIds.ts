@@ -60,11 +60,13 @@ export const dataTestId = {
   registrationWizard: {
     description: {
       addVocabularyButton: 'add-vocabulary-button',
+      datePublishedField: 'date-published-field',
       vocabularyMenuItem: (vocabulary: string) => `vocabulary-menu-item-${vocabulary}`,
       vocabularyRow: (vocabulary: string) => `vocabulary-row-${vocabulary}`,
     },
     files: {
       administrativeAgreement: 'administrative-agreement-checkbox',
+      embargoDateField: 'embargo-date-field',
       version: 'version-radios',
     },
     resourceType: {

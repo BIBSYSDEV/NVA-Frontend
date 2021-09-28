@@ -151,7 +151,6 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                     <DatePicker
                       {...datePickerTranslationProps}
                       {...field}
-                      data-testid="date-published-field"
                       label={t('description.date_published')}
                       value={field.value ?? null}
                       onChange={(value) => setFieldValue(field.name, value)}
@@ -162,6 +161,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                       renderInput={(params) => (
                         <TextField
                           {...params}
+                          data-testid={dataTestId.registrationWizard.files.embargoDateField}
                           variant="filled"
                           onBlur={() => !touched && setFieldTouched(field.name)}
                           error={!!error && touched}
