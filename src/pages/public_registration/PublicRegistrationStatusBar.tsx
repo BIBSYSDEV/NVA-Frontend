@@ -9,7 +9,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import { useTranslation } from 'react-i18next';
 import { validateYupSchema, yupToFormErrors } from 'formik';
-
+import { Link as RouterLink } from 'react-router-dom';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { PublicRegistrationProps } from './PublicRegistrationContent';
 import { Modal } from '../../components/Modal';
@@ -152,7 +152,8 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             <Button
               variant="contained"
               color="inherit"
-              href={`${editRegistrationUrl}?tab=${firstErrorTab}`}
+              component={RouterLink}
+              to={`${editRegistrationUrl}?tab=${firstErrorTab}`}
               endIcon={<EditIcon />}
               data-testid={dataTestId.registrationLandingPage.backToWizard}>
               {t('public_page.go_back_to_wizard')}
@@ -193,7 +194,8 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           )}
 
           <Button
-            href={editRegistrationUrl}
+            component={RouterLink}
+            to={editRegistrationUrl}
             variant="outlined"
             color="secondary"
             endIcon={<EditIcon />}
