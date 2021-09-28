@@ -44,6 +44,9 @@ export const darkTheme = createTheme(lightTheme, {
       styleOverrides: {
         root: {
           color: Color.White,
+          '&.Mui-focused': {
+            color: Color.White,
+          },
         },
       },
     },

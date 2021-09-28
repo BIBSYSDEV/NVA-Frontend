@@ -20,6 +20,7 @@ const MaskIsbnInput = forwardRef<HTMLElement, MaskIsbnInputProps>((props, ref) =
     <IMaskInput
       {...other}
       mask={isbnFormat}
+      inputRef={ref}
       onAccept={(value) => onChange({ target: { name: other.name, value: value.replaceAll('-', '') } })}
     />
   );
