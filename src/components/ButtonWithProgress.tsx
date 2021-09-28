@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, CircularProgress, ButtonProps } from '@material-ui/core';
+import { Button, CircularProgress, ButtonProps } from '@mui/material';
 import styled from 'styled-components';
 
 const StyledProgressContainer = styled.div`

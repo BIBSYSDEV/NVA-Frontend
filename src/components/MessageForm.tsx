@@ -3,8 +3,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import i18n from '../translations/i18n';
 import * as Yup from 'yup';
-import { Button, DialogActions, TextField } from '@material-ui/core';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import { Button, DialogActions, TextField } from '@mui/material';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { ButtonWithProgress } from './ButtonWithProgress';
 
 interface MessageFormProps {

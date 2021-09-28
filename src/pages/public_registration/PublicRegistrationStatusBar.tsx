@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, DialogActions, TextField, Typography } from '@material-ui/core';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import EditIcon from '@material-ui/icons/Edit';
-import CloseIcon from '@material-ui/icons/Close';
-import CheckIcon from '@material-ui/icons/Check';
-import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import { Button, DialogActions, TextField, Typography } from '@mui/material';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
+import CheckIcon from '@mui/icons-material/Check';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import { useTranslation } from 'react-i18next';
 import { validateYupSchema, yupToFormErrors } from 'formik';
 
@@ -151,6 +151,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           actions={
             <Button
               variant="contained"
+              color="inherit"
               href={`${editRegistrationUrl}?tab=${firstErrorTab}`}
               endIcon={<EditIcon />}
               data-testid={dataTestId.registrationLandingPage.backToWizard}>

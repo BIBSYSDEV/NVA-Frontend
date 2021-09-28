@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { TextField } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import Autocomplete from '@mui/material/Autocomplete';
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import disciplines from '../../../../resources/disciplines.json';
@@ -50,7 +50,7 @@ export const NpiDisciplineField = () => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                onBlur={() => (!touched ? setFieldTouched(name) : null)}
+                onBlur={() => (!touched ? setFieldTouched(name, true, false) : null)}
                 label={t('description.npi_disciplines')}
                 required
                 fullWidth

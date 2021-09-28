@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chip, Typography } from '@material-ui/core';
+import { Chip, Typography } from '@mui/material';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';

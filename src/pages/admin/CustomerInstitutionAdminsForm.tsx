@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Button, MuiThemeProvider, Typography } from '@material-ui/core';
+import { Button, ThemeProvider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@mui/icons-material/Add';
 
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import { filterUsersByRole } from '../../utils/role-helpers';
@@ -58,7 +58,7 @@ export const CustomerInstitutionAdminsForm = ({
         </>
       )}
 
-      <MuiThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={lightTheme}>
         <Modal
           open={openAddAdminModal}
           onClose={toggleOpenAddAdminModal}
@@ -72,7 +72,7 @@ export const CustomerInstitutionAdminsForm = ({
             tableCaption={t('users.add_institution_admin')}
           />
         </Modal>
-      </MuiThemeProvider>
+      </ThemeProvider>
     </BackgroundDiv>
   );
 };

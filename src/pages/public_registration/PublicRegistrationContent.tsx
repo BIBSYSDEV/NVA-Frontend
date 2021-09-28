@@ -2,7 +2,7 @@ import deepmerge from 'deepmerge';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { ItalicPageHeader } from '../../components/PageHeader';
 import { emptyRegistration, Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';

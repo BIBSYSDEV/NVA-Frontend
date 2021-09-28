@@ -256,14 +256,14 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=uploaded-file-select-license] p.Mui-error').should('not.exist');
 
     // Embargo field
-    cy.get('[data-testid=uploaded-file-embargo-date]')
+    cy.get(`[data-testid=${dataTestId.registrationWizard.files.embargoDateField}]`)
       .parent()
       .within(() => {
-        cy.get("input[type='text']").click({ force: true }).type('0101', { force: true }).blur();
+        cy.get("input").click({ force: true }).type('0101', { force: true }).blur();
         cy.get('p.Mui-error').should('be.visible');
-        cy.get("input[type='text']").click({ force: true }).type('2000', { force: true });
+        cy.get("input").click({ force: true }).type('2000', { force: true });
         cy.get('p.Mui-error').should('be.visible');
-        cy.get("input[type='text']").clear().click({ force: true }).type('01013000', { force: true });
+        cy.get("input").clear().click({ force: true }).type('01013000', { force: true });
         cy.get('p.Mui-error').should('not.exist');
       });
 

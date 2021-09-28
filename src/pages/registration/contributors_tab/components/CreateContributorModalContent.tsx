@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, Collapse, DialogActions, TextField } from '@material-ui/core';
+import { Button, Collapse, DialogActions, TextField } from '@mui/material';
 import { createAuthority } from '../../../../api/authorityApi';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { StyledTypographyPreWrapped, StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';

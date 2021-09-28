@@ -1,11 +1,13 @@
-import { createTheme } from '@material-ui/core';
-import { PaletteColor, PaletteColorOptions, SimplePaletteColorOptions } from '@material-ui/core/styles/createPalette';
+import { CalendarPickerView } from '@mui/lab';
+import { ParseableDate } from '@mui/lab/internal/pickers/constants/prop-types';
+import { createTheme } from '@mui/material';
+import { PaletteColor, PaletteColorOptions, SimplePaletteColorOptions } from '@mui/material/styles';
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
 import { Color } from './colors';
 
 // Extend Palette type to allow custom colors
-declare module '@material-ui/core/styles/createPalette' {
+declare module '@mui/material/styles/createPalette' {
   interface Palette {
     box: PaletteColor;
     section: ExtendedPalette;
@@ -120,124 +122,153 @@ export const lightTheme = createTheme({
       fontSize: '0.875rem',
     },
   },
-  overrides: {
+  components: {
     MuiAccordion: {
-      root: {
-        background: Color.Panel,
+      styleOverrides: {
+        root: {
+          background: Color.Panel,
+        },
       },
     },
     MuiAppBar: {
-      root: { background: Color.Header },
+      styleOverrides: {
+        root: {
+          background: Color.Header,
+        },
+        colorPrimary: {
+          color: Color.PrimaryText,
+        },
+      },
     },
     MuiButton: {
-      outlinedSecondary: {
-        color: Color.PrimaryText,
-      },
-      containedSecondary: {
-        '&:disabled': {
-          background: Color.SecondaryLight,
+      styleOverrides: {
+        outlinedSecondary: {
+          color: Color.PrimaryText,
+        },
+        containedSecondary: {
+          '&:disabled': {
+            background: Color.SecondaryLight,
+          },
         },
       },
     },
     MuiCard: {
-      root: {
-        backgroundColor: Color.Box,
+      styleOverrides: {
+        root: {
+          backgroundColor: Color.Box,
+        },
       },
     },
     MuiInputBase: {
-      root: {
-        background: Color.White,
+      styleOverrides: {
+        root: {
+          background: Color.White,
 
-        "& div[class*='MuiAutocomplete-tag']": {
-          // TODO: Set this in overrides.MuiAutocomplete.tag when Autocomplete is added to MUI core
-          margin: '0.5rem 0 !important',
-          '&:not(:last-child)': {
-            marginRight: '0.5rem !important',
+          "& div[class*='MuiAutocomplete-tag']": {
+            // TODO: Set this in overrides.MuiAutocomplete.tag when Autocomplete is added to MUI core
+            margin: '0.5rem 0 !important',
+            '&:not(:last-child)': {
+              marginRight: '0.5rem !important',
+            },
           },
         },
       },
     },
     MuiLink: {
-      root: {
-        color: Color.PrimaryText,
-      },
-      underlineHover: {
-        textDecoration: 'underline',
-        textDecorationColor: Color.SecondaryMain,
+      styleOverrides: {
+        root: {
+          color: Color.PrimaryText,
+        },
+        underlineAlways: {
+          textDecorationColor: Color.SecondaryMain,
+        },
       },
     },
     MuiTab: {
-      wrapper: {
-        flexDirection: 'row-reverse',
-      },
-      labelIcon: {
-        minHeight: undefined,
-        paddingTop: undefined,
-      },
-      textColorPrimary: {
-        '&$selected': {
-          color: Color.PrimaryText,
-          fontWeight: 'bold',
+      styleOverrides: {
+        root: {
+          flexDirection: 'row-reverse',
         },
+        textColorPrimary: {
+          '&.Mui-selected': {
+            color: Color.PrimaryText,
+            fontWeight: 'bold',
+          },
+        },
+      },
+    },
+    MuiTablePagination: {
+      defaultProps: {
+        labelRowsPerPage: i18n.t('common:table_pagination.rows_per_page'),
+        labelDisplayedRows: ({ from, to, count }) => getTranslatedLabelForDisplayedRows(from, to, count),
+        backIconButtonProps: { title: i18n.t('common:table_pagination.previous_page') },
+        nextIconButtonProps: { title: i18n.t('common:table_pagination.next_page') },
       },
     },
     MuiTextField: {
-      root: {
-        marginTop: '1rem',
+      styleOverrides: {
+        root: {
+          marginTop: '1rem',
+        },
+      },
+    },
+    MuiTypography: {
+      defaultProps: {
+        color: 'textPrimary',
       },
     },
     MuiFormLabel: {
-      asterisk: {
-        fontWeight: 'bold',
-        color: Color.ErrorMain,
-      },
-      root: {
-        color: Color.Black,
-        '&.Mui-focused': {
-          color: Color.Black,
-        },
-        '&.Mui-error': {
+      styleOverrides: {
+        asterisk: {
+          fontWeight: 'bold',
           color: Color.ErrorMain,
+        },
+        root: {
+          color: Color.Black,
+          '&.Mui-focused': {
+            color: Color.Black,
+          },
+          '&.Mui-error': {
+            color: Color.ErrorMain,
+          },
         },
       },
     },
     MuiFilledInput: {
-      root: {
-        backgroundColor: Color.White,
-        '&.Mui-focused': {
+      styleOverrides: {
+        root: {
           backgroundColor: Color.White,
-        },
-        '&:hover': {
-          backgroundColor: Color.White,
+          '&.Mui-focused': {
+            backgroundColor: Color.White,
+          },
+          '&:hover': {
+            backgroundColor: Color.White,
+          },
         },
       },
     },
     MuiFormHelperText: {
-      root: {
-        color: Color.Black,
-        '&.Mui-error': {
+      styleOverrides: {
+        root: {
           color: Color.Black,
-          backgroundColor: Color.ErrorLight,
-          margin: 0,
-          padding: '0.25rem 0.75rem',
+          '&.Mui-error': {
+            color: Color.Black,
+            backgroundColor: Color.ErrorLight,
+            margin: 0,
+            padding: '0.25rem 0.75rem',
+          },
         },
       },
     },
     MuiMenuItem: {
-      gutters: {
-        paddingRight: '2rem',
+      styleOverrides: {
+        root: {
+          color: Color.Black,
+        },
+        gutters: {
+          paddingRight: '2rem',
+        },
       },
-    },
-  },
-  props: {
-    MuiTypography: {
-      color: 'textPrimary',
-    },
-    MuiTablePagination: {
-      labelRowsPerPage: i18n.t('common:table_pagination.rows_per_page'),
-      labelDisplayedRows: ({ from, to, count }) => getTranslatedLabelForDisplayedRows(from, to, count),
-      backIconButtonText: i18n.t('common:table_pagination.previous_page'),
-      nextIconButtonText: i18n.t('common:table_pagination.next_page'),
     },
   },
 });
@@ -252,8 +283,25 @@ export const autocompleteTranslationProps = {
 };
 
 export const datePickerTranslationProps = {
-  cancelLabel: i18n.t('common:cancel'),
-  okLabel: i18n.t('common:select'),
+  cancelText: i18n.t('common:cancel'),
+  clearText: i18n.t('common:clear'),
+  getOpenDialogAriaText: (value: ParseableDate<Date | null>) =>
+    value
+      ? i18n.t('registration:description.date_picker.open_dialog', { date: new Date(value).toLocaleDateString() })
+      : i18n.t('registration:description.date_picker.choose_date'),
+  getViewSwitchingButtonText: (currentView: CalendarPickerView) => {
+    switch (currentView) {
+      case 'day':
+      case 'month':
+        return i18n.t('registration:description.date_picker.go_to_year_view');
+      case 'year':
+        return i18n.t('registration:description.date_picker.go_to_calendar_view');
+    }
+  },
+  leftArrowButtonText: i18n.t('registration:description.date_picker.previous_month'),
+  rightArrowButtonText: i18n.t('registration:description.date_picker.next_month'),
+  todayText: i18n.t('registration:description.date_picker.today'),
+  toolbarTitle: i18n.t('registration:description.date_picker.select_date'),
 };
 
 export const paginationTranslationProps = (type: string, page: number) => {

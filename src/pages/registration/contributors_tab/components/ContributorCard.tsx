@@ -2,14 +2,13 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Button, Checkbox, FormControlLabel, TextField, Tooltip, Typography } from '@material-ui/core';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import CheckIcon from '@material-ui/icons/CheckCircleSharp';
-import DeleteIcon from '@material-ui/icons/RemoveCircleSharp';
-import WarningIcon from '@material-ui/icons/Warning';
+import { Button, Checkbox, FormControlLabel, TextField, Tooltip, Typography } from '@mui/material';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import CheckIcon from '@mui/icons-material/CheckCircleSharp';
+import DeleteIcon from '@mui/icons-material/RemoveCircleSharp';
+import WarningIcon from '@mui/icons-material/Warning';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
-import { DangerButton } from '../../../../components/DangerButton';
 import { StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
 import { lightTheme } from '../../../../themes/lightTheme';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
@@ -68,10 +67,6 @@ const StyledVerifiedSection = styled.div`
 const StyledCorrespondingWrapper = styled.div`
   grid-area: corresponding;
   margin-bottom: 0.5rem;
-`;
-
-const StyledDangerButton = styled(DangerButton)`
-  border-radius: 0;
 `;
 
 const StyledRemoveContributorContainer = styled.div`
@@ -235,13 +230,14 @@ export const ContributorCard = ({
         />
       )}
       <StyledRemoveContributorContainer>
-        <StyledDangerButton
+        <Button
+          color="error"
           data-testid={`button-remove-contributor-${contributor.identity.name}`}
           startIcon={<DeleteIcon />}
           onClick={onRemoveContributorClick}
           variant="contained">
           {getRemoveContributorText(contributor.role)}
-        </StyledDangerButton>
+        </Button>
       </StyledRemoveContributorContainer>
     </StyledBackgroundDiv>
   );

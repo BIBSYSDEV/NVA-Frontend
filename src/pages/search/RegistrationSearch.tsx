@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TablePagination, Typography } from '@material-ui/core';
+import { TablePagination, Typography } from '@mui/material';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { SearchResults } from './SearchResults';

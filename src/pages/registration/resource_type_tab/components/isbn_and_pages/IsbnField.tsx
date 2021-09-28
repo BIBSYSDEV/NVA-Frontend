@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik';
 import React, { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TextField } from '@material-ui/core';
+import { TextField } from '@mui/material';
 import { IMaskInput } from 'react-imask';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../../utils/dataTestIds';
@@ -20,6 +20,7 @@ const MaskIsbnInput = forwardRef<HTMLElement, MaskIsbnInputProps>((props, ref) =
     <IMaskInput
       {...other}
       mask={isbnFormat}
+      inputRef={ref}
       onAccept={(value) => onChange({ target: { name: other.name, value: value.replaceAll('-', '') } })}
     />
   );

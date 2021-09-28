@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Divider, Link, Typography } from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
+import { Divider, Link, Typography } from '@mui/material';
+import { Skeleton } from '@mui/material';
 import styled from 'styled-components';
 import { CristinProject, ResearchProject } from '../../types/project.types';
 import { useFetch } from '../../utils/hooks/useFetch';

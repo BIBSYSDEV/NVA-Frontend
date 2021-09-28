@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
-import { MuiThemeProvider } from '@material-ui/core';
+import { ThemeProvider } from '@mui/material';
 import { darkTheme } from '../themes/darkTheme';
 import { lightTheme } from '../themes/lightTheme';
 import { isBackgroundColorDark } from '../utils/theme-helpers';
@@ -21,9 +21,9 @@ export const BackgroundDiv = ({ children, ...props }: BakcgroundDivProps) => {
   return (
     <StyledBackgroundDiv {...props}>
       {darkMode ? (
-        <MuiThemeProvider theme={darkTheme}>{children}</MuiThemeProvider>
+        <ThemeProvider theme={darkTheme}>{children}</ThemeProvider>
       ) : (
-        <MuiThemeProvider theme={lightTheme}>{children}</MuiThemeProvider>
+        <ThemeProvider theme={lightTheme}>{children}</ThemeProvider>
       )}
     </StyledBackgroundDiv>
   );
