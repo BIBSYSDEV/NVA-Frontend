@@ -59,6 +59,9 @@ const resourceErrorMessage = {
   publisherRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:publisher'),
   }),
+  seriesNotSelected: i18n.t('feedback:validation.not_selected', {
+    field: i18n.t('registration:resource_type.series'),
+  }),
   typeRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:type'),
   }),
@@ -116,6 +119,14 @@ const publisherField = Yup.object().shape({
     is: (value: string) => !!value,
     then: Yup.string().required(resourceErrorMessage.publisherNotSelected),
     otherwise: Yup.string().required(resourceErrorMessage.publisherRequired),
+  }),
+});
+
+const seriesField = Yup.object().shape({
+  id: Yup.string().when('title', {
+    is: (value: string) => !!value,
+    then: Yup.string().required(resourceErrorMessage.seriesNotSelected),
+    otherwise: Yup.string(),
   }),
 });
 
@@ -188,6 +199,7 @@ const bookPublicationInstance = Yup.object().shape({
 
 const bookPublicationContext = Yup.object().shape({
   publisher: publisherField,
+  series: seriesField,
   isbnList: isbnListField,
 });
 
@@ -204,6 +216,7 @@ const reportPublicationInstance = Yup.object().shape({
 
 const reportPublicationContext = Yup.object().shape({
   publisher: publisherField,
+  series: seriesField,
   isbnList: isbnListField,
 });
 
@@ -219,6 +232,7 @@ const degreePublicationInstance = Yup.object().shape({
 
 const degreePublicationContext = Yup.object().shape({
   publisher: publisherField,
+  series: seriesField,
 });
 
 export const degreeReference = baseReference.shape({
