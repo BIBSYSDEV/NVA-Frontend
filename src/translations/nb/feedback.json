@@ -81,6 +81,7 @@
     "editor_required": "Du må ha minst en redaktør på denne registreringen",
     "has_invalid_format": "{{field}} har ugyldig format",
     "isbn_too_short": "ISBN må ha 13 siffer",
+    "not_selected": "{{field}} er ikke valgt",
     "is_required": "{{field}} er obligatorisk",
     "minimum_one_file": "Du må laste opp minst en fil for denne registreringen",
     "must_be_bigger_than": "{{field}} kan ikke være mindre enn {{limit}}",

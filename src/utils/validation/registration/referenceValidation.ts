@@ -26,6 +26,9 @@ const resourceErrorMessage = {
     field: i18n.t('registration:resource_type.isbn'),
   }),
   isbnTooShort: i18n.t('feedback:validation.isbn_too_short'),
+  journalNotSelected: i18n.t('feedback:validation.not_selected', {
+    field: i18n.t('registration:resource_type.journal'),
+  }),
   journalRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.journal'),
   }),
@@ -49,6 +52,9 @@ const resourceErrorMessage = {
   }),
   peerReviewedRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.peer_reviewed'),
+  }),
+  publisherNotSelected: i18n.t('feedback:validation.not_selected', {
+    field: i18n.t('common:publisher'),
   }),
   publisherRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:publisher'),
@@ -83,6 +89,7 @@ const pagesMonographField = Yup.object()
       .transform(emptyStringToNull)
       .nullable(),
   });
+
 const pagesRangeField = Yup.object()
   .nullable()
   .shape({
@@ -105,7 +112,11 @@ const pagesRangeField = Yup.object()
   });
 
 const publisherField = Yup.object().shape({
-  id: Yup.string().required(resourceErrorMessage.publisherRequired),
+  id: Yup.string().when('title', {
+    is: (value: string) => !!value,
+    then: Yup.string().required(resourceErrorMessage.publisherNotSelected),
+    otherwise: Yup.string().required(resourceErrorMessage.publisherRequired),
+  }),
 });
 
 export const baseReference = Yup.object().shape({
@@ -146,7 +157,11 @@ const journalPublicationContext = Yup.object().shape({
   id: Yup.string().when('$publicationInstanceType', {
     is: JournalType.Corrigendum,
     then: Yup.string(),
-    otherwise: Yup.string().required(resourceErrorMessage.journalRequired),
+    otherwise: Yup.string().when('title', {
+      is: (value: string) => !!value,
+      then: Yup.string().required(resourceErrorMessage.journalNotSelected),
+      otherwise: Yup.string().required(resourceErrorMessage.journalRequired),
+    }),
   }),
 });
 
