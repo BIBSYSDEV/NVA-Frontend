@@ -2,7 +2,7 @@ import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { TextField, Typography } from '@material-ui/core';
+import { TextField, Typography } from '@mui/material';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { lightTheme } from '../../../../themes/lightTheme';
 import { JournalType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
@@ -34,9 +34,7 @@ const StyledLabel = styled(Typography)`
 export const JournalForm = () => {
   const { t } = useTranslation('registration');
   const { values } = useFormikContext<JournalRegistration>();
-  const {
-    reference: { publicationContext, publicationInstance },
-  } = values.entityDescription;
+  const { publicationInstance } = values.entityDescription.reference;
 
   return (
     <>
@@ -49,7 +47,8 @@ export const JournalForm = () => {
             searchSubtypes={[JournalType.Article]}
             label={t('resource_type.original_article_title')}
             placeholder={t('resource_type.search_for_original_article')}
-            dataTestId="article-search-field"
+            dataTestId={dataTestId.registrationWizard.resourceType.corrigendumForField}
+            removeButtonLabel={t('resource_type.remove_article')}
           />
         ) : (
           <JournalField />
@@ -137,7 +136,7 @@ export const JournalForm = () => {
           <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
             <NviFields contentTypes={Object.values(JournalArticleContentType)} />
           </BackgroundDiv>
-          <NviValidation isPeerReviewed={!!publicationInstance.peerReviewed} isRated={!!publicationContext?.level} />
+          <NviValidation isPeerReviewed={!!publicationInstance.peerReviewed} isRated={false} />
         </>
       )}
     </>

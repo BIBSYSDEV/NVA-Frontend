@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, DialogActions } from '@material-ui/core';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import { Button, DialogActions } from '@mui/material';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import { ConnectAuthority } from './ConnectAuthority';
 import { Modal } from '../../../components/Modal';

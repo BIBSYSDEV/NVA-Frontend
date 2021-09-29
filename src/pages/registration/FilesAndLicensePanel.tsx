@@ -2,7 +2,7 @@ import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } fro
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { FormHelperText, Typography } from '@material-ui/core';
+import { FormHelperText, Typography } from '@mui/material';
 import { UppyFile } from '@uppy/core';
 import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { Modal } from '../../components/Modal';

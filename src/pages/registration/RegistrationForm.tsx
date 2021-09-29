@@ -62,12 +62,11 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   }, [history, registration, isValidOwner, isValidCurator]);
 
   const validateForm = (values: Registration): FormikErrors<Registration> => {
-    const { publicationContext, publicationInstance } = values.entityDescription.reference;
+    const { publicationInstance } = values.entityDescription.reference;
     const contentType = 'contentType' in publicationInstance ? publicationInstance.contentType : null;
 
     try {
       validateYupSchema<Registration>(values, registrationValidationSchema, true, {
-        publicationContextType: publicationContext.type,
         publicationInstanceType: publicationInstance.type,
         publicationStatus: registration?.status,
         contentType,

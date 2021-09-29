@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { TextField } from '@material-ui/core';
+import { TextField } from '@mui/material';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { SeriesField } from './SeriesField';

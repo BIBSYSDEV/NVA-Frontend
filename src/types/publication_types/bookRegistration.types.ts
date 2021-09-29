@@ -19,17 +19,24 @@ export const emptyBookPublicationInstance: BookPublicationInstance = {
   peerReviewed: null,
 };
 
+export interface Series {
+  type: 'Series' | 'UnconfirmedSeries';
+  id?: string;
+  title?: string;
+}
+
+export interface ContextPublisher {
+  type: 'UnconfirmedPublisher' | 'Publisher';
+  name?: string;
+  id?: string;
+}
+
 export interface BookPublicationContext {
   type: PublicationType | '';
   isbnList: string[];
-  level: string | null;
-  openAccess: boolean;
-  peerReviewed: boolean;
-  publisher: string;
+  publisher?: ContextPublisher;
   seriesNumber: string;
-  seriesTitle: string;
-  seriesUri: string;
-  url: string;
+  series?: Series;
 }
 
 interface BookReference extends BaseReference {

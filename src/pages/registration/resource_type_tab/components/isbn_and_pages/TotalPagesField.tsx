@@ -2,7 +2,7 @@ import { ErrorMessage, Field, FieldProps } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { TextField } from '@material-ui/core';
+import { TextField } from '@mui/material';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 

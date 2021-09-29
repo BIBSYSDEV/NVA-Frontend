@@ -4,5 +4,9 @@
   "registration_type": "Registration type",
   "search": "Search",
   "search_help": "Use quotes (\"abs\") for exact matches, or wildcard (*) to search for substrings",
-  "select_filters": "Select filters to narrow down search:"
+  "select_filters": "Select filters to narrow down search:",
+  "sort_by": "Order by",
+  "sort_by_modified_date": "Last modified",
+  "sort_by_published_date_asc": "Publish date (oldest first)",
+  "sort_by_published_date_desc": "Publish date (newest first)"
 }

@@ -20,7 +20,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Alasdair Dyter',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -45,7 +45,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Kirstyn Jenik',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -66,7 +66,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Alberto Kuzma',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -95,7 +95,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Derby Budd',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -116,7 +116,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Alberto Kuzma',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -137,7 +137,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Alberto Kuzma',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -182,7 +182,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Isac Robson',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -203,7 +203,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Benji Rodrigo',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -224,7 +224,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Quintina Whiston',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -245,7 +245,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Wuintinas Whir',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -270,7 +270,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Joey Larway',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -291,7 +291,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Nolie Aggett',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -312,7 +312,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Burgess Bradnam',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -333,7 +333,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Bernardo Hurdwell',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -354,7 +354,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Anny Mandrier',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -383,7 +383,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Cecile Surmon',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -404,7 +404,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Brent Regus',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -429,7 +429,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Ennis Knapman',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -450,7 +450,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Francesca Blaxill',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -471,7 +471,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Rudolph Trivett',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -492,7 +492,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Maxi Morsom',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -521,7 +521,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Benjamin Bowering',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -542,7 +542,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Cristi Wadwell',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -563,7 +563,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Curtis Fitch',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -588,7 +588,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Christoffer Blakden',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -609,7 +609,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Sharyl Nickoles',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -630,7 +630,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Brittni Sebire',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -655,7 +655,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Giacomo Bleacher',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -680,7 +680,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Heath Greensitt',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -701,7 +701,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Huberto McParland',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -734,7 +734,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Darby Mengo',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -759,7 +759,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Avrit Knowlson',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -780,7 +780,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Avrit Knowlson',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -801,7 +801,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Avrit Knowlson',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -822,7 +822,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Avrit Knowlson',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -843,7 +843,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Avrit Knowlson',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -868,7 +868,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Dorene Ellens',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -893,7 +893,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Dorene Ellens',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -914,7 +914,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Hendrick Shawe',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -935,7 +935,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Hendrick Shawe',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -956,7 +956,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Dorene Ellens',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -977,7 +977,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Dorene Ellens',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -1006,7 +1006,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Amery Roskams',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -1035,7 +1035,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Amery Roskams',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -1060,7 +1060,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Brittni Sebire',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -1085,7 +1085,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Brittni Sebire',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -1106,7 +1106,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Brittni Sebire',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -1131,7 +1131,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Alberto Kuzma',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -1156,7 +1156,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Alberto Kuzma',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -1177,7 +1177,7 @@ export const mockSearchResults: SearchResult = {
           name: 'Alberto Kuzma',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },

@@ -2,10 +2,10 @@ import React, { useState, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { AccordionActions, AccordionDetails, AccordionSummary, Button, Typography } from '@material-ui/core';
-import LinkIcon from '@material-ui/icons/Link';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import { AccordionActions, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
+import LinkIcon from '@mui/icons-material/Link';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useDispatch } from 'react-redux';
 
 import { getRegistrationByDoi } from '../../../api/registrationApi';

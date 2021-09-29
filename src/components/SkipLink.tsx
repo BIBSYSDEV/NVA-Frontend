@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { LinkProps, Link, Typography } from '@material-ui/core';
+import { LinkProps, Link, Typography } from '@mui/material';
 
 const StyledSkipLink = styled(Link)`
   position: absolute;

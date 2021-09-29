@@ -2,9 +2,9 @@ import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { TextField, Typography } from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
-import RemoveIcon from '@material-ui/icons/Remove';
+import { TextField, Typography } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
+import RemoveIcon from '@mui/icons-material/Remove';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { StyledCenterAlignedContentWrapper } from '../../../../components/styled/Wrappers';
 import { lightTheme } from '../../../../themes/lightTheme';
@@ -51,9 +51,7 @@ export const ChapterForm = () => {
   const { t } = useTranslation('registration');
 
   const { values } = useFormikContext<ChapterRegistration>();
-  const {
-    reference: { publicationContext, publicationInstance },
-  } = values.entityDescription;
+  const { publicationInstance } = values.entityDescription.reference;
 
   return (
     <>
@@ -67,11 +65,12 @@ export const ChapterForm = () => {
 
         {publicationInstance.type === ChapterType.AnthologyChapter && (
           <SearchContainerField
-            fieldName={ResourceFieldNames.PubliactionContextLinkedContext}
+            fieldName={ResourceFieldNames.PartOf}
             searchSubtypes={[BookType.Anthology]}
             label={t('resource_type.chapter.published_in')}
             placeholder={t('resource_type.chapter.search_for_anthology')}
-            dataTestId="search-anthology-field"
+            dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
+            removeButtonLabel={t('resource_type.remove_anthology')}
           />
         )}
       </BackgroundDiv>
@@ -120,7 +119,7 @@ export const ChapterForm = () => {
             <NviFields contentTypes={Object.values(ChapterContentType)} />
           </BackgroundDiv>
 
-          <NviValidation isPeerReviewed={!!publicationInstance.peerReviewed} isRated={!!publicationContext?.level} />
+          <NviValidation isPeerReviewed={!!publicationInstance.peerReviewed} isRated={false} />
         </>
       )}
     </>

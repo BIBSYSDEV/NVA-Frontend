@@ -1,4 +1,4 @@
-import { TextField, MenuItem } from '@material-ui/core';
+import { TextField, MenuItem } from '@mui/material';
 import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../components/styled/Wrappers';
@@ -20,11 +20,6 @@ export const ContentTypeField = ({ contentTypes }: ContentTypeFieldProps) => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 
-  const contentTypeOptions = contentTypes.map((contentType) => ({
-    value: contentType,
-    text: t(`registration:resource_type.content_types.${contentType}`),
-  }));
-
   return (
     <Field name={ResourceFieldNames.ContentType}>
       {({ field, meta: { error, touched } }: FieldProps<string>) => (
@@ -39,7 +34,7 @@ export const ContentTypeField = ({ contentTypes }: ContentTypeFieldProps) => {
             onChange={(event) => {
               field.onChange(event);
               if (!nviApplicableContentTypes.includes(event.target.value)) {
-                setFieldValue(ResourceFieldNames.PEER_REVIEW, null, false);
+                setFieldValue(ResourceFieldNames.PeerReviewed, null, false);
               }
             }}
             label={t('resource_type.content')}
@@ -47,12 +42,12 @@ export const ContentTypeField = ({ contentTypes }: ContentTypeFieldProps) => {
             required
             error={!!error && touched}
             helperText={<ErrorMessage name={field.name} />}>
-            {contentTypeOptions.map(({ value, text }) => (
+            {contentTypes.map((contentType) => (
               <MenuItem
-                value={value}
-                key={value}
-                data-testid={dataTestId.registrationWizard.resourceType.contentValue(value)}>
-                {text}
+                value={contentType}
+                key={contentType}
+                data-testid={dataTestId.registrationWizard.resourceType.contentValue(contentType)}>
+                {t(`resource_type.content_types.${contentType}`)}
               </MenuItem>
             ))}
           </TextField>

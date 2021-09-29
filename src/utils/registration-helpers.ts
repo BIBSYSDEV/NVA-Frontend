@@ -1,17 +1,37 @@
 import { Registration } from '../types/registration.types';
-import { PublicationType } from '../types/publicationFieldNames';
+import {
+  BookType,
+  ChapterType,
+  DegreeType,
+  JournalType,
+  PublicationType,
+  ReportType,
+} from '../types/publicationFieldNames';
 import { User } from '../types/user.types';
+import i18n from '../translations/i18n';
 
-export const isJournal = (registration: Registration): boolean =>
-  registration.entityDescription.reference.publicationContext.type === PublicationType.PublicationInJournal;
-export const isBook = (registration: Registration): boolean =>
-  registration.entityDescription.reference.publicationContext.type === PublicationType.Book;
-export const isDegree = (registration: Registration): boolean =>
-  registration.entityDescription.reference.publicationContext.type === PublicationType.Degree;
-export const isReport = (registration: Registration): boolean =>
-  registration.entityDescription.reference.publicationContext.type === PublicationType.Report;
-export const isChapter = (registration: Registration): boolean =>
-  registration.entityDescription.reference.publicationContext.type === PublicationType.Chapter;
+export const getMainRegistrationType = (instanceType: string) =>
+  isJournal(instanceType)
+    ? PublicationType.PublicationInJournal
+    : isBook(instanceType)
+    ? PublicationType.Book
+    : isDegree(instanceType)
+    ? PublicationType.Degree
+    : isReport(instanceType)
+    ? PublicationType.Report
+    : isChapter(instanceType)
+    ? PublicationType.Chapter
+    : '';
+
+export const isJournal = (instanceType: string) => Object.values(JournalType).some((type) => type === instanceType);
+
+export const isBook = (instanceType: string) => Object.values(BookType).some((type) => type === instanceType);
+
+export const isDegree = (instanceType: string) => Object.values(DegreeType).some((type) => type === instanceType);
+
+export const isReport = (instanceType: string) => Object.values(ReportType).some((type) => type === instanceType);
+
+export const isChapter = (instanceType: string) => Object.values(ChapterType).some((type) => type === instanceType);
 
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCreator && user.id === registration.owner;
@@ -21,3 +41,21 @@ export const userIsRegistrationCurator = (user: User | null, registration?: Regi
 
 export const getYearQuery = (yearValue: string) =>
   yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear();
+
+const getPublicationChannelIssnString = (onlineIssn?: string | null, printIssn?: string | null) => {
+  const issnString =
+    printIssn || onlineIssn
+      ? [
+          printIssn ? `${i18n.t('registration:resource_type.print_issn')}: ${printIssn}` : '',
+          onlineIssn ? `${i18n.t('registration:resource_type.online_issn')}: ${onlineIssn}` : '',
+        ]
+          .filter((issn) => issn)
+          .join(', ')
+      : '';
+  return issnString;
+};
+
+export const getPublicationChannelString = (title: string, onlineIssn?: string | null, printIssn?: string | null) => {
+  const issnString = getPublicationChannelIssnString(onlineIssn, printIssn);
+  return issnString ? `${title} (${issnString})` : title;
+};

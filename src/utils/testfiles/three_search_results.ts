@@ -15,7 +15,7 @@ export const threeMockSearchResults: SearchResult = {
           name: 'Alasdair Dyter',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -35,7 +35,7 @@ export const threeMockSearchResults: SearchResult = {
           name: 'Kirstyn Jenik',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },
@@ -51,7 +51,7 @@ export const threeMockSearchResults: SearchResult = {
           name: 'Alberto Kuzma',
         },
       ],
-      publicationType: 'JournalArticle',
+      type: 'JournalArticle',
       publisher: {
         id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
       },

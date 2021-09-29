@@ -2,8 +2,8 @@ import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import React, { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { MenuItem, MuiThemeProvider, TextField, Typography } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { MenuItem, ThemeProvider, TextField, Typography } from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
 import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { lightTheme } from '../../themes/lightTheme';
 import { LanguageCodes, registrationLanguages } from '../../types/language.types';
@@ -12,7 +12,6 @@ import { Registration } from '../../types/registration.types';
 import { DatePickerField } from './description_tab/DatePickerField';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { VocabularyFields } from './description_tab/vocabularies/VocabularyFields';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 
 const DateAndLanguageWrapper = styled.div`
   display: grid;
@@ -109,9 +108,7 @@ export const DescriptionPanel = () => {
             />
           )}
         </Field>
-        <BetaFunctionality>
-          <VocabularyFields />
-        </BetaFunctionality>
+        <VocabularyFields />
       </BackgroundDiv>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DateAndLanguageWrapper>
@@ -148,9 +145,9 @@ export const DescriptionPanel = () => {
         <Typography variant="h5" color="primary" component="p">
           {t('description.connect_project')}
         </Typography>
-        <MuiThemeProvider theme={lightTheme}>
+        <ThemeProvider theme={lightTheme}>
           <ProjectsField />
-        </MuiThemeProvider>
+        </ThemeProvider>
       </BackgroundDiv>
     </>
   );

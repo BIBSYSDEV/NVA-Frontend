@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, DialogActions } from '@material-ui/core';
+import { Button, DialogActions } from '@mui/material';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../../api/authorityApi';
 import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
 import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
@@ -41,42 +41,47 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
   };
 
   const updateAuthorityForUser = async () => {
-    const selectedAuthority = user.possibleAuthorities.find((authority) => authority.id === selectedArpId);
+    let selectedAuthority = user.possibleAuthorities.find((authority) => authority.id === selectedArpId);
 
     if (selectedAuthority) {
       setIsUpdatingAuthority(true);
-      const updatedAuthorityWithFeide = await addQualifierIdForAuthority(
-        selectedArpId,
-        AuthorityQualifiers.FEIDE_ID,
-        user.id
-      );
-      if (isErrorStatus(updatedAuthorityWithFeide.status)) {
-        dispatch(
-          setNotification(
-            t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
-            NotificationVariant.Error
-          )
+
+      if (!selectedAuthority.feideids.includes(user.id)) {
+        const updatedAuthorityWithFeide = await addQualifierIdForAuthority(
+          selectedArpId,
+          AuthorityQualifiers.FeideId,
+          user.id
         );
-      } else if (isSuccessStatus(updatedAuthorityWithFeide.status)) {
-        if (user.cristinId && !updatedAuthorityWithFeide.data.orgunitids.includes(user.cristinId)) {
-          const updatedAuthorityWithCristinId = await addQualifierIdForAuthority(
-            selectedArpId,
-            AuthorityQualifiers.ORGUNIT_ID,
-            user.cristinId
+        if (isErrorStatus(updatedAuthorityWithFeide.status)) {
+          dispatch(
+            setNotification(
+              t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
+              NotificationVariant.Error
+            )
           );
-          if (isErrorStatus(updatedAuthorityWithCristinId.status)) {
-            dispatch(
-              setNotification(
-                t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
-                NotificationVariant.Error
-              )
-            );
-          } else if (isSuccessStatus(updatedAuthorityWithCristinId.status)) {
-            dispatch(setAuthorityData(updatedAuthorityWithCristinId.data));
-          }
-        } else {
-          dispatch(setAuthorityData(updatedAuthorityWithFeide.data));
+        } else if (isSuccessStatus(updatedAuthorityWithFeide.status)) {
+          selectedAuthority = updatedAuthorityWithFeide.data;
         }
+      }
+
+      if (user.cristinId && !selectedAuthority.orgunitids.includes(user.cristinId)) {
+        const updatedAuthorityWithCristinId = await addQualifierIdForAuthority(
+          selectedArpId,
+          AuthorityQualifiers.OrgUnitId,
+          user.cristinId
+        );
+        if (isErrorStatus(updatedAuthorityWithCristinId.status)) {
+          dispatch(
+            setNotification(
+              t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
+              NotificationVariant.Error
+            )
+          );
+        } else if (isSuccessStatus(updatedAuthorityWithCristinId.status)) {
+          dispatch(setAuthorityData(updatedAuthorityWithCristinId.data));
+        }
+      } else {
+        dispatch(setAuthorityData(selectedAuthority));
       }
     }
   };

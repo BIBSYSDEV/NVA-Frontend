@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { Link as MuiLink, Typography } from '@material-ui/core';
+import { Link as MuiLink, Typography } from '@mui/material';
 import styled from 'styled-components';
 
 const StyledLine = styled.div`

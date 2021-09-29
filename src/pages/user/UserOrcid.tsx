@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { Button, IconButton, Typography, Link as MuiLink } from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Button, IconButton, Typography, Link as MuiLink } from '@mui/material';
+import { Skeleton } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../utils/constants';
@@ -22,7 +22,6 @@ import { setAuthorityData } from '../../redux/actions/userActions';
 import { Modal } from '../../components/Modal';
 import { StyledTypographyPreWrapped } from '../../components/styled/Wrappers';
 import { User } from '../../types/user.types';
-import { DangerButton } from '../../components/DangerButton';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 
@@ -37,7 +36,7 @@ const StyledOrcidLine = styled.div`
   }
 `;
 
-const StyledButton = styled(DangerButton)`
+const StyledButton = styled(Button)`
   justify-self: right;
 `;
 
@@ -80,13 +79,13 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       } else if (user.authority && !user.authority.orcids.includes(orcidId)) {
         const updateAuthorityResponse = await addQualifierIdForAuthority(
           user.authority.id,
-          AuthorityQualifiers.ORCID,
+          AuthorityQualifiers.Orcid,
           orcidId
         );
         if (isErrorStatus(updateAuthorityResponse.status)) {
           dispatch(
             setNotification(
-              t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORCID}`) }),
+              t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.Orcid}`) }),
               NotificationVariant.Error
             )
           );
@@ -118,13 +117,13 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
     setIsRemovingOrcid(true);
     const updateAuthorityResponse = await removeQualifierIdFromAuthority(
       user.authority.id,
-      AuthorityQualifiers.ORCID,
+      AuthorityQualifiers.Orcid,
       id
     );
     if (isErrorStatus(updateAuthorityResponse.status)) {
       dispatch(
         setNotification(
-          t('feedback:error.delete_identifier', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+          t('feedback:error.delete_identifier', { qualifier: t(`common:${AuthorityQualifiers.Orcid}`) }),
           NotificationVariant.Error
         )
       );
@@ -158,11 +157,11 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
             </StyledLine>
 
             <StyledButton
+              color="error"
               data-testid="button-confirm-delete-orcid"
               onClick={toggleConfirmDialog}
               startIcon={<DeleteIcon />}
-              variant="outlined"
-              color="secondary">
+              variant="outlined">
               {t('common:remove')}
             </StyledButton>
 

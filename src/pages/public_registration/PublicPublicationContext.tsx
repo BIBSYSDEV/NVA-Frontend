@@ -1,141 +1,63 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, Typography } from '@material-ui/core';
-import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
-import { ChapterPublicationContext } from '../../types/publication_types/chapterRegistration.types';
+import { Link, Typography } from '@mui/material';
+import { BookPublicationContext, ContextPublisher } from '../../types/publication_types/bookRegistration.types';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
-import { Journal, levelMap, RegistrationDate } from '../../types/registration.types';
-import { displayDate } from '../../utils/date-helpers';
+import { Journal, Publisher } from '../../types/registration.types';
 import { RegistrationSummary } from './RegistrationSummary';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { ListSkeleton } from '../../components/ListSkeleton';
 
-interface PublicJournalContentProps {
-  date: RegistrationDate;
+interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
 }
 
-const getChannelRegisterUrl = (id: string) =>
-  `https://dbh.nsd.uib.no/publiseringskanaler/KanalTidsskriftInfo.action?id=${id}`;
+const channelRegisterBaseUrl = 'https://dbh.nsd.uib.no/publiseringskanaler';
+const getChannelRegisterJournalUrl = (id: string) => `${channelRegisterBaseUrl}/KanalTidsskriftInfo.action?id=${id}`;
+const getChannelRegisterPublisherUrl = (id: string) => `${channelRegisterBaseUrl}/KanalForlagInfo.action?id=${id}`;
 
-export const PublicJournalContent = ({ date, publicationContext }: PublicJournalContentProps) => {
+export const PublicJournal = ({ publicationContext }: PublicJournalProps) => {
   const { t } = useTranslation('registration');
-  const { onlineIssn, printIssn, title, url, level } = publicationContext;
 
-  return title ? (
+  return publicationContext.id ? (
     <>
       <Typography variant="overline" component="p">
         {t('resource_type.journal')}
       </Typography>
 
-      {url ? (
-        <Typography component={Link} href={url} target="_blank" rel="noopener noreferrer">
-          {title}
-        </Typography>
-      ) : (
-        <Typography>{title}</Typography>
-      )}
-
-      <Typography>{displayDate(date)}</Typography>
-
-      {onlineIssn && (
-        <Typography>
-          {t('resource_type.issn')}: {[onlineIssn, printIssn].filter((issn) => issn).join(', ')}
-        </Typography>
-      )}
-      <PublicLevelContent level={level} />
+      <PublicJournalContent id={publicationContext.id} errorMessage={t('feedback:error.get_journal')} />
     </>
   ) : null;
 };
 
-export const PublicPublisherContent = ({
-  publicationContext,
-}: {
-  publicationContext: Partial<BookPublicationContext & DegreePublicationContext & ReportPublicationContext>;
-}) => {
+export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher }) => {
   const { t } = useTranslation('registration');
-  const { publisher, url, level } = publicationContext;
+
+  const [fetchedPublisher, isLoadingPublisher] = useFetch<Publisher>({
+    url: publisher?.id ?? '',
+    errorMessage: t('feedback:error.get_publisher'),
+  });
 
   return publisher ? (
     <>
       <Typography variant="overline" component="p">
         {t('common:publisher')}
       </Typography>
-      {url ? (
-        <Typography component={Link} href={url} target="_blank" rel="noopener noreferrer">
-          {publisher}
-        </Typography>
+
+      {isLoadingPublisher ? (
+        <ListSkeleton height={20} />
       ) : (
-        <Typography>{publisher}</Typography>
-      )}
-      <PublicLevelContent level={level} />
-    </>
-  ) : null;
-};
-
-export const PublicLinkedContextContent = ({
-  publicationContext,
-}: {
-  publicationContext: ChapterPublicationContext;
-}) => {
-  const { t } = useTranslation('registration');
-  const { linkedContext } = publicationContext;
-
-  return (
-    <>
-      <Typography variant="overline" component="p">
-        {t('resource_type.chapter.published_in')}
-      </Typography>
-      <RegistrationSummary id={linkedContext} />
-    </>
-  );
-};
-
-export const PublicSeriesContent = ({
-  publicationContext,
-}: {
-  publicationContext: BookPublicationContext | ReportPublicationContext | DegreePublicationContext;
-}) => {
-  const { t } = useTranslation('registration');
-
-  const { seriesUri, seriesNumber } = publicationContext;
-  const [series, isLoadingSeries] = useFetch<Journal>({
-    url: seriesUri,
-    errorMessage: t('feedback:error.get_series'),
-  });
-
-  return seriesUri ? (
-    <>
-      <Typography variant="overline" component="p">
-        {t('resource_type.series')}
-      </Typography>
-      {isLoadingSeries ? (
-        <ListSkeleton />
-      ) : (
-        series && (
+        fetchedPublisher && (
           <>
-            <Typography>{series.name}</Typography>
-            <Typography>
-              {[
-                series.printIssn ? `${t('resource_type.print_issn')}: ${series.printIssn}` : '',
-                series.onlineIssn ? `${t('resource_type.online_issn')}: ${series.onlineIssn}` : '',
-              ]
-                .filter((issn) => issn)
-                .join(', ')}
-            </Typography>
-            <Typography>
-              {t('resource_type.level')}: {series.level}
-            </Typography>
-            <Typography component={Link} href={getChannelRegisterUrl(series.identifier)} target="_blank">
+            <Typography>{fetchedPublisher.name}</Typography>
+            <Typography
+              component={Link}
+              href={getChannelRegisterPublisherUrl(fetchedPublisher.identifier)}
+              target="_blank">
               {t('public_page.find_in_channel_registry')}
             </Typography>
-            {seriesNumber && (
-              <Typography>
-                {t('resource_type.series_number')}: {seriesNumber}
-              </Typography>
-            )}
           </>
         )
       )}
@@ -143,12 +65,79 @@ export const PublicSeriesContent = ({
   ) : null;
 };
 
-const PublicLevelContent = ({ level }: { level?: string | number | null }) => {
+export const PublicPartOfContent = ({ partOf }: { partOf: string }) => {
   const { t } = useTranslation('registration');
-  const levelValue = level ? levelMap[level] : null;
-  return levelValue ? (
-    <Typography>
-      {t('resource_type.level')}: {levelValue}
-    </Typography>
+
+  return (
+    <>
+      <Typography variant="overline" component="p">
+        {t('resource_type.chapter.published_in')}
+      </Typography>
+      <RegistrationSummary id={partOf} />
+    </>
+  );
+};
+
+export const PublicSeries = ({
+  publicationContext,
+}: {
+  publicationContext: BookPublicationContext | ReportPublicationContext | DegreePublicationContext;
+}) => {
+  const { t } = useTranslation('registration');
+  const { series, seriesNumber } = publicationContext;
+
+  return series?.id ? (
+    <>
+      <Typography variant="overline" component="p">
+        {t('resource_type.series')}
+      </Typography>
+      <PublicJournalContent id={series.id} errorMessage={t('feedback:error.get_series')} />
+      {seriesNumber && (
+        <Typography>
+          {t('resource_type.series_number')}: {seriesNumber}
+        </Typography>
+      )}
+    </>
+  ) : null;
+};
+
+interface PublicJournalContentProps {
+  id?: string;
+  errorMessage: string;
+}
+
+const PublicJournalContent = ({ id }: PublicJournalContentProps) => {
+  const { t } = useTranslation('registration');
+  const [journal, isLoadingJournal] = useFetch<Journal>({
+    url: id ?? '',
+    errorMessage: t('feedback:error.get_journal'),
+  });
+
+  return id ? (
+    <>
+      {isLoadingJournal ? (
+        <ListSkeleton height={20} />
+      ) : (
+        journal && (
+          <>
+            <Typography>{journal.name}</Typography>
+            <Typography>
+              {[
+                journal.printIssn ? `${t('resource_type.print_issn')}: ${journal.printIssn}` : '',
+                journal.onlineIssn ? `${t('resource_type.online_issn')}: ${journal.onlineIssn}` : '',
+              ]
+                .filter((issn) => issn)
+                .join(', ')}
+            </Typography>
+            <Typography>
+              {t('resource_type.level')}: {journal.level}
+            </Typography>
+            <Typography component={Link} href={getChannelRegisterJournalUrl(journal.identifier)} target="_blank">
+              {t('public_page.find_in_channel_registry')}
+            </Typography>
+          </>
+        )
+      )}
+    </>
   ) : null;
 };

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, DialogActions, TextField, Typography } from '@material-ui/core';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import EditIcon from '@material-ui/icons/Edit';
-import CloseIcon from '@material-ui/icons/Close';
-import CheckIcon from '@material-ui/icons/Check';
-import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import { Button, DialogActions, TextField, Typography } from '@mui/material';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
+import CheckIcon from '@mui/icons-material/Check';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import { useTranslation } from 'react-i18next';
 import { validateYupSchema, yupToFormErrors } from 'formik';
-
+import { Link as RouterLink } from 'react-router-dom';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { PublicRegistrationProps } from './PublicRegistrationContent';
 import { Modal } from '../../components/Modal';
@@ -109,11 +109,10 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   };
 
   useEffect(() => {
-    const { publicationInstance, publicationContext } = registration.entityDescription.reference;
+    const { publicationInstance } = registration.entityDescription.reference;
     const contentType = 'contentType' in publicationInstance ? publicationInstance.contentType : null;
     try {
       validateYupSchema<Registration>(registration, registrationValidationSchema, true, {
-        publicationContextType: publicationContext.type,
         publicationInstanceType: publicationInstance.type,
         publicationStatus: registration.status,
         contentType,
@@ -152,7 +151,9 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           actions={
             <Button
               variant="contained"
-              href={`${editRegistrationUrl}?tab=${firstErrorTab}`}
+              color="inherit"
+              component={RouterLink}
+              to={`${editRegistrationUrl}?tab=${firstErrorTab}`}
               endIcon={<EditIcon />}
               data-testid={dataTestId.registrationLandingPage.backToWizard}>
               {t('public_page.go_back_to_wizard')}
@@ -193,7 +194,8 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           )}
 
           <Button
-            href={editRegistrationUrl}
+            component={RouterLink}
+            to={editRegistrationUrl}
             variant="outlined"
             color="secondary"
             endIcon={<EditIcon />}

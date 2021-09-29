@@ -1,7 +1,7 @@
 import { useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { MuiThemeProvider, Typography } from '@material-ui/core';
+import { ThemeProvider, Typography } from '@mui/material';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { lightTheme } from '../../../../themes/lightTheme';
 import { BookType } from '../../../../types/publicationFieldNames';
@@ -20,7 +20,6 @@ export const BookForm = () => {
   const { values } = useFormikContext<BookRegistration>();
   const {
     reference: {
-      publicationContext,
       publicationInstance: { peerReviewed, type },
     },
   } = values.entityDescription;
@@ -31,9 +30,9 @@ export const BookForm = () => {
         <DoiField />
         <PublisherField />
 
-        <MuiThemeProvider theme={lightTheme}>
+        <ThemeProvider theme={lightTheme}>
           <NpiDisciplineField />
-        </MuiThemeProvider>
+        </ThemeProvider>
 
         <IsbnAndPages />
       </BackgroundDiv>
@@ -50,9 +49,7 @@ export const BookForm = () => {
         <SeriesFields />
       </BackgroundDiv>
 
-      {type === BookType.Monograph && (
-        <NviValidation isPeerReviewed={!!peerReviewed} isRated={!!publicationContext?.level} />
-      )}
+      {type === BookType.Monograph && <NviValidation isPeerReviewed={!!peerReviewed} isRated={false} />}
     </>
   );
 };

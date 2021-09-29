@@ -30,7 +30,7 @@ describe('Registration: Resource type: Book', () => {
       .click()
       .type(mockPublishersSearch[0].name);
     cy.contains(mockPublishersSearch[0].name).click();
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] textarea`).should(
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherChip}]`).should(
       'contain',
       mockPublishersSearch[0].name
     );
@@ -60,13 +60,12 @@ describe('Registration: Resource type: Book', () => {
       .click()
       .type(mockJournalsSearch[2].name);
     cy.contains(mockJournalsSearch[2].name).click();
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesField}] textarea`).should(
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesChip}]`).should(
       'contain',
       mockJournalsSearch[2].name
     );
 
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.removeSeriesButton}]`).click();
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesField}] textarea`).should('not.exist');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesField}] input`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesChip}] svg`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesChip}]`).should('not.exist');
   });
 });

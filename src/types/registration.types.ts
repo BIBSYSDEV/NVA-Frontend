@@ -1,6 +1,5 @@
 import { RegistrationFileSet } from './file.types';
 import { ResearchProject } from './project.types';
-import { EnumDictionary } from './common.types';
 import {
   JournalEntityDescription,
   emptyRegistrationEntityDescription,
@@ -25,14 +24,6 @@ export enum RegistrationTab {
   Contributors = 2,
   FilesAndLicenses = 3,
 }
-
-// NB! Keys must match supported values in datamodel
-export const levelMap: EnumDictionary<string, number | null> = {
-  NO_LEVEL: null,
-  LEVEL_0: 0,
-  LEVEL_1: 1,
-  LEVEL_2: 2,
-};
 
 export interface Journal {
   id: string;
@@ -63,12 +54,6 @@ export interface AlmaRegistration {
 
 export interface MyRegistrationsResponse {
   publications?: RegistrationPreview[]; // "publications" is undefined if user has no registrations
-}
-
-export interface NpiDiscipline {
-  id: string;
-  name: string;
-  mainDiscipline: string;
 }
 
 export enum DoiRequestStatus {
@@ -106,6 +91,7 @@ export interface BaseRegistration extends RegistrationFileSet {
   readonly doi?: string;
   readonly doiRequest?: DoiRequest;
   readonly publisher: RegistrationPublisher;
+  subjects: string[];
   projects: ResearchProject[];
 }
 
@@ -119,7 +105,6 @@ export interface BaseEntityDescription {
   mainTitle: string;
   npiSubjectHeading: string;
   tags: string[];
-  controlledKeywords: string[];
 }
 
 export interface NviApplicableBase<T> {
@@ -172,4 +157,5 @@ export const emptyRegistration: Registration = {
   },
   projects: [],
   publisher: { id: '' },
+  subjects: [],
 };

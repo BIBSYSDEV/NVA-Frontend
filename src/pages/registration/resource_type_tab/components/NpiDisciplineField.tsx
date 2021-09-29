@@ -1,18 +1,27 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { TextField } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import Autocomplete from '@mui/material/Autocomplete';
 import { ErrorMessage, Field, FieldProps } from 'formik';
-import { NpiDiscipline } from '../../../../types/registration.types';
-import { disciplineOptions, getNpiDiscipline } from '../../../../utils/npiDisciplines';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import disciplines from '../../../../resources/disciplines.json';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 const StyledSearchIcon = styled(SearchIcon)`
   margin-left: 0.5rem;
   color: ${({ theme }) => theme.palette.text.disabled};
 `;
+
+const disciplineOptions = disciplines
+  .map((mainDiscipline) =>
+    mainDiscipline.subdomains.map((subDiscipline) => ({
+      mainDisciplineId: mainDiscipline.id,
+      id: subDiscipline.id,
+    }))
+  )
+  .flat();
 
 export const NpiDisciplineField = () => {
   const { t } = useTranslation('registration');
@@ -23,37 +32,46 @@ export const NpiDisciplineField = () => {
         field: { name, value },
         form: { setFieldValue, setFieldTouched },
         meta: { error, touched },
-      }: FieldProps<string>) => (
-        <Autocomplete
-          id={name}
-          aria-labelledby={`${name}-label`}
-          options={disciplineOptions}
-          groupBy={(discipline) => discipline.mainDiscipline}
-          onChange={(_: unknown, value: NpiDiscipline | null) => setFieldValue(name, value?.id ?? '')}
-          value={getNpiDiscipline(value)}
-          getOptionLabel={(option) => option.name}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              onBlur={() => setFieldTouched(name)}
-              data-testid="search_npi"
-              label={t('description.npi_disciplines')}
-              required
-              fullWidth
-              variant="filled"
-              autoComplete="false"
-              placeholder={t('description.search_for_npi_discipline')}
-              error={!!error && touched}
-              helperText={<ErrorMessage name={name} />}
-              InputProps={{
-                ...params.InputProps,
-                startAdornment: <StyledSearchIcon />,
-                endAdornment: <>{params.InputProps.endAdornment}</>,
-              }}
-            />
-          )}
-        />
-      )}
+      }: FieldProps<string>) => {
+        const selectedOption = disciplineOptions.find((discipline) => discipline.id === value);
+
+        return (
+          <Autocomplete
+            data-testid={dataTestId.registrationWizard.resourceType.scientificSubjectField}
+            id={name}
+            multiple
+            aria-labelledby={`${name}-label`}
+            options={disciplineOptions}
+            blurOnSelect
+            groupBy={(discipline) => t(`disciplines:${discipline.mainDisciplineId}`)}
+            onChange={(_, value) => setFieldValue(name, value.pop()?.id ?? '')}
+            value={selectedOption ? [selectedOption] : []}
+            getOptionLabel={(option) => t(`disciplines:${option.id}`)}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                onBlur={() => (!touched ? setFieldTouched(name, true, false) : null)}
+                label={t('description.npi_disciplines')}
+                required
+                fullWidth
+                variant="filled"
+                placeholder={!value ? t('description.search_for_npi_discipline') : ''}
+                error={!!error && touched}
+                helperText={<ErrorMessage name={name} />}
+                InputProps={{
+                  ...params.InputProps,
+                  startAdornment: (
+                    <>
+                      {params.InputProps.startAdornment}
+                      {!value && <StyledSearchIcon />}
+                    </>
+                  ),
+                }}
+              />
+            )}
+          />
+        );
+      }}
     </Field>
   );
 };

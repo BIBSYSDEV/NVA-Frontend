@@ -2,12 +2,11 @@ import { useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { MuiThemeProvider, TextField, Typography } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { ThemeProvider, TextField, Typography, Button } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
-import { DangerButton } from '../../../../components/DangerButton';
 import { lightTheme } from '../../../../themes/lightTheme';
 
 const StyledDoiRow = styled.div`
@@ -52,11 +51,11 @@ export const DoiField = () => {
       />
 
       {referenceDoi && (
-        <DangerButton variant="contained" endIcon={<DeleteIcon />} onClick={toggleConfirmDialog}>
+        <Button color="error" variant="contained" endIcon={<DeleteIcon />} onClick={toggleConfirmDialog}>
           {t('resource_type.remove_doi')}
-        </DangerButton>
+        </Button>
       )}
-      <MuiThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={lightTheme}>
         <ConfirmDialog
           open={openConfirmDialog}
           title={t('resource_type.remove_doi')}
@@ -65,7 +64,7 @@ export const DoiField = () => {
           dataTestId="confirm-delete-doi-dialog">
           <StyledTypography>{t('resource_type.remove_doi_text')}</StyledTypography>
         </ConfirmDialog>
-      </MuiThemeProvider>
+      </ThemeProvider>
     </StyledDoiRow>
   ) : null;
 };

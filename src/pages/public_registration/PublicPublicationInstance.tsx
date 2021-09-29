@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import { hyphenate as hyphenateIsbn } from 'isbn-utils';
 import { JournalPublicationInstance } from '../../types/publication_types/journalRegistration.types';
 import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';

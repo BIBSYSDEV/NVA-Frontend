@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Menu, MenuItem } from '@material-ui/core';
+import { Menu, MenuItem } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -28,7 +28,6 @@ export const MobileMenu = ({ anchorEl, onClose }: MobileMenuProps) => {
         keepMounted
         open={!!anchorEl}
         onClose={onClose}
-        getContentAnchorEl={null}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',

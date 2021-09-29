@@ -2,7 +2,7 @@ import deepmerge from 'deepmerge';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { ItalicPageHeader } from '../../components/PageHeader';
 import { emptyRegistration, Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -41,6 +41,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
     entityDescription: { contributors, date, mainTitle, abstract, description, tags, reference },
     projects,
     fileSet,
+    subjects,
   } = registration;
 
   const [relatedRegistrations] = useFetch<SearchResult>({
@@ -87,7 +88,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           </LandingPageAccordion>
         )}
 
-        {(abstract || description || tags.length > 0) && (
+        {(abstract || description || tags.length > 0 || subjects.length > 0) && (
           <LandingPageAccordion
             data-testid={dataTestId.registrationLandingPage.abstractAccordion}
             defaultExpanded

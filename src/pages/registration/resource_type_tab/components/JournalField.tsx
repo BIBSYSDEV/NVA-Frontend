@@ -1,95 +1,97 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MuiThemeProvider, TextField, Typography } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { Chip, ThemeProvider, Typography } from '@mui/material';
+import { Autocomplete } from '@mui/material';
 import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
-import { Journal, Registration } from '../../../../types/registration.types';
+import { Journal } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { DangerButton } from '../../../../components/DangerButton';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { JournalEntityDescription } from '../../../../types/publication_types/journalRegistration.types';
-import { getYearQuery } from '../../../../utils/registration-helpers';
+import {
+  JournalEntityDescription,
+  JournalRegistration,
+} from '../../../../types/publication_types/journalRegistration.types';
+import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
 
 const journalFieldTestId = dataTestId.registrationWizard.resourceType.journalField;
 
-const StyledSelectedJournalContainer = styled.div`
-  display: grid;
-  grid-template-areas: 'field button';
-  grid-template-columns: 1fr auto;
-  gap: 1rem;
-  align-items: center;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    grid-template-areas: 'field' 'button';
-  }
-`;
-
-const StyledTextField = styled(TextField)`
-  grid-area: field;
-`;
-
-const StyledDangerButton = styled(DangerButton)`
-  max-width: 15rem;
-  grid-area: button;
+const StyledChip = styled(Chip)`
+  padding: 2rem 0 2rem 0;
 `;
 
 export const JournalField = () => {
   const { t } = useTranslation('registration');
-  const { setFieldValue, setFieldTouched, values } = useFormikContext<Registration>();
+  const { setFieldValue, setFieldTouched, values } = useFormikContext<JournalRegistration>();
   const {
-    reference: {
-      publicationContext: { title },
-    },
+    reference: { publicationContext },
     date: { year },
   } = values.entityDescription as JournalEntityDescription;
 
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(publicationContext.title ?? '');
   const debouncedQuery = useDebounce(query);
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
     url:
-      !title && debouncedQuery && debouncedQuery === query
+      debouncedQuery && debouncedQuery === query
         ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${debouncedQuery}`
         : '',
+    errorMessage: t('feedback:error.get_journals'),
   });
 
-  const options = query && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : [];
+  const [journal, isLoadingJournal] = useFetch<Journal>({
+    url: publicationContext.id ?? '',
+    errorMessage: t('feedback:error.get_journal'),
+  });
 
   return (
-    <Field name={ResourceFieldNames.PubliactionContextTitle}>
-      {({ field: { value, name }, meta: { error, touched } }: FieldProps<string>) =>
-        !value ? (
-          <MuiThemeProvider theme={lightTheme}>
-            <Autocomplete
-              {...autocompleteTranslationProps}
-              id={journalFieldTestId}
-              data-testid={journalFieldTestId}
-              aria-labelledby={`${journalFieldTestId}-label`}
-              popupIcon={null}
-              options={options}
-              filterOptions={(options) => options}
-              inputValue={query}
-              onInputChange={(_, newInputValue, reason) => {
-                if (reason !== 'reset') {
-                  setQuery(newInputValue);
-                }
-              }}
-              onBlur={() => (!touched ? setFieldTouched(name) : null)}
-              onChange={(_, inputValue) => setFieldValue(name, inputValue?.name)}
-              loading={isLoadingJournalOptions}
-              getOptionLabel={(option) => option.name}
-              renderOption={(option, state) => (
+    <ThemeProvider theme={lightTheme}>
+      <Field name={ResourceFieldNames.PubliactionContextId}>
+        {({ field, meta }: FieldProps<string>) => (
+          <Autocomplete
+            {...autocompleteTranslationProps}
+            multiple
+            id={journalFieldTestId}
+            data-testid={journalFieldTestId}
+            aria-labelledby={`${journalFieldTestId}-label`}
+            popupIcon={null}
+            options={debouncedQuery && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : []}
+            filterOptions={(options) => options}
+            inputValue={query}
+            onInputChange={(_, newInputValue, reason) => {
+              if (reason !== 'reset') {
+                setQuery(newInputValue);
+              }
+            }}
+            onBlur={() => setFieldTouched(field.name, true, false)}
+            blurOnSelect
+            disableClearable={!query}
+            value={publicationContext.id && journal ? [journal] : []}
+            onChange={(_, inputValue, reason) => {
+              if (reason === 'selectOption') {
+                setFieldValue(ResourceFieldNames.PubliactionContextType, 'Journal', false);
+                setFieldValue(field.name, inputValue.pop()?.id);
+              } else if (reason === 'removeOption') {
+                setFieldValue(ResourceFieldNames.PubliactionContextType, 'UnconfirmedJournal', false);
+                setFieldValue(field.name, '');
+              }
+              setQuery('');
+            }}
+            loading={isLoadingJournalOptions || isLoadingJournal}
+            getOptionLabel={(option) => option.name}
+            renderOption={(props, option, state) => (
+              <li {...props}>
                 <StyledFlexColumn>
                   <Typography variant="subtitle1">
-                    <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
+                    <EmphasizeSubstring
+                      text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
+                      emphasized={state.inputValue}
+                    />
                   </Typography>
                   {option.level && (
                     <Typography variant="body2" color="textSecondary">
@@ -97,44 +99,40 @@ export const JournalField = () => {
                     </Typography>
                   )}
                 </StyledFlexColumn>
-              )}
-              renderInput={(params) => (
-                <AutocompleteTextField
-                  {...params}
-                  label={t('resource_type.journal')}
-                  isLoading={isLoadingJournalOptions}
-                  placeholder={t('resource_type.search_for_journal')}
-                  required
-                  showSearchIcon
-                  errorMessage={touched && error ? error : ''}
+              </li>
+            )}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
+                <StyledChip
+                  {...getTagProps({ index })}
+                  data-testid={dataTestId.registrationWizard.resourceType.journalChip}
+                  label={
+                    <>
+                      <Typography variant="subtitle1">
+                        {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        {t('resource_type.level')}: {option.level}
+                      </Typography>
+                    </>
+                  }
                 />
-              )}
-            />
-          </MuiThemeProvider>
-        ) : (
-          <StyledSelectedJournalContainer>
-            <StyledTextField
-              data-testid={journalFieldTestId}
-              variant="filled"
-              value={value}
-              label={t('resource_type.journal')}
-              disabled
-              multiline
-              required
-            />
-            <StyledDangerButton
-              data-testid={dataTestId.registrationWizard.resourceType.removeJournalButton}
-              variant="contained"
-              onClick={() => {
-                setFieldValue(name, '');
-                setQuery('');
-              }}
-              endIcon={<DeleteIcon />}>
-              {t('resource_type.remove_journal')}
-            </StyledDangerButton>
-          </StyledSelectedJournalContainer>
-        )
-      }
-    </Field>
+              ))
+            }
+            renderInput={(params) => (
+              <AutocompleteTextField
+                {...params}
+                required
+                label={t('resource_type.journal')}
+                isLoading={isLoadingJournalOptions || isLoadingJournal}
+                placeholder={!publicationContext.id ? t('resource_type.search_for_journal') : ''}
+                showSearchIcon={!publicationContext.id}
+                errorMessage={meta.touched && !!meta.error ? meta.error : ''}
+              />
+            )}
+          />
+        )}
+      </Field>
+    </ThemeProvider>
   );
 };

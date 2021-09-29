@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
 import styled from 'styled-components';
-import { Link as MuiLink, List, ListItem, ListItemText, Typography } from '@material-ui/core';
+import { Link as MuiLink, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { SearchRegistration } from '../types/search.types';
 import { displayDate } from '../utils/date-helpers';
 import { getRegistrationLandingPagePath, getUserPath } from '../utils/urlPaths';
@@ -47,7 +47,7 @@ interface RegistrationListItemProps {
 
 const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
   const { t } = useTranslation('publicationTypes');
-  const { id, title, abstract, contributors, publicationType, publicationDate } = registration;
+  const { id, title, abstract, contributors, type, publicationDate } = registration;
 
   const registrationId = id.split('/').pop() as string;
   const focusedContributors = contributors.slice(0, 5);
@@ -57,7 +57,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
     <ListItem divider disableGutters>
       <ListItemText disableTypography data-testid="result-list-item">
         <StyledSuperHeader variant="overline">
-          {t(publicationType)} - {displayDate(publicationDate)}
+          {t(type)} - {displayDate(publicationDate)}
         </StyledSuperHeader>
         <StyledRegistrationTitle gutterBottom>
           <MuiLink component={Link} to={getRegistrationLandingPagePath(registrationId)}>

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Button, Typography } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import { Button, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import {
   addQualifierIdForAuthority,
   AuthorityQualifiers,
@@ -49,13 +49,13 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
     setIsRemovingInstitution(true);
     const updateAuthorityResponse = await removeQualifierIdFromAuthority(
       user.authority.id,
-      AuthorityQualifiers.ORGUNIT_ID,
+      AuthorityQualifiers.OrgUnitId,
       institutionIdToRemove
     );
     if (isErrorStatus(updateAuthorityResponse.status)) {
       dispatch(
         setNotification(
-          t('feedback:error.delete_identifier', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+          t('feedback:error.delete_identifier', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
           NotificationVariant.Error
         )
       );
@@ -86,13 +86,13 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
     if (user.authority) {
       const updateAuthorityResponse = await addQualifierIdForAuthority(
         user.authority.id,
-        AuthorityQualifiers.ORGUNIT_ID,
+        AuthorityQualifiers.OrgUnitId,
         newUnitId
       );
       if (isErrorStatus(updateAuthorityResponse.status)) {
         dispatch(
           setNotification(
-            t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.ORGUNIT_ID}`) }),
+            t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
             NotificationVariant.Error
           )
         );

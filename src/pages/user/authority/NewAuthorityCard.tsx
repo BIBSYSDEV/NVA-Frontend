@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, Radio, Typography } from '@material-ui/core';
+import { Button, Radio, Typography } from '@mui/material';
 import { createAuthority } from '../../../api/authorityApi';
 import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
 import { StyledTypographyPreWrapped } from '../../../components/styled/Wrappers';

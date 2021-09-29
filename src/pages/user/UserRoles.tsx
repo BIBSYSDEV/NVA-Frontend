@@ -1,12 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Typography } from '@material-ui/core';
-import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
-import PeopleIcon from '@material-ui/icons/People';
-import FindInPageIcon from '@material-ui/icons/FindInPage';
-import AllInboxIcon from '@material-ui/icons/AllInbox';
-import CreateIcon from '@material-ui/icons/Create';
+import { Typography } from '@mui/material';
+import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
+import PeopleIcon from '@mui/icons-material/People';
+import FindInPageIcon from '@mui/icons-material/FindInPage';
+import AllInboxIcon from '@mui/icons-material/AllInbox';
+import CreateIcon from '@mui/icons-material/Create';
 import { Card } from '../../components/Card';
 import { User } from '../../types/user.types';
 import { IconLabelTextLine } from '../../components/IconLabelTextLine';

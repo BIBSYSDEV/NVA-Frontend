@@ -29,7 +29,7 @@ describe('Registration: Resource type: Report', () => {
       .click()
       .type(mockPublishersSearch[1].name);
     cy.contains(mockPublishersSearch[1].name).click();
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] textarea`).should(
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherChip}]`).should(
       'contain',
       mockPublishersSearch[1].name
     );
@@ -45,7 +45,7 @@ describe('Registration: Resource type: Report', () => {
       .click()
       .type(mockJournalsSearch[0].name);
     cy.contains(mockJournalsSearch[0].name).click();
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesField}] textarea`).should(
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesChip}]`).should(
       'contain',
       mockJournalsSearch[0].name
     );

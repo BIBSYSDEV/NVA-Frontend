@@ -60,18 +60,19 @@ describe('User opens registration form and can see validation errors', () => {
       .click()
       .type(mockJournalsSearch[0].name);
     cy.contains(mockJournalsSearch[0].name).click();
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] textarea`).should(
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalChip}]`).should(
       'contain',
       mockJournalsSearch[0].name
     );
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] p.Mui-error`).should('not.exist');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.removeJournalButton}]`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalChip}] svg`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalChip}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] p.Mui-error`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] input`)
       .click()
       .type(mockJournalsSearch[0].name);
     cy.contains(mockJournalsSearch[0].name).click();
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] textarea`).should(
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalChip}]`).should(
       'contain',
       mockJournalsSearch[0].name
     );
@@ -255,14 +256,14 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=uploaded-file-select-license] p.Mui-error').should('not.exist');
 
     // Embargo field
-    cy.get('[data-testid=uploaded-file-embargo-date]')
+    cy.get(`[data-testid=${dataTestId.registrationWizard.files.embargoDateField}]`)
       .parent()
       .within(() => {
-        cy.get("input[type='text']").click({ force: true }).type('0101', { force: true }).blur();
+        cy.get("input").click({ force: true }).type('0101', { force: true }).blur();
         cy.get('p.Mui-error').should('be.visible');
-        cy.get("input[type='text']").click({ force: true }).type('2000', { force: true });
+        cy.get("input").click({ force: true }).type('2000', { force: true });
         cy.get('p.Mui-error').should('be.visible');
-        cy.get("input[type='text']").clear().click({ force: true }).type('01013000', { force: true });
+        cy.get("input").clear().click({ force: true }).type('01013000', { force: true });
         cy.get('p.Mui-error').should('not.exist');
       });
 
