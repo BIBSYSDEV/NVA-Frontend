@@ -27,7 +27,7 @@ export const PublisherField = () => {
     date: { year },
   } = values.entityDescription as BookEntityDescription;
 
-  const [query, setQuery] = useState(publisher?.name ?? '');
+  const [query, setQuery] = useState(!publisher?.id ? publisher?.name ?? '' : '');
   const debouncedQuery = useDebounce(query);
   const [publisherOptions, isLoadingPublisherOptions] = useFetch<Publisher[]>({
     url:

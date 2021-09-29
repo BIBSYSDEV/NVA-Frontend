@@ -34,7 +34,7 @@ export const JournalField = () => {
     date: { year },
   } = values.entityDescription as JournalEntityDescription;
 
-  const [query, setQuery] = useState(publicationContext.title ?? '');
+  const [query, setQuery] = useState(!publicationContext.id ? publicationContext.title ?? '' : '');
   const debouncedQuery = useDebounce(query);
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
     url:
