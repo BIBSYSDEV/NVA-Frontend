@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
+import { Link as RouterLink } from 'react-router-dom';
 import { Button, IconButton, Link, Typography } from '@mui/material';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -143,7 +144,8 @@ const ContributorsRow = ({
           <Typography key={index} component="li">
             {id ? (
               <Link
-                href={`/user?id=${encodedId}`}
+                component={RouterLink}
+                to={`/user?id=${encodedId}`}
                 data-testid={dataTestId.registrationLandingPage.authorLink(encodedId)}>
                 {name}
               </Link>

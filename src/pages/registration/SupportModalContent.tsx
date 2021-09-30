@@ -2,6 +2,7 @@ import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { Link, Typography } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 import { MessageForm } from '../../components/MessageForm';
 import { addMessage } from '../../api/registrationApi';
 import { useDispatch } from 'react-redux';
@@ -32,7 +33,7 @@ export const SupportModalContent = ({ closeModal }: SupportModalContentProps) =>
     <>
       <Typography>
         <Trans i18nKey="registration:support_description">
-          <Link href="/my-messages" />
+          <Link component={RouterLink} to="/my-messages" />
         </Trans>
       </Typography>
 

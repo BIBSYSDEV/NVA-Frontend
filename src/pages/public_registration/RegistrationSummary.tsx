@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link, Typography } from '@mui/material';
+import { Link } from '@mui/material';
 import { Skeleton } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SearchFieldName } from '../../types/search.types';
@@ -21,9 +22,9 @@ export const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
     <Skeleton width={400} />
   ) : (
     container && (
-      <Typography component={Link} href={getRegistrationLandingPagePath(container.id)}>
+      <Link component={RouterLink} to={getRegistrationLandingPagePath(container.id)}>
         {container.title}
-      </Typography>
+      </Link>
     )
   );
 };
