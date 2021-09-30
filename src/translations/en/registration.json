@@ -136,11 +136,11 @@
   },
   "validation_errors": "Validation errors",
   "registration": {
-    "link_to_resource": "DOI to resource",
+    "link_to_resource": "Link to resource",
     "start_registration": "Start registration",
-    "start_with_link_to_resource_description": "Link to original version if the resource already has been published on the Internet with a DOI",
+    "start_with_link_to_resource_description": "Link to original version if the resource already has been published on the Internet",
     "start_with_link_to_resource_title": "Start with link to original version",
-    "start_with_uploading_file_description": "Upload file if the resource isn't published on the Internet with a DOI",
+    "start_with_uploading_file_description": "Upload file if the resource isn't published on the Internet",
     "start_with_uploading_file_title": "Start with uploading file"
   },
   "resource_type": {
