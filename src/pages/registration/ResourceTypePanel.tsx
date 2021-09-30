@@ -15,7 +15,7 @@ import {
   instanceTypeBaseFieldName,
   PublicationType,
 } from '../../types/publicationFieldNames';
-import { Registration } from '../../types/registration.types';
+import { PublicationChannelType, Registration } from '../../types/registration.types';
 import { BookTypeForm } from './resource_type_tab/BookTypeForm';
 import { ChapterTypeForm } from './resource_type_tab/ChapterTypeForm';
 import { DegreeTypeForm } from './resource_type_tab/DegreeTypeForm';
@@ -37,7 +37,7 @@ export const ResourceTypePanel = () => {
     switch (newRegistrationMainType) {
       case PublicationType.PublicationInJournal:
         setFieldValue(instanceTypeBaseFieldName, emptyJournalPublicationInstance, false);
-        setFieldValue(contextTypeBaseFieldName, { type: 'UnconfirmedJournal' }, false);
+        setFieldValue(contextTypeBaseFieldName, { type: PublicationChannelType.UnconfirmedJournal }, false);
         break;
       case PublicationType.Book:
         setFieldValue(instanceTypeBaseFieldName, emptyBookPublicationInstance, false);
@@ -45,8 +45,8 @@ export const ResourceTypePanel = () => {
           contextTypeBaseFieldName,
           {
             type: PublicationType.Book,
-            publisher: { type: 'UnconfirmedPublisher' },
-            series: { type: 'UnconfirmedSeries' },
+            publisher: { type: PublicationChannelType.UnconfirmedPublisher },
+            series: { type: PublicationChannelType.UnconfirmedSeries },
           },
           false
         );
@@ -57,8 +57,8 @@ export const ResourceTypePanel = () => {
           contextTypeBaseFieldName,
           {
             type: PublicationType.Report,
-            publisher: { type: 'UnconfirmedPublisher' },
-            series: { type: 'UnconfirmedSeries' },
+            publisher: { type: PublicationChannelType.UnconfirmedPublisher },
+            series: { type: PublicationChannelType.UnconfirmedSeries },
           },
           false
         );
@@ -69,8 +69,8 @@ export const ResourceTypePanel = () => {
           contextTypeBaseFieldName,
           {
             type: PublicationType.Degree,
-            publisher: { type: 'UnconfirmedPublisher' },
-            series: { type: 'UnconfirmedSeries' },
+            publisher: { type: PublicationChannelType.UnconfirmedPublisher },
+            series: { type: PublicationChannelType.UnconfirmedSeries },
           },
           false
         );

@@ -8,7 +8,7 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
-import { Journal, Registration } from '../../../../types/registration.types';
+import { Journal, PublicationChannelType, Registration } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
@@ -72,10 +72,10 @@ export const SeriesField = () => {
             value={field.value && journal ? [journal] : []}
             onChange={(_, inputValue, reason) => {
               if (reason === 'selectOption') {
-                setFieldValue(ResourceFieldNames.SeriesType, 'Series');
+                setFieldValue(ResourceFieldNames.SeriesType, PublicationChannelType.Series);
                 setFieldValue(field.name, inputValue.pop()?.id);
               } else if (reason === 'removeOption') {
-                setFieldValue(ResourceFieldNames.SeriesType, 'UnconfirmedSeries');
+                setFieldValue(ResourceFieldNames.SeriesType, PublicationChannelType.UnconfirmedSeries);
                 setFieldValue(field.name, '');
               }
               setQuery('');

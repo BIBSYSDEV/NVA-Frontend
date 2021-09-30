@@ -8,7 +8,7 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
-import { Journal } from '../../../../types/registration.types';
+import { Journal, PublicationChannelType } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
@@ -74,10 +74,14 @@ export const JournalField = () => {
             value={publicationContext.id && journal ? [journal] : []}
             onChange={(_, inputValue, reason) => {
               if (reason === 'selectOption') {
-                setFieldValue(ResourceFieldNames.PubliactionContextType, 'Journal', false);
+                setFieldValue(ResourceFieldNames.PubliactionContextType, PublicationChannelType.Journal, false);
                 setFieldValue(field.name, inputValue.pop()?.id);
               } else if (reason === 'removeOption') {
-                setFieldValue(ResourceFieldNames.PubliactionContextType, 'UnconfirmedJournal', false);
+                setFieldValue(
+                  ResourceFieldNames.PubliactionContextType,
+                  PublicationChannelType.UnconfirmedJournal,
+                  false
+                );
                 setFieldValue(field.name, '');
               }
               setQuery('');
