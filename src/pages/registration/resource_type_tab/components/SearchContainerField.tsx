@@ -9,13 +9,14 @@ import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
 import { RegistrationSubtype } from '../../../../types/publicationFieldNames';
 import { Registration, RegistrationDate } from '../../../../types/registration.types';
-import { SearchFieldName, SearchResultContributor } from '../../../../types/search.types';
+import { SearchFieldName } from '../../../../types/search.types';
 import { API_URL } from '../../../../utils/constants';
 import { displayDate } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistrations';
 import { getRegistrationPath } from '../../../../utils/urlPaths';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { Contributor } from '../../../../types/contributor.types';
 
 const StyledChip = styled(Chip)`
   padding: 2rem 0 2rem 0;
@@ -78,22 +79,22 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
               value={field.value && selectedContainer ? [selectedContainer] : []}
               onChange={(_, inputValue, reason) => {
                 if (reason === 'selectOption') {
-                  setFieldValue(field.name, `${API_URL}${getRegistrationPath(inputValue.pop()?.id)}`);
+                  setFieldValue(field.name, `${API_URL}${getRegistrationPath(inputValue.pop()?.identifier)}`);
                 } else if (reason === 'removeOption') {
                   setFieldValue(field.name, undefined);
                 }
                 setQuery('');
               }}
               loading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
-              getOptionLabel={(option) => option.title}
+              getOptionLabel={(option) => option.entityDescription.mainTitle}
               renderOption={(props, option, state) => (
                 <li {...props}>
                   <StyledFlexColumn>
                     <Typography variant="subtitle1">
-                      <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
+                      <EmphasizeSubstring text={option.entityDescription.mainTitle} emphasized={state.inputValue} />
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {getDescriptionText(option.publicationDate, option.contributors)}
+                      {getDescriptionText(option.entityDescription.date, option.entityDescription.contributors)}
                     </Typography>
                   </StyledFlexColumn>
                 </li>
@@ -105,9 +106,9 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
                     data-testid={dataTestId.registrationWizard.resourceType.journalChip}
                     label={
                       <>
-                        <Typography variant="subtitle1">{option.title}</Typography>
+                        <Typography variant="subtitle1">{option.entityDescription.mainTitle}</Typography>
                         <Typography variant="body2" color="textSecondary">
-                          {getDescriptionText(option.publicationDate, option.contributors)}
+                          {getDescriptionText(option.entityDescription.date, option.entityDescription.contributors)}
                         </Typography>
                       </>
                     }
@@ -133,11 +134,11 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
   );
 };
 
-const getDescriptionText = (date: RegistrationDate, contributors: SearchResultContributor[]) => {
+const getDescriptionText = (date: RegistrationDate, contributors: Contributor[]) => {
   const dateText = displayDate(date);
   const contributorsText = contributors
     .slice(0, 5)
-    .map((contributor) => contributor.name)
+    .map((contributor) => contributor.identity.name)
     .join('; ');
 
   return [dateText, contributorsText].filter((text) => text).join(' - ');

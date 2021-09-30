@@ -22,8 +22,8 @@ export const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
     <Skeleton width={400} />
   ) : (
     container && (
-      <Link component={RouterLink} to={getRegistrationLandingPagePath(container.id)}>
-        {container.title}
+      <Link component={RouterLink} to={getRegistrationLandingPagePath(container.identifier)}>
+        {container.entityDescription.mainTitle}
       </Link>
     )
   );
