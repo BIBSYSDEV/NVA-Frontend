@@ -24,7 +24,7 @@ import { ReportTypeForm } from './resource_type_tab/ReportTypeForm';
 import { getMainRegistrationType } from '../../utils/registration-helpers';
 
 export const ResourceTypePanel = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('registration');
   const { values, setTouched, setFieldValue, touched, errors } = useFormikContext<Registration>();
   const [mainType, setMainType] = useState(
     getMainRegistrationType(values.entityDescription.reference.publicationInstance.type)
@@ -115,7 +115,7 @@ export const ResourceTypePanel = () => {
             select
             variant="filled"
             fullWidth
-            label={t('type')}
+            label={t('resource_type.form')}
             required
             value={mainType}
             error={!!typeError && typeTouched}
