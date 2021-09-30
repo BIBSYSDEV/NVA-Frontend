@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Divider, Link, Typography } from '@mui/material';
-import { Skeleton } from '@mui/material';
+import { Divider, Link, Typography, Skeleton } from '@mui/material';
 import styled from 'styled-components';
+import { Link as RouterLink } from 'react-router-dom';
 import { CristinProject, ResearchProject } from '../../types/project.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getProjectPath } from '../../utils/urlPaths';
@@ -84,7 +84,13 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
           variant="body1"
           variantMapping={{ body1: 'h3' }}
           data-testid={dataTestId.registrationLandingPage.projectTitle}>
-          {fetchedProject?.id ? <Link href={getProjectPath(fetchedProject.id)}>{projectTitle}</Link> : projectTitle}
+          {fetchedProject?.id ? (
+            <Link component={RouterLink} to={getProjectPath(fetchedProject.id)}>
+              {projectTitle}
+            </Link>
+          ) : (
+            projectTitle
+          )}
         </StyledProjectTitle>
       )}
       <Divider component="span" orientation="vertical" />

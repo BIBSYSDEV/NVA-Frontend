@@ -70,7 +70,7 @@ const PublicProfile = () => {
               )}
               {authority.orcids.map((orcid) => (
                 <StyledLine key={orcid}>
-                  <IconButton size="small" href={orcid}>
+                  <IconButton size="small" href={orcid} target="_blank">
                     <img src={orcidIcon} height="20" alt="orcid" />
                   </IconButton>
                   <StyledTextContainer>
