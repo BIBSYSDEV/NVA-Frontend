@@ -136,11 +136,11 @@
   },
   "validation_errors": "Valideringsfeil",
   "registration": {
-    "link_to_resource": "DOI til ressurs",
+    "link_to_resource": "Lenke til ressurs",
     "start_registration": "Start registrering",
-    "start_with_link_to_resource_description": "Lenke til original versjon hvis ressursen allerede er publisert på Internett med en DOI",
+    "start_with_link_to_resource_description": "Lenke til original versjon hvis ressursen allerede er publisert på Internett",
     "start_with_link_to_resource_title": "Start med lenke til original versjon",
-    "start_with_uploading_file_description": "Last opp fil hvis ressursen ikke er publisert på Internett med en DOI",
+    "start_with_uploading_file_description": "Last opp fil hvis ressursen ikke er publisert på Internett",
     "start_with_uploading_file_title": "Start med å laste opp fil"
   },
   "resource_type": {
@@ -159,9 +159,9 @@
       "Encyclopedia Chapter": "Kapittel i oppslagsverk",
       "Non-fiction Chapter": "Faglig kapittel",
       "Non-fiction Monograph": "Faglig monografi",
-      "Popular Science Monograph": "Popularvitenskapelig monografi",
+      "Popular Science Monograph": "Populærvitenskapelig monografi",
       "Popular Science Chapter": "Populærvitenskapelig kapittel",
-      "Popular science article": "Popularvitenskapelig artikkel",
+      "Popular science article": "Populærvitenskapelig artikkel",
       "Professional article": "Fagartikkel",
       "Research article": "Forskningsartikkel",
       "Review article": "Vitenskapelig oversiktsartikkel",
