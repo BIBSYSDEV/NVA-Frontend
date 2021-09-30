@@ -117,6 +117,15 @@ export interface BaseReference {
   doi: string;
 }
 
+export enum PublicationChannelType {
+  Journal = 'Journal',
+  Publisher = 'Publisher',
+  Series = 'Series',
+  UnconfirmedJournal = 'UnconfirmedJournal',
+  UnconfirmedPublisher = 'UnconfirmedPublisher',
+  UnconfirmedSeries = 'UnconfirmedSeries',
+}
+
 export interface Registration extends BaseRegistration {
   entityDescription:
     | JournalEntityDescription

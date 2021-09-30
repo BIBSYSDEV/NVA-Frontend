@@ -15,7 +15,7 @@ import {
   instanceTypeBaseFieldName,
   PublicationType,
 } from '../../types/publicationFieldNames';
-import { Registration } from '../../types/registration.types';
+import { PublicationChannelType, Registration } from '../../types/registration.types';
 import { BookTypeForm } from './resource_type_tab/BookTypeForm';
 import { ChapterTypeForm } from './resource_type_tab/ChapterTypeForm';
 import { DegreeTypeForm } from './resource_type_tab/DegreeTypeForm';
@@ -37,19 +37,43 @@ export const ResourceTypePanel = () => {
     switch (newRegistrationMainType) {
       case PublicationType.PublicationInJournal:
         setFieldValue(instanceTypeBaseFieldName, emptyJournalPublicationInstance, false);
-        setFieldValue(contextTypeBaseFieldName, { type: 'UnconfirmedJournal' }, false);
+        setFieldValue(contextTypeBaseFieldName, { type: PublicationChannelType.UnconfirmedJournal }, false);
         break;
       case PublicationType.Book:
         setFieldValue(instanceTypeBaseFieldName, emptyBookPublicationInstance, false);
-        setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Book }, false);
+        setFieldValue(
+          contextTypeBaseFieldName,
+          {
+            type: PublicationType.Book,
+            publisher: { type: PublicationChannelType.UnconfirmedPublisher },
+            series: { type: PublicationChannelType.UnconfirmedSeries },
+          },
+          false
+        );
         break;
       case PublicationType.Report:
         setFieldValue(instanceTypeBaseFieldName, emptyReportPublicationInstance, false);
-        setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Report }, false);
+        setFieldValue(
+          contextTypeBaseFieldName,
+          {
+            type: PublicationType.Report,
+            publisher: { type: PublicationChannelType.UnconfirmedPublisher },
+            series: { type: PublicationChannelType.UnconfirmedSeries },
+          },
+          false
+        );
         break;
       case PublicationType.Degree:
         setFieldValue(instanceTypeBaseFieldName, emptyDegreePublicationInstance, false);
-        setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Degree }, false);
+        setFieldValue(
+          contextTypeBaseFieldName,
+          {
+            type: PublicationType.Degree,
+            publisher: { type: PublicationChannelType.UnconfirmedPublisher },
+            series: { type: PublicationChannelType.UnconfirmedSeries },
+          },
+          false
+        );
         break;
       case PublicationType.Chapter:
         setFieldValue(instanceTypeBaseFieldName, emptyChapterPublicationInstance, false);

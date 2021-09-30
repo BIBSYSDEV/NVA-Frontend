@@ -1,7 +1,7 @@
 import { ContributorRole } from '../../types/contributor.types';
 import { LanguageValues } from '../../types/language.types';
-import { JournalType, PublicationType } from '../../types/publicationFieldNames';
-import { RegistrationStatus } from '../../types/registration.types';
+import { JournalType } from '../../types/publicationFieldNames';
+import { PublicationChannelType, RegistrationStatus } from '../../types/registration.types';
 import { mockCustomerInstitution } from './mockCustomerInstitutions';
 import { MessageType, SupportRequest } from '../../types/publication_types/messages.types';
 import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
@@ -100,7 +100,7 @@ export const mockRegistration: JournalRegistration = {
         contentType: JournalArticleContentType.ResearchArticle,
       },
       publicationContext: {
-        type: PublicationType.PublicationInJournal,
+        type: PublicationChannelType.Journal,
         title: 'International Journal of Human-Computer Interaction',
         onlineIssn: '1044-7318',
       },

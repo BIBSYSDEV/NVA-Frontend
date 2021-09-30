@@ -1,4 +1,10 @@
-import { BaseEntityDescription, BaseReference, BaseRegistration, NviApplicableBase } from '../registration.types';
+import {
+  BaseEntityDescription,
+  BaseReference,
+  BaseRegistration,
+  NviApplicableBase,
+  PublicationChannelType,
+} from '../registration.types';
 import { JournalType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { emptyPagesRange, PagesRange } from './pages.types';
@@ -18,7 +24,7 @@ export interface JournalPublicationInstance extends NviApplicableBase<JournalArt
 }
 
 export interface JournalPublicationContext {
-  type: 'UnconfirmedJournal' | 'Journal' | '';
+  type: PublicationChannelType.UnconfirmedJournal | PublicationChannelType.Journal | '';
   id?: string;
   title?: string;
   onlineIssn?: string;

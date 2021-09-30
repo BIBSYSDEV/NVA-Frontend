@@ -26,6 +26,9 @@ const resourceErrorMessage = {
     field: i18n.t('registration:resource_type.isbn'),
   }),
   isbnTooShort: i18n.t('feedback:validation.isbn_too_short'),
+  journalNotSelected: i18n.t('feedback:validation.not_selected', {
+    field: i18n.t('registration:resource_type.journal'),
+  }),
   journalRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.journal'),
   }),
@@ -50,8 +53,14 @@ const resourceErrorMessage = {
   peerReviewedRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.peer_reviewed'),
   }),
+  publisherNotSelected: i18n.t('feedback:validation.not_selected', {
+    field: i18n.t('common:publisher'),
+  }),
   publisherRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:publisher'),
+  }),
+  seriesNotSelected: i18n.t('feedback:validation.not_selected', {
+    field: i18n.t('registration:resource_type.series'),
   }),
   typeRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:type'),
@@ -83,19 +92,24 @@ const pagesMonographField = Yup.object()
       .transform(emptyStringToNull)
       .nullable(),
   });
+
 const pagesRangeField = Yup.object()
   .nullable()
   .shape({
-    begin: Yup.string().test('begin-test', resourceErrorMessage.pageBeginMustBeSmallerThanEnd, function (beginValue) {
-      const beginNumber = parseInt(beginValue ?? '');
-      const endNumber = parseInt(this.parent.end);
-      if (!isNaN(beginNumber) && !isNaN(endNumber)) {
-        return beginNumber <= endNumber;
+    begin: Yup.string().test(
+      'begin-test',
+      resourceErrorMessage.pageBeginMustBeSmallerThanEnd,
+      (beginValue, context) => {
+        const beginNumber = parseInt(beginValue ?? '');
+        const endNumber = parseInt(context.parent.end);
+        if (!isNaN(beginNumber) && !isNaN(endNumber)) {
+          return beginNumber <= endNumber;
+        }
+        return true;
       }
-      return true;
-    }),
-    end: Yup.string().test('end-test', resourceErrorMessage.pageEndMustBeBiggerThanBegin, function (endValue) {
-      const beginNumber = parseInt(this.parent.begin);
+    ),
+    end: Yup.string().test('end-test', resourceErrorMessage.pageEndMustBeBiggerThanBegin, (endValue, context) => {
+      const beginNumber = parseInt(context.parent.begin);
       const endNumber = parseInt(endValue ?? '');
       if (!isNaN(beginNumber) && !isNaN(endNumber)) {
         return beginNumber <= endNumber;
@@ -105,7 +119,19 @@ const pagesRangeField = Yup.object()
   });
 
 const publisherField = Yup.object().shape({
-  id: Yup.string().required(resourceErrorMessage.publisherRequired),
+  id: Yup.string().when('name', {
+    is: (value: string) => !!value,
+    then: Yup.string().required(resourceErrorMessage.publisherNotSelected),
+    otherwise: Yup.string().required(resourceErrorMessage.publisherRequired),
+  }),
+});
+
+const seriesField = Yup.object().shape({
+  id: Yup.string().when('title', {
+    is: (value: string) => !!value,
+    then: Yup.string().required(resourceErrorMessage.seriesNotSelected),
+    otherwise: Yup.string(),
+  }),
 });
 
 export const baseReference = Yup.object().shape({
@@ -146,7 +172,11 @@ const journalPublicationContext = Yup.object().shape({
   id: Yup.string().when('$publicationInstanceType', {
     is: JournalType.Corrigendum,
     then: Yup.string(),
-    otherwise: Yup.string().required(resourceErrorMessage.journalRequired),
+    otherwise: Yup.string().when('title', {
+      is: (value: string) => !!value,
+      then: Yup.string().required(resourceErrorMessage.journalNotSelected),
+      otherwise: Yup.string().required(resourceErrorMessage.journalRequired),
+    }),
   }),
 });
 
@@ -173,6 +203,7 @@ const bookPublicationInstance = Yup.object().shape({
 
 const bookPublicationContext = Yup.object().shape({
   publisher: publisherField,
+  series: seriesField,
   isbnList: isbnListField,
 });
 
@@ -189,6 +220,7 @@ const reportPublicationInstance = Yup.object().shape({
 
 const reportPublicationContext = Yup.object().shape({
   publisher: publisherField,
+  series: seriesField,
   isbnList: isbnListField,
 });
 
@@ -204,6 +236,7 @@ const degreePublicationInstance = Yup.object().shape({
 
 const degreePublicationContext = Yup.object().shape({
   publisher: publisherField,
+  series: seriesField,
 });
 
 export const degreeReference = baseReference.shape({

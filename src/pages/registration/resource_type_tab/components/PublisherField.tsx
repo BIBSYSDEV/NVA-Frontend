@@ -6,7 +6,7 @@ import { Autocomplete } from '@mui/material';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
-import { Publisher, Registration } from '../../../../types/registration.types';
+import { PublicationChannelType, Publisher, Registration } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
@@ -27,7 +27,7 @@ export const PublisherField = () => {
     date: { year },
   } = values.entityDescription as BookEntityDescription;
 
-  const [query, setQuery] = useState(publisher?.name ?? '');
+  const [query, setQuery] = useState(!publisher?.id ? publisher?.name ?? '' : '');
   const debouncedQuery = useDebounce(query);
   const [publisherOptions, isLoadingPublisherOptions] = useFetch<Publisher[]>({
     url:
@@ -69,10 +69,18 @@ export const PublisherField = () => {
             value={publisher?.id && fetchedPublisher ? [fetchedPublisher] : []}
             onChange={(_, inputValue, reason) => {
               if (reason === 'selectOption') {
-                setFieldValue(ResourceFieldNames.PubliactionContextPublisherType, 'Publisher', false);
+                setFieldValue(
+                  ResourceFieldNames.PubliactionContextPublisherType,
+                  PublicationChannelType.Publisher,
+                  false
+                );
                 setFieldValue(field.name, inputValue.pop()?.id);
               } else if (reason === 'removeOption') {
-                setFieldValue(ResourceFieldNames.PubliactionContextPublisherType, 'UnconfirmedPublisher', false);
+                setFieldValue(
+                  ResourceFieldNames.PubliactionContextPublisherType,
+                  PublicationChannelType.UnconfirmedPublisher,
+                  false
+                );
                 setFieldValue(field.name, '');
               }
               setQuery('');
