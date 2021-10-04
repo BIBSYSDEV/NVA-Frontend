@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TablePagination, Typography } from '@mui/material';
+import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { SearchResults } from './SearchResults';
-import { useLocation } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
-import { SearchResult } from '../../types/search.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { dataTestId } from '../../utils/dataTestIds';
-import styled from 'styled-components';
+import { SearchResult } from '../../types/registration.types';
 
 const StyledRegistrationSearch = styled.div`
   grid-area: results;

@@ -7,9 +7,12 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
-import { RegistrationSubtype } from '../../../../types/publicationFieldNames';
+import {
+  RegistrationFieldName,
+  RegistrationSubtype,
+  ResourceFieldNames,
+} from '../../../../types/publicationFieldNames';
 import { Registration, RegistrationDate } from '../../../../types/registration.types';
-import { SearchFieldName } from '../../../../types/search.types';
 import { API_URL } from '../../../../utils/constants';
 import { displayDate } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
@@ -38,12 +41,12 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
 
   const [searchContainerOptions, isLoadingSearchContainerOptions] = useSearchRegistrations({
     searchTerm: debouncedQuery,
-    properties: [{ fieldName: SearchFieldName.Type, value: props.searchSubtypes }],
+    properties: [{ fieldName: ResourceFieldNames.SubType, value: props.searchSubtypes }],
   });
 
   const currentIdentifier = getIn(values, props.fieldName)?.split('/').pop() ?? '';
   const [selectedContainerSearch, isLoadingSelectedContainer] = useSearchRegistrations({
-    properties: [{ fieldName: SearchFieldName.Id, value: currentIdentifier }],
+    properties: [{ fieldName: RegistrationFieldName.Id, value: currentIdentifier }],
   });
 
   const selectedContainer =

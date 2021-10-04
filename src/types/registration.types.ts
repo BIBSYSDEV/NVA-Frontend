@@ -126,6 +126,12 @@ export enum PublicationChannelType {
   UnconfirmedSeries = 'UnconfirmedSeries',
 }
 
+export interface SearchResult {
+  hits: Registration[];
+  took: number;
+  total: number;
+}
+
 export interface Registration extends BaseRegistration {
   entityDescription:
     | JournalEntityDescription

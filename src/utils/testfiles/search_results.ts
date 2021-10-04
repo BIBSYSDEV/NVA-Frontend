@@ -1,4 +1,4 @@
-import { SearchResult } from '../../types/search.types';
+import { SearchResult } from '../../types/registration.types';
 import { mockRegistration } from './mockRegistration';
 
 export const mockSearchResults: SearchResult = {

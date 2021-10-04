@@ -10,12 +10,12 @@ import { AffiliationHierarchy } from '../../components/institution/AffiliationHi
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
-import { SearchFieldName } from '../../types/search.types';
 import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { PageSpinner } from '../../components/PageSpinner';
 import { Authority } from '../../types/authority.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { SearchResults } from '../search/SearchResults';
+import { ContributorFieldNames, SpecificContributorFieldNames } from '../../types/publicationFieldNames';
 
 const StyledLine = styled.div`
   display: flex;
@@ -42,7 +42,9 @@ const PublicProfile = () => {
     errorMessage: t('feedback:error.get_authority'),
   });
   const [registrations, isLoadingRegistrations] = useSearchRegistrations({
-    properties: [{ fieldName: SearchFieldName.ContributorId, value: arpId }],
+    properties: [
+      { fieldName: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Id}`, value: arpId },
+    ],
   });
 
   return (
