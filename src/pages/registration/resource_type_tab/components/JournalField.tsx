@@ -64,12 +64,9 @@ export const JournalField = () => {
     }
   }, [setFieldValue, journalsByIssn]);
 
+  // Fetch selected journal
   const [journal, isLoadingJournal] = useFetch<Journal>({
-    url: publicationContext.id
-      ? publicationContext.id
-      : publicationContext.printIssn || publicationContext.onlineIssn
-      ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${debouncedQuery}`
-      : '',
+    url: publicationContext.id ?? '',
     errorMessage: t('feedback:error.get_journal'),
   });
 
