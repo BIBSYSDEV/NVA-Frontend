@@ -1,5 +1,5 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Chip, ThemeProvider, Typography } from '@mui/material';
 import { Autocomplete } from '@mui/material';
@@ -42,6 +42,14 @@ export const PublisherField = () => {
         : '',
     errorMessage: t('feedback:error.get_publishers'),
   });
+
+  useEffect(() => {
+    if (publisherOptions?.length === 1 && publisher?.name && publisherOptions[0].name === publisher.name) {
+      setFieldValue(ResourceFieldNames.PubliactionContextPublisherType, PublicationChannelType.Publisher, false);
+      setFieldValue(ResourceFieldNames.PubliactionContextPublisherId, publisherOptions[0].id);
+      setQuery('');
+    }
+  }, [setFieldValue, publisher?.name, publisherOptions]);
 
   const [fetchedPublisher, isLoadingPublisher] = useFetch<Publisher>({
     url: publisher?.id ?? '',
