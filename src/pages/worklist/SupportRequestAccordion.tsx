@@ -15,6 +15,7 @@ import { Registration } from '../../types/registration.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { MessageList } from './MessageList';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { getRegistrationIdentifier } from '../../utils/registration-helpers';
 
 const StyledAccordion = styled(Accordion)`
   width: 100%;
@@ -72,6 +73,7 @@ export const SupportRequestAccordion = ({
   const { t } = useTranslation('workLists');
   const dispatch = useDispatch();
   const { id } = registration;
+  const identifier = getRegistrationIdentifier(id);
 
   const onClickSendMessage = async (message: string) => {
     const updateDoiRequestResponse = await addMessage(id, message, messageCollection.messageType);
@@ -84,17 +86,19 @@ export const SupportRequestAccordion = ({
   };
 
   return (
-    <StyledAccordion data-testid={`message-${id}`}>
+    <StyledAccordion data-testid={`message-${identifier}`}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <StyledStatus data-testid={`message-type-${id}`}>
+        <StyledStatus data-testid={`message-type-${identifier}`}>
           {messageCollection.messageType === MessageType.DoiRequest
             ? t('types.doi')
             : messageCollection.messageType === MessageType.Support
             ? t('types.support')
             : null}
         </StyledStatus>
-        <StyledTitle data-testid={`message-title-${id}`}>{registration.entityDescription?.mainTitle}</StyledTitle>
-        <StyledOwner data-testid={`message-owner-${id}`}>
+        <StyledTitle data-testid={`message-title-${identifier}`}>
+          {registration.entityDescription?.mainTitle}
+        </StyledTitle>
+        <StyledOwner data-testid={`message-owner-${identifier}`}>
           <Typography>{registration.owner}</Typography>
           {new Date(messageCollection.messages[messageCollection.messages.length - 1].date).toLocaleDateString()}
         </StyledOwner>
@@ -106,7 +110,7 @@ export const SupportRequestAccordion = ({
         </StyledMessages>
         <StyledAccordionActionButtons>
           <Button
-            data-testid={`go-to-registration-${id}`}
+            data-testid={`go-to-registration-${identifier}`}
             variant="outlined"
             color="primary"
             endIcon={<ArrowForwardIcon />}
