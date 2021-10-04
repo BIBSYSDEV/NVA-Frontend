@@ -51,7 +51,7 @@ export const UploadRegistration = ({ expanded, onChange }: UploadRegistrationPro
       dispatch(setNotification(t('feedback:error.create_registration'), NotificationVariant.Error));
       setIsLoading(false);
     } else if (isSuccessStatus(createRegistrationResponse.status)) {
-      history.push(getRegistrationPath(createRegistrationResponse.data.identifier), { highestValidatedTab: -1 });
+      history.push(getRegistrationPath(createRegistrationResponse.data.id), { highestValidatedTab: -1 });
     }
   };
 

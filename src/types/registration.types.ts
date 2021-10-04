@@ -82,7 +82,7 @@ interface RegistrationPublisher {
 
 export interface BaseRegistration extends RegistrationFileSet {
   readonly type: 'Publication';
-  readonly identifier: string;
+  readonly id: string;
   readonly createdDate: string;
   readonly modifiedDate: string;
   readonly publishedDate?: string;
@@ -154,7 +154,7 @@ export interface Doi {
 
 export const emptyRegistration: Registration = {
   type: 'Publication',
-  identifier: '',
+  id: '',
   createdDate: '',
   modifiedDate: '',
   owner: '',

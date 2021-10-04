@@ -1,3 +1,5 @@
+import { getRegistrationIdentifier } from './registration-helpers';
+
 export enum UrlPathTemplate {
   About = '/about',
   AdminInstitutions = '/admin-institutions',
@@ -20,13 +22,15 @@ export enum UrlPathTemplate {
   Worklist = '/worklist',
 }
 
-export const getRegistrationLandingPagePath = (identifier: string) =>
-  UrlPathTemplate.RegistrationLandingPage.replace(':identifier', encodeURIComponent(identifier));
+export const getRegistrationLandingPagePath = (id: string) =>
+  UrlPathTemplate.RegistrationLandingPage.replace(':identifier', encodeURIComponent(getRegistrationIdentifier(id)));
 
-export const getRegistrationPath = (identifier?: string) =>
-  identifier
+export const getRegistrationPath = (id?: string) => {
+  const identifier = getRegistrationIdentifier(id ?? '');
+  return identifier
     ? UrlPathTemplate.Registration.replace(':identifier?', encodeURIComponent(identifier))
     : UrlPathTemplate.Registration.replace('/:identifier?', '');
+};
 
 export const getUserPath = (authorityId: string) => `${UrlPathTemplate.User}?id=${encodeURIComponent(authorityId)}`;
 

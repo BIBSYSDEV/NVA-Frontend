@@ -9,7 +9,7 @@ import { JournalArticleContentType } from '../../types/publication_types/content
 
 export const mockRegistration: JournalRegistration = {
   type: 'Publication',
-  identifier: '12345679',
+  id: '12345679',
   createdDate: new Date(2020, 1).toISOString(),
   modifiedDate: new Date(2020, 2).toISOString(),
   owner: 'tu@unit.no',

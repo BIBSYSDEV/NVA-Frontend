@@ -79,7 +79,7 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
               value={field.value && selectedContainer ? [selectedContainer] : []}
               onChange={(_, inputValue, reason) => {
                 if (reason === 'selectOption') {
-                  setFieldValue(field.name, `${API_URL}${getRegistrationPath(inputValue.pop()?.identifier)}`);
+                  setFieldValue(field.name, `${API_URL}${getRegistrationPath(inputValue.pop()?.id)}`);
                 } else if (reason === 'removeOption') {
                   setFieldValue(field.name, undefined);
                 }

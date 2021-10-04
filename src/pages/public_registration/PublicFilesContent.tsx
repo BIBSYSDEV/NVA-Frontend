@@ -90,7 +90,7 @@ export const PublicFilesContent = ({ registration }: PublicRegistrationContentPr
         <FileRow
           key={file.identifier}
           file={file}
-          registrationId={registration.identifier}
+          registrationId={registration.id}
           openPreviewByDefault={index === 0 && publiclyAvailableFiles[0].size < maxFileSize}
         />
       ))}

@@ -37,7 +37,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
   registration = deepmerge(emptyRegistration, registration);
 
   const {
-    identifier,
+    id,
     entityDescription: { contributors, date, mainTitle, abstract, description, tags, reference },
     projects,
     fileSet,
@@ -45,7 +45,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
   } = registration;
 
   const [relatedRegistrations] = useFetch<SearchResult>({
-    url: `${SearchApiPath.Registrations}?query="${identifier}" AND NOT (${SearchFieldName.Id}:"${identifier}")`,
+    url: `${SearchApiPath.Registrations}?query="${id}" AND NOT (${SearchFieldName.Id}:"${id}")`,
     errorMessage: t('feedback:error.search'),
   });
 

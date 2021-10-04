@@ -5,14 +5,16 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SearchFieldName } from '../../types/search.types';
+import { getRegistrationIdentifier } from '../../utils/registration-helpers';
 
 interface RegistrationSummaryProps {
   id: string;
 }
 
 export const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
+  const identifier = getRegistrationIdentifier(id);
   const [searchContainer, isLoadingSearchContainer] = useSearchRegistrations({
-    properties: [{ fieldName: SearchFieldName.Id, value: id?.split('/').pop() ?? '' }],
+    properties: [{ fieldName: SearchFieldName.Id, value: identifier }],
   });
 
   const container = searchContainer && searchContainer.hits.length === 1 ? searchContainer.hits[0] : null;
@@ -22,7 +24,7 @@ export const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
     <Skeleton width={400} />
   ) : (
     container && (
-      <Link component={RouterLink} to={getRegistrationLandingPagePath(container.identifier)}>
+      <Link component={RouterLink} to={getRegistrationLandingPagePath(identifier)}>
         {container.entityDescription.mainTitle}
       </Link>
     )

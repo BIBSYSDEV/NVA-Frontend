@@ -57,7 +57,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   useEffect(() => {
     // Redirect to Landing Page if user should not be able to edit this registration
     if (registration && !isValidOwner && !isValidCurator) {
-      history.replace(getRegistrationLandingPagePath(registration.identifier));
+      history.replace(getRegistrationLandingPagePath(registration.id));
     }
   }, [history, registration, isValidOwner, isValidCurator]);
 
