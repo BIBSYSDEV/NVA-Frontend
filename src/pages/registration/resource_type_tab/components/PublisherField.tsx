@@ -14,6 +14,12 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { getYearQuery } from '../../../../utils/registration-helpers';
+import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
+import styled from 'styled-components';
+
+const StyledChip = styled(Chip)`
+  padding: 2rem 0 2rem 0;
+`;
 
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
 
@@ -96,16 +102,32 @@ export const PublisherField = () => {
             loading={isLoadingPublisherOptions || isLoadingPublisher}
             getOptionLabel={(option) => option.name}
             renderOption={(props, option, state) => (
-              <Typography {...props} variant="subtitle1" component="li">
-                <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
-              </Typography>
+              <li {...props}>
+                <StyledFlexColumn>
+                  <Typography variant="subtitle1">
+                    <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
+                  </Typography>
+                  {option.level && (
+                    <Typography variant="body2" color="textSecondary">
+                      {t('resource_type.level')}: {option.level}
+                    </Typography>
+                  )}
+                </StyledFlexColumn>
+              </li>
             )}
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
-                <Chip
+                <StyledChip
                   {...getTagProps({ index })}
                   data-testid={dataTestId.registrationWizard.resourceType.publisherChip}
-                  label={<Typography variant="subtitle1">{option.name}</Typography>}
+                  label={
+                    <>
+                      <Typography variant="subtitle1">{option.name}</Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        {t('resource_type.level')}: {option.level}
+                      </Typography>
+                    </>
+                  }
                 />
               ))
             }
