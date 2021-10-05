@@ -52,6 +52,9 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
         fetchedPublisher && (
           <>
             <Typography>{fetchedPublisher.name}</Typography>
+            <Typography>
+              {t('resource_type.level')}: {fetchedPublisher.level}
+            </Typography>
             <Typography
               component={Link}
               href={getChannelRegisterPublisherUrl(fetchedPublisher.identifier)}
