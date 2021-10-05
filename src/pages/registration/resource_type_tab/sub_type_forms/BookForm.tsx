@@ -20,7 +20,7 @@ export const BookForm = () => {
   const { values } = useFormikContext<BookRegistration>();
   const {
     reference: {
-      publicationInstance: { peerReviewed, type },
+      publicationInstance: { type },
     },
   } = values.entityDescription;
 
@@ -49,7 +49,7 @@ export const BookForm = () => {
         <SeriesFields />
       </BackgroundDiv>
 
-      {type === BookType.Monograph && <NviValidation isPeerReviewed={!!peerReviewed} isRated={false} />}
+      {type === BookType.Monograph && <NviValidation registration={values} />}
     </>
   );
 };
