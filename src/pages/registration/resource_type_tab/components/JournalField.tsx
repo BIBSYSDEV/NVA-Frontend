@@ -8,7 +8,7 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
-import { Journal, PublicationChannelType } from '../../../../types/registration.types';
+import { Journal, PublicationChannelType, Publisher } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
@@ -19,6 +19,7 @@ import {
   JournalRegistration,
 } from '../../../../types/publication_types/journalRegistration.types';
 import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
+import { useFetchPublicationChannel } from '../../../../utils/hooks/useFetchPublicationChannel';
 
 const journalFieldTestId = dataTestId.registrationWizard.resourceType.journalField;
 
