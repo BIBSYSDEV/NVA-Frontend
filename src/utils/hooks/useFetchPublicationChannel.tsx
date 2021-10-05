@@ -7,13 +7,16 @@ import { Journal, Publisher } from '../../types/registration.types';
 import { setPublicationChannel } from '../../redux/actions/publicationChannelActions';
 
 // This hook is used to fetch all top-level institutions and put them in Redux, to avoid fetching same data many times
-export const useFetchPublicationChannel = (id: string, errorMessage?: string): [Journal | Publisher, boolean] => {
+export const useFetchPublicationChannel = <T extends Journal | Publisher>(
+  id: string,
+  errorMessage?: string
+): [T, boolean] => {
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation('feedback');
+  const { t } = useTranslation('feedback');
   const publicationChannelState = useSelector((store: RootStore) => store.publicationChannel);
-  const publicationChannel = publicationChannelState[id];
+  const publicationChannel = publicationChannelState[id] as T;
 
-  const [fetchedPublicationChannel, isLoading] = useFetch<Journal | Publisher>({
+  const [fetchedPublicationChannel, isLoading] = useFetch<T>({
     url: !publicationChannel ? id : '',
     errorMessage: errorMessage ?? t('error.get_journal'),
   });

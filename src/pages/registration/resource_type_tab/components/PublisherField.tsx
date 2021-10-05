@@ -16,6 +16,7 @@ import { BookEntityDescription } from '../../../../types/publication_types/bookR
 import { getYearQuery } from '../../../../utils/registration-helpers';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import styled from 'styled-components';
+import { useFetchPublicationChannel } from '../../../../utils/hooks/useFetchPublicationChannel';
 
 const StyledChip = styled(Chip)`
   padding: 2rem 0 2rem 0;
@@ -51,10 +52,10 @@ export const PublisherField = () => {
     }
   }, [setFieldValue, publisher?.name, publisherOptions]);
 
-  const [fetchedPublisher, isLoadingPublisher] = useFetch<Publisher>({
-    url: publisher?.id ?? '',
-    errorMessage: t('feedback:error.get_publisher'),
-  });
+  const [fetchedPublisher, isLoadingPublisher] = useFetchPublicationChannel<Publisher>(
+    publisher?.id ?? '',
+    t('feedback:error.get_publisher')
+  );
 
   return (
     <ThemeProvider theme={lightTheme}>

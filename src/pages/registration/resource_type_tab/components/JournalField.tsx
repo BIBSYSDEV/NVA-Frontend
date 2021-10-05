@@ -8,7 +8,7 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
-import { Journal, PublicationChannelType, Publisher } from '../../../../types/registration.types';
+import { Journal, PublicationChannelType } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
@@ -66,10 +66,10 @@ export const JournalField = () => {
   }, [setFieldValue, journalsByIssn]);
 
   // Fetch selected journal
-  const [journal, isLoadingJournal] = useFetch<Journal>({
-    url: publicationContext.id ?? '',
-    errorMessage: t('feedback:error.get_journal'),
-  });
+  const [journal, isLoadingJournal] = useFetchPublicationChannel<Journal>(
+    publicationContext.id ?? '',
+    t('feedback:error.get_journal')
+  );
 
   return (
     <ThemeProvider theme={lightTheme}>
