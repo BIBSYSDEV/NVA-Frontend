@@ -19,6 +19,7 @@ import {
   JournalRegistration,
 } from '../../../../types/publication_types/journalRegistration.types';
 import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
+import { useFetchPublicationChannel } from '../../../../utils/hooks/useFetchPublicationChannel';
 
 const journalFieldTestId = dataTestId.registrationWizard.resourceType.journalField;
 
@@ -65,10 +66,10 @@ export const JournalField = () => {
   }, [setFieldValue, journalsByIssn]);
 
   // Fetch selected journal
-  const [journal, isLoadingJournal] = useFetch<Journal>({
-    url: publicationContext.id ?? '',
-    errorMessage: t('feedback:error.get_journal'),
-  });
+  const [journal, isLoadingJournal] = useFetchPublicationChannel<Journal>(
+    publicationContext.id ?? '',
+    t('feedback:error.get_journal')
+  );
 
   return (
     <ThemeProvider theme={lightTheme}>
