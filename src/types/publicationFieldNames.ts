@@ -38,6 +38,11 @@ export enum ChapterType {
   AnthologyChapter = 'ChapterArticle',
 }
 
+export enum PresentationType {
+  ConferenceLecture = 'ConferenceLecture',
+  ConferencePoster = 'ConferencePoster',
+}
+
 export type RegistrationSubtype = JournalType | ReportType | BookType | DegreeType | ChapterType;
 
 export enum RegistrationFieldName {
