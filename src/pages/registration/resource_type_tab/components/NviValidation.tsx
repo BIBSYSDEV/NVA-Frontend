@@ -7,8 +7,9 @@ import { RootStore } from '../../../../redux/reducers/rootReducer';
 import { lightTheme } from '../../../../themes/lightTheme';
 import { JournalType } from '../../../../types/publicationFieldNames';
 import { JournalArticleContentType } from '../../../../types/publication_types/content.types';
-import { JournalEntityDescription } from '../../../../types/publication_types/journalRegistration.types';
+import { JournalRegistration } from '../../../../types/publication_types/journalRegistration.types';
 import { Journal, Registration } from '../../../../types/registration.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface NviValidationProps {
   registration: Registration;
@@ -25,15 +26,20 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
 
   return isNviApplicableJournalArticle ? (
     <BackgroundDiv backgroundColor={lightTheme.palette.section.black}>
-      {publicationInstance.type === JournalType.Article && <NviValidationJournalArticle registration={registration} />}
+      {publicationInstance.type === JournalType.Article && (
+        <NviValidationJournalArticle registration={registration as JournalRegistration} />
+      )}
     </BackgroundDiv>
   ) : null;
 };
 
-const NviValidationJournalArticle = ({ registration }: Pick<NviValidationProps, 'registration'>) => {
+interface NviValidationJournalArticleProps {
+  registration: JournalRegistration;
+}
+
+const NviValidationJournalArticle = ({ registration }: NviValidationJournalArticleProps) => {
   const { t } = useTranslation('registration');
-  const entityDescription = registration.entityDescription as JournalEntityDescription;
-  const { publicationContext, publicationInstance } = entityDescription.reference;
+  const { publicationContext, publicationInstance } = registration.entityDescription.reference;
 
   const publicationChannelState = useSelector((store: RootStore) => store.publicationChannel);
   const journal = publicationContext.id ? (publicationChannelState[publicationContext.id] as Journal) : null;
@@ -42,7 +48,12 @@ const NviValidationJournalArticle = ({ registration }: Pick<NviValidationProps, 
   const isPeerReviewed = !!publicationInstance.peerReviewed;
 
   return (
-    <Typography>
+    <Typography
+      data-testid={
+        isRatedJournal && isPeerReviewed
+          ? dataTestId.registrationWizard.resourceType.nviSuccess
+          : dataTestId.registrationWizard.resourceType.nviFailed
+      }>
       {isRatedJournal
         ? isPeerReviewed
           ? t('resource_type.nvi.applicable')
