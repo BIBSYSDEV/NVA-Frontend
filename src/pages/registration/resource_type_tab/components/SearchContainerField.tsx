@@ -44,7 +44,7 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
 
   const currentIdentifier = getIn(values, props.fieldName)?.split('/').pop() ?? '';
   const [selectedContainerSearch, isLoadingSelectedContainer] = useSearchRegistrations({
-    properties: [{ fieldName: RegistrationFieldName.Id, value: currentIdentifier }],
+    properties: [{ fieldName: RegistrationFieldName.Identifier, value: currentIdentifier }],
   });
 
   const selectedContainer =

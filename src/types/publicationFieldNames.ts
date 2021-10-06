@@ -41,7 +41,7 @@ export enum ChapterType {
 export type RegistrationSubtype = JournalType | ReportType | BookType | DegreeType | ChapterType;
 
 export enum RegistrationFieldName {
-  Id = 'id',
+  Identifier = 'identifier',
   ModifiedDate = 'modifiedDate',
   PublishedDate = 'publishedDate',
 }

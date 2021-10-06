@@ -14,7 +14,7 @@ interface RegistrationSummaryProps {
 export const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
   const identifier = getRegistrationIdentifier(id);
   const [searchContainer, isLoadingSearchContainer] = useSearchRegistrations({
-    properties: [{ fieldName: RegistrationFieldName.Id, value: identifier }],
+    properties: [{ fieldName: RegistrationFieldName.Identifier, value: identifier }],
   });
 
   const container = searchContainer && searchContainer.hits.length === 1 ? searchContainer.hits[0] : null;
