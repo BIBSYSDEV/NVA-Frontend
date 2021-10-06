@@ -16,6 +16,7 @@ import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistrations';
 import { getRegistrationPath } from '../../../../utils/urlPaths';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 
 const StyledChip = styled(Chip)`
   padding: 2rem 0 2rem 0;
@@ -40,15 +41,10 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
     properties: [{ fieldName: SearchFieldName.Type, value: props.searchSubtypes }],
   });
 
-  const currentIdentifier = getIn(values, props.fieldName)?.split('/').pop() ?? '';
-  const [selectedContainerSearch, isLoadingSelectedContainer] = useSearchRegistrations({
-    properties: [{ fieldName: SearchFieldName.Id, value: currentIdentifier }],
-  });
-
-  const selectedContainer =
-    currentIdentifier && selectedContainerSearch?.hits && selectedContainerSearch.hits.length === 1
-      ? selectedContainerSearch.hits[0]
-      : null;
+  const [selectedContainer, isLoadingSelectedContainer] = useFetchResource<Registration>(
+    getIn(values, props.fieldName),
+    ''
+  );
 
   return (
     <ThemeProvider theme={lightTheme}>
