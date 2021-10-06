@@ -5,14 +5,14 @@ import { InstitutionState } from '../../types/institution.types';
 import { notificationReducer } from './notificationReducer';
 import { userReducer } from './userReducer';
 import { institutionReducer } from './institutionReducer';
-import { Journal, Publisher, Registration } from '../../types/registration.types';
 import { resourcesReducer } from './ResourcesReducer';
+import { ResourceType } from '../actions/resourcesActions';
 
 export interface RootStore {
   institutions: InstitutionState;
   notification: Notification | null;
   user: User | null;
-  resources: { [id: string]: Publisher | Journal | Registration };
+  resources: { [id: string]: ResourceType };
 }
 
 export const rootReducer = combineReducers({
