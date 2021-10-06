@@ -47,33 +47,15 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
 };
 
 const NviValidationJournalArticle = ({ registration }: { registration: JournalRegistration }) => {
-  const { t } = useTranslation('registration');
   const { publicationContext, publicationInstance } = registration.entityDescription.reference;
 
   const resourceState = useSelector((store: RootStore) => store.resources);
   const journal = publicationContext.id ? (resourceState[publicationContext.id] as Journal) : null;
-  const isRatedJournal = parseInt(journal?.level ?? '0') > 0;
 
-  const isPeerReviewed = !!publicationInstance.peerReviewed;
-
-  return (
-    <Typography
-      data-testid={
-        isRatedJournal && isPeerReviewed
-          ? dataTestId.registrationWizard.resourceType.nviSuccess
-          : dataTestId.registrationWizard.resourceType.nviFailed
-      }>
-      {isRatedJournal
-        ? isPeerReviewed
-          ? t('resource_type.nvi.applicable')
-          : t('resource_type.nvi.not_peer_reviewed')
-        : t('resource_type.nvi.channel_not_rated')}
-    </Typography>
-  );
+  return <NviStatus level={journal?.level ?? ''} isPeerReviewed={!!publicationInstance.peerReviewed} />;
 };
 
 const NviValidationBookMonograph = ({ registration }: { registration: BookRegistration }) => {
-  const { t } = useTranslation('registration');
   const { publicationContext, publicationInstance } = registration.entityDescription.reference;
 
   const resourceState = useSelector((store: RootStore) => store.resources);
@@ -82,30 +64,10 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
     : null;
   const series = publicationContext.series?.id ? (resourceState[publicationContext.series.id] as Journal) : null;
 
-  const isRatedPublisher = parseInt(publisher?.level ?? '0') > 0;
-  const isRatedSeries = parseInt(series?.level ?? '0') > 0;
-  const isRated = series?.id ? isRatedSeries : isRatedPublisher;
-
-  const isPeerReviewed = !!publicationInstance.peerReviewed;
-
-  return (
-    <Typography
-      data-testid={
-        isRated && isPeerReviewed
-          ? dataTestId.registrationWizard.resourceType.nviSuccess
-          : dataTestId.registrationWizard.resourceType.nviFailed
-      }>
-      {isRated
-        ? isPeerReviewed
-          ? t('resource_type.nvi.applicable')
-          : t('resource_type.nvi.not_peer_reviewed')
-        : t('resource_type.nvi.channel_not_rated')}
-    </Typography>
-  );
+  return <NviStatus level={series?.level ?? publisher?.level} isPeerReviewed={!!publicationInstance.peerReviewed} />;
 };
 
 const NviValidationChapterArticle = ({ registration }: { registration: ChapterRegistration }) => {
-  const { t } = useTranslation('registration');
   const { publicationContext, publicationInstance } = registration.entityDescription.reference;
 
   const resourceState = useSelector((store: RootStore) => store.resources);
@@ -121,11 +83,18 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
     ? (resourceState[containerPublicationContext.series.id] as Journal)
     : null;
 
-  const isRatedPublisher = parseInt(publisher?.level ?? '0') > 0;
-  const isRatedSeries = parseInt(series?.level ?? '0') > 0;
-  const isRated = series?.id ? isRatedSeries : isRatedPublisher;
+  return <NviStatus level={series?.level ?? publisher?.level} isPeerReviewed={!!publicationInstance.peerReviewed} />;
+};
 
-  const isPeerReviewed = !!publicationInstance.peerReviewed;
+interface NviStatusProps {
+  level?: string;
+  isPeerReviewed?: boolean;
+}
+
+const NviStatus = ({ level = '', isPeerReviewed = false }: NviStatusProps) => {
+  const { t } = useTranslation('registration');
+
+  const isRated = parseInt(level) > 0;
 
   return (
     <Typography
