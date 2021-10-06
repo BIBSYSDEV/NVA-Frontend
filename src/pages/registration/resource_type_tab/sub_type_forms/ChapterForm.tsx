@@ -70,7 +70,7 @@ export const ChapterForm = () => {
             label={t('resource_type.chapter.published_in')}
             placeholder={t('resource_type.chapter.search_for_anthology')}
             dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
-            removeButtonLabel={t('resource_type.remove_anthology')}
+            fetchErrorMessage={t('feedback:error.get_monograph')}
           />
         )}
       </BackgroundDiv>

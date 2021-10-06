@@ -26,37 +26,44 @@ interface SearchContainerFieldProps {
   fieldName: string;
   searchSubtypes: RegistrationSubtype[];
   label: string;
-  removeButtonLabel: string;
   placeholder: string;
   dataTestId: string;
+  fetchErrorMessage: string;
 }
 
-export const SearchContainerField = (props: SearchContainerFieldProps) => {
+export const SearchContainerField = ({
+  fieldName,
+  searchSubtypes,
+  label,
+  placeholder,
+  dataTestId,
+  fetchErrorMessage,
+}: SearchContainerFieldProps) => {
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query);
 
   const [searchContainerOptions, isLoadingSearchContainerOptions] = useSearchRegistrations({
     searchTerm: debouncedQuery,
-    properties: [{ fieldName: SearchFieldName.Type, value: props.searchSubtypes }],
+    properties: [{ fieldName: SearchFieldName.Type, value: searchSubtypes }],
   });
 
   const [selectedContainer, isLoadingSelectedContainer] = useFetchResource<Registration>(
-    getIn(values, props.fieldName),
-    ''
+    getIn(values, fieldName),
+    fetchErrorMessage
   );
 
   return (
     <ThemeProvider theme={lightTheme}>
-      <Field name={props.fieldName}>
+      <Field name={fieldName}>
         {({ field, meta }: FieldProps<string>) => (
           <>
             <Autocomplete
               {...autocompleteTranslationProps}
               multiple
-              id={props.dataTestId}
-              data-testid={props.dataTestId}
-              aria-labelledby={`${props.dataTestId}-label`}
+              id={dataTestId}
+              data-testid={dataTestId}
+              aria-labelledby={`${dataTestId}-label`}
               popupIcon={null}
               options={
                 query === debouncedQuery && !isLoadingSearchContainerOptions ? searchContainerOptions?.hits ?? [] : []
@@ -114,9 +121,9 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
                 <AutocompleteTextField
                   {...params}
                   required
-                  label={props.label}
+                  label={label}
                   isLoading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
-                  placeholder={!field.value ? props.placeholder : ''}
+                  placeholder={!field.value ? placeholder : ''}
                   showSearchIcon={!field.value}
                   errorMessage={meta.touched && !!meta.error ? meta.error : ''}
                 />
