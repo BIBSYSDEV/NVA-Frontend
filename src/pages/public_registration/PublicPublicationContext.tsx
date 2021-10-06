@@ -7,8 +7,8 @@ import { JournalPublicationContext } from '../../types/publication_types/journal
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
 import { Journal, Publisher } from '../../types/registration.types';
 import { RegistrationSummary } from './RegistrationSummary';
-import { useFetch } from '../../utils/hooks/useFetch';
 import { ListSkeleton } from '../../components/ListSkeleton';
+import { useFetchPublicationChannel } from '../../utils/hooks/useFetchPublicationChannel';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
@@ -35,10 +35,10 @@ export const PublicJournal = ({ publicationContext }: PublicJournalProps) => {
 export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher }) => {
   const { t } = useTranslation('registration');
 
-  const [fetchedPublisher, isLoadingPublisher] = useFetch<Publisher>({
-    url: publisher?.id ?? '',
-    errorMessage: t('feedback:error.get_publisher'),
-  });
+  const [fetchedPublisher, isLoadingPublisher] = useFetchPublicationChannel<Publisher>(
+    publisher?.id ?? '',
+    t('feedback:error.get_publisher')
+  );
 
   return publisher ? (
     <>
@@ -52,6 +52,9 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
         fetchedPublisher && (
           <>
             <Typography>{fetchedPublisher.name}</Typography>
+            <Typography>
+              {t('resource_type.level')}: {fetchedPublisher.level}
+            </Typography>
             <Typography
               component={Link}
               href={getChannelRegisterPublisherUrl(fetchedPublisher.identifier)}
@@ -108,10 +111,7 @@ interface PublicJournalContentProps {
 
 const PublicJournalContent = ({ id }: PublicJournalContentProps) => {
   const { t } = useTranslation('registration');
-  const [journal, isLoadingJournal] = useFetch<Journal>({
-    url: id ?? '',
-    errorMessage: t('feedback:error.get_journal'),
-  });
+  const [journal, isLoadingJournal] = useFetchPublicationChannel<Journal>(id ?? '', t('feedback:error.get_journal'));
 
   return id ? (
     <>

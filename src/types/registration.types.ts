@@ -46,6 +46,7 @@ export interface Publisher {
   name: string;
   website: string;
   active: boolean;
+  level: string;
 }
 
 export interface AlmaRegistration {

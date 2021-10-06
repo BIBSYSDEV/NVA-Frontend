@@ -1,5 +1,5 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Chip, ThemeProvider, Typography } from '@mui/material';
 import { Autocomplete } from '@mui/material';
@@ -19,6 +19,7 @@ import {
   JournalRegistration,
 } from '../../../../types/publication_types/journalRegistration.types';
 import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
+import { useFetchPublicationChannel } from '../../../../utils/hooks/useFetchPublicationChannel';
 
 const journalFieldTestId = dataTestId.registrationWizard.resourceType.journalField;
 
@@ -44,10 +45,31 @@ export const JournalField = () => {
     errorMessage: t('feedback:error.get_journals'),
   });
 
-  const [journal, isLoadingJournal] = useFetch<Journal>({
-    url: publicationContext.id ?? '',
-    errorMessage: t('feedback:error.get_journal'),
+  // Fetch Journals with matching ISSN
+  const [journalsByIssn] = useFetch<Journal[]>({
+    url:
+      !publicationContext.id && (publicationContext.printIssn || publicationContext.onlineIssn)
+        ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${
+            publicationContext.printIssn ?? publicationContext.onlineIssn
+          }`
+        : '',
+    errorMessage: t('feedback:error.get_journals'),
   });
+
+  useEffect(() => {
+    // Set Journal with matching ISSN
+    if (journalsByIssn?.length === 1) {
+      setFieldValue(ResourceFieldNames.PubliactionContextType, PublicationChannelType.Journal, false);
+      setFieldValue(ResourceFieldNames.PubliactionContextId, journalsByIssn[0].id);
+      setQuery('');
+    }
+  }, [setFieldValue, journalsByIssn]);
+
+  // Fetch selected journal
+  const [journal, isLoadingJournal] = useFetchPublicationChannel<Journal>(
+    publicationContext.id ?? '',
+    t('feedback:error.get_journal')
+  );
 
   return (
     <ThemeProvider theme={lightTheme}>

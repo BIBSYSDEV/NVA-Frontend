@@ -1,5 +1,5 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Chip, ThemeProvider, Typography } from '@mui/material';
 import { Autocomplete } from '@mui/material';
@@ -14,6 +14,13 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { getYearQuery } from '../../../../utils/registration-helpers';
+import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
+import styled from 'styled-components';
+import { useFetchPublicationChannel } from '../../../../utils/hooks/useFetchPublicationChannel';
+
+const StyledChip = styled(Chip)`
+  padding: 2rem 0 2rem 0;
+`;
 
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
 
@@ -37,10 +44,18 @@ export const PublisherField = () => {
     errorMessage: t('feedback:error.get_publishers'),
   });
 
-  const [fetchedPublisher, isLoadingPublisher] = useFetch<Publisher>({
-    url: publisher?.id ?? '',
-    errorMessage: t('feedback:error.get_publisher'),
-  });
+  useEffect(() => {
+    if (publisherOptions?.length === 1 && publisher?.name && publisherOptions[0].name === publisher.name) {
+      setFieldValue(ResourceFieldNames.PubliactionContextPublisherType, PublicationChannelType.Publisher, false);
+      setFieldValue(ResourceFieldNames.PubliactionContextPublisherId, publisherOptions[0].id);
+      setQuery('');
+    }
+  }, [setFieldValue, publisher?.name, publisherOptions]);
+
+  const [fetchedPublisher, isLoadingPublisher] = useFetchPublicationChannel<Publisher>(
+    publisher?.id ?? '',
+    t('feedback:error.get_publisher')
+  );
 
   return (
     <ThemeProvider theme={lightTheme}>
@@ -88,16 +103,32 @@ export const PublisherField = () => {
             loading={isLoadingPublisherOptions || isLoadingPublisher}
             getOptionLabel={(option) => option.name}
             renderOption={(props, option, state) => (
-              <Typography {...props} variant="subtitle1" component="li">
-                <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
-              </Typography>
+              <li {...props}>
+                <StyledFlexColumn>
+                  <Typography variant="subtitle1">
+                    <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
+                  </Typography>
+                  {option.level && (
+                    <Typography variant="body2" color="textSecondary">
+                      {t('resource_type.level')}: {option.level}
+                    </Typography>
+                  )}
+                </StyledFlexColumn>
+              </li>
             )}
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
-                <Chip
+                <StyledChip
                   {...getTagProps({ index })}
                   data-testid={dataTestId.registrationWizard.resourceType.publisherChip}
-                  label={<Typography variant="subtitle1">{option.name}</Typography>}
+                  label={
+                    <>
+                      <Typography variant="subtitle1">{option.name}</Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        {t('resource_type.level')}: {option.level}
+                      </Typography>
+                    </>
+                  }
                 />
               ))
             }
