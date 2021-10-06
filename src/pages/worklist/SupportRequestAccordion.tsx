@@ -15,7 +15,6 @@ import { Registration } from '../../types/registration.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { MessageList } from './MessageList';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { getRegistrationIdentifier } from '../../utils/registration-helpers';
 
 const StyledAccordion = styled(Accordion)`
   width: 100%;
@@ -72,11 +71,10 @@ export const SupportRequestAccordion = ({
 }: SupportRequestAccordionProps) => {
   const { t } = useTranslation('workLists');
   const dispatch = useDispatch();
-  const { id } = registration;
-  const identifier = getRegistrationIdentifier(id);
+  const { identifier } = registration;
 
   const onClickSendMessage = async (message: string) => {
-    const updateDoiRequestResponse = await addMessage(id, message, messageCollection.messageType);
+    const updateDoiRequestResponse = await addMessage(identifier, message, messageCollection.messageType);
     if (isErrorStatus(updateDoiRequestResponse.status)) {
       dispatch(setNotification(t('feedback:error.send_message'), NotificationVariant.Error));
     } else if (isSuccessStatus(updateDoiRequestResponse.status)) {
@@ -115,7 +113,7 @@ export const SupportRequestAccordion = ({
             color="primary"
             endIcon={<ArrowForwardIcon />}
             component={RouterLink}
-            to={getRegistrationLandingPagePath(id)}>
+            to={getRegistrationLandingPagePath(identifier)}>
             {t('go_to_registration')}
           </Button>
         </StyledAccordionActionButtons>

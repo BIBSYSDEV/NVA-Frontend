@@ -7,7 +7,6 @@ import { Link as MuiLink, List, ListItem, ListItemText, Typography } from '@mui/
 import { displayDate } from '../utils/date-helpers';
 import { getRegistrationLandingPagePath, getUserPath } from '../utils/urlPaths';
 import { Registration } from '../types/registration.types';
-import { getRegistrationIdentifier } from '../utils/registration-helpers';
 
 const StyledContributors = styled.div`
   display: flex;
@@ -49,7 +48,7 @@ interface RegistrationListItemProps {
 const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
   const { t } = useTranslation('publicationTypes');
   const {
-    id,
+    identifier,
     entityDescription: {
       mainTitle,
       abstract,
@@ -71,7 +70,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
           {t(type)} - {displayDate(date)}
         </StyledSuperHeader>
         <StyledRegistrationTitle gutterBottom>
-          <MuiLink component={Link} to={getRegistrationLandingPagePath(getRegistrationIdentifier(id))}>
+          <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
             {mainTitle}
           </MuiLink>
         </StyledRegistrationTitle>

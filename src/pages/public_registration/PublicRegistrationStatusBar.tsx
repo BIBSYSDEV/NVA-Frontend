@@ -54,7 +54,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   const dispatch = useDispatch();
   const { t } = useTranslation('registration');
   const user = useSelector((store: RootStore) => store.user);
-  const { id, owner, doi, doiRequest, publisher } = registration;
+  const { identifier, owner, doi, doiRequest, publisher } = registration;
 
   const [messageToCurator, setMessageToCurator] = useState('');
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
@@ -64,7 +64,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
 
   const sendDoiRequest = async () => {
     setIsLoading(LoadingName.RequestDoi);
-    const createDoiRequestResponse = await createDoiRequest(id, messageToCurator);
+    const createDoiRequestResponse = await createDoiRequest(identifier, messageToCurator);
     if (isErrorStatus(createDoiRequestResponse.status)) {
       dispatch(setNotification(t('feedback:error.create_doi_request'), NotificationVariant.Error));
       setIsLoading(LoadingName.None);
@@ -86,7 +86,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     } else {
       setIsLoading(LoadingName.RejectDoi);
     }
-    const updateDoiResponse = await updateDoiRequest(id, status);
+    const updateDoiResponse = await updateDoiRequest(identifier, status);
     if (isErrorStatus(updateDoiResponse.status)) {
       dispatch(setNotification(t('feedback:error.update_doi_request'), NotificationVariant.Error));
       setIsLoading(LoadingName.None);
@@ -98,7 +98,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
 
   const onClickPublish = async () => {
     setIsLoading(LoadingName.Publish);
-    const publishRegistrationResponse = await publishRegistration(id);
+    const publishRegistrationResponse = await publishRegistration(identifier);
     if (isErrorStatus(publishRegistrationResponse.status)) {
       dispatch(setNotification(t('feedback:error.publish_registration'), NotificationVariant.Error));
       setIsLoading(LoadingName.None);
@@ -131,7 +131,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   const isCurator = user && user.isCurator && user.customerId === publisher.id;
   const hasNvaDoi = !!doi || doiRequest;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
-  const editRegistrationUrl = getRegistrationPath(id);
+  const editRegistrationUrl = getRegistrationPath(identifier);
 
   return isOwner || isCurator ? (
     <>

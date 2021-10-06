@@ -1,7 +1,6 @@
 import { AwsS3Part } from '@uppy/aws-s3-multipart';
 import { UppyFile } from '@uppy/core';
 import { isSuccessStatus } from '../utils/constants';
-import { getRegistrationIdentifier } from '../utils/registration-helpers';
 import { FileApiPath } from './apiPaths';
 import { apiRequest, authenticatedApiRequest } from './apiRequest';
 
@@ -9,8 +8,7 @@ interface DownloadFileResponse {
   presignedDownloadUrl: string;
 }
 
-export const downloadFile = async (registrationId: string, fileId: string) => {
-  const registrationIdentifier = getRegistrationIdentifier(registrationId);
+export const downloadFile = async (registrationIdentifier: string, fileId: string) => {
   try {
     const authenticatedResponse = await authenticatedApiRequest<DownloadFileResponse>({
       url: `${FileApiPath.Download}/${registrationIdentifier}/files/${fileId}`,

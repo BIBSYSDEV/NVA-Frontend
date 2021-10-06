@@ -87,7 +87,7 @@ export const RegistrationFormActions = ({
   const onClickSaveAndPresent = async () => {
     const registrationIsUpdated = await saveRegistration(values);
     if (registrationIsUpdated) {
-      history.push(getRegistrationLandingPagePath(values.id));
+      history.push(getRegistrationLandingPagePath(values.identifier));
     }
   };
 

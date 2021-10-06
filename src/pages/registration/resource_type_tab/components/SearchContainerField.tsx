@@ -13,11 +13,9 @@ import {
   ResourceFieldNames,
 } from '../../../../types/publicationFieldNames';
 import { Registration, RegistrationDate } from '../../../../types/registration.types';
-import { API_URL } from '../../../../utils/constants';
 import { displayDate } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistrations';
-import { getRegistrationPath } from '../../../../utils/urlPaths';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { Contributor } from '../../../../types/contributor.types';
 
@@ -82,7 +80,7 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
               value={field.value && selectedContainer ? [selectedContainer] : []}
               onChange={(_, inputValue, reason) => {
                 if (reason === 'selectOption') {
-                  setFieldValue(field.name, `${API_URL}${getRegistrationPath(inputValue.pop()?.id)}`);
+                  setFieldValue(field.name, inputValue.pop()?.id);
                 } else if (reason === 'removeOption') {
                   setFieldValue(field.name, undefined);
                 }

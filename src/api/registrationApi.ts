@@ -4,7 +4,6 @@ import { RegistrationFileSet } from '../types/file.types';
 import { authenticatedApiRequest } from './apiRequest';
 import { MessageType } from '../types/publication_types/messages.types';
 import { PublicationsApiPath } from './apiPaths';
-import { getRegistrationIdentifier } from '../utils/registration-helpers';
 
 export const createRegistration = async (partialRegistration?: RegistrationFileSet) =>
   await authenticatedApiRequest<Registration>({
@@ -15,14 +14,14 @@ export const createRegistration = async (partialRegistration?: RegistrationFileS
 
 export const updateRegistration = async (registration: Registration) =>
   await authenticatedApiRequest<Registration>({
-    url: `${PublicationsApiPath.Registration}/${getRegistrationIdentifier(registration.id)}`,
+    url: `${PublicationsApiPath.Registration}/${registration.identifier}`,
     method: 'PUT',
     data: registration,
   });
 
-export const publishRegistration = async (id: string) =>
+export const publishRegistration = async (identifier: string) =>
   await authenticatedApiRequest({
-    url: `${PublicationsApiPath.Registration}/${getRegistrationIdentifier(id)}/publish`,
+    url: `${PublicationsApiPath.Registration}/${identifier}/publish`,
     method: 'PUT',
   });
 
@@ -33,38 +32,38 @@ export const getRegistrationByDoi = async (doiUrl: string) =>
     method: 'POST',
   });
 
-export const deleteRegistration = async (id: string) =>
+export const deleteRegistration = async (identifier: string) =>
   await authenticatedApiRequest({
-    url: `${PublicationsApiPath.Registration}/${getRegistrationIdentifier(id)}`,
+    url: `${PublicationsApiPath.Registration}/${identifier}`,
     method: 'DELETE',
   });
 
-export const createDoiRequest = async (registrationId: string, message?: string, cancelToken?: CancelToken) =>
+export const createDoiRequest = async (registrationIdentifier: string, message?: string, cancelToken?: CancelToken) =>
   await authenticatedApiRequest({
     url: PublicationsApiPath.DoiRequest,
     method: 'POST',
     data: {
-      publicationId: getRegistrationIdentifier(registrationId),
+      publicationId: registrationIdentifier,
       message,
     },
     cancelToken,
   });
 
-export const updateDoiRequest = async (registrationId: string, status: DoiRequestStatus) =>
+export const updateDoiRequest = async (registrationIdentifier: string, status: DoiRequestStatus) =>
   await authenticatedApiRequest({
-    url: `${PublicationsApiPath.UpdateDoiRequest}/${getRegistrationIdentifier(registrationId)}`,
+    url: `${PublicationsApiPath.UpdateDoiRequest}/${registrationIdentifier}`,
     method: 'POST',
     data: {
       doiRequestStatus: status,
     },
   });
 
-export const addMessage = async (id: string, message: string, messageType: MessageType) =>
+export const addMessage = async (identifier: string, message: string, messageType: MessageType) =>
   await authenticatedApiRequest({
     url: `${PublicationsApiPath.Messages}`,
     method: 'POST',
     data: {
-      publicationIdentifier: getRegistrationIdentifier(id),
+      publicationIdentifier: identifier,
       message,
       messageType,
     },
