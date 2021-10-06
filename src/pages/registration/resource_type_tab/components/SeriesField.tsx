@@ -16,7 +16,7 @@ import { BookEntityDescription } from '../../../../types/publication_types/bookR
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
-import { useFetchPublicationChannel } from '../../../../utils/hooks/useFetchPublicationChannel';
+import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
 
@@ -44,10 +44,7 @@ export const SeriesField = () => {
     errorMessage: t('feedback:error.get_series'),
   });
 
-  const [journal, isLoadingJournal] = useFetchPublicationChannel<Journal>(
-    series?.id ?? '',
-    t('feedback:error.get_series')
-  );
+  const [journal, isLoadingJournal] = useFetchResource<Journal>(series?.id ?? '', t('feedback:error.get_series'));
 
   return (
     <ThemeProvider theme={lightTheme}>

@@ -5,19 +5,19 @@ import { InstitutionState } from '../../types/institution.types';
 import { notificationReducer } from './notificationReducer';
 import { userReducer } from './userReducer';
 import { institutionReducer } from './institutionReducer';
-import { Journal, Publisher } from '../../types/registration.types';
-import { publicationChannelReducer } from './publicationChannelReducer';
+import { Journal, Publisher, Registration } from '../../types/registration.types';
+import { resourcesReducer } from './ResourcesReducer';
 
 export interface RootStore {
   institutions: InstitutionState;
   notification: Notification | null;
   user: User | null;
-  publicationChannel: { [id: string]: Publisher | Journal };
+  resources: { [id: string]: Publisher | Journal | Registration };
 }
 
 export const rootReducer = combineReducers({
   institutions: institutionReducer,
   notification: notificationReducer,
   user: userReducer,
-  publicationChannel: publicationChannelReducer,
+  resources: resourcesReducer,
 });

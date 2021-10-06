@@ -45,7 +45,7 @@ const NviValidationJournalArticle = ({ registration }: { registration: JournalRe
   const { t } = useTranslation('registration');
   const { publicationContext, publicationInstance } = registration.entityDescription.reference;
 
-  const publicationChannelState = useSelector((store: RootStore) => store.publicationChannel);
+  const publicationChannelState = useSelector((store: RootStore) => store.resources);
   const journal = publicationContext.id ? (publicationChannelState[publicationContext.id] as Journal) : null;
   const isRatedJournal = parseInt(journal?.level ?? '0') > 0;
 
@@ -71,7 +71,7 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
   const { t } = useTranslation('registration');
   const { publicationContext, publicationInstance } = registration.entityDescription.reference;
 
-  const publicationChannelState = useSelector((store: RootStore) => store.publicationChannel);
+  const publicationChannelState = useSelector((store: RootStore) => store.resources);
   const publisher = publicationContext.publisher?.id
     ? (publicationChannelState[publicationContext.publisher.id] as Publisher)
     : null;
