@@ -2,8 +2,14 @@ import { ListItemButton, ListSubheader } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { BookType, ChapterType, DegreeType, JournalType, ReportType } from '../../../types/publicationFieldNames';
-import { SearchFieldName } from '../../../types/search.types';
+import {
+  BookType,
+  ChapterType,
+  DegreeType,
+  JournalType,
+  ReportType,
+  ResourceFieldNames,
+} from '../../../types/publicationFieldNames';
 import { SearchConfig } from '../../../utils/searchHelpers';
 import { BaseFilterItem } from './BaseFilterItem';
 
@@ -19,7 +25,7 @@ export const RegistrationTypeFilter = () => {
 
   const updateFilter = (type: string) => {
     const newFilter = {
-      fieldName: SearchFieldName.Type,
+      fieldName: ResourceFieldNames.SubType,
       value: currentValue !== type ? type : '',
     };
     setFieldValue('properties[0]', newFilter);

@@ -90,7 +90,7 @@ export const PublicFilesContent = ({ registration }: PublicRegistrationContentPr
         <FileRow
           key={file.identifier}
           file={file}
-          registrationId={registration.identifier}
+          registrationIdentifier={registration.identifier}
           openPreviewByDefault={index === 0 && publiclyAvailableFiles[0].size < maxFileSize}
         />
       ))}
@@ -100,11 +100,11 @@ export const PublicFilesContent = ({ registration }: PublicRegistrationContentPr
 
 interface FileRowProps {
   file: File;
-  registrationId: string;
+  registrationIdentifier: string;
   openPreviewByDefault: boolean;
 }
 
-const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) => {
+const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('common');
   const [isLoadingFile, setIsLoadingFile] = useState(false);
@@ -114,7 +114,7 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
   const handleDownload = useCallback(
     async (manuallyTriggered = true) => {
       setIsLoadingFile(true);
-      const downloadedFileUrl = await downloadFile(registrationId, file.identifier);
+      const downloadedFileUrl = await downloadFile(registrationIdentifier, file.identifier);
       if (!downloadedFileUrl) {
         dispatch(setNotification(t('feedback:error.download_file'), NotificationVariant.Error));
       } else {
@@ -125,7 +125,7 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
       }
       setIsLoadingFile(false);
     },
-    [t, dispatch, registrationId, file.identifier]
+    [t, dispatch, registrationIdentifier, file.identifier]
   );
 
   useEffect(() => {

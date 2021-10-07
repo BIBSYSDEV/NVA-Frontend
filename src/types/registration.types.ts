@@ -77,12 +77,13 @@ interface DoiRequest {
   messages?: DoiRequestMessage[];
 }
 
-export interface RegistrationPublisher {
+interface RegistrationPublisher {
   id: string;
 }
 
 export interface BaseRegistration extends RegistrationFileSet {
   readonly type: 'Publication';
+  readonly id: string;
   readonly identifier: string;
   readonly createdDate: string;
   readonly modifiedDate: string;
@@ -127,6 +128,12 @@ export enum PublicationChannelType {
   UnconfirmedSeries = 'UnconfirmedSeries',
 }
 
+export interface SearchResult {
+  hits: Registration[];
+  took: number;
+  total: number;
+}
+
 export interface Registration extends BaseRegistration {
   entityDescription:
     | JournalEntityDescription
@@ -155,6 +162,7 @@ export interface Doi {
 
 export const emptyRegistration: Registration = {
   type: 'Publication',
+  id: '',
   identifier: '',
   createdDate: '',
   modifiedDate: '',

@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
 import styled from 'styled-components';
 import { Link as MuiLink, List, ListItem, ListItemText, Typography } from '@mui/material';
-import { SearchRegistration } from '../types/search.types';
 import { displayDate } from '../utils/date-helpers';
 import { getRegistrationLandingPagePath, getUserPath } from '../utils/urlPaths';
+import { Registration } from '../types/registration.types';
 
 const StyledContributors = styled.div`
   display: flex;
@@ -30,7 +30,7 @@ const StyledSuperHeader = styled(Typography)`
 `;
 
 interface RegistrationListProps {
-  registrations: SearchRegistration[];
+  registrations: Registration[];
 }
 
 export const RegistrationList = ({ registrations }: RegistrationListProps) => (
@@ -42,14 +42,24 @@ export const RegistrationList = ({ registrations }: RegistrationListProps) => (
 );
 
 interface RegistrationListItemProps {
-  registration: SearchRegistration;
+  registration: Registration;
 }
 
 const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
   const { t } = useTranslation('publicationTypes');
-  const { id, title, abstract, contributors, type, publicationDate } = registration;
+  const {
+    identifier,
+    entityDescription: {
+      mainTitle,
+      abstract,
+      contributors,
+      date,
+      reference: {
+        publicationInstance: { type },
+      },
+    },
+  } = registration;
 
-  const registrationId = id.split('/').pop() as string;
   const focusedContributors = contributors.slice(0, 5);
   const countRestContributors = contributors.length - focusedContributors.length;
 
@@ -57,22 +67,22 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
     <ListItem divider disableGutters>
       <ListItemText disableTypography data-testid="result-list-item">
         <StyledSuperHeader variant="overline">
-          {t(type)} - {displayDate(publicationDate)}
+          {t(type)} - {displayDate(date)}
         </StyledSuperHeader>
         <StyledRegistrationTitle gutterBottom>
-          <MuiLink component={Link} to={getRegistrationLandingPagePath(registrationId)}>
-            {title}
+          <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
+            {mainTitle}
           </MuiLink>
         </StyledRegistrationTitle>
         <StyledContributors>
           {focusedContributors.map((contributor, index) => (
             <Typography key={index} variant="body2">
-              {contributor.id ? (
-                <MuiLink component={Link} to={getUserPath(contributor.id)}>
-                  {contributor.name}
+              {contributor.identity.id ? (
+                <MuiLink component={Link} to={getUserPath(contributor.identity.id)}>
+                  {contributor.identity.name}
                 </MuiLink>
               ) : (
-                contributor.name
+                contributor.identity.name
               )}
             </Typography>
           ))}

@@ -38,20 +38,20 @@ export const deleteRegistration = async (identifier: string) =>
     method: 'DELETE',
   });
 
-export const createDoiRequest = async (registrationId: string, message?: string, cancelToken?: CancelToken) =>
+export const createDoiRequest = async (registrationIdentifier: string, message?: string, cancelToken?: CancelToken) =>
   await authenticatedApiRequest({
     url: PublicationsApiPath.DoiRequest,
     method: 'POST',
     data: {
-      publicationId: registrationId,
+      publicationId: registrationIdentifier,
       message,
     },
     cancelToken,
   });
 
-export const updateDoiRequest = async (registrationId: string, status: DoiRequestStatus) =>
+export const updateDoiRequest = async (registrationIdentifier: string, status: DoiRequestStatus) =>
   await authenticatedApiRequest({
-    url: `${PublicationsApiPath.UpdateDoiRequest}/${registrationId}`,
+    url: `${PublicationsApiPath.UpdateDoiRequest}/${registrationIdentifier}`,
     method: 'POST',
     data: {
       doiRequestStatus: status,
