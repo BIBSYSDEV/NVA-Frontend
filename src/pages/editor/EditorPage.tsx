@@ -12,6 +12,11 @@ import { useFetch } from '../../utils/hooks/useFetch';
 const StyledVocabularyRow = styled.div`
   display: flex;
   align-items: center;
+  margin-top: 1rem;
+
+  div:first-child {
+    margin-right: 1rem;
+  }
 `;
 
 const defaultHrcsActivity: CustomerVocabulary = {
