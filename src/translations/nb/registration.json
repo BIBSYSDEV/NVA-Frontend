@@ -136,7 +136,7 @@
   },
   "validation_errors": "Valideringsfeil",
   "registration": {
-    "link_to_resource": "Lenke til ressurs",
+    "link_to_resource": "Lenke til original versjon",
     "start_registration": "Start registrering",
     "start_with_link_to_resource_description": "Lenke til original versjon hvis ressursen allerede er publisert på Internett",
     "start_with_link_to_resource_title": "Start med lenke til original versjon",
