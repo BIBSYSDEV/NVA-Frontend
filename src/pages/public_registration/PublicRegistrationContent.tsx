@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { ItalicPageHeader } from '../../components/PageHeader';
-import { emptyRegistration, Registration } from '../../types/registration.types';
+import { emptyRegistration, Registration, SearchResult } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PublicFilesContent } from './PublicFilesContent';
 import { PublicGeneralContent } from './PublicGeneralContent';
@@ -15,9 +15,9 @@ import { PublicSummaryContent } from './PublicSummaryContent';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { ShareOptions } from './ShareOptions';
 import { SearchApiPath } from '../../api/apiPaths';
-import { SearchFieldName, SearchResult } from '../../types/search.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { RegistrationList } from '../../components/RegistrationList';
+import { RegistrationFieldName } from '../../types/publicationFieldNames';
 
 const StyledYearSpan = styled.span`
   padding-left: 1rem;
@@ -45,7 +45,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
   } = registration;
 
   const [relatedRegistrations] = useFetch<SearchResult>({
-    url: `${SearchApiPath.Registrations}?query="${identifier}" AND NOT (${SearchFieldName.Id}:"${identifier}")`,
+    url: `${SearchApiPath.Registrations}?query="${identifier}" AND NOT (${RegistrationFieldName.Identifier}:"${identifier}")`,
     errorMessage: t('feedback:error.search'),
   });
 

@@ -77,7 +77,7 @@ interface DoiRequest {
   messages?: DoiRequestMessage[];
 }
 
-export interface RegistrationPublisher {
+interface RegistrationPublisher {
   id: string;
 }
 
@@ -126,6 +126,12 @@ export enum PublicationChannelType {
   UnconfirmedJournal = 'UnconfirmedJournal',
   UnconfirmedPublisher = 'UnconfirmedPublisher',
   UnconfirmedSeries = 'UnconfirmedSeries',
+}
+
+export interface SearchResult {
+  hits: Registration[];
+  took: number;
+  total: number;
 }
 
 export interface Registration extends BaseRegistration {

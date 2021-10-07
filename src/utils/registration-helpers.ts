@@ -59,3 +59,5 @@ export const getPublicationChannelString = (title: string, onlineIssn?: string |
   const issnString = getPublicationChannelIssnString(onlineIssn, printIssn);
   return issnString ? `${title} (${issnString})` : title;
 };
+
+export const getRegistrationIdentifier = (id: string) => id.split('/').pop() ?? '';

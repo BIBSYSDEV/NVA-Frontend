@@ -11,10 +11,6 @@ const StyledDraftSpan = styled.span`
   margin-left: 0.5rem;
 `;
 
-const StyledPublicDoi = styled.div`
-  margin-top: 1.5rem;
-`;
-
 interface PublicDoiProps {
   registration: Registration;
 }
@@ -33,16 +29,18 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
   const isDraftDoi = nvaDoi && !hasApprovedDoiRequest && canSeeDraftDoi;
 
   return doiToPresent ? (
-    <StyledPublicDoi data-testid={dataTestId.registrationLandingPage.doiLink}>
-      <Typography
-        component={Link}
-        data-testid="doi-presentation"
-        href={doiToPresent}
-        target="_blank"
-        rel="noopener noreferrer">
-        {doiToPresent}
+    <>
+      <Typography variant="overline">{t('registration.link_to_resource')}</Typography>
+      <Typography>
+        <Link
+          data-testid={dataTestId.registrationLandingPage.doiLink}
+          href={doiToPresent}
+          target="_blank"
+          rel="noopener noreferrer">
+          {doiToPresent}
+        </Link>
         {isDraftDoi && <StyledDraftSpan>({t('public_page.in_progess')})</StyledDraftSpan>}
       </Typography>
-    </StyledPublicDoi>
+    </>
   ) : null;
 };

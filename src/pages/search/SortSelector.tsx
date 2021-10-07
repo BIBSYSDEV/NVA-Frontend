@@ -3,7 +3,7 @@ import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { SearchFieldName } from '../../types/search.types';
+import { RegistrationFieldName } from '../../types/publicationFieldNames';
 import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledTextField = styled(TextField)`
@@ -29,7 +29,7 @@ export const SortSelector = () => {
   const params = new URLSearchParams(history.location.search);
 
   const selectedSortingValue =
-    params.get('orderBy') === SearchFieldName.PublishedDate
+    params.get('orderBy') === RegistrationFieldName.PublishedDate
       ? params.get('sortOrder') === 'desc'
         ? SortOption.PublishedDateDesc
         : SortOption.PublishedDateAsc
@@ -40,15 +40,15 @@ export const SortSelector = () => {
 
     switch (value) {
       case SortOption.PublishedDateDesc:
-        params.set('orderBy', SearchFieldName.PublishedDate);
+        params.set('orderBy', RegistrationFieldName.PublishedDate);
         params.set('sortOrder', 'desc');
         break;
       case SortOption.PublishedDateAsc:
-        params.set('orderBy', SearchFieldName.PublishedDate);
+        params.set('orderBy', RegistrationFieldName.PublishedDate);
         params.set('sortOrder', 'asc');
         break;
       case SortOption.ModifiedDateDesc:
-        params.set('orderBy', SearchFieldName.ModifiedDate);
+        params.set('orderBy', RegistrationFieldName.ModifiedDate);
         params.set('sortOrder', 'desc');
         break;
     }

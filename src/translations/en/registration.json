@@ -136,7 +136,7 @@
   },
   "validation_errors": "Validation errors",
   "registration": {
-    "link_to_resource": "Link to resource",
+    "link_to_resource": "Link to original version",
     "start_registration": "Start registration",
     "start_with_link_to_resource_description": "Link to original version if the resource already has been published on the Internet",
     "start_with_link_to_resource_title": "Start with link to original version",

@@ -40,6 +40,12 @@ export enum ChapterType {
 
 export type RegistrationSubtype = JournalType | ReportType | BookType | DegreeType | ChapterType;
 
+export enum RegistrationFieldName {
+  Identifier = 'identifier',
+  ModifiedDate = 'modifiedDate',
+  PublishedDate = 'publishedDate',
+}
+
 // Enums representing name of fields used by Formik
 export const contextTypeBaseFieldName = 'entityDescription.reference.publicationContext';
 export const instanceTypeBaseFieldName = 'entityDescription.reference.publicationInstance';
@@ -106,5 +112,6 @@ export enum ContributorFieldNames {
 export enum SpecificContributorFieldNames {
   Affiliations = 'affiliations',
   Corresponding = 'correspondingAuthor',
+  Id = 'id',
   Sequence = 'sequence',
 }
