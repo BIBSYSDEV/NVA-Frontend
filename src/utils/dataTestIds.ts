@@ -7,6 +7,7 @@ export const dataTestId = {
     adminUsersLink: 'admin-users-link',
     adminInstitutionLink: 'admin-institution-link',
     adminInstitutionsLink: 'admin-institutions-link',
+    editorLink: 'editor-link',
     languageButton: 'language-button',
     languageMenu: 'language-menu',
     logInButton: 'log-in-link',

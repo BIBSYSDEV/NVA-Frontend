@@ -1,11 +1,19 @@
 import React, { lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { DelayedFallback } from './components/DelayedFallback';
-import { AppAdminRoute, CreatorRoute, CuratorRoute, InstitutionAdminRoute, LoggedInRoute } from './utils/routes/Routes';
+import {
+  AppAdminRoute,
+  CreatorRoute,
+  CuratorRoute,
+  EditorRoute,
+  InstitutionAdminRoute,
+  LoggedInRoute,
+} from './utils/routes/Routes';
 import { UrlPathTemplate } from './utils/urlPaths';
 
 const AboutPage = lazy(() => import('./pages/infopages/AboutPage'));
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
+const EditorPage = lazy(() => import('./pages/editor/EditorPage'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
 const MyRegistrations = lazy(() => import('./pages/my_registrations/MyRegistrations'));
 const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
@@ -52,6 +60,9 @@ export const AppRoutes = () => {
 
         {/* AppAdminRoutes */}
         <AppAdminRoute exact path={UrlPathTemplate.AdminInstitutions} component={AdminCustomerInstitutionsPage} />
+
+        {/* EditorRoutes */}
+        <EditorRoute exact path={UrlPathTemplate.Editor} component={EditorPage} />
 
         {/* Wildcard path must be last, otherwise it will catch all routes */}
         <Route path={UrlPathTemplate.Wildcard} component={NotFound} />
