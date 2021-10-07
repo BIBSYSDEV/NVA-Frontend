@@ -12,6 +12,7 @@ export const mockCustomerInstitution: CustomerInstitution = {
   cristinId: 'https://api.cristin.no/v2/institutions/194',
   institutionDns: '1.1.1.1',
   feideOrganizationId: 'NO919477822',
+  vocabularies: [],
 };
 
 export const mockCustomerInstitutions: CustomerList = {
@@ -29,6 +30,7 @@ export const mockCustomerInstitutions: CustomerList = {
       cristinId: 'https://api.cristin.no/v2/institutions/2',
       institutionDns: 'xxx',
       feideOrganizationId: 'xxx',
+      vocabularies: [],
     },
     {
       id: 'https://api.dev.nva.aws.unit.no/customer/3',
@@ -42,6 +44,7 @@ export const mockCustomerInstitutions: CustomerList = {
       cristinId: 'https://api.cristin.no/v2/institutions/3',
       institutionDns: 'xxx',
       feideOrganizationId: 'xxx',
+      vocabularies: [],
     },
     {
       id: 'https://api.dev.nva.aws.unit.no/customer/4',
@@ -55,6 +58,7 @@ export const mockCustomerInstitutions: CustomerList = {
       cristinId: 'https://api.cristin.no/v2/institutions/4',
       institutionDns: 'xxx',
       feideOrganizationId: 'xxx',
+      vocabularies: [],
     },
     {
       id: 'https://api.dev.nva.aws.unit.no/customer/5',
@@ -68,6 +72,7 @@ export const mockCustomerInstitutions: CustomerList = {
       cristinId: 'https://api.cristin.no/v2/institutions/5',
       institutionDns: 'xxx',
       feideOrganizationId: 'xxx',
+      vocabularies: [],
     },
   ],
 };

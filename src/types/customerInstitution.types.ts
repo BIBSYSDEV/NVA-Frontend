@@ -12,6 +12,20 @@ export interface CustomerInstitution {
   name: string;
   modifiedDate?: string;
   shortName: string;
+  vocabularies: CustomerVocabulary[];
+}
+
+export enum VocabularyState {
+  Default = 'default',
+  Enabled = 'enabled',
+  Disabled = 'disabled',
+}
+
+export interface CustomerVocabulary {
+  type: 'Vocabulary';
+  id: string;
+  name: string;
+  active: VocabularyState;
 }
 
 export const emptyCustomerInstitution: CustomerInstitution = {
@@ -27,6 +41,7 @@ export const emptyCustomerInstitution: CustomerInstitution = {
   institutionDns: '',
   name: '',
   shortName: '',
+  vocabularies: [],
 };
 
 export enum CustomerInstitutionFieldNames {
