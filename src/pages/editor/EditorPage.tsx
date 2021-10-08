@@ -94,6 +94,11 @@ const EditorPage = () => {
     <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('profile:roles.editor')}</PageHeader>
       <Typography variant="h2">{t('select_vocabulary')}</Typography>
+      <Typography gutterBottom>{t('select_vocabulary_description')}</Typography>
+      <Typography>{t('default_description')}</Typography>
+      <Typography>{t('enabled_description')}</Typography>
+      <Typography>{t('disabled_description')}</Typography>
+
       <VocabularyRow
         vocabulary={currentHrcsActivityVocabularies}
         updateVocabulary={updateVocabulary}

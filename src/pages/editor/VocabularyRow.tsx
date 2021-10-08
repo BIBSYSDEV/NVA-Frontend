@@ -6,7 +6,7 @@ import { CustomerVocabulary, VocabularyStatus } from '../../types/customerInstit
 import { getTranslatedVocabularyName } from './EditorPage';
 
 const StyledVocabularyRow = styled.div`
-  display: flex;
+  /* display: flex; */
   align-items: center;
   margin-top: 1rem;
 
@@ -33,6 +33,9 @@ export const VocabularyRow = ({ vocabulary, updateVocabulary, isLoadingCustomer 
 
   return (
     <StyledVocabularyRow>
+      <Typography variant="h3" gutterBottom>
+        {getTranslatedVocabularyName(t, vocabulary.id)}
+      </Typography>
       <ToggleButtonGroup
         color="primary"
         disabled={isLoading}
@@ -49,7 +52,6 @@ export const VocabularyRow = ({ vocabulary, updateVocabulary, isLoadingCustomer 
         <ToggleButton value={VocabularyStatus.Allowed}>{t('enabled')}</ToggleButton>
         <ToggleButton value={VocabularyStatus.Disabled}>{t('disabled')}</ToggleButton>
       </ToggleButtonGroup>
-      <Typography>{getTranslatedVocabularyName(t, vocabulary.id)}</Typography>
     </StyledVocabularyRow>
   );
 };
