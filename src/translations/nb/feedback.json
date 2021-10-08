@@ -47,6 +47,7 @@
     "update_doi_request": "Kunne ikke oppdatere DOI-forespørsel",
     "update_institution_user": "Kunne ikke oppdatere bruker",
     "update_registration": "Kunne ikke oppdatere registrering",
+    "update_vocabulary": "Oppdatering av {{vocabulary}} feilet",
     "orcid": {
       "access_denied": "Kunne ikke koble til ORCID fordi tilgang til ORCID-kontoen ble avslått"
     }
@@ -74,7 +75,8 @@
     "send_message": "Melding sendt",
     "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",
-    "update_registration": "Registreringen er oppdatert"
+    "update_registration": "Registreringen er oppdatert",
+    "update_vocabulary": "{{vocabulary}} ble oppdatert"
   },
   "validation": {
     "author_required": "Du må ha minst en forfatter på denne registreringen",

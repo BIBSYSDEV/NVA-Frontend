@@ -47,6 +47,7 @@
     "update_doi_request": "Could not update DOI request",
     "update_institution_user": "Could not update user",
     "update_registration": "Could not update registration",
+    "update_vocabulary": "Failed to update {{vocabulary}}",
     "orcid": {
       "access_denied": "Could not connect to ORCID because access to the ORCID account was denied"
     }
@@ -74,7 +75,8 @@
     "send_message": "Message sent",
     "update_authority": "Updated authority",
     "update_customer": "Updated customer institution",
-    "update_registration": "Updated registration"
+    "update_registration": "Updated registration",
+    "update_vocabulary": "{{vocabulary}} was updated"
   },
   "validation": {
     "author_required": "You need to register at least one author for this registration",

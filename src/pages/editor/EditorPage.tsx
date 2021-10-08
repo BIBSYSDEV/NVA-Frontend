@@ -1,6 +1,6 @@
 import { ToggleButtonGroup, ToggleButton, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { TFunction, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { authenticatedApiRequest } from '../../api/apiRequest';
@@ -42,8 +42,15 @@ const defaultHrcsCategory: CustomerVocabulary = {
   name: 'HRCS Category',
 };
 
+const getTranslatedVocabularyName = (t: TFunction<'editor'>, id: string) =>
+  id === defaultHrcsActivity.id
+    ? t('registration:description.hrcs_activities')
+    : id === defaultHrcsCategory.id
+    ? t('registration:description.hrcs_categories')
+    : '';
+
 const EditorPage = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('editor');
   const user = useSelector((store: RootStore) => store.user);
   const dispatch = useDispatch();
 
@@ -72,24 +79,32 @@ const EditorPage = () => {
         ],
       };
 
-      const updatedVocabularyResponse = await authenticatedApiRequest({
+      const updatedVocabularyResponse = await authenticatedApiRequest<VocabularyList>({
         url: `${customerInstitution.id}/vocabularies`,
         method: 'PUT',
         data: vocabularyList,
       });
+
+      const vocabularyName = getTranslatedVocabularyName(t, updatedVocabulary.id);
+
       if (isSuccessStatus(updatedVocabularyResponse.status)) {
-        dispatch(setNotification('Oppdatert'));
+        dispatch(setNotification(t('feedback:success.update_vocabulary', { vocabulary: vocabularyName })));
         refetchCustomerInstitution();
       } else if (isErrorStatus(updatedVocabularyResponse.status)) {
-        dispatch(setNotification('Oppdatering feilet', NotificationVariant.Error));
+        dispatch(
+          setNotification(
+            t('feedback:error.update_vocabulary', { vocabulary: vocabularyName }),
+            NotificationVariant.Error
+          )
+        );
       }
     }
   };
 
   return (
     <StyledPageWrapperWithMaxWidth>
-      <PageHeader>Redaktør</PageHeader>
-      <Typography variant="h2">Velg vokabular</Typography>
+      <PageHeader>{t('profile:roles.editor')}</PageHeader>
+      <Typography variant="h2">{t('select_vocabulary')}</Typography>
       <VocabularyRow
         vocabulary={currentHrcsActivityVocabularies}
         updateVocabulary={updateVocabulary}
@@ -113,6 +128,7 @@ interface VocabularyRowProps {
 }
 
 const VocabularyRow = ({ vocabulary, updateVocabulary, isLoadingCustomer }: VocabularyRowProps) => {
+  const { t } = useTranslation('editor');
   const [isLoading, setIsLoading] = useState(isLoadingCustomer);
 
   useEffect(() => {
@@ -135,11 +151,11 @@ const VocabularyRow = ({ vocabulary, updateVocabulary, isLoadingCustomer }: Voca
           }
           return null;
         }}>
-        <ToggleButton value={VocabularyStatus.Default}>Default</ToggleButton>
-        <ToggleButton value={VocabularyStatus.Allowed}>Enabled</ToggleButton>
-        <ToggleButton value={VocabularyStatus.Disabled}>Disabled</ToggleButton>
+        <ToggleButton value={VocabularyStatus.Default}>{t('default')}</ToggleButton>
+        <ToggleButton value={VocabularyStatus.Allowed}>{t('enabled')}</ToggleButton>
+        <ToggleButton value={VocabularyStatus.Disabled}>{t('disabled')}</ToggleButton>
       </ToggleButtonGroup>
-      <Typography>{vocabulary.name}</Typography>
+      <Typography>{getTranslatedVocabularyName(t, vocabulary.id)}</Typography>
     </StyledVocabularyRow>
   );
 };
