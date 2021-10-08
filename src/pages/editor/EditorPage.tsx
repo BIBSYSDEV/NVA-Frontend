@@ -1,8 +1,6 @@
-import { ToggleButtonGroup, ToggleButton, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Typography } from '@mui/material';
 import { TFunction, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
 import { authenticatedApiRequest } from '../../api/apiRequest';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
@@ -17,16 +15,7 @@ import {
 import { NotificationVariant } from '../../types/notification.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { useFetch } from '../../utils/hooks/useFetch';
-
-const StyledVocabularyRow = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 1rem;
-
-  div:first-child {
-    margin-right: 1rem;
-  }
-`;
+import { VocabularyRow } from './VocabularyRow';
 
 const defaultHrcsActivity: CustomerVocabulary = {
   type: 'Vocabulary',
@@ -42,7 +31,7 @@ const defaultHrcsCategory: CustomerVocabulary = {
   name: 'HRCS Category',
 };
 
-const getTranslatedVocabularyName = (t: TFunction<'editor'>, id: string) =>
+export const getTranslatedVocabularyName = (t: TFunction<'editor'>, id: string) =>
   id === defaultHrcsActivity.id
     ? t('registration:description.hrcs_activities')
     : id === defaultHrcsCategory.id
@@ -120,42 +109,3 @@ const EditorPage = () => {
 };
 
 export default EditorPage;
-
-interface VocabularyRowProps {
-  vocabulary: CustomerVocabulary;
-  updateVocabulary: (updatedVocabulary: CustomerVocabulary) => void;
-  isLoadingCustomer: boolean;
-}
-
-const VocabularyRow = ({ vocabulary, updateVocabulary, isLoadingCustomer }: VocabularyRowProps) => {
-  const { t } = useTranslation('editor');
-  const [isLoading, setIsLoading] = useState(isLoadingCustomer);
-
-  useEffect(() => {
-    if (!isLoadingCustomer) {
-      setIsLoading(false);
-    }
-  }, [isLoadingCustomer]);
-
-  return (
-    <StyledVocabularyRow>
-      <ToggleButtonGroup
-        color="primary"
-        disabled={isLoading}
-        value={isLoading ? null : vocabulary.status}
-        exclusive
-        onChange={(event, value) => {
-          if (value) {
-            updateVocabulary({ ...vocabulary, status: value });
-            setIsLoading(true);
-          }
-          return null;
-        }}>
-        <ToggleButton value={VocabularyStatus.Default}>{t('default')}</ToggleButton>
-        <ToggleButton value={VocabularyStatus.Allowed}>{t('enabled')}</ToggleButton>
-        <ToggleButton value={VocabularyStatus.Disabled}>{t('disabled')}</ToggleButton>
-      </ToggleButtonGroup>
-      <Typography>{getTranslatedVocabularyName(t, vocabulary.id)}</Typography>
-    </StyledVocabularyRow>
-  );
-};
