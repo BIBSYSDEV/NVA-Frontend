@@ -1,12 +1,17 @@
 import { ToggleButtonGroup, ToggleButton, Typography } from '@mui/material';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { authenticatedApiRequest } from '../../api/apiRequest';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { CustomerInstitution, CustomerVocabulary, VocabularyState } from '../../types/customerInstitution.types';
+import {
+  CustomerInstitution,
+  CustomerVocabulary,
+  VocabularyList,
+  VocabularyStatus,
+} from '../../types/customerInstitution.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 
 const StyledVocabularyRow = styled.div`
@@ -22,14 +27,14 @@ const StyledVocabularyRow = styled.div`
 const defaultHrcsActivity: CustomerVocabulary = {
   type: 'Vocabulary',
   id: 'https://nva.unit.no/hrcs/activity',
-  active: VocabularyState.Enabled,
+  status: VocabularyStatus.Allowed,
   name: 'HRCS Activity',
 };
 
 const defaultHrcsCategory: CustomerVocabulary = {
   type: 'Vocabulary',
   id: 'https://nva.unit.no/hrcs/category',
-  active: VocabularyState.Enabled,
+  status: VocabularyStatus.Allowed,
   name: 'HRCS Category',
 };
 
@@ -37,11 +42,13 @@ const EditorPage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootStore) => store.user);
 
-  const [customerInstitution, isLoadingCustomerInstitution] = useFetch<CustomerInstitution>({
-    url: user?.customerId ?? '',
-    errorMessage: t('feedback:error.get_customer'),
-    withAuthentication: true,
-  });
+  const [customerInstitution, isLoadingCustomerInstitution, refetchCustomerInstitution] = useFetch<CustomerInstitution>(
+    {
+      url: user?.customerId ?? '',
+      errorMessage: t('feedback:error.get_customer'),
+      withAuthentication: true,
+    }
+  );
 
   const vocabularies = customerInstitution?.vocabularies ?? [];
   const currentHrcsActivityVocabularies =
@@ -49,18 +56,32 @@ const EditorPage = () => {
   const currentHrcsCategoryVocabularies =
     vocabularies.find((v) => v.id === defaultHrcsCategory.id) ?? defaultHrcsCategory;
 
+  const updateVocabulary = async (updatedVocabulary: CustomerVocabulary) => {
+    if (customerInstitution) {
+      const vocabularyList: VocabularyList = {
+        type: 'VocabularyList',
+        id: customerInstitution.id,
+        vocabularies: [
+          ...vocabularies.filter((vocabulary) => vocabulary.id !== updatedVocabulary.id),
+          updatedVocabulary,
+        ],
+      };
+
+      const updatedCustomerInstitution = await authenticatedApiRequest({
+        url: `${customerInstitution.id}/vocabularies`,
+        method: 'PUT',
+        data: vocabularyList,
+      });
+      refetchCustomerInstitution();
+    }
+  };
+
   return (
     <StyledPageWrapperWithMaxWidth>
       <PageHeader>Redaktør</PageHeader>
       <Typography variant="h2">Velg vokabular</Typography>
-      <VocabularyRow
-        vocabulary={currentHrcsActivityVocabularies}
-        name={'HRCS Activity - Health Research Classification System - Activity'}
-      />
-      <VocabularyRow
-        vocabulary={currentHrcsCategoryVocabularies}
-        name={'HRCS Categories - Health Research CLassification System - Categories'}
-      />
+      <VocabularyRow vocabulary={currentHrcsActivityVocabularies} updateVocabulary={updateVocabulary} />
+      <VocabularyRow vocabulary={currentHrcsCategoryVocabularies} updateVocabulary={updateVocabulary} />
     </StyledPageWrapperWithMaxWidth>
   );
 };
@@ -69,24 +90,22 @@ export default EditorPage;
 
 interface VocabularyRowProps {
   vocabulary: CustomerVocabulary;
-  name: string;
+  updateVocabulary: (updatedVocabulary: CustomerVocabulary) => void;
 }
 
-const VocabularyRow = ({ vocabulary, name }: VocabularyRowProps) => {
-  const [selectedValue, setSelectedValue] = useState(vocabulary.active);
-
+const VocabularyRow = ({ vocabulary, updateVocabulary }: VocabularyRowProps) => {
   return (
     <StyledVocabularyRow>
       <ToggleButtonGroup
         color="primary"
-        value={selectedValue}
+        value={vocabulary.status}
         exclusive
-        onChange={(event, value) => (value ? setSelectedValue(value) : null)}>
-        <ToggleButton value={VocabularyState.Default}>Default</ToggleButton>
-        <ToggleButton value={VocabularyState.Enabled}>Enabled</ToggleButton>
-        <ToggleButton value={VocabularyState.Disabled}>Disabled</ToggleButton>
+        onChange={(event, value) => (value ? updateVocabulary({ ...vocabulary, status: value }) : null)}>
+        <ToggleButton value={VocabularyStatus.Default}>Default</ToggleButton>
+        <ToggleButton value={VocabularyStatus.Allowed}>Enabled</ToggleButton>
+        <ToggleButton value={VocabularyStatus.Disabled}>Disabled</ToggleButton>
       </ToggleButtonGroup>
-      <Typography>{name}</Typography>
+      <Typography>{vocabulary.name}</Typography>
     </StyledVocabularyRow>
   );
 };

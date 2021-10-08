@@ -15,17 +15,17 @@ export interface CustomerInstitution {
   vocabularies: CustomerVocabulary[];
 }
 
-export enum VocabularyState {
-  Default = 'default',
-  Enabled = 'enabled',
-  Disabled = 'disabled',
+export enum VocabularyStatus {
+  Default = 'Default',
+  Allowed = 'Allowed',
+  Disabled = 'Disabled',
 }
 
 export interface CustomerVocabulary {
   type: 'Vocabulary';
   id: string;
   name: string;
-  active: VocabularyState;
+  status: VocabularyStatus;
 }
 
 export const emptyCustomerInstitution: CustomerInstitution = {
@@ -62,4 +62,10 @@ export interface CustomerList {
 
 export interface CustomerInstitutionsResponse {
   customers: CustomerInstitution[];
+}
+
+export interface VocabularyList {
+  type: 'VocabularyList';
+  id: string;
+  vocabularies: CustomerVocabulary[];
 }
