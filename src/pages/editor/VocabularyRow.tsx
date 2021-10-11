@@ -23,9 +23,10 @@ interface VocabularyRowProps {
   updateVocabularies: (newVocabulary: CustomerVocabulary) => Promise<void>;
   isLoadingCustomer: boolean;
   dataTestId: string;
+  disabled: boolean;
 }
 
-export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId }: VocabularyRowProps) => {
+export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId, disabled }: VocabularyRowProps) => {
   const { t } = useTranslation('editor');
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -38,7 +39,7 @@ export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId }: Vo
         <ToggleButtonGroup
           data-testid={dataTestId}
           color="primary"
-          disabled={isUpdating}
+          disabled={disabled || isUpdating}
           value={isUpdating ? null : vocabulary.status}
           exclusive
           onChange={async (event, value) => {
@@ -47,7 +48,6 @@ export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId }: Vo
               await updateVocabularies({ ...vocabulary, status: value });
               setIsUpdating(false);
             }
-            return null;
           }}>
           <ToggleButton value={VocabularyStatus.Default}>{t('default')}</ToggleButton>
           <ToggleButton value={VocabularyStatus.Allowed}>{t('allowed')}</ToggleButton>

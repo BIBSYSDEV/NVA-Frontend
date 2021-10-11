@@ -1,4 +1,5 @@
 import { CircularProgress, Typography } from '@mui/material';
+import { useState } from 'react';
 import { TFunction, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { authenticatedApiRequest } from '../../api/apiRequest';
@@ -38,6 +39,7 @@ const EditorPage = () => {
   const { t } = useTranslation('editor');
   const user = useSelector((store: RootStore) => store.user);
   const dispatch = useDispatch();
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const [vocabularyList, isLoadingVocabularyList, , setVocabularyList] = useFetch<VocabularyList>({
     url: user?.customerId ? `${user.customerId}/vocabularies` : '',
@@ -53,6 +55,7 @@ const EditorPage = () => {
 
   const updateVocabularies = async (newVocabulary: CustomerVocabulary) => {
     if (vocabularyList) {
+      setIsUpdating(true);
       const newVocabularyList: VocabularyList = {
         ...vocabularyList,
         vocabularies: [...vocabularies.filter((vocabulary) => vocabulary.id !== newVocabulary.id), newVocabulary],
@@ -84,6 +87,7 @@ const EditorPage = () => {
           )
         );
       }
+      setIsUpdating(false);
     }
   };
 
@@ -106,12 +110,14 @@ const EditorPage = () => {
               updateVocabularies={updateVocabularies}
               isLoadingCustomer={isLoadingVocabularyList}
               dataTestId={dataTestId.editor.hrcsActivityButtonGroup}
+              disabled={isUpdating}
             />
             <VocabularyRow
               vocabulary={currentHrcsCategoryVocabularies}
               updateVocabularies={updateVocabularies}
               isLoadingCustomer={isLoadingVocabularyList}
               dataTestId={dataTestId.editor.hrcsActivityButtonGroup}
+              disabled={isUpdating}
             />
           </>
         )
