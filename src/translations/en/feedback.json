@@ -77,7 +77,7 @@
     "update_authority": "Updated authority",
     "update_customer": "Updated customer institution",
     "update_registration": "Updated registration",
-    "update_vocabulary": "{{vocabulary}} was updated"
+    "update_vocabulary": "{{vocabulary}} is now {{status}}"
   },
   "validation": {
     "author_required": "You need to register at least one author for this registration",
