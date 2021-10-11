@@ -62,7 +62,7 @@ const EditorPage = () => {
 
       const updatedVocabularyResponse = await authenticatedApiRequest<VocabularyList>({
         url: vocabularyList.id,
-        method: 'PUT',
+        method: vocabularies.length === 0 ? 'POST' : 'PUT',
         data: newVocabularyList,
       });
 
@@ -95,7 +95,7 @@ const EditorPage = () => {
       <Typography variant="h2">{t('select_vocabulary')}</Typography>
       <Typography gutterBottom>{t('select_vocabulary_description')}</Typography>
       <Typography>{t('default_description')}</Typography>
-      <Typography>{t('enabled_description')}</Typography>
+      <Typography>{t('allowed_description')}</Typography>
       <Typography>{t('disabled_description')}</Typography>
 
       {vocabularyList && (
