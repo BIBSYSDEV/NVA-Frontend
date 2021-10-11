@@ -34,6 +34,7 @@
     "get_series": "Kunne ikke hente serie",
     "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
     "get_users_for_institution": "Kunne ikke hente brukere",
+    "get_vocabularies": "Kunne ikke hente kontrollerte vokabular",
     "institution_mismatch": "Denne brukeren tilhører en annen institusjon",
     "login": "Kunne ikke logge inn",
     "missing_user": "Mangler bruker",

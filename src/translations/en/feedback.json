@@ -34,6 +34,7 @@
     "get_series": "Could not get series",
     "get_session": "Invalid session. Please log in again.",
     "get_users_for_institution": "Could not get users",
+    "get_vocabularies": "Could not fetch vocabularies",
     "institution_mismatch": "This user belongs to another institution",
     "login": "Login failed",
     "missing_user": "Missing user",

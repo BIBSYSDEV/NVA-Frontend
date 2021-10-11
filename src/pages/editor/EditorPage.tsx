@@ -6,12 +6,7 @@ import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import {
-  CustomerInstitution,
-  CustomerVocabulary,
-  VocabularyList,
-  VocabularyStatus,
-} from '../../types/customerInstitution.types';
+import { CustomerVocabulary, VocabularyList, VocabularyStatus } from '../../types/customerInstitution.types';
 import { NotificationVariant } from '../../types/notification.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { useFetch } from '../../utils/hooks/useFetch';
@@ -43,25 +38,22 @@ const EditorPage = () => {
   const user = useSelector((store: RootStore) => store.user);
   const dispatch = useDispatch();
 
-  const [customerInstitution, isLoadingCustomerInstitution, refetchCustomerInstitution] = useFetch<CustomerInstitution>(
-    {
-      url: user?.customerId ?? '',
-      errorMessage: t('feedback:error.get_customer'),
-      withAuthentication: true,
-    }
-  );
+  const [vocabularyList, isLoadingVocabularyList, refetchCustomerInstitution] = useFetch<VocabularyList>({
+    url: user?.customerId ? `${user.customerId}/vocabularies` : '',
+    errorMessage: t('feedback:error.get_vocabularies'),
+    withAuthentication: true,
+  });
 
-  const vocabularies = customerInstitution?.vocabularies ?? [];
+  const vocabularies = vocabularyList?.vocabularies ?? [];
   const currentHrcsActivityVocabularies =
     vocabularies.find((v) => v.id === defaultHrcsActivity.id) ?? defaultHrcsActivity;
   const currentHrcsCategoryVocabularies =
     vocabularies.find((v) => v.id === defaultHrcsCategory.id) ?? defaultHrcsCategory;
 
   const updateVocabulary = async (updatedVocabulary: CustomerVocabulary) => {
-    if (customerInstitution) {
-      const vocabularyList: VocabularyList = {
-        type: 'VocabularyList',
-        id: customerInstitution.id,
+    if (vocabularyList) {
+      const newVocabularyList: VocabularyList = {
+        ...vocabularyList,
         vocabularies: [
           ...vocabularies.filter((vocabulary) => vocabulary.id !== updatedVocabulary.id),
           updatedVocabulary,
@@ -69,16 +61,16 @@ const EditorPage = () => {
       };
 
       const updatedVocabularyResponse = await authenticatedApiRequest<VocabularyList>({
-        url: `${customerInstitution.id}/vocabularies`,
+        url: vocabularyList.id,
         method: 'PUT',
-        data: vocabularyList,
+        data: newVocabularyList,
       });
 
       const vocabularyName = getTranslatedVocabularyName(t, updatedVocabulary.id);
 
       if (isSuccessStatus(updatedVocabularyResponse.status)) {
-        dispatch(setNotification(t('feedback:success.update_vocabulary', { vocabulary: vocabularyName })));
         refetchCustomerInstitution();
+        dispatch(setNotification(t('feedback:success.update_vocabulary', { vocabulary: vocabularyName })));
       } else if (isErrorStatus(updatedVocabularyResponse.status)) {
         dispatch(
           setNotification(
@@ -99,16 +91,20 @@ const EditorPage = () => {
       <Typography>{t('enabled_description')}</Typography>
       <Typography>{t('disabled_description')}</Typography>
 
-      <VocabularyRow
-        vocabulary={currentHrcsActivityVocabularies}
-        updateVocabulary={updateVocabulary}
-        isLoadingCustomer={isLoadingCustomerInstitution}
-      />
-      <VocabularyRow
-        vocabulary={currentHrcsCategoryVocabularies}
-        updateVocabulary={updateVocabulary}
-        isLoadingCustomer={isLoadingCustomerInstitution}
-      />
+      {vocabularyList && (
+        <>
+          <VocabularyRow
+            vocabulary={currentHrcsActivityVocabularies}
+            updateVocabulary={updateVocabulary}
+            isLoadingCustomer={isLoadingVocabularyList}
+          />
+          <VocabularyRow
+            vocabulary={currentHrcsCategoryVocabularies}
+            updateVocabulary={updateVocabulary}
+            isLoadingCustomer={isLoadingVocabularyList}
+          />
+        </>
+      )}
     </StyledPageWrapperWithMaxWidth>
   );
 };
