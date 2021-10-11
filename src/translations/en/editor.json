@@ -3,8 +3,8 @@
   "default_description": "$t(default): Shown by default for all registrations",
   "disabled": "Disabled",
   "disabled_description": "$t(disabled): Can not be added",
-  "enabled": "Enabled",
-  "enabled_description": "$t(enabled): Can be added by users themselves",
+  "allowed": "Enabled",
+  "allowed_description": "$t(enabled): Can be added by users themselves",
   "select_vocabulary": "Select vocabulary",
   "select_vocabulary_description": "Set settings for controlled vocabulary in your institution."
 }

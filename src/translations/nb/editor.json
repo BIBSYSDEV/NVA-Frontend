@@ -3,8 +3,8 @@
   "default_description": "$t(default): Vises som standard for alle registreringer",
   "disabled": "Ikke tillatt",
   "disabled_description": "$t(disabled): Kan ikke legges til",
-  "enabled": "Tillatt",
-  "enabled_description": "$t(enabled): Kan legges til selv av brukere",
+  "allowed": "Tillatt",
+  "allowed_description": "$t(enabled): Kan legges til selv av brukere",
   "select_vocabulary": "Velg vokabular",
   "select_vocabulary_description": "Sett innstillinger for kontrollerte vokabular i din institusjon."
 }

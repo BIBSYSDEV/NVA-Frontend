@@ -77,7 +77,7 @@
     "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",
     "update_registration": "Registreringen er oppdatert",
-    "update_vocabulary": "{{vocabulary}} ble oppdatert"
+    "update_vocabulary": "{{vocabulary}} er nå {{status}}"
   },
   "validation": {
     "author_required": "Du må ha minst en forfatter på denne registreringen",

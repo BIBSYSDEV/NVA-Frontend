@@ -70,7 +70,14 @@ const EditorPage = () => {
 
       if (isSuccessStatus(updatedVocabularyResponse.status)) {
         refetchCustomerInstitution();
-        dispatch(setNotification(t('feedback:success.update_vocabulary', { vocabulary: vocabularyName })));
+        dispatch(
+          setNotification(
+            t('feedback:success.update_vocabulary', {
+              vocabulary: vocabularyName,
+              status: t(updatedVocabulary.status.toLowerCase()).toLowerCase(),
+            })
+          )
+        );
       } else if (isErrorStatus(updatedVocabularyResponse.status)) {
         dispatch(
           setNotification(

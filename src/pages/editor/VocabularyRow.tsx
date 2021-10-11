@@ -53,7 +53,7 @@ export const VocabularyRow = ({ vocabulary, updateVocabulary, isLoadingCustomer 
             return null;
           }}>
           <ToggleButton value={VocabularyStatus.Default}>{t('default')}</ToggleButton>
-          <ToggleButton value={VocabularyStatus.Allowed}>{t('enabled')}</ToggleButton>
+          <ToggleButton value={VocabularyStatus.Allowed}>{t('allowed')}</ToggleButton>
           <ToggleButton value={VocabularyStatus.Disabled}>{t('disabled')}</ToggleButton>
         </ToggleButtonGroup>
         {isLoading && <CircularProgress />}
