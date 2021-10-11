@@ -1,4 +1,4 @@
-import { ToggleButtonGroup, ToggleButton, Typography } from '@mui/material';
+import { ToggleButtonGroup, ToggleButton, Typography, CircularProgress } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -6,9 +6,12 @@ import { CustomerVocabulary, VocabularyStatus } from '../../types/customerInstit
 import { getTranslatedVocabularyName } from './EditorPage';
 
 const StyledVocabularyRow = styled.div`
-  /* display: flex; */
-  align-items: center;
   margin-top: 1rem;
+`;
+
+const StyledButtonRow = styled.div`
+  display: flex;
+  align-items: center;
 
   div:first-child {
     margin-right: 1rem;
@@ -36,22 +39,25 @@ export const VocabularyRow = ({ vocabulary, updateVocabulary, isLoadingCustomer 
       <Typography variant="h3" gutterBottom>
         {getTranslatedVocabularyName(t, vocabulary.id)}
       </Typography>
-      <ToggleButtonGroup
-        color="primary"
-        disabled={isLoading}
-        value={isLoading ? null : vocabulary.status}
-        exclusive
-        onChange={(event, value) => {
-          if (value) {
-            updateVocabulary({ ...vocabulary, status: value });
-            setIsLoading(true);
-          }
-          return null;
-        }}>
-        <ToggleButton value={VocabularyStatus.Default}>{t('default')}</ToggleButton>
-        <ToggleButton value={VocabularyStatus.Allowed}>{t('enabled')}</ToggleButton>
-        <ToggleButton value={VocabularyStatus.Disabled}>{t('disabled')}</ToggleButton>
-      </ToggleButtonGroup>
+      <StyledButtonRow>
+        <ToggleButtonGroup
+          color="primary"
+          disabled={isLoading}
+          value={isLoading ? null : vocabulary.status}
+          exclusive
+          onChange={(event, value) => {
+            if (value) {
+              updateVocabulary({ ...vocabulary, status: value });
+              setIsLoading(true);
+            }
+            return null;
+          }}>
+          <ToggleButton value={VocabularyStatus.Default}>{t('default')}</ToggleButton>
+          <ToggleButton value={VocabularyStatus.Allowed}>{t('enabled')}</ToggleButton>
+          <ToggleButton value={VocabularyStatus.Disabled}>{t('disabled')}</ToggleButton>
+        </ToggleButtonGroup>
+        {isLoading && <CircularProgress />}
+      </StyledButtonRow>
     </StyledVocabularyRow>
   );
 };
