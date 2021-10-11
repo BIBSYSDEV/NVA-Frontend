@@ -1,4 +1,8 @@
 export const dataTestId = {
+  editor: {
+    hrcsActivityButtonGroup: 'hrcs-activity-button-group',
+    hrcsCategoryButtonGroup: 'hrcs-category-button-group',
+  },
   footer: {
     aboutLink: 'about-link',
     privacyLink: 'privacy-link',

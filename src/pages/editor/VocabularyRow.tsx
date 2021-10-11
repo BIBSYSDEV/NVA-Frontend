@@ -22,9 +22,10 @@ interface VocabularyRowProps {
   vocabulary: CustomerVocabulary;
   updateVocabularies: (newVocabulary: CustomerVocabulary) => Promise<void>;
   isLoadingCustomer: boolean;
+  dataTestId: string;
 }
 
-export const VocabularyRow = ({ vocabulary, updateVocabularies }: VocabularyRowProps) => {
+export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId }: VocabularyRowProps) => {
   const { t } = useTranslation('editor');
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -35,6 +36,7 @@ export const VocabularyRow = ({ vocabulary, updateVocabularies }: VocabularyRowP
       </Typography>
       <StyledButtonRow>
         <ToggleButtonGroup
+          data-testid={dataTestId}
           color="primary"
           disabled={isUpdating}
           value={isUpdating ? null : vocabulary.status}

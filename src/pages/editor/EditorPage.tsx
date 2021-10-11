@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
 import { TFunction, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { authenticatedApiRequest } from '../../api/apiRequest';
@@ -9,6 +9,7 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { CustomerVocabulary, VocabularyList, VocabularyStatus } from '../../types/customerInstitution.types';
 import { NotificationVariant } from '../../types/notification.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { VocabularyRow } from './VocabularyRow';
 
@@ -95,19 +96,25 @@ const EditorPage = () => {
       <Typography>{t('allowed_description')}</Typography>
       <Typography>{t('disabled_description')}</Typography>
 
-      {vocabularyList && (
-        <>
-          <VocabularyRow
-            vocabulary={currentHrcsActivityVocabularies}
-            updateVocabularies={updateVocabularies}
-            isLoadingCustomer={isLoadingVocabularyList}
-          />
-          <VocabularyRow
-            vocabulary={currentHrcsCategoryVocabularies}
-            updateVocabularies={updateVocabularies}
-            isLoadingCustomer={isLoadingVocabularyList}
-          />
-        </>
+      {isLoadingVocabularyList ? (
+        <CircularProgress />
+      ) : (
+        vocabularyList && (
+          <>
+            <VocabularyRow
+              vocabulary={currentHrcsActivityVocabularies}
+              updateVocabularies={updateVocabularies}
+              isLoadingCustomer={isLoadingVocabularyList}
+              dataTestId={dataTestId.editor.hrcsActivityButtonGroup}
+            />
+            <VocabularyRow
+              vocabulary={currentHrcsCategoryVocabularies}
+              updateVocabularies={updateVocabularies}
+              isLoadingCustomer={isLoadingVocabularyList}
+              dataTestId={dataTestId.editor.hrcsActivityButtonGroup}
+            />
+          </>
+        )
       )}
     </StyledPageWrapperWithMaxWidth>
   );
