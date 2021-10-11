@@ -38,7 +38,7 @@ const EditorPage = () => {
   const user = useSelector((store: RootStore) => store.user);
   const dispatch = useDispatch();
 
-  const [vocabularyList, isLoadingVocabularyList, refetchCustomerInstitution] = useFetch<VocabularyList>({
+  const [vocabularyList, isLoadingVocabularyList, , setVocabularyList] = useFetch<VocabularyList>({
     url: user?.customerId ? `${user.customerId}/vocabularies` : '',
     errorMessage: t('feedback:error.get_vocabularies'),
     withAuthentication: true,
@@ -50,14 +50,11 @@ const EditorPage = () => {
   const currentHrcsCategoryVocabularies =
     vocabularies.find((v) => v.id === defaultHrcsCategory.id) ?? defaultHrcsCategory;
 
-  const updateVocabulary = async (updatedVocabulary: CustomerVocabulary) => {
+  const updateVocabularies = async (newVocabulary: CustomerVocabulary) => {
     if (vocabularyList) {
       const newVocabularyList: VocabularyList = {
         ...vocabularyList,
-        vocabularies: [
-          ...vocabularies.filter((vocabulary) => vocabulary.id !== updatedVocabulary.id),
-          updatedVocabulary,
-        ],
+        vocabularies: [...vocabularies.filter((vocabulary) => vocabulary.id !== newVocabulary.id), newVocabulary],
       };
 
       const updatedVocabularyResponse = await authenticatedApiRequest<VocabularyList>({
@@ -66,18 +63,18 @@ const EditorPage = () => {
         data: newVocabularyList,
       });
 
-      const vocabularyName = getTranslatedVocabularyName(t, updatedVocabulary.id);
+      const vocabularyName = getTranslatedVocabularyName(t, newVocabulary.id);
 
       if (isSuccessStatus(updatedVocabularyResponse.status)) {
-        refetchCustomerInstitution();
         dispatch(
           setNotification(
             t('feedback:success.update_vocabulary', {
               vocabulary: vocabularyName,
-              status: t(updatedVocabulary.status.toLowerCase()).toLowerCase(),
+              status: t(newVocabulary.status.toLowerCase()).toLowerCase(),
             })
           )
         );
+        setVocabularyList(updatedVocabularyResponse.data);
       } else if (isErrorStatus(updatedVocabularyResponse.status)) {
         dispatch(
           setNotification(
@@ -102,12 +99,12 @@ const EditorPage = () => {
         <>
           <VocabularyRow
             vocabulary={currentHrcsActivityVocabularies}
-            updateVocabulary={updateVocabulary}
+            updateVocabularies={updateVocabularies}
             isLoadingCustomer={isLoadingVocabularyList}
           />
           <VocabularyRow
             vocabulary={currentHrcsCategoryVocabularies}
-            updateVocabulary={updateVocabulary}
+            updateVocabularies={updateVocabularies}
             isLoadingCustomer={isLoadingVocabularyList}
           />
         </>

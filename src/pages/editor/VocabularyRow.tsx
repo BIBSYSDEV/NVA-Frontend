@@ -1,5 +1,5 @@
 import { ToggleButtonGroup, ToggleButton, Typography, CircularProgress } from '@mui/material';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { CustomerVocabulary, VocabularyStatus } from '../../types/customerInstitution.types';
@@ -20,19 +20,13 @@ const StyledButtonRow = styled.div`
 
 interface VocabularyRowProps {
   vocabulary: CustomerVocabulary;
-  updateVocabulary: (updatedVocabulary: CustomerVocabulary) => void;
+  updateVocabularies: (newVocabulary: CustomerVocabulary) => Promise<void>;
   isLoadingCustomer: boolean;
 }
 
-export const VocabularyRow = ({ vocabulary, updateVocabulary, isLoadingCustomer }: VocabularyRowProps) => {
+export const VocabularyRow = ({ vocabulary, updateVocabularies }: VocabularyRowProps) => {
   const { t } = useTranslation('editor');
-  const [isLoading, setIsLoading] = useState(isLoadingCustomer);
-
-  useEffect(() => {
-    if (!isLoadingCustomer) {
-      setIsLoading(false);
-    }
-  }, [isLoadingCustomer]);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   return (
     <StyledVocabularyRow>
@@ -42,13 +36,14 @@ export const VocabularyRow = ({ vocabulary, updateVocabulary, isLoadingCustomer 
       <StyledButtonRow>
         <ToggleButtonGroup
           color="primary"
-          disabled={isLoading}
-          value={isLoading ? null : vocabulary.status}
+          disabled={isUpdating}
+          value={isUpdating ? null : vocabulary.status}
           exclusive
-          onChange={(event, value) => {
+          onChange={async (event, value) => {
             if (value) {
-              updateVocabulary({ ...vocabulary, status: value });
-              setIsLoading(true);
+              setIsUpdating(true);
+              await updateVocabularies({ ...vocabulary, status: value });
+              setIsUpdating(false);
             }
             return null;
           }}>
@@ -56,7 +51,7 @@ export const VocabularyRow = ({ vocabulary, updateVocabulary, isLoadingCustomer 
           <ToggleButton value={VocabularyStatus.Allowed}>{t('allowed')}</ToggleButton>
           <ToggleButton value={VocabularyStatus.Disabled}>{t('disabled')}</ToggleButton>
         </ToggleButtonGroup>
-        {isLoading && <CircularProgress />}
+        {isUpdating && <CircularProgress />}
       </StyledButtonRow>
     </StyledVocabularyRow>
   );
