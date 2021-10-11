@@ -34,6 +34,7 @@
     "get_series": "Kunne ikke hente serie",
     "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
     "get_users_for_institution": "Kunne ikke hente brukere",
+    "get_vocabularies": "Kunne ikke hente kontrollerte vokabular",
     "institution_mismatch": "Denne brukeren tilhører en annen institusjon",
     "login": "Kunne ikke logge inn",
     "missing_user": "Mangler bruker",
@@ -47,6 +48,7 @@
     "update_doi_request": "Kunne ikke oppdatere DOI-forespørsel",
     "update_institution_user": "Kunne ikke oppdatere bruker",
     "update_registration": "Kunne ikke oppdatere registrering",
+    "update_vocabulary": "Oppdatering av {{vocabulary}} feilet",
     "orcid": {
       "access_denied": "Kunne ikke koble til ORCID fordi tilgang til ORCID-kontoen ble avslått"
     }
@@ -74,7 +76,8 @@
     "send_message": "Melding sendt",
     "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",
-    "update_registration": "Registreringen er oppdatert"
+    "update_registration": "Registreringen er oppdatert",
+    "update_vocabulary": "{{vocabulary}} er nå {{status}}"
   },
   "validation": {
     "author_required": "Du må ha minst en forfatter på denne registreringen",
