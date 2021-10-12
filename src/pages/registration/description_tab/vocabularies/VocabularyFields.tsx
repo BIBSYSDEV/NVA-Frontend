@@ -66,7 +66,6 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
     values: { subjects },
   } = useFormikContext<Registration>();
 
-  // Show fields for vocabularies that has a value, or has status Default
   const vocabulariesWithValue = vocabularyEntries
     .filter(([_, value]) => subjects.some((key) => key.startsWith(value.baseId)))
     .map(([key, _]) => key);
