@@ -69,20 +69,20 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
   const vocabulariesWithValue = vocabularyEntries
     .filter(([_, value]) => subjects.some((key) => key.startsWith(value.baseId)))
     .map(([key, _]) => key);
-  const defaultVocabularyNames = vocabularyEntries
+  const defaultVocabularyKeys = vocabularyEntries
     .filter(([_, value]) => defaultVocabularies.includes(value.baseId))
     .map(([key, _]) => key);
-  const allowedVocabularyNames = vocabularyEntries
+  const allowedVocabularyKeys = vocabularyEntries
     .filter(([_, value]) => allowedVocabularies.includes(value.baseId))
     .map(([key, _]) => key);
 
   const [visibleVocabularies, setVisibleVocabularies] = useState([
-    ...new Set([...defaultVocabularyNames, ...vocabulariesWithValue]),
+    ...new Set([...defaultVocabularyKeys, ...vocabulariesWithValue]),
   ]);
   const [vocabularyToRemove, setVocabularyToRemove] = useState('');
   const [newVocabularyAnchor, setNewVocabularyAnchor] = useState<null | HTMLElement>(null);
 
-  const addableVocabularies = allowedVocabularyNames.filter((vocabulary) => !visibleVocabularies.includes(vocabulary));
+  const addableVocabularies = allowedVocabularyKeys.filter((vocabulary) => !visibleVocabularies.includes(vocabulary));
 
   return (
     <>
@@ -109,7 +109,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                       )
                     }
                   />
-                  {!defaultVocabularyNames.includes(vocabulary) && (
+                  {!defaultVocabularyKeys.includes(vocabulary) && (
                     <>
                       <StyledRemoveButton
                         color="error"
