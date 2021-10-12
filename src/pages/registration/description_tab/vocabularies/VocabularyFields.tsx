@@ -52,24 +52,38 @@ const vocabularyConfig: VocabularyConfig = {
     component: HrcsCategoryInput,
   },
 };
-const vocabularies = Object.keys(vocabularyConfig);
+const vocabularyEntries = Object.entries(vocabularyConfig);
 
-export const VocabularyFields = () => {
+interface VocabularyFieldsProps {
+  defaultVocabularies: string[];
+  allowedVocabularies: string[];
+}
+
+export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: VocabularyFieldsProps) => {
   const { t } = useTranslation('registration');
   const {
     setFieldValue,
     values: { subjects },
   } = useFormikContext<Registration>();
 
-  // Open vacabularies with values by default
-  const defaultVisibleVocabualaries = Object.entries(vocabularyConfig)
+  // Show fields for vocabularies that has a value, or has status Default
+  const vocabulariesWithValue = vocabularyEntries
     .filter(([_, value]) => subjects.some((key) => key.startsWith(value.baseId)))
     .map(([key, _]) => key);
-  const [visibleVocabularies, setVisibleVocabularies] = useState(defaultVisibleVocabualaries);
+  const defaultVocabularyNames = vocabularyEntries
+    .filter(([_, value]) => defaultVocabularies.some((defaultVocabularyId) => defaultVocabularyId === value.baseId))
+    .map(([key, _]) => key);
+  const allowedVocabularyNames = vocabularyEntries
+    .filter(([_, value]) => allowedVocabularies.some((defaultVocabularyId) => defaultVocabularyId === value.baseId))
+    .map(([key, _]) => key);
+
+  const [visibleVocabularies, setVisibleVocabularies] = useState([
+    ...new Set([...defaultVocabularyNames, ...vocabulariesWithValue]),
+  ]);
   const [vocabularyToRemove, setVocabularyToRemove] = useState('');
   const [newVocabularyAnchor, setNewVocabularyAnchor] = useState<null | HTMLElement>(null);
 
-  const addableVocabularies = vocabularies.filter((vocabulary) => !visibleVocabularies.includes(vocabulary));
+  const addableVocabularies = allowedVocabularyNames.filter((vocabulary) => !visibleVocabularies.includes(vocabulary));
 
   return (
     <>

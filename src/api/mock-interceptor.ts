@@ -11,7 +11,11 @@ import mockNtnuSubunitResponse from '../utils/testfiles/institutions/institution
 import { mockSchoolOfSportDepartment } from '../utils/testfiles/institutions/school_of_sport_department';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import { mockRoles } from '../utils/testfiles/mock_feide_user';
-import { mockCustomerInstitution, mockCustomerInstitutions } from '../utils/testfiles/mockCustomerInstitutions';
+import {
+  mockCustomerInstitution,
+  mockCustomerInstitutions,
+  mockCustomerInstitutionVocabularies,
+} from '../utils/testfiles/mockCustomerInstitutions';
 import mockMyRegistrations from '../utils/testfiles/my_registrations.json';
 import { mockProject, mockProjectSearch } from '../utils/testfiles/mockProjects';
 import mockPublishedRegistrations from '../utils/testfiles/published_registrations.json';
@@ -144,6 +148,9 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(AuthorityApiPath.Person)).reply(200, mockSingleAuthorityResponse);
 
   //memberinstitutions
+  mock
+    .onGet(new RegExp(`${CustomerInstitutionApiPath.Customer}/.+/vocabularies`))
+    .reply(200, mockCustomerInstitutionVocabularies);
   mock.onGet(new RegExp(CustomerInstitutionApiPath.Customer)).replyOnce(200, mockCustomerInstitutions);
   mock.onGet(new RegExp(CustomerInstitutionApiPath.Customer)).reply(200, mockCustomerInstitution);
   mock.onPut(new RegExp(CustomerInstitutionApiPath.Customer)).reply(200, mockCustomerInstitution);
