@@ -71,10 +71,10 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
     .filter(([_, value]) => subjects.some((key) => key.startsWith(value.baseId)))
     .map(([key, _]) => key);
   const defaultVocabularyNames = vocabularyEntries
-    .filter(([_, value]) => defaultVocabularies.some((defaultVocabularyId) => defaultVocabularyId === value.baseId))
+    .filter(([_, value]) => defaultVocabularies.includes(value.baseId))
     .map(([key, _]) => key);
   const allowedVocabularyNames = vocabularyEntries
-    .filter(([_, value]) => allowedVocabularies.some((defaultVocabularyId) => defaultVocabularyId === value.baseId))
+    .filter(([_, value]) => allowedVocabularies.includes(value.baseId))
     .map(([key, _]) => key);
 
   const [visibleVocabularies, setVisibleVocabularies] = useState([
@@ -110,31 +110,35 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                       )
                     }
                   />
-                  <StyledRemoveButton
-                    color="error"
-                    startIcon={<RemoveCircleIcon />}
-                    onClick={() => setVocabularyToRemove(vocabulary)}>
-                    {t('description.remove_vocabulary')}
-                  </StyledRemoveButton>
+                  {!defaultVocabularyNames.includes(vocabulary) && (
+                    <>
+                      <StyledRemoveButton
+                        color="error"
+                        startIcon={<RemoveCircleIcon />}
+                        onClick={() => setVocabularyToRemove(vocabulary)}>
+                        {t('description.remove_vocabulary')}
+                      </StyledRemoveButton>
 
-                  <ConfirmDialog
-                    open={vocabularyToRemove === vocabulary}
-                    title={t('description.confirm_remove_vocabulary_title')}
-                    onAccept={() => {
-                      const updatedValues = subjects.filter((keyword) => !keyword.startsWith(baseId));
-                      setFieldValue(name, updatedValues);
-                      setVisibleVocabularies(
-                        visibleVocabularies.filter((visibleVocabulary) => visibleVocabulary !== vocabulary)
-                      );
-                      setVocabularyToRemove('');
-                    }}
-                    onCancel={() => setVocabularyToRemove('')}>
-                    <Typography>
-                      {t('description.confirm_remove_vocabulary_text', {
-                        vocabulary: t(i18nKey),
-                      })}
-                    </Typography>
-                  </ConfirmDialog>
+                      <ConfirmDialog
+                        open={vocabularyToRemove === vocabulary}
+                        title={t('description.confirm_remove_vocabulary_title')}
+                        onAccept={() => {
+                          const updatedValues = subjects.filter((keyword) => !keyword.startsWith(baseId));
+                          setFieldValue(name, updatedValues);
+                          setVisibleVocabularies(
+                            visibleVocabularies.filter((visibleVocabulary) => visibleVocabulary !== vocabulary)
+                          );
+                          setVocabularyToRemove('');
+                        }}
+                        onCancel={() => setVocabularyToRemove('')}>
+                        <Typography>
+                          {t('description.confirm_remove_vocabulary_text', {
+                            vocabulary: t(i18nKey),
+                          })}
+                        </Typography>
+                      </ConfirmDialog>
+                    </>
+                  )}
                 </StyledVocabularyRow>
               );
             })}
