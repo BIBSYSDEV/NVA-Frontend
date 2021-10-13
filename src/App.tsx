@@ -27,6 +27,7 @@ import { useFetch } from './utils/hooks/useFetch';
 import { AuthorityApiPath, RoleApiPath } from './api/apiPaths';
 import { InstitutionUser } from './types/user.types';
 import { UrlPathTemplate } from './utils/urlPaths';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -173,7 +174,9 @@ export const App = () => {
             <SkipLink href="#main-content">{t('common:skip_to_main_content')}</SkipLink>
             <Header />
             <StyledMainContent id="main-content">
-              <AppRoutes />
+              <ErrorBoundary>
+                <AppRoutes />
+              </ErrorBoundary>
             </StyledMainContent>
             <Footer />
           </StyledApp>
