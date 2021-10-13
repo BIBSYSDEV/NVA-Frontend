@@ -42,6 +42,8 @@ export enum ChapterType {
 export enum PresentationType {
   ConferenceLecture = 'ConferenceLecture',
   ConferencePoster = 'ConferencePoster',
+  Lecture = 'Lecture',
+  OtherPresentation = 'OtherPresentation',
 }
 
 export type RegistrationSubtype = JournalType | ReportType | BookType | DegreeType | ChapterType;
