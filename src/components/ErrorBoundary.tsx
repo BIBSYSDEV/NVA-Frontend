@@ -13,10 +13,10 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryClassProps> {
   }
 
   componentDidUpdate(prevProps: ErrorBoundaryClassProps) {
-    const { location } = this.props;
+    const { pathname, search } = this.props.location;
     const { hasError } = this.state;
 
-    if (hasError && location.pathname !== prevProps.location.pathname) {
+    if (hasError && (pathname !== prevProps.location.pathname || search !== prevProps.location.search)) {
       this.setState({ hasError: false });
     }
   }
