@@ -11,7 +11,7 @@ interface PresentationTypeFormProps {
   onChangeSubType: (type: string) => void;
 }
 
-export const JournalTypeForm = ({ onChangeSubType }: PresentationTypeFormProps) => {
+export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormProps) => {
   const { values } = useFormikContext<PresentationRegistration>();
   const subType = values.entityDescription.reference.publicationInstance.type;
 

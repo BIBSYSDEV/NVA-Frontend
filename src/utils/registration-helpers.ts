@@ -4,6 +4,7 @@ import {
   ChapterType,
   DegreeType,
   JournalType,
+  PresentationType,
   PublicationType,
   ReportType,
 } from '../types/publicationFieldNames';
@@ -21,6 +22,8 @@ export const getMainRegistrationType = (instanceType: string) =>
     ? PublicationType.Report
     : isChapter(instanceType)
     ? PublicationType.Chapter
+    : isPresentation(instanceType)
+    ? PublicationType.Presentation
     : '';
 
 export const isJournal = (instanceType: string) => Object.values(JournalType).some((type) => type === instanceType);
@@ -32,6 +35,9 @@ export const isDegree = (instanceType: string) => Object.values(DegreeType).some
 export const isReport = (instanceType: string) => Object.values(ReportType).some((type) => type === instanceType);
 
 export const isChapter = (instanceType: string) => Object.values(ChapterType).some((type) => type === instanceType);
+
+export const isPresentation = (instanceType: string) =>
+  Object.values(PresentationType).some((type) => type === instanceType);
 
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCreator && user.id === registration.owner;

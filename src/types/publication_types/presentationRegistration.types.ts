@@ -1,7 +1,6 @@
 import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
 import { PresentationType, PublicationType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
-import { ContextPublisher, Series } from './bookRegistration.types';
 
 export interface PresentationRegistration extends BaseRegistration {
   entityDescription: PresentationEntityDescription;
@@ -12,7 +11,7 @@ export interface PresentationPublicationInstance {
   pages: PagesMonograph | null;
 }
 
-export const emptyReportPublicationInstance: PresentationPublicationInstance = {
+export const emptyPresentationPublicationInstance: PresentationPublicationInstance = {
   type: '',
   pages: emptyPagesMonograph,
 };

@@ -4,6 +4,7 @@ export enum PublicationType {
   Report = 'Report',
   Degree = 'Degree',
   Chapter = 'Chapter',
+  Presentation = 'Event',
 }
 
 export enum JournalType {
