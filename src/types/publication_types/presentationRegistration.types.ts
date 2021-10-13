@@ -1,6 +1,5 @@
 import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
 import { PresentationType, PublicationType } from '../publicationFieldNames';
-import { PagesMonograph, emptyPagesMonograph } from './pages.types';
 
 export interface PresentationRegistration extends BaseRegistration {
   entityDescription: PresentationEntityDescription;
@@ -8,16 +7,30 @@ export interface PresentationRegistration extends BaseRegistration {
 
 export interface PresentationPublicationInstance {
   type: PresentationType | '';
-  pages: PagesMonograph | null;
 }
 
 export const emptyPresentationPublicationInstance: PresentationPublicationInstance = {
   type: '',
-  pages: emptyPagesMonograph,
+};
+
+export const emptyPresentationPublicationContext: PresentationPublicationContext = {
+  type: PublicationType.Presentation,
+  label: '',
+  place: {
+    type: 'UnconfirmedPlace',
+    label: '',
+    country: '',
+  },
 };
 
 export interface PresentationPublicationContext {
-  type: PublicationType | '';
+  type: PublicationType.Presentation;
+  label: string;
+  place: {
+    type: 'UnconfirmedPlace';
+    label: string;
+    country: string;
+  };
 }
 
 interface PresentationReference extends BaseReference {

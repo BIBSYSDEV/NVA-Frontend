@@ -177,13 +177,14 @@
     "journal_not_found": "Finner du ikke tidsskriftet?",
     "level": "Nivå i Norsk publiseringsindikator",
     "number_of_pages": "Totalt antall sider",
-    "nvi":{
+    "nvi": {
       "applicable": "Publikasjonen kan inngå i Norsk vitenskapsindeks",
       "channel_not_rated": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden publiseringskanalen ikke er på nivå 1 eller 2. (Nivå kan bli endret før årets rapporteringsfrist slik at publikasjonen kan inngå i Norsk vitenskapsindeks, forutsatt at svaret på spørsmålet overfor er Ja)",
       "not_peer_reviewed": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden svaret på spørsmålet ovenfor er Nei"
     },
     "online_issn": "Online ISSN",
     "or": "Eller",
+    "organizer": "Arrangør",
     "original_article": "Original artikkel",
     "original_article_title": "Tittel på artikkel",
     "pages": "Sidetall",
@@ -191,6 +192,7 @@
     "pages_to": "til",
     "peer_review": "Er fagfellevurdert og presenterer ny original forskning?",
     "peer_reviewed": "Er fagfellevurdert og presenterer ny original forskning",
+    "place_for_event": "Sted for arrangement",
     "print_issn": "Print ISSN",
     "remove": "Fjern",
     "remove_anthology": "Fjern antologi",
@@ -207,6 +209,7 @@
     "series_info": "Hvis publikasjonen inngår i en serie",
     "series_number": "Serienummer",
     "subtype": "Undertype",
+    "title_of_event": "Tittel på arrangement",
     "volume": "Volum"
   },
   "save_draft": "Lagre kladd",
