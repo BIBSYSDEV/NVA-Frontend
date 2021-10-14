@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   parameter-store:
-    CYPRESS_baseurl: CognitoFrontendApplicationUrl
+    CYPRESS_baseUrl: CognitoFrontendApplicationUrl
 
 phases:
   install:
