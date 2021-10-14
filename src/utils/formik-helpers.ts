@@ -1,5 +1,5 @@
 import deepmerge, { Options } from 'deepmerge';
-import { FormikErrors, FormikTouched, FormikValues, getIn } from 'formik';
+import { FormikErrors, FormikTouched, getIn } from 'formik';
 import { HighestTouchedTab } from '../pages/registration/RegistrationForm';
 import { Contributor } from '../types/contributor.types';
 import { File } from '../types/file.types';
@@ -22,7 +22,11 @@ export interface TabErrors {
   [RegistrationTab.FilesAndLicenses]: string[];
 }
 
-const getErrorMessages = (fieldNames: string[], errors: FormikErrors<unknown>, touched?: FormikTouched<unknown>) => {
+const getErrorMessages = (
+  fieldNames: string[],
+  errors: FormikErrors<Registration>,
+  touched?: FormikTouched<Registration>
+) => {
   if (!Object.keys(errors).length || !fieldNames.length) {
     return [];
   }
@@ -40,7 +44,11 @@ const getErrorMessages = (fieldNames: string[], errors: FormikErrors<unknown>, t
   return uniqueErrorMessages;
 };
 
-export const getTabErrors = (values: FormikValues, errors: FormikErrors<unknown>, touched?: FormikTouched<unknown>) => {
+export const getTabErrors = (
+  values: Registration,
+  errors: FormikErrors<Registration>,
+  touched?: FormikTouched<Registration>
+) => {
   const tabErrors: TabErrors = {
     [RegistrationTab.Description]: getErrorMessages(descriptionFieldNames, errors, touched),
     [RegistrationTab.ResourceType]: getErrorMessages(resourceFieldNames, errors, touched),
@@ -49,7 +57,11 @@ export const getTabErrors = (values: FormikValues, errors: FormikErrors<unknown>
       errors,
       touched
     ),
-    [RegistrationTab.FilesAndLicenses]: getErrorMessages(getAllFileFields(values.fileSet.files), errors, touched),
+    [RegistrationTab.FilesAndLicenses]: getErrorMessages(
+      getAllFileFields(values.fileSet?.files ?? []),
+      errors,
+      touched
+    ),
   };
 
   return tabErrors;
