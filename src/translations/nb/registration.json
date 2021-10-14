@@ -169,6 +169,8 @@
       "Textbook": "Lærebok",
       "Textbook Chapter": "Kapittel i lærebok"
     },
+    "date_from": "Dato fra",
+    "date_to": "Dato til",
     "form": "Form",
     "isbn": "ISBN",
     "issn": "ISSN",

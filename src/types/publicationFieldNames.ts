@@ -80,6 +80,8 @@ export enum ResourceFieldNames {
   PublicationContextPlaceCountry = 'entityDescription.reference.publicationContext.place.country',
   PubliactionContextPublisherId = 'entityDescription.reference.publicationContext.publisher.id',
   PubliactionContextPublisherType = 'entityDescription.reference.publicationContext.publisher.type',
+  PubliactionContextTimeFrom = 'entityDescription.reference.publicationContext.time.from',
+  PubliactionContextTimeTo = 'entityDescription.reference.publicationContext.time.to',
   PubliactionContextType = 'entityDescription.reference.publicationContext.type',
   SeriesId = 'entityDescription.reference.publicationContext.series.id',
   SeriesNumber = 'entityDescription.reference.publicationContext.seriesNumber',

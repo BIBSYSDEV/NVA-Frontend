@@ -169,6 +169,8 @@
       "Textbook": "Textbook",
       "Textbook Chapter": "Textbook chapter"
     },
+    "date_from": "Date from",
+    "date_to": "Date to",
     "form": "Form",
     "isbn": "ISBN",
     "issn": "ISSN",

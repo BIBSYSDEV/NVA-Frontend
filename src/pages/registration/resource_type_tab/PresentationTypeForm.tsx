@@ -1,13 +1,31 @@
-import { TextField } from '@mui/material';
+import { LocalizationProvider, DatePicker } from '@mui/lab';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { TextField, ThemeProvider } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
-import { lightTheme } from '../../../themes/lightTheme';
+import { datePickerTranslationProps, lightTheme } from '../../../themes/lightTheme';
+import i18n from '../../../translations/i18n';
 import { PresentationType, ResourceFieldNames } from '../../../types/publicationFieldNames';
 import { PresentationRegistration } from '../../../types/publication_types/presentationRegistration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getDateFnsLocale } from '../../../utils/date-helpers';
 import { SelectTypeField } from './components/SelectTypeField';
+
+const StyledDatePickersContainer = styled.div`
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    div:first-child {
+      margin-right: 10rem;
+    }
+  }
+`;
 
 interface PresentationTypeFormProps {
   onChangeSubType: (type: string) => void;
@@ -15,7 +33,7 @@ interface PresentationTypeFormProps {
 
 export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormProps) => {
   const { t } = useTranslation('registration');
-  const { values } = useFormikContext<PresentationRegistration>();
+  const { values, setFieldValue } = useFormikContext<PresentationRegistration>();
   const subType = values.entityDescription.reference.publicationInstance.type;
 
   return (
@@ -36,6 +54,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
                 id={field.name}
+                required
                 data-testid={dataTestId.registrationWizard.resourceType.eventTitleField}
                 variant="filled"
                 fullWidth
@@ -50,6 +69,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
                 id={field.name}
+                required
                 data-testid={dataTestId.registrationWizard.resourceType.eventOrganizerField}
                 variant="filled"
                 fullWidth
@@ -64,6 +84,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
                 id={field.name}
+                required
                 data-testid={dataTestId.registrationWizard.resourceType.eventPlaceField}
                 variant="filled"
                 fullWidth
@@ -78,6 +99,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
                 id={field.name}
+                required
                 data-testid={dataTestId.registrationWizard.resourceType.eventCountryield}
                 variant="filled"
                 fullWidth
@@ -88,6 +110,67 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
               />
             )}
           </Field>
+
+          <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
+            <ThemeProvider theme={lightTheme}>
+              <StyledDatePickersContainer>
+                <Field name={ResourceFieldNames.PubliactionContextTimeFrom}>
+                  {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                    <DatePicker
+                      {...datePickerTranslationProps}
+                      label={t('resource_type.date_from')}
+                      value={field.value}
+                      onChange={(date) => setFieldValue(field.name, date?.toISOString())}
+                      inputFormat="dd.MM.yyyy"
+                      views={['year', 'month', 'day']}
+                      maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+                      mask="__.__.____"
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          data-testid={dataTestId.registrationWizard.description.datePublishedField}
+                          variant="filled"
+                          required
+                          // onBlur={() =>
+                          //   !touched.entityDescription?.date?.year && setFieldTouched(DescriptionFieldNames.PublicationYear)
+                          // }
+                          // error={hasError}
+                          // helperText={hasError && errors.entityDescription?.date?.year}
+                        />
+                      )}
+                    />
+                  )}
+                </Field>
+                <Field name={ResourceFieldNames.PubliactionContextTimeTo}>
+                  {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                    <DatePicker
+                      {...datePickerTranslationProps}
+                      label={t('resource_type.date_to')}
+                      value={field.value}
+                      onChange={(date) => setFieldValue(field.name, date?.toISOString())}
+                      inputFormat="dd.MM.yyyy"
+                      views={['year', 'month', 'day']}
+                      maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+                      mask="__.__.____"
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          data-testid={dataTestId.registrationWizard.description.datePublishedField}
+                          variant="filled"
+                          required
+                          // onBlur={() =>
+                          //   !touched.entityDescription?.date?.year && setFieldTouched(DescriptionFieldNames.PublicationYear)
+                          // }
+                          // error={hasError}
+                          // helperText={hasError && errors.entityDescription?.date?.year}
+                        />
+                      )}
+                    />
+                  )}
+                </Field>
+              </StyledDatePickersContainer>
+            </ThemeProvider>
+          </LocalizationProvider>
         </BackgroundDiv>
       )}
     </>

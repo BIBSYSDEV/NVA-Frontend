@@ -21,6 +21,11 @@ export const emptyPresentationPublicationContext: PresentationPublicationContext
     label: '',
     country: '',
   },
+  time: {
+    type: 'TemporalExtent',
+    from: '',
+    to: '',
+  },
 };
 
 export interface PresentationPublicationContext {
@@ -30,6 +35,11 @@ export interface PresentationPublicationContext {
     type: 'UnconfirmedPlace';
     label: string;
     country: string;
+  };
+  time: {
+    type: 'TemporalExtent';
+    from: string;
+    to: string;
   };
 }
 
