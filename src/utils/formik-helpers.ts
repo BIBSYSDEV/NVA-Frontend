@@ -237,7 +237,7 @@ const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched
   },
 });
 
-const touchedFilesTabFields = (files: File[]): FormikTouched<Registration> => ({
+const touchedFilesTabFields = (files: File[]): FormikTouched<unknown> => ({
   fileSet: {
     files: files.map((file) => ({
       administrativeAgreement: true,
@@ -262,7 +262,7 @@ export const getTouchedTabFields = (
     [RegistrationTab.ResourceType]: () =>
       touchedResourceTabFields(values.entityDescription.reference.publicationInstance.type),
     [RegistrationTab.Contributors]: () => touchedContributorTabFields(values.entityDescription.contributors),
-    [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(values.fileSet.files),
+    [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(values.fileSet?.files ?? []),
   };
 
   // Set all fields on previous tabs to touched

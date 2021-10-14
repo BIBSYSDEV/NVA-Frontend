@@ -44,6 +44,8 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
     subjects,
   } = registration;
 
+  const files = fileSet?.files ?? [];
+
   const [relatedRegistrations] = useFetch<SearchResult>({
     url: `${SearchApiPath.Registrations}?query="${identifier}" AND NOT (${RegistrationFieldName.Identifier}:"${identifier}")`,
     errorMessage: t('feedback:error.search'),
@@ -79,7 +81,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
 
         <PublicGeneralContent registration={registration} />
 
-        {fileSet.files.length > 0 && (
+        {files.length > 0 && (
           <LandingPageAccordion
             data-testid={dataTestId.registrationLandingPage.filesAccordion}
             defaultExpanded
