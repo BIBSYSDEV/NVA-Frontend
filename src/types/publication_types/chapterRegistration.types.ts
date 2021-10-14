@@ -9,7 +9,7 @@ export interface ChapterRegistration extends BaseRegistration {
 
 export interface ChapterPublicationInstance extends NviApplicableBase<ChapterContentType> {
   type: ChapterType | '';
-  pages: PagesRange;
+  pages: PagesRange | null;
 }
 
 export interface ChapterPublicationContext {

@@ -18,7 +18,7 @@ export interface JournalPublicationInstance extends NviApplicableBase<JournalArt
   type: JournalType | '';
   articleNumber: string;
   issue: string;
-  pages: PagesRange;
+  pages: PagesRange | null;
   volume: string;
   corrigendumFor: string;
 }
