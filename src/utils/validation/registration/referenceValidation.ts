@@ -1,6 +1,13 @@
 import * as Yup from 'yup';
 import { parse as parseIsbn } from 'isbn-utils';
-import { BookType, ChapterType, DegreeType, JournalType, ReportType } from '../../../types/publicationFieldNames';
+import {
+  BookType,
+  ChapterType,
+  DegreeType,
+  JournalType,
+  PresentationType,
+  ReportType,
+} from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
 import {
   BookMonographContentType,
@@ -267,4 +274,26 @@ const chapterPublicationContext = Yup.object().shape({
 export const chapterReference = baseReference.shape({
   publicationInstance: chapterPublicationInstance,
   publicationContext: chapterPublicationContext,
+});
+
+// Event/Presentation
+const presentationPublicationInstance = Yup.object().shape({
+  type: Yup.string().oneOf(Object.values(PresentationType)).required(resourceErrorMessage.typeRequired),
+});
+
+const presentationPublicationContext = Yup.object().shape({
+  label: Yup.string().required(),
+  place: Yup.object().shape({
+    label: Yup.string().required(),
+    country: Yup.string().required(),
+  }),
+  time: Yup.object().shape({
+    from: Yup.string().required(),
+    to: Yup.string().required(),
+  }),
+});
+
+export const presentationReference = baseReference.shape({
+  publicationInstance: presentationPublicationInstance,
+  publicationContext: presentationPublicationContext,
 });
