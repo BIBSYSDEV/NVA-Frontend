@@ -53,7 +53,7 @@ export const getTabErrors = (
     [RegistrationTab.Description]: getErrorMessages(descriptionFieldNames, errors, touched),
     [RegistrationTab.ResourceType]: getErrorMessages(resourceFieldNames, errors, touched),
     [RegistrationTab.Contributors]: getErrorMessages(
-      getAllContributorFields(values.entityDescription.contributors),
+      getAllContributorFields(values.entityDescription?.contributors ?? []),
       errors,
       touched
     ),
@@ -112,7 +112,7 @@ const getAllContributorFields = (contributors: Contributor[]): string[] => {
   return fieldNames;
 };
 
-const touchedDescriptionTabFields: FormikTouched<Registration> = {
+const touchedDescriptionTabFields: FormikTouched<unknown> = {
   entityDescription: {
     abstract: true,
     date: {
@@ -240,7 +240,7 @@ const touchedResourceTabFields = (instanceType: string): FormikTouched<unknown> 
   }
 };
 
-const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<Registration> => ({
+const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<unknown> => ({
   entityDescription: {
     contributors: contributors.map((_) => ({
       correspondingAuthor: true,
@@ -272,8 +272,8 @@ export const getTouchedTabFields = (
   const tabFields = {
     [RegistrationTab.Description]: () => touchedDescriptionTabFields,
     [RegistrationTab.ResourceType]: () =>
-      touchedResourceTabFields(values.entityDescription.reference.publicationInstance.type),
-    [RegistrationTab.Contributors]: () => touchedContributorTabFields(values.entityDescription.contributors),
+      touchedResourceTabFields(values.entityDescription?.reference.publicationInstance.type ?? ''),
+    [RegistrationTab.Contributors]: () => touchedContributorTabFields(values.entityDescription?.contributors ?? []),
     [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(values.fileSet?.files ?? []),
   };
 

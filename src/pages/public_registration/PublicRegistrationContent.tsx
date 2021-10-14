@@ -36,15 +36,12 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
   // Registration can lack some fields if it's newly created
   registration = deepmerge(emptyRegistration, registration);
 
-  const {
-    identifier,
-    entityDescription: { contributors, date, mainTitle, abstract, description, tags, reference },
-    projects,
-    fileSet,
-    subjects,
-  } = registration;
-
+  const { identifier, entityDescription, projects, fileSet, subjects } = registration;
+  const contributors = entityDescription?.contributors ?? [];
   const files = fileSet?.files ?? [];
+  const mainTitle = entityDescription?.mainTitle ?? `[${t('common:missing_title')}]`;
+  const abstract = entityDescription?.abstract;
+  const description = entityDescription?.description;
 
   const [relatedRegistrations] = useFetch<SearchResult>({
     url: `${SearchApiPath.Registrations}?query="${identifier}" AND NOT (${RegistrationFieldName.Identifier}:"${identifier}")`,
@@ -56,26 +53,28 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
       <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
       <ItalicPageHeader
         superHeader={{
-          title: reference.publicationInstance.type ? (
+          title: entityDescription?.reference.publicationInstance.type ? (
             <>
               <span data-testid={dataTestId.registrationLandingPage.registrationSubtype}>
-                {t(`publicationTypes:${reference.publicationInstance.type}`)}
+                {t(`publicationTypes:${entityDescription.reference.publicationInstance.type}`)}
               </span>
-              <StyledYearSpan data-testid={dataTestId.registrationLandingPage.publicationDate}>
-                {date.year}
-              </StyledYearSpan>
+              {entityDescription?.date?.year && (
+                <StyledYearSpan data-testid={dataTestId.registrationLandingPage.publicationDate}>
+                  {entityDescription.date.year}
+                </StyledYearSpan>
+              )}
             </>
           ) : null,
           icon: <MenuBookIcon />,
         }}
         data-testid={dataTestId.registrationLandingPage.title}>
-        {mainTitle || `[${t('common:missing_title')}]`}
+        {mainTitle}
       </ItalicPageHeader>
       <div>
         {contributors.length > 0 && (
           <PublicRegistrationContributors
             contributors={contributors}
-            registrationType={reference.publicationInstance.type}
+            registrationType={entityDescription?.reference.publicationInstance.type ?? ''}
           />
         )}
 
@@ -90,7 +89,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           </LandingPageAccordion>
         )}
 
-        {(abstract || description || tags.length > 0 || subjects.length > 0) && (
+        {entityDescription && (abstract || description || entityDescription.tags.length > 0 || subjects.length > 0) && (
           <LandingPageAccordion
             data-testid={dataTestId.registrationLandingPage.abstractAccordion}
             defaultExpanded
@@ -99,7 +98,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           </LandingPageAccordion>
         )}
 
-        {projects?.length > 0 && (
+        {projects.length > 0 && (
           <LandingPageAccordion
             data-testid={dataTestId.registrationLandingPage.projectsAccordion}
             defaultExpanded

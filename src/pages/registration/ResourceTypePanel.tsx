@@ -1,4 +1,4 @@
-import { useFormikContext } from 'formik';
+import { FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MenuItem, TextField } from '@mui/material';
@@ -8,14 +8,18 @@ import { lightTheme } from '../../themes/lightTheme';
 import { emptyBookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
 import { emptyChapterPublicationInstance } from '../../types/publication_types/chapterRegistration.types';
 import { emptyDegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
-import { emptyJournalPublicationInstance } from '../../types/publication_types/journalRegistration.types';
+import {
+  emptyJournalPublicationInstance,
+  JournalPublicationInstance,
+  JournalReference,
+} from '../../types/publication_types/journalRegistration.types';
 import { emptyReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
 import {
   contextTypeBaseFieldName,
   instanceTypeBaseFieldName,
   PublicationType,
 } from '../../types/publicationFieldNames';
-import { PublicationChannelType, Registration } from '../../types/registration.types';
+import { EntityDescription, PublicationChannelType, Registration } from '../../types/registration.types';
 import { BookTypeForm } from './resource_type_tab/BookTypeForm';
 import { ChapterTypeForm } from './resource_type_tab/ChapterTypeForm';
 import { DegreeTypeForm } from './resource_type_tab/DegreeTypeForm';
@@ -27,7 +31,7 @@ export const ResourceTypePanel = () => {
   const { t } = useTranslation('registration');
   const { values, setTouched, setFieldValue, touched, errors } = useFormikContext<Registration>();
   const [mainType, setMainType] = useState(
-    getMainRegistrationType(values.entityDescription.reference.publicationInstance.type)
+    getMainRegistrationType(values.entityDescription?.reference.publicationInstance.type ?? '')
   );
 
   const onChangeType = (newRegistrationMainType: string) => {
@@ -84,27 +88,35 @@ export const ResourceTypePanel = () => {
     // Avoid showing potential errors instantly
     setTouched({
       ...touched,
-      entityDescription: {
-        ...touched.entityDescription,
-        npiSubjectHeading: false,
-        reference: {},
-      },
+      entityDescription: false,
     });
   };
 
   const onChangeSubType = (newInstanceType: string) => {
-    const newValues = {
-      ...values.entityDescription.reference.publicationInstance,
+    const commonValues = {
       type: newInstanceType,
       contentType: null,
       peerReviewed: null,
     };
+    const newValues = values.entityDescription
+      ? {
+          ...values.entityDescription.reference.publicationInstance,
+          ...commonValues,
+        }
+      : commonValues;
 
     setFieldValue(instanceTypeBaseFieldName, newValues);
   };
 
-  const typeError = errors.entityDescription?.reference?.publicationInstance?.type;
-  const typeTouched = touched.entityDescription?.reference?.publicationInstance?.type;
+  const typeError =
+    (
+      ((errors.entityDescription as FormikErrors<EntityDescription>)?.reference as FormikErrors<JournalReference>)
+        ?.publicationInstance as FormikErrors<JournalPublicationInstance>
+    )?.type ?? '';
+  const typeTouched = (
+    ((touched.entityDescription as FormikTouched<EntityDescription>)?.reference as FormikTouched<JournalReference>)
+      ?.publicationInstance as FormikTouched<JournalPublicationInstance>
+  )?.type;
 
   return (
     <>

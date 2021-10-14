@@ -101,7 +101,7 @@ export interface BaseEntityDescription {
   type: 'EntityDescription';
   abstract: string;
   contributors: Contributor[];
-  date: RegistrationDate;
+  date?: RegistrationDate;
   description: string;
   language: LanguageValues;
   mainTitle: string;
@@ -134,13 +134,15 @@ export interface SearchResult {
   total: number;
 }
 
+export type EntityDescription =
+  | JournalEntityDescription
+  | DegreeEntityDescription
+  | BookEntityDescription
+  | ReportEntityDescription
+  | ChapterEntityDescription;
+
 export interface Registration extends BaseRegistration {
-  entityDescription:
-    | JournalEntityDescription
-    | DegreeEntityDescription
-    | BookEntityDescription
-    | ReportEntityDescription
-    | ChapterEntityDescription;
+  entityDescription?: EntityDescription;
 }
 
 export interface RegistrationDate {
