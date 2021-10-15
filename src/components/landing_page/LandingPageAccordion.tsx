@@ -2,6 +2,7 @@ import { Accordion, AccordionDetails, AccordionProps, AccordionSummary, Typograp
 import { ReactNode } from 'react';
 import styled from 'styled-components';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { ErrorBoundary } from '../ErrorBoundary';
 
 const StyledLandingPageAccordion = styled(Accordion)`
   background: ${({ theme }) => theme.palette.background.default};
@@ -41,6 +42,8 @@ export const LandingPageAccordion = ({ heading, children, ...props }: LandingPag
         {heading}
       </Typography>
     </StyledAccordionSummary>
-    <StyledAccordionDetails>{children}</StyledAccordionDetails>
+    <ErrorBoundary>
+      <StyledAccordionDetails>{children}</StyledAccordionDetails>
+    </ErrorBoundary>
   </StyledLandingPageAccordion>
 );
