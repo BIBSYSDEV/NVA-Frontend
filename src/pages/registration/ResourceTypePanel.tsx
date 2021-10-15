@@ -86,10 +86,11 @@ export const ResourceTypePanel = () => {
     }
 
     // Avoid showing potential errors instantly
-    setTouched({
-      ...touched,
-      entityDescription: false,
-    });
+    const newTouched = touched;
+    (newTouched.entityDescription as FormikTouched<EntityDescription>).npiSubjectHeading = false;
+    (newTouched.entityDescription as FormikTouched<EntityDescription>).reference = {};
+
+    setTouched(newTouched);
   };
 
   const onChangeSubType = (newInstanceType: string) => {
