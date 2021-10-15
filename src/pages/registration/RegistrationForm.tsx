@@ -1,4 +1,3 @@
-import deepmerge from 'deepmerge';
 import { Form, Formik, FormikErrors, FormikProps, validateYupSchema, yupToFormErrors } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -78,7 +77,12 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     return {};
   };
 
-  const initialValues = registration ? deepmerge(emptyRegistration, registration) : emptyRegistration;
+  const initialValues = registration
+    ? registration.entityDescription
+      ? registration
+      : { ...registration, entityDescription: emptyRegistration.entityDescription }
+    : emptyRegistration;
+
   return isLoadingRegistration ? (
     <PageSpinner />
   ) : !isValidOwner && !isValidCurator ? (
