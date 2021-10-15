@@ -14,7 +14,7 @@
     "@uppy/aws-s3-multipart": "^1.8.18",
     "@uppy/core": "^1.20.1",
     "@uppy/dashboard": "^1.21.1",
-    "@uppy/locales": "^1.22.0",
+    "@uppy/locales": "^2.0.3",
     "@uppy/react": "^1.12.2",
     "aws-amplify": "^4.3.2",
     "axios": "^0.23.0",
