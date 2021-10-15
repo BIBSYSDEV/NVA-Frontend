@@ -193,7 +193,7 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
             <Typography variant="button">{t('registration:public_page.preview')}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            {isLoadingFile || !currentFileUrl ? <CircularProgress /> : <PreviewFile url={currentFileUrl} file={file} />}
+            {isLoadingFile ? <CircularProgress /> : <PreviewFile url={currentFileUrl} file={file} />}
           </AccordionDetails>
         </StyledPreviewAccordion>
       )}
