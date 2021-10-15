@@ -16,15 +16,22 @@ import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { Forbidden } from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
-import { RegistrationFormContent } from './RegistrationFormContent';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
 import { getTouchedTabFields } from '../../utils/formik-helpers';
 import { SkipLink } from '../../components/SkipLink';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { PublicationsApiPath } from '../../api/apiPaths';
+import { ContributorsPanel } from './ContributorsPanel';
+import { DescriptionPanel } from './DescriptionPanel';
+import { FilesAndLicensePanel } from './FilesAndLicensePanel';
+import { ResourceTypePanel } from './ResourceTypePanel';
 
 const StyledRegistration = styled.div`
   width: 100%;
+`;
+
+const StyledPanel = styled.div`
+  margin-bottom: 1rem;
 `;
 
 export type HighestTouchedTab = RegistrationTab | -1;
@@ -109,7 +116,12 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
               {values.entityDescription?.mainTitle ?? `[${t('common:missing_title')}]`}
             </ItalicPageHeader>
             <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
-            <RegistrationFormContent tabNumber={tabNumber} uppy={uppy} />
+            <StyledPanel id="form">
+              {tabNumber === RegistrationTab.Description && <DescriptionPanel />}
+              {tabNumber === RegistrationTab.ResourceType && <ResourceTypePanel />}
+              {tabNumber === RegistrationTab.Contributors && <ContributorsPanel />}
+              {tabNumber === RegistrationTab.FilesAndLicenses && <FilesAndLicensePanel uppy={uppy} />}
+            </StyledPanel>
             <RegistrationFormActions
               tabNumber={tabNumber}
               setTabNumber={setTabNumber}
