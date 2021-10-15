@@ -1,12 +1,12 @@
 export interface PagesRange {
   type: 'Range';
-  begin: string;
-  end: string;
+  begin: string | null;
+  end: string | null;
 }
 
 export interface PagesMonograph {
   type: 'MonographPages';
-  pages: string;
+  pages: string | null;
 }
 
 export const emptyPagesMonograph: PagesMonograph = {

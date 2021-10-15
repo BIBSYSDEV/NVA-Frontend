@@ -1,4 +1,3 @@
-import deepmerge from 'deepmerge';
 import { Form, Formik, FormikErrors, FormikProps, validateYupSchema, yupToFormErrors } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -17,15 +16,22 @@ import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { Forbidden } from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
-import { RegistrationFormContent } from './RegistrationFormContent';
 import { RegistrationFormTabs } from './RegistrationFormTabs';
 import { getTouchedTabFields } from '../../utils/formik-helpers';
 import { SkipLink } from '../../components/SkipLink';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { PublicationsApiPath } from '../../api/apiPaths';
+import { ContributorsPanel } from './ContributorsPanel';
+import { DescriptionPanel } from './DescriptionPanel';
+import { FilesAndLicensePanel } from './FilesAndLicensePanel';
+import { ResourceTypePanel } from './ResourceTypePanel';
 
 const StyledRegistration = styled.div`
   width: 100%;
+`;
+
+const StyledPanel = styled.div`
+  margin-bottom: 1rem;
 `;
 
 export type HighestTouchedTab = RegistrationTab | -1;
@@ -62,12 +68,13 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   }, [history, registration, isValidOwner, isValidCurator]);
 
   const validateForm = (values: Registration): FormikErrors<Registration> => {
-    const { publicationInstance } = values.entityDescription.reference;
-    const contentType = 'contentType' in publicationInstance ? publicationInstance.contentType : null;
+    const publicationInstance = values.entityDescription?.reference.publicationInstance;
+    const contentType =
+      publicationInstance && 'contentType' in publicationInstance ? publicationInstance.contentType : null;
 
     try {
       validateYupSchema<Registration>(values, registrationValidationSchema, true, {
-        publicationInstanceType: publicationInstance.type,
+        publicationInstanceType: publicationInstance?.type ?? '',
         publicationStatus: registration?.status,
         contentType,
       });
@@ -77,7 +84,12 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     return {};
   };
 
-  const initialValues = registration ? deepmerge(emptyRegistration, registration) : emptyRegistration;
+  const initialValues = registration
+    ? registration.entityDescription
+      ? registration
+      : { ...registration, entityDescription: emptyRegistration.entityDescription }
+    : emptyRegistration;
+
   return isLoadingRegistration ? (
     <PageSpinner />
   ) : !isValidOwner && !isValidCurator ? (
@@ -101,10 +113,15 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
               shouldBlockNavigation={dirty}
             />
             <ItalicPageHeader>
-              {values.entityDescription.mainTitle || `[${t('common:missing_title')}]`}
+              {values.entityDescription?.mainTitle ?? `[${t('common:missing_title')}]`}
             </ItalicPageHeader>
             <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
-            <RegistrationFormContent tabNumber={tabNumber} uppy={uppy} />
+            <StyledPanel id="form">
+              {tabNumber === RegistrationTab.Description && <DescriptionPanel />}
+              {tabNumber === RegistrationTab.ResourceType && <ResourceTypePanel />}
+              {tabNumber === RegistrationTab.Contributors && <ContributorsPanel />}
+              {tabNumber === RegistrationTab.FilesAndLicenses && <FilesAndLicensePanel uppy={uppy} />}
+            </StyledPanel>
             <RegistrationFormActions
               tabNumber={tabNumber}
               setTabNumber={setTabNumber}

@@ -10,8 +10,8 @@ import { ChapterPublicationInstance } from '../../types/publication_types/chapte
 import { PagesMonograph, PagesRange } from '../../types/publication_types/pages.types';
 import i18n from '../../translations/i18n';
 
-const getPageInterval = (pages: PagesRange) => {
-  return pages.begin || pages.end
+const getPageInterval = (pages: PagesRange | null) => {
+  return pages?.begin || pages?.end
     ? `${i18n.t('registration:resource_type.pages')} ${pages.begin ?? '?'}-${pages.end ?? '?'}`
     : '';
 };

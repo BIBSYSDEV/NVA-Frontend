@@ -12,10 +12,7 @@ import { hrcsActivityBaseId, hrcsCategoryBaseId } from '../../utils/constants';
 export const PublicSummaryContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
 
-  const {
-    entityDescription: { abstract, description, tags },
-    subjects,
-  } = registration;
+  const { entityDescription, subjects } = registration;
 
   const selectedHrcsActivities = subjects
     .filter((subjectId) => subjectId.startsWith(hrcsActivityBaseId))
@@ -33,25 +30,31 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
 
   return (
     <>
-      {abstract && (
+      {entityDescription && (
         <>
-          <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
-            {abstract}
-          </Typography>
-        </>
-      )}
-      {description && (
-        <>
-          <Typography variant="overline" component="h3" color="primary">
-            {t('description.description')}
-          </Typography>
-          <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
-            {description}
-          </Typography>
-        </>
-      )}
+          {entityDescription.abstract && (
+            <>
+              <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
+                {entityDescription.abstract}
+              </Typography>
+            </>
+          )}
+          {entityDescription.description && (
+            <>
+              <Typography variant="overline" component="h3" color="primary">
+                {t('description.description')}
+              </Typography>
+              <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
+                {entityDescription.description}
+              </Typography>
+            </>
+          )}
 
-      {tags.length > 0 && <TagsList title={t('description.keywords')} values={tags} />}
+          {entityDescription.tags.length > 0 && (
+            <TagsList title={t('description.keywords')} values={entityDescription.tags} />
+          )}
+        </>
+      )}
 
       {selectedHrcsActivities.length > 0 && (
         <TagsList title={t('description.hrcs_activities')} values={selectedHrcsActivities} />

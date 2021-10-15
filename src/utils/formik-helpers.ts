@@ -1,8 +1,8 @@
 import deepmerge, { Options } from 'deepmerge';
-import { FormikErrors, FormikTouched, FormikValues, getIn } from 'formik';
+import { FormikErrors, FormikTouched, getIn } from 'formik';
 import { HighestTouchedTab } from '../pages/registration/RegistrationForm';
 import { Contributor } from '../types/contributor.types';
-import { File } from '../types/file.types';
+import { File, FileSet } from '../types/file.types';
 import {
   ContributorFieldNames,
   DescriptionFieldNames,
@@ -22,7 +22,11 @@ export interface TabErrors {
   [RegistrationTab.FilesAndLicenses]: string[];
 }
 
-const getErrorMessages = (fieldNames: string[], errors: FormikErrors<unknown>, touched?: FormikTouched<unknown>) => {
+const getErrorMessages = (
+  fieldNames: string[],
+  errors: FormikErrors<Registration>,
+  touched?: FormikTouched<Registration>
+) => {
   if (!Object.keys(errors).length || !fieldNames.length) {
     return [];
   }
@@ -40,16 +44,24 @@ const getErrorMessages = (fieldNames: string[], errors: FormikErrors<unknown>, t
   return uniqueErrorMessages;
 };
 
-export const getTabErrors = (values: FormikValues, errors: FormikErrors<unknown>, touched?: FormikTouched<unknown>) => {
+export const getTabErrors = (
+  values: Registration,
+  errors: FormikErrors<Registration>,
+  touched?: FormikTouched<Registration>
+) => {
   const tabErrors: TabErrors = {
     [RegistrationTab.Description]: getErrorMessages(descriptionFieldNames, errors, touched),
     [RegistrationTab.ResourceType]: getErrorMessages(resourceFieldNames, errors, touched),
     [RegistrationTab.Contributors]: getErrorMessages(
-      getAllContributorFields(values.entityDescription.contributors),
+      getAllContributorFields(values.entityDescription?.contributors ?? []),
       errors,
       touched
     ),
-    [RegistrationTab.FilesAndLicenses]: getErrorMessages(getAllFileFields(values.fileSet.files), errors, touched),
+    [RegistrationTab.FilesAndLicenses]: getErrorMessages(
+      getAllFileFields(values.fileSet?.files ?? []),
+      errors,
+      touched
+    ),
   };
 
   return tabErrors;
@@ -75,6 +87,7 @@ const getAllFileFields = (files: File[]): string[] => {
   const fieldNames: string[] = [];
   if (files.length === 0) {
     fieldNames.push(FileFieldNames.Files);
+    fieldNames.push(FileFieldNames.FileSet);
   } else {
     files.forEach((file, index) => {
       const baseFieldName = `${FileFieldNames.Files}[${index}]`;
@@ -100,7 +113,7 @@ const getAllContributorFields = (contributors: Contributor[]): string[] => {
   return fieldNames;
 };
 
-const touchedDescriptionTabFields: FormikTouched<Registration> = {
+const touchedDescriptionTabFields: FormikTouched<unknown> = {
   entityDescription: {
     abstract: true,
     date: {
@@ -228,7 +241,7 @@ const touchedResourceTabFields = (instanceType: string): FormikTouched<unknown> 
   }
 };
 
-const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<Registration> => ({
+const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<unknown> => ({
   entityDescription: {
     contributors: contributors.map((_) => ({
       correspondingAuthor: true,
@@ -237,15 +250,17 @@ const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched
   },
 });
 
-const touchedFilesTabFields = (files: File[]): FormikTouched<Registration> => ({
-  fileSet: {
-    files: files.map((file) => ({
-      administrativeAgreement: true,
-      publisherAuthority: !file.administrativeAgreement,
-      embargoDate: !file.administrativeAgreement,
-      license: !file.administrativeAgreement,
-    })),
-  },
+const touchedFilesTabFields = (fileSet: FileSet | null): FormikTouched<unknown> => ({
+  fileSet: fileSet
+    ? {
+        files: fileSet.files.map((file) => ({
+          administrativeAgreement: true,
+          publisherAuthority: !file.administrativeAgreement,
+          embargoDate: !file.administrativeAgreement,
+          license: !file.administrativeAgreement,
+        })),
+      }
+    : true,
 });
 
 const overwriteArrayMerge = (destinationArray: unknown[], sourceArray: unknown[], options?: Options) => sourceArray;
@@ -260,9 +275,9 @@ export const getTouchedTabFields = (
   const tabFields = {
     [RegistrationTab.Description]: () => touchedDescriptionTabFields,
     [RegistrationTab.ResourceType]: () =>
-      touchedResourceTabFields(values.entityDescription.reference.publicationInstance.type),
-    [RegistrationTab.Contributors]: () => touchedContributorTabFields(values.entityDescription.contributors),
-    [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(values.fileSet.files),
+      touchedResourceTabFields(values.entityDescription?.reference.publicationInstance.type ?? ''),
+    [RegistrationTab.Contributors]: () => touchedContributorTabFields(values.entityDescription?.contributors ?? []),
+    [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(values.fileSet),
   };
 
   // Set all fields on previous tabs to touched
