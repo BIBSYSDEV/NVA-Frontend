@@ -49,8 +49,9 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
 
   const publicationContext = entityDescription?.reference.publicationContext;
   const publicationInstance = entityDescription?.reference.publicationInstance;
-  const journalPublicationInstance = entityDescription?.reference.publicationInstance as JournalPublicationInstance;
-  const { contentType, peerReviewed, corrigendumFor } = journalPublicationInstance;
+  const journalPublicationInstance = entityDescription?.reference.publicationInstance as
+    | JournalPublicationInstance
+    | undefined;
 
   return (
     <StyledGeneralInfo>
@@ -59,9 +60,11 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
 
         <Typography>{displayDate(entityDescription?.date)}</Typography>
 
-        {contentType && <Typography>{t(`resource_type.content_types.${contentType}`)}</Typography>}
+        {journalPublicationInstance?.contentType && (
+          <Typography>{t(`resource_type.content_types.${journalPublicationInstance?.contentType}`)}</Typography>
+        )}
 
-        {peerReviewed && <Typography>{t('resource_type.peer_reviewed')}</Typography>}
+        {journalPublicationInstance?.peerReviewed && <Typography>{t('resource_type.peer_reviewed')}</Typography>}
 
         {entityDescription?.language && (
           <Typography data-testid={dataTestId.registrationLandingPage.primaryLanguage}>
@@ -87,7 +90,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
 
       <div data-testid={dataTestId.registrationLandingPage.subtypeFields}>
         {publicationInstance &&
-          (isJournal(publicationInstance.type) ? (
+          (isJournal(publicationInstance.type) && journalPublicationInstance ? (
             <>
               <PublicJournal publicationContext={publicationContext as JournalPublicationContext} />
               <PublicPublicationInstanceJournal publicationInstance={journalPublicationInstance} />
@@ -96,7 +99,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
                   <Typography variant="overline" component="p">
                     {t('resource_type.original_article')}
                   </Typography>
-                  <RegistrationSummary id={corrigendumFor} />
+                  <RegistrationSummary id={journalPublicationInstance.corrigendumFor} />
                 </>
               )}
             </>
