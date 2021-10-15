@@ -25,6 +25,7 @@ import { ContributorsPanel } from './ContributorsPanel';
 import { DescriptionPanel } from './DescriptionPanel';
 import { FilesAndLicensePanel } from './FilesAndLicensePanel';
 import { ResourceTypePanel } from './ResourceTypePanel';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
 
 const StyledRegistration = styled.div`
   width: 100%;
@@ -117,10 +118,26 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
             </ItalicPageHeader>
             <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
             <StyledPanel id="form">
-              {tabNumber === RegistrationTab.Description && <DescriptionPanel />}
-              {tabNumber === RegistrationTab.ResourceType && <ResourceTypePanel />}
-              {tabNumber === RegistrationTab.Contributors && <ContributorsPanel />}
-              {tabNumber === RegistrationTab.FilesAndLicenses && <FilesAndLicensePanel uppy={uppy} />}
+              {tabNumber === RegistrationTab.Description && (
+                <ErrorBoundary>
+                  <DescriptionPanel />
+                </ErrorBoundary>
+              )}
+              {tabNumber === RegistrationTab.ResourceType && (
+                <ErrorBoundary>
+                  <ResourceTypePanel />
+                </ErrorBoundary>
+              )}
+              {tabNumber === RegistrationTab.Contributors && (
+                <ErrorBoundary>
+                  <ContributorsPanel />
+                </ErrorBoundary>
+              )}
+              {tabNumber === RegistrationTab.FilesAndLicenses && (
+                <ErrorBoundary>
+                  <FilesAndLicensePanel uppy={uppy} />
+                </ErrorBoundary>
+              )}
             </StyledPanel>
             <RegistrationFormActions
               tabNumber={tabNumber}
