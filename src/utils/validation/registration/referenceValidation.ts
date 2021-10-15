@@ -135,7 +135,7 @@ const seriesField = Yup.object().shape({
 });
 
 export const baseReference = Yup.object().shape({
-  doi: Yup.string().trim().url(resourceErrorMessage.doiInvalid),
+  doi: Yup.string().nullable().trim().url(resourceErrorMessage.doiInvalid),
   publicationInstance: Yup.object().shape({
     type: Yup.string().required(resourceErrorMessage.typeRequired),
   }),

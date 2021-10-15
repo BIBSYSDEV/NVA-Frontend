@@ -2,7 +2,7 @@ import deepmerge, { Options } from 'deepmerge';
 import { FormikErrors, FormikTouched, getIn } from 'formik';
 import { HighestTouchedTab } from '../pages/registration/RegistrationForm';
 import { Contributor } from '../types/contributor.types';
-import { File } from '../types/file.types';
+import { File, FileSet } from '../types/file.types';
 import {
   ContributorFieldNames,
   DescriptionFieldNames,
@@ -87,6 +87,7 @@ const getAllFileFields = (files: File[]): string[] => {
   const fieldNames: string[] = [];
   if (files.length === 0) {
     fieldNames.push(FileFieldNames.Files);
+    fieldNames.push(FileFieldNames.FileSet);
   } else {
     files.forEach((file, index) => {
       const baseFieldName = `${FileFieldNames.Files}[${index}]`;
@@ -249,15 +250,17 @@ const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched
   },
 });
 
-const touchedFilesTabFields = (files: File[]): FormikTouched<unknown> => ({
-  fileSet: {
-    files: files.map((file) => ({
-      administrativeAgreement: true,
-      publisherAuthority: !file.administrativeAgreement,
-      embargoDate: !file.administrativeAgreement,
-      license: !file.administrativeAgreement,
-    })),
-  },
+const touchedFilesTabFields = (fileSet: FileSet | null): FormikTouched<unknown> => ({
+  fileSet: fileSet
+    ? {
+        files: fileSet.files.map((file) => ({
+          administrativeAgreement: true,
+          publisherAuthority: !file.administrativeAgreement,
+          embargoDate: !file.administrativeAgreement,
+          license: !file.administrativeAgreement,
+        })),
+      }
+    : true,
 });
 
 const overwriteArrayMerge = (destinationArray: unknown[], sourceArray: unknown[], options?: Options) => sourceArray;
@@ -274,7 +277,7 @@ export const getTouchedTabFields = (
     [RegistrationTab.ResourceType]: () =>
       touchedResourceTabFields(values.entityDescription?.reference.publicationInstance.type ?? ''),
     [RegistrationTab.Contributors]: () => touchedContributorTabFields(values.entityDescription?.contributors ?? []),
-    [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(values.fileSet?.files ?? []),
+    [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(values.fileSet),
   };
 
   // Set all fields on previous tabs to touched

@@ -1,4 +1,4 @@
-import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
+import { FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -71,8 +71,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
   };
 
-  const filesError = (errors.fileSet as FormikErrors<FileSet>)?.files;
-  const filesTouched = (touched.fileSet as FormikTouched<FileSet>)?.files;
+  const filesError = errors.fileSet || (errors.fileSet as FormikErrors<FileSet>)?.files;
+  const filesTouched = touched.fileSet || (touched.fileSet as FormikTouched<FileSet>)?.files;
 
   return (
     <>
@@ -108,9 +108,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
             <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
               <FileUploader uppy={uppy} addFile={(file) => push(file)} />
               {files.length === 0 && !!filesTouched && typeof filesError === 'string' && (
-                <FormHelperText error>
-                  <ErrorMessage name={name} />
-                </FormHelperText>
+                <FormHelperText error>{filesError}</FormHelperText>
               )}
             </BackgroundDiv>
           </>

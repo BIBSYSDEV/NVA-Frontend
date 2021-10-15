@@ -104,7 +104,7 @@ export interface FileSet {
 }
 
 export interface RegistrationFileSet {
-  fileSet?: FileSet;
+  fileSet: FileSet | null;
 }
 
 export interface File {
