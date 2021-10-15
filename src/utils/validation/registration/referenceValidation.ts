@@ -96,26 +96,26 @@ const pagesMonographField = Yup.object()
 const pagesRangeField = Yup.object()
   .nullable()
   .shape({
-    begin: Yup.string().test(
-      'begin-test',
-      resourceErrorMessage.pageBeginMustBeSmallerThanEnd,
-      (beginValue, context) => {
+    begin: Yup.string()
+      .nullable()
+      .test('begin-test', resourceErrorMessage.pageBeginMustBeSmallerThanEnd, (beginValue, context) => {
         const beginNumber = parseInt(beginValue ?? '');
         const endNumber = parseInt(context.parent.end);
         if (!isNaN(beginNumber) && !isNaN(endNumber)) {
           return beginNumber <= endNumber;
         }
         return true;
-      }
-    ),
-    end: Yup.string().test('end-test', resourceErrorMessage.pageEndMustBeBiggerThanBegin, (endValue, context) => {
-      const beginNumber = parseInt(context.parent.begin);
-      const endNumber = parseInt(endValue ?? '');
-      if (!isNaN(beginNumber) && !isNaN(endNumber)) {
-        return beginNumber <= endNumber;
-      }
-      return true;
-    }),
+      }),
+    end: Yup.string()
+      .nullable()
+      .test('end-test', resourceErrorMessage.pageEndMustBeBiggerThanBegin, (endValue, context) => {
+        const beginNumber = parseInt(context.parent.begin);
+        const endNumber = parseInt(endValue ?? '');
+        if (!isNaN(beginNumber) && !isNaN(endNumber)) {
+          return beginNumber <= endNumber;
+        }
+        return true;
+      }),
   });
 
 const publisherField = Yup.object().shape({
