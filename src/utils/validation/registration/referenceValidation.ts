@@ -144,12 +144,12 @@ export const baseReference = Yup.object().shape({
 // Journal
 const journalPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(JournalType)).required(resourceErrorMessage.typeRequired),
-  articleNumber: Yup.string(),
-  volume: Yup.string(),
-  issue: Yup.string(),
+  articleNumber: Yup.string().nullable(),
+  volume: Yup.string().nullable(),
+  issue: Yup.string().nullable(),
   pages: pagesRangeField,
   corrigendumFor: Yup.string()
-    .optional()
+    .nullable()
     .when('type', {
       is: JournalType.Corrigendum,
       then: Yup.string()
@@ -261,7 +261,7 @@ const chapterPublicationInstance = Yup.object().shape({
 });
 
 const chapterPublicationContext = Yup.object().shape({
-  partOf: Yup.string().required(resourceErrorMessage.partOfRequired),
+  partOf: Yup.string().nullable().required(resourceErrorMessage.partOfRequired),
 });
 
 export const chapterReference = baseReference.shape({
