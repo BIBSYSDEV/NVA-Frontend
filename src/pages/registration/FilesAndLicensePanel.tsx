@@ -1,4 +1,4 @@
-import { FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
+import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, useFormikContext } from 'formik';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -39,7 +39,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     values: { fileSet },
     setFieldTouched,
     errors,
-    touched,
   } = useFormikContext<Registration>();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const files = useMemo(() => fileSet?.files ?? [], [fileSet?.files]);
@@ -71,8 +70,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
   };
 
-  const filesError = errors.fileSet || (errors.fileSet as FormikErrors<FileSet>)?.files;
-  const filesTouched = touched.fileSet || (touched.fileSet as FormikTouched<FileSet>)?.files;
+  const fileSetErrors = errors.fileSet as FormikErrors<FileSet>;
 
   return (
     <>
@@ -107,8 +105,15 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
             <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
               <FileUploader uppy={uppy} addFile={(file) => push(file)} />
-              {files.length === 0 && !!filesTouched && typeof filesError === 'string' && (
-                <FormHelperText error>{filesError}</FormHelperText>
+
+              {files.length === 0 && (
+                <FormHelperText error>
+                  {fileSet?.files && typeof fileSetErrors.files === 'string' ? (
+                    <ErrorMessage name={name} />
+                  ) : (
+                    typeof fileSetErrors === 'string' && <ErrorMessage name={FileFieldNames.FileSet} />
+                  )}
+                </FormHelperText>
               )}
             </BackgroundDiv>
           </>

@@ -7,6 +7,7 @@ import { Link as MuiLink, List, ListItem, ListItemText, Typography } from '@mui/
 import { displayDate } from '../utils/date-helpers';
 import { getRegistrationLandingPagePath, getUserPath } from '../utils/urlPaths';
 import { Registration } from '../types/registration.types';
+import { ErrorBoundary } from './ErrorBoundary';
 
 const StyledContributors = styled.div`
   display: flex;
@@ -36,7 +37,9 @@ interface RegistrationListProps {
 export const RegistrationList = ({ registrations }: RegistrationListProps) => (
   <List>
     {registrations.map((registration) => (
-      <RegistrationListItem key={registration.id} registration={registration} />
+      <ErrorBoundary key={registration.id}>
+        <RegistrationListItem registration={registration} />
+      </ErrorBoundary>
     ))}
   </List>
 );
