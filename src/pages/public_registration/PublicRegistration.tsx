@@ -12,6 +12,7 @@ import { PageSpinner } from '../../components/PageSpinner';
 import { PublicRegistrationContent } from './PublicRegistrationContent';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { PublicationsApiPath } from '../../api/apiPaths';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
 
 const PublicRegistration = () => {
   const { t } = useTranslation();
@@ -33,7 +34,9 @@ const PublicRegistration = () => {
         <PageSpinner />
       ) : registration ? (
         isAllowedToSeePublicRegistration ? (
-          <PublicRegistrationContent registration={registration} refetchRegistration={refetchRegistration} />
+          <ErrorBoundary>
+            <PublicRegistrationContent registration={registration} refetchRegistration={refetchRegistration} />
+          </ErrorBoundary>
         ) : (
           <NotPublished />
         )

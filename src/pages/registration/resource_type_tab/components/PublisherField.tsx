@@ -31,8 +31,9 @@ export const PublisherField = () => {
     reference: {
       publicationContext: { publisher },
     },
-    date: { year },
+    date,
   } = values.entityDescription as BookEntityDescription;
+  const year = date?.year ?? '';
 
   const [query, setQuery] = useState(!publisher?.id ? publisher?.name ?? '' : '');
   const debouncedQuery = useDebounce(query);

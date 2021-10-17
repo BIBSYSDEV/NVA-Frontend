@@ -98,13 +98,13 @@ interface License {
   link: string;
 }
 
-interface FileSet {
+export interface FileSet {
   type: 'FileSet';
   files: File[];
 }
 
 export interface RegistrationFileSet {
-  fileSet: FileSet;
+  fileSet: FileSet | null;
 }
 
 export interface File {

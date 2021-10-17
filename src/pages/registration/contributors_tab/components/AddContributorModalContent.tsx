@@ -78,9 +78,8 @@ export const AddContributorModalContent = ({
   const user = useSelector((store: RootStore) => store.user);
 
   const { values } = useFormikContext<Registration>();
-  const {
-    entityDescription: { contributors },
-  } = values;
+  const { entityDescription } = values;
+  const contributors = entityDescription?.contributors ?? [];
 
   const isSelfAdded = contributors.some((contributor) => contributor.identity.id === user?.authority?.id);
 

@@ -32,8 +32,9 @@ export const JournalField = () => {
   const { setFieldValue, setFieldTouched, values } = useFormikContext<JournalRegistration>();
   const {
     reference: { publicationContext },
-    date: { year },
+    date,
   } = values.entityDescription as JournalEntityDescription;
+  const year = date?.year ?? '';
 
   const [query, setQuery] = useState(!publicationContext.id ? publicationContext.title ?? '' : '');
   const debouncedQuery = useDebounce(query);

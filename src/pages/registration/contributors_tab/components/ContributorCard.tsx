@@ -112,11 +112,10 @@ export const ContributorCard = ({
 }: ContributorCardProps) => {
   const { t } = useTranslation('registration');
   const {
-    values: {
-      entityDescription: { contributors },
-    },
+    values: { entityDescription },
   } = useFormikContext<Registration>();
 
+  const contributors = entityDescription?.contributors ?? [];
   const contributorIndex = contributors.findIndex(
     (c) =>
       c.identity.id === contributor.identity.id &&
