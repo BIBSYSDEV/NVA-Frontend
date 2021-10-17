@@ -1,4 +1,4 @@
-import { useFormikContext } from 'formik';
+import { FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -7,7 +7,7 @@ import { LocalizationProvider, DatePicker } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { lightTheme, datePickerTranslationProps } from '../../../themes/lightTheme';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
-import { Registration, RegistrationDate } from '../../../types/registration.types';
+import { EntityDescription, Registration, RegistrationDate } from '../../../types/registration.types';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
 
@@ -18,8 +18,18 @@ const StyledFormControlLabel = styled(FormControlLabel)`
 
 export const DatePickerField = () => {
   const { t, i18n } = useTranslation('registration');
-  const { setFieldValue, values, errors, touched, setFieldTouched } = useFormikContext<Registration>();
-  const { year, month, day } = values.entityDescription.date;
+  const {
+    values: { entityDescription },
+    errors,
+    touched,
+    setFieldValue,
+    setFieldTouched,
+  } = useFormikContext<Registration>();
+
+  const dateData = entityDescription?.date ?? { year: '', month: '', day: '' };
+
+  const { year, month, day } = dateData;
+
   const yearInt = parseInt(year);
   const monthInt = parseInt(month);
   const dayInt = parseInt(day);
@@ -54,7 +64,13 @@ export const DatePickerField = () => {
     setYearOnly(nextYearOnlyValue);
   };
 
-  const hasError = !!errors.entityDescription?.date?.year && touched.entityDescription?.date?.year;
+  const touchedYear = (
+    (touched.entityDescription as FormikTouched<EntityDescription>)?.date as FormikTouched<RegistrationDate>
+  )?.year;
+  const errorYear = (
+    (errors.entityDescription as FormikErrors<EntityDescription>)?.date as FormikErrors<RegistrationDate>
+  )?.year;
+  const hasError = !!errorYear && touchedYear;
 
   return (
     <>
@@ -75,11 +91,9 @@ export const DatePickerField = () => {
                 data-testid={dataTestId.registrationWizard.description.datePublishedField}
                 variant="filled"
                 required
-                onBlur={() =>
-                  !touched.entityDescription?.date?.year && setFieldTouched(DescriptionFieldNames.PublicationYear)
-                }
+                onBlur={() => !touchedYear && setFieldTouched(DescriptionFieldNames.PublicationYear)}
                 error={hasError}
-                helperText={hasError && errors.entityDescription?.date?.year}
+                helperText={hasError && errorYear}
               />
             )}
           />

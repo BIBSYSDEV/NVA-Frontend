@@ -49,3 +49,9 @@ export const InstitutionAdminRoute = ({ component, ...rest }: LoggedInRouteProps
     />
   );
 };
+
+export const EditorRoute = ({ component, ...rest }: LoggedInRouteProps) => {
+  const user = useSelector((store: RootStore) => store.user);
+
+  return <PrivateRoute {...rest} component={component} isAuthorized={!!user && !!user.customerId && user.isEditor} />;
+};

@@ -58,11 +58,12 @@ export const JournalForm = () => {
           <Field name={ResourceFieldNames.Volume}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
+                {...field}
                 id={field.name}
+                value={field.value ?? ''}
                 data-testid="volume-field"
                 variant="filled"
                 label={t('resource_type.volume')}
-                {...field}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
@@ -72,11 +73,12 @@ export const JournalForm = () => {
           <Field name={ResourceFieldNames.Issue}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
+                {...field}
                 id={field.name}
+                value={field.value ?? ''}
                 data-testid="issue-field"
                 variant="filled"
                 label={t('resource_type.issue')}
-                {...field}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
@@ -86,12 +88,12 @@ export const JournalForm = () => {
           <Field name={ResourceFieldNames.PagesFrom}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
+                {...field}
                 id={field.name}
                 data-testid={dataTestId.registrationWizard.resourceType.pagesFromField}
+                value={field.value ?? ''}
                 variant="filled"
                 label={t('resource_type.pages_from')}
-                {...field}
-                value={field.value ?? ''}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
@@ -101,11 +103,11 @@ export const JournalForm = () => {
           <Field name={ResourceFieldNames.PagesTo}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
+                {...field}
                 id={field.name}
                 data-testid={dataTestId.registrationWizard.resourceType.pagesToField}
                 variant="filled"
                 label={t('resource_type.pages_to')}
-                {...field}
                 value={field.value ?? ''}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
@@ -118,11 +120,12 @@ export const JournalForm = () => {
           <Field name={ResourceFieldNames.ArticleNumber}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
+                {...field}
                 id={field.name}
                 data-testid="article-number-field"
+                value={field.value ?? ''}
                 variant="filled"
                 label={t('resource_type.article_number')}
-                {...field}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />

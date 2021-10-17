@@ -30,14 +30,14 @@ const registrationErrorMessage = {
 
 export const registrationValidationSchema = Yup.object().shape({
   entityDescription: Yup.object().shape({
-    mainTitle: Yup.string().required(registrationErrorMessage.titleRequired),
-    abstract: Yup.string(),
-    description: Yup.string(),
+    mainTitle: Yup.string().nullable().required(registrationErrorMessage.titleRequired),
+    abstract: Yup.string().nullable(),
+    description: Yup.string().nullable(),
     tags: Yup.array().of(Yup.string()),
     npiSubjectHeading: Yup.string().when('$publicationInstanceType', (publicationInstanceType) =>
       isBook(publicationInstanceType)
-        ? Yup.string().required(registrationErrorMessage.npiSubjectRequired)
-        : Yup.string()
+        ? Yup.string().nullable().required(registrationErrorMessage.npiSubjectRequired)
+        : Yup.string().nullable()
     ),
     date: Yup.object().shape({
       year: Yup.number()
@@ -46,7 +46,7 @@ export const registrationValidationSchema = Yup.object().shape({
       month: Yup.number().transform(emptyStringToNull).nullable(),
       day: Yup.number().transform(emptyStringToNull).nullable(),
     }),
-    language: Yup.string(),
+    language: Yup.string().nullable(),
     projects: Yup.array().of(Yup.object()),
     contributors: contributorsValidationSchema,
     reference: Yup.object().when('$publicationInstanceType', (publicationInstanceType) => {
@@ -67,7 +67,10 @@ export const registrationValidationSchema = Yup.object().shape({
       }
     }),
   }),
-  fileSet: Yup.object().shape({
-    files: Yup.array().of(fileValidationSchema).min(1, registrationErrorMessage.fileRequired),
-  }),
+  fileSet: Yup.object()
+    .shape({
+      files: Yup.array().of(fileValidationSchema).min(1, registrationErrorMessage.fileRequired),
+    })
+    .nullable()
+    .required(registrationErrorMessage.fileRequired),
 });

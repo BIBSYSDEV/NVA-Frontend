@@ -36,6 +36,7 @@ export const DescriptionPanel = () => {
             <TextField
               {...field}
               id={field.name}
+              value={field.value ?? ''}
               required
               data-testid="registration-title-field"
               variant="filled"
@@ -51,6 +52,7 @@ export const DescriptionPanel = () => {
             <TextField
               {...field}
               id={field.name}
+              value={field.value ?? ''}
               data-testid="registration-abstract-field"
               variant="filled"
               fullWidth
@@ -65,6 +67,7 @@ export const DescriptionPanel = () => {
             <TextField
               {...field}
               id={field.name}
+              value={field.value ?? ''}
               data-testid="registration-description-field"
               label={t('description.description_of_content')}
               multiline
@@ -82,6 +85,7 @@ export const DescriptionPanel = () => {
               {...field}
               id={field.name}
               aria-labelledby={`${field.name}-label`}
+              value={field.value ?? []}
               freeSolo
               multiple
               options={[]}
@@ -119,6 +123,7 @@ export const DescriptionPanel = () => {
               <TextField
                 {...field}
                 id={field.name}
+                value={field.value ?? ''}
                 data-testid="registration-language-field"
                 fullWidth
                 label={t('description.primary_language')}

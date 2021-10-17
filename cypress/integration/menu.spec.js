@@ -17,6 +17,7 @@ describe('Menu', () => {
     cy.get('[data-testid=new-registration]').should('be.visible');
     cy.get('[data-testid=my-registrations]').should('be.visible');
     cy.get(`[data-testid=${dataTestId.header.adminInstitutionLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.header.editorLink}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.header.logOutLink}]`).should('be.visible');
   });
 
@@ -27,6 +28,7 @@ describe('Menu', () => {
     cy.get('[data-testid=new-registration]').should('not.exist');
     cy.get('[data-testid=my-registrations]').should('not.exist');
     cy.get(`[data-testid=${dataTestId.header.adminInstitutionLink}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.header.editorLink}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.header.logOutLink}]`).should('be.visible');
   });
 
@@ -52,6 +54,10 @@ describe('Menu', () => {
     cy.get('[data-testid=forbidden]').should('be.visible');
 
     cy.visit('/admin-institutions');
+    cy.setUserRolesInRedux(noRoles);
+    cy.get('[data-testid=forbidden]').should('be.visible');
+
+    cy.visit('/editor');
     cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=forbidden]').should('be.visible');
   });

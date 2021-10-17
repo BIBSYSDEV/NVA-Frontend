@@ -1,5 +1,5 @@
-import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
-import React, { useEffect, useRef, useState } from 'react';
+import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, useFormikContext } from 'formik';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { FormHelperText, Typography } from '@mui/material';
@@ -7,7 +7,7 @@ import { UppyFile } from '@uppy/core';
 import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { Modal } from '../../components/Modal';
 import { lightTheme } from '../../themes/lightTheme';
-import { File, licenses, Uppy } from '../../types/file.types';
+import { File, FileSet, licenses, Uppy } from '../../types/file.types';
 import { NotificationVariant } from '../../types/notification.types';
 import { FileFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
@@ -35,11 +35,13 @@ interface FilesAndLicensePanelProps {
 
 export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation('registration');
-  const { values, setFieldTouched, errors, touched } = useFormikContext<Registration>();
-  const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const {
-    fileSet: { files = [] },
-  } = values;
+    values: { fileSet },
+    setFieldTouched,
+    errors,
+  } = useFormikContext<Registration>();
+  const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
+  const files = useMemo(() => fileSet?.files ?? [], [fileSet?.files]);
 
   const filesRef = useRef(files);
   useEffect(() => {
@@ -68,8 +70,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
   };
 
-  const filesError = errors.fileSet?.files;
-  const filesTouched = touched.fileSet?.files;
+  const fileSetErrors = errors.fileSet as FormikErrors<FileSet>;
 
   return (
     <>
@@ -104,9 +105,14 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
             <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
               <FileUploader uppy={uppy} addFile={(file) => push(file)} />
-              {files.length === 0 && !!filesTouched && typeof filesError === 'string' && (
+
+              {files.length === 0 && (
                 <FormHelperText error>
-                  <ErrorMessage name={name} />
+                  {fileSet?.files && typeof fileSetErrors.files === 'string' ? (
+                    <ErrorMessage name={name} />
+                  ) : (
+                    typeof fileSetErrors === 'string' && <ErrorMessage name={FileFieldNames.FileSet} />
+                  )}
                 </FormHelperText>
               )}
             </BackgroundDiv>
