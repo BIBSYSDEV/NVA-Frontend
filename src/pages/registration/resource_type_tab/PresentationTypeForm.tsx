@@ -53,13 +53,14 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
           <Field name={ResourceFieldNames.PublicationContextLabel}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
+                {...field}
                 id={field.name}
+                value={field.value ?? ''}
                 required
                 data-testid={dataTestId.registrationWizard.resourceType.eventTitleField}
                 variant="filled"
                 fullWidth
                 label={t('resource_type.title_of_event')}
-                {...field}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
@@ -68,13 +69,14 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
           <Field name={'TODO'}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
+                {...field}
                 id={field.name}
+                value={field.value ?? ''}
                 required
                 data-testid={dataTestId.registrationWizard.resourceType.eventOrganizerField}
                 variant="filled"
                 fullWidth
                 label={t('resource_type.organizer')}
-                {...field}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
@@ -83,13 +85,14 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
           <Field name={ResourceFieldNames.PublicationContextPlaceLabel}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
+                {...field}
                 id={field.name}
+                value={field.value ?? ''}
                 required
                 data-testid={dataTestId.registrationWizard.resourceType.eventPlaceField}
                 variant="filled"
                 fullWidth
                 label={t('resource_type.place_for_event')}
-                {...field}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
@@ -98,13 +101,14 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
           <Field name={ResourceFieldNames.PublicationContextPlaceCountry}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
+                {...field}
                 id={field.name}
+                value={field.value ?? ''}
                 required
                 data-testid={dataTestId.registrationWizard.resourceType.eventCountryield}
                 variant="filled"
                 fullWidth
                 label={t('common:country')}
-                {...field}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
@@ -119,7 +123,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                     <DatePicker
                       {...datePickerTranslationProps}
                       label={t('resource_type.date_from')}
-                      value={field.value}
+                      value={field.value ?? null}
                       onChange={(date) => setFieldValue(field.name, date?.toISOString())}
                       inputFormat="dd.MM.yyyy"
                       views={['year', 'month', 'day']}
@@ -146,7 +150,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                     <DatePicker
                       {...datePickerTranslationProps}
                       label={t('resource_type.date_to')}
-                      value={field.value}
+                      value={field.value ?? null}
                       onChange={(date) => setFieldValue(field.name, date?.toISOString())}
                       inputFormat="dd.MM.yyyy"
                       views={['year', 'month', 'day']}

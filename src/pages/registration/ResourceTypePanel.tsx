@@ -87,7 +87,15 @@ export const ResourceTypePanel = () => {
         break;
       case PublicationType.Presentation:
         setFieldValue(instanceTypeBaseFieldName, emptyPresentationPublicationInstance, false);
-        setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Presentation }, false);
+        setFieldValue(
+          contextTypeBaseFieldName,
+          {
+            type: PublicationType.Presentation,
+            place: { type: 'UnconfirmedPlace' }, // TODO: find better soltion for this
+            time: { type: 'TemporalExtent' },
+          },
+          false
+        );
         break;
     }
 
