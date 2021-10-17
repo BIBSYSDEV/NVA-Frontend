@@ -82,7 +82,8 @@ const StyledPreviewAccordion = styled(Accordion)`
 const maxFileSize = 10000000; //10 MB
 
 export const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) => {
-  const publiclyAvailableFiles = registration.fileSet.files.filter((file) => !file.administrativeAgreement);
+  const files = registration.fileSet?.files ?? [];
+  const publiclyAvailableFiles = files.filter((file) => !file.administrativeAgreement);
 
   return (
     <StyledFileRowContainer>
@@ -192,7 +193,7 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
             <Typography variant="button">{t('registration:public_page.preview')}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            {isLoadingFile || !currentFileUrl ? <CircularProgress /> : <PreviewFile url={currentFileUrl} file={file} />}
+            {isLoadingFile ? <CircularProgress /> : <PreviewFile url={currentFileUrl} file={file} />}
           </AccordionDetails>
         </StyledPreviewAccordion>
       )}

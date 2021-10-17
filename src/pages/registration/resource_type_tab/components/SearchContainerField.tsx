@@ -87,15 +87,18 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
                 setQuery('');
               }}
               loading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
-              getOptionLabel={(option) => option.entityDescription.mainTitle}
+              getOptionLabel={(option) => option.entityDescription?.mainTitle ?? ''}
               renderOption={(props, option, state) => (
                 <li {...props}>
                   <StyledFlexColumn>
                     <Typography variant="subtitle1">
-                      <EmphasizeSubstring text={option.entityDescription.mainTitle} emphasized={state.inputValue} />
+                      <EmphasizeSubstring
+                        text={option.entityDescription?.mainTitle ?? ''}
+                        emphasized={state.inputValue}
+                      />
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {getDescriptionText(option.entityDescription.date, option.entityDescription.contributors)}
+                      {getDescriptionText(option.entityDescription?.date, option.entityDescription?.contributors ?? [])}
                     </Typography>
                   </StyledFlexColumn>
                 </li>
@@ -107,9 +110,12 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
                     data-testid={dataTestId.registrationWizard.resourceType.journalChip}
                     label={
                       <>
-                        <Typography variant="subtitle1">{option.entityDescription.mainTitle}</Typography>
+                        <Typography variant="subtitle1">{option.entityDescription?.mainTitle ?? ''}</Typography>
                         <Typography variant="body2" color="textSecondary">
-                          {getDescriptionText(option.entityDescription.date, option.entityDescription.contributors)}
+                          {getDescriptionText(
+                            option.entityDescription?.date,
+                            option.entityDescription?.contributors ?? []
+                          )}
                         </Typography>
                       </>
                     }
@@ -135,7 +141,7 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
   );
 };
 
-const getDescriptionText = (date: RegistrationDate, contributors: Contributor[]) => {
+const getDescriptionText = (date: RegistrationDate | undefined, contributors: Contributor[]) => {
   const dateText = displayDate(date);
   const contributorsText = contributors
     .slice(0, 5)

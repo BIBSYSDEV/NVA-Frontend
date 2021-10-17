@@ -47,14 +47,12 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
-  const {
-    entityDescription: { contributors },
-  } = values;
   const [openContributorModal, setOpenContributorModal] = useState(false);
   const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
   const [currentPage, setCurrentPage] = useState(1); // Pagination pages are 1-indexed :/
   const isMobile = useIsMobile();
 
+  const contributors = values.entityDescription?.contributors ?? [];
   const relevantContributors = contributors.filter((contributor) =>
     contributorRoles.some((role) => role === contributor.role)
   );

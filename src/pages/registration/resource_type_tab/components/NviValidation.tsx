@@ -17,6 +17,9 @@ interface NviValidationProps {
 }
 
 export const NviValidation = ({ registration }: NviValidationProps) => {
+  if (!registration.entityDescription) {
+    return null;
+  }
   const { publicationInstance } = registration.entityDescription.reference;
 
   const isNviApplicableJournalArticle =
