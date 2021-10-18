@@ -27,22 +27,20 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
     return null;
   }
   const { reference } = registration.entityDescription;
+  const instanceType = reference?.publicationInstance.type;
+  const contentType =
+    reference && 'contentType' in reference.publicationInstance ? reference.publicationInstance.contentType : '';
 
   const isNviApplicableJournalArticle =
-    reference?.publicationInstance.type === JournalType.Article &&
-    'contentType' in reference.publicationInstance &&
-    (reference.publicationInstance.contentType === JournalArticleContentType.ResearchArticle ||
-      reference.publicationInstance.contentType === JournalArticleContentType.ReviewArticle);
+    instanceType === JournalType.Article &&
+    (contentType === JournalArticleContentType.ResearchArticle ||
+      contentType === JournalArticleContentType.ReviewArticle);
 
   const isNviApplicableBookMonograph =
-    reference?.publicationInstance.type === BookType.Monograph &&
-    'contentType' in reference.publicationInstance &&
-    reference.publicationInstance.contentType === BookMonographContentType.AcademicMonograph;
+    instanceType === BookType.Monograph && contentType === BookMonographContentType.AcademicMonograph;
 
   const isNviApplicableChapterArticle =
-    reference?.publicationInstance.type === ChapterType.AnthologyChapter &&
-    'contentType' in reference.publicationInstance &&
-    reference.publicationInstance.contentType === ChapterContentType.AcademicChapter;
+    instanceType === ChapterType.AnthologyChapter && contentType === ChapterContentType.AcademicChapter;
 
   return isNviApplicableJournalArticle || isNviApplicableBookMonograph || isNviApplicableChapterArticle ? (
     <BackgroundDiv backgroundColor={lightTheme.palette.section.black}>
