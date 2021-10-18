@@ -8,7 +8,7 @@ import { ReportPublicationContext } from '../../types/publication_types/reportRe
 import { Journal, Publisher } from '../../types/registration.types';
 import { RegistrationSummary } from './RegistrationSummary';
 import { ListSkeleton } from '../../components/ListSkeleton';
-import { useFetchPublicationChannel } from '../../utils/hooks/useFetchPublicationChannel';
+import { useFetchResource } from '../../utils/hooks/useFetchResource';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
@@ -35,7 +35,7 @@ export const PublicJournal = ({ publicationContext }: PublicJournalProps) => {
 export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher }) => {
   const { t } = useTranslation('registration');
 
-  const [fetchedPublisher, isLoadingPublisher] = useFetchPublicationChannel<Publisher>(
+  const [fetchedPublisher, isLoadingPublisher] = useFetchResource<Publisher>(
     publisher?.id ?? '',
     t('feedback:error.get_publisher')
   );
@@ -111,7 +111,7 @@ interface PublicJournalContentProps {
 
 const PublicJournalContent = ({ id }: PublicJournalContentProps) => {
   const { t } = useTranslation('registration');
-  const [journal, isLoadingJournal] = useFetchPublicationChannel<Journal>(id ?? '', t('feedback:error.get_journal'));
+  const [journal, isLoadingJournal] = useFetchResource<Journal>(id ?? '', t('feedback:error.get_journal'));
 
   return id ? (
     <>

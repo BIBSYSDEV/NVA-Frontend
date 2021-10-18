@@ -48,7 +48,7 @@ export const JournalForm = () => {
             label={t('resource_type.original_article_title')}
             placeholder={t('resource_type.search_for_original_article')}
             dataTestId={dataTestId.registrationWizard.resourceType.corrigendumForField}
-            removeButtonLabel={t('resource_type.remove_article')}
+            fetchErrorMessage={t('feedback:error.get_journal_article')}
           />
         ) : (
           <JournalField />
