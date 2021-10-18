@@ -8,10 +8,15 @@ import { lightTheme } from '../../../../themes/lightTheme';
 import { BookType, ChapterType, JournalType } from '../../../../types/publicationFieldNames';
 import { BookRegistration } from '../../../../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
-import { BookMonographContentType, JournalArticleContentType } from '../../../../types/publication_types/content.types';
+import {
+  BookMonographContentType,
+  ChapterContentType,
+  JournalArticleContentType,
+} from '../../../../types/publication_types/content.types';
 import { JournalRegistration } from '../../../../types/publication_types/journalRegistration.types';
 import { Journal, Publisher, Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 
 interface NviValidationProps {
   registration: Registration;
@@ -34,9 +39,12 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
     'contentType' in reference.publicationInstance &&
     reference.publicationInstance.contentType === BookMonographContentType.AcademicMonograph;
 
-  const isNviApplicableChapterArticle = reference?.publicationInstance.type === ChapterType.AnthologyChapter;
+  const isNviApplicableChapterArticle =
+    reference?.publicationInstance.type === ChapterType.AnthologyChapter &&
+    'contentType' in reference.publicationInstance &&
+    reference.publicationInstance.contentType === ChapterContentType.AcademicChapter;
 
-  return isNviApplicableJournalArticle || isNviApplicableBookMonograph ? (
+  return isNviApplicableJournalArticle || isNviApplicableBookMonograph || isNviApplicableChapterArticle ? (
     <BackgroundDiv backgroundColor={lightTheme.palette.section.black}>
       {isNviApplicableJournalArticle ? (
         <NviValidationJournalArticle registration={registration as JournalRegistration} />
@@ -79,6 +87,7 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
 
 const NviValidationChapterArticle = ({ registration }: { registration: ChapterRegistration }) => {
   const { reference } = registration.entityDescription;
+  const { t } = useTranslation('feedback');
 
   const resourceState = useSelector((store: RootStore) => store.resources);
 
@@ -87,13 +96,11 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
     : null;
   const containerPublicationContext = container?.entityDescription.reference?.publicationContext;
 
-  // TODO: useFetchResource?
-  const publisher = containerPublicationContext?.publisher?.id
-    ? (resourceState[containerPublicationContext.publisher.id] as Publisher)
-    : null;
-  const series = containerPublicationContext?.series?.id
-    ? (resourceState[containerPublicationContext.series.id] as Journal)
-    : null;
+  const [publisher] = useFetchResource<Publisher>(
+    containerPublicationContext?.publisher?.id ?? '',
+    t('error.get_publisher')
+  );
+  const [series] = useFetchResource<Journal>(containerPublicationContext?.series?.id ?? '', t('error.get_series'));
 
   return (
     <NviStatus
