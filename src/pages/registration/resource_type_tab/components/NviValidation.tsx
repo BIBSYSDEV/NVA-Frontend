@@ -61,7 +61,7 @@ const NviValidationJournalArticle = ({ registration }: { registration: JournalRe
   const resourceState = useSelector((store: RootStore) => store.resources);
   const journal = reference?.publicationContext.id ? (resourceState[reference.publicationContext.id] as Journal) : null;
 
-  return <NviStatus level={journal?.level ?? ''} isPeerReviewed={!!reference?.publicationInstance.peerReviewed} />;
+  return <NviStatus level={journal?.level} isPeerReviewed={!!reference?.publicationInstance.peerReviewed} />;
 };
 
 const NviValidationBookMonograph = ({ registration }: { registration: BookRegistration }) => {
@@ -84,10 +84,10 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
 };
 
 const NviValidationChapterArticle = ({ registration }: { registration: ChapterRegistration }) => {
-  const { reference } = registration.entityDescription;
   const { t } = useTranslation('feedback');
-
   const resourceState = useSelector((store: RootStore) => store.resources);
+
+  const { reference } = registration.entityDescription;
 
   const container = reference?.publicationContext.partOf
     ? (resourceState[reference.publicationContext.partOf] as BookRegistration)
