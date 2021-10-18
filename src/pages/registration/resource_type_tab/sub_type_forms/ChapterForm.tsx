@@ -51,7 +51,7 @@ export const ChapterForm = () => {
   const { t } = useTranslation('registration');
 
   const { values } = useFormikContext<ChapterRegistration>();
-  const { publicationInstance } = values.entityDescription.reference;
+  const instanceType = values.entityDescription.reference?.publicationInstance.type;
 
   return (
     <>
@@ -63,7 +63,7 @@ export const ChapterForm = () => {
 
         <DoiField />
 
-        {publicationInstance.type === ChapterType.AnthologyChapter && (
+        {instanceType === ChapterType.AnthologyChapter && (
           <SearchContainerField
             fieldName={ResourceFieldNames.PartOf}
             searchSubtypes={[BookType.Anthology]}
@@ -113,7 +113,7 @@ export const ChapterForm = () => {
         </StyledPageNumberWrapper>
       </BackgroundDiv>
 
-      {publicationInstance.type === ChapterType.AnthologyChapter && (
+      {instanceType === ChapterType.AnthologyChapter && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
             <NviFields contentTypes={Object.values(ChapterContentType)} />
