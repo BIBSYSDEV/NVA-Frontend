@@ -109,15 +109,17 @@ export const ResourceTypePanel = () => {
     setFieldValue(instanceTypeBaseFieldName, newValues);
   };
 
+  const referenceErrors = (errors.entityDescription as FormikErrors<EntityDescription>)
+    ?.reference as FormikErrors<JournalReference>;
+  const referenceTouched = (touched.entityDescription as FormikTouched<EntityDescription>)
+    ?.reference as FormikTouched<JournalReference>;
+
+  // Handle error for nullable reference as well as reference with missing type
   const typeError =
-    (
-      ((errors.entityDescription as FormikErrors<EntityDescription>)?.reference as FormikErrors<JournalReference>)
-        ?.publicationInstance as FormikErrors<JournalPublicationInstance>
-    )?.type ?? '';
-  const typeTouched = (
-    ((touched.entityDescription as FormikTouched<EntityDescription>)?.reference as FormikTouched<JournalReference>)
-      ?.publicationInstance as FormikTouched<JournalPublicationInstance>
-  )?.type;
+    (referenceErrors?.publicationInstance as FormikErrors<JournalPublicationInstance>)?.type ??
+    (typeof referenceErrors === 'string' && referenceErrors) ??
+    '';
+  const typeTouched = (referenceTouched?.publicationInstance as FormikTouched<JournalPublicationInstance>)?.type;
 
   return (
     <>
