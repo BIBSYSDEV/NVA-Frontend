@@ -109,7 +109,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   };
 
   useEffect(() => {
-    const publicationInstance = registration.entityDescription?.reference.publicationInstance;
+    const publicationInstance = registration.entityDescription?.reference?.publicationInstance;
     const contentType =
       publicationInstance && 'contentType' in publicationInstance ? publicationInstance.contentType : null;
     try {

@@ -30,5 +30,5 @@ interface ChapterReference extends BaseReference {
 }
 
 export interface ChapterEntityDescription extends BaseEntityDescription {
-  reference: ChapterReference;
+  reference: ChapterReference | null;
 }

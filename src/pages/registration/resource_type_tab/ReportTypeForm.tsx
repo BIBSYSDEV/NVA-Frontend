@@ -14,7 +14,7 @@ interface ReportTypeFormProps {
 
 export const ReportTypeForm = ({ onChangeSubType }: ReportTypeFormProps) => {
   const { values } = useFormikContext<ReportRegistration>();
-  const subType = values.entityDescription.reference.publicationInstance.type;
+  const subType = values.entityDescription.reference?.publicationInstance.type;
 
   return (
     <>

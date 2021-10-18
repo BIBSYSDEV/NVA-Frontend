@@ -31,7 +31,7 @@ export const ResourceTypePanel = () => {
   const { t } = useTranslation('registration');
   const { values, setTouched, setFieldValue, touched, errors } = useFormikContext<Registration>();
   const [mainType, setMainType] = useState(
-    getMainRegistrationType(values.entityDescription?.reference.publicationInstance.type ?? '')
+    getMainRegistrationType(values.entityDescription?.reference?.publicationInstance.type ?? '')
   );
 
   const onChangeType = (newRegistrationMainType: string) => {
@@ -88,7 +88,7 @@ export const ResourceTypePanel = () => {
     // Avoid showing potential errors instantly
     const newTouched = touched;
     (newTouched.entityDescription as FormikTouched<EntityDescription>).npiSubjectHeading = false;
-    (newTouched.entityDescription as FormikTouched<EntityDescription>).reference = {};
+    (newTouched.entityDescription as FormikTouched<EntityDescription>).reference = false;
 
     setTouched(newTouched);
   };
@@ -99,7 +99,7 @@ export const ResourceTypePanel = () => {
       contentType: null,
       peerReviewed: null,
     };
-    const newValues = values.entityDescription
+    const newValues = values.entityDescription?.reference
       ? {
           ...values.entityDescription.reference.publicationInstance,
           ...commonValues,

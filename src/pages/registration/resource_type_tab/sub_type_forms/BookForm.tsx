@@ -18,11 +18,7 @@ import { IsbnAndPages } from '../components/isbn_and_pages/IsbnAndPages';
 export const BookForm = () => {
   const { t } = useTranslation('registration');
   const { values } = useFormikContext<BookRegistration>();
-  const {
-    reference: {
-      publicationInstance: { type },
-    },
-  } = values.entityDescription;
+  const instanceType = values.entityDescription.reference?.publicationInstance.type;
 
   return (
     <>
@@ -37,7 +33,7 @@ export const BookForm = () => {
         <IsbnAndPages />
       </BackgroundDiv>
 
-      {type === BookType.Monograph && (
+      {instanceType === BookType.Monograph && (
         <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
           <NviFields contentTypes={Object.values(BookMonographContentType)} />
         </BackgroundDiv>
@@ -49,7 +45,7 @@ export const BookForm = () => {
         <SeriesFields />
       </BackgroundDiv>
 
-      {type === BookType.Monograph && <NviValidation registration={values} />}
+      {instanceType === BookType.Monograph && <NviValidation registration={values} />}
     </>
   );
 };

@@ -30,13 +30,12 @@ const StyledChip = styled(Chip)`
 export const JournalField = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue, setFieldTouched, values } = useFormikContext<JournalRegistration>();
-  const {
-    reference: { publicationContext },
-    date,
-  } = values.entityDescription as JournalEntityDescription;
+  const { reference, date } = values.entityDescription as JournalEntityDescription;
   const year = date?.year ?? '';
 
-  const [query, setQuery] = useState(!publicationContext.id ? publicationContext.title ?? '' : '');
+  const [query, setQuery] = useState(
+    !reference?.publicationContext.id ? reference?.publicationContext.title ?? '' : ''
+  );
   const debouncedQuery = useDebounce(query);
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
     url:
@@ -49,9 +48,10 @@ export const JournalField = () => {
   // Fetch Journals with matching ISSN
   const [journalsByIssn] = useFetch<Journal[]>({
     url:
-      !publicationContext.id && (publicationContext.printIssn || publicationContext.onlineIssn)
+      !reference?.publicationContext.id &&
+      (reference?.publicationContext.printIssn || reference?.publicationContext.onlineIssn)
         ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${
-            publicationContext.printIssn ?? publicationContext.onlineIssn
+            reference.publicationContext.printIssn ?? reference.publicationContext.onlineIssn
           }`
         : '',
     errorMessage: t('feedback:error.get_journals'),
@@ -68,7 +68,7 @@ export const JournalField = () => {
 
   // Fetch selected journal
   const [journal, isLoadingJournal] = useFetchPublicationChannel<Journal>(
-    publicationContext.id ?? '',
+    reference?.publicationContext.id ?? '',
     t('feedback:error.get_journal')
   );
 
@@ -94,7 +94,7 @@ export const JournalField = () => {
             onBlur={() => setFieldTouched(field.name, true, false)}
             blurOnSelect
             disableClearable={!query}
-            value={publicationContext.id && journal ? [journal] : []}
+            value={reference?.publicationContext.id && journal ? [journal] : []}
             onChange={(_, inputValue, reason) => {
               if (reason === 'selectOption') {
                 setFieldValue(ResourceFieldNames.PubliactionContextType, PublicationChannelType.Journal, false);
@@ -152,8 +152,8 @@ export const JournalField = () => {
                 required
                 label={t('resource_type.journal')}
                 isLoading={isLoadingJournalOptions || isLoadingJournal}
-                placeholder={!publicationContext.id ? t('resource_type.search_for_journal') : ''}
-                showSearchIcon={!publicationContext.id}
+                placeholder={!reference?.publicationContext.id ? t('resource_type.search_for_journal') : ''}
+                showSearchIcon={!reference?.publicationContext.id}
                 errorMessage={meta.touched && !!meta.error ? meta.error : ''}
               />
             )}

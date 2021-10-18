@@ -275,7 +275,7 @@ export const getTouchedTabFields = (
   const tabFields = {
     [RegistrationTab.Description]: () => touchedDescriptionTabFields,
     [RegistrationTab.ResourceType]: () =>
-      touchedResourceTabFields(values.entityDescription?.reference.publicationInstance.type ?? ''),
+      touchedResourceTabFields(values.entityDescription?.reference?.publicationInstance.type ?? ''),
     [RegistrationTab.Contributors]: () => touchedContributorTabFields(values.entityDescription?.contributors ?? []),
     [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(values.fileSet),
   };

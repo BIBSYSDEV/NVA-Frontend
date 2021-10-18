@@ -20,18 +20,18 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
   if (!registration.entityDescription) {
     return null;
   }
-  const { publicationInstance } = registration.entityDescription.reference;
+  const { reference } = registration.entityDescription;
 
   const isNviApplicableJournalArticle =
-    publicationInstance.type === JournalType.Article &&
-    'contentType' in publicationInstance &&
-    (publicationInstance.contentType === JournalArticleContentType.ResearchArticle ||
-      publicationInstance.contentType === JournalArticleContentType.ReviewArticle);
+    reference?.publicationInstance.type === JournalType.Article &&
+    'contentType' in reference.publicationInstance &&
+    (reference.publicationInstance.contentType === JournalArticleContentType.ResearchArticle ||
+      reference.publicationInstance.contentType === JournalArticleContentType.ReviewArticle);
 
   const isNviApplicableBookMonograph =
-    publicationInstance.type === BookType.Monograph &&
-    'contentType' in publicationInstance &&
-    publicationInstance.contentType === BookMonographContentType.AcademicMonograph;
+    reference?.publicationInstance.type === BookType.Monograph &&
+    'contentType' in reference.publicationInstance &&
+    reference.publicationInstance.contentType === BookMonographContentType.AcademicMonograph;
 
   return isNviApplicableJournalArticle || isNviApplicableBookMonograph ? (
     <BackgroundDiv backgroundColor={lightTheme.palette.section.black}>
@@ -46,13 +46,15 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
 
 const NviValidationJournalArticle = ({ registration }: { registration: JournalRegistration }) => {
   const { t } = useTranslation('registration');
-  const { publicationContext, publicationInstance } = registration.entityDescription.reference;
+  const { reference } = registration.entityDescription;
 
   const publicationChannelState = useSelector((store: RootStore) => store.publicationChannel);
-  const journal = publicationContext.id ? (publicationChannelState[publicationContext.id] as Journal) : null;
+  const journal = reference?.publicationContext.id
+    ? (publicationChannelState[reference.publicationContext.id] as Journal)
+    : null;
   const isRatedJournal = parseInt(journal?.level ?? '0') > 0;
 
-  const isPeerReviewed = !!publicationInstance.peerReviewed;
+  const isPeerReviewed = !!reference?.publicationInstance.peerReviewed;
 
   return (
     <Typography
@@ -72,21 +74,21 @@ const NviValidationJournalArticle = ({ registration }: { registration: JournalRe
 
 const NviValidationBookMonograph = ({ registration }: { registration: BookRegistration }) => {
   const { t } = useTranslation('registration');
-  const { publicationContext, publicationInstance } = registration.entityDescription.reference;
+  const { reference } = registration.entityDescription;
 
   const publicationChannelState = useSelector((store: RootStore) => store.publicationChannel);
-  const publisher = publicationContext.publisher?.id
-    ? (publicationChannelState[publicationContext.publisher.id] as Publisher)
+  const publisher = reference?.publicationContext.publisher?.id
+    ? (publicationChannelState[reference.publicationContext.publisher.id] as Publisher)
     : null;
-  const series = publicationContext.series?.id
-    ? (publicationChannelState[publicationContext.series.id] as Journal)
+  const series = reference?.publicationContext.series?.id
+    ? (publicationChannelState[reference.publicationContext.series.id] as Journal)
     : null;
 
   const isRatedPublisher = parseInt(publisher?.level ?? '0') > 0;
   const isRatedSeries = parseInt(series?.level ?? '0') > 0;
   const isRated = series?.id ? isRatedSeries : isRatedPublisher;
 
-  const isPeerReviewed = !!publicationInstance.peerReviewed;
+  const isPeerReviewed = !!reference?.publicationInstance.peerReviewed;
 
   return (
     <Typography

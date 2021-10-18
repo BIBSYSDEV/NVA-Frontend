@@ -37,7 +37,7 @@ export interface JournalReference extends BaseReference {
 }
 
 export interface JournalEntityDescription extends BaseEntityDescription {
-  reference: JournalReference;
+  reference: JournalReference | null;
 }
 
 export const emptyJournalPublicationInstance: JournalPublicationInstance = {
