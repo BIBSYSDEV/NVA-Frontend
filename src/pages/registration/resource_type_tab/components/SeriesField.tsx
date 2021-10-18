@@ -27,12 +27,8 @@ const StyledChip = styled(Chip)`
 export const SeriesField = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue, values } = useFormikContext<Registration>();
-  const {
-    reference: {
-      publicationContext: { series },
-    },
-    date,
-  } = values.entityDescription as BookEntityDescription;
+  const { reference, date } = values.entityDescription as BookEntityDescription;
+  const series = reference?.publicationContext.series;
   const year = date?.year ?? '';
 
   const [query, setQuery] = useState(!series?.id ? series?.title ?? '' : '');

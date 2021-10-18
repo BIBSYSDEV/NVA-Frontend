@@ -19,7 +19,7 @@ export const ContributorsPanel = () => {
   const contributorsError = (errors.entityDescription as FormikErrors<EntityDescription>)?.contributors;
   const contributorsTouched = (touched.entityDescription as FormikTouched<EntityDescription>)?.contributors;
 
-  const publicationInstanceType = entityDescription?.reference.publicationInstance.type ?? '';
+  const publicationInstanceType = entityDescription?.reference?.publicationInstance.type ?? '';
   const contributors = entityDescription?.contributors ?? [];
   const contributorsRef = useRef(contributors);
 

@@ -47,9 +47,9 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   const { t } = useTranslation('registration');
   const { entityDescription } = registration;
 
-  const publicationContext = entityDescription?.reference.publicationContext;
-  const publicationInstance = entityDescription?.reference.publicationInstance;
-  const journalPublicationInstance = entityDescription?.reference.publicationInstance as
+  const publicationContext = entityDescription?.reference?.publicationContext;
+  const publicationInstance = entityDescription?.reference?.publicationInstance;
+  const journalPublicationInstance = entityDescription?.reference?.publicationInstance as
     | JournalPublicationInstance
     | undefined;
 
@@ -109,7 +109,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               <PublicSeries publicationContext={publicationContext as BookPublicationContext} />
               <PublicPublicationInstanceBook publicationInstance={publicationInstance as BookPublicationInstance} />
               <PublicIsbnContent
-                isbnList={(registration as BookRegistration).entityDescription.reference.publicationContext.isbnList}
+                isbnList={(registration as BookRegistration).entityDescription.reference?.publicationContext.isbnList}
               />
             </>
           ) : isDegree(publicationInstance.type) ? (
@@ -120,7 +120,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
                   <PublicSeries publicationContext={publicationContext as DegreePublicationContext} />
                   <PublicIsbnContent
                     isbnList={
-                      (registration as DegreeRegistration).entityDescription.reference.publicationContext.isbnList
+                      (registration as DegreeRegistration).entityDescription.reference?.publicationContext.isbnList
                     }
                   />
                 </>
@@ -133,7 +133,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               <PublicSeries publicationContext={publicationContext as ReportPublicationContext} />
               <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
               <PublicIsbnContent
-                isbnList={(registration as ReportRegistration).entityDescription.reference.publicationContext.isbnList}
+                isbnList={(registration as ReportRegistration).entityDescription.reference?.publicationContext.isbnList}
               />
             </>
           ) : isChapter(publicationInstance.type) ? (

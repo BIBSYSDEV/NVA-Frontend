@@ -21,20 +21,20 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
   if (!registration.entityDescription) {
     return null;
   }
-  const { publicationInstance } = registration.entityDescription.reference;
+  const { reference } = registration.entityDescription;
 
   const isNviApplicableJournalArticle =
-    publicationInstance.type === JournalType.Article &&
-    'contentType' in publicationInstance &&
-    (publicationInstance.contentType === JournalArticleContentType.ResearchArticle ||
-      publicationInstance.contentType === JournalArticleContentType.ReviewArticle);
+    reference?.publicationInstance.type === JournalType.Article &&
+    'contentType' in reference.publicationInstance &&
+    (reference.publicationInstance.contentType === JournalArticleContentType.ResearchArticle ||
+      reference.publicationInstance.contentType === JournalArticleContentType.ReviewArticle);
 
   const isNviApplicableBookMonograph =
-    publicationInstance.type === BookType.Monograph &&
-    'contentType' in publicationInstance &&
-    publicationInstance.contentType === BookMonographContentType.AcademicMonograph;
+    reference?.publicationInstance.type === BookType.Monograph &&
+    'contentType' in reference.publicationInstance &&
+    reference.publicationInstance.contentType === BookMonographContentType.AcademicMonograph;
 
-  const isNviApplicableChapterArticle = publicationInstance.type === ChapterType.AnthologyChapter;
+  const isNviApplicableChapterArticle = reference?.publicationInstance.type === ChapterType.AnthologyChapter;
 
   return isNviApplicableJournalArticle || isNviApplicableBookMonograph ? (
     <BackgroundDiv backgroundColor={lightTheme.palette.section.black}>
@@ -50,33 +50,42 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
 };
 
 const NviValidationJournalArticle = ({ registration }: { registration: JournalRegistration }) => {
-  const { publicationContext, publicationInstance } = registration.entityDescription.reference;
+  const { reference } = registration.entityDescription;
 
   const resourceState = useSelector((store: RootStore) => store.resources);
-  const journal = publicationContext.id ? (resourceState[publicationContext.id] as Journal) : null;
+  const journal = reference?.publicationContext.id ? (resourceState[reference.publicationContext.id] as Journal) : null;
 
-  return <NviStatus level={journal?.level ?? ''} isPeerReviewed={!!publicationInstance.peerReviewed} />;
+  return <NviStatus level={journal?.level ?? ''} isPeerReviewed={!!reference?.publicationInstance.peerReviewed} />;
 };
 
 const NviValidationBookMonograph = ({ registration }: { registration: BookRegistration }) => {
-  const { publicationContext, publicationInstance } = registration.entityDescription.reference;
+  const { reference } = registration.entityDescription;
 
   const resourceState = useSelector((store: RootStore) => store.resources);
-  const publisher = publicationContext.publisher?.id
-    ? (resourceState[publicationContext.publisher.id] as Publisher)
+  const publisher = reference?.publicationContext.publisher?.id
+    ? (resourceState[reference.publicationContext.publisher.id] as Publisher)
     : null;
-  const series = publicationContext.series?.id ? (resourceState[publicationContext.series.id] as Journal) : null;
+  const series = reference?.publicationContext.series?.id
+    ? (resourceState[reference.publicationContext.series.id] as Journal)
+    : null;
 
-  return <NviStatus level={series?.level ?? publisher?.level} isPeerReviewed={!!publicationInstance.peerReviewed} />;
+  return (
+    <NviStatus
+      level={series?.level ?? publisher?.level}
+      isPeerReviewed={!!reference?.publicationInstance.peerReviewed}
+    />
+  );
 };
 
 const NviValidationChapterArticle = ({ registration }: { registration: ChapterRegistration }) => {
-  const { publicationContext, publicationInstance } = registration.entityDescription.reference;
+  const { reference } = registration.entityDescription;
 
   const resourceState = useSelector((store: RootStore) => store.resources);
 
-  const container = publicationContext.partOf ? (resourceState[publicationContext.partOf] as BookRegistration) : null;
-  const containerPublicationContext = container?.entityDescription.reference.publicationContext;
+  const container = reference?.publicationContext.partOf
+    ? (resourceState[reference.publicationContext.partOf] as BookRegistration)
+    : null;
+  const containerPublicationContext = container?.entityDescription.reference?.publicationContext;
 
   // TODO: useFetchResource?
   const publisher = containerPublicationContext?.publisher?.id
@@ -86,7 +95,12 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
     ? (resourceState[containerPublicationContext.series.id] as Journal)
     : null;
 
-  return <NviStatus level={series?.level ?? publisher?.level} isPeerReviewed={!!publicationInstance.peerReviewed} />;
+  return (
+    <NviStatus
+      level={series?.level ?? publisher?.level}
+      isPeerReviewed={!!reference?.publicationInstance.peerReviewed}
+    />
+  );
 };
 
 interface NviStatusProps {
