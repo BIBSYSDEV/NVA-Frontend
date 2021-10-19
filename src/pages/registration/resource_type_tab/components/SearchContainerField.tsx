@@ -8,7 +8,7 @@ import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
 import { RegistrationSubtype, ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { Registration, RegistrationDate } from '../../../../types/registration.types';
+import { Publisher, Registration, RegistrationDate } from '../../../../types/registration.types';
 import { displayDate } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistrations';
@@ -27,6 +27,7 @@ interface SearchContainerFieldProps {
   placeholder: string;
   dataTestId: string;
   fetchErrorMessage: string;
+  description?: 'year-and-contributors' | 'publisher-and-level';
 }
 
 export const SearchContainerField = ({
@@ -36,6 +37,7 @@ export const SearchContainerField = ({
   placeholder,
   dataTestId,
   fetchErrorMessage,
+  description = 'year-and-contributors',
 }: SearchContainerFieldProps) => {
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [query, setQuery] = useState('');
@@ -97,7 +99,14 @@ export const SearchContainerField = ({
                       />
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {getDescriptionText(option.entityDescription?.date, option.entityDescription?.contributors ?? [])}
+                      {description === 'year-and-contributors' ? (
+                        <YearAndContributorsText
+                          date={option.entityDescription?.date}
+                          contributors={option.entityDescription?.contributors ?? []}
+                        />
+                      ) : (
+                        <PublisherAndLevelText option={option} />
+                      )}
                     </Typography>
                   </StyledFlexColumn>
                 </li>
@@ -111,9 +120,13 @@ export const SearchContainerField = ({
                       <>
                         <Typography variant="subtitle1">{option.entityDescription?.mainTitle ?? ''}</Typography>
                         <Typography variant="body2" color="textSecondary">
-                          {getDescriptionText(
-                            option.entityDescription?.date,
-                            option.entityDescription?.contributors ?? []
+                          {description === 'year-and-contributors' ? (
+                            <YearAndContributorsText
+                              date={option.entityDescription?.date}
+                              contributors={option.entityDescription?.contributors ?? []}
+                            />
+                          ) : (
+                            <PublisherAndLevelText option={option} />
                           )}
                         </Typography>
                       </>
@@ -140,12 +153,34 @@ export const SearchContainerField = ({
   );
 };
 
-const getDescriptionText = (date: RegistrationDate | undefined, contributors: Contributor[]) => {
-  const dateText = displayDate(date);
-  const contributorsText = contributors
-    .slice(0, 5)
-    .map((contributor) => contributor.identity.name)
-    .join('; ');
+interface YearAndContributorsTextProps {
+  date?: RegistrationDate;
+  contributors: Contributor[];
+}
 
-  return [dateText, contributorsText].filter((text) => text).join(' - ');
+const YearAndContributorsText = ({ date, contributors }: YearAndContributorsTextProps) => {
+  const dateText = displayDate(date);
+  const contributorsText = Array.isArray(contributors) // TODO: remove
+    ? contributors
+        .slice(0, 5)
+        .map((contributor) => contributor.identity.name)
+        .join('; ')
+    : '';
+
+  return <span>{[dateText, contributorsText].filter((text) => text).join(' - ')}</span>;
+};
+
+interface PublisherAndLevelTextProps {
+  option: Registration;
+}
+
+const PublisherAndLevelText = ({ option }: PublisherAndLevelTextProps) => {
+  const publicationContext = option.entityDescription?.reference?.publicationContext;
+
+  const publisherId = publicationContext && 'id' in publicationContext ? publicationContext.id ?? '' : '';
+
+  const [publisher] = useFetchResource<Publisher>(publisherId, 'sdf'); // todo:update useFetch type
+  console.log(option, publisherId, publisher);
+
+  return <span>Utgiver: {publisher?.name}</span>;
 };

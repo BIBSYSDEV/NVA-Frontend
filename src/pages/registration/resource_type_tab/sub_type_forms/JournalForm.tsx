@@ -49,6 +49,7 @@ export const JournalForm = () => {
             placeholder={t('resource_type.search_for_original_article')}
             dataTestId={dataTestId.registrationWizard.resourceType.corrigendumForField}
             fetchErrorMessage={t('feedback:error.get_journal_article')}
+            description="publisher-and-level"
           />
         ) : (
           <JournalField />
