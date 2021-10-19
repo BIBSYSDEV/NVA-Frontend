@@ -8,16 +8,18 @@ import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
 import { RegistrationSubtype, ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { Registration, RegistrationDate } from '../../../../types/registration.types';
+import { Journal, Publisher, Registration, RegistrationDate } from '../../../../types/registration.types';
 import { displayDate } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistrations';
 import { dataTestId as dataTestIds } from '../../../../utils/dataTestIds';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { Contributor } from '../../../../types/contributor.types';
+import { useTranslation } from 'react-i18next';
+import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
 
 const StyledChip = styled(Chip)`
-  padding: 2rem 0 2rem 0;
+  height: 100%;
 `;
 
 interface SearchContainerFieldProps {
@@ -27,6 +29,7 @@ interface SearchContainerFieldProps {
   placeholder: string;
   dataTestId: string;
   fetchErrorMessage: string;
+  descriptionToShow?: 'year-and-contributors' | 'publisher-and-level';
 }
 
 export const SearchContainerField = ({
@@ -36,6 +39,7 @@ export const SearchContainerField = ({
   placeholder,
   dataTestId,
   fetchErrorMessage,
+  descriptionToShow = 'year-and-contributors',
 }: SearchContainerFieldProps) => {
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [query, setQuery] = useState('');
@@ -96,9 +100,14 @@ export const SearchContainerField = ({
                         emphasized={state.inputValue}
                       />
                     </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {getDescriptionText(option.entityDescription?.date, option.entityDescription?.contributors ?? [])}
-                    </Typography>
+                    {descriptionToShow === 'year-and-contributors' ? (
+                      <YearAndContributorsText
+                        date={option.entityDescription?.date}
+                        contributors={option.entityDescription?.contributors ?? []}
+                      />
+                    ) : (
+                      <ContainerAndLevelText registration={option} />
+                    )}
                   </StyledFlexColumn>
                 </li>
               )}
@@ -110,12 +119,14 @@ export const SearchContainerField = ({
                     label={
                       <>
                         <Typography variant="subtitle1">{option.entityDescription?.mainTitle ?? ''}</Typography>
-                        <Typography variant="body2" color="textSecondary">
-                          {getDescriptionText(
-                            option.entityDescription?.date,
-                            option.entityDescription?.contributors ?? []
-                          )}
-                        </Typography>
+                        {descriptionToShow === 'year-and-contributors' ? (
+                          <YearAndContributorsText
+                            date={option.entityDescription?.date}
+                            contributors={option.entityDescription?.contributors ?? []}
+                          />
+                        ) : (
+                          <ContainerAndLevelText registration={option} />
+                        )}
                       </>
                     }
                   />
@@ -140,12 +151,59 @@ export const SearchContainerField = ({
   );
 };
 
-const getDescriptionText = (date: RegistrationDate | undefined, contributors: Contributor[]) => {
+interface YearAndContributorsTextProps {
+  date?: RegistrationDate;
+  contributors: Contributor[];
+}
+
+const YearAndContributorsText = ({ date, contributors }: YearAndContributorsTextProps) => {
   const dateText = displayDate(date);
   const contributorsText = contributors
     .slice(0, 5)
     .map((contributor) => contributor.identity.name)
     .join('; ');
 
-  return [dateText, contributorsText].filter((text) => text).join(' - ');
+  return (
+    <Typography variant="body2" color="textSecondary">
+      {[dateText, contributorsText].filter((text) => text).join(' - ')}
+    </Typography>
+  );
+};
+
+interface ContainerAndLevelTextProps {
+  registration: Registration;
+}
+
+const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => {
+  const { t } = useTranslation('feedback');
+
+  const publicationContext = registration.entityDescription?.reference?.publicationContext as BookPublicationContext;
+
+  const [publisher] = useFetchResource<Publisher>(publicationContext.publisher?.id ?? '', t('error.get_publisher'));
+  const [series] = useFetchResource<Journal>(publicationContext.series?.id ?? '', t('error.get_series'));
+
+  return series ? (
+    <>
+      {publisher && (
+        <Typography variant="body2" color="textSecondary">
+          {t('common:publisher')}: {publisher.name}
+        </Typography>
+      )}
+      <Typography variant="body2" color="textSecondary">
+        {t('registration:resource_type.series')}: {series.name}
+      </Typography>
+      <Typography variant="body2" color="textSecondary">
+        {t('registration:resource_type.level')}: {series.level}
+      </Typography>
+    </>
+  ) : publisher ? (
+    <>
+      <Typography variant="body2" color="textSecondary">
+        {t('common:publisher')}: {publisher.name}
+      </Typography>
+      <Typography variant="body2" color="textSecondary">
+        {t('registration:resource_type.level')}: {publisher.level}
+      </Typography>
+    </>
+  ) : null;
 };

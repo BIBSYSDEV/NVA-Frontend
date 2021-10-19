@@ -177,7 +177,7 @@
     "journal_not_found": "Finner du ikke tidsskriftet?",
     "level": "Nivå i Norsk publiseringsindikator",
     "number_of_pages": "Totalt antall sider",
-    "nvi":{
+    "nvi": {
       "applicable": "Publikasjonen kan inngå i Norsk vitenskapsindeks",
       "channel_not_rated": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden publiseringskanalen ikke er på nivå 1 eller 2. (Nivå kan bli endret før årets rapporteringsfrist slik at publikasjonen kan inngå i Norsk vitenskapsindeks, forutsatt at svaret på spørsmålet overfor er Ja)",
       "not_peer_reviewed": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden svaret på spørsmålet ovenfor er Nei"

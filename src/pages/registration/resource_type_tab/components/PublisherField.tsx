@@ -19,7 +19,7 @@ import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 
 const StyledChip = styled(Chip)`
-  padding: 2rem 0 2rem 0;
+  height: 100%;
 `;
 
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
