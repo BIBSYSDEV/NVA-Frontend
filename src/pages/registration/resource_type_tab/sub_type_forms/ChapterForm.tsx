@@ -71,7 +71,7 @@ export const ChapterForm = () => {
             placeholder={t('resource_type.chapter.search_for_anthology')}
             dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
             fetchErrorMessage={t('feedback:error.get_monograph')}
-            description="publisher-and-level"
+            descriptionToShow="publisher-and-level"
           />
         )}
       </BackgroundDiv>

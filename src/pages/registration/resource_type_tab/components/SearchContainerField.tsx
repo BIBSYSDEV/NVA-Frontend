@@ -29,7 +29,7 @@ interface SearchContainerFieldProps {
   placeholder: string;
   dataTestId: string;
   fetchErrorMessage: string;
-  description?: 'year-and-contributors' | 'publisher-and-level';
+  descriptionToShow?: 'year-and-contributors' | 'publisher-and-level';
 }
 
 export const SearchContainerField = ({
@@ -39,7 +39,7 @@ export const SearchContainerField = ({
   placeholder,
   dataTestId,
   fetchErrorMessage,
-  description = 'year-and-contributors',
+  descriptionToShow = 'year-and-contributors',
 }: SearchContainerFieldProps) => {
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [query, setQuery] = useState('');
@@ -100,13 +100,13 @@ export const SearchContainerField = ({
                         emphasized={state.inputValue}
                       />
                     </Typography>
-                    {description === 'year-and-contributors' ? (
+                    {descriptionToShow === 'year-and-contributors' ? (
                       <YearAndContributorsText
                         date={option.entityDescription?.date}
                         contributors={option.entityDescription?.contributors ?? []}
                       />
                     ) : (
-                      <ContainerAndLevelText option={option} />
+                      <ContainerAndLevelText registration={option} />
                     )}
                   </StyledFlexColumn>
                 </li>
@@ -119,13 +119,13 @@ export const SearchContainerField = ({
                     label={
                       <>
                         <Typography variant="subtitle1">{option.entityDescription?.mainTitle ?? ''}</Typography>
-                        {description === 'year-and-contributors' ? (
+                        {descriptionToShow === 'year-and-contributors' ? (
                           <YearAndContributorsText
                             date={option.entityDescription?.date}
                             contributors={option.entityDescription?.contributors ?? []}
                           />
                         ) : (
-                          <ContainerAndLevelText option={option} />
+                          <ContainerAndLevelText registration={option} />
                         )}
                       </>
                     }
@@ -158,12 +158,10 @@ interface YearAndContributorsTextProps {
 
 const YearAndContributorsText = ({ date, contributors }: YearAndContributorsTextProps) => {
   const dateText = displayDate(date);
-  const contributorsText = Array.isArray(contributors) // TODO: remove
-    ? contributors
-        .slice(0, 5)
-        .map((contributor) => contributor.identity.name)
-        .join('; ')
-    : '';
+  const contributorsText = contributors
+    .slice(0, 5)
+    .map((contributor) => contributor.identity.name)
+    .join('; ');
 
   return (
     <Typography variant="body2" color="textSecondary">
@@ -173,13 +171,13 @@ const YearAndContributorsText = ({ date, contributors }: YearAndContributorsText
 };
 
 interface ContainerAndLevelTextProps {
-  option: Registration;
+  registration: Registration;
 }
 
-const ContainerAndLevelText = ({ option }: ContainerAndLevelTextProps) => {
+const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => {
   const { t } = useTranslation('feedback');
 
-  const publicationContext = option.entityDescription?.reference?.publicationContext as BookPublicationContext;
+  const publicationContext = registration.entityDescription?.reference?.publicationContext as BookPublicationContext;
 
   const [publisher] = useFetchResource<Publisher>(publicationContext.publisher?.id ?? '', t('error.get_publisher'));
   const [series] = useFetchResource<Journal>(publicationContext.series?.id ?? '', t('error.get_series'));
