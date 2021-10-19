@@ -14,7 +14,7 @@ export interface ChapterPublicationInstance extends NviApplicableBase<ChapterCon
 
 export interface ChapterPublicationContext {
   type: PublicationType.Chapter;
-  partOf: string;
+  partOf: string | null;
 }
 
 export const emptyChapterPublicationInstance: ChapterPublicationInstance = {
