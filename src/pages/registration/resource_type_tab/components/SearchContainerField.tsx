@@ -8,7 +8,7 @@ import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
 import { RegistrationSubtype, ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { Publisher, Registration, RegistrationDate } from '../../../../types/registration.types';
+import { Journal, Publisher, Registration, RegistrationDate } from '../../../../types/registration.types';
 import { displayDate } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistrations';
@@ -181,8 +181,8 @@ const ContainerAndLevelText = ({ option }: ContainerAndLevelTextProps) => {
 
   const publicationContext = option.entityDescription?.reference?.publicationContext as BookPublicationContext;
 
-  const [publisher] = useFetchResource<Publisher>(publicationContext.publisher?.id ?? '', t('error.get_publisher')); // todo:update useFetch type
-  const [series] = useFetchResource<Publisher>(publicationContext.series?.id ?? '', t('error.get_series')); // todo:update useFetch type
+  const [publisher] = useFetchResource<Publisher>(publicationContext.publisher?.id ?? '', t('error.get_publisher'));
+  const [series] = useFetchResource<Journal>(publicationContext.series?.id ?? '', t('error.get_series'));
 
   return series ? (
     <>
