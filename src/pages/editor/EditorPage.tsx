@@ -17,14 +17,14 @@ import { VocabularyRow } from './VocabularyRow';
 const defaultHrcsActivity: CustomerVocabulary = {
   type: 'Vocabulary',
   id: 'https://nva.unit.no/hrcs/activity',
-  status: VocabularyStatus.Allowed,
+  status: VocabularyStatus.Disabled,
   name: 'HRCS Activity',
 };
 
 const defaultHrcsCategory: CustomerVocabulary = {
   type: 'Vocabulary',
   id: 'https://nva.unit.no/hrcs/category',
-  status: VocabularyStatus.Allowed,
+  status: VocabularyStatus.Disabled,
   name: 'HRCS Category',
 };
 
