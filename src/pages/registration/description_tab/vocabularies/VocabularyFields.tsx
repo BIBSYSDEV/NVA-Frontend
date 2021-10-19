@@ -67,14 +67,14 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
   } = useFormikContext<Registration>();
 
   const vocabulariesWithValue = vocabularyEntries
-    .filter(([_, value]) => subjects.some((key) => key.startsWith(value.baseId)))
-    .map(([key, _]) => key);
+    .filter(([, value]) => subjects.some((key) => key.startsWith(value.baseId)))
+    .map(([key]) => key);
   const defaultVocabularyKeys = vocabularyEntries
-    .filter(([_, value]) => defaultVocabularies.includes(value.baseId))
-    .map(([key, _]) => key);
+    .filter(([, value]) => defaultVocabularies.includes(value.baseId))
+    .map(([key]) => key);
   const allowedVocabularyKeys = vocabularyEntries
-    .filter(([_, value]) => allowedVocabularies.includes(value.baseId))
-    .map(([key, _]) => key);
+    .filter(([, value]) => allowedVocabularies.includes(value.baseId))
+    .map(([key]) => key);
 
   const [visibleVocabularies, setVisibleVocabularies] = useState([
     ...new Set([...defaultVocabularyKeys, ...vocabulariesWithValue]),
