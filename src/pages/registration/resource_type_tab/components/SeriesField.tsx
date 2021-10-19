@@ -21,7 +21,7 @@ import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
 
 const StyledChip = styled(Chip)`
-  padding: 2rem 0 2rem 0;
+  height: 100%;
 `;
 
 export const SeriesField = () => {
