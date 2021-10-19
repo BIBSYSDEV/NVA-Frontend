@@ -15,6 +15,8 @@ import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistr
 import { dataTestId as dataTestIds } from '../../../../utils/dataTestIds';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { Contributor } from '../../../../types/contributor.types';
+import { useTranslation } from 'react-i18next';
+import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
 
 const StyledChip = styled(Chip)`
   padding: 2rem 0 2rem 0;
@@ -98,16 +100,14 @@ export const SearchContainerField = ({
                         emphasized={state.inputValue}
                       />
                     </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {description === 'year-and-contributors' ? (
-                        <YearAndContributorsText
-                          date={option.entityDescription?.date}
-                          contributors={option.entityDescription?.contributors ?? []}
-                        />
-                      ) : (
-                        <PublisherAndLevelText option={option} />
-                      )}
-                    </Typography>
+                    {description === 'year-and-contributors' ? (
+                      <YearAndContributorsText
+                        date={option.entityDescription?.date}
+                        contributors={option.entityDescription?.contributors ?? []}
+                      />
+                    ) : (
+                      <ContainerAndLevelText option={option} />
+                    )}
                   </StyledFlexColumn>
                 </li>
               )}
@@ -119,16 +119,14 @@ export const SearchContainerField = ({
                     label={
                       <>
                         <Typography variant="subtitle1">{option.entityDescription?.mainTitle ?? ''}</Typography>
-                        <Typography variant="body2" color="textSecondary">
-                          {description === 'year-and-contributors' ? (
-                            <YearAndContributorsText
-                              date={option.entityDescription?.date}
-                              contributors={option.entityDescription?.contributors ?? []}
-                            />
-                          ) : (
-                            <PublisherAndLevelText option={option} />
-                          )}
-                        </Typography>
+                        {description === 'year-and-contributors' ? (
+                          <YearAndContributorsText
+                            date={option.entityDescription?.date}
+                            contributors={option.entityDescription?.contributors ?? []}
+                          />
+                        ) : (
+                          <ContainerAndLevelText option={option} />
+                        )}
                       </>
                     }
                   />
@@ -167,20 +165,47 @@ const YearAndContributorsText = ({ date, contributors }: YearAndContributorsText
         .join('; ')
     : '';
 
-  return <span>{[dateText, contributorsText].filter((text) => text).join(' - ')}</span>;
+  return (
+    <Typography variant="body2" color="textSecondary">
+      {[dateText, contributorsText].filter((text) => text).join(' - ')}
+    </Typography>
+  );
 };
 
-interface PublisherAndLevelTextProps {
+interface ContainerAndLevelTextProps {
   option: Registration;
 }
 
-const PublisherAndLevelText = ({ option }: PublisherAndLevelTextProps) => {
-  const publicationContext = option.entityDescription?.reference?.publicationContext;
+const ContainerAndLevelText = ({ option }: ContainerAndLevelTextProps) => {
+  const { t } = useTranslation('feedback');
 
-  const publisherId = publicationContext && 'id' in publicationContext ? publicationContext.id ?? '' : '';
+  const publicationContext = option.entityDescription?.reference?.publicationContext as BookPublicationContext;
 
-  const [publisher] = useFetchResource<Publisher>(publisherId, 'sdf'); // todo:update useFetch type
-  console.log(option, publisherId, publisher);
+  const [publisher] = useFetchResource<Publisher>(publicationContext.publisher?.id ?? '', t('error.get_publisher')); // todo:update useFetch type
+  const [series] = useFetchResource<Publisher>(publicationContext.series?.id ?? '', t('error.get_series')); // todo:update useFetch type
 
-  return <span>Utgiver: {publisher?.name}</span>;
+  return series ? (
+    <>
+      {publisher && (
+        <Typography variant="body2" color="textSecondary">
+          {t('common:publisher')}: {publisher.name}
+        </Typography>
+      )}
+      <Typography variant="body2" color="textSecondary">
+        {t('registration:resource_type.series')}: {series.name}
+      </Typography>
+      <Typography variant="body2" color="textSecondary">
+        {t('registration:resource_type.level')}: {series.level}
+      </Typography>
+    </>
+  ) : publisher ? (
+    <>
+      <Typography variant="body2" color="textSecondary">
+        {t('common:publisher')}: {publisher.name}
+      </Typography>
+      <Typography variant="body2" color="textSecondary">
+        {t('registration:resource_type.level')}: {publisher.level}
+      </Typography>
+    </>
+  ) : null;
 };
