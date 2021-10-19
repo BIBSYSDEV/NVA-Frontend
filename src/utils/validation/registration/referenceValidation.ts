@@ -157,6 +157,7 @@ const journalPublicationInstance = Yup.object().shape({
       is: JournalType.Corrigendum,
       then: Yup.string()
         .url(resourceErrorMessage.corrigendumForInvalid)
+        .nullable()
         .required(resourceErrorMessage.corrigendumForRequired),
     }),
   contentType: Yup.string()

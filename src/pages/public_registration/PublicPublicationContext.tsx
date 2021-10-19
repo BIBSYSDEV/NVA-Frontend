@@ -68,7 +68,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
   ) : null;
 };
 
-export const PublicPartOfContent = ({ partOf }: { partOf: string }) => {
+export const PublicPartOfContent = ({ partOf }: { partOf: string | null }) => {
   const { t } = useTranslation('registration');
 
   return (
@@ -76,7 +76,7 @@ export const PublicPartOfContent = ({ partOf }: { partOf: string }) => {
       <Typography variant="overline" component="p">
         {t('resource_type.chapter.published_in')}
       </Typography>
-      <RegistrationSummary id={partOf} />
+      <RegistrationSummary id={partOf ?? ''} />
     </>
   );
 };
