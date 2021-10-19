@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next';
 import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
 
 const StyledChip = styled(Chip)`
-  padding: 2rem 0 2rem 0;
+  height: 100%;
 `;
 
 interface SearchContainerFieldProps {

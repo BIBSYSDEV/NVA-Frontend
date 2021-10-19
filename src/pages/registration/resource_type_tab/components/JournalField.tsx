@@ -24,7 +24,7 @@ import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 const journalFieldTestId = dataTestId.registrationWizard.resourceType.journalField;
 
 const StyledChip = styled(Chip)`
-  padding: 2rem 0 2rem 0;
+  height: 100%;
 `;
 
 export const JournalField = () => {
