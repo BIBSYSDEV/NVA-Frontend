@@ -99,7 +99,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
                   <Typography variant="overline" component="p">
                     {t('resource_type.original_article')}
                   </Typography>
-                  <RegistrationSummary id={journalPublicationInstance.corrigendumFor} />
+                  <RegistrationSummary id={journalPublicationInstance.corrigendumFor ?? ''} />
                 </>
               )}
             </>

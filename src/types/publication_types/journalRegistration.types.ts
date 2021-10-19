@@ -17,10 +17,10 @@ export interface JournalRegistration extends BaseRegistration {
 export interface JournalPublicationInstance extends NviApplicableBase<JournalArticleContentType> {
   type: JournalType | '';
   articleNumber: string;
-  issue: string;
+  issue: string | null;
   pages: PagesRange | null;
-  volume: string;
-  corrigendumFor: string;
+  volume: string | null;
+  corrigendumFor: string | null;
 }
 
 export interface JournalPublicationContext {
