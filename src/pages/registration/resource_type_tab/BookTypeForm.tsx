@@ -14,7 +14,7 @@ interface BookTypeFormProps {
 
 export const BookTypeForm = ({ onChangeSubType }: BookTypeFormProps) => {
   const { values } = useFormikContext<BookRegistration>();
-  const subType = values.entityDescription.reference.publicationInstance.type;
+  const subType = values.entityDescription.reference?.publicationInstance.type;
 
   return (
     <>

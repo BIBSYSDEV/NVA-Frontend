@@ -96,26 +96,26 @@ const pagesMonographField = Yup.object()
 const pagesRangeField = Yup.object()
   .nullable()
   .shape({
-    begin: Yup.string().test(
-      'begin-test',
-      resourceErrorMessage.pageBeginMustBeSmallerThanEnd,
-      (beginValue, context) => {
+    begin: Yup.string()
+      .nullable()
+      .test('begin-test', resourceErrorMessage.pageBeginMustBeSmallerThanEnd, (beginValue, context) => {
         const beginNumber = parseInt(beginValue ?? '');
         const endNumber = parseInt(context.parent.end);
         if (!isNaN(beginNumber) && !isNaN(endNumber)) {
           return beginNumber <= endNumber;
         }
         return true;
-      }
-    ),
-    end: Yup.string().test('end-test', resourceErrorMessage.pageEndMustBeBiggerThanBegin, (endValue, context) => {
-      const beginNumber = parseInt(context.parent.begin);
-      const endNumber = parseInt(endValue ?? '');
-      if (!isNaN(beginNumber) && !isNaN(endNumber)) {
-        return beginNumber <= endNumber;
-      }
-      return true;
-    }),
+      }),
+    end: Yup.string()
+      .nullable()
+      .test('end-test', resourceErrorMessage.pageEndMustBeBiggerThanBegin, (endValue, context) => {
+        const beginNumber = parseInt(context.parent.begin);
+        const endNumber = parseInt(endValue ?? '');
+        if (!isNaN(beginNumber) && !isNaN(endNumber)) {
+          return beginNumber <= endNumber;
+        }
+        return true;
+      }),
   });
 
 const publisherField = Yup.object().shape({
@@ -134,26 +134,30 @@ const seriesField = Yup.object().shape({
   }),
 });
 
-export const baseReference = Yup.object().shape({
-  doi: Yup.string().trim().url(resourceErrorMessage.doiInvalid),
-  publicationInstance: Yup.object().shape({
-    type: Yup.string().required(resourceErrorMessage.typeRequired),
-  }),
-});
+export const baseReference = Yup.object()
+  .shape({
+    doi: Yup.string().nullable().trim().url(resourceErrorMessage.doiInvalid),
+    publicationInstance: Yup.object().shape({
+      type: Yup.string().required(resourceErrorMessage.typeRequired),
+    }),
+  })
+  .nullable()
+  .required(resourceErrorMessage.typeRequired);
 
 // Journal
 const journalPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(JournalType)).required(resourceErrorMessage.typeRequired),
-  articleNumber: Yup.string(),
-  volume: Yup.string(),
-  issue: Yup.string(),
+  articleNumber: Yup.string().nullable(),
+  volume: Yup.string().nullable(),
+  issue: Yup.string().nullable(),
   pages: pagesRangeField,
   corrigendumFor: Yup.string()
-    .optional()
+    .nullable()
     .when('type', {
       is: JournalType.Corrigendum,
       then: Yup.string()
         .url(resourceErrorMessage.corrigendumForInvalid)
+        .nullable()
         .required(resourceErrorMessage.corrigendumForRequired),
     }),
   contentType: Yup.string()
@@ -261,7 +265,7 @@ const chapterPublicationInstance = Yup.object().shape({
 });
 
 const chapterPublicationContext = Yup.object().shape({
-  partOf: Yup.string().required(resourceErrorMessage.partOfRequired),
+  partOf: Yup.string().nullable().required(resourceErrorMessage.partOfRequired),
 });
 
 export const chapterReference = baseReference.shape({

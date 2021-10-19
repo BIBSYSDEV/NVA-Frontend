@@ -19,7 +19,7 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
   const { t } = useTranslation('registration');
   const user = useSelector((store: RootStore) => store.user);
 
-  const originalDoi = registration.entityDescription.reference.doi;
+  const originalDoi = registration.entityDescription?.reference?.doi ?? '';
   const nvaDoi = registration.doi;
   const hasApprovedDoiRequest = registration.doiRequest?.status === DoiRequestStatus.Approved;
   const canSeeDraftDoi =

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Chip, ThemeProvider, Typography } from '@mui/material';
 import { Autocomplete } from '@mui/material';
+import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
@@ -15,8 +16,7 @@ import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { getYearQuery } from '../../../../utils/registration-helpers';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
-import styled from 'styled-components';
-import { useFetchPublicationChannel } from '../../../../utils/hooks/useFetchPublicationChannel';
+import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 
 const StyledChip = styled(Chip)`
   padding: 2rem 0 2rem 0;
@@ -27,12 +27,9 @@ const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publishe
 export const PublisherField = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue, setFieldTouched, values } = useFormikContext<Registration>();
-  const {
-    reference: {
-      publicationContext: { publisher },
-    },
-    date: { year },
-  } = values.entityDescription as BookEntityDescription;
+  const { reference, date } = values.entityDescription as BookEntityDescription;
+  const publisher = reference?.publicationContext.publisher;
+  const year = date?.year ?? '';
 
   const [query, setQuery] = useState(!publisher?.id ? publisher?.name ?? '' : '');
   const debouncedQuery = useDebounce(query);
@@ -52,7 +49,7 @@ export const PublisherField = () => {
     }
   }, [setFieldValue, publisher?.name, publisherOptions]);
 
-  const [fetchedPublisher, isLoadingPublisher] = useFetchPublicationChannel<Publisher>(
+  const [fetchedPublisher, isLoadingPublisher] = useFetchResource<Publisher>(
     publisher?.id ?? '',
     t('feedback:error.get_publisher')
   );

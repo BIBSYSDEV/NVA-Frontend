@@ -34,21 +34,21 @@ const StyledLabel = styled(Typography)`
 export const JournalForm = () => {
   const { t } = useTranslation('registration');
   const { values } = useFormikContext<JournalRegistration>();
-  const { publicationInstance } = values.entityDescription.reference;
+  const instanceType = values.entityDescription.reference?.publicationInstance.type;
 
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DoiField />
 
-        {publicationInstance.type === JournalType.Corrigendum ? (
+        {instanceType === JournalType.Corrigendum ? (
           <SearchContainerField
             fieldName={ResourceFieldNames.CorrigendumFor}
             searchSubtypes={[JournalType.Article]}
             label={t('resource_type.original_article_title')}
             placeholder={t('resource_type.search_for_original_article')}
             dataTestId={dataTestId.registrationWizard.resourceType.corrigendumForField}
-            removeButtonLabel={t('resource_type.remove_article')}
+            fetchErrorMessage={t('feedback:error.get_journal_article')}
           />
         ) : (
           <JournalField />
@@ -58,11 +58,12 @@ export const JournalForm = () => {
           <Field name={ResourceFieldNames.Volume}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
+                {...field}
                 id={field.name}
+                value={field.value ?? ''}
                 data-testid="volume-field"
                 variant="filled"
                 label={t('resource_type.volume')}
-                {...field}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
@@ -72,11 +73,12 @@ export const JournalForm = () => {
           <Field name={ResourceFieldNames.Issue}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
+                {...field}
                 id={field.name}
+                value={field.value ?? ''}
                 data-testid="issue-field"
                 variant="filled"
                 label={t('resource_type.issue')}
-                {...field}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
@@ -86,12 +88,12 @@ export const JournalForm = () => {
           <Field name={ResourceFieldNames.PagesFrom}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
+                {...field}
                 id={field.name}
                 data-testid={dataTestId.registrationWizard.resourceType.pagesFromField}
+                value={field.value ?? ''}
                 variant="filled"
                 label={t('resource_type.pages_from')}
-                {...field}
-                value={field.value ?? ''}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
@@ -101,11 +103,11 @@ export const JournalForm = () => {
           <Field name={ResourceFieldNames.PagesTo}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
+                {...field}
                 id={field.name}
                 data-testid={dataTestId.registrationWizard.resourceType.pagesToField}
                 variant="filled"
                 label={t('resource_type.pages_to')}
-                {...field}
                 value={field.value ?? ''}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
@@ -118,11 +120,12 @@ export const JournalForm = () => {
           <Field name={ResourceFieldNames.ArticleNumber}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
+                {...field}
                 id={field.name}
                 data-testid="article-number-field"
+                value={field.value ?? ''}
                 variant="filled"
                 label={t('resource_type.article_number')}
-                {...field}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
@@ -131,7 +134,7 @@ export const JournalForm = () => {
         </StyledArticleDetail>
       </BackgroundDiv>
 
-      {publicationInstance.type === JournalType.Article && (
+      {instanceType === JournalType.Article && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
             <NviFields contentTypes={Object.values(JournalArticleContentType)} />

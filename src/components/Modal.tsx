@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Avatar, AvatarProps, Backdrop, Dialog, DialogProps, DialogTitle, Fade, Typography } from '@mui/material';
+import { Avatar, AvatarProps, Backdrop, Dialog, DialogProps, DialogTitle, Fade } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 const StyledPaper = styled.div`
@@ -21,7 +21,7 @@ const StyledHeaderContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
-const StyledHeading = styled(Typography)`
+const StyledSpan = styled.span`
   grid-area: text;
   margin-left: 1rem;
 `;
@@ -98,14 +98,14 @@ export const Modal = ({
           {headingIcon ? (
             <StyledInfoContainer>
               {headingIcon && <StyledAvatar src={headingIcon.src} alt={headingIcon.alt} />}
-              <StyledHeading id="titleId" variant="h3" variantMapping={{ h3: 'h1' }} data-testid={headingDataTestId}>
+              <StyledSpan id="titleId" data-testid={headingDataTestId}>
                 {headingText}
-              </StyledHeading>
+              </StyledSpan>
             </StyledInfoContainer>
           ) : (
-            <StyledHeading id="titleId" variant="h3" variantMapping={{ h3: 'h1' }} data-testid={headingDataTestId}>
+            <StyledSpan id="titleId" data-testid={headingDataTestId}>
               {headingText}
-            </StyledHeading>
+            </StyledSpan>
           )}
         </StyledDialogTitle>
         <StyledCloseIcon onClick={handleClose} data-testid="close-modal" titleAccess={t('close')} />

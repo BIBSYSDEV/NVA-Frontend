@@ -7,16 +7,13 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
-import {
-  RegistrationFieldName,
-  RegistrationSubtype,
-  ResourceFieldNames,
-} from '../../../../types/publicationFieldNames';
+import { RegistrationSubtype, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration, RegistrationDate } from '../../../../types/registration.types';
 import { displayDate } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistrations';
-import { dataTestId } from '../../../../utils/dataTestIds';
+import { dataTestId as dataTestIds } from '../../../../utils/dataTestIds';
+import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { Contributor } from '../../../../types/contributor.types';
 
 const StyledChip = styled(Chip)`
@@ -27,42 +24,44 @@ interface SearchContainerFieldProps {
   fieldName: string;
   searchSubtypes: RegistrationSubtype[];
   label: string;
-  removeButtonLabel: string;
   placeholder: string;
   dataTestId: string;
+  fetchErrorMessage: string;
 }
 
-export const SearchContainerField = (props: SearchContainerFieldProps) => {
+export const SearchContainerField = ({
+  fieldName,
+  searchSubtypes,
+  label,
+  placeholder,
+  dataTestId,
+  fetchErrorMessage,
+}: SearchContainerFieldProps) => {
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query);
 
   const [searchContainerOptions, isLoadingSearchContainerOptions] = useSearchRegistrations({
     searchTerm: debouncedQuery,
-    properties: [{ fieldName: ResourceFieldNames.SubType, value: props.searchSubtypes }],
+    properties: [{ fieldName: ResourceFieldNames.SubType, value: searchSubtypes }],
   });
 
-  const currentIdentifier = getIn(values, props.fieldName)?.split('/').pop() ?? '';
-  const [selectedContainerSearch, isLoadingSelectedContainer] = useSearchRegistrations({
-    properties: [{ fieldName: RegistrationFieldName.Identifier, value: currentIdentifier }],
-  });
-
-  const selectedContainer =
-    currentIdentifier && selectedContainerSearch?.hits && selectedContainerSearch.hits.length === 1
-      ? selectedContainerSearch.hits[0]
-      : null;
+  const [selectedContainer, isLoadingSelectedContainer] = useFetchResource<Registration>(
+    getIn(values, fieldName),
+    fetchErrorMessage
+  );
 
   return (
     <ThemeProvider theme={lightTheme}>
-      <Field name={props.fieldName}>
+      <Field name={fieldName}>
         {({ field, meta }: FieldProps<string>) => (
           <>
             <Autocomplete
               {...autocompleteTranslationProps}
               multiple
-              id={props.dataTestId}
-              data-testid={props.dataTestId}
-              aria-labelledby={`${props.dataTestId}-label`}
+              id={dataTestId}
+              data-testid={dataTestId}
+              aria-labelledby={`${dataTestId}-label`}
               popupIcon={null}
               options={
                 query === debouncedQuery && !isLoadingSearchContainerOptions ? searchContainerOptions?.hits ?? [] : []
@@ -87,15 +86,18 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
                 setQuery('');
               }}
               loading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
-              getOptionLabel={(option) => option.entityDescription.mainTitle}
+              getOptionLabel={(option) => option.entityDescription?.mainTitle ?? ''}
               renderOption={(props, option, state) => (
                 <li {...props}>
                   <StyledFlexColumn>
                     <Typography variant="subtitle1">
-                      <EmphasizeSubstring text={option.entityDescription.mainTitle} emphasized={state.inputValue} />
+                      <EmphasizeSubstring
+                        text={option.entityDescription?.mainTitle ?? ''}
+                        emphasized={state.inputValue}
+                      />
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {getDescriptionText(option.entityDescription.date, option.entityDescription.contributors)}
+                      {getDescriptionText(option.entityDescription?.date, option.entityDescription?.contributors ?? [])}
                     </Typography>
                   </StyledFlexColumn>
                 </li>
@@ -104,12 +106,15 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
                 value.map((option, index) => (
                   <StyledChip
                     {...getTagProps({ index })}
-                    data-testid={dataTestId.registrationWizard.resourceType.journalChip}
+                    data-testid={dataTestIds.registrationWizard.resourceType.journalChip}
                     label={
                       <>
-                        <Typography variant="subtitle1">{option.entityDescription.mainTitle}</Typography>
+                        <Typography variant="subtitle1">{option.entityDescription?.mainTitle ?? ''}</Typography>
                         <Typography variant="body2" color="textSecondary">
-                          {getDescriptionText(option.entityDescription.date, option.entityDescription.contributors)}
+                          {getDescriptionText(
+                            option.entityDescription?.date,
+                            option.entityDescription?.contributors ?? []
+                          )}
                         </Typography>
                       </>
                     }
@@ -120,9 +125,9 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
                 <AutocompleteTextField
                   {...params}
                   required
-                  label={props.label}
+                  label={label}
                   isLoading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
-                  placeholder={!field.value ? props.placeholder : ''}
+                  placeholder={!field.value ? placeholder : ''}
                   showSearchIcon={!field.value}
                   errorMessage={meta.touched && !!meta.error ? meta.error : ''}
                 />
@@ -135,7 +140,7 @@ export const SearchContainerField = (props: SearchContainerFieldProps) => {
   );
 };
 
-const getDescriptionText = (date: RegistrationDate, contributors: Contributor[]) => {
+const getDescriptionText = (date: RegistrationDate | undefined, contributors: Contributor[]) => {
   const dateText = displayDate(date);
   const contributorsText = contributors
     .slice(0, 5)

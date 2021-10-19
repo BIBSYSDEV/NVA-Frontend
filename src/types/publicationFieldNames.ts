@@ -70,6 +70,7 @@ export enum ResourceFieldNames {
   PubliactionContextPublisherId = 'entityDescription.reference.publicationContext.publisher.id',
   PubliactionContextPublisherType = 'entityDescription.reference.publicationContext.publisher.type',
   PubliactionContextType = 'entityDescription.reference.publicationContext.type',
+  Reference = 'entityDescription.reference',
   SeriesId = 'entityDescription.reference.publicationContext.series.id',
   SeriesNumber = 'entityDescription.reference.publicationContext.seriesNumber',
   SeriesTitle = 'entityDescription.reference.publicationContext.series.title',
@@ -94,6 +95,7 @@ export enum DescriptionFieldNames {
 
 export enum FileFieldNames {
   Files = 'fileSet.files',
+  FileSet = 'fileSet',
 }
 
 // The following fields should be present in "fileSet.files[index].<KEY>"
