@@ -81,7 +81,7 @@ export const PublicPartOfContent = ({ partOf }: { partOf: string | null }) => {
       <Typography variant="overline" component="p">
         {t('resource_type.chapter.published_in')}
       </Typography>
-      <RegistrationSummary id={partOf ?? ''} />
+      <RegistrationSummary id={partOf} />
     </>
   ) : null;
 };
