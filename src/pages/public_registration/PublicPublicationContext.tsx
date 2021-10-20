@@ -48,21 +48,21 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
 
       {isLoadingPublisher ? (
         <ListSkeleton height={20} />
+      ) : fetchedPublisher ? (
+        <>
+          <Typography>{fetchedPublisher.name}</Typography>
+          <Typography>
+            {t('resource_type.level')}: {fetchedPublisher.level}
+          </Typography>
+          <Typography
+            component={Link}
+            href={getChannelRegisterPublisherUrl(fetchedPublisher.identifier)}
+            target="_blank">
+            {t('public_page.find_in_channel_registry')}
+          </Typography>
+        </>
       ) : (
-        fetchedPublisher && (
-          <>
-            <Typography>{fetchedPublisher.name}</Typography>
-            <Typography>
-              {t('resource_type.level')}: {fetchedPublisher.level}
-            </Typography>
-            <Typography
-              component={Link}
-              href={getChannelRegisterPublisherUrl(fetchedPublisher.identifier)}
-              target="_blank">
-              {t('public_page.find_in_channel_registry')}
-            </Typography>
-          </>
-        )
+        <Typography>{publisher.name}</Typography>
       )}
     </>
   ) : null;
