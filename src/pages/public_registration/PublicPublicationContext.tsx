@@ -14,7 +14,7 @@ interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
 }
 
-const channelRegisterBaseUrl = 'https://dbh.nsd.uib.no/publiseringskanaler';
+const channelRegisterBaseUrl = 'https://kanalregister.hkdir.no/publiseringskanaler';
 const getChannelRegisterJournalUrl = (id: string) => `${channelRegisterBaseUrl}/KanalTidsskriftInfo.action?id=${id}`;
 const getChannelRegisterPublisherUrl = (id: string) => `${channelRegisterBaseUrl}/KanalForlagInfo.action?id=${id}`;
 
