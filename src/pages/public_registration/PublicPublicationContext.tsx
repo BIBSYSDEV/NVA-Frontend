@@ -92,12 +92,16 @@ export const PublicSeries = ({
   const { t } = useTranslation('registration');
   const { series, seriesNumber } = publicationContext;
 
-  return series?.id ? (
+  return series ? (
     <>
       <Typography variant="overline" component="p">
         {t('resource_type.series')}
       </Typography>
-      <PublicJournalContent id={series.id} errorMessage={t('feedback:error.get_series')} />
+      {series.id ? (
+        <PublicJournalContent id={series.id} errorMessage={t('feedback:error.get_series')} />
+      ) : (
+        <Typography>{series.title}</Typography>
+      )}
       {seriesNumber && (
         <Typography>
           {t('resource_type.series_number')}: {seriesNumber}
