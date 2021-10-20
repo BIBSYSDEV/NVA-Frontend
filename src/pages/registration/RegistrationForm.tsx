@@ -114,7 +114,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
               shouldBlockNavigation={dirty}
             />
             <ItalicPageHeader>
-              {values.entityDescription?.mainTitle ?? `[${t('common:missing_title')}]`}
+              {values.entityDescription?.mainTitle || `[${t('common:missing_title')}]`}
             </ItalicPageHeader>
             <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
             <StyledPanel id="form">
