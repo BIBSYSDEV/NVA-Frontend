@@ -95,7 +95,7 @@ const PublicTotalPagesContent = ({ pages }: { pages: PagesMonograph | null }) =>
 
 export const PublicIsbnContent = ({ isbnList }: { isbnList?: string[] }) => {
   const { t } = useTranslation('registration');
-  return isbnList ? (
+  return isbnList && isbnList.length > 0 ? (
     <Typography>
       {t('resource_type.isbn')}:{' '}
       {isbnList

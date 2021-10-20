@@ -43,7 +43,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
     t('feedback:error.get_publisher')
   );
 
-  return publisher ? (
+  return publisher?.id || publisher?.name ? (
     <>
       <Typography variant="overline" component="p">
         {t('common:publisher')}
@@ -74,14 +74,14 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
 export const PublicPartOfContent = ({ partOf }: { partOf: string | null }) => {
   const { t } = useTranslation('registration');
 
-  return (
+  return partOf ? (
     <>
       <Typography variant="overline" component="p">
         {t('resource_type.chapter.published_in')}
       </Typography>
       <RegistrationSummary id={partOf ?? ''} />
     </>
-  );
+  ) : null;
 };
 
 export const PublicSeries = ({
@@ -92,7 +92,7 @@ export const PublicSeries = ({
   const { t } = useTranslation('registration');
   const { series, seriesNumber } = publicationContext;
 
-  return series ? (
+  return series?.id || series?.title ? (
     <>
       <Typography variant="overline" component="p">
         {t('resource_type.series')}
