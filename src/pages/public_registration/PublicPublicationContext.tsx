@@ -21,13 +21,16 @@ const getChannelRegisterPublisherUrl = (id: string) => `${channelRegisterBaseUrl
 export const PublicJournal = ({ publicationContext }: PublicJournalProps) => {
   const { t } = useTranslation('registration');
 
-  return publicationContext.id ? (
+  return publicationContext.id || publicationContext.title ? (
     <>
       <Typography variant="overline" component="p">
         {t('resource_type.journal')}
       </Typography>
-
-      <PublicJournalContent id={publicationContext.id} errorMessage={t('feedback:error.get_journal')} />
+      {publicationContext.id ? (
+        <PublicJournalContent id={publicationContext.id} errorMessage={t('feedback:error.get_journal')} />
+      ) : (
+        <Typography>{publicationContext.title}</Typography>
+      )}
     </>
   ) : null;
 };
