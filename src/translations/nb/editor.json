@@ -4,7 +4,7 @@
   "disabled": "Ikke tillatt",
   "disabled_description": "$t(disabled): Kan ikke legges til",
   "allowed": "Tillatt",
-  "allowed_description": "$t(enabled): Kan legges til selv av brukere",
+  "allowed_description": "$t(allowed): Kan legges til selv av brukere",
   "select_vocabulary": "Velg vokabular",
   "select_vocabulary_description": "Sett innstillinger for kontrollerte vokabular i din institusjon."
 }
