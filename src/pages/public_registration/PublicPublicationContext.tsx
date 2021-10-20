@@ -54,9 +54,11 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
       ) : fetchedPublisher ? (
         <>
           <Typography>{fetchedPublisher.name}</Typography>
-          <Typography>
-            {t('resource_type.level')}: {fetchedPublisher.level}
-          </Typography>
+          {fetchedPublisher.level && (
+            <Typography>
+              {t('resource_type.level')}: {fetchedPublisher.level}
+            </Typography>
+          )}
           <Typography
             component={Link}
             href={getChannelRegisterPublisherUrl(fetchedPublisher.identifier)}
@@ -136,9 +138,11 @@ const PublicJournalContent = ({ id }: PublicJournalContentProps) => {
                 .filter((issn) => issn)
                 .join(', ')}
             </Typography>
-            <Typography>
-              {t('resource_type.level')}: {journal.level}
-            </Typography>
+            {journal.level && (
+              <Typography>
+                {t('resource_type.level')}: {journal.level}
+              </Typography>
+            )}
             <Typography component={Link} href={getChannelRegisterJournalUrl(journal.identifier)} target="_blank">
               {t('public_page.find_in_channel_registry')}
             </Typography>
