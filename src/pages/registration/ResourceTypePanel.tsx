@@ -92,6 +92,7 @@ export const ResourceTypePanel = () => {
           {
             type: PublicationType.Presentation,
             place: { type: 'UnconfirmedPlace' },
+            time: { type: 'TemporalExtent' },
           },
           false
         );

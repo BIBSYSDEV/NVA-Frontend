@@ -26,8 +26,20 @@ const resourceErrorMessage = {
   corrigendumForInvalid: i18n.t('feedback:validation.has_invalid_format', {
     field: i18n.t('registration:resource_type.original_article'),
   }),
+  countryRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('common:country'),
+  }),
+  dateFromRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.date_from'),
+  }),
+  dateToRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.date_to'),
+  }),
   doiInvalid: i18n.t('feedback:validation.has_invalid_format', {
     field: i18n.t('registration:registration.link_to_resource'),
+  }),
+  eventTitleRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.title_of_event'),
   }),
   isbnInvalid: i18n.t('feedback:validation.has_invalid_format', {
     field: i18n.t('registration:resource_type.isbn'),
@@ -59,6 +71,9 @@ const resourceErrorMessage = {
   }),
   peerReviewedRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.peer_reviewed'),
+  }),
+  placeRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.place_for_event'),
   }),
   publisherNotSelected: i18n.t('feedback:validation.not_selected', {
     field: i18n.t('common:publisher'),
@@ -286,14 +301,14 @@ const presentationPublicationInstance = Yup.object().shape({
 });
 
 const presentationPublicationContext = Yup.object().shape({
-  label: Yup.string().required(),
+  label: Yup.string().nullable().required(resourceErrorMessage.eventTitleRequired),
   place: Yup.object().shape({
-    label: Yup.string().required(),
-    country: Yup.string().required(),
+    label: Yup.string().nullable().required(resourceErrorMessage.placeRequired),
+    country: Yup.string().nullable().required(resourceErrorMessage.countryRequired),
   }),
   time: Yup.object().shape({
-    from: Yup.string().required(),
-    to: Yup.string().required(),
+    from: Yup.string().nullable().required(resourceErrorMessage.dateFromRequired),
+    to: Yup.string().nullable().required(resourceErrorMessage.dateToRequired),
   }),
 });
 

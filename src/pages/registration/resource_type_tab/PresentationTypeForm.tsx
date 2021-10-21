@@ -33,15 +33,9 @@ interface PresentationTypeFormProps {
 
 export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormProps) => {
   const { t } = useTranslation('registration');
-  const { values, setFieldValue } = useFormikContext<PresentationRegistration>();
+  const { values, setFieldValue, setFieldTouched } = useFormikContext<PresentationRegistration>();
   const { reference } = values.entityDescription;
   const subType = reference.publicationInstance.type;
-
-  const setTimeType = () => {
-    if (!reference.publicationContext.time) {
-      setFieldValue('entityDescription.reference.publicationContext.time', { type: 'TemporalExtent' });
-    }
-  };
 
   return (
     <>
@@ -131,10 +125,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                       {...datePickerTranslationProps}
                       label={t('resource_type.date_from')}
                       value={field.value ?? null}
-                      onChange={(date) => {
-                        setTimeType();
-                        setFieldValue(field.name, date?.toISOString());
-                      }}
+                      onChange={(date) => setFieldValue(field.name, date?.toISOString())}
                       inputFormat="dd.MM.yyyy"
                       views={['year', 'month', 'day']}
                       maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
@@ -145,11 +136,9 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                           data-testid={dataTestId.registrationWizard.description.datePublishedField}
                           variant="filled"
                           required
-                          // onBlur={() =>
-                          //   !touched.entityDescription?.date?.year && setFieldTouched(DescriptionFieldNames.PublicationYear)
-                          // }
-                          // error={hasError}
-                          // helperText={hasError && errors.entityDescription?.date?.year}
+                          onBlur={() => !touched && setFieldTouched(field.name)}
+                          error={touched && !!error}
+                          helperText={touched && error}
                         />
                       )}
                     />
@@ -161,10 +150,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                       {...datePickerTranslationProps}
                       label={t('resource_type.date_to')}
                       value={field.value ?? null}
-                      onChange={(date) => {
-                        setTimeType();
-                        setFieldValue(field.name, date?.toISOString());
-                      }}
+                      onChange={(date) => setFieldValue(field.name, date?.toISOString())}
                       inputFormat="dd.MM.yyyy"
                       views={['year', 'month', 'day']}
                       maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
@@ -175,11 +161,9 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                           data-testid={dataTestId.registrationWizard.description.datePublishedField}
                           variant="filled"
                           required
-                          // onBlur={() =>
-                          //   !touched.entityDescription?.date?.year && setFieldTouched(DescriptionFieldNames.PublicationYear)
-                          // }
-                          // error={hasError}
-                          // helperText={hasError && errors.entityDescription?.date?.year}
+                          onBlur={() => !touched && setFieldTouched(field.name)}
+                          error={touched && !!error}
+                          helperText={touched && error}
                         />
                       )}
                     />
