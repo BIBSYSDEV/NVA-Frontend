@@ -14,59 +14,59 @@ export enum LicenseNames {
 }
 
 interface LicenseInfo {
-  buttonImage: string;
-  description: string;
   identifier: LicenseNames;
+  description: string;
+  logo: string;
   link: string;
 }
 
 export const licenses: LicenseInfo[] = [
   {
-    buttonImage: LicenseImages.rightsReservedLogo,
-    description: i18n.t('licenses:description.rights_reserved'),
     identifier: LicenseNames.RightsReserved,
+    description: i18n.t('licenses:description.rights_reserved'),
+    logo: LicenseImages.rightsReservedLogo,
     link: i18n.t('licenses:links.rights_reserved'),
   },
   {
-    buttonImage: LicenseImages.ccByLogo,
-    description: i18n.t('licenses:description.cc_by'),
     identifier: LicenseNames.CC_BY,
+    description: i18n.t('licenses:description.cc_by'),
+    logo: LicenseImages.ccByLogo,
     link: i18n.t('licenses:links.cc_by'),
   },
   {
-    buttonImage: LicenseImages.ccBySaLogo,
-    description: i18n.t('licenses:description.cc_by_sa'),
     identifier: LicenseNames.CC_BY_SA,
+    description: i18n.t('licenses:description.cc_by_sa'),
+    logo: LicenseImages.ccBySaLogo,
     link: i18n.t('licenses:links.cc_by_sa'),
   },
   {
-    buttonImage: LicenseImages.ccByNdLogo,
-    description: i18n.t('licenses:description.cc_by_nd'),
     identifier: LicenseNames.CC_BY_ND,
+    description: i18n.t('licenses:description.cc_by_nd'),
+    logo: LicenseImages.ccByNdLogo,
     link: i18n.t('licenses:links.cc_by_nd'),
   },
   {
     identifier: LicenseNames.CC_BY_NC,
-    buttonImage: LicenseImages.ccByNcLogo,
     description: i18n.t('licenses:description.cc_by_nc'),
+    logo: LicenseImages.ccByNcLogo,
     link: i18n.t('licenses:links.cc_by_nc'),
   },
   {
-    buttonImage: LicenseImages.ccByNcSaLogo,
-    description: i18n.t('licenses:description.cc_by_nc_sa'),
     identifier: LicenseNames.CC_BY_NC_SA,
+    description: i18n.t('licenses:description.cc_by_nc_sa'),
+    logo: LicenseImages.ccByNcSaLogo,
     link: i18n.t('licenses:links.cc_by_nc_sa'),
   },
   {
-    buttonImage: LicenseImages.ccByNcNdLogo,
-    description: i18n.t('licenses:description.cc_by_nc_nd'),
     identifier: LicenseNames.CC_BY_NC_ND,
+    description: i18n.t('licenses:description.cc_by_nc_nd'),
+    logo: LicenseImages.ccByNcNdLogo,
     link: i18n.t('licenses:links.cc_by_nc_nd'),
   },
   {
-    buttonImage: LicenseImages.cc0Logo,
-    description: i18n.t('licenses:description.cc0'),
     identifier: LicenseNames.CC0,
+    description: i18n.t('licenses:description.cc0'),
+    logo: LicenseImages.cc0Logo,
     link: i18n.t('licenses:links.cc0'),
   },
 ];

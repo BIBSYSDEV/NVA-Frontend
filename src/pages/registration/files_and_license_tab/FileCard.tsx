@@ -193,7 +193,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                         const selectedLicense = licenses.find((license) => license.identifier === option);
                         return selectedLicense ? (
                           <StyledLicenseValue>
-                            <img src={selectedLicense.buttonImage} alt={selectedLicense.identifier} />
+                            <img src={selectedLicense.logo} alt={selectedLicense.identifier} />
                             <span>{t(`licenses:labels.${option}`)}</span>
                           </StyledLicenseValue>
                         ) : null;
@@ -221,7 +221,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                         divider
                         dense>
                         <ListItemIcon>
-                          <StyledLicenseOptionImage src={license.buttonImage} alt={license.identifier} />
+                          <StyledLicenseOptionImage src={license.logo} alt={license.identifier} />
                         </ListItemIcon>
                         <ListItemText>
                           <Typography>{t(`licenses:labels.${license.identifier}`)}</Typography>
