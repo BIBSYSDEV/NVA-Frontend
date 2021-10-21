@@ -2,7 +2,7 @@ import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, useFormi
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { FormHelperText, Typography } from '@mui/material';
+import { FormHelperText, Link, Typography } from '@mui/material';
 import { UppyFile } from '@uppy/core';
 import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { Modal } from '../../components/Modal';
@@ -129,7 +129,12 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
           <StyledLicenseDescription key={license.identifier}>
             <Typography variant="h6">{t(`licenses:labels.${license.identifier}`)}</Typography>
             <img src={license.logo} alt={license.identifier} />
-            <Typography>{license.description}</Typography>
+            <Typography paragraph>{license.description}</Typography>
+            {license.link && (
+              <Link href={license.link} target="blank">
+                {license.link}
+              </Link>
+            )}
           </StyledLicenseDescription>
         ))}
       </Modal>
