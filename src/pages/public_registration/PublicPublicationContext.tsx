@@ -43,7 +43,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
     t('feedback:error.get_publisher')
   );
 
-  return publisher ? (
+  return publisher?.id || publisher?.name ? (
     <>
       <Typography variant="overline" component="p">
         {t('common:publisher')}
@@ -54,9 +54,11 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
       ) : fetchedPublisher ? (
         <>
           <Typography>{fetchedPublisher.name}</Typography>
-          <Typography>
-            {t('resource_type.level')}: {fetchedPublisher.level}
-          </Typography>
+          {fetchedPublisher.level && (
+            <Typography>
+              {t('resource_type.level')}: {fetchedPublisher.level}
+            </Typography>
+          )}
           <Typography
             component={Link}
             href={getChannelRegisterPublisherUrl(fetchedPublisher.identifier)}
@@ -74,14 +76,14 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
 export const PublicPartOfContent = ({ partOf }: { partOf: string | null }) => {
   const { t } = useTranslation('registration');
 
-  return (
+  return partOf ? (
     <>
       <Typography variant="overline" component="p">
         {t('resource_type.chapter.published_in')}
       </Typography>
-      <RegistrationSummary id={partOf ?? ''} />
+      <RegistrationSummary id={partOf} />
     </>
-  );
+  ) : null;
 };
 
 export const PublicSeries = ({
@@ -92,7 +94,7 @@ export const PublicSeries = ({
   const { t } = useTranslation('registration');
   const { series, seriesNumber } = publicationContext;
 
-  return series ? (
+  return series?.id || series?.title ? (
     <>
       <Typography variant="overline" component="p">
         {t('resource_type.series')}
@@ -136,9 +138,11 @@ const PublicJournalContent = ({ id }: PublicJournalContentProps) => {
                 .filter((issn) => issn)
                 .join(', ')}
             </Typography>
-            <Typography>
-              {t('resource_type.level')}: {journal.level}
-            </Typography>
+            {journal.level && (
+              <Typography>
+                {t('resource_type.level')}: {journal.level}
+              </Typography>
+            )}
             <Typography component={Link} href={getChannelRegisterJournalUrl(journal.identifier)} target="_blank">
               {t('public_page.find_in_channel_registry')}
             </Typography>

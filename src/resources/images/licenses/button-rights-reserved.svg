@@ -1,7 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" height="42" width="120">
     <defs>
         <style>
-            .cls-1{fill:#abb2ac;stroke:#231f20;stroke-miterlimit:10;stroke-width:0.9px;}.cls-2{fill:#010101;}.cls-3{fill:#231f20;}.cls-4{fill:#fff;}
+            .cls-1 {
+                fill: #abb2ac;
+                stroke: #231f20;
+                stroke-miterlimit: 10;
+                stroke-width: 0.9px;
+            }
+            .cls-2 {
+                fill: #010101;
+            }
+            .cls-3 {
+                fill: #231f20;
+            }
+            .cls-4 {
+                fill: #fff;
+            }
         </style>
     </defs>
     <g id="Layer_2" data-name="Layer 2">
