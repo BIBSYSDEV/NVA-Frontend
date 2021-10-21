@@ -33,5 +33,5 @@ interface ReportReference extends BaseReference {
 }
 
 export interface ReportEntityDescription extends BaseEntityDescription {
-  reference: ReportReference;
+  reference: ReportReference | null;
 }

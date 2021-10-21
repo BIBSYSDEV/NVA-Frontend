@@ -14,7 +14,7 @@ interface ChapterTypeFormProps {
 
 export const ChapterTypeForm = ({ onChangeSubType }: ChapterTypeFormProps) => {
   const { values } = useFormikContext<ChapterRegistration>();
-  const subtype = values.entityDescription.reference.publicationInstance.type;
+  const subtype = values.entityDescription.reference?.publicationInstance.type;
 
   return (
     <>

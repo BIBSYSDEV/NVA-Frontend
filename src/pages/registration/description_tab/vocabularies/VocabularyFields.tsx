@@ -52,24 +52,37 @@ const vocabularyConfig: VocabularyConfig = {
     component: HrcsCategoryInput,
   },
 };
-const vocabularies = Object.keys(vocabularyConfig);
+const vocabularyEntries = Object.entries(vocabularyConfig);
 
-export const VocabularyFields = () => {
+interface VocabularyFieldsProps {
+  defaultVocabularies: string[];
+  allowedVocabularies: string[];
+}
+
+export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: VocabularyFieldsProps) => {
   const { t } = useTranslation('registration');
   const {
     setFieldValue,
     values: { subjects },
   } = useFormikContext<Registration>();
 
-  // Open vacabularies with values by default
-  const defaultVisibleVocabualaries = Object.entries(vocabularyConfig)
-    .filter(([_, value]) => subjects.some((key) => key.startsWith(value.baseId)))
-    .map(([key, _]) => key);
-  const [visibleVocabularies, setVisibleVocabularies] = useState(defaultVisibleVocabualaries);
+  const vocabulariesWithValue = vocabularyEntries
+    .filter(([, value]) => subjects.some((key) => key.startsWith(value.baseId)))
+    .map(([key]) => key);
+  const defaultVocabularyKeys = vocabularyEntries
+    .filter(([, value]) => defaultVocabularies.includes(value.baseId))
+    .map(([key]) => key);
+  const allowedVocabularyKeys = vocabularyEntries
+    .filter(([, value]) => allowedVocabularies.includes(value.baseId))
+    .map(([key]) => key);
+
+  const [visibleVocabularies, setVisibleVocabularies] = useState([
+    ...new Set([...defaultVocabularyKeys, ...vocabulariesWithValue]),
+  ]);
   const [vocabularyToRemove, setVocabularyToRemove] = useState('');
   const [newVocabularyAnchor, setNewVocabularyAnchor] = useState<null | HTMLElement>(null);
 
-  const addableVocabularies = vocabularies.filter((vocabulary) => !visibleVocabularies.includes(vocabulary));
+  const addableVocabularies = allowedVocabularyKeys.filter((vocabulary) => !visibleVocabularies.includes(vocabulary));
 
   return (
     <>
@@ -96,31 +109,35 @@ export const VocabularyFields = () => {
                       )
                     }
                   />
-                  <StyledRemoveButton
-                    color="error"
-                    startIcon={<RemoveCircleIcon />}
-                    onClick={() => setVocabularyToRemove(vocabulary)}>
-                    {t('description.remove_vocabulary')}
-                  </StyledRemoveButton>
+                  {!defaultVocabularyKeys.includes(vocabulary) && (
+                    <>
+                      <StyledRemoveButton
+                        color="error"
+                        startIcon={<RemoveCircleIcon />}
+                        onClick={() => setVocabularyToRemove(vocabulary)}>
+                        {t('description.remove_vocabulary')}
+                      </StyledRemoveButton>
 
-                  <ConfirmDialog
-                    open={vocabularyToRemove === vocabulary}
-                    title={t('description.confirm_remove_vocabulary_title')}
-                    onAccept={() => {
-                      const updatedValues = subjects.filter((keyword) => !keyword.startsWith(baseId));
-                      setFieldValue(name, updatedValues);
-                      setVisibleVocabularies(
-                        visibleVocabularies.filter((visibleVocabulary) => visibleVocabulary !== vocabulary)
-                      );
-                      setVocabularyToRemove('');
-                    }}
-                    onCancel={() => setVocabularyToRemove('')}>
-                    <Typography>
-                      {t('description.confirm_remove_vocabulary_text', {
-                        vocabulary: t(i18nKey),
-                      })}
-                    </Typography>
-                  </ConfirmDialog>
+                      <ConfirmDialog
+                        open={vocabularyToRemove === vocabulary}
+                        title={t('description.confirm_remove_vocabulary_title')}
+                        onAccept={() => {
+                          const updatedValues = subjects.filter((keyword) => !keyword.startsWith(baseId));
+                          setFieldValue(name, updatedValues);
+                          setVisibleVocabularies(
+                            visibleVocabularies.filter((visibleVocabulary) => visibleVocabulary !== vocabulary)
+                          );
+                          setVocabularyToRemove('');
+                        }}
+                        onCancel={() => setVocabularyToRemove('')}>
+                        <Typography>
+                          {t('description.confirm_remove_vocabulary_text', {
+                            vocabulary: t(i18nKey),
+                          })}
+                        </Typography>
+                      </ConfirmDialog>
+                    </>
+                  )}
                 </StyledVocabularyRow>
               );
             })}

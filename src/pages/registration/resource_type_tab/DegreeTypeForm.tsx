@@ -14,7 +14,7 @@ interface DegreeTypeFormProps {
 
 export const DegreeTypeForm = ({ onChangeSubType }: DegreeTypeFormProps) => {
   const { values } = useFormikContext<DegreeRegistration>();
-  const subType = values.entityDescription.reference.publicationInstance.type;
+  const subType = values.entityDescription.reference?.publicationInstance.type;
 
   return (
     <>

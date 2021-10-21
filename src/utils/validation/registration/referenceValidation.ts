@@ -134,12 +134,15 @@ const seriesField = Yup.object().shape({
   }),
 });
 
-export const baseReference = Yup.object().shape({
-  doi: Yup.string().nullable().trim().url(resourceErrorMessage.doiInvalid),
-  publicationInstance: Yup.object().shape({
-    type: Yup.string().required(resourceErrorMessage.typeRequired),
-  }),
-});
+export const baseReference = Yup.object()
+  .shape({
+    doi: Yup.string().nullable().trim().url(resourceErrorMessage.doiInvalid),
+    publicationInstance: Yup.object().shape({
+      type: Yup.string().required(resourceErrorMessage.typeRequired),
+    }),
+  })
+  .nullable()
+  .required(resourceErrorMessage.typeRequired);
 
 // Journal
 const journalPublicationInstance = Yup.object().shape({
@@ -154,6 +157,7 @@ const journalPublicationInstance = Yup.object().shape({
       is: JournalType.Corrigendum,
       then: Yup.string()
         .url(resourceErrorMessage.corrigendumForInvalid)
+        .nullable()
         .required(resourceErrorMessage.corrigendumForRequired),
     }),
   contentType: Yup.string()

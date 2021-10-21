@@ -47,9 +47,9 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   const { t } = useTranslation('registration');
   const { entityDescription } = registration;
 
-  const publicationContext = entityDescription?.reference.publicationContext;
-  const publicationInstance = entityDescription?.reference.publicationInstance;
-  const journalPublicationInstance = entityDescription?.reference.publicationInstance as
+  const publicationContext = entityDescription?.reference?.publicationContext;
+  const publicationInstance = entityDescription?.reference?.publicationInstance;
+  const journalPublicationInstance = entityDescription?.reference?.publicationInstance as
     | JournalPublicationInstance
     | undefined;
 
@@ -85,6 +85,38 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           </Typography>
         )}
 
+        {publicationInstance &&
+          (isJournal(publicationInstance.type) && journalPublicationInstance ? (
+            <PublicPublicationInstanceJournal publicationInstance={journalPublicationInstance} />
+          ) : isBook(publicationInstance.type) ? (
+            <>
+              <PublicPublicationInstanceBook publicationInstance={publicationInstance as BookPublicationInstance} />
+              <PublicIsbnContent
+                isbnList={(registration as BookRegistration).entityDescription.reference?.publicationContext.isbnList}
+              />
+            </>
+          ) : isDegree(publicationInstance.type) ? (
+            <>
+              {publicationInstance.type === DegreeType.Phd && (
+                <PublicIsbnContent
+                  isbnList={
+                    (registration as DegreeRegistration).entityDescription.reference?.publicationContext.isbnList
+                  }
+                />
+              )}
+              <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
+            </>
+          ) : isReport(publicationInstance.type) ? (
+            <>
+              <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
+              <PublicIsbnContent
+                isbnList={(registration as ReportRegistration).entityDescription.reference?.publicationContext.isbnList}
+              />
+            </>
+          ) : isChapter(publicationInstance.type) ? (
+            <PublicPublicationInstanceChapter publicationInstance={publicationInstance as ChapterPublicationInstance} />
+          ) : null)}
+
         <PublicDoi registration={registration} />
       </div>
 
@@ -93,13 +125,12 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           (isJournal(publicationInstance.type) && journalPublicationInstance ? (
             <>
               <PublicJournal publicationContext={publicationContext as JournalPublicationContext} />
-              <PublicPublicationInstanceJournal publicationInstance={journalPublicationInstance} />
               {publicationInstance.type === JournalType.Corrigendum && (
                 <>
                   <Typography variant="overline" component="p">
                     {t('resource_type.original_article')}
                   </Typography>
-                  <RegistrationSummary id={journalPublicationInstance.corrigendumFor} />
+                  <RegistrationSummary id={journalPublicationInstance.corrigendumFor ?? ''} />
                 </>
               )}
             </>
@@ -107,42 +138,21 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             <>
               <PublicPublisher publisher={(publicationContext as BookPublicationContext).publisher} />
               <PublicSeries publicationContext={publicationContext as BookPublicationContext} />
-              <PublicPublicationInstanceBook publicationInstance={publicationInstance as BookPublicationInstance} />
-              <PublicIsbnContent
-                isbnList={(registration as BookRegistration).entityDescription.reference.publicationContext.isbnList}
-              />
             </>
           ) : isDegree(publicationInstance.type) ? (
             <>
               <PublicPublisher publisher={(publicationContext as DegreePublicationContext).publisher} />
               {publicationInstance.type === DegreeType.Phd && (
-                <>
-                  <PublicSeries publicationContext={publicationContext as DegreePublicationContext} />
-                  <PublicIsbnContent
-                    isbnList={
-                      (registration as DegreeRegistration).entityDescription.reference.publicationContext.isbnList
-                    }
-                  />
-                </>
+                <PublicSeries publicationContext={publicationContext as DegreePublicationContext} />
               )}
-              <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
             </>
           ) : isReport(publicationInstance.type) ? (
             <>
               <PublicPublisher publisher={(publicationContext as ReportPublicationContext).publisher} />
               <PublicSeries publicationContext={publicationContext as ReportPublicationContext} />
-              <PublicPublicationInstanceReport publicationInstance={publicationInstance as ReportPublicationInstance} />
-              <PublicIsbnContent
-                isbnList={(registration as ReportRegistration).entityDescription.reference.publicationContext.isbnList}
-              />
             </>
           ) : isChapter(publicationInstance.type) ? (
-            <>
-              <PublicPartOfContent partOf={(publicationContext as ChapterPublicationContext).partOf} />
-              <PublicPublicationInstanceChapter
-                publicationInstance={publicationInstance as ChapterPublicationInstance}
-              />
-            </>
+            <PublicPartOfContent partOf={(publicationContext as ChapterPublicationContext).partOf} />
           ) : null)}
       </div>
     </StyledGeneralInfo>

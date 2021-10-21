@@ -33,7 +33,7 @@ export const ResourceTypePanel = () => {
   const { t } = useTranslation('registration');
   const { values, setTouched, setFieldValue, touched, errors } = useFormikContext<Registration>();
   const [mainType, setMainType] = useState(
-    getMainRegistrationType(values.entityDescription?.reference.publicationInstance.type ?? '')
+    getMainRegistrationType(values.entityDescription?.reference?.publicationInstance.type ?? '')
   );
 
   const onChangeType = (newRegistrationMainType: string) => {
@@ -94,7 +94,7 @@ export const ResourceTypePanel = () => {
     // Avoid showing potential errors instantly
     const newTouched = touched;
     (newTouched.entityDescription as FormikTouched<EntityDescription>).npiSubjectHeading = false;
-    (newTouched.entityDescription as FormikTouched<EntityDescription>).reference = {};
+    (newTouched.entityDescription as FormikTouched<EntityDescription>).reference = false;
 
     setTouched(newTouched);
   };
@@ -105,7 +105,7 @@ export const ResourceTypePanel = () => {
       contentType: null,
       peerReviewed: null,
     };
-    const newValues = values.entityDescription
+    const newValues = values.entityDescription?.reference
       ? {
           ...values.entityDescription.reference.publicationInstance,
           ...commonValues,
@@ -115,15 +115,17 @@ export const ResourceTypePanel = () => {
     setFieldValue(instanceTypeBaseFieldName, newValues);
   };
 
+  const referenceErrors = (errors.entityDescription as FormikErrors<EntityDescription>)
+    ?.reference as FormikErrors<JournalReference>;
+  const referenceTouched = (touched.entityDescription as FormikTouched<EntityDescription>)
+    ?.reference as FormikTouched<JournalReference>;
+
+  // Handle error for nullable reference as well as reference with missing type
   const typeError =
-    (
-      ((errors.entityDescription as FormikErrors<EntityDescription>)?.reference as FormikErrors<JournalReference>)
-        ?.publicationInstance as FormikErrors<JournalPublicationInstance>
-    )?.type ?? '';
-  const typeTouched = (
-    ((touched.entityDescription as FormikTouched<EntityDescription>)?.reference as FormikTouched<JournalReference>)
-      ?.publicationInstance as FormikTouched<JournalPublicationInstance>
-  )?.type;
+    (referenceErrors?.publicationInstance as FormikErrors<JournalPublicationInstance>)?.type ??
+    (typeof referenceErrors === 'string' && referenceErrors) ??
+    '';
+  const typeTouched = (referenceTouched?.publicationInstance as FormikTouched<JournalPublicationInstance>)?.type;
 
   return (
     <>

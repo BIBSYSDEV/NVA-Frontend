@@ -8,26 +8,29 @@ import { ReportPublicationContext } from '../../types/publication_types/reportRe
 import { Journal, Publisher } from '../../types/registration.types';
 import { RegistrationSummary } from './RegistrationSummary';
 import { ListSkeleton } from '../../components/ListSkeleton';
-import { useFetchPublicationChannel } from '../../utils/hooks/useFetchPublicationChannel';
+import { useFetchResource } from '../../utils/hooks/useFetchResource';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
 }
 
-const channelRegisterBaseUrl = 'https://dbh.nsd.uib.no/publiseringskanaler';
+const channelRegisterBaseUrl = 'https://kanalregister.hkdir.no/publiseringskanaler';
 const getChannelRegisterJournalUrl = (id: string) => `${channelRegisterBaseUrl}/KanalTidsskriftInfo.action?id=${id}`;
 const getChannelRegisterPublisherUrl = (id: string) => `${channelRegisterBaseUrl}/KanalForlagInfo.action?id=${id}`;
 
 export const PublicJournal = ({ publicationContext }: PublicJournalProps) => {
   const { t } = useTranslation('registration');
 
-  return publicationContext.id ? (
+  return publicationContext.id || publicationContext.title ? (
     <>
       <Typography variant="overline" component="p">
         {t('resource_type.journal')}
       </Typography>
-
-      <PublicJournalContent id={publicationContext.id} errorMessage={t('feedback:error.get_journal')} />
+      {publicationContext.id ? (
+        <PublicJournalContent id={publicationContext.id} errorMessage={t('feedback:error.get_journal')} />
+      ) : (
+        <Typography>{publicationContext.title}</Typography>
+      )}
     </>
   ) : null;
 };
@@ -35,12 +38,12 @@ export const PublicJournal = ({ publicationContext }: PublicJournalProps) => {
 export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher }) => {
   const { t } = useTranslation('registration');
 
-  const [fetchedPublisher, isLoadingPublisher] = useFetchPublicationChannel<Publisher>(
+  const [fetchedPublisher, isLoadingPublisher] = useFetchResource<Publisher>(
     publisher?.id ?? '',
     t('feedback:error.get_publisher')
   );
 
-  return publisher ? (
+  return publisher?.id || publisher?.name ? (
     <>
       <Typography variant="overline" component="p">
         {t('common:publisher')}
@@ -48,37 +51,39 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
 
       {isLoadingPublisher ? (
         <ListSkeleton height={20} />
-      ) : (
-        fetchedPublisher && (
-          <>
-            <Typography>{fetchedPublisher.name}</Typography>
+      ) : fetchedPublisher ? (
+        <>
+          <Typography>{fetchedPublisher.name}</Typography>
+          {fetchedPublisher.level && (
             <Typography>
               {t('resource_type.level')}: {fetchedPublisher.level}
             </Typography>
-            <Typography
-              component={Link}
-              href={getChannelRegisterPublisherUrl(fetchedPublisher.identifier)}
-              target="_blank">
-              {t('public_page.find_in_channel_registry')}
-            </Typography>
-          </>
-        )
+          )}
+          <Typography
+            component={Link}
+            href={getChannelRegisterPublisherUrl(fetchedPublisher.identifier)}
+            target="_blank">
+            {t('public_page.find_in_channel_registry')}
+          </Typography>
+        </>
+      ) : (
+        <Typography>{publisher.name}</Typography>
       )}
     </>
   ) : null;
 };
 
-export const PublicPartOfContent = ({ partOf }: { partOf: string }) => {
+export const PublicPartOfContent = ({ partOf }: { partOf: string | null }) => {
   const { t } = useTranslation('registration');
 
-  return (
+  return partOf ? (
     <>
       <Typography variant="overline" component="p">
         {t('resource_type.chapter.published_in')}
       </Typography>
       <RegistrationSummary id={partOf} />
     </>
-  );
+  ) : null;
 };
 
 export const PublicSeries = ({
@@ -89,12 +94,16 @@ export const PublicSeries = ({
   const { t } = useTranslation('registration');
   const { series, seriesNumber } = publicationContext;
 
-  return series?.id ? (
+  return series?.id || series?.title ? (
     <>
       <Typography variant="overline" component="p">
         {t('resource_type.series')}
       </Typography>
-      <PublicJournalContent id={series.id} errorMessage={t('feedback:error.get_series')} />
+      {series.id ? (
+        <PublicJournalContent id={series.id} errorMessage={t('feedback:error.get_series')} />
+      ) : (
+        <Typography>{series.title}</Typography>
+      )}
       {seriesNumber && (
         <Typography>
           {t('resource_type.series_number')}: {seriesNumber}
@@ -111,7 +120,7 @@ interface PublicJournalContentProps {
 
 const PublicJournalContent = ({ id }: PublicJournalContentProps) => {
   const { t } = useTranslation('registration');
-  const [journal, isLoadingJournal] = useFetchPublicationChannel<Journal>(id ?? '', t('feedback:error.get_journal'));
+  const [journal, isLoadingJournal] = useFetchResource<Journal>(id ?? '', t('feedback:error.get_journal'));
 
   return id ? (
     <>
@@ -129,9 +138,11 @@ const PublicJournalContent = ({ id }: PublicJournalContentProps) => {
                 .filter((issn) => issn)
                 .join(', ')}
             </Typography>
-            <Typography>
-              {t('resource_type.level')}: {journal.level}
-            </Typography>
+            {journal.level && (
+              <Typography>
+                {t('resource_type.level')}: {journal.level}
+              </Typography>
+            )}
             <Typography component={Link} href={getChannelRegisterJournalUrl(journal.identifier)} target="_blank">
               {t('public_page.find_in_channel_registry')}
             </Typography>

@@ -35,7 +35,7 @@ export const DoiField = () => {
   };
 
   const doi = values.doi;
-  const referenceDoi = values.entityDescription?.reference.doi ?? '';
+  const referenceDoi = values.entityDescription?.reference?.doi ?? '';
 
   return doi || referenceDoi ? (
     <StyledDoiRow>

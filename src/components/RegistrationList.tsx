@@ -60,7 +60,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
     <ListItem divider disableGutters>
       <ListItemText disableTypography data-testid="result-list-item">
         <StyledSuperHeader variant="overline">
-          {t(entityDescription?.reference.publicationInstance.type ?? '')} - {displayDate(entityDescription?.date)}
+          {t(entityDescription?.reference?.publicationInstance.type ?? '')} - {displayDate(entityDescription?.date)}
         </StyledSuperHeader>
         <StyledRegistrationTitle gutterBottom>
           <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>

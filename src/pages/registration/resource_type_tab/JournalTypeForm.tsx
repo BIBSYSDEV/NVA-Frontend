@@ -14,7 +14,7 @@ interface JournalTypeFormProps {
 
 export const JournalTypeForm = ({ onChangeSubType }: JournalTypeFormProps) => {
   const { values } = useFormikContext<JournalRegistration>();
-  const subType = values.entityDescription.reference.publicationInstance.type;
+  const subType = values.entityDescription.reference?.publicationInstance.type;
 
   return (
     <>

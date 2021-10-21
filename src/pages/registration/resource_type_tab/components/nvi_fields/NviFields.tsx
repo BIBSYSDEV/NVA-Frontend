@@ -18,7 +18,8 @@ export const NviFields = ({ contentTypes }: NviFieldsProps) => {
     values: { entityDescription },
   } = useFormikContext<Registration>();
   const contentType =
-    entityDescription?.reference.publicationInstance && 'contentType' in entityDescription.reference.publicationInstance
+    entityDescription?.reference?.publicationInstance &&
+    'contentType' in entityDescription.reference.publicationInstance
       ? entityDescription.reference.publicationInstance.contentType ?? ''
       : '';
 

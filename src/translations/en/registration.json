@@ -177,7 +177,7 @@
     "journal_not_found": "Journal not found?",
     "level": "Level in Norwegian publication indicator",
     "number_of_pages": "Total number of pages",
-    "nvi":{
+    "nvi": {
       "applicable": "The publication can be included in the Norwegian Science Index",
       "channel_not_rated": "The publication can not be included in the Norwegian Science Index since the publication channel is not at level 1 or 2. (Level can be changed before this year's reporting deadline so that the publication can be included in the Norwegian Science Index, provided that the answer to the question above is Yes)",
       "not_peer_reviewed": "The publication can not be included in the Norwegian Science Index since the answer to the question above is No"
@@ -193,8 +193,6 @@
     "peer_reviewed": "Peer reviewed and presents new original research",
     "print_issn": "Print ISSN",
     "remove": "Remove",
-    "remove_anthology": "Remove anthology",
-    "remove_article": "Remove article",
     "remove_doi": "Remove DOI",
     "remove_doi_text": "You can remove the DOI that was used when starting registration.\nDo you wish to remove connection to the original DOI?",
     "remove_journal": "Remove journal",
