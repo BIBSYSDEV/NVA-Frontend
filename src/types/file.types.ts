@@ -22,49 +22,49 @@ interface LicenseInfo {
 
 export const licenses: LicenseInfo[] = [
   {
-    buttonImage: LicenseImages.rightsReservedButton,
+    buttonImage: LicenseImages.rightsReservedLogo,
     description: i18n.t('licenses:description.rights_reserved'),
     identifier: LicenseNames.RightsReserved,
     link: i18n.t('licenses:links.rights_reserved'),
   },
   {
-    buttonImage: LicenseImages.ccByButton,
+    buttonImage: LicenseImages.ccByLogo,
     description: i18n.t('licenses:description.cc_by'),
     identifier: LicenseNames.CC_BY,
     link: i18n.t('licenses:links.cc_by'),
   },
   {
-    buttonImage: LicenseImages.ccBySaButton,
+    buttonImage: LicenseImages.ccBySaLogo,
     description: i18n.t('licenses:description.cc_by_sa'),
     identifier: LicenseNames.CC_BY_SA,
     link: i18n.t('licenses:links.cc_by_sa'),
   },
   {
-    buttonImage: LicenseImages.ccByNdButton,
+    buttonImage: LicenseImages.ccByNdLogo,
     description: i18n.t('licenses:description.cc_by_nd'),
     identifier: LicenseNames.CC_BY_ND,
     link: i18n.t('licenses:links.cc_by_nd'),
   },
   {
     identifier: LicenseNames.CC_BY_NC,
-    buttonImage: LicenseImages.ccByNcButton,
+    buttonImage: LicenseImages.ccByNcLogo,
     description: i18n.t('licenses:description.cc_by_nc'),
     link: i18n.t('licenses:links.cc_by_nc'),
   },
   {
-    buttonImage: LicenseImages.ccByNcSaButton,
+    buttonImage: LicenseImages.ccByNcSaLogo,
     description: i18n.t('licenses:description.cc_by_nc_sa'),
     identifier: LicenseNames.CC_BY_NC_SA,
     link: i18n.t('licenses:links.cc_by_nc_sa'),
   },
   {
-    buttonImage: LicenseImages.ccByNcNdButton,
+    buttonImage: LicenseImages.ccByNcNdLogo,
     description: i18n.t('licenses:description.cc_by_nc_nd'),
     identifier: LicenseNames.CC_BY_NC_ND,
     link: i18n.t('licenses:links.cc_by_nc_nd'),
   },
   {
-    buttonImage: LicenseImages.cc0Button,
+    buttonImage: LicenseImages.cc0Logo,
     description: i18n.t('licenses:description.cc0'),
     identifier: LicenseNames.CC0,
     link: i18n.t('licenses:links.cc0'),
