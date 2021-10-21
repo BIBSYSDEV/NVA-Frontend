@@ -194,7 +194,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                         return selectedLicense ? (
                           <StyledLicenseValue>
                             <img src={selectedLicense.buttonImage} alt={selectedLicense.identifier} />
-                            <span>{option}</span>
+                            <span>{t(`licenses:labels.${option}`)}</span>
                           </StyledLicenseValue>
                         ) : null;
                       },
@@ -224,7 +224,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                           <StyledLicenseOptionImage src={license.buttonImage} alt={license.identifier} />
                         </ListItemIcon>
                         <ListItemText>
-                          <Typography>{license.identifier}</Typography>
+                          <Typography>{t(`licenses:labels.${license.identifier}`)}</Typography>
                         </ListItemText>
                       </MenuItem>
                     ))}

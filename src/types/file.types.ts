@@ -17,7 +17,6 @@ interface LicenseInfo {
   buttonImage: string;
   description: string;
   identifier: LicenseNames;
-  label: string;
   link: string;
 }
 
@@ -26,33 +25,28 @@ export const licenses: LicenseInfo[] = [
     buttonImage: LicenseImages.rightsReservedButton,
     description: i18n.t('licenses:description.rights_reserved'),
     identifier: LicenseNames.RightsReserved,
-    label: i18n.t('licenses:labels.rights_reserved'),
     link: i18n.t('licenses:links.rights_reserved'),
   },
   {
     buttonImage: LicenseImages.ccByButton,
     description: i18n.t('licenses:description.cc_by'),
     identifier: LicenseNames.CC_BY,
-    label: i18n.t('licenses:labels.cc_by'),
     link: i18n.t('licenses:links.cc_by'),
   },
   {
     buttonImage: LicenseImages.ccBySaButton,
     description: i18n.t('licenses:description.cc_by_sa'),
     identifier: LicenseNames.CC_BY_SA,
-    label: i18n.t('licenses:labels.cc_by_sa'),
     link: i18n.t('licenses:links.cc_by_sa'),
   },
   {
     buttonImage: LicenseImages.ccByNdButton,
     description: i18n.t('licenses:description.cc_by_nd'),
     identifier: LicenseNames.CC_BY_ND,
-    label: i18n.t('licenses:labels.cc_by_nd'),
     link: i18n.t('licenses:links.cc_by_nd'),
   },
   {
     identifier: LicenseNames.CC_BY_NC,
-    label: i18n.t('licenses:labels.cc_by_nc'),
     buttonImage: LicenseImages.ccByNcButton,
     description: i18n.t('licenses:description.cc_by_nc'),
     link: i18n.t('licenses:links.cc_by_nc'),
@@ -61,21 +55,18 @@ export const licenses: LicenseInfo[] = [
     buttonImage: LicenseImages.ccByNcSaButton,
     description: i18n.t('licenses:description.cc_by_nc_sa'),
     identifier: LicenseNames.CC_BY_NC_SA,
-    label: i18n.t('licenses:labels.cc_by_nc_sa'),
     link: i18n.t('licenses:links.cc_by_nc_sa'),
   },
   {
     buttonImage: LicenseImages.ccByNcNdButton,
     description: i18n.t('licenses:description.cc_by_nc_nd'),
     identifier: LicenseNames.CC_BY_NC_ND,
-    label: i18n.t('licenses:labels.cc_by_nc_nd'),
     link: i18n.t('licenses:links.cc_by_nc_nd'),
   },
   {
     buttonImage: LicenseImages.cc0Button,
     description: i18n.t('licenses:description.cc0'),
     identifier: LicenseNames.CC0,
-    label: i18n.t('licenses:labels.cc0'),
     link: i18n.t('licenses:links.cc0'),
   },
 ];

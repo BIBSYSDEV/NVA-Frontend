@@ -149,8 +149,13 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
           : t('registration:files_and_license.accepted_version')}
       </StyledVersion>
       <StyledLicenseImg
-        onClick={() => window.open(licenseData?.link)}
-        alt={file.license?.identifier}
+        onClick={() => {
+          if (licenseData?.link) {
+            window.open(licenseData.link);
+          }
+        }}
+        alt={t(`licenses:labels.${file.license?.identifier}`)}
+        title={t(`licenses:labels.${file.license?.identifier}`)}
         src={licenseData?.buttonImage}
         data-testid={dataTestId.registrationLandingPage.license}
       />

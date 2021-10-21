@@ -127,7 +127,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
         dataTestId="license-modal">
         {licenses.map((license) => (
           <StyledLicenseDescription key={license.identifier}>
-            <Typography variant="h6">{license.identifier}</Typography>
+            <Typography variant="h6">{t(`licenses:labels.${license.identifier}`)}</Typography>
             <img src={license.buttonImage} alt={license.identifier} />
             <Typography>{license.description}</Typography>
           </StyledLicenseDescription>
