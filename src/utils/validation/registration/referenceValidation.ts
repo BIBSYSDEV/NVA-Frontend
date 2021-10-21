@@ -41,6 +41,10 @@ const resourceErrorMessage = {
   eventTitleRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.title_of_event'),
   }),
+  fromMustBeBeforeTo: i18n.t('feedback:validation.cannot_be_after', {
+    field: i18n.t('registration:resource_type.date_from'),
+    limitField: i18n.t('registration:resource_type.date_to').toLowerCase(),
+  }),
   isbnInvalid: i18n.t('feedback:validation.has_invalid_format', {
     field: i18n.t('registration:resource_type.isbn'),
   }),
@@ -83,6 +87,10 @@ const resourceErrorMessage = {
   }),
   seriesNotSelected: i18n.t('feedback:validation.not_selected', {
     field: i18n.t('registration:resource_type.series'),
+  }),
+  toMustBeAfterFrom: i18n.t('feedback:validation.cannot_be_before', {
+    field: i18n.t('registration:resource_type.date_to'),
+    limitField: i18n.t('registration:resource_type.date_from').toLowerCase(),
   }),
   typeRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:type'),
@@ -307,8 +315,28 @@ const presentationPublicationContext = Yup.object().shape({
     country: Yup.string().nullable().required(resourceErrorMessage.countryRequired),
   }),
   time: Yup.object().shape({
-    from: Yup.string().nullable().required(resourceErrorMessage.dateFromRequired),
-    to: Yup.string().nullable().required(resourceErrorMessage.dateToRequired),
+    from: Yup.string()
+      .nullable()
+      .test('from-test', resourceErrorMessage.fromMustBeBeforeTo, (fromValue, context) => {
+        const fromDate = fromValue ? new Date(fromValue) : null;
+        const toDate = context.parent.to ? new Date(context.parent.to) : null;
+        if (fromDate && toDate) {
+          return fromDate <= toDate;
+        }
+        return true;
+      })
+      .required(resourceErrorMessage.dateFromRequired),
+    to: Yup.string()
+      .nullable()
+      .test('to-test', resourceErrorMessage.toMustBeAfterFrom, (toValue, context) => {
+        const fromDate = context.parent.from ? new Date(context.parent.from) : null;
+        const toDate = toValue ? new Date(toValue) : null;
+        if (fromDate && toDate) {
+          return fromDate <= toDate;
+        }
+        return true;
+      })
+      .required(resourceErrorMessage.dateToRequired),
   }),
 });
 
