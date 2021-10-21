@@ -91,8 +91,7 @@ export const ResourceTypePanel = () => {
           contextTypeBaseFieldName,
           {
             type: PublicationType.Presentation,
-            place: { type: 'UnconfirmedPlace' }, // TODO: find better soltion for this
-            time: { type: 'TemporalExtent' },
+            place: { type: 'UnconfirmedPlace' },
           },
           false
         );
