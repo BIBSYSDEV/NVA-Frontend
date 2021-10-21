@@ -11,7 +11,7 @@ import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { DatePickerField } from './description_tab/DatePickerField';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
-import { VocabularyFields } from './description_tab/vocabularies/VocabularyFields';
+import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
 
 const DateAndLanguageWrapper = styled.div`
   display: grid;
@@ -112,7 +112,7 @@ export const DescriptionPanel = () => {
             />
           )}
         </Field>
-        <VocabularyFields />
+        <VocabularyBase />
       </BackgroundDiv>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DateAndLanguageWrapper>

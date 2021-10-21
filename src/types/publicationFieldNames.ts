@@ -83,6 +83,7 @@ export enum ResourceFieldNames {
   PubliactionContextTimeFrom = 'entityDescription.reference.publicationContext.time.from',
   PubliactionContextTimeTo = 'entityDescription.reference.publicationContext.time.to',
   PubliactionContextType = 'entityDescription.reference.publicationContext.type',
+  Reference = 'entityDescription.reference',
   SeriesId = 'entityDescription.reference.publicationContext.series.id',
   SeriesNumber = 'entityDescription.reference.publicationContext.seriesNumber',
   SeriesTitle = 'entityDescription.reference.publicationContext.series.title',
@@ -126,6 +127,6 @@ export enum ContributorFieldNames {
 export enum SpecificContributorFieldNames {
   Affiliations = 'affiliations',
   Corresponding = 'correspondingAuthor',
-  Id = 'id',
+  Id = 'identity.id',
   Sequence = 'sequence',
 }

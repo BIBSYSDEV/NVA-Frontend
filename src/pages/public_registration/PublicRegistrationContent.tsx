@@ -39,7 +39,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
   const { identifier, entityDescription, projects, fileSet, subjects } = registration;
   const contributors = entityDescription?.contributors ?? [];
   const files = fileSet?.files ?? [];
-  const mainTitle = entityDescription?.mainTitle ?? `[${t('common:missing_title')}]`;
+  const mainTitle = entityDescription?.mainTitle || `[${t('common:missing_title')}]`;
   const abstract = entityDescription?.abstract;
   const description = entityDescription?.description;
 
@@ -53,7 +53,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
       <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
       <ItalicPageHeader
         superHeader={{
-          title: entityDescription?.reference.publicationInstance.type ? (
+          title: entityDescription?.reference?.publicationInstance.type ? (
             <>
               <span data-testid={dataTestId.registrationLandingPage.registrationSubtype}>
                 {t(`publicationTypes:${entityDescription.reference.publicationInstance.type}`)}
@@ -74,7 +74,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
         {contributors.length > 0 && (
           <PublicRegistrationContributors
             contributors={contributors}
-            registrationType={entityDescription?.reference.publicationInstance.type ?? ''}
+            registrationType={entityDescription?.reference?.publicationInstance.type ?? ''}
           />
         )}
 

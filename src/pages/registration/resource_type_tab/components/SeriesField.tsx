@@ -16,23 +16,19 @@ import { BookEntityDescription } from '../../../../types/publication_types/bookR
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
-import { useFetchPublicationChannel } from '../../../../utils/hooks/useFetchPublicationChannel';
+import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
 
 const StyledChip = styled(Chip)`
-  padding: 2rem 0 2rem 0;
+  height: 100%;
 `;
 
 export const SeriesField = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue, values } = useFormikContext<Registration>();
-  const {
-    reference: {
-      publicationContext: { series },
-    },
-    date,
-  } = values.entityDescription as BookEntityDescription;
+  const { reference, date } = values.entityDescription as BookEntityDescription;
+  const series = reference?.publicationContext.series;
   const year = date?.year ?? '';
 
   const [query, setQuery] = useState(!series?.id ? series?.title ?? '' : '');
@@ -45,10 +41,7 @@ export const SeriesField = () => {
     errorMessage: t('feedback:error.get_series'),
   });
 
-  const [journal, isLoadingJournal] = useFetchPublicationChannel<Journal>(
-    series?.id ?? '',
-    t('feedback:error.get_series')
-  );
+  const [journal, isLoadingJournal] = useFetchResource<Journal>(series?.id ?? '', t('feedback:error.get_series'));
 
   return (
     <ThemeProvider theme={lightTheme}>

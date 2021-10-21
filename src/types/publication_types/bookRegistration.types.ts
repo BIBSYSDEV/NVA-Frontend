@@ -51,5 +51,5 @@ interface BookReference extends BaseReference {
 }
 
 export interface BookEntityDescription extends BaseEntityDescription {
-  reference: BookReference;
+  reference: BookReference | null;
 }

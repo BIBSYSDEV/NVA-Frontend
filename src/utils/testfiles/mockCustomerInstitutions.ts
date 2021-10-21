@@ -1,4 +1,28 @@
-import { CustomerInstitution, CustomerList } from '../../types/customerInstitution.types';
+import {
+  CustomerInstitution,
+  CustomerList,
+  VocabularyList,
+  VocabularyStatus,
+} from '../../types/customerInstitution.types';
+
+export const mockCustomerInstitutionVocabularies: VocabularyList = {
+  type: 'VocabularyList',
+  id: 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934/vocabularies',
+  vocabularies: [
+    {
+      type: 'Vocabulary',
+      name: 'HRCS Category',
+      id: 'https://nva.unit.no/hrcs/category',
+      status: VocabularyStatus.Allowed,
+    },
+    {
+      type: 'Vocabulary',
+      name: 'HRCS Activity',
+      id: 'https://nva.unit.no/hrcs/activity',
+      status: VocabularyStatus.Default,
+    },
+  ],
+};
 
 export const mockCustomerInstitution: CustomerInstitution = {
   id: 'https://api.dev.nva.aws.unit.no/customer/1',
@@ -12,7 +36,7 @@ export const mockCustomerInstitution: CustomerInstitution = {
   cristinId: 'https://api.cristin.no/v2/institutions/194',
   institutionDns: '1.1.1.1',
   feideOrganizationId: 'NO919477822',
-  vocabularies: [],
+  vocabularies: mockCustomerInstitutionVocabularies.vocabularies,
 };
 
 export const mockCustomerInstitutions: CustomerList = {

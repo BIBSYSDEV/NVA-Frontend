@@ -34,21 +34,21 @@ const StyledLabel = styled(Typography)`
 export const JournalForm = () => {
   const { t } = useTranslation('registration');
   const { values } = useFormikContext<JournalRegistration>();
-  const { publicationInstance } = values.entityDescription.reference;
+  const instanceType = values.entityDescription.reference?.publicationInstance.type;
 
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DoiField />
 
-        {publicationInstance.type === JournalType.Corrigendum ? (
+        {instanceType === JournalType.Corrigendum ? (
           <SearchContainerField
             fieldName={ResourceFieldNames.CorrigendumFor}
             searchSubtypes={[JournalType.Article]}
             label={t('resource_type.original_article_title')}
             placeholder={t('resource_type.search_for_original_article')}
             dataTestId={dataTestId.registrationWizard.resourceType.corrigendumForField}
-            removeButtonLabel={t('resource_type.remove_article')}
+            fetchErrorMessage={t('feedback:error.get_journal_article')}
           />
         ) : (
           <JournalField />
@@ -134,7 +134,7 @@ export const JournalForm = () => {
         </StyledArticleDetail>
       </BackgroundDiv>
 
-      {publicationInstance.type === JournalType.Article && (
+      {instanceType === JournalType.Article && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
             <NviFields contentTypes={Object.values(JournalArticleContentType)} />

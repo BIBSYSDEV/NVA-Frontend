@@ -138,6 +138,7 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
   const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
   const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
   const fileIsEmbargoed = fileEmbargoDate ? fileEmbargoDate > new Date() : false;
+  const licenseTitle = file.license?.identifier ? t(`licenses:labels.${file.license.identifier}`) : '';
 
   return (
     <StyledFileRow>
@@ -149,9 +150,14 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
           : t('registration:files_and_license.accepted_version')}
       </StyledVersion>
       <StyledLicenseImg
-        onClick={() => window.open(licenseData?.link)}
-        alt={file.license?.identifier}
-        src={licenseData?.buttonImage}
+        onClick={() => {
+          if (licenseData?.link) {
+            window.open(licenseData.link);
+          }
+        }}
+        alt={licenseTitle}
+        title={licenseTitle}
+        src={licenseData?.logo}
         data-testid={dataTestId.registrationLandingPage.license}
       />
       <StyledDownload>

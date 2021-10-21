@@ -69,7 +69,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   }, [history, registration, isValidOwner, isValidCurator]);
 
   const validateForm = (values: Registration): FormikErrors<Registration> => {
-    const publicationInstance = values.entityDescription?.reference.publicationInstance;
+    const publicationInstance = values.entityDescription?.reference?.publicationInstance;
     const contentType =
       publicationInstance && 'contentType' in publicationInstance ? publicationInstance.contentType : null;
 
@@ -114,7 +114,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
               shouldBlockNavigation={dirty}
             />
             <ItalicPageHeader>
-              {values.entityDescription?.mainTitle ?? `[${t('common:missing_title')}]`}
+              {values.entityDescription?.mainTitle || `[${t('common:missing_title')}]`}
             </ItalicPageHeader>
             <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
             <StyledPanel id="form">
