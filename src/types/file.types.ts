@@ -27,7 +27,7 @@ export const licenses: LicenseInfo[] = [
     description: i18n.t('licenses:description.rights_reserved'),
     identifier: LicenseNames.RightsReserved,
     label: i18n.t('licenses:labels.rights_reserved'),
-    link: i18n.t('licenses:links.rights_reserved'), // TODO: Move from translations
+    link: i18n.t('licenses:links.rights_reserved'),
   },
   {
     buttonImage: LicenseImages.ccByButton,
