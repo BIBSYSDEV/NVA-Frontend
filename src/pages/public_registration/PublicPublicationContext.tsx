@@ -9,6 +9,7 @@ import { Journal, Publisher } from '../../types/registration.types';
 import { RegistrationSummary } from './RegistrationSummary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
+import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
@@ -151,4 +152,24 @@ const PublicJournalContent = ({ id }: PublicJournalContentProps) => {
       )}
     </>
   ) : null;
+};
+
+interface PublicPresentationProps {
+  publicationContext: PresentationPublicationContext;
+}
+
+export const PublicPresentation = ({ publicationContext }: PublicPresentationProps) => {
+  const { t } = useTranslation('registration');
+  const fromDate = publicationContext.time?.from ? new Date(publicationContext.time.from).toLocaleDateString() : '';
+  const toDate = publicationContext.time?.to ? new Date(publicationContext.time.to).toLocaleDateString() : '';
+
+  return (
+    <>
+      <Typography variant="overline">{t('publicationTypes:Event')}</Typography>
+      <Typography>{publicationContext.label}</Typography>
+      <Typography>{publicationContext.place.label}</Typography>
+      <Typography>{publicationContext.place.country}</Typography>
+      <Typography>{fromDate === toDate ? fromDate : `${fromDate ?? '?'} - ${toDate ?? '?'}`}</Typography>
+    </>
+  );
 };
