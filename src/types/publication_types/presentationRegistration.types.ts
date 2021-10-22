@@ -28,20 +28,24 @@ export const emptyPresentationPublicationContext: PresentationPublicationContext
   },
 };
 
+interface Place {
+  type: 'UnconfirmedPlace';
+  label: string;
+  country: string;
+}
+
+interface Time {
+  type: 'TemporalExtent';
+  from: string;
+  to: string;
+}
+
 export interface PresentationPublicationContext {
   type: PublicationType.Presentation;
   agent?: any; // TODO: NP-3292
   label: string;
-  place: {
-    type: 'UnconfirmedPlace';
-    label: string;
-    country: string;
-  };
-  time: {
-    type: 'TemporalExtent';
-    from: string;
-    to: string;
-  };
+  place: Place | null;
+  time: Time | null;
 }
 
 interface PresentationReference extends BaseReference {
