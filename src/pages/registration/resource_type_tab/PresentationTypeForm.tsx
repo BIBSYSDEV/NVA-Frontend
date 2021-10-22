@@ -113,9 +113,9 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
             )}
           </Field>
 
-          <Field name={ResourceFieldNames.PublicationContextPlaceCountry}>
-            {({ field, meta: { error, touched } }: FieldProps) => (
-              <ThemeProvider theme={lightTheme}>
+          <ThemeProvider theme={lightTheme}>
+            <Field name={ResourceFieldNames.PublicationContextPlaceCountry}>
+              {({ field, meta: { error, touched } }: FieldProps<string>) => (
                 <Autocomplete
                   id={field.name}
                   aria-labelledby={`${field.name}-label`}
@@ -142,7 +142,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                     <TextField
                       {...params}
                       required
-                      data-testid="registration-tag-field"
+                      data-testid={dataTestId.registrationWizard.resourceType.eventCountryField}
                       label={t('common:country')}
                       variant="filled"
                       fullWidth
@@ -151,22 +151,20 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                     />
                   )}
                 />
-              </ThemeProvider>
-            )}
-          </Field>
+              )}
+            </Field>
 
-          <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
-            <ThemeProvider theme={lightTheme}>
+            <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
               <StyledDatePickersContainer>
                 <Field name={ResourceFieldNames.PubliactionContextTimeFrom}>
                   {({ field, meta: { error, touched } }: FieldProps<string>) => (
                     <DatePicker
                       {...datePickerTranslationProps}
                       label={t('resource_type.date_from')}
-                      value={field.value ?? null}
+                      value={field.value}
                       onChange={(date) => {
                         !touched && setFieldTouched(field.name, true, false);
-                        setFieldValue(field.name, date?.toISOString(), true);
+                        setFieldValue(field.name, date?.toISOString());
                       }}
                       inputFormat="dd.MM.yyyy"
                       views={['year', 'month', 'day']}
@@ -194,7 +192,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                       value={field.value ?? null}
                       onChange={(date) => {
                         !touched && setFieldTouched(field.name, true, false);
-                        setFieldValue(field.name, date?.toISOString(), true);
+                        setFieldValue(field.name, date?.toISOString());
                       }}
                       inputFormat="dd.MM.yyyy"
                       views={['year', 'month', 'day']}
@@ -215,8 +213,8 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                   )}
                 </Field>
               </StyledDatePickersContainer>
-            </ThemeProvider>
-          </LocalizationProvider>
+            </LocalizationProvider>
+          </ThemeProvider>
         </BackgroundDiv>
       )}
     </>
