@@ -67,7 +67,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
               />
             )}
           </Field>
-          <Field name={'TODO'}>
+          <Field name="agent">
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
                 {...field}

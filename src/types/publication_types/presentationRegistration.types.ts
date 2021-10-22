@@ -30,6 +30,7 @@ export const emptyPresentationPublicationContext: PresentationPublicationContext
 
 export interface PresentationPublicationContext {
   type: PublicationType.Presentation;
+  agent?: any; // TODO: NP-3292
   label: string;
   place: {
     type: 'UnconfirmedPlace';
