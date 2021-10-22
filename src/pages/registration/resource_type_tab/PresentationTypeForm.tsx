@@ -1,18 +1,23 @@
 import { LocalizationProvider, DatePicker } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import { TextField, ThemeProvider } from '@mui/material';
+import { Autocomplete, TextField, ThemeProvider } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import { datePickerTranslationProps, lightTheme } from '../../../themes/lightTheme';
-import i18n from '../../../translations/i18n';
 import { PresentationType, ResourceFieldNames } from '../../../types/publicationFieldNames';
 import { PresentationRegistration } from '../../../types/publication_types/presentationRegistration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
 import { SelectTypeField } from './components/SelectTypeField';
+import countries from 'i18n-iso-countries';
+import enCountries from 'i18n-iso-countries/langs/en.json';
+import noCountries from 'i18n-iso-countries/langs/no.json';
+import { LanguageCodes } from '../../../types/language.types';
+countries.registerLocale(enCountries);
+countries.registerLocale(noCountries);
 
 const StyledDatePickersContainer = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
@@ -27,15 +32,23 @@ const StyledDatePickersContainer = styled.div`
   }
 `;
 
+const StyledFlagImg = styled.img`
+  margin-right: 1rem;
+`;
+
 interface PresentationTypeFormProps {
   onChangeSubType: (type: string) => void;
 }
 
 export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormProps) => {
-  const { t } = useTranslation('registration');
+  const { t, i18n } = useTranslation('registration');
   const { values, setFieldValue, setFieldTouched } = useFormikContext<PresentationRegistration>();
   const { reference } = values.entityDescription;
   const subType = reference.publicationInstance.type;
+
+  const countryOptions = Object.entries(
+    countries.getNames(i18n.language === LanguageCodes.NORWEGIAN_BOKMAL ? 'no' : 'en')
+  ).map(([code, label]) => ({ code, label }));
 
   return (
     <>
@@ -99,20 +112,46 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
               />
             )}
           </Field>
+
           <Field name={ResourceFieldNames.PublicationContextPlaceCountry}>
-            {({ field, meta: { error, touched } }: FieldProps<string>) => (
-              <TextField
-                {...field}
-                id={field.name}
-                value={field.value ?? ''}
-                required
-                data-testid={dataTestId.registrationWizard.resourceType.eventCountryield}
-                variant="filled"
-                fullWidth
-                label={t('common:country')}
-                error={touched && !!error}
-                helperText={<ErrorMessage name={field.name} />}
-              />
+            {({ field, meta: { error, touched } }: FieldProps) => (
+              <ThemeProvider theme={lightTheme}>
+                <Autocomplete
+                  id={field.name}
+                  aria-labelledby={`${field.name}-label`}
+                  value={countryOptions.find((option) => option.code === field.value) ?? null}
+                  options={countryOptions}
+                  autoSelect
+                  onChange={(_, value) => {
+                    setFieldValue(field.name, value?.code);
+                  }}
+                  isOptionEqualToValue={(option, value) => option.code === value.code}
+                  getOptionLabel={(option) => option.label}
+                  renderOption={(props, option) => (
+                    <li {...props}>
+                      <StyledFlagImg
+                        loading="lazy"
+                        src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                        srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                        alt={option.code}
+                      />
+                      {option.label} ({option.code})
+                    </li>
+                  )}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      required
+                      data-testid="registration-tag-field"
+                      label={t('common:country')}
+                      variant="filled"
+                      fullWidth
+                      error={touched && !!error}
+                      helperText={<ErrorMessage name={field.name} />}
+                    />
+                  )}
+                />
+              </ThemeProvider>
             )}
           </Field>
 
