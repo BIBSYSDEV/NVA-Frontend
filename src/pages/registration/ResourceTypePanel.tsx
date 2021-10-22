@@ -27,7 +27,10 @@ import { JournalTypeForm } from './resource_type_tab/JournalTypeForm';
 import { ReportTypeForm } from './resource_type_tab/ReportTypeForm';
 import { getMainRegistrationType } from '../../utils/registration-helpers';
 import { PresentationTypeForm } from './resource_type_tab/PresentationTypeForm';
-import { emptyPresentationPublicationInstance } from '../../types/publication_types/presentationRegistration.types';
+import {
+  emptyPresentationPublicationContext,
+  emptyPresentationPublicationInstance,
+} from '../../types/publication_types/presentationRegistration.types';
 
 export const ResourceTypePanel = () => {
   const { t } = useTranslation('registration');
@@ -87,15 +90,7 @@ export const ResourceTypePanel = () => {
         break;
       case PublicationType.Presentation:
         setFieldValue(instanceTypeBaseFieldName, emptyPresentationPublicationInstance, false);
-        setFieldValue(
-          contextTypeBaseFieldName,
-          {
-            type: PublicationType.Presentation,
-            place: { type: 'UnconfirmedPlace' },
-            time: { type: 'TemporalExtent' },
-          },
-          false
-        );
+        setFieldValue(contextTypeBaseFieldName, emptyPresentationPublicationContext, false);
         break;
     }
 

@@ -125,7 +125,10 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                       {...datePickerTranslationProps}
                       label={t('resource_type.date_from')}
                       value={field.value ?? null}
-                      onChange={(date) => setFieldValue(field.name, date?.toISOString())}
+                      onChange={(date) => {
+                        !touched && setFieldTouched(field.name, true, false);
+                        setFieldValue(field.name, date?.toISOString(), true);
+                      }}
                       inputFormat="dd.MM.yyyy"
                       views={['year', 'month', 'day']}
                       maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
@@ -150,7 +153,10 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                       {...datePickerTranslationProps}
                       label={t('resource_type.date_to')}
                       value={field.value ?? null}
-                      onChange={(date) => setFieldValue(field.name, date?.toISOString())}
+                      onChange={(date) => {
+                        !touched && setFieldTouched(field.name, true, false);
+                        setFieldValue(field.name, date?.toISOString(), true);
+                      }}
                       inputFormat="dd.MM.yyyy"
                       views={['year', 'month', 'day']}
                       maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
