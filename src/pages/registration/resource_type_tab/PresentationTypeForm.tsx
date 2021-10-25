@@ -173,7 +173,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                       renderInput={(params) => (
                         <TextField
                           {...params}
-                          data-testid={dataTestId.registrationWizard.description.datePublishedField}
+                          data-testid={dataTestId.registrationWizard.resourceType.eventDateFrom}
                           variant="filled"
                           required
                           onBlur={() => !touched && setFieldTouched(field.name)}
@@ -201,7 +201,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                       renderInput={(params) => (
                         <TextField
                           {...params}
-                          data-testid={dataTestId.registrationWizard.description.datePublishedField}
+                          data-testid={dataTestId.registrationWizard.resourceType.eventDateTo}
                           variant="filled"
                           required
                           onBlur={() => !touched && setFieldTouched(field.name)}

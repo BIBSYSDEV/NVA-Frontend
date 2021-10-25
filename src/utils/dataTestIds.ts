@@ -79,6 +79,8 @@ export const dataTestId = {
       contentValue: (value: string) => `content-value-${value.toLowerCase().replaceAll(' ', '-')}`,
       corrigendumForField: 'corrigendum-for-field',
       eventCountryField: 'event-country-field',
+      eventDateFrom: 'event-date-from',
+      eventDateTo: 'event-date-to',
       eventOrganizerField: 'event-organizer-field',
       eventPlaceField: 'event-place-field',
       eventTitleField: 'event-title-field',

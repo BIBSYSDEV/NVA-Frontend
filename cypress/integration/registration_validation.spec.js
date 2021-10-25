@@ -178,6 +178,39 @@ describe('User opens registration form and can see validation errors', () => {
     );
   });
 
+  it.only('The User should be able to see validation errors on resource tab (Presentation)', () => {
+    cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });//remove
+    cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
+    cy.get(`[data-testid=publication-context-type-Event]`).click({ force: true });
+
+    // publicationInstance type
+    cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
+    cy.get('[data-testid=publication-instance-type-ConferenceLecture]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
+    cy.get('[data-testid=publication-instance-type] p.Mui-error').should('not.exist');
+    cy.get('p.Mui-error').should('have.length', 5); // TODO: 6
+
+    // publicationContext
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventTitleField}] input`)
+    .type("My Event");
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventOrganizerField}] input`)
+    .type("My Organization");
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventPlaceField}] input`)
+    .type("My Place");
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventCountryField}] input`)
+    .click()
+    cy.get(`[id$=-option-1]`)
+    .click()
+
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventDateFrom}] input`).type('02.01.2020');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventDateTo}] input`).type('01.01.2020');
+    cy.get('p.Mui-error').should('have.length', 2);
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventDateFrom}] input`).clear().type('01.01.2020');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventDateTo}] input`).clear().type('02.01.2020');
+    cy.get('p.Mui-error').should('have.length', 0);
+  });
+
   it('The User should be able to see validation errors on resource tab (Degree)', () => {
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get(`[data-testid=publication-context-type-Degree]`).click({ force: true });
