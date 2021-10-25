@@ -55,6 +55,9 @@ const resourceErrorMessage = {
   journalRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.journal'),
   }),
+  organizerRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.organizer'),
+  }),
   pageBeginMustBeSmallerThanEnd: i18n.t('feedback:validation.must_be_smaller_than', {
     field: i18n.t('registration:resource_type.pages_from'),
     limit: i18n.t('registration:resource_type.pages_to'),
@@ -313,6 +316,9 @@ const presentationPublicationContext = Yup.object().shape({
   place: Yup.object().shape({
     label: Yup.string().nullable().required(resourceErrorMessage.placeRequired),
     country: Yup.string().nullable().required(resourceErrorMessage.countryRequired),
+  }),
+  agent: Yup.object().shape({
+    title: Yup.string().nullable().required(resourceErrorMessage.organizerRequired),
   }),
   time: Yup.object().shape({
     from: Yup.string()

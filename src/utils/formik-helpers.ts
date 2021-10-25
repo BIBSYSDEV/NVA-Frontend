@@ -231,8 +231,10 @@ const touchedResourceTabFields = (instanceType: string): FormikTouched<unknown> 
           reference: {
             publicationContext: {
               type: true,
-              // TODO: Add agent,
               label: true,
+              agent: {
+                title: true,
+              },
               place: {
                 label: true,
                 country: true,

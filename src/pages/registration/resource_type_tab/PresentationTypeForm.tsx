@@ -90,7 +90,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
               />
             )}
           </Field>
-          <Field name="agent">
+          <Field name={ResourceFieldNames.PublicationContextAgentTitle}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
                 {...field}
