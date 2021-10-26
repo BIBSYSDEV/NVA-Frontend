@@ -166,11 +166,25 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
   return (
     <>
       <Typography variant="overline">{t('publicationTypes:Event')}</Typography>
-      <Typography>{publicationContext.label}</Typography>
-      <Typography>{publicationContext.agent?.name}</Typography>
-      <Typography>{publicationContext.place?.label}</Typography>
-      <Typography>{publicationContext.place?.country}</Typography>
-      <Typography>{fromDate === toDate ? fromDate : `${fromDate ?? '?'} - ${toDate ?? '?'}`}</Typography>
+      {publicationContext.label && <Typography>{publicationContext.label}</Typography>}
+      {publicationContext.agent?.name && (
+        <Typography>
+          {t('resource_type.organizer')}: {publicationContext.agent.name}
+        </Typography>
+      )}
+      {publicationContext.place?.label && (
+        <Typography>
+          {t('resource_type.place_for_event')}: {publicationContext.place.label}
+        </Typography>
+      )}
+      {publicationContext.place?.country && (
+        <Typography>
+          {t('common:country')}: {publicationContext.place.country}
+        </Typography>
+      )}
+      {(fromDate || toDate) && (
+        <Typography>{fromDate === toDate ? fromDate : `${fromDate ?? '?'} - ${toDate ?? '?'}`}</Typography>
+      )}
     </>
   );
 };
