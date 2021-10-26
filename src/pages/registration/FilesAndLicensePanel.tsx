@@ -38,7 +38,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const {
     values: { fileSet },
     setFieldTouched,
+    setFieldValue,
     errors,
+    touched,
   } = useFormikContext<Registration>();
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const files = useMemo(() => fileSet?.files ?? [], [fileSet?.files]);
@@ -104,9 +106,17 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
             )}
 
             <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-              <FileUploader uppy={uppy} addFile={(file) => push(file)} />
+              <FileUploader
+                uppy={uppy}
+                addFile={(file) => {
+                  if (!fileSet?.type) {
+                    setFieldValue(FileFieldNames.FileSetType, 'FileSet');
+                  }
+                  push(file);
+                }}
+              />
 
-              {files.length === 0 && (
+              {files.length === 0 && touched.fileSet && (
                 <FormHelperText error>
                   {fileSet?.files && typeof fileSetErrors.files === 'string' ? (
                     <ErrorMessage name={name} />
