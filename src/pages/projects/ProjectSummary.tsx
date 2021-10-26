@@ -11,8 +11,8 @@ interface ProjectSummaryProps {
 export const ProjectSummary = ({ academicSummary, popularScienceSummary }: ProjectSummaryProps) => {
   const { t } = useTranslation('project');
 
-  const popularScienceSummaryString = getLanguageString(popularScienceSummary);
   const academicSummaryString = getLanguageString(academicSummary);
+  const popularScienceSummaryString = getLanguageString(popularScienceSummary);
   return (
     <>
       {academicSummaryString && (

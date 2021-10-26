@@ -39,17 +39,17 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
         </Typography>
         {project.funding.length > 0 ? (
           project.funding.map((funding) => {
-            const text = `${getLanguageString(funding.source.names)} - ${t('grant_id')} ${funding.code}`;
+            const fundingText = `${getLanguageString(funding.source.names)} - ${t('grant_id')} ${funding.code}`;
             return (
               <Typography key={funding.code}>
                 {funding.source.code === 'NFR' ? (
                   <Link
                     href={`https://prosjektbanken.forskningsradet.no/project/FORISS/${funding.code}`}
                     target="_blank">
-                    {text}
+                    {fundingText}
                   </Link>
                 ) : (
-                  text
+                  fundingText
                 )}
               </Typography>
             );

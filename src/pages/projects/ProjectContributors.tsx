@@ -40,11 +40,7 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
           <Typography variant="overline" component="h3">
             {t('project_manager')}
           </Typography>
-          <StyledContributorList>
-            {projectManagers.map((manager) => (
-              <ContributorElement key={manager.identity.id} contributor={manager} />
-            ))}
-          </StyledContributorList>
+          <ContributorList contributors={projectManagers} />
         </div>
       )}
       {projectParticipants.length > 0 && (
@@ -52,26 +48,26 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
           <Typography variant="overline" component="h3">
             {t('project_participants')}
           </Typography>
-          <StyledContributorList>
-            {projectParticipants.map((participant, index) => (
-              <ContributorElement key={index} contributor={participant} />
-            ))}
-          </StyledContributorList>
+          <ContributorList contributors={projectParticipants} />
         </div>
       )}
     </StyledProjectContributors>
   );
 };
 
-interface ContributorElementProps {
-  contributor: ProjectContributor;
+interface ContributorListProps {
+  contributors: ProjectContributor[];
 }
 
-const ContributorElement = ({ contributor }: ContributorElementProps) => (
-  <div>
-    <Typography variant="subtitle2" component="p">
-      {contributor.identity.firstName} {contributor.identity.lastName}
-    </Typography>
-    <Typography variant="body2">{getLanguageString(contributor.affiliation.name)}</Typography>
-  </div>
+const ContributorList = ({ contributors }: ContributorListProps) => (
+  <StyledContributorList>
+    {contributors.map((contributor, index) => (
+      <div key={index}>
+        <Typography variant="subtitle2" component="p">
+          {contributor.identity.firstName} {contributor.identity.lastName}
+        </Typography>
+        <Typography variant="body2">{getLanguageString(contributor.affiliation.name)}</Typography>
+      </div>
+    ))}
+  </StyledContributorList>
 );
