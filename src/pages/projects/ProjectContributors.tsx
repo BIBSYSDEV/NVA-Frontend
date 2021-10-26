@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ProjectContributor } from '../../types/project.types';
 import { getLanguageString } from '../../utils/translation-helpers';
 
-const StyledContributorAccordionContent = styled.div`
+const StyledProjectContributors = styled.div`
   > div:not(:first-child) {
     margin-top: 1rem;
   }
@@ -34,7 +34,7 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
   const projectParticipants = contributors.filter((contributor) => contributor.type === 'ProjectParticipant');
 
   return (
-    <StyledContributorAccordionContent>
+    <StyledProjectContributors>
       {projectManagers.length > 0 && (
         <div>
           <Typography variant="overline" component="h3">
@@ -59,7 +59,7 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
           </StyledContributorList>
         </div>
       )}
-    </StyledContributorAccordionContent>
+    </StyledProjectContributors>
   );
 };
 
