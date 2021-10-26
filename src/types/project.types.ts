@@ -61,6 +61,7 @@ export interface CristinProject {
   endDate?: string;
   coordinatingInstitution: CoordinatingInstitution;
   contributors: ProjectContributor[];
+  status: 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
 }
 
 export interface ProjectSearchResponse {

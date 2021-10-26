@@ -22,7 +22,8 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
 
   return (
     <>
-      <ItalicPageHeader superHeader={{ title: t('project'), icon: <AccountTreeIcon /> }}>
+      <ItalicPageHeader
+        superHeader={{ title: `${t('project')} - ${t(`status.${project.status}`)}`, icon: <AccountTreeIcon /> }}>
         {project.title}
       </ItalicPageHeader>
 

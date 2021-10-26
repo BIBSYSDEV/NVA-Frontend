@@ -8,5 +8,10 @@
   "project_owner": "Prosjekteier",
   "project_participants": "Prosjektdeltakere",
   "results": "Resultater",
-  "scientific_summary": "Vitenskapelig sammendrag"
+  "scientific_summary": "Vitenskapelig sammendrag",
+  "status": {
+    "ACTIVE": "Aktivt",
+    "CONCLUDED": "Avsluttet",
+    "NOTSTARTED": "Ikke startet"
+  }
 }

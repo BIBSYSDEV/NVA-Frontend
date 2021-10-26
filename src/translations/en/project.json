@@ -8,5 +8,10 @@
   "project_owner": "Project owner",
   "project_participants": "Project participants",
   "results": "Results",
-  "scientific_summary": "Scientific summary"
+  "scientific_summary": "Scientific summary",
+  "status": {
+    "ACTIVE": "Active",
+    "CONCLUDED": "Concluded",
+    "NOTSTARTED": "Not started"
+  }
 }

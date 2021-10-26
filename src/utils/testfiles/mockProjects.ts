@@ -10,6 +10,7 @@ export const mockProject: CristinProject = {
       value: '1',
     },
   ],
+  status: 'ACTIVE',
   title: 'A dummy project',
   language: LanguageValues.ENGLISH,
   alternativeTitles: [
@@ -89,6 +90,7 @@ const mockProjects: CristinProject[] = [
         value: '414343',
       },
     ],
+    status: 'ACTIVE',
     title: 'Ornitologisk kartlegging i og ved Semsøyene naturreservat',
     language: LanguageValues.ENGLISH,
     alternativeTitles: [
@@ -133,6 +135,7 @@ const mockProjects: CristinProject[] = [
         value: '414392',
       },
     ],
+    status: 'ACTIVE',
     title: 'Naturbasert avløpsteknologi',
     language: LanguageValues.ENGLISH,
     alternativeTitles: [
@@ -177,6 +180,7 @@ const mockProjects: CristinProject[] = [
         value: '414451',
       },
     ],
+    status: 'CONCLUDED',
     title: 'Tørking og duggpunktbestemmelse av naturgass',
     language: LanguageValues.ENGLISH,
     alternativeTitles: [
@@ -253,6 +257,7 @@ const mockProjects: CristinProject[] = [
         value: '414803',
       },
     ],
+    status: 'NOTSTARTED',
     title: 'Antikkens syn på mennesket og naturen',
     language: LanguageValues.ENGLISH,
     alternativeTitles: [
