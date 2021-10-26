@@ -4,16 +4,22 @@ import styled from 'styled-components';
 import { ProjectContributor } from '../../types/project.types';
 import { getLanguageString } from '../../utils/translation-helpers';
 
-const StyledContributorElement = styled.div`
-  margin-bottom: 1rem;
+const StyledContributorAccordionContent = styled.div`
+  > div:not(:first-child) {
+    margin-top: 1rem;
+  }
 `;
 
 const StyledContributorList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 0.75rem;
 
-  > div {
-    margin-right: 1rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
 
@@ -28,9 +34,9 @@ export const ContributorAccordionContent = ({ contributors }: ContributorAccordi
   const projectParticipants = contributors.filter((contributor) => contributor.type === 'ProjectParticipant');
 
   return (
-    <>
+    <StyledContributorAccordionContent>
       {projectManagers.length > 0 && (
-        <>
+        <div>
           <Typography variant="overline" component="h3">
             {t('project_manager')}
           </Typography>
@@ -39,21 +45,21 @@ export const ContributorAccordionContent = ({ contributors }: ContributorAccordi
               <ContributorElement key={manager.identity.id} contributor={manager} />
             ))}
           </StyledContributorList>
-        </>
+        </div>
       )}
       {projectParticipants.length > 0 && (
-        <>
+        <div>
           <Typography variant="overline" component="h3">
             {t('project_participants')}
           </Typography>
           <StyledContributorList>
-            {projectParticipants.map((participant) => (
-              <ContributorElement key={participant.identity.id} contributor={participant} />
+            {projectParticipants.map((participant, index) => (
+              <ContributorElement key={index} contributor={participant} />
             ))}
           </StyledContributorList>
-        </>
+        </div>
       )}
-    </>
+    </StyledContributorAccordionContent>
   );
 };
 
@@ -61,13 +67,11 @@ interface ContributorElementProps {
   contributor: ProjectContributor;
 }
 
-const ContributorElement = ({ contributor }: ContributorElementProps) => {
-  return (
-    <StyledContributorElement>
-      <Typography variant="subtitle2" component="p">
-        {contributor.identity.firstName} {contributor.identity.lastName}
-      </Typography>
-      <Typography variant="body2">{getLanguageString(contributor.affiliation.name)}</Typography>
-    </StyledContributorElement>
-  );
-};
+const ContributorElement = ({ contributor }: ContributorElementProps) => (
+  <div>
+    <Typography variant="subtitle2" component="p">
+      {contributor.identity.firstName} {contributor.identity.lastName}
+    </Typography>
+    <Typography variant="body2">{getLanguageString(contributor.affiliation.name)}</Typography>
+  </div>
+);
