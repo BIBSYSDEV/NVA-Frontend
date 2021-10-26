@@ -233,7 +233,7 @@ const touchedResourceTabFields = (instanceType: string): FormikTouched<unknown> 
               type: true,
               label: true,
               agent: {
-                title: true,
+                name: true,
               },
               place: {
                 label: true,

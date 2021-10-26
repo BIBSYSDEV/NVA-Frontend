@@ -16,6 +16,10 @@ export const emptyPresentationPublicationInstance: PresentationPublicationInstan
 export const emptyPresentationPublicationContext: PresentationPublicationContext = {
   type: PublicationType.Presentation,
   label: '',
+  agent: {
+    type: 'UnconfirmedOrganization',
+    name: '',
+  },
   place: {
     type: 'UnconfirmedPlace',
     label: '',
@@ -28,6 +32,10 @@ export const emptyPresentationPublicationContext: PresentationPublicationContext
   },
 };
 
+interface Agent {
+  type: 'UnconfirmedOrganization';
+  name: string;
+}
 interface Place {
   type: 'UnconfirmedPlace';
   label: string;
@@ -42,8 +50,8 @@ interface Time {
 
 export interface PresentationPublicationContext {
   type: PublicationType.Presentation;
-  agent?: any; // TODO: NP-3292
   label: string;
+  agent: Agent | null;
   place: Place | null;
   time: Time | null;
 }

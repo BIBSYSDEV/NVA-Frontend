@@ -43,8 +43,7 @@ interface PresentationTypeFormProps {
 export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormProps) => {
   const { t, i18n } = useTranslation('registration');
   const { values, setFieldValue, setFieldTouched } = useFormikContext<PresentationRegistration>();
-  const { reference } = values.entityDescription;
-  const subType = reference.publicationInstance.type;
+  const subType = values.entityDescription.reference.publicationInstance.type;
 
   const countryOptions = Object.entries(
     countries.getNames(i18n.language === LanguageCodes.NORWEGIAN_BOKMAL ? 'no' : 'en')
@@ -90,7 +89,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
               />
             )}
           </Field>
-          <Field name={ResourceFieldNames.PublicationContextAgentTitle}>
+          <Field name={ResourceFieldNames.PublicationContextAgentName}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
                 {...field}

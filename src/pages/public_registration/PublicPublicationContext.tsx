@@ -167,6 +167,7 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
     <>
       <Typography variant="overline">{t('publicationTypes:Event')}</Typography>
       <Typography>{publicationContext.label}</Typography>
+      <Typography>{publicationContext.agent?.name}</Typography>
       <Typography>{publicationContext.place?.label}</Typography>
       <Typography>{publicationContext.place?.country}</Typography>
       <Typography>{fromDate === toDate ? fromDate : `${fromDate ?? '?'} - ${toDate ?? '?'}`}</Typography>

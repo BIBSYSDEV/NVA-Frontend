@@ -318,7 +318,7 @@ const presentationPublicationContext = Yup.object().shape({
     country: Yup.string().nullable().required(resourceErrorMessage.countryRequired),
   }),
   agent: Yup.object().shape({
-    title: Yup.string().nullable().required(resourceErrorMessage.organizerRequired),
+    name: Yup.string().nullable().required(resourceErrorMessage.organizerRequired),
   }),
   time: Yup.object().shape({
     from: Yup.string()
