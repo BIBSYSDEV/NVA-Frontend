@@ -35,7 +35,7 @@ interface CoordinatingInstitution {
   name: LanguageString;
 }
 
-interface ProjectContributor {
+export interface ProjectContributor {
   type: 'ProjectManager' | 'ProjectParticipant';
   identity: {
     type: 'Person';
