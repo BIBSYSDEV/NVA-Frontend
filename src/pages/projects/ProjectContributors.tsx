@@ -23,11 +23,11 @@ const StyledContributorList = styled.div`
   }
 `;
 
-interface ContributorAccordionContentProps {
+interface ProjectContributorsProps {
   contributors: ProjectContributor[];
 }
 
-export const ContributorAccordionContent = ({ contributors }: ContributorAccordionContentProps) => {
+export const ProjectContributors = ({ contributors }: ProjectContributorsProps) => {
   const { t } = useTranslation('project');
 
   const projectManagers = contributors.filter((contributor) => contributor.type === 'ProjectManager');
