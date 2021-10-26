@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import { useTranslation } from 'react-i18next';
 import { ItalicPageHeader } from '../../components/PageHeader';
@@ -47,13 +47,28 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
         </div>
         <div>
           <Typography variant="overline" component="h2">
-            {t('category_and_discipline')}
-          </Typography>
-          <Typography>-</Typography>
-          <Typography variant="overline" component="h2">
             {t('financing')}
           </Typography>
-          <Typography>-</Typography>
+          {project.funding.length > 0 ? (
+            project.funding.map((funding) => {
+              const text = `${getLanguageString(funding.source.names)} - ${t('grant_id')} ${funding.code}`;
+              return (
+                <Typography key={funding.code}>
+                  {funding.source.code === 'NFR' ? (
+                    <Link
+                      href={`https://prosjektbanken.forskningsradet.no/project/FORISS/${funding.code}`}
+                      target="_blank">
+                      {text}
+                    </Link>
+                  ) : (
+                    text
+                  )}
+                </Typography>
+              );
+            })
+          ) : (
+            <Typography>-</Typography>
+          )}
         </div>
       </StyledGeneralInfo>
 

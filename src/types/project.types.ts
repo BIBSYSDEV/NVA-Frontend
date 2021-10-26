@@ -50,6 +50,14 @@ interface ProjectContributor {
   };
 }
 
+interface Funding {
+  source: {
+    names: LanguageString;
+    code: string;
+  };
+  code: string;
+}
+
 export interface CristinProject {
   type: 'Project';
   id: string;
@@ -64,6 +72,7 @@ export interface CristinProject {
   status: 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
   academicSummary: LanguageString;
   popularScientificSummary: LanguageString;
+  funding: Funding[];
 }
 
 export interface ProjectSearchResponse {
