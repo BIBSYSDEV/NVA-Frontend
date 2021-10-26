@@ -23,6 +23,7 @@ export const convertToCristinProject = (project: ResearchProject): CristinProjec
   status: 'ACTIVE',
   academicSummary: {},
   popularScientificSummary: {},
+  funding: [],
 });
 
 export const getProjectName = (project?: CristinProject) =>
