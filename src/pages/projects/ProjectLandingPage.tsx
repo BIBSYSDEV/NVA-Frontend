@@ -12,6 +12,7 @@ import {
 import { dataTestId } from '../../utils/dataTestIds';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { StyledGeneralInfo } from '../../components/landing_page/SyledGeneralInfo';
+import { getLanguageString } from '../../utils/translation-helpers';
 
 interface ProjectLandingPageProps {
   project: CristinProject;
@@ -20,6 +21,8 @@ interface ProjectLandingPageProps {
 export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
   const { t } = useTranslation('project');
 
+  const popularScienceSummary = getLanguageString(project.popularScientificSummary);
+  const academicSummary = getLanguageString(project.academicSummary);
   return (
     <>
       <ItalicPageHeader
@@ -55,8 +58,21 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
       </StyledGeneralInfo>
 
       <LandingPageAccordion
-        heading={t('scientific_summary')}
-        data-testid={dataTestId.projectLandingPage.scientificSummaryAccordion}></LandingPageAccordion>
+        heading={t('summary')}
+        data-testid={dataTestId.projectLandingPage.scientificSummaryAccordion}>
+        {academicSummary && (
+          <>
+            <Typography variant="h3">{t('scientific_summary')}</Typography>
+            <Typography paragraph>{academicSummary}</Typography>
+          </>
+        )}
+        {popularScienceSummary && (
+          <>
+            <Typography variant="h3">{t('popular_science_summary')}</Typography>
+            <Typography>{popularScienceSummary}</Typography>
+          </>
+        )}
+      </LandingPageAccordion>
 
       <LandingPageAccordion
         data-testid={dataTestId.projectLandingPage.participantsAccordion}

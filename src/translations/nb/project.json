@@ -2,6 +2,7 @@
   "category_and_discipline": "Kategori og disiplin",
   "financing": "Finansiering",
   "period": "Prosjektperiode",
+  "popular_science_summary": "Populærvitenskapelig sammendrag",
   "project": "Prosjekt",
   "project_info": "Prosjektinfo",
   "project_manager": "Prosjektleder",
@@ -13,5 +14,6 @@
     "ACTIVE": "Aktivt",
     "CONCLUDED": "Avsluttet",
     "NOTSTARTED": "Ikke startet"
-  }
+  },
+  "summary": "Sammendrag"
 }
