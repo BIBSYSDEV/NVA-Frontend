@@ -5,7 +5,16 @@ import { ProjectContributor } from '../../types/project.types';
 import { getLanguageString } from '../../utils/translation-helpers';
 
 const StyledContributorElement = styled.div`
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+`;
+
+const StyledContributorList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+
+  > div {
+    margin-right: 1rem;
+  }
 `;
 
 interface ContributorAccordionContentProps {
@@ -25,9 +34,11 @@ export const ContributorAccordionContent = ({ contributors }: ContributorAccordi
           <Typography variant="overline" component="h3">
             {t('project_manager')}
           </Typography>
-          {projectManagers.map((manager) => (
-            <ContributorElement key={manager.identity.id} contributor={manager} />
-          ))}
+          <StyledContributorList>
+            {projectManagers.map((manager) => (
+              <ContributorElement key={manager.identity.id} contributor={manager} />
+            ))}
+          </StyledContributorList>
         </>
       )}
       {projectParticipants.length > 0 && (
@@ -35,9 +46,11 @@ export const ContributorAccordionContent = ({ contributors }: ContributorAccordi
           <Typography variant="overline" component="h3">
             {t('project_participants')}
           </Typography>
-          {projectParticipants.map((participant) => (
-            <ContributorElement key={participant.identity.id} contributor={participant} />
-          ))}
+          <StyledContributorList>
+            {projectParticipants.map((participant) => (
+              <ContributorElement key={participant.identity.id} contributor={participant} />
+            ))}
+          </StyledContributorList>
         </>
       )}
     </>
