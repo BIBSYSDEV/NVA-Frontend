@@ -62,6 +62,8 @@ export interface CristinProject {
   coordinatingInstitution: CoordinatingInstitution;
   contributors: ProjectContributor[];
   status: 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
+  academicSummary: LanguageString;
+  popularScientificSummary: LanguageString;
 }
 
 export interface ProjectSearchResponse {
