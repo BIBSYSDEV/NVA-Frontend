@@ -20,6 +20,7 @@ export const convertToCristinProject = (project: ResearchProject): CristinProjec
   startDate: '',
   endDate: '',
   coordinatingInstitution: { id: '', type: 'Organization', name: {} },
+  status: 'ACTIVE',
 });
 
 export const getProjectName = (project?: CristinProject) =>
