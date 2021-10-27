@@ -35,21 +35,27 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
 
   return (
     <StyledProjectContributors>
-      {projectManagers.length > 0 && (
-        <div>
-          <Typography variant="overline" component="h3">
-            {t('project_manager')}
-          </Typography>
-          <ContributorList contributors={projectManagers} />
-        </div>
-      )}
-      {projectParticipants.length > 0 && (
-        <div>
-          <Typography variant="overline" component="h3">
-            {t('project_participants')}
-          </Typography>
-          <ContributorList contributors={projectParticipants} />
-        </div>
+      {contributors.length === 0 ? (
+        <Typography>{t('no_participants')}</Typography>
+      ) : (
+        <>
+          {projectManagers.length > 0 && (
+            <div>
+              <Typography variant="overline" component="h3">
+                {t('project_manager')}
+              </Typography>
+              <ContributorList contributors={projectManagers} />
+            </div>
+          )}
+          {projectParticipants.length > 0 && (
+            <div>
+              <Typography variant="overline" component="h3">
+                {t('project_participants')}
+              </Typography>
+              <ContributorList contributors={projectParticipants} />
+            </div>
+          )}
+        </>
       )}
     </StyledProjectContributors>
   );

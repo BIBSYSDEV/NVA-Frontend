@@ -8,6 +8,7 @@ import { LandingPageAccordion } from '../../components/landing_page/LandingPageA
 import { ProjectContributors } from './ProjectContributors';
 import { ProjectGeneralInfo } from './ProjectGeneralInfo';
 import { ProjectSummary } from './ProjectSummary';
+import { ProjectResults } from './ProjectResults';
 
 interface ProjectLandingPageProps {
   project: CristinProject;
@@ -40,9 +41,9 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
         <ProjectContributors contributors={project.contributors} />
       </LandingPageAccordion>
 
-      <LandingPageAccordion
-        data-testid={dataTestId.projectLandingPage.resultsAccordion}
-        heading={t('results')}></LandingPageAccordion>
+      <LandingPageAccordion data-testid={dataTestId.projectLandingPage.resultsAccordion} heading={t('results')}>
+        <ProjectResults projectId={project.id} />
+      </LandingPageAccordion>
     </>
   );
 };
