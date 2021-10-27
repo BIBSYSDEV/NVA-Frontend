@@ -1,6 +1,9 @@
 {
   "financing": "Finansiering",
   "grant_id": "GrantID",
+  "no_participants": "Ingen registrerte deltakere.",
+  "no_results": "Ingen publiserte resultater.",
+  "no_summary": "Ingen registrerte sammendrag.",
   "period": "Prosjektperiode",
   "popular_science_summary": "Populærvitenskapelig sammendrag",
   "project": "Prosjekt",

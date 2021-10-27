@@ -1,4 +1,4 @@
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { SearchApiPath } from '../../api/apiPaths';
 import { RegistrationList } from '../../components/RegistrationList';
@@ -21,5 +21,7 @@ export const ProjectResults = ({ projectId }: ProjectResultsProps) => {
     <CircularProgress />
   ) : results && results.total > 0 ? (
     <RegistrationList registrations={results.hits} />
-  ) : null;
+  ) : (
+    <Typography>{t('no_results')}</Typography>
+  );
 };

@@ -13,7 +13,10 @@ export const ProjectSummary = ({ academicSummary, popularScienceSummary }: Proje
 
   const academicSummaryString = getLanguageString(academicSummary);
   const popularScienceSummaryString = getLanguageString(popularScienceSummary);
-  return (
+
+  return !academicSummaryString && !popularScienceSummaryString ? (
+    <Typography>{t('no_summary')}</Typography>
+  ) : (
     <>
       {academicSummaryString && (
         <>

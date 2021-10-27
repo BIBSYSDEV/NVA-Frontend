@@ -1,6 +1,9 @@
 {
   "financing": "Financing",
   "grant_id": "GrantID",
+  "no_participants": "No registered participants.",
+  "no_results": "No published results.",
+  "no_summary": "No registered summary.",
   "period": "Project period",
   "popular_science_summary": "Popular science summary",
   "project": "Project",
