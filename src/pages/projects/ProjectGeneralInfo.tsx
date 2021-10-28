@@ -39,8 +39,8 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
         </Typography>
         {project.funding.length > 0 ? (
           project.funding.map((funding) => {
-            const projectTitle = getLanguageString(funding.source.names);
-            const fundingText = funding.code ? `${projectTitle} - ${t('grant_id')} ${funding.code}` : projectTitle;
+            const sourceName = getLanguageString(funding.source.names);
+            const fundingText = funding.code ? `${sourceName} - ${t('grant_id')} ${funding.code}` : sourceName;
             return (
               <Typography key={funding.code}>
                 {funding.source.code === 'NFR' ? (
