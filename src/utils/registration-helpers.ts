@@ -75,7 +75,7 @@ export const getFormattedRegistration = (registration: Registration) => {
 
   if (isPresentation(type)) {
     const presentationRegistration = registration as PresentationRegistration;
-    const { time } = presentationRegistration.entityDescription.reference.publicationContext;
+    const { time, agent, place } = presentationRegistration.entityDescription.reference.publicationContext;
 
     formattedValues = {
       ...presentationRegistration,
@@ -86,6 +86,8 @@ export const getFormattedRegistration = (registration: Registration) => {
           publicationContext: {
             ...presentationRegistration.entityDescription.reference.publicationContext,
             time: time?.from && time.to ? { ...time, type: 'Period' } : null,
+            agent: agent?.name ? agent : null,
+            place: place?.label || place?.country ? { ...place, type: 'UnconfirmedPlace' } : null,
           },
         },
       },

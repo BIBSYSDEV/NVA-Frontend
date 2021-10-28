@@ -16,15 +16,8 @@ export const emptyPresentationPublicationInstance: PresentationPublicationInstan
 export const emptyPresentationPublicationContext: PresentationPublicationContext = {
   type: PublicationType.Presentation,
   label: '',
-  agent: null /* {
-    type: 'UnconfirmedOrganization',
-    name: '',
-  },*/,
-  place: {
-    type: 'UnconfirmedPlace',
-    label: '',
-    country: '',
-  },
+  agent: null,
+  place: null,
   time: null,
 };
 
