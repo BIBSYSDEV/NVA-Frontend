@@ -168,7 +168,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                     <DatePicker
                       {...datePickerTranslationProps}
                       label={t('resource_type.date_from')}
-                      value={field.value}
+                      value={field.value ?? null}
                       onChange={(date, keyboardInput) => {
                         !touched && setFieldTouched(field.name, true, false);
                         onChangeDate(field.name, date, keyboardInput);

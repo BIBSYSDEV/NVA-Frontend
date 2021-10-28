@@ -16,20 +16,16 @@ export const emptyPresentationPublicationInstance: PresentationPublicationInstan
 export const emptyPresentationPublicationContext: PresentationPublicationContext = {
   type: PublicationType.Presentation,
   label: '',
-  agent: {
+  agent: null /* {
     type: 'UnconfirmedOrganization',
     name: '',
-  },
+  },*/,
   place: {
     type: 'UnconfirmedPlace',
     label: '',
     country: '',
   },
-  time: {
-    type: 'Period',
-    from: '',
-    to: '',
-  },
+  time: null,
 };
 
 interface Agent {

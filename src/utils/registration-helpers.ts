@@ -10,6 +10,7 @@ import {
 } from '../types/publicationFieldNames';
 import { User } from '../types/user.types';
 import i18n from '../translations/i18n';
+import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -67,3 +68,29 @@ export const getPublicationChannelString = (title: string, onlineIssn?: string |
 };
 
 export const getRegistrationIdentifier = (id: string) => id.split('/').pop() ?? '';
+
+export const getFormattedRegistration = (registration: Registration) => {
+  const type = registration.entityDescription?.reference?.publicationInstance.type ?? '';
+  let formattedValues = registration;
+
+  if (isPresentation(type)) {
+    const presentationRegistration = registration as PresentationRegistration;
+    const { time } = presentationRegistration.entityDescription.reference.publicationContext;
+
+    formattedValues = {
+      ...presentationRegistration,
+      entityDescription: {
+        ...presentationRegistration.entityDescription,
+        reference: {
+          ...presentationRegistration.entityDescription.reference,
+          publicationContext: {
+            ...presentationRegistration.entityDescription.reference.publicationContext,
+            time: time?.from && time.to ? { ...time, type: 'Period' } : null,
+          },
+        },
+      },
+    };
+  }
+
+  return formattedValues;
+};
