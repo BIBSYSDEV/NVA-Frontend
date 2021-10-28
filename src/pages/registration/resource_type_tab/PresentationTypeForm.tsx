@@ -163,7 +163,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
 
             <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
               <StyledDatePickersContainer>
-                <Field name={ResourceFieldNames.PubliactionContextTimeFrom}>
+                <Field name={ResourceFieldNames.PublicationContextTimeFrom}>
                   {({ field, meta: { error, touched } }: FieldProps<string>) => (
                     <DatePicker
                       {...datePickerTranslationProps}
@@ -191,7 +191,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                     />
                   )}
                 </Field>
-                <Field name={ResourceFieldNames.PubliactionContextTimeTo}>
+                <Field name={ResourceFieldNames.PublicationContextTimeTo}>
                   {({ field, meta: { error, touched } }: FieldProps<string>) => (
                     <DatePicker
                       {...datePickerTranslationProps}

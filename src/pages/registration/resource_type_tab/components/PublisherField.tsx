@@ -43,8 +43,8 @@ export const PublisherField = () => {
 
   useEffect(() => {
     if (publisherOptions?.length === 1 && publisher?.name && publisherOptions[0].name === publisher.name) {
-      setFieldValue(ResourceFieldNames.PubliactionContextPublisherType, PublicationChannelType.Publisher, false);
-      setFieldValue(ResourceFieldNames.PubliactionContextPublisherId, publisherOptions[0].id);
+      setFieldValue(ResourceFieldNames.PublicationContextPublisherType, PublicationChannelType.Publisher, false);
+      setFieldValue(ResourceFieldNames.PublicationContextPublisherId, publisherOptions[0].id);
       setQuery('');
     }
   }, [setFieldValue, publisher?.name, publisherOptions]);
@@ -56,7 +56,7 @@ export const PublisherField = () => {
 
   return (
     <ThemeProvider theme={lightTheme}>
-      <Field name={ResourceFieldNames.PubliactionContextPublisherId}>
+      <Field name={ResourceFieldNames.PublicationContextPublisherId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
             {...autocompleteTranslationProps}
@@ -82,14 +82,14 @@ export const PublisherField = () => {
             onChange={(_, inputValue, reason) => {
               if (reason === 'selectOption') {
                 setFieldValue(
-                  ResourceFieldNames.PubliactionContextPublisherType,
+                  ResourceFieldNames.PublicationContextPublisherType,
                   PublicationChannelType.Publisher,
                   false
                 );
                 setFieldValue(field.name, inputValue.pop()?.id);
               } else if (reason === 'removeOption') {
                 setFieldValue(
-                  ResourceFieldNames.PubliactionContextPublisherType,
+                  ResourceFieldNames.PublicationContextPublisherType,
                   PublicationChannelType.UnconfirmedPublisher,
                   false
                 );

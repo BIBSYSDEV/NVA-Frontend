@@ -26,7 +26,7 @@ export const emptyPresentationPublicationContext: PresentationPublicationContext
     country: '',
   },
   time: {
-    type: 'TemporalExtent',
+    type: 'Period',
     from: '',
     to: '',
   },
@@ -36,14 +36,15 @@ interface Agent {
   type: 'UnconfirmedOrganization';
   name: string;
 }
+
 interface Place {
   type: 'UnconfirmedPlace';
   label: string;
   country: string;
 }
 
-interface Time {
-  type: 'TemporalExtent';
+interface Period {
+  type: 'Period';
   from: string;
   to: string;
 }
@@ -53,7 +54,7 @@ export interface PresentationPublicationContext {
   label: string;
   agent: Agent | null;
   place: Place | null;
-  time: Time | null;
+  time: Period | null;
 }
 
 interface PresentationReference extends BaseReference {
