@@ -86,7 +86,7 @@ export const getFormattedRegistration = (registration: Registration) => {
           publicationContext: {
             ...presentationRegistration.entityDescription.reference.publicationContext,
             time: time?.from && time.to ? { ...time, type: 'Period' } : null,
-            agent: agent?.name ? agent : null,
+            agent: agent?.name ? { ...agent, type: 'UnconfirmedOrganization' } : null,
             place: place?.label || place?.country ? { ...place, type: 'UnconfirmedPlace' } : null,
           },
         },
