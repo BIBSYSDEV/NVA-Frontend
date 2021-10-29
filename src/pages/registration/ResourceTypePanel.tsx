@@ -26,6 +26,11 @@ import { DegreeTypeForm } from './resource_type_tab/DegreeTypeForm';
 import { JournalTypeForm } from './resource_type_tab/JournalTypeForm';
 import { ReportTypeForm } from './resource_type_tab/ReportTypeForm';
 import { getMainRegistrationType } from '../../utils/registration-helpers';
+import { PresentationTypeForm } from './resource_type_tab/PresentationTypeForm';
+import {
+  emptyPresentationPublicationContext,
+  emptyPresentationPublicationInstance,
+} from '../../types/publication_types/presentationRegistration.types';
 
 export const ResourceTypePanel = () => {
   const { t } = useTranslation('registration');
@@ -82,6 +87,10 @@ export const ResourceTypePanel = () => {
       case PublicationType.Chapter:
         setFieldValue(instanceTypeBaseFieldName, emptyChapterPublicationInstance, false);
         setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Chapter }, false);
+        break;
+      case PublicationType.Presentation:
+        setFieldValue(instanceTypeBaseFieldName, emptyPresentationPublicationInstance, false);
+        setFieldValue(contextTypeBaseFieldName, emptyPresentationPublicationContext, false);
         break;
     }
 
@@ -150,6 +159,7 @@ export const ResourceTypePanel = () => {
       {mainType === PublicationType.Degree && <DegreeTypeForm onChangeSubType={onChangeSubType} />}
       {mainType === PublicationType.Chapter && <ChapterTypeForm onChangeSubType={onChangeSubType} />}
       {mainType === PublicationType.PublicationInJournal && <JournalTypeForm onChangeSubType={onChangeSubType} />}
+      {mainType === PublicationType.Presentation && <PresentationTypeForm onChangeSubType={onChangeSubType} />}
     </>
   );
 };

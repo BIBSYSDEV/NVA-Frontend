@@ -2,10 +2,11 @@ import * as Yup from 'yup';
 import { Contributor, ContributorRole } from '../../../types/contributor.types';
 import { BookType } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
-import { isDegree } from '../../registration-helpers';
+import { isDegree, isPresentation } from '../../registration-helpers';
 
 const contributorErrorMessage = {
   authorRequired: i18n.t('feedback:validation.author_required'),
+  contributorRequired: i18n.t('feedback:validation.contributor_required'),
   editorRequired: i18n.t('feedback:validation.editor_required'),
   supervisorRequired: i18n.t('feedback:validation.supervisor_required'),
 };
@@ -34,6 +35,8 @@ export const contributorsValidationSchema = Yup.array().when(
         .test('editor-test', contributorErrorMessage.editorRequired, (contributors) =>
           hasRole(contributors, ContributorRole.Editor)
         );
+    } else if (isPresentation(publicationInstanceType)) {
+      return Yup.array().of(contributorValidationSchema).min(1, contributorErrorMessage.contributorRequired);
     } else {
       return Yup.array()
         .of(contributorValidationSchema)

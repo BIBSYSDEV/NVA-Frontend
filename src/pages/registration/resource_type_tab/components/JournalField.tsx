@@ -60,8 +60,8 @@ export const JournalField = () => {
   useEffect(() => {
     // Set Journal with matching ISSN
     if (journalsByIssn?.length === 1) {
-      setFieldValue(ResourceFieldNames.PubliactionContextType, PublicationChannelType.Journal, false);
-      setFieldValue(ResourceFieldNames.PubliactionContextId, journalsByIssn[0].id);
+      setFieldValue(ResourceFieldNames.PublicationContextType, PublicationChannelType.Journal, false);
+      setFieldValue(ResourceFieldNames.PublicationContextId, journalsByIssn[0].id);
       setQuery('');
     }
   }, [setFieldValue, journalsByIssn]);
@@ -74,7 +74,7 @@ export const JournalField = () => {
 
   return (
     <ThemeProvider theme={lightTheme}>
-      <Field name={ResourceFieldNames.PubliactionContextId}>
+      <Field name={ResourceFieldNames.PublicationContextId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
             {...autocompleteTranslationProps}
@@ -97,11 +97,11 @@ export const JournalField = () => {
             value={reference?.publicationContext.id && journal ? [journal] : []}
             onChange={(_, inputValue, reason) => {
               if (reason === 'selectOption') {
-                setFieldValue(ResourceFieldNames.PubliactionContextType, PublicationChannelType.Journal, false);
+                setFieldValue(ResourceFieldNames.PublicationContextType, PublicationChannelType.Journal, false);
                 setFieldValue(field.name, inputValue.pop()?.id);
               } else if (reason === 'removeOption') {
                 setFieldValue(
-                  ResourceFieldNames.PubliactionContextType,
+                  ResourceFieldNames.PublicationContextType,
                   PublicationChannelType.UnconfirmedJournal,
                   false
                 );

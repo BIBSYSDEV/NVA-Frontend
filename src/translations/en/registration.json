@@ -169,6 +169,8 @@
       "Textbook": "Textbook",
       "Textbook Chapter": "Textbook chapter"
     },
+    "date_from": "Date from",
+    "date_to": "Date to",
     "form": "Form",
     "isbn": "ISBN",
     "issn": "ISSN",
@@ -184,6 +186,7 @@
     },
     "online_issn": "Online ISSN",
     "or": "Or",
+    "organizer": "Organizer",
     "original_article": "Original article",
     "original_article_title": "Title on article",
     "pages": "Pages",
@@ -191,6 +194,7 @@
     "pages_to": "to",
     "peer_review": "Is peer reviewed and presents new original research?",
     "peer_reviewed": "Peer reviewed and presents new original research",
+    "place_for_event": "Place for event",
     "print_issn": "Print ISSN",
     "remove": "Remove",
     "remove_doi": "Remove DOI",
@@ -205,6 +209,7 @@
     "series_info": "If the publication is part of a series",
     "series_number": "Series number",
     "subtype": "Subtype",
+    "title_of_event": "Title of event",
     "volume": "Volume"
   },
   "save_draft": "Save draft",

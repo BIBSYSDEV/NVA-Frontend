@@ -26,9 +26,15 @@ import {
   ReportRegistration,
 } from '../../types/publication_types/reportRegistration.types';
 import { DegreeType, JournalType } from '../../types/publicationFieldNames';
-import { isBook, isChapter, isDegree, isJournal, isReport } from '../../utils/registration-helpers';
+import { isBook, isChapter, isDegree, isJournal, isPresentation, isReport } from '../../utils/registration-helpers';
 import { PublicDoi } from './PublicDoi';
-import { PublicJournal, PublicPartOfContent, PublicPublisher, PublicSeries } from './PublicPublicationContext';
+import {
+  PublicJournal,
+  PublicPartOfContent,
+  PublicPresentation,
+  PublicPublisher,
+  PublicSeries,
+} from './PublicPublicationContext';
 import {
   PublicIsbnContent,
   PublicPublicationInstanceBook,
@@ -42,6 +48,7 @@ import { RegistrationSummary } from './RegistrationSummary';
 import { StyledGeneralInfo } from '../../components/landing_page/SyledGeneralInfo';
 import { dataTestId } from '../../utils/dataTestIds';
 import { displayDate } from '../../utils/date-helpers';
+import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
@@ -153,6 +160,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             </>
           ) : isChapter(publicationInstance.type) ? (
             <PublicPartOfContent partOf={(publicationContext as ChapterPublicationContext).partOf} />
+          ) : isPresentation(publicationInstance.type) ? (
+            <PublicPresentation publicationContext={publicationContext as PresentationPublicationContext} />
           ) : null)}
       </div>
     </StyledGeneralInfo>

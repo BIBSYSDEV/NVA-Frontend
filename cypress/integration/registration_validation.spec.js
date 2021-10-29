@@ -178,6 +178,44 @@ describe('User opens registration form and can see validation errors', () => {
     );
   });
 
+  it('The User should be able to see validation errors on resource tab (Presentation)', () => {
+    cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
+    cy.get('[data-testid=publication-context-type-Event]').click({ force: true });
+
+    // publicationInstance type
+    cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
+    cy.get('[data-testid=publication-instance-type-ConferenceLecture]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
+      cy.get('[data-testid=error-tab]').should('be.visible')
+    );
+    cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
+    cy.get('[data-testid=publication-instance-type] p.Mui-error').should('not.exist');
+    cy.get('p.Mui-error').should('have.length', 6);
+
+    // publicationContext
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventTitleField}] input`).type('My Event');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventOrganizerField}] input`).type(
+      'My Organization'
+    );
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventPlaceField}] input`).type('My Place');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventCountryField}] input`).click();
+    cy.get('[id$=-option-1]').click();
+
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventDateFrom}] input`).type('02.01.2020');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventDateTo}] input`).type('01.01.2020');
+    cy.get('p.Mui-error').should('have.length', 2);
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventDateFrom}] input`)
+      .clear()
+      .type('01.01.2020');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventDateTo}] input`).clear().type('02.01.2020');
+    cy.get('p.Mui-error').should('have.length', 0);
+
+    cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
+      cy.get('[data-testid=error-tab]').should('not.exist')
+    );
+  });
+
   it('The User should be able to see validation errors on resource tab (Degree)', () => {
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get(`[data-testid=publication-context-type-Degree]`).click({ force: true });
@@ -259,11 +297,11 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.files.embargoDateField}]`)
       .parent()
       .within(() => {
-        cy.get("input").click({ force: true }).type('0101', { force: true }).blur();
+        cy.get('input').click({ force: true }).type('0101', { force: true }).blur();
         cy.get('p.Mui-error').should('be.visible');
-        cy.get("input").click({ force: true }).type('2000', { force: true });
+        cy.get('input').click({ force: true }).type('2000', { force: true });
         cy.get('p.Mui-error').should('be.visible');
-        cy.get("input").clear().click({ force: true }).type('01013000', { force: true });
+        cy.get('input').clear().click({ force: true }).type('01013000', { force: true });
         cy.get('p.Mui-error').should('not.exist');
       });
 

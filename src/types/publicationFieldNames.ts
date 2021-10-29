@@ -4,6 +4,7 @@ export enum PublicationType {
   Report = 'Report',
   Degree = 'Degree',
   Chapter = 'Chapter',
+  Presentation = 'Event',
 }
 
 export enum JournalType {
@@ -38,6 +39,13 @@ export enum ChapterType {
   AnthologyChapter = 'ChapterArticle',
 }
 
+export enum PresentationType {
+  ConferenceLecture = 'ConferenceLecture',
+  ConferencePoster = 'ConferencePoster',
+  Lecture = 'Lecture',
+  OtherPresentation = 'OtherPresentation',
+}
+
 export type RegistrationSubtype = JournalType | ReportType | BookType | DegreeType | ChapterType;
 
 export enum RegistrationFieldName {
@@ -65,11 +73,17 @@ export enum ResourceFieldNames {
   PagesPages = 'entityDescription.reference.publicationInstance.pages.pages',
   PartOf = 'entityDescription.reference.publicationContext.partOf',
   PeerReviewed = 'entityDescription.reference.publicationInstance.peerReviewed',
-  PubliactionContextId = 'entityDescription.reference.publicationContext.id',
-  PubliactionContextLevel = 'entityDescription.reference.publicationContext.level',
-  PubliactionContextPublisherId = 'entityDescription.reference.publicationContext.publisher.id',
-  PubliactionContextPublisherType = 'entityDescription.reference.publicationContext.publisher.type',
-  PubliactionContextType = 'entityDescription.reference.publicationContext.type',
+  PublicationContextAgentName = 'entityDescription.reference.publicationContext.agent.name',
+  PublicationContextId = 'entityDescription.reference.publicationContext.id',
+  PublicationContextLabel = 'entityDescription.reference.publicationContext.label',
+  PublicationContextLevel = 'entityDescription.reference.publicationContext.level',
+  PublicationContextPlaceLabel = 'entityDescription.reference.publicationContext.place.label',
+  PublicationContextPlaceCountry = 'entityDescription.reference.publicationContext.place.country',
+  PublicationContextPublisherId = 'entityDescription.reference.publicationContext.publisher.id',
+  PublicationContextPublisherType = 'entityDescription.reference.publicationContext.publisher.type',
+  PublicationContextTimeFrom = 'entityDescription.reference.publicationContext.time.from',
+  PublicationContextTimeTo = 'entityDescription.reference.publicationContext.time.to',
+  PublicationContextType = 'entityDescription.reference.publicationContext.type',
   Reference = 'entityDescription.reference',
   SeriesId = 'entityDescription.reference.publicationContext.series.id',
   SeriesNumber = 'entityDescription.reference.publicationContext.seriesNumber',

@@ -17,6 +17,7 @@ import { Registration, RegistrationStatus, RegistrationTab } from '../../types/r
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { getFormattedRegistration } from '../../utils/registration-helpers';
 
 const StyledActionsContainer = styled.div`
   margin-bottom: 1rem;
@@ -71,7 +72,8 @@ export const RegistrationFormActions = ({
 
   const saveRegistration = async (values: Registration) => {
     setIsSaving(true);
-    const updateRegistrationResponse = await updateRegistration(values);
+    const formattedValues = getFormattedRegistration(values);
+    const updateRegistrationResponse = await updateRegistration(formattedValues);
     const isSuccess = isSuccessStatus(updateRegistrationResponse.status);
     if (isErrorStatus(updateRegistrationResponse.status)) {
       dispatch(setNotification(t('feedback:error.update_registration'), NotificationVariant.Error));

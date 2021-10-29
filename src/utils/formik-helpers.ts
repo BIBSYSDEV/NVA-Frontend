@@ -225,6 +225,31 @@ const touchedResourceTabFields = (instanceType: string): FormikTouched<unknown> 
           },
         },
       };
+    case PublicationType.Presentation:
+      return {
+        entityDescription: {
+          reference: {
+            publicationContext: {
+              type: true,
+              label: true,
+              agent: {
+                name: true,
+              },
+              place: {
+                label: true,
+                country: true,
+              },
+              time: {
+                from: true,
+                to: true,
+              },
+            },
+            publicationInstance: {
+              type: true,
+            },
+          },
+        },
+      };
     default:
       return {
         entityDescription: {

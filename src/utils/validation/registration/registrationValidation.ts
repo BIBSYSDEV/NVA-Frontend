@@ -9,6 +9,7 @@ import {
   degreeReference,
   emptyStringToNull,
   journalReference,
+  presentationReference,
   reportReference,
 } from './referenceValidation';
 import i18n from '../../../translations/i18n';
@@ -62,6 +63,8 @@ export const registrationValidationSchema = Yup.object().shape({
           return degreeReference;
         case PublicationType.Chapter:
           return chapterReference;
+        case PublicationType.Presentation:
+          return presentationReference;
         default:
           return baseReference;
       }

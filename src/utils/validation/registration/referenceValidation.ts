@@ -1,6 +1,13 @@
 import * as Yup from 'yup';
 import { parse as parseIsbn } from 'isbn-utils';
-import { BookType, ChapterType, DegreeType, JournalType, ReportType } from '../../../types/publicationFieldNames';
+import {
+  BookType,
+  ChapterType,
+  DegreeType,
+  JournalType,
+  PresentationType,
+  ReportType,
+} from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
 import {
   BookMonographContentType,
@@ -19,8 +26,24 @@ const resourceErrorMessage = {
   corrigendumForInvalid: i18n.t('feedback:validation.has_invalid_format', {
     field: i18n.t('registration:resource_type.original_article'),
   }),
+  countryRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('common:country'),
+  }),
+  dateFromRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.date_from'),
+  }),
+  dateToRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.date_to'),
+  }),
   doiInvalid: i18n.t('feedback:validation.has_invalid_format', {
     field: i18n.t('registration:registration.link_to_resource'),
+  }),
+  eventTitleRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.title_of_event'),
+  }),
+  fromMustBeBeforeTo: i18n.t('feedback:validation.cannot_be_after', {
+    field: i18n.t('registration:resource_type.date_from'),
+    limitField: i18n.t('registration:resource_type.date_to').toLowerCase(),
   }),
   isbnInvalid: i18n.t('feedback:validation.has_invalid_format', {
     field: i18n.t('registration:resource_type.isbn'),
@@ -31,6 +54,9 @@ const resourceErrorMessage = {
   }),
   journalRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.journal'),
+  }),
+  organizerRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.organizer'),
   }),
   pageBeginMustBeSmallerThanEnd: i18n.t('feedback:validation.must_be_smaller_than', {
     field: i18n.t('registration:resource_type.pages_from'),
@@ -53,6 +79,9 @@ const resourceErrorMessage = {
   peerReviewedRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.peer_reviewed'),
   }),
+  placeRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.place_for_event'),
+  }),
   publisherNotSelected: i18n.t('feedback:validation.not_selected', {
     field: i18n.t('common:publisher'),
   }),
@@ -61,6 +90,10 @@ const resourceErrorMessage = {
   }),
   seriesNotSelected: i18n.t('feedback:validation.not_selected', {
     field: i18n.t('registration:resource_type.series'),
+  }),
+  toMustBeAfterFrom: i18n.t('feedback:validation.cannot_be_before', {
+    field: i18n.t('registration:resource_type.date_to'),
+    limitField: i18n.t('registration:resource_type.date_from').toLowerCase(),
   }),
   typeRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:type'),
@@ -271,4 +304,49 @@ const chapterPublicationContext = Yup.object().shape({
 export const chapterReference = baseReference.shape({
   publicationInstance: chapterPublicationInstance,
   publicationContext: chapterPublicationContext,
+});
+
+// Event/Presentation
+const presentationPublicationInstance = Yup.object().shape({
+  type: Yup.string().oneOf(Object.values(PresentationType)).required(resourceErrorMessage.typeRequired),
+});
+
+const presentationPublicationContext = Yup.object().shape({
+  label: Yup.string().nullable().required(resourceErrorMessage.eventTitleRequired),
+  place: Yup.object().shape({
+    label: Yup.string().nullable().required(resourceErrorMessage.placeRequired),
+    country: Yup.string().nullable().required(resourceErrorMessage.countryRequired),
+  }),
+  agent: Yup.object().shape({
+    name: Yup.string().nullable().required(resourceErrorMessage.organizerRequired),
+  }),
+  time: Yup.object().shape({
+    from: Yup.string()
+      .nullable()
+      .test('from-test', resourceErrorMessage.fromMustBeBeforeTo, (fromValue, context) => {
+        const fromDate = fromValue ? new Date(fromValue) : null;
+        const toDate = context.parent.to ? new Date(context.parent.to) : null;
+        if (fromDate && toDate) {
+          return fromDate <= toDate;
+        }
+        return true;
+      })
+      .required(resourceErrorMessage.dateFromRequired),
+    to: Yup.string()
+      .nullable()
+      .test('to-test', resourceErrorMessage.toMustBeAfterFrom, (toValue, context) => {
+        const fromDate = context.parent.from ? new Date(context.parent.from) : null;
+        const toDate = toValue ? new Date(toValue) : null;
+        if (fromDate && toDate) {
+          return fromDate <= toDate;
+        }
+        return true;
+      })
+      .required(resourceErrorMessage.dateToRequired),
+  }),
+});
+
+export const presentationReference = baseReference.shape({
+  publicationInstance: presentationPublicationInstance,
+  publicationContext: presentationPublicationContext,
 });

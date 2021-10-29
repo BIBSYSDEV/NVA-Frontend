@@ -4,8 +4,8 @@ import { ContributorRole } from '../types/contributor.types';
 import { LanguageCodes } from '../types/language.types';
 
 // Map from three letter language to two ("nob" -> "no")
-export const getPreferredLanguageCode = () => {
-  const currentLanguage = i18n.language;
+export const getPreferredLanguageCode = (language?: string) => {
+  const currentLanguage = language || i18n.language;
   if (currentLanguage === LanguageCodes.NORWEGIAN_BOKMAL || currentLanguage === LanguageCodes.NORWEGIAN_NYNORSK) {
     return 'nb';
   } else {

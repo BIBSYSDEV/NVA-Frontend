@@ -169,6 +169,8 @@
       "Textbook": "Lærebok",
       "Textbook Chapter": "Kapittel i lærebok"
     },
+    "date_from": "Dato fra",
+    "date_to": "Dato til",
     "form": "Form",
     "isbn": "ISBN",
     "issn": "ISSN",
@@ -184,6 +186,7 @@
     },
     "online_issn": "Online ISSN",
     "or": "Eller",
+    "organizer": "Arrangør",
     "original_article": "Original artikkel",
     "original_article_title": "Tittel på artikkel",
     "pages": "Sidetall",
@@ -191,6 +194,7 @@
     "pages_to": "til",
     "peer_review": "Er fagfellevurdert og presenterer ny original forskning?",
     "peer_reviewed": "Er fagfellevurdert og presenterer ny original forskning",
+    "place_for_event": "Sted for arrangement",
     "print_issn": "Print ISSN",
     "remove": "Fjern",
     "remove_doi": "Fjern DOI",
@@ -205,6 +209,7 @@
     "series_info": "Hvis publikasjonen inngår i en serie",
     "series_number": "Serienummer",
     "subtype": "Undertype",
+    "title_of_event": "Tittel på arrangement",
     "volume": "Volum"
   },
   "save_draft": "Lagre kladd",

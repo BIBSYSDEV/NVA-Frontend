@@ -10,6 +10,7 @@ import { ReportEntityDescription } from './publication_types/reportRegistration.
 import { ChapterEntityDescription } from './publication_types/chapterRegistration.types';
 import { Contributor } from './contributor.types';
 import { LanguageValues } from './language.types';
+import { PresentationEntityDescription } from './publication_types/presentationRegistration.types';
 
 export enum RegistrationStatus {
   Deleted = 'DRAFT_FOR_DELETION',
@@ -139,7 +140,8 @@ export type EntityDescription =
   | DegreeEntityDescription
   | BookEntityDescription
   | ReportEntityDescription
-  | ChapterEntityDescription;
+  | ChapterEntityDescription
+  | PresentationEntityDescription;
 
 export interface Registration extends BaseRegistration {
   entityDescription?: EntityDescription;

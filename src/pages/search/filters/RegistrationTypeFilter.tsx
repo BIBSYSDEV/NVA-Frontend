@@ -7,6 +7,7 @@ import {
   ChapterType,
   DegreeType,
   JournalType,
+  PresentationType,
   ReportType,
   ResourceFieldNames,
 } from '../../../types/publicationFieldNames';
@@ -60,6 +61,12 @@ export const RegistrationTypeFilter = () => {
       ))}
       <ListSubheader disableSticky>{t('Chapter')}</ListSubheader>
       {Object.values(ChapterType).map((type) => (
+        <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} $isSelected={type === currentValue}>
+          {t(type)}
+        </StyledIndentedListItem>
+      ))}
+      <ListSubheader disableSticky>{t('Event')}</ListSubheader>
+      {Object.values(PresentationType).map((type) => (
         <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} $isSelected={type === currentValue}>
           {t(type)}
         </StyledIndentedListItem>

@@ -83,6 +83,9 @@
   },
   "validation": {
     "author_required": "You need to register at least one author for this registration",
+    "cannot_be_after": "{{field}} cannot be after {{limitField}}",
+    "cannot_be_before": "{{field}} cannot be before {{limitField}}",
+    "contributor_required": "You need to register at least one contributor for this registration",
     "editor_required": "You need to register at least one editor for this registration",
     "has_invalid_format": "{{field}} has invalid format",
     "isbn_too_short": "ISBN must have 13 digits",

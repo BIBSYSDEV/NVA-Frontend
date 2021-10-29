@@ -9,6 +9,7 @@ import { Journal, Publisher } from '../../types/registration.types';
 import { RegistrationSummary } from './RegistrationSummary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
+import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
@@ -151,4 +152,40 @@ const PublicJournalContent = ({ id }: PublicJournalContentProps) => {
       )}
     </>
   ) : null;
+};
+
+interface PublicPresentationProps {
+  publicationContext: PresentationPublicationContext;
+}
+
+export const PublicPresentation = ({ publicationContext }: PublicPresentationProps) => {
+  const { t } = useTranslation('registration');
+  const { type, time, place, label, agent } = publicationContext;
+  const fromDate = time?.from ? new Date(time.from).toLocaleDateString() : '';
+  const toDate = time?.to ? new Date(time.to).toLocaleDateString() : '';
+
+  return (
+    <>
+      <Typography variant="overline">{t(`publicationTypes:${type}`)}</Typography>
+      {label && <Typography>{label}</Typography>}
+      {agent?.name && (
+        <Typography>
+          {t('resource_type.organizer')}: {agent.name}
+        </Typography>
+      )}
+      {place?.label && (
+        <Typography>
+          {t('resource_type.place_for_event')}: {place.label}
+        </Typography>
+      )}
+      {place?.country && (
+        <Typography>
+          {t('common:country')}: {place.country}
+        </Typography>
+      )}
+      {(fromDate || toDate) && (
+        <Typography>{fromDate === toDate ? fromDate : `${fromDate ?? '?'} - ${toDate ?? '?'}`}</Typography>
+      )}
+    </>
+  );
 };
