@@ -69,15 +69,16 @@ export const getPublicationChannelString = (title: string, onlineIssn?: string |
 
 export const getRegistrationIdentifier = (id: string) => id.split('/').pop() ?? '';
 
+// Ensure Registration has correct type values, etc
 export const getFormattedRegistration = (registration: Registration) => {
   const type = registration.entityDescription?.reference?.publicationInstance.type ?? '';
-  let formattedValues = registration;
+  let formattedRegistration = registration;
 
   if (isPresentation(type)) {
     const presentationRegistration = registration as PresentationRegistration;
     const { time, agent, place } = presentationRegistration.entityDescription.reference.publicationContext;
 
-    formattedValues = {
+    formattedRegistration = {
       ...presentationRegistration,
       entityDescription: {
         ...presentationRegistration.entityDescription,
@@ -94,5 +95,5 @@ export const getFormattedRegistration = (registration: Registration) => {
     };
   }
 
-  return formattedValues;
+  return formattedRegistration;
 };
