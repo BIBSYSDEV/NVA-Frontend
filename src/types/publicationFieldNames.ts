@@ -5,6 +5,7 @@ export enum PublicationType {
   Degree = 'Degree',
   Chapter = 'Chapter',
   Presentation = 'Event',
+  Artistic = 'Artistic',
 }
 
 export enum JournalType {
@@ -46,7 +47,18 @@ export enum PresentationType {
   OtherPresentation = 'OtherPresentation',
 }
 
-export type RegistrationSubtype = JournalType | ReportType | BookType | DegreeType | ChapterType;
+export enum ArtisticType {
+  ArtisticDesign = 'ArtisticDesign',
+}
+
+export type RegistrationSubtype =
+  | JournalType
+  | ReportType
+  | BookType
+  | DegreeType
+  | ChapterType
+  | PresentationType
+  | ArtisticType;
 
 export enum RegistrationFieldName {
   Identifier = 'identifier',
