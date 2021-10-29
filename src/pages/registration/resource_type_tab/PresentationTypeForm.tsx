@@ -4,6 +4,9 @@ import { Autocomplete, TextField, ThemeProvider } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import countries from 'i18n-iso-countries';
+import enCountries from 'i18n-iso-countries/langs/en.json';
+import nbCountries from 'i18n-iso-countries/langs/nb.json';
 import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import { datePickerTranslationProps, lightTheme } from '../../../themes/lightTheme';
@@ -12,10 +15,8 @@ import { PresentationRegistration } from '../../../types/publication_types/prese
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
 import { SelectTypeField } from './components/SelectTypeField';
-import countries from 'i18n-iso-countries';
-import enCountries from 'i18n-iso-countries/langs/en.json';
-import nbCountries from 'i18n-iso-countries/langs/nb.json';
 import { getPreferredLanguageCode } from '../../../utils/translation-helpers';
+
 countries.registerLocale(enCountries);
 countries.registerLocale(nbCountries);
 
@@ -139,7 +140,6 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                       <StyledFlagImg
                         loading="lazy"
                         src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                        srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
                         alt={option.code}
                       />
                       {option.label} ({option.code})

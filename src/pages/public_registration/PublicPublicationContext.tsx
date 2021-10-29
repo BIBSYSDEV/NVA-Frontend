@@ -160,26 +160,27 @@ interface PublicPresentationProps {
 
 export const PublicPresentation = ({ publicationContext }: PublicPresentationProps) => {
   const { t } = useTranslation('registration');
-  const fromDate = publicationContext.time?.from ? new Date(publicationContext.time.from).toLocaleDateString() : '';
-  const toDate = publicationContext.time?.to ? new Date(publicationContext.time.to).toLocaleDateString() : '';
+  const { type, time, place, label, agent } = publicationContext;
+  const fromDate = time?.from ? new Date(time.from).toLocaleDateString() : '';
+  const toDate = time?.to ? new Date(time.to).toLocaleDateString() : '';
 
   return (
     <>
-      <Typography variant="overline">{t('publicationTypes:Event')}</Typography>
-      {publicationContext.label && <Typography>{publicationContext.label}</Typography>}
-      {publicationContext.agent?.name && (
+      <Typography variant="overline">{t(`publicationTypes:${type}`)}</Typography>
+      {label && <Typography>{label}</Typography>}
+      {agent?.name && (
         <Typography>
-          {t('resource_type.organizer')}: {publicationContext.agent.name}
+          {t('resource_type.organizer')}: {agent.name}
         </Typography>
       )}
-      {publicationContext.place?.label && (
+      {place?.label && (
         <Typography>
-          {t('resource_type.place_for_event')}: {publicationContext.place.label}
+          {t('resource_type.place_for_event')}: {place.label}
         </Typography>
       )}
-      {publicationContext.place?.country && (
+      {place?.country && (
         <Typography>
-          {t('common:country')}: {publicationContext.place.country}
+          {t('common:country')}: {place.country}
         </Typography>
       )}
       {(fromDate || toDate) && (
