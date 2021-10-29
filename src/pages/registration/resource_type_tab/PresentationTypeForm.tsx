@@ -14,10 +14,10 @@ import { getDateFnsLocale } from '../../../utils/date-helpers';
 import { SelectTypeField } from './components/SelectTypeField';
 import countries from 'i18n-iso-countries';
 import enCountries from 'i18n-iso-countries/langs/en.json';
-import noCountries from 'i18n-iso-countries/langs/no.json';
-import { LanguageCodes } from '../../../types/language.types';
+import nbCountries from 'i18n-iso-countries/langs/nb.json';
+import { getPreferredLanguageCode } from '../../../utils/translation-helpers';
 countries.registerLocale(enCountries);
-countries.registerLocale(noCountries);
+countries.registerLocale(nbCountries);
 
 const StyledDatePickersContainer = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
@@ -45,9 +45,9 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
   const { values, setFieldValue, setFieldTouched } = useFormikContext<PresentationRegistration>();
   const subType = values.entityDescription.reference.publicationInstance.type;
 
-  const countryOptions = Object.entries(
-    countries.getNames(i18n.language === LanguageCodes.NORWEGIAN_BOKMAL ? 'no' : 'en')
-  ).map(([code, label]) => ({ code, label }));
+  const countryOptions = Object.entries(countries.getNames(getPreferredLanguageCode(i18n.language))).map(
+    ([code, label]) => ({ code, label })
+  );
 
   const onChangeDate = (fieldName: string, date: Date | null, keyboardInput?: string) => {
     const isValidDate = date && date && !isNaN(date.getTime());
