@@ -3,7 +3,7 @@ import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import { lightTheme } from '../../../themes/lightTheme';
 import { ArtisticType, ResourceFieldNames } from '../../../types/publicationFieldNames';
-import { ArtisticRegistration } from '../../../types/publication_types/artisticRegistration';
+import { ArtisticRegistration } from '../../../types/publication_types/artisticRegistration.types';
 import { SelectTypeField } from './components/SelectTypeField';
 import { ArtisticDesignForm } from './sub_type_forms/artistic_types/ArtisticDesignForm';
 

@@ -7,10 +7,12 @@ export interface ArtisticRegistration extends BaseRegistration {
 
 export interface ArtisticPublicationInstance {
   type: ArtisticType | '';
+  designType: DesignType | '';
 }
 
 export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {
   type: '',
+  designType: '',
 };
 
 export interface ArtisticPublicationContext {
@@ -24,4 +26,17 @@ interface ArtisticReference extends BaseReference {
 
 export interface ArtisticEntityDescription extends BaseEntityDescription {
   reference: ArtisticReference;
+}
+
+export enum DesignType {
+  Product = 'Product',
+  InteriorArchitecture = 'InteriorArchitecture',
+  ClothingDesign = 'ClothingDesign',
+  LightingDesign = 'LightingDesign',
+  Exhibition = 'Exhibition',
+  GraphicalDesign = 'GraphicalDesign',
+  Illustration = 'Illustration',
+  WebDesign = 'WebDesign',
+  ServiceDesign = 'ServiceDesign',
+  Other = 'Other',
 }

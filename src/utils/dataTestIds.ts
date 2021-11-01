@@ -75,6 +75,8 @@ export const dataTestId = {
       version: 'version-radios',
     },
     resourceType: {
+      artisticTypeField: 'artistic-type-field',
+      artisticMoreInfoField: 'artistic-type-field',
       contentField: 'content-field',
       contentValue: (value: string) => `content-value-${value.toLowerCase().replaceAll(' ', '-')}`,
       corrigendumForField: 'corrigendum-for-field',
