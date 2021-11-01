@@ -26,7 +26,7 @@ export const ProjectsField = () => {
   const debouncedSearchTerm = useDebounce(searchTerm);
   const [projects, isLoadingProjects] = useFetch<ProjectSearchResponse>({
     url: debouncedSearchTerm ? `${ProjectsApiPath.Project}?query=${encodeURIComponent(debouncedSearchTerm)}` : '',
-    errorMessage: t('fedback:error.get_project'),
+    errorMessage: t('feedback:error.get_project'),
   });
 
   return (
