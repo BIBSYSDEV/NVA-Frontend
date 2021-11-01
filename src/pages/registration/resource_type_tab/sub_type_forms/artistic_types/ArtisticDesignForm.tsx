@@ -73,7 +73,7 @@ export const ArtisticDesignForm = () => {
       </BackgroundDiv>
 
       <FieldArray name="entityDescription.reference.publicationContext.venues">
-        {({ push, replace }: FieldArrayRenderProps) => (
+        {({ push, replace, remove }: FieldArrayRenderProps) => (
           <>
             <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
               <Typography variant="h3">Visningssteder</Typography>
@@ -85,7 +85,12 @@ export const ArtisticDesignForm = () => {
               </Button>
 
               {values.entityDescription.reference.publicationContext.venues?.map((venue, index) => (
-                <VenueRow key={index} venue={venue} updateVenue={(newVenue) => replace(index, newVenue)} />
+                <VenueRow
+                  key={index}
+                  venue={venue}
+                  updateVenue={(newVenue) => replace(index, newVenue)}
+                  removeVenue={() => remove(index)}
+                />
               ))}
             </BackgroundDiv>
           </>
@@ -98,15 +103,21 @@ export const ArtisticDesignForm = () => {
 interface VenueRowProps {
   venue: Venue;
   updateVenue: (venue: Venue) => void;
+  removeVenue: () => void;
 }
 
-const VenueRow = ({ updateVenue, venue }: VenueRowProps) => {
+const VenueRow = ({ updateVenue, removeVenue, venue }: VenueRowProps) => {
   const [openAddVenue, setOpenAddVenue] = useState(false);
 
   return (
     <>
       <Typography>{venue.name}</Typography>
-      <Button onClick={() => setOpenAddVenue(true)}>Rediger</Button>
+      <Button onClick={() => setOpenAddVenue(true)} variant="outlined">
+        Rediger
+      </Button>
+      <Button onClick={removeVenue} variant="contained" color="error">
+        Fjern
+      </Button>
       <ThemeProvider theme={lightTheme}>
         <Modal
           open={openAddVenue || !venue.name}
