@@ -11,13 +11,13 @@ export interface Venue {
 
 export interface ArtisticPublicationInstance {
   type: ArtisticType | '';
-  designType: DesignType | '';
+  designType: DesignSubtype;
   description: string;
 }
 
 export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {
   type: '',
-  designType: '',
+  designType: { type: '' },
   description: '',
 };
 
@@ -33,6 +33,11 @@ interface ArtisticReference extends BaseReference {
 
 export interface ArtisticEntityDescription extends BaseEntityDescription {
   reference: ArtisticReference;
+}
+
+interface DesignSubtype {
+  type: DesignType | '';
+  description?: string;
 }
 
 export enum DesignType {

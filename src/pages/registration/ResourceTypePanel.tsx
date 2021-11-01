@@ -32,6 +32,7 @@ import {
   emptyPresentationPublicationInstance,
 } from '../../types/publication_types/presentationRegistration.types';
 import { ArtisticTypeForm } from './resource_type_tab/ArtisticTypeForm';
+import { emptyArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
 
 export const ResourceTypePanel = () => {
   const { t } = useTranslation('registration');
@@ -92,6 +93,10 @@ export const ResourceTypePanel = () => {
       case PublicationType.Presentation:
         setFieldValue(instanceTypeBaseFieldName, emptyPresentationPublicationInstance, false);
         setFieldValue(contextTypeBaseFieldName, emptyPresentationPublicationContext, false);
+        break;
+      case PublicationType.Artistic:
+        setFieldValue(instanceTypeBaseFieldName, emptyArtisticPublicationInstance, false);
+        setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Artistic, venues: [] }, false);
         break;
     }
 

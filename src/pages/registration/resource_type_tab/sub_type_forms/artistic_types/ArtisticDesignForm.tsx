@@ -43,7 +43,7 @@ export const ArtisticDesignForm = () => {
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        <Field name={'subType'}>
+        <Field name={'entityDescription.reference.publicationInstance.designType.type'}>
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <StyledSelectWrapper>
               <TextField
@@ -67,7 +67,25 @@ export const ArtisticDesignForm = () => {
           )}
         </Field>
 
-        <Field name={'description'}>
+        {values.entityDescription.reference.publicationInstance.designType.type === DesignType.Other && (
+          <Field name={'entityDescription.reference.publicationInstance.designType.description'}>
+            {({ field, meta: { error, touched } }: FieldProps<string>) => (
+              <TextField
+                id={field.name}
+                data-testid={dataTestId.registrationWizard.resourceType.artisticOtherTypeField}
+                variant="filled"
+                fullWidth
+                {...field}
+                multiline
+                label={'Annen type'}
+                error={!!error && touched}
+                helperText={<ErrorMessage name={field.name} />}
+              />
+            )}
+          </Field>
+        )}
+
+        <Field name={'entityDescription.reference.publicationInstance.description'}>
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <TextField
               id={field.name}
@@ -76,7 +94,7 @@ export const ArtisticDesignForm = () => {
               fullWidth
               {...field}
               multiline
-              label={'Mer informasjon'}
+              label={'Mer informasjon om verket'}
               error={!!error && touched}
               helperText={<ErrorMessage name={field.name} />}
             />
