@@ -2,7 +2,7 @@ import { LanguageValues } from '../../types/language.types';
 import { CristinProject, ProjectSearchResponse } from '../../types/project.types';
 
 export const mockProject: CristinProject = {
-  id: 'https://api.dev.nva.aws.unit.no/project/1',
+  id: 'https://api.dev.nva.aws.unit.no/cristin/project/1',
   type: 'Project',
   identifier: [
     {
@@ -85,7 +85,7 @@ export const mockProject: CristinProject = {
 const mockProjects: CristinProject[] = [
   mockProject,
   {
-    id: 'https://api.dev.nva.aws.unit.no/project/414343',
+    id: 'https://api.dev.nva.aws.unit.no/cristin/project/414343',
     type: 'Project',
     identifier: [
       {
@@ -133,7 +133,7 @@ const mockProjects: CristinProject[] = [
     ],
   },
   {
-    id: 'https://api.dev.nva.aws.unit.no/project/414392',
+    id: 'https://api.dev.nva.aws.unit.no/cristin/project/414392',
     type: 'Project',
     identifier: [
       {
@@ -181,7 +181,7 @@ const mockProjects: CristinProject[] = [
     ],
   },
   {
-    id: 'https://api.dev.nva.aws.unit.no/project/414451',
+    id: 'https://api.dev.nva.aws.unit.no/cristin/project/414451',
     type: 'Project',
     identifier: [
       {
@@ -261,7 +261,7 @@ const mockProjects: CristinProject[] = [
     ],
   },
   {
-    id: 'https://api.dev.nva.aws.unit.no/project/414803',
+    id: 'https://api.dev.nva.aws.unit.no/cristin/project/414803',
     type: 'Project',
     identifier: [
       {
@@ -311,7 +311,7 @@ const mockProjects: CristinProject[] = [
 ];
 
 export const mockProjectSearch: ProjectSearchResponse = {
-  id: 'https://api.dev.nva.aws.unit.no/project/search?QUERY_PARAMS',
+  id: 'https://api.dev.nva.aws.unit.no/cristin/project/search?QUERY_PARAMS',
   size: 0,
   searchString: 'title=natu',
   processingTime: 5828,
