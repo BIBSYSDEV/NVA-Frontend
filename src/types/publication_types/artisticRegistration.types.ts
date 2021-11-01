@@ -5,6 +5,10 @@ export interface ArtisticRegistration extends BaseRegistration {
   entityDescription: ArtisticEntityDescription;
 }
 
+export interface Venue {
+  name: string;
+}
+
 export interface ArtisticPublicationInstance {
   type: ArtisticType | '';
   designType: DesignType | '';
@@ -19,6 +23,7 @@ export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {
 
 export interface ArtisticPublicationContext {
   type: PublicationType.Artistic;
+  venues: Venue[];
 }
 
 interface ArtisticReference extends BaseReference {
