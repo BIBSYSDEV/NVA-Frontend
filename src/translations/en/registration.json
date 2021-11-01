@@ -171,6 +171,18 @@
     },
     "date_from": "Date from",
     "date_to": "Date to",
+    "designType": {
+      "ClothingDesign": "Clothing design",
+      "Exhibition": "Exhibition",
+      "GraphicalDesign": "Graphical design",
+      "Illustration": "Illustration",
+      "InteriorArchitecture": "Interior architecture",
+      "LightingDesign": "Lighting design",
+      "Product": "Product",
+      "ServiceDesign": "Service design",
+      "Other": "Other",
+      "WebDesign": "Web design"
+    },
     "form": "Form",
     "isbn": "ISBN",
     "issn": "ISSN",

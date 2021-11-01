@@ -171,6 +171,18 @@
     },
     "date_from": "Dato fra",
     "date_to": "Dato til",
+    "designType": {
+      "ClothingDesign": "Klesdesign",
+      "Exhibition": "Utstilling/messe",
+      "GraphicalDesign": "Grafisk design",
+      "Illustration": "Illustrasjon",
+      "InteriorArchitecture": "Interiørarkitektur",
+      "LightingDesign": "Lysdesign",
+      "Product": "Produkt",
+      "ServiceDesign": "Tjenestedesign",
+      "Other": "Annet",
+      "WebDesign": "Webdesign"
+    },
     "form": "Form",
     "isbn": "ISBN",
     "issn": "ISSN",

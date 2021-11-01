@@ -10,7 +10,7 @@ import { dataTestId } from '../../../../../utils/dataTestIds';
 const designTypes = Object.values(DesignType);
 
 export const ArtisticDesignForm = () => {
-  const { t } = useTranslation('');
+  const { t } = useTranslation('registration');
 
   return (
     <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
@@ -30,7 +30,7 @@ export const ArtisticDesignForm = () => {
               helperText={<ErrorMessage name={field.name} />}>
               {designTypes.map((designType) => (
                 <MenuItem value={designType} key={designType}>
-                  {t(designType)}
+                  {t(`resource_type.designType.${designType}`)}
                 </MenuItem>
               ))}
             </TextField>

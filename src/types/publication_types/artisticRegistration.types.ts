@@ -8,11 +8,13 @@ export interface ArtisticRegistration extends BaseRegistration {
 export interface ArtisticPublicationInstance {
   type: ArtisticType | '';
   designType: DesignType | '';
+  description: string;
 }
 
 export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {
   type: '',
   designType: '',
+  description: '',
 };
 
 export interface ArtisticPublicationContext {
