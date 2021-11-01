@@ -38,6 +38,7 @@ const designTypes = Object.values(DesignType);
 export const ArtisticDesignForm = () => {
   const { t } = useTranslation('registration');
   const { values } = useFormikContext<ArtisticRegistration>();
+  const [openNewVenueModal, setOpenNewVenueModal] = useState(false);
 
   return (
     <>
@@ -110,12 +111,18 @@ export const ArtisticDesignForm = () => {
               </Table>
               <Button
                 onClick={() => {
-                  push({ name: '' });
+                  setOpenNewVenueModal(true);
                 }}
                 variant="outlined"
                 sx={{ marginTop: '1rem' }}>
                 Legg til visningssted
               </Button>
+              <VenueModal
+                venue={{ name: '' }}
+                onSubmit={(newVenue) => push(newVenue)}
+                open={openNewVenueModal}
+                setOpen={setOpenNewVenueModal}
+              />
             </BackgroundDiv>
           </>
         )}
@@ -132,7 +139,7 @@ interface VenueRowProps {
 }
 
 const VenueRow = ({ updateVenue, removeVenue, venue, index }: VenueRowProps) => {
-  const [openAddVenue, setOpenAddVenue] = useState(false);
+  const [openEditVenue, setOpenEditVenue] = useState(false);
 
   return (
     <TableRow>
@@ -141,46 +148,55 @@ const VenueRow = ({ updateVenue, removeVenue, venue, index }: VenueRowProps) => 
       </TableCell>
       <TableCell>{index}</TableCell>
       <TableCell>
-        <Button onClick={() => setOpenAddVenue(true)} variant="outlined" sx={{ marginRight: '1rem' }}>
+        <Button onClick={() => setOpenEditVenue(true)} variant="outlined" sx={{ marginRight: '1rem' }}>
           Rediger
         </Button>
         <Button onClick={removeVenue} variant="contained" color="error">
           Fjern
         </Button>
       </TableCell>
-
-      <ThemeProvider theme={lightTheme}>
-        <Modal
-          open={openAddVenue || !venue.name}
-          onClose={() => setOpenAddVenue(false)}
-          headingText="Legg til visningssted">
-          <Formik
-            initialValues={venue}
-            onSubmit={(values) => {
-              updateVenue(values);
-              setOpenAddVenue(false);
-            }}>
-            {() => (
-              <Form>
-                <Field name="name">
-                  {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                    <TextField
-                      {...field}
-                      variant="filled"
-                      fullWidth
-                      label={'Name'}
-                      required
-                      error={touched && !!error}
-                      helperText={<ErrorMessage name={field.name} />}
-                    />
-                  )}
-                </Field>
-                <Button type="submit">Lagre</Button>
-              </Form>
-            )}
-          </Formik>
-        </Modal>
-      </ThemeProvider>
+      <VenueModal venue={venue} onSubmit={updateVenue} open={openEditVenue} setOpen={setOpenEditVenue} />
     </TableRow>
+  );
+};
+
+interface VenueModalProps {
+  venue: Venue;
+  onSubmit: (venue: Venue) => void;
+  open: boolean;
+  setOpen: (status: boolean) => void;
+}
+
+const VenueModal = ({ venue, onSubmit, open, setOpen }: VenueModalProps) => {
+  return (
+    <ThemeProvider theme={lightTheme}>
+      <Modal open={open} onClose={() => setOpen(false)} headingText="Legg til visningssted">
+        <Formik
+          initialValues={venue}
+          onSubmit={(values) => {
+            onSubmit(values);
+            setOpen(false);
+          }}>
+          {() => (
+            <Form>
+              <Field name="name">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    label={'Name'}
+                    required
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
+              </Field>
+              <Button type="submit">Lagre</Button>
+            </Form>
+          )}
+        </Formik>
+      </Modal>
+    </ThemeProvider>
   );
 };
