@@ -1,4 +1,15 @@
-import { TextField, MenuItem, Typography, Button, ThemeProvider } from '@mui/material';
+import {
+  TextField,
+  MenuItem,
+  Typography,
+  Button,
+  ThemeProvider,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from '@mui/material';
 import {
   Field,
   FieldProps,
@@ -77,21 +88,34 @@ export const ArtisticDesignForm = () => {
           <>
             <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
               <Typography variant="h3">Visningssteder</Typography>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Visningssted</TableCell>
+                    <TableCell>Rekkefølge</TableCell>
+                    <TableCell>Handlinger</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {values.entityDescription.reference.publicationContext.venues?.map((venue, index) => (
+                    <VenueRow
+                      key={index}
+                      venue={venue}
+                      updateVenue={(newVenue) => replace(index, newVenue)}
+                      removeVenue={() => remove(index)}
+                      index={index}
+                    />
+                  ))}
+                </TableBody>
+              </Table>
               <Button
                 onClick={() => {
                   push({ name: '' });
-                }}>
+                }}
+                variant="outlined"
+                sx={{ marginTop: '1rem' }}>
                 Legg til visningssted
               </Button>
-
-              {values.entityDescription.reference.publicationContext.venues?.map((venue, index) => (
-                <VenueRow
-                  key={index}
-                  venue={venue}
-                  updateVenue={(newVenue) => replace(index, newVenue)}
-                  removeVenue={() => remove(index)}
-                />
-              ))}
             </BackgroundDiv>
           </>
         )}
@@ -104,20 +128,27 @@ interface VenueRowProps {
   venue: Venue;
   updateVenue: (venue: Venue) => void;
   removeVenue: () => void;
+  index: number;
 }
 
-const VenueRow = ({ updateVenue, removeVenue, venue }: VenueRowProps) => {
+const VenueRow = ({ updateVenue, removeVenue, venue, index }: VenueRowProps) => {
   const [openAddVenue, setOpenAddVenue] = useState(false);
 
   return (
-    <>
-      <Typography>{venue.name}</Typography>
-      <Button onClick={() => setOpenAddVenue(true)} variant="outlined">
-        Rediger
-      </Button>
-      <Button onClick={removeVenue} variant="contained" color="error">
-        Fjern
-      </Button>
+    <TableRow>
+      <TableCell>
+        <Typography>{venue.name}</Typography>
+      </TableCell>
+      <TableCell>{index}</TableCell>
+      <TableCell>
+        <Button onClick={() => setOpenAddVenue(true)} variant="outlined" sx={{ marginRight: '1rem' }}>
+          Rediger
+        </Button>
+        <Button onClick={removeVenue} variant="contained" color="error">
+          Fjern
+        </Button>
+      </TableCell>
+
       <ThemeProvider theme={lightTheme}>
         <Modal
           open={openAddVenue || !venue.name}
@@ -150,6 +181,6 @@ const VenueRow = ({ updateVenue, removeVenue, venue }: VenueRowProps) => {
           </Formik>
         </Modal>
       </ThemeProvider>
-    </>
+    </TableRow>
   );
 };
