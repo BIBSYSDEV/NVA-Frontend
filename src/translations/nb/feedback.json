@@ -95,6 +95,7 @@
     "must_be_bigger_than": "{{field}} kan ikke være mindre enn {{limit}}",
     "must_be_in_future": "{{field}} må være i fremtiden",
     "must_be_smaller_than": "{{field}} kan ikke være større enn {{limit}}",
+    "must_have_at_least": "Må ha minst {{limit}} {{name}}",
     "supervisor_required": "Du må ha minst en veileder på denne registreringen"
   }
 }

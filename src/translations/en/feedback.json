@@ -95,6 +95,7 @@
     "must_be_bigger_than": "{{field}} cannot be smaller than {{limit}}",
     "must_be_in_future": "{{field}} must be in future",
     "must_be_smaller_than": "{{field}} cannot be bigger than {{limit}}",
+    "must_have_at_least": "Must have at least {{limit}} {{name}}",
     "supervisor_required": "You need to register at least one supervisor for this registration"
   }
 }

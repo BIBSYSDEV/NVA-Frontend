@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 import { parse as parseIsbn } from 'isbn-utils';
 import {
+  ArtisticType,
   BookType,
   ChapterType,
   DegreeType,
@@ -40,6 +41,10 @@ const resourceErrorMessage = {
   }),
   eventTitleRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.title_of_event'),
+  }),
+  exhibitionRequired: i18n.t('feedback:validation.must_have_at_least', {
+    limit: 1,
+    name: i18n.t('registration:resource_type.exhibition_place').toLowerCase(),
   }),
   fromMustBeBeforeTo: i18n.t('feedback:validation.cannot_be_after', {
     field: i18n.t('registration:resource_type.date_from'),
@@ -97,6 +102,9 @@ const resourceErrorMessage = {
   }),
   typeRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:type'),
+  }),
+  typeWorkRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.type_work'),
   }),
 };
 
@@ -349,4 +357,22 @@ const presentationPublicationContext = Yup.object().shape({
 export const presentationReference = baseReference.shape({
   publicationInstance: presentationPublicationInstance,
   publicationContext: presentationPublicationContext,
+});
+
+// Artistic
+const artisticPublicationInstance = Yup.object().shape({
+  type: Yup.string().oneOf(Object.values(ArtisticType)).required(resourceErrorMessage.typeRequired),
+  subtype: Yup.object().shape({
+    type: Yup.string().nullable().required(resourceErrorMessage.typeWorkRequired),
+  }),
+  description: Yup.string().nullable(),
+});
+
+const artisticPublicationContext = Yup.object().shape({
+  venues: Yup.array().of(Yup.object()).min(1, resourceErrorMessage.exhibitionRequired),
+});
+
+export const artisticReference = baseReference.shape({
+  publicationInstance: artisticPublicationInstance,
+  publicationContext: artisticPublicationContext,
 });

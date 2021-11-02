@@ -8,6 +8,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  FormHelperText,
 } from '@mui/material';
 import { Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
@@ -25,7 +26,7 @@ const designTypes = Object.values(DesignType);
 
 export const ArtisticDesignForm = () => {
   const { t } = useTranslation('registration');
-  const { values } = useFormikContext<ArtisticRegistration>();
+  const { values, errors, touched } = useFormikContext<ArtisticRegistration>();
   const [openNewVenueModal, setOpenNewVenueModal] = useState(false);
 
   return (
@@ -41,7 +42,7 @@ export const ArtisticDesignForm = () => {
                 variant="filled"
                 fullWidth
                 {...field}
-                label={t('resource_type.design_type_label')}
+                label={t('resource_type.type_work')}
                 required
                 error={!!error && touched}
                 helperText={<ErrorMessage name={field.name} />}>
@@ -91,7 +92,7 @@ export const ArtisticDesignForm = () => {
       </BackgroundDiv>
 
       <FieldArray name={ResourceFieldNames.Venues}>
-        {({ push, replace, remove }: FieldArrayRenderProps) => (
+        {({ push, replace, remove, name }: FieldArrayRenderProps) => (
           <>
             <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
               <Typography variant="h3">{t('resource_type.exhibition_places')}</Typography>
@@ -116,6 +117,13 @@ export const ArtisticDesignForm = () => {
                   ))}
                 </TableBody>
               </Table>
+              {!!touched.entityDescription?.reference?.publicationContext?.venues &&
+                typeof errors.entityDescription?.reference?.publicationContext?.venues === 'string' && (
+                  <FormHelperText error>
+                    <ErrorMessage name={name} />
+                  </FormHelperText>
+                )}
+
               <Button onClick={() => setOpenNewVenueModal(true)} variant="outlined" sx={{ marginTop: '1rem' }}>
                 {t('resource_type.add_venue')}
               </Button>

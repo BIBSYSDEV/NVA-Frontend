@@ -184,7 +184,6 @@
       "Other": "Annet",
       "WebDesign": "Webdesign"
     },
-    "design_type_label": "Designtype",
     "exhibition_place": "Visningssted",
     "exhibition_places": "Visningssteder",
     "form": "Form",
@@ -227,6 +226,7 @@
     "series_number": "Serienummer",
     "subtype": "Undertype",
     "title_of_event": "Tittel på arrangement",
+    "type_work": "Type verk",
     "volume": "Volum"
   },
   "save_draft": "Lagre kladd",

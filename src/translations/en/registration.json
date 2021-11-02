@@ -184,7 +184,6 @@
       "Other": "Other",
       "WebDesign": "Web design"
     },
-    "design_type_label": "Design type",
     "exhibition_place": "Exhibition place",
     "exhibition_places": "Exhibition places",
     "form": "Form",
@@ -227,6 +226,7 @@
     "series_number": "Series number",
     "subtype": "Subtype",
     "title_of_event": "Title of event",
+    "type_work": "Type work",
     "volume": "Volume"
   },
   "save_draft": "Save draft",
