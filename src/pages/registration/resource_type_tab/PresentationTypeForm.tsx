@@ -1,5 +1,3 @@
-import { LocalizationProvider, DatePicker } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { Autocomplete, TextField, ThemeProvider } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -9,14 +7,13 @@ import enCountries from 'i18n-iso-countries/langs/en.json';
 import nbCountries from 'i18n-iso-countries/langs/nb.json';
 import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
-import { datePickerTranslationProps, lightTheme } from '../../../themes/lightTheme';
+import { lightTheme } from '../../../themes/lightTheme';
 import { PresentationType, ResourceFieldNames } from '../../../types/publicationFieldNames';
 import { PresentationRegistration } from '../../../types/publication_types/presentationRegistration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getDateFnsLocale } from '../../../utils/date-helpers';
 import { SelectTypeField } from './components/SelectTypeField';
 import { getPreferredLanguageCode } from '../../../utils/translation-helpers';
-import { getNewDateValue } from '../../../utils/registration-helpers';
+import { PeriodFields } from './components/PeriodFields';
 
 countries.registerLocale(enCountries);
 countries.registerLocale(nbCountries);
@@ -44,7 +41,7 @@ interface PresentationTypeFormProps {
 
 export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormProps) => {
   const { t, i18n } = useTranslation('registration');
-  const { values, setFieldValue, setFieldTouched } = useFormikContext<PresentationRegistration>();
+  const { values, setFieldValue } = useFormikContext<PresentationRegistration>();
   const subType = values.entityDescription.reference.publicationInstance.type;
 
   const countryOptions = Object.entries(countries.getNames(getPreferredLanguageCode(i18n.language))).map(
@@ -152,72 +149,12 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
               )}
             </Field>
 
-            <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
-              <StyledDatePickersContainer>
-                <Field name={ResourceFieldNames.PublicationContextTimeFrom}>
-                  {({ field, meta: { error, touched } }: FieldProps<string>) => (
-                    <DatePicker
-                      {...datePickerTranslationProps}
-                      label={t('resource_type.date_from')}
-                      value={field.value ?? null}
-                      onChange={(date, keyboardInput) => {
-                        !touched && setFieldTouched(field.name, true, false);
-                        const newValue = getNewDateValue(date, keyboardInput);
-                        if (newValue !== null) {
-                          setFieldValue(field.name, newValue);
-                        }
-                      }}
-                      inputFormat="dd.MM.yyyy"
-                      views={['year', 'month', 'day']}
-                      maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
-                      mask="__.__.____"
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          data-testid={dataTestId.registrationWizard.resourceType.eventDateFrom}
-                          variant="filled"
-                          required
-                          onBlur={() => !touched && setFieldTouched(field.name)}
-                          error={touched && !!error}
-                          helperText={touched && error}
-                        />
-                      )}
-                    />
-                  )}
-                </Field>
-                <Field name={ResourceFieldNames.PublicationContextTimeTo}>
-                  {({ field, meta: { error, touched } }: FieldProps<string>) => (
-                    <DatePicker
-                      {...datePickerTranslationProps}
-                      label={t('resource_type.date_to')}
-                      value={field.value ?? null}
-                      onChange={(date, keyboardInput) => {
-                        !touched && setFieldTouched(field.name, true, false);
-                        const newValue = getNewDateValue(date, keyboardInput);
-                        if (newValue !== null) {
-                          setFieldValue(field.name, newValue);
-                        }
-                      }}
-                      inputFormat="dd.MM.yyyy"
-                      views={['year', 'month', 'day']}
-                      maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
-                      mask="__.__.____"
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          data-testid={dataTestId.registrationWizard.resourceType.eventDateTo}
-                          variant="filled"
-                          required
-                          onBlur={() => !touched && setFieldTouched(field.name)}
-                          error={touched && !!error}
-                          helperText={touched && error}
-                        />
-                      )}
-                    />
-                  )}
-                </Field>
-              </StyledDatePickersContainer>
-            </LocalizationProvider>
+            <StyledDatePickersContainer>
+              <PeriodFields
+                fromFieldName={ResourceFieldNames.PublicationContextTimeFrom}
+                toFieldName={ResourceFieldNames.PublicationContextTimeTo}
+              />
+            </StyledDatePickersContainer>
           </ThemeProvider>
         </BackgroundDiv>
       )}

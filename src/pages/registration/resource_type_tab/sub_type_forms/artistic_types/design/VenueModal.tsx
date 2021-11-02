@@ -1,5 +1,3 @@
-import { LocalizationProvider, DatePicker } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {
   Dialog,
   DialogTitle,
@@ -12,12 +10,9 @@ import {
 } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { datePickerTranslationProps, lightTheme } from '../../../../../../themes/lightTheme';
-import i18n from '../../../../../../translations/i18n';
+import { lightTheme } from '../../../../../../themes/lightTheme';
 import { Venue } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { getDateFnsLocale } from '../../../../../../utils/date-helpers';
-import { getNewDateValue } from '../../../../../../utils/registration-helpers';
+import { PeriodFields } from '../../../components/PeriodFields';
 
 interface VenueModalProps {
   venue: Venue;
@@ -39,14 +34,14 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
             onSubmit(values);
             closeModal();
           }}>
-          {({ setFieldValue, setFieldTouched }) => (
+          {() => (
             <Form>
               <DialogContent>
                 <Field name="name">
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <TextField
                       {...field}
-                      variant="outlined"
+                      variant="filled"
                       fullWidth
                       label={t('common:name')}
                       required
@@ -55,72 +50,9 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
                     />
                   )}
                 </Field>
-                <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
-                  <Box flex="row" sx={{ display: 'flex', 'div:first-child': { mr: '1rem' } }}>
-                    <Field name={'time.from'}>
-                      {({ field, meta: { error, touched } }: FieldProps<string>) => (
-                        <DatePicker
-                          {...datePickerTranslationProps}
-                          label={t('resource_type.date_from')}
-                          value={field.value ?? null}
-                          onChange={(date, keyboardInput) => {
-                            !touched && setFieldTouched(field.name, true, false);
-                            const newValue = getNewDateValue(date, keyboardInput);
-                            if (newValue !== null) {
-                              setFieldValue(field.name, newValue);
-                            }
-                          }}
-                          inputFormat="dd.MM.yyyy"
-                          views={['year', 'month', 'day']}
-                          maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
-                          mask="__.__.____"
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              data-testid={dataTestId.registrationWizard.resourceType.eventDateFrom}
-                              variant="outlined"
-                              required
-                              onBlur={() => !touched && setFieldTouched(field.name)}
-                              error={touched && !!error}
-                              helperText={touched && error}
-                            />
-                          )}
-                        />
-                      )}
-                    </Field>
-                    <Field name={'time.to'}>
-                      {({ field, meta: { error, touched } }: FieldProps<string>) => (
-                        <DatePicker
-                          {...datePickerTranslationProps}
-                          label={t('resource_type.date_to')}
-                          value={field.value ?? null}
-                          onChange={(date, keyboardInput) => {
-                            !touched && setFieldTouched(field.name, true, false);
-                            const newValue = getNewDateValue(date, keyboardInput);
-                            if (newValue !== null) {
-                              setFieldValue(field.name, newValue);
-                            }
-                          }}
-                          inputFormat="dd.MM.yyyy"
-                          views={['year', 'month', 'day']}
-                          maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
-                          mask="__.__.____"
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              data-testid={dataTestId.registrationWizard.resourceType.eventDateTo}
-                              variant="outlined"
-                              required
-                              onBlur={() => !touched && setFieldTouched(field.name)}
-                              error={touched && !!error}
-                              helperText={touched && error}
-                            />
-                          )}
-                        />
-                      )}
-                    </Field>
-                  </Box>
-                </LocalizationProvider>
+                <Box flex="row" sx={{ display: 'flex', 'div:first-of-type': { mr: '1rem' } }}>
+                  <PeriodFields fromFieldName="time.from" toFieldName="time.to" />
+                </Box>
               </DialogContent>
               <DialogActions>
                 <Button variant="outlined" color="inherit" onClick={closeModal}>
