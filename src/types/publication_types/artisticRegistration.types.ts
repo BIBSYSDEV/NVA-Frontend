@@ -1,3 +1,4 @@
+import { Period, Place } from '../common.types';
 import { ArtisticType, PublicationType } from '../publicationFieldNames';
 import { BaseRegistration, BaseReference, BaseEntityDescription } from '../registration.types';
 
@@ -7,6 +8,8 @@ export interface ArtisticRegistration extends BaseRegistration {
 
 export interface Venue {
   name: string;
+  place: Place | null;
+  time: Period | null;
 }
 
 export interface ArtisticPublicationInstance {

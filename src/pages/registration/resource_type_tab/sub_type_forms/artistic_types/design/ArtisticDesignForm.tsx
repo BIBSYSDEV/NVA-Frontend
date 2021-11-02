@@ -3,36 +3,22 @@ import {
   MenuItem,
   Typography,
   Button,
-  ThemeProvider,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  DialogActions,
 } from '@mui/material';
-import {
-  Field,
-  FieldProps,
-  ErrorMessage,
-  FieldArray,
-  FieldArrayRenderProps,
-  useFormikContext,
-  Formik,
-  Form,
-} from 'formik';
+import { Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { BackgroundDiv } from '../../../../../components/BackgroundDiv';
-import { Modal } from '../../../../../components/Modal';
-import { StyledSelectWrapper } from '../../../../../components/styled/Wrappers';
-import { lightTheme } from '../../../../../themes/lightTheme';
-import {
-  ArtisticRegistration,
-  DesignType,
-  Venue,
-} from '../../../../../types/publication_types/artisticRegistration.types';
-import { dataTestId } from '../../../../../utils/dataTestIds';
+import { BackgroundDiv } from '../../../../../../components/BackgroundDiv';
+import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
+import { lightTheme } from '../../../../../../themes/lightTheme';
+import { ArtisticRegistration, DesignType } from '../../../../../../types/publication_types/artisticRegistration.types';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { VenueModal } from './VenueModal';
+import { VenueRow } from './VenueRow';
 
 const designTypes = Object.values(DesignType);
 
@@ -132,7 +118,7 @@ export const ArtisticDesignForm = () => {
                 {t('resource_type.add_venue')}
               </Button>
               <VenueModal
-                venue={{ name: '' }}
+                venue={{ name: '', place: null, time: null }}
                 onSubmit={(newVenue) => push(newVenue)}
                 open={openNewVenueModal}
                 closeModal={() => setOpenNewVenueModal(false)}
@@ -142,90 +128,5 @@ export const ArtisticDesignForm = () => {
         )}
       </FieldArray>
     </>
-  );
-};
-
-interface VenueRowProps {
-  venue: Venue;
-  updateVenue: (venue: Venue) => void;
-  removeVenue: () => void;
-  index: number;
-}
-
-const VenueRow = ({ updateVenue, removeVenue, venue, index }: VenueRowProps) => {
-  const { t } = useTranslation('common');
-  const [openEditVenue, setOpenEditVenue] = useState(false);
-
-  return (
-    <TableRow>
-      <TableCell>
-        <Typography>{venue.name}</Typography>
-      </TableCell>
-      <TableCell>{index}</TableCell>
-      <TableCell>
-        <Button onClick={() => setOpenEditVenue(true)} variant="outlined" sx={{ marginRight: '1rem' }}>
-          {t('edit')}
-        </Button>
-        <Button onClick={removeVenue} variant="contained" color="error">
-          {t('remove')}
-        </Button>
-      </TableCell>
-      <VenueModal
-        venue={venue}
-        onSubmit={updateVenue}
-        open={openEditVenue}
-        closeModal={() => setOpenEditVenue(false)}
-      />
-    </TableRow>
-  );
-};
-
-interface VenueModalProps {
-  venue: Venue;
-  onSubmit: (venue: Venue) => void;
-  open: boolean;
-  closeModal: () => void;
-}
-
-const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProps) => {
-  const { t } = useTranslation('registration');
-
-  return (
-    <ThemeProvider theme={lightTheme}>
-      <Modal open={open} onClose={closeModal} headingText={t('resource_type.add_venue')}>
-        <Formik
-          initialValues={venue}
-          onSubmit={(values) => {
-            onSubmit(values);
-            closeModal();
-          }}>
-          {() => (
-            <Form>
-              <Field name="name">
-                {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                  <TextField
-                    {...field}
-                    variant="filled"
-                    fullWidth
-                    label={t('common:name')}
-                    required
-                    error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}
-                  />
-                )}
-              </Field>
-              <DialogActions>
-                <Button variant="outlined" color="inherit" onClick={closeModal}>
-                  {t('common:cancel')}
-                </Button>
-                <Button variant="contained" type="submit">
-                  {t('common:save')}
-                </Button>
-              </DialogActions>
-            </Form>
-          )}
-        </Formik>
-      </Modal>
-    </ThemeProvider>
   );
 };
