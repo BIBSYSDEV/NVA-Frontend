@@ -44,14 +44,15 @@ interface DesignSubtype {
 }
 
 export enum DesignType {
-  Product = 'Product',
-  InteriorArchitecture = 'InteriorArchitecture',
+  ProductDesign = 'ProductDesign',
+  InteriorDesign = 'InteriorDesign',
   ClothingDesign = 'ClothingDesign',
-  LightingDesign = 'LightingDesign',
+  LightDesign = 'LightDesign',
   Exhibition = 'Exhibition',
-  GraphicalDesign = 'GraphicalDesign',
+  GraphicDesign = 'GraphicDesign',
   Illustration = 'Illustration',
   WebDesign = 'WebDesign',
+  InteractionDesign = 'InteractionDesign',
   ServiceDesign = 'ServiceDesign',
   Other = 'Other',
 }

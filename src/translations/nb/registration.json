@@ -175,11 +175,12 @@
     "design_type": {
       "ClothingDesign": "Klesdesign",
       "Exhibition": "Utstilling/messe",
-      "GraphicalDesign": "Grafisk design",
+      "GraphicDesign": "Grafisk design",
       "Illustration": "Illustrasjon",
-      "InteriorArchitecture": "Interiørarkitektur",
-      "LightingDesign": "Lysdesign",
-      "Product": "Produkt",
+      "InteractionDesign": "Interaksjonsdesign",
+      "InteriorDesign": "Interiørdesign",
+      "LightDesign": "Lysdesign",
+      "ProductDesign": "Produktdesign",
       "ServiceDesign": "Tjenestedesign",
       "Other": "Annet",
       "WebDesign": "Webdesign"

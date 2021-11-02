@@ -175,11 +175,12 @@
     "design_type": {
       "ClothingDesign": "Clothing design",
       "Exhibition": "Exhibition",
-      "GraphicalDesign": "Graphical design",
+      "GraphicDesign": "Graphical design",
       "Illustration": "Illustration",
-      "InteriorArchitecture": "Interior architecture",
-      "LightingDesign": "Lighting design",
-      "Product": "Product",
+      "InteractionDesign": "Interaction design",
+      "InteriorDesign": "Interior design",
+      "LightDesign": "Lighting design",
+      "ProductDesign": "Product design",
       "ServiceDesign": "Service design",
       "Other": "Other",
       "WebDesign": "Web design"

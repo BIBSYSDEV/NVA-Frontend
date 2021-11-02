@@ -28,6 +28,7 @@ export const ArtisticDesignForm = () => {
   const { t } = useTranslation('registration');
   const { values, errors, touched } = useFormikContext<ArtisticRegistration>();
   const [openNewVenueModal, setOpenNewVenueModal] = useState(false);
+  const { venues } = values.entityDescription.reference.publicationContext;
 
   return (
     <>
@@ -96,27 +97,29 @@ export const ArtisticDesignForm = () => {
           <>
             <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
               <Typography variant="h3">{t('resource_type.exhibition_places')}</Typography>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>{t('resource_type.exhibition_place')}</TableCell>
-                    <TableCell>{t('common:date')}</TableCell>
-                    <TableCell>{t('common:order')}</TableCell>
-                    <TableCell></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {values.entityDescription.reference.publicationContext.venues?.map((venue, index) => (
-                    <VenueRow
-                      key={index}
-                      venue={venue}
-                      updateVenue={(newVenue) => replace(index, newVenue)}
-                      removeVenue={() => remove(index)}
-                      index={index}
-                    />
-                  ))}
-                </TableBody>
-              </Table>
+              {venues.length > 0 && (
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>{t('resource_type.exhibition_place')}</TableCell>
+                      <TableCell>{t('common:date')}</TableCell>
+                      <TableCell>{t('common:order')}</TableCell>
+                      <TableCell></TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {values.entityDescription.reference.publicationContext.venues.map((venue, index) => (
+                      <VenueRow
+                        key={index}
+                        venue={venue}
+                        updateVenue={(newVenue) => replace(index, newVenue)}
+                        removeVenue={() => remove(index)}
+                        index={index}
+                      />
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
               {!!touched.entityDescription?.reference?.publicationContext?.venues &&
                 typeof errors.entityDescription?.reference?.publicationContext?.venues === 'string' && (
                   <FormHelperText error>
