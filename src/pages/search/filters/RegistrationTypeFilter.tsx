@@ -3,11 +3,13 @@ import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import {
+  ArtisticType,
   BookType,
   ChapterType,
   DegreeType,
   JournalType,
   PresentationType,
+  PublicationType,
   ReportType,
   ResourceFieldNames,
 } from '../../../types/publicationFieldNames';
@@ -35,38 +37,44 @@ export const RegistrationTypeFilter = () => {
 
   return (
     <BaseFilterItem title={t('search:registration_type')}>
-      <ListSubheader disableSticky>{t('Journal')}</ListSubheader>
+      <ListSubheader disableSticky>{t(PublicationType.PublicationInJournal)}</ListSubheader>
       {Object.values(JournalType).map((type) => (
         <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} $isSelected={type === currentValue}>
           {t(type)}
         </StyledIndentedListItem>
       ))}
-      <ListSubheader disableSticky>{t('Book')}</ListSubheader>
+      <ListSubheader disableSticky>{t(PublicationType.Book)}</ListSubheader>
       {Object.values(BookType).map((type) => (
         <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} $isSelected={type === currentValue}>
           {t(type)}
         </StyledIndentedListItem>
       ))}
-      <ListSubheader disableSticky>{t('Report')}</ListSubheader>
+      <ListSubheader disableSticky>{t(PublicationType.Report)}</ListSubheader>
       {Object.values(ReportType).map((type) => (
         <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} $isSelected={type === currentValue}>
           {t(type)}
         </StyledIndentedListItem>
       ))}
-      <ListSubheader disableSticky>{t('Degree')}</ListSubheader>
+      <ListSubheader disableSticky>{t(PublicationType.Degree)}</ListSubheader>
       {Object.values(DegreeType).map((type) => (
         <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} $isSelected={type === currentValue}>
           {t(type)}
         </StyledIndentedListItem>
       ))}
-      <ListSubheader disableSticky>{t('Chapter')}</ListSubheader>
+      <ListSubheader disableSticky>{t(PublicationType.Chapter)}</ListSubheader>
       {Object.values(ChapterType).map((type) => (
         <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} $isSelected={type === currentValue}>
           {t(type)}
         </StyledIndentedListItem>
       ))}
-      <ListSubheader disableSticky>{t('Event')}</ListSubheader>
+      <ListSubheader disableSticky>{t(PublicationType.Presentation)}</ListSubheader>
       {Object.values(PresentationType).map((type) => (
+        <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} $isSelected={type === currentValue}>
+          {t(type)}
+        </StyledIndentedListItem>
+      ))}
+      <ListSubheader disableSticky>{t(PublicationType.Artistic)}</ListSubheader>
+      {Object.values(ArtisticType).map((type) => (
         <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} $isSelected={type === currentValue}>
           {t(type)}
         </StyledIndentedListItem>
