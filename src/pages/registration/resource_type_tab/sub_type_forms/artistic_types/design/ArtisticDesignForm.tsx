@@ -98,6 +98,7 @@ export const ArtisticDesignForm = () => {
                 <TableHead>
                   <TableRow>
                     <TableCell>{t('resource_type.exhibition_place')}</TableCell>
+                    <TableCell>{t('common:date')}</TableCell>
                     <TableCell>{t('common:order')}</TableCell>
                     <TableCell></TableCell>
                   </TableRow>
@@ -118,7 +119,11 @@ export const ArtisticDesignForm = () => {
                 {t('resource_type.add_venue')}
               </Button>
               <VenueModal
-                venue={{ name: '', place: null, time: null }}
+                venue={{
+                  name: '',
+                  place: { type: 'UnconfirmedPlace', label: '', country: '' },
+                  time: { type: 'Period', from: '', to: '' },
+                }}
                 onSubmit={(newVenue) => push(newVenue)}
                 open={openNewVenueModal}
                 closeModal={() => setOpenNewVenueModal(false)}

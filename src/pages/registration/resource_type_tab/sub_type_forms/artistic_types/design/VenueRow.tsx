@@ -2,6 +2,7 @@ import { TableRow, TableCell, Typography, Button } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Venue } from '../../../../../../types/publication_types/artisticRegistration.types';
+import { getPeriodString } from '../../../../../../utils/registration-helpers';
 import { VenueModal } from './VenueModal';
 
 interface VenueRowProps {
@@ -20,6 +21,7 @@ export const VenueRow = ({ updateVenue, removeVenue, venue, index }: VenueRowPro
       <TableCell>
         <Typography>{venue.name}</Typography>
       </TableCell>
+      <TableCell>{getPeriodString(venue.time)}</TableCell>
       <TableCell>{index}</TableCell>
       <TableCell>
         <Button onClick={() => setOpenEditVenue(true)} variant="outlined" sx={{ marginRight: '1rem' }}>

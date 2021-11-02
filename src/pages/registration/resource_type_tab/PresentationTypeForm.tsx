@@ -16,6 +16,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
 import { SelectTypeField } from './components/SelectTypeField';
 import { getPreferredLanguageCode } from '../../../utils/translation-helpers';
+import { getNewDateValue } from '../../../utils/registration-helpers';
 
 countries.registerLocale(enCountries);
 countries.registerLocale(nbCountries);
@@ -49,16 +50,6 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
   const countryOptions = Object.entries(countries.getNames(getPreferredLanguageCode(i18n.language))).map(
     ([code, label]) => ({ code, label })
   );
-
-  const onChangeDate = (fieldName: string, date: Date | null, keyboardInput?: string) => {
-    const isValidDate = date && date && !isNaN(date.getTime());
-    const isValidInput = keyboardInput?.length === 10;
-    if (isValidDate) {
-      setFieldValue(fieldName, date.toISOString());
-    } else if (!isValidDate || !isValidInput) {
-      setFieldValue(fieldName, '');
-    }
-  };
 
   return (
     <>
@@ -171,7 +162,10 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                       value={field.value ?? null}
                       onChange={(date, keyboardInput) => {
                         !touched && setFieldTouched(field.name, true, false);
-                        onChangeDate(field.name, date, keyboardInput);
+                        const newValue = getNewDateValue(date, keyboardInput);
+                        if (newValue !== null) {
+                          setFieldValue(field.name, newValue);
+                        }
                       }}
                       inputFormat="dd.MM.yyyy"
                       views={['year', 'month', 'day']}
@@ -199,7 +193,10 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                       value={field.value ?? null}
                       onChange={(date, keyboardInput) => {
                         !touched && setFieldTouched(field.name, true, false);
-                        onChangeDate(field.name, date, keyboardInput);
+                        const newValue = getNewDateValue(date, keyboardInput);
+                        if (newValue !== null) {
+                          setFieldValue(field.name, newValue);
+                        }
                       }}
                       inputFormat="dd.MM.yyyy"
                       views={['year', 'month', 'day']}

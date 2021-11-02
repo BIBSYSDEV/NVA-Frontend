@@ -11,6 +11,7 @@ import {
 import { User } from '../types/user.types';
 import i18n from '../translations/i18n';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
+import { Period } from '../types/common.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -96,4 +97,27 @@ export const getFormattedRegistration = (registration: Registration) => {
   }
 
   return formattedRegistration;
+};
+
+export const getNewDateValue = (date: Date | null, keyboardInput?: string) => {
+  const isValidDate = date && date && !isNaN(date.getTime());
+  const isValidInput = keyboardInput?.length === 10;
+  if (isValidDate) {
+    return date.toISOString();
+  } else if (!isValidDate || !isValidInput) {
+    return '';
+  } else {
+    return null;
+  }
+};
+
+export const getPeriodString = (period: Period | null) => {
+  const fromDate = period?.from ? new Date(period.from).toLocaleDateString() : '';
+  const toDate = period?.to ? new Date(period.to).toLocaleDateString() : '';
+
+  if (!fromDate && !toDate) {
+    return '';
+  } else {
+    return fromDate === toDate ? fromDate : `${fromDate ?? '?'} - ${toDate ?? '?'}`;
+  }
 };

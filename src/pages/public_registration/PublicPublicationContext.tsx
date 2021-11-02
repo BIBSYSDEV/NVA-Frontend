@@ -10,6 +10,7 @@ import { RegistrationSummary } from './RegistrationSummary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
+import { getPeriodString } from '../../utils/registration-helpers';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
@@ -161,8 +162,7 @@ interface PublicPresentationProps {
 export const PublicPresentation = ({ publicationContext }: PublicPresentationProps) => {
   const { t } = useTranslation('registration');
   const { type, time, place, label, agent } = publicationContext;
-  const fromDate = time?.from ? new Date(time.from).toLocaleDateString() : '';
-  const toDate = time?.to ? new Date(time.to).toLocaleDateString() : '';
+  const periodString = getPeriodString(time);
 
   return (
     <>
@@ -183,9 +183,7 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
           {t('common:country')}: {place.country}
         </Typography>
       )}
-      {(fromDate || toDate) && (
-        <Typography>{fromDate === toDate ? fromDate : `${fromDate ?? '?'} - ${toDate ?? '?'}`}</Typography>
-      )}
+      {periodString && <Typography>{periodString}</Typography>}
     </>
   );
 };
