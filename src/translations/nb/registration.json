@@ -144,6 +144,7 @@
     "start_with_uploading_file_title": "Start med å laste opp fil"
   },
   "resource_type": {
+    "add_venue": "Legg til visningssted",
     "article_number": "Artikkelnummer",
     "chapter": {
       "info_anthology": "Antologien hvor kapittelet er publisert i må være publisert først",
@@ -171,7 +172,7 @@
     },
     "date_from": "Dato fra",
     "date_to": "Dato til",
-    "designType": {
+    "design_type": {
       "ClothingDesign": "Klesdesign",
       "Exhibition": "Utstilling/messe",
       "GraphicalDesign": "Grafisk design",
@@ -183,6 +184,9 @@
       "Other": "Annet",
       "WebDesign": "Webdesign"
     },
+    "design_type_label": "Designtype",
+    "exhibition_place": "Visningssted",
+    "exhibition_places": "Visningssteder",
     "form": "Form",
     "isbn": "ISBN",
     "issn": "ISSN",
@@ -190,6 +194,7 @@
     "journal": "Tidsskrift",
     "journal_not_found": "Finner du ikke tidsskriftet?",
     "level": "Nivå i Norsk publiseringsindikator",
+    "more_info_about_work": "Mer informasjon om verket",
     "number_of_pages": "Totalt antall sider",
     "nvi": {
       "applicable": "Publikasjonen kan inngå i Norsk vitenskapsindeks",

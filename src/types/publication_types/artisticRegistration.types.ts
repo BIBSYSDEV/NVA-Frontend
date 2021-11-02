@@ -11,13 +11,13 @@ export interface Venue {
 
 export interface ArtisticPublicationInstance {
   type: ArtisticType | '';
-  designType: DesignSubtype;
+  subtype: DesignSubtype;
   description: string;
 }
 
 export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {
   type: '',
-  designType: { type: '' },
+  subtype: { type: '' },
   description: '',
 };
 

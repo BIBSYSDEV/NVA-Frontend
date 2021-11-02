@@ -144,6 +144,7 @@
     "start_with_uploading_file_title": "Start with uploading file"
   },
   "resource_type": {
+    "add_venue": "Add exhibition place",
     "article_number": "Article number",
     "chapter": {
       "info_anthology": "The anthology where this chapter is published in must be published in advance",
@@ -171,7 +172,7 @@
     },
     "date_from": "Date from",
     "date_to": "Date to",
-    "designType": {
+    "design_type": {
       "ClothingDesign": "Clothing design",
       "Exhibition": "Exhibition",
       "GraphicalDesign": "Graphical design",
@@ -183,6 +184,9 @@
       "Other": "Other",
       "WebDesign": "Web design"
     },
+    "design_type_label": "Design type",
+    "exhibition_place": "Exhibition place",
+    "exhibition_places": "Exhibition places",
     "form": "Form",
     "isbn": "ISBN",
     "issn": "ISSN",
@@ -190,6 +194,7 @@
     "journal": "Journal",
     "journal_not_found": "Journal not found?",
     "level": "Level in Norwegian publication indicator",
+    "more_info_about_work": "More information about work",
     "number_of_pages": "Total number of pages",
     "nvi": {
       "applicable": "The publication can be included in the Norwegian Science Index",
