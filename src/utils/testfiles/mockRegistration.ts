@@ -15,7 +15,9 @@ export const mockRegistration: JournalRegistration = {
   modifiedDate: new Date(2020, 2).toISOString(),
   owner: 'tu@unit.no',
   status: RegistrationStatus.Draft,
-  projects: [{ type: 'ResearchProject', id: 'https://api.dev.nva.aws.unit.no/project/1', name: 'A dummy project' }],
+  projects: [
+    { type: 'ResearchProject', id: 'https://api.dev.nva.aws.unit.no/cristin/project/1', name: 'A dummy project' },
+  ],
   publisher: { id: mockCustomerInstitution.id },
   fileSet: {
     type: 'FileSet',
