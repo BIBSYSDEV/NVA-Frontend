@@ -1,5 +1,6 @@
 import { Registration } from '../types/registration.types';
 import {
+  ArtisticType,
   BookType,
   ChapterType,
   DegreeType,
@@ -26,6 +27,8 @@ export const getMainRegistrationType = (instanceType: string) =>
     ? PublicationType.Chapter
     : isPresentation(instanceType)
     ? PublicationType.Presentation
+    : isArtistic(instanceType)
+    ? PublicationType.Artistic
     : '';
 
 export const isJournal = (instanceType: string) => Object.values(JournalType).some((type) => type === instanceType);
@@ -40,6 +43,8 @@ export const isChapter = (instanceType: string) => Object.values(ChapterType).so
 
 export const isPresentation = (instanceType: string) =>
   Object.values(PresentationType).some((type) => type === instanceType);
+
+export const isArtistic = (instanceType: string) => Object.values(ArtisticType).some((type) => type === instanceType);
 
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCreator && user.id === registration.owner;

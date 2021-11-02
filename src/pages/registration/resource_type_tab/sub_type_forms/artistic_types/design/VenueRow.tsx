@@ -22,7 +22,7 @@ export const VenueRow = ({ updateVenue, removeVenue, venue, index }: VenueRowPro
         <Typography>{venue.name}</Typography>
       </TableCell>
       <TableCell>{getPeriodString(venue.time)}</TableCell>
-      <TableCell>{index}</TableCell>
+      <TableCell>{index + 1}</TableCell>
       <TableCell>
         <Button onClick={() => setOpenEditVenue(true)} variant="outlined" sx={{ marginRight: '1rem' }}>
           {t('edit')}

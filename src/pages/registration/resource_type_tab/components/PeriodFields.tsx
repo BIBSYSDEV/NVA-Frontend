@@ -40,7 +40,7 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
             renderInput={(params) => (
               <TextField
                 {...params}
-                data-testid={dataTestId.registrationWizard.resourceType.eventDateFrom}
+                data-testid={dataTestId.registrationWizard.resourceType.dateFromField}
                 variant="filled"
                 required
                 onBlur={() => !touched && setFieldTouched(field.name)}
@@ -71,7 +71,7 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
             renderInput={(params) => (
               <TextField
                 {...params}
-                data-testid={dataTestId.registrationWizard.resourceType.eventDateTo}
+                data-testid={dataTestId.registrationWizard.resourceType.dateToField}
                 variant="filled"
                 required
                 onBlur={() => !touched && setFieldTouched(field.name)}

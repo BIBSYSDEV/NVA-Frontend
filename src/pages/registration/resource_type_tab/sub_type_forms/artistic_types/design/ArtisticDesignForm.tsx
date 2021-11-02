@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { BackgroundDiv } from '../../../../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
 import { lightTheme } from '../../../../../../themes/lightTheme';
+import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import { ArtisticRegistration, DesignType } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { VenueModal } from './VenueModal';
@@ -30,7 +31,7 @@ export const ArtisticDesignForm = () => {
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        <Field name={'entityDescription.reference.publicationInstance.designType.type'}>
+        <Field name={ResourceFieldNames.PublicationInstanceSubtypeType}>
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <StyledSelectWrapper>
               <TextField
@@ -55,7 +56,7 @@ export const ArtisticDesignForm = () => {
         </Field>
 
         {values.entityDescription.reference.publicationInstance.subtype.type === DesignType.Other && (
-          <Field name={'entityDescription.reference.publicationInstance.designType.description'}>
+          <Field name={ResourceFieldNames.PublicationInstanceSubtypeDescription}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
                 id={field.name}
@@ -72,7 +73,7 @@ export const ArtisticDesignForm = () => {
           </Field>
         )}
 
-        <Field name={'entityDescription.reference.publicationInstance.description'}>
+        <Field name={ResourceFieldNames.PublicationInstanceDescription}>
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <TextField
               id={field.name}
@@ -89,7 +90,7 @@ export const ArtisticDesignForm = () => {
         </Field>
       </BackgroundDiv>
 
-      <FieldArray name="entityDescription.reference.publicationContext.venues">
+      <FieldArray name={ResourceFieldNames.Venues}>
         {({ push, replace, remove }: FieldArrayRenderProps) => (
           <>
             <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>

@@ -40,7 +40,6 @@ export const ResourceTypePanel = () => {
   const [mainType, setMainType] = useState(
     getMainRegistrationType(values.entityDescription?.reference?.publicationInstance.type ?? '')
   );
-
   const onChangeType = (newRegistrationMainType: string) => {
     // Ensure some values are reset when publication type changes
     setMainType(newRegistrationMainType);

@@ -96,12 +96,16 @@ export enum ResourceFieldNames {
   PublicationContextTimeFrom = 'entityDescription.reference.publicationContext.time.from',
   PublicationContextTimeTo = 'entityDescription.reference.publicationContext.time.to',
   PublicationContextType = 'entityDescription.reference.publicationContext.type',
+  PublicationInstanceDescription = 'entityDescription.reference.publicationInstance.description',
+  PublicationInstanceSubtypeDescription = 'entityDescription.reference.publicationInstance.subtype.description',
+  PublicationInstanceSubtypeType = 'entityDescription.reference.publicationInstance.subtype.type',
   Reference = 'entityDescription.reference',
   SeriesId = 'entityDescription.reference.publicationContext.series.id',
   SeriesNumber = 'entityDescription.reference.publicationContext.seriesNumber',
   SeriesTitle = 'entityDescription.reference.publicationContext.series.title',
   SeriesType = 'entityDescription.reference.publicationContext.series.type',
   SubType = 'entityDescription.reference.publicationInstance.type',
+  Venues = 'entityDescription.reference.publicationContext.venues',
   Volume = 'entityDescription.reference.publicationInstance.volume',
 }
 
