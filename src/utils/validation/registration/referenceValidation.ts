@@ -160,6 +160,31 @@ const pagesRangeField = Yup.object()
       }),
   });
 
+const periodField = Yup.object().shape({
+  from: Yup.string()
+    .nullable()
+    .test('from-test', resourceErrorMessage.fromMustBeBeforeTo, (fromValue, context) => {
+      const fromDate = fromValue ? new Date(fromValue) : null;
+      const toDate = context.parent.to ? new Date(context.parent.to) : null;
+      if (fromDate && toDate) {
+        return fromDate <= toDate;
+      }
+      return true;
+    })
+    .required(resourceErrorMessage.dateFromRequired),
+  to: Yup.string()
+    .nullable()
+    .test('to-test', resourceErrorMessage.toMustBeAfterFrom, (toValue, context) => {
+      const fromDate = context.parent.from ? new Date(context.parent.from) : null;
+      const toDate = toValue ? new Date(toValue) : null;
+      if (fromDate && toDate) {
+        return fromDate <= toDate;
+      }
+      return true;
+    })
+    .required(resourceErrorMessage.dateToRequired),
+});
+
 const publisherField = Yup.object().shape({
   id: Yup.string().when('name', {
     is: (value: string) => !!value,
@@ -329,30 +354,7 @@ const presentationPublicationContext = Yup.object().shape({
   agent: Yup.object().shape({
     name: Yup.string().nullable().required(resourceErrorMessage.organizerRequired),
   }),
-  time: Yup.object().shape({
-    from: Yup.string()
-      .nullable()
-      .test('from-test', resourceErrorMessage.fromMustBeBeforeTo, (fromValue, context) => {
-        const fromDate = fromValue ? new Date(fromValue) : null;
-        const toDate = context.parent.to ? new Date(context.parent.to) : null;
-        if (fromDate && toDate) {
-          return fromDate <= toDate;
-        }
-        return true;
-      })
-      .required(resourceErrorMessage.dateFromRequired),
-    to: Yup.string()
-      .nullable()
-      .test('to-test', resourceErrorMessage.toMustBeAfterFrom, (toValue, context) => {
-        const fromDate = context.parent.from ? new Date(context.parent.from) : null;
-        const toDate = toValue ? new Date(toValue) : null;
-        if (fromDate && toDate) {
-          return fromDate <= toDate;
-        }
-        return true;
-      })
-      .required(resourceErrorMessage.dateToRequired),
-  }),
+  time: periodField,
 });
 
 export const presentationReference = baseReference.shape({
@@ -377,10 +379,7 @@ const artisticPublicationInstance = Yup.object().shape({
 
 export const venueValidationSchema = Yup.object().shape({
   name: Yup.string().required(resourceErrorMessage.exhibitionNameRequired),
-  time: Yup.object().shape({
-    from: Yup.string().required(resourceErrorMessage.dateFromRequired),
-    to: Yup.string().required(resourceErrorMessage.dateToRequired),
-  }),
+  time: periodField,
 });
 
 const artisticPublicationContext = Yup.object().shape({
