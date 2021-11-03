@@ -1,6 +1,6 @@
 import { DatePicker, LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import { TextField } from '@mui/material';
+import { TextField, TextFieldProps } from '@mui/material';
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { datePickerTranslationProps } from '../../../../themes/lightTheme';
@@ -9,12 +9,12 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { getDateFnsLocale } from '../../../../utils/date-helpers';
 import { getNewDateValue } from '../../../../utils/registration-helpers';
 
-interface PeriodFieldsProps {
+interface PeriodFieldsProps extends Pick<TextFieldProps, 'variant'> {
   fromFieldName: string;
   toFieldName: string;
 }
 
-export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) => {
+export const PeriodFields = ({ fromFieldName, toFieldName, variant }: PeriodFieldsProps) => {
   const { t } = useTranslation('registration');
   const { values, setFieldValue, setFieldTouched } = useFormikContext();
   const maxDate = new Date(new Date().getFullYear() + 5, 11, 31);
@@ -42,7 +42,7 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
               <TextField
                 {...params}
                 data-testid={dataTestId.registrationWizard.resourceType.dateFromField}
-                variant="filled"
+                variant={variant}
                 required
                 onBlur={() => !touched && setFieldTouched(field.name)}
                 error={touched && !!error}
@@ -74,7 +74,7 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
               <TextField
                 {...params}
                 data-testid={dataTestId.registrationWizard.resourceType.dateToField}
-                variant="filled"
+                variant={variant}
                 required
                 onBlur={() => !touched && setFieldTouched(field.name)}
                 error={touched && !!error}

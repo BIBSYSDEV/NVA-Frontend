@@ -153,6 +153,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
               <PeriodFields
                 fromFieldName={ResourceFieldNames.PublicationContextTimeFrom}
                 toFieldName={ResourceFieldNames.PublicationContextTimeTo}
+                variant="filled"
               />
             </StyledDatePickersContainer>
           </ThemeProvider>

@@ -10,9 +10,11 @@ import {
 } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
+import SaveIcon from '@mui/icons-material/Save';
 import { lightTheme } from '../../../../../../themes/lightTheme';
 import { Venue } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { venueValidationSchema } from '../../../../../../utils/validation/registration/referenceValidation';
 import { PeriodFields } from '../../../components/PeriodFields';
 
 interface VenueModalProps {
@@ -20,6 +22,12 @@ interface VenueModalProps {
   onSubmit: (venue: Venue) => void;
   open: boolean;
   closeModal: () => void;
+}
+
+enum VenueFieldName {
+  Name = 'name',
+  From = 'time.from',
+  To = 'time.to',
 }
 
 export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProps) => {
@@ -31,29 +39,30 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
         <DialogTitle>{t('resource_type.add_venue')}</DialogTitle>
         <Formik
           initialValues={venue}
+          validationSchema={venueValidationSchema}
           onSubmit={(values) => {
             onSubmit(values);
             closeModal();
           }}>
           {() => (
-            <Form>
+            <Form noValidate>
               <DialogContent>
-                <Field name="name">
+                <Field name={VenueFieldName.Name}>
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <TextField
                       {...field}
                       data-testid={dataTestId.registrationWizard.resourceType.venueNameField}
-                      variant="filled"
+                      variant="outlined"
                       fullWidth
-                      label={t('common:name')}
+                      label={t('resource_type.exhibition_place')}
                       required
                       error={touched && !!error}
                       helperText={<ErrorMessage name={field.name} />}
                     />
                   )}
                 </Field>
-                <Box flex="row" sx={{ display: 'flex', 'div:first-of-type': { mr: '1rem' } }}>
-                  <PeriodFields fromFieldName="time.from" toFieldName="time.to" />
+                <Box sx={{ display: 'flex', gap: '3rem' }}>
+                  <PeriodFields fromFieldName={VenueFieldName.From} toFieldName={VenueFieldName.To} />
                 </Box>
               </DialogContent>
               <DialogActions>
@@ -63,6 +72,7 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
                 <Button
                   data-testid={dataTestId.registrationWizard.resourceType.saveVenueButton}
                   variant="contained"
+                  startIcon={<SaveIcon />}
                   type="submit">
                   {t('common:save')}
                 </Button>
