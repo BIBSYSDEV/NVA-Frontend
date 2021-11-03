@@ -1,5 +1,4 @@
-import { CalendarPickerView } from '@mui/lab';
-import { ParseableDate } from '@mui/lab/internal/pickers/constants/prop-types';
+import { CalendarPickerView, DatePickerProps } from '@mui/lab';
 import { createTheme } from '@mui/material';
 import { PaletteColor, PaletteColorOptions, SimplePaletteColorOptions } from '@mui/material/styles';
 import i18n from '../translations/i18n';
@@ -282,12 +281,24 @@ export const autocompleteTranslationProps = {
   openText: i18n.t('common:open'),
 };
 
-export const datePickerTranslationProps = {
+export const datePickerTranslationProps: Pick<
+  DatePickerProps,
+  | 'cancelText'
+  | 'clearText'
+  | 'getOpenDialogAriaText'
+  | 'getViewSwitchingButtonText'
+  | 'leftArrowButtonText'
+  | 'rightArrowButtonText'
+  | 'todayText'
+  | 'toolbarTitle'
+> = {
   cancelText: i18n.t('common:cancel'),
   clearText: i18n.t('common:clear'),
-  getOpenDialogAriaText: (value: ParseableDate<Date | null>) =>
+  getOpenDialogAriaText: (value) =>
     value
-      ? i18n.t('registration:description.date_picker.open_dialog', { date: new Date(value).toLocaleDateString() })
+      ? i18n.t('registration:description.date_picker.open_dialog', {
+          date: new Date(value as string).toLocaleDateString(),
+        })
       : i18n.t('registration:description.date_picker.choose_date'),
   getViewSwitchingButtonText: (currentView: CalendarPickerView) => {
     switch (currentView) {

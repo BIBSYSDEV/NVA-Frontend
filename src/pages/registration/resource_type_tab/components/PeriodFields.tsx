@@ -19,6 +19,9 @@ export const PeriodFields = ({ fromFieldName, toFieldName, variant }: PeriodFiel
   const { values, setFieldValue, setFieldTouched } = useFormikContext();
   const maxDate = new Date(new Date().getFullYear() + 5, 11, 31);
 
+  const fromValue = getIn(values, fromFieldName);
+  const toValue = getIn(values, toFieldName);
+
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
       <Field name={fromFieldName}>
@@ -36,7 +39,7 @@ export const PeriodFields = ({ fromFieldName, toFieldName, variant }: PeriodFiel
             }}
             inputFormat="dd.MM.yyyy"
             views={['year', 'month', 'day']}
-            maxDate={new Date(getIn(values, toFieldName)) ?? maxDate}
+            maxDate={toValue ? new Date(toValue) : maxDate}
             mask="__.__.____"
             renderInput={(params) => (
               <TextField
@@ -67,7 +70,7 @@ export const PeriodFields = ({ fromFieldName, toFieldName, variant }: PeriodFiel
             }}
             inputFormat="dd.MM.yyyy"
             views={['year', 'month', 'day']}
-            minDate={new Date(getIn(values, fromFieldName))}
+            minDate={fromValue ? new Date(fromValue) : undefined}
             maxDate={maxDate}
             mask="__.__.____"
             renderInput={(params) => (
