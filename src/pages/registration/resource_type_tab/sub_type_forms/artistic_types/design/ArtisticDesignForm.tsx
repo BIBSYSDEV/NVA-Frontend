@@ -81,7 +81,7 @@ export const ArtisticDesignForm = () => {
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <TextField
               id={field.name}
-              data-testid={dataTestId.registrationWizard.resourceType.artisticMoreInfoField}
+              data-testid={dataTestId.registrationWizard.resourceType.artisticDescriptionField}
               variant="filled"
               fullWidth
               {...field}
@@ -132,6 +132,7 @@ export const ArtisticDesignForm = () => {
                 )}
 
               <Button
+                data-testid={dataTestId.registrationWizard.resourceType.addVenueButton}
                 onClick={() => setOpenNewVenueModal(true)}
                 variant="contained"
                 color="inherit"

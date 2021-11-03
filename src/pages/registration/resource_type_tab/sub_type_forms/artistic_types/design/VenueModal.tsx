@@ -12,6 +12,7 @@ import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { lightTheme } from '../../../../../../themes/lightTheme';
 import { Venue } from '../../../../../../types/publication_types/artisticRegistration.types';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { PeriodFields } from '../../../components/PeriodFields';
 
 interface VenueModalProps {
@@ -41,6 +42,7 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <TextField
                       {...field}
+                      data-testid={dataTestId.registrationWizard.resourceType.venueNameField}
                       variant="filled"
                       fullWidth
                       label={t('common:name')}
@@ -58,7 +60,10 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
                 <Button variant="outlined" color="inherit" onClick={closeModal}>
                   {t('common:cancel')}
                 </Button>
-                <Button variant="contained" type="submit">
+                <Button
+                  data-testid={dataTestId.registrationWizard.resourceType.saveVenueButton}
+                  variant="contained"
+                  type="submit">
                   {t('common:save')}
                 </Button>
               </DialogActions>

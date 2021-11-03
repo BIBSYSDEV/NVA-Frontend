@@ -75,8 +75,9 @@ export const dataTestId = {
       version: 'version-radios',
     },
     resourceType: {
+      addVenueButton: 'add-venue-button',
       artisticTypeField: 'artistic-type-field',
-      artisticMoreInfoField: 'artistic-type-field',
+      artisticDescriptionField: 'artistic-description-field',
       artisticOtherTypeField: 'artistic-other-type-field',
       contentField: 'content-field',
       contentValue: (value: string) => `content-value-${value.toLowerCase().replaceAll(' ', '-')}`,
@@ -100,10 +101,12 @@ export const dataTestId = {
       publisherChip: 'publisher-chip',
       publisherField: 'publisher-search-field',
       removePublisherButton: 'remove-publisher-button',
+      saveVenueButton: 'save-venue-button',
       scientificSubjectField: 'scientific-subject-field',
       seriesChip: 'series-chip',
       seriesField: 'series-search-field',
       seriesNumber: 'series-number-field',
+      venueNameField: 'venue-name-field',
     },
   },
   myInstitutionUsersPage: {
