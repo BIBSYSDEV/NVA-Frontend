@@ -9,10 +9,12 @@ import {
   TableHead,
   TableRow,
   FormHelperText,
+  Box,
 } from '@mui/material';
 import { Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { BackgroundDiv } from '../../../../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
 import { lightTheme } from '../../../../../../themes/lightTheme';
@@ -122,12 +124,19 @@ export const ArtisticDesignForm = () => {
               )}
               {!!touched.entityDescription?.reference?.publicationContext?.venues &&
                 typeof errors.entityDescription?.reference?.publicationContext?.venues === 'string' && (
-                  <FormHelperText error>
-                    <ErrorMessage name={name} />
-                  </FormHelperText>
+                  <Box mt="1rem">
+                    <FormHelperText error>
+                      <ErrorMessage name={name} />
+                    </FormHelperText>
+                  </Box>
                 )}
 
-              <Button onClick={() => setOpenNewVenueModal(true)} variant="outlined" sx={{ marginTop: '1rem' }}>
+              <Button
+                onClick={() => setOpenNewVenueModal(true)}
+                variant="contained"
+                color="inherit"
+                sx={{ mt: '1rem' }}
+                startIcon={<AddCircleOutlineIcon />}>
                 {t('resource_type.add_venue')}
               </Button>
               <VenueModal
