@@ -228,6 +228,7 @@
     "subtype": "Undertype",
     "title_of_event": "Tittel på arrangement",
     "type_work": "Type verk",
+    "type_work_specified": "Egendefinert type verk",
     "volume": "Volum"
   },
   "save_draft": "Lagre kladd",

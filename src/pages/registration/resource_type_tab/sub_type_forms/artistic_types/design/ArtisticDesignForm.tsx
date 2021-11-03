@@ -68,8 +68,9 @@ export const ArtisticDesignForm = () => {
                 variant="filled"
                 fullWidth
                 {...field}
+                required
                 multiline
-                label={t('resource_type.design_type.Other')}
+                label={t('resource_type.type_work_specified')}
                 error={!!error && touched}
                 helperText={<ErrorMessage name={field.name} />}
               />

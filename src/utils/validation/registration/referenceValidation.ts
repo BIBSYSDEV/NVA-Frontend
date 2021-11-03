@@ -16,6 +16,7 @@ import {
   JournalArticleContentType,
   nviApplicableContentTypes,
 } from '../../../types/publication_types/content.types';
+import { DesignType } from '../../../types/publication_types/artisticRegistration.types';
 
 const resourceErrorMessage = {
   contentTypeRequired: i18n.t('feedback:validation.is_required', {
@@ -364,6 +365,12 @@ const artisticPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(ArtisticType)).required(resourceErrorMessage.typeRequired),
   subtype: Yup.object().shape({
     type: Yup.string().nullable().required(resourceErrorMessage.typeWorkRequired),
+    description: Yup.string()
+      .nullable()
+      .when('type', {
+        is: DesignType.Other,
+        then: Yup.string().nullable().required(resourceErrorMessage.typeWorkRequired),
+      }),
   }),
   description: Yup.string().nullable(),
 });

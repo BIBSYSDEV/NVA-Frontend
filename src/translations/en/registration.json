@@ -228,6 +228,7 @@
     "subtype": "Subtype",
     "title_of_event": "Title of event",
     "type_work": "Type work",
+    "type_work_specified": "Self-defined type work",
     "volume": "Volume"
   },
   "save_draft": "Save draft",
