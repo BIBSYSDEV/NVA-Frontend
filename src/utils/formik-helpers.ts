@@ -12,6 +12,7 @@ import {
   SpecificContributorFieldNames,
   SpecificFileFieldNames,
 } from '../types/publicationFieldNames';
+import { ArtisticPublicationContext } from '../types/publication_types/artisticRegistration.types';
 import { Registration, RegistrationTab } from '../types/registration.types';
 import { getMainRegistrationType } from './registration-helpers';
 
@@ -128,8 +129,8 @@ const touchedDescriptionTabFields: FormikTouched<unknown> = {
   },
 };
 
-const touchedResourceTabFields = (instanceType: string): FormikTouched<unknown> => {
-  const mainType = getMainRegistrationType(instanceType);
+const touchedResourceTabFields = (registration: Registration): FormikTouched<unknown> => {
+  const mainType = getMainRegistrationType(registration.entityDescription?.reference?.publicationInstance.type ?? '');
 
   switch (mainType) {
     case PublicationType.PublicationInJournal:
@@ -250,6 +251,29 @@ const touchedResourceTabFields = (instanceType: string): FormikTouched<unknown> 
           },
         },
       };
+    case PublicationType.Artistic: {
+      const artisticPublicationContext = registration.entityDescription?.reference
+        ?.publicationContext as ArtisticPublicationContext;
+
+      return {
+        entityDescription: {
+          reference: {
+            publicationContext: {
+              type: true,
+              venues: artisticPublicationContext.venues.map((_) => ({
+                name: true,
+                time: { from: true, to: true },
+              })),
+            },
+            publicationInstance: {
+              type: true,
+              subtype: { type: true, description: true },
+              description: true,
+            },
+          },
+        },
+      };
+    }
     default:
       return {
         entityDescription: {
@@ -299,8 +323,7 @@ export const getTouchedTabFields = (
 ): FormikTouched<Registration> => {
   const tabFields = {
     [RegistrationTab.Description]: () => touchedDescriptionTabFields,
-    [RegistrationTab.ResourceType]: () =>
-      touchedResourceTabFields(values.entityDescription?.reference?.publicationInstance.type ?? ''),
+    [RegistrationTab.ResourceType]: () => touchedResourceTabFields(values),
     [RegistrationTab.Contributors]: () => touchedContributorTabFields(values.entityDescription?.contributors ?? []),
     [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(values.fileSet),
   };

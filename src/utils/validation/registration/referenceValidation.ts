@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 import { parse as parseIsbn } from 'isbn-utils';
 import {
+  ArtisticType,
   BookType,
   ChapterType,
   DegreeType,
@@ -15,6 +16,7 @@ import {
   JournalArticleContentType,
   nviApplicableContentTypes,
 } from '../../../types/publication_types/content.types';
+import { DesignType } from '../../../types/publication_types/artisticRegistration.types';
 
 const resourceErrorMessage = {
   contentTypeRequired: i18n.t('feedback:validation.is_required', {
@@ -41,6 +43,10 @@ const resourceErrorMessage = {
   eventTitleRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.title_of_event'),
   }),
+  exhibitionNameRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.exhibition_place'),
+  }),
+  exhibitionRequired: i18n.t('feedback:validation.exhibition_place_required'),
   fromMustBeBeforeTo: i18n.t('feedback:validation.cannot_be_after', {
     field: i18n.t('registration:resource_type.date_from'),
     limitField: i18n.t('registration:resource_type.date_to').toLowerCase(),
@@ -98,6 +104,9 @@ const resourceErrorMessage = {
   typeRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:type'),
   }),
+  typeWorkRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.type_work'),
+  }),
 };
 
 export const emptyStringToNull = (value: string, originalValue: string) => (originalValue === '' ? null : value);
@@ -150,6 +159,31 @@ const pagesRangeField = Yup.object()
         return true;
       }),
   });
+
+const periodField = Yup.object().shape({
+  from: Yup.string()
+    .nullable()
+    .test('from-test', resourceErrorMessage.fromMustBeBeforeTo, (fromValue, context) => {
+      const fromDate = fromValue ? new Date(fromValue) : null;
+      const toDate = context.parent.to ? new Date(context.parent.to) : null;
+      if (fromDate && toDate) {
+        return fromDate <= toDate;
+      }
+      return true;
+    })
+    .required(resourceErrorMessage.dateFromRequired),
+  to: Yup.string()
+    .nullable()
+    .test('to-test', resourceErrorMessage.toMustBeAfterFrom, (toValue, context) => {
+      const fromDate = context.parent.from ? new Date(context.parent.from) : null;
+      const toDate = toValue ? new Date(toValue) : null;
+      if (fromDate && toDate) {
+        return fromDate <= toDate;
+      }
+      return true;
+    })
+    .required(resourceErrorMessage.dateToRequired),
+});
 
 const publisherField = Yup.object().shape({
   id: Yup.string().when('name', {
@@ -320,33 +354,39 @@ const presentationPublicationContext = Yup.object().shape({
   agent: Yup.object().shape({
     name: Yup.string().nullable().required(resourceErrorMessage.organizerRequired),
   }),
-  time: Yup.object().shape({
-    from: Yup.string()
-      .nullable()
-      .test('from-test', resourceErrorMessage.fromMustBeBeforeTo, (fromValue, context) => {
-        const fromDate = fromValue ? new Date(fromValue) : null;
-        const toDate = context.parent.to ? new Date(context.parent.to) : null;
-        if (fromDate && toDate) {
-          return fromDate <= toDate;
-        }
-        return true;
-      })
-      .required(resourceErrorMessage.dateFromRequired),
-    to: Yup.string()
-      .nullable()
-      .test('to-test', resourceErrorMessage.toMustBeAfterFrom, (toValue, context) => {
-        const fromDate = context.parent.from ? new Date(context.parent.from) : null;
-        const toDate = toValue ? new Date(toValue) : null;
-        if (fromDate && toDate) {
-          return fromDate <= toDate;
-        }
-        return true;
-      })
-      .required(resourceErrorMessage.dateToRequired),
-  }),
+  time: periodField,
 });
 
 export const presentationReference = baseReference.shape({
   publicationInstance: presentationPublicationInstance,
   publicationContext: presentationPublicationContext,
+});
+
+// Artistic
+const artisticPublicationInstance = Yup.object().shape({
+  type: Yup.string().oneOf(Object.values(ArtisticType)).required(resourceErrorMessage.typeRequired),
+  subtype: Yup.object().shape({
+    type: Yup.string().nullable().required(resourceErrorMessage.typeWorkRequired),
+    description: Yup.string()
+      .nullable()
+      .when('type', {
+        is: DesignType.Other,
+        then: Yup.string().nullable().required(resourceErrorMessage.typeWorkRequired),
+      }),
+  }),
+  description: Yup.string().nullable(),
+});
+
+export const venueValidationSchema = Yup.object().shape({
+  name: Yup.string().required(resourceErrorMessage.exhibitionNameRequired),
+  time: periodField,
+});
+
+const artisticPublicationContext = Yup.object().shape({
+  venues: Yup.array().of(venueValidationSchema).min(1, resourceErrorMessage.exhibitionRequired),
+});
+
+export const artisticReference = baseReference.shape({
+  publicationInstance: artisticPublicationInstance,
+  publicationContext: artisticPublicationContext,
 });

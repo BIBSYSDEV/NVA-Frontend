@@ -31,6 +31,8 @@ import {
   emptyPresentationPublicationContext,
   emptyPresentationPublicationInstance,
 } from '../../types/publication_types/presentationRegistration.types';
+import { ArtisticTypeForm } from './resource_type_tab/ArtisticTypeForm';
+import { emptyArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
 
 export const ResourceTypePanel = () => {
   const { t } = useTranslation('registration');
@@ -38,7 +40,6 @@ export const ResourceTypePanel = () => {
   const [mainType, setMainType] = useState(
     getMainRegistrationType(values.entityDescription?.reference?.publicationInstance.type ?? '')
   );
-
   const onChangeType = (newRegistrationMainType: string) => {
     // Ensure some values are reset when publication type changes
     setMainType(newRegistrationMainType);
@@ -91,6 +92,10 @@ export const ResourceTypePanel = () => {
       case PublicationType.Presentation:
         setFieldValue(instanceTypeBaseFieldName, emptyPresentationPublicationInstance, false);
         setFieldValue(contextTypeBaseFieldName, emptyPresentationPublicationContext, false);
+        break;
+      case PublicationType.Artistic:
+        setFieldValue(instanceTypeBaseFieldName, emptyArtisticPublicationInstance, false);
+        setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Artistic, venues: [] }, false);
         break;
     }
 
@@ -160,6 +165,7 @@ export const ResourceTypePanel = () => {
       {mainType === PublicationType.Chapter && <ChapterTypeForm onChangeSubType={onChangeSubType} />}
       {mainType === PublicationType.PublicationInJournal && <JournalTypeForm onChangeSubType={onChangeSubType} />}
       {mainType === PublicationType.Presentation && <PresentationTypeForm onChangeSubType={onChangeSubType} />}
+      {mainType === PublicationType.Artistic && <ArtisticTypeForm onChangeSubType={onChangeSubType} />}
     </>
   );
 };

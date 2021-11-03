@@ -144,6 +144,7 @@
     "start_with_uploading_file_title": "Start with uploading file"
   },
   "resource_type": {
+    "add_exhibition_place": "Add exhibition place",
     "article_number": "Article number",
     "chapter": {
       "info_anthology": "The anthology where this chapter is published in must be published in advance",
@@ -171,6 +172,22 @@
     },
     "date_from": "Date from",
     "date_to": "Date to",
+    "design_type": {
+      "ClothingDesign": "Clothing design",
+      "Exhibition": "Exhibition",
+      "GraphicDesign": "Graphical design",
+      "Illustration": "Illustration",
+      "InteractionDesign": "Interaction design",
+      "InteriorDesign": "Interior design",
+      "LightDesign": "Lighting design",
+      "ProductDesign": "Product design",
+      "ServiceDesign": "Service design",
+      "Other": "Other",
+      "WebDesign": "Web design"
+    },
+    "edit_exhibition_place": "Edit exhibition place",
+    "exhibition_place": "Exhibition place",
+    "exhibition_places": "Exhibition places",
     "form": "Form",
     "isbn": "ISBN",
     "issn": "ISSN",
@@ -178,6 +195,7 @@
     "journal": "Journal",
     "journal_not_found": "Journal not found?",
     "level": "Level in Norwegian publication indicator",
+    "more_info_about_work": "More information about work",
     "number_of_pages": "Total number of pages",
     "nvi": {
       "applicable": "The publication can be included in the Norwegian Science Index",
@@ -201,6 +219,8 @@
     "remove_doi_text": "You can remove the DOI that was used when starting registration.\nDo you wish to remove connection to the original DOI?",
     "remove_journal": "Remove journal",
     "remove_publisher": "Remove publisher",
+    "remove_venue_title": "Remove exhibition place?",
+    "remove_venue_text": "Are you sure you want to remove \"{{name}}\" from list over exhibition places?",
     "search_for_journal": "Search for journals",
     "search_for_original_article": "Search for original article",
     "search_for_publisher": "Search for publisher",
@@ -210,6 +230,8 @@
     "series_number": "Series number",
     "subtype": "Subtype",
     "title_of_event": "Title of event",
+    "type_work": "Type work",
+    "type_work_specified": "Self-defined type work",
     "volume": "Volume"
   },
   "save_draft": "Save draft",

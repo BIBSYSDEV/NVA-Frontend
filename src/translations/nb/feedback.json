@@ -87,6 +87,7 @@
     "cannot_be_before": "{{field}} kan ikke være før {{limitField}}",
     "contributor_required": "Du må ha minst en bidragsyter på denne registreringen",
     "editor_required": "Du må ha minst en redaktør på denne registreringen",
+    "exhibition_place_required": "Må ha minst ett visningssted",
     "has_invalid_format": "{{field}} har ugyldig format",
     "isbn_too_short": "ISBN må ha 13 siffer",
     "not_selected": "{{field}} er ikke valgt",

@@ -1,6 +1,7 @@
 import 'cypress-file-upload';
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { JournalArticleContentType, BookMonographContentType } from '../../src/types/publication_types/content.types';
+import { DesignType } from '../../src/types/publication_types/artisticRegistration.types';
 import { mockJournalsSearch } from '../../src/utils/testfiles/mockJournals';
 import { mockPublishersSearch } from '../../src/utils/testfiles/mockPublishers';
 
@@ -202,15 +203,51 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventCountryField}] input`).click();
     cy.get('[id$=-option-1]').click();
 
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventDateFrom}] input`).type('02.01.2020');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventDateTo}] input`).type('01.01.2020');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateFromField}] input`).type('02.01.2020');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateToField}] input`).type('01.01.2020');
     cy.get('p.Mui-error').should('have.length', 2);
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventDateFrom}] input`)
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateFromField}] input`)
       .clear()
       .type('01.01.2020');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventDateTo}] input`).clear().type('02.01.2020');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateToField}] input`).clear().type('02.01.2020');
     cy.get('p.Mui-error').should('have.length', 0);
 
+    cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
+      cy.get('[data-testid=error-tab]').should('not.exist')
+    );
+  });
+
+  it('The User should be able to see validation errors on resource tab (Artistic)', () => {
+    cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true }); //todo rm
+    cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
+    cy.get('[data-testid=publication-context-type-Artistic]').click({ force: true });
+
+    // publicationInstance type
+    cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
+    cy.get('[data-testid=publication-instance-type-ArtisticDesign]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
+      cy.get('[data-testid=error-tab]').should('be.visible')
+    );
+    cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
+    cy.get('[data-testid=publication-instance-type] p.Mui-error').should('not.exist');
+    cy.get('p.Mui-error').should('have.length', 2);
+
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.artisticTypeField}]`).click();
+    cy.get(`[data-value=${DesignType.ProductDesign}]`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.artisticDescriptionField}] textarea`)
+      .eq(0)
+      .type('My info');
+
+    // Add exhibition place
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.addVenueButton}]`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.venueNameField}] input`).type('My Venue');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateFromField}] input`).type('01.01.2020');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateToField}] input`).type('02.01.2020');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateToField}] input`).type('02.01.2020');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.saveVenueButton}]`).click();
+
+    cy.get('p.Mui-error').should('have.length', 0);
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
     );
