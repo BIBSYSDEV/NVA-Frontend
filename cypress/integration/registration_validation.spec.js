@@ -202,13 +202,13 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventCountryField}] input`).click();
     cy.get('[id$=-option-1]').click();
 
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventDateFrom}] input`).type('02.01.2020');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventDateTo}] input`).type('01.01.2020');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateFromField}] input`).type('02.01.2020');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateToField}] input`).type('01.01.2020');
     cy.get('p.Mui-error').should('have.length', 2);
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventDateFrom}] input`)
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateFromField}] input`)
       .clear()
       .type('01.01.2020');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventDateTo}] input`).clear().type('02.01.2020');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateToField}] input`).clear().type('02.01.2020');
     cy.get('p.Mui-error').should('have.length', 0);
 
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
