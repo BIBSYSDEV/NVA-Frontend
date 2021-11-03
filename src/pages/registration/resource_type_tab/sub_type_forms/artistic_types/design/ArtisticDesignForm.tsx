@@ -139,14 +139,10 @@ export const ArtisticDesignForm = () => {
                 color="inherit"
                 sx={{ mt: '1rem' }}
                 startIcon={<AddCircleOutlineIcon />}>
-                {t('resource_type.add_venue')}
+                {t('resource_type.add_exhibition_place')}
               </Button>
               <VenueModal
-                venue={{
-                  name: '',
-                  place: { type: 'UnconfirmedPlace', label: '', country: '' },
-                  time: { type: 'Period', from: '', to: '' },
-                }}
+                venue={null}
                 onSubmit={(newVenue) => push(newVenue)}
                 open={openNewVenueModal}
                 closeModal={() => setOpenNewVenueModal(false)}

@@ -18,7 +18,7 @@ import { venueValidationSchema } from '../../../../../../utils/validation/regist
 import { PeriodFields } from '../../../components/PeriodFields';
 
 interface VenueModalProps {
-  venue: Venue;
+  venue: Venue | null;
   onSubmit: (venue: Venue) => void;
   open: boolean;
   closeModal: () => void;
@@ -30,15 +30,23 @@ enum VenueFieldName {
   To = 'time.to',
 }
 
+const emptyVenue: Venue = {
+  name: '',
+  place: { type: 'UnconfirmedPlace', label: '', country: '' },
+  time: { type: 'Period', from: '', to: '' },
+};
+
 export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProps) => {
   const { t } = useTranslation('registration');
 
   return (
     <ThemeProvider theme={lightTheme}>
       <Dialog open={open} onClose={closeModal}>
-        <DialogTitle>{t('resource_type.add_venue')}</DialogTitle>
+        <DialogTitle>
+          {venue ? t('resource_type.edit_exhibition_place') : t('resource_type.add_exhibition_place')}
+        </DialogTitle>
         <Formik
-          initialValues={venue}
+          initialValues={venue ? venue : emptyVenue}
           validationSchema={venueValidationSchema}
           onSubmit={(values) => {
             onSubmit(values);

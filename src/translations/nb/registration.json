@@ -144,7 +144,7 @@
     "start_with_uploading_file_title": "Start med å laste opp fil"
   },
   "resource_type": {
-    "add_venue": "Legg til visningssted",
+    "add_exhibition_place": "Legg til visningssted",
     "article_number": "Artikkelnummer",
     "chapter": {
       "info_anthology": "Antologien hvor kapittelet er publisert i må være publisert først",
@@ -185,6 +185,7 @@
       "Other": "Annet",
       "WebDesign": "Webdesign"
     },
+    "edit_exhibition_place": "Endre visningsted",
     "exhibition_place": "Visningssted",
     "exhibition_places": "Visningssteder",
     "form": "Form",
@@ -218,6 +219,8 @@
     "remove_doi_text": "Du kan fjerne DOI som ble brukt ved registreringsstart.\nØnsker du å fjerne kobling til original DOI?",
     "remove_journal": "Fjern tidsskrift",
     "remove_publisher": "Fjern utgiver",
+    "remove_venue_title": "Fjern visningssted?",
+    "remove_venue_text": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over visningssteder?",
     "search_for_journal": "Søk etter tidsskrift",
     "search_for_original_article": "Søk etter original artikkel",
     "search_for_publisher": "Søk etter utgiver",

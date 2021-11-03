@@ -144,7 +144,7 @@
     "start_with_uploading_file_title": "Start with uploading file"
   },
   "resource_type": {
-    "add_venue": "Add exhibition place",
+    "add_exhibition_place": "Add exhibition place",
     "article_number": "Article number",
     "chapter": {
       "info_anthology": "The anthology where this chapter is published in must be published in advance",
@@ -185,6 +185,7 @@
       "Other": "Other",
       "WebDesign": "Web design"
     },
+    "edit_exhibition_place": "Edit exhibition place",
     "exhibition_place": "Exhibition place",
     "exhibition_places": "Exhibition places",
     "form": "Form",
@@ -218,6 +219,8 @@
     "remove_doi_text": "You can remove the DOI that was used when starting registration.\nDo you wish to remove connection to the original DOI?",
     "remove_journal": "Remove journal",
     "remove_publisher": "Remove publisher",
+    "remove_venue_title": "Remove exhibition place?",
+    "remove_venue_text": "Are you sure you want to remove \"{{name}}\" from list over exhibition places?",
     "search_for_journal": "Search for journals",
     "search_for_original_article": "Search for original article",
     "search_for_publisher": "Search for publisher",
