@@ -26,7 +26,15 @@ import {
   ReportRegistration,
 } from '../../types/publication_types/reportRegistration.types';
 import { DegreeType, JournalType } from '../../types/publicationFieldNames';
-import { isBook, isChapter, isDegree, isJournal, isPresentation, isReport } from '../../utils/registration-helpers';
+import {
+  isArtistic,
+  isBook,
+  isChapter,
+  isDegree,
+  isJournal,
+  isPresentation,
+  isReport,
+} from '../../utils/registration-helpers';
 import { PublicDoi } from './PublicDoi';
 import {
   PublicJournal,
@@ -37,6 +45,7 @@ import {
 } from './PublicPublicationContext';
 import {
   PublicIsbnContent,
+  PublicPublicationInstanceArtistic,
   PublicPublicationInstanceBook,
   PublicPublicationInstanceChapter,
   PublicPublicationInstanceDegree,
@@ -49,6 +58,7 @@ import { StyledGeneralInfo } from '../../components/landing_page/SyledGeneralInf
 import { dataTestId } from '../../utils/dataTestIds';
 import { displayDate } from '../../utils/date-helpers';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
+import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
@@ -59,7 +69,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   const journalPublicationInstance = entityDescription?.reference?.publicationInstance as
     | JournalPublicationInstance
     | undefined;
-
+  console.log(publicationContext, publicationInstance);
   return (
     <StyledGeneralInfo>
       <div>
@@ -122,6 +132,10 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             </>
           ) : isChapter(publicationInstance.type) ? (
             <PublicPublicationInstanceChapter publicationInstance={publicationInstance as ChapterPublicationInstance} />
+          ) : isArtistic(publicationInstance.type) ? (
+            <PublicPublicationInstanceArtistic
+              publicationInstance={publicationInstance as ArtisticPublicationInstance}
+            />
           ) : null)}
 
         <PublicDoi registration={registration} />
