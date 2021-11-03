@@ -95,10 +95,10 @@ export const ArtisticDesignForm = () => {
         </Field>
       </BackgroundDiv>
 
-      <FieldArray name={ResourceFieldNames.Venues}>
-        {({ push, replace, remove, name }: FieldArrayRenderProps) => (
-          <>
-            <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
+        <FieldArray name={ResourceFieldNames.Venues}>
+          {({ push, replace, remove, name }: FieldArrayRenderProps) => (
+            <>
               <Typography variant="h3">{t('resource_type.exhibition_places')}</Typography>
               {venues.length > 0 && (
                 <Table>
@@ -147,10 +147,10 @@ export const ArtisticDesignForm = () => {
                 open={openNewVenueModal}
                 closeModal={() => setOpenNewVenueModal(false)}
               />
-            </BackgroundDiv>
-          </>
-        )}
-      </FieldArray>
+            </>
+          )}
+        </FieldArray>
+      </BackgroundDiv>
     </>
   );
 };

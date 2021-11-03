@@ -17,7 +17,7 @@ interface VenueRowProps {
 }
 
 export const VenueRow = ({ updateVenue, removeVenue, venue, index }: VenueRowProps) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('registration');
   const [openEditVenue, setOpenEditVenue] = useState(false);
   const [openRemoveVenue, setOpenRemoveVenue] = useState(false);
 
@@ -30,10 +30,10 @@ export const VenueRow = ({ updateVenue, removeVenue, venue, index }: VenueRowPro
       <TableCell>{index + 1}</TableCell>
       <TableCell>
         <Button onClick={() => setOpenEditVenue(true)} variant="outlined" sx={{ mr: '1rem' }} startIcon={<EditIcon />}>
-          {t('edit')}
+          {t('common:edit')}
         </Button>
         <Button onClick={() => setOpenRemoveVenue(true)} variant="contained" color="error" startIcon={<DeleteIcon />}>
-          {t('remove')}
+          {t('common:remove')}
         </Button>
       </TableCell>
       <VenueModal
@@ -45,13 +45,13 @@ export const VenueRow = ({ updateVenue, removeVenue, venue, index }: VenueRowPro
       <ThemeProvider theme={lightTheme}>
         <ConfirmDialog
           open={openRemoveVenue}
-          title={t('registration:resource_type.remove_venue_title')}
+          title={t('resource_type.remove_venue_title')}
           onCancel={() => setOpenRemoveVenue(false)}
           onAccept={() => {
             removeVenue();
             setOpenRemoveVenue(false);
           }}>
-          {t('registration:resource_type.remove_venue_text', { name: venue.name })}
+          {t('resource_type.remove_venue_text', { name: venue.name })}
         </ConfirmDialog>
       </ThemeProvider>
     </TableRow>

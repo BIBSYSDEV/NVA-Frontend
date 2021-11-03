@@ -46,7 +46,7 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
           {venue ? t('resource_type.edit_exhibition_place') : t('resource_type.add_exhibition_place')}
         </DialogTitle>
         <Formik
-          initialValues={venue ? venue : emptyVenue}
+          initialValues={venue ?? emptyVenue}
           validationSchema={venueValidationSchema}
           onSubmit={(values) => {
             onSubmit(values);
