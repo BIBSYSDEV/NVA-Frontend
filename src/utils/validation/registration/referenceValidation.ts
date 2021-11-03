@@ -366,7 +366,17 @@ const artisticPublicationInstance = Yup.object().shape({
 });
 
 const artisticPublicationContext = Yup.object().shape({
-  venues: Yup.array().of(Yup.object()).min(1, resourceErrorMessage.exhibitionRequired),
+  venues: Yup.array()
+    .of(
+      Yup.object().shape({
+        name: Yup.string(),
+        time: Yup.object().shape({
+          from: Yup.string(),
+          to: Yup.string(),
+        }),
+      })
+    )
+    .min(1, resourceErrorMessage.exhibitionRequired),
 });
 
 export const artisticReference = baseReference.shape({

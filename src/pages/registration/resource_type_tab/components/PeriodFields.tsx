@@ -1,7 +1,7 @@
 import { DatePicker, LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { TextField } from '@mui/material';
-import { Field, FieldProps, useFormikContext } from 'formik';
+import { Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { datePickerTranslationProps } from '../../../../themes/lightTheme';
 import i18n from '../../../../translations/i18n';
@@ -16,7 +16,8 @@ interface PeriodFieldsProps {
 
 export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) => {
   const { t } = useTranslation('registration');
-  const { setFieldValue, setFieldTouched } = useFormikContext();
+  const { values, setFieldValue, setFieldTouched } = useFormikContext();
+  const maxDate = new Date(new Date().getFullYear() + 5, 11, 31);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
@@ -35,7 +36,7 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
             }}
             inputFormat="dd.MM.yyyy"
             views={['year', 'month', 'day']}
-            maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+            maxDate={new Date(getIn(values, toFieldName)) ?? maxDate}
             mask="__.__.____"
             renderInput={(params) => (
               <TextField
@@ -66,7 +67,8 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
             }}
             inputFormat="dd.MM.yyyy"
             views={['year', 'month', 'day']}
-            maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+            minDate={new Date(getIn(values, fromFieldName))}
+            maxDate={maxDate}
             mask="__.__.____"
             renderInput={(params) => (
               <TextField
