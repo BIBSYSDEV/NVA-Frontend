@@ -34,10 +34,10 @@ export const VenueRow = ({ updateVenue, removeVenue, moveVenue, venue, index, ma
       <TableCell>
         {maxIndex !== 0 && (
           <Box
-            sx={{ display: 'grid', gridTemplateAreas: "'down up'", gridTemplateColumns: '1fr 1fr', maxWidth: '8rem' }}>
+            sx={{ display: 'grid', gridTemplateAreas: '"down up"', gridTemplateColumns: '1fr 1fr', maxWidth: '8rem' }}>
             {index !== maxIndex && (
               <Tooltip title={t<string>('common:move_down')} sx={{ gridArea: 'down' }}>
-                <Button color="secondary" onClick={() => moveVenue(index + 1)} sx={{ minWidth: 'auto' }}>
+                <Button color="secondary" onClick={() => moveVenue(index + 1)}>
                   <ArrowDownwardIcon />
                 </Button>
               </Tooltip>
