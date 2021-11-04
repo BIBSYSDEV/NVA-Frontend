@@ -34,6 +34,7 @@ export const ProjectsField = () => {
           data-testid="project-search-field"
           options={projects?.hits ?? []}
           filterOptions={(options) => options}
+          getOptionLabel={(option) => option.title}
           onInputChange={(_, newInputValue, reason) => {
             if (reason !== 'reset') {
               // Autocomplete triggers "reset" events after input change when it's controlled. Ignore these.
@@ -41,26 +42,26 @@ export const ProjectsField = () => {
             }
           }}
           inputValue={searchTerm}
-          onChange={(_, value) => {
+          onChange={(_, value: (CristinProject | ResearchProject)[]) => {
             setSearchTerm('');
             const projectsToPersist: ResearchProject[] = value.map((projectValue) => ({
               type: 'ResearchProject',
               id: projectValue.id,
-              name: projectValue.title || projectValue.name,
+              name: 'title' in projectValue ? projectValue.title : 'name' in projectValue ? projectValue.name : '',
             }));
             setFieldValue(field.name, projectsToPersist);
           }}
           popupIcon={null}
           multiple
           value={(field.value ?? []) as any[]}
-          renderTags={(value, getTagProps) =>
+          renderTags={(value: ResearchProject[], getTagProps) =>
             value.map((option, index) => (
               <ProjectChip {...getTagProps({ index })} key={index} id={option.id} fallbackName={option.name} />
             ))
           }
           getOptionDisabled={(option) => field.value.some((project) => project.id === option.id)}
           loading={isLoadingProjects}
-          renderOption={(props, option, state) => (
+          renderOption={(props, option: CristinProject, state) => (
             <li {...props}>
               <StyledFlexColumn data-testid={`project-option-${option.id}`}>
                 <Typography variant="subtitle1">
