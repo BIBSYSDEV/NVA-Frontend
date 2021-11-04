@@ -1,14 +1,6 @@
 import { CristinProject, ResearchProject } from '../../../../types/project.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
-export const convertToResearchProject = (project: CristinProject): ResearchProject => ({
-  type: 'ResearchProject',
-  id: project.id,
-  name: project.title,
-  grants: [],
-  approvals: [],
-});
-
 export const convertToCristinProject = (project: ResearchProject): CristinProject => ({
   type: 'Project',
   id: project.id,

@@ -1,8 +1,9 @@
+import { CristinProject } from '../../types/project.types';
 import { Journal, Publisher, Registration } from '../../types/registration.types';
 
 export const SET_RESOURCE = 'set resource';
 
-export type ResourceType = Journal | Publisher | Registration;
+export type ResourceType = Journal | Publisher | Registration | CristinProject;
 
 export const setResource = (resource: ResourceType): SetResourcesAction => ({
   type: SET_RESOURCE,

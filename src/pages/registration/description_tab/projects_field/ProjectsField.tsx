@@ -1,24 +1,20 @@
 import { Field, FieldProps } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { Chip, Typography } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { autocompleteTranslationProps } from '../../../../themes/lightTheme';
-import { ProjectSearchResponse, ResearchProject } from '../../../../types/project.types';
+import { CristinProject, ProjectSearchResponse, ResearchProject } from '../../../../types/project.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { convertToCristinProject, convertToResearchProject } from './projectHelpers';
+import { convertToCristinProject } from './projectHelpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { ProjectsApiPath } from '../../../../api/apiPaths';
-
-const StyledProjectChip = styled(Chip)`
-  height: auto;
-`;
+import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 
 export const ProjectsField = () => {
   const { t } = useTranslation('registration');
@@ -49,7 +45,11 @@ export const ProjectsField = () => {
           inputValue={searchTerm}
           onChange={(_, value) => {
             setSearchTerm('');
-            const projectsToPersist = value.map((projectValue) => convertToResearchProject(projectValue));
+            const projectsToPersist = value.map((projectValue) => ({
+              type: 'ResearchProject',
+              id: projectValue.id,
+              name: projectValue.title,
+            }));
             setFieldValue(field.name, projectsToPersist);
           }}
           popupIcon={null}
@@ -57,11 +57,7 @@ export const ProjectsField = () => {
           value={field.value.map((project) => convertToCristinProject(project)) ?? []}
           renderTags={(value, getTagProps) =>
             value.map((option, index) => (
-              <StyledProjectChip
-                {...getTagProps({ index })}
-                data-testid={`project-chip-${option.id}`}
-                label={<Typography variant="subtitle1">{option.title}</Typography>}
-              />
+              <ProjectChip {...getTagProps({ index })} id={option.id} fallbackName={option.title} />
             ))
           }
           getOptionDisabled={(option) => field.value.some((project) => project.id === option.id)}
@@ -90,5 +86,32 @@ export const ProjectsField = () => {
         />
       )}
     </Field>
+  );
+};
+
+interface ProjectChipProps {
+  id: string;
+  fallbackName: string;
+}
+
+const ProjectChip = ({ id, fallbackName, ...rest }: ProjectChipProps) => {
+  const [project] = useFetchResource<CristinProject>(id);
+
+  return (
+    <Chip
+      {...rest}
+      sx={{ height: 'auto', py: '0.25rem' }}
+      data-testid={`project-chip-${id}`}
+      label={
+        <>
+          <Typography variant="subtitle1">{project?.title ?? fallbackName}</Typography>
+          {project && (
+            <Typography variant="body2" color="textSecondary">
+              {getLanguageString(project.coordinatingInstitution.name)}
+            </Typography>
+          )}
+        </>
+      }
+    />
   );
 };
