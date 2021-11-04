@@ -1,7 +1,7 @@
 import { Field, FieldProps } from 'formik';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Chip, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
@@ -13,7 +13,7 @@ import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { ProjectsApiPath } from '../../../../api/apiPaths';
-import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
+import { ProjectChip } from './ProjectChip';
 
 export const ProjectsField = () => {
   const { t } = useTranslation('registration');
@@ -85,32 +85,5 @@ export const ProjectsField = () => {
         />
       )}
     </Field>
-  );
-};
-
-interface ProjectChipProps {
-  id: string;
-  fallbackName: string;
-}
-
-const ProjectChip = ({ id, fallbackName, ...rest }: ProjectChipProps) => {
-  const [project] = useFetchResource<CristinProject>(id);
-
-  return (
-    <Chip
-      {...rest}
-      sx={{ height: 'auto', py: '0.25rem' }}
-      data-testid={`project-chip-${id}`}
-      label={
-        <>
-          <Typography variant="subtitle1">{project?.title ?? fallbackName}</Typography>
-          {project && (
-            <Typography variant="body2" color="textSecondary">
-              {getLanguageString(project.coordinatingInstitution.name)}
-            </Typography>
-          )}
-        </>
-      }
-    />
   );
 };
