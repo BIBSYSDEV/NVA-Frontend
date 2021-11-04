@@ -1,22 +1,5 @@
-import { CristinProject, ResearchProject } from '../../../../types/project.types';
+import { CristinProject } from '../../../../types/project.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
-
-export const convertToCristinProject = (project: ResearchProject): CristinProject => ({
-  type: 'Project',
-  id: project.id,
-  title: project.name,
-  alternativeTitles: [],
-  identifier: [],
-  language: '',
-  contributors: [],
-  startDate: '',
-  endDate: '',
-  coordinatingInstitution: { id: '', type: 'Organization', name: {} },
-  status: 'ACTIVE',
-  academicSummary: {},
-  popularScientificSummary: {},
-  funding: [],
-});
 
 export const getProjectName = (project?: CristinProject) =>
   project ? getLanguageString(project.coordinatingInstitution.name) : '';

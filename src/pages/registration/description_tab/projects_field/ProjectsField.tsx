@@ -10,7 +10,6 @@ import { autocompleteTranslationProps } from '../../../../themes/lightTheme';
 import { CristinProject, ProjectSearchResponse, ResearchProject } from '../../../../types/project.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { convertToCristinProject } from './projectHelpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { ProjectsApiPath } from '../../../../api/apiPaths';
@@ -35,7 +34,6 @@ export const ProjectsField = () => {
           data-testid="project-search-field"
           options={projects?.hits ?? []}
           filterOptions={(options) => options}
-          getOptionLabel={(option) => option.title}
           onInputChange={(_, newInputValue, reason) => {
             if (reason !== 'reset') {
               // Autocomplete triggers "reset" events after input change when it's controlled. Ignore these.
@@ -45,19 +43,19 @@ export const ProjectsField = () => {
           inputValue={searchTerm}
           onChange={(_, value) => {
             setSearchTerm('');
-            const projectsToPersist = value.map((projectValue) => ({
+            const projectsToPersist: ResearchProject[] = value.map((projectValue) => ({
               type: 'ResearchProject',
               id: projectValue.id,
-              name: projectValue.title,
+              name: projectValue.title || projectValue.name,
             }));
             setFieldValue(field.name, projectsToPersist);
           }}
           popupIcon={null}
           multiple
-          value={field.value.map((project) => convertToCristinProject(project)) ?? []}
+          value={(field.value ?? []) as any[]}
           renderTags={(value, getTagProps) =>
             value.map((option, index) => (
-              <ProjectChip {...getTagProps({ index })} id={option.id} fallbackName={option.title} />
+              <ProjectChip {...getTagProps({ index })} key={index} id={option.id} fallbackName={option.name} />
             ))
           }
           getOptionDisabled={(option) => field.value.some((project) => project.id === option.id)}
