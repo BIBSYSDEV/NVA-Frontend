@@ -26,7 +26,15 @@ import {
   ReportRegistration,
 } from '../../types/publication_types/reportRegistration.types';
 import { DegreeType, JournalType } from '../../types/publicationFieldNames';
-import { isBook, isChapter, isDegree, isJournal, isPresentation, isReport } from '../../utils/registration-helpers';
+import {
+  isArtistic,
+  isBook,
+  isChapter,
+  isDegree,
+  isJournal,
+  isPresentation,
+  isReport,
+} from '../../utils/registration-helpers';
 import { PublicDoi } from './PublicDoi';
 import {
   PublicJournal,
@@ -34,9 +42,11 @@ import {
   PublicPresentation,
   PublicPublisher,
   PublicSeries,
+  PublicVenues,
 } from './PublicPublicationContext';
 import {
   PublicIsbnContent,
+  PublicPublicationInstanceArtistic,
   PublicPublicationInstanceBook,
   PublicPublicationInstanceChapter,
   PublicPublicationInstanceDegree,
@@ -49,6 +59,10 @@ import { StyledGeneralInfo } from '../../components/landing_page/SyledGeneralInf
 import { dataTestId } from '../../utils/dataTestIds';
 import { displayDate } from '../../utils/date-helpers';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
+import {
+  ArtisticPublicationContext,
+  ArtisticPublicationInstance,
+} from '../../types/publication_types/artisticRegistration.types';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
@@ -122,6 +136,10 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             </>
           ) : isChapter(publicationInstance.type) ? (
             <PublicPublicationInstanceChapter publicationInstance={publicationInstance as ChapterPublicationInstance} />
+          ) : isArtistic(publicationInstance.type) ? (
+            <PublicPublicationInstanceArtistic
+              publicationInstance={publicationInstance as ArtisticPublicationInstance}
+            />
           ) : null)}
 
         <PublicDoi registration={registration} />
@@ -162,6 +180,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             <PublicPartOfContent partOf={(publicationContext as ChapterPublicationContext).partOf} />
           ) : isPresentation(publicationInstance.type) ? (
             <PublicPresentation publicationContext={publicationContext as PresentationPublicationContext} />
+          ) : isArtistic(publicationInstance.type) ? (
+            <PublicVenues venues={(publicationContext as ArtisticPublicationContext).venues} />
           ) : null)}
       </div>
     </StyledGeneralInfo>

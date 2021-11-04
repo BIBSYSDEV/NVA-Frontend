@@ -14,7 +14,7 @@ export interface Venue {
 
 export interface ArtisticPublicationInstance {
   type: ArtisticType | '';
-  subtype: DesignSubtype;
+  subtype: DesignSubtype | null;
   description: string;
 }
 

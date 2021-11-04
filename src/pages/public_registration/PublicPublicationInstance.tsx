@@ -9,6 +9,7 @@ import { BookPublicationInstance } from '../../types/publication_types/bookRegis
 import { ChapterPublicationInstance } from '../../types/publication_types/chapterRegistration.types';
 import { PagesMonograph, PagesRange } from '../../types/publication_types/pages.types';
 import i18n from '../../translations/i18n';
+import { ArtisticPublicationInstance, DesignType } from '../../types/publication_types/artisticRegistration.types';
 
 const getPageInterval = (pages: PagesRange | null) => {
   return pages?.begin || pages?.end
@@ -81,6 +82,31 @@ export const PublicPublicationInstanceChapter = ({
   const pagesInterval = getPageInterval(pages);
 
   return <>{pagesInterval && <Typography>{pagesInterval}</Typography>}</>;
+};
+
+export const PublicPublicationInstanceArtistic = ({
+  publicationInstance,
+}: {
+  publicationInstance: ArtisticPublicationInstance;
+}) => {
+  const { t } = useTranslation('registration');
+  const { subtype, description } = publicationInstance;
+  const typeString = subtype
+    ? subtype.type === DesignType.Other && subtype.description
+      ? `${subtype.description} (${t(`resource_type.design_type.${subtype.type}`)})`
+      : t(`resource_type.design_type.${subtype.type}`)
+    : '';
+
+  return (
+    <>
+      {typeString && (
+        <Typography>
+          {t('resource_type.type_work')}: {typeString}
+        </Typography>
+      )}
+      {description && <Typography>{description}</Typography>}
+    </>
+  );
 };
 
 const PublicTotalPagesContent = ({ pages }: { pages: PagesMonograph | null }) => {

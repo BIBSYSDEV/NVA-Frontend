@@ -59,7 +59,7 @@ export const ArtisticDesignForm = () => {
           )}
         </Field>
 
-        {values.entityDescription.reference.publicationInstance.subtype.type === DesignType.Other && (
+        {values.entityDescription.reference.publicationInstance.subtype?.type === DesignType.Other && (
           <Field name={ResourceFieldNames.PublicationInstanceSubtypeDescription}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
