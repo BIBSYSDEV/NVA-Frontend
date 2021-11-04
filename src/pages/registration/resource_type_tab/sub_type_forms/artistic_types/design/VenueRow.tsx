@@ -1,8 +1,10 @@
-import { TableRow, TableCell, Typography, Button, ThemeProvider } from '@mui/material';
+import { TableRow, TableCell, Typography, Button, ThemeProvider, Tooltip, Box } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { Venue } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { getPeriodString } from '../../../../../../utils/registration-helpers';
 import { VenueModal } from './VenueModal';
@@ -13,10 +15,12 @@ interface VenueRowProps {
   venue: Venue;
   updateVenue: (venue: Venue) => void;
   removeVenue: () => void;
+  moveVenue: (to: number) => void;
   index: number;
+  maxIndex: number;
 }
 
-export const VenueRow = ({ updateVenue, removeVenue, venue, index }: VenueRowProps) => {
+export const VenueRow = ({ updateVenue, removeVenue, moveVenue, venue, index, maxIndex }: VenueRowProps) => {
   const { t } = useTranslation('registration');
   const [openEditVenue, setOpenEditVenue] = useState(false);
   const [openRemoveVenue, setOpenRemoveVenue] = useState(false);
@@ -27,7 +31,27 @@ export const VenueRow = ({ updateVenue, removeVenue, venue, index }: VenueRowPro
         <Typography>{venue.name}</Typography>
       </TableCell>
       <TableCell>{getPeriodString(venue.time)}</TableCell>
-      <TableCell>{index + 1}</TableCell>
+      <TableCell>
+        {maxIndex !== 0 && (
+          <Box
+            sx={{ display: 'grid', gridTemplateAreas: '"down up"', gridTemplateColumns: '1fr 1fr', maxWidth: '8rem' }}>
+            {index !== maxIndex && (
+              <Tooltip title={t<string>('common:move_down')} sx={{ gridArea: 'down' }}>
+                <Button color="secondary" onClick={() => moveVenue(index + 1)}>
+                  <ArrowDownwardIcon />
+                </Button>
+              </Tooltip>
+            )}
+            {index !== 0 && (
+              <Tooltip title={t<string>('common:move_up')} sx={{ gridArea: 'up' }}>
+                <Button color="secondary" onClick={() => moveVenue(index - 1)}>
+                  <ArrowUpwardIcon />
+                </Button>
+              </Tooltip>
+            )}
+          </Box>
+        )}
+      </TableCell>
       <TableCell>
         <Button onClick={() => setOpenEditVenue(true)} variant="outlined" sx={{ mr: '1rem' }} startIcon={<EditIcon />}>
           {t('common:edit')}

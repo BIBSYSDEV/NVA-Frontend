@@ -10,7 +10,6 @@ import {
 } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
-import SaveIcon from '@mui/icons-material/Save';
 import { lightTheme } from '../../../../../../themes/lightTheme';
 import { Venue } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
@@ -80,9 +79,8 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
                 <Button
                   data-testid={dataTestId.registrationWizard.resourceType.saveVenueButton}
                   variant="contained"
-                  startIcon={<SaveIcon />}
                   type="submit">
-                  {t('common:save')}
+                  {venue ? t('common:save') : t('common:add')}
                 </Button>
               </DialogActions>
             </Form>

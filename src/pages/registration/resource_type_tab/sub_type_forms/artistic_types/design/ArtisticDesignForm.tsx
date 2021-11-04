@@ -97,7 +97,7 @@ export const ArtisticDesignForm = () => {
 
       <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
         <FieldArray name={ResourceFieldNames.Venues}>
-          {({ push, replace, remove, name }: FieldArrayRenderProps) => (
+          {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
               <Typography variant="h3">{t('resource_type.exhibition_places')}</Typography>
               {venues.length > 0 && (
@@ -117,7 +117,9 @@ export const ArtisticDesignForm = () => {
                         venue={venue}
                         updateVenue={(newVenue) => replace(index, newVenue)}
                         removeVenue={() => remove(index)}
+                        moveVenue={(newIndex) => move(index, newIndex)}
                         index={index}
+                        maxIndex={venues.length - 1}
                       />
                     ))}
                   </TableBody>
