@@ -11,6 +11,7 @@ import { ListSkeleton } from '../../components/ListSkeleton';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 import { getPeriodString } from '../../utils/registration-helpers';
+import { Venue } from '../../types/publication_types/artisticRegistration.types';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
@@ -186,4 +187,23 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
       {periodString && <Typography>{periodString}</Typography>}
     </>
   );
+};
+
+interface PublicVenuesProps {
+  venues: Venue[];
+}
+
+export const PublicVenues = ({ venues }: PublicVenuesProps) => {
+  const { t } = useTranslation('registration');
+
+  return venues && venues.length > 0 ? (
+    <>
+      <Typography variant="overline">{t('resource_type.exhibition_places')}</Typography>
+      {venues.map((venue, index) => {
+        const periodString = getPeriodString(venue.time);
+        const venueStringRepresentation = periodString ? `${venue.name} (${periodString})` : venue.name;
+        return <Typography key={index}>{venueStringRepresentation}</Typography>;
+      })}
+    </>
+  ) : null;
 };

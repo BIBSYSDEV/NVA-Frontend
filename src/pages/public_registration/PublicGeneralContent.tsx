@@ -42,6 +42,7 @@ import {
   PublicPresentation,
   PublicPublisher,
   PublicSeries,
+  PublicVenues,
 } from './PublicPublicationContext';
 import {
   PublicIsbnContent,
@@ -58,7 +59,10 @@ import { StyledGeneralInfo } from '../../components/landing_page/SyledGeneralInf
 import { dataTestId } from '../../utils/dataTestIds';
 import { displayDate } from '../../utils/date-helpers';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
-import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
+import {
+  ArtisticPublicationContext,
+  ArtisticPublicationInstance,
+} from '../../types/publication_types/artisticRegistration.types';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
@@ -69,7 +73,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   const journalPublicationInstance = entityDescription?.reference?.publicationInstance as
     | JournalPublicationInstance
     | undefined;
-  console.log(publicationContext, publicationInstance);
+
   return (
     <StyledGeneralInfo>
       <div>
@@ -176,6 +180,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             <PublicPartOfContent partOf={(publicationContext as ChapterPublicationContext).partOf} />
           ) : isPresentation(publicationInstance.type) ? (
             <PublicPresentation publicationContext={publicationContext as PresentationPublicationContext} />
+          ) : isArtistic(publicationInstance.type) ? (
+            <PublicVenues venues={(publicationContext as ArtisticPublicationContext).venues} />
           ) : null)}
       </div>
     </StyledGeneralInfo>

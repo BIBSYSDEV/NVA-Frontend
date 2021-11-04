@@ -91,14 +91,17 @@ export const PublicPublicationInstanceArtistic = ({
 }) => {
   const { t } = useTranslation('registration');
   const { subtype, description } = publicationInstance;
+  const typeString = subtype
+    ? subtype.type === DesignType.Other && subtype.description
+      ? `${subtype.description} (${t(`resource_type.design_type.${subtype.type}`)})`
+      : t(`resource_type.design_type.${subtype.type}`)
+    : '';
 
   return (
     <>
-      {subtype && (
+      {typeString && (
         <Typography>
-          {subtype.type === DesignType.Other
-            ? `${subtype.description} (${t(`resource_type.design_type.${subtype.type}`)})`
-            : t(`resource_type.design_type.${subtype.type}`)}
+          {t('resource_type.type_work')}: {typeString}
         </Typography>
       )}
       {description && <Typography>{description}</Typography>}
