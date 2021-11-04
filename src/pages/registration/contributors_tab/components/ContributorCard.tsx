@@ -170,7 +170,7 @@ export const ContributorCard = ({
         <StyledRightAlignedWrapper>
           <StyledArrowSection>
             {contributor.sequence < contributorsLength && (
-              <Tooltip title={t<string>('contributors.move_down')}>
+              <Tooltip title={t<string>('common:move_down')}>
                 <StyledArrowButton
                   color="secondary"
                   onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}>
@@ -179,7 +179,7 @@ export const ContributorCard = ({
               </Tooltip>
             )}
             {contributor.sequence !== 1 && (
-              <Tooltip title={t<string>('contributors.move_up')}>
+              <Tooltip title={t<string>('common:move_up')}>
                 <StyledArrowButton
                   color="secondary"
                   onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}>
