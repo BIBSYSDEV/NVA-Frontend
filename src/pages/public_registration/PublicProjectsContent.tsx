@@ -8,7 +8,7 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { getProjectPath } from '../../utils/urlPaths';
 import {
   getProjectManagerName,
-  getProjectName,
+  getProjectCoordinatingInstitutionName,
   getProjectPeriod,
 } from '../registration/description_tab/projects_field/projectHelpers';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -94,7 +94,11 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
         </StyledProjectTitle>
       )}
       <Divider component="span" orientation="vertical" />
-      {isLoadingProject ? <Skeleton /> : <Typography variant="body1">{getProjectName(fetchedProject)}</Typography>}
+      {isLoadingProject ? (
+        <Skeleton />
+      ) : (
+        <Typography variant="body1">{getProjectCoordinatingInstitutionName(fetchedProject)}</Typography>
+      )}
       <Divider component="span" orientation="vertical" />
       {isLoadingProject ? (
         <Skeleton />

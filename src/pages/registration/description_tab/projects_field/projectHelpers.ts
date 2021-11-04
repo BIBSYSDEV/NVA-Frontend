@@ -1,7 +1,7 @@
 import { CristinProject } from '../../../../types/project.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
-export const getProjectName = (project?: CristinProject) =>
+export const getProjectCoordinatingInstitutionName = (project?: CristinProject) =>
   project ? getLanguageString(project.coordinatingInstitution.name) : '';
 
 export const getProjectManagerName = (project?: CristinProject) => {
