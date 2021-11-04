@@ -1,24 +1,19 @@
 import { Field, FieldProps } from 'formik';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import { Chip, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { autocompleteTranslationProps } from '../../../../themes/lightTheme';
-import { ProjectSearchResponse, ResearchProject } from '../../../../types/project.types';
+import { CristinProject, ProjectSearchResponse, ResearchProject } from '../../../../types/project.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { convertToCristinProject, convertToResearchProject } from './projectHelpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { ProjectsApiPath } from '../../../../api/apiPaths';
-
-const StyledProjectChip = styled(Chip)`
-  height: auto;
-`;
+import { ProjectChip } from './ProjectChip';
 
 export const ProjectsField = () => {
   const { t } = useTranslation('registration');
@@ -47,26 +42,26 @@ export const ProjectsField = () => {
             }
           }}
           inputValue={searchTerm}
-          onChange={(_, value) => {
+          onChange={(_, value: (CristinProject | ResearchProject)[]) => {
             setSearchTerm('');
-            const projectsToPersist = value.map((projectValue) => convertToResearchProject(projectValue));
+            const projectsToPersist: ResearchProject[] = value.map((projectValue) => ({
+              type: 'ResearchProject',
+              id: projectValue.id,
+              name: 'title' in projectValue ? projectValue.title : 'name' in projectValue ? projectValue.name : '',
+            }));
             setFieldValue(field.name, projectsToPersist);
           }}
           popupIcon={null}
           multiple
-          value={field.value.map((project) => convertToCristinProject(project)) ?? []}
-          renderTags={(value, getTagProps) =>
+          value={(field.value ?? []) as any[]}
+          renderTags={(value: ResearchProject[], getTagProps) =>
             value.map((option, index) => (
-              <StyledProjectChip
-                {...getTagProps({ index })}
-                data-testid={`project-chip-${option.id}`}
-                label={<Typography variant="subtitle1">{option.title}</Typography>}
-              />
+              <ProjectChip {...getTagProps({ index })} key={index} id={option.id} fallbackName={option.name} />
             ))
           }
           getOptionDisabled={(option) => field.value.some((project) => project.id === option.id)}
           loading={isLoadingProjects}
-          renderOption={(props, option, state) => (
+          renderOption={(props, option: CristinProject, state) => (
             <li {...props}>
               <StyledFlexColumn data-testid={`project-option-${option.id}`}>
                 <Typography variant="subtitle1">

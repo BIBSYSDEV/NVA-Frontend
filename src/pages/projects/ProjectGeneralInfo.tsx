@@ -5,7 +5,7 @@ import { CristinProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getLanguageString } from '../../utils/translation-helpers';
 import {
-  getProjectName,
+  getProjectCoordinatingInstitutionName,
   getProjectManagerName,
   getProjectPeriod,
 } from '../registration/description_tab/projects_field/projectHelpers';
@@ -23,7 +23,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
         <Typography variant="overline" component="h2">
           {t('project_owner')}
         </Typography>
-        <Typography>{getProjectName(project) ?? '-'}</Typography>
+        <Typography>{getProjectCoordinatingInstitutionName(project) ?? '-'}</Typography>
         <Typography variant="overline" component="h2">
           {t('project_manager')}
         </Typography>
