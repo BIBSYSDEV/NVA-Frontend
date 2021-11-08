@@ -42,12 +42,7 @@ const MyInstitutionUsersPage = () => {
     setAutoAssignCreators(!autoAssignCreators);
   };
 
-  const roleToAddTitle =
-    roleToAdd === RoleName.INSTITUTION_ADMIN
-      ? t('users.add_institution_admin')
-      : roleToAdd === RoleName.CURATOR
-      ? t('users.add_curator')
-      : t('users.add_editor');
+  const roleToAddTitle = t('common:add_custom', { name: roleToAdd });
 
   return (
     <StyledPageWrapperWithMaxWidth>
