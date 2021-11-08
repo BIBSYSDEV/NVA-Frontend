@@ -35,7 +35,7 @@ export const AddContributorModal = ({
   const { t } = useTranslation('registration');
   const [createNewContributor, setCreateNewContributor] = useState(false);
   const user = useSelector((store: RootStore) => store.user);
-  const [selectedContributorRole, setSelectedContributorRole] = useState(
+  const [selectedContributorRole, setSelectedContributorRole] = useState<ContributorRole | ''>(
     contributorRoles.length === 1 ? contributorRoles[0] : ''
   );
 
@@ -99,9 +99,9 @@ export const AddContributorModal = ({
             addContributor={addContributor}
             addSelfAsContributor={addSelfAsContributor}
             contributorRole={contributorRole}
-            handleCloseModal={handleCloseModal}
             openNewContributorModal={() => setCreateNewContributor(true)}
             initialSearchTerm={initialSearchTerm}
+            roleToAdd={selectedContributorRole}
           />
         ))}
     </Modal>
