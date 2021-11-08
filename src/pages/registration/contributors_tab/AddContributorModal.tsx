@@ -7,7 +7,7 @@ import { Modal } from '../../../components/Modal';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
 import { ContributorRole } from '../../../types/contributor.types';
-import { getAddContributorText, getCreateContributorText } from '../../../utils/translation-helpers';
+import { getAddContributorText } from '../../../utils/translation-helpers';
 import { AddContributorModalContent } from './components/AddContributorModalContent';
 import { CreateContributorModalContent } from './components/CreateContributorModalContent';
 
@@ -63,7 +63,9 @@ export const AddContributorModal = ({
     <Modal
       headingText={
         createNewContributor
-          ? getCreateContributorText(contributorRole)
+          ? contributorRole === 'OtherContributor'
+            ? t('contributors.create_new_with_role', { role: t('contributors.contributor').toLowerCase() })
+            : t('contributors.create_new_with_role', { role: t(`contributors.types.${contributorRole}`).toLowerCase() })
           : initialSearchTerm
           ? t('contributors.verify_person')
           : getAddContributorText(contributorRole)

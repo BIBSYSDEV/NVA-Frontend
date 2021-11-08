@@ -11,7 +11,6 @@ import { Authority } from '../../../../types/authority.types';
 import { Registration } from '../../../../types/registration.types';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { AuthorityList } from '../../../user/authority/AuthorityList';
-import { getCreateContributorText, getAddSelfAsContributorText } from '../../../../utils/translation-helpers';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { AuthorityApiPath } from '../../../../api/apiPaths';
 import { ContributorRole } from '../../../../types/contributor.types';
@@ -50,7 +49,7 @@ interface AddContributorModalContentProps {
   openNewContributorModal: () => void;
   contributorRole: string;
   initialSearchTerm?: string;
-  roleToAdd: ContributorRole | '';
+  roleToAdd: ContributorRole;
 }
 
 export const AddContributorModalContent = ({
@@ -124,11 +123,11 @@ export const AddContributorModalContent = ({
             : t('common:add_custom', { name: t(`contributors.types.${roleToAdd}`) })}
         </StyledVerifyButton>
         <StyledCreateButton color="primary" data-testid="button-create-new-author" onClick={openNewContributorModal}>
-          {getCreateContributorText(contributorRole)}
+          {t('contributors.create_new_with_role', { role: t(`contributors.types.${roleToAdd}`) })}
         </StyledCreateButton>
         {!isSelfAdded && !initialSearchTerm && (
           <StyledAddSelfButton color="primary" data-testid="button-add-self-author" onClick={addSelfAsContributor}>
-            {getAddSelfAsContributorText(contributorRole)}
+            {t('contributors.add_self_as_role', { role: t(`contributors.types.${roleToAdd}`) })}
           </StyledAddSelfButton>
         )}
       </StyledDialogActions>
