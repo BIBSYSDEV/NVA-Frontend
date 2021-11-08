@@ -35,19 +35,6 @@ export const getAddContributorText = (contributorRole: string) => {
   }
 };
 
-export const getContributorHeading = (contributorRole: string) => {
-  switch (contributorRole) {
-    case ContributorRole.Creator:
-      return i18n.t('registration:contributors.authors');
-    case ContributorRole.Editor:
-      return i18n.t('registration:contributors.editors');
-    case ContributorRole.Supervisor:
-      return i18n.t('registration:contributors.supervisors');
-    default:
-      return i18n.t('registration:heading.contributors');
-  }
-};
-
 export const getRemoveContributorText = (contributorRole: string) => {
   switch (contributorRole) {
     case ContributorRole.Creator:

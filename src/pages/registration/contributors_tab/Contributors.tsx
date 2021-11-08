@@ -23,7 +23,7 @@ import { useIsMobile } from '../../../utils/hooks/useIsMobile';
 import { lightTheme, paginationTranslationProps } from '../../../themes/lightTheme';
 import { ContributorList } from './components/ContributorList';
 import { AddContributorModal } from './AddContributorModal';
-import { getAddContributorText, getContributorHeading } from '../../../utils/translation-helpers';
+import { getAddContributorText } from '../../../utils/translation-helpers';
 
 const StyledButton = styled(Button)`
   margin: 1rem 0rem;
@@ -174,7 +174,15 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
 
   return (
     <div data-testid={contributorRole}>
-      <Typography variant="h2">{getContributorHeading(contributorRole)}</Typography>
+      <Typography variant="h2">
+        {contributorRole === ContributorRole.Creator
+          ? t('registration:contributors.authors')
+          : contributorRole === ContributorRole.Editor
+          ? t('registration:contributors.editors')
+          : contributorRole === ContributorRole.Supervisor
+          ? t('registration:contributors.supervisors')
+          : t('registration:heading.contributors')}
+      </Typography>
       <ThemeProvider theme={lightTheme}>
         {((isMobile && contributorsToShow.length >= 2) || (!isMobile && contributorsToShow.length >= 5)) &&
           addContributorButton}
