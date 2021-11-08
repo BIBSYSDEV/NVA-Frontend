@@ -6,7 +6,7 @@ import { lightTheme } from '../../themes/lightTheme';
 import { ContributorRole } from '../../types/contributor.types';
 import { BookType, ContributorFieldNames } from '../../types/publicationFieldNames';
 import { EntityDescription, Registration } from '../../types/registration.types';
-import { isDegree } from '../../utils/registration-helpers';
+import { isArtistic, isDegree } from '../../utils/registration-helpers';
 import { Contributors } from './contributors_tab/Contributors';
 
 export const ContributorsPanel = () => {
@@ -68,6 +68,10 @@ export const ContributorsPanel = () => {
                 />
               </BackgroundDiv>
             </>
+          ) : isArtistic(publicationInstanceType) ? (
+            <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+              <Contributors push={push} replace={replace} contributorRoles={Object.values(ContributorRole)} />
+            </BackgroundDiv>
           ) : (
             <>
               <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>

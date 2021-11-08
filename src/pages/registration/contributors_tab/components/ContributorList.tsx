@@ -4,7 +4,6 @@ import { Typography } from '@mui/material';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import { ContributorCard } from './ContributorCard';
-import { getRemoveContributorText } from '../../../../utils/translation-helpers';
 
 interface ContributorListProps {
   contributors: Contributor[];
@@ -46,7 +45,9 @@ export const ContributorList = ({
       {contributorToRemove && (
         <ConfirmDialog
           open={!!contributorToRemove}
-          title={getRemoveContributorText(contributorToRemove.role)}
+          title={t('contributors.remove_role', {
+            role: t(`contributors.types.${contributorToRemove.role}`).toLowerCase(),
+          })}
           onAccept={() => {
             onDelete(contributorToRemove.sequence - 1);
             closeConfirmDialog();

@@ -7,7 +7,6 @@ import { Modal } from '../../../components/Modal';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
 import { ContributorRole } from '../../../types/contributor.types';
-import { getAddContributorText, getCreateContributorText } from '../../../utils/translation-helpers';
 import { AddContributorModalContent } from './components/AddContributorModalContent';
 import { CreateContributorModalContent } from './components/CreateContributorModalContent';
 
@@ -35,7 +34,7 @@ export const AddContributorModal = ({
   const { t } = useTranslation('registration');
   const [createNewContributor, setCreateNewContributor] = useState(false);
   const user = useSelector((store: RootStore) => store.user);
-  const [selectedContributorRole, setSelectedContributorRole] = useState(
+  const [selectedContributorRole, setSelectedContributorRole] = useState<ContributorRole | ''>(
     contributorRoles.length === 1 ? contributorRoles[0] : ''
   );
 
@@ -63,10 +62,17 @@ export const AddContributorModal = ({
     <Modal
       headingText={
         createNewContributor
-          ? getCreateContributorText(contributorRole)
+          ? contributorRole === 'OtherContributor'
+            ? t('contributors.create_new_with_role', { role: t('contributors.contributor').toLowerCase() })
+            : t('contributors.create_new_with_role', { role: t(`contributors.types.${contributorRole}`).toLowerCase() })
           : initialSearchTerm
           ? t('contributors.verify_person')
-          : getAddContributorText(contributorRole)
+          : t('contributors.add_as_role', {
+              role:
+                contributorRole === 'OtherContributor'
+                  ? t('contributors.contributor').toLowerCase()
+                  : t(`contributors.types.${contributorRole}`).toLowerCase(),
+            })
       }
       onClose={handleCloseModal}
       open={open}
@@ -99,9 +105,9 @@ export const AddContributorModal = ({
             addContributor={addContributor}
             addSelfAsContributor={addSelfAsContributor}
             contributorRole={contributorRole}
-            handleCloseModal={handleCloseModal}
             openNewContributorModal={() => setCreateNewContributor(true)}
             initialSearchTerm={initialSearchTerm}
+            roleToAdd={selectedContributorRole}
           />
         ))}
     </Modal>
