@@ -15,7 +15,6 @@ import { Contributor, UnverifiedContributor } from '../../../../types/contributo
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import { AffiliationsCell } from './AffiliationsCell';
-import { getRemoveContributorText } from '../../../../utils/translation-helpers';
 
 const StyledCheckIcon = styled(CheckIcon)`
   color: ${({ theme }) => theme.palette.success.main};
@@ -235,7 +234,7 @@ export const ContributorCard = ({
           startIcon={<DeleteIcon />}
           onClick={onRemoveContributorClick}
           variant="contained">
-          {getRemoveContributorText(contributor.role)}
+          {t('contributors.remove_role', { role: t(`contributors.types.${contributor.role}`) })}
         </Button>
       </StyledRemoveContributorContainer>
     </StyledBackgroundDiv>

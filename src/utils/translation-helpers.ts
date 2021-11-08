@@ -1,6 +1,5 @@
 import i18n from '../translations/i18n';
 import { LanguageString } from '../types/common.types';
-import { ContributorRole } from '../types/contributor.types';
 import { LanguageCodes } from '../types/language.types';
 
 // Map from three letter language to two ("nob" -> "no")
@@ -20,17 +19,4 @@ export const getLanguageString = (labels: LanguageString) => {
     return labels[preferredLanguageCode];
   }
   return Object.values(labels)[0];
-};
-
-export const getRemoveContributorText = (contributorRole: string) => {
-  switch (contributorRole) {
-    case ContributorRole.Creator:
-      return i18n.t('registration:contributors.remove_author');
-    case ContributorRole.Editor:
-      return i18n.t('registration:contributors.remove_editor');
-    case ContributorRole.Supervisor:
-      return i18n.t('registration:contributors.remove_supervisor');
-    default:
-      return i18n.t('registration:contributors.remove_contributor');
-  }
 };
