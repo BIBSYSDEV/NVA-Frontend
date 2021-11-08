@@ -22,19 +22,6 @@ export const getLanguageString = (labels: LanguageString) => {
   return Object.values(labels)[0];
 };
 
-export const getAddContributorText = (contributorRole: string) => {
-  switch (contributorRole) {
-    case ContributorRole.Creator:
-      return i18n.t('registration:contributors.add_author');
-    case ContributorRole.Editor:
-      return i18n.t('registration:contributors.add_editor');
-    case ContributorRole.Supervisor:
-      return i18n.t('registration:contributors.add_supervisor');
-    default:
-      return i18n.t('registration:contributors.add_contributor');
-  }
-};
-
 export const getRemoveContributorText = (contributorRole: string) => {
   switch (contributorRole) {
     case ContributorRole.Creator:

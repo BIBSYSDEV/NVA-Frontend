@@ -7,7 +7,6 @@ import { Modal } from '../../../components/Modal';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
 import { ContributorRole } from '../../../types/contributor.types';
-import { getAddContributorText } from '../../../utils/translation-helpers';
 import { AddContributorModalContent } from './components/AddContributorModalContent';
 import { CreateContributorModalContent } from './components/CreateContributorModalContent';
 
@@ -68,7 +67,12 @@ export const AddContributorModal = ({
             : t('contributors.create_new_with_role', { role: t(`contributors.types.${contributorRole}`).toLowerCase() })
           : initialSearchTerm
           ? t('contributors.verify_person')
-          : getAddContributorText(contributorRole)
+          : t('contributors.add_as_role', {
+              role:
+                contributorRole === 'OtherContributor'
+                  ? t('contributors.contributor').toLowerCase()
+                  : t(`contributors.types.${contributorRole}`).toLowerCase(),
+            })
       }
       onClose={handleCloseModal}
       open={open}

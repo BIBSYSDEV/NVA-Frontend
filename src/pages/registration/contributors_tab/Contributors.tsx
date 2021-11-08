@@ -23,7 +23,6 @@ import { useIsMobile } from '../../../utils/hooks/useIsMobile';
 import { lightTheme, paginationTranslationProps } from '../../../themes/lightTheme';
 import { ContributorList } from './components/ContributorList';
 import { AddContributorModal } from './AddContributorModal';
-import { getAddContributorText } from '../../../utils/translation-helpers';
 
 const StyledButton = styled(Button)`
   margin: 1rem 0rem;
@@ -168,7 +167,12 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       color={contributorRoles.length === 1 ? 'secondary' : 'inherit'}
       startIcon={<AddIcon />}
       data-testid={`add-${contributorRole}`}>
-      {getAddContributorText(contributorRole)}
+      {t('contributors.add_as_role', {
+        role:
+          contributorRole === 'OtherContributor'
+            ? t('contributors.contributor')
+            : t(`contributors.types.${contributorRole}`),
+      })}
     </StyledButton>
   );
 
