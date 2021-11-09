@@ -135,7 +135,7 @@ const MyInstitutionUsersPage = () => {
           <FormControlLabel
             control={<Checkbox disabled checked={autoAssignCreators} data-testid="checkbox-assign-creators" />}
             onChange={handleCheckAutoAssignCreators}
-            label={t('users.auto_assign_creators')}
+            label={t<string>('users.auto_assign_creators')}
           />
         </StyledContainer>
 

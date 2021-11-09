@@ -119,12 +119,12 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                     <FormControlLabel
                       value={false}
                       control={<Radio color="primary" />}
-                      label={t('files_and_license.accepted_version')}
+                      label={t<string>('files_and_license.accepted_version')}
                     />
                     <FormControlLabel
                       value={true}
                       control={<Radio color="primary" />}
-                      label={t('files_and_license.published_version')}
+                      label={t<string>('files_and_license.published_version')}
                     />
                   </RadioGroup>
                   {error && touched && <FormHelperText error>{error}</FormHelperText>}
@@ -137,7 +137,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                 <StyledAdministrativeContract
                   data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
                   control={<Checkbox {...field} color="primary" checked={field.value} />}
-                  label={t('files_and_license.administrative_contract')}
+                  label={t<string>('files_and_license.administrative_contract')}
                 />
               )}
             </Field>
