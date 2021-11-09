@@ -72,8 +72,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
   };
 
-  const fileSetErrors = errors.fileSet as FormikErrors<FileSet>;
-
   return (
     <>
       <FieldArray name={FileFieldNames.Files}>
@@ -115,16 +113,13 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   push(file);
                 }}
               />
-
-              {files.length === 0 && touched.fileSet && (
-                <FormHelperText error>
-                  {fileSet?.files && typeof fileSetErrors.files === 'string' ? (
+              {files.length === 0 &&
+                typeof (errors.fileSet as FormikErrors<FileSet>).files === 'string' &&
+                touched.fileSet && (
+                  <FormHelperText error>
                     <ErrorMessage name={name} />
-                  ) : (
-                    typeof fileSetErrors === 'string' && <ErrorMessage name={FileFieldNames.FileSet} />
-                  )}
-                </FormHelperText>
-              )}
+                  </FormHelperText>
+                )}
             </BackgroundDiv>
           </>
         )}
