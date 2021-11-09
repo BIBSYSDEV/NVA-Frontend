@@ -218,7 +218,6 @@ describe('User opens registration form and can see validation errors', () => {
   });
 
   it('The User should be able to see validation errors on resource tab (Artistic)', () => {
-    cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true }); //todo rm
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-context-type-Artistic]').click({ force: true });
 

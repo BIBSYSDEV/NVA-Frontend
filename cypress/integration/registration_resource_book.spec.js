@@ -45,12 +45,17 @@ describe('Registration: Resource type: Book', () => {
     cy.get(`[data-value="${BookMonographContentType.AcademicMonograph}"]`).click();
 
     // choose peer review value and show NVI status
-    // TODO
-    // cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviFailedPeerReview}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviFailed}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`)
       .eq(0)
       .click({ force: true });
-    // cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviSuccess}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviFailed}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
+      .click()
+      .type(mockPublishersSearch[1].name);
+    cy.contains(mockPublishersSearch[1].name).click();
+
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviSuccess}]`).should('be.visible');
 
     // fill out number of pages field
     cy.get('[data-testid=pages-field] input').type('483');
