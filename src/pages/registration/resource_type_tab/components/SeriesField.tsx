@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
-import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
+import { lightTheme } from '../../../../themes/lightTheme';
 import { Journal, PublicationChannelType, Registration } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
@@ -48,7 +48,6 @@ export const SeriesField = () => {
       <Field name={ResourceFieldNames.SeriesId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
-            {...autocompleteTranslationProps}
             multiple
             id={seriesFieldTestId}
             data-testid={seriesFieldTestId}

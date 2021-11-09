@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
-import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
+import { lightTheme } from '../../../../themes/lightTheme';
 import { RegistrationSubtype, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { Journal, Publisher, Registration, RegistrationDate } from '../../../../types/registration.types';
 import { displayDate } from '../../../../utils/date-helpers';
@@ -61,7 +61,6 @@ export const SearchContainerField = ({
         {({ field, meta }: FieldProps<string>) => (
           <>
             <Autocomplete
-              {...autocompleteTranslationProps}
               multiple
               id={dataTestId}
               data-testid={dataTestId}

@@ -6,7 +6,7 @@ import { Autocomplete } from '@mui/material';
 import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
+import { lightTheme } from '../../../../themes/lightTheme';
 import { PublicationChannelType, Publisher, Registration } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
@@ -59,7 +59,6 @@ export const PublisherField = () => {
       <Field name={ResourceFieldNames.PublicationContextPublisherId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
-            {...autocompleteTranslationProps}
             multiple
             id={publisherFieldTestId}
             data-testid={publisherFieldTestId}

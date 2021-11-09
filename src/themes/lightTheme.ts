@@ -139,6 +139,23 @@ export const lightTheme = createTheme({
         },
       },
     },
+    MuiAutocomplete: {
+      styleOverrides: {
+        tag: {
+          margin: '0.5rem 0',
+          '&:not(:last-child)': {
+            marginRight: '0.5rem',
+          },
+        },
+      },
+      defaultProps: {
+        noOptionsText: i18n.t('common:no_hits'),
+        loadingText: `${i18n.t('common:loading')}...`,
+        clearText: i18n.t('common:clear'),
+        closeText: i18n.t('common:close'),
+        openText: i18n.t('common:open'),
+      },
+    },
     MuiButton: {
       styleOverrides: {
         outlinedSecondary: {
@@ -162,14 +179,6 @@ export const lightTheme = createTheme({
       styleOverrides: {
         root: {
           background: Color.White,
-
-          "& div[class*='MuiAutocomplete-tag']": {
-            // TODO: Set this in overrides.MuiAutocomplete.tag when Autocomplete is added to MUI core
-            margin: '0.5rem 0 !important',
-            '&:not(:last-child)': {
-              marginRight: '0.5rem !important',
-            },
-          },
         },
       },
     },
@@ -273,14 +282,6 @@ export const lightTheme = createTheme({
 });
 
 // Default props in theme are not supported for components still in /lab
-export const autocompleteTranslationProps = {
-  noOptionsText: i18n.t('common:no_hits'),
-  loadingText: `${i18n.t('common:loading')}...`,
-  clearText: i18n.t('common:clear'),
-  closeText: i18n.t('common:close'),
-  openText: i18n.t('common:open'),
-};
-
 export const datePickerTranslationProps: Pick<
   DatePickerProps,
   | 'cancelText'
