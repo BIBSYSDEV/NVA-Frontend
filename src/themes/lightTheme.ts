@@ -139,6 +139,23 @@ export const lightTheme = createTheme({
         },
       },
     },
+    MuiAutocomplete: {
+      styleOverrides: {
+        tag: {
+          margin: '0.5rem 0',
+          '&:not(:last-child)': {
+            marginRight: '0.5rem',
+          },
+        },
+      },
+      defaultProps: {
+        noOptionsText: i18n.t('common:no_hits'),
+        loadingText: `${i18n.t('common:loading')}...`,
+        clearText: i18n.t('common:clear'),
+        closeText: i18n.t('common:close'),
+        openText: i18n.t('common:open'),
+      },
+    },
     MuiButton: {
       styleOverrides: {
         outlinedSecondary: {
@@ -162,14 +179,6 @@ export const lightTheme = createTheme({
       styleOverrides: {
         root: {
           background: Color.White,
-
-          "& div[class*='MuiAutocomplete-tag']": {
-            // TODO: Set this in overrides.MuiAutocomplete.tag when Autocomplete is added to MUI core
-            margin: '0.5rem 0 !important',
-            '&:not(:last-child)': {
-              marginRight: '0.5rem !important',
-            },
-          },
         },
       },
     },
@@ -269,18 +278,22 @@ export const lightTheme = createTheme({
         },
       },
     },
+    MuiPagination: {
+      defaultProps: {
+        getItemAriaLabel: (type: string, page: number) =>
+          type === 'previous'
+            ? i18n.t('common:go_to_previous_page')
+            : type === 'next'
+            ? i18n.t('common:go_to_next_page')
+            : type === 'page'
+            ? i18n.t('common:go_to_page', { page })
+            : '',
+      },
+    },
   },
 });
 
 // Default props in theme are not supported for components still in /lab
-export const autocompleteTranslationProps = {
-  noOptionsText: i18n.t('common:no_hits'),
-  loadingText: `${i18n.t('common:loading')}...`,
-  clearText: i18n.t('common:clear'),
-  closeText: i18n.t('common:close'),
-  openText: i18n.t('common:open'),
-};
-
 export const datePickerTranslationProps: Pick<
   DatePickerProps,
   | 'cancelText'
@@ -300,28 +313,12 @@ export const datePickerTranslationProps: Pick<
           date: new Date(value as string).toLocaleDateString(),
         })
       : i18n.t('registration:description.date_picker.choose_date'),
-  getViewSwitchingButtonText: (currentView: CalendarPickerView) => {
-    switch (currentView) {
-      case 'day':
-      case 'month':
-        return i18n.t('registration:description.date_picker.go_to_year_view');
-      case 'year':
-        return i18n.t('registration:description.date_picker.go_to_calendar_view');
-    }
-  },
+  getViewSwitchingButtonText: (currentView: CalendarPickerView) =>
+    currentView === 'year'
+      ? i18n.t('registration:description.date_picker.go_to_calendar_view')
+      : i18n.t('registration:description.date_picker.go_to_year_view'),
   leftArrowButtonText: i18n.t('registration:description.date_picker.previous_month'),
   rightArrowButtonText: i18n.t('registration:description.date_picker.next_month'),
   todayText: i18n.t('registration:description.date_picker.today'),
   toolbarTitle: i18n.t('registration:description.date_picker.select_date'),
-};
-
-export const paginationTranslationProps = (type: string, page: number) => {
-  if (type === 'previous') {
-    return i18n.t('common:go_to_previous_page');
-  } else if (type === 'next') {
-    return i18n.t('common:go_to_next_page');
-  } else if (type === 'page') {
-    return i18n.t('common:go_to_page', { page });
-  }
-  return '';
 };

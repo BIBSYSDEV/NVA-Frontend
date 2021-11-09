@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
-import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
+import { lightTheme } from '../../../../themes/lightTheme';
 import { Journal, PublicationChannelType } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
@@ -77,7 +77,6 @@ export const JournalField = () => {
       <Field name={ResourceFieldNames.PublicationContextId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
-            {...autocompleteTranslationProps}
             multiple
             id={journalFieldTestId}
             data-testid={journalFieldTestId}

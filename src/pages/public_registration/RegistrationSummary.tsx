@@ -19,7 +19,6 @@ export const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
 
   const container = searchContainer && searchContainer.hits.length === 1 ? searchContainer.hits[0] : null;
 
-  // TODO: Reuse <SelectedContainerSummary> to show data about container
   return isLoadingSearchContainer ? (
     <Skeleton width={400} />
   ) : (

@@ -6,7 +6,6 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
-import { autocompleteTranslationProps } from '../../../../themes/lightTheme';
 import { CristinProject, ProjectSearchResponse, ResearchProject } from '../../../../types/project.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
@@ -28,7 +27,6 @@ export const ProjectsField = () => {
     <Field name={DescriptionFieldNames.Projects}>
       {({ field, form: { setFieldValue } }: FieldProps<ResearchProject[]>) => (
         <Autocomplete
-          {...autocompleteTranslationProps}
           id={field.name}
           aria-labelledby={`${field.name}-label`}
           data-testid="project-search-field"
