@@ -213,7 +213,7 @@ export const ContributorCard = ({
                 <FormControlLabel
                   data-testid="author-corresponding-checkbox"
                   control={<Checkbox checked={!!field.value} color="default" {...field} />}
-                  label={t('contributors.corresponding')}
+                  label={t<string>('contributors.corresponding')}
                 />
               )}
             </Field>
