@@ -20,7 +20,7 @@ import { NotificationVariant } from '../../../types/notification.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { useIsMobile } from '../../../utils/hooks/useIsMobile';
-import { lightTheme, paginationTranslationProps } from '../../../themes/lightTheme';
+import { lightTheme } from '../../../themes/lightTheme';
 import { ContributorList } from './components/ContributorList';
 import { AddContributorModal } from './AddContributorModal';
 
@@ -215,7 +215,6 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           color="primary"
           size="large"
           shape="rounded"
-          getItemAriaLabel={paginationTranslationProps}
           onChange={(_, page) => setCurrentPage(page)}
           page={currentPage}
           count={Math.ceil(relevantContributors.length / contributorsPerPage)}

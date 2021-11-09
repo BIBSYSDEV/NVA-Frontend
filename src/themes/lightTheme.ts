@@ -278,6 +278,20 @@ export const lightTheme = createTheme({
         },
       },
     },
+    MuiPagination: {
+      defaultProps: {
+        getItemAriaLabel: (type: string, page: number) => {
+          if (type === 'previous') {
+            return i18n.t('common:go_to_previous_page');
+          } else if (type === 'next') {
+            return i18n.t('common:go_to_next_page');
+          } else if (type === 'page') {
+            return i18n.t('common:go_to_page', { page });
+          }
+          return '';
+        },
+      },
+    },
   },
 });
 
@@ -314,15 +328,4 @@ export const datePickerTranslationProps: Pick<
   rightArrowButtonText: i18n.t('registration:description.date_picker.next_month'),
   todayText: i18n.t('registration:description.date_picker.today'),
   toolbarTitle: i18n.t('registration:description.date_picker.select_date'),
-};
-
-export const paginationTranslationProps = (type: string, page: number) => {
-  if (type === 'previous') {
-    return i18n.t('common:go_to_previous_page');
-  } else if (type === 'next') {
-    return i18n.t('common:go_to_next_page');
-  } else if (type === 'page') {
-    return i18n.t('common:go_to_page', { page });
-  }
-  return '';
 };
