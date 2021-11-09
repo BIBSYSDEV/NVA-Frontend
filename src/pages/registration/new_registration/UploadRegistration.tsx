@@ -20,6 +20,7 @@ import { getRegistrationPath } from '../../../utils/urlPaths';
 import { createUppy } from '../../../utils/uppy/uppy-config';
 import { UploadedFileRow } from './UploadedFileRow';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
   border-color: ${({ theme }) => theme.palette.secondary.main};
@@ -57,7 +58,9 @@ export const UploadRegistration = ({ expanded, onChange }: UploadRegistrationPro
 
   return (
     <StyledRegistrationAccorion expanded={expanded} onChange={onChange}>
-      <AccordionSummary data-testid="new-registration-file" expandIcon={<ExpandMoreIcon fontSize="large" />}>
+      <AccordionSummary
+        data-testid={dataTestId.registrationWizard.new.fileAccordion}
+        expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <CloudUploadIcon />
         <div>
           <Typography variant="h2">{t('registration.start_with_uploading_file_title')}</Typography>
@@ -94,7 +97,7 @@ export const UploadRegistration = ({ expanded, onChange }: UploadRegistrationPro
 
       <AccordionActions>
         <ButtonWithProgress
-          data-testid="registration-file-start-button"
+          data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
           color="secondary"
           variant="contained"

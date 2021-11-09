@@ -14,6 +14,7 @@ import { NotificationVariant } from '../../../types/notification.types';
 import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
   border-color: ${({ theme }) => theme.palette.primary.main};
@@ -44,7 +45,9 @@ export const StartEmptyRegistration = ({ expanded, onChange }: StartEmptyRegistr
 
   return (
     <StyledRegistrationAccorion expanded={expanded} onChange={onChange}>
-      <AccordionSummary data-testid="new-registration-empty" expandIcon={<ExpandMoreIcon fontSize="large" />}>
+      <AccordionSummary
+        data-testid={dataTestId.registrationWizard.new.emptyRegistrationAccordion}
+        expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <InsertDriveFileIcon />
         <div>
           <Typography variant="h2">{t('registration.start_with_empty_registration_title')}</Typography>
@@ -54,7 +57,7 @@ export const StartEmptyRegistration = ({ expanded, onChange }: StartEmptyRegistr
 
       <AccordionActions>
         <ButtonWithProgress
-          data-testid="registration-empty-start-button"
+          data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
           color="secondary"
           variant="contained"

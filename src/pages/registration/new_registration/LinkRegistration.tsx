@@ -16,6 +16,7 @@ import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
   border-color: ${({ theme }) => theme.palette.primary.main};
@@ -59,7 +60,9 @@ export const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) 
 
   return (
     <StyledRegistrationAccorion expanded={expanded} onChange={onChange}>
-      <AccordionSummary data-testid="new-registration-link" expandIcon={<ExpandMoreIcon fontSize="large" />}>
+      <AccordionSummary
+        data-testid={dataTestId.registrationWizard.new.linkAccordion}
+        expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <LinkIcon />
         <div>
           <Typography variant="h2">{t('registration:registration.start_with_link_to_resource_title')}</Typography>
@@ -71,7 +74,7 @@ export const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) 
         <LinkRegistrationForm handleSearch={handleSearch} />
         {noHit && <Typography>{t('no_hits')}</Typography>}
         {doi && (
-          <div data-testid="link-metadata">
+          <div data-testid={dataTestId.registrationWizard.new.linkMetadata}>
             <Typography variant="subtitle1">{t('registration')}:</Typography>
             <Typography>{doi.title}</Typography>
           </div>
@@ -80,7 +83,7 @@ export const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) 
 
       <AccordionActions>
         <Button
-          data-testid="registration-link-next-button"
+          data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
           color="secondary"
           variant="contained"
