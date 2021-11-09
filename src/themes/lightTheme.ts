@@ -280,16 +280,14 @@ export const lightTheme = createTheme({
     },
     MuiPagination: {
       defaultProps: {
-        getItemAriaLabel: (type: string, page: number) => {
-          if (type === 'previous') {
-            return i18n.t('common:go_to_previous_page');
-          } else if (type === 'next') {
-            return i18n.t('common:go_to_next_page');
-          } else if (type === 'page') {
-            return i18n.t('common:go_to_page', { page });
-          }
-          return '';
-        },
+        getItemAriaLabel: (type: string, page: number) =>
+          type === 'previous'
+            ? i18n.t('common:go_to_previous_page')
+            : type === 'next'
+            ? i18n.t('common:go_to_next_page')
+            : type === 'page'
+            ? i18n.t('common:go_to_page', { page })
+            : '',
       },
     },
   },
@@ -315,15 +313,10 @@ export const datePickerTranslationProps: Pick<
           date: new Date(value as string).toLocaleDateString(),
         })
       : i18n.t('registration:description.date_picker.choose_date'),
-  getViewSwitchingButtonText: (currentView: CalendarPickerView) => {
-    switch (currentView) {
-      case 'day':
-      case 'month':
-        return i18n.t('registration:description.date_picker.go_to_year_view');
-      case 'year':
-        return i18n.t('registration:description.date_picker.go_to_calendar_view');
-    }
-  },
+  getViewSwitchingButtonText: (currentView: CalendarPickerView) =>
+    currentView === 'year'
+      ? i18n.t('registration:description.date_picker.go_to_calendar_view')
+      : i18n.t('registration:description.date_picker.go_to_year_view'),
   leftArrowButtonText: i18n.t('registration:description.date_picker.previous_month'),
   rightArrowButtonText: i18n.t('registration:description.date_picker.next_month'),
   todayText: i18n.t('registration:description.date_picker.today'),
