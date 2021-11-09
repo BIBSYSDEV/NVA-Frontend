@@ -22,12 +22,12 @@ const StyledRegistrationAccorion = styled(RegistrationAccordion)`
   border-color: ${({ theme }) => theme.palette.primary.main};
 `;
 
-interface LinkRegistrationProps {
+export interface StartRegistrationAccordionProps {
   expanded: boolean;
   onChange: (event: ChangeEvent<unknown>, isExpanded: boolean) => void;
 }
 
-export const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
+export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
   const { t } = useTranslation('common');
   const [doi, setDoi] = useState<Doi | null>(null);
   const [noHit, setNoHit] = useState(false);

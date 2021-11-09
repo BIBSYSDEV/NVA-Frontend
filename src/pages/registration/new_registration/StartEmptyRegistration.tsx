@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AccordionActions, AccordionSummary, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -15,17 +15,13 @@ import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { StartRegistrationAccordionProps } from './LinkRegistration';
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
   border-color: ${({ theme }) => theme.palette.primary.main};
 `;
 
-interface StartEmptyRegistrationProps {
-  expanded: boolean;
-  onChange: (event: ChangeEvent<unknown>, isExpanded: boolean) => void;
-}
-
-export const StartEmptyRegistration = ({ expanded, onChange }: StartEmptyRegistrationProps) => {
+export const StartEmptyRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
   const { t } = useTranslation('registration');
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
@@ -33,7 +29,6 @@ export const StartEmptyRegistration = ({ expanded, onChange }: StartEmptyRegistr
 
   const createRegistrationWithFiles = async () => {
     setIsLoading(true);
-
     const createRegistrationResponse = await createRegistration();
     if (isErrorStatus(createRegistrationResponse.status)) {
       dispatch(setNotification(t('feedback:error.create_registration'), NotificationVariant.Error));

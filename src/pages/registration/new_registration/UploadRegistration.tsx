@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AccordionActions, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -21,17 +21,13 @@ import { createUppy } from '../../../utils/uppy/uppy-config';
 import { UploadedFileRow } from './UploadedFileRow';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { StartRegistrationAccordionProps } from './LinkRegistration';
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
   border-color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
-interface UploadRegistrationProps {
-  expanded: boolean;
-  onChange: (event: ChangeEvent<unknown>, isExpanded: boolean) => void;
-}
-
-export const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => {
+export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
   const { t } = useTranslation('registration');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
