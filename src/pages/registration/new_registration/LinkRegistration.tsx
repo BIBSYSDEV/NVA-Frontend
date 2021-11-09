@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { AccordionActions, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
-import LinkIcon from '@mui/icons-material/Link';
+import LinkIcon from '@mui/icons-material/LinkOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useDispatch } from 'react-redux';

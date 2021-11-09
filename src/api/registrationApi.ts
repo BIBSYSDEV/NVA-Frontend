@@ -1,11 +1,10 @@
 import { CancelToken } from 'axios';
 import { Doi, DoiRequestStatus, Registration } from '../types/registration.types';
-import { RegistrationFileSet } from '../types/file.types';
 import { authenticatedApiRequest } from './apiRequest';
 import { MessageType } from '../types/publication_types/messages.types';
 import { PublicationsApiPath } from './apiPaths';
 
-export const createRegistration = async (partialRegistration?: RegistrationFileSet) =>
+export const createRegistration = async (partialRegistration?: Partial<Registration>) =>
   await authenticatedApiRequest<Registration>({
     url: PublicationsApiPath.Registration,
     method: 'POST',

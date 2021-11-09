@@ -124,6 +124,8 @@
   "registration": {
     "link_to_resource": "Lenke til original versjon",
     "start_registration": "Start registrering",
+    "start_with_empty_registration_description": "Fyll inn informasjon i etterkant",
+    "start_with_empty_registration_title": "Start med tom registrering",
     "start_with_link_to_resource_description": "Lenke til original versjon hvis ressursen allerede er publisert på Internett",
     "start_with_link_to_resource_title": "Start med lenke til original versjon",
     "start_with_uploading_file_description": "Last opp fil hvis ressursen ikke er publisert på Internett",

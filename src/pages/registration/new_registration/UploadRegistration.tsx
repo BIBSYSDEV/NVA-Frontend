@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AccordionActions, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import CloudUploadIcon from '@mui/icons-material/CloudUploadOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
@@ -60,8 +60,8 @@ export const UploadRegistration = ({ expanded, onChange }: UploadRegistrationPro
       <AccordionSummary data-testid="new-registration-file" expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <CloudUploadIcon />
         <div>
-          <Typography variant="h2">{t('registration:registration.start_with_uploading_file_title')}</Typography>
-          <Typography>{t('registration:registration.start_with_uploading_file_description')}</Typography>
+          <Typography variant="h2">{t('registration.start_with_uploading_file_title')}</Typography>
+          <Typography>{t('registration.start_with_uploading_file_description')}</Typography>
         </div>
       </AccordionSummary>
 
