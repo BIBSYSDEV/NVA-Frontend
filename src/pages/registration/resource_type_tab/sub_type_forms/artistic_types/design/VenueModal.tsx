@@ -24,13 +24,13 @@ interface VenueModalProps {
 }
 
 enum VenueFieldName {
-  Name = 'name',
+  Label = 'place.label',
   From = 'time.from',
   To = 'time.to',
 }
 
 const emptyVenue: Venue = {
-  name: '',
+  type: 'Venue',
   place: { type: 'UnconfirmedPlace', label: '', country: '' },
   time: { type: 'Period', from: '', to: '' },
 };
@@ -54,7 +54,7 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
           {() => (
             <Form noValidate>
               <DialogContent>
-                <Field name={VenueFieldName.Name}>
+                <Field name={VenueFieldName.Label}>
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <TextField
                       {...field}

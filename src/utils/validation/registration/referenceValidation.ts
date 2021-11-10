@@ -378,7 +378,9 @@ const artisticPublicationInstance = Yup.object().shape({
 });
 
 export const venueValidationSchema = Yup.object().shape({
-  name: Yup.string().required(resourceErrorMessage.exhibitionNameRequired),
+  place: Yup.object().shape({
+    label: Yup.string().nullable().required(resourceErrorMessage.exhibitionNameRequired),
+  }),
   time: periodField,
 });
 

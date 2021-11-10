@@ -7,7 +7,7 @@ export interface ArtisticRegistration extends BaseRegistration {
 }
 
 export interface Venue {
-  name: string;
+  type: 'Venue';
   place: Place | null;
   time: Period | null;
 }
