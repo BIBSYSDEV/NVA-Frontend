@@ -43,9 +43,12 @@ export const dataTestId = {
     doiMessageField: 'request-doi-message',
     downloadFileButton: 'button-download-file',
     editButton: 'button-edit-registration',
+    emailButton: 'email-button',
+    facebookButton: 'facebook-button',
     filesAccordion: 'files-accordion',
     keywords: 'public-registration-keywords',
     license: 'public-registration-license',
+    linkedInButton: 'linkedin-button',
     npi: 'public-registration-npi',
     primaryLanguage: 'public-registration-primary-language',
     projectsAccordion: 'projects-accordion',
@@ -61,6 +64,7 @@ export const dataTestId = {
     status: 'public-registration-status',
     subtypeFields: 'public-registration-subtype-fields',
     title: 'public-registration-title',
+    twitterButton: 'twitter-button',
   },
   registrationWizard: {
     description: {
