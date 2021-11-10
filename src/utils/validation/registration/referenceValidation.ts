@@ -43,6 +43,9 @@ const resourceErrorMessage = {
   eventTitleRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.title_of_event'),
   }),
+  exhibitionNameRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('registration:resource_type.exhibition_place'),
+  }),
   exhibitionRequired: i18n.t('feedback:validation.exhibition_place_required'),
   fromMustBeBeforeTo: i18n.t('feedback:validation.cannot_be_after', {
     field: i18n.t('registration:resource_type.date_from'),
@@ -376,7 +379,7 @@ const artisticPublicationInstance = Yup.object().shape({
 
 export const venueValidationSchema = Yup.object().shape({
   place: Yup.object().shape({
-    label: Yup.string().nullable().required(resourceErrorMessage.placeRequired),
+    label: Yup.string().nullable().required(resourceErrorMessage.exhibitionNameRequired),
   }),
   time: periodField,
 });
