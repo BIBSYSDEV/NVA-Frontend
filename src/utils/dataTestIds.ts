@@ -78,6 +78,13 @@ export const dataTestId = {
       embargoDateField: 'embargo-date-field',
       version: 'version-radios',
     },
+    new: {
+      emptyRegistrationAccordion: 'new-registration-empty',
+      fileAccordion: 'new-registration-file',
+      linkAccordion: 'new-registration-link',
+      linkMetadata: 'link-metadata',
+      startRegistrationButton: 'registration-start-button',
+    },
     resourceType: {
       addVenueButton: 'add-venue-button',
       artisticTypeField: 'artistic-type-field',

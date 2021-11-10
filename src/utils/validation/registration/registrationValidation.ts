@@ -73,10 +73,10 @@ export const registrationValidationSchema = Yup.object().shape({
       }
     }),
   }),
-  fileSet: Yup.object()
-    .shape({
-      files: Yup.array().of(fileValidationSchema).min(1, registrationErrorMessage.fileRequired),
-    })
-    .nullable()
-    .required(registrationErrorMessage.fileRequired),
+  fileSet: Yup.object().shape({
+    files: Yup.array()
+      .of(fileValidationSchema)
+      .min(1, registrationErrorMessage.fileRequired)
+      .required(registrationErrorMessage.fileRequired),
+  }),
 });

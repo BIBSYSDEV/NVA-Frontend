@@ -1,4 +1,5 @@
 import 'cypress-file-upload';
+import { dataTestId } from '../../src/utils/dataTestIds';
 
 describe('Registration', () => {
   beforeEach(() => {
@@ -10,14 +11,15 @@ describe('Registration', () => {
     cy.get('[data-testid=new-registration]').click({ force: true });
     cy.url().should('include', '/registration');
 
-    cy.get('[data-testid=new-registration-link]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.new.linkAccordion}]`).click();
     cy.get('[data-testid=new-registration-link-field] input').type('https://doi.org/10.1098/rspb.2018.0085');
     cy.get('[data-testid=doi-search-button]').click({ force: true });
     cy.contains(
       'Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting'
     );
 
-    cy.get('[data-testid=registration-link-next-button]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.new.startRegistrationButton}]`).filter(':visible').click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.description.datePublishedField}]`).should('be.visible');
     cy.get('[data-testid=error-tab]').should('have.length', 0);
     cy.get('[data-testid=registration-title-field] input').should(
       'have.value',
@@ -30,14 +32,27 @@ describe('Registration', () => {
     cy.get('[data-testid=new-registration]').click({ force: true });
     cy.url().should('include', '/registration');
 
-    cy.get('[data-testid=new-registration-file]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.new.fileAccordion}]`).click();
 
     cy.mockFileUpload();
 
     cy.get('input[type=file]').attachFile('img.jpg');
     cy.get('[data-testid=uploaded-file]').should('be.visible');
 
-    cy.get('[data-testid=registration-file-start-button]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.new.startRegistrationButton}]`).filter(':visible').click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.description.datePublishedField}]`).should('be.visible');
+    cy.get('[data-testid=error-tab]').should('have.length', 0);
+  });
+
+  it('The user should be able to start empty registration', () => {
+    cy.mocklogin();
+    cy.get('[data-testid=new-registration]').click({ force: true });
+    cy.url().should('include', '/registration');
+
+    cy.get(`[data-testid=${dataTestId.registrationWizard.new.emptyRegistrationAccordion}]`).click();
+
+    cy.get(`[data-testid=${dataTestId.registrationWizard.new.startRegistrationButton}]`).filter(':visible').click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.description.datePublishedField}]`).should('be.visible');
     cy.get('[data-testid=error-tab]').should('have.length', 0);
   });
 

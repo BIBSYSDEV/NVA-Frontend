@@ -29,7 +29,7 @@ describe('Registration: Resource type: Book', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
       .click()
       .type(mockPublishersSearch[0].name);
-    cy.contains(mockPublishersSearch[0].name).click();
+    cy.contains(mockPublishersSearch[0].name).click({ force: true });
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherChip}]`).should(
       'contain',
       mockPublishersSearch[0].name
@@ -53,7 +53,7 @@ describe('Registration: Resource type: Book', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
       .click()
       .type(mockPublishersSearch[1].name);
-    cy.contains(mockPublishersSearch[1].name).click();
+    cy.contains(mockPublishersSearch[1].name).click({ force: true });
 
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviSuccess}]`).should('be.visible');
 
@@ -64,7 +64,7 @@ describe('Registration: Resource type: Book', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesField}] input`)
       .click()
       .type(mockJournalsSearch[2].name);
-    cy.contains(mockJournalsSearch[2].name).click();
+    cy.contains(mockJournalsSearch[2].name).click({ force: true });
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesChip}]`).should(
       'contain',
       mockJournalsSearch[2].name

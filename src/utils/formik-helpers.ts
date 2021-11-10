@@ -300,16 +300,14 @@ const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched
 });
 
 const touchedFilesTabFields = (fileSet: FileSet | null): FormikTouched<unknown> => ({
-  fileSet: fileSet
-    ? {
-        files: fileSet.files.map((file) => ({
-          administrativeAgreement: true,
-          publisherAuthority: !file.administrativeAgreement,
-          embargoDate: !file.administrativeAgreement,
-          license: !file.administrativeAgreement,
-        })),
-      }
-    : true,
+  fileSet: {
+    files: (fileSet?.files ?? []).map((file) => ({
+      administrativeAgreement: true,
+      publisherAuthority: !file.administrativeAgreement,
+      embargoDate: !file.administrativeAgreement,
+      license: !file.administrativeAgreement,
+    })),
+  },
 });
 
 const overwriteArrayMerge = (destinationArray: unknown[], sourceArray: unknown[], options?: Options) => sourceArray;
