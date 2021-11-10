@@ -201,7 +201,8 @@ export const PublicVenues = ({ venues }: PublicVenuesProps) => {
       <Typography variant="overline">{t('resource_type.exhibition_places')}</Typography>
       {venues.map((venue, index) => {
         const periodString = getPeriodString(venue.time);
-        const venueStringRepresentation = periodString ? `${venue.name} (${periodString})` : venue.name;
+        const placeLabel = venue.place?.label ?? '';
+        const venueStringRepresentation = periodString ? `${placeLabel} (${periodString})` : placeLabel;
         return <Typography key={index}>{venueStringRepresentation}</Typography>;
       })}
     </>
