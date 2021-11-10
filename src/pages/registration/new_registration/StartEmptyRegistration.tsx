@@ -27,7 +27,7 @@ export const StartEmptyRegistration = ({ expanded, onChange }: StartRegistration
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const createRegistrationWithFiles = async () => {
+  const createEmptyRegistration = async () => {
     setIsLoading(true);
     const createRegistrationResponse = await createRegistration();
     if (isErrorStatus(createRegistrationResponse.status)) {
@@ -57,7 +57,7 @@ export const StartEmptyRegistration = ({ expanded, onChange }: StartRegistration
           color="secondary"
           variant="contained"
           isLoading={isLoading}
-          onClick={createRegistrationWithFiles}>
+          onClick={createEmptyRegistration}>
           {t('registration.start_registration')}
         </ButtonWithProgress>
       </AccordionActions>
