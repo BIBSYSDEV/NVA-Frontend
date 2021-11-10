@@ -106,31 +106,31 @@ interface FileRowProps {
 const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('common');
-  const [isLoadingFile, setIsLoadingFile] = useState(false);
+  const [openPreviewAccordion, setOpenPreviewAccordion] = useState(openPreviewByDefault);
+  const [isLoadingPreviewFile, setIsLoadingPreviewFile] = useState(false);
   const [previewFileUrl, setPreviewFileUrl] = useState('');
 
-  const [openPreviewAccordion, setOpenPreviewAccordion] = useState(openPreviewByDefault);
   const handleDownload = useCallback(
-    async (preview = false) => {
-      setIsLoadingFile(true);
+    async (previewFile = false) => {
+      previewFile && setIsLoadingPreviewFile(true);
       const downloadedFileUrl = await downloadFile(registrationIdentifier, file.identifier);
       if (!downloadedFileUrl) {
         dispatch(setNotification(t('feedback:error.download_file'), NotificationVariant.Error));
       } else {
-        if (preview) {
+        if (previewFile) {
           setPreviewFileUrl(downloadedFileUrl);
         } else {
           window.open(downloadedFileUrl, '_blank');
         }
       }
-      setIsLoadingFile(false);
+      previewFile && setIsLoadingPreviewFile(false);
     },
     [t, dispatch, registrationIdentifier, file.identifier]
   );
 
   useEffect(() => {
     if (openPreviewAccordion) {
-      handleDownload(true); // Download file without user interaction
+      handleDownload(true); // Download file for preview
     }
   }, [handleDownload, openPreviewAccordion]);
 
@@ -187,7 +187,7 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
             <Typography variant="button">{t('registration:public_page.preview')}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            {isLoadingFile ? <CircularProgress /> : <PreviewFile url={previewFileUrl} file={file} />}
+            {isLoadingPreviewFile ? <CircularProgress /> : <PreviewFile url={previewFileUrl} file={file} />}
           </AccordionDetails>
         </StyledPreviewAccordion>
       )}
