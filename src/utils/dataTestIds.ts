@@ -76,10 +76,10 @@ export const dataTestId = {
     },
     new: {
       emptyRegistrationAccordion: 'new-registration-empty',
-      fileAccordion: 'new-registration-empty',
+      fileAccordion: 'new-registration-file',
       linkAccordion: 'new-registration-link',
       linkMetadata: 'link-metadata',
-      startRegistrationButton: 'registration-empty-start-button',
+      startRegistrationButton: 'registration-start-button',
     },
     resourceType: {
       addVenueButton: 'add-venue-button',
