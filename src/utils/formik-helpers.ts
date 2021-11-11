@@ -1,4 +1,4 @@
-import deepmerge, { Options } from 'deepmerge';
+import deepmerge from 'deepmerge';
 import { FormikErrors, FormikTouched, getIn } from 'formik';
 import { HighestTouchedTab } from '../pages/registration/RegistrationForm';
 import { Contributor } from '../types/contributor.types';
@@ -310,10 +310,10 @@ const touchedFilesTabFields = (fileSet: FileSet | null): FormikTouched<unknown> 
   },
 });
 
-const overwriteArrayMerge = (destinationArray: unknown[], sourceArray: unknown[], options?: Options) => sourceArray;
-
 export const mergeTouchedFields = (touchedArray: FormikTouched<Registration>[]) =>
-  deepmerge.all(touchedArray, { arrayMerge: overwriteArrayMerge });
+  deepmerge.all(touchedArray, {
+    arrayMerge: (destinationArray, sourceArray) => sourceArray,
+  });
 
 export const getTouchedTabFields = (
   tabToTouch: HighestTouchedTab,
