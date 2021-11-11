@@ -24,11 +24,12 @@ export const VenueRow = ({ updateVenue, removeVenue, moveVenue, venue, index, ma
   const { t } = useTranslation('registration');
   const [openEditVenue, setOpenEditVenue] = useState(false);
   const [openRemoveVenue, setOpenRemoveVenue] = useState(false);
+  const placeLabel = venue.place?.label ?? '';
 
   return (
     <TableRow>
       <TableCell>
-        <Typography>{venue.name}</Typography>
+        <Typography>{placeLabel}</Typography>
       </TableCell>
       <TableCell>{getPeriodString(venue.time)}</TableCell>
       <TableCell>
@@ -75,7 +76,7 @@ export const VenueRow = ({ updateVenue, removeVenue, moveVenue, venue, index, ma
             removeVenue();
             setOpenRemoveVenue(false);
           }}>
-          {t('resource_type.remove_venue_text', { name: venue.name })}
+          {t('resource_type.remove_venue_text', { name: placeLabel })}
         </ConfirmDialog>
       </ThemeProvider>
     </TableRow>
