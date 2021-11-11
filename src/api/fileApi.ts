@@ -14,14 +14,14 @@ export const downloadFile = async (registrationIdentifier: string, fileId: strin
       url: `${FileApiPath.Download}/${registrationIdentifier}/files/${fileId}`,
     });
     if (isSuccessStatus(authenticatedResponse.status)) {
-      return authenticatedResponse.data.presignedDownloadUrl;
+      return authenticatedResponse.data;
     }
   } catch {
     const publicDownloadResponse = await apiRequest<DownloadFileResponse>({
       url: `${FileApiPath.PublicDownload}/${registrationIdentifier}/files/${fileId}`,
     });
     if (isSuccessStatus(publicDownloadResponse.status)) {
-      return publicDownloadResponse.data.presignedDownloadUrl;
+      return publicDownloadResponse.data;
     }
   }
 

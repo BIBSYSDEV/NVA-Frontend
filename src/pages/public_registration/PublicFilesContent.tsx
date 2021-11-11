@@ -113,14 +113,15 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
   const handleDownload = useCallback(
     async (previewFile = false) => {
       previewFile && setIsLoadingPreviewFile(true);
-      const downloadedFileUrl = await downloadFile(registrationIdentifier, file.identifier);
-      if (!downloadedFileUrl) {
+      const downloadedFileResponse = await downloadFile(registrationIdentifier, file.identifier);
+      if (!downloadedFileResponse) {
         dispatch(setNotification(t('feedback:error.download_file'), NotificationVariant.Error));
       } else {
+        const { presignedDownloadUrl } = downloadedFileResponse;
         if (previewFile) {
-          setPreviewFileUrl(downloadedFileUrl);
+          setPreviewFileUrl(presignedDownloadUrl);
         } else {
-          window.open(downloadedFileUrl, '_blank');
+          window.open(presignedDownloadUrl, '_blank');
         }
       }
       previewFile && setIsLoadingPreviewFile(false);
@@ -129,10 +130,10 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
   );
 
   useEffect(() => {
-    if (openPreviewAccordion) {
+    if (openPreviewAccordion && !previewFileUrl) {
       handleDownload(true); // Download file for preview
     }
-  }, [handleDownload, openPreviewAccordion]);
+  }, [handleDownload, openPreviewAccordion, previewFileUrl]);
 
   const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
   const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
