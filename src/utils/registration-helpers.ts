@@ -86,6 +86,9 @@ export const getFormattedRegistration = (registration: Registration) => {
   if (formattedRegistration.entityDescription?.reference && !formattedRegistration.entityDescription.reference.type) {
     formattedRegistration.entityDescription.reference.type = 'Reference';
   }
+  if (formattedRegistration.fileSet && !formattedRegistration.fileSet?.type) {
+    formattedRegistration.fileSet.type = 'FileSet';
+  }
 
   if (isPresentation(type)) {
     const presentationRegistration = formattedRegistration as PresentationRegistration;
