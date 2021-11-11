@@ -10,7 +10,8 @@ interface FileUploaderProps {
 export const FileUploader = ({ addFile, uppy }: FileUploaderProps) => {
   useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
-      uppy.on('upload-success', (file, response) => {
+      uppy.on('upload-success', (file, response: any) => {
+        // TODO: see if this removes need of any https://github.com/transloadit/uppy/pull/3141
         const newFile = {
           ...emptyFile,
           identifier: response.uploadURL, // In reality an ID from completeMultipartUpload endpoint
