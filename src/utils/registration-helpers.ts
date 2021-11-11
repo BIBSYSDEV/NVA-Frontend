@@ -88,7 +88,7 @@ export const getFormattedRegistration = (registration: Registration) => {
   }
 
   if (isPresentation(type)) {
-    const presentationRegistration = registration as PresentationRegistration;
+    const presentationRegistration = formattedRegistration as PresentationRegistration;
     const { time, agent, place } = presentationRegistration.entityDescription.reference.publicationContext;
 
     formattedRegistration = {
