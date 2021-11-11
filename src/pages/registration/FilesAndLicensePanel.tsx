@@ -19,13 +19,11 @@ import {
   getChannelRegisterPublisherUrl,
 } from '../public_registration/PublicPublicationContext';
 
-const StyledBackgroundDiv = styled(BackgroundDiv)`
+const StyledUploadedFilesContainer = styled.div`
   display: flex;
   flex-direction: column;
-
-  > * {
-    margin-bottom: 1rem;
-  }
+  gap: 1rem;
+  margin-bottom: 2rem;
 `;
 
 const StyledLicenseDescription = styled.div`
@@ -91,56 +89,57 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   return (
     <>
       {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
-        <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+        <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
           <Typography variant="h2">{t('files_and_license.info_from_channel_register')}</Typography>
           {journalIdentifier && (
-            <Typography component={Link} href={getChannelRegisterJournalUrl(journalIdentifier)} target="_blank">
-              {t('files_and_license.find_journal_in_channel_register')}
-            </Typography>
+            <Link href={getChannelRegisterJournalUrl(journalIdentifier)} target="_blank">
+              <Typography>{t('files_and_license.find_journal_in_channel_register')}</Typography>
+            </Link>
           )}
           {publisherIdentifier && (
-            <Typography component={Link} href={getChannelRegisterPublisherUrl(publisherIdentifier)} target="_blank">
-              {t('files_and_license.find_publisher_in_channel_register')}
-            </Typography>
+            <Link href={getChannelRegisterPublisherUrl(publisherIdentifier)} target="_blank">
+              <Typography gutterBottom>{t('files_and_license.find_publisher_in_channel_register')}</Typography>
+            </Link>
           )}
+
           {seriesIdentifier && (
-            <Typography component={Link} href={getChannelRegisterJournalUrl(seriesIdentifier)} target="_blank">
-              {t('files_and_license.find_series_in_channel_register')}
-            </Typography>
+            <Link href={getChannelRegisterJournalUrl(seriesIdentifier)} target="_blank">
+              <Typography>{t('files_and_license.find_series_in_channel_register')}</Typography>
+            </Link>
           )}
-        </StyledBackgroundDiv>
+        </BackgroundDiv>
       )}
 
-      <FieldArray name={FileFieldNames.Files}>
-        {({ name, remove, push }: FieldArrayRenderProps) => (
-          <>
-            {files.length > 0 && (
-              <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-                <Typography variant="h2">{t('files_and_license.files')}</Typography>
-                {files.map((file, index) => (
-                  <FileCard
-                    key={file.identifier}
-                    file={file}
-                    removeFile={() => {
-                      const remainingFiles = uppy
-                        .getFiles()
-                        .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
-                      uppy.setState({ files: remainingFiles });
-                      remove(index);
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+        <FieldArray name={FileFieldNames.Files}>
+          {({ name, remove, push }: FieldArrayRenderProps) => (
+            <>
+              {files.length > 0 && (
+                <StyledUploadedFilesContainer>
+                  <Typography variant="h2">{t('files_and_license.files')}</Typography>
+                  {files.map((file, index) => (
+                    <FileCard
+                      key={file.identifier}
+                      file={file}
+                      removeFile={() => {
+                        const remainingFiles = uppy
+                          .getFiles()
+                          .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
+                        uppy.setState({ files: remainingFiles });
+                        remove(index);
 
-                      if (remainingFiles.length === 0) {
-                        // Ensure field is set to touched even if it's empty
-                        setFieldTouched(name);
-                      }
-                    }}
-                    toggleLicenseModal={toggleLicenseModal}
-                    baseFieldName={`${name}[${index}]`}
-                  />
-                ))}
-              </StyledBackgroundDiv>
-            )}
+                        if (remainingFiles.length === 0) {
+                          // Ensure field is set to touched even if it's empty
+                          setFieldTouched(name);
+                        }
+                      }}
+                      toggleLicenseModal={toggleLicenseModal}
+                      baseFieldName={`${name}[${index}]`}
+                    />
+                  ))}
+                </StyledUploadedFilesContainer>
+              )}
 
-            <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
               <FileUploader
                 uppy={uppy}
                 addFile={(file) => {
@@ -157,10 +156,11 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     <ErrorMessage name={name} />
                   </FormHelperText>
                 )}
-            </BackgroundDiv>
-          </>
-        )}
-      </FieldArray>
+            </>
+          )}
+        </FieldArray>
+      </BackgroundDiv>
+
       <Modal
         headingText={t('files_and_license.licenses')}
         open={isLicenseModalOpen}
