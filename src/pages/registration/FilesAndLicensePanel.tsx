@@ -76,7 +76,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     <>
       {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
         <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-          <Typography variant="h2">{t('files_and_license.info_from_channel_register')}</Typography>
+          <Typography variant="h2" gutterBottom>
+            {t('files_and_license.info_from_channel_register')}
+          </Typography>
           {journalIdentifier && (
             <Link href={getChannelRegisterJournalUrl(journalIdentifier)} target="_blank">
               <Typography>{t('files_and_license.find_journal_in_channel_register')}</Typography>
