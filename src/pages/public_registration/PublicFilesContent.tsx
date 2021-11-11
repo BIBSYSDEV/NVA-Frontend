@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import LockIcon from '@mui/icons-material/Lock';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -12,7 +11,6 @@ import { File, licenses } from '../../types/file.types';
 import { downloadFile } from '../../api/fileApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { PreviewFile } from './preview_file/PreviewFile';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -108,32 +106,34 @@ interface FileRowProps {
 const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('common');
-  const [isLoadingFile, setIsLoadingFile] = useState(false);
-  const [currentFileUrl, setCurrentFileUrl] = useState('');
   const [openPreviewAccordion, setOpenPreviewAccordion] = useState(openPreviewByDefault);
+  const [isLoadingPreviewFile, setIsLoadingPreviewFile] = useState(false);
+  const [previewFileUrl, setPreviewFileUrl] = useState('');
 
   const handleDownload = useCallback(
-    async (manuallyTriggered = true) => {
-      setIsLoadingFile(true);
-      const downloadedFileUrl = await downloadFile(registrationIdentifier, file.identifier);
-      if (!downloadedFileUrl) {
+    async (previewFile = false) => {
+      previewFile && setIsLoadingPreviewFile(true);
+      const downloadFileResponse = await downloadFile(registrationIdentifier, file.identifier);
+      if (!downloadFileResponse) {
         dispatch(setNotification(t('feedback:error.download_file'), NotificationVariant.Error));
       } else {
-        setCurrentFileUrl(downloadedFileUrl);
-        if (manuallyTriggered) {
-          window.open(downloadedFileUrl, '_blank');
+        const { presignedDownloadUrl } = downloadFileResponse;
+        if (previewFile) {
+          setPreviewFileUrl(presignedDownloadUrl);
+        } else {
+          window.open(presignedDownloadUrl, '_blank');
         }
       }
-      setIsLoadingFile(false);
+      previewFile && setIsLoadingPreviewFile(false);
     },
     [t, dispatch, registrationIdentifier, file.identifier]
   );
 
   useEffect(() => {
-    if (openPreviewAccordion && !currentFileUrl) {
-      handleDownload(false); // Download file without user interaction
+    if (openPreviewAccordion && !previewFileUrl) {
+      handleDownload(true); // Download file for preview
     }
-  }, [handleDownload, currentFileUrl, openPreviewAccordion, file.size]);
+  }, [handleDownload, openPreviewAccordion, previewFileUrl]);
 
   const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
   const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
@@ -161,30 +161,19 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
         data-testid={dataTestId.registrationLandingPage.license}
       />
       <StyledDownload>
-        {fileEmbargoDate && fileIsEmbargoed ? (
+        {fileIsEmbargoed ? (
           <Typography>
             <LockIcon />
-            {t('will_be_available')} {fileEmbargoDate.toLocaleDateString()}
+            {t('will_be_available')} {fileEmbargoDate?.toLocaleDateString()}
           </Typography>
-        ) : !currentFileUrl ? (
-          <ButtonWithProgress
-            data-testid={dataTestId.registrationLandingPage.downloadFileButton}
-            variant="contained"
-            color="secondary"
-            fullWidth
-            endIcon={<CloudDownloadIcon />}
-            isLoading={isLoadingFile}
-            onClick={handleDownload}>
-            {t('download')}
-          </ButtonWithProgress>
         ) : (
           <Button
-            data-testid="button-open-file"
+            data-testid={dataTestId.registrationLandingPage.openFileButton}
             variant="contained"
             color="secondary"
             fullWidth
             endIcon={<OpenInNewIcon />}
-            href={currentFileUrl}>
+            onClick={() => handleDownload(false)}>
             {t('open')}
           </Button>
         )}
@@ -199,7 +188,7 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
             <Typography variant="button">{t('registration:public_page.preview')}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            {isLoadingFile ? <CircularProgress /> : <PreviewFile url={currentFileUrl} file={file} />}
+            {isLoadingPreviewFile ? <CircularProgress /> : <PreviewFile url={previewFileUrl} file={file} />}
           </AccordionDetails>
         </StyledPreviewAccordion>
       )}
