@@ -14,6 +14,10 @@ import { Registration } from '../../types/registration.types';
 import { autoHideNotificationDuration } from '../../utils/constants';
 import { FileUploader } from './files_and_license_tab/FileUploader';
 import { FileCard } from './files_and_license_tab/FileCard';
+import {
+  getChannelRegisterJournalUrl,
+  getChannelRegisterPublisherUrl,
+} from '../public_registration/PublicPublicationContext';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
   display: flex;
@@ -36,12 +40,13 @@ interface FilesAndLicensePanelProps {
 export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation('registration');
   const {
-    values: { fileSet },
+    values: { fileSet, entityDescription },
     setFieldTouched,
     setFieldValue,
     errors,
     touched,
   } = useFormikContext<Registration>();
+  const publicationContext = entityDescription?.reference?.publicationContext;
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const files = useMemo(() => fileSet?.files ?? [], [fileSet?.files]);
 
@@ -72,8 +77,40 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
   };
 
+  const publisherIdentifier =
+    (publicationContext &&
+      'publisher' in publicationContext &&
+      publicationContext.publisher?.id?.split('/').reverse()[1]) ||
+    '';
+  const seriesIdentifier =
+    (publicationContext && 'series' in publicationContext && publicationContext.series?.id?.split('/').reverse()[1]) ||
+    '';
+  const journalIdentifier =
+    (publicationContext && 'id' in publicationContext && publicationContext.id?.split('/').reverse()[1]) || '';
+
   return (
     <>
+      {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
+        <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+          <Typography variant="h2">{t('files_and_license.info_from_channel_register')}</Typography>
+          {journalIdentifier && (
+            <Typography component={Link} href={getChannelRegisterJournalUrl(journalIdentifier)} target="_blank">
+              {t('files_and_license.find_journal_in_channel_register')}
+            </Typography>
+          )}
+          {publisherIdentifier && (
+            <Typography component={Link} href={getChannelRegisterPublisherUrl(publisherIdentifier)} target="_blank">
+              {t('files_and_license.find_publisher_in_channel_register')}
+            </Typography>
+          )}
+          {seriesIdentifier && (
+            <Typography component={Link} href={getChannelRegisterJournalUrl(seriesIdentifier)} target="_blank">
+              {t('files_and_license.find_series_in_channel_register')}
+            </Typography>
+          )}
+        </StyledBackgroundDiv>
+      )}
+
       <FieldArray name={FileFieldNames.Files}>
         {({ name, remove, push }: FieldArrayRenderProps) => (
           <>
