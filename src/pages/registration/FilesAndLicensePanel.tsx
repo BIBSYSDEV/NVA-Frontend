@@ -1,8 +1,7 @@
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, useFormikContext } from 'formik';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import { FormHelperText, Link, Typography } from '@mui/material';
+import { Box, FormHelperText, Link, Typography } from '@mui/material';
 import { UppyFile } from '@uppy/core';
 import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { Modal } from '../../components/Modal';
@@ -18,18 +17,6 @@ import {
   getChannelRegisterJournalUrl,
   getChannelRegisterPublisherUrl,
 } from '../public_registration/PublicPublicationContext';
-
-const StyledUploadedFilesContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 2rem;
-`;
-
-const StyledLicenseDescription = styled.div`
-  margin-bottom: 1rem;
-  white-space: pre-wrap;
-`;
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
@@ -114,7 +101,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
           {({ name, remove, push }: FieldArrayRenderProps) => (
             <>
               {files.length > 0 && (
-                <StyledUploadedFilesContainer>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
                   <Typography variant="h2">{t('files_and_license.files')}</Typography>
                   {files.map((file, index) => (
                     <FileCard
@@ -136,7 +123,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                       baseFieldName={`${name}[${index}]`}
                     />
                   ))}
-                </StyledUploadedFilesContainer>
+                </Box>
               )}
 
               <FileUploader uppy={uppy} addFile={push} />
@@ -159,7 +146,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
         maxWidth="sm"
         dataTestId="license-modal">
         {licenses.map((license) => (
-          <StyledLicenseDescription key={license.identifier}>
+          <Box key={license.identifier} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
             <Typography variant="h6">{t(`licenses:labels.${license.identifier}`)}</Typography>
             <img src={license.logo} alt={license.identifier} />
             <Typography paragraph>{license.description}</Typography>
@@ -168,7 +155,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                 {license.link}
               </Link>
             )}
-          </StyledLicenseDescription>
+          </Box>
         ))}
       </Modal>
     </>
