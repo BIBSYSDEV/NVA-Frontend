@@ -80,8 +80,15 @@ export const getFormattedRegistration = (registration: Registration) => {
   const type = registration.entityDescription?.reference?.publicationInstance.type ?? '';
   let formattedRegistration = registration;
 
+  if (formattedRegistration.entityDescription && !formattedRegistration.entityDescription.type) {
+    formattedRegistration.entityDescription.type = 'EntityDescription';
+  }
+  if (formattedRegistration.entityDescription?.reference && !formattedRegistration.entityDescription.reference.type) {
+    formattedRegistration.entityDescription.reference.type = 'Reference';
+  }
+
   if (isPresentation(type)) {
-    const presentationRegistration = registration as PresentationRegistration;
+    const presentationRegistration = formattedRegistration as PresentationRegistration;
     const { time, agent, place } = presentationRegistration.entityDescription.reference.publicationContext;
 
     formattedRegistration = {

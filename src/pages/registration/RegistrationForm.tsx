@@ -9,7 +9,7 @@ import { ItalicPageHeader } from '../../components/PageHeader';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { emptyRegistration, Registration, RegistrationTab } from '../../types/registration.types';
+import { Registration, RegistrationTab } from '../../types/registration.types';
 import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
@@ -85,24 +85,18 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     return {};
   };
 
-  const initialValues = registration
-    ? registration.entityDescription
-      ? registration
-      : { ...registration, entityDescription: emptyRegistration.entityDescription }
-    : emptyRegistration;
-
   return isLoadingRegistration ? (
     <PageSpinner />
   ) : !isValidOwner && !isValidCurator ? (
     <Forbidden />
-  ) : (
+  ) : registration ? (
     <StyledRegistration>
       <SkipLink href="#form">{t('common:skip_to_schema')}</SkipLink>
       <Formik
-        initialValues={initialValues}
+        initialValues={registration}
         validate={validateForm}
-        initialErrors={validateForm(initialValues)}
-        initialTouched={getTouchedTabFields(highestValidatedTab, initialValues)}
+        initialErrors={validateForm(registration)}
+        initialTouched={getTouchedTabFields(highestValidatedTab, registration)}
         onSubmit={() => {
           /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
         }}>
@@ -148,5 +142,5 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
         )}
       </Formik>
     </StyledRegistration>
-  );
+  ) : null;
 };

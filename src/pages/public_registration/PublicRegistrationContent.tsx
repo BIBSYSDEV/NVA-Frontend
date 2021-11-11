@@ -1,10 +1,9 @@
-import deepmerge from 'deepmerge';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { ItalicPageHeader } from '../../components/PageHeader';
-import { emptyRegistration, Registration, SearchResult } from '../../types/registration.types';
+import { Registration, SearchResult } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PublicFilesContent } from './PublicFilesContent';
 import { PublicGeneralContent } from './PublicGeneralContent';
@@ -32,9 +31,6 @@ export interface PublicRegistrationProps extends PublicRegistrationContentProps 
 
 export const PublicRegistrationContent = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
   const { t } = useTranslation('registration');
-
-  // Registration can lack some fields if it's newly created
-  registration = deepmerge(emptyRegistration, registration);
 
   const { identifier, entityDescription, projects, fileSet, subjects } = registration;
   const contributors = entityDescription?.contributors ?? [];
