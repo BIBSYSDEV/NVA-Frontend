@@ -40,7 +40,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const {
     values: { fileSet, entityDescription },
     setFieldTouched,
-    setFieldValue,
     errors,
     touched,
   } = useFormikContext<Registration>();
@@ -140,15 +139,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                 </StyledUploadedFilesContainer>
               )}
 
-              <FileUploader
-                uppy={uppy}
-                addFile={(file) => {
-                  if (!fileSet?.type) {
-                    setFieldValue(FileFieldNames.FileSetType, 'FileSet');
-                  }
-                  push(file);
-                }}
-              />
+              <FileUploader uppy={uppy} addFile={push} />
               {files.length === 0 &&
                 typeof (errors.fileSet as FormikErrors<FileSet>).files === 'string' &&
                 touched.fileSet && (
