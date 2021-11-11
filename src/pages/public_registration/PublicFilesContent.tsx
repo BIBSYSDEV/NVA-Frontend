@@ -113,11 +113,11 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
   const handleDownload = useCallback(
     async (previewFile = false) => {
       previewFile && setIsLoadingPreviewFile(true);
-      const downloadedFileResponse = await downloadFile(registrationIdentifier, file.identifier);
-      if (!downloadedFileResponse) {
+      const downloadFileResponse = await downloadFile(registrationIdentifier, file.identifier);
+      if (!downloadFileResponse) {
         dispatch(setNotification(t('feedback:error.download_file'), NotificationVariant.Error));
       } else {
-        const { presignedDownloadUrl } = downloadedFileResponse;
+        const { presignedDownloadUrl } = downloadFileResponse;
         if (previewFile) {
           setPreviewFileUrl(presignedDownloadUrl);
         } else {
