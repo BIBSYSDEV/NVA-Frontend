@@ -59,6 +59,7 @@ export const dataTestId = {
     rejectDoiButton: 'button-reject-doi',
     relatedRegistrationsAccordion: 'related-registrations-accordion',
     requestDoiButton: 'button-toggle-request-doi',
+    reserveDoiButton: 'button-toggle-reserve-doi',
     requestDoiModal: 'request-doi-modal',
     sendDoiButton: 'button-send-doi-request',
     status: 'public-registration-status',
