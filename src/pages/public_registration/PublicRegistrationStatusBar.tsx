@@ -210,7 +210,11 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
               color="secondary"
               endIcon={<LocalOfferIcon />}
               isLoading={isLoading === LoadingName.RequestDoi}
-              data-testid={dataTestId.registrationLandingPage.requestDoiButton}
+              data-testid={
+                isPublishedRegistration
+                  ? dataTestId.registrationLandingPage.requestDoiButton
+                  : dataTestId.registrationLandingPage.reserveDoiButton
+              }
               onClick={() => (isPublishedRegistration ? toggleRequestDoiModal() : sendDoiRequest())}>
               {isPublishedRegistration ? t('public_page.request_doi') : t('public_page.reserve_doi')}
             </ButtonWithProgress>
