@@ -19,7 +19,7 @@ describe('Registration: Resource type: Report', () => {
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' '); //makes the select options open
     cy.get('[data-testid=publication-context-type-Report]').should('be.visible');
     cy.get('[data-testid=publication-context-type-Report]').click({ force: true });
-    cy.get('[data-testid=publication-context-type-Report]').contains('Report');
+    cy.get('[data-testid=publication-context-type] input').should('have.value', 'Report');
 
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-ReportResearch]').click({ force: true });
