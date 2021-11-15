@@ -109,6 +109,7 @@ const AdvancedSearchRow = ({ index, remove }: AdvancedSearchRowProps) => {
             <MenuItem value={DescriptionFieldNames.Title}>{t('common:title')}</MenuItem>
             <MenuItem value={DescriptionFieldNames.Abstract}>{t('registration:description.abstract')}</MenuItem>
             <MenuItem value={ResourceFieldNames.SubType}>{t('registration_type')}</MenuItem>
+            <MenuItem value={DescriptionFieldNames.Tags}>{t('registration:description.keywords')}</MenuItem>
           </StyledTextField>
         )}
       </Field>
