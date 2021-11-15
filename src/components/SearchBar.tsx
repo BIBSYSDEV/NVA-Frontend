@@ -8,6 +8,7 @@ import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext 
 import { dataTestId } from '../utils/dataTestIds';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../utils/searchHelpers';
 import { DescriptionFieldNames, ResourceFieldNames } from '../types/publicationFieldNames';
+import { BetaFunctionality } from './BetaFunctionality';
 
 const StyledTextField = styled(TextField)`
   margin-top: 0;
@@ -58,36 +59,37 @@ export const SearchBar = () => {
           />
         )}
       </Field>
-
-      <FieldArray name="properties">
-        {({ push, remove }: FieldArrayRenderProps) => (
-          <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {properties.map((_, index) => (
-              <AdvancedSearchRow key={index} index={index} remove={remove} />
-            ))}
-            <Box sx={{ display: 'flex', gap: '1rem' }}>
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  const newPropertyFilter: PropertySearch = {
-                    fieldName: '',
-                    value: '',
-                    operator: ExpressionStatement.Contains,
-                  };
-                  push(newPropertyFilter);
-                }}
-                startIcon={<FilterAltIcon />}>
-                {t('add_filter')}
-              </Button>
-              {properties.length > 0 && (
-                <Button variant="contained" type="submit" startIcon={<SearchIcon />}>
-                  {t('search')}
+      <BetaFunctionality gridArea="advanced">
+        <FieldArray name="properties">
+          {({ push, remove }: FieldArrayRenderProps) => (
+            <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {properties.map((_, index) => (
+                <AdvancedSearchRow key={index} index={index} remove={remove} />
+              ))}
+              <Box sx={{ display: 'flex', gap: '1rem' }}>
+                <Button
+                  variant="outlined"
+                  onClick={() => {
+                    const newPropertyFilter: PropertySearch = {
+                      fieldName: '',
+                      value: '',
+                      operator: ExpressionStatement.Contains,
+                    };
+                    push(newPropertyFilter);
+                  }}
+                  startIcon={<FilterAltIcon />}>
+                  {t('add_filter')}
                 </Button>
-              )}
+                {properties.length > 0 && (
+                  <Button variant="contained" type="submit" startIcon={<SearchIcon />}>
+                    {t('search')}
+                  </Button>
+                )}
+              </Box>
             </Box>
-          </Box>
-        )}
-      </FieldArray>
+          )}
+        </FieldArray>
+      </BetaFunctionality>
     </>
   );
 };
