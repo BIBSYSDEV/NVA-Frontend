@@ -77,11 +77,11 @@ export const SearchBar = () => {
                   push(newPropertyFilter);
                 }}
                 startIcon={<FilterAltIcon />}>
-                Legg til filter
+                {t('add_filter')}
               </Button>
               {properties.length > 0 && (
                 <Button variant="contained" type="submit" startIcon={<SearchIcon />}>
-                  Søk
+                  {t('search')}
                 </Button>
               )}
             </Box>
@@ -97,7 +97,7 @@ interface AdvancedSearchRowProps extends Pick<FieldArrayRenderProps, 'remove'> {
 }
 
 const AdvancedSearchRow = ({ index, remove }: AdvancedSearchRowProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation('search');
 
   return (
     <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 3fr 6fr 2fr', gap: '1rem' }}>
@@ -105,26 +105,31 @@ const AdvancedSearchRow = ({ index, remove }: AdvancedSearchRowProps) => {
         {({ field }: FieldProps<string>) => (
           <StyledTextField {...field} select variant="outlined" label="Felt">
             <MenuItem value={DescriptionFieldNames.Title}>{t('common:title')}</MenuItem>
-            <MenuItem value={DescriptionFieldNames.Abstract}>{t('description.abstract')}</MenuItem>
-            <MenuItem value={ResourceFieldNames.SubType}>{t('search:registration_type')}</MenuItem>
+            <MenuItem value={DescriptionFieldNames.Abstract}>{t('registration:description.abstract')}</MenuItem>
+            <MenuItem value={ResourceFieldNames.SubType}>{t('registration_type')}</MenuItem>
           </StyledTextField>
         )}
       </Field>
       <Field name={`properties[${index}].operator`}>
         {({ field }: FieldProps<string>) => (
           <StyledTextField {...field} select SelectProps={{ displayEmpty: true }} variant="outlined" label="Operator">
-            <MenuItem value={ExpressionStatement.Contains}>Inneholder</MenuItem>
-            <MenuItem value={ExpressionStatement.NotContaining}>Inneholder ikke</MenuItem>
+            <MenuItem value={ExpressionStatement.Contains}>{t('contains')}</MenuItem>
+            <MenuItem value={ExpressionStatement.NotContaining}>{t('not_containing')}</MenuItem>
           </StyledTextField>
         )}
       </Field>
       <Field name={`properties[${index}].value`}>
         {({ field }: FieldProps<string>) => (
-          <StyledTextField {...field} variant="outlined" label="Verdi" InputLabelProps={{ shrink: true }} />
+          <StyledTextField
+            {...field}
+            variant="outlined"
+            label={t('search_term_label')}
+            InputLabelProps={{ shrink: true }}
+          />
         )}
       </Field>
       <Button onClick={() => remove(index)} color="error">
-        Fjern filter
+        {t('remove_filter')}
       </Button>
     </Box>
   );
