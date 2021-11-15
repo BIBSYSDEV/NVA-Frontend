@@ -10,8 +10,6 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { dataTestId } from '../../utils/dataTestIds';
 import { SearchResult } from '../../types/registration.types';
 
-const defaultRowsPerPage = ROWS_PER_PAGE_OPTIONS[1];
-
 export const RegistrationSearch = () => {
   const { t } = useTranslation('common');
   const history = useHistory();
@@ -20,7 +18,7 @@ export const RegistrationSearch = () => {
   const resultsParam = params.get('results');
   const fromParam = params.get('from');
 
-  const initialRowsPerPage = (resultsParam && +resultsParam) || defaultRowsPerPage;
+  const initialRowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[1];
   const initalPage = (fromParam && resultsParam && Math.floor(+fromParam / initialRowsPerPage)) || 0;
 
   const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
