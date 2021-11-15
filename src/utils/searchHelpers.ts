@@ -19,6 +19,16 @@ enum Operator {
   OR = ' OR ',
 }
 
+// Add quoatation marks if no wildcard
+const formatValue = (value: string) => {
+  const hasWildcard = value.includes('*');
+  if (hasWildcard) {
+    return value;
+  } else {
+    return `"${value}"`;
+  }
+};
+
 const createPropertyFilter = (properties?: PropertySearch[]) => {
   const propertiesWithValues = properties?.filter(({ fieldName, value }) => fieldName && value);
   if (!propertiesWithValues || propertiesWithValues.length === 0) {
@@ -28,7 +38,10 @@ const createPropertyFilter = (properties?: PropertySearch[]) => {
   const propertyFilter = propertiesWithValues
     .map(({ fieldName, value, operator }) => {
       const prefix = operator === ExpressionStatement.NotContaining ? 'NOT' : '';
-      const valueString = Array.isArray(value) ? value.map((v) => `"${v}"`).join(Operator.OR) : `"${value}"`;
+
+      const valueString = Array.isArray(value)
+        ? value.map((v) => formatValue(v)).join(Operator.OR)
+        : formatValue(value);
 
       return `${prefix}(${fieldName}:${valueString})`;
     })
