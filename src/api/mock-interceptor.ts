@@ -22,7 +22,6 @@ import mockPublishedRegistrations from '../utils/testfiles/published_registratio
 import { mockPublishersSearch } from '../utils/testfiles/mockPublishers';
 import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
 import { mockSearchResults } from '../utils/testfiles/search_results';
-import { threeMockSearchResults } from '../utils/testfiles/three_search_results';
 import { mockMessages, mockPublishedRegistration, mockRegistration } from '../utils/testfiles/mockRegistration';
 import {
   SearchApiPath,
@@ -72,8 +71,7 @@ export const interceptRequestsOnMock = () => {
   const mock = new MockAdapter(Axios);
 
   // SEARCH
-  mock.onGet(new RegExp(SearchApiPath.Registrations)).replyOnce(200, mockSearchResults);
-  mock.onGet(new RegExp(SearchApiPath.Registrations)).reply(200, threeMockSearchResults);
+  mock.onGet(new RegExp(SearchApiPath.Registrations)).reply(200, mockSearchResults);
 
   // File
   mock.onGet(new RegExp(FileApiPath.Download)).reply(200, mockDownload);
