@@ -15,8 +15,8 @@ import { SortSelector } from './SortSelector';
 const StyledSearch = styled.div`
   display: grid;
   grid-template-columns: 2fr 5fr 2fr;
-  grid-template-rows: auto 1fr;
-  grid-template-areas: 'filters searchbar sorting' 'filters results results';
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas: 'filters searchbar sorting' 'filters advanced advanced' 'filters results results';
   column-gap: 2rem;
   row-gap: 1rem;
 
