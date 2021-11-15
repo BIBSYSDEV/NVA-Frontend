@@ -6,28 +6,24 @@ import ClearIcon from '@mui/icons-material/Clear';
 import FilterAltIcon from '@mui/icons-material/FilterAltOutlined';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { dataTestId } from '../utils/dataTestIds';
-import { SearchConfig } from '../utils/searchHelpers';
+import { ExpressionStatement, PropertySearch, SearchConfig } from '../utils/searchHelpers';
 import { DescriptionFieldNames, ResourceFieldNames } from '../types/publicationFieldNames';
 
 const StyledTextField = styled(TextField)`
   margin-top: 0;
 `;
 
-const StyledSearchBar = styled(StyledTextField)`
-  grid-area: searchbar;
-`;
-
 export const SearchBar = () => {
   const { t } = useTranslation('search');
   const { values } = useFormikContext<SearchConfig>();
-
   const properties = values.properties ?? [];
 
   return (
     <>
       <Field name="searchTerm">
         {({ field, form: { submitForm } }: FieldProps<string>) => (
-          <StyledSearchBar
+          <StyledTextField
+            sx={{ gridArea: 'searchbar' }}
             {...field}
             id={field.name}
             data-testid={dataTestId.startPage.searchField}
@@ -64,7 +60,7 @@ export const SearchBar = () => {
       </Field>
 
       <FieldArray name="properties">
-        {({ push, remove, form: { submitForm } }: FieldArrayRenderProps) => (
+        {({ push, remove }: FieldArrayRenderProps) => (
           <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {properties.map((_, index) => (
               <AdvancedSearchRow key={index} index={index} remove={remove} />
@@ -72,13 +68,20 @@ export const SearchBar = () => {
             <Box sx={{ display: 'flex', gap: '1rem' }}>
               <Button
                 variant="outlined"
-                onClick={() => push({ fieldName: '', value: '' })}
+                onClick={() => {
+                  const newPropertyFilter: PropertySearch = {
+                    fieldName: '',
+                    value: '',
+                    operator: ExpressionStatement.Contains,
+                  };
+                  push(newPropertyFilter);
+                }}
                 startIcon={<FilterAltIcon />}>
                 Legg til filter
               </Button>
               {properties.length > 0 && (
-                <Button variant="contained" type="submit">
-                  SØK
+                <Button variant="contained" type="submit" startIcon={<SearchIcon />}>
+                  Søk
                 </Button>
               )}
             </Box>
@@ -89,17 +92,15 @@ export const SearchBar = () => {
   );
 };
 
-const StyledAdvancedSearchRow = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 1fr 3fr 1fr;
-  gap: 1rem;
-`;
+interface AdvancedSearchRowProps extends Pick<FieldArrayRenderProps, 'remove'> {
+  index: number;
+}
 
-const AdvancedSearchRow = ({ index, remove }: any) => {
+const AdvancedSearchRow = ({ index, remove }: AdvancedSearchRowProps) => {
   const { t } = useTranslation('registration');
 
   return (
-    <StyledAdvancedSearchRow>
+    <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 3fr 6fr 2fr', gap: '1rem' }}>
       <Field name={`properties[${index}].fieldName`}>
         {({ field }: FieldProps<string>) => (
           <StyledTextField {...field} select variant="outlined" label="Felt">
@@ -111,17 +112,9 @@ const AdvancedSearchRow = ({ index, remove }: any) => {
       </Field>
       <Field name={`properties[${index}].operator`}>
         {({ field }: FieldProps<string>) => (
-          <StyledTextField
-            {...field}
-            select
-            SelectProps={{ displayEmpty: true }}
-            InputLabelProps={{ shrink: true }}
-            variant="outlined"
-            label="Operator">
-            <MenuItem>Inneholder</MenuItem>
-            {/* <MenuItem>Inneholder ikke</MenuItem> */}
-            {/* <MenuItem>Er lik</MenuItem> */}
-            {/* <MenuItem>Er ikke lik</MenuItem> */}
+          <StyledTextField {...field} select SelectProps={{ displayEmpty: true }} variant="outlined" label="Operator">
+            <MenuItem value={ExpressionStatement.Contains}>Inneholder</MenuItem>
+            <MenuItem value={ExpressionStatement.NotContaining}>Inneholder ikke</MenuItem>
           </StyledTextField>
         )}
       </Field>
@@ -133,6 +126,6 @@ const AdvancedSearchRow = ({ index, remove }: any) => {
       <Button onClick={() => remove(index)} color="error">
         Fjern filter
       </Button>
-    </StyledAdvancedSearchRow>
+    </Box>
   );
 };

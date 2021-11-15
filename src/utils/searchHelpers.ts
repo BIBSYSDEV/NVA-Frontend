@@ -1,6 +1,12 @@
-interface PropertySearch {
+export enum ExpressionStatement {
+  Contains,
+  NotContaining,
+}
+
+export interface PropertySearch {
   fieldName: string;
   value: string | string[]; // Can check for one or multiple values
+  operator: ExpressionStatement;
 }
 export interface SearchConfig {
   searchTerm?: string;
@@ -20,9 +26,11 @@ const createPropertyFilter = (properties?: PropertySearch[]) => {
   }
 
   const propertyFilter = propertiesWithValues
-    .map(({ fieldName, value }) => {
+    .map(({ fieldName, value, operator }) => {
+      const prefix = operator === ExpressionStatement.NotContaining ? 'NOT' : '';
       const valueString = Array.isArray(value) ? value.map((v) => `"${v}"`).join(Operator.OR) : `"${value}"`;
-      return `(${fieldName}:${valueString})`;
+
+      return `${prefix}(${fieldName}:${valueString})`;
     })
     .join(Operator.AND);
 
@@ -48,8 +56,12 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams): Sea
   const searchTerm = searchTermIndex >= 0 ? filters.splice(searchTermIndex, 1)[0] : '';
 
   const properties: PropertySearch[] = filters.map((filter) => {
+    // Find operator
+    const isNegated = filter.startsWith('NOT');
+    // Remove potential NOT prefix
+    const filterWithoutOperator = isNegated ? filter.replace('NOT', '') : filter;
     // Remove parentheses
-    const formattedFilter = filter.substring(1, filter.length - 1);
+    const formattedFilter = filterWithoutOperator.substring(1, filterWithoutOperator.length - 1);
     const [fieldName, value] = formattedFilter.split(':');
 
     return {
@@ -58,6 +70,7 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams): Sea
         value.startsWith('"') && value.endsWith('"')
           ? value.substring(1, value.length - 1) // Remove surrounding "
           : value,
+      operator: isNegated ? ExpressionStatement.NotContaining : ExpressionStatement.Contains,
     };
   });
 
