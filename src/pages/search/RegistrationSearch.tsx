@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TablePagination, Typography } from '@mui/material';
-import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { Box, TablePagination, Typography } from '@mui/material';
+import { useHistory } from 'react-router-dom';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { SearchResults } from './SearchResults';
@@ -11,28 +10,33 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { dataTestId } from '../../utils/dataTestIds';
 import { SearchResult } from '../../types/registration.types';
 
-const StyledRegistrationSearch = styled.div`
-  grid-area: results;
-`;
-
-export const RegistrationSearch = (props: unknown) => {
+export const RegistrationSearch = () => {
   const { t } = useTranslation('common');
-  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[1]);
-  const [page, setPage] = useState(0);
+  const history = useHistory();
+  const params = useMemo(() => new URLSearchParams(history.location.search), [history.location.search]);
 
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  params.set('results', rowsPerPage.toString());
-  params.set('from', (page * rowsPerPage).toString());
-  const paramsString = params.toString();
+  const resultsParam = params.get('results');
+  const fromParam = params.get('from');
+
+  const initialRowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[1];
+  const initalPage = (fromParam && resultsParam && Math.floor(+fromParam / initialRowsPerPage)) || 0;
+
+  const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
+  const [page, setPage] = useState(initalPage);
+
+  useEffect(() => {
+    params.set('results', rowsPerPage.toString());
+    params.set('from', (page * rowsPerPage).toString());
+    history.push({ search: params.toString() });
+  }, [history, params, rowsPerPage, page]);
 
   const [searchResults, isLoadingSearch] = useFetch<SearchResult>({
-    url: `${SearchApiPath.Registrations}?${paramsString}`,
+    url: `${SearchApiPath.Registrations}?${params.toString()}`,
     errorMessage: t('feedback:error.search'),
   });
 
   return (
-    <StyledRegistrationSearch>
+    <Box gridArea="results">
       {isLoadingSearch ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : searchResults && searchResults.hits.length > 0 ? (
@@ -55,6 +59,6 @@ export const RegistrationSearch = (props: unknown) => {
       ) : (
         <Typography>{t('no_hits')}</Typography>
       )}
-    </StyledRegistrationSearch>
+    </Box>
   );
 };
