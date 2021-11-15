@@ -1,9 +1,11 @@
 {
   "add_filter": "Legg til filter",
   "contains": "Inneholder",
+  "field_label": "Felt",
   "hits": "{{count}} treff",
   "hits_plural": "{{count}} treff",
   "not_containing": "Inneholder ikke",
+  "operator": "Operator",
   "registration_type": "Registreringstype",
   "remove_filter": "Fjern filter",
   "search": "Søk",

@@ -105,7 +105,7 @@ const AdvancedSearchRow = ({ index, remove }: AdvancedSearchRowProps) => {
     <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 3fr 6fr 2fr', gap: '1rem' }}>
       <Field name={`properties[${index}].fieldName`}>
         {({ field }: FieldProps<string>) => (
-          <StyledTextField {...field} select variant="outlined" label="Felt">
+          <StyledTextField {...field} select variant="outlined" label={t('field_label')}>
             <MenuItem value={DescriptionFieldNames.Title}>{t('common:title')}</MenuItem>
             <MenuItem value={DescriptionFieldNames.Abstract}>{t('registration:description.abstract')}</MenuItem>
             <MenuItem value={ResourceFieldNames.SubType}>{t('registration_type')}</MenuItem>
@@ -114,7 +114,12 @@ const AdvancedSearchRow = ({ index, remove }: AdvancedSearchRowProps) => {
       </Field>
       <Field name={`properties[${index}].operator`}>
         {({ field }: FieldProps<string>) => (
-          <StyledTextField {...field} select SelectProps={{ displayEmpty: true }} variant="outlined" label="Operator">
+          <StyledTextField
+            {...field}
+            select
+            SelectProps={{ displayEmpty: true }}
+            variant="outlined"
+            label={t('operator')}>
             <MenuItem value={ExpressionStatement.Contains}>{t('contains')}</MenuItem>
             <MenuItem value={ExpressionStatement.NotContaining}>{t('not_containing')}</MenuItem>
           </StyledTextField>

@@ -1,9 +1,11 @@
 {
   "add_filter": "Add filter",
   "contains": "Contains",
+  "field_label": "Field",
   "hits": "{{count}} hit",
   "hits_plural": "{{count}} hits",
   "not_containing": "Doesn't include",
+  "operator": "Operator",
   "registration_type": "Registration type",
   "remove_filter": "Remove filter",
   "search": "Search",
