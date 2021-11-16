@@ -2,10 +2,13 @@ import { LanguageString } from './common.types';
 
 // For available roles, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/Role.java
 export enum ContributorRole {
+  Consultant = 'Consultant',
+  ContactPerson = 'ContactPerson',
   Creator = 'Creator',
+  CuratorOrganizer = 'CuratorOrganizer',
+  Designer = 'Designer',
   Editor = 'Editor',
   Supervisor = 'Supervisor',
-  ContactPerson = 'ContactPerson',
   RelatedPerson = 'RelatedPerson',
   Researcher = 'Researcher',
   RightsHolder = 'RightsHolder',

@@ -24,8 +24,11 @@
     "supervisors": "Veiledere",
     "type": "Bidragstype",
     "types": {
+      "Consultant": "Konsulent",
       "ContactPerson": "Kontaktperson",
       "Creator": "Forfatter",
+      "CuratorOrganizer": "Kurator/arrangør",
+      "Designer": "Designer",
       "Editor": "Redaktør",
       "Other": "Annen",
       "RelatedPerson": "Relatert person",
