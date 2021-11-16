@@ -48,7 +48,9 @@ const StyledOwner = styled.div`
 
 const StyledMessages = styled.div`
   width: 75%;
+  display: flex;
   flex-direction: column;
+  gap: 1rem;
 `;
 
 const StyledAccordionActionButtons = styled.div`

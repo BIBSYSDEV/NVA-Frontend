@@ -33,7 +33,9 @@ export const AddRoleModalContent = ({
 
   return (
     <>
-      <Typography data-testid="add-role-info">{t('users.add_role_info')}</Typography>
+      <Typography data-testid="add-role-info" paragraph>
+        {t('users.add_role_info')}
+      </Typography>
       <TextField
         autoFocus
         fullWidth
