@@ -145,5 +145,6 @@ export enum SpecificContributorFieldNames {
   Affiliations = 'affiliations',
   Corresponding = 'correspondingAuthor',
   Id = 'identity.id',
+  Name = 'identity.name',
   Sequence = 'sequence',
 }

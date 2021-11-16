@@ -1,12 +1,20 @@
 {
+  "add_filter": "Add filter",
+  "contains": "Contains",
+  "field_label": "Field",
   "hits": "{{count}} hit",
   "hits_plural": "{{count}} hits",
+  "not_containing": "Doesn't include",
+  "operator": "Operator",
   "registration_type": "Registration type",
+  "remove_filter": "Remove filter",
   "search": "Search",
   "search_help": "Use quotes (\"abs\") for exact matches, or wildcard (*) to search for substrings",
   "select_filters": "Select filters to narrow down search:",
+  "search_term_label": "Value",
   "sort_by": "Order by",
   "sort_by_modified_date": "Last modified",
   "sort_by_published_date_asc": "Publish date (oldest first)",
-  "sort_by_published_date_desc": "Publish date (newest first)"
+  "sort_by_published_date_desc": "Publish date (newest first)",
+  "year_published": "Year published"
 }

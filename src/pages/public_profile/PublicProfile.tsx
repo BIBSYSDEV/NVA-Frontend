@@ -16,6 +16,7 @@ import { Authority } from '../../types/authority.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { SearchResults } from '../search/SearchResults';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../types/publicationFieldNames';
+import { ExpressionStatement } from '../../utils/searchHelpers';
 
 const StyledLine = styled.div`
   display: flex;
@@ -43,7 +44,11 @@ const PublicProfile = () => {
   });
   const [registrations, isLoadingRegistrations] = useSearchRegistrations({
     properties: [
-      { fieldName: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Id}`, value: arpId },
+      {
+        fieldName: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Id}`,
+        value: arpId,
+        operator: ExpressionStatement.Contains,
+      },
     ],
   });
 

@@ -17,6 +17,7 @@ import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { Contributor } from '../../../../types/contributor.types';
 import { useTranslation } from 'react-i18next';
 import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
+import { ExpressionStatement } from '../../../../utils/searchHelpers';
 
 const StyledChip = styled(Chip)`
   height: 100%;
@@ -47,7 +48,9 @@ export const SearchContainerField = ({
 
   const [searchContainerOptions, isLoadingSearchContainerOptions] = useSearchRegistrations({
     searchTerm: debouncedQuery,
-    properties: [{ fieldName: ResourceFieldNames.SubType, value: searchSubtypes }],
+    properties: [
+      { fieldName: ResourceFieldNames.SubType, value: searchSubtypes, operator: ExpressionStatement.Contains },
+    ],
   });
 
   const [selectedContainer, isLoadingSelectedContainer] = useFetchResource<Registration>(

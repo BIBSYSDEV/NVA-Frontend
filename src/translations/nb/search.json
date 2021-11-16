@@ -1,12 +1,20 @@
 {
+  "add_filter": "Legg til filter",
+  "contains": "Inneholder",
+  "field_label": "Felt",
   "hits": "{{count}} treff",
   "hits_plural": "{{count}} treff",
+  "not_containing": "Inneholder ikke",
+  "operator": "Operator",
   "registration_type": "Registreringstype",
+  "remove_filter": "Fjern filter",
   "search": "Søk",
   "search_help": "Bruk anførselstegn (\"abc\") for eksakte treff, eller jokertegn (*) for å søke etter deler av ord",
   "select_filters": "Velg filtre for å snevre inn søket:",
+  "search_term_label": "Verdi",
   "sort_by": "Sorter etter",
   "sort_by_modified_date": "Sist endret",
   "sort_by_published_date_asc": "Publiseringsdato (eldste først)",
-  "sort_by_published_date_desc": "Publiseringsdato (nyeste først)"
+  "sort_by_published_date_desc": "Publiseringsdato (nyeste først)",
+  "year_published": "Publiseringsår"
 }
