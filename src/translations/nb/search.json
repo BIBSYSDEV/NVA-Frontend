@@ -15,5 +15,6 @@
   "sort_by": "Sorter etter",
   "sort_by_modified_date": "Sist endret",
   "sort_by_published_date_asc": "Publiseringsdato (eldste først)",
-  "sort_by_published_date_desc": "Publiseringsdato (nyeste først)"
+  "sort_by_published_date_desc": "Publiseringsdato (nyeste først)",
+  "year_published": "Publiseringsår"
 }

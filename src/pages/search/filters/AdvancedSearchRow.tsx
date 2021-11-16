@@ -26,12 +26,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
     <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 3fr 6fr 2fr', gap: '1rem' }}>
       <Field name={`${baseFieldName}.fieldName`}>
         {({ field }: FieldProps<string>) => (
-          <StyledTextField
-            {...field}
-            select
-            variant="outlined"
-            label={t('field_label')}
-            InputLabelProps={{ shrink: true }}>
+          <StyledTextField {...field} select variant="outlined" label={t('field_label')}>
             <MenuItem value={DescriptionFieldNames.Title}>{t('common:title')}</MenuItem>
             <MenuItem value={DescriptionFieldNames.Abstract}>{t('registration:description.abstract')}</MenuItem>
             <MenuItem value={ResourceFieldNames.SubType}>{t('registration_type')}</MenuItem>
@@ -39,6 +34,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
             <MenuItem value={`${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Name}`}>
               {t('registration:contributors.contributor')}
             </MenuItem>
+            <MenuItem value={`${DescriptionFieldNames.Date}.year`}>{t('year_published')}</MenuItem>
           </StyledTextField>
         )}
       </Field>
@@ -52,12 +48,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
       </Field>
       <Field name={`${baseFieldName}.value`}>
         {({ field }: FieldProps<string>) => (
-          <StyledTextField
-            {...field}
-            variant="outlined"
-            label={t('search_term_label')}
-            InputLabelProps={{ shrink: true }}
-          />
+          <StyledTextField {...field} variant="outlined" label={t('search_term_label')} />
         )}
       </Field>
       <Button onClick={removeFilter} color="error">
