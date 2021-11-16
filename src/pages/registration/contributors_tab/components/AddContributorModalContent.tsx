@@ -47,7 +47,6 @@ interface AddContributorModalContentProps {
   addContributor: (selectedAuthority: Authority) => void;
   addSelfAsContributor: () => void;
   openNewContributorModal: () => void;
-  contributorRole: string;
   initialSearchTerm?: string;
   roleToAdd: ContributorRole;
 }
@@ -56,7 +55,6 @@ export const AddContributorModalContent = ({
   addContributor,
   addSelfAsContributor,
   openNewContributorModal,
-  contributorRole,
   initialSearchTerm = '',
   roleToAdd,
 }: AddContributorModalContentProps) => {

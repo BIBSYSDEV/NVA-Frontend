@@ -100,7 +100,6 @@ export const AddContributorModal = ({
           <AddContributorModalContent
             addContributor={addContributor}
             addSelfAsContributor={addSelfAsContributor}
-            contributorRole={contributorRole}
             openNewContributorModal={() => setCreateNewContributor(true)}
             initialSearchTerm={initialSearchTerm}
             roleToAdd={selectedContributorRole}

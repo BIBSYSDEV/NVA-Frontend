@@ -252,7 +252,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             onClose={toggleRequestDoiModal}
             headingText={t('public_page.request_doi')}
             dataTestId={dataTestId.registrationLandingPage.requestDoiModal}>
-            <Typography>{t('public_page.request_doi_description')}</Typography>
+            <Typography paragraph>{t('public_page.request_doi_description')}</Typography>
             <TextField
               variant="outlined"
               multiline

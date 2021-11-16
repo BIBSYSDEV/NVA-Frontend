@@ -1,6 +1,4 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Typography } from '@mui/material';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { lightTheme } from '../../../../themes/lightTheme';
 import { DoiField } from '../components/DoiField';
@@ -14,26 +12,20 @@ interface DegreeFormProps {
   subType: DegreeType;
 }
 
-export const DegreeForm = ({ subType }: DegreeFormProps) => {
-  const { t } = useTranslation('registration');
+export const DegreeForm = ({ subType }: DegreeFormProps) => (
+  <>
+    <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+      <InputContainerBox>
+        <DoiField />
+        <PublisherField />
+        <IsbnAndPages />
+      </InputContainerBox>
+    </BackgroundDiv>
 
-  return (
-    <>
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        <InputContainerBox>
-          <DoiField />
-          <PublisherField />
-          <IsbnAndPages />
-        </InputContainerBox>
+    {subType === DegreeType.Phd && (
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
+        <SeriesFields />
       </BackgroundDiv>
-
-      {subType === DegreeType.Phd && (
-        <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-          <Typography variant="h5">{t('resource_type.series')}</Typography>
-          <Typography paragraph>{t('resource_type.series_info')}</Typography>
-          <SeriesFields />
-        </BackgroundDiv>
-      )}
-    </>
-  );
-};
+    )}
+  </>
+);
