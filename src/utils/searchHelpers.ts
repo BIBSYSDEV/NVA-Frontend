@@ -22,7 +22,9 @@ enum Operator {
 // Add quoatation marks if no wildcard
 const formatValue = (value: string) => {
   const hasWildcard = value.includes('*');
-  if (hasWildcard) {
+  const hasQuotationMarks = value.startsWith('"') && value.endsWith('"');
+
+  if (hasWildcard || hasQuotationMarks) {
     return value;
   } else {
     return `"${value}"`;
