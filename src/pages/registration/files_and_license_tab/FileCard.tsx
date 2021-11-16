@@ -184,6 +184,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
               <Field name={`${baseFieldName}.${SpecificFileFieldNames.License}`}>
                 {({ field, meta: { error, touched } }: FieldProps) => (
                   <TextField
+                    sx={{ mt: '1rem' }}
                     id={field.name}
                     data-testid="uploaded-file-select-license"
                     select
