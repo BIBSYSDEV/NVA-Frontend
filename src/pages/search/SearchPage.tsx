@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { PageHeader } from '../../components/PageHeader';
-import { SearchBar } from '../../components/SearchBar';
+import { SearchBar } from './SearchBar';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { createSearchConfigFromSearchParams, createSearchQuery } from '../../utils/searchHelpers';
 import { RegistrationTypeFilter } from './filters/RegistrationTypeFilter';
