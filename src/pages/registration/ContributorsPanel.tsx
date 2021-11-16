@@ -70,7 +70,16 @@ export const ContributorsPanel = () => {
             </>
           ) : isArtistic(publicationInstanceType) ? (
             <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-              <Contributors push={push} replace={replace} contributorRoles={Object.values(ContributorRole)} />
+              <Contributors
+                push={push}
+                replace={replace}
+                contributorRoles={[
+                  ContributorRole.Designer,
+                  ContributorRole.CuratorOrganizer,
+                  ContributorRole.Consultant,
+                  ContributorRole.Other,
+                ]}
+              />
             </BackgroundDiv>
           ) : (
             <>
