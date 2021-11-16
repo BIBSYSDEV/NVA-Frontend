@@ -2,17 +2,12 @@ import { MenuItem, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 import { Modal } from '../../../components/Modal';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { Authority } from '../../../types/authority.types';
 import { ContributorRole } from '../../../types/contributor.types';
 import { AddContributorModalContent } from './components/AddContributorModalContent';
 import { CreateContributorModalContent } from './components/CreateContributorModalContent';
-
-const StyledTextField = styled(TextField)`
-  max-width: 15rem;
-`;
 
 interface AddContributorModalProps {
   onContributorSelected: (authority: Authority, role: ContributorRole) => void;
@@ -80,7 +75,8 @@ export const AddContributorModal = ({
       maxWidth="md"
       dataTestId="contributor-modal">
       {contributorRoles.length > 1 && (
-        <StyledTextField
+        <TextField
+          sx={{ maxWidth: '15rem', mb: '1rem' }}
           value={selectedContributorRole}
           onChange={(event) => {
             const role = (event.target.value as ContributorRole) ?? '';
@@ -95,7 +91,7 @@ export const AddContributorModal = ({
               {t(`contributors.types.${role}`)}
             </MenuItem>
           ))}
-        </StyledTextField>
+        </TextField>
       )}
       {selectedContributorRole &&
         (createNewContributor ? (
@@ -104,7 +100,6 @@ export const AddContributorModal = ({
           <AddContributorModalContent
             addContributor={addContributor}
             addSelfAsContributor={addSelfAsContributor}
-            contributorRole={contributorRole}
             openNewContributorModal={() => setCreateNewContributor(true)}
             initialSearchTerm={initialSearchTerm}
             roleToAdd={selectedContributorRole}

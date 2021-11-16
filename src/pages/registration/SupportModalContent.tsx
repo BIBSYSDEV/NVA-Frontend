@@ -31,7 +31,7 @@ export const SupportModalContent = ({ closeModal }: SupportModalContentProps) =>
 
   return (
     <>
-      <Typography>
+      <Typography paragraph>
         <Trans i18nKey="registration:support_description">
           <Link component={RouterLink} to="/my-messages" />
         </Trans>

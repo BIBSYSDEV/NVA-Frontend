@@ -12,10 +12,7 @@ import { ButtonWithProgress } from '../ButtonWithProgress';
 
 export const StyledButtonContainer = styled.div`
   display: flex;
-  margin-top: 1rem;
-  > :not(:last-child) {
-    margin-right: 1rem;
-  }
+  gap: 1rem;
 `;
 
 const StyledInstitutionSearchContainer = styled.div`
@@ -23,6 +20,9 @@ const StyledInstitutionSearchContainer = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     width: 100%;
   }
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 interface AddInstitutionProps {
@@ -84,8 +84,7 @@ export const AddInstitution = ({ onSubmit, onClose }: AddInstitutionProps) => {
                     onClick={() => {
                       onClose();
                     }}
-                    data-testid="institution-cancel-button"
-                    variant="contained">
+                    data-testid="institution-cancel-button">
                     {t('cancel')}
                   </Button>
                 )}

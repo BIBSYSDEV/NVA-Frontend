@@ -213,13 +213,6 @@ export const lightTheme = createTheme({
         nextIconButtonProps: { title: i18n.t('common:table_pagination.next_page') },
       },
     },
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          marginTop: '1rem',
-        },
-      },
-    },
     MuiTypography: {
       defaultProps: {
         color: 'textPrimary',

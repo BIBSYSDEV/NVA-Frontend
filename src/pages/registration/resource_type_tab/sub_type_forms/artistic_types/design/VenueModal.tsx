@@ -68,7 +68,7 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
                     />
                   )}
                 </Field>
-                <Box sx={{ display: 'flex', gap: '3rem' }}>
+                <Box sx={{ display: 'flex', gap: '3rem', mt: '1rem' }}>
                   <PeriodFields fromFieldName={VenueFieldName.From} toFieldName={VenueFieldName.To} />
                 </Box>
               </DialogContent>

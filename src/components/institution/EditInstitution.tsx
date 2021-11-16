@@ -18,6 +18,9 @@ const StyledInstitutionSearchContainer = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     width: 100%;
   }
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 interface EditInstitutionProps {

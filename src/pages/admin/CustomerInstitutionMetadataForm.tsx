@@ -1,10 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 
 import {
@@ -24,10 +23,6 @@ import { getAdminInstitutionPath } from '../../utils/urlPaths';
 import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { lightTheme } from '../../themes/lightTheme';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-
-const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
-  margin-top: 2rem;
-`;
 
 interface CustomerInstitutionMetadataFormProps {
   customerInstitution: CustomerInstitution;
@@ -63,7 +58,9 @@ export const CustomerInstitutionMetadataForm = ({
 
   return (
     <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
-      <Typography variant="h2">{t('common:institution')}</Typography>
+      <Typography variant="h2" paragraph>
+        {t('common:institution')}
+      </Typography>
       <Formik
         enableReinitialize
         initialValues={{ ...emptyCustomerInstitution, ...customerInstitution }}
@@ -72,40 +69,42 @@ export const CustomerInstitutionMetadataForm = ({
         onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form noValidate>
-            <SelectInstitutionField disabled={editMode} />
-            <CustomerInstitutionTextField
-              name={CustomerInstitutionFieldNames.DisplayName}
-              label={t('display_name')}
-              required
-              dataTestId="customer-institution-display-name-field"
-            />
-            <CustomerInstitutionTextField
-              name={CustomerInstitutionFieldNames.ShortName}
-              label={t('short_name')}
-              required
-              dataTestId="customer-institution-short-name-field"
-            />
-            <CustomerInstitutionTextField
-              name={CustomerInstitutionFieldNames.ArchiveName}
-              label={t('archive_name')}
-              dataTestId="customer-institution-archive-name-field"
-            />
-            <CustomerInstitutionTextField
-              name={CustomerInstitutionFieldNames.FeideOrganizationId}
-              label={t('feide_organization_id')}
-              required
-              dataTestId="customer-institution-feide-organization-id-field"
-            />
-            <StyledButtonContainer>
-              <ButtonWithProgress
-                data-testid="customer-institution-save-button"
-                color="secondary"
-                startIcon={<SaveIcon />}
-                isLoading={isSubmitting}
-                type="submit">
-                {editMode ? t('common:save') : t('common:create')}
-              </ButtonWithProgress>
-            </StyledButtonContainer>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <SelectInstitutionField disabled={editMode} />
+              <CustomerInstitutionTextField
+                name={CustomerInstitutionFieldNames.DisplayName}
+                label={t('display_name')}
+                required
+                dataTestId="customer-institution-display-name-field"
+              />
+              <CustomerInstitutionTextField
+                name={CustomerInstitutionFieldNames.ShortName}
+                label={t('short_name')}
+                required
+                dataTestId="customer-institution-short-name-field"
+              />
+              <CustomerInstitutionTextField
+                name={CustomerInstitutionFieldNames.ArchiveName}
+                label={t('archive_name')}
+                dataTestId="customer-institution-archive-name-field"
+              />
+              <CustomerInstitutionTextField
+                name={CustomerInstitutionFieldNames.FeideOrganizationId}
+                label={t('feide_organization_id')}
+                required
+                dataTestId="customer-institution-feide-organization-id-field"
+              />
+              <StyledRightAlignedWrapper>
+                <ButtonWithProgress
+                  data-testid="customer-institution-save-button"
+                  color="secondary"
+                  startIcon={<SaveIcon />}
+                  isLoading={isSubmitting}
+                  type="submit">
+                  {editMode ? t('common:save') : t('common:create')}
+                </ButtonWithProgress>
+              </StyledRightAlignedWrapper>
+            </Box>
           </Form>
         )}
       </Formik>

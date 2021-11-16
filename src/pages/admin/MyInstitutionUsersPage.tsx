@@ -70,7 +70,7 @@ const MyInstitutionUsersPage = () => {
             startIcon={<AddIcon />}
             data-testid="button-add-institution-admin"
             onClick={() => setRoleToAdd(RoleName.INSTITUTION_ADMIN)}>
-            {t('users.add_institution_admin')}
+            {t('common:add_custom', { name: t('profile:roles.institution_admin') })}
           </StyledNewButton>
         </StyledContainer>
 
@@ -96,7 +96,7 @@ const MyInstitutionUsersPage = () => {
             startIcon={<AddIcon />}
             data-testid="button-add-curator"
             onClick={() => setRoleToAdd(RoleName.CURATOR)}>
-            {t('users.add_curator')}
+            {t('common:add_custom', { name: t('profile:roles.curator') })}
           </StyledNewButton>
         </StyledContainer>
 
@@ -122,7 +122,7 @@ const MyInstitutionUsersPage = () => {
             startIcon={<AddIcon />}
             data-testid="button-add-editor"
             onClick={() => setRoleToAdd(RoleName.EDITOR)}>
-            {t('users.add_editor')}
+            {t('common:add_custom', { name: t('profile:roles.editor') })}
           </StyledNewButton>
         </StyledContainer>
 

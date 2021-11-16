@@ -1,7 +1,6 @@
 import { useFormikContext } from 'formik';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { ThemeProvider, Typography } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { lightTheme } from '../../../../themes/lightTheme';
 import { BookType } from '../../../../types/publicationFieldNames';
@@ -14,23 +13,25 @@ import { BookRegistration } from '../../../../types/publication_types/bookRegist
 import { BookMonographContentType } from '../../../../types/publication_types/content.types';
 import { PublisherField } from '../components/PublisherField';
 import { IsbnAndPages } from '../components/isbn_and_pages/IsbnAndPages';
+import { InputContainerBox } from '../../../../components/styled/Wrappers';
 
 export const BookForm = () => {
-  const { t } = useTranslation('registration');
   const { values } = useFormikContext<BookRegistration>();
   const instanceType = values.entityDescription.reference?.publicationInstance.type;
 
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        <DoiField />
-        <PublisherField />
+        <InputContainerBox>
+          <DoiField />
+          <PublisherField />
 
-        <ThemeProvider theme={lightTheme}>
-          <NpiDisciplineField />
-        </ThemeProvider>
+          <ThemeProvider theme={lightTheme}>
+            <NpiDisciplineField />
+          </ThemeProvider>
 
-        <IsbnAndPages />
+          <IsbnAndPages />
+        </InputContainerBox>
       </BackgroundDiv>
 
       {instanceType === BookType.Monograph && (
@@ -40,8 +41,6 @@ export const BookForm = () => {
       )}
 
       <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-        <Typography variant="h5">{t('resource_type.series')}</Typography>
-        <Typography>{t('resource_type.series_info')}</Typography>
         <SeriesFields />
       </BackgroundDiv>
 

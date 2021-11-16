@@ -15,11 +15,10 @@ import { VocabularyComponentProps } from './VocabularyAutocomplete';
 import { hrcsActivityBaseId, hrcsCategoryBaseId } from '../../../../utils/constants';
 
 const StyledAddButton = styled(Button)`
-  margin-top: 1rem;
+  align-self: flex-start;
 `;
 
 const StyledRemoveButton = styled(Button)`
-  margin-top: 1rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     margin-top: 0.5rem;
   }

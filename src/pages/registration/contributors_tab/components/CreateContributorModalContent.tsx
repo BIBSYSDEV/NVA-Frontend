@@ -69,6 +69,7 @@ export const CreateContributorModalContent = ({
             <Field name="firstName">
               {({ field, meta: { error, touched } }: FieldProps) => (
                 <TextField
+                  sx={{ mb: '1rem' }}
                   {...field}
                   id={field.name}
                   fullWidth

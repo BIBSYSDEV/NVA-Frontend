@@ -1,20 +1,10 @@
-import { Field, Formik, Form, FieldProps, FormikHelpers } from 'formik';
+import { Field, Formik, FieldProps, FormikHelpers, Form } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import { TextField } from '@mui/material';
+import { TextField, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
 import { doiValidationSchema, isValidUrl } from '../../../utils/validation/doiSearchValidation';
-
-const StyledForm = styled(Form)`
-  display: flex;
-  align-items: center;
-`;
-
-const StyledTextField = styled(TextField)`
-  margin: 0 1rem 0 0;
-`;
 
 interface DoiFormValues {
   doiUrl: string;
@@ -50,32 +40,35 @@ export const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps
   return (
     <Formik onSubmit={onSubmit} initialValues={emptyDoiFormValues} validationSchema={doiValidationSchema}>
       {({ isSubmitting }) => (
-        <StyledForm noValidate>
-          <Field name="doiUrl">
-            {({ field, meta: { error, touched } }: FieldProps<string>) => (
-              <StyledTextField
-                id={field.name}
-                data-testid="new-registration-link-field"
-                variant="outlined"
-                label={t('registration.link_to_resource')}
-                required
-                fullWidth
-                disabled={isSubmitting}
-                {...field}
-                error={!!error && touched}
-                InputLabelProps={{ shrink: true }}
-                placeholder={doiUrlPlaceholder}
-              />
-            )}
-          </Field>
-          <ButtonWithProgress
-            data-testid="doi-search-button"
-            isLoading={isSubmitting}
-            type="submit"
-            endIcon={<SearchIcon />}>
-            {t('common:search')}
-          </ButtonWithProgress>
-        </StyledForm>
+        <Form noValidate>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Field name="doiUrl">
+              {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                <TextField
+                  sx={{ mr: '1rem' }}
+                  id={field.name}
+                  data-testid="new-registration-link-field"
+                  variant="outlined"
+                  label={t('registration.link_to_resource')}
+                  required
+                  fullWidth
+                  disabled={isSubmitting}
+                  {...field}
+                  error={!!error && touched}
+                  InputLabelProps={{ shrink: true }}
+                  placeholder={doiUrlPlaceholder}
+                />
+              )}
+            </Field>
+            <ButtonWithProgress
+              data-testid="doi-search-button"
+              isLoading={isSubmitting}
+              type="submit"
+              endIcon={<SearchIcon />}>
+              {t('common:search')}
+            </ButtonWithProgress>
+          </Box>
+        </Form>
       )}
     </Formik>
   );
