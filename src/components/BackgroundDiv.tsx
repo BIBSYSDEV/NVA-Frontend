@@ -20,11 +20,7 @@ export const BackgroundDiv = ({ children, ...props }: BakcgroundDivProps) => {
 
   return (
     <StyledBackgroundDiv {...props}>
-      {darkMode ? (
-        <ThemeProvider theme={darkTheme}>{children}</ThemeProvider>
-      ) : (
-        <ThemeProvider theme={lightTheme}>{children}</ThemeProvider>
-      )}
+      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>{children}</ThemeProvider>
     </StyledBackgroundDiv>
   );
 };
