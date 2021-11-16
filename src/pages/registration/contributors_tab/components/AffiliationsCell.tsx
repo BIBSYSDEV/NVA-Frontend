@@ -159,7 +159,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
         headingText={t('contributors.select_institution')}
         dataTestId="affiliation-modal">
         <>
-          <Typography>
+          <Typography paragraph>
             {t('common:name')}: <b>{authorName}</b>
           </Typography>
           {affiliationToVerify && (
