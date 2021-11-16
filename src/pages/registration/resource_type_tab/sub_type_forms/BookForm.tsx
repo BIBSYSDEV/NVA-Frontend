@@ -14,6 +14,7 @@ import { BookRegistration } from '../../../../types/publication_types/bookRegist
 import { BookMonographContentType } from '../../../../types/publication_types/content.types';
 import { PublisherField } from '../components/PublisherField';
 import { IsbnAndPages } from '../components/isbn_and_pages/IsbnAndPages';
+import { InputContainerBox } from '../../../../components/styled/Wrappers';
 
 export const BookForm = () => {
   const { t } = useTranslation('registration');
@@ -23,14 +24,16 @@ export const BookForm = () => {
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        <DoiField />
-        <PublisherField />
+        <InputContainerBox>
+          <DoiField />
+          <PublisherField />
 
-        <ThemeProvider theme={lightTheme}>
-          <NpiDisciplineField />
-        </ThemeProvider>
+          <ThemeProvider theme={lightTheme}>
+            <NpiDisciplineField />
+          </ThemeProvider>
 
-        <IsbnAndPages />
+          <IsbnAndPages />
+        </InputContainerBox>
       </BackgroundDiv>
 
       {instanceType === BookType.Monograph && (

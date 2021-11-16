@@ -58,7 +58,9 @@ export const ChapterForm = () => {
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <StyledDiv data-testid="info-anthology">
           <InfoIcon color="primary" />
-          <Typography variant="body1">{t('resource_type.chapter.info_anthology')}</Typography>
+          <Typography variant="body1" paragraph>
+            {t('resource_type.chapter.info_anthology')}
+          </Typography>
         </StyledDiv>
 
         <DoiField />

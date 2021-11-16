@@ -8,6 +8,7 @@ import { SeriesFields } from '../components/SeriesFields';
 import { DegreeType } from '../../../../types/publicationFieldNames';
 import { PublisherField } from '../components/PublisherField';
 import { IsbnAndPages } from '../components/isbn_and_pages/IsbnAndPages';
+import { InputContainerBox } from '../../../../components/styled/Wrappers';
 
 interface DegreeFormProps {
   subType: DegreeType;
@@ -19,15 +20,17 @@ export const DegreeForm = ({ subType }: DegreeFormProps) => {
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        <DoiField />
-        <PublisherField />
-        <IsbnAndPages />
+        <InputContainerBox>
+          <DoiField />
+          <PublisherField />
+          <IsbnAndPages />
+        </InputContainerBox>
       </BackgroundDiv>
 
       {subType === DegreeType.Phd && (
         <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
           <Typography variant="h5">{t('resource_type.series')}</Typography>
-          <Typography>{t('resource_type.series_info')}</Typography>
+          <Typography paragraph>{t('resource_type.series_info')}</Typography>
           <SeriesFields />
         </BackgroundDiv>
       )}

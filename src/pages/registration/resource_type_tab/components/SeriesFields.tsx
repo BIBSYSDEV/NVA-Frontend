@@ -5,17 +5,19 @@ import { TextField } from '@mui/material';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { SeriesField } from './SeriesField';
+import { InputContainerBox } from '../../../../components/styled/Wrappers';
 
 export const SeriesFields = () => {
   const { t } = useTranslation('registration');
 
   return (
-    <>
+    <InputContainerBox>
       <SeriesField />
 
       <Field name={ResourceFieldNames.SeriesNumber}>
         {({ field }: FieldProps<string>) => (
           <TextField
+            sx={{ alignSelf: 'flex-start' }}
             {...field}
             id={field.name}
             data-testid={dataTestId.registrationWizard.resourceType.seriesNumber}
@@ -25,6 +27,6 @@ export const SeriesFields = () => {
           />
         )}
       </Field>
-    </>
+    </InputContainerBox>
   );
 };

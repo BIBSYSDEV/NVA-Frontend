@@ -2,7 +2,7 @@ import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import React, { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { MenuItem, ThemeProvider, TextField, Typography, Box } from '@mui/material';
+import { MenuItem, ThemeProvider, TextField, Typography } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { lightTheme } from '../../themes/lightTheme';
@@ -12,7 +12,7 @@ import { Registration } from '../../types/registration.types';
 import { DatePickerField } from './description_tab/DatePickerField';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
-import { SxProps } from '@mui/system';
+import { InputContainerBox } from '../../components/styled/Wrappers';
 
 const DateAndLanguageWrapper = styled.div`
   display: grid;
@@ -25,12 +25,6 @@ const DateAndLanguageWrapper = styled.div`
   }
 `;
 
-const sxInputContainer: SxProps = {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '1rem',
-};
-
 export const DescriptionPanel = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
@@ -38,7 +32,7 @@ export const DescriptionPanel = () => {
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
-        <Box sx={sxInputContainer}>
+        <InputContainerBox>
           <Field name={DescriptionFieldNames.Title}>
             {({ field, meta: { touched, error } }: FieldProps<string>) => (
               <TextField
@@ -85,10 +79,10 @@ export const DescriptionPanel = () => {
               />
             )}
           </Field>
-        </Box>
+        </InputContainerBox>
       </BackgroundDiv>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-        <Box sx={sxInputContainer}>
+        <InputContainerBox>
           <Field name={DescriptionFieldNames.Tags}>
             {({ field }: FieldProps) => (
               <Autocomplete
@@ -123,7 +117,7 @@ export const DescriptionPanel = () => {
             )}
           </Field>
           <VocabularyBase />
-        </Box>
+        </InputContainerBox>
       </BackgroundDiv>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <DateAndLanguageWrapper>

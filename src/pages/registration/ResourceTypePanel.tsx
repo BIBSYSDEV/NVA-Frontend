@@ -159,11 +159,11 @@ export const ResourceTypePanel = () => {
         </StyledSelectWrapper>
       </BackgroundDiv>
 
+      {mainType === PublicationType.PublicationInJournal && <JournalTypeForm onChangeSubType={onChangeSubType} />}
       {mainType === PublicationType.Book && <BookTypeForm onChangeSubType={onChangeSubType} />}
       {mainType === PublicationType.Report && <ReportTypeForm onChangeSubType={onChangeSubType} />}
       {mainType === PublicationType.Degree && <DegreeTypeForm onChangeSubType={onChangeSubType} />}
       {mainType === PublicationType.Chapter && <ChapterTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.PublicationInJournal && <JournalTypeForm onChangeSubType={onChangeSubType} />}
       {mainType === PublicationType.Presentation && <PresentationTypeForm onChangeSubType={onChangeSubType} />}
       {mainType === PublicationType.Artistic && <ArtisticTypeForm onChangeSubType={onChangeSubType} />}
     </>
