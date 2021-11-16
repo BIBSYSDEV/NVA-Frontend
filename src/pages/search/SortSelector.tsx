@@ -2,14 +2,8 @@ import { TextField, MenuItem } from '@mui/material';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
 import { RegistrationFieldName } from '../../types/publicationFieldNames';
 import { dataTestId } from '../../utils/dataTestIds';
-
-const StyledTextField = styled(TextField)`
-  margin-top: 0;
-  grid-area: sorting;
-`;
 
 enum SortOption {
   PublishedDateDesc,
@@ -56,7 +50,8 @@ export const SortSelector = () => {
   };
 
   return (
-    <StyledTextField
+    <TextField
+      sx={{ gridArea: 'sorting' }}
       data-testid={dataTestId.startPage.orderBySelect}
       select
       value={selectedSortingValue}
@@ -69,6 +64,6 @@ export const SortSelector = () => {
           {t(option.i18nKey)}
         </MenuItem>
       ))}
-    </StyledTextField>
+    </TextField>
   );
 };

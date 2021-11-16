@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { Box, Button, IconButton, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -10,10 +9,6 @@ import { ExpressionStatement, PropertySearch, SearchConfig } from '../../utils/s
 import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
 
-const StyledTextField = styled(TextField)`
-  margin-top: 0;
-`;
-
 export const SearchBar = () => {
   const { t } = useTranslation('search');
   const { values, submitForm } = useFormikContext<SearchConfig>();
@@ -23,7 +18,7 @@ export const SearchBar = () => {
     <>
       <Field name="searchTerm">
         {({ field }: FieldProps<string>) => (
-          <StyledTextField
+          <TextField
             sx={{ gridArea: 'searchbar' }}
             {...field}
             id={field.name}
