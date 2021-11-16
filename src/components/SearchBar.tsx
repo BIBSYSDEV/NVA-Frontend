@@ -7,7 +7,12 @@ import FilterAltIcon from '@mui/icons-material/FilterAltOutlined';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { dataTestId } from '../utils/dataTestIds';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../utils/searchHelpers';
-import { DescriptionFieldNames, ResourceFieldNames } from '../types/publicationFieldNames';
+import {
+  ContributorFieldNames,
+  DescriptionFieldNames,
+  ResourceFieldNames,
+  SpecificContributorFieldNames,
+} from '../types/publicationFieldNames';
 import { BetaFunctionality } from './BetaFunctionality';
 
 const StyledTextField = styled(TextField)`
@@ -16,13 +21,13 @@ const StyledTextField = styled(TextField)`
 
 export const SearchBar = () => {
   const { t } = useTranslation('search');
-  const { values } = useFormikContext<SearchConfig>();
+  const { values, submitForm } = useFormikContext<SearchConfig>();
   const properties = values.properties ?? [];
 
   return (
     <>
       <Field name="searchTerm">
-        {({ field, form: { submitForm } }: FieldProps<string>) => (
+        {({ field }: FieldProps<string>) => (
           <StyledTextField
             sx={{ gridArea: 'searchbar' }}
             {...field}
@@ -110,6 +115,9 @@ const AdvancedSearchRow = ({ index, remove }: AdvancedSearchRowProps) => {
             <MenuItem value={DescriptionFieldNames.Abstract}>{t('registration:description.abstract')}</MenuItem>
             <MenuItem value={ResourceFieldNames.SubType}>{t('registration_type')}</MenuItem>
             <MenuItem value={DescriptionFieldNames.Tags}>{t('registration:description.keywords')}</MenuItem>
+            <MenuItem value={`${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Name}`}>
+              {t('registration:contributors.contributor')}
+            </MenuItem>
           </StyledTextField>
         )}
       </Field>
