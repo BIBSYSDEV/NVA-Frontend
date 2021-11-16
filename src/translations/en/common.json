@@ -1,7 +1,7 @@
 {
   "about_nva": "About NVA",
   "add": "Add",
-  "add_custom": "Add {{name}}",
+  "add_custom": "Add {{- name}}",
   "admin": "Administrator",
   "all": "All",
   "back": "Back",
