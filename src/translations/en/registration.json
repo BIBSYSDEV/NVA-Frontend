@@ -24,8 +24,11 @@
     "supervisors": "Supervisors",
     "type": "Contributor type",
     "types": {
+      "Consultant": "Consultant",
       "ContactPerson": "Contact person",
       "Creator": "Author",
+      "CuratorOrganizer": "Curator/organizer",
+      "Designer": "Designer",
       "Editor": "Editor",
       "Other": "Other",
       "RelatedPerson": "Related person",
