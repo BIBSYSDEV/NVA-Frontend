@@ -13,7 +13,7 @@ import {
   ReportType,
   ResourceFieldNames,
 } from '../../../types/publicationFieldNames';
-import { SearchConfig } from '../../../utils/searchHelpers';
+import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
 import { BaseFilterItem } from './BaseFilterItem';
 
 const StyledIndentedListItem = styled(ListItemButton)<{ $isSelected: boolean }>`
@@ -27,9 +27,10 @@ export const RegistrationTypeFilter = () => {
   const currentValue = (values.properties?.length && values.properties[0].value) ?? '';
 
   const updateFilter = (type: string) => {
-    const newFilter = {
+    const newFilter: PropertySearch = {
       fieldName: ResourceFieldNames.SubType,
       value: currentValue !== type ? type : '',
+      operator: ExpressionStatement.Contains,
     };
     setFieldValue('properties[0]', newFilter);
     submitForm();

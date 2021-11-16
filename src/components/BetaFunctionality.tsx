@@ -1,15 +1,15 @@
 import { ReactNode } from 'react';
-import styled from 'styled-components';
+import { Box, BoxProps } from '@mui/material';
 
-const StyledBetaBox = styled.div`
-  border: 3px dashed;
-`;
-
-interface BetaFunctionalityProps {
+interface BetaFunctionalityProps extends BoxProps {
   children: ReactNode;
 }
 
-export const BetaFunctionality = ({ children }: BetaFunctionalityProps) => {
+export const BetaFunctionality = ({ children, ...props }: BetaFunctionalityProps) => {
   const betaEnabled = localStorage.getItem('beta') === 'true';
-  return betaEnabled ? <StyledBetaBox>{children}</StyledBetaBox> : null;
+  return betaEnabled ? (
+    <Box sx={{ border: '3px dashed', padding: '0.5rem' }} {...props}>
+      {children}
+    </Box>
+  ) : null;
 };

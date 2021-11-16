@@ -6,6 +6,7 @@ import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { getRegistrationIdentifier } from '../../utils/registration-helpers';
 import { RegistrationFieldName } from '../../types/publicationFieldNames';
+import { ExpressionStatement } from '../../utils/searchHelpers';
 
 interface RegistrationSummaryProps {
   id: string;
@@ -14,7 +15,9 @@ interface RegistrationSummaryProps {
 export const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
   const identifier = getRegistrationIdentifier(id);
   const [searchContainer, isLoadingSearchContainer] = useSearchRegistrations({
-    properties: [{ fieldName: RegistrationFieldName.Identifier, value: identifier }],
+    properties: [
+      { fieldName: RegistrationFieldName.Identifier, value: identifier, operator: ExpressionStatement.Contains },
+    ],
   });
 
   const container = searchContainer && searchContainer.hits.length === 1 ? searchContainer.hits[0] : null;
