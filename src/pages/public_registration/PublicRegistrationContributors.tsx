@@ -10,7 +10,7 @@ import OrcidLogo from '../../resources/images/orcid_logo.svg';
 import { Contributor } from '../../types/contributor.types';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
-import { splitContributorsBasedOnRole } from '../../utils/registration-helpers';
+import { mainRolesPerType, splitContributorsBasedOnRole } from '../../utils/registration-helpers';
 
 const StyledContributorsGrid = styled.div`
   display: grid;
@@ -51,6 +51,8 @@ export const PublicRegistrationContributors = ({
 
   const [mainContributors, otherContributors] = splitContributorsBasedOnRole(contributors, registrationType);
   const mainContributorsToShow = showAll ? mainContributors : mainContributors.slice(0, 10);
+  const showRolesForMainContributors =
+    mainRolesPerType[registrationType] && mainRolesPerType[registrationType].length > 1;
   const otherContributorsToShow = showAll ? otherContributors : [];
 
   const hiddenContributorsCount = useRef(contributors.length - mainContributorsToShow.length);
@@ -64,6 +66,7 @@ export const PublicRegistrationContributors = ({
             contributors={mainContributorsToShow}
             distinctUnits={distinctUnits}
             otherCount={showAll ? undefined : hiddenContributorsCount.current}
+            showRole={showRolesForMainContributors}
           />
           {showAll && otherContributorsToShow.length > 0 && (
             <ContributorsRow contributors={otherContributorsToShow} distinctUnits={distinctUnits} isOtherContributors />
@@ -108,6 +111,7 @@ interface ContributorsRowProps {
   contributors: Contributor[];
   distinctUnits: string[];
   isOtherContributors?: boolean;
+  showRole?: boolean;
   otherCount?: number;
 }
 
@@ -115,6 +119,7 @@ const ContributorsRow = ({
   contributors,
   distinctUnits,
   isOtherContributors = false,
+  showRole = isOtherContributors,
   otherCount,
 }: ContributorsRowProps) => {
   const { t } = useTranslation('registration');
@@ -144,7 +149,7 @@ const ContributorsRow = ({
             ) : (
               name
             )}
-            {isOtherContributors && ` (${t(`contributors.types.${contributor.role}`)})`}
+            {showRole && ` (${t(`contributors.types.${contributor.role}`)})`}
             {(orcId || (affiliationIndexes && affiliationIndexes.length > 0)) && (
               <sup>
                 {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}

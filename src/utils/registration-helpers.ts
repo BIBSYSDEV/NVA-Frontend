@@ -138,46 +138,30 @@ export const getPeriodString = (period: Period | null) => {
   }
 };
 
-const mainDegreeRoles = [ContributorRole.Creator, ContributorRole.Supervisor];
-const mainAnthologyRoles = [ContributorRole.Editor];
-const mainArtisticDesignRoles = [
-  ContributorRole.Designer,
-  ContributorRole.CuratorOrganizer,
-  ContributorRole.Consultant,
-  ContributorRole.Other,
-];
+export const mainRolesPerType: { [type: string]: ContributorRole[] } = {
+  [DegreeType.Bachelor]: [ContributorRole.Creator, ContributorRole.Supervisor],
+  [DegreeType.Master]: [ContributorRole.Creator, ContributorRole.Supervisor],
+  [DegreeType.Phd]: [ContributorRole.Creator, ContributorRole.Supervisor],
+  [DegreeType.Other]: [ContributorRole.Creator, ContributorRole.Supervisor],
+  [BookType.Anthology]: [ContributorRole.Editor],
+  [ArtisticType.ArtisticDesign]: [
+    ContributorRole.Designer,
+    ContributorRole.CuratorOrganizer,
+    ContributorRole.Consultant,
+    ContributorRole.Other,
+  ],
+};
 
 export const splitContributorsBasedOnRole = (contributors: Contributor[], registrationType: string) => {
+  const mainRoles = mainRolesPerType[registrationType] ?? ContributorRole.Creator;
   const mainContributors: Contributor[] = [];
   const otherContributors: Contributor[] = [];
 
   contributors.forEach((contributor) => {
-    if (registrationType === BookType.Anthology) {
-      if (mainAnthologyRoles.includes(contributor.role)) {
-        mainContributors.push(contributor);
-      } else {
-        otherContributors.push(contributor);
-      }
-    } else if (isDegree(registrationType)) {
-      if (mainDegreeRoles.includes(contributor.role)) {
-        mainContributors.push(contributor);
-      } else {
-        otherContributors.push(contributor);
-      }
-    } else if (registrationType === ArtisticType.ArtisticDesign) {
-      if (mainArtisticDesignRoles.includes(contributor.role)) {
-        mainContributors.push(contributor);
-      } else {
-        otherContributors.push(contributor);
-      }
+    if (mainRoles.includes(contributor.role)) {
+      mainContributors.push(contributor);
     } else {
-      if (contributor.role === ContributorRole.Creator) {
-        if (mainArtisticDesignRoles.includes(contributor.role)) {
-          mainContributors.push(contributor);
-        } else {
-          otherContributors.push(contributor);
-        }
-      }
+      otherContributors.push(contributor);
     }
   });
 
