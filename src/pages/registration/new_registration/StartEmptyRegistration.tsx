@@ -7,11 +7,11 @@ import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { LoadingButton } from '@mui/lab';
 import { RegistrationAccordion } from './RegistrationAccordion';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
-import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -51,15 +51,16 @@ export const StartEmptyRegistration = ({ expanded, onChange }: StartRegistration
       </AccordionSummary>
 
       <AccordionActions>
-        <ButtonWithProgress
+        <LoadingButton
           data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
+          loadingPosition="end"
           color="secondary"
           variant="contained"
-          isLoading={isLoading}
+          loading={isLoading}
           onClick={createEmptyRegistration}>
           {t('registration.start_registration')}
-        </ButtonWithProgress>
+        </LoadingButton>
       </AccordionActions>
     </StyledRegistrationAccorion>
   );

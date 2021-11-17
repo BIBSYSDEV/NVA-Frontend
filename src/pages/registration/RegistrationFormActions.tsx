@@ -8,8 +8,8 @@ import { Button } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import SaveIcon from '@mui/icons-material/Save';
+import { LoadingButton } from '@mui/lab';
 import { updateRegistration } from '../../api/registrationApi';
-import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
@@ -117,18 +117,19 @@ export const RegistrationFormActions = ({
         </StyledSupportButtonContainer>
         {tabNumber < RegistrationTab.FilesAndLicenses ? (
           <StyledSaveNextButtonsContainer>
-            <ButtonWithProgress
+            <LoadingButton
               variant="outlined"
-              isLoading={isSaving}
+              loading={isSaving}
               data-testid="button-save-registration"
               endIcon={<SaveIcon />}
+              loadingPosition="end"
               onClick={async () => {
                 await saveRegistration(values);
                 // Set all fields with error to touched to ensure error messages are shown
                 setTouched(setNestedObjectValues(errors, true));
               }}>
               {values.status === RegistrationStatus.Draft ? t('save_draft') : t('common:save')}
-            </ButtonWithProgress>
+            </LoadingButton>
             <Button
               color="secondary"
               variant="contained"
@@ -142,15 +143,16 @@ export const RegistrationFormActions = ({
           </StyledSaveNextButtonsContainer>
         ) : (
           <StyledSaveAndPresentButtonContainer>
-            <ButtonWithProgress
+            <LoadingButton
               color="secondary"
               variant="contained"
-              isLoading={isSaving}
+              loading={isSaving}
               data-testid="button-save-registration"
               endIcon={<SaveIcon />}
+              loadingPosition="end"
               onClick={onClickSaveAndPresent}>
               {t('common:save_and_present')}
-            </ButtonWithProgress>
+            </LoadingButton>
           </StyledSaveAndPresentButtonContainer>
         )}
       </StyledActionsContainer>

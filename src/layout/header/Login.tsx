@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Button } from '@mui/material';
-
+import { LoadingButton } from '@mui/lab';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { Menu } from './Menu';
-import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { AMPLIFY_REDIRECTED_KEY } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -32,7 +31,9 @@ export const Login = () => {
   return user ? (
     <Menu menuButtonLabel={user.name} handleLogout={handleLogoutWrapper} />
   ) : isLoading ? (
-    <ButtonWithProgress isLoading>{t('common:loading')}</ButtonWithProgress>
+    <LoadingButton variant="contained" loading>
+      {t('common:loading')}
+    </LoadingButton>
   ) : (
     <Button variant="contained" onClick={handleLogin} data-testid={dataTestId.header.logInButton}>
       {t('login')}

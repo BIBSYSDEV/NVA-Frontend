@@ -8,13 +8,12 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useUppy } from '@uppy/react';
-
+import { LoadingButton } from '@mui/lab';
 import { RegistrationAccordion } from './RegistrationAccordion';
 import { File, RegistrationFileSet } from '../../../types/file.types';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
-import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
 import { FileUploader } from '../files_and_license_tab/FileUploader';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { createUppy } from '../../../utils/uppy/uppy-config';
@@ -92,16 +91,17 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
       </AccordionDetails>
 
       <AccordionActions>
-        <ButtonWithProgress
+        <LoadingButton
           data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
+          loadingPosition="end"
           color="secondary"
           variant="contained"
-          isLoading={isLoading}
+          loading={isLoading}
           disabled={uploadedFiles.length === 0}
           onClick={createRegistrationWithFiles}>
           {t('registration.start_registration')}
-        </ButtonWithProgress>
+        </LoadingButton>
       </AccordionActions>
     </StyledRegistrationAccorion>
   );

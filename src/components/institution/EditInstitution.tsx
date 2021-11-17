@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Button, CircularProgress, Typography } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
+import { LoadingButton } from '@mui/lab';
 import { InstitutionSelector } from '../../pages/user/institution/InstitutionSelector';
 import { FormikInstitutionUnit, FormikInstitutionUnitFieldNames } from '../../types/institution.types';
 import { useFetchDepartment } from '../../utils/hooks/useFetchDepartment';
@@ -11,7 +12,6 @@ import { useFetchInstitutions } from '../../utils/hooks/useFetchInstitutions';
 import { convertToInstitution } from '../../utils/institutions-helpers';
 import { InstitutionAutocomplete } from './InstitutionAutocomplete';
 import { StyledButtonContainer } from './AddInstitution';
-import { ButtonWithProgress } from '../ButtonWithProgress';
 
 const StyledInstitutionSearchContainer = styled.div`
   width: 30rem;
@@ -69,16 +69,17 @@ export const EditInstitution = ({ initialInstitutionId, onCancel, onSubmit }: Ed
               )}
 
               <StyledButtonContainer>
-                <ButtonWithProgress
+                <LoadingButton
                   variant="contained"
                   type="submit"
                   color="primary"
                   startIcon={<SaveIcon />}
-                  isLoading={isSubmitting}
+                  loadingPosition="start"
+                  loading={isSubmitting}
                   disabled={isLoadingDepartment}
                   data-testid="institution-edit-button">
                   {t('save')}
-                </ButtonWithProgress>
+                </LoadingButton>
 
                 <Button onClick={onCancel} data-testid="institution-cancel-button" variant="text">
                   {t('cancel')}

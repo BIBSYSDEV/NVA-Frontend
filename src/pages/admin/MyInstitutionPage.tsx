@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import SaveIcon from '@mui/icons-material/Save';
 import { Box } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
-import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
@@ -79,14 +79,16 @@ const MyCustomerInstitutionPage = () => {
                     dataTestId="customer-institution-archive-name-field"
                   />
                   <StyledRightAlignedWrapper>
-                    <ButtonWithProgress
+                    <LoadingButton
                       data-testid="customer-institution-save-button"
                       color="secondary"
-                      isLoading={isSubmitting}
+                      variant="contained"
+                      loading={isSubmitting}
                       startIcon={<SaveIcon />}
+                      loadingPosition="start"
                       type="submit">
                       {t('common:save')}
-                    </ButtonWithProgress>
+                    </LoadingButton>
                   </StyledRightAlignedWrapper>
                 </Box>
               </Form>

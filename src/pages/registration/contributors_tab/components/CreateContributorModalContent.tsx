@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, Collapse, DialogActions, TextField } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { createAuthority } from '../../../../api/authorityApi';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { StyledTypographyPreWrapped, StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
@@ -13,7 +14,6 @@ import { Authority } from '../../../../types/authority.types';
 import { emptyNewContributor } from '../../../../types/contributor.types';
 import { NotificationVariant } from '../../../../types/notification.types';
 import { newContributorValidationSchema } from '../../../../utils/validation/newContributorValidation';
-import { ButtonWithProgress } from '../../../../components/ButtonWithProgress';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 
 const StyledBackgroundDiv = styled(BackgroundDiv)`
@@ -101,15 +101,15 @@ export const CreateContributorModalContent = ({
             </Field>
             <DialogActions>
               <Button onClick={handleCloseModal}>{t('common:close')}</Button>
-              <ButtonWithProgress
+              <LoadingButton
                 data-testid="button-create-authority"
                 type="submit"
                 color="secondary"
                 variant="contained"
-                isLoading={isLoading}
+                loading={isLoading}
                 disabled={isSubmitting}>
                 {t('common:create')}
-              </ButtonWithProgress>
+              </LoadingButton>
             </DialogActions>
           </Form>
         )}

@@ -6,8 +6,8 @@ import { Button, Table, TableBody, TableCell, TableHead, TablePagination, TableR
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { visuallyHidden } from '@mui/utils';
+import { LoadingButton } from '@mui/lab';
 import { updateUser } from '../../api/roleApi';
-import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
@@ -145,17 +145,18 @@ export const UserList = ({
                         </Button>
                       )}
                       {roleToAdd && (
-                        <ButtonWithProgress
+                        <LoadingButton
                           color="primary"
                           variant="contained"
                           size="small"
                           startIcon={<AddIcon />}
+                          loadingPosition="start"
                           disabled={disableAddButton}
-                          isLoading={!disableAddButton && isLoading}
+                          loading={!disableAddButton && isLoading}
                           data-testid={`button-add-role-${roleToAdd}-${user.username}`}
                           onClick={() => handleAddRoleToUser(user)}>
                           {t('common:add')}
-                        </ButtonWithProgress>
+                        </LoadingButton>
                       )}
                     </TableCell>
                   </StyledTableRow>

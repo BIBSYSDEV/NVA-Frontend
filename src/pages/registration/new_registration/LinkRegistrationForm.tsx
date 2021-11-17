@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextField, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
+import { LoadingButton } from '@mui/lab';
 import { doiValidationSchema, isValidUrl } from '../../../utils/validation/doiSearchValidation';
 
 interface DoiFormValues {
@@ -60,13 +60,15 @@ export const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps
                 />
               )}
             </Field>
-            <ButtonWithProgress
+            <LoadingButton
               data-testid="doi-search-button"
-              isLoading={isSubmitting}
+              variant="contained"
+              loading={isSubmitting}
               type="submit"
-              endIcon={<SearchIcon />}>
+              endIcon={<SearchIcon />}
+              loadingPosition="end">
               {t('common:search')}
-            </ButtonWithProgress>
+            </LoadingButton>
           </Box>
         </Form>
       )}

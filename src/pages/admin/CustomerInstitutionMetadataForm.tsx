@@ -5,7 +5,7 @@ import { Form, Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
-
+import { LoadingButton } from '@mui/lab';
 import {
   CustomerInstitution,
   emptyCustomerInstitution,
@@ -14,7 +14,6 @@ import {
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { createCustomerInstitution, updateCustomerInstitution } from '../../api/customerInstitutionsApi';
-import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { customerInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
 import { CustomerInstitutionTextField } from './customerInstitutionFields/CustomerInstitutionTextField';
@@ -95,14 +94,16 @@ export const CustomerInstitutionMetadataForm = ({
                 dataTestId="customer-institution-feide-organization-id-field"
               />
               <StyledRightAlignedWrapper>
-                <ButtonWithProgress
+                <LoadingButton
                   data-testid="customer-institution-save-button"
+                  variant="contained"
                   color="secondary"
                   startIcon={<SaveIcon />}
-                  isLoading={isSubmitting}
+                  loadingPosition="start"
+                  loading={isSubmitting}
                   type="submit">
                   {editMode ? t('common:save') : t('common:create')}
-                </ButtonWithProgress>
+                </LoadingButton>
               </StyledRightAlignedWrapper>
             </Box>
           </Form>
