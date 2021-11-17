@@ -138,11 +138,13 @@ export const getPeriodString = (period: Period | null) => {
   }
 };
 
-export const mainRolesPerType: { [type: string]: ContributorRole[] | undefined } = {
-  [DegreeType.Bachelor]: [ContributorRole.Creator, ContributorRole.Supervisor],
-  [DegreeType.Master]: [ContributorRole.Creator, ContributorRole.Supervisor],
-  [DegreeType.Phd]: [ContributorRole.Creator, ContributorRole.Supervisor],
-  [DegreeType.Other]: [ContributorRole.Creator, ContributorRole.Supervisor],
+const mainDegreeRoles = [ContributorRole.Creator, ContributorRole.Supervisor];
+
+export const mainContributorRolesPerType: { [type: string]: ContributorRole[] | undefined } = {
+  [DegreeType.Bachelor]: mainDegreeRoles,
+  [DegreeType.Master]: mainDegreeRoles,
+  [DegreeType.Phd]: mainDegreeRoles,
+  [DegreeType.Other]: mainDegreeRoles,
   [BookType.Anthology]: [ContributorRole.Editor],
   [ArtisticType.ArtisticDesign]: [
     ContributorRole.Designer,
@@ -152,8 +154,8 @@ export const mainRolesPerType: { [type: string]: ContributorRole[] | undefined }
   ],
 };
 
-export const splitContributorsBasedOnRole = (contributors: Contributor[], registrationType: string) => {
-  const mainRoles = mainRolesPerType[registrationType] ?? ContributorRole.Creator;
+export const splitMainContributors = (contributors: Contributor[], registrationType: string) => {
+  const mainRoles = mainContributorRolesPerType[registrationType] ?? ContributorRole.Creator;
   const mainContributors: Contributor[] = [];
   const otherContributors: Contributor[] = [];
 

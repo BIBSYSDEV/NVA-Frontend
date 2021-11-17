@@ -10,7 +10,7 @@ import OrcidLogo from '../../resources/images/orcid_logo.svg';
 import { Contributor } from '../../types/contributor.types';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
-import { mainRolesPerType, splitContributorsBasedOnRole } from '../../utils/registration-helpers';
+import { mainContributorRolesPerType, splitMainContributors } from '../../utils/registration-helpers';
 
 const StyledContributorsGrid = styled.div`
   display: grid;
@@ -46,13 +46,13 @@ export const PublicRegistrationContributors = ({
   registrationType,
 }: PublicRegistrationContributorsProps) => {
   const { t } = useTranslation('registration');
-  const [mainContributors, otherContributors] = splitContributorsBasedOnRole(contributors, registrationType);
+  const [mainContributors, otherContributors] = splitMainContributors(contributors, registrationType);
 
   const [showAll, setShowAll] = useState(mainContributors.length === 0);
   const toggleShowAll = () => setShowAll(!showAll);
 
   const mainContributorsToShow = showAll ? mainContributors : mainContributors.slice(0, 10);
-  const mainRoles = mainRolesPerType[registrationType];
+  const mainRoles = mainContributorRolesPerType[registrationType];
   const showRolesForMainContributors = mainRoles && mainRoles.length > 1;
   const otherContributorsToShow = showAll ? otherContributors : [];
 
