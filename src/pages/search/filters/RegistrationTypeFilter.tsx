@@ -24,7 +24,14 @@ const StyledIndentedListItem = styled(ListItemButton)<{ $isSelected: boolean }>`
 export const RegistrationTypeFilter = () => {
   const { t } = useTranslation('publicationTypes');
   const { setFieldValue, submitForm, values } = useFormikContext<SearchConfig>();
-  const currentValue = (values.properties?.length && values.properties[0].value) ?? '';
+
+  const properties = values.properties ?? [];
+
+  const typeFilterIndex = properties.findIndex(
+    (property) =>
+      property.fieldName === ResourceFieldNames.SubType && property.operator === ExpressionStatement.Contains
+  );
+  const currentValue = typeFilterIndex > -1 ? properties[typeFilterIndex].value : '';
 
   const updateFilter = (type: string) => {
     const newFilter: PropertySearch = {
@@ -32,7 +39,10 @@ export const RegistrationTypeFilter = () => {
       value: currentValue !== type ? type : '',
       operator: ExpressionStatement.Contains,
     };
-    setFieldValue('properties[0]', newFilter);
+
+    const index = typeFilterIndex > -1 ? typeFilterIndex : properties.length ?? 0;
+
+    setFieldValue(`properties[${index}]`, newFilter);
     submitForm();
   };
 
