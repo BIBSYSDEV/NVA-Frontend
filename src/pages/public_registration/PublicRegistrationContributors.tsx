@@ -46,10 +46,11 @@ export const PublicRegistrationContributors = ({
   registrationType,
 }: PublicRegistrationContributorsProps) => {
   const { t } = useTranslation('registration');
-  const [showAll, setShowAll] = useState(false);
+  const [mainContributors, otherContributors] = splitContributorsBasedOnRole(contributors, registrationType);
+
+  const [showAll, setShowAll] = useState(mainContributors.length === 0);
   const toggleShowAll = () => setShowAll(!showAll);
 
-  const [mainContributors, otherContributors] = splitContributorsBasedOnRole(contributors, registrationType);
   const mainContributorsToShow = showAll ? mainContributors : mainContributors.slice(0, 10);
   const mainRoles = mainRolesPerType[registrationType];
   const showRolesForMainContributors = mainRoles && mainRoles.length > 1;
