@@ -120,9 +120,11 @@ const StyledTooltip = styled(Tooltip)`
   padding-top: 0.5rem;
 `;
 
-const StyledTitle = styled.div<{ canBeTruncated: boolean }>`
+const StyledTitle = styled.div`
   display: grid;
-  grid-template-columns: ${({ canBeTruncated }) => (canBeTruncated ? '1fr auto' : '1fr')};
+  grid-template-columns: 9fr 1fr;
+  gap: 0.5rem;
+  align-items: center;
 `;
 
 interface LastAlmaRegistrationCellProps {
@@ -151,15 +153,14 @@ const LastAlmaRegistrationCell = ({ authority }: LastAlmaRegistrationCellProps) 
       {isLoadingAlmaPublication ? (
         <Skeleton />
       ) : almaPublication?.title ? (
-        <StyledTitle canBeTruncated={canBeTruncated}>
-          <Typography>
-            <TextTruncate
-              line={showFullText ? false : 1}
-              truncateText=" [...]"
-              text={almaPublication.title}
-              onTruncated={() => setCanBeTruncated(true)}
-            />
-          </Typography>
+        <StyledTitle>
+          <TextTruncate
+            element="p"
+            line={showFullText ? false : 1}
+            truncateText=" [...]"
+            text={almaPublication.title}
+            onTruncated={() => setCanBeTruncated(true)}
+          />
           {canBeTruncated && (
             <StyledTooltip
               title={showFullText ? t<string>('common:title_minimize') : t<string>('common:title_expand')}
