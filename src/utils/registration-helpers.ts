@@ -13,6 +13,7 @@ import { User } from '../types/user.types';
 import i18n from '../translations/i18n';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
 import { Period } from '../types/common.types';
+import { Contributor, ContributorRole } from '../types/contributor.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -135,4 +136,50 @@ export const getPeriodString = (period: Period | null) => {
   } else {
     return fromDate === toDate ? fromDate : `${fromDate ?? '?'} - ${toDate ?? '?'}`;
   }
+};
+
+const mainDegreeRoles = [ContributorRole.Creator, ContributorRole.Supervisor];
+const mainAnthologyRoles = [ContributorRole.Editor];
+const mainArtisticDesignRoles = [
+  ContributorRole.Designer,
+  ContributorRole.CuratorOrganizer,
+  ContributorRole.Consultant,
+  ContributorRole.Other,
+];
+
+export const splitContributorsBasedOnRole = (contributors: Contributor[], registrationType: string) => {
+  const mainContributors: Contributor[] = [];
+  const otherContributors: Contributor[] = [];
+
+  contributors.forEach((contributor) => {
+    if (registrationType === BookType.Anthology) {
+      if (mainAnthologyRoles.includes(contributor.role)) {
+        mainContributors.push(contributor);
+      } else {
+        otherContributors.push(contributor);
+      }
+    } else if (isDegree(registrationType)) {
+      if (mainDegreeRoles.includes(contributor.role)) {
+        mainContributors.push(contributor);
+      } else {
+        otherContributors.push(contributor);
+      }
+    } else if (registrationType === ArtisticType.ArtisticDesign) {
+      if (mainArtisticDesignRoles.includes(contributor.role)) {
+        mainContributors.push(contributor);
+      } else {
+        otherContributors.push(contributor);
+      }
+    } else {
+      if (contributor.role === ContributorRole.Creator) {
+        if (mainArtisticDesignRoles.includes(contributor.role)) {
+          mainContributors.push(contributor);
+        } else {
+          otherContributors.push(contributor);
+        }
+      }
+    }
+  });
+
+  return [mainContributors, otherContributors];
 };

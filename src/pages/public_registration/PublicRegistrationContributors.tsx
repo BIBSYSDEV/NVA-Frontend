@@ -7,10 +7,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTranslation } from 'react-i18next';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import OrcidLogo from '../../resources/images/orcid_logo.svg';
-import { Contributor, ContributorRole } from '../../types/contributor.types';
+import { Contributor } from '../../types/contributor.types';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
-import { BookType } from '../../types/publicationFieldNames';
 import { dataTestId } from '../../utils/dataTestIds';
+import { splitContributorsBasedOnRole } from '../../utils/registration-helpers';
 
 const StyledContributorsGrid = styled.div`
   display: grid;
@@ -49,16 +49,8 @@ export const PublicRegistrationContributors = ({
   const [showAll, setShowAll] = useState(false);
   const toggleShowAll = () => setShowAll(!showAll);
 
-  const mainContributors =
-    registrationType === BookType.Anthology
-      ? contributors.filter((contributor) => contributor.role === ContributorRole.Editor)
-      : contributors.filter((contributor) => contributor.role === ContributorRole.Creator);
+  const [mainContributors, otherContributors] = splitContributorsBasedOnRole(contributors, registrationType);
   const mainContributorsToShow = showAll ? mainContributors : mainContributors.slice(0, 10);
-
-  const otherContributors =
-    registrationType === BookType.Anthology
-      ? contributors.filter((contributor) => contributor.role !== ContributorRole.Editor)
-      : contributors.filter((contributor) => contributor.role !== ContributorRole.Creator);
   const otherContributorsToShow = showAll ? otherContributors : [];
 
   const hiddenContributorsCount = useRef(contributors.length - mainContributorsToShow.length);
