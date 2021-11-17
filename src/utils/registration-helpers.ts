@@ -13,6 +13,7 @@ import { User } from '../types/user.types';
 import i18n from '../translations/i18n';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
 import { Period } from '../types/common.types';
+import { Contributor, ContributorRole } from '../types/contributor.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -135,4 +136,36 @@ export const getPeriodString = (period: Period | null) => {
   } else {
     return fromDate === toDate ? fromDate : `${fromDate ?? '?'} - ${toDate ?? '?'}`;
   }
+};
+
+const mainDegreeRoles = [ContributorRole.Creator, ContributorRole.Supervisor];
+
+export const mainContributorRolesPerType: { [type: string]: ContributorRole[] | undefined } = {
+  [DegreeType.Bachelor]: mainDegreeRoles,
+  [DegreeType.Master]: mainDegreeRoles,
+  [DegreeType.Phd]: mainDegreeRoles,
+  [DegreeType.Other]: mainDegreeRoles,
+  [BookType.Anthology]: [ContributorRole.Editor],
+  [ArtisticType.ArtisticDesign]: [
+    ContributorRole.Designer,
+    ContributorRole.CuratorOrganizer,
+    ContributorRole.Consultant,
+    ContributorRole.Other,
+  ],
+};
+
+export const splitMainContributors = (contributors: Contributor[], registrationType: string) => {
+  const mainRoles = mainContributorRolesPerType[registrationType] ?? ContributorRole.Creator;
+  const mainContributors: Contributor[] = [];
+  const otherContributors: Contributor[] = [];
+
+  contributors.forEach((contributor) => {
+    if (mainRoles.includes(contributor.role)) {
+      mainContributors.push(contributor);
+    } else {
+      otherContributors.push(contributor);
+    }
+  });
+
+  return [mainContributors, otherContributors];
 };
