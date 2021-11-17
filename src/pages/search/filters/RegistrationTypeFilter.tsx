@@ -27,11 +27,11 @@ export const RegistrationTypeFilter = () => {
 
   const properties = values.properties ?? [];
 
-  const registrationTypeIndex = properties.findIndex(
+  const typeFilterIndex = properties.findIndex(
     (property) =>
       property.fieldName === ResourceFieldNames.SubType && property.operator === ExpressionStatement.Contains
   );
-  const currentValue = registrationTypeIndex > -1 ? properties[registrationTypeIndex].value : '';
+  const currentValue = typeFilterIndex > -1 ? properties[typeFilterIndex].value : '';
 
   const updateFilter = (type: string) => {
     const newFilter: PropertySearch = {
@@ -40,7 +40,7 @@ export const RegistrationTypeFilter = () => {
       operator: ExpressionStatement.Contains,
     };
 
-    const index = registrationTypeIndex > -1 ? registrationTypeIndex : properties.length ?? 0;
+    const index = typeFilterIndex > -1 ? typeFilterIndex : properties.length ?? 0;
 
     setFieldValue(`properties[${index}]`, newFilter);
     submitForm();
