@@ -51,8 +51,8 @@ export const PublicRegistrationContributors = ({
 
   const [mainContributors, otherContributors] = splitContributorsBasedOnRole(contributors, registrationType);
   const mainContributorsToShow = showAll ? mainContributors : mainContributors.slice(0, 10);
-  const showRolesForMainContributors =
-    mainRolesPerType[registrationType] && mainRolesPerType[registrationType].length > 1;
+  const mainRoles = mainRolesPerType[registrationType];
+  const showRolesForMainContributors = mainRoles && mainRoles.length > 1;
   const otherContributorsToShow = showAll ? otherContributors : [];
 
   const hiddenContributorsCount = useRef(contributors.length - mainContributorsToShow.length);

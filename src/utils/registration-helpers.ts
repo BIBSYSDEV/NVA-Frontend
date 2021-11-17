@@ -138,7 +138,7 @@ export const getPeriodString = (period: Period | null) => {
   }
 };
 
-export const mainRolesPerType: { [type: string]: ContributorRole[] } = {
+export const mainRolesPerType: { [type: string]: ContributorRole[] | undefined } = {
   [DegreeType.Bachelor]: [ContributorRole.Creator, ContributorRole.Supervisor],
   [DegreeType.Master]: [ContributorRole.Creator, ContributorRole.Supervisor],
   [DegreeType.Phd]: [ContributorRole.Creator, ContributorRole.Supervisor],
