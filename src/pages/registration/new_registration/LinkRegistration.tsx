@@ -34,7 +34,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const createRegistration = async () => {
+  const openRegistration = async () => {
     if (!doi) {
       return;
     }
@@ -88,7 +88,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
           color="secondary"
           variant="contained"
           disabled={!doi}
-          onClick={createRegistration}>
+          onClick={openRegistration}>
           {t('registration:registration.start_registration')}
         </Button>
       </AccordionActions>

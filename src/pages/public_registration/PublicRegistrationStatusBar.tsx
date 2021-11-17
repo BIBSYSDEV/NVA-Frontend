@@ -10,12 +10,12 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import { useTranslation } from 'react-i18next';
 import { validateYupSchema, yupToFormErrors } from 'formik';
 import { Link as RouterLink } from 'react-router-dom';
+import { LoadingButton } from '@mui/lab';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { PublicRegistrationProps } from './PublicRegistrationContent';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import { RegistrationStatus, DoiRequestStatus, Registration } from '../../types/registration.types';
 import { createDoiRequest, publishRegistration, updateDoiRequest } from '../../api/registrationApi';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
@@ -183,15 +183,17 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
         )}
         <StyledButtonsContainer>
           {registration.status === RegistrationStatus.Draft && (
-            <ButtonWithProgress
+            <LoadingButton
               disabled={!!isLoading || !registrationIsValid}
               data-testid={dataTestId.registrationLandingPage.publishButton}
               color="secondary"
+              variant="contained"
               endIcon={<CloudUploadIcon />}
+              loadingPosition="end"
               onClick={onClickPublish}
-              isLoading={isLoading === LoadingName.Publish}>
+              loading={isLoading === LoadingName.Publish}>
               {t('common:publish')}
-            </ButtonWithProgress>
+            </LoadingButton>
           )}
 
           <Button
@@ -205,11 +207,12 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           </Button>
 
           {!hasNvaDoi && (
-            <ButtonWithProgress
+            <LoadingButton
               variant="outlined"
               color="secondary"
               endIcon={<LocalOfferIcon />}
-              isLoading={isLoading === LoadingName.RequestDoi}
+              loadingPosition="end"
+              loading={isLoading === LoadingName.RequestDoi}
               data-testid={
                 isPublishedRegistration
                   ? dataTestId.registrationLandingPage.requestDoiButton
@@ -217,31 +220,33 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
               }
               onClick={() => (isPublishedRegistration ? toggleRequestDoiModal() : sendDoiRequest())}>
               {isPublishedRegistration ? t('public_page.request_doi') : t('public_page.reserve_doi')}
-            </ButtonWithProgress>
+            </LoadingButton>
           )}
 
           {isCurator && isPublishedRegistration && doiRequest?.status === DoiRequestStatus.Requested && (
             <>
-              <ButtonWithProgress
+              <LoadingButton
                 color="secondary"
                 variant="contained"
                 data-testid={dataTestId.registrationLandingPage.rejectDoiButton}
                 endIcon={<CloseIcon />}
+                loadingPosition="end"
                 onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Rejected)}
-                isLoading={isLoading === LoadingName.RejectDoi}
+                loading={isLoading === LoadingName.RejectDoi}
                 disabled={!!isLoading}>
                 {t('common:reject_doi')}
-              </ButtonWithProgress>
-              <ButtonWithProgress
+              </LoadingButton>
+              <LoadingButton
                 color="secondary"
                 variant="contained"
                 data-testid={dataTestId.registrationLandingPage.createDoiButton}
                 endIcon={<CheckIcon />}
+                loadingPosition="end"
                 onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Approved)}
-                isLoading={isLoading === LoadingName.ApproveDoi}
+                loading={isLoading === LoadingName.ApproveDoi}
                 disabled={!!isLoading || !registrationIsValid}>
                 {t('common:create_doi')}
-              </ButtonWithProgress>
+              </LoadingButton>
             </>
           )}
         </StyledButtonsContainer>
@@ -264,14 +269,14 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             />
             <DialogActions>
               <Button onClick={toggleRequestDoiModal}>{t('common:cancel')}</Button>
-              <ButtonWithProgress
+              <LoadingButton
                 variant="contained"
                 color="primary"
                 data-testid={dataTestId.registrationLandingPage.sendDoiButton}
                 onClick={sendDoiRequest}
-                isLoading={isLoading === LoadingName.RequestDoi}>
+                loading={isLoading === LoadingName.RequestDoi}>
                 {t('common:send')}
-              </ButtonWithProgress>
+              </LoadingButton>
             </DialogActions>
           </Modal>
         )}
