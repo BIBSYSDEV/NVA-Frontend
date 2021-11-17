@@ -63,7 +63,7 @@ export const AddContributorModalContent = ({
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const debouncedSearchTerm = useDebounce(searchTerm);
   const [authorities, isLoadingAuthorities] = useFetch<Authority[]>({
-    url: searchTerm ? `${AuthorityApiPath.Person}?name=${encodeURIComponent(debouncedSearchTerm)}` : '',
+    url: debouncedSearchTerm ? `${AuthorityApiPath.Person}?name=${encodeURIComponent(debouncedSearchTerm)}` : '',
     errorMessage: t('feedback:error.get_authorities'),
   });
   const user = useSelector((store: RootStore) => store.user);
