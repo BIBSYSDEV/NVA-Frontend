@@ -13,7 +13,7 @@ import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { contextTypeBaseFieldName, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import {
   JournalEntityDescription,
   JournalRegistration,
@@ -99,12 +99,7 @@ export const JournalField = () => {
                 setFieldValue(ResourceFieldNames.PublicationContextType, PublicationChannelType.Journal, false);
                 setFieldValue(field.name, inputValue.pop()?.id);
               } else if (reason === 'removeOption') {
-                setFieldValue(
-                  ResourceFieldNames.PublicationContextType,
-                  PublicationChannelType.UnconfirmedJournal,
-                  false
-                );
-                setFieldValue(field.name, '');
+                setFieldValue(contextTypeBaseFieldName, { type: PublicationChannelType.UnconfirmedJournal }, false);
               }
               setQuery('');
             }}
