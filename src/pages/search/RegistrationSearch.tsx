@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, TablePagination, Typography } from '@mui/material';
 import { useHistory } from 'react-router-dom';
@@ -18,22 +18,21 @@ export const RegistrationSearch = () => {
   const resultsParam = params.get('results');
   const fromParam = params.get('from');
 
-  const initialRowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[1];
-  const initalPage = (fromParam && resultsParam && Math.floor(+fromParam / initialRowsPerPage)) || 0;
-
-  const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
-  const [page, setPage] = useState(initalPage);
-
-  useEffect(() => {
-    params.set('results', rowsPerPage.toString());
-    params.set('from', (page * rowsPerPage).toString());
-    history.push({ search: params.toString() });
-  }, [history, params, rowsPerPage, page]);
+  const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[1];
+  const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
 
   const [searchResults, isLoadingSearch] = useFetch<SearchResult>({
     url: `${SearchApiPath.Registrations}?${params.toString()}`,
     errorMessage: t('feedback:error.search'),
   });
+
+  const updatePath = (from: string, results?: string) => {
+    params.set('from', from);
+    if (results) {
+      params.set('results', results);
+    }
+    history.push({ search: params.toString() });
+  };
 
   return (
     <Box gridArea="results">
@@ -49,11 +48,8 @@ export const RegistrationSearch = () => {
             count={searchResults.total}
             rowsPerPage={rowsPerPage}
             page={page}
-            onPageChange={(_, newPage) => setPage(newPage)}
-            onRowsPerPageChange={(event) => {
-              setRowsPerPage(parseInt(event.target.value));
-              setPage(0);
-            }}
+            onPageChange={(_, newPage) => updatePath((newPage * rowsPerPage).toString())}
+            onRowsPerPageChange={(event) => updatePath('0', event.target.value)}
           />
         </>
       ) : (

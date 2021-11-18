@@ -48,6 +48,7 @@ const SearchPage = () => {
         initialValues={initialSearchParams}
         onSubmit={(values) => {
           const queryString = createSearchQuery(values);
+          params.set('from', '0');
           if (queryString) {
             params.set('query', queryString);
           } else {
