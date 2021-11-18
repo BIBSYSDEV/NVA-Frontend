@@ -84,6 +84,9 @@ export const JournalField = () => {
               if (reason !== 'reset') {
                 setQuery(newInputValue);
               }
+              if (reason === 'input' && !newInputValue && reference?.publicationContext.title) {
+                setFieldValue(contextTypeBaseFieldName, { type: PublicationChannelType.UnconfirmedSeries });
+              }
             }}
             onBlur={() => setFieldTouched(field.name, true, false)}
             blurOnSelect
@@ -91,10 +94,12 @@ export const JournalField = () => {
             value={reference?.publicationContext.id && journal ? [journal] : []}
             onChange={(_, inputValue, reason) => {
               if (reason === 'selectOption') {
-                setFieldValue(ResourceFieldNames.PublicationContextType, PublicationChannelType.Journal, false);
-                setFieldValue(field.name, inputValue.pop()?.id);
+                setFieldValue(contextTypeBaseFieldName, {
+                  type: PublicationChannelType.Journal,
+                  id: inputValue.pop()?.id,
+                });
               } else if (reason === 'removeOption') {
-                setFieldValue(contextTypeBaseFieldName, { type: PublicationChannelType.UnconfirmedJournal }, false);
+                setFieldValue(contextTypeBaseFieldName, { type: PublicationChannelType.UnconfirmedJournal });
               }
               setQuery('');
             }}

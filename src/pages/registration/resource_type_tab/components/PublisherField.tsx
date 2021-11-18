@@ -68,6 +68,11 @@ export const PublisherField = () => {
               if (reason !== 'reset') {
                 setQuery(newInputValue);
               }
+              if (reason === 'input' && !newInputValue && publisher?.name) {
+                setFieldValue(ResourceFieldNames.PublicationContextPublisher, {
+                  type: PublicationChannelType.UnconfirmedPublisher,
+                });
+              }
             }}
             onBlur={() => setFieldTouched(field.name, true, false)}
             blurOnSelect

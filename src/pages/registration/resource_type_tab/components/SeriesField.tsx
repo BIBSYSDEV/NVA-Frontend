@@ -69,6 +69,9 @@ export const SeriesField = () => {
               if (reason !== 'reset') {
                 setQuery(newInputValue);
               }
+              if (reason === 'input' && !newInputValue && series?.title) {
+                setFieldValue(ResourceFieldNames.Series, { type: PublicationChannelType.UnconfirmedSeries });
+              }
             }}
             blurOnSelect
             disableClearable={!query}
