@@ -8,14 +8,15 @@ import { SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { dataTestId } from '../../utils/dataTestIds';
 import { SearchResult } from '../../types/registration.types';
+import { SearchParam } from '../../utils/searchHelpers';
 
 export const RegistrationSearch = () => {
   const { t } = useTranslation('common');
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
 
-  const resultsParam = params.get('results');
-  const fromParam = params.get('from');
+  const resultsParam = params.get(SearchParam.Results);
+  const fromParam = params.get(SearchParam.From);
 
   const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[1];
   const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
@@ -26,9 +27,9 @@ export const RegistrationSearch = () => {
   });
 
   const updatePath = (from: string, results?: string) => {
-    params.set('from', from);
+    params.set(SearchParam.From, from);
     if (results) {
-      params.set('results', results);
+      params.set(SearchParam.Results, results);
     }
     history.push({ search: params.toString() });
   };

@@ -1,3 +1,11 @@
+export enum SearchParam {
+  From = 'from',
+  OrderBy = 'orderBy',
+  Query = 'query',
+  Results = 'results',
+  SortOrder = 'sortOrder',
+}
+
 export enum ExpressionStatement {
   Contains,
   NotContaining,
@@ -61,7 +69,7 @@ export const createSearchQuery = (searchConfig: SearchConfig) => {
 };
 
 export const createSearchConfigFromSearchParams = (params: URLSearchParams): SearchConfig => {
-  const query = params.get('query');
+  const query = params.get(SearchParam.Query);
   const filters = query?.split('AND').map((a) => a.trim());
   if (!filters) {
     return { searchTerm: '', properties: [] };
