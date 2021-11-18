@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { PageHeader } from '../../components/PageHeader';
 import { SearchBar } from './SearchBar';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
-import { createSearchConfigFromSearchParams, createSearchQuery } from '../../utils/searchHelpers';
+import { createSearchConfigFromSearchParams, createSearchQuery, SearchParam } from '../../utils/searchHelpers';
 import { RegistrationTypeFilter } from './filters/RegistrationTypeFilter';
 import { RegistrationSearch } from './RegistrationSearch';
 import { SortSelector } from './SortSelector';
@@ -48,10 +48,11 @@ const SearchPage = () => {
         initialValues={initialSearchParams}
         onSubmit={(values) => {
           const queryString = createSearchQuery(values);
+          params.set(SearchParam.From, '0');
           if (queryString) {
-            params.set('query', queryString);
+            params.set(SearchParam.Query, queryString);
           } else {
-            params.delete('query');
+            params.delete(SearchParam.Query);
           }
           history.push({ search: params.toString() });
         }}>

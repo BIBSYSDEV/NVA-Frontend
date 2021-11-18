@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { RegistrationFieldName } from '../../types/publicationFieldNames';
 import { dataTestId } from '../../utils/dataTestIds';
+import { SearchParam } from '../../utils/searchHelpers';
 
 enum SortOption {
   PublishedDateDesc,
@@ -23,8 +24,8 @@ export const SortSelector = () => {
   const params = new URLSearchParams(history.location.search);
 
   const selectedSortingValue =
-    params.get('orderBy') === RegistrationFieldName.PublishedDate
-      ? params.get('sortOrder') === 'desc'
+    params.get(SearchParam.OrderBy) === RegistrationFieldName.PublishedDate
+      ? params.get(SearchParam.SortOrder) === 'desc'
         ? SortOption.PublishedDateDesc
         : SortOption.PublishedDateAsc
       : SortOption.ModifiedDateDesc;
@@ -34,16 +35,16 @@ export const SortSelector = () => {
 
     switch (value) {
       case SortOption.PublishedDateDesc:
-        params.set('orderBy', RegistrationFieldName.PublishedDate);
-        params.set('sortOrder', 'desc');
+        params.set(SearchParam.OrderBy, RegistrationFieldName.PublishedDate);
+        params.set(SearchParam.SortOrder, 'desc');
         break;
       case SortOption.PublishedDateAsc:
-        params.set('orderBy', RegistrationFieldName.PublishedDate);
-        params.set('sortOrder', 'asc');
+        params.set(SearchParam.OrderBy, RegistrationFieldName.PublishedDate);
+        params.set(SearchParam.SortOrder, 'asc');
         break;
       case SortOption.ModifiedDateDesc:
-        params.set('orderBy', RegistrationFieldName.ModifiedDate);
-        params.set('sortOrder', 'desc');
+        params.set(SearchParam.OrderBy, RegistrationFieldName.ModifiedDate);
+        params.set(SearchParam.SortOrder, 'desc');
         break;
     }
     history.push({ search: params.toString() });
