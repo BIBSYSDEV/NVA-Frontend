@@ -26,11 +26,9 @@ export const RegistrationSearch = () => {
     errorMessage: t('feedback:error.search'),
   });
 
-  const updatePath = (from: string, results?: string) => {
+  const updatePath = (from: string, results: string) => {
     params.set(SearchParam.From, from);
-    if (results) {
-      params.set(SearchParam.Results, results);
-    }
+    params.set(SearchParam.Results, results);
     history.push({ search: params.toString() });
   };
 
@@ -48,7 +46,7 @@ export const RegistrationSearch = () => {
             count={searchResults.total}
             rowsPerPage={rowsPerPage}
             page={page}
-            onPageChange={(_, newPage) => updatePath((newPage * rowsPerPage).toString())}
+            onPageChange={(_, newPage) => updatePath((newPage * rowsPerPage).toString(), rowsPerPage.toString())}
             onRowsPerPageChange={(event) => updatePath('0', event.target.value)}
           />
         </>
