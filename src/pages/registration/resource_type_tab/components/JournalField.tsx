@@ -126,7 +126,6 @@ export const JournalField = () => {
               value.map((option, index) => (
                 <Chip
                   {...getTagProps({ index })}
-                  sx={{ height: '100%' }}
                   data-testid={dataTestId.registrationWizard.resourceType.journalChip}
                   label={
                     <>

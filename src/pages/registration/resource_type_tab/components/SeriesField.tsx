@@ -110,7 +110,6 @@ export const SeriesField = () => {
               value.map((option, index) => (
                 <Chip
                   {...getTagProps({ index })}
-                  sx={{ height: '100%' }}
                   data-testid={dataTestId.registrationWizard.resourceType.seriesChip}
                   label={
                     <>

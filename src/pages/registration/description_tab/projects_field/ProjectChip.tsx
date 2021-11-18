@@ -19,7 +19,6 @@ export const ProjectChip = ({ id, fallbackName, ...rest }: ProjectChipProps) => 
   return (
     <Chip
       {...rest}
-      sx={{ height: 'auto', py: '0.25rem' }}
       data-testid={`project-chip-${id}`}
       label={
         <>
