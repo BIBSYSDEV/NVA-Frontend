@@ -91,6 +91,7 @@ export enum ResourceFieldNames {
   PublicationContextLevel = 'entityDescription.reference.publicationContext.level',
   PublicationContextPlaceLabel = 'entityDescription.reference.publicationContext.place.label',
   PublicationContextPlaceCountry = 'entityDescription.reference.publicationContext.place.country',
+  PublicationContextPublisher = 'entityDescription.reference.publicationContext.publisher',
   PublicationContextPublisherId = 'entityDescription.reference.publicationContext.publisher.id',
   PublicationContextPublisherType = 'entityDescription.reference.publicationContext.publisher.type',
   PublicationContextTimeFrom = 'entityDescription.reference.publicationContext.time.from',

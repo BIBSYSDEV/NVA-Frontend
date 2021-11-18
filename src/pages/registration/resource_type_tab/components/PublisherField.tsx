@@ -1,9 +1,8 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Chip, ThemeProvider, Typography } from '@mui/material';
 import { Autocomplete } from '@mui/material';
-import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { lightTheme } from '../../../../themes/lightTheme';
@@ -17,10 +16,6 @@ import { BookEntityDescription } from '../../../../types/publication_types/bookR
 import { getYearQuery } from '../../../../utils/registration-helpers';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
-
-const StyledChip = styled(Chip)`
-  height: 100%;
-`;
 
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
 
@@ -80,19 +75,14 @@ export const PublisherField = () => {
             value={publisher?.id && fetchedPublisher ? [fetchedPublisher] : []}
             onChange={(_, inputValue, reason) => {
               if (reason === 'selectOption') {
-                setFieldValue(
-                  ResourceFieldNames.PublicationContextPublisherType,
-                  PublicationChannelType.Publisher,
-                  false
-                );
-                setFieldValue(field.name, inputValue.pop()?.id);
+                setFieldValue(ResourceFieldNames.PublicationContextPublisher, {
+                  type: PublicationChannelType.Publisher,
+                  id: inputValue.pop()?.id,
+                });
               } else if (reason === 'removeOption') {
-                setFieldValue(
-                  ResourceFieldNames.PublicationContextPublisherType,
-                  PublicationChannelType.UnconfirmedPublisher,
-                  false
-                );
-                setFieldValue(field.name, '');
+                setFieldValue(ResourceFieldNames.PublicationContextPublisher, {
+                  type: PublicationChannelType.UnconfirmedPublisher,
+                });
               }
               setQuery('');
             }}
@@ -114,8 +104,9 @@ export const PublisherField = () => {
             )}
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
-                <StyledChip
+                <Chip
                   {...getTagProps({ index })}
+                  sx={{ height: '100%' }}
                   data-testid={dataTestId.registrationWizard.resourceType.publisherChip}
                   label={
                     <>
