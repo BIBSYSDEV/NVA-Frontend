@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, TablePagination, Typography } from '@mui/material';
 import { useHistory } from 'react-router-dom';
@@ -13,7 +12,7 @@ import { SearchResult } from '../../types/registration.types';
 export const RegistrationSearch = () => {
   const { t } = useTranslation('common');
   const history = useHistory();
-  const params = useMemo(() => new URLSearchParams(history.location.search), [history.location.search]);
+  const params = new URLSearchParams(history.location.search);
 
   const resultsParam = params.get('results');
   const fromParam = params.get('from');
