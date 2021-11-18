@@ -1,9 +1,8 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Chip, ThemeProvider, Typography } from '@mui/material';
 import { Autocomplete } from '@mui/material';
-import styled from 'styled-components';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
@@ -13,7 +12,7 @@ import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { contextTypeBaseFieldName, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import {
   JournalEntityDescription,
   JournalRegistration,
@@ -22,10 +21,6 @@ import { getPublicationChannelString, getYearQuery } from '../../../../utils/reg
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 
 const journalFieldTestId = dataTestId.registrationWizard.resourceType.journalField;
-
-const StyledChip = styled(Chip)`
-  height: 100%;
-`;
 
 export const JournalField = () => {
   const { t } = useTranslation('registration');
@@ -99,12 +94,7 @@ export const JournalField = () => {
                 setFieldValue(ResourceFieldNames.PublicationContextType, PublicationChannelType.Journal, false);
                 setFieldValue(field.name, inputValue.pop()?.id);
               } else if (reason === 'removeOption') {
-                setFieldValue(
-                  ResourceFieldNames.PublicationContextType,
-                  PublicationChannelType.UnconfirmedJournal,
-                  false
-                );
-                setFieldValue(field.name, '');
+                setFieldValue(contextTypeBaseFieldName, { type: PublicationChannelType.UnconfirmedJournal }, false);
               }
               setQuery('');
             }}
@@ -129,8 +119,9 @@ export const JournalField = () => {
             )}
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
-                <StyledChip
+                <Chip
                   {...getTagProps({ index })}
+                  sx={{ height: '100%' }}
                   data-testid={dataTestId.registrationWizard.resourceType.journalChip}
                   label={
                     <>
