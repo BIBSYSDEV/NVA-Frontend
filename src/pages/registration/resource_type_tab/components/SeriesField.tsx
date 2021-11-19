@@ -1,9 +1,7 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Chip, ThemeProvider, Typography } from '@mui/material';
-import { Autocomplete } from '@mui/material';
-import styled from 'styled-components';
+import { Chip, ThemeProvider, Typography, Autocomplete } from '@mui/material';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
@@ -19,10 +17,6 @@ import { getPublicationChannelString, getYearQuery } from '../../../../utils/reg
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
-
-const StyledChip = styled(Chip)`
-  height: 100%;
-`;
 
 export const SeriesField = () => {
   const { t } = useTranslation('registration');
@@ -40,6 +34,20 @@ export const SeriesField = () => {
         : '',
     errorMessage: t('feedback:error.get_series'),
   });
+
+  useEffect(() => {
+    if (
+      journalOptions?.length === 1 &&
+      series?.title &&
+      journalOptions[0].name.toLowerCase() === series.title.toLowerCase()
+    ) {
+      setFieldValue(ResourceFieldNames.Series, {
+        type: PublicationChannelType.Series,
+        id: journalOptions[0].id,
+      });
+      setQuery('');
+    }
+  }, [setFieldValue, series?.title, journalOptions]);
 
   const [journal, isLoadingJournal] = useFetchResource<Journal>(series?.id ?? '', t('feedback:error.get_series'));
 
@@ -60,17 +68,21 @@ export const SeriesField = () => {
               if (reason !== 'reset') {
                 setQuery(newInputValue);
               }
+              if (reason === 'input' && !newInputValue && series?.title) {
+                setFieldValue(ResourceFieldNames.Series, { type: PublicationChannelType.UnconfirmedSeries });
+              }
             }}
             blurOnSelect
             disableClearable={!query}
             value={field.value && journal ? [journal] : []}
             onChange={(_, inputValue, reason) => {
               if (reason === 'selectOption') {
-                setFieldValue(ResourceFieldNames.SeriesType, PublicationChannelType.Series);
-                setFieldValue(field.name, inputValue.pop()?.id);
+                setFieldValue(ResourceFieldNames.Series, {
+                  type: PublicationChannelType.Series,
+                  id: inputValue.pop()?.id,
+                });
               } else if (reason === 'removeOption') {
-                setFieldValue(ResourceFieldNames.SeriesType, PublicationChannelType.UnconfirmedSeries);
-                setFieldValue(field.name, '');
+                setFieldValue(ResourceFieldNames.Series, { type: PublicationChannelType.UnconfirmedSeries });
               }
               setQuery('');
             }}
@@ -95,7 +107,7 @@ export const SeriesField = () => {
             )}
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
-                <StyledChip
+                <Chip
                   {...getTagProps({ index })}
                   data-testid={dataTestId.registrationWizard.resourceType.seriesChip}
                   label={

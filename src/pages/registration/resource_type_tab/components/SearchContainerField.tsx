@@ -1,8 +1,7 @@
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
-import React, { useState } from 'react';
-import { Chip, ThemeProvider, Typography } from '@mui/material';
-import { Autocomplete } from '@mui/material';
-import styled from 'styled-components';
+import { useState } from 'react';
+import { Chip, ThemeProvider, Typography, Autocomplete } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
@@ -15,13 +14,8 @@ import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistr
 import { dataTestId as dataTestIds } from '../../../../utils/dataTestIds';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { Contributor } from '../../../../types/contributor.types';
-import { useTranslation } from 'react-i18next';
 import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
 import { ExpressionStatement } from '../../../../utils/searchHelpers';
-
-const StyledChip = styled(Chip)`
-  height: 100%;
-`;
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -115,7 +109,7 @@ export const SearchContainerField = ({
               )}
               renderTags={(value, getTagProps) =>
                 value.map((option, index) => (
-                  <StyledChip
+                  <Chip
                     {...getTagProps({ index })}
                     data-testid={dataTestIds.registrationWizard.resourceType.journalChip}
                     label={

@@ -91,13 +91,6 @@ const StyledTags = styled.div`
 const StyledChip = styled(Chip)`
   background: ${({ theme }) => theme.palette.section.light};
   margin: 0.25rem 0;
-  padding: 0.25rem;
-  height: auto;
-`;
-
-const StyledChipLabel = styled(Typography)`
-  white-space: normal;
-  color: ${({ theme }) => theme.palette.text.primary};
 `;
 
 interface TagsListProps {
@@ -112,7 +105,7 @@ const TagsList = ({ title, values }: TagsListProps) => (
     </Typography>
     <StyledTags data-testid={dataTestId.registrationLandingPage.keywords}>
       {values.map((value) => (
-        <StyledChip key={value} label={<StyledChipLabel>{value}</StyledChipLabel>} />
+        <StyledChip key={value} label={<Typography>{value}</Typography>} />
       ))}
     </StyledTags>
   </StyledTagsList>
