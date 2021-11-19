@@ -37,7 +37,11 @@ export const PublisherField = () => {
   });
 
   useEffect(() => {
-    if (publisherOptions?.length === 1 && publisher?.name && publisherOptions[0].name === publisher.name) {
+    if (
+      publisherOptions?.length === 1 &&
+      publisher?.name &&
+      publisherOptions[0].name.toLowerCase() === publisher.name.toLowerCase()
+    ) {
       setFieldValue(ResourceFieldNames.PublicationContextPublisherType, PublicationChannelType.Publisher, false);
       setFieldValue(ResourceFieldNames.PublicationContextPublisherId, publisherOptions[0].id);
       setQuery('');
