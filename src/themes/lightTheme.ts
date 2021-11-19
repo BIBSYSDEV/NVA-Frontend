@@ -181,6 +181,9 @@ export const lightTheme = createTheme({
           height: '100%',
           padding: '0.4rem 0',
         },
+        label: {
+          whiteSpace: 'normal', // Allow multiline chips
+        },
       },
     },
     MuiInputBase: {

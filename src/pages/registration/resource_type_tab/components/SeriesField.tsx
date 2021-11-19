@@ -1,8 +1,7 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Chip, ThemeProvider, Typography } from '@mui/material';
-import { Autocomplete } from '@mui/material';
+import { Chip, ThemeProvider, Typography, Autocomplete } from '@mui/material';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
