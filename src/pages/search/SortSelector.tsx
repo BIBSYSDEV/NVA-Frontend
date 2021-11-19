@@ -1,15 +1,10 @@
-import { TextField, MenuItem } from '@material-ui/core';
+import { TextField, MenuItem } from '@mui/material';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
-import { SearchFieldName } from '../../types/search.types';
+import { RegistrationFieldName } from '../../types/publicationFieldNames';
 import { dataTestId } from '../../utils/dataTestIds';
-
-const StyledTextField = styled(TextField)`
-  margin-top: 0;
-  grid-area: sorting;
-`;
+import { SearchParam } from '../../utils/searchHelpers';
 
 enum SortOption {
   PublishedDateDesc,
@@ -29,8 +24,8 @@ export const SortSelector = () => {
   const params = new URLSearchParams(history.location.search);
 
   const selectedSortingValue =
-    params.get('orderBy') === SearchFieldName.PublishedDate
-      ? params.get('sortOrder') === 'desc'
+    params.get(SearchParam.OrderBy) === RegistrationFieldName.PublishedDate
+      ? params.get(SearchParam.SortOrder) === 'desc'
         ? SortOption.PublishedDateDesc
         : SortOption.PublishedDateAsc
       : SortOption.ModifiedDateDesc;
@@ -40,23 +35,24 @@ export const SortSelector = () => {
 
     switch (value) {
       case SortOption.PublishedDateDesc:
-        params.set('orderBy', SearchFieldName.PublishedDate);
-        params.set('sortOrder', 'desc');
+        params.set(SearchParam.OrderBy, RegistrationFieldName.PublishedDate);
+        params.set(SearchParam.SortOrder, 'desc');
         break;
       case SortOption.PublishedDateAsc:
-        params.set('orderBy', SearchFieldName.PublishedDate);
-        params.set('sortOrder', 'asc');
+        params.set(SearchParam.OrderBy, RegistrationFieldName.PublishedDate);
+        params.set(SearchParam.SortOrder, 'asc');
         break;
       case SortOption.ModifiedDateDesc:
-        params.set('orderBy', SearchFieldName.ModifiedDate);
-        params.set('sortOrder', 'desc');
+        params.set(SearchParam.OrderBy, RegistrationFieldName.ModifiedDate);
+        params.set(SearchParam.SortOrder, 'desc');
         break;
     }
     history.push({ search: params.toString() });
   };
 
   return (
-    <StyledTextField
+    <TextField
+      sx={{ gridArea: 'sorting' }}
       data-testid={dataTestId.startPage.orderBySelect}
       select
       value={selectedSortingValue}
@@ -69,6 +65,6 @@ export const SortSelector = () => {
           {t(option.i18nKey)}
         </MenuItem>
       ))}
-    </StyledTextField>
+    </TextField>
   );
 };

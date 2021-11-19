@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core';
+import { Box, BoxProps, Typography } from '@mui/material';
 import styled from 'styled-components';
 
 export const StyledRightAlignedWrapper = styled.div`
@@ -44,3 +44,7 @@ export const StyledPageWrapperWithMaxWidth = styled(StyledPageWrapper)`
 export const StyledCenteredContent = styled.div`
   margin-top: 4rem;
 `;
+
+export const InputContainerBox = (props: BoxProps) => {
+  return <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }} {...props} />;
+};

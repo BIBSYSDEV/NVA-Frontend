@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, MuiThemeProvider, Typography } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
-import { Pagination } from '@material-ui/lab';
+import { Button, ThemeProvider, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
+import { Pagination } from '@mui/material';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { Authority } from '../../../types/authority.types';
 import {
@@ -20,10 +20,9 @@ import { NotificationVariant } from '../../../types/notification.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { useIsMobile } from '../../../utils/hooks/useIsMobile';
-import { lightTheme, paginationTranslationProps } from '../../../themes/lightTheme';
+import { lightTheme } from '../../../themes/lightTheme';
 import { ContributorList } from './components/ContributorList';
 import { AddContributorModal } from './AddContributorModal';
-import { getAddContributorText, getContributorHeading } from '../../../utils/translation-helpers';
 
 const StyledButton = styled(Button)`
   margin: 1rem 0rem;
@@ -47,14 +46,12 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
-  const {
-    entityDescription: { contributors },
-  } = values;
   const [openContributorModal, setOpenContributorModal] = useState(false);
   const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
   const [currentPage, setCurrentPage] = useState(1); // Pagination pages are 1-indexed :/
   const isMobile = useIsMobile();
 
+  const contributors = values.entityDescription?.contributors ?? [];
   const relevantContributors = contributors.filter((contributor) =>
     contributorRoles.some((role) => role === contributor.role)
   );
@@ -167,17 +164,30 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         setUnverifiedContributor(null);
       }}
       variant="contained"
-      color={contributorRoles.length === 1 ? 'secondary' : 'default'}
+      color={contributorRoles.length === 1 ? 'secondary' : 'inherit'}
       startIcon={<AddIcon />}
       data-testid={`add-${contributorRole}`}>
-      {getAddContributorText(contributorRole)}
+      {t('contributors.add_as_role', {
+        role:
+          contributorRole === 'OtherContributor'
+            ? t('contributors.contributor')
+            : t(`contributors.types.${contributorRole}`),
+      })}
     </StyledButton>
   );
 
   return (
     <div data-testid={contributorRole}>
-      <Typography variant="h2">{getContributorHeading(contributorRole)}</Typography>
-      <MuiThemeProvider theme={lightTheme}>
+      <Typography variant="h2">
+        {contributorRole === ContributorRole.Creator
+          ? t('registration:contributors.authors')
+          : contributorRole === ContributorRole.Editor
+          ? t('registration:contributors.editors')
+          : contributorRole === ContributorRole.Supervisor
+          ? t('registration:contributors.supervisors')
+          : t('registration:heading.contributors')}
+      </Typography>
+      <ThemeProvider theme={lightTheme}>
         {((isMobile && contributorsToShow.length >= 2) || (!isMobile && contributorsToShow.length >= 5)) &&
           addContributorButton}
 
@@ -198,14 +208,13 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           toggleModal={() => setOpenContributorModal(!openContributorModal)}
           onContributorSelected={onContributorSelected}
         />
-      </MuiThemeProvider>
+      </ThemeProvider>
       {relevantContributors.length > contributorsPerPage && (
         <StyledPagination
           variant="outlined"
           color="primary"
           size="large"
           shape="rounded"
-          getItemAriaLabel={paginationTranslationProps}
           onChange={(_, page) => setCurrentPage(page)}
           page={currentPage}
           count={Math.ceil(relevantContributors.length / contributorsPerPage)}

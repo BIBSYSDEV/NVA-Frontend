@@ -10,6 +10,8 @@ import { ReportEntityDescription } from './publication_types/reportRegistration.
 import { ChapterEntityDescription } from './publication_types/chapterRegistration.types';
 import { Contributor } from './contributor.types';
 import { LanguageValues } from './language.types';
+import { PresentationEntityDescription } from './publication_types/presentationRegistration.types';
+import { ArtisticEntityDescription } from './publication_types/artisticRegistration.types';
 
 export enum RegistrationStatus {
   Deleted = 'DRAFT_FOR_DELETION',
@@ -46,6 +48,7 @@ export interface Publisher {
   name: string;
   website: string;
   active: boolean;
+  level: string;
 }
 
 export interface AlmaRegistration {
@@ -76,12 +79,13 @@ interface DoiRequest {
   messages?: DoiRequestMessage[];
 }
 
-export interface RegistrationPublisher {
+interface RegistrationPublisher {
   id: string;
 }
 
 export interface BaseRegistration extends RegistrationFileSet {
   readonly type: 'Publication';
+  readonly id: string;
   readonly identifier: string;
   readonly createdDate: string;
   readonly modifiedDate: string;
@@ -99,7 +103,7 @@ export interface BaseEntityDescription {
   type: 'EntityDescription';
   abstract: string;
   contributors: Contributor[];
-  date: RegistrationDate;
+  date?: RegistrationDate;
   description: string;
   language: LanguageValues;
   mainTitle: string;
@@ -117,13 +121,32 @@ export interface BaseReference {
   doi: string;
 }
 
+export enum PublicationChannelType {
+  Journal = 'Journal',
+  Publisher = 'Publisher',
+  Series = 'Series',
+  UnconfirmedJournal = 'UnconfirmedJournal',
+  UnconfirmedPublisher = 'UnconfirmedPublisher',
+  UnconfirmedSeries = 'UnconfirmedSeries',
+}
+
+export interface SearchResult {
+  hits: Registration[];
+  took: number;
+  total: number;
+}
+
+export type EntityDescription =
+  | JournalEntityDescription
+  | DegreeEntityDescription
+  | BookEntityDescription
+  | ReportEntityDescription
+  | ChapterEntityDescription
+  | PresentationEntityDescription
+  | ArtisticEntityDescription;
+
 export interface Registration extends BaseRegistration {
-  entityDescription:
-    | JournalEntityDescription
-    | DegreeEntityDescription
-    | BookEntityDescription
-    | ReportEntityDescription
-    | ChapterEntityDescription;
+  entityDescription?: EntityDescription;
 }
 
 export interface RegistrationDate {
@@ -145,6 +168,7 @@ export interface Doi {
 
 export const emptyRegistration: Registration = {
   type: 'Publication',
+  id: '',
   identifier: '',
   createdDate: '',
   modifiedDate: '',

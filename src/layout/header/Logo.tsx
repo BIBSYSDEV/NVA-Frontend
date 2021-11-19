@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Typography, Divider, Button } from '@material-ui/core';
+import { Typography, Divider, Button } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 

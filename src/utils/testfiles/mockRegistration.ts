@@ -1,7 +1,7 @@
 import { ContributorRole } from '../../types/contributor.types';
 import { LanguageValues } from '../../types/language.types';
-import { JournalType, PublicationType } from '../../types/publicationFieldNames';
-import { RegistrationStatus } from '../../types/registration.types';
+import { JournalType } from '../../types/publicationFieldNames';
+import { PublicationChannelType, RegistrationStatus } from '../../types/registration.types';
 import { mockCustomerInstitution } from './mockCustomerInstitutions';
 import { MessageType, SupportRequest } from '../../types/publication_types/messages.types';
 import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
@@ -9,12 +9,15 @@ import { JournalArticleContentType } from '../../types/publication_types/content
 
 export const mockRegistration: JournalRegistration = {
   type: 'Publication',
+  id: 'https://frontend.dev.nva.aws.unit.no/registration/12345679',
   identifier: '12345679',
   createdDate: new Date(2020, 1).toISOString(),
   modifiedDate: new Date(2020, 2).toISOString(),
   owner: 'tu@unit.no',
   status: RegistrationStatus.Draft,
-  projects: [{ type: 'ResearchProject', id: 'https://api.dev.nva.aws.unit.no/project/1', name: 'A dummy project' }],
+  projects: [
+    { type: 'ResearchProject', id: 'https://api.dev.nva.aws.unit.no/cristin/project/1', name: 'A dummy project' },
+  ],
   publisher: { id: mockCustomerInstitution.id },
   fileSet: {
     type: 'FileSet',
@@ -100,7 +103,7 @@ export const mockRegistration: JournalRegistration = {
         contentType: JournalArticleContentType.ResearchArticle,
       },
       publicationContext: {
-        type: PublicationType.PublicationInJournal,
+        type: PublicationChannelType.Journal,
         title: 'International Journal of Human-Computer Interaction',
         onlineIssn: '1044-7318',
       },

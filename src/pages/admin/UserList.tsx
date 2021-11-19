@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typography } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { Button, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { visuallyHidden } from '@mui/utils';
+import { LoadingButton } from '@mui/lab';
 import { updateUser } from '../../api/roleApi';
-import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { DangerButton } from '../../components/DangerButton';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { InstitutionUser, RoleName } from '../../types/user.types';
@@ -109,7 +109,7 @@ export const UserList = ({
         <>
           <StyledTable size="small">
             <caption>
-              <Typography variant="srOnly">{tableCaption}</Typography>
+              <span style={visuallyHidden}>{tableCaption}</span>
             </caption>
             <TableHead>
               <TableRow>
@@ -134,27 +134,29 @@ export const UserList = ({
                     </TableCell>
                     <TableCell align="right">
                       {roleToRemove && (
-                        <DangerButton
+                        <Button
+                          color="error"
                           variant="outlined"
                           startIcon={<DeleteIcon />}
                           disabled={isLastInstitutionAdmin}
                           data-testid={`button-remove-role-${roleToRemove}-${user.username}`}
                           onClick={() => setRemoveRoleForUser(user.username)}>
                           {t('common:remove')}
-                        </DangerButton>
+                        </Button>
                       )}
                       {roleToAdd && (
-                        <ButtonWithProgress
+                        <LoadingButton
                           color="primary"
                           variant="contained"
                           size="small"
                           startIcon={<AddIcon />}
+                          loadingPosition="start"
                           disabled={disableAddButton}
-                          isLoading={!disableAddButton && isLoading}
+                          loading={!disableAddButton && isLoading}
                           data-testid={`button-add-role-${roleToAdd}-${user.username}`}
                           onClick={() => handleAddRoleToUser(user)}>
                           {t('common:add')}
-                        </ButtonWithProgress>
+                        </LoadingButton>
                       )}
                     </TableCell>
                   </StyledTableRow>
@@ -174,7 +176,7 @@ export const UserList = ({
                 setRowsPerPage(parseInt(event.target.value));
                 setPage(0);
               }}
-              data-testid={`user-pagination-${roleToRemove}`}
+              data-testid={`user-pagination-${roleToRemove ?? roleToAdd}`}
             />
           )}
           {roleToRemove && (

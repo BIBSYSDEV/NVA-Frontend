@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
 import styled from 'styled-components';
-import { Link as MuiLink, List, ListItem, ListItemText, Typography } from '@material-ui/core';
-import { SearchRegistration } from '../types/search.types';
+import { Link as MuiLink, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { displayDate } from '../utils/date-helpers';
 import { getRegistrationLandingPagePath, getUserPath } from '../utils/urlPaths';
+import { Registration } from '../types/registration.types';
+import { ErrorBoundary } from './ErrorBoundary';
 
 const StyledContributors = styled.div`
   display: flex;
@@ -30,26 +31,28 @@ const StyledSuperHeader = styled(Typography)`
 `;
 
 interface RegistrationListProps {
-  registrations: SearchRegistration[];
+  registrations: Registration[];
 }
 
 export const RegistrationList = ({ registrations }: RegistrationListProps) => (
   <List>
     {registrations.map((registration) => (
-      <RegistrationListItem key={registration.id} registration={registration} />
+      <ErrorBoundary key={registration.id}>
+        <RegistrationListItem registration={registration} />
+      </ErrorBoundary>
     ))}
   </List>
 );
 
 interface RegistrationListItemProps {
-  registration: SearchRegistration;
+  registration: Registration;
 }
 
 const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
   const { t } = useTranslation('publicationTypes');
-  const { id, title, abstract, contributors, type, publicationDate } = registration;
+  const { identifier, entityDescription } = registration;
 
-  const registrationId = id.split('/').pop() as string;
+  const contributors = entityDescription?.contributors ?? [];
   const focusedContributors = contributors.slice(0, 5);
   const countRestContributors = contributors.length - focusedContributors.length;
 
@@ -57,22 +60,22 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
     <ListItem divider disableGutters>
       <ListItemText disableTypography data-testid="result-list-item">
         <StyledSuperHeader variant="overline">
-          {t(type)} - {displayDate(publicationDate)}
+          {t(entityDescription?.reference?.publicationInstance.type ?? '')} - {displayDate(entityDescription?.date)}
         </StyledSuperHeader>
         <StyledRegistrationTitle gutterBottom>
-          <MuiLink component={Link} to={getRegistrationLandingPagePath(registrationId)}>
-            {title}
+          <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
+            {entityDescription?.mainTitle}
           </MuiLink>
         </StyledRegistrationTitle>
         <StyledContributors>
           {focusedContributors.map((contributor, index) => (
             <Typography key={index} variant="body2">
-              {contributor.id ? (
-                <MuiLink component={Link} to={getUserPath(contributor.id)}>
-                  {contributor.name}
+              {contributor.identity.id ? (
+                <MuiLink component={Link} to={getUserPath(contributor.identity.id)}>
+                  {contributor.identity.name}
                 </MuiLink>
               ) : (
-                contributor.name
+                contributor.identity.name
               )}
             </Typography>
           ))}
@@ -82,7 +85,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
         </StyledContributors>
 
         <Typography>
-          <TextTruncate line={3} element="span" truncateText=" [...]" text={abstract} />
+          <TextTruncate line={3} element="span" truncateText=" [...]" text={entityDescription?.abstract} />
         </Typography>
       </ListItemText>
     </ListItem>

@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { ButtonWithProgress } from './ButtonWithProgress';
 
 const StyledDialogContentText = styled.div`
   min-width: 35rem;
@@ -42,9 +42,14 @@ export const ConfirmDialog = ({
         <Button data-testid="cancel-button" color="primary" variant="outlined" onClick={onCancel}>
           {t('common:no')}
         </Button>
-        <ButtonWithProgress data-testid="accept-button" color="secondary" isLoading={isLoading} onClick={onAccept}>
+        <LoadingButton
+          data-testid="accept-button"
+          color="secondary"
+          variant="contained"
+          loading={isLoading}
+          onClick={onAccept}>
           {t('common:yes')}
-        </ButtonWithProgress>
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );

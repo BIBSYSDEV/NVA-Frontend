@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Divider, Typography } from '@material-ui/core';
-import { SearchResult } from '../../types/search.types';
+import { Divider, Typography } from '@mui/material';
 import { RegistrationList } from '../../components/RegistrationList';
+import { SearchResult } from '../../types/registration.types';
 
 const StyledSearchResults = styled.div`
   padding-bottom: 1rem;

@@ -1,36 +1,32 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AccordionActions, AccordionDetails, AccordionSummary, Typography } from '@material-ui/core';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { AccordionActions, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import CloudUploadIcon from '@mui/icons-material/CloudUploadOutlined';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useUppy } from '@uppy/react';
-
+import { LoadingButton } from '@mui/lab';
 import { RegistrationAccordion } from './RegistrationAccordion';
 import { File, RegistrationFileSet } from '../../../types/file.types';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
-import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
 import { FileUploader } from '../files_and_license_tab/FileUploader';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { createUppy } from '../../../utils/uppy/uppy-config';
 import { UploadedFileRow } from './UploadedFileRow';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { StartRegistrationAccordionProps } from './LinkRegistration';
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
   border-color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
-interface UploadRegistrationProps {
-  expanded: boolean;
-  onChange: (event: ChangeEvent<unknown>, isExpanded: boolean) => void;
-}
-
-export const UploadRegistration = ({ expanded, onChange }: UploadRegistrationProps) => {
+export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
   const { t } = useTranslation('registration');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -57,11 +53,13 @@ export const UploadRegistration = ({ expanded, onChange }: UploadRegistrationPro
 
   return (
     <StyledRegistrationAccorion expanded={expanded} onChange={onChange}>
-      <AccordionSummary data-testid="new-registration-file" expandIcon={<ExpandMoreIcon fontSize="large" />}>
+      <AccordionSummary
+        data-testid={dataTestId.registrationWizard.new.fileAccordion}
+        expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <CloudUploadIcon />
         <div>
-          <Typography variant="h2">{t('registration:registration.start_with_uploading_file_title')}</Typography>
-          <Typography>{t('registration:registration.start_with_uploading_file_description')}</Typography>
+          <Typography variant="h2">{t('registration.start_with_uploading_file_title')}</Typography>
+          <Typography>{t('registration.start_with_uploading_file_description')}</Typography>
         </div>
       </AccordionSummary>
 
@@ -93,16 +91,17 @@ export const UploadRegistration = ({ expanded, onChange }: UploadRegistrationPro
       </AccordionDetails>
 
       <AccordionActions>
-        <ButtonWithProgress
-          data-testid="registration-file-start-button"
+        <LoadingButton
+          data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
+          loadingPosition="end"
           color="secondary"
           variant="contained"
-          isLoading={isLoading}
+          loading={isLoading}
           disabled={uploadedFiles.length === 0}
           onClick={createRegistrationWithFiles}>
           {t('registration.start_registration')}
-        </ButtonWithProgress>
+        </LoadingButton>
       </AccordionActions>
     </StyledRegistrationAccorion>
   );

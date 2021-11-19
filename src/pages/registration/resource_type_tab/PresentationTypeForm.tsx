@@ -1,0 +1,166 @@
+import { Autocomplete, TextField, ThemeProvider } from '@mui/material';
+import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
+import countries from 'i18n-iso-countries';
+import enCountries from 'i18n-iso-countries/langs/en.json';
+import nbCountries from 'i18n-iso-countries/langs/nb.json';
+import { BackgroundDiv } from '../../../components/BackgroundDiv';
+import { InputContainerBox, StyledSelectWrapper } from '../../../components/styled/Wrappers';
+import { lightTheme } from '../../../themes/lightTheme';
+import { PresentationType, ResourceFieldNames } from '../../../types/publicationFieldNames';
+import { PresentationRegistration } from '../../../types/publication_types/presentationRegistration.types';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { SelectTypeField } from './components/SelectTypeField';
+import { getPreferredLanguageCode } from '../../../utils/translation-helpers';
+import { PeriodFields } from './components/PeriodFields';
+
+countries.registerLocale(enCountries);
+countries.registerLocale(nbCountries);
+
+const StyledDatePickersContainer = styled.div`
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
+    div:first-child {
+      margin-right: 10rem;
+    }
+  }
+`;
+
+const StyledFlagImg = styled.img`
+  margin-right: 1rem;
+`;
+
+interface PresentationTypeFormProps {
+  onChangeSubType: (type: string) => void;
+}
+
+export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormProps) => {
+  const { t, i18n } = useTranslation('registration');
+  const { values, setFieldValue } = useFormikContext<PresentationRegistration>();
+  const subType = values.entityDescription.reference.publicationInstance.type;
+
+  const countryOptions = Object.entries(countries.getNames(getPreferredLanguageCode(i18n.language))).map(
+    ([code, label]) => ({ code, label })
+  );
+
+  return (
+    <>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
+        <StyledSelectWrapper>
+          <SelectTypeField
+            fieldName={ResourceFieldNames.SubType}
+            onChangeType={onChangeSubType}
+            options={Object.values(PresentationType)}
+          />
+        </StyledSelectWrapper>
+      </BackgroundDiv>
+
+      {subType && (
+        <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+          <InputContainerBox>
+            <Field name={ResourceFieldNames.PublicationContextLabel}>
+              {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                <TextField
+                  {...field}
+                  id={field.name}
+                  value={field.value ?? ''}
+                  required
+                  data-testid={dataTestId.registrationWizard.resourceType.eventTitleField}
+                  variant="filled"
+                  fullWidth
+                  label={t('resource_type.title_of_event')}
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={field.name} />}
+                />
+              )}
+            </Field>
+            <Field name={ResourceFieldNames.PublicationContextAgentName}>
+              {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                <TextField
+                  {...field}
+                  id={field.name}
+                  value={field.value ?? ''}
+                  required
+                  data-testid={dataTestId.registrationWizard.resourceType.eventOrganizerField}
+                  variant="filled"
+                  fullWidth
+                  label={t('resource_type.organizer')}
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={field.name} />}
+                />
+              )}
+            </Field>
+            <Field name={ResourceFieldNames.PublicationContextPlaceLabel}>
+              {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                <TextField
+                  {...field}
+                  id={field.name}
+                  value={field.value ?? ''}
+                  required
+                  data-testid={dataTestId.registrationWizard.resourceType.eventPlaceField}
+                  variant="filled"
+                  fullWidth
+                  label={t('resource_type.place_for_event')}
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={field.name} />}
+                />
+              )}
+            </Field>
+
+            <ThemeProvider theme={lightTheme}>
+              <Field name={ResourceFieldNames.PublicationContextPlaceCountry}>
+                {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                  <Autocomplete
+                    id={field.name}
+                    aria-labelledby={`${field.name}-label`}
+                    value={countryOptions.find((option) => option.code === field.value) ?? null}
+                    options={countryOptions}
+                    autoSelect
+                    onChange={(_, value) => setFieldValue(field.name, value?.code)}
+                    isOptionEqualToValue={(option, value) => option.code === value.code}
+                    getOptionLabel={(option) => option.label}
+                    renderOption={(props, option) => (
+                      <li {...props}>
+                        <StyledFlagImg
+                          loading="lazy"
+                          src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                          alt={option.code}
+                        />
+                        {option.label} ({option.code})
+                      </li>
+                    )}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        required
+                        data-testid={dataTestId.registrationWizard.resourceType.eventCountryField}
+                        label={t('common:country')}
+                        variant="filled"
+                        fullWidth
+                        error={touched && !!error}
+                        helperText={<ErrorMessage name={field.name} />}
+                      />
+                    )}
+                  />
+                )}
+              </Field>
+
+              <StyledDatePickersContainer>
+                <PeriodFields
+                  fromFieldName={ResourceFieldNames.PublicationContextTimeFrom}
+                  toFieldName={ResourceFieldNames.PublicationContextTimeTo}
+                  variant="filled"
+                />
+              </StyledDatePickersContainer>
+            </ThemeProvider>
+          </InputContainerBox>
+        </BackgroundDiv>
+      )}
+    </>
+  );
+};

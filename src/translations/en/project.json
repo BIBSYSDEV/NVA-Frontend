@@ -1,12 +1,22 @@
 {
-  "category_and_discipline": "Category and discipline",
   "financing": "Financing",
+  "grant_id": "GrantID",
+  "no_participants": "No registered participants.",
+  "no_results": "No published results.",
+  "no_summary": "No registered summary.",
   "period": "Project period",
+  "popular_science_summary": "Popular science summary",
   "project": "Project",
   "project_info": "Project info",
   "project_manager": "Project manager",
   "project_owner": "Project owner",
   "project_participants": "Project participants",
   "results": "Results",
-  "scientific_summary": "Scientific summary"
+  "scientific_summary": "Scientific summary",
+  "status": {
+    "ACTIVE": "Active",
+    "CONCLUDED": "Concluded",
+    "NOTSTARTED": "Not started"
+  },
+  "summary": "Summary"
 }

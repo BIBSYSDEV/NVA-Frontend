@@ -4,6 +4,8 @@ export enum PublicationType {
   Report = 'Report',
   Degree = 'Degree',
   Chapter = 'Chapter',
+  Presentation = 'Event',
+  Artistic = 'Artistic',
 }
 
 export enum JournalType {
@@ -38,7 +40,31 @@ export enum ChapterType {
   AnthologyChapter = 'ChapterArticle',
 }
 
-export type RegistrationSubtype = JournalType | ReportType | BookType | DegreeType | ChapterType;
+export enum PresentationType {
+  ConferenceLecture = 'ConferenceLecture',
+  ConferencePoster = 'ConferencePoster',
+  Lecture = 'Lecture',
+  OtherPresentation = 'OtherPresentation',
+}
+
+export enum ArtisticType {
+  ArtisticDesign = 'ArtisticDesign',
+}
+
+export type RegistrationSubtype =
+  | JournalType
+  | ReportType
+  | BookType
+  | DegreeType
+  | ChapterType
+  | PresentationType
+  | ArtisticType;
+
+export enum RegistrationFieldName {
+  Identifier = 'identifier',
+  ModifiedDate = 'modifiedDate',
+  PublishedDate = 'publishedDate',
+}
 
 // Enums representing name of fields used by Formik
 export const contextTypeBaseFieldName = 'entityDescription.reference.publicationContext';
@@ -59,16 +85,29 @@ export enum ResourceFieldNames {
   PagesPages = 'entityDescription.reference.publicationInstance.pages.pages',
   PartOf = 'entityDescription.reference.publicationContext.partOf',
   PeerReviewed = 'entityDescription.reference.publicationInstance.peerReviewed',
-  PubliactionContextId = 'entityDescription.reference.publicationContext.id',
-  PubliactionContextLevel = 'entityDescription.reference.publicationContext.level',
-  PubliactionContextPublisherId = 'entityDescription.reference.publicationContext.publisher.id',
-  PubliactionContextPublisherType = 'entityDescription.reference.publicationContext.publisher.type',
-  PubliactionContextType = 'entityDescription.reference.publicationContext.type',
+  PublicationContextAgentName = 'entityDescription.reference.publicationContext.agent.name',
+  PublicationContextId = 'entityDescription.reference.publicationContext.id',
+  PublicationContextLabel = 'entityDescription.reference.publicationContext.label',
+  PublicationContextLevel = 'entityDescription.reference.publicationContext.level',
+  PublicationContextPlaceLabel = 'entityDescription.reference.publicationContext.place.label',
+  PublicationContextPlaceCountry = 'entityDescription.reference.publicationContext.place.country',
+  PublicationContextPublisher = 'entityDescription.reference.publicationContext.publisher',
+  PublicationContextPublisherId = 'entityDescription.reference.publicationContext.publisher.id',
+  PublicationContextPublisherType = 'entityDescription.reference.publicationContext.publisher.type',
+  PublicationContextTimeFrom = 'entityDescription.reference.publicationContext.time.from',
+  PublicationContextTimeTo = 'entityDescription.reference.publicationContext.time.to',
+  PublicationContextType = 'entityDescription.reference.publicationContext.type',
+  PublicationInstanceDescription = 'entityDescription.reference.publicationInstance.description',
+  PublicationInstanceSubtypeDescription = 'entityDescription.reference.publicationInstance.subtype.description',
+  PublicationInstanceSubtypeType = 'entityDescription.reference.publicationInstance.subtype.type',
+  Reference = 'entityDescription.reference',
+  Series = 'entityDescription.reference.publicationContext.series',
   SeriesId = 'entityDescription.reference.publicationContext.series.id',
   SeriesNumber = 'entityDescription.reference.publicationContext.seriesNumber',
   SeriesTitle = 'entityDescription.reference.publicationContext.series.title',
   SeriesType = 'entityDescription.reference.publicationContext.series.type',
   SubType = 'entityDescription.reference.publicationInstance.type',
+  Venues = 'entityDescription.reference.publicationContext.venues',
   Volume = 'entityDescription.reference.publicationInstance.volume',
 }
 
@@ -88,6 +127,7 @@ export enum DescriptionFieldNames {
 
 export enum FileFieldNames {
   Files = 'fileSet.files',
+  FileSet = 'fileSet',
 }
 
 // The following fields should be present in "fileSet.files[index].<KEY>"
@@ -106,5 +146,7 @@ export enum ContributorFieldNames {
 export enum SpecificContributorFieldNames {
   Affiliations = 'affiliations',
   Corresponding = 'correspondingAuthor',
+  Id = 'identity.id',
+  Name = 'identity.name',
   Sequence = 'sequence',
 }

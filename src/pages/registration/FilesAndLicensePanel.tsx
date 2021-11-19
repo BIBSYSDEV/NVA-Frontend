@@ -1,33 +1,22 @@
-import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
-import React, { useEffect, useRef, useState } from 'react';
+import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, useFormikContext } from 'formik';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import { FormHelperText, Typography } from '@material-ui/core';
+import { Box, FormHelperText, Link, Typography } from '@mui/material';
 import { UppyFile } from '@uppy/core';
 import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { Modal } from '../../components/Modal';
 import { lightTheme } from '../../themes/lightTheme';
-import { File, licenses, Uppy } from '../../types/file.types';
+import { File, FileSet, licenses, Uppy } from '../../types/file.types';
 import { NotificationVariant } from '../../types/notification.types';
 import { FileFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { autoHideNotificationDuration } from '../../utils/constants';
 import { FileUploader } from './files_and_license_tab/FileUploader';
 import { FileCard } from './files_and_license_tab/FileCard';
-
-const StyledBackgroundDiv = styled(BackgroundDiv)`
-  display: flex;
-  flex-direction: column;
-
-  > * {
-    margin-bottom: 1rem;
-  }
-`;
-
-const StyledLicenseDescription = styled.div`
-  margin-bottom: 1rem;
-  white-space: pre-wrap;
-`;
+import {
+  getChannelRegisterJournalUrl,
+  getChannelRegisterPublisherUrl,
+} from '../public_registration/PublicPublicationContext';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
@@ -35,11 +24,15 @@ interface FilesAndLicensePanelProps {
 
 export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation('registration');
-  const { values, setFieldTouched, errors, touched } = useFormikContext<Registration>();
-  const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const {
-    fileSet: { files = [] },
-  } = values;
+    values: { fileSet, entityDescription },
+    setFieldTouched,
+    errors,
+    touched,
+  } = useFormikContext<Registration>();
+  const publicationContext = entityDescription?.reference?.publicationContext;
+  const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
+  const files = useMemo(() => fileSet?.files ?? [], [fileSet?.files]);
 
   const filesRef = useRef(files);
   useEffect(() => {
@@ -68,51 +61,86 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
   };
 
-  const filesError = errors.fileSet?.files;
-  const filesTouched = touched.fileSet?.files;
+  const publisherIdentifier =
+    (publicationContext &&
+      'publisher' in publicationContext &&
+      publicationContext.publisher?.id?.split('/').reverse()[1]) ||
+    '';
+  const seriesIdentifier =
+    (publicationContext && 'series' in publicationContext && publicationContext.series?.id?.split('/').reverse()[1]) ||
+    '';
+  const journalIdentifier =
+    (publicationContext && 'id' in publicationContext && publicationContext.id?.split('/').reverse()[1]) || '';
 
   return (
     <>
-      <FieldArray name={FileFieldNames.Files}>
-        {({ name, remove, push }: FieldArrayRenderProps) => (
-          <>
-            {files.length > 0 && (
-              <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-                <Typography variant="h2">{t('files_and_license.files')}</Typography>
-                {files.map((file, index) => (
-                  <FileCard
-                    key={file.identifier}
-                    file={file}
-                    removeFile={() => {
-                      const remainingFiles = uppy
-                        .getFiles()
-                        .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
-                      uppy.setState({ files: remainingFiles });
-                      remove(index);
+      {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
+        <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
+          <Typography variant="h2" gutterBottom>
+            {t('files_and_license.info_from_channel_register')}
+          </Typography>
+          {journalIdentifier && (
+            <Link href={getChannelRegisterJournalUrl(journalIdentifier)} target="_blank">
+              <Typography>{t('files_and_license.find_journal_in_channel_register')}</Typography>
+            </Link>
+          )}
+          {publisherIdentifier && (
+            <Link href={getChannelRegisterPublisherUrl(publisherIdentifier)} target="_blank">
+              <Typography gutterBottom>{t('files_and_license.find_publisher_in_channel_register')}</Typography>
+            </Link>
+          )}
 
-                      if (remainingFiles.length === 0) {
-                        // Ensure field is set to touched even if it's empty
-                        setFieldTouched(name);
-                      }
-                    }}
-                    toggleLicenseModal={toggleLicenseModal}
-                    baseFieldName={`${name}[${index}]`}
-                  />
-                ))}
-              </StyledBackgroundDiv>
-            )}
+          {seriesIdentifier && (
+            <Link href={getChannelRegisterJournalUrl(seriesIdentifier)} target="_blank">
+              <Typography>{t('files_and_license.find_series_in_channel_register')}</Typography>
+            </Link>
+          )}
+        </BackgroundDiv>
+      )}
 
-            <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-              <FileUploader uppy={uppy} addFile={(file) => push(file)} />
-              {files.length === 0 && !!filesTouched && typeof filesError === 'string' && (
-                <FormHelperText error>
-                  <ErrorMessage name={name} />
-                </FormHelperText>
+      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+        <FieldArray name={FileFieldNames.Files}>
+          {({ name, remove, push }: FieldArrayRenderProps) => (
+            <>
+              {files.length > 0 && (
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
+                  <Typography variant="h2">{t('files_and_license.files')}</Typography>
+                  {files.map((file, index) => (
+                    <FileCard
+                      key={file.identifier}
+                      file={file}
+                      removeFile={() => {
+                        const remainingFiles = uppy
+                          .getFiles()
+                          .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
+                        uppy.setState({ files: remainingFiles });
+                        remove(index);
+
+                        if (remainingFiles.length === 0) {
+                          // Ensure field is set to touched even if it's empty
+                          setFieldTouched(name);
+                        }
+                      }}
+                      toggleLicenseModal={toggleLicenseModal}
+                      baseFieldName={`${name}[${index}]`}
+                    />
+                  ))}
+                </Box>
               )}
-            </BackgroundDiv>
-          </>
-        )}
-      </FieldArray>
+
+              <FileUploader uppy={uppy} addFile={push} />
+              {files.length === 0 &&
+                typeof (errors.fileSet as FormikErrors<FileSet>).files === 'string' &&
+                touched.fileSet && (
+                  <FormHelperText error>
+                    <ErrorMessage name={name} />
+                  </FormHelperText>
+                )}
+            </>
+          )}
+        </FieldArray>
+      </BackgroundDiv>
+
       <Modal
         headingText={t('files_and_license.licenses')}
         open={isLicenseModalOpen}
@@ -120,11 +148,16 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
         maxWidth="sm"
         dataTestId="license-modal">
         {licenses.map((license) => (
-          <StyledLicenseDescription key={license.identifier}>
-            <Typography variant="h6">{license.identifier}</Typography>
-            <img src={license.buttonImage} alt={license.identifier} />
-            <Typography>{license.description}</Typography>
-          </StyledLicenseDescription>
+          <Box key={license.identifier} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
+            <Typography variant="h6">{t(`licenses:labels.${license.identifier}`)}</Typography>
+            <img src={license.logo} alt={license.identifier} />
+            <Typography paragraph>{license.description}</Typography>
+            {license.link && (
+              <Link href={license.link} target="blank">
+                {license.link}
+              </Link>
+            )}
+          </Box>
         ))}
       </Modal>
     </>

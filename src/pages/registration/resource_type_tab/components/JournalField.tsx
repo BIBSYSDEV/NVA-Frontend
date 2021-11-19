@@ -1,40 +1,36 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Chip, MuiThemeProvider, Typography } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
-import styled from 'styled-components';
+import { Chip, ThemeProvider, Typography } from '@mui/material';
+import { Autocomplete } from '@mui/material';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
-import { lightTheme, autocompleteTranslationProps } from '../../../../themes/lightTheme';
-import { Journal } from '../../../../types/registration.types';
+import { lightTheme } from '../../../../themes/lightTheme';
+import { Journal, PublicationChannelType } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { contextTypeBaseFieldName, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import {
   JournalEntityDescription,
   JournalRegistration,
 } from '../../../../types/publication_types/journalRegistration.types';
 import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
+import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 
 const journalFieldTestId = dataTestId.registrationWizard.resourceType.journalField;
-
-const StyledChip = styled(Chip)`
-  padding: 2rem 0 2rem 0;
-`;
 
 export const JournalField = () => {
   const { t } = useTranslation('registration');
   const { setFieldValue, setFieldTouched, values } = useFormikContext<JournalRegistration>();
-  const {
-    reference: { publicationContext },
-    date: { year },
-  } = values.entityDescription as JournalEntityDescription;
+  const { reference, date } = values.entityDescription as JournalEntityDescription;
+  const year = date?.year ?? '';
 
-  const [query, setQuery] = useState(publicationContext.title ?? '');
+  const [query, setQuery] = useState(
+    !reference?.publicationContext.id ? reference?.publicationContext.title ?? '' : ''
+  );
   const debouncedQuery = useDebounce(query);
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
     url:
@@ -44,17 +40,38 @@ export const JournalField = () => {
     errorMessage: t('feedback:error.get_journals'),
   });
 
-  const [journal, isLoadingJournal] = useFetch<Journal>({
-    url: publicationContext.id ?? '',
-    errorMessage: t('feedback:error.get_journal'),
+  // Fetch Journals with matching ISSN
+  const [journalsByIssn] = useFetch<Journal[]>({
+    url:
+      !reference?.publicationContext.id &&
+      (reference?.publicationContext.printIssn || reference?.publicationContext.onlineIssn)
+        ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${
+            reference.publicationContext.printIssn ?? reference.publicationContext.onlineIssn
+          }`
+        : '',
+    errorMessage: t('feedback:error.get_journals'),
   });
 
+  useEffect(() => {
+    // Set Journal with matching ISSN
+    if (journalsByIssn?.length === 1) {
+      setFieldValue(ResourceFieldNames.PublicationContextType, PublicationChannelType.Journal, false);
+      setFieldValue(ResourceFieldNames.PublicationContextId, journalsByIssn[0].id);
+      setQuery('');
+    }
+  }, [setFieldValue, journalsByIssn]);
+
+  // Fetch selected journal
+  const [journal, isLoadingJournal] = useFetchResource<Journal>(
+    reference?.publicationContext.id ?? '',
+    t('feedback:error.get_journal')
+  );
+
   return (
-    <MuiThemeProvider theme={lightTheme}>
-      <Field name={ResourceFieldNames.PubliactionContextId}>
+    <ThemeProvider theme={lightTheme}>
+      <Field name={ResourceFieldNames.PublicationContextId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
-            {...autocompleteTranslationProps}
             multiple
             id={journalFieldTestId}
             data-testid={journalFieldTestId}
@@ -67,41 +84,47 @@ export const JournalField = () => {
               if (reason !== 'reset') {
                 setQuery(newInputValue);
               }
+              if (reason === 'input' && !newInputValue && reference?.publicationContext.title) {
+                setFieldValue(contextTypeBaseFieldName, { type: PublicationChannelType.UnconfirmedSeries });
+              }
             }}
             onBlur={() => setFieldTouched(field.name, true, false)}
             blurOnSelect
             disableClearable={!query}
-            value={publicationContext.id && journal ? [journal] : []}
+            value={reference?.publicationContext.id && journal ? [journal] : []}
             onChange={(_, inputValue, reason) => {
-              if (reason === 'select-option') {
-                setFieldValue(ResourceFieldNames.PubliactionContextType, 'Journal', false);
-                setFieldValue(field.name, inputValue.pop()?.id);
-              } else if (reason === 'remove-option') {
-                setFieldValue(ResourceFieldNames.PubliactionContextType, 'UnconfirmedJournal', false);
-                setFieldValue(field.name, '');
+              if (reason === 'selectOption') {
+                setFieldValue(contextTypeBaseFieldName, {
+                  type: PublicationChannelType.Journal,
+                  id: inputValue.pop()?.id,
+                });
+              } else if (reason === 'removeOption') {
+                setFieldValue(contextTypeBaseFieldName, { type: PublicationChannelType.UnconfirmedJournal });
               }
               setQuery('');
             }}
             loading={isLoadingJournalOptions || isLoadingJournal}
             getOptionLabel={(option) => option.name}
-            renderOption={(option, state) => (
-              <StyledFlexColumn>
-                <Typography variant="subtitle1">
-                  <EmphasizeSubstring
-                    text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
-                    emphasized={state.inputValue}
-                  />
-                </Typography>
-                {option.level && (
-                  <Typography variant="body2" color="textSecondary">
-                    {t('resource_type.level')}: {option.level}
+            renderOption={(props, option, state) => (
+              <li {...props}>
+                <StyledFlexColumn>
+                  <Typography variant="subtitle1">
+                    <EmphasizeSubstring
+                      text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
+                      emphasized={state.inputValue}
+                    />
                   </Typography>
-                )}
-              </StyledFlexColumn>
+                  {option.level && (
+                    <Typography variant="body2" color="textSecondary">
+                      {t('resource_type.level')}: {option.level}
+                    </Typography>
+                  )}
+                </StyledFlexColumn>
+              </li>
             )}
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
-                <StyledChip
+                <Chip
                   {...getTagProps({ index })}
                   data-testid={dataTestId.registrationWizard.resourceType.journalChip}
                   label={
@@ -123,14 +146,14 @@ export const JournalField = () => {
                 required
                 label={t('resource_type.journal')}
                 isLoading={isLoadingJournalOptions || isLoadingJournal}
-                placeholder={!publicationContext.id ? t('resource_type.search_for_journal') : ''}
-                showSearchIcon={!publicationContext.id}
+                placeholder={!reference?.publicationContext.id ? t('resource_type.search_for_journal') : ''}
+                showSearchIcon={!reference?.publicationContext.id}
                 errorMessage={meta.touched && !!meta.error ? meta.error : ''}
               />
             )}
           />
         )}
       </Field>
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 };

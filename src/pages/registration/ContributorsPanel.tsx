@@ -1,24 +1,26 @@
-import { FormHelperText } from '@material-ui/core';
-import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
+import { FormHelperText } from '@mui/material';
+import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import React, { useEffect, useRef } from 'react';
 import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { lightTheme } from '../../themes/lightTheme';
 import { ContributorRole } from '../../types/contributor.types';
 import { BookType, ContributorFieldNames } from '../../types/publicationFieldNames';
-import { Registration } from '../../types/registration.types';
-import { isDegree } from '../../utils/registration-helpers';
+import { EntityDescription, Registration } from '../../types/registration.types';
+import { isArtistic, isDegree } from '../../utils/registration-helpers';
 import { Contributors } from './contributors_tab/Contributors';
 
 export const ContributorsPanel = () => {
-  const { values, errors, touched, setFieldValue } = useFormikContext<Registration>();
   const {
-    entityDescription: {
-      reference: { publicationInstance },
-      contributors,
-    },
-  } = values;
-  const contributorsError = errors.entityDescription?.contributors;
-  const contributorsTouched = touched.entityDescription?.contributors;
+    values: { entityDescription },
+    errors,
+    touched,
+    setFieldValue,
+  } = useFormikContext<Registration>();
+  const contributorsError = (errors.entityDescription as FormikErrors<EntityDescription>)?.contributors;
+  const contributorsTouched = (touched.entityDescription as FormikTouched<EntityDescription>)?.contributors;
+
+  const publicationInstanceType = entityDescription?.reference?.publicationInstance.type ?? '';
+  const contributors = entityDescription?.contributors ?? [];
   const contributorsRef = useRef(contributors);
 
   useEffect(() => {
@@ -37,7 +39,7 @@ export const ContributorsPanel = () => {
     <>
       <FieldArray name={ContributorFieldNames.Contributors}>
         {({ push, replace }: FieldArrayRenderProps) =>
-          isDegree(publicationInstance.type) ? (
+          isDegree(publicationInstanceType) ? (
             <>
               <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
                 <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
@@ -53,7 +55,7 @@ export const ContributorsPanel = () => {
                 />
               </BackgroundDiv>
             </>
-          ) : publicationInstance.type === BookType.Anthology ? (
+          ) : publicationInstanceType === BookType.Anthology ? (
             <>
               <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
                 <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Editor]} />
@@ -66,6 +68,19 @@ export const ContributorsPanel = () => {
                 />
               </BackgroundDiv>
             </>
+          ) : isArtistic(publicationInstanceType) ? (
+            <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+              <Contributors
+                push={push}
+                replace={replace}
+                contributorRoles={[
+                  ContributorRole.Designer,
+                  ContributorRole.CuratorOrganizer,
+                  ContributorRole.Consultant,
+                  ContributorRole.Other,
+                ]}
+              />
+            </BackgroundDiv>
           ) : (
             <>
               <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>

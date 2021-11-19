@@ -13,13 +13,13 @@ import {
   TablePagination,
   TableRow,
   Typography,
-} from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
+} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { visuallyHidden } from '@mui/utils';
 import { deleteRegistration } from '../../api/registrationApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { DangerButton } from '../../components/DangerButton';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { RegistrationPreview, RegistrationStatus } from '../../types/registration.types';
@@ -86,7 +86,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
       <TableContainer>
         <Table>
           <caption>
-            <Typography variant="srOnly">{t('workLists:my_registrations')}</Typography>
+            <span style={visuallyHidden}>{t('workLists:my_registrations')}</span>
           </caption>
           <TableHead>
             <TableRow>
@@ -108,7 +108,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
             {registrationsOnPage.map((registration) => (
               <StyledTableRow key={registration.identifier}>
                 <TableCell component="th" scope="row" data-testid={`registration-title-${registration.identifier}`}>
-                  <Typography>{registration.mainTitle ?? <i>[{t('common:missing_title')}]</i>}</Typography>
+                  <Typography>{registration.mainTitle || <i>[{t('common:missing_title')}]</i>}</Typography>
                 </TableCell>
                 <TableCell data-testid={`registration-status-${registration.identifier}`}>
                   <Typography>{t<string>(`registration:status.${registration.status}`)}</Typography>
@@ -140,7 +140,8 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                 </TableCell>
                 <TableCell>
                   {registration.status === RegistrationStatus.Draft && (
-                    <DangerButton
+                    <Button
+                      color="error"
                       variant="outlined"
                       data-testid={`delete-registration-${registration.identifier}`}
                       startIcon={<DeleteIcon />}
@@ -149,7 +150,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                         setShowDeleteModal(true);
                       }}>
                       {t('delete')}
-                    </DangerButton>
+                    </Button>
                   )}
                 </TableCell>
               </StyledTableRow>

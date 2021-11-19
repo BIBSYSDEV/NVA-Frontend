@@ -1,7 +1,7 @@
 import React, { SyntheticEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Fade, Snackbar, SnackbarCloseReason } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
+import { Fade, Snackbar, SnackbarCloseReason } from '@mui/material';
+import Alert from '@mui/material/Alert';
 import { removeNotification } from '../redux/actions/notificationActions';
 import { RootStore } from '../redux/reducers/rootReducer';
 import { autoHideNotificationDuration } from '../utils/constants';

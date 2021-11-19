@@ -1,7 +1,6 @@
 import { useFormikContext } from 'formik';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { MuiThemeProvider, Typography } from '@material-ui/core';
+import { ThemeProvider } from '@mui/material';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { lightTheme } from '../../../../themes/lightTheme';
 import { BookType } from '../../../../types/publicationFieldNames';
@@ -14,42 +13,38 @@ import { BookRegistration } from '../../../../types/publication_types/bookRegist
 import { BookMonographContentType } from '../../../../types/publication_types/content.types';
 import { PublisherField } from '../components/PublisherField';
 import { IsbnAndPages } from '../components/isbn_and_pages/IsbnAndPages';
+import { InputContainerBox } from '../../../../components/styled/Wrappers';
 
 export const BookForm = () => {
-  const { t } = useTranslation('registration');
   const { values } = useFormikContext<BookRegistration>();
-  const {
-    reference: {
-      publicationInstance: { peerReviewed, type },
-    },
-  } = values.entityDescription;
+  const instanceType = values.entityDescription.reference?.publicationInstance.type;
 
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        <DoiField />
-        <PublisherField />
+        <InputContainerBox>
+          <DoiField />
+          <PublisherField />
 
-        <MuiThemeProvider theme={lightTheme}>
-          <NpiDisciplineField />
-        </MuiThemeProvider>
+          <ThemeProvider theme={lightTheme}>
+            <NpiDisciplineField />
+          </ThemeProvider>
 
-        <IsbnAndPages />
+          <IsbnAndPages />
+        </InputContainerBox>
       </BackgroundDiv>
 
-      {type === BookType.Monograph && (
+      {instanceType === BookType.Monograph && (
         <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
           <NviFields contentTypes={Object.values(BookMonographContentType)} />
         </BackgroundDiv>
       )}
 
       <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-        <Typography variant="h5">{t('resource_type.series')}</Typography>
-        <Typography>{t('resource_type.series_info')}</Typography>
         <SeriesFields />
       </BackgroundDiv>
 
-      {type === BookType.Monograph && <NviValidation isPeerReviewed={!!peerReviewed} isRated={false} />}
+      {instanceType === BookType.Monograph && <NviValidation registration={values} />}
     </>
   );
 };

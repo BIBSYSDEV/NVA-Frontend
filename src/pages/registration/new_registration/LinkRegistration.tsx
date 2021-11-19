@@ -2,10 +2,10 @@ import React, { useState, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { AccordionActions, AccordionDetails, AccordionSummary, Button, Typography } from '@material-ui/core';
-import LinkIcon from '@material-ui/icons/Link';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import { AccordionActions, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
+import LinkIcon from '@mui/icons-material/LinkOutlined';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useDispatch } from 'react-redux';
 
 import { getRegistrationByDoi } from '../../../api/registrationApi';
@@ -16,24 +16,25 @@ import { setNotification } from '../../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 const StyledRegistrationAccorion = styled(RegistrationAccordion)`
   border-color: ${({ theme }) => theme.palette.primary.main};
 `;
 
-interface LinkRegistrationProps {
+export interface StartRegistrationAccordionProps {
   expanded: boolean;
   onChange: (event: ChangeEvent<unknown>, isExpanded: boolean) => void;
 }
 
-export const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) => {
+export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
   const { t } = useTranslation('common');
   const [doi, setDoi] = useState<Doi | null>(null);
   const [noHit, setNoHit] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const createRegistration = async () => {
+  const openRegistration = async () => {
     if (!doi) {
       return;
     }
@@ -59,7 +60,9 @@ export const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) 
 
   return (
     <StyledRegistrationAccorion expanded={expanded} onChange={onChange}>
-      <AccordionSummary data-testid="new-registration-link" expandIcon={<ExpandMoreIcon fontSize="large" />}>
+      <AccordionSummary
+        data-testid={dataTestId.registrationWizard.new.linkAccordion}
+        expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <LinkIcon />
         <div>
           <Typography variant="h2">{t('registration:registration.start_with_link_to_resource_title')}</Typography>
@@ -71,7 +74,7 @@ export const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) 
         <LinkRegistrationForm handleSearch={handleSearch} />
         {noHit && <Typography>{t('no_hits')}</Typography>}
         {doi && (
-          <div data-testid="link-metadata">
+          <div data-testid={dataTestId.registrationWizard.new.linkMetadata}>
             <Typography variant="subtitle1">{t('registration')}:</Typography>
             <Typography>{doi.title}</Typography>
           </div>
@@ -80,12 +83,12 @@ export const LinkRegistration = ({ expanded, onChange }: LinkRegistrationProps) 
 
       <AccordionActions>
         <Button
-          data-testid="registration-link-next-button"
+          data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
           color="secondary"
           variant="contained"
           disabled={!doi}
-          onClick={createRegistration}>
+          onClick={openRegistration}>
           {t('registration:registration.start_registration')}
         </Button>
       </AccordionActions>

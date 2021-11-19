@@ -12,10 +12,11 @@ import {
   TableRow,
   Tooltip,
   Typography,
-} from '@material-ui/core';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import { Skeleton } from '@material-ui/lab';
+} from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { Skeleton } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import { lightTheme } from '../../../themes/lightTheme';
@@ -57,7 +58,7 @@ export const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, sele
         <TableContainer>
           <Table size="medium">
             <caption>
-              <Typography variant="srOnly">{t('registration:contributors.authors')}</Typography>
+              <span style={visuallyHidden}>{t('registration:contributors.authors')}</span>
             </caption>
             <TableHead>
               <TableRow>
@@ -119,9 +120,11 @@ const StyledTooltip = styled(Tooltip)`
   padding-top: 0.5rem;
 `;
 
-const StyledTitle = styled.div<{ canBeTruncated: boolean }>`
+const StyledTitle = styled.div`
   display: grid;
-  grid-template-columns: ${({ canBeTruncated }) => (canBeTruncated ? '1fr auto' : '1fr')};
+  grid-template-columns: 9fr 1fr;
+  gap: 0.5rem;
+  align-items: center;
 `;
 
 interface LastAlmaRegistrationCellProps {
@@ -150,15 +153,14 @@ const LastAlmaRegistrationCell = ({ authority }: LastAlmaRegistrationCellProps) 
       {isLoadingAlmaPublication ? (
         <Skeleton />
       ) : almaPublication?.title ? (
-        <StyledTitle canBeTruncated={canBeTruncated}>
-          <Typography>
-            <TextTruncate
-              line={showFullText ? false : 1}
-              truncateText=" [...]"
-              text={almaPublication.title}
-              onTruncated={() => setCanBeTruncated(true)}
-            />
-          </Typography>
+        <StyledTitle>
+          <TextTruncate
+            element="p"
+            line={showFullText ? false : 1}
+            truncateText=" [...]"
+            text={almaPublication.title}
+            onTruncated={() => setCanBeTruncated(true)}
+          />
           {canBeTruncated && (
             <StyledTooltip
               title={showFullText ? t<string>('common:title_minimize') : t<string>('common:title_expand')}

@@ -2,17 +2,13 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Link, Typography } from '@material-ui/core';
+import { Link, Typography } from '@mui/material';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { DoiRequestStatus, Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledDraftSpan = styled.span`
   margin-left: 0.5rem;
-`;
-
-const StyledPublicDoi = styled.div`
-  margin-top: 1.5rem;
 `;
 
 interface PublicDoiProps {
@@ -23,7 +19,7 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
   const { t } = useTranslation('registration');
   const user = useSelector((store: RootStore) => store.user);
 
-  const originalDoi = registration.entityDescription.reference.doi;
+  const originalDoi = registration.entityDescription?.reference?.doi ?? '';
   const nvaDoi = registration.doi;
   const hasApprovedDoiRequest = registration.doiRequest?.status === DoiRequestStatus.Approved;
   const canSeeDraftDoi =
@@ -33,16 +29,18 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
   const isDraftDoi = nvaDoi && !hasApprovedDoiRequest && canSeeDraftDoi;
 
   return doiToPresent ? (
-    <StyledPublicDoi data-testid={dataTestId.registrationLandingPage.doiLink}>
-      <Typography
-        component={Link}
-        data-testid="doi-presentation"
-        href={doiToPresent}
-        target="_blank"
-        rel="noopener noreferrer">
-        {doiToPresent}
+    <>
+      <Typography variant="overline">{t('registration.link_to_resource')}</Typography>
+      <Typography>
+        <Link
+          data-testid={dataTestId.registrationLandingPage.doiLink}
+          href={doiToPresent}
+          target="_blank"
+          rel="noopener noreferrer">
+          {doiToPresent}
+        </Link>
         {isDraftDoi && <StyledDraftSpan>({t('public_page.in_progess')})</StyledDraftSpan>}
       </Typography>
-    </StyledPublicDoi>
+    </>
   ) : null;
 };

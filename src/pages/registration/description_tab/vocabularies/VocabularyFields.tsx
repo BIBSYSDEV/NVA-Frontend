@@ -1,26 +1,24 @@
-import { Button, Menu, MenuItem, Typography } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import { Button, Menu, MenuItem, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
-import { DangerButton } from '../../../../components/DangerButton';
 import { HrcsActivityInput } from './HrcsActivityInput';
 import { HrcsCategoryInput } from './HrcsCategoryInput';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { Registration } from '../../../../types/registration.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { VocabularyComponentProps } from './VocabularyAutocomplete';
 import { hrcsActivityBaseId, hrcsCategoryBaseId } from '../../../../utils/constants';
 
 const StyledAddButton = styled(Button)`
-  margin-top: 1rem;
+  align-self: flex-start;
 `;
 
-const StyledRemoveButton = styled(DangerButton)`
-  margin-top: 1rem;
+const StyledRemoveButton = styled(Button)`
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     margin-top: 0.5rem;
   }
@@ -53,24 +51,37 @@ const vocabularyConfig: VocabularyConfig = {
     component: HrcsCategoryInput,
   },
 };
-const vocabularies = Object.keys(vocabularyConfig);
+const vocabularyEntries = Object.entries(vocabularyConfig);
 
-export const VocabularyFields = () => {
+interface VocabularyFieldsProps {
+  defaultVocabularies: string[];
+  allowedVocabularies: string[];
+}
+
+export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: VocabularyFieldsProps) => {
   const { t } = useTranslation('registration');
   const {
     setFieldValue,
     values: { subjects },
   } = useFormikContext<Registration>();
 
-  // Open vacabularies with values by default
-  const defaultVisibleVocabualaries = Object.entries(vocabularyConfig)
-    .filter(([_, value]) => subjects.some((key) => key.startsWith(value.baseId)))
-    .map(([key, _]) => key);
-  const [visibleVocabularies, setVisibleVocabularies] = useState(defaultVisibleVocabualaries);
+  const vocabulariesWithValue = vocabularyEntries
+    .filter(([, value]) => subjects.some((key) => key.startsWith(value.baseId)))
+    .map(([key]) => key);
+  const defaultVocabularyKeys = vocabularyEntries
+    .filter(([, value]) => defaultVocabularies.includes(value.baseId))
+    .map(([key]) => key);
+  const allowedVocabularyKeys = vocabularyEntries
+    .filter(([, value]) => allowedVocabularies.includes(value.baseId))
+    .map(([key]) => key);
+
+  const [visibleVocabularies, setVisibleVocabularies] = useState([
+    ...new Set([...defaultVocabularyKeys, ...vocabulariesWithValue]),
+  ]);
   const [vocabularyToRemove, setVocabularyToRemove] = useState('');
   const [newVocabularyAnchor, setNewVocabularyAnchor] = useState<null | HTMLElement>(null);
 
-  const addableVocabularies = vocabularies.filter((vocabulary) => !visibleVocabularies.includes(vocabulary));
+  const addableVocabularies = allowedVocabularyKeys.filter((vocabulary) => !visibleVocabularies.includes(vocabulary));
 
   return (
     <>
@@ -97,30 +108,35 @@ export const VocabularyFields = () => {
                       )
                     }
                   />
-                  <StyledRemoveButton
-                    startIcon={<RemoveCircleIcon />}
-                    onClick={() => setVocabularyToRemove(vocabulary)}>
-                    {t('description.remove_vocabulary')}
-                  </StyledRemoveButton>
+                  {!defaultVocabularyKeys.includes(vocabulary) && (
+                    <>
+                      <StyledRemoveButton
+                        color="error"
+                        startIcon={<RemoveCircleIcon />}
+                        onClick={() => setVocabularyToRemove(vocabulary)}>
+                        {t('description.remove_vocabulary')}
+                      </StyledRemoveButton>
 
-                  <ConfirmDialog
-                    open={vocabularyToRemove === vocabulary}
-                    title={t('description.confirm_remove_vocabulary_title')}
-                    onAccept={() => {
-                      const updatedValues = subjects.filter((keyword) => !keyword.startsWith(baseId));
-                      setFieldValue(name, updatedValues);
-                      setVisibleVocabularies(
-                        visibleVocabularies.filter((visibleVocabulary) => visibleVocabulary !== vocabulary)
-                      );
-                      setVocabularyToRemove('');
-                    }}
-                    onCancel={() => setVocabularyToRemove('')}>
-                    <Typography>
-                      {t('description.confirm_remove_vocabulary_text', {
-                        vocabulary: t(i18nKey),
-                      })}
-                    </Typography>
-                  </ConfirmDialog>
+                      <ConfirmDialog
+                        open={vocabularyToRemove === vocabulary}
+                        title={t('description.confirm_remove_vocabulary_title')}
+                        onAccept={() => {
+                          const updatedValues = subjects.filter((keyword) => !keyword.startsWith(baseId));
+                          setFieldValue(name, updatedValues);
+                          setVisibleVocabularies(
+                            visibleVocabularies.filter((visibleVocabulary) => visibleVocabulary !== vocabulary)
+                          );
+                          setVocabularyToRemove('');
+                        }}
+                        onCancel={() => setVocabularyToRemove('')}>
+                        <Typography>
+                          {t('description.confirm_remove_vocabulary_text', {
+                            vocabulary: t(i18nKey),
+                          })}
+                        </Typography>
+                      </ConfirmDialog>
+                    </>
+                  )}
                 </StyledVocabularyRow>
               );
             })}

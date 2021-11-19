@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Button, Collapse, IconButton, Typography } from '@material-ui/core';
+import { Button, Collapse, IconButton, Typography } from '@mui/material';
 import { useHistory } from 'react-router-dom';
-import CloseIcon from '@material-ui/icons/Close';
+import CloseIcon from '@mui/icons-material/Close';
 import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { lightTheme } from '../../themes/lightTheme';
 import { AboutContent } from '../infopages/AboutContent';
@@ -112,7 +112,8 @@ const Dashboard = () => {
                 onClick={() => {
                   localStorage.setItem(showTaglineKey, 'false');
                   setShowBanner(false);
-                }}>
+                }}
+                size="large">
                 <CloseIcon />
               </IconButton>
             </StyledCloseButtonWrapper>

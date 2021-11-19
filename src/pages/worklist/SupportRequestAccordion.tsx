@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@material-ui/core';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { addMessage } from '../../api/registrationApi';
 import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/actions/notificationActions';
@@ -48,7 +48,9 @@ const StyledOwner = styled.div`
 
 const StyledMessages = styled.div`
   width: 75%;
+  display: flex;
   flex-direction: column;
+  gap: 1rem;
 `;
 
 const StyledAccordionActionButtons = styled.div`

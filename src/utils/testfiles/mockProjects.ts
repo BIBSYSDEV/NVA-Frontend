@@ -2,7 +2,7 @@ import { LanguageValues } from '../../types/language.types';
 import { CristinProject, ProjectSearchResponse } from '../../types/project.types';
 
 export const mockProject: CristinProject = {
-  id: 'https://api.dev.nva.aws.unit.no/project/1',
+  id: 'https://api.dev.nva.aws.unit.no/cristin/project/1',
   type: 'Project',
   identifier: [
     {
@@ -10,6 +10,10 @@ export const mockProject: CristinProject = {
       value: '1',
     },
   ],
+  funding: [],
+  academicSummary: {},
+  popularScientificSummary: {},
+  status: 'ACTIVE',
   title: 'A dummy project',
   language: LanguageValues.ENGLISH,
   alternativeTitles: [
@@ -81,7 +85,7 @@ export const mockProject: CristinProject = {
 const mockProjects: CristinProject[] = [
   mockProject,
   {
-    id: 'https://api.dev.nva.aws.unit.no/project/414343',
+    id: 'https://api.dev.nva.aws.unit.no/cristin/project/414343',
     type: 'Project',
     identifier: [
       {
@@ -89,6 +93,10 @@ const mockProjects: CristinProject[] = [
         value: '414343',
       },
     ],
+    funding: [],
+    academicSummary: {},
+    popularScientificSummary: {},
+    status: 'ACTIVE',
     title: 'Ornitologisk kartlegging i og ved Semsøyene naturreservat',
     language: LanguageValues.ENGLISH,
     alternativeTitles: [
@@ -125,7 +133,7 @@ const mockProjects: CristinProject[] = [
     ],
   },
   {
-    id: 'https://api.dev.nva.aws.unit.no/project/414392',
+    id: 'https://api.dev.nva.aws.unit.no/cristin/project/414392',
     type: 'Project',
     identifier: [
       {
@@ -133,6 +141,10 @@ const mockProjects: CristinProject[] = [
         value: '414392',
       },
     ],
+    funding: [],
+    academicSummary: {},
+    popularScientificSummary: {},
+    status: 'ACTIVE',
     title: 'Naturbasert avløpsteknologi',
     language: LanguageValues.ENGLISH,
     alternativeTitles: [
@@ -169,7 +181,7 @@ const mockProjects: CristinProject[] = [
     ],
   },
   {
-    id: 'https://api.dev.nva.aws.unit.no/project/414451',
+    id: 'https://api.dev.nva.aws.unit.no/cristin/project/414451',
     type: 'Project',
     identifier: [
       {
@@ -177,6 +189,10 @@ const mockProjects: CristinProject[] = [
         value: '414451',
       },
     ],
+    funding: [],
+    academicSummary: {},
+    popularScientificSummary: {},
+    status: 'CONCLUDED',
     title: 'Tørking og duggpunktbestemmelse av naturgass',
     language: LanguageValues.ENGLISH,
     alternativeTitles: [
@@ -245,7 +261,7 @@ const mockProjects: CristinProject[] = [
     ],
   },
   {
-    id: 'https://api.dev.nva.aws.unit.no/project/414803',
+    id: 'https://api.dev.nva.aws.unit.no/cristin/project/414803',
     type: 'Project',
     identifier: [
       {
@@ -253,6 +269,10 @@ const mockProjects: CristinProject[] = [
         value: '414803',
       },
     ],
+    funding: [],
+    academicSummary: {},
+    popularScientificSummary: {},
+    status: 'NOTSTARTED',
     title: 'Antikkens syn på mennesket og naturen',
     language: LanguageValues.ENGLISH,
     alternativeTitles: [
@@ -291,7 +311,7 @@ const mockProjects: CristinProject[] = [
 ];
 
 export const mockProjectSearch: ProjectSearchResponse = {
-  id: 'https://api.dev.nva.aws.unit.no/project/search?QUERY_PARAMS',
+  id: 'https://api.dev.nva.aws.unit.no/cristin/project/search?QUERY_PARAMS',
   size: 0,
   searchString: 'title=natu',
   processingTime: 5828,

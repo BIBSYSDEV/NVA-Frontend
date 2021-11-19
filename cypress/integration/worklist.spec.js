@@ -6,7 +6,7 @@ describe('Worklist', () => {
   beforeEach(() => {
     cy.visit('/my-profile');
     cy.mocklogin();
-    cy.setUserRolesInRedux([RoleName.CURATOR, RoleName.PUBLISHER]);
+    cy.setUserRolesInRedux([RoleName.CURATOR]);
     cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click({ force: true });
     cy.get(`[data-testid=${dataTestId.header.worklistLink}]`).click({ force: true });
   });

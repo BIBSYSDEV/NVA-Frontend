@@ -20,20 +20,10 @@ describe('Registration: Resource type: Book', () => {
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' '); //makes the select options open
     cy.get('[data-testid=publication-context-type-Book]').should('be.visible');
     cy.get('[data-testid=publication-context-type-Book]').click({ force: true });
-    cy.get('[data-testid=publication-context-type-Book]').contains('Book');
+    cy.get('[data-testid=publication-context-type] input').should('have.value', 'Book');
 
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-BookMonograph]').click({ force: true });
-
-    // search for and select a publisher
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
-      .click()
-      .type(mockPublishersSearch[0].name);
-    cy.contains(mockPublishersSearch[0].name).click();
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherChip}]`).should(
-      'contain',
-      mockPublishersSearch[0].name
-    );
 
     // NPI Subject
     cy.selectNpiDiscipline('Linguistics');
@@ -45,12 +35,16 @@ describe('Registration: Resource type: Book', () => {
     cy.get(`[data-value="${BookMonographContentType.AcademicMonograph}"]`).click();
 
     // choose peer review value and show NVI status
-    // TODO
-    // cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviFailedPeerReview}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`)
       .eq(0)
       .click({ force: true });
-    // cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviSuccess}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviFailed}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
+      .click()
+      .type(mockPublishersSearch[1].name);
+    cy.contains(mockPublishersSearch[1].name).click({ force: true });
+
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviSuccess}]`).should('be.visible');
 
     // fill out number of pages field
     cy.get('[data-testid=pages-field] input').type('483');
@@ -59,7 +53,7 @@ describe('Registration: Resource type: Book', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesField}] input`)
       .click()
       .type(mockJournalsSearch[2].name);
-    cy.contains(mockJournalsSearch[2].name).click();
+    cy.contains(mockJournalsSearch[2].name).click({ force: true });
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesChip}]`).should(
       'contain',
       mockJournalsSearch[2].name

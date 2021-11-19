@@ -8,20 +8,20 @@ interface DownloadFileResponse {
   presignedDownloadUrl: string;
 }
 
-export const downloadFile = async (registrationId: string, fileId: string) => {
+export const downloadFile = async (registrationIdentifier: string, fileId: string) => {
   try {
     const authenticatedResponse = await authenticatedApiRequest<DownloadFileResponse>({
-      url: `${FileApiPath.Download}/${registrationId}/files/${fileId}`,
+      url: `${FileApiPath.Download}/${registrationIdentifier}/files/${fileId}`,
     });
     if (isSuccessStatus(authenticatedResponse.status)) {
-      return authenticatedResponse.data.presignedDownloadUrl;
+      return authenticatedResponse.data;
     }
   } catch {
     const publicDownloadResponse = await apiRequest<DownloadFileResponse>({
-      url: `${FileApiPath.PublicDownload}/${registrationId}/files/${fileId}`,
+      url: `${FileApiPath.PublicDownload}/${registrationIdentifier}/files/${fileId}`,
     });
     if (isSuccessStatus(publicDownloadResponse.status)) {
-      return publicDownloadResponse.data.presignedDownloadUrl;
+      return publicDownloadResponse.data;
     }
   }
 

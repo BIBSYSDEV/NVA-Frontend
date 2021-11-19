@@ -2,9 +2,9 @@ import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { TextField, Typography } from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
-import RemoveIcon from '@material-ui/icons/Remove';
+import { TextField, Typography } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
+import RemoveIcon from '@mui/icons-material/Remove';
 import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { StyledCenterAlignedContentWrapper } from '../../../../components/styled/Wrappers';
 import { lightTheme } from '../../../../themes/lightTheme';
@@ -51,26 +51,29 @@ export const ChapterForm = () => {
   const { t } = useTranslation('registration');
 
   const { values } = useFormikContext<ChapterRegistration>();
-  const { publicationInstance } = values.entityDescription.reference;
+  const instanceType = values.entityDescription.reference?.publicationInstance.type;
 
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
         <StyledDiv data-testid="info-anthology">
           <InfoIcon color="primary" />
-          <Typography variant="body1">{t('resource_type.chapter.info_anthology')}</Typography>
+          <Typography variant="body1" paragraph>
+            {t('resource_type.chapter.info_anthology')}
+          </Typography>
         </StyledDiv>
 
         <DoiField />
 
-        {publicationInstance.type === ChapterType.AnthologyChapter && (
+        {instanceType === ChapterType.AnthologyChapter && (
           <SearchContainerField
             fieldName={ResourceFieldNames.PartOf}
             searchSubtypes={[BookType.Anthology]}
             label={t('resource_type.chapter.published_in')}
             placeholder={t('resource_type.chapter.search_for_anthology')}
             dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
-            removeButtonLabel={t('resource_type.remove_anthology')}
+            fetchErrorMessage={t('feedback:error.get_monograph')}
+            descriptionToShow="publisher-and-level"
           />
         )}
       </BackgroundDiv>
@@ -113,13 +116,13 @@ export const ChapterForm = () => {
         </StyledPageNumberWrapper>
       </BackgroundDiv>
 
-      {publicationInstance.type === ChapterType.AnthologyChapter && (
+      {instanceType === ChapterType.AnthologyChapter && (
         <>
           <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
             <NviFields contentTypes={Object.values(ChapterContentType)} />
           </BackgroundDiv>
 
-          <NviValidation isPeerReviewed={!!publicationInstance.peerReviewed} isRated={false} />
+          <NviValidation registration={values} />
         </>
       )}
     </>

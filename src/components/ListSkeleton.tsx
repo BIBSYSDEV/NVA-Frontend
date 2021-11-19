@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Skeleton } from '@material-ui/lab';
+import { Skeleton } from '@mui/material';
 import { getRandomWidthPercent } from '../utils/skeleton-helpers';
 
 interface ListSkeletonProps {

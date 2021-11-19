@@ -3,12 +3,14 @@ import { PublicationType } from '../../../types/publicationFieldNames';
 import { contributorsValidationSchema } from './contributorValidation';
 import { fileValidationSchema } from './fileValidation';
 import {
+  artisticReference,
   baseReference,
   bookReference,
   chapterReference,
   degreeReference,
   emptyStringToNull,
   journalReference,
+  presentationReference,
   reportReference,
 } from './referenceValidation';
 import i18n from '../../../translations/i18n';
@@ -30,14 +32,14 @@ const registrationErrorMessage = {
 
 export const registrationValidationSchema = Yup.object().shape({
   entityDescription: Yup.object().shape({
-    mainTitle: Yup.string().required(registrationErrorMessage.titleRequired),
-    abstract: Yup.string(),
-    description: Yup.string(),
+    mainTitle: Yup.string().nullable().required(registrationErrorMessage.titleRequired),
+    abstract: Yup.string().nullable(),
+    description: Yup.string().nullable(),
     tags: Yup.array().of(Yup.string()),
     npiSubjectHeading: Yup.string().when('$publicationInstanceType', (publicationInstanceType) =>
       isBook(publicationInstanceType)
-        ? Yup.string().required(registrationErrorMessage.npiSubjectRequired)
-        : Yup.string()
+        ? Yup.string().nullable().required(registrationErrorMessage.npiSubjectRequired)
+        : Yup.string().nullable()
     ),
     date: Yup.object().shape({
       year: Yup.number()
@@ -46,7 +48,7 @@ export const registrationValidationSchema = Yup.object().shape({
       month: Yup.number().transform(emptyStringToNull).nullable(),
       day: Yup.number().transform(emptyStringToNull).nullable(),
     }),
-    language: Yup.string(),
+    language: Yup.string().nullable(),
     projects: Yup.array().of(Yup.object()),
     contributors: contributorsValidationSchema,
     reference: Yup.object().when('$publicationInstanceType', (publicationInstanceType) => {
@@ -62,12 +64,19 @@ export const registrationValidationSchema = Yup.object().shape({
           return degreeReference;
         case PublicationType.Chapter:
           return chapterReference;
+        case PublicationType.Presentation:
+          return presentationReference;
+        case PublicationType.Artistic:
+          return artisticReference;
         default:
           return baseReference;
       }
     }),
   }),
   fileSet: Yup.object().shape({
-    files: Yup.array().of(fileValidationSchema).min(1, registrationErrorMessage.fileRequired),
+    files: Yup.array()
+      .of(fileValidationSchema)
+      .min(1, registrationErrorMessage.fileRequired)
+      .required(registrationErrorMessage.fileRequired),
   }),
 });

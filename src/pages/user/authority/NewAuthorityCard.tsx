@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, Radio, Typography } from '@material-ui/core';
+import { Button, Radio, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { createAuthority } from '../../../api/authorityApi';
-import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
 import { StyledTypographyPreWrapped } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
@@ -42,7 +42,7 @@ const StyledDescription = styled(StyledTypographyPreWrapped)`
   margin-left: 0.7rem;
 `;
 
-const StyledSaveButton = styled(ButtonWithProgress)`
+const StyledSaveButton = styled(LoadingButton)`
   grid-area: create-button;
   margin-top: 2rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
@@ -100,7 +100,7 @@ export const NewAuthorityCard = ({ onClickCancel, user }: NewAuthorityCardProps)
         color="secondary"
         variant="contained"
         size="large"
-        isLoading={isLoading}
+        loading={isLoading}
         onClick={handleCreateAuthority}>
         {t('authority.create_authority')}
       </StyledSaveButton>

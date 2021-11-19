@@ -2,10 +2,10 @@ import { Form, Formik } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
-import SaveIcon from '@material-ui/icons/Save';
+import SaveIcon from '@mui/icons-material/Save';
+import { Box } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
-import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
@@ -24,10 +24,6 @@ import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { lightTheme } from '../../themes/lightTheme';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-
-const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
-  margin-top: 2rem;
-`;
 
 const MyCustomerInstitutionPage = () => {
   const { t } = useTranslation('admin');
@@ -63,34 +59,38 @@ const MyCustomerInstitutionPage = () => {
             onSubmit={handleSubmit}>
             {({ isSubmitting }) => (
               <Form noValidate>
-                <SelectInstitutionField disabled />
-                <CustomerInstitutionTextField
-                  name={CustomerInstitutionFieldNames.DisplayName}
-                  label={t('display_name')}
-                  required
-                  dataTestId="customer-institution-display-name-field"
-                />
-                <CustomerInstitutionTextField
-                  name={CustomerInstitutionFieldNames.ShortName}
-                  label={t('short_name')}
-                  required
-                  dataTestId="customer-institution-short-name-field"
-                />
-                <CustomerInstitutionTextField
-                  name={CustomerInstitutionFieldNames.ArchiveName}
-                  label={t('archive_name')}
-                  dataTestId="customer-institution-archive-name-field"
-                />
-                <StyledButtonContainer>
-                  <ButtonWithProgress
-                    data-testid="customer-institution-save-button"
-                    color="secondary"
-                    isLoading={isSubmitting}
-                    startIcon={<SaveIcon />}
-                    type="submit">
-                    {t('common:save')}
-                  </ButtonWithProgress>
-                </StyledButtonContainer>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  <SelectInstitutionField disabled />
+                  <CustomerInstitutionTextField
+                    name={CustomerInstitutionFieldNames.DisplayName}
+                    label={t('display_name')}
+                    required
+                    dataTestId="customer-institution-display-name-field"
+                  />
+                  <CustomerInstitutionTextField
+                    name={CustomerInstitutionFieldNames.ShortName}
+                    label={t('short_name')}
+                    required
+                    dataTestId="customer-institution-short-name-field"
+                  />
+                  <CustomerInstitutionTextField
+                    name={CustomerInstitutionFieldNames.ArchiveName}
+                    label={t('archive_name')}
+                    dataTestId="customer-institution-archive-name-field"
+                  />
+                  <StyledRightAlignedWrapper>
+                    <LoadingButton
+                      data-testid="customer-institution-save-button"
+                      color="secondary"
+                      variant="contained"
+                      loading={isSubmitting}
+                      startIcon={<SaveIcon />}
+                      loadingPosition="start"
+                      type="submit">
+                      {t('common:save')}
+                    </LoadingButton>
+                  </StyledRightAlignedWrapper>
+                </Box>
               </Form>
             )}
           </Formik>

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { Card } from '../../components/Card';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { PageHeader } from '../../components/PageHeader';

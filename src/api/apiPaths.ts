@@ -26,7 +26,7 @@ export enum InstitutionApiPath {
 }
 
 export enum ProjectsApiPath {
-  Project = '/project',
+  Project = '/cristin/project',
 }
 
 export enum PublicationChannelApiPath {

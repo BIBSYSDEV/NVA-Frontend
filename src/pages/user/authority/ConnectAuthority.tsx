@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, DialogActions } from '@material-ui/core';
+import { Button, DialogActions } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../../api/authorityApi';
-import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
 import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
@@ -111,16 +111,16 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
               <Button variant="text" onClick={handleCloseModal}>
                 {t('common:cancel')}
               </Button>
-              <ButtonWithProgress
+              <LoadingButton
                 data-testid="connect-author-button"
                 color="secondary"
                 variant="contained"
                 size="large"
                 onClick={updateAuthorityForUser}
-                disabled={!selectedArpId || isUpdatingAuthority}
-                isLoading={isUpdatingAuthority}>
+                disabled={!selectedArpId}
+                loading={isUpdatingAuthority}>
                 {t('authority.connect_to_select_authority')}
-              </ButtonWithProgress>
+              </LoadingButton>
             </DialogActions>
           </>
         ) : (

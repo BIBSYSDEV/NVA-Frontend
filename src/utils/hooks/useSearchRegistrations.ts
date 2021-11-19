@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { SearchApiPath } from '../../api/apiPaths';
-import { SearchResult } from '../../types/search.types';
+import { SearchResult } from '../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../constants';
 import { createSearchQuery, SearchConfig } from '../searchHelpers';
 import { useFetch } from './useFetch';

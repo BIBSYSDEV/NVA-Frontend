@@ -1,4 +1,10 @@
-import { BaseEntityDescription, BaseReference, BaseRegistration, NviApplicableBase } from '../registration.types';
+import {
+  BaseEntityDescription,
+  BaseReference,
+  BaseRegistration,
+  NviApplicableBase,
+  PublicationChannelType,
+} from '../registration.types';
 import { JournalType } from '../publicationFieldNames';
 import { LanguageValues } from '../language.types';
 import { emptyPagesRange, PagesRange } from './pages.types';
@@ -11,27 +17,27 @@ export interface JournalRegistration extends BaseRegistration {
 export interface JournalPublicationInstance extends NviApplicableBase<JournalArticleContentType> {
   type: JournalType | '';
   articleNumber: string;
-  issue: string;
-  pages: PagesRange;
-  volume: string;
-  corrigendumFor: string;
+  issue: string | null;
+  pages: PagesRange | null;
+  volume: string | null;
+  corrigendumFor: string | null;
 }
 
 export interface JournalPublicationContext {
-  type: 'UnconfirmedJournal' | 'Journal' | '';
+  type: PublicationChannelType.UnconfirmedJournal | PublicationChannelType.Journal | '';
   id?: string;
   title?: string;
   onlineIssn?: string;
   printIssn?: string;
 }
 
-interface JournalReference extends BaseReference {
+export interface JournalReference extends BaseReference {
   publicationContext: JournalPublicationContext;
   publicationInstance: JournalPublicationInstance;
 }
 
 export interface JournalEntityDescription extends BaseEntityDescription {
-  reference: JournalReference;
+  reference: JournalReference | null;
 }
 
 export const emptyJournalPublicationInstance: JournalPublicationInstance = {

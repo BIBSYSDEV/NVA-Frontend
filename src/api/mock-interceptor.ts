@@ -11,14 +11,17 @@ import mockNtnuSubunitResponse from '../utils/testfiles/institutions/institution
 import { mockSchoolOfSportDepartment } from '../utils/testfiles/institutions/school_of_sport_department';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import { mockRoles } from '../utils/testfiles/mock_feide_user';
-import { mockCustomerInstitution, mockCustomerInstitutions } from '../utils/testfiles/mockCustomerInstitutions';
+import {
+  mockCustomerInstitution,
+  mockCustomerInstitutions,
+  mockCustomerInstitutionVocabularies,
+} from '../utils/testfiles/mockCustomerInstitutions';
 import mockMyRegistrations from '../utils/testfiles/my_registrations.json';
 import { mockProject, mockProjectSearch } from '../utils/testfiles/mockProjects';
 import mockPublishedRegistrations from '../utils/testfiles/published_registrations.json';
 import { mockPublishersSearch } from '../utils/testfiles/mockPublishers';
 import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
 import { mockSearchResults } from '../utils/testfiles/search_results';
-import { threeMockSearchResults } from '../utils/testfiles/three_search_results';
 import { mockMessages, mockPublishedRegistration, mockRegistration } from '../utils/testfiles/mockRegistration';
 import {
   SearchApiPath,
@@ -68,8 +71,7 @@ export const interceptRequestsOnMock = () => {
   const mock = new MockAdapter(Axios);
 
   // SEARCH
-  mock.onGet(new RegExp(SearchApiPath.Registrations)).replyOnce(200, mockSearchResults);
-  mock.onGet(new RegExp(SearchApiPath.Registrations)).reply(200, threeMockSearchResults);
+  mock.onGet(new RegExp(SearchApiPath.Registrations)).reply(200, mockSearchResults);
 
   // File
   mock.onGet(new RegExp(FileApiPath.Download)).reply(200, mockDownload);
@@ -96,8 +98,7 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(PublicationChannelApiPath.PublisherSearch)).reply(200, mockPublishersSearch);
 
   //PUBLICATION
-  mock.onPost(new RegExp(PublicationsApiPath.Registration)).reply(201, emptyRegistration);
-  mock.onGet(new RegExp(`${PublicationsApiPath.Registration}/new`)).reply(200, emptyRegistration);
+  mock.onPost(new RegExp(PublicationsApiPath.Registration)).reply(201, mockRegistration);
   mock
     .onGet(new RegExp(`${PublicationsApiPath.Registration}/4327439`))
     .reply(200, { ...emptyRegistration, owner: 'tu@unit.no' });
@@ -144,6 +145,9 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(AuthorityApiPath.Person)).reply(200, mockSingleAuthorityResponse);
 
   //memberinstitutions
+  mock
+    .onGet(new RegExp(`${CustomerInstitutionApiPath.Customer}/.+/vocabularies`))
+    .reply(200, mockCustomerInstitutionVocabularies);
   mock.onGet(new RegExp(CustomerInstitutionApiPath.Customer)).replyOnce(200, mockCustomerInstitutions);
   mock.onGet(new RegExp(CustomerInstitutionApiPath.Customer)).reply(200, mockCustomerInstitution);
   mock.onPut(new RegExp(CustomerInstitutionApiPath.Customer)).reply(200, mockCustomerInstitution);

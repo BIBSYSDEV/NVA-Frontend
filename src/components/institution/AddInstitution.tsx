@@ -2,20 +2,17 @@ import { Field, FieldProps, Form, Formik } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Button, CircularProgress, Typography } from '@material-ui/core';
+import { Button, CircularProgress, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { InstitutionSelector } from '../../pages/user/institution/InstitutionSelector';
 import { FormikInstitutionUnit, FormikInstitutionUnitFieldNames } from '../../types/institution.types';
 import { useFetchDepartment } from '../../utils/hooks/useFetchDepartment';
 import { useFetchInstitutions } from '../../utils/hooks/useFetchInstitutions';
 import { InstitutionAutocomplete } from './InstitutionAutocomplete';
-import { ButtonWithProgress } from '../ButtonWithProgress';
 
 export const StyledButtonContainer = styled.div`
   display: flex;
-  margin-top: 1rem;
-  > :not(:last-child) {
-    margin-right: 1rem;
-  }
+  gap: 1rem;
 `;
 
 const StyledInstitutionSearchContainer = styled.div`
@@ -23,6 +20,9 @@ const StyledInstitutionSearchContainer = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     width: 100%;
   }
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 interface AddInstitutionProps {
@@ -69,23 +69,22 @@ export const AddInstitution = ({ onSubmit, onClose }: AddInstitutionProps) => {
               )}
 
               <StyledButtonContainer>
-                <ButtonWithProgress
+                <LoadingButton
                   variant="contained"
                   type="submit"
                   color="primary"
-                  isLoading={isSubmitting}
+                  loading={isSubmitting}
                   disabled={!value || isLoadingDepartment}
                   data-testid="institution-add-button">
                   {t('add')}
-                </ButtonWithProgress>
+                </LoadingButton>
 
                 {onClose && (
                   <Button
                     onClick={() => {
                       onClose();
                     }}
-                    data-testid="institution-cancel-button"
-                    variant="contained">
+                    data-testid="institution-cancel-button">
                     {t('cancel')}
                   </Button>
                 )}

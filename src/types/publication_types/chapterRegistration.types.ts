@@ -9,12 +9,12 @@ export interface ChapterRegistration extends BaseRegistration {
 
 export interface ChapterPublicationInstance extends NviApplicableBase<ChapterContentType> {
   type: ChapterType | '';
-  pages: PagesRange;
+  pages: PagesRange | null;
 }
 
 export interface ChapterPublicationContext {
   type: PublicationType.Chapter;
-  partOf: string;
+  partOf: string | null;
 }
 
 export const emptyChapterPublicationInstance: ChapterPublicationInstance = {
@@ -30,5 +30,5 @@ interface ChapterReference extends BaseReference {
 }
 
 export interface ChapterEntityDescription extends BaseEntityDescription {
-  reference: ChapterReference;
+  reference: ChapterReference | null;
 }

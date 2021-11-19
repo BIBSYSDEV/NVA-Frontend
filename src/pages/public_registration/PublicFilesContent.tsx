@@ -1,18 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import LockIcon from '@material-ui/icons/Lock';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import LockIcon from '@mui/icons-material/Lock';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Accordion, AccordionDetails, AccordionSummary, Button, CircularProgress, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Button, CircularProgress, Typography } from '@mui/material';
 import prettyBytes from 'pretty-bytes';
 import { File, licenses } from '../../types/file.types';
 import { downloadFile } from '../../api/fileApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { ButtonWithProgress } from '../../components/ButtonWithProgress';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { PreviewFile } from './preview_file/PreviewFile';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -82,7 +80,8 @@ const StyledPreviewAccordion = styled(Accordion)`
 const maxFileSize = 10000000; //10 MB
 
 export const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) => {
-  const publiclyAvailableFiles = registration.fileSet.files.filter((file) => !file.administrativeAgreement);
+  const files = registration.fileSet?.files ?? [];
+  const publiclyAvailableFiles = files.filter((file) => !file.administrativeAgreement);
 
   return (
     <StyledFileRowContainer>
@@ -90,7 +89,7 @@ export const PublicFilesContent = ({ registration }: PublicRegistrationContentPr
         <FileRow
           key={file.identifier}
           file={file}
-          registrationId={registration.identifier}
+          registrationIdentifier={registration.identifier}
           openPreviewByDefault={index === 0 && publiclyAvailableFiles[0].size < maxFileSize}
         />
       ))}
@@ -100,43 +99,46 @@ export const PublicFilesContent = ({ registration }: PublicRegistrationContentPr
 
 interface FileRowProps {
   file: File;
-  registrationId: string;
+  registrationIdentifier: string;
   openPreviewByDefault: boolean;
 }
 
-const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) => {
+const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('common');
-  const [isLoadingFile, setIsLoadingFile] = useState(false);
-  const [currentFileUrl, setCurrentFileUrl] = useState('');
   const [openPreviewAccordion, setOpenPreviewAccordion] = useState(openPreviewByDefault);
+  const [isLoadingPreviewFile, setIsLoadingPreviewFile] = useState(false);
+  const [previewFileUrl, setPreviewFileUrl] = useState('');
 
   const handleDownload = useCallback(
-    async (manuallyTriggered = true) => {
-      setIsLoadingFile(true);
-      const downloadedFileUrl = await downloadFile(registrationId, file.identifier);
-      if (!downloadedFileUrl) {
+    async (previewFile = false) => {
+      previewFile && setIsLoadingPreviewFile(true);
+      const downloadFileResponse = await downloadFile(registrationIdentifier, file.identifier);
+      if (!downloadFileResponse) {
         dispatch(setNotification(t('feedback:error.download_file'), NotificationVariant.Error));
       } else {
-        setCurrentFileUrl(downloadedFileUrl);
-        if (manuallyTriggered) {
-          window.open(downloadedFileUrl, '_blank');
+        const { presignedDownloadUrl } = downloadFileResponse;
+        if (previewFile) {
+          setPreviewFileUrl(presignedDownloadUrl);
+        } else {
+          window.open(presignedDownloadUrl, '_blank');
         }
       }
-      setIsLoadingFile(false);
+      previewFile && setIsLoadingPreviewFile(false);
     },
-    [t, dispatch, registrationId, file.identifier]
+    [t, dispatch, registrationIdentifier, file.identifier]
   );
 
   useEffect(() => {
-    if (openPreviewAccordion && !currentFileUrl) {
-      handleDownload(false); // Download file without user interaction
+    if (openPreviewAccordion && !previewFileUrl) {
+      handleDownload(true); // Download file for preview
     }
-  }, [handleDownload, currentFileUrl, openPreviewAccordion, file.size]);
+  }, [handleDownload, openPreviewAccordion, previewFileUrl]);
 
   const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
   const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
   const fileIsEmbargoed = fileEmbargoDate ? fileEmbargoDate > new Date() : false;
+  const licenseTitle = file.license?.identifier ? t(`licenses:labels.${file.license.identifier}`) : '';
 
   return (
     <StyledFileRow>
@@ -148,36 +150,30 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
           : t('registration:files_and_license.accepted_version')}
       </StyledVersion>
       <StyledLicenseImg
-        onClick={() => window.open(licenseData?.link)}
-        alt={file.license?.identifier}
-        src={licenseData?.buttonImage}
+        onClick={() => {
+          if (licenseData?.link) {
+            window.open(licenseData.link);
+          }
+        }}
+        alt={licenseTitle}
+        title={licenseTitle}
+        src={licenseData?.logo}
         data-testid={dataTestId.registrationLandingPage.license}
       />
       <StyledDownload>
-        {fileEmbargoDate && fileIsEmbargoed ? (
+        {fileIsEmbargoed ? (
           <Typography>
             <LockIcon />
-            {t('will_be_available')} {fileEmbargoDate.toLocaleDateString()}
+            {t('will_be_available')} {fileEmbargoDate?.toLocaleDateString()}
           </Typography>
-        ) : !currentFileUrl ? (
-          <ButtonWithProgress
-            data-testid={dataTestId.registrationLandingPage.downloadFileButton}
-            variant="contained"
-            color="secondary"
-            fullWidth
-            endIcon={<CloudDownloadIcon />}
-            isLoading={isLoadingFile}
-            onClick={handleDownload}>
-            {t('download')}
-          </ButtonWithProgress>
         ) : (
           <Button
-            data-testid="button-open-file"
+            data-testid={dataTestId.registrationLandingPage.openFileButton}
             variant="contained"
             color="secondary"
             fullWidth
             endIcon={<OpenInNewIcon />}
-            href={currentFileUrl}>
+            onClick={() => handleDownload(false)}>
             {t('open')}
           </Button>
         )}
@@ -192,7 +188,7 @@ const FileRow = ({ file, registrationId, openPreviewByDefault }: FileRowProps) =
             <Typography variant="button">{t('registration:public_page.preview')}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            {isLoadingFile || !currentFileUrl ? <CircularProgress /> : <PreviewFile url={currentFileUrl} file={file} />}
+            {isLoadingPreviewFile ? <CircularProgress /> : <PreviewFile url={previewFileUrl} file={file} />}
           </AccordionDetails>
         </StyledPreviewAccordion>
       )}

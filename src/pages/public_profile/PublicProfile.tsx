@@ -2,20 +2,21 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { IconButton, Link as MuiLink, Typography } from '@material-ui/core';
-import WorkIcon from '@material-ui/icons/Work';
+import { IconButton, Link as MuiLink, Typography } from '@mui/material';
+import WorkIcon from '@mui/icons-material/Work';
 import { Helmet } from 'react-helmet';
 import { Card } from '../../components/Card';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
-import { SearchFieldName } from '../../types/search.types';
 import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { PageSpinner } from '../../components/PageSpinner';
 import { Authority } from '../../types/authority.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { SearchResults } from '../search/SearchResults';
+import { ContributorFieldNames, SpecificContributorFieldNames } from '../../types/publicationFieldNames';
+import { ExpressionStatement } from '../../utils/searchHelpers';
 
 const StyledLine = styled.div`
   display: flex;
@@ -42,7 +43,13 @@ const PublicProfile = () => {
     errorMessage: t('feedback:error.get_authority'),
   });
   const [registrations, isLoadingRegistrations] = useSearchRegistrations({
-    properties: [{ fieldName: SearchFieldName.ContributorId, value: arpId }],
+    properties: [
+      {
+        fieldName: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Id}`,
+        value: arpId,
+        operator: ExpressionStatement.Contains,
+      },
+    ],
   });
 
   return (
@@ -70,7 +77,7 @@ const PublicProfile = () => {
               )}
               {authority.orcids.map((orcid) => (
                 <StyledLine key={orcid}>
-                  <IconButton size="small" href={orcid}>
+                  <IconButton size="small" href={orcid} target="_blank">
                     <img src={orcidIcon} height="20" alt="orcid" />
                   </IconButton>
                   <StyledTextContainer>

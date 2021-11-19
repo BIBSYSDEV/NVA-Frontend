@@ -1,12 +1,22 @@
 {
-  "category_and_discipline": "Kategori og disiplin",
   "financing": "Finansiering",
+  "grant_id": "GrantID",
+  "no_participants": "Ingen registrerte deltakere.",
+  "no_results": "Ingen publiserte resultater.",
+  "no_summary": "Ingen registrerte sammendrag.",
   "period": "Prosjektperiode",
+  "popular_science_summary": "Populærvitenskapelig sammendrag",
   "project": "Prosjekt",
   "project_info": "Prosjektinfo",
   "project_manager": "Prosjektleder",
   "project_owner": "Prosjekteier",
   "project_participants": "Prosjektdeltakere",
   "results": "Resultater",
-  "scientific_summary": "Vitenskapelig sammendrag"
+  "scientific_summary": "Vitenskapelig sammendrag",
+  "status": {
+    "ACTIVE": "Aktivt",
+    "CONCLUDED": "Avsluttet",
+    "NOTSTARTED": "Ikke startet"
+  },
+  "summary": "Sammendrag"
 }

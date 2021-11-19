@@ -1,4 +1,10 @@
-import { BaseEntityDescription, BaseReference, BaseRegistration, NviApplicableBase } from '../registration.types';
+import {
+  BaseEntityDescription,
+  BaseReference,
+  BaseRegistration,
+  NviApplicableBase,
+  PublicationChannelType,
+} from '../registration.types';
 import { PublicationType, BookType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
 import { BookMonographContentType } from './content.types';
@@ -20,13 +26,13 @@ export const emptyBookPublicationInstance: BookPublicationInstance = {
 };
 
 export interface Series {
-  type: 'Series' | 'UnconfirmedSeries';
+  type: PublicationChannelType.Series | PublicationChannelType.UnconfirmedSeries;
   id?: string;
   title?: string;
 }
 
 export interface ContextPublisher {
-  type: 'UnconfirmedPublisher' | 'Publisher';
+  type: PublicationChannelType.UnconfirmedPublisher | PublicationChannelType.Publisher;
   name?: string;
   id?: string;
 }
@@ -45,5 +51,5 @@ interface BookReference extends BaseReference {
 }
 
 export interface BookEntityDescription extends BaseEntityDescription {
-  reference: BookReference;
+  reference: BookReference | null;
 }

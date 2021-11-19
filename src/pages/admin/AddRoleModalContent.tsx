@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, TextField, DialogActions, InputAdornment, Typography } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
+import { Button, TextField, DialogActions, InputAdornment, Typography } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 import { RoleName, InstitutionUser } from '../../types/user.types';
 import { UserList } from './UserList';
@@ -33,7 +33,9 @@ export const AddRoleModalContent = ({
 
   return (
     <>
-      <Typography data-testid="add-role-info">{t('users.add_role_info')}</Typography>
+      <Typography data-testid="add-role-info" paragraph>
+        {t('users.add_role_info')}
+      </Typography>
       <TextField
         autoFocus
         fullWidth

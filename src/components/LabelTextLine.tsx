@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
-import { Link } from 'react-router-dom';
-import { Link as MuiLink, Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import styled from 'styled-components';
 
 const StyledLine = styled.div`
@@ -22,35 +21,11 @@ interface LabelTextLineProps {
   label: string;
   children?: ReactNode;
   dataTestId?: string;
-  externalLink?: string;
-  internalLink?: string;
-  linkText?: string;
 }
 
-export const LabelTextLine = ({
-  label,
-  children,
-  dataTestId,
-  externalLink,
-  internalLink,
-  linkText,
-}: LabelTextLineProps) => (
+export const LabelTextLine = ({ label, children, dataTestId }: LabelTextLineProps) => (
   <StyledLine>
     <StyledLabel>{label}:</StyledLabel>
-    {externalLink && (
-      <MuiLink href={externalLink} target="_blank" rel="noopener noreferrer">
-        <StyledContent data-testid={dataTestId}>
-          <Typography>{linkText ?? externalLink}</Typography>
-        </StyledContent>
-      </MuiLink>
-    )}
-    {internalLink && (
-      <MuiLink component={Link} to={internalLink}>
-        <StyledContent data-testid={dataTestId}>
-          <Typography>{linkText ?? internalLink}</Typography>
-        </StyledContent>
-      </MuiLink>
-    )}
     {children && <StyledContent data-testid={dataTestId}>{children}</StyledContent>}
   </StyledLine>
 );

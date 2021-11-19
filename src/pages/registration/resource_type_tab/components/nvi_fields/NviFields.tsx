@@ -15,13 +15,13 @@ interface NviFieldsProps {
 
 export const NviFields = ({ contentTypes }: NviFieldsProps) => {
   const {
-    values: {
-      entityDescription: {
-        reference: { publicationInstance },
-      },
-    },
+    values: { entityDescription },
   } = useFormikContext<Registration>();
-  const contentType = 'contentType' in publicationInstance ? (publicationInstance.contentType as string) : '';
+  const contentType =
+    entityDescription?.reference?.publicationInstance &&
+    'contentType' in entityDescription.reference.publicationInstance
+      ? entityDescription.reference.publicationInstance.contentType ?? ''
+      : '';
 
   return (
     <>

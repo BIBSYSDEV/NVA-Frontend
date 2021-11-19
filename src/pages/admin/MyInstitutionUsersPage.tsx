@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Button, Checkbox, Divider, FormControlLabel, Typography } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import { Button, Checkbox, Divider, FormControlLabel, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import { Card } from '../../components/Card';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { Modal } from '../../components/Modal';
@@ -42,12 +42,7 @@ const MyInstitutionUsersPage = () => {
     setAutoAssignCreators(!autoAssignCreators);
   };
 
-  const roleToAddTitle =
-    roleToAdd === RoleName.INSTITUTION_ADMIN
-      ? t('users.add_institution_admin')
-      : roleToAdd === RoleName.CURATOR
-      ? t('users.add_curator')
-      : t('users.add_editor');
+  const roleToAddTitle = t('common:add_custom', { name: roleToAdd });
 
   return (
     <StyledPageWrapperWithMaxWidth>
@@ -75,7 +70,7 @@ const MyInstitutionUsersPage = () => {
             startIcon={<AddIcon />}
             data-testid="button-add-institution-admin"
             onClick={() => setRoleToAdd(RoleName.INSTITUTION_ADMIN)}>
-            {t('users.add_institution_admin')}
+            {t('common:add_custom', { name: t('profile:roles.institution_admin') })}
           </StyledNewButton>
         </StyledContainer>
 
@@ -101,7 +96,7 @@ const MyInstitutionUsersPage = () => {
             startIcon={<AddIcon />}
             data-testid="button-add-curator"
             onClick={() => setRoleToAdd(RoleName.CURATOR)}>
-            {t('users.add_curator')}
+            {t('common:add_custom', { name: t('profile:roles.curator') })}
           </StyledNewButton>
         </StyledContainer>
 
@@ -127,7 +122,7 @@ const MyInstitutionUsersPage = () => {
             startIcon={<AddIcon />}
             data-testid="button-add-editor"
             onClick={() => setRoleToAdd(RoleName.EDITOR)}>
-            {t('users.add_editor')}
+            {t('common:add_custom', { name: t('profile:roles.editor') })}
           </StyledNewButton>
         </StyledContainer>
 
@@ -140,7 +135,7 @@ const MyInstitutionUsersPage = () => {
           <FormControlLabel
             control={<Checkbox disabled checked={autoAssignCreators} data-testid="checkbox-assign-creators" />}
             onChange={handleCheckAutoAssignCreators}
-            label={t('users.auto_assign_creators')}
+            label={t<string>('users.auto_assign_creators')}
           />
         </StyledContainer>
 

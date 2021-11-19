@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { Button, DialogActions, DialogContent, Typography } from '@material-ui/core';
+import { Button, DialogActions, DialogContent, Typography } from '@mui/material';
 
 import { ORCID_SIGN_IN_URL, USE_MOCK_DATA } from '../../utils/constants';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -31,7 +31,7 @@ export const OrcidModalContent = ({ cancelFunction, cancelText }: OrcidModalCont
         <Typography>{t('orcid.dialog.paragraph1')}</Typography>
       </DialogContent>
       <DialogActions>
-        <Button data-testid="cancel-connect-to-orcid" color="default" variant="outlined" onClick={cancelFunction}>
+        <Button data-testid="cancel-connect-to-orcid" variant="outlined" onClick={cancelFunction}>
           {cancelText ?? t('common:close')}
         </Button>
         <Button data-testid="connect-to-orcid" onClick={openORCID} color="secondary" variant="contained">

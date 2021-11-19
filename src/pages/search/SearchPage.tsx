@@ -1,13 +1,13 @@
-import { List, Typography } from '@material-ui/core';
+import { List, Typography } from '@mui/material';
 import { Formik, Form } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { PageHeader } from '../../components/PageHeader';
-import { SearchBar } from '../../components/SearchBar';
+import { SearchBar } from './SearchBar';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
-import { createSearchConfigFromSearchParams, createSearchQuery } from '../../utils/searchHelpers';
+import { createSearchConfigFromSearchParams, createSearchQuery, SearchParam } from '../../utils/searchHelpers';
 import { RegistrationTypeFilter } from './filters/RegistrationTypeFilter';
 import { RegistrationSearch } from './RegistrationSearch';
 import { SortSelector } from './SortSelector';
@@ -15,8 +15,8 @@ import { SortSelector } from './SortSelector';
 const StyledSearch = styled.div`
   display: grid;
   grid-template-columns: 2fr 5fr 2fr;
-  grid-template-rows: auto 1fr;
-  grid-template-areas: 'filters searchbar sorting' 'filters results results';
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas: 'filters searchbar sorting' 'filters advanced advanced' 'filters results results';
   column-gap: 2rem;
   row-gap: 1rem;
 
@@ -48,10 +48,11 @@ const SearchPage = () => {
         initialValues={initialSearchParams}
         onSubmit={(values) => {
           const queryString = createSearchQuery(values);
+          params.set(SearchParam.From, '0');
           if (queryString) {
-            params.set('query', queryString);
+            params.set(SearchParam.Query, queryString);
           } else {
-            params.delete('query');
+            params.delete(SearchParam.Query);
           }
           history.push({ search: params.toString() });
         }}>

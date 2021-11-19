@@ -3,12 +3,11 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, Typography } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
-import DeleteIcon from '@material-ui/icons/RemoveCircleSharp';
-import WarningIcon from '@material-ui/icons/Warning';
+import { Button, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
+import DeleteIcon from '@mui/icons-material/RemoveCircleSharp';
+import WarningIcon from '@mui/icons-material/Warning';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
-import { DangerButton } from '../../../../components/DangerButton';
 import { AddInstitution } from '../../../../components/institution/AddInstitution';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { Modal } from '../../../../components/Modal';
@@ -129,13 +128,14 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
               </>
             )
           )}
-          <DangerButton
+          <Button
+            color="error"
             size="small"
             data-testid={`button-remove-affiliation-${affiliation.id}`}
             startIcon={<DeleteIcon />}
             onClick={() => setAffiliationToRemove(affiliation)}>
             {t('contributors.remove_affiliation')}
-          </DangerButton>
+          </Button>
         </StyledCard>
       ))}
       <StyledAddAffiliationButton
@@ -159,7 +159,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
         headingText={t('contributors.select_institution')}
         dataTestId="affiliation-modal">
         <>
-          <Typography>
+          <Typography paragraph>
             {t('common:name')}: <b>{authorName}</b>
           </Typography>
           {affiliationToVerify && (
