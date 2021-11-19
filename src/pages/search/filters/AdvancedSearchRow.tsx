@@ -18,7 +18,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
   const { t } = useTranslation('search');
 
   return (
-    <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 3fr 6fr 2fr', gap: '1rem' }}>
+    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '3fr 3fr 5fr 2fr' }, gap: '1rem' }}>
       <Field name={`${baseFieldName}.fieldName`}>
         {({ field }: FieldProps<string>) => (
           <TextField {...field} select variant="outlined" label={t('field_label')}>

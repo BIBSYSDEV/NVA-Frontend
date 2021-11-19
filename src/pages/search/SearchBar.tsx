@@ -6,7 +6,6 @@ import FilterAltIcon from '@mui/icons-material/FilterAltOutlined';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { dataTestId } from '../../utils/dataTestIds';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../utils/searchHelpers';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
 
 export const SearchBar = () => {
@@ -54,41 +53,39 @@ export const SearchBar = () => {
           />
         )}
       </Field>
-      <BetaFunctionality gridArea="advanced">
-        <FieldArray name="properties">
-          {({ push, remove }: FieldArrayRenderProps) => (
-            <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {properties.map((_, index) => (
-                <AdvancedSearchRow
-                  key={index}
-                  removeFilter={() => remove(index)}
-                  baseFieldName={`properties[${index}]`}
-                />
-              ))}
-              <Box sx={{ display: 'flex', gap: '1rem' }}>
-                <Button
-                  variant="outlined"
-                  onClick={() => {
-                    const newPropertyFilter: PropertySearch = {
-                      fieldName: '',
-                      value: '',
-                      operator: ExpressionStatement.Contains,
-                    };
-                    push(newPropertyFilter);
-                  }}
-                  startIcon={<FilterAltIcon />}>
-                  {t('add_filter')}
+      <FieldArray name="properties">
+        {({ push, remove }: FieldArrayRenderProps) => (
+          <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {properties.map((_, index) => (
+              <AdvancedSearchRow
+                key={index}
+                removeFilter={() => remove(index)}
+                baseFieldName={`properties[${index}]`}
+              />
+            ))}
+            <Box sx={{ display: 'flex', gap: '1rem' }}>
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  const newPropertyFilter: PropertySearch = {
+                    fieldName: '',
+                    value: '',
+                    operator: ExpressionStatement.Contains,
+                  };
+                  push(newPropertyFilter);
+                }}
+                startIcon={<FilterAltIcon />}>
+                {t('add_filter')}
+              </Button>
+              {properties.length > 0 && (
+                <Button variant="contained" type="submit" startIcon={<SearchIcon />}>
+                  {t('search')}
                 </Button>
-                {properties.length > 0 && (
-                  <Button variant="contained" type="submit" startIcon={<SearchIcon />}>
-                    {t('search')}
-                  </Button>
-                )}
-              </Box>
+              )}
             </Box>
-          )}
-        </FieldArray>
-      </BetaFunctionality>
+          </Box>
+        )}
+      </FieldArray>
     </>
   );
 };

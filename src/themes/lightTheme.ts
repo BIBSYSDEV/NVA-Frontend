@@ -175,6 +175,17 @@ export const lightTheme = createTheme({
         },
       },
     },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          height: '100%',
+          padding: '0.4rem 0',
+        },
+        label: {
+          whiteSpace: 'normal', // Allow multiline chips
+        },
+      },
+    },
     MuiInputBase: {
       styleOverrides: {
         root: {
