@@ -22,7 +22,7 @@ const StyledSearch = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     grid-template-columns: 1fr;
-    grid-template-areas: 'searchbar' 'sorting' 'filters' 'results';
+    grid-template-areas: 'searchbar' 'sorting' 'filters' 'advanced' 'results';
   }
 `;
 
