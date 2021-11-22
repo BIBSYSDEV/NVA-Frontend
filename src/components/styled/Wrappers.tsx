@@ -42,6 +42,6 @@ export const StyledCenteredContent = styled.div`
   margin-top: 4rem;
 `;
 
-export const InputContainerBox = (props: BoxProps) => {
-  return <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }} {...props} />;
-};
+export const InputContainerBox = (props: BoxProps) => (
+  <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }} {...props} />
+);
