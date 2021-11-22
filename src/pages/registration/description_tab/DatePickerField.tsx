@@ -1,15 +1,15 @@
-import { useFormikContext } from 'formik';
+import { FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import DateFnsUtils from '@date-io/date-fns';
-import { Checkbox, FormControlLabel, MuiThemeProvider, Typography } from '@material-ui/core';
-import { DatePickerView, KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import lightTheme, { datePickerTranslationProps } from '../../../themes/lightTheme';
+import { Checkbox, FormControlLabel, ThemeProvider, Typography, TextField } from '@mui/material';
+import { LocalizationProvider, DatePicker } from '@mui/lab';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { lightTheme, datePickerTranslationProps } from '../../../themes/lightTheme';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
-import { Registration } from '../../../types/registration.types';
+import { EntityDescription, Registration, RegistrationDate } from '../../../types/registration.types';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
-import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 const StyledFormControlLabel = styled(FormControlLabel)`
   margin-left: 0.5rem;
@@ -18,8 +18,18 @@ const StyledFormControlLabel = styled(FormControlLabel)`
 
 export const DatePickerField = () => {
   const { t, i18n } = useTranslation('registration');
-  const { setFieldValue, values, errors, touched, setFieldTouched } = useFormikContext<Registration>();
-  const { year, month, day } = values.entityDescription.date;
+  const {
+    values: { entityDescription },
+    errors,
+    touched,
+    setFieldValue,
+    setFieldTouched,
+  } = useFormikContext<Registration>();
+
+  const dateData = entityDescription?.date ?? { year: '', month: '', day: '' };
+
+  const { year, month, day } = dateData;
+
   const yearInt = parseInt(year);
   const monthInt = parseInt(month);
   const dayInt = parseInt(day);
@@ -33,17 +43,14 @@ export const DatePickerField = () => {
   );
   const [yearOnly, setYearOnly] = useState(!!year && !month);
 
-  const setYearFieldTouched = () => setFieldTouched(DescriptionFieldNames.PUBLICATION_YEAR);
-
   const updateDateValues = (newDate: Date | null, isYearOnly: boolean) => {
-    const updatedDate = {
-      type: BackendTypeNames.PUBLICATION_DATE,
-      year: newDate ? newDate.getFullYear() : '',
-      month: !isYearOnly && newDate ? newDate.getMonth() + 1 : '',
-      day: !isYearOnly && newDate ? newDate.getDate() : '',
+    const updatedDate: RegistrationDate = {
+      type: 'PublicationDate',
+      year: newDate ? newDate.getFullYear().toString() : '',
+      month: !isYearOnly && newDate ? (newDate.getMonth() + 1).toString() : '',
+      day: !isYearOnly && newDate ? newDate.getDate().toString() : '',
     };
-    setYearFieldTouched();
-    setFieldValue(DescriptionFieldNames.DATE, updatedDate);
+    setFieldValue(DescriptionFieldNames.Date, updatedDate);
   };
 
   const onChangeDate = (newDate: Date | null) => {
@@ -57,42 +64,45 @@ export const DatePickerField = () => {
     setYearOnly(nextYearOnlyValue);
   };
 
-  const views: DatePickerView[] = yearOnly ? ['year'] : ['year', 'month', 'date'];
-
-  const hasError = !!errors.entityDescription?.date?.year && touched.entityDescription?.date?.year;
+  const touchedYear = (
+    (touched.entityDescription as FormikTouched<EntityDescription>)?.date as FormikTouched<RegistrationDate>
+  )?.year;
+  const errorYear = (
+    (errors.entityDescription as FormikErrors<EntityDescription>)?.date as FormikErrors<RegistrationDate>
+  )?.year;
+  const hasError = !!errorYear && touchedYear;
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils} locale={getDateFnsLocale(i18n.language)}>
-      <MuiThemeProvider theme={lightTheme}>
-        <KeyboardDatePicker
-          id="date-picker"
-          {...datePickerTranslationProps}
-          DialogProps={{ 'aria-labelledby': 'date-picker-label', 'aria-label': t('description.date_published') }}
-          KeyboardButtonProps={{
-            'aria-labelledby': 'date-picker-label',
-          }}
-          leftArrowButtonProps={{ 'aria-label': t('common:previous') }}
-          rightArrowButtonProps={{ 'aria-label': t('common:next') }}
-          data-testid="date-published-field"
-          inputVariant="filled"
-          label={t('description.date_published')}
-          required
-          onChange={onChangeDate}
-          views={views}
-          value={date}
-          autoOk
-          maxDate={`${new Date().getFullYear() + 5}-12-31`}
-          format={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
-          onBlur={setYearFieldTouched}
-          onClose={setYearFieldTouched}
-          error={hasError}
-          helperText={hasError && errors.entityDescription?.date?.year}
-        />
-      </MuiThemeProvider>
+    <>
+      <ThemeProvider theme={lightTheme}>
+        <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
+          <DatePicker
+            {...datePickerTranslationProps}
+            label={t('description.date_published')}
+            value={date}
+            onChange={onChangeDate}
+            inputFormat={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
+            views={yearOnly ? ['year'] : ['year', 'month', 'day']}
+            maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+            mask={yearOnly ? '____' : '__.__.____'}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                data-testid={dataTestId.registrationWizard.description.datePublishedField}
+                variant="filled"
+                required
+                onBlur={() => !touchedYear && setFieldTouched(DescriptionFieldNames.PublicationYear)}
+                error={hasError}
+                helperText={hasError && errorYear}
+              />
+            )}
+          />
+        </LocalizationProvider>
+      </ThemeProvider>
       <StyledFormControlLabel
-        control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} color="primary" />}
+        control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} />}
         label={<Typography>{t('description.year_only')}</Typography>}
       />
-    </MuiPickersUtilsProvider>
+    </>
   );
 };

@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+import { Button } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import { AuthorityQualifiers, updateQualifierIdForAuthority } from '../../../api/authorityApi';
-import Card from '../../../components/Card';
-import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
-import EditInstitution from '../../../components/institution/EditInstitution';
+import { Card } from '../../../components/Card';
+import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
+import { EditInstitution } from '../../../components/institution/EditInstitution';
 import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
@@ -16,7 +16,7 @@ import { RootStore } from '../../../redux/reducers/rootReducer';
 import { FormikInstitutionUnit } from '../../../types/institution.types';
 import { NotificationVariant } from '../../../types/notification.types';
 import { getMostSpecificUnit } from '../../../utils/institutions-helpers';
-import DangerButton from '../../../components/DangerButton';
+import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
 const StyledCard = styled(Card)`
   display: grid;
@@ -49,7 +49,7 @@ interface InstitutionCardProps {
   setInstitutionIdToRemove: (orgunitId: string) => void;
 }
 
-const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: InstitutionCardProps) => {
+export const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: InstitutionCardProps) => {
   const { t } = useTranslation('common');
   const [openEditForm, setOpenEditForm] = useState(false);
   const dispatch = useDispatch();
@@ -70,16 +70,21 @@ const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: InstitutionCar
       return;
     }
 
-    const updatedAuthority = await updateQualifierIdForAuthority(
+    const updateAuthorityResponse = await updateQualifierIdForAuthority(
       user.authority.id,
-      AuthorityQualifiers.ORGUNIT_ID,
+      AuthorityQualifiers.OrgUnitId,
       initialInstitution,
       newUnitId
     );
-    if (updatedAuthority.error) {
-      dispatch(setNotification(updatedAuthority.error, NotificationVariant.Error));
-    } else if (updatedAuthority) {
-      dispatch(setAuthorityData(updatedAuthority));
+    if (isErrorStatus(updateAuthorityResponse.status)) {
+      dispatch(
+        setNotification(
+          t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
+          NotificationVariant.Error
+        )
+      );
+    } else if (isSuccessStatus(updateAuthorityResponse.status)) {
+      dispatch(setAuthorityData(updateAuthorityResponse.data));
       dispatch(setNotification(t('feedback:success.added_affiliation')));
     }
   };
@@ -106,17 +111,15 @@ const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: InstitutionCar
           onClick={() => setOpenEditForm(true)}>
           {t('edit')}
         </Button>
-        <DangerButton
+        <Button
+          color="error"
           variant="outlined"
-          color="secondary"
           data-testid={`button-delete-institution-${orgunitId}`}
           startIcon={<DeleteIcon />}
           onClick={() => setInstitutionIdToRemove(orgunitId)}>
           {t('remove')}
-        </DangerButton>
+        </Button>
       </StyledButtonContainer>
     </StyledCard>
   );
 };
-
-export default InstitutionCard;

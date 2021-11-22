@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Typography, Divider, Button } from '@material-ui/core';
+import { Typography, Divider, Button } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 
 const StyledLogo = styled.div`
@@ -16,7 +17,7 @@ const StyledLogo = styled.div`
 
 export const Logo = () => (
   <StyledLogo>
-    <Button data-testid="logo" href={UrlPathTemplate.Home}>
+    <Button data-testid="logo" component={RouterLink} to={UrlPathTemplate.Home}>
       <Typography variant="h5" component="span">
         NVA
       </Typography>

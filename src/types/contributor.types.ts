@@ -1,25 +1,29 @@
-import { BackendTypeNames, LanguageString } from './publication_types/commonRegistration.types';
-import { BackendType } from './registration.types';
+import { LanguageString } from './common.types';
 
 // For available roles, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/Role.java
 export enum ContributorRole {
+  Consultant = 'Consultant',
+  ContactPerson = 'ContactPerson',
   Creator = 'Creator',
+  CuratorOrganizer = 'CuratorOrganizer',
+  Designer = 'Designer',
   Editor = 'Editor',
   Supervisor = 'Supervisor',
-  ContactPerson = 'ContactPerson',
   RelatedPerson = 'RelatedPerson',
   Researcher = 'Researcher',
   RightsHolder = 'RightsHolder',
   Other = 'Other',
 }
 
-export interface Identity extends BackendType {
+export interface Identity {
+  type: 'Identity';
   id?: string;
   name: string;
   orcId?: string;
 }
 
-export interface Contributor extends BackendType {
+export interface Contributor {
+  type: 'Contributor';
   affiliations?: Institution[];
   correspondingAuthor?: boolean;
   identity: Identity;
@@ -29,7 +33,8 @@ export interface Contributor extends BackendType {
 
 // DOI lookup can give labels without id for institutions,
 // while when a contributor is added manually there will be ids present, and no need for labels.
-export interface Institution extends BackendType {
+export interface Institution {
+  type: 'Organization';
   id?: string;
   labels?: LanguageString;
 }
@@ -38,12 +43,12 @@ export const emptyContributor: Contributor = {
   affiliations: [],
   correspondingAuthor: false,
   identity: {
+    type: 'Identity',
     name: '',
-    type: BackendTypeNames.IDENTITY,
   },
   role: ContributorRole.Creator,
   sequence: 0,
-  type: BackendTypeNames.CONTRIBUTOR,
+  type: 'Contributor',
 };
 
 interface NewContributor {

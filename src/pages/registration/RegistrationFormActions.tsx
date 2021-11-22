@@ -4,18 +4,20 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import SaveIcon from '@material-ui/icons/Save';
+import { Button } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import SaveIcon from '@mui/icons-material/Save';
+import { LoadingButton } from '@mui/lab';
 import { updateRegistration } from '../../api/registrationApi';
-import ButtonWithProgress from '../../components/ButtonWithProgress';
-import Modal from '../../components/Modal';
+import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
+import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { getFormattedRegistration } from '../../utils/registration-helpers';
 
 const StyledActionsContainer = styled.div`
   margin-bottom: 1rem;
@@ -70,15 +72,18 @@ export const RegistrationFormActions = ({
 
   const saveRegistration = async (values: Registration) => {
     setIsSaving(true);
-    const updatedRegistration = await updateRegistration(values);
-    if (updatedRegistration?.error) {
-      dispatch(setNotification(updatedRegistration.error, NotificationVariant.Error));
+    const formattedValues = getFormattedRegistration(values);
+    const updateRegistrationResponse = await updateRegistration(formattedValues);
+    const isSuccess = isSuccessStatus(updateRegistrationResponse.status);
+    if (isErrorStatus(updateRegistrationResponse.status)) {
+      dispatch(setNotification(t('feedback:error.update_registration'), NotificationVariant.Error));
       setIsSaving(false);
-    } else {
+    } else if (isSuccess) {
       refetchRegistration();
       dispatch(setNotification(t('feedback:success.update_registration')));
     }
-    return !updatedRegistration.error;
+
+    return isSuccess;
   };
 
   const onClickSaveAndPresent = async () => {
@@ -112,18 +117,19 @@ export const RegistrationFormActions = ({
         </StyledSupportButtonContainer>
         {tabNumber < RegistrationTab.FilesAndLicenses ? (
           <StyledSaveNextButtonsContainer>
-            <ButtonWithProgress
+            <LoadingButton
               variant="outlined"
-              isLoading={isSaving}
+              loading={isSaving}
               data-testid="button-save-registration"
               endIcon={<SaveIcon />}
+              loadingPosition="end"
               onClick={async () => {
                 await saveRegistration(values);
                 // Set all fields with error to touched to ensure error messages are shown
                 setTouched(setNestedObjectValues(errors, true));
               }}>
-              {values.status === RegistrationStatus.DRAFT ? t('save_draft') : t('common:save')}
-            </ButtonWithProgress>
+              {values.status === RegistrationStatus.Draft ? t('save_draft') : t('common:save')}
+            </LoadingButton>
             <Button
               color="secondary"
               variant="contained"
@@ -137,15 +143,16 @@ export const RegistrationFormActions = ({
           </StyledSaveNextButtonsContainer>
         ) : (
           <StyledSaveAndPresentButtonContainer>
-            <ButtonWithProgress
+            <LoadingButton
               color="secondary"
               variant="contained"
-              isLoading={isSaving}
+              loading={isSaving}
               data-testid="button-save-registration"
               endIcon={<SaveIcon />}
+              loadingPosition="end"
               onClick={onClickSaveAndPresent}>
               {t('common:save_and_present')}
-            </ButtonWithProgress>
+            </LoadingButton>
           </StyledSaveAndPresentButtonContainer>
         )}
       </StyledActionsContainer>

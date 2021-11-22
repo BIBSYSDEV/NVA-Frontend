@@ -20,18 +20,10 @@ export const mockUser: FeideUser = {
 
 export const mockRoles: InstitutionUser = {
   roles: [
-    {
-      rolename: RoleName.APP_ADMIN,
-    },
-    {
-      rolename: RoleName.CREATOR,
-    },
-    {
-      rolename: RoleName.CURATOR,
-    },
-    {
-      rolename: RoleName.INSTITUTION_ADMIN,
-    },
+    { type: 'Role', rolename: RoleName.APP_ADMIN },
+    { type: 'Role', rolename: RoleName.CREATOR },
+    { type: 'Role', rolename: RoleName.CURATOR },
+    { type: 'Role', rolename: RoleName.INSTITUTION_ADMIN },
   ],
   username: 'tu@unit.no',
   institution: 'https://api.cristin.no/v2/institutions/20202',

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Field, FieldProps, ErrorMessage } from 'formik';
-import useFetchInstitutions from '../../../utils/hooks/useFetchInstitutions';
+import { useFetchInstitutions } from '../../../utils/hooks/useFetchInstitutions';
 import { CustomerInstitutionFieldNames } from '../../../types/customerInstitution.types';
-import InstitutionAutocomplete from '../../../components/institution/InstitutionAutocomplete';
+import { InstitutionAutocomplete } from '../../../components/institution/InstitutionAutocomplete';
 
 interface SelectInstitutionFieldProps {
   disabled?: boolean;
@@ -12,7 +12,7 @@ export const SelectInstitutionField = ({ disabled = false }: SelectInstitutionFi
   const [institutions, isLoadingInstitutions] = useFetchInstitutions();
 
   return (
-    <Field name={CustomerInstitutionFieldNames.NAME}>
+    <Field name={CustomerInstitutionFieldNames.Name}>
       {({ field: { name }, form: { values, setValues }, meta: { touched, error } }: FieldProps<string>) => (
         <InstitutionAutocomplete
           id={name}
@@ -26,9 +26,9 @@ export const SelectInstitutionField = ({ disabled = false }: SelectInstitutionFi
             setValues({
               ...values,
               name: selectedInstitution?.name ?? '',
-              [CustomerInstitutionFieldNames.DISPLAY_NAME]: selectedInstitution?.name ?? '',
-              [CustomerInstitutionFieldNames.SHORT_NAME]: selectedInstitution?.acronym ?? '',
-              [CustomerInstitutionFieldNames.CRISTIN_ID]: selectedInstitution?.id ?? '',
+              [CustomerInstitutionFieldNames.DisplayName]: selectedInstitution?.name ?? '',
+              [CustomerInstitutionFieldNames.ShortName]: selectedInstitution?.acronym ?? '',
+              [CustomerInstitutionFieldNames.CristinId]: selectedInstitution?.id ?? '',
             });
           }}
           value={institutions.find((i) => i.id === values.cristinId) ?? null}

@@ -1,4 +1,4 @@
-import { LanguageString } from './publication_types/commonRegistration.types';
+import { LanguageString } from './common.types';
 
 export interface ResearchProject {
   type: 'ResearchProject';
@@ -35,7 +35,7 @@ interface CoordinatingInstitution {
   name: LanguageString;
 }
 
-interface ProjectContributor {
+export interface ProjectContributor {
   type: 'ProjectManager' | 'ProjectParticipant';
   identity: {
     type: 'Person';
@@ -50,6 +50,14 @@ interface ProjectContributor {
   };
 }
 
+interface Funding {
+  source: {
+    names: LanguageString;
+    code: string;
+  };
+  code: string;
+}
+
 export interface CristinProject {
   type: 'Project';
   id: string;
@@ -61,6 +69,10 @@ export interface CristinProject {
   endDate?: string;
   coordinatingInstitution: CoordinatingInstitution;
   contributors: ProjectContributor[];
+  status: 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
+  academicSummary: LanguageString;
+  popularScientificSummary: LanguageString;
+  funding: Funding[];
 }
 
 export interface ProjectSearchResponse {

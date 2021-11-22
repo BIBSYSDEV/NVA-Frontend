@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
-import { MuiThemeProvider } from '@material-ui/core';
-import darkTheme from '../themes/darkTheme';
-import lightTheme from '../themes/lightTheme';
+import { ThemeProvider } from '@mui/material';
+import { darkTheme } from '../themes/darkTheme';
+import { lightTheme } from '../themes/lightTheme';
 import { isBackgroundColorDark } from '../utils/theme-helpers';
 import { StyledPageWrapper } from './styled/Wrappers';
 
@@ -15,18 +15,12 @@ const StyledBackgroundDiv = styled(({ backgroundColor, ...rest }) => <StyledPage
   ${({ backgroundColor }) => `background-color: ${backgroundColor}`}
 `;
 
-const BackgroundDiv = ({ children, ...props }: BakcgroundDivProps) => {
+export const BackgroundDiv = ({ children, ...props }: BakcgroundDivProps) => {
   const darkMode = props.backgroundColor && isBackgroundColorDark(props.backgroundColor);
 
   return (
     <StyledBackgroundDiv {...props}>
-      {darkMode ? (
-        <MuiThemeProvider theme={darkTheme}>{children}</MuiThemeProvider>
-      ) : (
-        <MuiThemeProvider theme={lightTheme}>{children}</MuiThemeProvider>
-      )}
+      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>{children}</ThemeProvider>
     </StyledBackgroundDiv>
   );
 };
-
-export default BackgroundDiv;

@@ -1,7 +1,10 @@
+import { dataTestId } from '../../src/utils/dataTestIds';
+import { mockJournalsSearch } from '../../src/utils/testfiles/mockJournals';
+import { mockPublishersSearch } from '../../src/utils/testfiles/mockPublishers';
+
 describe('Registration: Resource type: Report', () => {
   beforeEach(() => {
     cy.visit('/');
-    cy.server();
   });
 
   it('The user should be able to fill out the form for report type', () => {
@@ -16,15 +19,20 @@ describe('Registration: Resource type: Report', () => {
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' '); //makes the select options open
     cy.get('[data-testid=publication-context-type-Report]').should('be.visible');
     cy.get('[data-testid=publication-context-type-Report]').click({ force: true });
-    cy.get('[data-testid=publication-context-type-Report]').contains('Report');
+    cy.get('[data-testid=publication-context-type] input').should('have.value', 'Report');
 
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-ReportResearch]').click({ force: true });
 
     // search for and select a publisher
-    cy.get('[data-testid=publisher-search-field] input').click({ force: true }).type('Test');
-    cy.contains('Novum Testamentum').click({ force: true });
-    cy.get('[data-testid=publisher-search-field] input').should('have.value', 'Novum Testamentum');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
+      .click()
+      .type(mockPublishersSearch[1].name);
+    cy.contains(mockPublishersSearch[1].name).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherChip}]`).should(
+      'contain',
+      mockPublishersSearch[1].name
+    );
 
     // fill out ISBN_LIST field
     cy.get('[data-testid=isbn-field] input').type('978-1-78-763271-4');
@@ -33,8 +41,13 @@ describe('Registration: Resource type: Report', () => {
     cy.get('[data-testid=pages-field] input').type('483');
 
     // search and select a series
-    cy.get('[data-testid=series-search-field] input').click({ force: true }).type('Test');
-    cy.contains('New Testament Studies').click({ force: true });
-    cy.get('[data-testid=series-search-field] input').should('have.value', 'New Testament Studies');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesField}] input`)
+      .click()
+      .type(mockJournalsSearch[0].name);
+    cy.contains(mockJournalsSearch[0].name).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.seriesChip}]`).should(
+      'contain',
+      mockJournalsSearch[0].name
+    );
   });
 });

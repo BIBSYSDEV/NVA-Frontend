@@ -1,14 +1,14 @@
 import { RoleName } from '../../src/types/user.types';
+import { dataTestId } from '../../src/utils/dataTestIds';
 
 describe('User administers institutions ', () => {
   beforeEach('Given that the user is logged in as Application administrator:', () => {
     cy.visit('/');
-    cy.server();
     cy.mocklogin();
     cy.setUserRolesInRedux([RoleName.APP_ADMIN]);
     // Open administer institutions page
-    cy.get('[data-testid=menu]').click({ force: true });
-    cy.get('[data-testid=menu-admin-institutions-button]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.header.adminInstitutionsLink}]`).click({ force: true });
   });
 
   it('The User should be able to open admin page for institutions from the menu', () => {

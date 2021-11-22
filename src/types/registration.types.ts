@@ -1,6 +1,5 @@
 import { RegistrationFileSet } from './file.types';
 import { ResearchProject } from './project.types';
-import { EnumDictionary } from './common.types';
 import {
   JournalEntityDescription,
   emptyRegistrationEntityDescription,
@@ -8,16 +7,17 @@ import {
 import { DegreeEntityDescription } from './publication_types/degreeRegistration.types';
 import { BookEntityDescription } from './publication_types/bookRegistration.types';
 import { ReportEntityDescription } from './publication_types/reportRegistration.types';
-import { BackendTypeNames } from './publication_types/commonRegistration.types';
 import { ChapterEntityDescription } from './publication_types/chapterRegistration.types';
 import { Contributor } from './contributor.types';
 import { LanguageValues } from './language.types';
+import { PresentationEntityDescription } from './publication_types/presentationRegistration.types';
+import { ArtisticEntityDescription } from './publication_types/artisticRegistration.types';
 
 export enum RegistrationStatus {
-  DELETED = 'DRAFT_FOR_DELETION',
-  DRAFT = 'DRAFT',
-  NEW = 'NEW',
-  PUBLISHED = 'PUBLISHED',
+  Deleted = 'DRAFT_FOR_DELETION',
+  Draft = 'DRAFT',
+  New = 'NEW',
+  Published = 'PUBLISHED',
 }
 
 export enum RegistrationTab {
@@ -27,36 +27,36 @@ export enum RegistrationTab {
   FilesAndLicenses = 3,
 }
 
-export const levelMap: EnumDictionary<string, number | null> = {
-  NO_LEVEL: null,
-  LEVEL_0: 0,
-  LEVEL_1: 1,
-  LEVEL_2: 2,
-};
-
-export interface BackendType {
-  type: BackendTypeNames | '';
+export interface Journal {
+  id: string;
+  identifier: string;
+  name: string;
+  active: boolean;
+  website: string;
+  level: string;
+  onlineIssn: string | null;
+  printIssn: string | null;
+  npiDomain: string;
+  openAccess: boolean | null;
+  language: string | null;
+  publisherId: string | null;
 }
 
 export interface Publisher {
-  type: string;
-  title: string;
-  onlineIssn: string;
-  printIssn: string;
-  level: string | number | null;
-  openAccess: boolean;
-  peerReviewed: boolean;
-  url: string;
+  id: string;
+  identifier: string;
+  name: string;
+  website: string;
+  active: boolean;
+  level: string;
 }
 
 export interface AlmaRegistration {
   title: string;
 }
 
-export interface NpiDiscipline {
-  id: string;
-  name: string;
-  mainDiscipline: string;
+export interface MyRegistrationsResponse {
+  publications?: RegistrationPreview[]; // "publications" is undefined if user has no registrations
 }
 
 export enum DoiRequestStatus {
@@ -65,7 +65,7 @@ export enum DoiRequestStatus {
   Requested = 'REQUESTED',
 }
 
-export interface DoiRequestMessage {
+interface DoiRequestMessage {
   text: string;
   author: string;
   timestamp: string;
@@ -79,11 +79,13 @@ interface DoiRequest {
   messages?: DoiRequestMessage[];
 }
 
-export interface RegistrationPublisher {
+interface RegistrationPublisher {
   id: string;
 }
 
-interface BaseRegistration extends BackendType, RegistrationFileSet {
+export interface BaseRegistration extends RegistrationFileSet {
+  readonly type: 'Publication';
+  readonly id: string;
   readonly identifier: string;
   readonly createdDate: string;
   readonly modifiedDate: string;
@@ -93,51 +95,62 @@ interface BaseRegistration extends BackendType, RegistrationFileSet {
   readonly doi?: string;
   readonly doiRequest?: DoiRequest;
   readonly publisher: RegistrationPublisher;
+  subjects: string[];
   projects: ResearchProject[];
 }
 
-export interface BaseEntityDescription extends BackendType {
+export interface BaseEntityDescription {
+  type: 'EntityDescription';
   abstract: string;
   contributors: Contributor[];
-  date: RegistrationDate;
+  date?: RegistrationDate;
   description: string;
   language: LanguageValues;
   mainTitle: string;
   npiSubjectHeading: string;
   tags: string[];
-  controlledKeywords: string[];
 }
+
+export interface NviApplicableBase<T> {
+  contentType: T | null;
+  peerReviewed: boolean | null;
+}
+
+export interface BaseReference {
+  type: 'Reference';
+  doi: string;
+}
+
+export enum PublicationChannelType {
+  Journal = 'Journal',
+  Publisher = 'Publisher',
+  Series = 'Series',
+  UnconfirmedJournal = 'UnconfirmedJournal',
+  UnconfirmedPublisher = 'UnconfirmedPublisher',
+  UnconfirmedSeries = 'UnconfirmedSeries',
+}
+
+export interface SearchResult {
+  hits: Registration[];
+  took: number;
+  total: number;
+}
+
+export type EntityDescription =
+  | JournalEntityDescription
+  | DegreeEntityDescription
+  | BookEntityDescription
+  | ReportEntityDescription
+  | ChapterEntityDescription
+  | PresentationEntityDescription
+  | ArtisticEntityDescription;
 
 export interface Registration extends BaseRegistration {
-  entityDescription:
-    | JournalEntityDescription
-    | DegreeEntityDescription
-    | BookEntityDescription
-    | ReportEntityDescription
-    | ChapterEntityDescription;
+  entityDescription?: EntityDescription;
 }
 
-export interface JournalRegistration extends BaseRegistration {
-  entityDescription: JournalEntityDescription;
-}
-
-export interface DegreeRegistration extends BaseRegistration {
-  entityDescription: DegreeEntityDescription;
-}
-
-export interface BookRegistration extends BaseRegistration {
-  entityDescription: BookEntityDescription;
-}
-
-export interface ReportRegistration extends BaseRegistration {
-  entityDescription: ReportEntityDescription;
-}
-
-export interface ChapterRegistration extends BaseRegistration {
-  entityDescription: ChapterEntityDescription;
-}
-
-export interface RegistrationDate extends BackendType {
+export interface RegistrationDate {
+  type: 'PublicationDate' | 'IndexDate';
   year: string;
   month: string;
   day: string;
@@ -154,17 +167,19 @@ export interface Doi {
 }
 
 export const emptyRegistration: Registration = {
-  type: BackendTypeNames.PUBLICATION,
+  type: 'Publication',
+  id: '',
   identifier: '',
   createdDate: '',
   modifiedDate: '',
   owner: '',
-  status: RegistrationStatus.NEW,
+  status: RegistrationStatus.New,
   entityDescription: emptyRegistrationEntityDescription,
   fileSet: {
-    type: BackendTypeNames.FILE_SET,
+    type: 'FileSet',
     files: [],
   },
   projects: [],
   publisher: { id: '' },
+  subjects: [],
 };

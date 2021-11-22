@@ -1,110 +1,152 @@
 export enum PublicationType {
-  PUBLICATION_IN_JOURNAL = 'Journal',
-  BOOK = 'Book',
-  REPORT = 'Report',
-  DEGREE = 'Degree',
-  CHAPTER = 'Chapter',
+  PublicationInJournal = 'Journal',
+  Book = 'Book',
+  Report = 'Report',
+  Degree = 'Degree',
+  Chapter = 'Chapter',
+  Presentation = 'Event',
+  Artistic = 'Artistic',
 }
 
 export enum JournalType {
-  ARTICLE = 'JournalArticle',
-  SHORT_COMMUNICATION = 'JournalShortCommunication',
-  FEATURE_ARTICLE = 'FeatureArticle',
-  LETTER = 'JournalLetter',
-  REVIEW = 'JournalReview',
-  LEADER = 'JournalLeader',
-  CORRIGENDUM = 'JournalCorrigendum',
+  Article = 'JournalArticle',
+  FeatureArticle = 'FeatureArticle',
+  Letter = 'JournalLetter',
+  Review = 'JournalReview',
+  Leader = 'JournalLeader',
+  Corrigendum = 'JournalCorrigendum',
 }
 
 export enum BookType {
-  MONOGRAPH = 'BookMonograph',
-  ANTHOLOGY = 'BookAnthology',
+  Monograph = 'BookMonograph',
+  Anthology = 'BookAnthology',
 }
 
 export enum ReportType {
-  RESEARCH = 'ReportResearch',
-  POLICY = 'ReportPolicy',
-  WORKING_PAPER = 'ReportWorkingPaper',
-  REPORT = 'ReportBasic',
+  Research = 'ReportResearch',
+  Policy = 'ReportPolicy',
+  WorkingPaper = 'ReportWorkingPaper',
+  Report = 'ReportBasic',
 }
 
 export enum DegreeType {
-  BACHELOR = 'DegreeBachelor',
-  MASTER = 'DegreeMaster',
-  PHD = 'DegreePhd',
-  OTHER = 'OtherStudentWork',
+  Bachelor = 'DegreeBachelor',
+  Master = 'DegreeMaster',
+  Phd = 'DegreePhd',
+  Other = 'OtherStudentWork',
 }
 
 export enum ChapterType {
-  BOOK = 'ChapterArticle',
+  AnthologyChapter = 'ChapterArticle',
 }
 
-export type RegistrationSubtype = JournalType | ReportType | BookType | DegreeType | ChapterType;
+export enum PresentationType {
+  ConferenceLecture = 'ConferenceLecture',
+  ConferencePoster = 'ConferencePoster',
+  Lecture = 'Lecture',
+  OtherPresentation = 'OtherPresentation',
+}
+
+export enum ArtisticType {
+  ArtisticDesign = 'ArtisticDesign',
+}
+
+export type RegistrationSubtype =
+  | JournalType
+  | ReportType
+  | BookType
+  | DegreeType
+  | ChapterType
+  | PresentationType
+  | ArtisticType;
+
+export enum RegistrationFieldName {
+  Identifier = 'identifier',
+  ModifiedDate = 'modifiedDate',
+  PublishedDate = 'publishedDate',
+}
 
 // Enums representing name of fields used by Formik
 export const contextTypeBaseFieldName = 'entityDescription.reference.publicationContext';
 export const instanceTypeBaseFieldName = 'entityDescription.reference.publicationInstance';
 
 export enum ResourceFieldNames {
-  ARTICLE_NUMBER = 'entityDescription.reference.publicationInstance.articleNumber',
-  CORRIGENDUM_FOR = 'entityDescription.reference.publicationInstance.corrigendumFor',
-  DOI = 'entityDescription.reference.doi',
-  TEXTBOOK_CONTENT = 'entityDescription.reference.publicationInstance.textbookContent',
-  ISBN_LIST = 'entityDescription.reference.publicationContext.isbnList',
-  ISSUE = 'entityDescription.reference.publicationInstance.issue',
-  NPI_SUBJECT_HEADING = 'entityDescription.npiSubjectHeading',
-  PAGES_FROM = 'entityDescription.reference.publicationInstance.pages.begin',
-  PAGES_TO = 'entityDescription.reference.publicationInstance.pages.end',
-  PAGES_TYPE = 'entityDescription.reference.publicationInstance.pages.type',
-  PAGES_PAGES = 'entityDescription.reference.publicationInstance.pages.pages',
-  PEER_REVIEW = 'entityDescription.reference.publicationInstance.peerReviewed',
-  PUBLICATION_CONTEXT_LEVEL = 'entityDescription.reference.publicationContext.level',
-  PUBLICATION_CONTEXT_LINKED_CONTEXT = 'entityDescription.reference.publicationContext.linkedContext',
-  PUBLICATION_CONTEXT_TITLE = 'entityDescription.reference.publicationContext.title',
-  PUBLICATION_CONTEXT_PUBLISHER = 'entityDescription.reference.publicationContext.publisher',
-  PUBLICATION_CONTEXT_TYPE = 'entityDescription.reference.publicationContext.type',
-  SERIES_NUMBER = 'entityDescription.reference.publicationContext.seriesNumber',
-  SERIES_TITLE = 'entityDescription.reference.publicationContext.seriesTitle',
-  SUB_TYPE = 'entityDescription.reference.publicationInstance.type',
-  VOLUME = 'entityDescription.reference.publicationInstance.volume',
+  ArticleNumber = 'entityDescription.reference.publicationInstance.articleNumber',
+  ContentType = 'entityDescription.reference.publicationInstance.contentType',
+  CorrigendumFor = 'entityDescription.reference.publicationInstance.corrigendumFor',
+  Doi = 'entityDescription.reference.doi',
+  IsbnList = 'entityDescription.reference.publicationContext.isbnList',
+  Isbn = 'entityDescription.reference.publicationContext.isbnList[0]',
+  Issue = 'entityDescription.reference.publicationInstance.issue',
+  NpiSubjectHeading = 'entityDescription.npiSubjectHeading',
+  PagesFrom = 'entityDescription.reference.publicationInstance.pages.begin',
+  PagesTo = 'entityDescription.reference.publicationInstance.pages.end',
+  PagesType = 'entityDescription.reference.publicationInstance.pages.type',
+  PagesPages = 'entityDescription.reference.publicationInstance.pages.pages',
+  PartOf = 'entityDescription.reference.publicationContext.partOf',
+  PeerReviewed = 'entityDescription.reference.publicationInstance.peerReviewed',
+  PublicationContextAgentName = 'entityDescription.reference.publicationContext.agent.name',
+  PublicationContextId = 'entityDescription.reference.publicationContext.id',
+  PublicationContextLabel = 'entityDescription.reference.publicationContext.label',
+  PublicationContextLevel = 'entityDescription.reference.publicationContext.level',
+  PublicationContextPlaceLabel = 'entityDescription.reference.publicationContext.place.label',
+  PublicationContextPlaceCountry = 'entityDescription.reference.publicationContext.place.country',
+  PublicationContextPublisher = 'entityDescription.reference.publicationContext.publisher',
+  PublicationContextPublisherId = 'entityDescription.reference.publicationContext.publisher.id',
+  PublicationContextPublisherType = 'entityDescription.reference.publicationContext.publisher.type',
+  PublicationContextTimeFrom = 'entityDescription.reference.publicationContext.time.from',
+  PublicationContextTimeTo = 'entityDescription.reference.publicationContext.time.to',
+  PublicationContextType = 'entityDescription.reference.publicationContext.type',
+  PublicationInstanceDescription = 'entityDescription.reference.publicationInstance.description',
+  PublicationInstanceSubtypeDescription = 'entityDescription.reference.publicationInstance.subtype.description',
+  PublicationInstanceSubtypeType = 'entityDescription.reference.publicationInstance.subtype.type',
+  Reference = 'entityDescription.reference',
+  Series = 'entityDescription.reference.publicationContext.series',
+  SeriesId = 'entityDescription.reference.publicationContext.series.id',
+  SeriesNumber = 'entityDescription.reference.publicationContext.seriesNumber',
+  SeriesTitle = 'entityDescription.reference.publicationContext.series.title',
+  SeriesType = 'entityDescription.reference.publicationContext.series.type',
+  SubType = 'entityDescription.reference.publicationInstance.type',
+  Venues = 'entityDescription.reference.publicationContext.venues',
+  Volume = 'entityDescription.reference.publicationInstance.volume',
 }
 
 export enum DescriptionFieldNames {
-  ABSTRACT = 'entityDescription.abstract',
-  CONTROLLED_KEYWORDS = 'entityDescription.controlledKeywords',
-  DATE = 'entityDescription.date',
-  DESCRIPTION = 'entityDescription.description',
-  LANGUAGE = 'entityDescription.language',
-  PROJECTS = 'projects',
-  PUBLICATION_DAY = 'entityDescription.date.day',
-  PUBLICATION_MONTH = 'entityDescription.date.month',
-  PUBLICATION_YEAR = 'entityDescription.date.year',
-  TAGS = 'entityDescription.tags',
-  TITLE = 'entityDescription.mainTitle',
+  Abstract = 'entityDescription.abstract',
+  Date = 'entityDescription.date',
+  Description = 'entityDescription.description',
+  Language = 'entityDescription.language',
+  Projects = 'projects',
+  PublicationDay = 'entityDescription.date.day',
+  PublicationMonth = 'entityDescription.date.month',
+  PublicationYear = 'entityDescription.date.year',
+  Subjects = 'subjects',
+  Tags = 'entityDescription.tags',
+  Title = 'entityDescription.mainTitle',
 }
 
 export enum FileFieldNames {
-  FILES = 'fileSet.files',
+  Files = 'fileSet.files',
+  FileSet = 'fileSet',
 }
 
 // The following fields should be present in "fileSet.files[index].<KEY>"
 export enum SpecificFileFieldNames {
-  ADMINISTRATIVE_AGREEMENT = 'administrativeAgreement',
-  PUBLISHER_AUTHORITY = 'publisherAuthority',
-  EMBARGO_DATE = 'embargoDate',
-  LICENSE = 'license',
+  AdministrativeAgreement = 'administrativeAgreement',
+  PublisherAuthority = 'publisherAuthority',
+  EmbargoDate = 'embargoDate',
+  License = 'license',
 }
 
 export enum ContributorFieldNames {
-  CONTRIBUTORS = 'entityDescription.contributors',
+  Contributors = 'entityDescription.contributors',
 }
 
 // The following fields should be present in "entityDescription.contributors[index].<KEY>"
 export enum SpecificContributorFieldNames {
-  AFFILIATIONS = 'affiliations',
-  CORRESPONDING = 'correspondingAuthor',
-  EMAIL = 'email',
-  ID = 'id',
-  ROLE = 'role', // TODO
-  SEQUENCE = 'sequence',
+  Affiliations = 'affiliations',
+  Corresponding = 'correspondingAuthor',
+  Id = 'identity.id',
+  Name = 'identity.name',
+  Sequence = 'sequence',
 }

@@ -2,21 +2,19 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Button, Checkbox, FormControlLabel, TextField, Tooltip, Typography } from '@material-ui/core';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import CheckIcon from '@material-ui/icons/CheckCircleSharp';
-import DeleteIcon from '@material-ui/icons/RemoveCircleSharp';
-import WarningIcon from '@material-ui/icons/Warning';
-import BackgroundDiv from '../../../../components/BackgroundDiv';
-import DangerButton from '../../../../components/DangerButton';
+import { Button, Checkbox, FormControlLabel, TextField, Tooltip, Typography } from '@mui/material';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import CheckIcon from '@mui/icons-material/CheckCircleSharp';
+import DeleteIcon from '@mui/icons-material/RemoveCircleSharp';
+import WarningIcon from '@mui/icons-material/Warning';
+import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
-import lightTheme from '../../../../themes/lightTheme';
+import { lightTheme } from '../../../../themes/lightTheme';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
-import AffiliationsCell from './AffiliationsCell';
-import { getRemoveContributorText } from '../../../../utils/translation-helpers';
+import { AffiliationsCell } from './AffiliationsCell';
 
 const StyledCheckIcon = styled(CheckIcon)`
   color: ${({ theme }) => theme.palette.success.main};
@@ -70,10 +68,6 @@ const StyledCorrespondingWrapper = styled.div`
   margin-bottom: 0.5rem;
 `;
 
-const StyledDangerButton = styled(DangerButton)`
-  border-radius: 0;
-`;
-
 const StyledRemoveContributorContainer = styled.div`
   grid-area: remove-contributor;
   display: flex;
@@ -117,18 +111,17 @@ export const ContributorCard = ({
 }: ContributorCardProps) => {
   const { t } = useTranslation('registration');
   const {
-    values: {
-      entityDescription: { contributors },
-    },
+    values: { entityDescription },
   } = useFormikContext<Registration>();
 
+  const contributors = entityDescription?.contributors ?? [];
   const contributorIndex = contributors.findIndex(
     (c) =>
       c.identity.id === contributor.identity.id &&
       c.identity.name === contributor.identity.name &&
       c.role === contributor.role
   );
-  const baseFieldName = `${ContributorFieldNames.CONTRIBUTORS}[${contributorIndex}]`;
+  const baseFieldName = `${ContributorFieldNames.Contributors}[${contributorIndex}]`;
   const [sequenceValue, setSequenceValue] = useState(`${contributor.sequence}`);
 
   useEffect(() => {
@@ -176,7 +169,7 @@ export const ContributorCard = ({
         <StyledRightAlignedWrapper>
           <StyledArrowSection>
             {contributor.sequence < contributorsLength && (
-              <Tooltip title={t<string>('contributors.move_down')}>
+              <Tooltip title={t<string>('common:move_down')}>
                 <StyledArrowButton
                   color="secondary"
                   onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}>
@@ -185,7 +178,7 @@ export const ContributorCard = ({
               </Tooltip>
             )}
             {contributor.sequence !== 1 && (
-              <Tooltip title={t<string>('contributors.move_up')}>
+              <Tooltip title={t<string>('common:move_up')}>
                 <StyledArrowButton
                   color="secondary"
                   onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}>
@@ -215,12 +208,12 @@ export const ContributorCard = ({
               {t(`contributors.types.${contributor.role}`)}
             </Typography>
           ) : (
-            <Field name={`${baseFieldName}.${SpecificContributorFieldNames.CORRESPONDING}`}>
+            <Field name={`${baseFieldName}.${SpecificContributorFieldNames.Corresponding}`}>
               {({ field }: FieldProps) => (
                 <FormControlLabel
                   data-testid="author-corresponding-checkbox"
                   control={<Checkbox checked={!!field.value} color="default" {...field} />}
-                  label={t('contributors.corresponding')}
+                  label={t<string>('contributors.corresponding')}
                 />
               )}
             </Field>
@@ -235,13 +228,14 @@ export const ContributorCard = ({
         />
       )}
       <StyledRemoveContributorContainer>
-        <StyledDangerButton
+        <Button
+          color="error"
           data-testid={`button-remove-contributor-${contributor.identity.name}`}
           startIcon={<DeleteIcon />}
           onClick={onRemoveContributorClick}
           variant="contained">
-          {getRemoveContributorText(contributor.role)}
-        </StyledDangerButton>
+          {t('contributors.remove_role', { role: t(`contributors.types.${contributor.role}`) })}
+        </Button>
       </StyledRemoveContributorContainer>
     </StyledBackgroundDiv>
   );

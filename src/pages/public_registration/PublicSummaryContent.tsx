@@ -1,35 +1,68 @@
 import React from 'react';
-import { Chip, Typography } from '@material-ui/core';
+import { Chip, Typography } from '@mui/material';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
+import { dataTestId } from '../../utils/dataTestIds';
+import { getLanguageString } from '../../utils/translation-helpers';
+import { hrcsCategories } from '../../resources/vocabularies/hrcsCategories';
+import { hrcsActivityOptions } from '../registration/description_tab/vocabularies/HrcsActivityInput';
+import { hrcsActivityBaseId, hrcsCategoryBaseId } from '../../utils/constants';
 
 export const PublicSummaryContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');
 
-  const { abstract, description, tags } = registration.entityDescription;
+  const { entityDescription, subjects } = registration;
+
+  const selectedHrcsActivities = subjects
+    .filter((subjectId) => subjectId.startsWith(hrcsActivityBaseId))
+    .map((activityId) => {
+      const matchingActivity = hrcsActivityOptions.find((activity) => activity.id === activityId);
+      return matchingActivity ? getLanguageString(matchingActivity.label) : '';
+    });
+
+  const selectedHrcsCategories = subjects
+    .filter((subjectId) => subjectId.startsWith(hrcsCategoryBaseId))
+    .map((categoryId) => {
+      const matchingCategory = hrcsCategories.categories.find((category) => category.id === categoryId);
+      return matchingCategory ? getLanguageString(matchingCategory.label) : '';
+    });
 
   return (
     <>
-      {abstract && (
+      {entityDescription && (
         <>
-          <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
-            {abstract}
-          </Typography>
-        </>
-      )}
-      {description && (
-        <>
-          <Typography variant="overline" component="h3" color="primary">
-            {t('description.description')}
-          </Typography>
-          <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
-            {description}
-          </Typography>
+          {entityDescription.abstract && (
+            <>
+              <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
+                {entityDescription.abstract}
+              </Typography>
+            </>
+          )}
+          {entityDescription.description && (
+            <>
+              <Typography variant="overline" component="h3" color="primary">
+                {t('description.description')}
+              </Typography>
+              <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
+                {entityDescription.description}
+              </Typography>
+            </>
+          )}
+
+          {entityDescription.tags.length > 0 && (
+            <TagsList title={t('description.keywords')} values={entityDescription.tags} />
+          )}
         </>
       )}
 
-      {tags.length > 0 && <TagsList title={t('description.keywords')} values={tags} />}
+      {selectedHrcsActivities.length > 0 && (
+        <TagsList title={t('description.hrcs_activities')} values={selectedHrcsActivities} />
+      )}
+
+      {selectedHrcsCategories.length > 0 && (
+        <TagsList title={t('description.hrcs_categories')} values={selectedHrcsCategories} />
+      )}
     </>
   );
 };
@@ -58,13 +91,6 @@ const StyledTags = styled.div`
 const StyledChip = styled(Chip)`
   background: ${({ theme }) => theme.palette.section.light};
   margin: 0.25rem 0;
-  padding: 0.25rem;
-  height: auto;
-`;
-
-const StyledChipLabel = styled(Typography)`
-  white-space: normal;
-  color: ${({ theme }) => theme.palette.text.primary};
 `;
 
 interface TagsListProps {
@@ -77,9 +103,9 @@ const TagsList = ({ title, values }: TagsListProps) => (
     <Typography variant="overline" component="h3" color="primary">
       {title}
     </Typography>
-    <StyledTags>
+    <StyledTags data-testid={dataTestId.registrationLandingPage.keywords}>
       {values.map((value) => (
-        <StyledChip key={value} label={<StyledChipLabel>{value}</StyledChipLabel>} />
+        <StyledChip key={value} label={<Typography>{value}</Typography>} />
       ))}
     </StyledTags>
   </StyledTagsList>

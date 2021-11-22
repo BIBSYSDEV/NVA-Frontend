@@ -1,11 +1,8 @@
 import { StrictTypes, Uppy as UppyType } from '@uppy/core';
 import * as LicenseImages from '../resources/images/licenses';
 import i18n from '../translations/i18n';
-import { BackendTypeNames } from './publication_types/commonRegistration.types';
-import { BackendType } from './registration.types';
 
 export enum LicenseNames {
-  CC = 'CC',
   CC_BY = 'CC BY',
   CC_BY_SA = 'CC BY-SA',
   CC_BY_ND = 'CC BY-ND',
@@ -13,85 +10,69 @@ export enum LicenseNames {
   CC_BY_NC_SA = 'CC BY-NC-SA',
   CC_BY_NC_ND = 'CC BY-NC-ND',
   CC0 = 'CC0',
+  RightsReserved = 'RightsReserved',
 }
 
 interface LicenseInfo {
-  buttonImage: string;
-  description: string;
   identifier: LicenseNames;
-  image: string;
-  label: string;
+  description: string;
+  logo: string;
   link: string;
 }
 
 export const licenses: LicenseInfo[] = [
   {
-    buttonImage: LicenseImages.ccButton,
-    description: i18n.t('licenses:description.cc'),
-    identifier: i18n.t('licenses:labels.cc'),
-    image: LicenseImages.ccImage,
-    label: i18n.t('licenses:labels.cc'),
-    link: i18n.t('licenses:links.cc'),
+    identifier: LicenseNames.RightsReserved,
+    description: i18n.t('licenses:description.rights_reserved'),
+    logo: LicenseImages.rightsReservedLogo,
+    link: i18n.t('licenses:links.rights_reserved'),
   },
   {
-    buttonImage: LicenseImages.ccByButton,
-    description: i18n.t('licenses:description.cc_by'),
     identifier: LicenseNames.CC_BY,
-    image: LicenseImages.ccByImage,
-    label: i18n.t('licenses:labels.cc_by'),
+    description: i18n.t('licenses:description.cc_by'),
+    logo: LicenseImages.ccByLogo,
     link: i18n.t('licenses:links.cc_by'),
   },
   {
-    buttonImage: LicenseImages.ccBySaButton,
-    description: i18n.t('licenses:description.cc_by_sa'),
     identifier: LicenseNames.CC_BY_SA,
-    image: LicenseImages.ccBySaImage,
-    label: i18n.t('licenses:labels.cc_by_sa'),
+    description: i18n.t('licenses:description.cc_by_sa'),
+    logo: LicenseImages.ccBySaLogo,
     link: i18n.t('licenses:links.cc_by_sa'),
   },
   {
-    buttonImage: LicenseImages.ccByNdButton,
-    description: i18n.t('licenses:description.cc_by_nd'),
     identifier: LicenseNames.CC_BY_ND,
-    image: LicenseImages.ccByNdImage,
-    label: i18n.t('licenses:labels.cc_by_nd'),
+    description: i18n.t('licenses:description.cc_by_nd'),
+    logo: LicenseImages.ccByNdLogo,
     link: i18n.t('licenses:links.cc_by_nd'),
   },
   {
     identifier: LicenseNames.CC_BY_NC,
-    label: i18n.t('licenses:labels.cc_by_nc'),
-    image: LicenseImages.ccByNcImage,
-    buttonImage: LicenseImages.ccByNcButton,
     description: i18n.t('licenses:description.cc_by_nc'),
+    logo: LicenseImages.ccByNcLogo,
     link: i18n.t('licenses:links.cc_by_nc'),
   },
   {
-    buttonImage: LicenseImages.ccByNcSaButton,
-    description: i18n.t('licenses:description.cc_by_nc_sa'),
     identifier: LicenseNames.CC_BY_NC_SA,
-    image: LicenseImages.ccByNcSaImage,
-    label: i18n.t('licenses:labels.cc_by_nc_sa'),
+    description: i18n.t('licenses:description.cc_by_nc_sa'),
+    logo: LicenseImages.ccByNcSaLogo,
     link: i18n.t('licenses:links.cc_by_nc_sa'),
   },
   {
-    buttonImage: LicenseImages.ccByNcNdButton,
-    description: i18n.t('licenses:description.cc_by_nc_nd'),
     identifier: LicenseNames.CC_BY_NC_ND,
-    image: LicenseImages.ccByNcNdImage,
-    label: i18n.t('licenses:labels.cc_by_nc_nd'),
+    description: i18n.t('licenses:description.cc_by_nc_nd'),
+    logo: LicenseImages.ccByNcNdLogo,
     link: i18n.t('licenses:links.cc_by_nc_nd'),
   },
   {
-    buttonImage: LicenseImages.cc0Button,
-    description: i18n.t('licenses:description.cc0'),
     identifier: LicenseNames.CC0,
-    image: LicenseImages.cc0Image,
-    label: i18n.t('licenses:labels.cc0'),
+    description: i18n.t('licenses:description.cc0'),
+    logo: LicenseImages.cc0Logo,
     link: i18n.t('licenses:links.cc0'),
   },
 ];
 
-interface License extends BackendType {
+interface License {
+  type: 'License';
   identifier: LicenseNames;
   labels: {
     [key: string]: string;
@@ -99,15 +80,17 @@ interface License extends BackendType {
   link: string;
 }
 
-interface FileSet extends BackendType {
+export interface FileSet {
+  type: 'FileSet';
   files: File[];
 }
 
 export interface RegistrationFileSet {
-  fileSet: FileSet;
+  fileSet: FileSet | null;
 }
 
-export interface File extends BackendType {
+export interface File {
+  type: 'File';
   identifier: string;
   name: string;
   size: number;
@@ -119,7 +102,7 @@ export interface File extends BackendType {
 }
 
 export const emptyFile: File = {
-  type: BackendTypeNames.FILE,
+  type: 'File',
   identifier: '',
   name: '',
   size: 0,

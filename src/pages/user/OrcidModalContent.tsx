@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { Button, DialogActions, DialogContent, Typography } from '@material-ui/core';
+import { Button, DialogActions, DialogContent, Typography } from '@mui/material';
 
 import { ORCID_SIGN_IN_URL, USE_MOCK_DATA } from '../../utils/constants';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -11,13 +11,14 @@ interface OrcidModalContentProps {
   cancelText?: string;
 }
 
-const OrcidModalContent = ({ cancelFunction, cancelText }: OrcidModalContentProps) => {
+export const OrcidModalContent = ({ cancelFunction, cancelText }: OrcidModalContentProps) => {
   const { t } = useTranslation('profile');
   const history = useHistory();
 
   const openORCID = () => {
     if (USE_MOCK_DATA) {
-      history.push(`${UrlPathTemplate.MyProfile}/#access_token=12343123`);
+      history.push(`${UrlPathTemplate.MyProfile}?access_token=123`);
+      cancelFunction();
     } else {
       window.location.assign(ORCID_SIGN_IN_URL);
     }
@@ -30,7 +31,7 @@ const OrcidModalContent = ({ cancelFunction, cancelText }: OrcidModalContentProp
         <Typography>{t('orcid.dialog.paragraph1')}</Typography>
       </DialogContent>
       <DialogActions>
-        <Button data-testid="cancel-connect-to-orcid" color="default" variant="outlined" onClick={cancelFunction}>
+        <Button data-testid="cancel-connect-to-orcid" variant="outlined" onClick={cancelFunction}>
           {cancelText ?? t('common:close')}
         </Button>
         <Button data-testid="connect-to-orcid" onClick={openORCID} color="secondary" variant="contained">
@@ -40,5 +41,3 @@ const OrcidModalContent = ({ cancelFunction, cancelText }: OrcidModalContentProp
     </>
   );
 };
-
-export default OrcidModalContent;

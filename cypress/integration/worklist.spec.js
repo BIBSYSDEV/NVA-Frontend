@@ -1,14 +1,14 @@
 import { RoleName } from '../../src/types/user.types';
 import { mockMessages } from '../../src/utils/testfiles/mockRegistration';
+import { dataTestId } from '../../src/utils/dataTestIds';
 
 describe('Worklist', () => {
   beforeEach(() => {
-    cy.server();
     cy.visit('/my-profile');
     cy.mocklogin();
-    cy.setUserRolesInRedux([RoleName.CURATOR, RoleName.PUBLISHER]);
-    cy.get('[data-testid=menu]').click({ force: true });
-    cy.get('[data-testid=menu-my-worklist-button]').click({ force: true });
+    cy.setUserRolesInRedux([RoleName.CURATOR]);
+    cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.header.worklistLink}]`).click({ force: true });
   });
 
   it('The Curator should be able to view worklist', () => {

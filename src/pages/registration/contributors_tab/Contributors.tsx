@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, MuiThemeProvider, Typography } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/AddCircleOutlineSharp';
-import { Pagination } from '@material-ui/lab';
+import { Button, ThemeProvider, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
+import { Pagination } from '@mui/material';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { Authority } from '../../../types/authority.types';
 import {
@@ -13,17 +13,16 @@ import {
   ContributorRole,
   emptyContributor,
   Identity,
+  Institution,
   UnverifiedContributor,
 } from '../../../types/contributor.types';
 import { NotificationVariant } from '../../../types/notification.types';
-import { BackendTypeNames } from '../../../types/publication_types/commonRegistration.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
-import useIsMobile from '../../../utils/hooks/useIsMobile';
-import lightTheme, { paginationTranslationProps } from '../../../themes/lightTheme';
+import { useIsMobile } from '../../../utils/hooks/useIsMobile';
+import { lightTheme } from '../../../themes/lightTheme';
 import { ContributorList } from './components/ContributorList';
 import { AddContributorModal } from './AddContributorModal';
-import { getAddContributorText, getContributorHeading } from '../../../utils/translation-helpers';
 
 const StyledButton = styled(Button)`
   margin: 1rem 0rem;
@@ -47,14 +46,12 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
-  const {
-    entityDescription: { contributors },
-  } = values;
   const [openContributorModal, setOpenContributorModal] = useState(false);
   const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
   const [currentPage, setCurrentPage] = useState(1); // Pagination pages are 1-indexed :/
   const isMobile = useIsMobile();
 
+  const contributors = values.entityDescription?.contributors ?? [];
   const relevantContributors = contributors.filter((contributor) =>
     contributorRoles.some((role) => role === contributor.role)
   );
@@ -71,7 +68,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       .filter((_, index) => index !== indexToRemove)
       .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
     const nextContributors = [...nextRelevantContributors, ...otherContributors];
-    setFieldValue(ContributorFieldNames.CONTRIBUTORS, nextContributors);
+    setFieldValue(ContributorFieldNames.Contributors, nextContributors);
 
     const maxValidPage = Math.ceil(nextContributors.length / contributorsPerPage);
     if (currentPage > maxValidPage) {
@@ -80,7 +77,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
 
     if (nextContributors.length === 0) {
       // Ensure field is set to touched even if it's empty
-      setFieldTouched(ContributorFieldNames.CONTRIBUTORS);
+      setFieldTouched(ContributorFieldNames.Contributors);
     }
   };
 
@@ -104,7 +101,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       ...contributor,
       sequence: index + 1,
     }));
-    setFieldValue(ContributorFieldNames.CONTRIBUTORS, [...otherContributors, ...newContributors]);
+    setFieldValue(ContributorFieldNames.Contributors, [...otherContributors, ...newContributors]);
   };
 
   const handleOpenContributorModal = (unverifiedContributor: UnverifiedContributor) => {
@@ -119,7 +116,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     }
 
     const identity: Identity = {
-      type: BackendTypeNames.IDENTITY,
+      type: 'Identity',
       id: authority.id,
       orcId: authority.orcids.length > 0 ? authority.orcids[0] : '',
       name: authority.name,
@@ -130,7 +127,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         ...emptyContributor,
         identity,
         affiliations: authority.orgunitids.map((unitUri) => ({
-          type: BackendTypeNames.ORGANIZATION,
+          type: 'Organization',
           id: unitUri,
         })),
         role,
@@ -142,8 +139,8 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     } else {
       const relevantContributor = relevantContributors[unverifiedContributor.index];
       const relevantAffiliations = relevantContributor.affiliations ?? [];
-      const existingOrgunitIds = authority.orgunitids.map((unitUri) => ({
-        type: BackendTypeNames.ORGANIZATION,
+      const existingOrgunitIds: Institution[] = authority.orgunitids.map((unitUri) => ({
+        type: 'Organization',
         id: unitUri,
       }));
       relevantAffiliations.push(...existingOrgunitIds);
@@ -167,17 +164,30 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         setUnverifiedContributor(null);
       }}
       variant="contained"
-      color={contributorRoles.length === 1 ? 'secondary' : 'default'}
+      color={contributorRoles.length === 1 ? 'secondary' : 'inherit'}
       startIcon={<AddIcon />}
       data-testid={`add-${contributorRole}`}>
-      {getAddContributorText(contributorRole)}
+      {t('contributors.add_as_role', {
+        role:
+          contributorRole === 'OtherContributor'
+            ? t('contributors.contributor')
+            : t(`contributors.types.${contributorRole}`),
+      })}
     </StyledButton>
   );
 
   return (
     <div data-testid={contributorRole}>
-      <Typography variant="h2">{getContributorHeading(contributorRole)}</Typography>
-      <MuiThemeProvider theme={lightTheme}>
+      <Typography variant="h2">
+        {contributorRole === ContributorRole.Creator
+          ? t('registration:contributors.authors')
+          : contributorRole === ContributorRole.Editor
+          ? t('registration:contributors.editors')
+          : contributorRole === ContributorRole.Supervisor
+          ? t('registration:contributors.supervisors')
+          : t('registration:heading.contributors')}
+      </Typography>
+      <ThemeProvider theme={lightTheme}>
         {((isMobile && contributorsToShow.length >= 2) || (!isMobile && contributorsToShow.length >= 5)) &&
           addContributorButton}
 
@@ -198,14 +208,13 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           toggleModal={() => setOpenContributorModal(!openContributorModal)}
           onContributorSelected={onContributorSelected}
         />
-      </MuiThemeProvider>
+      </ThemeProvider>
       {relevantContributors.length > contributorsPerPage && (
         <StyledPagination
           variant="outlined"
           color="primary"
           size="large"
           shape="rounded"
-          getItemAriaLabel={paginationTranslationProps}
           onChange={(_, page) => setCurrentPage(page)}
           page={currentPage}
           count={Math.ceil(relevantContributors.length / contributorsPerPage)}

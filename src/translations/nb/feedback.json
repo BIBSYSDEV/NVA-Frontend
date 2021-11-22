@@ -1,6 +1,6 @@
 {
   "error": {
-    "404_page": "Beklager, men vi kan ikke finne siden du ser etter. (Http feilkode 404)",
+    "404_page": "Beklager, men vi kan ikke finne siden du ser etter",
     "add_role": "Kunne ikke legge til rolle",
     "an_error_occurred": "En feil oppstod",
     "create_authority": "Kunne ikke opprette autoritet",
@@ -19,18 +19,24 @@
     "get_doi": "Kunne ikke hente lenkedata",
     "get_institution": "Kunne ikke laste inn institusjon",
     "get_institutions": "Kunne ikke laste inn institusjoner",
+    "get_journal": "Kunne ikke hente tidsskrift",
+    "get_journals": "Kunne ikke hente tidsskrifter",
+    "get_journal_article": "Kunne ikke hente artikkel i tidsskrift",
     "get_last_registration": "Kunne ikke hente tidligere registrering",
     "get_messages": "Kunne ikke hente meldinger",
+    "get_monograph": "Kunne ikke hente monografi",
     "get_orcid": "Kunne ikke hente data fra ORCID",
     "get_parent_units": "Kunne ikke hente institusjoner",
     "get_project": "Søk på prosjekt feilet",
+    "get_publisher": "Kunne ikke hente utgiver",
     "get_publishers": "Søk på utgivere feilet",
     "get_registrations": "Kunne ikke laste inn registreringer",
     "get_registration": "Kunne ikke laste inn registrering",
     "get_roles": "Kunne ikke hente roller",
+    "get_series": "Kunne ikke hente serie",
     "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
-    "get_user": "Kunne ikke hente bruker",
     "get_users_for_institution": "Kunne ikke hente brukere",
+    "get_vocabularies": "Kunne ikke hente kontrollerte vokabular",
     "institution_mismatch": "Denne brukeren tilhører en annen institusjon",
     "login": "Kunne ikke logge inn",
     "missing_user": "Mangler bruker",
@@ -44,6 +50,7 @@
     "update_doi_request": "Kunne ikke oppdatere DOI-forespørsel",
     "update_institution_user": "Kunne ikke oppdatere bruker",
     "update_registration": "Kunne ikke oppdatere registrering",
+    "update_vocabulary": "Oppdatering av {{vocabulary}} feilet",
     "orcid": {
       "access_denied": "Kunne ikke koble til ORCID fordi tilgang til ORCID-kontoen ble avslått"
     }
@@ -71,12 +78,19 @@
     "send_message": "Melding sendt",
     "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",
-    "update_registration": "Registreringen er oppdatert"
+    "update_registration": "Registreringen er oppdatert",
+    "update_vocabulary": "{{vocabulary}} er nå {{status}}"
   },
   "validation": {
     "author_required": "Du må ha minst en forfatter på denne registreringen",
+    "cannot_be_after": "{{field}} kan ikke være etter {{limitField}}",
+    "cannot_be_before": "{{field}} kan ikke være før {{limitField}}",
+    "contributor_required": "Du må ha minst en bidragsyter på denne registreringen",
     "editor_required": "Du må ha minst en redaktør på denne registreringen",
+    "exhibition_place_required": "Må ha minst ett visningssted",
     "has_invalid_format": "{{field}} har ugyldig format",
+    "isbn_too_short": "ISBN må ha 13 siffer",
+    "not_selected": "{{field}} er ikke valgt",
     "is_required": "{{field}} er obligatorisk",
     "minimum_one_file": "Du må laste opp minst en fil for denne registreringen",
     "must_be_bigger_than": "{{field}} kan ikke være mindre enn {{limit}}",

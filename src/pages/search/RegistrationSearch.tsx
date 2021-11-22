@@ -1,47 +1,58 @@
-import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TablePagination, Typography } from '@material-ui/core';
-import ListSkeleton from '../../components/ListSkeleton';
+import { Box, TablePagination, Typography } from '@mui/material';
+import { useHistory } from 'react-router-dom';
+import { ListSkeleton } from '../../components/ListSkeleton';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
-import useSearchRegistrations from '../../utils/hooks/useSearchRegistrations';
-import SearchResults from './SearchResults';
-import { SearchConfig } from '../../utils/searchHelpers';
+import { SearchResults } from './SearchResults';
+import { SearchApiPath } from '../../api/apiPaths';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { dataTestId } from '../../utils/dataTestIds';
+import { SearchResult } from '../../types/registration.types';
+import { SearchParam } from '../../utils/searchHelpers';
 
-interface RegistrationSearchProps {
-  searchConfig?: SearchConfig;
-  noHitsText?: string;
-}
-
-export const RegistrationSearch = ({ searchConfig, noHitsText }: RegistrationSearchProps) => {
+export const RegistrationSearch = () => {
   const { t } = useTranslation('common');
-  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[1]);
-  const [page, setPage] = useState(0);
-  const [searchResults, isLoadingSearch] = useSearchRegistrations(searchConfig, rowsPerPage, page * rowsPerPage);
+  const history = useHistory();
+  const params = new URLSearchParams(history.location.search);
+
+  const resultsParam = params.get(SearchParam.Results);
+  const fromParam = params.get(SearchParam.From);
+
+  const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[1];
+  const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
+
+  const [searchResults, isLoadingSearch] = useFetch<SearchResult>({
+    url: `${SearchApiPath.Registrations}?${params.toString()}`,
+    errorMessage: t('feedback:error.search'),
+  });
+
+  const updatePath = (from: string, results: string) => {
+    params.set(SearchParam.From, from);
+    params.set(SearchParam.Results, results);
+    history.push({ search: params.toString() });
+  };
 
   return (
-    <>
+    <Box gridArea="results">
       {isLoadingSearch ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : searchResults && searchResults.hits.length > 0 ? (
         <>
-          <SearchResults searchResult={searchResults} searchTerm={searchConfig?.searchTerm} />
+          <SearchResults searchResult={searchResults} />
           <TablePagination
-            data-testid="search-pagination"
+            data-testid={dataTestId.startPage.searchPagination}
             rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
             component="div"
             count={searchResults.total}
             rowsPerPage={rowsPerPage}
             page={page}
-            onChangePage={(_, newPage) => setPage(newPage)}
-            onChangeRowsPerPage={(event) => {
-              setRowsPerPage(parseInt(event.target.value));
-              setPage(0);
-            }}
+            onPageChange={(_, newPage) => updatePath((newPage * rowsPerPage).toString(), rowsPerPage.toString())}
+            onRowsPerPageChange={(event) => updatePath('0', event.target.value)}
           />
         </>
       ) : (
-        <Typography>{noHitsText ? noHitsText : t('no_hits')}</Typography>
+        <Typography>{t('no_hits')}</Typography>
       )}
-    </>
+    </Box>
   );
 };

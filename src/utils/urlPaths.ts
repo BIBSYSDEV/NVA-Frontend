@@ -1,6 +1,7 @@
 export enum UrlPathTemplate {
   About = '/about',
   AdminInstitutions = '/admin-institutions',
+  Editor = '/editor',
   Home = '/',
   Login = '/login',
   Logout = '/logout',
@@ -27,9 +28,6 @@ export const getRegistrationPath = (identifier?: string) =>
   identifier
     ? UrlPathTemplate.Registration.replace(':identifier?', encodeURIComponent(identifier))
     : UrlPathTemplate.Registration.replace('/:identifier?', '');
-
-export const getSearchPath = (searchTerm: string) =>
-  `${UrlPathTemplate.Search}?query=${encodeURIComponent(searchTerm)}`;
 
 export const getUserPath = (authorityId: string) => `${UrlPathTemplate.User}?id=${encodeURIComponent(authorityId)}`;
 

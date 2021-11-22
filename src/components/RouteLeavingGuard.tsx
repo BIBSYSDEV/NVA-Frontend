@@ -1,8 +1,8 @@
 import { Location } from 'history';
 import React, { useEffect, useState } from 'react';
 import { Prompt, useHistory } from 'react-router-dom';
-import { Typography } from '@material-ui/core';
-import ConfirmDialog from './ConfirmDialog';
+import { Typography } from '@mui/material';
+import { ConfirmDialog } from './ConfirmDialog';
 
 interface RouteLeavingGuardProps {
   modalDescription: string;

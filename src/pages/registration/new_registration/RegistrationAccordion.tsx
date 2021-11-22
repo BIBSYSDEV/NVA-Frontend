@@ -1,5 +1,5 @@
 import React from 'react';
-import { Accordion, AccordionProps } from '@material-ui/core';
+import { Accordion, AccordionProps } from '@mui/material';
 import styled from 'styled-components';
 
 const StyledRegistrationAccordion = styled(Accordion)`
@@ -35,10 +35,8 @@ const StyledRegistrationAccordion = styled(Accordion)`
   }
 `;
 
-const RegistrationAccordion = ({ children, ...props }: AccordionProps) => (
+export const RegistrationAccordion = ({ children, ...props }: AccordionProps) => (
   <StyledRegistrationAccordion variant="outlined" square {...props}>
     {children}
   </StyledRegistrationAccordion>
 );
-
-export default RegistrationAccordion;

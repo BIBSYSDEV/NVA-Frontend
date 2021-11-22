@@ -1,21 +1,15 @@
 import React, { useState } from 'react';
-import { Button, MuiThemeProvider, Typography } from '@material-ui/core';
+import { Button, ThemeProvider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import AddIcon from '@material-ui/icons/Add';
-
+import AddIcon from '@mui/icons-material/Add';
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import { filterUsersByRole } from '../../utils/role-helpers';
-import UserList from './UserList';
-import Modal from '../../components/Modal';
+import { UserList } from './UserList';
+import { Modal } from '../../components/Modal';
 import { AddRoleModalContent } from './AddRoleModalContent';
-import ListSkeleton from '../../components/ListSkeleton';
-import BackgroundDiv from '../../components/BackgroundDiv';
-import lightTheme from '../../themes/lightTheme';
-
-const StyledNewButton = styled(Button)`
-  margin-top: 1rem;
-`;
+import { ListSkeleton } from '../../components/ListSkeleton';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { lightTheme } from '../../themes/lightTheme';
 
 interface CustomerInstitutionAdminsFormProps {
   users: InstitutionUser[];
@@ -34,6 +28,8 @@ export const CustomerInstitutionAdminsForm = ({
     setOpenAddAdminModal((state) => !state);
   };
 
+  const addAdminText = t('common:add_custom', { name: t('profile:roles.institution_admin') });
+
   return (
     <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
       <Typography variant="h2">{t('administrators')}</Typography>
@@ -47,32 +43,33 @@ export const CustomerInstitutionAdminsForm = ({
             refetchUsers={refetchInstitutionUsers}
             tableCaption={t('profile:roles.institution_admins')}
           />
-          <StyledNewButton
+          <Button
+            sx={{ mt: '1rem' }}
             color="secondary"
             variant="contained"
             startIcon={<AddIcon />}
             data-testid="button-open-add-admin"
             onClick={toggleOpenAddAdminModal}>
-            {t('users.add_institution_admin')}
-          </StyledNewButton>
+            {addAdminText}
+          </Button>
         </>
       )}
 
-      <MuiThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={lightTheme}>
         <Modal
           open={openAddAdminModal}
           onClose={toggleOpenAddAdminModal}
-          headingText={t('users.add_institution_admin')}
+          headingText={addAdminText}
           dataTestId="add-role-modal">
           <AddRoleModalContent
             role={RoleName.INSTITUTION_ADMIN}
             users={users}
             closeModal={toggleOpenAddAdminModal}
             refetchUsers={refetchInstitutionUsers}
-            tableCaption={t('users.add_institution_admin')}
+            tableCaption={addAdminText}
           />
         </Modal>
-      </MuiThemeProvider>
+      </ThemeProvider>
     </BackgroundDiv>
   );
 };

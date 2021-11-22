@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
 import styled from 'styled-components';
-import { Button, IconButton, Tooltip, Typography, TypographyProps } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import { Button, IconButton, Tooltip, Typography, TypographyProps } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { UrlPathTemplate } from '../utils/urlPaths';
 import { ReactNode } from 'react';
 
@@ -40,7 +40,7 @@ const StyledSuperHeader = styled.div`
   color: ${({ theme }) => theme.palette.section.megaDark};
 `;
 
-export interface PageHeaderProps extends TypographyProps {
+interface PageHeaderProps extends TypographyProps {
   backPath?: string;
   children: string;
   htmlTitle?: string;

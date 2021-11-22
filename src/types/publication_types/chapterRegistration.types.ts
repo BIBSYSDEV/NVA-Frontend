@@ -1,39 +1,34 @@
 import { ChapterType, PublicationType } from '../publicationFieldNames';
-import { BackendType, BaseEntityDescription } from '../registration.types';
+import { BaseEntityDescription, BaseReference, BaseRegistration, NviApplicableBase } from '../registration.types';
+import { ChapterContentType } from './content.types';
 import { PagesRange, emptyPagesRange } from './pages.types';
 
-export interface ChapterPublicationInstance {
+export interface ChapterRegistration extends BaseRegistration {
+  entityDescription: ChapterEntityDescription;
+}
+
+export interface ChapterPublicationInstance extends NviApplicableBase<ChapterContentType> {
   type: ChapterType | '';
-  pages: PagesRange;
-  peerReviewed: boolean | null;
+  pages: PagesRange | null;
 }
 
 export interface ChapterPublicationContext {
-  type: PublicationType.CHAPTER;
-  level: string | number | null;
-  onlineIssn: string;
-  openAccess: boolean;
-  peerReviewed: boolean;
-  printIssn: string;
-  publisher: string;
-  seriesNumber: string;
-  seriesTitle: string;
-  url: string;
-  linkedContext: string;
+  type: PublicationType.Chapter;
+  partOf: string | null;
 }
 
 export const emptyChapterPublicationInstance: ChapterPublicationInstance = {
   type: '',
   pages: emptyPagesRange,
+  contentType: null,
   peerReviewed: null,
 };
 
-interface ChapterReference extends BackendType {
-  doi: string;
+interface ChapterReference extends BaseReference {
   publicationContext: ChapterPublicationContext;
   publicationInstance: ChapterPublicationInstance;
 }
 
 export interface ChapterEntityDescription extends BaseEntityDescription {
-  reference: ChapterReference;
+  reference: ChapterReference | null;
 }

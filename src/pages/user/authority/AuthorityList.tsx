@@ -12,15 +12,18 @@ import {
   TableRow,
   Tooltip,
   Typography,
-} from '@material-ui/core';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import { Skeleton } from '@material-ui/lab';
-import BackgroundDiv from '../../../components/BackgroundDiv';
-import AffiliationHierarchy from '../../../components/institution/AffiliationHierarchy';
-import lightTheme from '../../../themes/lightTheme';
+} from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { Skeleton } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
+import { BackgroundDiv } from '../../../components/BackgroundDiv';
+import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
+import { lightTheme } from '../../../themes/lightTheme';
 import { Authority } from '../../../types/authority.types';
-import useFetchLastRegistrationFromAlma from '../../../utils/hooks/useFetchLastRegistration';
+import { AlmaRegistration } from '../../../types/registration.types';
+import { useFetch } from '../../../utils/hooks/useFetch';
+import { AlmaApiPath } from '../../../api/apiPaths';
 
 const StyledTableRow = styled(TableRow)`
   cursor: pointer;
@@ -40,7 +43,7 @@ interface AuthorityListProps {
   selectedArpId?: string;
 }
 
-const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, selectedArpId }: AuthorityListProps) => {
+export const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, selectedArpId }: AuthorityListProps) => {
   const { t } = useTranslation('common');
 
   return (
@@ -55,7 +58,7 @@ const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, selectedArp
         <TableContainer>
           <Table size="medium">
             <caption>
-              <Typography variant="srOnly">{t('registration:contributors.authors')}</Typography>
+              <span style={visuallyHidden}>{t('registration:contributors.authors')}</span>
             </caption>
             <TableHead>
               <TableRow>
@@ -117,9 +120,11 @@ const StyledTooltip = styled(Tooltip)`
   padding-top: 0.5rem;
 `;
 
-const StyledTitle = styled.div<{ canBeTruncated: boolean }>`
+const StyledTitle = styled.div`
   display: grid;
-  grid-template-columns: ${({ canBeTruncated }) => (canBeTruncated ? '1fr auto' : '1fr')};
+  grid-template-columns: 9fr 1fr;
+  gap: 0.5rem;
+  align-items: center;
 `;
 
 interface LastAlmaRegistrationCellProps {
@@ -128,7 +133,16 @@ interface LastAlmaRegistrationCellProps {
 
 const LastAlmaRegistrationCell = ({ authority }: LastAlmaRegistrationCellProps) => {
   const { t } = useTranslation('profile');
-  const [almaPublication, isLoadingAlmaPublication] = useFetchLastRegistrationFromAlma(authority.id, authority.name);
+
+  const systemControlNumber = authority.id.split('/').pop();
+  const [almaPublication, isLoadingAlmaPublication] = useFetch<AlmaRegistration>({
+    url:
+      systemControlNumber && authority.name
+        ? encodeURI(`${AlmaApiPath.Alma}/?scn=${systemControlNumber}&creatorname=${authority.name}`)
+        : '',
+    errorMessage: t('feedback:error.get_last_registration'),
+  });
+
   const [canBeTruncated, setCanBeTruncated] = useState(false);
   const [showFullText, setShowFullText] = useState(false);
 
@@ -139,15 +153,14 @@ const LastAlmaRegistrationCell = ({ authority }: LastAlmaRegistrationCellProps) 
       {isLoadingAlmaPublication ? (
         <Skeleton />
       ) : almaPublication?.title ? (
-        <StyledTitle canBeTruncated={canBeTruncated}>
-          <Typography>
-            <TextTruncate
-              line={showFullText ? false : 1}
-              truncateText=" [...]"
-              text={almaPublication.title}
-              onTruncated={() => setCanBeTruncated(true)}
-            />
-          </Typography>
+        <StyledTitle>
+          <TextTruncate
+            element="p"
+            line={showFullText ? false : 1}
+            truncateText=" [...]"
+            text={almaPublication.title}
+            onTruncated={() => setCanBeTruncated(true)}
+          />
           {canBeTruncated && (
             <StyledTooltip
               title={showFullText ? t<string>('common:title_minimize') : t<string>('common:title_expand')}
@@ -162,5 +175,3 @@ const LastAlmaRegistrationCell = ({ authority }: LastAlmaRegistrationCellProps) 
     </>
   );
 };
-
-export default AuthorityList;

@@ -1,18 +1,22 @@
-import deepmerge from 'deepmerge';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { ItalicPageHeader } from '../../components/PageHeader';
-import { emptyRegistration, Registration } from '../../types/registration.types';
+import { Registration, SearchResult } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PublicFilesContent } from './PublicFilesContent';
-import PublicGeneralContent from './PublicGeneralContent';
+import { PublicGeneralContent } from './PublicGeneralContent';
 import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
 import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
 import { PublicSummaryContent } from './PublicSummaryContent';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
+import { ShareOptions } from './ShareOptions';
+import { SearchApiPath } from '../../api/apiPaths';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { RegistrationList } from '../../components/RegistrationList';
+import { RegistrationFieldName } from '../../types/publicationFieldNames';
 
 const StyledYearSpan = styled.span`
   padding-left: 1rem;
@@ -28,41 +32,51 @@ export interface PublicRegistrationProps extends PublicRegistrationContentProps 
 export const PublicRegistrationContent = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
   const { t } = useTranslation('registration');
 
-  // Registration can lack some fields if it's newly created
-  registration = deepmerge(emptyRegistration, registration);
+  const { identifier, entityDescription, projects, fileSet, subjects } = registration;
+  const contributors = entityDescription?.contributors ?? [];
+  const files = fileSet?.files ?? [];
+  const mainTitle = entityDescription?.mainTitle || `[${t('common:missing_title')}]`;
+  const abstract = entityDescription?.abstract;
+  const description = entityDescription?.description;
 
-  const {
-    entityDescription: { contributors, date, mainTitle, abstract, description, tags, reference },
-    projects,
-    fileSet,
-  } = registration;
+  const [relatedRegistrations] = useFetch<SearchResult>({
+    url: `${SearchApiPath.Registrations}?query="${identifier}" AND NOT (${RegistrationFieldName.Identifier}:"${identifier}")`,
+    errorMessage: t('feedback:error.search'),
+  });
 
   return (
     <>
       <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
       <ItalicPageHeader
         superHeader={{
-          title: reference.publicationInstance.type ? (
+          title: entityDescription?.reference?.publicationInstance.type ? (
             <>
-              <span>{t(`publicationTypes:${reference.publicationInstance.type}`)}</span>
-              <StyledYearSpan>{date.year}</StyledYearSpan>
+              <span data-testid={dataTestId.registrationLandingPage.registrationSubtype}>
+                {t(`publicationTypes:${entityDescription.reference.publicationInstance.type}`)}
+              </span>
+              {entityDescription?.date?.year && (
+                <StyledYearSpan data-testid={dataTestId.registrationLandingPage.publicationDate}>
+                  {entityDescription.date.year}
+                </StyledYearSpan>
+              )}
             </>
           ) : null,
           icon: <MenuBookIcon />,
-        }}>
-        {mainTitle || `[${t('common:missing_title')}]`}
+        }}
+        data-testid={dataTestId.registrationLandingPage.title}>
+        {mainTitle}
       </ItalicPageHeader>
       <div>
         {contributors.length > 0 && (
           <PublicRegistrationContributors
             contributors={contributors}
-            registrationType={reference.publicationInstance.type}
+            registrationType={entityDescription?.reference?.publicationInstance.type ?? ''}
           />
         )}
 
         <PublicGeneralContent registration={registration} />
 
-        {fileSet.files.length > 0 && (
+        {files.length > 0 && (
           <LandingPageAccordion
             data-testid={dataTestId.registrationLandingPage.filesAccordion}
             defaultExpanded
@@ -71,7 +85,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           </LandingPageAccordion>
         )}
 
-        {(abstract || description || tags.length > 0) && (
+        {entityDescription && (abstract || description || entityDescription.tags.length > 0 || subjects.length > 0) && (
           <LandingPageAccordion
             data-testid={dataTestId.registrationLandingPage.abstractAccordion}
             defaultExpanded
@@ -80,7 +94,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           </LandingPageAccordion>
         )}
 
-        {projects?.length > 0 && (
+        {projects.length > 0 && (
           <LandingPageAccordion
             data-testid={dataTestId.registrationLandingPage.projectsAccordion}
             defaultExpanded
@@ -88,7 +102,17 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
             <PublicProjectsContent projects={projects} />
           </LandingPageAccordion>
         )}
+
+        {relatedRegistrations && relatedRegistrations.hits.length > 0 && (
+          <LandingPageAccordion
+            data-testid={dataTestId.registrationLandingPage.relatedRegistrationsAccordion}
+            defaultExpanded
+            heading={t('public_page.related_registrations')}>
+            <RegistrationList registrations={relatedRegistrations.hits} />
+          </LandingPageAccordion>
+        )}
       </div>
+      <ShareOptions title={mainTitle} description={abstract ?? description ?? ''} />
     </>
   );
 };

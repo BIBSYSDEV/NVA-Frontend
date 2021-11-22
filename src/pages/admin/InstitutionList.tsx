@@ -2,17 +2,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-import {
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
+import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import { visuallyHidden } from '@mui/utils';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { getAdminInstitutionPath } from '../../utils/urlPaths';
 
@@ -40,14 +32,14 @@ interface InstitutionListProps {
   institutions: CustomerInstitution[];
 }
 
-const InstitutionList = ({ institutions }: InstitutionListProps) => {
+export const InstitutionList = ({ institutions }: InstitutionListProps) => {
   const { t } = useTranslation('common');
 
   return (
     <TableContainer>
       <StyledTable data-testid="customer-institutions-list">
         <caption>
-          <Typography variant="srOnly">{t('admin:admin_institutions')}</Typography>
+          <span style={visuallyHidden}>{t('admin:admin_institutions')}</span>
         </caption>
         <TableHead>
           <TableRow>
@@ -87,5 +79,3 @@ const InstitutionList = ({ institutions }: InstitutionListProps) => {
     </TableContainer>
   );
 };
-
-export default InstitutionList;

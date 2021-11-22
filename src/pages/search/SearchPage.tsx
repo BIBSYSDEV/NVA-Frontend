@@ -1,36 +1,73 @@
+import { List, Typography } from '@mui/material';
+import { Formik, Form } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { PageHeader } from '../../components/PageHeader';
-import SearchBar from '../../components/SearchBar';
+import { SearchBar } from './SearchBar';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
-import { getSearchPath } from '../../utils/urlPaths';
+import { createSearchConfigFromSearchParams, createSearchQuery, SearchParam } from '../../utils/searchHelpers';
+import { RegistrationTypeFilter } from './filters/RegistrationTypeFilter';
 import { RegistrationSearch } from './RegistrationSearch';
+import { SortSelector } from './SortSelector';
 
 const StyledSearch = styled.div`
-  width: 85%;
-  justify-items: center;
+  display: grid;
+  grid-template-columns: 2fr 5fr 2fr;
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas: 'filters searchbar sorting' 'filters advanced advanced' 'filters results results';
+  column-gap: 2rem;
+  row-gap: 1rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'searchbar' 'sorting' 'filters' 'advanced' 'results';
+  }
+`;
+
+const StyledFilters = styled(List)`
+  grid-area: filters;
+`;
+
+const StyledFilterHelperText = styled(Typography)`
+  font-weight: 500;
 `;
 
 const SearchPage = () => {
   const { t } = useTranslation('common');
   const history = useHistory();
-  const searchTerm = new URLSearchParams(history.location.search).get('query') ?? '';
+  const params = new URLSearchParams(history.location.search);
 
-  const handleSearch = (searchTerm: string) => {
-    if (searchTerm.length) {
-      history.push(getSearchPath(searchTerm));
-    }
-  };
+  const initialSearchParams = createSearchConfigFromSearchParams(params);
 
   return (
     <StyledPageWrapperWithMaxWidth>
       <PageHeader backPath="/">{t('registrations')}</PageHeader>
-      <StyledSearch>
-        <SearchBar handleSearch={handleSearch} initialSearchTerm={searchTerm} />
-        <RegistrationSearch searchConfig={{ searchTerm }} />
-      </StyledSearch>
+      <Formik
+        initialValues={initialSearchParams}
+        onSubmit={(values) => {
+          const queryString = createSearchQuery(values);
+          params.set(SearchParam.From, '0');
+          if (queryString) {
+            params.set(SearchParam.Query, queryString);
+          } else {
+            params.delete(SearchParam.Query);
+          }
+          history.push({ search: params.toString() });
+        }}>
+        <Form>
+          <StyledSearch>
+            <StyledFilters>
+              <StyledFilterHelperText>{t('search:select_filters')}</StyledFilterHelperText>
+              <RegistrationTypeFilter />
+            </StyledFilters>
+            <SearchBar />
+            <SortSelector />
+            <RegistrationSearch />
+          </StyledSearch>
+        </Form>
+      </Formik>
     </StyledPageWrapperWithMaxWidth>
   );
 };

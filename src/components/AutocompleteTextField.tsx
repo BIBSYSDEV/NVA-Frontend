@@ -1,8 +1,7 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { CircularProgress, TextField, TextFieldProps } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
-import { AutocompleteRenderInputParams } from '@material-ui/lab';
+import { CircularProgress, TextField, TextFieldProps, AutocompleteRenderInputParams } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 const StyledSearchIcon = styled(SearchIcon)`
   margin-left: 0.5rem;
@@ -13,16 +12,16 @@ interface AutocompleteTextFieldProps
   extends AutocompleteRenderInputParams,
     Pick<TextFieldProps, 'placeholder' | 'label' | 'required'> {
   isLoading: boolean;
-  showSearchIcon: boolean;
+  showSearchIcon?: boolean;
   errorMessage?: string;
 }
 
-export const AutocompleteTextField: FC<AutocompleteTextFieldProps> = ({
+export const AutocompleteTextField = ({
   isLoading,
   showSearchIcon,
   errorMessage,
   ...params
-}) => (
+}: AutocompleteTextFieldProps) => (
   <TextField
     {...params}
     variant="filled"

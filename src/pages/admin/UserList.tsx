@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typography } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { addRoleToUser, removeRoleFromUser } from '../../api/roleApi';
-import ButtonWithProgress from '../../components/ButtonWithProgress';
-import ConfirmDialog from '../../components/ConfirmDialog';
-import DangerButton from '../../components/DangerButton';
+import { Button, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { visuallyHidden } from '@mui/utils';
+import { LoadingButton } from '@mui/lab';
+import { updateUser } from '../../api/roleApi';
+import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { InstitutionUser, RoleName } from '../../types/user.types';
-import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 
 const StyledTable = styled(Table)`
   width: 100%;
@@ -38,7 +38,7 @@ interface UserListProps {
   alwaysShowPagination?: boolean; // If false, show pagination only if more elements than minimum rows per page
 }
 
-const UserList = ({
+export const UserList = ({
   userList,
   tableCaption,
   roleToRemove,
@@ -53,18 +53,20 @@ const UserList = ({
   const [updatedRoleForUsers, setUpdatedRoleForUsers] = useState<string[]>([]);
   const [removeRoleForUser, setRemoveRoleForUser] = useState('');
 
-  const handleAddRoleToUser = async (username: string) => {
+  const handleAddRoleToUser = async (user: InstitutionUser) => {
     if (roleToAdd) {
-      setUpdatedRoleForUsers((state) => [...state, username]);
-      const response = await addRoleToUser(username, roleToAdd);
-      if (response) {
-        if (response.error) {
-          setUpdatedRoleForUsers((state) => state.filter((user) => user !== username));
-          dispatch(setNotification(t('feedback:error.add_role'), NotificationVariant.Error));
-        } else {
-          dispatch(setNotification(t('feedback:success.added_role')));
-          refetchUsers?.();
-        }
+      setUpdatedRoleForUsers((state) => [...state, user.username]);
+      const newUser: InstitutionUser = {
+        ...user,
+        roles: [...user.roles, { type: 'Role', rolename: roleToAdd }],
+      };
+      const updateUserResponse = await updateUser(user.username, newUser);
+      if (isErrorStatus(updateUserResponse.status)) {
+        setUpdatedRoleForUsers((state) => state.filter((username) => username !== user.username));
+        dispatch(setNotification(t('feedback:error.add_role'), NotificationVariant.Error));
+      } else if (isSuccessStatus(updateUserResponse.status)) {
+        dispatch(setNotification(t('feedback:success.added_role')));
+        refetchUsers?.();
       }
     }
   };
@@ -72,15 +74,22 @@ const UserList = ({
   const handleRemoveRoleFromUser = async () => {
     if (roleToRemove && removeRoleForUser) {
       setUpdatedRoleForUsers((state) => [...state, removeRoleForUser]);
-      const response = await removeRoleFromUser(removeRoleForUser, roleToRemove);
-      if (response) {
-        if (response.error) {
-          setUpdatedRoleForUsers((state) => state.filter((user) => user !== removeRoleForUser));
-          dispatch(setNotification(t('feedback:error.remove_role'), NotificationVariant.Error));
-        } else {
-          dispatch(setNotification(t('feedback:success.removed_role')));
-          refetchUsers?.();
-        }
+
+      const existingUser = userList.find((user) => user.username === removeRoleForUser);
+      if (!existingUser) {
+        return;
+      }
+      const newUser: InstitutionUser = {
+        ...existingUser,
+        roles: existingUser.roles.filter((role) => role.rolename !== roleToRemove),
+      };
+      const updateUserResponse = await updateUser(removeRoleForUser, newUser);
+      if (isErrorStatus(updateUserResponse.status)) {
+        setUpdatedRoleForUsers((state) => state.filter((user) => user !== removeRoleForUser));
+        dispatch(setNotification(t('feedback:error.remove_role'), NotificationVariant.Error));
+      } else if (isSuccessStatus(updateUserResponse.status)) {
+        dispatch(setNotification(t('feedback:success.removed_role')));
+        refetchUsers?.();
       }
     }
     setRemoveRoleForUser('');
@@ -100,7 +109,7 @@ const UserList = ({
         <>
           <StyledTable size="small">
             <caption>
-              <Typography variant="srOnly">{tableCaption}</Typography>
+              <span style={visuallyHidden}>{tableCaption}</span>
             </caption>
             <TableHead>
               <TableRow>
@@ -125,27 +134,29 @@ const UserList = ({
                     </TableCell>
                     <TableCell align="right">
                       {roleToRemove && (
-                        <DangerButton
+                        <Button
+                          color="error"
                           variant="outlined"
                           startIcon={<DeleteIcon />}
                           disabled={isLastInstitutionAdmin}
                           data-testid={`button-remove-role-${roleToRemove}-${user.username}`}
                           onClick={() => setRemoveRoleForUser(user.username)}>
                           {t('common:remove')}
-                        </DangerButton>
+                        </Button>
                       )}
                       {roleToAdd && (
-                        <ButtonWithProgress
+                        <LoadingButton
                           color="primary"
                           variant="contained"
                           size="small"
                           startIcon={<AddIcon />}
+                          loadingPosition="start"
                           disabled={disableAddButton}
-                          isLoading={!disableAddButton && isLoading}
+                          loading={!disableAddButton && isLoading}
                           data-testid={`button-add-role-${roleToAdd}-${user.username}`}
-                          onClick={() => handleAddRoleToUser(user.username)}>
+                          onClick={() => handleAddRoleToUser(user)}>
                           {t('common:add')}
-                        </ButtonWithProgress>
+                        </LoadingButton>
                       )}
                     </TableCell>
                   </StyledTableRow>
@@ -160,11 +171,12 @@ const UserList = ({
               count={userList.length}
               rowsPerPage={rowsPerPage}
               page={validPage}
-              onChangePage={(_, newPage) => setPage(newPage)}
-              onChangeRowsPerPage={(event) => {
+              onPageChange={(_, newPage) => setPage(newPage)}
+              onRowsPerPageChange={(event) => {
                 setRowsPerPage(parseInt(event.target.value));
                 setPage(0);
               }}
+              data-testid={`user-pagination-${roleToRemove ?? roleToAdd}`}
             />
           )}
           {roleToRemove && (
@@ -183,5 +195,3 @@ const UserList = ({
     </>
   );
 };
-
-export default UserList;

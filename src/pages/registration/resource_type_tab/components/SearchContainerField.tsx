@@ -1,21 +1,21 @@
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Chip, ThemeProvider, Typography, Autocomplete } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import TextTruncate from 'react-text-truncate';
-import { MuiThemeProvider, Typography } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import EmphasizeSubstring from '../../../../components/EmphasizeSubstring';
+import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
-import lightTheme, { autocompleteTranslationProps } from '../../../../themes/lightTheme';
-import { RegistrationSubtype } from '../../../../types/publicationFieldNames';
-import { levelMap, Registration } from '../../../../types/registration.types';
-import { SearchFieldName, SearchPublicationContext } from '../../../../types/search.types';
-import { API_URL } from '../../../../utils/constants';
+import { lightTheme } from '../../../../themes/lightTheme';
+import { RegistrationSubtype, ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { Journal, Publisher, Registration, RegistrationDate } from '../../../../types/registration.types';
 import { displayDate } from '../../../../utils/date-helpers';
-import useDebounce from '../../../../utils/hooks/useDebounce';
-import useSearchRegistrations from '../../../../utils/hooks/useSearchRegistrations';
-import { getRegistrationPath } from '../../../../utils/urlPaths';
+import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistrations';
+import { dataTestId as dataTestIds } from '../../../../utils/dataTestIds';
+import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
+import { Contributor } from '../../../../types/contributor.types';
+import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
+import { ExpressionStatement } from '../../../../utils/searchHelpers';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -23,135 +23,183 @@ interface SearchContainerFieldProps {
   label: string;
   placeholder: string;
   dataTestId: string;
+  fetchErrorMessage: string;
+  descriptionToShow?: 'year-and-contributors' | 'publisher-and-level';
 }
 
-const SearchContainerField = (props: SearchContainerFieldProps) => {
+export const SearchContainerField = ({
+  fieldName,
+  searchSubtypes,
+  label,
+  placeholder,
+  dataTestId,
+  fetchErrorMessage,
+  descriptionToShow = 'year-and-contributors',
+}: SearchContainerFieldProps) => {
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
-  const [searchTerm, setSearchTerm] = useState('');
-  const debouncedSearchTerm = useDebounce(searchTerm);
+  const [query, setQuery] = useState('');
+  const debouncedQuery = useDebounce(query);
 
   const [searchContainerOptions, isLoadingSearchContainerOptions] = useSearchRegistrations({
-    searchTerm: debouncedSearchTerm,
-    properties: [{ fieldName: SearchFieldName.Subtype, value: props.searchSubtypes }],
+    searchTerm: debouncedQuery,
+    properties: [
+      { fieldName: ResourceFieldNames.SubType, value: searchSubtypes, operator: ExpressionStatement.Contains },
+    ],
   });
 
-  const currentIdentifier = getIn(values, props.fieldName)?.split('/').pop() ?? '';
-  const [selectedContainerSearch, isLoadingSelectedContainer] = useSearchRegistrations({
-    properties: [{ fieldName: SearchFieldName.Id, value: currentIdentifier }],
-  });
-  const selectedContainer =
-    currentIdentifier && selectedContainerSearch?.hits && selectedContainerSearch.hits.length === 1
-      ? selectedContainerSearch.hits[0]
-      : null;
-
-  // Show only selected value as option unless user are performing a new search
-  const options =
-    selectedContainer && selectedContainer.title === searchTerm
-      ? [selectedContainer]
-      : searchContainerOptions?.hits ?? [];
+  const [selectedContainer, isLoadingSelectedContainer] = useFetchResource<Registration>(
+    getIn(values, fieldName),
+    fetchErrorMessage
+  );
 
   return (
-    <div data-testid={props.dataTestId}>
-      <Field name={props.fieldName}>
+    <ThemeProvider theme={lightTheme}>
+      <Field name={fieldName}>
         {({ field, meta }: FieldProps<string>) => (
-          <MuiThemeProvider theme={lightTheme}>
+          <>
             <Autocomplete
-              {...autocompleteTranslationProps}
-              id={field.name}
-              aria-labelledby={`${field.name}-label`}
+              multiple
+              id={dataTestId}
+              data-testid={dataTestId}
+              aria-labelledby={`${dataTestId}-label`}
               popupIcon={null}
-              options={options}
+              options={
+                query === debouncedQuery && !isLoadingSearchContainerOptions ? searchContainerOptions?.hits ?? [] : []
+              }
               filterOptions={(options) => options}
-              onBlur={() => setFieldTouched(field.name)}
-              onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
-              getOptionSelected={(option, value) => option.id === value.id}
-              value={selectedContainer}
-              onChange={(_, inputValue) => {
-                if (inputValue) {
-                  // Construct IRI manually, until it is part of the object itself
-                  setFieldValue(field.name, `${API_URL}${getRegistrationPath(inputValue.id)}`);
-                } else {
-                  setSearchTerm('');
-                  setFieldValue(field.name, '');
+              inputValue={query}
+              onInputChange={(_, newInputValue, reason) => {
+                if (reason !== 'reset') {
+                  setQuery(newInputValue);
                 }
               }}
+              onBlur={() => setFieldTouched(field.name, true, false)}
+              blurOnSelect
+              disableClearable={!query}
+              value={field.value && selectedContainer ? [selectedContainer] : []}
+              onChange={(_, inputValue, reason) => {
+                if (reason === 'selectOption') {
+                  setFieldValue(field.name, inputValue.pop()?.id);
+                } else if (reason === 'removeOption') {
+                  setFieldValue(field.name, undefined);
+                }
+                setQuery('');
+              }}
               loading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
-              getOptionLabel={(option) => option.title}
-              renderOption={(option, state) => {
-                const optionDate = option.publicationDate.year && displayDate(option.publicationDate);
-                const optionContributors = option.contributors.map((contributor) => contributor.name).join('; ');
-                const optionText = [optionDate, optionContributors].filter((string) => string).join(' - ');
-                return (
+              getOptionLabel={(option) => option.entityDescription?.mainTitle ?? ''}
+              renderOption={(props, option, state) => (
+                <li {...props}>
                   <StyledFlexColumn>
                     <Typography variant="subtitle1">
-                      <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
+                      <EmphasizeSubstring
+                        text={option.entityDescription?.mainTitle ?? ''}
+                        emphasized={state.inputValue}
+                      />
                     </Typography>
-                    <Typography component="span" variant="body2" color="textSecondary">
-                      <TextTruncate line={1} truncateText=" [...]" text={optionText} />
-                    </Typography>
+                    {descriptionToShow === 'year-and-contributors' ? (
+                      <YearAndContributorsText
+                        date={option.entityDescription?.date}
+                        contributors={option.entityDescription?.contributors ?? []}
+                      />
+                    ) : (
+                      <ContainerAndLevelText registration={option} />
+                    )}
                   </StyledFlexColumn>
-                );
-              }}
+                </li>
+              )}
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip
+                    {...getTagProps({ index })}
+                    data-testid={dataTestIds.registrationWizard.resourceType.journalChip}
+                    label={
+                      <>
+                        <Typography variant="subtitle1">{option.entityDescription?.mainTitle ?? ''}</Typography>
+                        {descriptionToShow === 'year-and-contributors' ? (
+                          <YearAndContributorsText
+                            date={option.entityDescription?.date}
+                            contributors={option.entityDescription?.contributors ?? []}
+                          />
+                        ) : (
+                          <ContainerAndLevelText registration={option} />
+                        )}
+                      </>
+                    }
+                  />
+                ))
+              }
               renderInput={(params) => (
                 <AutocompleteTextField
                   {...params}
-                  label={props.label}
                   required
+                  label={label}
                   isLoading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
-                  placeholder={props.placeholder}
-                  showSearchIcon
-                  errorMessage={meta.touched && !!meta.error ? meta.error : undefined}
+                  placeholder={!field.value ? placeholder : ''}
+                  showSearchIcon={!field.value}
+                  errorMessage={meta.touched && !!meta.error ? meta.error : ''}
                 />
               )}
             />
-          </MuiThemeProvider>
+          </>
         )}
       </Field>
-      {selectedContainer?.reference?.publicationContext && (
-        <SelectedContainerSummary publicationContext={selectedContainer.reference.publicationContext} />
-      )}
-    </div>
+    </ThemeProvider>
   );
 };
 
-interface SelectedContainerSummaryProps {
-  publicationContext: SearchPublicationContext;
+interface YearAndContributorsTextProps {
+  date?: RegistrationDate;
+  contributors: Contributor[];
 }
 
-const SelectedContainerSummary = ({ publicationContext }: SelectedContainerSummaryProps) => {
-  const { t } = useTranslation('registration');
-  const { publisher, title, url, onlineIssn, printIssn, level } = publicationContext;
-  const levelValue = level ? levelMap[level] : null;
+const YearAndContributorsText = ({ date, contributors }: YearAndContributorsTextProps) => {
+  const dateText = displayDate(date);
+  const contributorsText = contributors
+    .slice(0, 5)
+    .map((contributor) => contributor.identity.name)
+    .join('; ');
 
   return (
-    <>
-      {title && (
-        <Typography>
-          {t('resource_type.journal')}: {title}
-        </Typography>
-      )}
-      {publisher && (
-        <Typography>
-          {t('common:publisher')}: {publisher}
-        </Typography>
-      )}
-      {url && (
-        <Typography component="a" href={url}>
-          {url}
-        </Typography>
-      )}
-      {levelValue && (
-        <Typography>
-          {t('resource_type.level')}: {levelValue}
-        </Typography>
-      )}
-      {(printIssn || onlineIssn) && (
-        <Typography>
-          {t('resource_type.issn')}: {[printIssn, onlineIssn].filter((issn) => issn).join(', ')}
-        </Typography>
-      )}
-    </>
+    <Typography variant="body2" color="textSecondary">
+      {[dateText, contributorsText].filter((text) => text).join(' - ')}
+    </Typography>
   );
 };
 
-export default SearchContainerField;
+interface ContainerAndLevelTextProps {
+  registration: Registration;
+}
+
+const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => {
+  const { t } = useTranslation('feedback');
+
+  const publicationContext = registration.entityDescription?.reference?.publicationContext as BookPublicationContext;
+
+  const [publisher] = useFetchResource<Publisher>(publicationContext.publisher?.id ?? '', t('error.get_publisher'));
+  const [series] = useFetchResource<Journal>(publicationContext.series?.id ?? '', t('error.get_series'));
+
+  return series ? (
+    <>
+      {publisher && (
+        <Typography variant="body2" color="textSecondary">
+          {t('common:publisher')}: {publisher.name}
+        </Typography>
+      )}
+      <Typography variant="body2" color="textSecondary">
+        {t('registration:resource_type.series')}: {series.name}
+      </Typography>
+      <Typography variant="body2" color="textSecondary">
+        {t('registration:resource_type.level')}: {series.level}
+      </Typography>
+    </>
+  ) : publisher ? (
+    <>
+      <Typography variant="body2" color="textSecondary">
+        {t('common:publisher')}: {publisher.name}
+      </Typography>
+      <Typography variant="body2" color="textSecondary">
+        {t('registration:resource_type.level')}: {publisher.level}
+      </Typography>
+    </>
+  ) : null;
+};

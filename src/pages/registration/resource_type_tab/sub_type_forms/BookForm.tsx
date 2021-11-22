@@ -1,102 +1,50 @@
-import { Field, FieldProps, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import { Checkbox, FormControlLabel, MuiThemeProvider, Typography } from '@material-ui/core';
-import BackgroundDiv from '../../../../components/BackgroundDiv';
-import lightTheme from '../../../../themes/lightTheme';
-import { BookType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { BookRegistration } from '../../../../types/registration.types';
+import { ThemeProvider } from '@mui/material';
+import { BackgroundDiv } from '../../../../components/BackgroundDiv';
+import { lightTheme } from '../../../../themes/lightTheme';
+import { BookType } from '../../../../types/publicationFieldNames';
 import { DoiField } from '../components/DoiField';
-import IsbnListField from '../components/IsbnListField';
 import { NpiDisciplineField } from '../components/NpiDisciplineField';
-import NviValidation from '../components/NviValidation';
-import { PeerReviewedField } from '../components/PeerReviewedField';
-import PublisherField from '../components/PublisherField';
+import { NviValidation } from '../components/NviValidation';
 import { SeriesFields } from '../components/SeriesFields';
-import { TotalPagesField } from '../components/TotalPagesField';
+import { NviFields } from '../components/nvi_fields/NviFields';
+import { BookRegistration } from '../../../../types/publication_types/bookRegistration.types';
+import { BookMonographContentType } from '../../../../types/publication_types/content.types';
+import { PublisherField } from '../components/PublisherField';
+import { IsbnAndPages } from '../components/isbn_and_pages/IsbnAndPages';
+import { InputContainerBox } from '../../../../components/styled/Wrappers';
 
-const StyledSection = styled.div`
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: 1fr 2fr;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const BookForm = () => {
-  const { t } = useTranslation('registration');
+export const BookForm = () => {
   const { values } = useFormikContext<BookRegistration>();
-  const {
-    reference: {
-      publicationContext,
-      publicationInstance: { peerReviewed, textbookContent, type },
-    },
-  } = values.entityDescription;
+  const instanceType = values.entityDescription.reference?.publicationInstance.type;
 
   return (
     <>
       <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        <DoiField />
-        <PublisherField />
+        <InputContainerBox>
+          <DoiField />
+          <PublisherField />
 
-        <MuiThemeProvider theme={lightTheme}>
-          <NpiDisciplineField />
-        </MuiThemeProvider>
+          <ThemeProvider theme={lightTheme}>
+            <NpiDisciplineField />
+          </ThemeProvider>
 
-        <StyledSection>
-          <IsbnListField />
-          <TotalPagesField />
-        </StyledSection>
+          <IsbnAndPages />
+        </InputContainerBox>
       </BackgroundDiv>
 
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-        <StyledSection>
-          {type === BookType.MONOGRAPH && (
-            <div>
-              <PeerReviewedField />
-            </div>
-          )}
-          <div>
-            <Typography variant="h5" component="p">
-              {t('resource_type.is_book_a_textbook')}
-            </Typography>
-            <Field name={ResourceFieldNames.TEXTBOOK_CONTENT}>
-              {({ field }: FieldProps) => (
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      data-testid="is-textbook-checkbox"
-                      color="primary"
-                      checked={field.value ?? false}
-                      {...field}
-                    />
-                  }
-                  label={<Typography>{t('resource_type.is_book_a_textbook_confirm')}</Typography>}
-                />
-              )}
-            </Field>
-          </div>
-        </StyledSection>
-      </BackgroundDiv>
+      {instanceType === BookType.Monograph && (
+        <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
+          <NviFields contentTypes={Object.values(BookMonographContentType)} />
+        </BackgroundDiv>
+      )}
 
       <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-        <Typography variant="h5">{t('resource_type.series')}</Typography>
-        <Typography>{t('resource_type.series_info')}</Typography>
         <SeriesFields />
       </BackgroundDiv>
 
-      {type === BookType.MONOGRAPH && (
-        <NviValidation
-          isPeerReviewed={!!peerReviewed}
-          isRated={!!publicationContext?.level}
-          isTextbook={!!textbookContent}
-          dataTestId="nvi_book"
-        />
-      )}
+      {instanceType === BookType.Monograph && <NviValidation registration={values} />}
     </>
   );
 };
-
-export default BookForm;

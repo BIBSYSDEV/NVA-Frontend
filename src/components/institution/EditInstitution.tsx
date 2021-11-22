@@ -1,23 +1,26 @@
 import { Field, FieldProps, Form, Formik } from 'formik';
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Button, CircularProgress, Typography } from '@material-ui/core';
-import SaveIcon from '@material-ui/icons/Save';
-import InstitutionSelector from '../../pages/user/institution/InstitutionSelector';
+import { Button, CircularProgress, Typography } from '@mui/material';
+import SaveIcon from '@mui/icons-material/Save';
+import { LoadingButton } from '@mui/lab';
+import { InstitutionSelector } from '../../pages/user/institution/InstitutionSelector';
 import { FormikInstitutionUnit, FormikInstitutionUnitFieldNames } from '../../types/institution.types';
-import useFetchDepartment from '../../utils/hooks/useFetchDepartment';
-import useFetchInstitutions from '../../utils/hooks/useFetchInstitutions';
+import { useFetchDepartment } from '../../utils/hooks/useFetchDepartment';
+import { useFetchInstitutions } from '../../utils/hooks/useFetchInstitutions';
 import { convertToInstitution } from '../../utils/institutions-helpers';
-import InstitutionAutocomplete from './InstitutionAutocomplete';
+import { InstitutionAutocomplete } from './InstitutionAutocomplete';
 import { StyledButtonContainer } from './AddInstitution';
-import ButtonWithProgress from '../ButtonWithProgress';
 
 const StyledInstitutionSearchContainer = styled.div`
   width: 30rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     width: 100%;
   }
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 interface EditInstitutionProps {
@@ -26,7 +29,7 @@ interface EditInstitutionProps {
   onSubmit: (values: FormikInstitutionUnit) => void;
 }
 
-const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCancel, onSubmit }) => {
+export const EditInstitution = ({ initialInstitutionId, onCancel, onSubmit }: EditInstitutionProps) => {
   const { t } = useTranslation('common');
   const [institutions, isLoadingInstitutions] = useFetchInstitutions();
   const [department, isLoadingDepartment] = useFetchDepartment(convertToInstitution(initialInstitutionId));
@@ -38,7 +41,7 @@ const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCan
   return (
     <Formik enableReinitialize initialValues={{ unit: initialValue }} onSubmit={onSubmit}>
       <Form noValidate>
-        <Field name={FormikInstitutionUnitFieldNames.UNIT}>
+        <Field name={FormikInstitutionUnitFieldNames.Unit}>
           {({ field: { name, value }, form: { isSubmitting } }: FieldProps) => (
             <StyledInstitutionSearchContainer>
               <InstitutionAutocomplete
@@ -66,16 +69,17 @@ const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCan
               )}
 
               <StyledButtonContainer>
-                <ButtonWithProgress
+                <LoadingButton
                   variant="contained"
                   type="submit"
                   color="primary"
                   startIcon={<SaveIcon />}
-                  isLoading={isSubmitting}
+                  loadingPosition="start"
+                  loading={isSubmitting}
                   disabled={isLoadingDepartment}
                   data-testid="institution-edit-button">
                   {t('save')}
-                </ButtonWithProgress>
+                </LoadingButton>
 
                 <Button onClick={onCancel} data-testid="institution-cancel-button" variant="text">
                   {t('cancel')}
@@ -88,5 +92,3 @@ const EditInstitution: FC<EditInstitutionProps> = ({ initialInstitutionId, onCan
     </Formik>
   );
 };
-
-export default EditInstitution;

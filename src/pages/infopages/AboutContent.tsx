@@ -1,9 +1,8 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link as MuiLink, Typography } from '@material-ui/core';
-import { ContactInformation } from '../../utils/constants';
+import { Link as MuiLink, Typography } from '@mui/material';
 
-const AboutContent = () => {
+export const AboutContent = () => {
   const { t } = useTranslation('about');
 
   return (
@@ -20,7 +19,7 @@ const AboutContent = () => {
       <Typography paragraph>{t('description.paragraph4')}</Typography>
       <Typography paragraph>
         <Trans t={t} i18nKey="description.paragraph5">
-          <MuiLink href={`mailto:${ContactInformation.UNIT_SUPPORT_EMAIL}`} target="_blank" rel="noopener noreferrer">
+          <MuiLink href={'mailto:support@unit.no'} target="_blank" rel="noopener noreferrer">
             (i18n content: support email)
           </MuiLink>
         </Trans>
@@ -28,5 +27,3 @@ const AboutContent = () => {
     </>
   );
 };
-
-export default AboutContent;

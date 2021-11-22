@@ -1,13 +1,13 @@
-import React, { useEffect, FC } from 'react';
+import React, { useEffect } from 'react';
 import { File, emptyFile, Uppy } from '../../../types/file.types';
-import UppyDashboard from '../../../components/UppyDashboard';
+import { UppyDashboard } from '../../../components/UppyDashboard';
 
 interface FileUploaderProps {
   addFile: (file: File) => void;
   uppy: Uppy;
 }
 
-const FileUploader: FC<FileUploaderProps> = ({ addFile, uppy }) => {
+export const FileUploader = ({ addFile, uppy }: FileUploaderProps) => {
   useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
       uppy.on('upload-success', (file, response) => {
@@ -27,5 +27,3 @@ const FileUploader: FC<FileUploaderProps> = ({ addFile, uppy }) => {
 
   return uppy ? <UppyDashboard uppy={uppy} /> : null;
 };
-
-export default FileUploader;

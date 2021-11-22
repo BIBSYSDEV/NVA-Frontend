@@ -1,42 +1,19 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { getDepartment } from '../../api/institutionApi';
+import { InstitutionApiPath } from '../../api/apiPaths';
 import { RecursiveInstitutionUnit } from '../../types/institution.types';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
-import useCancelToken from './useCancelToken';
+import { getPreferredLanguageCode } from '../translation-helpers';
+import { useFetch } from './useFetch';
 
-const useFetchDepartment = (departmentId: string): [RecursiveInstitutionUnit | undefined, boolean] => {
-  const dispatch = useDispatch();
+export const useFetchDepartment = (departmentId: string) => {
   const { t } = useTranslation('feedback');
-  const [department, setDepartment] = useState<RecursiveInstitutionUnit>();
-  const [isLoading, setIsLoading] = useState(false);
-  const cancelToken = useCancelToken();
+  const fetchDepartment = useFetch<RecursiveInstitutionUnit>({
+    url: departmentId
+      ? `${InstitutionApiPath.Departments}?uri=${encodeURIComponent(
+          departmentId
+        )}&language=${getPreferredLanguageCode()}`
+      : '',
+    errorMessage: t('feedback:error.get_institutions'),
+  });
 
-  const fetchDepartment = useCallback(
-    async (unitId: string) => {
-      setIsLoading(true);
-      const response = await getDepartment(unitId, cancelToken);
-      if (response) {
-        if (response.error) {
-          dispatch(setNotification(t('error.get_institutions'), NotificationVariant.Error));
-        } else if (response.data) {
-          setDepartment(response.data);
-        }
-        setIsLoading(false);
-      }
-    },
-    [dispatch, t, cancelToken]
-  );
-
-  useEffect(() => {
-    if (departmentId) {
-      fetchDepartment(departmentId);
-    }
-  }, [fetchDepartment, departmentId]);
-
-  return [department, isLoading];
+  return fetchDepartment;
 };
-
-export default useFetchDepartment;

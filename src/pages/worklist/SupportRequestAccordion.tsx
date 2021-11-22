@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@material-ui/core';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { addMessage } from '../../api/registrationApi';
 import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/actions/notificationActions';
@@ -14,6 +14,7 @@ import { MessageCollection, MessageType } from '../../types/publication_types/me
 import { Registration } from '../../types/registration.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { MessageList } from './MessageList';
+import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 
 const StyledAccordion = styled(Accordion)`
   width: 100%;
@@ -47,7 +48,9 @@ const StyledOwner = styled.div`
 
 const StyledMessages = styled.div`
   width: 75%;
+  display: flex;
   flex-direction: column;
+  gap: 1rem;
 `;
 
 const StyledAccordionActionButtons = styled.div`
@@ -70,17 +73,15 @@ export const SupportRequestAccordion = ({
 }: SupportRequestAccordionProps) => {
   const { t } = useTranslation('workLists');
   const dispatch = useDispatch();
-  const identifier = registration.identifier;
+  const { identifier } = registration;
 
   const onClickSendMessage = async (message: string) => {
-    const updatedDoiRequestWithMessage = await addMessage(identifier, message, messageCollection.messageType);
-    if (updatedDoiRequestWithMessage) {
-      if (updatedDoiRequestWithMessage.error) {
-        dispatch(setNotification(t('feedback:error.send_message'), NotificationVariant.Error));
-      } else {
-        dispatch(setNotification(t('feedback:success.send_message'), NotificationVariant.Success));
-        fetchSupportRequests();
-      }
+    const updateDoiRequestResponse = await addMessage(identifier, message, messageCollection.messageType);
+    if (isErrorStatus(updateDoiRequestResponse.status)) {
+      dispatch(setNotification(t('feedback:error.send_message'), NotificationVariant.Error));
+    } else if (isSuccessStatus(updateDoiRequestResponse.status)) {
+      dispatch(setNotification(t('feedback:success.send_message'), NotificationVariant.Success));
+      fetchSupportRequests();
     }
   };
 

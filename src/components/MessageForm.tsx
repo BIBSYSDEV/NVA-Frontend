@@ -1,11 +1,11 @@
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import i18n from '../translations/i18n';
 import * as Yup from 'yup';
-import { Button, DialogActions, TextField } from '@material-ui/core';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import ButtonWithProgress from './ButtonWithProgress';
+import { Button, DialogActions, TextField } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import i18n from '../translations/i18n';
 
 interface MessageFormProps {
   confirmAction: (message: string) => Promise<unknown> | void;
@@ -47,7 +47,7 @@ export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) =
                 {...field}
                 disabled={isSubmitting}
                 data-testid="message-field"
-                variant="filled"
+                variant="outlined"
                 multiline
                 rows="4"
                 fullWidth
@@ -65,15 +65,16 @@ export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) =
                 {t('common:cancel')}
               </Button>
             )}
-            <ButtonWithProgress
+            <LoadingButton
               data-testid="send-button"
               type="submit"
               variant="contained"
               color="secondary"
               endIcon={<MailOutlineIcon />}
-              isLoading={isSubmitting}>
+              loadingPosition="end"
+              loading={isSubmitting}>
               {t('common:send')}
-            </ButtonWithProgress>
+            </LoadingButton>
           </DialogActions>
         </Form>
       )}

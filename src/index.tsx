@@ -2,15 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
-import { ThemeProvider } from 'styled-components';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { StylesProvider, ThemeProvider as MUIThemeProvider } from '@material-ui/styles';
+import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
+import { StyledEngineProvider, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import { interceptRequestsOnMock } from './api/mock-interceptor';
-import App from './App';
-import store from './redux/store';
-import mainTheme from './themes/lightTheme';
+import { App } from './App';
+import { store } from './redux/store';
+import { lightTheme } from './themes/lightTheme';
 import i18n from './translations/i18n';
 import { USE_MOCK_DATA } from './utils/constants';
+import { BasicErrorBoundary } from './components/ErrorBoundary';
 
 // Fonts
 import '@fontsource/barlow/400.css';
@@ -29,17 +30,19 @@ if ((window as any).Cypress) {
 }
 
 ReactDOM.render(
-  <I18nextProvider i18n={i18n}>
-    <Provider store={store}>
-      <StylesProvider injectFirst>
-        <ThemeProvider theme={mainTheme}>
-          <MUIThemeProvider theme={mainTheme}>
-            <CssBaseline />
-            <App />
-          </MUIThemeProvider>
-        </ThemeProvider>
-      </StylesProvider>
-    </Provider>
-  </I18nextProvider>,
+  <BasicErrorBoundary>
+    <I18nextProvider i18n={i18n}>
+      <Provider store={store}>
+        <StyledEngineProvider injectFirst>
+          <StyledComponentsThemeProvider theme={lightTheme}>
+            <MuiThemeProvider theme={lightTheme}>
+              <CssBaseline />
+              <App />
+            </MuiThemeProvider>
+          </StyledComponentsThemeProvider>
+        </StyledEngineProvider>
+      </Provider>
+    </I18nextProvider>
+  </BasicErrorBoundary>,
   document.getElementById('root')
 );

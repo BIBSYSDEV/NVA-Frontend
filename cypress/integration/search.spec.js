@@ -1,25 +1,26 @@
+import { dataTestId } from '../../src/utils/dataTestIds';
+
 describe('Search', () => {
   beforeEach(() => {
-    cy.visit('/search');
-    cy.server();
+    cy.visit('/');
+  });
+
+  it('The user should see a working pagination', () => {
+    cy.url().should('not.include', 'results');
+    cy.url().should('not.include', 'from');
+    cy.get(`[data-testid=${dataTestId.startPage.searchPagination}]`).contains('1-10');
+    cy.get(`[data-testid=${dataTestId.startPage.searchPagination}] button`).eq(0).should('be.disabled');
+    cy.get(`[data-testid=${dataTestId.startPage.searchPagination}] button`).eq(1).should('be.enabled');
+    cy.get(`[data-testid=${dataTestId.startPage.searchPagination}] button`).eq(1).click();
+    cy.url().should('include', 'results=10');
+    cy.url().should('include', 'from=10');
   });
 
   it('The user should see a result-list when searching', () => {
-    cy.route('/search?search=test');
-    searchForText('test');
-    cy.get('[data-testid=search-results]').find('[data-testid=result-list-item] ').should('have.length.greaterThan', 1);
-    cy.get('[data-testid=search-results]').contains('2');
-  });
-
-  it.skip('The user should see a working pagination', () => {
-    cy.route('/search?search=test');
-    searchForText('test');
-    cy.get('[data-testid=search-results]').contains('25');
-    cy.get('[data-testid=pagination]').contains('2').click({ force: true });
+    const searchTerm = 'test';
+    cy.get(`[data-testid=${dataTestId.startPage.searchField}] input`).type(searchTerm);
+    cy.get(`[data-testid=${dataTestId.startPage.searchButton}]`).click();
+    cy.get(`[data-testid=${dataTestId.startPage.searchPagination}]`).contains('1-10');
+    cy.url().should('include', `query=${searchTerm}`);
   });
 });
-
-const searchForText = (text) => {
-  cy.get('[data-testid=search-field] input').click({ force: true }).type(text);
-  cy.get('[data-testid=search-button]').click({ force: true });
-};

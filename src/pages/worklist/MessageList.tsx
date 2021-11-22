@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import { Message } from '../../types/publication_types/messages.types';
 
 const StyledMessagesContainer = styled.div`

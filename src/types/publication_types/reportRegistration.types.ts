@@ -1,6 +1,11 @@
-import { BackendType, BaseEntityDescription } from '../registration.types';
+import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
 import { PublicationType, ReportType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
+import { ContextPublisher, Series } from './bookRegistration.types';
+
+export interface ReportRegistration extends BaseRegistration {
+  entityDescription: ReportEntityDescription;
+}
 
 export interface ReportPublicationInstance {
   type: ReportType | '';
@@ -15,23 +20,18 @@ export const emptyReportPublicationInstance: ReportPublicationInstance = {
 export interface ReportPublicationContext {
   type: PublicationType | '';
   isbnList: string[];
-  level: string | number | null;
-  onlineIssn: string;
-  openAccess: boolean;
-  peerReviewed: boolean;
-  printIssn: string;
-  publisher: string;
+  publisher: ContextPublisher;
   seriesNumber: string;
-  seriesTitle: string;
-  url: string;
+  series?: Series;
+  onlineIssn: string;
+  printIssn: string;
 }
 
-interface ReportReference extends BackendType {
-  doi: string;
+interface ReportReference extends BaseReference {
   publicationContext: ReportPublicationContext;
   publicationInstance: ReportPublicationInstance;
 }
 
 export interface ReportEntityDescription extends BaseEntityDescription {
-  reference: ReportReference;
+  reference: ReportReference | null;
 }

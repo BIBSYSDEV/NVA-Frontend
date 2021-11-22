@@ -1,28 +1,26 @@
-import { FormHelperText } from '@material-ui/core';
-import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
+import { FormHelperText } from '@mui/material';
+import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import React, { useEffect, useRef } from 'react';
-import BackgroundDiv from '../../components/BackgroundDiv';
-import lightTheme from '../../themes/lightTheme';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { lightTheme } from '../../themes/lightTheme';
 import { ContributorRole } from '../../types/contributor.types';
-import { BookType, ContributorFieldNames, PublicationType } from '../../types/publicationFieldNames';
-import { Registration } from '../../types/registration.types';
+import { BookType, ContributorFieldNames } from '../../types/publicationFieldNames';
+import { EntityDescription, Registration } from '../../types/registration.types';
+import { isArtistic, isDegree } from '../../utils/registration-helpers';
 import { Contributors } from './contributors_tab/Contributors';
 
-const ContributorsPanel = () => {
+export const ContributorsPanel = () => {
   const {
-    values: {
-      entityDescription: {
-        reference: { publicationContext, publicationInstance },
-        contributors,
-      },
-    },
+    values: { entityDescription },
     errors,
     touched,
     setFieldValue,
   } = useFormikContext<Registration>();
+  const contributorsError = (errors.entityDescription as FormikErrors<EntityDescription>)?.contributors;
+  const contributorsTouched = (touched.entityDescription as FormikTouched<EntityDescription>)?.contributors;
 
-  const contributorsError = errors.entityDescription?.contributors;
-  const contributorsTouched = touched.entityDescription?.contributors;
+  const publicationInstanceType = entityDescription?.reference?.publicationInstance.type ?? '';
+  const contributors = entityDescription?.contributors ?? [];
   const contributorsRef = useRef(contributors);
 
   useEffect(() => {
@@ -31,7 +29,7 @@ const ContributorsPanel = () => {
       ...contributor,
       role: contributor.role ?? ContributorRole.Creator,
     }));
-    setFieldValue(ContributorFieldNames.CONTRIBUTORS, contributorsWithRole);
+    setFieldValue(ContributorFieldNames.Contributors, contributorsWithRole);
   }, [setFieldValue]);
 
   // Creator should not be selectable for other contributors
@@ -39,9 +37,9 @@ const ContributorsPanel = () => {
 
   return (
     <>
-      <FieldArray name={ContributorFieldNames.CONTRIBUTORS}>
+      <FieldArray name={ContributorFieldNames.Contributors}>
         {({ push, replace }: FieldArrayRenderProps) =>
-          publicationContext.type === PublicationType.DEGREE ? (
+          isDegree(publicationInstanceType) ? (
             <>
               <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
                 <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
@@ -57,7 +55,7 @@ const ContributorsPanel = () => {
                 />
               </BackgroundDiv>
             </>
-          ) : publicationInstance.type === BookType.ANTHOLOGY ? (
+          ) : publicationInstanceType === BookType.Anthology ? (
             <>
               <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
                 <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Editor]} />
@@ -70,6 +68,19 @@ const ContributorsPanel = () => {
                 />
               </BackgroundDiv>
             </>
+          ) : isArtistic(publicationInstanceType) ? (
+            <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+              <Contributors
+                push={push}
+                replace={replace}
+                contributorRoles={[
+                  ContributorRole.Designer,
+                  ContributorRole.CuratorOrganizer,
+                  ContributorRole.Consultant,
+                  ContributorRole.Other,
+                ]}
+              />
+            </BackgroundDiv>
           ) : (
             <>
               <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
@@ -84,11 +95,9 @@ const ContributorsPanel = () => {
       </FieldArray>
       {!!contributorsTouched && typeof contributorsError === 'string' && (
         <FormHelperText error>
-          <ErrorMessage name={ContributorFieldNames.CONTRIBUTORS} />
+          <ErrorMessage name={ContributorFieldNames.Contributors} />
         </FormHelperText>
       )}
     </>
   );
 };
-
-export default ContributorsPanel;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import LabelTextLine from '../../components/LabelTextLine';
+import { LabelTextLine } from '../../components/LabelTextLine';
 import { User } from '../../types/user.types';
-import Card from '../../components/Card';
-import { Typography } from '@material-ui/core';
+import { Card } from '../../components/Card';
+import { Typography } from '@mui/material';
 
 interface UserInfoProps {
   user: User;

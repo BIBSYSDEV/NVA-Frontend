@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, DialogActions } from '@material-ui/core';
+import { Button, DialogActions } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../../api/authorityApi';
-import ButtonWithProgress from '../../../components/ButtonWithProgress';
 import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { NotificationVariant } from '../../../types/notification.types';
 import { User } from '../../../types/user.types';
-import AuthorityList from './AuthorityList';
-import NewAuthorityCard from './NewAuthorityCard';
+import { AuthorityList } from './AuthorityList';
+import { NewAuthorityCard } from './NewAuthorityCard';
+import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
 const StyledAuthorityContainer = styled.div`
   min-width: 20rem;
@@ -40,27 +41,47 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
   };
 
   const updateAuthorityForUser = async () => {
-    const selectedAuthority = user.possibleAuthorities.find((authority) => authority.id === selectedArpId);
+    let selectedAuthority = user.possibleAuthorities.find((authority) => authority.id === selectedArpId);
 
     if (selectedAuthority) {
       setIsUpdatingAuthority(true);
-      const updatedAuthorityWithFeide = await addQualifierIdForAuthority(
-        selectedArpId,
-        AuthorityQualifiers.FEIDE_ID,
-        user.id
-      );
-      if (updatedAuthorityWithFeide.error) {
-        dispatch(setNotification(updatedAuthorityWithFeide.error, NotificationVariant.Error));
-        setIsUpdatingAuthority(false);
-      } else if (user.cristinId && !updatedAuthorityWithFeide.orgunitids.includes(user.cristinId)) {
+
+      if (!selectedAuthority.feideids.includes(user.id)) {
+        const updatedAuthorityWithFeide = await addQualifierIdForAuthority(
+          selectedArpId,
+          AuthorityQualifiers.FeideId,
+          user.id
+        );
+        if (isErrorStatus(updatedAuthorityWithFeide.status)) {
+          dispatch(
+            setNotification(
+              t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
+              NotificationVariant.Error
+            )
+          );
+        } else if (isSuccessStatus(updatedAuthorityWithFeide.status)) {
+          selectedAuthority = updatedAuthorityWithFeide.data;
+        }
+      }
+
+      if (user.cristinId && !selectedAuthority.orgunitids.includes(user.cristinId)) {
         const updatedAuthorityWithCristinId = await addQualifierIdForAuthority(
           selectedArpId,
-          AuthorityQualifiers.ORGUNIT_ID,
+          AuthorityQualifiers.OrgUnitId,
           user.cristinId
         );
-        dispatch(setAuthorityData(updatedAuthorityWithCristinId));
+        if (isErrorStatus(updatedAuthorityWithCristinId.status)) {
+          dispatch(
+            setNotification(
+              t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
+              NotificationVariant.Error
+            )
+          );
+        } else if (isSuccessStatus(updatedAuthorityWithCristinId.status)) {
+          dispatch(setAuthorityData(updatedAuthorityWithCristinId.data));
+        }
       } else {
-        dispatch(setAuthorityData(updatedAuthorityWithFeide));
+        dispatch(setAuthorityData(selectedAuthority));
       }
     }
   };
@@ -90,16 +111,16 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
               <Button variant="text" onClick={handleCloseModal}>
                 {t('common:cancel')}
               </Button>
-              <ButtonWithProgress
+              <LoadingButton
                 data-testid="connect-author-button"
                 color="secondary"
                 variant="contained"
                 size="large"
                 onClick={updateAuthorityForUser}
-                disabled={!selectedArpId || isUpdatingAuthority}
-                isLoading={isUpdatingAuthority}>
+                disabled={!selectedArpId}
+                loading={isUpdatingAuthority}>
                 {t('authority.connect_to_select_authority')}
-              </ButtonWithProgress>
+              </LoadingButton>
             </DialogActions>
           </>
         ) : (

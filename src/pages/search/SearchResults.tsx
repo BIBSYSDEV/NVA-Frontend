@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { List, Typography } from '@material-ui/core';
-import { SearchResult } from '../../types/search.types';
-import RegistrationListItem from '../dashboard/RegistrationListItem';
+import { Divider, Typography } from '@mui/material';
+import { RegistrationList } from '../../components/RegistrationList';
+import { SearchResult } from '../../types/registration.types';
 
 const StyledSearchResults = styled.div`
   padding-bottom: 1rem;
@@ -11,27 +11,16 @@ const StyledSearchResults = styled.div`
 
 interface SearchResultsProps {
   searchResult: SearchResult;
-  searchTerm?: string;
 }
 
-const SearchResults = ({ searchResult, searchTerm }: SearchResultsProps) => {
-  const { t } = useTranslation('common');
-
-  const registrations = searchResult.hits;
+export const SearchResults = ({ searchResult }: SearchResultsProps) => {
+  const { t } = useTranslation('search');
 
   return (
     <StyledSearchResults data-testid="search-results">
-      {searchTerm && (
-        <Typography variant="subtitle1">{t('search_summary', { count: searchResult.total, searchTerm })}</Typography>
-      )}
-      <List>
-        {registrations &&
-          registrations.map((registration) => (
-            <RegistrationListItem key={registration.id} registration={registration} />
-          ))}
-      </List>
+      <Typography variant="subtitle1">{t('hits', { count: searchResult.total })}:</Typography>
+      <Divider />
+      <RegistrationList registrations={searchResult.hits} />
     </StyledSearchResults>
   );
 };
-
-export default SearchResults;

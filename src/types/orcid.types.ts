@@ -1,4 +1,4 @@
-export default interface OrcidResponse {
+export interface OrcidResponse {
   id: string;
   sub: string;
   name: string | null;

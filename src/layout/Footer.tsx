@@ -1,32 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 import { UrlPathTemplate } from '../utils/urlPaths';
 import logo from '../resources/images/unit_logo.png';
+import { dataTestId } from '../utils/dataTestIds';
 
 const StyledFooter = styled.footer`
   display: grid;
-  grid-template-areas: '. logo privacy';
+  grid-template-areas: 'about logo privacy';
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
+  justify-items: center;
   min-height: 4rem;
   background: ${({ theme }) => theme.palette.background.footer};
+`;
 
-  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.md}px`}) {
-    grid-template-areas: 'logo privacy';
-    grid-template-columns: 1fr 1fr;
-  }
+const StyledAboutButton = styled(Button).attrs({ component: Link, to: UrlPathTemplate.About })`
+  grid-area: about;
 `;
 
 const StyledLogoContainer = styled.div`
   grid-area: logo;
-  justify-self: center;
 `;
 
-const StyledPrivacyButton = styled(Button)`
+const StyledPrivacyButton = styled(Button).attrs({ component: Link, to: UrlPathTemplate.PrivacyPolicy })`
   grid-area: privacy;
-  justify-self: center;
+  word-break: break-all;
 `;
 
 export const Footer = () => {
@@ -34,11 +35,14 @@ export const Footer = () => {
 
   return (
     <StyledFooter>
+      <StyledAboutButton data-testid={dataTestId.footer.aboutLink} color="primary">
+        {t('common:about_nva')}
+      </StyledAboutButton>
       <StyledLogoContainer>
         <Typography>{t('common:delivered_by')}</Typography>
         <img src={logo} alt="UNIT logo" />
       </StyledLogoContainer>
-      <StyledPrivacyButton data-testid="privacy_statement_link" color="primary" href={UrlPathTemplate.PrivacyPolicy}>
+      <StyledPrivacyButton data-testid={dataTestId.footer.privacyLink} color="primary">
         {t('privacy_statement')}
       </StyledPrivacyButton>
     </StyledFooter>

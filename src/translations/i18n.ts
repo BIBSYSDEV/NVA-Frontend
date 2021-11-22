@@ -7,6 +7,7 @@ import adminEn from './en/admin.json';
 import authorizationEn from './en/authorization.json';
 import commonEn from './en/common.json';
 import disciplinesEn from './en/disciplines.json';
+import editorEn from './en/editor.json';
 import feedbackEn from './en/feedback.json';
 import formikValuesEn from './en/formikValues.json';
 import institutionEn from './en/institution.json';
@@ -17,6 +18,7 @@ import profileEn from './en/profile.json';
 import projectEn from './en/project.json';
 import publicationTypesEn from './en/publicationTypes.json';
 import registrationEn from './en/registration.json';
+import searchEn from './en/search.json';
 import workListsEn from './en/workLists.json';
 
 import aboutNb from './nb/about.json';
@@ -24,6 +26,7 @@ import adminNb from './nb/admin.json';
 import authorizationNb from './nb/authorization.json';
 import commonNb from './nb/common.json';
 import disciplinesNb from './nb/disciplines.json';
+import editorNb from './nb/editor.json';
 import feedbackNb from './nb/feedback.json';
 import formikValuesNb from './nb/formikValues.json';
 import institutionNb from './nb/institution.json';
@@ -34,9 +37,10 @@ import profileNb from './nb/profile.json';
 import projectNb from './nb/project.json';
 import publicationTypesNb from './nb/publicationTypes.json';
 import registrationNb from './nb/registration.json';
+import searchNb from './nb/search.json';
 import workListsNb from './nb/workLists.json';
 
-export const fallbackLanguage = LanguageCodes.NORWEGIAN_BOKMAL;
+const fallbackLanguage = LanguageCodes.NORWEGIAN_BOKMAL;
 
 i18n.use(LanguageDetector).init({
   resources: {
@@ -46,6 +50,7 @@ i18n.use(LanguageDetector).init({
       authorization: authorizationEn,
       common: commonEn,
       disciplines: disciplinesEn,
+      editor: editorEn,
       feedback: feedbackEn,
       formikValues: formikValuesEn,
       institution: institutionEn,
@@ -56,6 +61,7 @@ i18n.use(LanguageDetector).init({
       project: projectEn,
       publicationTypes: publicationTypesEn,
       registration: registrationEn,
+      search: searchEn,
       workLists: workListsEn,
     },
     nob: {
@@ -64,6 +70,7 @@ i18n.use(LanguageDetector).init({
       authorization: authorizationNb,
       common: commonNb,
       disciplines: disciplinesNb,
+      editor: editorNb,
       feedback: feedbackNb,
       formikValues: formikValuesNb,
       institution: institutionNb,
@@ -74,6 +81,7 @@ i18n.use(LanguageDetector).init({
       project: projectNb,
       publicationTypes: publicationTypesNb,
       registration: registrationNb,
+      search: searchNb,
       workLists: workListsNb,
     },
   },

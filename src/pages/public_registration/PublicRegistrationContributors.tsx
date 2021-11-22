@@ -1,15 +1,16 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
-import { Button, IconButton, Link, Typography } from '@material-ui/core';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Link as RouterLink } from 'react-router-dom';
+import { Button, IconButton, Link, Typography } from '@mui/material';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTranslation } from 'react-i18next';
-import AffiliationHierarchy from '../../components/institution/AffiliationHierarchy';
+import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import OrcidLogo from '../../resources/images/orcid_logo.svg';
-import { Contributor, ContributorRole } from '../../types/contributor.types';
+import { Contributor } from '../../types/contributor.types';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
-import { BookType } from '../../types/publicationFieldNames';
 import { dataTestId } from '../../utils/dataTestIds';
+import { mainContributorRolesPerType, splitMainContributors } from '../../utils/registration-helpers';
 
 const StyledContributorsGrid = styled.div`
   display: grid;
@@ -45,32 +46,28 @@ export const PublicRegistrationContributors = ({
   registrationType,
 }: PublicRegistrationContributorsProps) => {
   const { t } = useTranslation('registration');
-  const [showAll, setShowAll] = useState(false);
+  const [mainContributors, otherContributors] = splitMainContributors(contributors, registrationType);
+
+  const [showAll, setShowAll] = useState(mainContributors.length === 0);
   const toggleShowAll = () => setShowAll(!showAll);
 
-  const mainContributors =
-    registrationType === BookType.ANTHOLOGY
-      ? contributors.filter((contributor) => contributor.role === ContributorRole.Editor)
-      : contributors.filter((contributor) => contributor.role === ContributorRole.Creator);
   const mainContributorsToShow = showAll ? mainContributors : mainContributors.slice(0, 10);
-
-  const otherContributors =
-    registrationType === BookType.ANTHOLOGY
-      ? contributors.filter((contributor) => contributor.role !== ContributorRole.Editor)
-      : contributors.filter((contributor) => contributor.role !== ContributorRole.Creator);
+  const mainRoles = mainContributorRolesPerType[registrationType];
+  const showRolesForMainContributors = mainRoles && mainRoles.length > 1;
   const otherContributorsToShow = showAll ? otherContributors : [];
 
   const hiddenContributorsCount = useRef(contributors.length - mainContributorsToShow.length);
   const distinctUnits = getDistinctContributorUnits([...mainContributorsToShow, ...otherContributorsToShow]);
 
   return (
-    <StyledPublicRegistrationAuthors>
+    <StyledPublicRegistrationAuthors data-testid={dataTestId.registrationLandingPage.contributors}>
       <StyledContributorsGrid>
         <div>
           <ContributorsRow
             contributors={mainContributorsToShow}
             distinctUnits={distinctUnits}
             otherCount={showAll ? undefined : hiddenContributorsCount.current}
+            showRole={showRolesForMainContributors}
           />
           {showAll && otherContributorsToShow.length > 0 && (
             <ContributorsRow contributors={otherContributorsToShow} distinctUnits={distinctUnits} isOtherContributors />
@@ -115,6 +112,7 @@ interface ContributorsRowProps {
   contributors: Contributor[];
   distinctUnits: string[];
   isOtherContributors?: boolean;
+  showRole?: boolean;
   otherCount?: number;
 }
 
@@ -122,6 +120,7 @@ const ContributorsRow = ({
   contributors,
   distinctUnits,
   isOtherContributors = false,
+  showRole = isOtherContributors,
   otherCount,
 }: ContributorsRowProps) => {
   const { t } = useTranslation('registration');
@@ -143,14 +142,15 @@ const ContributorsRow = ({
           <Typography key={index} component="li">
             {id ? (
               <Link
-                href={`/user?id=${encodedId}`}
+                component={RouterLink}
+                to={`/user?id=${encodedId}`}
                 data-testid={dataTestId.registrationLandingPage.authorLink(encodedId)}>
                 {name}
               </Link>
             ) : (
               name
             )}
-            {isOtherContributors && ` (${t(`contributors.types.${contributor.role}`)})`}
+            {showRole && ` (${t(`contributors.types.${contributor.role}`)})`}
             {(orcId || (affiliationIndexes && affiliationIndexes.length > 0)) && (
               <sup>
                 {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
