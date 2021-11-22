@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, DialogActions, TextField, Typography } from '@mui/material';
+import { Box, Button, DialogActions, TextField, Typography } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
@@ -22,14 +22,8 @@ import { registrationValidationSchema } from '../../utils/validation/registratio
 import { getRegistrationPath } from '../../utils/urlPaths';
 import { getFirstErrorTab, getTabErrors, TabErrors } from '../../utils/formik-helpers';
 import { ErrorList } from '../registration/ErrorList';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
-import { lightTheme } from '../../themes/lightTheme';
 import { dataTestId } from '../../utils/dataTestIds';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-
-const StyledBackgroundDiv = styled(BackgroundDiv)`
-  margin-bottom: 1rem;
-`;
 
 const StyledButtonsContainer = styled.div`
   display: flex;
@@ -162,8 +156,8 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           }
         />
       )}
-      <StyledBackgroundDiv
-        backgroundColor={lightTheme.palette.background.statusBar}
+      <Box
+        sx={{ bgcolor: 'background.statusBar', p: '1rem', mb: '1rem' }}
         data-testid={dataTestId.registrationLandingPage.status}>
         {!isPublishedRegistration && registrationIsValid && (
           <>
@@ -280,7 +274,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             </DialogActions>
           </Modal>
         )}
-      </StyledBackgroundDiv>
+      </Box>
     </>
   ) : null;
 };

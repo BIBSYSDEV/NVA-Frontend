@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 import { Box, BoxProps, ThemeProvider } from '@mui/material';
 import { darkTheme } from '../themes/darkTheme';

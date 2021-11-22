@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import {
+  Box,
   Button,
   Checkbox,
   FormControl,
@@ -18,14 +19,13 @@ import {
   TextField,
   Tooltip,
   Typography,
+  ListItemIcon,
 } from '@mui/material';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import DeleteIcon from '@mui/icons-material/Delete';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { DatePicker, LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import { BackgroundDiv } from '../../../components/BackgroundDiv';
-import { lightTheme, datePickerTranslationProps } from '../../../themes/lightTheme';
+import { datePickerTranslationProps } from '../../../themes/lightTheme';
 import { File, LicenseNames, licenses } from '../../../types/file.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
@@ -97,7 +97,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
 
   return (
-    <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight} data-testid="uploaded-file-card">
+    <Box sx={{ bgcolor: 'section.megaLight', p: '1rem' }} data-testid="uploaded-file-card">
       <StyledTypography variant="h5">{file.name}</StyledTypography>
       <StyledDescription>
         {t('files_and_license.uploaded_size', { size: prettyBytes(file.size, { locale: true }) })}
@@ -262,6 +262,6 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
         onCancel={toggleOpenConfirmDialog}>
         <Typography>{t('files_and_license.remove_file_description', { fileName: file.name })}</Typography>
       </ConfirmDialog>
-    </BackgroundDiv>
+    </Box>
   );
 };

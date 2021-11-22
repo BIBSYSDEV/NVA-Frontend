@@ -1,24 +1,17 @@
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikValues } from 'formik';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
 import { Button, Collapse, DialogActions, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { createAuthority } from '../../../../api/authorityApi';
-import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { StyledTypographyPreWrapped, StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/actions/notificationActions';
-import { lightTheme } from '../../../../themes/lightTheme';
 import { Authority } from '../../../../types/authority.types';
 import { emptyNewContributor } from '../../../../types/contributor.types';
 import { NotificationVariant } from '../../../../types/notification.types';
 import { newContributorValidationSchema } from '../../../../utils/validation/newContributorValidation';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
-
-const StyledBackgroundDiv = styled(BackgroundDiv)`
-  padding: 0;
-`;
 
 interface CreateContributorModalContentProps {
   addContributor: (authority: Authority) => void;
@@ -49,7 +42,7 @@ export const CreateContributorModalContent = ({
   };
 
   return (
-    <StyledBackgroundDiv backgroundColor={lightTheme.palette.background.paper}>
+    <>
       <Formik
         initialValues={emptyNewContributor}
         validationSchema={newContributorValidationSchema}
@@ -114,6 +107,6 @@ export const CreateContributorModalContent = ({
           </Form>
         )}
       </Formik>
-    </StyledBackgroundDiv>
+    </>
   );
 };

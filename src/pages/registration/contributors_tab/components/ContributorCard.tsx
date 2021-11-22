@@ -1,16 +1,14 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Button, Checkbox, FormControlLabel, TextField, Tooltip, Typography } from '@mui/material';
+import { Box, Button, Checkbox, FormControlLabel, TextField, Tooltip, Typography } from '@mui/material';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import CheckIcon from '@mui/icons-material/CheckCircleSharp';
 import DeleteIcon from '@mui/icons-material/RemoveCircleSharp';
 import WarningIcon from '@mui/icons-material/Warning';
-import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
-import { lightTheme } from '../../../../themes/lightTheme';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
@@ -20,7 +18,8 @@ const StyledCheckIcon = styled(CheckIcon)`
   color: ${({ theme }) => theme.palette.success.main};
 `;
 
-const StyledBackgroundDiv = styled(BackgroundDiv)`
+const StyledContributorBox = styled(Box)`
+  padding: 1rem;
   display: grid;
   grid-template-areas: 'contributor contributor' 'affiliation affiliation' 'add-affiliation remove-contributor';
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
@@ -138,7 +137,7 @@ export const ContributorCard = ({
   };
 
   return (
-    <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
+    <StyledContributorBox sx={{ bgcolor: 'section.megaLight' }}>
       <StyledContributorSection>
         <StyledNameField variant="h5" variantMapping={{ h5: 'h3' }}>
           {contributor.identity.name}
@@ -237,6 +236,6 @@ export const ContributorCard = ({
           {t('contributors.remove_role', { role: t(`contributors.types.${contributor.role}`) })}
         </Button>
       </StyledRemoveContributorContainer>
-    </StyledBackgroundDiv>
+    </StyledContributorBox>
   );
 };
