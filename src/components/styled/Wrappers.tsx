@@ -29,15 +29,12 @@ export const StyledFlexColumn = styled.div`
   flex-direction: column;
 `;
 
-export const StyledPageWrapper = styled.div`
+export const StyledPageWrapperWithMaxWidth = styled.div`
   width: 100%;
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     padding: 1rem 2rem;
   }
   padding: 0.5rem;
-`;
-
-export const StyledPageWrapperWithMaxWidth = styled(StyledPageWrapper)`
   max-width: ${({ theme }) => theme.breakpoints.values.lg + 'px'};
 `;
 
