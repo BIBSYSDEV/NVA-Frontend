@@ -78,7 +78,7 @@ export const lightTheme = createTheme({
       default: Color.White,
       footer: Color.Footer,
       statusBar: Color.SecondaryMegaLight,
-      paper: '#faf7f4',
+      paper: Color.Card,
     },
     section: {
       megaLight: Color.BlueMegaLight,
@@ -126,7 +126,7 @@ export const lightTheme = createTheme({
     MuiAccordion: {
       styleOverrides: {
         root: {
-          background: Color.Panel,
+          background: Color.Card,
         },
       },
     },
