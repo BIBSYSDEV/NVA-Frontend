@@ -1,11 +1,10 @@
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, useFormikContext } from 'formik';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, FormHelperText, Link, Typography } from '@mui/material';
 import { UppyFile } from '@uppy/core';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { NewBackgroundDiv } from '../../components/BackgroundDiv';
 import { Modal } from '../../components/Modal';
-import { lightTheme } from '../../themes/lightTheme';
 import { File, FileSet, licenses, Uppy } from '../../types/file.types';
 import { NotificationVariant } from '../../types/notification.types';
 import { FileFieldNames } from '../../types/publicationFieldNames';
@@ -73,9 +72,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     (publicationContext && 'id' in publicationContext && publicationContext.id?.split('/').reverse()[1]) || '';
 
   return (
-    <>
+    <NewBackgroundDiv>
       {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
-        <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
+        <>
           <Typography variant="h2" gutterBottom>
             {t('files_and_license.info_from_channel_register')}
           </Typography>
@@ -95,51 +94,49 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
               <Typography>{t('files_and_license.find_series_in_channel_register')}</Typography>
             </Link>
           )}
-        </BackgroundDiv>
+        </>
       )}
 
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        <FieldArray name={FileFieldNames.Files}>
-          {({ name, remove, push }: FieldArrayRenderProps) => (
-            <>
-              {files.length > 0 && (
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
-                  <Typography variant="h2">{t('files_and_license.files')}</Typography>
-                  {files.map((file, index) => (
-                    <FileCard
-                      key={file.identifier}
-                      file={file}
-                      removeFile={() => {
-                        const remainingFiles = uppy
-                          .getFiles()
-                          .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
-                        uppy.setState({ files: remainingFiles });
-                        remove(index);
+      <FieldArray name={FileFieldNames.Files}>
+        {({ name, remove, push }: FieldArrayRenderProps) => (
+          <div>
+            {files.length > 0 && (
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
+                <Typography variant="h2">{t('files_and_license.files')}</Typography>
+                {files.map((file, index) => (
+                  <FileCard
+                    key={file.identifier}
+                    file={file}
+                    removeFile={() => {
+                      const remainingFiles = uppy
+                        .getFiles()
+                        .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
+                      uppy.setState({ files: remainingFiles });
+                      remove(index);
 
-                        if (remainingFiles.length === 0) {
-                          // Ensure field is set to touched even if it's empty
-                          setFieldTouched(name);
-                        }
-                      }}
-                      toggleLicenseModal={toggleLicenseModal}
-                      baseFieldName={`${name}[${index}]`}
-                    />
-                  ))}
-                </Box>
+                      if (remainingFiles.length === 0) {
+                        // Ensure field is set to touched even if it's empty
+                        setFieldTouched(name);
+                      }
+                    }}
+                    toggleLicenseModal={toggleLicenseModal}
+                    baseFieldName={`${name}[${index}]`}
+                  />
+                ))}
+              </Box>
+            )}
+
+            <FileUploader uppy={uppy} addFile={push} />
+            {files.length === 0 &&
+              typeof (errors.fileSet as FormikErrors<FileSet>).files === 'string' &&
+              touched.fileSet && (
+                <FormHelperText error>
+                  <ErrorMessage name={name} />
+                </FormHelperText>
               )}
-
-              <FileUploader uppy={uppy} addFile={push} />
-              {files.length === 0 &&
-                typeof (errors.fileSet as FormikErrors<FileSet>).files === 'string' &&
-                touched.fileSet && (
-                  <FormHelperText error>
-                    <ErrorMessage name={name} />
-                  </FormHelperText>
-                )}
-            </>
-          )}
-        </FieldArray>
-      </BackgroundDiv>
+          </div>
+        )}
+      </FieldArray>
 
       <Modal
         headingText={t('files_and_license.licenses')}
@@ -160,6 +157,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
           </Box>
         ))}
       </Modal>
-    </>
+    </NewBackgroundDiv>
   );
 };

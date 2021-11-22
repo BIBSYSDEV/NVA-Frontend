@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import prettyBytes from 'pretty-bytes';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import {
