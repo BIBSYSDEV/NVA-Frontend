@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MenuItem, TextField } from '@mui/material';
 import { NewBackgroundDiv } from '../../components/BackgroundDiv';
-import { StyledSelectWrapper } from '../../components/styled/Wrappers';
+import { InputContainerBox, StyledSelectWrapper } from '../../components/styled/Wrappers';
 import { emptyBookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
 import { emptyChapterPublicationInstance } from '../../types/publication_types/chapterRegistration.types';
 import { emptyDegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
@@ -136,33 +136,35 @@ export const ResourceTypePanel = () => {
 
   return (
     <NewBackgroundDiv>
-      <StyledSelectWrapper>
-        <TextField
-          data-testid="publication-context-type"
-          select
-          variant="filled"
-          fullWidth
-          label={t('resource_type.form')}
-          required
-          value={mainType}
-          error={!!typeError && typeTouched}
-          helperText={!!typeError && typeTouched ? typeError : ''}
-          onChange={(event) => onChangeType(event.target.value)}>
-          {Object.values(PublicationType).map((typeValue) => (
-            <MenuItem value={typeValue} key={typeValue} data-testid={`publication-context-type-${typeValue}`}>
-              {t(`publicationTypes:${typeValue}`)}
-            </MenuItem>
-          ))}
-        </TextField>
-      </StyledSelectWrapper>
+      <InputContainerBox>
+        <StyledSelectWrapper>
+          <TextField
+            data-testid="publication-context-type"
+            select
+            variant="filled"
+            fullWidth
+            label={t('resource_type.form')}
+            required
+            value={mainType}
+            error={!!typeError && typeTouched}
+            helperText={!!typeError && typeTouched ? typeError : ''}
+            onChange={(event) => onChangeType(event.target.value)}>
+            {Object.values(PublicationType).map((typeValue) => (
+              <MenuItem value={typeValue} key={typeValue} data-testid={`publication-context-type-${typeValue}`}>
+                {t(`publicationTypes:${typeValue}`)}
+              </MenuItem>
+            ))}
+          </TextField>
+        </StyledSelectWrapper>
 
-      {mainType === PublicationType.PublicationInJournal && <JournalTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.Book && <BookTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.Report && <ReportTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.Degree && <DegreeTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.Chapter && <ChapterTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.Presentation && <PresentationTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.Artistic && <ArtisticTypeForm onChangeSubType={onChangeSubType} />}
+        {mainType === PublicationType.PublicationInJournal && <JournalTypeForm onChangeSubType={onChangeSubType} />}
+        {mainType === PublicationType.Book && <BookTypeForm onChangeSubType={onChangeSubType} />}
+        {mainType === PublicationType.Report && <ReportTypeForm onChangeSubType={onChangeSubType} />}
+        {mainType === PublicationType.Degree && <DegreeTypeForm onChangeSubType={onChangeSubType} />}
+        {mainType === PublicationType.Chapter && <ChapterTypeForm onChangeSubType={onChangeSubType} />}
+        {mainType === PublicationType.Presentation && <PresentationTypeForm onChangeSubType={onChangeSubType} />}
+        {mainType === PublicationType.Artistic && <ArtisticTypeForm onChangeSubType={onChangeSubType} />}
+      </InputContainerBox>
     </NewBackgroundDiv>
   );
 };

@@ -10,6 +10,7 @@ import { Registration } from '../../types/registration.types';
 import { DatePickerField } from './description_tab/DatePickerField';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
+import { InputContainerBox } from '../../components/styled/Wrappers';
 
 const DateAndLanguageWrapper = styled.div`
   display: grid;
@@ -27,8 +28,8 @@ export const DescriptionPanel = () => {
   const { setFieldValue } = useFormikContext<Registration>();
 
   return (
-    <>
-      <NewBackgroundDiv>
+    <NewBackgroundDiv>
+      <InputContainerBox>
         <Field name={DescriptionFieldNames.Title}>
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
@@ -144,7 +145,7 @@ export const DescriptionPanel = () => {
         </DateAndLanguageWrapper>
 
         <ProjectsField />
-      </NewBackgroundDiv>
-    </>
+      </InputContainerBox>
+    </NewBackgroundDiv>
   );
 };

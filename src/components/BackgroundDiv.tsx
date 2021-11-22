@@ -25,9 +25,8 @@ export const BackgroundDiv = ({ children, ...props }: BakcgroundDivProps) => {
   );
 };
 
-export const NewBackgroundDiv = ({ children, sx }: BoxProps) => (
-  <Box
-    sx={{ background: '#faf7f4', padding: '1rem 3rem', display: 'flex', flexDirection: 'column', gap: '2rem', ...sx }}>
+export const NewBackgroundDiv = ({ children, ...props }: BoxProps) => (
+  <Box sx={{ background: '#faf7f4', padding: '1rem 3rem' }} {...props}>
     {children}
   </Box>
 );

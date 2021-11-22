@@ -1,14 +1,16 @@
 import { Form, Formik } from 'formik';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import SaveIcon from '@mui/icons-material/Save';
-import { Box } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { PageHeader } from '../../components/PageHeader';
-import { StyledPageWrapperWithMaxWidth, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import {
+  InputContainerBox,
+  StyledPageWrapperWithMaxWidth,
+  StyledRightAlignedWrapper,
+} from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import {
@@ -20,8 +22,7 @@ import { NotificationVariant } from '../../types/notification.types';
 import { myInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
 import { CustomerInstitutionTextField } from './customerInstitutionFields/CustomerInstitutionTextField';
 import { SelectInstitutionField } from './customerInstitutionFields/SelectInstitutionField';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
-import { lightTheme } from '../../themes/lightTheme';
+import { NewBackgroundDiv } from '../../components/BackgroundDiv';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 
@@ -47,7 +48,7 @@ const MyCustomerInstitutionPage = () => {
   return (
     <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('common:my_institution')}</PageHeader>
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
+      <NewBackgroundDiv>
         {isLoadingCustomerInstitution ? (
           <ListSkeleton arrayLength={4} minWidth={100} height={80} />
         ) : (
@@ -59,7 +60,7 @@ const MyCustomerInstitutionPage = () => {
             onSubmit={handleSubmit}>
             {({ isSubmitting }) => (
               <Form noValidate>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <InputContainerBox>
                   <SelectInstitutionField disabled />
                   <CustomerInstitutionTextField
                     name={CustomerInstitutionFieldNames.DisplayName}
@@ -90,12 +91,12 @@ const MyCustomerInstitutionPage = () => {
                       {t('common:save')}
                     </LoadingButton>
                   </StyledRightAlignedWrapper>
-                </Box>
+                </InputContainerBox>
               </Form>
             )}
           </Formik>
         )}
-      </BackgroundDiv>
+      </NewBackgroundDiv>
     </StyledPageWrapperWithMaxWidth>
   );
 };
