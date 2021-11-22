@@ -1,8 +1,5 @@
 import { useFormikContext } from 'formik';
-import React from 'react';
-import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
-import { lightTheme } from '../../../themes/lightTheme';
 import { ChapterType, ResourceFieldNames } from '../../../types/publicationFieldNames';
 import { ChapterRegistration } from '../../../types/publication_types/chapterRegistration.types';
 import { SelectTypeField } from './components/SelectTypeField';
@@ -18,15 +15,13 @@ export const ChapterTypeForm = ({ onChangeSubType }: ChapterTypeFormProps) => {
 
   return (
     <>
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-        <StyledSelectWrapper>
-          <SelectTypeField
-            fieldName={ResourceFieldNames.SubType}
-            onChangeType={onChangeSubType}
-            options={Object.values(ChapterType)}
-          />
-        </StyledSelectWrapper>
-      </BackgroundDiv>
+      <StyledSelectWrapper>
+        <SelectTypeField
+          fieldName={ResourceFieldNames.SubType}
+          onChangeType={onChangeSubType}
+          options={Object.values(ChapterType)}
+        />
+      </StyledSelectWrapper>
 
       {subtype && <ChapterForm />}
     </>

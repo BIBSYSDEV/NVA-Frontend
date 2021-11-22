@@ -1,10 +1,9 @@
 import { FormikErrors, FormikTouched, useFormikContext } from 'formik';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MenuItem, TextField } from '@mui/material';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { NewBackgroundDiv } from '../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../components/styled/Wrappers';
-import { lightTheme } from '../../themes/lightTheme';
 import { emptyBookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
 import { emptyChapterPublicationInstance } from '../../types/publication_types/chapterRegistration.types';
 import { emptyDegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
@@ -136,28 +135,26 @@ export const ResourceTypePanel = () => {
   const typeTouched = (referenceTouched?.publicationInstance as FormikTouched<JournalPublicationInstance>)?.type;
 
   return (
-    <>
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-        <StyledSelectWrapper>
-          <TextField
-            data-testid="publication-context-type"
-            select
-            variant="filled"
-            fullWidth
-            label={t('resource_type.form')}
-            required
-            value={mainType}
-            error={!!typeError && typeTouched}
-            helperText={!!typeError && typeTouched ? typeError : ''}
-            onChange={(event) => onChangeType(event.target.value)}>
-            {Object.values(PublicationType).map((typeValue) => (
-              <MenuItem value={typeValue} key={typeValue} data-testid={`publication-context-type-${typeValue}`}>
-                {t(`publicationTypes:${typeValue}`)}
-              </MenuItem>
-            ))}
-          </TextField>
-        </StyledSelectWrapper>
-      </BackgroundDiv>
+    <NewBackgroundDiv>
+      <StyledSelectWrapper>
+        <TextField
+          data-testid="publication-context-type"
+          select
+          variant="filled"
+          fullWidth
+          label={t('resource_type.form')}
+          required
+          value={mainType}
+          error={!!typeError && typeTouched}
+          helperText={!!typeError && typeTouched ? typeError : ''}
+          onChange={(event) => onChangeType(event.target.value)}>
+          {Object.values(PublicationType).map((typeValue) => (
+            <MenuItem value={typeValue} key={typeValue} data-testid={`publication-context-type-${typeValue}`}>
+              {t(`publicationTypes:${typeValue}`)}
+            </MenuItem>
+          ))}
+        </TextField>
+      </StyledSelectWrapper>
 
       {mainType === PublicationType.PublicationInJournal && <JournalTypeForm onChangeSubType={onChangeSubType} />}
       {mainType === PublicationType.Book && <BookTypeForm onChangeSubType={onChangeSubType} />}
@@ -166,6 +163,6 @@ export const ResourceTypePanel = () => {
       {mainType === PublicationType.Chapter && <ChapterTypeForm onChangeSubType={onChangeSubType} />}
       {mainType === PublicationType.Presentation && <PresentationTypeForm onChangeSubType={onChangeSubType} />}
       {mainType === PublicationType.Artistic && <ArtisticTypeForm onChangeSubType={onChangeSubType} />}
-    </>
+    </NewBackgroundDiv>
   );
 };

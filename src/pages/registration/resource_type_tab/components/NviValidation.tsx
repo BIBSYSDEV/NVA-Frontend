@@ -1,10 +1,7 @@
 import { Typography } from '@mui/material';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { RootStore } from '../../../../redux/reducers/rootReducer';
-import { lightTheme } from '../../../../themes/lightTheme';
 import { BookType, ChapterType, JournalType } from '../../../../types/publicationFieldNames';
 import { BookRegistration } from '../../../../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
@@ -43,7 +40,7 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
     instanceType === ChapterType.AnthologyChapter && contentType === ChapterContentType.AcademicChapter;
 
   return isNviApplicableJournalArticle || isNviApplicableBookMonograph || isNviApplicableChapterArticle ? (
-    <BackgroundDiv backgroundColor={lightTheme.palette.section.black}>
+    <>
       {isNviApplicableJournalArticle ? (
         <NviValidationJournalArticle registration={registration as JournalRegistration} />
       ) : isNviApplicableBookMonograph ? (
@@ -51,7 +48,7 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
       ) : isNviApplicableChapterArticle ? (
         <NviValidationChapterArticle registration={registration as ChapterRegistration} />
       ) : null}
-    </BackgroundDiv>
+    </>
   ) : null;
 };
 
