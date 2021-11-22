@@ -9,7 +9,7 @@ import { CustomerInstitutionMetadataForm } from './CustomerInstitutionMetadataFo
 import { useFetch } from '../../utils/hooks/useFetch';
 import { InstitutionUser } from '../../types/user.types';
 import { RoleApiPath } from '../../api/apiPaths';
-import { NewBackgroundDiv } from '../../components/BackgroundDiv';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
 
 const StyledCustomerInstitution = styled.section`
   display: flex;
@@ -44,7 +44,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
         {isLoadingCustomerInstitution ? (
           <PageSpinner />
         ) : (
-          <NewBackgroundDiv>
+          <BackgroundDiv>
             <CustomerInstitutionMetadataForm
               customerInstitution={customerInstitution ?? emptyCustomerInstitution}
               editMode={editMode}
@@ -56,7 +56,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
                 isLoadingUsers={isLoadingUsers}
               />
             )}
-          </NewBackgroundDiv>
+          </BackgroundDiv>
         )}
       </StyledCustomerInstitution>
     </StyledPageWrapperWithMaxWidth>

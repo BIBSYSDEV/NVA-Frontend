@@ -78,6 +78,7 @@ export const lightTheme = createTheme({
       default: Color.White,
       footer: Color.Footer,
       statusBar: Color.SecondaryMegaLight,
+      paper: '#faf7f4',
     },
     section: {
       megaLight: Color.BlueMegaLight,

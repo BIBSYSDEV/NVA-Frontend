@@ -3,7 +3,7 @@ import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { MenuItem, TextField, Autocomplete } from '@mui/material';
-import { NewBackgroundDiv } from '../../components/BackgroundDiv';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { LanguageCodes, registrationLanguages } from '../../types/language.types';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
@@ -28,7 +28,7 @@ export const DescriptionPanel = () => {
   const { setFieldValue } = useFormikContext<Registration>();
 
   return (
-    <NewBackgroundDiv>
+    <BackgroundDiv>
       <InputContainerBox>
         <Field name={DescriptionFieldNames.Title}>
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
@@ -146,6 +146,6 @@ export const DescriptionPanel = () => {
 
         <ProjectsField />
       </InputContainerBox>
-    </NewBackgroundDiv>
+    </BackgroundDiv>
   );
 };

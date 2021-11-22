@@ -2,7 +2,7 @@ import { FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MenuItem, TextField } from '@mui/material';
-import { NewBackgroundDiv } from '../../components/BackgroundDiv';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { InputContainerBox, StyledSelectWrapper } from '../../components/styled/Wrappers';
 import { emptyBookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
 import { emptyChapterPublicationInstance } from '../../types/publication_types/chapterRegistration.types';
@@ -135,7 +135,7 @@ export const ResourceTypePanel = () => {
   const typeTouched = (referenceTouched?.publicationInstance as FormikTouched<JournalPublicationInstance>)?.type;
 
   return (
-    <NewBackgroundDiv>
+    <BackgroundDiv>
       <InputContainerBox>
         <StyledSelectWrapper>
           <TextField
@@ -165,6 +165,6 @@ export const ResourceTypePanel = () => {
         {mainType === PublicationType.Presentation && <PresentationTypeForm onChangeSubType={onChangeSubType} />}
         {mainType === PublicationType.Artistic && <ArtisticTypeForm onChangeSubType={onChangeSubType} />}
       </InputContainerBox>
-    </NewBackgroundDiv>
+    </BackgroundDiv>
   );
 };

@@ -22,7 +22,7 @@ import { NotificationVariant } from '../../types/notification.types';
 import { myInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
 import { CustomerInstitutionTextField } from './customerInstitutionFields/CustomerInstitutionTextField';
 import { SelectInstitutionField } from './customerInstitutionFields/SelectInstitutionField';
-import { NewBackgroundDiv } from '../../components/BackgroundDiv';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 
@@ -48,7 +48,7 @@ const MyCustomerInstitutionPage = () => {
   return (
     <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('common:my_institution')}</PageHeader>
-      <NewBackgroundDiv>
+      <BackgroundDiv>
         {isLoadingCustomerInstitution ? (
           <ListSkeleton arrayLength={4} minWidth={100} height={80} />
         ) : (
@@ -96,7 +96,7 @@ const MyCustomerInstitutionPage = () => {
             )}
           </Formik>
         )}
-      </NewBackgroundDiv>
+      </BackgroundDiv>
     </StyledPageWrapperWithMaxWidth>
   );
 };

@@ -1,7 +1,7 @@
 import { Box, BoxProps } from '@mui/material';
 
-export const NewBackgroundDiv = ({ children, ...props }: BoxProps) => (
-  <Box sx={{ background: '#faf7f4', padding: '1rem 3rem' }} {...props}>
+export const BackgroundDiv = ({ children, ...props }: BoxProps) => (
+  <Box sx={{ bgcolor: 'background.paper', padding: '1rem 3rem' }} {...props}>
     {children}
   </Box>
 );
