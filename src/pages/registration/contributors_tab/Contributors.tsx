@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, ThemeProvider, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import { Pagination } from '@mui/material';
 import { setNotification } from '../../../redux/actions/notificationActions';
@@ -20,7 +20,6 @@ import { NotificationVariant } from '../../../types/notification.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { useIsMobile } from '../../../utils/hooks/useIsMobile';
-import { lightTheme } from '../../../themes/lightTheme';
 import { ContributorList } from './components/ContributorList';
 import { AddContributorModal } from './AddContributorModal';
 
@@ -187,28 +186,26 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           ? t('registration:contributors.supervisors')
           : t('registration:heading.contributors')}
       </Typography>
-      <ThemeProvider theme={lightTheme}>
-        {((isMobile && contributorsToShow.length >= 2) || (!isMobile && contributorsToShow.length >= 5)) &&
-          addContributorButton}
+      {((isMobile && contributorsToShow.length >= 2) || (!isMobile && contributorsToShow.length >= 5)) &&
+        addContributorButton}
 
-        <ContributorList
-          contributors={contributorsToShow}
-          onDelete={handleOnRemove}
-          onMoveContributor={handleMoveContributor}
-          openContributorModal={handleOpenContributorModal}
-          showContributorRole={contributorRoles.length > 1}
-          contributorsLength={relevantContributors.length}
-        />
+      <ContributorList
+        contributors={contributorsToShow}
+        onDelete={handleOnRemove}
+        onMoveContributor={handleMoveContributor}
+        openContributorModal={handleOpenContributorModal}
+        showContributorRole={contributorRoles.length > 1}
+        contributorsLength={relevantContributors.length}
+      />
 
-        <AddContributorModal
-          contributorRoles={contributorRoles}
-          contributorRole={contributorRole}
-          initialSearchTerm={unverifiedContributor?.name}
-          open={openContributorModal}
-          toggleModal={() => setOpenContributorModal(!openContributorModal)}
-          onContributorSelected={onContributorSelected}
-        />
-      </ThemeProvider>
+      <AddContributorModal
+        contributorRoles={contributorRoles}
+        contributorRole={contributorRole}
+        initialSearchTerm={unverifiedContributor?.name}
+        open={openContributorModal}
+        toggleModal={() => setOpenContributorModal(!openContributorModal)}
+        onContributorSelected={onContributorSelected}
+      />
       {relevantContributors.length > contributorsPerPage && (
         <StyledPagination
           variant="outlined"
