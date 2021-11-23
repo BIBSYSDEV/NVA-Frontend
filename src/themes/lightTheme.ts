@@ -9,27 +9,9 @@ import { Color } from './colors';
 declare module '@mui/material/styles/createPalette' {
   interface Palette {
     box: PaletteColor;
-    section: ExtendedPalette;
   }
   interface PaletteOptions {
     box?: PaletteColorOptions;
-    section?: ExtendedPaletteOptions;
-  }
-
-  interface TypeBackground {
-    footer: string;
-    statusBar: string;
-  }
-
-  interface ExtendedPalette extends PaletteColor {
-    megaLight: string;
-    megaDark: string;
-    black: string;
-  }
-
-  interface ExtendedPaletteOptions {
-    megaLight?: string;
-    megaDark?: string;
   }
 }
 
@@ -76,10 +58,6 @@ export const lightTheme = createTheme({
     background: {
       default: Color.White,
       paper: Color.Card,
-    },
-    section: {
-      megaLight: Color.BlueMegaLight,
-      megaDark: Color.BlueMegaDark,
     },
   },
   typography: {

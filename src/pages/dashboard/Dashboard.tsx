@@ -101,7 +101,7 @@ const Dashboard = () => {
         <title>{t('start_page')}</title>
       </Helmet>
       {showBanner && (
-        <Box sx={{ bgcolor: 'section.megaDark', p: '1rem 0.5rem', 'h1,p,li,a,svg': { color: 'white' } }}>
+        <Box sx={{ bgcolor: 'primary.dark', p: '1rem 0.5rem', 'h1,p,li,a,svg': { color: 'white' } }}>
           <StyledTaglineDiv>
             <StyledTagline variant="h1">{t('nva_tagline')}</StyledTagline>
             <StyledCloseButtonWrapper>
