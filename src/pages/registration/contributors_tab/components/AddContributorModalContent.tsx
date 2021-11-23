@@ -110,7 +110,6 @@ export const AddContributorModalContent = ({
 
       <StyledDialogActions>
         <StyledVerifyButton
-          color="secondary"
           data-testid="connect-author-button"
           disabled={!selectedAuthority}
           onClick={() => selectedAuthority && addContributor(selectedAuthority)}

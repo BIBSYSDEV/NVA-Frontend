@@ -170,18 +170,14 @@ export const ContributorCard = ({
           <StyledArrowSection>
             {contributor.sequence < contributorsLength && (
               <Tooltip title={t<string>('common:move_down')}>
-                <StyledArrowButton
-                  color="secondary"
-                  onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}>
+                <StyledArrowButton onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}>
                   <ArrowDownwardIcon />
                 </StyledArrowButton>
               </Tooltip>
             )}
             {contributor.sequence !== 1 && (
               <Tooltip title={t<string>('common:move_up')}>
-                <StyledArrowButton
-                  color="secondary"
-                  onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}>
+                <StyledArrowButton onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}>
                   <ArrowUpwardIcon />
                 </StyledArrowButton>
               </Tooltip>
@@ -233,7 +229,7 @@ export const ContributorCard = ({
           data-testid={`button-remove-contributor-${contributor.identity.name}`}
           startIcon={<DeleteIcon />}
           onClick={onRemoveContributorClick}
-          variant="contained">
+          variant="outlined">
           {t('contributors.remove_role', { role: t(`contributors.types.${contributor.role}`) })}
         </Button>
       </StyledRemoveContributorContainer>

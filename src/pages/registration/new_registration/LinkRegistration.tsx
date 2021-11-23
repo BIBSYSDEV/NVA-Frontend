@@ -85,7 +85,6 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
         <Button
           data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
-          color="secondary"
           variant="contained"
           disabled={!doi}
           onClick={openRegistration}>

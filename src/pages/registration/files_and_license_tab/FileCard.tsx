@@ -244,7 +244,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
       <StyledActionsContainer>
         <Button
           color="error"
-          variant="contained"
+          variant="outlined"
           data-testid="button-remove-file"
           startIcon={<DeleteIcon />}
           onClick={toggleOpenConfirmDialog}>

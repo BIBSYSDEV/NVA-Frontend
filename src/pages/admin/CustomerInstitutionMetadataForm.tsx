@@ -94,7 +94,6 @@ export const CustomerInstitutionMetadataForm = ({
                 <LoadingButton
                   data-testid="customer-institution-save-button"
                   variant="contained"
-                  color="secondary"
                   startIcon={<SaveIcon />}
                   loadingPosition="start"
                   loading={isSubmitting}

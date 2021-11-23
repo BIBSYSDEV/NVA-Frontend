@@ -38,14 +38,14 @@ export const VenueRow = ({ updateVenue, removeVenue, moveVenue, venue, index, ma
             sx={{ display: 'grid', gridTemplateAreas: '"down up"', gridTemplateColumns: '1fr 1fr', maxWidth: '8rem' }}>
             {index !== maxIndex && (
               <Tooltip title={t<string>('common:move_down')} sx={{ gridArea: 'down' }}>
-                <Button color="secondary" onClick={() => moveVenue(index + 1)}>
+                <Button onClick={() => moveVenue(index + 1)}>
                   <ArrowDownwardIcon />
                 </Button>
               </Tooltip>
             )}
             {index !== 0 && (
               <Tooltip title={t<string>('common:move_up')} sx={{ gridArea: 'up' }}>
-                <Button color="secondary" onClick={() => moveVenue(index - 1)}>
+                <Button onClick={() => moveVenue(index - 1)}>
                   <ArrowUpwardIcon />
                 </Button>
               </Tooltip>
@@ -57,7 +57,7 @@ export const VenueRow = ({ updateVenue, removeVenue, moveVenue, venue, index, ma
         <Button onClick={() => setOpenEditVenue(true)} variant="outlined" sx={{ mr: '1rem' }} startIcon={<EditIcon />}>
           {t('common:edit')}
         </Button>
-        <Button onClick={() => setOpenRemoveVenue(true)} variant="contained" color="error" startIcon={<DeleteIcon />}>
+        <Button onClick={() => setOpenRemoveVenue(true)} variant="outlined" color="error" startIcon={<DeleteIcon />}>
           {t('common:remove')}
         </Button>
       </TableCell>

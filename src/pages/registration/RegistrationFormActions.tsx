@@ -99,7 +99,6 @@ export const RegistrationFormActions = ({
         {tabNumber > RegistrationTab.Description && (
           <StyledBackButtonContainer>
             <Button
-              color="secondary"
               variant="outlined"
               data-testid="button-previous-tab"
               startIcon={<ArrowBackIcon />}
@@ -111,7 +110,7 @@ export const RegistrationFormActions = ({
           </StyledBackButtonContainer>
         )}
         <StyledSupportButtonContainer>
-          <Button data-testid="open-support-button" variant="text" color="primary" onClick={toggleSupportModal}>
+          <Button data-testid="open-support-button" onClick={toggleSupportModal}>
             {t('common:support')}
           </Button>
         </StyledSupportButtonContainer>
@@ -131,7 +130,6 @@ export const RegistrationFormActions = ({
               {values.status === RegistrationStatus.Draft ? t('save_draft') : t('common:save')}
             </LoadingButton>
             <Button
-              color="secondary"
               variant="contained"
               data-testid="button-next-tab"
               endIcon={<ArrowForwardIcon />}
@@ -144,7 +142,6 @@ export const RegistrationFormActions = ({
         ) : (
           <StyledSaveAndPresentButtonContainer>
             <LoadingButton
-              color="secondary"
               variant="contained"
               loading={isSaving}
               data-testid="button-save-registration"

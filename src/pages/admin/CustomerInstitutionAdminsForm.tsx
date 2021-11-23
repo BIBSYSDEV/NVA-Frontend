@@ -43,7 +43,6 @@ export const CustomerInstitutionAdminsForm = ({
           />
           <Button
             sx={{ mt: '1rem' }}
-            color="secondary"
             variant="contained"
             startIcon={<AddIcon />}
             data-testid="button-open-add-admin"

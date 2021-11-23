@@ -82,7 +82,6 @@ const MyCustomerInstitutionPage = () => {
                   <StyledRightAlignedWrapper>
                     <LoadingButton
                       data-testid="customer-institution-save-button"
-                      color="secondary"
                       variant="contained"
                       loading={isSubmitting}
                       startIcon={<SaveIcon />}

@@ -122,8 +122,7 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
         ) : (
           <StyledRightAlignedWrapper>
             <Button
-              variant="contained"
-              color="secondary"
+              variant="outlined"
               onClick={toggleUnitForm}
               disabled={!user.authority}
               startIcon={<AddIcon />}

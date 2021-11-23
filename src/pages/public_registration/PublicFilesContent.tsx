@@ -169,7 +169,6 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
           <Button
             data-testid={dataTestId.registrationLandingPage.openFileButton}
             variant="contained"
-            color="secondary"
             fullWidth
             endIcon={<OpenInNewIcon />}
             onClick={() => handleDownload(false)}>

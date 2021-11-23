@@ -55,7 +55,6 @@ export const StartEmptyRegistration = ({ expanded, onChange }: StartRegistration
           data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
           loadingPosition="end"
-          color="secondary"
           variant="contained"
           loading={isLoading}
           onClick={createEmptyRegistration}>

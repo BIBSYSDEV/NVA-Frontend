@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../../../redux/reducers/rootReducer';
@@ -14,6 +15,7 @@ import { JournalRegistration } from '../../../../types/publication_types/journal
 import { Journal, Publisher, Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
+import { Box } from '@mui/system';
 
 interface NviValidationProps {
   registration: Registration;
@@ -116,17 +118,20 @@ const NviStatus = ({ level = '', isPeerReviewed = false }: NviStatusProps) => {
   const isRated = parseInt(level) > 0;
 
   return (
-    <Typography
-      data-testid={
-        isRated && isPeerReviewed
-          ? dataTestId.registrationWizard.resourceType.nviSuccess
-          : dataTestId.registrationWizard.resourceType.nviFailed
-      }>
-      {isRated
-        ? isPeerReviewed
-          ? t('resource_type.nvi.applicable')
-          : t('resource_type.nvi.not_peer_reviewed')
-        : t('resource_type.nvi.channel_not_rated')}
-    </Typography>
+    <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+      <InfoIcon color="primary" fontSize="large" />
+      <Typography
+        data-testid={
+          isRated && isPeerReviewed
+            ? dataTestId.registrationWizard.resourceType.nviSuccess
+            : dataTestId.registrationWizard.resourceType.nviFailed
+        }>
+        {isRated
+          ? isPeerReviewed
+            ? t('resource_type.nvi.applicable')
+            : t('resource_type.nvi.not_peer_reviewed')
+          : t('resource_type.nvi.channel_not_rated')}
+      </Typography>
+    </Box>
   );
 };

@@ -184,12 +184,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       ) : (
         <>
           <Typography paragraph>{t('orcid.orcid_description')}</Typography>
-          <Button
-            color="secondary"
-            data-testid="button-create-connect-orcid"
-            onClick={toggleModal}
-            variant="contained"
-            size="small">
+          <Button data-testid="button-create-connect-orcid" onClick={toggleModal} variant="contained" size="small">
             {t('orcid.connect_orcid')}
           </Button>
           <Modal

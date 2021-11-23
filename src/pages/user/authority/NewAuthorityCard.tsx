@@ -97,7 +97,6 @@ export const NewAuthorityCard = ({ onClickCancel, user }: NewAuthorityCardProps)
       </StyledDescription>
       <StyledSaveButton
         data-testid="create-author-button"
-        color="secondary"
         variant="contained"
         size="large"
         loading={isLoading}
@@ -107,7 +106,7 @@ export const NewAuthorityCard = ({ onClickCancel, user }: NewAuthorityCardProps)
       {hasMatchingAuthorities && (
         <StyledCancelButton
           data-testid="cancel-create-author-button"
-          variant="contained"
+          variant="outlined"
           size="large"
           disabled={isLoading}
           onClick={onClickCancel}>

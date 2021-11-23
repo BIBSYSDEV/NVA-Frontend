@@ -133,8 +133,7 @@ export const ArtisticDesignForm = () => {
               <Button
                 data-testid={dataTestId.registrationWizard.resourceType.addVenueButton}
                 onClick={() => setOpenNewVenueModal(true)}
-                variant="contained"
-                color="inherit"
+                variant="outlined"
                 sx={{ mt: '1rem' }}
                 startIcon={<AddCircleOutlineIcon />}>
                 {t('resource_type.add_exhibition_place')}

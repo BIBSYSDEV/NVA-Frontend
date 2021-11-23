@@ -194,7 +194,6 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             component={RouterLink}
             to={editRegistrationUrl}
             variant="outlined"
-            color="secondary"
             endIcon={<EditIcon />}
             data-testid={dataTestId.registrationLandingPage.editButton}>
             {t('edit_registration')}
@@ -203,7 +202,6 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           {!hasNvaDoi && (
             <LoadingButton
               variant="outlined"
-              color="secondary"
               endIcon={<LocalOfferIcon />}
               loadingPosition="end"
               loading={isLoading === LoadingName.RequestDoi}
@@ -220,7 +218,6 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           {isCurator && isPublishedRegistration && doiRequest?.status === DoiRequestStatus.Requested && (
             <>
               <LoadingButton
-                color="secondary"
                 variant="contained"
                 data-testid={dataTestId.registrationLandingPage.rejectDoiButton}
                 endIcon={<CloseIcon />}
@@ -231,7 +228,6 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
                 {t('common:reject_doi')}
               </LoadingButton>
               <LoadingButton
-                color="secondary"
                 variant="contained"
                 data-testid={dataTestId.registrationLandingPage.createDoiButton}
                 endIcon={<CheckIcon />}

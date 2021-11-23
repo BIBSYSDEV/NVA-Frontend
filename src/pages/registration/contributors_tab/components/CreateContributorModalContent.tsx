@@ -97,7 +97,6 @@ export const CreateContributorModalContent = ({
               <LoadingButton
                 data-testid="button-create-authority"
                 type="submit"
-                color="secondary"
                 variant="contained"
                 loading={isLoading}
                 disabled={isSubmitting}>

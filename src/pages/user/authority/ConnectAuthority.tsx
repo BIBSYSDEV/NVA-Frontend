@@ -113,7 +113,6 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
               </Button>
               <LoadingButton
                 data-testid="connect-author-button"
-                color="secondary"
                 variant="contained"
                 size="large"
                 onClick={updateAuthorityForUser}

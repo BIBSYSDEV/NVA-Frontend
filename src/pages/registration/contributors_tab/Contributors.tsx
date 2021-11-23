@@ -163,7 +163,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         setUnverifiedContributor(null);
       }}
       variant="contained"
-      color={contributorRoles.length === 1 ? 'secondary' : 'inherit'}
+      color={contributorRoles.length === 1 ? 'primary' : 'inherit'}
       startIcon={<AddIcon />}
       data-testid={`add-${contributorRole}`}>
       {t('contributors.add_as_role', {
