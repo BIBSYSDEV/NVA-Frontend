@@ -157,7 +157,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
         />
       )}
       <Box
-        sx={{ bgcolor: 'background.statusBar', p: '1rem', mb: '1rem' }}
+        sx={{ bgcolor: 'background.paper', p: '1rem', mb: '1rem' }}
         data-testid={dataTestId.registrationLandingPage.status}>
         {!isPublishedRegistration && registrationIsValid && (
           <>

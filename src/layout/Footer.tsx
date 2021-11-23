@@ -14,7 +14,7 @@ const StyledFooter = styled.footer`
   align-items: center;
   justify-items: center;
   min-height: 4rem;
-  background: ${({ theme }) => theme.palette.background.footer};
+  background: ${({ theme }) => theme.palette.background.paper};
 `;
 
 const StyledAboutButton = styled(Button).attrs({ component: Link, to: UrlPathTemplate.About })`

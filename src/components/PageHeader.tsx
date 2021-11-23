@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
 import styled from 'styled-components';
-import { Button, IconButton, Tooltip, Typography, TypographyProps } from '@mui/material';
+import { Box, Button, IconButton, Tooltip, Typography, TypographyProps } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -15,11 +15,6 @@ const StyledHeader = styled.div`
   width: 100%;
   margin-bottom: 2rem;
   word-break: break-word;
-`;
-
-const StyledIconButton = styled(IconButton)`
-  background-color: ${({ theme }) => theme.palette.section.light};
-  color: ${({ theme }) => theme.palette.section.megaDark};
 `;
 
 const StyledTruncatableHeading = styled.div<{ canBeTruncated: boolean }>`
@@ -34,10 +29,6 @@ const StyledTruncatableHeading = styled.div<{ canBeTruncated: boolean }>`
     display: block;
     width: 100%;
   }
-`;
-
-const StyledSuperHeader = styled.div`
-  color: ${({ theme }) => theme.palette.section.megaDark};
 `;
 
 interface PageHeaderProps extends TypographyProps {
@@ -87,12 +78,12 @@ export const PageHeader = ({
         </Button>
       )}
       {superHeader && (
-        <StyledSuperHeader>
+        <Box sx={{ color: 'primary.dark' }}>
           {superHeader.icon}
           <Typography variant="overline" paragraph color="inherit">
             {superHeader.title}
           </Typography>
-        </StyledSuperHeader>
+        </Box>
       )}
       <StyledTruncatableHeading canBeTruncated={canBeTruncated}>
         <Typography variant="h1" {...props}>
@@ -106,9 +97,9 @@ export const PageHeader = ({
         </Typography>
         {canBeTruncated && (
           <Tooltip title={showFullText ? t<string>('title_minimize') : t<string>('title_expand')}>
-            <StyledIconButton onClick={toggleFullText}>
+            <IconButton color="primary" onClick={toggleFullText}>
               {showFullText ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </StyledIconButton>
+            </IconButton>
           </Tooltip>
         )}
       </StyledTruncatableHeading>

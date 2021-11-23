@@ -76,8 +76,6 @@ export const lightTheme = createTheme({
     },
     background: {
       default: Color.White,
-      footer: Color.Footer,
-      statusBar: Color.SecondaryMegaLight,
       paper: Color.Card,
     },
     section: {
