@@ -129,7 +129,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   const editRegistrationUrl = getRegistrationPath(identifier);
 
   return isOwner || isCurator ? (
-    <>
+    <Box>
       {!registrationIsValid && tabErrors && (
         <ErrorList
           tabErrors={tabErrors}
@@ -157,7 +157,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
         />
       )}
       <Box
-        sx={{ bgcolor: 'background.paper', p: '1rem', mb: '1rem' }}
+        sx={{ bgcolor: 'background.paper', p: '1rem', mb: '1rem', borderBottom: '2px dotted' }}
         data-testid={dataTestId.registrationLandingPage.status}>
         {!isPublishedRegistration && registrationIsValid && (
           <>
@@ -275,6 +275,6 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           </Modal>
         )}
       </Box>
-    </>
+    </Box>
   ) : null;
 };

@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import {
-  Box,
   Button,
   Checkbox,
   FormControl,
@@ -31,6 +30,7 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { Card } from '../../../components/Card';
 
 const StyledDescription = styled(Typography)`
   font-style: italic;
@@ -97,7 +97,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
 
   return (
-    <Box sx={{ bgcolor: 'box.main', p: '1rem' }} data-testid="uploaded-file-card">
+    <Card data-testid="uploaded-file-card">
       <StyledTypography variant="h5">{file.name}</StyledTypography>
       <StyledDescription>
         {t('files_and_license.uploaded_size', { size: prettyBytes(file.size, { locale: true }) })}
@@ -262,6 +262,6 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
         onCancel={toggleOpenConfirmDialog}>
         <Typography>{t('files_and_license.remove_file_description', { fileName: file.name })}</Typography>
       </ConfirmDialog>
-    </Box>
+    </Card>
   );
 };

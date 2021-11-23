@@ -2,7 +2,7 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Box, Button, Checkbox, FormControlLabel, TextField, Tooltip, Typography } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, TextField, Tooltip, Typography } from '@mui/material';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import CheckIcon from '@mui/icons-material/CheckCircleSharp';
@@ -13,12 +13,13 @@ import { Contributor, UnverifiedContributor } from '../../../../types/contributo
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import { AffiliationsCell } from './AffiliationsCell';
+import { Card } from '../../../../components/Card';
 
 const StyledCheckIcon = styled(CheckIcon)`
   color: ${({ theme }) => theme.palette.success.main};
 `;
 
-const StyledContributorBox = styled(Box)`
+const StyledContributorCard = styled(Card)`
   padding: 1rem;
   display: grid;
   grid-template-areas: 'contributor contributor' 'affiliation affiliation' 'add-affiliation remove-contributor';
@@ -137,7 +138,7 @@ export const ContributorCard = ({
   };
 
   return (
-    <StyledContributorBox sx={{ bgcolor: 'box.main' }}>
+    <StyledContributorCard>
       <StyledContributorSection>
         <StyledNameField variant="h5" variantMapping={{ h5: 'h3' }}>
           {contributor.identity.name}
@@ -236,6 +237,6 @@ export const ContributorCard = ({
           {t('contributors.remove_role', { role: t(`contributors.types.${contributor.role}`) })}
         </Button>
       </StyledRemoveContributorContainer>
-    </StyledContributorBox>
+    </StyledContributorCard>
   );
 };

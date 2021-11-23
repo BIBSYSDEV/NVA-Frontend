@@ -80,7 +80,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
           </Typography>
           {journalIdentifier && (
             <Link href={getChannelRegisterJournalUrl(journalIdentifier)} target="_blank">
-              <Typography>{t('files_and_license.find_journal_in_channel_register')}</Typography>
+              <Typography paragraph>{t('files_and_license.find_journal_in_channel_register')}</Typography>
             </Link>
           )}
           {publisherIdentifier && (
@@ -91,7 +91,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
           {seriesIdentifier && (
             <Link href={getChannelRegisterJournalUrl(seriesIdentifier)} target="_blank">
-              <Typography>{t('files_and_license.find_series_in_channel_register')}</Typography>
+              <Typography paragraph>{t('files_and_license.find_series_in_channel_register')}</Typography>
             </Link>
           )}
         </>
