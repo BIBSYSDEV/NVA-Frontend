@@ -1,6 +1,6 @@
 import { CalendarPickerView, DatePickerProps } from '@mui/lab';
 import { createTheme } from '@mui/material';
-import { PaletteColor, PaletteColorOptions, SimplePaletteColorOptions } from '@mui/material/styles';
+import { PaletteColor, PaletteColorOptions } from '@mui/material/styles';
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
 import { Color } from './colors';
@@ -27,10 +27,9 @@ declare module '@mui/material/styles/createPalette' {
     black: string;
   }
 
-  interface ExtendedPaletteOptions extends SimplePaletteColorOptions {
+  interface ExtendedPaletteOptions {
     megaLight?: string;
     megaDark?: string;
-    black?: string;
   }
 }
 
@@ -80,11 +79,7 @@ export const lightTheme = createTheme({
     },
     section: {
       megaLight: Color.BlueMegaLight,
-      light: Color.BlueLight,
-      main: Color.BlueMain,
-      dark: Color.BlueDark,
       megaDark: Color.BlueMegaDark,
-      black: Color.Black,
     },
   },
   typography: {

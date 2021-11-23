@@ -81,15 +81,10 @@ const StyledTags = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  > div {
-    :not(:last-child) {
-      margin-right: 0.5rem;
-    }
-  }
+  gap: 0.5rem;
 `;
 
 const StyledChip = styled(Chip)`
-  background: ${({ theme }) => theme.palette.section.light};
   margin: 0.25rem 0;
 `;
 
@@ -105,7 +100,7 @@ const TagsList = ({ title, values }: TagsListProps) => (
     </Typography>
     <StyledTags data-testid={dataTestId.registrationLandingPage.keywords}>
       {values.map((value) => (
-        <StyledChip key={value} label={<Typography>{value}</Typography>} />
+        <StyledChip key={value} label={<Typography>{value}</Typography>} color="primary" variant="outlined" />
       ))}
     </StyledTags>
   </StyledTagsList>

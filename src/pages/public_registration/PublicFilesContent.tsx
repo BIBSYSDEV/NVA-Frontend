@@ -30,7 +30,7 @@ const StyledFileRow = styled.div`
   column-gap: 1rem;
   align-items: center;
   padding: 1rem;
-  background: ${({ theme }) => theme.palette.section.megaLight};
+  background: ${({ theme }) => theme.palette.background.paper};
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
     grid-template-areas:
@@ -70,7 +70,6 @@ const StyledPreviewAccordion = styled(Accordion)`
   grid-area: preview;
   margin-top: 1rem;
   max-height: 35rem;
-  background: #f6f6f6;
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
     display: none;

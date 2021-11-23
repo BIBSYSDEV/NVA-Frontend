@@ -137,7 +137,7 @@ export const ContributorCard = ({
   };
 
   return (
-    <StyledContributorBox sx={{ bgcolor: 'section.megaLight' }}>
+    <StyledContributorBox sx={{ bgcolor: 'box.main' }}>
       <StyledContributorSection>
         <StyledNameField variant="h5" variantMapping={{ h5: 'h3' }}>
           {contributor.identity.name}

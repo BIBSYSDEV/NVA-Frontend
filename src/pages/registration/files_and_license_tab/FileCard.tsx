@@ -97,7 +97,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
 
   return (
-    <Box sx={{ bgcolor: 'section.megaLight', p: '1rem' }} data-testid="uploaded-file-card">
+    <Box sx={{ bgcolor: 'box.main', p: '1rem' }} data-testid="uploaded-file-card">
       <StyledTypography variant="h5">{file.name}</StyledTypography>
       <StyledDescription>
         {t('files_and_license.uploaded_size', { size: prettyBytes(file.size, { locale: true }) })}

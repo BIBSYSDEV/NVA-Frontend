@@ -8,7 +8,7 @@ const StyledSkipLink = styled(Link)`
   justify-content: center;
   align-items: center;
   height: 3rem;
-  background: ${({ theme }) => theme.palette.section.black};
+  background: ${({ theme }) => theme.palette.common.black};
   clip-path: circle(0%);
 
   :focus {
