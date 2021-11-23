@@ -8,13 +8,6 @@ import { visuallyHidden } from '@mui/utils';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { getAdminInstitutionPath } from '../../utils/urlPaths';
 
-const StyledTableRow = styled(TableRow)`
-  background-color: ${(props) => props.theme.palette.box.main};
-  :nth-child(odd) {
-    background-color: ${(props) => props.theme.palette.background.default};
-  }
-`;
-
 const StyledTable = styled(Table)`
   width: 100%;
 `;
@@ -54,7 +47,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
         </TableHead>
         <TableBody>
           {institutions.map((institution) => (
-            <StyledTableRow key={institution.identifier}>
+            <TableRow key={institution.identifier}>
               <TableCell component="th" scope="row">
                 <Typography>{institution.name}</Typography>
               </TableCell>
@@ -72,7 +65,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
                   <Typography>{t('edit')}</Typography>
                 </Button>
               </TableCell>
-            </StyledTableRow>
+            </TableRow>
           ))}
         </TableBody>
       </StyledTable>

@@ -18,13 +18,6 @@ const StyledTable = styled(Table)`
   width: 100%;
 `;
 
-const StyledTableRow = styled(TableRow)`
-  background-color: ${(props) => props.theme.palette.box.main};
-  :nth-child(odd) {
-    background-color: ${(props) => props.theme.palette.background.default};
-  }
-`;
-
 const StyledTypography = styled(Typography)`
   font-weight: bold;
 `;
@@ -127,7 +120,7 @@ export const UserList = ({
                 const isLoading = updatedRoleForUsers.includes(user.username);
                 const disableAddButton = user.roles.some((role) => role.rolename === roleToAdd);
                 return (
-                  <StyledTableRow key={index}>
+                  <TableRow key={index}>
                     <TableCell>{user.username}</TableCell>
                     <TableCell>
                       {user.givenName} {user.familyName}
@@ -159,7 +152,7 @@ export const UserList = ({
                         </LoadingButton>
                       )}
                     </TableCell>
-                  </StyledTableRow>
+                  </TableRow>
                 );
               })}
             </TableBody>

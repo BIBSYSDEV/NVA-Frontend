@@ -1,18 +1,18 @@
 import { CalendarPickerView, DatePickerProps } from '@mui/lab';
 import { createTheme } from '@mui/material';
-import { PaletteColor, PaletteColorOptions } from '@mui/material/styles';
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
-import { Color } from './colors';
 
-// Extend Palette type to allow custom colors
-declare module '@mui/material/styles/createPalette' {
-  interface Palette {
-    box: PaletteColor;
-  }
-  interface PaletteOptions {
-    box?: PaletteColorOptions;
-  }
+// Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
+enum Color {
+  Black = '#222',
+  Paper = '#faf7f4',
+  SecondaryMain = '#FFB546',
+  White = '#fff',
+  PrimaryMain = '#0e6d82',
+  ErrorLight = '#FF8888',
+  ErrorMain = '#C2363D',
+  SuccessMain = '#08B677',
 }
 
 enum Font {
@@ -35,12 +35,7 @@ export const lightTheme = createTheme({
       main: Color.PrimaryMain,
     },
     secondary: {
-      light: Color.SecondaryLight,
       main: Color.SecondaryMain,
-      dark: Color.SecondaryDark,
-    },
-    box: {
-      main: Color.Box,
     },
     error: {
       main: Color.ErrorMain,
@@ -48,16 +43,10 @@ export const lightTheme = createTheme({
     },
     success: {
       main: Color.SuccessMain,
-      dark: Color.SuccessDark,
-    },
-    text: {
-      primary: Color.PrimaryText,
-      secondary: Color.SecondaryText,
-      disabled: Color.Disabled,
     },
     background: {
       default: Color.White,
-      paper: Color.Card,
+      paper: Color.Paper,
     },
   },
   typography: {
@@ -94,13 +83,6 @@ export const lightTheme = createTheme({
     },
   },
   components: {
-    MuiAccordion: {
-      styleOverrides: {
-        root: {
-          background: Color.Card,
-        },
-      },
-    },
     MuiAutocomplete: {
       styleOverrides: {
         tag: {
@@ -118,25 +100,6 @@ export const lightTheme = createTheme({
         openText: i18n.t('common:open'),
       },
     },
-    MuiButton: {
-      styleOverrides: {
-        outlinedSecondary: {
-          color: Color.PrimaryText,
-        },
-        containedSecondary: {
-          '&:disabled': {
-            background: Color.SecondaryLight,
-          },
-        },
-      },
-    },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          backgroundColor: Color.Box,
-        },
-      },
-    },
     MuiChip: {
       styleOverrides: {
         root: {
@@ -148,18 +111,8 @@ export const lightTheme = createTheme({
         },
       },
     },
-    MuiInputBase: {
-      styleOverrides: {
-        root: {
-          background: Color.White,
-        },
-      },
-    },
     MuiLink: {
       styleOverrides: {
-        root: {
-          color: Color.PrimaryText,
-        },
         underlineAlways: {
           textDecorationColor: Color.SecondaryMain,
         },
@@ -172,7 +125,6 @@ export const lightTheme = createTheme({
         },
         textColorPrimary: {
           '&.Mui-selected': {
-            color: Color.PrimaryText,
             fontWeight: 'bold',
           },
         },
