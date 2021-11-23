@@ -69,7 +69,7 @@ export const Header = () => {
   };
 
   return (
-    <AppBar position="static" elevation={0}>
+    <AppBar position="static" elevation={0} sx={{ color: 'white' }}>
       <StyledNav>
         {user && (
           <StyledBurgerMenu>

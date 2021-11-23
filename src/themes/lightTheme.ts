@@ -51,7 +51,7 @@ export const lightTheme = createTheme({
   },
   palette: {
     primary: {
-      main: Color.BlueMain,
+      main: Color.PrimaryMain,
     },
     secondary: {
       light: Color.SecondaryLight,
@@ -127,16 +127,6 @@ export const lightTheme = createTheme({
       styleOverrides: {
         root: {
           background: Color.Card,
-        },
-      },
-    },
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          background: Color.Header,
-        },
-        colorPrimary: {
-          color: Color.PrimaryText,
         },
       },
     },
