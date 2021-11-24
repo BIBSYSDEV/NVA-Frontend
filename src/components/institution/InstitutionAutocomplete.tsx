@@ -28,12 +28,17 @@ export const InstitutionAutocomplete = ({
 }: InstitutionAutocompleteProps) => {
   const { t } = useTranslation('common');
 
+  const options = sortInstitutionsAlphabetically(
+    // Remove potential duplicates (TODO: NP-3465)
+    institutions.filter((institution, index, array) => index === array.findIndex((i) => i.id === institution.id))
+  );
+
   return (
     <Autocomplete
       id={id}
       aria-labelledby={`${id}-label`}
       disabled={disabled}
-      options={sortInstitutionsAlphabetically(institutions)}
+      options={options}
       getOptionLabel={(option) => option.name}
       isOptionEqualToValue={(option, value) => option.id === value.id}
       value={value}
@@ -61,7 +66,7 @@ export const InstitutionAutocomplete = ({
             ...params.InputProps,
             endAdornment: (
               <>
-                {isLoading && institutions.length === 0 && <CircularProgress size={20} />}
+                {isLoading && options.length === 0 && <CircularProgress size={20} />}
                 {params.InputProps.endAdornment}
               </>
             ),
