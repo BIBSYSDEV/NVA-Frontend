@@ -131,8 +131,8 @@
   "registration": {
     "link_to_resource": "Link to original version",
     "start_registration": "Start registration",
-    "start_with_empty_registration_description": "Fill in information afterwards",
-    "start_with_empty_registration_title": "Start with empty registration",
+    "start_with_empty_registration_description": "Enter information afterwards",
+    "start_with_empty_registration_title": "Start in empty registration form",
     "start_with_link_to_resource_description": "Link to original version if the resource already has been published on the Internet",
     "start_with_link_to_resource_title": "Start with link to original version",
     "start_with_uploading_file_description": "Upload file if the resource isn't published on the Internet",
