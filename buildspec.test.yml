@@ -3,6 +3,13 @@ version: 0.2
 env:
   parameter-store:
     CYPRESS_baseUrl: CognitoFrontendApplicationUrl
+    CYPRESS_AWS_IDENTITY_POOL_ID: CognitoIdentityPoolId
+    CYPRESS_AWS_USER_POOL_ID: CognitoUserPoolId
+    CYPRESS_AWS_CLIENT_ID: CognitoUserPoolAppClientId
+    CYPRESS_REACT_APP_ORCID_CLIENT_ID: REACT_APP_ORCID_CLIENT_ID
+    CYPRESS_REACT_APP_ORCID_BASE_URL: REACT_APP_ORCID_BASE_URL
+    CYPRESS_REACT_APP_URL:  /NVA/ApplicationDomain
+    CYPRESS_REACT_APP_API_URL: /NVA/ApiDomain
 
 phases:
   install:
@@ -19,6 +26,7 @@ phases:
       - export CYPRESS_AWS_ACCESS_KEY_ID=$(cat Credentials | jq -r '.Credentials.AccessKeyId')
       - export CYPRESS_AWS_SECRET_ACCESS_KEY=$(cat Credentials | jq -r '.Credentials.SecretAccessKey')
       - export CYPRESS_AWS_SESSION_TOKEN=$(cat Credentials | jq -r '.Credentials.SessionToken')
+      - export CYPRESS_AWS_REGION=${AWS_REGION}
   build:
     commands:
       - cd test_data

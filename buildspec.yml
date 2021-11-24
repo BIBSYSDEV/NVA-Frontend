@@ -8,12 +8,13 @@ env:
     REACT_APP_DOMAIN: CognitoAuthenticationDomain # from nva-identity-service
     REACT_APP_REDIRECT_SIGN_IN: CognitoFrontendApplicationUrl # from nva-identity-service
     REACT_APP_REDIRECT_SIGN_OUT: CognitoFrontendApplicationLogoutUrl # from nva-identity-service
-    REACT_APP_ORCID_CLIENT_ID: REACT_APP_ORCID_CLIENT_ID
-    REACT_APP_ORCID_REDIRECT_URI: REACT_APP_ORCID_REDIRECT_URI
-    REACT_APP_ORCID_BASE_URL: REACT_APP_ORCID_BASE_URL
-    REACT_APP_API_URL: BackendApiUrl # from nva-deploy
+    REACT_APP_ORCID_BASE_URL: OrcidBaseUrl
+    REACT_APP_API_URL: /NVA/ApiDomain
+    REACT_APP_APP_URL: /NVA/ApplicationDomain
+
   secrets-manager:
-    REACT_APP_ORCID_CLIENT_SECRET: REACT_APP_ORCID_CLIENT_SECRET
+    REACT_APP_ORCID_CLIENT_SECRET: OrcidClientSecret
+    REACT_APP_ORCID_CLIENT_ID: OrcidClientID
     #  Values to be assigned outside of pipeline
     # REACT_APP_AWS_REGION
     # REACT_APP_USE_MOCK
@@ -25,6 +26,9 @@ phases:
     commands:
       - env
       - npm install
+  pre_build:
+    commands:
+      - export REACT_APP_ORCID_REDIRECT_URI=https://${REACT_APP_APP_URL}/my-profile
   build:
     commands:
       - npm run build
