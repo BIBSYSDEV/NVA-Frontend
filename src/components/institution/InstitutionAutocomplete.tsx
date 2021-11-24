@@ -29,7 +29,7 @@ export const InstitutionAutocomplete = ({
   const { t } = useTranslation('common');
 
   const options = sortInstitutionsAlphabetically(
-    // Remove potential duplicates
+    // Remove potential duplicates (TODO: NP-3465)
     institutions.filter((institution, index, array) => index === array.findIndex((i) => i.id === institution.id))
   );
 
