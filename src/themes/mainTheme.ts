@@ -20,7 +20,7 @@ enum Font {
   Crimson = 'Crimson Text, serif',
 }
 
-export const lightTheme = createTheme({
+export const mainTheme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
@@ -149,15 +149,6 @@ export const lightTheme = createTheme({
           fontWeight: 'bold',
           color: Color.ErrorMain,
         },
-        root: {
-          color: Color.Black,
-          '&.Mui-focused': {
-            color: Color.Black,
-          },
-          '&.Mui-error': {
-            color: Color.ErrorMain,
-          },
-        },
       },
     },
     MuiFilledInput: {
@@ -176,7 +167,6 @@ export const lightTheme = createTheme({
     MuiFormHelperText: {
       styleOverrides: {
         root: {
-          color: Color.Black,
           '&.Mui-error': {
             color: Color.Black,
             backgroundColor: Color.ErrorLight,

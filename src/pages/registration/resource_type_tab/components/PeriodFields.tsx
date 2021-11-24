@@ -3,7 +3,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { TextField, TextFieldProps } from '@mui/material';
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { datePickerTranslationProps } from '../../../../themes/lightTheme';
+import { datePickerTranslationProps } from '../../../../themes/mainTheme';
 import i18n from '../../../../translations/i18n';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getDateFnsLocale } from '../../../../utils/date-helpers';

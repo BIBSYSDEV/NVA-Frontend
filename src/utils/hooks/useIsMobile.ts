@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { lightTheme } from '../../themes/lightTheme';
+import { mainTheme } from '../../themes/mainTheme';
 
 export const useIsMobile = () => {
   const [width, setWidth] = useState(window.innerWidth);
-  const isMobile = width < lightTheme.breakpoints.values.md;
+  const isMobile = width < mainTheme.breakpoints.values.md;
 
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);

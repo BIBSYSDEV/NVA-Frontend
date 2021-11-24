@@ -1,11 +1,11 @@
 import { FormikErrors, FormikTouched, useFormikContext } from 'formik';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Checkbox, FormControlLabel, ThemeProvider, Typography, TextField } from '@mui/material';
+import { Checkbox, FormControlLabel, Typography, TextField } from '@mui/material';
 import { LocalizationProvider, DatePicker } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import { lightTheme, datePickerTranslationProps } from '../../../themes/lightTheme';
+import { datePickerTranslationProps } from '../../../themes/mainTheme';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { EntityDescription, Registration, RegistrationDate } from '../../../types/registration.types';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
@@ -74,31 +74,29 @@ export const DatePickerField = () => {
 
   return (
     <>
-      <ThemeProvider theme={lightTheme}>
-        <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
-          <DatePicker
-            {...datePickerTranslationProps}
-            label={t('description.date_published')}
-            value={date}
-            onChange={onChangeDate}
-            inputFormat={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
-            views={yearOnly ? ['year'] : ['year', 'month', 'day']}
-            maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
-            mask={yearOnly ? '____' : '__.__.____'}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                data-testid={dataTestId.registrationWizard.description.datePublishedField}
-                variant="filled"
-                required
-                onBlur={() => !touchedYear && setFieldTouched(DescriptionFieldNames.PublicationYear)}
-                error={hasError}
-                helperText={hasError && errorYear}
-              />
-            )}
-          />
-        </LocalizationProvider>
-      </ThemeProvider>
+      <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
+        <DatePicker
+          {...datePickerTranslationProps}
+          label={t('description.date_published')}
+          value={date}
+          onChange={onChangeDate}
+          inputFormat={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
+          views={yearOnly ? ['year'] : ['year', 'month', 'day']}
+          maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+          mask={yearOnly ? '____' : '__.__.____'}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              data-testid={dataTestId.registrationWizard.description.datePublishedField}
+              variant="filled"
+              required
+              onBlur={() => !touchedYear && setFieldTouched(DescriptionFieldNames.PublicationYear)}
+              error={hasError}
+              helperText={hasError && errorYear}
+            />
+          )}
+        />
+      </LocalizationProvider>
       <StyledFormControlLabel
         control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} />}
         label={<Typography>{t('description.year_only')}</Typography>}

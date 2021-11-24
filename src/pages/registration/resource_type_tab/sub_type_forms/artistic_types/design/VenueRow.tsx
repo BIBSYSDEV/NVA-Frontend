@@ -1,4 +1,4 @@
-import { TableRow, TableCell, Typography, Button, ThemeProvider, Tooltip, Box } from '@mui/material';
+import { TableRow, TableCell, Typography, Button, Tooltip, Box } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import EditIcon from '@mui/icons-material/Edit';
@@ -9,7 +9,6 @@ import { Venue } from '../../../../../../types/publication_types/artisticRegistr
 import { getPeriodString } from '../../../../../../utils/registration-helpers';
 import { VenueModal } from './VenueModal';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
-import { lightTheme } from '../../../../../../themes/lightTheme';
 
 interface VenueRowProps {
   venue: Venue;
@@ -67,18 +66,16 @@ export const VenueRow = ({ updateVenue, removeVenue, moveVenue, venue, index, ma
         open={openEditVenue}
         closeModal={() => setOpenEditVenue(false)}
       />
-      <ThemeProvider theme={lightTheme}>
-        <ConfirmDialog
-          open={openRemoveVenue}
-          title={t('resource_type.remove_venue_title')}
-          onCancel={() => setOpenRemoveVenue(false)}
-          onAccept={() => {
-            removeVenue();
-            setOpenRemoveVenue(false);
-          }}>
-          {t('resource_type.remove_venue_text', { name: placeLabel })}
-        </ConfirmDialog>
-      </ThemeProvider>
+      <ConfirmDialog
+        open={openRemoveVenue}
+        title={t('resource_type.remove_venue_title')}
+        onCancel={() => setOpenRemoveVenue(false)}
+        onAccept={() => {
+          removeVenue();
+          setOpenRemoveVenue(false);
+        }}>
+        {t('resource_type.remove_venue_text', { name: placeLabel })}
+      </ConfirmDialog>
     </TableRow>
   );
 };
