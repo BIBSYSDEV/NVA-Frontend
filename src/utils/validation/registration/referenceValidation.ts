@@ -194,11 +194,11 @@ const publisherField = Yup.object().shape({
 });
 
 const seriesField = Yup.object().shape({
-  id: Yup.string().when('title', {
-    is: (value: string) => !!value,
-    then: Yup.string().required(resourceErrorMessage.seriesNotSelected),
-    otherwise: Yup.string(),
-  }),
+  id: Yup.string().test(
+    'series-test',
+    resourceErrorMessage.seriesNotSelected,
+    (idValue, context) => !context.parent.title || !!idValue
+  ),
 });
 
 export const baseReference = Yup.object()
