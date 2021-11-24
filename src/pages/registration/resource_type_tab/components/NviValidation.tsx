@@ -15,7 +15,7 @@ import { JournalRegistration } from '../../../../types/publication_types/journal
 import { Journal, Publisher, Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
-import { Box } from '@mui/system';
+import { Card } from '../../../../components/Card';
 
 interface NviValidationProps {
   registration: Registration;
@@ -118,7 +118,7 @@ const NviStatus = ({ level = '', isPeerReviewed = false }: NviStatusProps) => {
   const isRated = parseInt(level) > 0;
 
   return (
-    <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+    <Card sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
       <InfoIcon color="primary" fontSize="large" />
       <Typography
         data-testid={
@@ -132,6 +132,6 @@ const NviStatus = ({ level = '', isPeerReviewed = false }: NviStatusProps) => {
             : t('resource_type.nvi.not_peer_reviewed')
           : t('resource_type.nvi.channel_not_rated')}
       </Typography>
-    </Box>
+    </Card>
   );
 };

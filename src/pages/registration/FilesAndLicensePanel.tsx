@@ -15,6 +15,7 @@ import {
   getChannelRegisterJournalUrl,
   getChannelRegisterPublisherUrl,
 } from '../public_registration/PublicPublicationContext';
+import { Card } from '../../components/Card';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
@@ -73,7 +74,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   return (
     <>
       {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
-        <>
+        <Card>
           <Typography variant="h2" gutterBottom>
             {t('files_and_license.info_from_channel_register')}
           </Typography>
@@ -93,7 +94,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
               <Typography paragraph>{t('files_and_license.find_series_in_channel_register')}</Typography>
             </Link>
           )}
-        </>
+        </Card>
       )}
 
       <FieldArray name={FileFieldNames.Files}>
