@@ -3,7 +3,6 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, FormHelperText, Link, Typography } from '@mui/material';
 import { UppyFile } from '@uppy/core';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { Modal } from '../../components/Modal';
 import { File, FileSet, licenses, Uppy } from '../../types/file.types';
 import { NotificationVariant } from '../../types/notification.types';
@@ -72,7 +71,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     (publicationContext && 'id' in publicationContext && publicationContext.id?.split('/').reverse()[1]) || '';
 
   return (
-    <BackgroundDiv>
+    <>
       {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
         <>
           <Typography variant="h2" gutterBottom>
@@ -157,6 +156,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
           </Box>
         ))}
       </Modal>
-    </BackgroundDiv>
+    </>
   );
 };

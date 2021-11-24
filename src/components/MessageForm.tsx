@@ -47,7 +47,7 @@ export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) =
                 {...field}
                 disabled={isSubmitting}
                 data-testid="message-field"
-                variant="outlined"
+                variant="filled"
                 multiline
                 rows="4"
                 fullWidth

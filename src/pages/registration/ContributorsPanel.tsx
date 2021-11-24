@@ -1,7 +1,6 @@
 import { FormHelperText } from '@mui/material';
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useEffect, useRef } from 'react';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { ContributorRole } from '../../types/contributor.types';
 import { BookType, ContributorFieldNames } from '../../types/publicationFieldNames';
 import { EntityDescription, Registration } from '../../types/registration.types';
@@ -35,7 +34,7 @@ export const ContributorsPanel = () => {
   const selectableContributorRoles = Object.values(ContributorRole).filter((role) => role !== ContributorRole.Creator);
 
   return (
-    <BackgroundDiv>
+    <>
       <FieldArray name={ContributorFieldNames.Contributors}>
         {({ push, replace }: FieldArrayRenderProps) =>
           isDegree(publicationInstanceType) ? (
@@ -81,6 +80,6 @@ export const ContributorsPanel = () => {
           <ErrorMessage name={ContributorFieldNames.Contributors} />
         </FormHelperText>
       )}
-    </BackgroundDiv>
+    </>
   );
 };

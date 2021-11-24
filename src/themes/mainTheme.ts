@@ -6,13 +6,14 @@ import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
 enum Color {
   Black = '#222',
-  Paper = '#faf7f4',
-  SecondaryMain = '#FFB546',
-  White = '#fff',
-  PrimaryMain = '#0e6d82',
   ErrorLight = '#FF8888',
   ErrorMain = '#C2363D',
+  Paper = '#faf7f4',
+  PrimaryMain = '#0e6d82',
+  SecondaryMain = '#FFB546',
   SuccessMain = '#08B677',
+  TextPrimary = 'rgba(0, 0, 0, 0.87)',
+  White = '#fff',
 }
 
 enum Font {
@@ -113,6 +114,9 @@ export const mainTheme = createTheme({
     },
     MuiLink: {
       styleOverrides: {
+        root: {
+          color: Color.TextPrimary,
+        },
         underlineAlways: {
           textDecorationColor: Color.SecondaryMain,
         },
