@@ -111,6 +111,9 @@ export const mainTheme = createTheme({
           whiteSpace: 'normal', // Allow multiline chips
         },
       },
+      defaultProps: {
+        variant: 'outlined',
+      },
     },
     MuiLink: {
       styleOverrides: {

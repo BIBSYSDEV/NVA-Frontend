@@ -100,7 +100,7 @@ const TagsList = ({ title, values }: TagsListProps) => (
     </Typography>
     <StyledTags data-testid={dataTestId.registrationLandingPage.keywords}>
       {values.map((value) => (
-        <StyledChip key={value} label={<Typography>{value}</Typography>} color="primary" variant="outlined" />
+        <StyledChip key={value} label={<Typography>{value}</Typography>} />
       ))}
     </StyledTags>
   </StyledTagsList>
