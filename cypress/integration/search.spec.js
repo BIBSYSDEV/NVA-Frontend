@@ -21,6 +21,6 @@ describe('Search', () => {
     cy.get(`[data-testid=${dataTestId.startPage.searchField}] input`).type(searchTerm);
     cy.get(`[data-testid=${dataTestId.startPage.searchButton}]`).click();
     cy.get(`[data-testid=${dataTestId.startPage.searchPagination}]`).contains('1-10');
-    cy.url().should('include', `query=${searchTerm}`);
+    cy.url().should('include', `query=%22${searchTerm}%22`);
   });
 });
