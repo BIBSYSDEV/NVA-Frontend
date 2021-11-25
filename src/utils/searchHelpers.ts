@@ -30,7 +30,10 @@ enum Operator {
 }
 
 // Add quoatation marks if no wildcard
-const formatValue = (value: string) => {
+const formatValue = (value?: string) => {
+  if (!value) {
+    return '';
+  }
   const hasWildcard = value.includes('*');
   const hasQuotationMarks = value.startsWith('"') && value.endsWith('"');
 
