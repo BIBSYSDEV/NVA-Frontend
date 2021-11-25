@@ -1,3 +1,5 @@
+import { registrationFilters } from '../pages/search/filters/AdvancedSearchRow';
+
 export enum SearchParam {
   From = 'from',
   OrderBy = 'orderBy',
@@ -74,8 +76,11 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams): Sea
   if (!filters) {
     return { searchTerm: '', properties: [] };
   }
-
-  const searchTermIndex = filters?.findIndex((filter) => filter && !filter.startsWith('(') && !filter.endsWith(')'));
+  const searchTermIndex = filters?.findIndex(
+    // Find filter that does not point to specific field
+    (filter) =>
+      filter && !registrationFilters.some((f) => filter.startsWith(f.field) || filter.startsWith(`(${f.field}`))
+  );
   const searchTerm = searchTermIndex >= 0 ? filters.splice(searchTermIndex, 1)[0] : '';
 
   const properties: PropertySearch[] = filters.map((filter) => {
