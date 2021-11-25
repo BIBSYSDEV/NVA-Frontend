@@ -81,8 +81,7 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams): Sea
   }
   const searchTermIndex = filters?.findIndex(
     // Find filter that does not point to specific field
-    (filter) =>
-      filter && !registrationFilters.some((f) => filter.startsWith(f.field) || filter.startsWith(`(${f.field}`))
+    (filter) => filter && !registrationFilters.some((f) => filter.includes(`${f.field}:`))
   );
   const searchTerm = searchTermIndex >= 0 ? filters.splice(searchTermIndex, 1)[0] : '';
 
