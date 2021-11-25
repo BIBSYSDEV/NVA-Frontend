@@ -153,7 +153,6 @@ export const ContributorCard = ({
             </>
           ) : (
             <Button
-              color="primary"
               startIcon={
                 <Tooltip title={t<string>('contributors.unknown_author_identity')}>
                   <WarningIcon />

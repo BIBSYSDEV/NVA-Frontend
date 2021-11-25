@@ -86,7 +86,7 @@ export const NewAuthorityCard = ({ onClickCancel, user }: NewAuthorityCardProps)
   return (
     <StyledBoxContent>
       <StyledAuthority>
-        <Radio color="primary" checked />
+        <Radio checked />
         <StyledLabel>{name}</StyledLabel>
       </StyledAuthority>
       <StyledDescription>

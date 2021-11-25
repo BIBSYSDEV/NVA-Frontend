@@ -139,7 +139,6 @@ export const UserList = ({
                       )}
                       {roleToAdd && (
                         <LoadingButton
-                          color="primary"
                           variant="contained"
                           size="small"
                           startIcon={<AddIcon />}

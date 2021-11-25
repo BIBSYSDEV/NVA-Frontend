@@ -56,7 +56,6 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
               </StyledSmallCell>
               <TableCell>
                 <Button
-                  color="primary"
                   variant="outlined"
                   startIcon={<EditIcon />}
                   component={RouterLink}

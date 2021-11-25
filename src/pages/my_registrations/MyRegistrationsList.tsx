@@ -111,7 +111,6 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                 </TableCell>
                 <TableCell>
                   <Button
-                    color="primary"
                     variant="outlined"
                     component={RouterLink}
                     to={getRegistrationLandingPagePath(registration.identifier)}
@@ -122,7 +121,6 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                 </TableCell>
                 <TableCell>
                   <Button
-                    color="primary"
                     variant="outlined"
                     component={RouterLink}
                     to={getRegistrationPath(registration.identifier)}

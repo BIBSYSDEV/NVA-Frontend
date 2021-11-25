@@ -36,7 +36,7 @@ export const AutocompleteTextField = ({
       ),
       endAdornment: (
         <>
-          {isLoading && <CircularProgress color="inherit" size={20} />}
+          {isLoading && <CircularProgress size={20} />}
           {params.InputProps.endAdornment}
         </>
       ),

@@ -118,12 +118,12 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                     onChange={(event) => setFieldValue(field.name, JSON.parse(event.target.value))}>
                     <FormControlLabel
                       value={false}
-                      control={<Radio color="primary" />}
+                      control={<Radio />}
                       label={t<string>('files_and_license.accepted_version')}
                     />
                     <FormControlLabel
                       value={true}
-                      control={<Radio color="primary" />}
+                      control={<Radio />}
                       label={t<string>('files_and_license.published_version')}
                     />
                   </RadioGroup>
@@ -136,7 +136,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
               {({ field }: FieldProps) => (
                 <StyledAdministrativeContract
                   data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
-                  control={<Checkbox {...field} color="primary" checked={field.value} />}
+                  control={<Checkbox {...field} checked={field.value} />}
                   label={t<string>('files_and_license.administrative_contract')}
                 />
               )}

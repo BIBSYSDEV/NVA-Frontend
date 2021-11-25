@@ -112,7 +112,6 @@ export const SupportRequestAccordion = ({
           <Button
             data-testid={`go-to-registration-${identifier}`}
             variant="outlined"
-            color="primary"
             endIcon={<ArrowForwardIcon />}
             component={RouterLink}
             to={getRegistrationLandingPagePath(identifier)}>

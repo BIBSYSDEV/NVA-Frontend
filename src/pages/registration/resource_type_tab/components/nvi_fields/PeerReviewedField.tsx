@@ -24,14 +24,8 @@ export const PeerReviewedField = () => {
           <RadioGroup
             value={value === true ? 'true' : value === false ? 'false' : ''}
             onChange={(event) => setFieldValue(name, event.target.value === 'true')}>
-            <FormControlLabel
-              control={<Radio color="primary" value="true" />}
-              label={<Typography>{t('common:yes')}</Typography>}
-            />
-            <FormControlLabel
-              control={<Radio color="primary" value="false" />}
-              label={<Typography>{t('common:no')}</Typography>}
-            />
+            <FormControlLabel control={<Radio value="true" />} label={<Typography>{t('common:yes')}</Typography>} />
+            <FormControlLabel control={<Radio value="false" />} label={<Typography>{t('common:no')}</Typography>} />
           </RadioGroup>
           <ErrorMessage name={name} render={(message) => <FormHelperText error>{message}</FormHelperText>} />
         </FormControl>

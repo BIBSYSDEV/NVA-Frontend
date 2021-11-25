@@ -98,11 +98,7 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
               searchTerm={user.name}
             />
             <StyledRightAlignedWrapper>
-              <Button
-                color="primary"
-                variant="text"
-                data-testid="button-create-authority"
-                onClick={toggleOpenNewAuthorityCard}>
+              <Button variant="text" data-testid="button-create-authority" onClick={toggleOpenNewAuthorityCard}>
                 {t('authority.create_authority')}
               </Button>
             </StyledRightAlignedWrapper>

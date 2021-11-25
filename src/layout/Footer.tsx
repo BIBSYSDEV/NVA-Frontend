@@ -35,16 +35,12 @@ export const Footer = () => {
 
   return (
     <StyledFooter>
-      <StyledAboutButton data-testid={dataTestId.footer.aboutLink} color="primary">
-        {t('common:about_nva')}
-      </StyledAboutButton>
+      <StyledAboutButton data-testid={dataTestId.footer.aboutLink}>{t('common:about_nva')}</StyledAboutButton>
       <StyledLogoContainer>
         <Typography>{t('common:delivered_by')}</Typography>
         <img src={logo} alt="UNIT logo" />
       </StyledLogoContainer>
-      <StyledPrivacyButton data-testid={dataTestId.footer.privacyLink} color="primary">
-        {t('privacy_statement')}
-      </StyledPrivacyButton>
+      <StyledPrivacyButton data-testid={dataTestId.footer.privacyLink}>{t('privacy_statement')}</StyledPrivacyButton>
     </StyledFooter>
   );
 };

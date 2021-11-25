@@ -65,7 +65,6 @@ const MyInstitutionUsersPage = () => {
             />
           )}
           <StyledNewButton
-            color="primary"
             variant="outlined"
             startIcon={<AddIcon />}
             data-testid="button-add-institution-admin"
@@ -91,7 +90,6 @@ const MyInstitutionUsersPage = () => {
             />
           )}
           <StyledNewButton
-            color="primary"
             variant="outlined"
             startIcon={<AddIcon />}
             data-testid="button-add-curator"
@@ -117,7 +115,6 @@ const MyInstitutionUsersPage = () => {
             />
           )}
           <StyledNewButton
-            color="primary"
             variant="outlined"
             startIcon={<AddIcon />}
             data-testid="button-add-editor"

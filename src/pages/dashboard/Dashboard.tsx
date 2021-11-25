@@ -106,7 +106,6 @@ const Dashboard = () => {
             <StyledTagline variant="h1">{t('nva_tagline')}</StyledTagline>
             <StyledCloseButtonWrapper>
               <IconButton
-                color="primary"
                 title={t('close_forever')}
                 onClick={() => {
                   localStorage.setItem(showTaglineKey, 'false');

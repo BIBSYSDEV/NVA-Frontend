@@ -72,7 +72,6 @@ export const EditInstitution = ({ initialInstitutionId, onCancel, onSubmit }: Ed
                 <LoadingButton
                   variant="contained"
                   type="submit"
-                  color="primary"
                   startIcon={<SaveIcon />}
                   loadingPosition="start"
                   loading={isSubmitting}

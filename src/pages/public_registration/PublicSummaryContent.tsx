@@ -1,4 +1,3 @@
-import React from 'react';
 import { Chip, Typography } from '@mui/material';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
@@ -33,11 +32,9 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
       {entityDescription && (
         <>
           {entityDescription.abstract && (
-            <>
-              <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
-                {entityDescription.abstract}
-              </Typography>
-            </>
+            <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
+              {entityDescription.abstract}
+            </Typography>
           )}
           {entityDescription.description && (
             <>

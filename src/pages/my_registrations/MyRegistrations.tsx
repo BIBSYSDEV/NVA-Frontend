@@ -58,11 +58,7 @@ const MyRegistrations = () => {
       <StyledContainer>
         <StyledRightAlignedWrapper>
           {user?.authority && (
-            <Button
-              color="primary"
-              component={RouterLink}
-              to={getUserPath(user.authority.id)}
-              data-testid="public-profile-button">
+            <Button component={RouterLink} to={getUserPath(user.authority.id)} data-testid="public-profile-button">
               {t('go_to_public_profile')}
             </Button>
           )}

@@ -62,7 +62,7 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
               </Box>
             </DialogContent>
             <DialogActions>
-              <Button variant="outlined" color="inherit" onClick={closeModal}>
+              <Button variant="outlined" onClick={closeModal}>
                 {t('common:cancel')}
               </Button>
               <Button

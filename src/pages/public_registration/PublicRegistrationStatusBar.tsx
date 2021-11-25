@@ -261,7 +261,6 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
               <Button onClick={toggleRequestDoiModal}>{t('common:cancel')}</Button>
               <LoadingButton
                 variant="contained"
-                color="primary"
                 data-testid={dataTestId.registrationLandingPage.sendDoiButton}
                 onClick={sendDoiRequest}
                 loading={isLoading === LoadingName.RequestDoi}>

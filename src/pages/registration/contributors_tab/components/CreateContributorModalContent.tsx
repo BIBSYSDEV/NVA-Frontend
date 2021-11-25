@@ -55,7 +55,7 @@ export const CreateContributorModalContent = ({
               </StyledTypographyPreWrapped>
             </Collapse>
             <StyledRightAlignedWrapper>
-              <Button color="primary" data-testid="button-read-more" onClick={toggleReadMore}>
+              <Button data-testid="button-read-more" onClick={toggleReadMore}>
                 {t(readMore ? 'read_less' : 'read_more')}
               </Button>
             </StyledRightAlignedWrapper>
