@@ -14,6 +14,18 @@ interface AdvancedSearchRowProps {
   removeFilter: () => void;
 }
 
+export const registrationFilters = [
+  { field: DescriptionFieldNames.Title, i18nKey: 'common:title' },
+  { field: DescriptionFieldNames.Abstract, i18nKey: 'registration:description.abstract' },
+  { field: ResourceFieldNames.SubType, i18nKey: 'registration_type' },
+  { field: DescriptionFieldNames.Tags, i18nKey: 'registration:description.keywords' },
+  {
+    field: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Name}`,
+    i18nKey: 'registration:contributors.contributor',
+  },
+  { field: `${DescriptionFieldNames.Date}.year`, i18nKey: 'year_published' },
+];
+
 export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearchRowProps) => {
   const { t } = useTranslation('search');
 
@@ -22,14 +34,11 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
       <Field name={`${baseFieldName}.fieldName`}>
         {({ field }: FieldProps<string>) => (
           <TextField {...field} select variant="outlined" label={t('field_label')}>
-            <MenuItem value={DescriptionFieldNames.Title}>{t('common:title')}</MenuItem>
-            <MenuItem value={DescriptionFieldNames.Abstract}>{t('registration:description.abstract')}</MenuItem>
-            <MenuItem value={ResourceFieldNames.SubType}>{t('registration_type')}</MenuItem>
-            <MenuItem value={DescriptionFieldNames.Tags}>{t('registration:description.keywords')}</MenuItem>
-            <MenuItem value={`${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Name}`}>
-              {t('registration:contributors.contributor')}
-            </MenuItem>
-            <MenuItem value={`${DescriptionFieldNames.Date}.year`}>{t('year_published')}</MenuItem>
+            {registrationFilters.map((filter) => (
+              <MenuItem key={filter.i18nKey} value={filter.field}>
+                {t(filter.i18nKey)}
+              </MenuItem>
+            ))}
           </TextField>
         )}
       </Field>
