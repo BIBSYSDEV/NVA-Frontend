@@ -44,6 +44,8 @@ const formatValue = (value?: string) => {
   }
 };
 
+const stripQuotationMarks = (value: string) => value.replace(/^"+|"+$/g, '');
+
 const createPropertyFilter = (properties?: PropertySearch[]) => {
   const propertiesWithValues = properties?.filter(({ fieldName, value }) => fieldName && value);
   if (!propertiesWithValues || propertiesWithValues.length === 0) {
@@ -66,7 +68,7 @@ const createPropertyFilter = (properties?: PropertySearch[]) => {
 };
 
 export const createSearchQuery = (searchConfig: SearchConfig) => {
-  const textSearch = searchConfig.searchTerm;
+  const textSearch = formatValue(searchConfig.searchTerm);
   const propertySearch = createPropertyFilter(searchConfig.properties);
 
   const searchQuery = [textSearch, propertySearch].filter((search) => !!search).join(Operator.AND);
@@ -83,7 +85,8 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams): Sea
     // Find filter that does not point to specific field
     (filter) => filter && !registrationFilters.some((f) => filter.includes(`${f.field}:`))
   );
-  const searchTerm = searchTermIndex >= 0 ? filters.splice(searchTermIndex, 1)[0] : '';
+  const rawSearchTerm = searchTermIndex >= 0 ? filters.splice(searchTermIndex, 1)[0] : '';
+  const searchTerm = stripQuotationMarks(rawSearchTerm);
 
   const properties: PropertySearch[] = filters.map((filter) => {
     // Find operator
@@ -96,10 +99,7 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams): Sea
 
     return {
       fieldName,
-      value:
-        value.startsWith('"') && value.endsWith('"')
-          ? value.substring(1, value.length - 1) // Remove surrounding "
-          : value,
+      value: stripQuotationMarks(value),
       operator: isNegated ? ExpressionStatement.NotContaining : ExpressionStatement.Contains,
     };
   });

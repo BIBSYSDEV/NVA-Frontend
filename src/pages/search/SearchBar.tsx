@@ -25,7 +25,7 @@ export const SearchBar = () => {
             fullWidth
             variant="outlined"
             label={t('search')}
-            helperText={t('search_help')}
+            placeholder={t('search_placeholder')}
             InputProps={{
               endAdornment: (
                 <>
