@@ -173,18 +173,6 @@ export const mainTheme = createTheme({
         },
       },
     },
-    MuiFormHelperText: {
-      styleOverrides: {
-        root: {
-          '&.Mui-error': {
-            color: Color.Black,
-            backgroundColor: Color.ErrorLight,
-            margin: 0,
-            padding: '0.25rem 0.75rem',
-          },
-        },
-      },
-    },
     MuiMenuItem: {
       styleOverrides: {
         root: {
