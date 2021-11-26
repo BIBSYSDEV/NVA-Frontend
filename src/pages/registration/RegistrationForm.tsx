@@ -27,6 +27,7 @@ import { FilesAndLicensePanel } from './FilesAndLicensePanel';
 import { ResourceTypePanel } from './ResourceTypePanel';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { RequiredDescription } from '../../components/RequiredDescription';
 
 export type HighestTouchedTab = RegistrationTab | -1;
 
@@ -104,6 +105,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
               {values.entityDescription?.mainTitle || `[${t('common:missing_title')}]`}
             </ItalicPageHeader>
             <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
+            <RequiredDescription />
             <BackgroundDiv>
               <Box id="form" mb="2rem">
                 {tabNumber === RegistrationTab.Description && (
