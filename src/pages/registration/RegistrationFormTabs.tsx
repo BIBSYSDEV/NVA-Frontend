@@ -18,6 +18,7 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
   const { t } = useTranslation('registration');
   const { errors, touched, values, setTouched } = useFormikContext<Registration>();
   const locationState = useLocation<RegistrationLocationState>().state;
+  const maxVisitedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
 
   const valuesRef = useRef(values);
   useEffect(() => {
@@ -57,14 +58,14 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
   return (
     <>
       <Stepper nonLinear activeStep={tabNumber}>
-        <Step>
+        <Step completed={maxVisitedTab > RegistrationTab.Description && !descriptionTabHasError}>
           <StepButton data-testid="nav-tabpanel-description" onClick={() => setTabNumber(RegistrationTab.Description)}>
             <StepLabel error={descriptionTabHasError} data-testid={descriptionTabHasError ? 'error-tab' : undefined}>
               {t('heading.description')}
             </StepLabel>
           </StepButton>
         </Step>
-        <Step>
+        <Step completed={maxVisitedTab > RegistrationTab.ResourceType && !resourceTabHasError}>
           <StepButton
             data-testid="nav-tabpanel-resource-type"
             onClick={() => setTabNumber(RegistrationTab.ResourceType)}>
@@ -73,7 +74,7 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
             </StepLabel>
           </StepButton>
         </Step>
-        <Step>
+        <Step completed={maxVisitedTab > RegistrationTab.Contributors && !contributorTabHasError}>
           <StepButton
             data-testid="nav-tabpanel-contributors"
             onClick={() => setTabNumber(RegistrationTab.Contributors)}>
@@ -82,7 +83,7 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
             </StepLabel>
           </StepButton>
         </Step>
-        <Step>
+        <Step completed={maxVisitedTab > RegistrationTab.FilesAndLicenses && !fileTabHasError}>
           <StepButton
             data-testid="nav-tabpanel-files-and-license"
             onClick={() => setTabNumber(RegistrationTab.FilesAndLicenses)}>
