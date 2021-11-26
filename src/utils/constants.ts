@@ -32,6 +32,3 @@ export const autoHideNotificationDuration = {
   [NotificationVariant.Success]: 3000,
   [NotificationVariant.Warning]: 6000,
 };
-
-
-
