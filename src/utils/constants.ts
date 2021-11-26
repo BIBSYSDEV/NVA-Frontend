@@ -6,7 +6,6 @@ const hostToUrl = (hostString: string) => {
       : new URL(`https://${hostString}`);
 }
 
-
 export const USE_MOCK_DATA = process.env.REACT_APP_USE_MOCK === 'true';
 export const ROWS_PER_PAGE_OPTIONS = [5, 10, 25];
 export const DEBOUNCE_INTERVAL_INPUT = 1000;
