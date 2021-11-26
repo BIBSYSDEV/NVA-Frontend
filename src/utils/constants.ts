@@ -1,9 +1,9 @@
-import {NotificationVariant} from '../types/notification.types';
+import { NotificationVariant } from '../types/notification.types';
 
 const hostToUrl = (hostString: string) => {
-  return hostString.startsWith("http")
-      ? new URL(hostString.replace('http://', 'https://'))
-      : new URL(`https://${hostString}`);
+  return hostString.startsWith('http')
+    ? new URL(hostString.replace('http://', 'https://'))
+    : new URL(`https://${hostString}`);
 };
 
 export const USE_MOCK_DATA = process.env.REACT_APP_USE_MOCK === 'true';
