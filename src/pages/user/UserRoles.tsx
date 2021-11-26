@@ -7,9 +7,9 @@ import PeopleIcon from '@mui/icons-material/People';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 import AllInboxIcon from '@mui/icons-material/AllInbox';
 import CreateIcon from '@mui/icons-material/Create';
-import { Card } from '../../components/Card';
 import { User } from '../../types/user.types';
 import { IconLabelTextLine } from '../../components/IconLabelTextLine';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
 
 const StyledTypography = styled(Typography)`
   color: ${({ theme }) => theme.palette.error.main};
@@ -24,7 +24,7 @@ export const UserRoles = ({ user }: UserRolesProps) => {
   const { isAppAdmin, isInstitutionAdmin, isEditor, isCurator, isCreator } = user;
 
   return (
-    <Card>
+    <BackgroundDiv>
       <Typography variant="h2">{t('heading.roles')}</Typography>
       {user.customerId ? (
         !isAppAdmin &&
@@ -83,6 +83,6 @@ export const UserRoles = ({ user }: UserRolesProps) => {
           text={t('roles.creator_description')}
         />
       )}
-    </Card>
+    </BackgroundDiv>
   );
 };

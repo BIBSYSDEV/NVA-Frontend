@@ -1,8 +1,6 @@
 import { FormHelperText } from '@mui/material';
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
-import React, { useEffect, useRef } from 'react';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
-import { lightTheme } from '../../themes/lightTheme';
+import { useEffect, useRef } from 'react';
 import { ContributorRole } from '../../types/contributor.types';
 import { BookType, ContributorFieldNames } from '../../types/publicationFieldNames';
 import { EntityDescription, Registration } from '../../types/registration.types';
@@ -41,54 +39,38 @@ export const ContributorsPanel = () => {
         {({ push, replace }: FieldArrayRenderProps) =>
           isDegree(publicationInstanceType) ? (
             <>
-              <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-                <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
-              </BackgroundDiv>
-              <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-                <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Supervisor]} />
-              </BackgroundDiv>
-              <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-                <Contributors
-                  push={push}
-                  replace={replace}
-                  contributorRoles={selectableContributorRoles.filter((role) => role !== ContributorRole.Supervisor)}
-                />
-              </BackgroundDiv>
-            </>
-          ) : publicationInstanceType === BookType.Anthology ? (
-            <>
-              <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-                <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Editor]} />
-              </BackgroundDiv>
-              <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-                <Contributors
-                  push={push}
-                  replace={replace}
-                  contributorRoles={selectableContributorRoles.filter((role) => role !== ContributorRole.Editor)}
-                />
-              </BackgroundDiv>
-            </>
-          ) : isArtistic(publicationInstanceType) ? (
-            <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+              <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
+              <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Supervisor]} />
               <Contributors
                 push={push}
                 replace={replace}
-                contributorRoles={[
-                  ContributorRole.Designer,
-                  ContributorRole.CuratorOrganizer,
-                  ContributorRole.Consultant,
-                  ContributorRole.Other,
-                ]}
+                contributorRoles={selectableContributorRoles.filter((role) => role !== ContributorRole.Supervisor)}
               />
-            </BackgroundDiv>
+            </>
+          ) : publicationInstanceType === BookType.Anthology ? (
+            <>
+              <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Editor]} />
+              <Contributors
+                push={push}
+                replace={replace}
+                contributorRoles={selectableContributorRoles.filter((role) => role !== ContributorRole.Editor)}
+              />
+            </>
+          ) : isArtistic(publicationInstanceType) ? (
+            <Contributors
+              push={push}
+              replace={replace}
+              contributorRoles={[
+                ContributorRole.Designer,
+                ContributorRole.CuratorOrganizer,
+                ContributorRole.Consultant,
+                ContributorRole.Other,
+              ]}
+            />
           ) : (
             <>
-              <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-                <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
-              </BackgroundDiv>
-              <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-                <Contributors push={push} replace={replace} contributorRoles={selectableContributorRoles} />
-              </BackgroundDiv>
+              <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
+              <Contributors push={push} replace={replace} contributorRoles={selectableContributorRoles} />
             </>
           )
         }

@@ -110,7 +110,6 @@ export const AddContributorModalContent = ({
 
       <StyledDialogActions>
         <StyledVerifyButton
-          color="secondary"
           data-testid="connect-author-button"
           disabled={!selectedAuthority}
           onClick={() => selectedAuthority && addContributor(selectedAuthority)}
@@ -120,11 +119,11 @@ export const AddContributorModalContent = ({
             ? t('contributors.verify_person')
             : t('common:add_custom', { name: t(`contributors.types.${roleToAdd}`) })}
         </StyledVerifyButton>
-        <StyledCreateButton color="primary" data-testid="button-create-new-author" onClick={openNewContributorModal}>
+        <StyledCreateButton data-testid="button-create-new-author" onClick={openNewContributorModal}>
           {t('contributors.create_new_with_role', { role: t(`contributors.types.${roleToAdd}`) })}
         </StyledCreateButton>
         {!isSelfAdded && !initialSearchTerm && (
-          <StyledAddSelfButton color="primary" data-testid="button-add-self-author" onClick={addSelfAsContributor}>
+          <StyledAddSelfButton data-testid="button-add-self-author" onClick={addSelfAsContributor}>
             {t('contributors.add_self_as_role', { role: t(`contributors.types.${roleToAdd}`) })}
           </StyledAddSelfButton>
         )}

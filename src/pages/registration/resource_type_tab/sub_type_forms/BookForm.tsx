@@ -1,8 +1,4 @@
 import { useFormikContext } from 'formik';
-import React from 'react';
-import { ThemeProvider } from '@mui/material';
-import { BackgroundDiv } from '../../../../components/BackgroundDiv';
-import { lightTheme } from '../../../../themes/lightTheme';
 import { BookType } from '../../../../types/publicationFieldNames';
 import { DoiField } from '../components/DoiField';
 import { NpiDisciplineField } from '../components/NpiDisciplineField';
@@ -13,7 +9,6 @@ import { BookRegistration } from '../../../../types/publication_types/bookRegist
 import { BookMonographContentType } from '../../../../types/publication_types/content.types';
 import { PublisherField } from '../components/PublisherField';
 import { IsbnAndPages } from '../components/isbn_and_pages/IsbnAndPages';
-import { InputContainerBox } from '../../../../components/styled/Wrappers';
 
 export const BookForm = () => {
   const { values } = useFormikContext<BookRegistration>();
@@ -21,28 +16,16 @@ export const BookForm = () => {
 
   return (
     <>
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        <InputContainerBox>
-          <DoiField />
-          <PublisherField />
+      <DoiField />
+      <PublisherField />
 
-          <ThemeProvider theme={lightTheme}>
-            <NpiDisciplineField />
-          </ThemeProvider>
+      <NpiDisciplineField />
 
-          <IsbnAndPages />
-        </InputContainerBox>
-      </BackgroundDiv>
+      <IsbnAndPages />
 
-      {instanceType === BookType.Monograph && (
-        <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-          <NviFields contentTypes={Object.values(BookMonographContentType)} />
-        </BackgroundDiv>
-      )}
+      {instanceType === BookType.Monograph && <NviFields contentTypes={Object.values(BookMonographContentType)} />}
 
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-        <SeriesFields />
-      </BackgroundDiv>
+      <SeriesFields />
 
       {instanceType === BookType.Monograph && <NviValidation registration={values} />}
     </>

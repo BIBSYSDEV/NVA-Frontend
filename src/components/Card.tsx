@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Card as MaterialCard, CardProps } from '@mui/material';
 

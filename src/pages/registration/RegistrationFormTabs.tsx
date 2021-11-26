@@ -67,7 +67,6 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
         onChange={(_, value) => setTabNumber(value)}
         variant="scrollable"
         scrollButtons="auto"
-        indicatorColor="secondary"
         value={tabNumber}>
         <LinkTab
           data-testid="nav-tabpanel-description"

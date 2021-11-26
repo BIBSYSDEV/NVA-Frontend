@@ -1,5 +1,5 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Button, Checkbox, FormControlLabel, TextField, Tooltip, Typography } from '@mui/material';
@@ -8,19 +8,19 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import CheckIcon from '@mui/icons-material/CheckCircleSharp';
 import DeleteIcon from '@mui/icons-material/RemoveCircleSharp';
 import WarningIcon from '@mui/icons-material/Warning';
-import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
-import { lightTheme } from '../../../../themes/lightTheme';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import { AffiliationsCell } from './AffiliationsCell';
+import { Card } from '../../../../components/Card';
 
 const StyledCheckIcon = styled(CheckIcon)`
   color: ${({ theme }) => theme.palette.success.main};
 `;
 
-const StyledBackgroundDiv = styled(BackgroundDiv)`
+const StyledContributorCard = styled(Card)`
+  padding: 1rem;
   display: grid;
   grid-template-areas: 'contributor contributor' 'affiliation affiliation' 'add-affiliation remove-contributor';
   @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
@@ -138,7 +138,7 @@ export const ContributorCard = ({
   };
 
   return (
-    <StyledBackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
+    <StyledContributorCard>
       <StyledContributorSection>
         <StyledNameField variant="h5" variantMapping={{ h5: 'h3' }}>
           {contributor.identity.name}
@@ -153,7 +153,6 @@ export const ContributorCard = ({
             </>
           ) : (
             <Button
-              color="primary"
               startIcon={
                 <Tooltip title={t<string>('contributors.unknown_author_identity')}>
                   <WarningIcon />
@@ -170,18 +169,14 @@ export const ContributorCard = ({
           <StyledArrowSection>
             {contributor.sequence < contributorsLength && (
               <Tooltip title={t<string>('common:move_down')}>
-                <StyledArrowButton
-                  color="secondary"
-                  onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}>
+                <StyledArrowButton onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}>
                   <ArrowDownwardIcon />
                 </StyledArrowButton>
               </Tooltip>
             )}
             {contributor.sequence !== 1 && (
               <Tooltip title={t<string>('common:move_up')}>
-                <StyledArrowButton
-                  color="secondary"
-                  onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}>
+                <StyledArrowButton onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}>
                   <ArrowUpwardIcon />
                 </StyledArrowButton>
               </Tooltip>
@@ -233,10 +228,10 @@ export const ContributorCard = ({
           data-testid={`button-remove-contributor-${contributor.identity.name}`}
           startIcon={<DeleteIcon />}
           onClick={onRemoveContributorClick}
-          variant="contained">
+          variant="outlined">
           {t('contributors.remove_role', { role: t(`contributors.types.${contributor.role}`) })}
         </Button>
       </StyledRemoveContributorContainer>
-    </StyledBackgroundDiv>
+    </StyledContributorCard>
   );
 };

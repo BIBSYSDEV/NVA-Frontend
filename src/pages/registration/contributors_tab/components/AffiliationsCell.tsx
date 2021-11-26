@@ -118,7 +118,6 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
               <>
                 <Typography>"{getLanguageString(affiliation.labels)}"</Typography>
                 <Button
-                  color="primary"
                   startIcon={<WarningIcon />}
                   variant="outlined"
                   data-testid="button-set-unverified-affiliation"
@@ -140,7 +139,6 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
       ))}
       <StyledAddAffiliationButton
         size="small"
-        color="primary"
         data-testid="button-add-affiliation"
         startIcon={<AddIcon />}
         onClick={toggleAffiliationModal}>

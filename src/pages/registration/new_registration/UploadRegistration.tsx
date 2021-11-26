@@ -95,7 +95,6 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
           data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
           loadingPosition="end"
-          color="secondary"
           variant="contained"
           loading={isLoading}
           disabled={uploadedFiles.length === 0}

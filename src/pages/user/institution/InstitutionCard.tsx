@@ -105,7 +105,6 @@ export const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: Institu
       <StyledButtonContainer>
         <Button
           variant="outlined"
-          color="primary"
           data-testid={`button-edit-institution-${orgunitId}`}
           startIcon={<EditIcon />}
           onClick={() => setOpenEditForm(true)}>

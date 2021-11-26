@@ -31,11 +31,11 @@ export const Login = () => {
   return user ? (
     <Menu menuButtonLabel={user.name} handleLogout={handleLogoutWrapper} />
   ) : isLoading ? (
-    <LoadingButton variant="contained" loading>
+    <LoadingButton variant="contained" color="secondary" loading>
       {t('common:loading')}
     </LoadingButton>
   ) : (
-    <Button variant="contained" onClick={handleLogin} data-testid={dataTestId.header.logInButton}>
+    <Button variant="contained" color="secondary" onClick={handleLogin} data-testid={dataTestId.header.logInButton}>
       {t('login')}
     </Button>
   );

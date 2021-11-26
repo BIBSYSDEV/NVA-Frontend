@@ -18,7 +18,7 @@ const StyledLogo = styled.div`
 export const Logo = () => (
   <StyledLogo>
     <Button data-testid="logo" component={RouterLink} to={UrlPathTemplate.Home}>
-      <Typography variant="h5" component="span">
+      <Typography variant="h5" component="span" color="white">
         NVA
       </Typography>
     </Button>

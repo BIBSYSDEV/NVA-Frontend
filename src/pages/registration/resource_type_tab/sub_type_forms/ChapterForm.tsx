@@ -1,13 +1,10 @@
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { TextField, Typography } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { StyledCenterAlignedContentWrapper } from '../../../../components/styled/Wrappers';
-import { lightTheme } from '../../../../themes/lightTheme';
 import { BookType, ChapterType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { DoiField } from '../components/DoiField';
 import { NviValidation } from '../components/NviValidation';
@@ -55,9 +52,9 @@ export const ChapterForm = () => {
 
   return (
     <>
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+      <div>
         <StyledDiv data-testid="info-anthology">
-          <InfoIcon color="primary" />
+          <InfoIcon />
           <Typography variant="body1" paragraph>
             {t('resource_type.chapter.info_anthology')}
           </Typography>
@@ -76,51 +73,47 @@ export const ChapterForm = () => {
             descriptionToShow="publisher-and-level"
           />
         )}
-      </BackgroundDiv>
+      </div>
 
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-        <StyledPageNumberWrapper>
-          <Field name={ResourceFieldNames.PagesFrom}>
-            {({ field, meta: { error, touched } }: FieldProps<string>) => (
-              <StyledPageNumberField
-                id={field.name}
-                variant="filled"
-                data-testid={dataTestId.registrationWizard.resourceType.pagesFromField}
-                label={t('resource_type.pages_from')}
-                {...field}
-                value={field.value ?? ''}
-                error={touched && !!error}
-                helperText={<ErrorMessage name={field.name} />}
-              />
-            )}
-          </Field>
+      <StyledPageNumberWrapper>
+        <Field name={ResourceFieldNames.PagesFrom}>
+          {({ field, meta: { error, touched } }: FieldProps<string>) => (
+            <StyledPageNumberField
+              id={field.name}
+              variant="filled"
+              data-testid={dataTestId.registrationWizard.resourceType.pagesFromField}
+              label={t('resource_type.pages_from')}
+              {...field}
+              value={field.value ?? ''}
+              error={touched && !!error}
+              helperText={<ErrorMessage name={field.name} />}
+            />
+          )}
+        </Field>
 
-          <StyledDashIconWrapper>
-            <RemoveIcon color="primary" />
-          </StyledDashIconWrapper>
+        <StyledDashIconWrapper>
+          <RemoveIcon />
+        </StyledDashIconWrapper>
 
-          <Field name={ResourceFieldNames.PagesTo}>
-            {({ field, meta: { error, touched } }: FieldProps<string>) => (
-              <StyledPageNumberField
-                id={field.name}
-                data-testid={dataTestId.registrationWizard.resourceType.pagesToField}
-                variant="filled"
-                label={t('resource_type.pages_to')}
-                {...field}
-                value={field.value ?? ''}
-                error={touched && !!error}
-                helperText={<ErrorMessage name={field.name} />}
-              />
-            )}
-          </Field>
-        </StyledPageNumberWrapper>
-      </BackgroundDiv>
+        <Field name={ResourceFieldNames.PagesTo}>
+          {({ field, meta: { error, touched } }: FieldProps<string>) => (
+            <StyledPageNumberField
+              id={field.name}
+              data-testid={dataTestId.registrationWizard.resourceType.pagesToField}
+              variant="filled"
+              label={t('resource_type.pages_to')}
+              {...field}
+              value={field.value ?? ''}
+              error={touched && !!error}
+              helperText={<ErrorMessage name={field.name} />}
+            />
+          )}
+        </Field>
+      </StyledPageNumberWrapper>
 
       {instanceType === ChapterType.AnthologyChapter && (
         <>
-          <BackgroundDiv backgroundColor={lightTheme.palette.section.megaDark}>
-            <NviFields contentTypes={Object.values(ChapterContentType)} />
-          </BackgroundDiv>
+          <NviFields contentTypes={Object.values(ChapterContentType)} />
 
           <NviValidation registration={values} />
         </>

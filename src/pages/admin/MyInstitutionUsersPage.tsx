@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Button, Checkbox, Divider, FormControlLabel, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { Card } from '../../components/Card';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { Modal } from '../../components/Modal';
 import { PageHeader } from '../../components/PageHeader';
@@ -17,9 +16,10 @@ import { UserList } from './UserList';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { RoleApiPath } from '../../api/apiPaths';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
 
 const StyledContainer = styled.div`
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 `;
 
 const StyledNewButton = styled(Button)`
@@ -47,7 +47,7 @@ const MyInstitutionUsersPage = () => {
   return (
     <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('users.user_administration')}</PageHeader>
-      <Card>
+      <BackgroundDiv>
         {/* Admins */}
         <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersAdministrators}>
           <Typography variant="h3" component="h2">
@@ -65,7 +65,6 @@ const MyInstitutionUsersPage = () => {
             />
           )}
           <StyledNewButton
-            color="primary"
             variant="outlined"
             startIcon={<AddIcon />}
             data-testid="button-add-institution-admin"
@@ -91,7 +90,6 @@ const MyInstitutionUsersPage = () => {
             />
           )}
           <StyledNewButton
-            color="primary"
             variant="outlined"
             startIcon={<AddIcon />}
             data-testid="button-add-curator"
@@ -117,7 +115,6 @@ const MyInstitutionUsersPage = () => {
             />
           )}
           <StyledNewButton
-            color="primary"
             variant="outlined"
             startIcon={<AddIcon />}
             data-testid="button-add-editor"
@@ -154,7 +151,7 @@ const MyInstitutionUsersPage = () => {
             />
           </Modal>
         )}
-      </Card>
+      </BackgroundDiv>
     </StyledPageWrapperWithMaxWidth>
   );
 };

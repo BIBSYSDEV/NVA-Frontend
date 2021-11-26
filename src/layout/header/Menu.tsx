@@ -61,7 +61,9 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
         data-testid={dataTestId.header.menuButton}
         onClick={handleClickMenuAnchor}
         endIcon={anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}>
-        <Typography noWrap>{menuButtonLabel}</Typography>
+        <Typography noWrap color="inherit">
+          {menuButtonLabel}
+        </Typography>
       </StyledMenuButton>
       <StyledMobileMenuButton onClick={handleClickMenuAnchor} title={menuButtonLabel}>
         <AccountCircle />

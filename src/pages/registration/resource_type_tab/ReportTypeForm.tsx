@@ -1,8 +1,5 @@
 import { useFormikContext } from 'formik';
-import React from 'react';
-import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
-import { lightTheme } from '../../../themes/lightTheme';
 import { ResourceFieldNames, ReportType } from '../../../types/publicationFieldNames';
 import { ReportRegistration } from '../../../types/publication_types/reportRegistration.types';
 import { SelectTypeField } from './components/SelectTypeField';
@@ -18,15 +15,13 @@ export const ReportTypeForm = ({ onChangeSubType }: ReportTypeFormProps) => {
 
   return (
     <>
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-        <StyledSelectWrapper>
-          <SelectTypeField
-            fieldName={ResourceFieldNames.SubType}
-            onChangeType={onChangeSubType}
-            options={Object.values(ReportType)}
-          />
-        </StyledSelectWrapper>
-      </BackgroundDiv>
+      <StyledSelectWrapper>
+        <SelectTypeField
+          fieldName={ResourceFieldNames.SubType}
+          onChangeType={onChangeSubType}
+          options={Object.values(ReportType)}
+        />
+      </StyledSelectWrapper>
 
       {subType && <ReportForm />}
     </>

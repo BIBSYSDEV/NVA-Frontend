@@ -5,7 +5,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ErrorBoundary } from '../ErrorBoundary';
 
 const StyledLandingPageAccordion = styled(Accordion)`
-  background: ${({ theme }) => theme.palette.background.default};
+  background: ${({ theme }) => theme.palette.background.paper};
   border-top: 1px solid;
   :last-child {
     border-bottom: 1px solid;

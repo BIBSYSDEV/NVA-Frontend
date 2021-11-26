@@ -46,7 +46,6 @@
     "abstract": "Abstract",
     "confirm_remove_vocabulary_text": "Are you sure you want to remove vocabulary for {{vocabulary}}?",
     "confirm_remove_vocabulary_title": "Remove vocabulary?",
-    "connect_project": "Connect to project",
     "date_picker": {
       "choose_date": "Choose date",
       "open_dialog": "Choose date, selected date is {{date}}",

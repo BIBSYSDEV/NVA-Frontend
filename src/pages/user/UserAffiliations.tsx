@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Button, Typography } from '@mui/material';
@@ -8,7 +8,6 @@ import {
   AuthorityQualifiers,
   removeQualifierIdFromAuthority,
 } from '../../api/authorityApi';
-import { Card } from '../../components/Card';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { AddInstitution } from '../../components/institution/AddInstitution';
 import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
@@ -20,6 +19,7 @@ import { getMostSpecificUnit } from '../../utils/institutions-helpers';
 import { InstitutionCard } from './institution/InstitutionCard';
 import { User } from '../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
 
 interface UserInstituionProps {
   user: User;
@@ -106,7 +106,7 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
 
   return (
     <>
-      <Card>
+      <BackgroundDiv>
         <Typography variant="h2">{t('heading.affiliations')}</Typography>
         {user.authority?.orgunitids &&
           user.authority.orgunitids.map((orgunitId) => (
@@ -122,8 +122,7 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
         ) : (
           <StyledRightAlignedWrapper>
             <Button
-              variant="contained"
-              color="secondary"
+              variant="outlined"
               onClick={toggleUnitForm}
               disabled={!user.authority}
               startIcon={<AddIcon />}
@@ -132,7 +131,7 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
             </Button>
           </StyledRightAlignedWrapper>
         )}
-      </Card>
+      </BackgroundDiv>
       <ConfirmDialog
         open={!!institutionIdToRemove}
         title={t('affiliations.confirm_remove_affiliation_title')}

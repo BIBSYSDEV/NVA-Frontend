@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
@@ -19,7 +18,7 @@ const StyledUserPage = styled.div`
     grid-template-areas: 'top top' 'secondary-info primary-info' '. primary-info';
     grid-template-columns: 1fr 3fr;
   }
-  grid-gap: 2rem;
+  gap: 2rem;
   font-size: 1rem;
   grid-template-areas: 'top' 'primary-info' 'secondary-info';
 `;
@@ -33,6 +32,7 @@ const StyledSecondaryUserInfo = styled.div`
 const StyledPrimaryUserInfo = styled.div`
   display: grid;
   grid-area: primary-info;
+  gap: 1rem;
 `;
 
 const StyledButtonWrapper = styled(StyledRightAlignedWrapper)`
@@ -50,11 +50,7 @@ const MyProfilePage = () => {
       <StyledUserPage>
         {user.authority && (
           <StyledButtonWrapper>
-            <Button
-              color="primary"
-              component={RouterLink}
-              to={getUserPath(user.authority.id)}
-              data-testid="public-profile-button">
+            <Button component={RouterLink} to={getUserPath(user.authority.id)} data-testid="public-profile-button">
               {t('workLists:go_to_public_profile')}
             </Button>
           </StyledButtonWrapper>

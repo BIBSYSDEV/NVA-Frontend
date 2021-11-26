@@ -72,7 +72,6 @@ export const AddInstitution = ({ onSubmit, onClose }: AddInstitutionProps) => {
                 <LoadingButton
                   variant="contained"
                   type="submit"
-                  color="primary"
                   loading={isSubmitting}
                   disabled={!value || isLoadingDepartment}
                   data-testid="institution-add-button">

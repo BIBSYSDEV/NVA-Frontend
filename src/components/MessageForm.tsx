@@ -47,7 +47,7 @@ export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) =
                 {...field}
                 disabled={isSubmitting}
                 data-testid="message-field"
-                variant="outlined"
+                variant="filled"
                 multiline
                 rows="4"
                 fullWidth
@@ -69,7 +69,6 @@ export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) =
               data-testid="send-button"
               type="submit"
               variant="contained"
-              color="secondary"
               endIcon={<MailOutlineIcon />}
               loadingPosition="end"
               loading={isSubmitting}>
