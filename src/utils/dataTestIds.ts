@@ -120,6 +120,13 @@ export const dataTestId = {
       seriesNumber: 'series-number-field',
       venueNameField: 'venue-name-field',
     },
+    stepper: {
+      contributorsStepButton: 'nav-tabpanel-contributors',
+      descriptionStepButton: 'nav-tabpanel-description',
+      errorStep: 'error-tab',
+      filesStepButton: 'nav-tabpanel-files-and-license',
+      resourceStepButton: 'nav-tabpanel-resource-type',
+    },
   },
   myInstitutionUsersPage: {
     usersAdministrators: 'users-administrators',

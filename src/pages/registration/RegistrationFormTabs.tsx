@@ -1,25 +1,14 @@
 import { useFormikContext } from 'formik';
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import { Tabs, Typography } from '@mui/material';
+import { Step, StepButton, StepLabel, Stepper, Typography } from '@mui/material';
 import { useLocation } from 'react-router-dom';
-
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { getTabErrors, getFirstErrorTab, getTouchedTabFields, mergeTouchedFields } from '../../utils/formik-helpers';
 import { ErrorList } from './ErrorList';
 import { RequiredDescription } from '../../components/RequiredDescription';
-import { LinkTab } from '../../components/LinkTab';
 import { RegistrationLocationState } from './RegistrationForm';
-
-const StyledTabs = styled(Tabs)`
-  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    .MuiTabs-flexContainer {
-      justify-content: space-around;
-    }
-  }
-  max-height: 3.5rem;
-`;
+import { dataTestId } from '../../utils/dataTestIds';
 
 interface RegistrationFormTabsProps {
   setTabNumber: (newTab: RegistrationTab) => void;
@@ -30,6 +19,7 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
   const { t } = useTranslation('registration');
   const { errors, touched, values, setTouched } = useFormikContext<Registration>();
   const locationState = useLocation<RegistrationLocationState>().state;
+  const maxVisitedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
 
   const valuesRef = useRef(values);
   useEffect(() => {
@@ -61,34 +51,59 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
 
   const tabErrors = getTabErrors(valuesRef.current, errors, touched);
 
+  const descriptionTabHasError = tabErrors[RegistrationTab.Description].length > 0;
+  const resourceTabHasError = tabErrors[RegistrationTab.ResourceType].length > 0;
+  const contributorTabHasError = tabErrors[RegistrationTab.Contributors].length > 0;
+  const fileTabHasError = tabErrors[RegistrationTab.FilesAndLicenses].length > 0;
+
   return (
     <>
-      <StyledTabs
-        onChange={(_, value) => setTabNumber(value)}
-        variant="scrollable"
-        scrollButtons="auto"
-        value={tabNumber}>
-        <LinkTab
-          data-testid="nav-tabpanel-description"
-          label={t('heading.description')}
-          error={tabErrors[RegistrationTab.Description].length > 0}
-        />
-        <LinkTab
-          data-testid="nav-tabpanel-resource-type"
-          label={t('heading.resource_type')}
-          error={tabErrors[RegistrationTab.ResourceType].length > 0}
-        />
-        <LinkTab
-          data-testid="nav-tabpanel-contributors"
-          label={t('heading.contributors')}
-          error={tabErrors[RegistrationTab.Contributors].length > 0}
-        />
-        <LinkTab
-          data-testid="nav-tabpanel-files-and-license"
-          label={t('heading.files_and_license')}
-          error={tabErrors[RegistrationTab.FilesAndLicenses].length > 0}
-        />
-      </StyledTabs>
+      <Stepper nonLinear activeStep={tabNumber}>
+        <Step completed={maxVisitedTab > RegistrationTab.Description && !descriptionTabHasError}>
+          <StepButton
+            data-testid={dataTestId.registrationWizard.stepper.descriptionStepButton}
+            onClick={() => setTabNumber(RegistrationTab.Description)}>
+            <StepLabel
+              error={descriptionTabHasError}
+              data-testid={descriptionTabHasError ? dataTestId.registrationWizard.stepper.errorStep : undefined}>
+              {t('heading.description')}
+            </StepLabel>
+          </StepButton>
+        </Step>
+        <Step completed={maxVisitedTab > RegistrationTab.ResourceType && !resourceTabHasError}>
+          <StepButton
+            data-testid={dataTestId.registrationWizard.stepper.resourceStepButton}
+            onClick={() => setTabNumber(RegistrationTab.ResourceType)}>
+            <StepLabel
+              error={resourceTabHasError}
+              data-testid={resourceTabHasError ? dataTestId.registrationWizard.stepper.errorStep : undefined}>
+              {t('heading.resource_type')}
+            </StepLabel>
+          </StepButton>
+        </Step>
+        <Step completed={maxVisitedTab > RegistrationTab.Contributors && !contributorTabHasError}>
+          <StepButton
+            data-testid={dataTestId.registrationWizard.stepper.contributorsStepButton}
+            onClick={() => setTabNumber(RegistrationTab.Contributors)}>
+            <StepLabel
+              error={contributorTabHasError}
+              data-testid={contributorTabHasError ? dataTestId.registrationWizard.stepper.errorStep : undefined}>
+              {t('heading.contributors')}
+            </StepLabel>
+          </StepButton>
+        </Step>
+        <Step completed={maxVisitedTab > RegistrationTab.FilesAndLicenses && !fileTabHasError}>
+          <StepButton
+            data-testid={dataTestId.registrationWizard.stepper.filesStepButton}
+            onClick={() => setTabNumber(RegistrationTab.FilesAndLicenses)}>
+            <StepLabel
+              error={fileTabHasError}
+              data-testid={fileTabHasError ? dataTestId.registrationWizard.stepper.errorStep : undefined}>
+              {t('heading.files_and_license')}
+            </StepLabel>
+          </StepButton>
+        </Step>
+      </Stepper>
 
       <RequiredDescription />
 

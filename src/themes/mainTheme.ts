@@ -125,14 +125,16 @@ export const mainTheme = createTheme({
         },
       },
     },
-    MuiTab: {
+    MuiStepLabel: {
       styleOverrides: {
-        root: {
-          flexDirection: 'row-reverse',
-        },
-        textColorPrimary: {
-          '&.Mui-selected': {
-            fontWeight: 'bold',
+        label: {
+          textTransform: 'uppercase',
+          fontSize: '1rem',
+          '&.Mui-active': {
+            color: Color.PrimaryMain,
+          },
+          '&.Mui-error': {
+            color: Color.ErrorMain,
           },
         },
       },
