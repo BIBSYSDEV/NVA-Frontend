@@ -1,10 +1,10 @@
-import {NotificationVariant} from '../types/notification.types';
+import { NotificationVariant } from '../types/notification.types';
 
 const hostToUrlString = (hostString: string | undefined): string => {
   if (hostString) {
     const url = hostString.startsWith('http')
-        ? new URL(hostString.replace('http://', 'https://'))
-        : new URL(`https://${hostString}`);
+      ? new URL(hostString.replace('http://', 'https://'))
+      : new URL(`https://${hostString}`);
     return url.toString();
   }
   throw new Error('API host is not set');
