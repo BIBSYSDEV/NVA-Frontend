@@ -9,7 +9,7 @@
   "registration_type": "Registreringstype",
   "remove_filter": "Fjern filter",
   "search": "Søk",
-  "search_help": "Bruk anførselstegn (\"abc\") for eksakte treff, eller jokertegn (*) for å søke etter deler av ord",
+  "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",
   "select_filters": "Velg filtre for å snevre inn søket:",
   "search_term_label": "Verdi",
   "sort_by": "Sorter etter",

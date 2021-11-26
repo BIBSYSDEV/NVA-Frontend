@@ -9,7 +9,7 @@
   "registration_type": "Registration type",
   "remove_filter": "Remove filter",
   "search": "Search",
-  "search_help": "Use quotes (\"abs\") for exact matches, or wildcard (*) to search for substrings",
+  "search_placeholder": "Search for title, contributor, abstract, etc.",
   "select_filters": "Select filters to narrow down search:",
   "search_term_label": "Value",
   "sort_by": "Order by",
