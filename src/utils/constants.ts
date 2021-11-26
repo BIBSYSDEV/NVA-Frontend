@@ -1,10 +1,13 @@
-import { NotificationVariant } from '../types/notification.types';
+import {NotificationVariant} from '../types/notification.types';
 
-const hostToUrlString = (hostString: string): string => {
-  const url = hostString.startsWith('http')
-    ? new URL(hostString.replace('http://', 'https://'))
-    : new URL(`https://${hostString}`);
-  return url.toString();
+const hostToUrlString = (hostString: string | undefined): string => {
+  if (hostString) {
+    const url = hostString.startsWith('http')
+        ? new URL(hostString.replace('http://', 'https://'))
+        : new URL(`https://${hostString}`);
+    return url.toString();
+  }
+  throw new Error('API host is not set');
 };
 
 export const USE_MOCK_DATA = process.env.REACT_APP_USE_MOCK === 'true';
