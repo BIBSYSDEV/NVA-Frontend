@@ -16,7 +16,7 @@ import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { Forbidden } from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
-import { RegistrationFormTabs } from './RegistrationFormTabs';
+import { RegistrationFormStepper } from './RegistrationFormStepper';
 import { getTouchedTabFields } from '../../utils/formik-helpers';
 import { SkipLink } from '../../components/SkipLink';
 import { useFetch } from '../../utils/hooks/useFetch';
@@ -104,7 +104,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
             <ItalicPageHeader>
               {values.entityDescription?.mainTitle || `[${t('common:missing_title')}]`}
             </ItalicPageHeader>
-            <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
+            <RegistrationFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
             <RequiredDescription />
             <BackgroundDiv>
               <Box id="form" mb="2rem">

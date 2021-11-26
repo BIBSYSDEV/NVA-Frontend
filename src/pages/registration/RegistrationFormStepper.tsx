@@ -8,12 +8,12 @@ import { getTabErrors, getTouchedTabFields, mergeTouchedFields } from '../../uti
 import { RegistrationLocationState } from './RegistrationForm';
 import { dataTestId } from '../../utils/dataTestIds';
 
-interface RegistrationFormTabsProps {
+interface RegistrationFormStepperProps {
   setTabNumber: (newTab: RegistrationTab) => void;
   tabNumber: RegistrationTab;
 }
 
-export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFormTabsProps) => {
+export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: RegistrationFormStepperProps) => {
   const { t } = useTranslation('registration');
   const { errors, touched, values, setTouched } = useFormikContext<Registration>();
   const locationState = useLocation<RegistrationLocationState>().state;
