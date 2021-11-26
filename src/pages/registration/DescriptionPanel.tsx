@@ -1,11 +1,8 @@
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
-import React, { ChangeEvent } from 'react';
+import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { MenuItem, ThemeProvider, TextField, Typography } from '@mui/material';
-import Autocomplete from '@mui/material/Autocomplete';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
-import { lightTheme } from '../../themes/lightTheme';
+import { MenuItem, TextField, Autocomplete } from '@mui/material';
 import { LanguageCodes, registrationLanguages } from '../../types/language.types';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
@@ -30,135 +27,122 @@ export const DescriptionPanel = () => {
   const { setFieldValue } = useFormikContext<Registration>();
 
   return (
-    <>
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
-        <InputContainerBox>
-          <Field name={DescriptionFieldNames.Title}>
-            {({ field, meta: { touched, error } }: FieldProps<string>) => (
-              <TextField
-                {...field}
-                id={field.name}
-                value={field.value ?? ''}
-                required
-                data-testid="registration-title-field"
-                variant="filled"
-                fullWidth
-                label={t('common:title')}
-                error={touched && !!error}
-                helperText={<ErrorMessage name={field.name} />}
-              />
-            )}
-          </Field>
-          <Field name={DescriptionFieldNames.Abstract}>
-            {({ field }: FieldProps<string>) => (
-              <TextField
-                {...field}
-                id={field.name}
-                value={field.value ?? ''}
-                data-testid="registration-abstract-field"
-                variant="filled"
-                fullWidth
-                multiline
-                rows="4"
-                label={t('description.abstract')}
-              />
-            )}
-          </Field>
-          <Field name={DescriptionFieldNames.Description}>
-            {({ field }: FieldProps<string>) => (
-              <TextField
-                {...field}
-                id={field.name}
-                value={field.value ?? ''}
-                data-testid="registration-description-field"
-                label={t('description.description_of_content')}
-                multiline
-                rows="4"
-                fullWidth
-                variant="filled"
-              />
-            )}
-          </Field>
-        </InputContainerBox>
-      </BackgroundDiv>
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-        <InputContainerBox>
-          <Field name={DescriptionFieldNames.Tags}>
-            {({ field }: FieldProps) => (
-              <Autocomplete
-                {...field}
-                id={field.name}
-                aria-labelledby={`${field.name}-label`}
-                value={field.value ?? []}
-                freeSolo
-                multiple
-                options={[]}
-                autoSelect
-                onChange={(_: ChangeEvent<unknown>, value: string[]) => {
-                  const newValues = value
-                    .map((item) => item.split(','))
-                    .flat()
-                    .map((item) => item.trim())
-                    .filter((item) => item);
-                  const uniqueValues = [...new Set(newValues)];
-                  setFieldValue(field.name, uniqueValues);
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    data-testid="registration-tag-field"
-                    label={t('description.keywords')}
-                    helperText={t('description.keywords_helper')}
-                    variant="filled"
-                    fullWidth
-                  />
-                )}
-              />
-            )}
-          </Field>
-          <VocabularyBase />
-        </InputContainerBox>
-      </BackgroundDiv>
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        <DateAndLanguageWrapper>
-          <DatePickerField />
+    <InputContainerBox>
+      <Field name={DescriptionFieldNames.Title}>
+        {({ field, meta: { touched, error } }: FieldProps<string>) => (
+          <TextField
+            {...field}
+            id={field.name}
+            value={field.value ?? ''}
+            required
+            data-testid="registration-title-field"
+            variant="filled"
+            fullWidth
+            label={t('common:title')}
+            error={touched && !!error}
+            helperText={<ErrorMessage name={field.name} />}
+          />
+        )}
+      </Field>
+      <Field name={DescriptionFieldNames.Abstract}>
+        {({ field }: FieldProps<string>) => (
+          <TextField
+            {...field}
+            id={field.name}
+            value={field.value ?? ''}
+            data-testid="registration-abstract-field"
+            variant="filled"
+            fullWidth
+            multiline
+            rows="4"
+            label={t('description.abstract')}
+          />
+        )}
+      </Field>
+      <Field name={DescriptionFieldNames.Description}>
+        {({ field }: FieldProps<string>) => (
+          <TextField
+            {...field}
+            id={field.name}
+            value={field.value ?? ''}
+            data-testid="registration-description-field"
+            label={t('description.description_of_content')}
+            multiline
+            rows="4"
+            fullWidth
+            variant="filled"
+          />
+        )}
+      </Field>
 
-          <Field name={DescriptionFieldNames.Language}>
-            {({ field }: FieldProps<string>) => (
+      <Field name={DescriptionFieldNames.Tags}>
+        {({ field }: FieldProps) => (
+          <Autocomplete
+            {...field}
+            id={field.name}
+            aria-labelledby={`${field.name}-label`}
+            value={field.value ?? []}
+            freeSolo
+            multiple
+            options={[]}
+            autoSelect
+            onChange={(_: ChangeEvent<unknown>, value: string[]) => {
+              const newValues = value
+                .map((item) => item.split(','))
+                .flat()
+                .map((item) => item.trim())
+                .filter((item) => item);
+              const uniqueValues = [...new Set(newValues)];
+              setFieldValue(field.name, uniqueValues);
+            }}
+            renderInput={(params) => (
               <TextField
-                {...field}
-                id={field.name}
-                value={field.value ?? ''}
-                data-testid="registration-language-field"
+                {...params}
+                data-testid="registration-tag-field"
+                label={t('description.keywords')}
+                helperText={t('description.keywords_helper')}
+                variant="filled"
                 fullWidth
-                label={t('description.primary_language')}
-                placeholder={t('description.primary_language')}
-                select
-                variant="filled">
-                {!registrationLanguages.some((registrationLanguage) => registrationLanguage.value === field.value) && (
-                  // Show if Registration has a language that's currently not supported
-                  <MenuItem value={field.value} disabled>
-                    {t(`languages:${LanguageCodes.Undefined}`)}
-                  </MenuItem>
-                )}
-                {registrationLanguages.map(({ id, value }) => (
-                  <MenuItem value={value} key={id} data-testid={`registration-language-${id}`}>
-                    {t(`languages:${id}`)}
-                  </MenuItem>
-                ))}
-              </TextField>
+              />
             )}
-          </Field>
-        </DateAndLanguageWrapper>
-      </BackgroundDiv>
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
-        <Typography variant="h5" color="primary" component="p" paragraph>
-          {t('description.connect_project')}
-        </Typography>
-        <ThemeProvider theme={lightTheme}>
-          <ProjectsField />
-        </ThemeProvider>
-      </BackgroundDiv>
-    </>
+          />
+        )}
+      </Field>
+
+      <VocabularyBase />
+
+      <DateAndLanguageWrapper>
+        <DatePickerField />
+
+        <Field name={DescriptionFieldNames.Language}>
+          {({ field }: FieldProps<string>) => (
+            <TextField
+              {...field}
+              id={field.name}
+              value={field.value ?? ''}
+              data-testid="registration-language-field"
+              fullWidth
+              label={t('description.primary_language')}
+              placeholder={t('description.primary_language')}
+              select
+              variant="filled">
+              {!registrationLanguages.some((registrationLanguage) => registrationLanguage.value === field.value) && (
+                // Show if Registration has a language that's currently not supported
+                <MenuItem value={field.value} disabled>
+                  {t(`languages:${LanguageCodes.Undefined}`)}
+                </MenuItem>
+              )}
+              {registrationLanguages.map(({ id, value }) => (
+                <MenuItem value={value} key={id} data-testid={`registration-language-${id}`}>
+                  {t(`languages:${id}`)}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
+        </Field>
+      </DateAndLanguageWrapper>
+
+      <ProjectsField />
+    </InputContainerBox>
   );
 };

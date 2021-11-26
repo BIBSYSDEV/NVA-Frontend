@@ -13,6 +13,7 @@ import { Registration } from '../../../../types/registration.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { VocabularyComponentProps } from './VocabularyAutocomplete';
 import { hrcsActivityBaseId, hrcsCategoryBaseId } from '../../../../utils/constants';
+import { InputContainerBox } from '../../../../components/styled/Wrappers';
 
 const StyledAddButton = styled(Button)`
   align-self: flex-start;
@@ -84,7 +85,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
   const addableVocabularies = allowedVocabularyKeys.filter((vocabulary) => !visibleVocabularies.includes(vocabulary));
 
   return (
-    <>
+    <InputContainerBox>
       <FieldArray name={DescriptionFieldNames.Subjects}>
         {({ name, remove, push }: FieldArrayRenderProps) => (
           <>
@@ -172,6 +173,6 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
           {t('description.add_vocabulary')}
         </StyledAddButton>
       )}
-    </>
+    </InputContainerBox>
   );
 };

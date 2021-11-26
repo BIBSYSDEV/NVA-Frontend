@@ -1,4 +1,3 @@
-import React from 'react';
 import { Chip, Typography } from '@mui/material';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
@@ -33,11 +32,9 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
       {entityDescription && (
         <>
           {entityDescription.abstract && (
-            <>
-              <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
-                {entityDescription.abstract}
-              </Typography>
-            </>
+            <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
+              {entityDescription.abstract}
+            </Typography>
           )}
           {entityDescription.description && (
             <>
@@ -81,15 +78,10 @@ const StyledTags = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  > div {
-    :not(:last-child) {
-      margin-right: 0.5rem;
-    }
-  }
+  gap: 0.5rem;
 `;
 
 const StyledChip = styled(Chip)`
-  background: ${({ theme }) => theme.palette.section.light};
   margin: 0.25rem 0;
 `;
 

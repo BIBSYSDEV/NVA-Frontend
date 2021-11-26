@@ -11,7 +11,7 @@ export const SeriesFields = () => {
   const { t } = useTranslation('registration');
 
   return (
-    <>
+    <div>
       <Typography variant="h5">{t('resource_type.series')}</Typography>
       <Typography paragraph>{t('resource_type.series_info')}</Typography>
 
@@ -32,6 +32,6 @@ export const SeriesFields = () => {
           )}
         </Field>
       </InputContainerBox>
-    </>
+    </div>
   );
 };

@@ -14,7 +14,7 @@ const StyledFooter = styled.footer`
   align-items: center;
   justify-items: center;
   min-height: 4rem;
-  background: ${({ theme }) => theme.palette.background.footer};
+  background: ${({ theme }) => theme.palette.background.paper};
 `;
 
 const StyledAboutButton = styled(Button).attrs({ component: Link, to: UrlPathTemplate.About })`
@@ -35,16 +35,12 @@ export const Footer = () => {
 
   return (
     <StyledFooter>
-      <StyledAboutButton data-testid={dataTestId.footer.aboutLink} color="primary">
-        {t('common:about_nva')}
-      </StyledAboutButton>
+      <StyledAboutButton data-testid={dataTestId.footer.aboutLink}>{t('common:about_nva')}</StyledAboutButton>
       <StyledLogoContainer>
         <Typography>{t('common:delivered_by')}</Typography>
         <img src={logo} alt="UNIT logo" />
       </StyledLogoContainer>
-      <StyledPrivacyButton data-testid={dataTestId.footer.privacyLink} color="primary">
-        {t('privacy_statement')}
-      </StyledPrivacyButton>
+      <StyledPrivacyButton data-testid={dataTestId.footer.privacyLink}>{t('privacy_statement')}</StyledPrivacyButton>
     </StyledFooter>
   );
 };

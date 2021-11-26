@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
+import { Box } from '@mui/material';
 import { useUppy } from '@uppy/react';
 import { ItalicPageHeader } from '../../components/PageHeader';
 import { PageSpinner } from '../../components/PageSpinner';
@@ -26,14 +26,7 @@ import { DescriptionPanel } from './DescriptionPanel';
 import { FilesAndLicensePanel } from './FilesAndLicensePanel';
 import { ResourceTypePanel } from './ResourceTypePanel';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
-
-const StyledRegistration = styled.div`
-  width: 100%;
-`;
-
-const StyledPanel = styled.div`
-  margin-bottom: 1rem;
-`;
+import { BackgroundDiv } from '../../components/BackgroundDiv';
 
 export type HighestTouchedTab = RegistrationTab | -1;
 
@@ -90,7 +83,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   ) : !isValidOwner && !isValidCurator ? (
     <Forbidden />
   ) : registration ? (
-    <StyledRegistration>
+    <>
       <SkipLink href="#form">{t('common:skip_to_schema')}</SkipLink>
       <Formik
         initialValues={registration}
@@ -111,36 +104,38 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
               {values.entityDescription?.mainTitle || `[${t('common:missing_title')}]`}
             </ItalicPageHeader>
             <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
-            <StyledPanel id="form">
-              {tabNumber === RegistrationTab.Description && (
-                <ErrorBoundary>
-                  <DescriptionPanel />
-                </ErrorBoundary>
-              )}
-              {tabNumber === RegistrationTab.ResourceType && (
-                <ErrorBoundary>
-                  <ResourceTypePanel />
-                </ErrorBoundary>
-              )}
-              {tabNumber === RegistrationTab.Contributors && (
-                <ErrorBoundary>
-                  <ContributorsPanel />
-                </ErrorBoundary>
-              )}
-              {tabNumber === RegistrationTab.FilesAndLicenses && (
-                <ErrorBoundary>
-                  <FilesAndLicensePanel uppy={uppy} />
-                </ErrorBoundary>
-              )}
-            </StyledPanel>
-            <RegistrationFormActions
-              tabNumber={tabNumber}
-              setTabNumber={setTabNumber}
-              refetchRegistration={refetchRegistration}
-            />
+            <BackgroundDiv>
+              <Box id="form" mb="2rem">
+                {tabNumber === RegistrationTab.Description && (
+                  <ErrorBoundary>
+                    <DescriptionPanel />
+                  </ErrorBoundary>
+                )}
+                {tabNumber === RegistrationTab.ResourceType && (
+                  <ErrorBoundary>
+                    <ResourceTypePanel />
+                  </ErrorBoundary>
+                )}
+                {tabNumber === RegistrationTab.Contributors && (
+                  <ErrorBoundary>
+                    <ContributorsPanel />
+                  </ErrorBoundary>
+                )}
+                {tabNumber === RegistrationTab.FilesAndLicenses && (
+                  <ErrorBoundary>
+                    <FilesAndLicensePanel uppy={uppy} />
+                  </ErrorBoundary>
+                )}
+              </Box>
+              <RegistrationFormActions
+                tabNumber={tabNumber}
+                setTabNumber={setTabNumber}
+                refetchRegistration={refetchRegistration}
+              />
+            </BackgroundDiv>
           </Form>
         )}
       </Formik>
-    </StyledRegistration>
+    </>
   ) : null;
 };

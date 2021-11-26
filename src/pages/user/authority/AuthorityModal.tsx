@@ -45,7 +45,6 @@ export const AuthorityModal = ({ closeModal, handleNextClick, user }: AuthorityM
             <AuthorityList authorities={[user.authority]} selectedArpId={user.authority.id} />
             <DialogActions>
               <Button
-                color="secondary"
                 variant="contained"
                 endIcon={<ArrowForwardIcon />}
                 data-testid="modal_next"

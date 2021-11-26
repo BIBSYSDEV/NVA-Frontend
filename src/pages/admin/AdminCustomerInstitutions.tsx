@@ -1,8 +1,6 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { Button } from '@mui/material';
-import { Card } from '../../components/Card';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { getAdminInstitutionPath } from '../../utils/urlPaths';
@@ -11,6 +9,7 @@ import { PageSpinner } from '../../components/PageSpinner';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { CustomerInstitutionsResponse } from '../../types/customerInstitution.types';
 import { CustomerInstitutionApiPath } from '../../api/apiPaths';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
 
 export const AdminCustomerInstitutions = () => {
   const { t } = useTranslation('admin');
@@ -23,13 +22,9 @@ export const AdminCustomerInstitutions = () => {
   return (
     <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('admin_institutions')}</PageHeader>
-      <Card>
+      <BackgroundDiv>
         <StyledRightAlignedWrapper>
-          <Button
-            color="primary"
-            component={RouterLink}
-            to={getAdminInstitutionPath('new')}
-            data-testid="add-institution-button">
+          <Button component={RouterLink} to={getAdminInstitutionPath('new')} data-testid="add-institution-button">
             {t('add_institution')}
           </Button>
         </StyledRightAlignedWrapper>
@@ -38,7 +33,7 @@ export const AdminCustomerInstitutions = () => {
         ) : (
           customerInstitutions && <InstitutionList institutions={customerInstitutions.customers} />
         )}
-      </Card>
+      </BackgroundDiv>
     </StyledPageWrapperWithMaxWidth>
   );
 };

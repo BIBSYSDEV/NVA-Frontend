@@ -15,9 +15,7 @@ import { Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, use
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { BackgroundDiv } from '../../../../../../components/BackgroundDiv';
-import { InputContainerBox, StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
-import { lightTheme } from '../../../../../../themes/lightTheme';
+import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import { ArtisticRegistration, DesignType } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
@@ -34,70 +32,66 @@ export const ArtisticDesignForm = () => {
 
   return (
     <>
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
-        <InputContainerBox>
-          <Field name={ResourceFieldNames.PublicationInstanceSubtypeType}>
-            {({ field, meta: { error, touched } }: FieldProps<string>) => (
-              <StyledSelectWrapper>
-                <TextField
-                  id={field.name}
-                  data-testid={dataTestId.registrationWizard.resourceType.artisticTypeField}
-                  select
-                  variant="filled"
-                  fullWidth
-                  {...field}
-                  label={t('resource_type.type_work')}
-                  required
-                  error={!!error && touched}
-                  helperText={<ErrorMessage name={field.name} />}>
-                  {designTypes.map((designType) => (
-                    <MenuItem value={designType} key={designType}>
-                      {t(`resource_type.design_type.${designType}`)}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </StyledSelectWrapper>
-            )}
-          </Field>
+      <Field name={ResourceFieldNames.PublicationInstanceSubtypeType}>
+        {({ field, meta: { error, touched } }: FieldProps<string>) => (
+          <StyledSelectWrapper>
+            <TextField
+              id={field.name}
+              data-testid={dataTestId.registrationWizard.resourceType.artisticTypeField}
+              select
+              variant="filled"
+              fullWidth
+              {...field}
+              label={t('resource_type.type_work')}
+              required
+              error={!!error && touched}
+              helperText={<ErrorMessage name={field.name} />}>
+              {designTypes.map((designType) => (
+                <MenuItem value={designType} key={designType}>
+                  {t(`resource_type.design_type.${designType}`)}
+                </MenuItem>
+              ))}
+            </TextField>
+          </StyledSelectWrapper>
+        )}
+      </Field>
 
-          {values.entityDescription.reference.publicationInstance.subtype?.type === DesignType.Other && (
-            <Field name={ResourceFieldNames.PublicationInstanceSubtypeDescription}>
-              {({ field, meta: { error, touched } }: FieldProps<string>) => (
-                <TextField
-                  id={field.name}
-                  data-testid={dataTestId.registrationWizard.resourceType.artisticOtherTypeField}
-                  variant="filled"
-                  fullWidth
-                  {...field}
-                  required
-                  multiline
-                  label={t('resource_type.type_work_specified')}
-                  error={!!error && touched}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            </Field>
+      {values.entityDescription.reference.publicationInstance.subtype?.type === DesignType.Other && (
+        <Field name={ResourceFieldNames.PublicationInstanceSubtypeDescription}>
+          {({ field, meta: { error, touched } }: FieldProps<string>) => (
+            <TextField
+              id={field.name}
+              data-testid={dataTestId.registrationWizard.resourceType.artisticOtherTypeField}
+              variant="filled"
+              fullWidth
+              {...field}
+              required
+              multiline
+              label={t('resource_type.type_work_specified')}
+              error={!!error && touched}
+              helperText={<ErrorMessage name={field.name} />}
+            />
           )}
+        </Field>
+      )}
 
-          <Field name={ResourceFieldNames.PublicationInstanceDescription}>
-            {({ field, meta: { error, touched } }: FieldProps<string>) => (
-              <TextField
-                id={field.name}
-                data-testid={dataTestId.registrationWizard.resourceType.artisticDescriptionField}
-                variant="filled"
-                fullWidth
-                {...field}
-                multiline
-                label={t('resource_type.more_info_about_work')}
-                error={!!error && touched}
-                helperText={<ErrorMessage name={field.name} />}
-              />
-            )}
-          </Field>
-        </InputContainerBox>
-      </BackgroundDiv>
+      <Field name={ResourceFieldNames.PublicationInstanceDescription}>
+        {({ field, meta: { error, touched } }: FieldProps<string>) => (
+          <TextField
+            id={field.name}
+            data-testid={dataTestId.registrationWizard.resourceType.artisticDescriptionField}
+            variant="filled"
+            fullWidth
+            {...field}
+            multiline
+            label={t('resource_type.more_info_about_work')}
+            error={!!error && touched}
+            helperText={<ErrorMessage name={field.name} />}
+          />
+        )}
+      </Field>
 
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.dark}>
+      <div>
         <FieldArray name={ResourceFieldNames.Venues}>
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
@@ -139,8 +133,7 @@ export const ArtisticDesignForm = () => {
               <Button
                 data-testid={dataTestId.registrationWizard.resourceType.addVenueButton}
                 onClick={() => setOpenNewVenueModal(true)}
-                variant="contained"
-                color="inherit"
+                variant="outlined"
                 sx={{ mt: '1rem' }}
                 startIcon={<AddCircleOutlineIcon />}>
                 {t('resource_type.add_exhibition_place')}
@@ -154,7 +147,7 @@ export const ArtisticDesignForm = () => {
             </>
           )}
         </FieldArray>
-      </BackgroundDiv>
+      </div>
     </>
   );
 };

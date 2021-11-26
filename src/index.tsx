@@ -8,7 +8,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { interceptRequestsOnMock } from './api/mock-interceptor';
 import { App } from './App';
 import { store } from './redux/store';
-import { lightTheme } from './themes/lightTheme';
+import { mainTheme } from './themes/mainTheme';
 import i18n from './translations/i18n';
 import { USE_MOCK_DATA } from './utils/constants';
 import { BasicErrorBoundary } from './components/ErrorBoundary';
@@ -34,8 +34,8 @@ ReactDOM.render(
     <I18nextProvider i18n={i18n}>
       <Provider store={store}>
         <StyledEngineProvider injectFirst>
-          <StyledComponentsThemeProvider theme={lightTheme}>
-            <MuiThemeProvider theme={lightTheme}>
+          <StyledComponentsThemeProvider theme={mainTheme}>
+            <MuiThemeProvider theme={mainTheme}>
               <CssBaseline />
               <App />
             </MuiThemeProvider>

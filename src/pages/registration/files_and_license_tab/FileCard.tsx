@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import prettyBytes from 'pretty-bytes';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import {
@@ -18,19 +18,19 @@ import {
   TextField,
   Tooltip,
   Typography,
+  ListItemIcon,
 } from '@mui/material';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import DeleteIcon from '@mui/icons-material/Delete';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { DatePicker, LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import { BackgroundDiv } from '../../../components/BackgroundDiv';
-import { lightTheme, datePickerTranslationProps } from '../../../themes/lightTheme';
+import { datePickerTranslationProps } from '../../../themes/mainTheme';
 import { File, LicenseNames, licenses } from '../../../types/file.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { Card } from '../../../components/Card';
 
 const StyledDescription = styled(Typography)`
   font-style: italic;
@@ -97,7 +97,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
 
   return (
-    <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight} data-testid="uploaded-file-card">
+    <Card data-testid="uploaded-file-card">
       <StyledTypography variant="h5">{file.name}</StyledTypography>
       <StyledDescription>
         {t('files_and_license.uploaded_size', { size: prettyBytes(file.size, { locale: true }) })}
@@ -118,12 +118,12 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                     onChange={(event) => setFieldValue(field.name, JSON.parse(event.target.value))}>
                     <FormControlLabel
                       value={false}
-                      control={<Radio color="primary" />}
+                      control={<Radio />}
                       label={t<string>('files_and_license.accepted_version')}
                     />
                     <FormControlLabel
                       value={true}
-                      control={<Radio color="primary" />}
+                      control={<Radio />}
                       label={t<string>('files_and_license.published_version')}
                     />
                   </RadioGroup>
@@ -136,7 +136,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
               {({ field }: FieldProps) => (
                 <StyledAdministrativeContract
                   data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
-                  control={<Checkbox {...field} color="primary" checked={field.value} />}
+                  control={<Checkbox {...field} checked={field.value} />}
                   label={t<string>('files_and_license.administrative_contract')}
                 />
               )}
@@ -244,7 +244,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
       <StyledActionsContainer>
         <Button
           color="error"
-          variant="contained"
+          variant="outlined"
           data-testid="button-remove-file"
           startIcon={<DeleteIcon />}
           onClick={toggleOpenConfirmDialog}>
@@ -262,6 +262,6 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
         onCancel={toggleOpenConfirmDialog}>
         <Typography>{t('files_and_license.remove_file_description', { fileName: file.name })}</Typography>
       </ConfirmDialog>
-    </BackgroundDiv>
+    </Card>
   );
 };
