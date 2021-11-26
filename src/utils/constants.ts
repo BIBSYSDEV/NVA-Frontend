@@ -1,9 +1,10 @@
 import { NotificationVariant } from '../types/notification.types';
 
-const hostToUrl = (hostString: string) => {
-  return hostString.startsWith('http')
+const hostToUrlString = (hostString: string) => {
+  const url= hostString.startsWith('http')
     ? new URL(hostString.replace('http://', 'https://'))
     : new URL(`https://${hostString}`);
+  return url.toString();
 };
 
 export const USE_MOCK_DATA = process.env.REACT_APP_USE_MOCK === 'true';
@@ -18,7 +19,7 @@ export const FEIDE_IDENTITY_PROVIDER = 'FeideIdentityProvider';
 export const AMPLIFY_REDIRECTED_KEY = 'amplify-redirected-from-hosted-ui';
 export const REDIRECT_PATH_KEY = 'redirect-path';
 
-export const API_URL = hostToUrl(process.env.REACT_APP_API_HOST);
+export const API_URL = hostToUrlString(process.env.REACT_APP_API_HOST);
 
 export const hrcsActivityBaseId = 'https://nva.unit.no/hrcs/activity';
 export const hrcsCategoryBaseId = 'https://nva.unit.no/hrcs/category';
