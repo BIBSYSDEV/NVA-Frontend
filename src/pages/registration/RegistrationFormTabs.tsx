@@ -8,6 +8,7 @@ import { getTabErrors, getFirstErrorTab, getTouchedTabFields, mergeTouchedFields
 import { ErrorList } from './ErrorList';
 import { RequiredDescription } from '../../components/RequiredDescription';
 import { RegistrationLocationState } from './RegistrationForm';
+import { dataTestId } from '../../utils/dataTestIds';
 
 interface RegistrationFormTabsProps {
   setTabNumber: (newTab: RegistrationTab) => void;
@@ -59,35 +60,45 @@ export const RegistrationFormTabs = ({ setTabNumber, tabNumber }: RegistrationFo
     <>
       <Stepper nonLinear activeStep={tabNumber}>
         <Step completed={maxVisitedTab > RegistrationTab.Description && !descriptionTabHasError}>
-          <StepButton data-testid="nav-tabpanel-description" onClick={() => setTabNumber(RegistrationTab.Description)}>
-            <StepLabel error={descriptionTabHasError} data-testid={descriptionTabHasError ? 'error-tab' : undefined}>
+          <StepButton
+            data-testid={dataTestId.registrationWizard.stepper.descriptionStepButton}
+            onClick={() => setTabNumber(RegistrationTab.Description)}>
+            <StepLabel
+              error={descriptionTabHasError}
+              data-testid={descriptionTabHasError ? dataTestId.registrationWizard.stepper.errorStep : undefined}>
               {t('heading.description')}
             </StepLabel>
           </StepButton>
         </Step>
         <Step completed={maxVisitedTab > RegistrationTab.ResourceType && !resourceTabHasError}>
           <StepButton
-            data-testid="nav-tabpanel-resource-type"
+            data-testid={dataTestId.registrationWizard.stepper.resourceStepButton}
             onClick={() => setTabNumber(RegistrationTab.ResourceType)}>
-            <StepLabel error={resourceTabHasError} data-testid={resourceTabHasError ? 'error-tab' : undefined}>
+            <StepLabel
+              error={resourceTabHasError}
+              data-testid={resourceTabHasError ? dataTestId.registrationWizard.stepper.errorStep : undefined}>
               {t('heading.resource_type')}
             </StepLabel>
           </StepButton>
         </Step>
         <Step completed={maxVisitedTab > RegistrationTab.Contributors && !contributorTabHasError}>
           <StepButton
-            data-testid="nav-tabpanel-contributors"
+            data-testid={dataTestId.registrationWizard.stepper.contributorsStepButton}
             onClick={() => setTabNumber(RegistrationTab.Contributors)}>
-            <StepLabel error={contributorTabHasError} data-testid={contributorTabHasError ? 'error-tab' : undefined}>
+            <StepLabel
+              error={contributorTabHasError}
+              data-testid={contributorTabHasError ? dataTestId.registrationWizard.stepper.errorStep : undefined}>
               {t('heading.contributors')}
             </StepLabel>
           </StepButton>
         </Step>
         <Step completed={maxVisitedTab > RegistrationTab.FilesAndLicenses && !fileTabHasError}>
           <StepButton
-            data-testid="nav-tabpanel-files-and-license"
+            data-testid={dataTestId.registrationWizard.stepper.filesStepButton}
             onClick={() => setTabNumber(RegistrationTab.FilesAndLicenses)}>
-            <StepLabel error={fileTabHasError} data-testid={fileTabHasError ? 'error-tab' : undefined}>
+            <StepLabel
+              error={fileTabHasError}
+              data-testid={fileTabHasError ? dataTestId.registrationWizard.stepper.errorStep : undefined}>
               {t('heading.files_and_license')}
             </StepLabel>
           </StepButton>
