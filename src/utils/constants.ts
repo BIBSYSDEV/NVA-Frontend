@@ -1,7 +1,7 @@
 import { NotificationVariant } from '../types/notification.types';
 
 const hostToUrlString = (hostString: string) => {
-  const url= hostString.startsWith('http')
+  const url = hostString.startsWith('http')
     ? new URL(hostString.replace('http://', 'https://'))
     : new URL(`https://${hostString}`);
   return url.toString();
