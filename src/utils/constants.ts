@@ -1,16 +1,16 @@
-import {NotificationVariant} from '../types/notification.types';
+import { NotificationVariant } from '../types/notification.types';
 
-const API_HOST_IS_EMPTY = "REACT_APP_API_HOST is empty";
+const API_HOST_IS_EMPTY = 'REACT_APP_API_HOST is empty';
 
 const assertNotEmpty = (hostString: string | undefined, errorMessage: string): string => {
   if (hostString === undefined || hostString === null || hostString.trim().length === 0) {
-    throw new Error(errorMessage)
+    throw new Error(errorMessage);
   }
   return hostString;
-}
+};
 
 const hostToUrlString = (): string => {
-  const hostString = assertNotEmpty(process.env.REACT_APP_API_HOST,API_HOST_IS_EMPTY);
+  const hostString = assertNotEmpty(process.env.REACT_APP_API_HOST, API_HOST_IS_EMPTY);
   const url = hostString.startsWith('http')
     ? new URL(hostString.replace('http://', 'https://'))
     : new URL(`https://${hostString}`);
