@@ -125,14 +125,16 @@ export const mainTheme = createTheme({
         },
       },
     },
-    MuiTab: {
+    MuiStepLabel: {
       styleOverrides: {
-        root: {
-          flexDirection: 'row-reverse',
-        },
-        textColorPrimary: {
-          '&.Mui-selected': {
-            fontWeight: 'bold',
+        label: {
+          textTransform: 'uppercase',
+          fontSize: '1rem',
+          '&.Mui-active': {
+            color: Color.PrimaryMain,
+          },
+          '&.Mui-error': {
+            color: Color.ErrorMain,
           },
         },
       },
@@ -167,18 +169,6 @@ export const mainTheme = createTheme({
           },
           '&:hover': {
             backgroundColor: Color.White,
-          },
-        },
-      },
-    },
-    MuiFormHelperText: {
-      styleOverrides: {
-        root: {
-          '&.Mui-error': {
-            color: Color.Black,
-            backgroundColor: Color.ErrorLight,
-            margin: 0,
-            padding: '0.25rem 0.75rem',
           },
         },
       },
