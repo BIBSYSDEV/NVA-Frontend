@@ -3,7 +3,7 @@ import { NotificationVariant } from '../types/notification.types';
 const API_HOST_IS_EMPTY = 'REACT_APP_API_HOST is empty';
 
 const assertNotEmpty = (hostString: string | undefined, errorMessage: string): string => {
-  if (hostString === undefined || hostString === null || hostString.trim().length === 0) {
+  if (!hostString || hostString.trim().length === 0) {
     throw new Error(errorMessage);
   }
   return hostString;
