@@ -1,9 +1,8 @@
-import { ListItem, Collapse, List, ListItemText, Typography } from '@mui/material';
+import { ListItem, Collapse, List, ListItemText, Typography, Theme, useMediaQuery } from '@mui/material';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { ReactNode, useState } from 'react';
 import styled from 'styled-components';
-import { useIsMobile } from '../../../utils/hooks/useIsMobile';
 
 const StyledCollapsableList = styled(List)`
   padding-left: 1rem;
@@ -23,7 +22,7 @@ interface BaseFilterItemProps {
 }
 
 export const BaseFilterItem = ({ title, children }: BaseFilterItemProps) => {
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'), { noSsr: true });
   const [isOpen, setIsOpen] = useState(!isMobile);
   const toggleOpen = () => setIsOpen(!isOpen);
 

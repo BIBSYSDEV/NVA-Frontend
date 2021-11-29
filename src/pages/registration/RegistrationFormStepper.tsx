@@ -1,7 +1,7 @@
 import { useFormikContext } from 'formik';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Step, StepButton, StepLabel, Stepper, useMediaQuery, useTheme } from '@mui/material';
+import { Step, StepButton, StepLabel, Stepper, Theme, useMediaQuery } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { getTabErrors, getTouchedTabFields, mergeTouchedFields } from '../../utils/formik-helpers';
@@ -16,8 +16,7 @@ interface RegistrationFormStepperProps {
 export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: RegistrationFormStepperProps) => {
   const { t } = useTranslation('registration');
   const { errors, touched, values, setTouched } = useFormikContext<Registration>();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const locationState = useLocation<RegistrationLocationState>().state;
   const maxVisitedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
 
