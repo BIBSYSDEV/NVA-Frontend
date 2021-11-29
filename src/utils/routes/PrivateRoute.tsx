@@ -1,4 +1,4 @@
-import React, { ComponentType, ReactNode } from 'react';
+import { ComponentType, ReactNode } from 'react';
 import { Route, RouteProps } from 'react-router-dom';
 import { Forbidden } from '../../pages/errorpages/Forbidden';
 

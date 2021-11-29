@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { File, emptyFile, Uppy } from '../../../types/file.types';
 import { UppyDashboard } from '../../../components/UppyDashboard';
 

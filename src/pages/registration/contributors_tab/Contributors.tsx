@@ -1,5 +1,5 @@
 import { FieldArrayRenderProps, move, useFormikContext } from 'formik';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';

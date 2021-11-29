@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 const StyledLine = styled.div`

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useLocation } from 'react-router';
 import { PageSpinner } from '../../components/PageSpinner';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';

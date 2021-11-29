@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { CircularProgress, TextField, TextFieldProps, AutocompleteRenderInputParams } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';

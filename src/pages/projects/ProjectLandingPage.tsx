@@ -1,4 +1,3 @@
-import React from 'react';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import { useTranslation } from 'react-i18next';
 import { ItalicPageHeader } from '../../components/PageHeader';
