@@ -9,8 +9,8 @@ env:
     REACT_APP_REDIRECT_SIGN_IN: CognitoFrontendApplicationUrl # from nva-identity-service
     REACT_APP_REDIRECT_SIGN_OUT: CognitoFrontendApplicationLogoutUrl # from nva-identity-service
     REACT_APP_ORCID_BASE_URL: OrcidBaseUrl
-    REACT_APP_API_URL: /NVA/ApiDomain
-    REACT_APP_APP_URL: /NVA/ApplicationDomain
+    REACT_APP_API_HOST: /NVA/ApiDomain
+    REACT_APP_APP_HOST: /NVA/ApplicationDomain
 
   secrets-manager:
     REACT_APP_ORCID_CLIENT_SECRET: OrcidClientSecret
@@ -28,7 +28,7 @@ phases:
       - npm install
   pre_build:
     commands:
-      - export REACT_APP_ORCID_REDIRECT_URI=https://${REACT_APP_APP_URL}/my-profile
+      - export REACT_APP_ORCID_REDIRECT_URI=https://${REACT_APP_APP_HOST}/my-profile
   build:
     commands:
       - npm run build

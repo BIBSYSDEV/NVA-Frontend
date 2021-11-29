@@ -1,7 +1,23 @@
 import { NotificationVariant } from '../types/notification.types';
 
-export const USE_MOCK_DATA = process.env.REACT_APP_USE_MOCK === 'true';
+const API_HOST_IS_EMPTY = 'REACT_APP_API_HOST is empty';
 
+const assertNotEmpty = (hostString: string | undefined, errorMessage: string): string => {
+  if (!hostString || hostString.trim().length === 0) {
+    throw new Error(errorMessage);
+  }
+  return hostString;
+};
+
+const hostToUrlString = (): string => {
+  const hostString = assertNotEmpty(process.env.REACT_APP_API_HOST, API_HOST_IS_EMPTY);
+  const url = hostString.startsWith('http')
+    ? new URL(hostString.replace('http://', 'https://'))
+    : new URL(`https://${hostString}`);
+  return url.toString();
+};
+
+export const USE_MOCK_DATA = process.env.REACT_APP_USE_MOCK === 'true';
 export const ROWS_PER_PAGE_OPTIONS = [5, 10, 25];
 export const DEBOUNCE_INTERVAL_INPUT = 1000;
 
@@ -13,7 +29,7 @@ export const FEIDE_IDENTITY_PROVIDER = 'FeideIdentityProvider';
 export const AMPLIFY_REDIRECTED_KEY = 'amplify-redirected-from-hosted-ui';
 export const REDIRECT_PATH_KEY = 'redirect-path';
 
-export const API_URL = process.env.REACT_APP_API_URL;
+export const API_URL = hostToUrlString();
 
 export const hrcsActivityBaseId = 'https://nva.unit.no/hrcs/activity';
 export const hrcsCategoryBaseId = 'https://nva.unit.no/hrcs/category';

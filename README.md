@@ -9,7 +9,7 @@ To run this app, you need to add a set of environment variables to a `.env` file
 A minimal working example for `.env` that uses a simplistic set of (incomplete) mock data looks as follows:
 
 ```markdown
-REACT_APP_API_URL=https://api.dev.nva.aws.unit.no
+REACT_APP_API_HOST=api.dev.nva.aws.unit.no
 REACT_APP_USE_MOCK=true
 ```
 
@@ -17,7 +17,7 @@ Info about all environment variables are listed in the table below. Note that yo
 
 | Name                                   | Example value                                | Description                                                                              |
 | -------------------------------------- | -------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| REACT_APP_API_URL                      | `https://api.dev.nva.aws.unit.no`            | Required. Base URL to the API.                                                           |
+| REACT_APP_API_HOST                      | `api.dev.nva.aws.unit.no`                    | Required. Base URL to the API.                                                           |
 | REACT_APP_USE_MOCK                     | `false`                                      | Whether to use local mock data or not. If `true`, no more variables are needed.          |
 | REACT_APP_REDIRECT_SIGN_IN             | `http://localhost:3000`                      | Callback URI for successfull login.                                                      |
 | REACT_APP_REDIRECT_SIGN_OUT            | `http://localhost:3000/logout`               | Callback URI for successfull logout.                                                     |
