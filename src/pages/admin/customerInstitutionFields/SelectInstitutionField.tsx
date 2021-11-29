@@ -1,4 +1,3 @@
-import React from 'react';
 import { Field, FieldProps, ErrorMessage } from 'formik';
 import { useFetchInstitutions } from '../../../utils/hooks/useFetchInstitutions';
 import { CustomerInstitutionFieldNames } from '../../../types/customerInstitution.types';

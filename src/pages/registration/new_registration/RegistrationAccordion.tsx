@@ -1,4 +1,3 @@
-import React from 'react';
 import { Accordion, AccordionProps } from '@mui/material';
 import styled from 'styled-components';
 

@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface EmphasizeSubstringProps {
   text: string;
   emphasized: string;

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Skeleton } from '@mui/material';
 import styled from 'styled-components';
 import { getRandomWidthPercent } from '../../utils/skeleton-helpers';

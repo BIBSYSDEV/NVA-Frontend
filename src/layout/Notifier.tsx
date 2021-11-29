@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from 'react';
+import { SyntheticEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Fade, Snackbar, SnackbarCloseReason } from '@mui/material';
 import Alert from '@mui/material/Alert';

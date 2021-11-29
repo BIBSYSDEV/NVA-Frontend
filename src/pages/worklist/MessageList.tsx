@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import styled from 'styled-components';
 import { Typography } from '@mui/material';
 import { Message } from '../../types/publication_types/messages.types';

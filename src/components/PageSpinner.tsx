@@ -1,4 +1,3 @@
-import React from 'react';
 import { CircularProgress, CircularProgressProps } from '@mui/material';
 import styled from 'styled-components';
 
