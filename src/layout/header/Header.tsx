@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { AppBar, Button, IconButton } from '@mui/material';
+import { AppBar, Button, IconButton, Theme, useMediaQuery } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import MailIcon from '@mui/icons-material/Mail';
@@ -14,7 +14,6 @@ import { Login } from './Login';
 import { Logo } from './Logo';
 import { MobileMenu } from './MobileMenu';
 import { LanguageSelector } from './LanguageSelector';
-import { useIsMobile } from '../../utils/hooks/useIsMobile';
 
 const StyledNav = styled.nav`
   display: grid;
@@ -62,7 +61,7 @@ export const Header = () => {
   const { t } = useTranslation('registration');
   const user = useSelector((store: RootStore) => store.user);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);

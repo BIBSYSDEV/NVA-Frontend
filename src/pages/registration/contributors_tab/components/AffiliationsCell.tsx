@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, Typography } from '@mui/material';
+import { Button, Theme, Typography, useMediaQuery } from '@mui/material';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import DeleteIcon from '@mui/icons-material/RemoveCircleSharp';
 import WarningIcon from '@mui/icons-material/Warning';
@@ -17,7 +17,6 @@ import { FormikInstitutionUnit } from '../../../../types/institution.types';
 import { NotificationVariant } from '../../../../types/notification.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
-import { useIsMobile } from '../../../../utils/hooks/useIsMobile';
 import { getMostSpecificUnit } from '../../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
@@ -61,7 +60,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [affiliationToRemove, setAffiliationToRemove] = useState<Institution | null>(null);
   const [affiliationToVerify, setAffiliationToVerify] = useState('');
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
   const verifyAffiliationOnClick = (affiliationString: string) => {
