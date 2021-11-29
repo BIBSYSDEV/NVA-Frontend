@@ -2,7 +2,16 @@ import React, { useState, MouseEvent, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button, Menu as MuiMenu, MenuItem, Typography, IconButton, Divider } from '@mui/material';
+import {
+  Button,
+  Menu as MuiMenu,
+  MenuItem,
+  Typography,
+  IconButton,
+  Divider,
+  Theme,
+  useMediaQuery,
+} from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -10,7 +19,6 @@ import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { LanguageSelector } from './LanguageSelector';
-import { useIsMobile } from '../../utils/hooks/useIsMobile';
 import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledMenu = styled.div`
@@ -46,7 +54,7 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
   const user = useSelector((store: RootStore) => store.user);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const divRef = useRef<any>();
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
   const handleClickMenuAnchor = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);

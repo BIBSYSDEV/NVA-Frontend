@@ -1,9 +1,9 @@
 import { FieldArrayRenderProps, move, useFormikContext } from 'formik';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, Typography } from '@mui/material';
+import { Button, Theme, Typography, useMediaQuery } from '@mui/material';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import { Pagination } from '@mui/material';
 import { setNotification } from '../../../redux/actions/notificationActions';
@@ -19,7 +19,6 @@ import {
 import { NotificationVariant } from '../../../types/notification.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
-import { useIsMobile } from '../../../utils/hooks/useIsMobile';
 import { ContributorList } from './components/ContributorList';
 import { AddContributorModal } from './AddContributorModal';
 
@@ -48,7 +47,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   const [openContributorModal, setOpenContributorModal] = useState(false);
   const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
   const [currentPage, setCurrentPage] = useState(1); // Pagination pages are 1-indexed :/
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
   const contributors = values.entityDescription?.contributors ?? [];
   const relevantContributors = contributors.filter((contributor) =>
