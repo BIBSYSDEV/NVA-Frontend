@@ -2,6 +2,8 @@ import { useRef } from 'react';
 import { Menu, MenuItem } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { dataTestId } from '../../utils/dataTestIds';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 
 interface MobileMenuProps {
   anchorEl: HTMLElement | null;
@@ -32,14 +34,13 @@ export const MobileMenu = ({ anchorEl, onClose }: MobileMenuProps) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        <MenuItem data-testid="mobile-new-registration" onClick={() => handleClickMenuItem('/registration')}>
-          {t('new_registration')}
+        <MenuItem data-testid={dataTestId.footer.aboutLink} onClick={() => handleClickMenuItem(UrlPathTemplate.About)}>
+          {t('common:about_nva')}
         </MenuItem>
-        <MenuItem data-testid="mobile-my-registrations" onClick={() => handleClickMenuItem('/my-registrations')}>
-          {t('workLists:my_registrations')}
-        </MenuItem>
-        <MenuItem data-testid="mobile-my-messages" onClick={() => handleClickMenuItem('/my-messages')}>
-          {t('workLists:my_messages')}
+        <MenuItem
+          data-testid={dataTestId.footer.privacyLink}
+          onClick={() => handleClickMenuItem(UrlPathTemplate.PrivacyPolicy)}>
+          {t('privacy:privacy_statement')}
         </MenuItem>
       </Menu>
     </div>

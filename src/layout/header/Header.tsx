@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { AppBar, Button, IconButton, Theme, useMediaQuery } from '@mui/material';
+import { AppBar, Button, Divider, IconButton, Theme, useMediaQuery } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import MailIcon from '@mui/icons-material/Mail';
@@ -17,44 +17,30 @@ import { LanguageSelector } from './LanguageSelector';
 
 const StyledNav = styled.nav`
   display: grid;
-  grid-template-areas: 'logo shortcuts auth';
-  grid-template-columns: 5rem auto auto;
+  grid-template-areas: 'menu logo new-result user-items';
+  grid-template-columns: 1fr 1fr 10fr 3fr;
+  gap: 1rem;
   align-items: center;
   padding: 0 1rem;
-  min-height: 4rem;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    grid-template-areas: 'menu logo auth';
-    grid-template-columns: 1fr 1fr 1fr;
-  }
 `;
 
 const StyledShortcuts = styled.div`
-  grid-area: shortcuts;
+  align-self: center;
+  grid-area: new-result;
   > * {
     margin-left: 2rem;
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    display: none;
   }
 `;
 
 const StyledAuth = styled.div`
-  grid-area: auth;
-  justify-self: right;
+  grid-area: user-items;
   display: flex;
-  > :nth-child(2) {
-    margin-left: 1rem;
-  }
+  gap: 1rem;
 `;
 
 const StyledBurgerMenu = styled.div`
   grid-area: menu;
   justify-self: left;
-  @media (min-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    display: none;
-  }
 `;
 
 export const Header = () => {
@@ -70,14 +56,13 @@ export const Header = () => {
   return (
     <AppBar position="static" elevation={0} sx={{ color: 'white' }}>
       <StyledNav>
-        {user && (
-          <StyledBurgerMenu>
-            <IconButton onClick={handleClick} title={t('common:menu')} size="large">
-              <MenuIcon />
-            </IconButton>
-            <MobileMenu anchorEl={anchorEl} onClose={() => setAnchorEl(null)} />
-          </StyledBurgerMenu>
-        )}
+        <StyledBurgerMenu>
+          <IconButton onClick={handleClick} title={t('common:menu')} size="large" sx={{ color: 'white' }}>
+            <MenuIcon fontSize="large" />
+          </IconButton>
+          <MobileMenu anchorEl={anchorEl} onClose={() => setAnchorEl(null)} />
+        </StyledBurgerMenu>
+
         <Logo />
         {user?.isCreator && (
           <StyledShortcuts>
@@ -108,6 +93,7 @@ export const Header = () => {
           </StyledShortcuts>
         )}
         <StyledAuth>
+          <Divider sx={{ gridArea: 'divider', borderColor: 'white', opacity: 0.8 }} orientation="vertical" flexItem />
           {!isMobile && <LanguageSelector />}
           <Login />
         </StyledAuth>
