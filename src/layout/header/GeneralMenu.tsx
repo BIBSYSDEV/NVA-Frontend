@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 
-interface MobileMenuProps {
+interface GeneralMenuProps {
   anchorEl: HTMLElement | null;
   onClose: () => void;
 }
 
-export const MobileMenu = ({ anchorEl, onClose }: MobileMenuProps) => {
+export const GeneralMenu = ({ anchorEl, onClose }: GeneralMenuProps) => {
   const { t } = useTranslation('registration');
   const history = useHistory();
 

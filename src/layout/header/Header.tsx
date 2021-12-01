@@ -2,7 +2,6 @@ import { useState, MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import styled from 'styled-components';
 import { AppBar, Box, Button, Divider, IconButton, Theme, useMediaQuery } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import MailIcon from '@mui/icons-material/MailOutlined';
@@ -12,29 +11,9 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { getRegistrationPath, UrlPathTemplate } from '../../utils/urlPaths';
 import { Login } from './Login';
 import { Logo } from './Logo';
-import { MobileMenu } from './MobileMenu';
+import { GeneralMenu } from './GeneralMenu';
 import { LanguageSelector } from './LanguageSelector';
 import { dataTestId } from '../../utils/dataTestIds';
-
-const StyledAuth = styled.div`
-  grid-area: user-items;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-
-  .MuiButton-startIcon {
-    margin: 0;
-  }
-
-  a,
-  button {
-    flex-direction: column;
-  }
-`;
-
-const StyledBurgerMenu = styled.div`
-  grid-area: menu;
-`;
 
 export const Header = () => {
   const { t } = useTranslation('registration');
@@ -54,8 +33,8 @@ export const Header = () => {
           display: 'grid',
           justifyItems: 'center',
           gridTemplateAreas: {
-            xs: '"menu logo user-items"',
-            md: '"menu logo new-result user-items"',
+            xs: '"other-menu logo user-menu"',
+            md: '"other-menu logo new-result user-menu"',
           },
           gridTemplateColumns: { xs: 'auto auto auto', md: '1fr 1fr 10fr 3fr' },
           gridTemplateRows: 'auto',
@@ -63,12 +42,15 @@ export const Header = () => {
           alignItems: 'center',
           padding: '0 1rem',
         }}>
-        <StyledBurgerMenu>
-          <IconButton onClick={handleClick} title={t('common:menu')} size="large" sx={{ color: 'white' }}>
-            <MenuIcon fontSize="large" />
-          </IconButton>
-          <MobileMenu anchorEl={anchorEl} onClose={() => setAnchorEl(null)} />
-        </StyledBurgerMenu>
+        <IconButton
+          onClick={handleClick}
+          title={t('common:menu')}
+          size="large"
+          color="inherit"
+          sx={{ gridArea: 'other-menu' }}>
+          <MenuIcon fontSize="large" />
+        </IconButton>
+        <GeneralMenu anchorEl={anchorEl} onClose={() => setAnchorEl(null)} />
 
         <Logo />
         {user?.isCreator && (
@@ -86,7 +68,19 @@ export const Header = () => {
             {t('new_registration')}
           </Button>
         )}
-        <StyledAuth>
+        <Box
+          sx={{
+            gridArea: 'user-menu',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+            'a, button': {
+              flexDirection: 'column',
+              '.MuiButton-startIcon': {
+                margin: 0,
+              },
+            },
+          }}>
           {!isMobile && (
             <>
               <Divider
@@ -116,7 +110,7 @@ export const Header = () => {
           )}
 
           <Login />
-        </StyledAuth>
+        </Box>
       </Box>
     </AppBar>
   );
