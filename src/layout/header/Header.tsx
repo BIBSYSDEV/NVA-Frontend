@@ -4,8 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { AppBar, Button, Divider, IconButton, Theme, useMediaQuery } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -14,6 +13,7 @@ import { Login } from './Login';
 import { Logo } from './Logo';
 import { MobileMenu } from './MobileMenu';
 import { LanguageSelector } from './LanguageSelector';
+import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledNav = styled.nav`
   display: grid;
@@ -25,16 +25,16 @@ const StyledNav = styled.nav`
 `;
 
 const StyledShortcuts = styled.div`
-  align-self: center;
   grid-area: new-result;
-  > * {
-    margin-left: 2rem;
-  }
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
 `;
 
 const StyledAuth = styled.div`
   grid-area: user-items;
   display: flex;
+  align-items: center;
   gap: 1rem;
 `;
 
@@ -71,30 +71,30 @@ export const Header = () => {
               component={RouterLink}
               data-testid="new-registration"
               to={getRegistrationPath()}
-              startIcon={<AddIcon />}>
+              startIcon={<AddCircleIcon />}>
               {t('new_registration')}
-            </Button>
-            <Button
-              color="inherit"
-              component={RouterLink}
-              data-testid="my-registrations"
-              to={UrlPathTemplate.MyRegistrations}
-              startIcon={<LibraryBooksIcon />}>
-              {t('workLists:my_registrations')}
-            </Button>
-            <Button
-              color="inherit"
-              component={RouterLink}
-              data-testid="my-messages"
-              to={UrlPathTemplate.MyMessages}
-              startIcon={<MailIcon />}>
-              {t('workLists:my_messages')}
             </Button>
           </StyledShortcuts>
         )}
         <StyledAuth>
           <Divider sx={{ gridArea: 'divider', borderColor: 'white', opacity: 0.8 }} orientation="vertical" flexItem />
           {!isMobile && <LanguageSelector />}
+          <Button
+            color="inherit"
+            component={RouterLink}
+            data-testid={dataTestId.header.worklistLink}
+            to={UrlPathTemplate.Worklist}
+            startIcon={<MailIcon />}>
+            {t('workLists:my_worklist')}
+          </Button>
+          <Button
+            color="inherit"
+            component={RouterLink}
+            data-testid="my-messages"
+            to={UrlPathTemplate.MyMessages}
+            startIcon={<MailIcon />}>
+            {t('workLists:my_messages')}
+          </Button>
           <Login />
         </StyledAuth>
       </StyledNav>

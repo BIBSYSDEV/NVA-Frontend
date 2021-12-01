@@ -91,27 +91,25 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
             <LanguageSelector />
           </MenuItem>
         )}
-        {(user?.isCurator || user?.isEditor) && [
-          user.isCurator && (
-            <MenuItem
-              key={dataTestId.header.worklistLink}
-              data-testid={dataTestId.header.worklistLink}
-              onClick={closeMenu}
-              component={StyledLink}
-              to={UrlPathTemplate.Worklist}>
-              <Typography>{t('workLists:my_worklist')}</Typography>
-            </MenuItem>
-          ),
-          user.isEditor && (
-            <MenuItem
-              key={dataTestId.header.editorLink}
-              data-testid={dataTestId.header.editorLink}
-              onClick={closeMenu}
-              component={StyledLink}
-              to={UrlPathTemplate.Editor}>
-              <Typography>{t('profile:roles.editor')}</Typography>
-            </MenuItem>
-          ),
+        {user?.isCreator && [
+          <MenuItem
+            key={'dataTestId.header.myRegistrationsLink'}
+            data-testid={'dataTestId.header.myRegistrationsLink'}
+            onClick={closeMenu}
+            component={StyledLink}
+            to={UrlPathTemplate.MyRegistrations}>
+            <Typography>{t('workLists:my_registrations')}</Typography>
+          </MenuItem>,
+        ]}
+        {user?.isEditor && [
+          <MenuItem
+            key={dataTestId.header.editorLink}
+            data-testid={dataTestId.header.editorLink}
+            onClick={closeMenu}
+            component={StyledLink}
+            to={UrlPathTemplate.Editor}>
+            <Typography>{t('profile:roles.editor')}</Typography>
+          </MenuItem>,
           <Divider key="divider0" />,
         ]}
         {(user?.isAppAdmin || user?.isInstitutionAdmin) && [
