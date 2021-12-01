@@ -36,7 +36,7 @@ export const Header = () => {
             xs: '"other-menu logo user-menu"',
             md: '"other-menu logo new-result user-menu"',
           },
-          gridTemplateColumns: { xs: 'auto auto auto', md: '1fr 1fr 10fr 3fr' },
+          gridTemplateColumns: { xs: 'auto auto auto', md: '1fr 1fr 10fr 5fr' },
           gridTemplateRows: 'auto',
           gap: '1rem',
           alignItems: 'center',
@@ -90,22 +90,26 @@ export const Header = () => {
                 flexItem
               />
               <LanguageSelector />
-              <Button
-                color="inherit"
-                component={RouterLink}
-                data-testid={dataTestId.header.worklistLink}
-                to={UrlPathTemplate.Worklist}
-                startIcon={<AssignmentIcon />}>
-                {t('workLists:worklist')}
-              </Button>
-              <Button
-                color="inherit"
-                component={RouterLink}
-                data-testid={dataTestId.header.messagesLink}
-                to={UrlPathTemplate.MyMessages}
-                startIcon={<MailIcon />}>
-                {t('workLists:messages')}
-              </Button>
+              {user?.isCurator && (
+                <Button
+                  color="inherit"
+                  component={RouterLink}
+                  data-testid={dataTestId.header.worklistLink}
+                  to={UrlPathTemplate.Worklist}
+                  startIcon={<AssignmentIcon />}>
+                  {t('workLists:worklist')}
+                </Button>
+              )}
+              {user?.isCreator && (
+                <Button
+                  color="inherit"
+                  component={RouterLink}
+                  data-testid={dataTestId.header.messagesLink}
+                  to={UrlPathTemplate.MyMessages}
+                  startIcon={<MailIcon />}>
+                  {t('workLists:messages')}
+                </Button>
+              )}
             </>
           )}
 
