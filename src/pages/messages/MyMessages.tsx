@@ -9,7 +9,7 @@ const MyMessages = () => {
 
   return (
     <StyledPageWrapperWithMaxWidth>
-      <PageHeader>{t('my_messages')}</PageHeader>
+      <PageHeader>{t('messages')}</PageHeader>
       <MessagesOverview role={RoleName.CREATOR} />
     </StyledPageWrapperWithMaxWidth>
   );

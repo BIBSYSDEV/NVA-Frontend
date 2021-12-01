@@ -5,8 +5,9 @@ import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { AppBar, Button, Divider, IconButton, Theme, useMediaQuery } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import MailIcon from '@mui/icons-material/Mail';
+import MailIcon from '@mui/icons-material/MailOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
+import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { getRegistrationPath, UrlPathTemplate } from '../../utils/urlPaths';
 import { Login } from './Login';
@@ -29,6 +30,9 @@ const StyledShortcuts = styled.div`
   display: flex;
   justify-content: center;
   gap: 2rem;
+  a {
+    font-size: 1.5rem;
+  }
 `;
 
 const StyledAuth = styled.div`
@@ -36,6 +40,11 @@ const StyledAuth = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
+
+  a,
+  button {
+    flex-direction: column;
+  }
 `;
 
 const StyledBurgerMenu = styled.div`
@@ -77,15 +86,20 @@ export const Header = () => {
           </StyledShortcuts>
         )}
         <StyledAuth>
-          <Divider sx={{ gridArea: 'divider', borderColor: 'white', opacity: 0.8 }} orientation="vertical" flexItem />
+          <Divider
+            variant="middle"
+            sx={{ gridArea: 'divider', borderColor: 'white', opacity: 0.8 }}
+            orientation="vertical"
+            flexItem
+          />
           {!isMobile && <LanguageSelector />}
           <Button
             color="inherit"
             component={RouterLink}
             data-testid={dataTestId.header.worklistLink}
             to={UrlPathTemplate.Worklist}
-            startIcon={<MailIcon />}>
-            {t('workLists:my_worklist')}
+            startIcon={<AssignmentIcon />}>
+            {t('workLists:worklist')}
           </Button>
           <Button
             color="inherit"
@@ -93,7 +107,7 @@ export const Header = () => {
             data-testid="my-messages"
             to={UrlPathTemplate.MyMessages}
             startIcon={<MailIcon />}>
-            {t('workLists:my_messages')}
+            {t('workLists:messages')}
           </Button>
           <Login />
         </StyledAuth>

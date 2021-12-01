@@ -12,7 +12,7 @@ import {
   Theme,
   useMediaQuery,
 } from '@mui/material';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import AccountCircle from '@mui/icons-material/AccountCircleOutlined';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -61,7 +61,11 @@ export const Menu = ({ handleLogout }: MenuProps) => {
 
   return (
     <StyledMenu>
-      <StyledMenuButton color="inherit" data-testid={dataTestId.header.menuButton} onClick={handleClickMenuAnchor}>
+      <StyledMenuButton
+        color="inherit"
+        data-testid={dataTestId.header.menuButton}
+        onClick={handleClickMenuAnchor}
+        startIcon={<AccountCircle />}>
         <Typography noWrap color="inherit">
           {name}
         </Typography>

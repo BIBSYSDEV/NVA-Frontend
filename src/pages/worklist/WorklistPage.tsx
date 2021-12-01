@@ -9,7 +9,7 @@ const WorklistPage = () => {
 
   return (
     <StyledPageWrapperWithMaxWidth>
-      <PageHeader>{t('my_worklist')}</PageHeader>
+      <PageHeader>{t('worklist')}</PageHeader>
       <MessagesOverview role={RoleName.CURATOR} />
     </StyledPageWrapperWithMaxWidth>
   );
