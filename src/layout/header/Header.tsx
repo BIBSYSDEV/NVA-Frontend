@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { AppBar, Button, Divider, IconButton, Theme, useMediaQuery } from '@mui/material';
+import { AppBar, Box, Button, Divider, IconButton, Theme, useMediaQuery } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import MailIcon from '@mui/icons-material/MailOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -16,30 +16,15 @@ import { MobileMenu } from './MobileMenu';
 import { LanguageSelector } from './LanguageSelector';
 import { dataTestId } from '../../utils/dataTestIds';
 
-const StyledNav = styled.nav`
-  display: grid;
-  grid-template-areas: 'menu logo new-result user-items';
-  grid-template-columns: 1fr 1fr 10fr 3fr;
-  gap: 1rem;
-  align-items: center;
-  padding: 0 1rem;
-`;
-
-const StyledShortcuts = styled.div`
-  grid-area: new-result;
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  a {
-    font-size: 1.5rem;
-  }
-`;
-
 const StyledAuth = styled.div`
   grid-area: user-items;
   display: flex;
   align-items: center;
   gap: 1rem;
+
+  .MuiButton-startIcon {
+    margin: 0;
+  }
 
   a,
   button {
@@ -49,7 +34,6 @@ const StyledAuth = styled.div`
 
 const StyledBurgerMenu = styled.div`
   grid-area: menu;
-  justify-self: left;
 `;
 
 export const Header = () => {
@@ -64,7 +48,21 @@ export const Header = () => {
 
   return (
     <AppBar position="static" elevation={0} sx={{ color: 'white' }}>
-      <StyledNav>
+      <Box
+        component="nav"
+        sx={{
+          display: 'grid',
+          justifyItems: 'center',
+          gridTemplateAreas: {
+            xs: '"menu logo user-items"',
+            md: '"menu logo new-result user-items"',
+          },
+          gridTemplateColumns: { xs: 'auto auto auto', md: '1fr 1fr 10fr 3fr' },
+          gridTemplateRows: 'auto',
+          gap: '1rem',
+          alignItems: 'center',
+          padding: '0 1rem',
+        }}>
         <StyledBurgerMenu>
           <IconButton onClick={handleClick} title={t('common:menu')} size="large" sx={{ color: 'white' }}>
             <MenuIcon fontSize="large" />
@@ -74,44 +72,52 @@ export const Header = () => {
 
         <Logo />
         {user?.isCreator && (
-          <StyledShortcuts>
-            <Button
-              color="inherit"
-              component={RouterLink}
-              data-testid="new-registration"
-              to={getRegistrationPath()}
-              startIcon={<AddCircleIcon />}>
-              {t('new_registration')}
-            </Button>
-          </StyledShortcuts>
+          <Button
+            sx={{
+              gridArea: 'new-result',
+              fontSize: '1.5rem',
+              display: { xs: 'none', md: 'inline-flex' },
+            }}
+            color="inherit"
+            component={RouterLink}
+            data-testid="new-registration"
+            to={getRegistrationPath()}
+            startIcon={<AddCircleIcon />}>
+            {t('new_registration')}
+          </Button>
         )}
         <StyledAuth>
-          <Divider
-            variant="middle"
-            sx={{ gridArea: 'divider', borderColor: 'white', opacity: 0.8 }}
-            orientation="vertical"
-            flexItem
-          />
-          {!isMobile && <LanguageSelector />}
-          <Button
-            color="inherit"
-            component={RouterLink}
-            data-testid={dataTestId.header.worklistLink}
-            to={UrlPathTemplate.Worklist}
-            startIcon={<AssignmentIcon />}>
-            {t('workLists:worklist')}
-          </Button>
-          <Button
-            color="inherit"
-            component={RouterLink}
-            data-testid="my-messages"
-            to={UrlPathTemplate.MyMessages}
-            startIcon={<MailIcon />}>
-            {t('workLists:messages')}
-          </Button>
+          {!isMobile && (
+            <>
+              <Divider
+                variant="middle"
+                sx={{ gridArea: 'divider', borderColor: 'white', opacity: 0.8 }}
+                orientation="vertical"
+                flexItem
+              />
+              <LanguageSelector />
+              <Button
+                color="inherit"
+                component={RouterLink}
+                data-testid={dataTestId.header.worklistLink}
+                to={UrlPathTemplate.Worklist}
+                startIcon={<AssignmentIcon />}>
+                {t('workLists:worklist')}
+              </Button>
+              <Button
+                color="inherit"
+                component={RouterLink}
+                data-testid="my-messages"
+                to={UrlPathTemplate.MyMessages}
+                startIcon={<MailIcon />}>
+                {t('workLists:messages')}
+              </Button>
+            </>
+          )}
+
           <Login />
         </StyledAuth>
-      </StyledNav>
+      </Box>
     </AppBar>
   );
 };

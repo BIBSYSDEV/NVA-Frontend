@@ -7,10 +7,10 @@ import {
   Menu as MuiMenu,
   MenuItem,
   Typography,
-  IconButton,
   Divider,
   Theme,
   useMediaQuery,
+  IconButton,
 } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircleOutlined';
 import { useSelector } from 'react-redux';
@@ -25,15 +25,6 @@ const StyledMenu = styled.div`
 
 const StyledMenuButton = styled(Button)`
   text-transform: none;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    display: none;
-  }
-`;
-
-const StyledMobileMenuButton = styled(IconButton)`
-  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    display: none;
-  }
 `;
 
 const StyledLink = styled(Link)`
@@ -61,18 +52,21 @@ export const Menu = ({ handleLogout }: MenuProps) => {
 
   return (
     <StyledMenu>
-      <StyledMenuButton
-        color="inherit"
-        data-testid={dataTestId.header.menuButton}
-        onClick={handleClickMenuAnchor}
-        startIcon={<AccountCircle />}>
-        <Typography noWrap color="inherit">
-          {name}
-        </Typography>
-      </StyledMenuButton>
-      <StyledMobileMenuButton onClick={handleClickMenuAnchor} title={name}>
-        <AccountCircle />
-      </StyledMobileMenuButton>
+      {isMobile ? (
+        <IconButton onClick={handleClickMenuAnchor} title={name} color="inherit">
+          <AccountCircle fontSize="large" />
+        </IconButton>
+      ) : (
+        <StyledMenuButton
+          color="inherit"
+          data-testid={dataTestId.header.menuButton}
+          onClick={handleClickMenuAnchor}
+          startIcon={<AccountCircle />}>
+          <Typography noWrap color="inherit">
+            {name}
+          </Typography>
+        </StyledMenuButton>
+      )}
       <MuiMenu
         anchorEl={anchorEl}
         keepMounted
@@ -83,9 +77,31 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           horizontal: 'left',
         }}>
         {isMobile && (
-          <MenuItem divider>
-            <LanguageSelector />
-          </MenuItem>
+          <>
+            <MenuItem divider>
+              <LanguageSelector />
+            </MenuItem>
+            {user?.isCurator && (
+              <MenuItem
+                key={dataTestId.header.worklistLink}
+                data-testid={dataTestId.header.worklistLink}
+                onClick={closeMenu}
+                component={StyledLink}
+                to={UrlPathTemplate}>
+                <Typography>{t('workLists:worklist')}</Typography>
+              </MenuItem>
+            )}
+            {user?.isCreator && (
+              <MenuItem
+                key={'dataTestId.header.messagesLink'}
+                data-testid={'dataTestId.header.messagesLink'}
+                onClick={closeMenu}
+                component={StyledLink}
+                to={UrlPathTemplate.MyMessages}>
+                <Typography>{t('workLists:messages')}</Typography>
+              </MenuItem>
+            )}
+          </>
         )}
         {user?.isCreator && [
           <MenuItem
@@ -97,17 +113,17 @@ export const Menu = ({ handleLogout }: MenuProps) => {
             <Typography>{t('workLists:my_registrations')}</Typography>
           </MenuItem>,
         ]}
-        {user?.isEditor && [
+        {user?.isEditor && (
           <MenuItem
+            divider
             key={dataTestId.header.editorLink}
             data-testid={dataTestId.header.editorLink}
             onClick={closeMenu}
             component={StyledLink}
             to={UrlPathTemplate.Editor}>
             <Typography>{t('profile:roles.editor')}</Typography>
-          </MenuItem>,
-          <Divider key="divider0" />,
-        ]}
+          </MenuItem>
+        )}
         {(user?.isAppAdmin || user?.isInstitutionAdmin) && [
           user.isAppAdmin && (
             <MenuItem
