@@ -1,12 +1,13 @@
 import { RoleName } from '../../src/types/user.types';
 import { mockMessages } from '../../src/utils/testfiles/mockRegistration';
+import { dataTestId } from '../../src/utils/dataTestIds';
 
 describe('My messages', () => {
   beforeEach(() => {
     cy.visit('/my-profile');
     cy.mocklogin();
     cy.setUserRolesInRedux([RoleName.CREATOR]);
-    cy.get('[data-testid=my-messages]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.header.messagesLink}]`).click({ force: true });
   });
 
   it('The Creator should be able to view my messages', () => {

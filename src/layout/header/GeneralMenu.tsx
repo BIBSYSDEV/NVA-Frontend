@@ -22,6 +22,7 @@ export const GeneralMenu = ({ anchorEl, onClose }: GeneralMenuProps) => {
 
   return (
     <Menu
+      data-testid={dataTestId.header.generalMenuButton}
       anchorEl={anchorEl}
       keepMounted
       open={!!anchorEl}
@@ -30,11 +31,11 @@ export const GeneralMenu = ({ anchorEl, onClose }: GeneralMenuProps) => {
         vertical: 'bottom',
         horizontal: 'left',
       }}>
-      <MenuItem data-testid={dataTestId.footer.aboutLink} onClick={() => handleClickMenuItem(UrlPathTemplate.About)}>
+      <MenuItem data-testid={dataTestId.header.aboutLink} onClick={() => handleClickMenuItem(UrlPathTemplate.About)}>
         {t('common:about_nva')}
       </MenuItem>
       <MenuItem
-        data-testid={dataTestId.footer.privacyLink}
+        data-testid={dataTestId.header.privacyLink}
         onClick={() => handleClickMenuItem(UrlPathTemplate.PrivacyPolicy)}>
         {t('privacy:privacy_statement')}
       </MenuItem>

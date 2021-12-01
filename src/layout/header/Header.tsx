@@ -101,7 +101,7 @@ export const Header = () => {
               <Button
                 color="inherit"
                 component={RouterLink}
-                data-testid="my-messages"
+                data-testid={dataTestId.header.messagesLink}
                 to={UrlPathTemplate.MyMessages}
                 startIcon={<MailIcon />}>
                 {t('workLists:messages')}

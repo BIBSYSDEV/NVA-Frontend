@@ -9,7 +9,7 @@ describe('User opens registration form and can see validation errors', () => {
   before('Given that the user is logged in as Creator:', () => {
     cy.visit('/');
     cy.mocklogin();
-    cy.get('[data-testid=my-registrations]').click({ force: true });
+    cy.get('[data-testid=my-registrations-link]').click({ force: true });
     cy.get('[data-testid=edit-registration-4327439]').click({ force: true });
   });
 

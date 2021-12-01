@@ -93,8 +93,8 @@ export const Menu = ({ handleLogout }: MenuProps) => {
             )}
             {user?.isCreator && (
               <MenuItem
-                key={'dataTestId.header.messagesLink'}
-                data-testid={'dataTestId.header.messagesLink'}
+                key={dataTestId.header.messagesLink}
+                data-testid={dataTestId.header.messagesLink}
                 onClick={closeMenu}
                 component={StyledLink}
                 to={UrlPathTemplate.MyMessages}>
@@ -105,8 +105,8 @@ export const Menu = ({ handleLogout }: MenuProps) => {
         )}
         {user?.isCreator && [
           <MenuItem
-            key={'dataTestId.header.myRegistrationsLink'}
-            data-testid={'dataTestId.header.myRegistrationsLink'}
+            key={dataTestId.header.myRegistrationsLink}
+            data-testid={dataTestId.header.myRegistrationsLink}
             onClick={closeMenu}
             component={StyledLink}
             to={UrlPathTemplate.MyRegistrations}>
