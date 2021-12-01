@@ -29,7 +29,7 @@ export const Login = () => {
   };
 
   return user ? (
-    <Menu menuButtonLabel={user.name} handleLogout={handleLogoutWrapper} />
+    <Menu handleLogout={handleLogoutWrapper} />
   ) : isLoading ? (
     <LoadingButton variant="contained" color="secondary" loading>
       {t('common:loading')}

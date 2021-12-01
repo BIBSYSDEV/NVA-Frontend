@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Menu, MenuItem } from '@mui/material';
 import LanguageIcon from '@mui/icons-material/Language';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { LanguageCodes } from '../../types/language.types';
 import { dataTestId } from '../../utils/dataTestIds';
 
@@ -22,7 +20,6 @@ export const LanguageSelector = () => {
         color="inherit"
         data-testid={dataTestId.header.languageButton}
         startIcon={<LanguageIcon />}
-        endIcon={anchorEl ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         onClick={(event) => setAnchorEl(event.currentTarget)}>
         {i18n.language === LanguageCodes.NORWEGIAN_BOKMAL ? t('languages:nor') : t(`languages:${i18n.language}`)}
       </Button>

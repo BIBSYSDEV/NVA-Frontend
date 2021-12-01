@@ -1,4 +1,4 @@
-import { useState, MouseEvent, useRef } from 'react';
+import { useState, MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -12,8 +12,6 @@ import {
   Theme,
   useMediaQuery,
 } from '@mui/material';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -22,7 +20,7 @@ import { LanguageSelector } from './LanguageSelector';
 import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledMenu = styled.div`
-  grid-area: menu;
+  grid-area: user-items;
 `;
 
 const StyledMenuButton = styled(Button)`
@@ -46,15 +44,14 @@ const StyledLink = styled(Link)`
 
 interface MenuProps {
   handleLogout: () => void;
-  menuButtonLabel: string;
 }
 
-export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
+export const Menu = ({ handleLogout }: MenuProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootStore) => store.user);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const divRef = useRef<any>();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+  const name = user?.name ?? '';
 
   const handleClickMenuAnchor = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -63,22 +60,17 @@ export const Menu = ({ menuButtonLabel, handleLogout }: MenuProps) => {
   const closeMenu = () => setAnchorEl(null);
 
   return (
-    <StyledMenu ref={divRef}>
-      <StyledMenuButton
-        color="inherit"
-        data-testid={dataTestId.header.menuButton}
-        onClick={handleClickMenuAnchor}
-        endIcon={anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}>
+    <StyledMenu>
+      <StyledMenuButton color="inherit" data-testid={dataTestId.header.menuButton} onClick={handleClickMenuAnchor}>
         <Typography noWrap color="inherit">
-          {menuButtonLabel}
+          {name}
         </Typography>
       </StyledMenuButton>
-      <StyledMobileMenuButton onClick={handleClickMenuAnchor} title={menuButtonLabel}>
+      <StyledMobileMenuButton onClick={handleClickMenuAnchor} title={name}>
         <AccountCircle />
       </StyledMobileMenuButton>
       <MuiMenu
         anchorEl={anchorEl}
-        container={divRef.current}
         keepMounted
         open={!!anchorEl}
         onClose={() => setAnchorEl(null)}
