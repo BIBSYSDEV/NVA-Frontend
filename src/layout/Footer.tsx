@@ -1,31 +1,19 @@
-import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Typography } from '@mui/material';
-import logo from '../resources/images/unit_logo.png';
-
-const StyledFooter = styled.footer`
-  display: grid;
-  grid-template-areas: 'about logo privacy';
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
-  justify-items: center;
-  min-height: 4rem;
-  background: ${({ theme }) => theme.palette.background.paper};
-`;
-
-const StyledLogoContainer = styled.div`
-  grid-area: logo;
-`;
+import { Box, Typography } from '@mui/material';
 
 export const Footer = () => {
-  const { t } = useTranslation('privacy');
+  const { t } = useTranslation('about');
 
   return (
-    <StyledFooter>
-      <StyledLogoContainer>
-        <Typography>{t('common:delivered_by')}</Typography>
-        <img src={logo} alt="UNIT logo" />
-      </StyledLogoContainer>
-    </StyledFooter>
+    <Box
+      sx={{
+        padding: '1rem',
+        bgcolor: 'background.paper',
+        display: 'flex',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+      }}>
+      <Typography>{t('footer_text')}</Typography>
+    </Box>
   );
 };
