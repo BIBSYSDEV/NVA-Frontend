@@ -18,6 +18,7 @@ export const dataTestId = {
     messagesLink: 'messages-link',
     myProfileLink: 'my-profile-link',
     myRegistrationsLink: 'my-registrations-link',
+    newRegistrationLink: 'new-registration',
     privacyLink: 'privacy-link',
     worklistLink: 'worklist-link',
   },

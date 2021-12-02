@@ -37,10 +37,8 @@ export const Header = () => {
             md: '"other-menu logo new-result user-menu"',
           },
           gridTemplateColumns: { xs: 'auto auto auto', md: '1fr 1fr 10fr 5fr' },
-          gridTemplateRows: 'auto',
           gap: '1rem',
-          alignItems: 'center',
-          padding: '0 1rem',
+          px: '1rem',
         }}>
         <IconButton
           onClick={handleClick}
@@ -62,7 +60,7 @@ export const Header = () => {
             }}
             color="inherit"
             component={RouterLink}
-            data-testid="new-registration"
+            data-testid={dataTestId.header.newRegistrationLink}
             to={getRegistrationPath()}
             startIcon={<AddCircleIcon />}>
             {t('new_registration')}
