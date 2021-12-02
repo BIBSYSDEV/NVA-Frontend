@@ -76,33 +76,31 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        {isMobile && (
-          <>
-            <MenuItem divider>
-              <LanguageSelector />
+        {isMobile && [
+          <MenuItem divider key={dataTestId.header.languageButton}>
+            <LanguageSelector />
+          </MenuItem>,
+          user?.isCurator && (
+            <MenuItem
+              key={dataTestId.header.worklistLink}
+              data-testid={dataTestId.header.worklistLink}
+              onClick={closeMenu}
+              component={StyledLink}
+              to={UrlPathTemplate}>
+              <Typography>{t('workLists:worklist')}</Typography>
             </MenuItem>
-            {user?.isCurator && (
-              <MenuItem
-                key={dataTestId.header.worklistLink}
-                data-testid={dataTestId.header.worklistLink}
-                onClick={closeMenu}
-                component={StyledLink}
-                to={UrlPathTemplate}>
-                <Typography>{t('workLists:worklist')}</Typography>
-              </MenuItem>
-            )}
-            {user?.isCreator && (
-              <MenuItem
-                key={dataTestId.header.messagesLink}
-                data-testid={dataTestId.header.messagesLink}
-                onClick={closeMenu}
-                component={StyledLink}
-                to={UrlPathTemplate.MyMessages}>
-                <Typography>{t('workLists:messages')}</Typography>
-              </MenuItem>
-            )}
-          </>
-        )}
+          ),
+          user?.isCreator && (
+            <MenuItem
+              key={dataTestId.header.messagesLink}
+              data-testid={dataTestId.header.messagesLink}
+              onClick={closeMenu}
+              component={StyledLink}
+              to={UrlPathTemplate.MyMessages}>
+              <Typography>{t('workLists:messages')}</Typography>
+            </MenuItem>
+          ),
+        ]}
         {user?.isCreator && [
           <MenuItem
             key={dataTestId.header.myRegistrationsLink}
