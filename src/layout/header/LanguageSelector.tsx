@@ -5,7 +5,11 @@ import LanguageIcon from '@mui/icons-material/Language';
 import { LanguageCodes } from '../../types/language.types';
 import { dataTestId } from '../../utils/dataTestIds';
 
-export const LanguageSelector = () => {
+interface LanguageSelectorProps {
+  isMobile?: boolean;
+}
+
+export const LanguageSelector = ({ isMobile }: LanguageSelectorProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const { t, i18n } = useTranslation();
 
@@ -18,7 +22,7 @@ export const LanguageSelector = () => {
     <>
       <Button
         color="inherit"
-        fullWidth
+        fullWidth={!!isMobile}
         data-testid={dataTestId.header.languageButton}
         startIcon={<LanguageIcon />}
         onClick={(event) => setAnchorEl(event.currentTarget)}>

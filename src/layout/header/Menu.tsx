@@ -78,7 +78,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
         }}>
         {isMobile && [
           <MenuItem divider key={dataTestId.header.languageButton}>
-            <LanguageSelector />
+            <LanguageSelector isMobile={true} />
           </MenuItem>,
           user?.isCurator && (
             <MenuItem
