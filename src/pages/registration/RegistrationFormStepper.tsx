@@ -34,7 +34,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
     const highestValidatedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
 
     if (tabNumber > highestValidatedTab) {
-      locationState.highestValidatedTab = tabNumber;
+      locationState.highestValidatedTab = tabNumber - 1; // Validate up to current tab
 
       // Set fields on previous tabs to touched
       const touchedFieldsOnMount = getTouchedTabFields(tabNumber - 1, valuesRef.current);
@@ -43,6 +43,9 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
 
     // Set fields on current tab to touched
     return () => {
+      if (tabNumber > highestValidatedTab) {
+        locationState.highestValidatedTab = tabNumber; // Validate current tab
+      }
       const touchedFieldsOnUnmount = getTouchedTabFields(tabNumber, valuesRef.current);
       setTouched(mergeTouchedFields([touchedRef.current, touchedFieldsOnUnmount]));
     };
@@ -57,7 +60,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
 
   return isMobile ? null : (
     <Stepper nonLinear activeStep={tabNumber}>
-      <Step completed={maxVisitedTab > RegistrationTab.Description && !descriptionTabHasError}>
+      <Step completed={maxVisitedTab >= RegistrationTab.Description && !descriptionTabHasError}>
         <StepButton
           data-testid={dataTestId.registrationWizard.stepper.descriptionStepButton}
           onClick={() => setTabNumber(RegistrationTab.Description)}>
@@ -68,7 +71,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
           </StepLabel>
         </StepButton>
       </Step>
-      <Step completed={maxVisitedTab > RegistrationTab.ResourceType && !resourceTabHasError}>
+      <Step completed={maxVisitedTab >= RegistrationTab.ResourceType && !resourceTabHasError}>
         <StepButton
           data-testid={dataTestId.registrationWizard.stepper.resourceStepButton}
           onClick={() => setTabNumber(RegistrationTab.ResourceType)}>
@@ -79,7 +82,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
           </StepLabel>
         </StepButton>
       </Step>
-      <Step completed={maxVisitedTab > RegistrationTab.Contributors && !contributorTabHasError}>
+      <Step completed={maxVisitedTab >= RegistrationTab.Contributors && !contributorTabHasError}>
         <StepButton
           data-testid={dataTestId.registrationWizard.stepper.contributorsStepButton}
           onClick={() => setTabNumber(RegistrationTab.Contributors)}>
@@ -90,7 +93,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
           </StepLabel>
         </StepButton>
       </Step>
-      <Step completed={maxVisitedTab > RegistrationTab.FilesAndLicenses && !fileTabHasError}>
+      <Step completed={maxVisitedTab >= RegistrationTab.FilesAndLicenses && !fileTabHasError}>
         <StepButton
           data-testid={dataTestId.registrationWizard.stepper.filesStepButton}
           onClick={() => setTabNumber(RegistrationTab.FilesAndLicenses)}>
