@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { CustomerVocabulary, VocabularyStatus } from '../../types/customerInstitution.types';
-import { getTranslatedVocabularyName } from './EditorPage';
+import { getTranslatedVocabularyName } from './VocabularySettings';
 
 const StyledVocabularyRow = styled.div`
   margin-top: 1rem;
