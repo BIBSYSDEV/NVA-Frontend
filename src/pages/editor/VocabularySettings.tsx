@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { TFunction, useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { authenticatedApiRequest } from '../../api/apiRequest';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { VocabularyList, CustomerVocabulary, VocabularyStatus } from '../../types/customerInstitution.types';
@@ -90,12 +91,9 @@ export const VocabularySettings = () => {
   };
 
   return (
-    <>
+    <BackgroundDiv>
       <Typography variant="h2">{t('select_vocabulary')}</Typography>
       <Typography gutterBottom>{t('select_vocabulary_description')}</Typography>
-      <Typography>{t('default_description')}</Typography>
-      <Typography>{t('allowed_description')}</Typography>
-      <Typography>{t('disabled_description')}</Typography>
 
       {isLoadingVocabularyList ? (
         <CircularProgress />
@@ -119,6 +117,9 @@ export const VocabularySettings = () => {
           </>
         )
       )}
-    </>
+      <Typography>{t('default_description')}</Typography>
+      <Typography>{t('allowed_description')}</Typography>
+      <Typography>{t('disabled_description')}</Typography>
+    </BackgroundDiv>
   );
 };

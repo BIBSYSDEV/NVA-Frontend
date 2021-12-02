@@ -1,13 +1,9 @@
-import { ToggleButtonGroup, ToggleButton, Typography, CircularProgress } from '@mui/material';
+import { ToggleButtonGroup, ToggleButton, Typography, CircularProgress, Box } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { CustomerVocabulary, VocabularyStatus } from '../../types/customerInstitution.types';
 import { getTranslatedVocabularyName } from './VocabularySettings';
-
-const StyledVocabularyRow = styled.div`
-  margin-top: 1rem;
-`;
 
 const StyledButtonRow = styled.div`
   display: flex;
@@ -31,10 +27,16 @@ export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId, disa
   const [isUpdating, setIsUpdating] = useState(false);
 
   return (
-    <StyledVocabularyRow>
-      <Typography variant="h3" gutterBottom>
-        {getTranslatedVocabularyName(t, vocabulary.id)}
-      </Typography>
+    <Box
+      sx={{
+        padding: '1rem',
+        bgcolor: 'background.default',
+        '&:nth-of-type(odd)': {
+          bgcolor: '#f3f0ed',
+        },
+        display: 'flex',
+        alignItems: 'center',
+      }}>
       <StyledButtonRow>
         <ToggleButtonGroup
           data-testid={dataTestId}
@@ -55,6 +57,9 @@ export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId, disa
         </ToggleButtonGroup>
         {isUpdating && <CircularProgress />}
       </StyledButtonRow>
-    </StyledVocabularyRow>
+      <Typography variant="h3" gutterBottom>
+        {getTranslatedVocabularyName(t, vocabulary.id)}
+      </Typography>
+    </Box>
   );
 };

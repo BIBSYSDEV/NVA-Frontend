@@ -2,9 +2,9 @@
   "default": "Standard",
   "default_description": "$t(default): Vises som standard for alle registreringer",
   "disabled": "Ikke tillatt",
-  "disabled_description": "$t(disabled): Kan ikke legges til",
+  "disabled_description": "$t(disabled): Er ikke tilgjengelig",
   "allowed": "Tillatt",
-  "allowed_description": "$t(allowed): Kan legges til selv av brukere",
+  "allowed_description": "$t(allowed): Kan legges til av brukeren selv",
   "select_vocabulary": "Velg vokabular",
-  "select_vocabulary_description": "Sett innstillinger for kontrollerte vokabular i din institusjon."
+  "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat."
 }
