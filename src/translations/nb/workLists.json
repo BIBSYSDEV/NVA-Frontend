@@ -3,9 +3,8 @@
   "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
   "go_to_public_profile": "Min offentlige profil",
   "go_to_registration": "Gå til registrering",
-  "my_messages": "Mine meldinger",
+  "messages": "Meldinger",
   "my_registrations": "Mine registreringer",
-  "my_worklist": "Min arbeidsliste",
   "no_messages": "Du har ingen meldinger",
   "no_pending_registrations": "Du har ingen registreringer som venter på godkjenning",
   "published_registrations": "Publiserte registreringer",
@@ -14,5 +13,6 @@
     "doi": "DOI-forespørsel",
     "support": "Brukerstøtte"
   },
-  "unpublished_registrations": "Upubliserte registreringer"
+  "unpublished_registrations": "Upubliserte registreringer",
+  "worklist": "Arbeidsliste"
 }

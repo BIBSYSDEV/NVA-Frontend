@@ -6,7 +6,7 @@ describe('User opens an item in the My Registrations list', () => {
 
   it('The User should be able to edit an item in the My Registrations list', () => {
     // Open My Registrations
-    cy.get('[data-testid=my-registrations]').click({ force: true });
+    cy.get('[data-testid=my-registrations-link]').click({ force: true });
 
     // Edit registration
     // Description tab
