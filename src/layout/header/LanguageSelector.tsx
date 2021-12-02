@@ -18,6 +18,7 @@ export const LanguageSelector = () => {
     <>
       <Button
         color="inherit"
+        fullWidth
         data-testid={dataTestId.header.languageButton}
         startIcon={<LanguageIcon />}
         onClick={(event) => setAnchorEl(event.currentTarget)}>
