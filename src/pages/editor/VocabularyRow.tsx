@@ -1,4 +1,4 @@
-import { ToggleButtonGroup, ToggleButton, Typography, Box } from '@mui/material';
+import { ToggleButtonGroup, ToggleButton, Typography, Box, SxProps } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -13,6 +13,8 @@ const StyledButtonRow = styled.div`
     margin-right: 1rem;
   }
 `;
+
+const toggleButtonSx: SxProps = { width: '6rem' };
 
 interface VocabularyRowProps {
   vocabulary: CustomerVocabulary;
@@ -39,6 +41,7 @@ export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId, disa
       }}>
       <StyledButtonRow>
         <ToggleButtonGroup
+          size="small"
           data-testid={dataTestId}
           color="primary"
           disabled={disabled || isUpdating}
@@ -51,9 +54,15 @@ export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId, disa
               setIsUpdating(false);
             }
           }}>
-          <ToggleButton value={VocabularyStatus.Default}>{t('default')}</ToggleButton>
-          <ToggleButton value={VocabularyStatus.Allowed}>{t('allowed')}</ToggleButton>
-          <ToggleButton value={VocabularyStatus.Disabled}>{t('disabled')}</ToggleButton>
+          <ToggleButton sx={toggleButtonSx} value={VocabularyStatus.Default}>
+            {t('default')}
+          </ToggleButton>
+          <ToggleButton sx={toggleButtonSx} value={VocabularyStatus.Allowed}>
+            {t('allowed')}
+          </ToggleButton>
+          <ToggleButton sx={toggleButtonSx} value={VocabularyStatus.Disabled}>
+            {t('disabled')}
+          </ToggleButton>
         </ToggleButtonGroup>
       </StyledButtonRow>
       <Typography>{getTranslatedVocabularyName(t, vocabulary.id)}</Typography>

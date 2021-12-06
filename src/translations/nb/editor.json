@@ -1,10 +1,12 @@
 {
+  "allowed": "Tillatt",
+  "allowed_description": "$t(allowed): Kan legges til av brukeren selv",
   "default": "Standard",
   "default_description": "$t(default): Vises som standard for alle registreringer",
   "disabled": "Ikke tillatt",
   "disabled_description": "$t(disabled): Er ikke tilgjengelig",
-  "allowed": "Tillatt",
-  "allowed_description": "$t(allowed): Kan legges til av brukeren selv",
-  "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat.",
+  "hrcs_activity": "Health Research Classification System - Activity",
+  "hrcs_categories": "Health Research Classification System - Categories",
+  "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
   "vocabulary": "Vokabular"
 }

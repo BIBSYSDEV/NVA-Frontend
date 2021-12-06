@@ -28,9 +28,9 @@ const defaultHrcsCategory: CustomerVocabulary = {
 
 export const getTranslatedVocabularyName = (t: TFunction<'editor'>, id: string) =>
   id === defaultHrcsActivity.id
-    ? t('registration:description.hrcs_activities')
+    ? t('editor:hrcs_activity')
     : id === defaultHrcsCategory.id
-    ? t('registration:description.hrcs_categories')
+    ? t('editor:hrcs_categories')
     : '';
 
 export const VocabularySettings = () => {
@@ -91,7 +91,7 @@ export const VocabularySettings = () => {
 
   return (
     <>
-      <Typography paragraph color="primary">
+      <Typography paragraph color="primary" fontWeight="600">
         {t('select_vocabulary_description')}
       </Typography>
 

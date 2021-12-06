@@ -1,10 +1,12 @@
 {
+  "allowed": "Allowed",
+  "allowed_description": "$t(allowed): Can be added by the user",
   "default": "Default",
   "default_description": "$t(default): Shown by default for all registrations",
   "disabled": "Disabled",
   "disabled_description": "$t(disabled): Is not available",
-  "allowed": "Allowed",
-  "allowed_description": "$t(allowed): Can be added by the user",
-  "select_vocabulary_description": "Activate controlled vocabularies for registrating new results.",
+  "hrcs_activity": "Health Research Classification System - Activity",
+  "hrcs_categories": "Health Research Classification System - Categories",
+  "select_vocabulary_description": "Activate controlled vocabularies for registration of new results",
   "vocabulary": "Vocabulary"
 }
