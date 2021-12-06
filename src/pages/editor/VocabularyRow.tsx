@@ -1,4 +1,4 @@
-import { ToggleButtonGroup, ToggleButton, Typography, CircularProgress, Box } from '@mui/material';
+import { ToggleButtonGroup, ToggleButton, Typography, Box } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -55,7 +55,6 @@ export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId, disa
           <ToggleButton value={VocabularyStatus.Allowed}>{t('allowed')}</ToggleButton>
           <ToggleButton value={VocabularyStatus.Disabled}>{t('disabled')}</ToggleButton>
         </ToggleButtonGroup>
-        {isUpdating && <CircularProgress />}
       </StyledButtonRow>
       <Typography variant="h3" gutterBottom>
         {getTranslatedVocabularyName(t, vocabulary.id)}

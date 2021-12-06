@@ -117,9 +117,11 @@ export const VocabularySettings = () => {
           </>
         )
       )}
-      <Typography>{t('default_description')}</Typography>
-      <Typography>{t('allowed_description')}</Typography>
-      <Typography>{t('disabled_description')}</Typography>
+      <Typography gutterBottom mt="1rem">
+        {t('default_description')}
+      </Typography>
+      <Typography gutterBottom>{t('allowed_description')}</Typography>
+      <Typography gutterBottom>{t('disabled_description')}</Typography>
     </BackgroundDiv>
   );
 };
