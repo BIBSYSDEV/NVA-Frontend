@@ -56,9 +56,7 @@ export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId, disa
           <ToggleButton value={VocabularyStatus.Disabled}>{t('disabled')}</ToggleButton>
         </ToggleButtonGroup>
       </StyledButtonRow>
-      <Typography variant="h3" gutterBottom>
-        {getTranslatedVocabularyName(t, vocabulary.id)}
-      </Typography>
+      <Typography>{getTranslatedVocabularyName(t, vocabulary.id)}</Typography>
     </Box>
   );
 };

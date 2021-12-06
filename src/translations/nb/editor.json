@@ -5,6 +5,6 @@
   "disabled_description": "$t(disabled): Er ikke tilgjengelig",
   "allowed": "Tillatt",
   "allowed_description": "$t(allowed): Kan legges til av brukeren selv",
-  "select_vocabulary": "Velg vokabular",
-  "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat."
+  "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat.",
+  "vocabulary": "Vokabular"
 }
