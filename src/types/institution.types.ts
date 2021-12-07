@@ -1,3 +1,5 @@
+import { LanguageString } from './common.types';
+
 export interface InstitutionUnitBase {
   acronym?: string;
   name: string;
@@ -21,4 +23,15 @@ export enum FormikInstitutionUnitFieldNames {
 export interface InstitutionState {
   items: InstitutionUnitBase[];
   language?: string;
+}
+
+export interface Organization {
+  id: string;
+  name: LanguageString;
+  partOf?: Organization[];
+  hasPart?: Organization[];
+}
+
+export interface OrganizationsResponse {
+  hits: Organization[];
 }

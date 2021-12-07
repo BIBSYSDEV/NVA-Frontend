@@ -1,9 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Typography } from '@mui/material';
-import { getUnitHierarchyNames } from '../../utils/institutions-helpers';
 import { AffiliationSkeleton } from './AffiliationSkeleton';
-import { useFetchDepartment } from '../../utils/hooks/useFetchDepartment';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { getLanguageString } from '../../utils/translation-helpers';
+import { getUnitHierarchy } from '../../utils/institutions-helpers';
+import { Organization } from '../../types/institution.types';
 
 const StyledTypography = styled(Typography)`
   font-weight: bold;
@@ -24,20 +26,23 @@ export const AffiliationHierarchy = ({
   commaSeparated = false,
   boldTopLevel = true,
 }: AffiliationHierarchyProps) => {
-  const [department, isLoadingDepartment] = useFetchDepartment(unitUri);
-  const unitHierarchyNames = getUnitHierarchyNames(unitUri, department);
   const { t } = useTranslation('feedback');
+
+  const [department, isLoadingDepartment] = useFetch<Organization>({ url: unitUri });
+  const unitNames = getUnitHierarchy(department)
+    .map((unit) => getLanguageString(unit.name))
+    .reverse();
 
   return isLoadingDepartment ? (
     <AffiliationSkeleton commaSeparated={commaSeparated} />
   ) : department ? (
     commaSeparated ? (
       <i>
-        <Typography>{unitHierarchyNames.join(', ')}</Typography>
+        <Typography>{unitNames.join(', ')}</Typography>
       </i>
     ) : (
       <div>
-        {unitHierarchyNames.map((unitName, index) =>
+        {unitNames.map((unitName, index) =>
           index === 0 && boldTopLevel ? (
             <StyledTypography key={unitName + index}>{unitName}</StyledTypography>
           ) : (

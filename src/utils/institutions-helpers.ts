@@ -1,5 +1,5 @@
 import { Contributor } from '../types/contributor.types';
-import { FormikInstitutionUnit, InstitutionUnitBase, RecursiveInstitutionUnit } from '../types/institution.types';
+import { FormikInstitutionUnit, InstitutionUnitBase, Organization } from '../types/institution.types';
 
 // Find the most specific unit in hierarchy
 export const getMostSpecificUnit = (values: FormikInstitutionUnit): InstitutionUnitBase => {
@@ -19,22 +19,15 @@ export const getDistinctContributorUnits = (contributors: Contributor[]) => {
   return [...new Set(unitIds)];
 };
 
-// Returns top-down unit names: ["Level1", "Level2", (etc.)]
-export const getUnitHierarchyNames = (
-  queryId: string,
-  unit?: RecursiveInstitutionUnit,
-  unitNames: string[] = []
-): string[] => {
+export const getUnitHierarchy = (unit?: Organization, units: Organization[] = []) => {
   if (!unit) {
-    return unitNames;
+    return [];
   }
-  unitNames.push(unit.name);
-
-  if (queryId === unit.id || queryId === convertToInstitution(unit.id) || !unit.subunits) {
-    return unitNames;
-  } else {
-    return getUnitHierarchyNames(queryId, unit.subunits[0], unitNames);
+  units.push(unit);
+  if (unit.partOf) {
+    getUnitHierarchy(unit.partOf[0], units);
   }
+  return units;
 };
 
 // converts from https://api.cristin.no/v2/units/7482.3.3.0
