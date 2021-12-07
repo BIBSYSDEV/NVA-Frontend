@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-
 import { InstitutionUnitBase } from '../../types/institution.types';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { useFetch } from './useFetch';
