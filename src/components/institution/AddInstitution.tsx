@@ -43,10 +43,11 @@ export const AddInstitution = ({ onSubmit, onClose }: AddInstitutionProps) => {
         <Form noValidate>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <Field name={FormikInstitutionUnitFieldNames.Unit}>
-              {({ field, form: { setFieldValue } }: FieldProps) => (
+              {({ field, form: { setFieldValue } }: FieldProps<Organization>) => (
                 <Autocomplete
                   {...field}
                   options={options}
+                  inputValue={field.value ? getLanguageString(field.value.name) : searchTerm}
                   getOptionLabel={(option) => getLanguageString(option.name)}
                   filterOptions={(options) => options}
                   onInputChange={(_, value, reason) => {
@@ -57,14 +58,14 @@ export const AddInstitution = ({ onSubmit, onClose }: AddInstitutionProps) => {
                   onChange={(_, value) => setFieldValue(field.name, value)}
                   loading={isLoadingInstitutions}
                   renderInput={(params) => (
-                    <TextField {...params} label={t('common:institution')} variant="filled" fullWidth />
+                    <TextField {...params} label={t('institution')} variant="filled" fullWidth />
                   )}
                 />
               )}
             </Field>
             {values.unit?.hasPart && (
               <Field name={FormikInstitutionUnitFieldNames.SubUnit}>
-                {({ field, form: { setFieldValue } }: FieldProps) => (
+                {({ field, form: { setFieldValue } }: FieldProps<Organization>) => (
                   <Autocomplete
                     options={values.unit?.hasPart ?? []}
                     getOptionLabel={(option) => getLanguageString(option.name)}
@@ -87,7 +88,7 @@ export const AddInstitution = ({ onSubmit, onClose }: AddInstitutionProps) => {
                 variant="contained"
                 type="submit"
                 loading={isSubmitting}
-                disabled={!values.unit || isLoadingInstitutions}
+                disabled={!values.unit}
                 data-testid="institution-add-button">
                 {t('add')}
               </LoadingButton>
