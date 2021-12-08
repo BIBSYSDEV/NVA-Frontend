@@ -116,11 +116,10 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
       if (!downloadFileResponse) {
         dispatch(setNotification(t('feedback:error.download_file'), NotificationVariant.Error));
       } else {
-        const { presignedDownloadUrl } = downloadFileResponse;
         if (previewFile) {
-          setPreviewFileUrl(presignedDownloadUrl);
+          setPreviewFileUrl(downloadFileResponse.id);
         } else {
-          window.open(presignedDownloadUrl, '_blank');
+          window.open(downloadFileResponse.id, '_blank');
         }
       }
       previewFile && setIsLoadingPreviewFile(false);
