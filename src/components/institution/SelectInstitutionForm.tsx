@@ -7,6 +7,7 @@ import { FormikInstitutionUnitFieldNames, Organization, OrganizationsResponse } 
 import { useDebounce } from '../../utils/hooks/useDebounce';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getLanguageString } from '../../utils/translation-helpers';
+import { getAllChildOrganizations } from '../../utils/institutions-helpers';
 
 interface OrganizationForm {
   unit: Organization | null;
@@ -63,15 +64,11 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
                 />
               )}
             </Field>
-            {values.unit?.hasPart && (
+            {values.unit?.hasPart && values.unit.hasPart.length > 0 && (
               <Field name={FormikInstitutionUnitFieldNames.SubUnit}>
                 {({ field, form: { setFieldValue } }: FieldProps<Organization>) => (
                   <Autocomplete
-                    options={
-                      values.unit?.hasPart?.sort((a, b) =>
-                        getLanguageString(a.name) < getLanguageString(b.name) ? -1 : 1
-                      ) ?? []
-                    }
+                    options={getAllChildOrganizations(values.unit)}
                     getOptionLabel={(option) => getLanguageString(option.name)}
                     onChange={(_, value) => setFieldValue(field.name, value)}
                     filterOptions={(options, state) =>

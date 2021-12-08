@@ -5,6 +5,7 @@ import {
   Organization,
   RecursiveInstitutionUnit,
 } from '../types/institution.types';
+import { getLanguageString } from './translation-helpers';
 
 // Find the most specific unit in hierarchy
 export const getMostSpecificUnit = (values: FormikInstitutionUnit): InstitutionUnitBase => {
@@ -51,6 +52,22 @@ export const getNewUnitHierarchy = (unit?: Organization, units: Organization[] =
     getNewUnitHierarchy(unit.partOf[0], units);
   }
   return units;
+};
+
+export const getAllChildOrganizations = (organization: Organization | null, organizations: Organization[] = []) => {
+  if (!organization) {
+    return [];
+  }
+  if (organization.hasPart && organization.hasPart.length > 0) {
+    for (const subUnit of organization.hasPart) {
+      organizations.push(subUnit);
+      if (subUnit.hasPart && subUnit.hasPart.length > 0) {
+        getNewUnitHierarchy(subUnit, organizations);
+      }
+    }
+  }
+  const result = organizations.sort((a, b) => (getLanguageString(a.name) < getLanguageString(b.name) ? -1 : 1));
+  return result;
 };
 
 // converts from https://api.cristin.no/v2/units/7482.3.3.0
