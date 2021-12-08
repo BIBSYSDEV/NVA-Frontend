@@ -1,5 +1,10 @@
 import { Contributor } from '../types/contributor.types';
-import { FormikInstitutionUnit, InstitutionUnitBase, RecursiveInstitutionUnit } from '../types/institution.types';
+import {
+  FormikInstitutionUnit,
+  InstitutionUnitBase,
+  Organization,
+  RecursiveInstitutionUnit,
+} from '../types/institution.types';
 
 // Find the most specific unit in hierarchy
 export const getMostSpecificUnit = (values: FormikInstitutionUnit): InstitutionUnitBase => {
@@ -35,6 +40,17 @@ export const getUnitHierarchyNames = (
   } else {
     return getUnitHierarchyNames(queryId, unit.subunits[0], unitNames);
   }
+};
+
+export const getNewUnitHierarchy = (unit?: Organization, units: Organization[] = []) => {
+  if (!unit) {
+    return [];
+  }
+  units.push(unit);
+  if (unit.partOf) {
+    getNewUnitHierarchy(unit.partOf[0], units);
+  }
+  return units;
 };
 
 // converts from https://api.cristin.no/v2/units/7482.3.3.0
