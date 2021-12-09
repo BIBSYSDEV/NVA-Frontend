@@ -45,6 +45,11 @@ const MyCustomerInstitutionPage = () => {
     }
   };
 
+  const initialValues: CustomerInstitution = {
+    ...emptyCustomerInstitution,
+    ...customerInstitution,
+  };
+
   return (
     <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('common:my_institution')}</PageHeader>
@@ -54,7 +59,7 @@ const MyCustomerInstitutionPage = () => {
         ) : (
           <Formik
             enableReinitialize
-            initialValues={{ ...emptyCustomerInstitution, ...customerInstitution }}
+            initialValues={initialValues}
             validateOnChange
             validationSchema={myInstitutionValidationSchema}
             onSubmit={handleSubmit}>

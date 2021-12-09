@@ -5,7 +5,7 @@ import i18n from '../../translations/i18n';
 const customerErrorMessage = {
   displayNameRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('admin:display_name') }),
   feideIdRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('admin:feide_organization_id') }),
-  institutionRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('admin:institution') }),
+  institutionRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('common:institution') }),
   shortNameRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('admin:short_name') }),
 };
 
