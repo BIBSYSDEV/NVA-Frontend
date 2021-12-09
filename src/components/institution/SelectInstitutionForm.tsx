@@ -8,6 +8,7 @@ import { useDebounce } from '../../utils/hooks/useDebounce';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { getAllChildOrganizations } from '../../utils/institutions-helpers';
+import { InstitutionApiPath } from '../../api/apiPaths';
 
 interface OrganizationForm {
   unit: Organization | null;
@@ -29,7 +30,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
   const [institutions, isLoadingInstitutions] = useFetch<OrganizationsResponse>({
-    url: debouncedQuery ? `/cristin/organization?query=${debouncedQuery}` : '',
+    url: debouncedQuery ? `${InstitutionApiPath.Organization}?query=${debouncedQuery}` : '',
     errorMessage: t('feedback:error.get_institutions'),
   });
 
@@ -40,11 +41,11 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
     <Formik
       initialValues={initialValuesOrganizationForm}
       onSubmit={(values) => onSubmit(values.subunit?.id ?? values.unit?.id ?? '')}>
-      {({ isSubmitting, values }: FormikProps<OrganizationForm>) => (
+      {({ isSubmitting, values, setFieldValue }: FormikProps<OrganizationForm>) => (
         <Form noValidate>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <Field name={FormikInstitutionUnitFieldNames.Unit}>
-              {({ field, form: { setFieldValue } }: FieldProps<Organization>) => (
+              {({ field }: FieldProps<Organization>) => (
                 <Autocomplete
                   {...field}
                   options={options}
@@ -66,7 +67,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
             </Field>
             {values.unit?.hasPart && values.unit.hasPart.length > 0 && (
               <Field name={FormikInstitutionUnitFieldNames.SubUnit}>
-                {({ field, form: { setFieldValue } }: FieldProps<Organization>) => (
+                {({ field }: FieldProps<Organization>) => (
                   <Autocomplete
                     options={getAllChildOrganizations(values.unit)}
                     getOptionLabel={(option) => getLanguageString(option.name)}

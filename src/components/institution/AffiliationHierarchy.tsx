@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 import { getNewUnitHierarchy, getUnitHierarchyNames } from '../../utils/institutions-helpers';
 import { AffiliationSkeleton } from './AffiliationSkeleton';
 import { useFetchDepartment } from '../../utils/hooks/useFetchDepartment';
-import { Organization } from '../../types/institution.types';
+import { Organization, RecursiveInstitutionUnit } from '../../types/institution.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getLanguageString } from '../../utils/translation-helpers';
 
@@ -25,19 +25,24 @@ const NewAffiliationHierarchy = (props: AffiliationHierarchyProps) => {
     .reverse();
 
   return (
-    <AffiliationHierarchyRender {...props} isLoading={isLoadingDepartment} names={unitNames} department={department} />
+    <AffiliationHierarchyRender
+      {...props}
+      isLoading={isLoadingDepartment}
+      unitNames={unitNames}
+      department={department}
+    />
   );
 };
 
 const OldAffiliationHierarchy = (props: AffiliationHierarchyProps) => {
   const [department, isLoadingDepartment] = useFetchDepartment(props.unitUri);
-  const unitHierarchyNames = getUnitHierarchyNames(props.unitUri, department);
+  const unitNames = getUnitHierarchyNames(props.unitUri, department);
 
   return (
     <AffiliationHierarchyRender
       {...props}
       isLoading={isLoadingDepartment}
-      names={unitHierarchyNames}
+      unitNames={unitNames}
       department={department}
     />
   );
@@ -45,8 +50,8 @@ const OldAffiliationHierarchy = (props: AffiliationHierarchyProps) => {
 
 interface AffiliationHierarchyRenderProps extends AffiliationHierarchyProps {
   isLoading: boolean;
-  names: string[];
-  department: any;
+  unitNames: string[];
+  department?: Organization | RecursiveInstitutionUnit;
 }
 
 const AffiliationHierarchyRender = ({
@@ -55,7 +60,7 @@ const AffiliationHierarchyRender = ({
   boldTopLevel = true,
   isLoading,
   department,
-  names,
+  unitNames,
 }: AffiliationHierarchyRenderProps) => {
   const { t } = useTranslation('feedback');
 
@@ -64,11 +69,11 @@ const AffiliationHierarchyRender = ({
   ) : department ? (
     commaSeparated ? (
       <i>
-        <Typography>{names.join(', ')}</Typography>
+        <Typography>{unitNames.join(', ')}</Typography>
       </i>
     ) : (
       <div>
-        {names.map((unitName, index) =>
+        {unitNames.map((unitName, index) =>
           index === 0 && boldTopLevel ? (
             <Typography sx={{ fontWeight: 'bold' }} key={unitName + index}>
               {unitName}
