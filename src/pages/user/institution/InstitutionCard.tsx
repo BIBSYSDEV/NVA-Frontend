@@ -55,6 +55,7 @@ export const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: Institu
   const dispatch = useDispatch();
   const { user } = useSelector((store: RootStore) => store);
 
+  // TODO: Remove when all IDs are updated (NP-3492)
   const handleEditInstitution = async (values: FormikInstitutionUnit, initialInstitution: string) => {
     if (!values.unit || !user?.authority) {
       return;
