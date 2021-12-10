@@ -9,6 +9,7 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { getAllChildOrganizations } from '../../utils/institutions-helpers';
 import { InstitutionApiPath } from '../../api/apiPaths';
+import { dataTestId } from '../../utils/dataTestIds';
 
 interface OrganizationForm {
   unit: Organization | null;
@@ -60,7 +61,13 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
                   onChange={(_, value) => setFieldValue(field.name, value)}
                   loading={isLoadingInstitutions}
                   renderInput={(params) => (
-                    <TextField {...params} label={t('institution')} variant="filled" fullWidth />
+                    <TextField
+                      {...params}
+                      data-testid={dataTestId.organization.searchField}
+                      label={t('institution')}
+                      variant="filled"
+                      fullWidth
+                    />
                   )}
                 />
               )}
@@ -78,7 +85,13 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
                       )
                     }
                     renderInput={(params) => (
-                      <TextField {...params} label={t('institution:department')} variant="filled" fullWidth />
+                      <TextField
+                        {...params}
+                        data-testid={dataTestId.organization.subSearchField}
+                        label={t('institution:department')}
+                        variant="filled"
+                        fullWidth
+                      />
                     )}
                   />
                 )}

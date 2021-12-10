@@ -35,6 +35,7 @@ import {
   RoleApiPath,
   AlmaApiPath,
 } from './apiPaths';
+import { mockOrganizationSearch } from '../utils/testfiles/institutions/mockOrganizationSearch';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -162,6 +163,7 @@ export const interceptRequestsOnMock = () => {
   mock
     .onGet(new RegExp(`${InstitutionApiPath.Departments}\\?uri=.*150.4.1.0&language=.*`))
     .reply(200, mockSchoolOfSportDepartment);
+  mock.onGet(new RegExp(InstitutionApiPath.Organization)).reply(200, mockOrganizationSearch);
 
   // Roles
   mock.onGet(new RegExp(RoleApiPath.InstitutionUsers)).reply(200, []);
