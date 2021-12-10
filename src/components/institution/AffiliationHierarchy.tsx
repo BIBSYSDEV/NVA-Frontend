@@ -6,6 +6,7 @@ import { useFetchDepartment } from '../../utils/hooks/useFetchDepartment';
 import { Organization, RecursiveInstitutionUnit } from '../../types/institution.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getLanguageString } from '../../utils/translation-helpers';
+import { cristinBaseId } from '../../utils/constants';
 
 interface AffiliationHierarchyProps {
   unitUri: string;
@@ -14,7 +15,7 @@ interface AffiliationHierarchyProps {
 }
 
 export const AffiliationHierarchy = (props: AffiliationHierarchyProps) => {
-  const isNewUri = !props.unitUri.includes('https://api.cristin.no/v2/');
+  const isNewUri = !props.unitUri.includes(cristinBaseId);
   return isNewUri ? <NewAffiliationHierarchy {...props} /> : <OldAffiliationHierarchy {...props} />;
 };
 

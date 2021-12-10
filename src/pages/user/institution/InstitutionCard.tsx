@@ -16,7 +16,7 @@ import { RootStore } from '../../../redux/reducers/rootReducer';
 import { FormikInstitutionUnit } from '../../../types/institution.types';
 import { NotificationVariant } from '../../../types/notification.types';
 import { getMostSpecificUnit } from '../../../utils/institutions-helpers';
-import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { cristinBaseId, isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
 const StyledCard = styled(Card)`
   display: grid;
@@ -103,13 +103,15 @@ export const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: Institu
         <AffiliationHierarchy unitUri={orgunitId} />
       </StyledTextContainer>
       <StyledButtonContainer>
-        <Button
-          variant="outlined"
-          data-testid={`button-edit-institution-${orgunitId}`}
-          startIcon={<EditIcon />}
-          onClick={() => setOpenEditForm(true)}>
-          {t('edit')}
-        </Button>
+        {orgunitId.includes(cristinBaseId) && (
+          <Button
+            variant="outlined"
+            data-testid={`button-edit-institution-${orgunitId}`}
+            startIcon={<EditIcon />}
+            onClick={() => setOpenEditForm(true)}>
+            {t('edit')}
+          </Button>
+        )}
         <Button
           color="error"
           variant="outlined"
