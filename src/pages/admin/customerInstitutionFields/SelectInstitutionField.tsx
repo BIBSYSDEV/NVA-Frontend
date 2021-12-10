@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { Autocomplete, TextField } from '@mui/material';
-import { CustomerInstitution, CustomerInstitutionFieldNames } from '../../../types/customerInstitution.types';
+import {
+  CustomerInstitution,
+  CustomerInstitutionFieldNames,
+  emptyCustomerInstitution,
+} from '../../../types/customerInstitution.types';
 import { InstitutionApiPath } from '../../../api/apiPaths';
 import { OrganizationsResponse } from '../../../types/institution.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
@@ -16,7 +20,7 @@ interface SelectInstitutionFieldProps {
 
 export const SelectInstitutionField = ({ disabled = false }: SelectInstitutionFieldProps) => {
   const { t } = useTranslation('feedback');
-  const { values, setFieldValue } = useFormikContext<CustomerInstitution>();
+  const { values, setValues } = useFormikContext<CustomerInstitution>();
   const [searchTerm, setSearchTerm] = useState(values.name);
   const debouncedQuery = useDebounce(searchTerm);
   const [institutions, isLoadingInstitutions] = useFetch<OrganizationsResponse>({
@@ -42,9 +46,12 @@ export const SelectInstitutionField = ({ disabled = false }: SelectInstitutionFi
           }}
           onChange={(_, selectedInstitution) => {
             const name = selectedInstitution?.name ? getLanguageString(selectedInstitution.name) : '';
-            setFieldValue(field.name, name);
-            setFieldValue(CustomerInstitutionFieldNames.DisplayName, name);
-            setFieldValue(CustomerInstitutionFieldNames.CristinId, selectedInstitution?.id ?? '');
+            setValues({
+              ...emptyCustomerInstitution,
+              name,
+              [CustomerInstitutionFieldNames.DisplayName]: name,
+              [CustomerInstitutionFieldNames.CristinId]: selectedInstitution?.id ?? '',
+            });
             setSearchTerm('');
           }}
           loading={isLoadingInstitutions}
