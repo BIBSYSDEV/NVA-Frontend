@@ -83,7 +83,7 @@ export const CustomerInstitutionMetadataForm = ({
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.ArchiveName}
                 label={t('archive_name')}
-                dataTestId={dataTestId.institutionAdmin.shortNameField}
+                dataTestId={dataTestId.institutionAdmin.archiveNameField}
               />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.FeideOrganizationId}
