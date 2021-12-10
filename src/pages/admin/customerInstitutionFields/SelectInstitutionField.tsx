@@ -8,6 +8,7 @@ import { OrganizationsResponse } from '../../../types/institution.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 interface SelectInstitutionFieldProps {
   disabled?: boolean;
@@ -51,6 +52,7 @@ export const SelectInstitutionField = ({ disabled = false }: SelectInstitutionFi
             <TextField
               {...field}
               {...params}
+              data-testid={dataTestId.institutionAdmin.nameField}
               label={t('common:institution')}
               required
               variant="outlined"

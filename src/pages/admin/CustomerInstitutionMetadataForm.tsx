@@ -19,6 +19,7 @@ import { CustomerInstitutionTextField } from './customerInstitutionFields/Custom
 import { SelectInstitutionField } from './customerInstitutionFields/SelectInstitutionField';
 import { getAdminInstitutionPath } from '../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { dataTestId } from '../../utils/dataTestIds';
 
 interface CustomerInstitutionMetadataFormProps {
   customerInstitution: CustomerInstitution;
@@ -71,28 +72,28 @@ export const CustomerInstitutionMetadataForm = ({
                 name={CustomerInstitutionFieldNames.DisplayName}
                 label={t('display_name')}
                 required
-                dataTestId="customer-institution-display-name-field"
+                dataTestId={dataTestId.institutionAdmin.displayNameField}
               />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.ShortName}
                 label={t('short_name')}
                 required
-                dataTestId="customer-institution-short-name-field"
+                dataTestId={dataTestId.institutionAdmin.shortNameField}
               />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.ArchiveName}
                 label={t('archive_name')}
-                dataTestId="customer-institution-archive-name-field"
+                dataTestId={dataTestId.institutionAdmin.shortNameField}
               />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.FeideOrganizationId}
                 label={t('feide_organization_id')}
                 required
-                dataTestId="customer-institution-feide-organization-id-field"
+                dataTestId={dataTestId.institutionAdmin.feideField}
               />
               <StyledRightAlignedWrapper>
                 <LoadingButton
-                  data-testid="customer-institution-save-button"
+                  data-testid={dataTestId.institutionAdmin.saveButton}
                   variant="contained"
                   startIcon={<SaveIcon />}
                   loadingPosition="start"
