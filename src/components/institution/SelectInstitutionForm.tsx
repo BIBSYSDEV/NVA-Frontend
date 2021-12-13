@@ -69,7 +69,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
               <Field name={FormikInstitutionUnitFieldNames.SubUnit}>
                 {({ field }: FieldProps<Organization>) => (
                   <Autocomplete
-                    options={getAllChildOrganizations(values.unit)}
+                    options={getAllChildOrganizations(values.unit?.hasPart ?? [])}
                     getOptionLabel={(option) => getLanguageString(option.name)}
                     onChange={(_, value) => setFieldValue(field.name, value)}
                     filterOptions={(options, state) =>

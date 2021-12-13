@@ -54,17 +54,14 @@ export const getNewUnitHierarchy = (unit?: Organization, units: Organization[] =
   return units;
 };
 
-export const getAllChildOrganizations = (organization: Organization | null, organizations: Organization[] = []) => {
-  if (!organization) {
-    return [];
-  }
-  organizations.push(organization);
-  if (organization.hasPart) {
-    for (const subUnit of organization.hasPart) {
-      getAllChildOrganizations(subUnit, organizations);
+export const getAllChildOrganizations = (subunits: Organization[], result: Organization[] = []) => {
+  for (const unit of subunits) {
+    result.push(unit);
+    if (unit.hasPart) {
+      getAllChildOrganizations(unit.hasPart, result);
     }
   }
-  return organizations.sort((a, b) => (getLanguageString(a.name) < getLanguageString(b.name) ? -1 : 1));
+  return result.sort((a, b) => (getLanguageString(a.name) < getLanguageString(b.name) ? -1 : 1));
 };
 
 // converts from https://api.cristin.no/v2/units/7482.3.3.0
