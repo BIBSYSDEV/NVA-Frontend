@@ -44,8 +44,9 @@
   },
   "scripts": {
     "start": "react-scripts -r @cypress/instrument-cra start",
+    "start:mock": "set REACT_APP_USE_MOCK=true&& npm start",
     "build": "react-scripts build",
-    "test:cypress": "start-server-and-test start http://localhost:3000 test",
+    "test:cypress": "start-server-and-test start:mock http://localhost:3000 test",
     "test:react": "react-scripts test --coverage --watchAll=false",
     "test": "cypress run",
     "eject": "react-scripts eject"
