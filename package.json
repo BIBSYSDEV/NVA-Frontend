@@ -48,9 +48,7 @@
     "test:cypress": "REACT_APP_USE_MOCK=true start-server-and-test http://localhost:3000",
     "test:react": "react-scripts test --coverage --watchAll=false",
     "test": "cypress run",
-    "deploy": "aws s3 sync build/ s3://demo-stack-bucket",
-    "eject": "react-scripts eject",
-    "generateTestFiles": "sh generateTestFiles.sh"
+    "eject": "react-scripts eject"
   },
   "husky": {
     "hooks": {
@@ -93,7 +91,6 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-prettier": "^4.0.0",
-    "faker": "^5.5.3",
     "husky": "^7.0.4",
     "nyc": "^15.1.0",
     "prettier": "^2.5.1",

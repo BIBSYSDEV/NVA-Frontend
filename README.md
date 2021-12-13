@@ -17,7 +17,7 @@ Info about all environment variables are listed in the table below. Note that yo
 
 | Name                                   | Example value                                | Description                                                                              |
 | -------------------------------------- | -------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| REACT_APP_API_HOST                      | `api.dev.nva.aws.unit.no`                    | Required. Base URL to the API.                                                           |
+| REACT_APP_API_HOST                     | `api.dev.nva.aws.unit.no`                    | Required. Base URL to the API.                                                           |
 | REACT_APP_USE_MOCK                     | `false`                                      | Whether to use local mock data or not. If `true`, no more variables are needed.          |
 | REACT_APP_REDIRECT_SIGN_IN             | `http://localhost:3000`                      | Callback URI for successfull login.                                                      |
 | REACT_APP_REDIRECT_SIGN_OUT            | `http://localhost:3000/logout`               | Callback URI for successfull logout.                                                     |
@@ -67,11 +67,3 @@ Runs React testing library tests
 `npx nyc report`
 
 coverage report: `coverage/lcov-report/index.html`
-
-## Generate test files using faker.js
-
-Generate your desired structure of the object/list. (Example: generateProjectList.ts)
-
-Navigate to the folder your test file is in.
-
-Run `npx tsc && npx ts-node generateProjectList` to generate.
