@@ -58,16 +58,13 @@ export const getAllChildOrganizations = (organization: Organization | null, orga
   if (!organization) {
     return [];
   }
-  if (organization.hasPart && organization.hasPart.length > 0) {
+  organizations.push(organization);
+  if (organization.hasPart) {
     for (const subUnit of organization.hasPart) {
-      organizations.push(subUnit);
-      if (subUnit.hasPart && subUnit.hasPart.length > 0) {
-        getNewUnitHierarchy(subUnit, organizations);
-      }
+      getAllChildOrganizations(subUnit, organizations);
     }
   }
-  const result = organizations.sort((a, b) => (getLanguageString(a.name) < getLanguageString(b.name) ? -1 : 1));
-  return result;
+  return organizations.sort((a, b) => (getLanguageString(a.name) < getLanguageString(b.name) ? -1 : 1));
 };
 
 // converts from https://api.cristin.no/v2/units/7482.3.3.0
