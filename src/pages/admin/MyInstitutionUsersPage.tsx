@@ -42,7 +42,9 @@ const MyInstitutionUsersPage = () => {
     setAutoAssignCreators(!autoAssignCreators);
   };
 
-  const roleToAddTitle = t('common:add_custom', { name: roleToAdd });
+  const roleToAddTitle = t('common:add_custom', {
+    name: t(`profile:roles.${roleToAdd?.toLowerCase().replace('-', '_')}`),
+  });
 
   return (
     <StyledPageWrapperWithMaxWidth>
