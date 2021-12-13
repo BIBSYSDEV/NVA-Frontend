@@ -92,9 +92,13 @@ export const UserList = ({
   const validPage = userList.length <= page * rowsPerPage ? 0 : page;
   const isLastInstitutionAdmin = roleToRemove === RoleName.INSTITUTION_ADMIN && userList.length === 1;
 
+  const sortedList = userList.sort((a, b) =>
+    `${a.givenName} ${a.familyName}`.toLocaleLowerCase() < `${b.givenName} ${b.familyName}`.toLocaleLowerCase() ? -1 : 1
+  );
+
   return (
     <>
-      {userList.length === 0 ? (
+      {sortedList.length === 0 ? (
         <Typography>
           <i>{t('users.no_users_found')}</i>
         </Typography>
@@ -116,7 +120,7 @@ export const UserList = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {userList.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((user, index) => {
+              {sortedList.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((user, index) => {
                 const isLoading = updatedRoleForUsers.includes(user.username);
                 const disableAddButton = user.roles.some((role) => role.rolename === roleToAdd);
                 return (
@@ -156,11 +160,11 @@ export const UserList = ({
               })}
             </TableBody>
           </StyledTable>
-          {(alwaysShowPagination || userList.length > ROWS_PER_PAGE_OPTIONS[0]) && (
+          {(alwaysShowPagination || sortedList.length > ROWS_PER_PAGE_OPTIONS[0]) && (
             <TablePagination
               rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
               component="div"
-              count={userList.length}
+              count={sortedList.length}
               rowsPerPage={rowsPerPage}
               page={validPage}
               onPageChange={(_, newPage) => setPage(newPage)}
