@@ -31,7 +31,13 @@ export const AdminCustomerInstitutions = () => {
         {isLoadingCustomerInstitutions ? (
           <PageSpinner />
         ) : (
-          customerInstitutions && <InstitutionList institutions={customerInstitutions.customers} />
+          customerInstitutions && (
+            <InstitutionList
+              institutions={customerInstitutions.customers.sort((a, b) =>
+                a.displayName.toLocaleLowerCase() < b.displayName.toLocaleLowerCase() ? -1 : 1
+              )}
+            />
+          )
         )}
       </BackgroundDiv>
     </StyledPageWrapperWithMaxWidth>
