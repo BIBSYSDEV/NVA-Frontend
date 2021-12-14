@@ -58,6 +58,9 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
                   )}
                   filterOptions={(options) => options}
                   onInputChange={(_, value, reason) => {
+                    if (field.value) {
+                      setFieldValue(field.name, null);
+                    }
                     if (reason !== 'reset') {
                       setSearchTerm(value);
                     }
