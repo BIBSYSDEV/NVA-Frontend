@@ -51,6 +51,11 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
                   options={options}
                   inputValue={field.value ? getLanguageString(field.value.name) : searchTerm}
                   getOptionLabel={(option) => getLanguageString(option.name)}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.id}>
+                      {getLanguageString(option.name)}
+                    </li>
+                  )}
                   filterOptions={(options) => options}
                   onInputChange={(_, value, reason) => {
                     if (reason !== 'reset') {
@@ -71,6 +76,11 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
                   <Autocomplete
                     options={getSortedSubUnits(values.unit?.hasPart)}
                     getOptionLabel={(option) => getLanguageString(option.name)}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.id}>
+                        {getLanguageString(option.name)}
+                      </li>
+                    )}
                     onChange={(_, value) => setFieldValue(field.name, value)}
                     filterOptions={(options, state) =>
                       options.filter((option) =>
