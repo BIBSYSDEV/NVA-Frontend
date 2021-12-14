@@ -23,7 +23,7 @@ export enum FileApiPath {
 export enum InstitutionApiPath {
   Institutions = '/institution/institutions',
   Departments = '/institution/departments',
-  Organization = '/cristin/organization',
+  Organization = '/cristin-np-3491-more-org-haspart-data/organization/', //TODO
 }
 
 export enum ProjectsApiPath {
