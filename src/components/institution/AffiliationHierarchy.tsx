@@ -20,17 +20,21 @@ export const AffiliationHierarchy = (props: AffiliationHierarchyProps) => {
 };
 
 const NewAffiliationHierarchy = (props: AffiliationHierarchyProps) => {
-  const [department, isLoadingDepartment] = useFetch<Organization>({ url: props.unitUri });
-  const unitNames = getNewUnitHierarchy(department)
+  const { t } = useTranslation('feedback');
+  const [organization, isLoadingOrganization] = useFetch<Organization>({
+    url: props.unitUri,
+    errorMessage: t('error.get_institution'),
+  });
+  const unitNames = getNewUnitHierarchy(organization)
     .map((unit) => getLanguageString(unit.name))
     .reverse();
 
   return (
     <AffiliationHierarchyRender
       {...props}
-      isLoading={isLoadingDepartment}
+      isLoading={isLoadingOrganization}
       unitNames={unitNames}
-      department={department}
+      department={organization}
     />
   );
 };

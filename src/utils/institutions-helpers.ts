@@ -54,20 +54,17 @@ export const getNewUnitHierarchy = (unit?: Organization, units: Organization[] =
   return units;
 };
 
-export const getAllChildOrganizations = (organization: Organization | null, organizations: Organization[] = []) => {
-  if (!organization) {
-    return [];
+export const getSortedSubUnits = (subUnits: Organization[] = []) => {
+  const units = getAllChildOrganizations(subUnits);
+  return units.sort((a, b) => (getLanguageString(a.name) < getLanguageString(b.name) ? -1 : 1));
+};
+
+const getAllChildOrganizations = (units: Organization[] = [], result: Organization[] = []): Organization[] => {
+  if (!units.length) {
+    return result;
   }
-  if (organization.hasPart && organization.hasPart.length > 0) {
-    for (const subUnit of organization.hasPart) {
-      organizations.push(subUnit);
-      if (subUnit.hasPart && subUnit.hasPart.length > 0) {
-        getNewUnitHierarchy(subUnit, organizations);
-      }
-    }
-  }
-  const result = organizations.sort((a, b) => (getLanguageString(a.name) < getLanguageString(b.name) ? -1 : 1));
-  return result;
+  const subUnits = units.flatMap((u) => u.hasPart ?? []);
+  return getAllChildOrganizations(subUnits, [...result, ...units]);
 };
 
 // converts from https://api.cristin.no/v2/units/7482.3.3.0

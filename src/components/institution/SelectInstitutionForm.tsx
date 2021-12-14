@@ -7,7 +7,7 @@ import { FormikInstitutionUnitFieldNames, Organization, OrganizationsResponse } 
 import { useDebounce } from '../../utils/hooks/useDebounce';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getLanguageString } from '../../utils/translation-helpers';
-import { getAllChildOrganizations } from '../../utils/institutions-helpers';
+import { getSortedSubUnits } from '../../utils/institutions-helpers';
 import { InstitutionApiPath } from '../../api/apiPaths';
 import { dataTestId } from '../../utils/dataTestIds';
 
@@ -31,7 +31,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
   const [institutions, isLoadingInstitutions] = useFetch<OrganizationsResponse>({
-    url: debouncedQuery ? `${InstitutionApiPath.Organization}?query=${debouncedQuery}` : '',
+    url: debouncedQuery ? `${InstitutionApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
     errorMessage: t('feedback:error.get_institutions'),
   });
 
@@ -52,6 +52,11 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
                   options={options}
                   inputValue={field.value ? getLanguageString(field.value.name) : searchTerm}
                   getOptionLabel={(option) => getLanguageString(option.name)}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.id}>
+                      {getLanguageString(option.name)}
+                    </li>
+                  )}
                   filterOptions={(options) => options}
                   onInputChange={(_, value, reason) => {
                     if (reason !== 'reset') {
@@ -76,8 +81,13 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
               <Field name={FormikInstitutionUnitFieldNames.SubUnit}>
                 {({ field }: FieldProps<Organization>) => (
                   <Autocomplete
-                    options={getAllChildOrganizations(values.unit)}
+                    options={getSortedSubUnits(values.unit?.hasPart)}
                     getOptionLabel={(option) => getLanguageString(option.name)}
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.id}>
+                        {getLanguageString(option.name)}
+                      </li>
+                    )}
                     onChange={(_, value) => setFieldValue(field.name, value)}
                     filterOptions={(options, state) =>
                       options.filter((option) =>
