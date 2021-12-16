@@ -4,7 +4,8 @@ import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
-enum Color {
+export enum Color {
+  AlternativeBackground = '#f3f0ed',
   Black = '#222',
   ErrorLight = '#FF8888',
   ErrorMain = '#C2363D',
@@ -141,6 +142,19 @@ export const mainTheme = createTheme({
         },
       },
     },
+    MuiTableHead: { styleOverrides: { root: { th: { background: Color.AlternativeBackground } } } },
+    MuiTableBody: {
+      styleOverrides: {
+        root: {
+          tr: {
+            background: Color.AlternativeBackground,
+            '&:nth-of-type(odd)': {
+              background: Color.White,
+            },
+          },
+        },
+      },
+    },
     MuiTablePagination: {
       defaultProps: {
         labelRowsPerPage: i18n.t('common:table_pagination.rows_per_page'),
@@ -149,6 +163,7 @@ export const mainTheme = createTheme({
         nextIconButtonProps: { title: i18n.t('common:table_pagination.next_page') },
       },
     },
+    MuiTooltip: { defaultProps: { arrow: true } },
     MuiTypography: {
       defaultProps: {
         color: 'textPrimary',

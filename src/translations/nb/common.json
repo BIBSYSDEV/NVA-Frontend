@@ -68,6 +68,7 @@
   "remove": "Fjern",
   "required_description": "Felt med stjerne er obligatorisk",
   "requires_login": "Krever innlogging",
+  "role": "Rolle",
   "save": "Lagre",
   "save_and_present": "Lagre og presenter",
   "search": "Søk",
