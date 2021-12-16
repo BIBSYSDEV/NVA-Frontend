@@ -68,6 +68,7 @@
   "remove": "Remove",
   "required_description": "Fields with asterisk are required",
   "requires_login": "Requires login",
+  "role": "Role",
   "save": "Save",
   "save_and_present": "Save and present",
   "search": "Search",

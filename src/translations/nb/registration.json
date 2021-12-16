@@ -5,6 +5,7 @@
     "add_duplicate_affiliation": "Tilhørigheten er allerede lagt til",
     "add_self_as_role": "Legg meg til som {{- role}}",
     "authors": "Forfattere",
+    "confirmed": "Bekreftet",
     "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilhørigheten?",
     "confirm_remove_affiliation_title": "Fjerne tilhørighet?",
     "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",

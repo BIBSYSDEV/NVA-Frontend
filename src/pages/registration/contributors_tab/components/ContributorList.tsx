@@ -36,12 +36,12 @@ export const ContributorList = ({
           <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell size="small">Rekkefølge</TableCell>
-                <TableCell>{showContributorRole ? 'Rolle' : 'Korresponderende'}</TableCell>
-                <TableCell>Bekreftet</TableCell>
-                <TableCell>Navn</TableCell>
-                <TableCell>Institusjon</TableCell>
-                <TableCell>Fjern</TableCell>
+                <TableCell>{t('common:order')}</TableCell>
+                <TableCell>{showContributorRole ? t('common:role') : t('contributors.corresponding')}</TableCell>
+                <TableCell>{t('contributors.confirmed')}</TableCell>
+                <TableCell>{t('common:name')}</TableCell>
+                <TableCell>{t('common:institution')}</TableCell>
+                <TableCell>{t('common:remove')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

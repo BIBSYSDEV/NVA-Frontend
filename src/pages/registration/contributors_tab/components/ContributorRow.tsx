@@ -59,7 +59,7 @@ export const ContributorRow = ({
 
   return (
     <TableRow>
-      <TableCell>
+      <TableCell width="1">
         <Box sx={{ display: 'flex' }}>
           <TextField
             id={`sequence-${contributor.sequence}`}
@@ -96,11 +96,9 @@ export const ContributorRow = ({
           )}
         </Box>
       </TableCell>
-      <TableCell align="center">
+      <TableCell align="center" width="1">
         {showContributorRole ? (
-          <Typography variant="subtitle2" component="p">
-            {t(`contributors.types.${contributor.role}`)}
-          </Typography>
+          <Typography>{t(`contributors.types.${contributor.role}`)}</Typography>
         ) : (
           <Field name={`${baseFieldName}.${SpecificContributorFieldNames.Corresponding}`}>
             {({ field }: FieldProps) => (
@@ -111,7 +109,7 @@ export const ContributorRow = ({
           </Field>
         )}
       </TableCell>
-      <TableCell align="center">
+      <TableCell align="center" width="1">
         {contributor.identity.id ? (
           <Tooltip title={t<string>('contributors.known_author_identity')}>
             <CheckIcon color="primary" />
@@ -138,7 +136,7 @@ export const ContributorRow = ({
           />
         )}
       </TableCell>
-      <TableCell>
+      <TableCell width="1">
         <Tooltip title={t<string>('contributors.remove_role', { role: t(`contributors.types.${contributor.role}`) })}>
           <IconButton
             data-testid={`button-remove-contributor-${contributor.identity.name}`}
