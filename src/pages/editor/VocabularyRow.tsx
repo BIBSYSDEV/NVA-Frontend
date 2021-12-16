@@ -2,6 +2,7 @@ import { ToggleButtonGroup, ToggleButton, Typography, Box, SxProps } from '@mui/
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { Color } from '../../themes/mainTheme';
 import { CustomerVocabulary, VocabularyStatus } from '../../types/customerInstitution.types';
 import { getTranslatedVocabularyName } from './VocabularySettings';
 
@@ -34,7 +35,7 @@ export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId, disa
         padding: '1rem',
         bgcolor: 'background.default',
         '&:nth-of-type(odd)': {
-          bgcolor: '#f3f0ed',
+          bgcolor: Color.AlternativeBackground,
         },
         display: 'flex',
         alignItems: 'center',

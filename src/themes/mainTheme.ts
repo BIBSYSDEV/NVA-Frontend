@@ -4,7 +4,8 @@ import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
-enum Color {
+export enum Color {
+  AlternativeBackground = '#f3f0ed',
   Black = '#222',
   ErrorLight = '#FF8888',
   ErrorMain = '#C2363D',
@@ -141,12 +142,12 @@ export const mainTheme = createTheme({
         },
       },
     },
-    MuiTableHead: { styleOverrides: { root: { th: { background: '#f3f0ed' } } } },
+    MuiTableHead: { styleOverrides: { root: { th: { background: Color.AlternativeBackground } } } },
     MuiTableBody: {
       styleOverrides: {
         root: {
           tr: {
-            background: '#f3f0ed',
+            background: Color.AlternativeBackground,
             '&:nth-of-type(odd)': {
               background: Color.White,
             },
