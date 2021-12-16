@@ -3,9 +3,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Button, TablePagination, Theme, Typography, useMediaQuery } from '@mui/material';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
-import { Pagination } from '@mui/material';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { Authority } from '../../../types/authority.types';
 import {
@@ -21,24 +20,16 @@ import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { ContributorList } from './components/ContributorList';
 import { AddContributorModal } from './AddContributorModal';
+import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 
 const StyledButton = styled(Button)`
   margin: 1rem 0rem;
   border-radius: 1rem;
 `;
 
-const StyledPagination = styled(Pagination)`
-  margin-top: 1rem;
-  > ul {
-    justify-content: center;
-  }
-`;
-
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
   contributorRoles: ContributorRole[];
 }
-
-const contributorsPerPage = 5;
 
 export const Contributors = ({ contributorRoles, push, replace }: ContributorsProps) => {
   const { t } = useTranslation('registration');
@@ -46,17 +37,15 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [openContributorModal, setOpenContributorModal] = useState(false);
   const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
-  const [currentPage, setCurrentPage] = useState(1); // Pagination pages are 1-indexed :/
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
+  const [currentPage, setCurrentPage] = useState(0);
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
   const contributors = values.entityDescription?.contributors ?? [];
   const relevantContributors = contributors.filter((contributor) =>
     contributorRoles.some((role) => role === contributor.role)
   );
-  const contributorsToShow = relevantContributors.slice(
-    contributorsPerPage * (currentPage - 1),
-    contributorsPerPage * currentPage
-  );
+  const contributorsToShow = relevantContributors.slice(rowsPerPage * currentPage, rowsPerPage * (currentPage + 1));
   const otherContributors = contributors.filter(
     (contributor) => !contributorRoles.some((role) => role === contributor.role)
   );
@@ -67,8 +56,8 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
     const nextContributors = [...nextRelevantContributors, ...otherContributors];
     setFieldValue(ContributorFieldNames.Contributors, nextContributors);
+    const maxValidPage = Math.ceil(nextRelevantContributors.length / rowsPerPage) - 1;
 
-    const maxValidPage = Math.ceil(nextContributors.length / contributorsPerPage);
     if (currentPage > maxValidPage) {
       setCurrentPage(maxValidPage);
     }
@@ -132,7 +121,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         sequence: relevantContributors.length + 1,
       };
       push(newContributor);
-      const maxValidPage = Math.ceil((relevantContributors.length + 1) / contributorsPerPage);
+      const maxValidPage = Math.floor(relevantContributors.length / rowsPerPage);
       setCurrentPage(maxValidPage);
     } else {
       const relevantContributor = relevantContributors[unverifiedContributor.index];
@@ -205,15 +194,18 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         toggleModal={() => setOpenContributorModal(!openContributorModal)}
         onContributorSelected={onContributorSelected}
       />
-      {relevantContributors.length > contributorsPerPage && (
-        <StyledPagination
-          variant="outlined"
-          color="primary"
-          size="large"
-          shape="rounded"
-          onChange={(_, page) => setCurrentPage(page)}
+      {contributorsToShow.length > 0 && (
+        <TablePagination
+          rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+          component="div"
+          count={relevantContributors.length}
+          rowsPerPage={rowsPerPage}
           page={currentPage}
-          count={Math.ceil(relevantContributors.length / contributorsPerPage)}
+          onPageChange={(_, newPage) => setCurrentPage(newPage)}
+          onRowsPerPageChange={(event) => {
+            setRowsPerPage(parseInt(event.target.value));
+            setCurrentPage(0);
+          }}
         />
       )}
       {addContributorButton}
