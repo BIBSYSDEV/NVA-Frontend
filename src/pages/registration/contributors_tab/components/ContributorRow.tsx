@@ -62,7 +62,6 @@ export const ContributorRow = ({
       <TableCell width="1">
         <Box sx={{ display: 'flex' }}>
           <TextField
-            id={`sequence-${contributor.sequence}`}
             sx={{ width: '3.6rem' }}
             value={sequenceValue}
             onChange={(event) => setSequenceValue(event.target.value)}
@@ -103,7 +102,11 @@ export const ContributorRow = ({
           <Field name={`${baseFieldName}.${SpecificContributorFieldNames.Corresponding}`}>
             {({ field }: FieldProps) => (
               <Tooltip title={t<string>('contributors.corresponding')}>
-                <Checkbox checked={!!field.value} {...field} />
+                <Checkbox
+                  checked={!!field.value}
+                  {...field}
+                  inputProps={{ 'aria-label': t('contributors.corresponding') }}
+                />
               </Tooltip>
             )}
           </Field>
