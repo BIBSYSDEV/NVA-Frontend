@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Button, IconButton, Theme, Tooltip, Typography, useMediaQuery } from '@mui/material';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
-import DeleteIcon from '@mui/icons-material/RemoveCircleSharp';
+import RemoveIcon from '@mui/icons-material/HighlightOff';
 import WarningIcon from '@mui/icons-material/Warning';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { AddInstitution } from '../../../../components/institution/AddInstitution';
@@ -22,29 +22,22 @@ import { getLanguageString } from '../../../../utils/translation-helpers';
 
 const StyledAffiliationsCell = styled.div`
   grid-area: affiliation;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 `;
 
 const StyledCard = styled.div`
   display: flex;
-  flex-wrap: wrap;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
-  border-bottom: 1px solid ${({ theme }) => theme.palette.divider};
-  &:first-of-type {
-    border-top: 1px solid ${({ theme }) => theme.palette.divider};
-  }
 `;
 
 const StyledAddAffiliationButton = styled(Button)`
   grid-area: add-affiliation;
   display: flex;
   justify-content: flex-start;
-  margin-top: 1rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    margin: 1rem 0;
-  }
 `;
 
 interface AffiliationsCellProps {
@@ -126,14 +119,15 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
               </>
             )
           )}
-          <Button
-            color="error"
-            size="small"
-            data-testid={`button-remove-affiliation-${affiliation.id}`}
-            startIcon={<DeleteIcon />}
-            onClick={() => setAffiliationToRemove(affiliation)}>
-            {t('contributors.remove_affiliation')}
-          </Button>
+          <Tooltip title={t<string>('contributors.remove_affiliation')}>
+            <IconButton
+              color="error"
+              size="small"
+              data-testid={`button-remove-affiliation-${affiliation.id}`}
+              onClick={() => setAffiliationToRemove(affiliation)}>
+              <RemoveIcon />
+            </IconButton>
+          </Tooltip>
         </StyledCard>
       ))}
       <StyledAddAffiliationButton

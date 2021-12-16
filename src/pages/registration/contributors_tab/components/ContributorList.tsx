@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Typography } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
-import { ContributorCard } from './ContributorCard';
+import { ContributorRow } from './ContributorRow';
 
 interface ContributorListProps {
   contributors: Contributor[];
@@ -31,17 +31,36 @@ export const ContributorList = ({
 
   return (
     <>
-      {contributors.map((contributor, index) => (
-        <ContributorCard
-          key={index}
-          contributor={contributor}
-          onMoveContributor={onMoveContributor}
-          onRemoveContributorClick={() => setContributorToRemove(contributor)}
-          openContributorModal={openContributorModal}
-          contributorsLength={contributorsLength}
-          showContributorRole={showContributorRole}
-        />
-      ))}
+      {contributors.length > 0 && (
+        <TableContainer>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell size="small">Rekkefølge</TableCell>
+                <TableCell>{showContributorRole ? 'Rolle' : 'Korresponderende'}</TableCell>
+                <TableCell>Bekreftet</TableCell>
+                <TableCell>Navn</TableCell>
+                <TableCell>Institusjon</TableCell>
+                <TableCell>Fjern</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {contributors.map((contributor, index) => (
+                <ContributorRow
+                  key={index}
+                  contributor={contributor}
+                  onMoveContributor={onMoveContributor}
+                  onRemoveContributorClick={() => setContributorToRemove(contributor)}
+                  openContributorModal={openContributorModal}
+                  contributorsLength={contributorsLength}
+                  showContributorRole={showContributorRole}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+
       {contributorToRemove && (
         <ConfirmDialog
           open={!!contributorToRemove}

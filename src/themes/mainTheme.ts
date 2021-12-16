@@ -141,6 +141,19 @@ export const mainTheme = createTheme({
         },
       },
     },
+    MuiTableHead: { styleOverrides: { root: { th: { background: '#f3f0ed' } } } },
+    MuiTableBody: {
+      styleOverrides: {
+        root: {
+          tr: {
+            background: '#f3f0ed',
+            '&:nth-of-type(odd)': {
+              background: Color.White,
+            },
+          },
+        },
+      },
+    },
     MuiTablePagination: {
       defaultProps: {
         labelRowsPerPage: i18n.t('common:table_pagination.rows_per_page'),
@@ -149,6 +162,7 @@ export const mainTheme = createTheme({
         nextIconButtonProps: { title: i18n.t('common:table_pagination.next_page') },
       },
     },
+    MuiTooltip: { defaultProps: { arrow: true } },
     MuiTypography: {
       defaultProps: {
         color: 'textPrimary',

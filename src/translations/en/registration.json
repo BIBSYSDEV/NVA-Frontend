@@ -38,8 +38,7 @@
     },
     "unknown_author_identity": "Unknown author identity",
     "verify_affiliation": "Verify affiliation",
-    "verify_person": "Verify person",
-    "verified": "Verified"
+    "verify_person": "Verify person"
   },
   "description": {
     "add_vocabulary": "Add vocabulary",
