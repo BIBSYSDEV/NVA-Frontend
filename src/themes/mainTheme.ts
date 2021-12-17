@@ -1,7 +1,6 @@
 import { CalendarPickerView, DatePickerProps } from '@mui/lab';
 import { createTheme, SxProps } from '@mui/material';
 import i18n from '../translations/i18n';
-import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
 enum Color {
@@ -145,10 +144,24 @@ export const mainTheme = createTheme({
     MuiTableHead: { styleOverrides: { root: { th: { background: Color.AlternativeBackground } } } },
     MuiTablePagination: {
       defaultProps: {
+        showFirstButton: true,
+        showLastButton: true,
         labelRowsPerPage: i18n.t('common:table_pagination.rows_per_page'),
-        labelDisplayedRows: ({ from, to, count }) => getTranslatedLabelForDisplayedRows(from, to, count),
-        backIconButtonProps: { title: i18n.t('common:table_pagination.previous_page') },
-        nextIconButtonProps: { title: i18n.t('common:table_pagination.next_page') },
+        labelDisplayedRows: ({ from, to, count }) => `${from}-${to} ${i18n.t('common:of')} ${count}`,
+        getItemAriaLabel: (type) => {
+          switch (type) {
+            case 'first':
+              return i18n.t('common:table_pagination.go_to_first_page');
+            case 'last':
+              return i18n.t('common:table_pagination.go_to_last_page');
+            case 'next':
+              return i18n.t('common:table_pagination.go_to_next_page');
+            case 'previous':
+              return i18n.t('common:table_pagination.go_to_previous_page');
+            default:
+              return '';
+          }
+        },
       },
     },
     MuiTooltip: { defaultProps: { arrow: true } },
@@ -186,18 +199,6 @@ export const mainTheme = createTheme({
         gutters: {
           paddingRight: '2rem',
         },
-      },
-    },
-    MuiPagination: {
-      defaultProps: {
-        getItemAriaLabel: (type: string, page: number) =>
-          type === 'previous'
-            ? i18n.t('common:go_to_previous_page')
-            : type === 'next'
-            ? i18n.t('common:go_to_next_page')
-            : type === 'page'
-            ? i18n.t('common:go_to_page', { page })
-            : '',
       },
     },
   },
