@@ -4,6 +4,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typog
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
 import { ContributorRow } from './ContributorRow';
+import { alternatingTableRowColor } from '../../../../themes/mainTheme';
 
 interface ContributorListProps {
   contributors: Contributor[];
@@ -33,7 +34,7 @@ export const ContributorList = ({
     <>
       {contributors.length > 0 && (
         <TableContainer>
-          <Table size="small">
+          <Table size="small" sx={alternatingTableRowColor}>
             <TableHead>
               <TableRow>
                 <TableCell>{t('common:order')}</TableCell>
