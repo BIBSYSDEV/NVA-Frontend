@@ -2,7 +2,6 @@ import { FieldArrayRenderProps, move, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
 import {
   Button,
   Table,
@@ -32,11 +31,6 @@ import { AddContributorModal } from './AddContributorModal';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { ContributorRow } from './components/ContributorRow';
-
-const StyledButton = styled(Button)`
-  margin-bottom: 1rem;
-  border-radius: 1rem;
-`;
 
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
   contributorRoles: ContributorRole[];
@@ -220,7 +214,8 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           }}
         />
       )}
-      <StyledButton
+      <Button
+        sx={{ marginBottom: '1rem', borderRadius: '1rem' }}
         onClick={() => {
           setOpenContributorModal(true);
           setUnverifiedContributor(null);
@@ -235,7 +230,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
               ? t('contributors.contributor')
               : t(`contributors.types.${contributorRole}`),
         })}
-      </StyledButton>
+      </Button>
     </div>
   );
 };
