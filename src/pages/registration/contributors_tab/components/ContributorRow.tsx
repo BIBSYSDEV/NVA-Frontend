@@ -11,11 +11,12 @@ import { Contributor, UnverifiedContributor } from '../../../../types/contributo
 import { Registration } from '../../../../types/registration.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { AffiliationsCell } from './AffiliationsCell';
+import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 
 interface ContributorRowProps {
   contributor: Contributor;
   onMoveContributor: (newSequence: number, oldSequence: number) => void;
-  onRemoveContributorClick: () => void;
+  onRemoveContributor: (index: number) => void;
   openContributorModal: (unverifiedContributor: UnverifiedContributor) => void;
   contributorsLength: number;
   showContributorRole: boolean;
@@ -24,7 +25,7 @@ interface ContributorRowProps {
 export const ContributorRow = ({
   contributor,
   onMoveContributor,
-  onRemoveContributorClick,
+  onRemoveContributor,
   openContributorModal,
   contributorsLength,
   showContributorRole,
@@ -33,6 +34,7 @@ export const ContributorRow = ({
   const {
     values: { entityDescription },
   } = useFormikContext<Registration>();
+  const [removeContributor, setRemoveContributor] = useState(false);
 
   const contributors = entityDescription?.contributors ?? [];
   const contributorIndex = contributors.findIndex(
@@ -144,11 +146,29 @@ export const ContributorRow = ({
         <Tooltip title={t<string>('contributors.remove_role', { role: t(`contributors.types.${contributor.role}`) })}>
           <IconButton
             data-testid={`button-remove-contributor-${contributor.identity.name}`}
-            onClick={onRemoveContributorClick}>
+            onClick={() => setRemoveContributor(true)}>
             <DeleteIcon color="error" />
           </IconButton>
         </Tooltip>
       </TableCell>
+
+      <ConfirmDialog
+        open={!!removeContributor}
+        title={t('contributors.remove_role', {
+          role: t(`contributors.types.${contributor.role}`).toLowerCase(),
+        })}
+        onAccept={() => {
+          onRemoveContributor(contributor.sequence - 1);
+          setRemoveContributor(false);
+        }}
+        onCancel={() => setRemoveContributor(false)}
+        dataTestId="confirm-remove-author-dialog">
+        <Typography>
+          {t('contributors.confirm_remove_author_text', {
+            contributorName: contributor.identity.name,
+          })}
+        </Typography>
+      </ConfirmDialog>
     </TableRow>
   );
 };

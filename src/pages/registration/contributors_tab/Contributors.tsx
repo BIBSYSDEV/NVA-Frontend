@@ -3,7 +3,17 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, TablePagination, Typography } from '@mui/material';
+import {
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  Typography,
+} from '@mui/material';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { Authority } from '../../../types/authority.types';
@@ -18,9 +28,10 @@ import {
 import { NotificationVariant } from '../../../types/notification.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
-import { ContributorList } from './components/ContributorList';
 import { AddContributorModal } from './AddContributorModal';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
+import { alternatingTableRowColor } from '../../../themes/mainTheme';
+import { ContributorRow } from './components/ContributorRow';
 
 const StyledButton = styled(Button)`
   margin-bottom: 1rem;
@@ -155,14 +166,37 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           : t('registration:heading.contributors')}
       </Typography>
 
-      <ContributorList
-        contributors={contributorsToShow}
-        onDelete={handleOnRemove}
-        onMoveContributor={handleMoveContributor}
-        openContributorModal={handleOpenContributorModal}
-        showContributorRole={contributorRoles.length > 1}
-        contributorsLength={relevantContributors.length}
-      />
+      {contributorsToShow.length > 0 && (
+        <TableContainer>
+          <Table size="small" sx={alternatingTableRowColor}>
+            <TableHead>
+              <TableRow>
+                <TableCell>{t('common:order')}</TableCell>
+                <TableCell>
+                  {contributorRoles.length > 1 ? t('common:role') : t('contributors.corresponding')}
+                </TableCell>
+                <TableCell>{t('contributors.confirmed')}</TableCell>
+                <TableCell>{t('common:name')}</TableCell>
+                <TableCell>{t('common:institution')}</TableCell>
+                <TableCell>{t('common:remove')}</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {contributorsToShow.map((contributor, index) => (
+                <ContributorRow
+                  key={index}
+                  contributor={contributor}
+                  onMoveContributor={handleMoveContributor}
+                  onRemoveContributor={handleOnRemove}
+                  openContributorModal={handleOpenContributorModal}
+                  contributorsLength={relevantContributors.length}
+                  showContributorRole={contributorRoles.length > 1}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
 
       <AddContributorModal
         contributorRoles={contributorRoles}
