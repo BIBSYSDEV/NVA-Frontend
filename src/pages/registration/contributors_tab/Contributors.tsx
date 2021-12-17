@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, TablePagination, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Button, TablePagination, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { Authority } from '../../../types/authority.types';
@@ -23,7 +23,7 @@ import { AddContributorModal } from './AddContributorModal';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 
 const StyledButton = styled(Button)`
-  margin: 1rem 0rem;
+  margin-bottom: 1rem;
   border-radius: 1rem;
 `;
 
@@ -39,7 +39,6 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [currentPage, setCurrentPage] = useState(0);
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
   const contributors = values.entityDescription?.contributors ?? [];
   const relevantContributors = contributors.filter((contributor) =>
@@ -144,28 +143,9 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
 
   const contributorRole = contributorRoles.length === 1 ? contributorRoles[0] : 'OtherContributor';
 
-  const addContributorButton = (
-    <StyledButton
-      onClick={() => {
-        setOpenContributorModal(true);
-        setUnverifiedContributor(null);
-      }}
-      variant="contained"
-      color={contributorRoles.length === 1 ? 'primary' : 'inherit'}
-      startIcon={<AddIcon />}
-      data-testid={`add-${contributorRole}`}>
-      {t('contributors.add_as_role', {
-        role:
-          contributorRole === 'OtherContributor'
-            ? t('contributors.contributor')
-            : t(`contributors.types.${contributorRole}`),
-      })}
-    </StyledButton>
-  );
-
   return (
     <div data-testid={contributorRole}>
-      <Typography variant="h2">
+      <Typography variant="h2" paragraph>
         {contributorRole === ContributorRole.Creator
           ? t('registration:contributors.authors')
           : contributorRole === ContributorRole.Editor
@@ -174,8 +154,6 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           ? t('registration:contributors.supervisors')
           : t('registration:heading.contributors')}
       </Typography>
-      {((isMobile && contributorsToShow.length >= 2) || (!isMobile && contributorsToShow.length >= 5)) &&
-        addContributorButton}
 
       <ContributorList
         contributors={contributorsToShow}
@@ -208,7 +186,22 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           }}
         />
       )}
-      {addContributorButton}
+      <StyledButton
+        onClick={() => {
+          setOpenContributorModal(true);
+          setUnverifiedContributor(null);
+        }}
+        variant="contained"
+        color={contributorRoles.length === 1 ? 'primary' : 'inherit'}
+        startIcon={<AddIcon />}
+        data-testid={`add-${contributorRole}`}>
+        {t('contributors.add_as_role', {
+          role:
+            contributorRole === 'OtherContributor'
+              ? t('contributors.contributor')
+              : t(`contributors.types.${contributorRole}`),
+        })}
+      </StyledButton>
     </div>
   );
 };
