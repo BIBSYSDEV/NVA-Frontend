@@ -1,4 +1,4 @@
-import { Typography, CircularProgress } from '@mui/material';
+import { Typography, CircularProgress, Box } from '@mui/material';
 import { useState } from 'react';
 import { TFunction, useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
@@ -99,7 +99,7 @@ export const VocabularySettings = () => {
         <CircularProgress />
       ) : (
         vocabularyList && (
-          <>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <VocabularyRow
               vocabulary={currentHrcsActivityVocabularies}
               updateVocabularies={updateVocabularies}
@@ -114,7 +114,7 @@ export const VocabularySettings = () => {
               dataTestId={dataTestId.editor.hrcsActivityButtonGroup}
               disabled={isUpdating}
             />
-          </>
+          </Box>
         )
       )}
       <Typography gutterBottom mt="1rem">

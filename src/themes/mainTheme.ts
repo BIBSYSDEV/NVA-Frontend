@@ -1,10 +1,10 @@
 import { CalendarPickerView, DatePickerProps } from '@mui/lab';
-import { createTheme } from '@mui/material';
+import { createTheme, SxProps } from '@mui/material';
 import i18n from '../translations/i18n';
 import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
-export enum Color {
+enum Color {
   AlternativeBackground = '#f3f0ed',
   Black = '#222',
   ErrorLight = '#FF8888',
@@ -143,18 +143,6 @@ export const mainTheme = createTheme({
       },
     },
     MuiTableHead: { styleOverrides: { root: { th: { background: Color.AlternativeBackground } } } },
-    MuiTableBody: {
-      styleOverrides: {
-        root: {
-          tr: {
-            background: Color.AlternativeBackground,
-            '&:nth-of-type(odd)': {
-              background: Color.White,
-            },
-          },
-        },
-      },
-    },
     MuiTablePagination: {
       defaultProps: {
         labelRowsPerPage: i18n.t('common:table_pagination.rows_per_page'),
@@ -214,6 +202,15 @@ export const mainTheme = createTheme({
     },
   },
 });
+
+export const alternatingTableRowColor: SxProps = {
+  tr: {
+    background: Color.AlternativeBackground,
+    '&:nth-of-type(odd)': {
+      background: Color.White,
+    },
+  },
+};
 
 // Default props in theme are not supported for components still in /lab
 export const datePickerTranslationProps: Pick<

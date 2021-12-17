@@ -95,7 +95,7 @@ export const ContributorRow = ({
           )}
         </Box>
       </TableCell>
-      <TableCell align="center" width="1">
+      <TableCell align={showContributorRole ? 'left' : 'center'} width="1">
         {showContributorRole ? (
           <Typography>{t(`contributors.types.${contributor.role}`)}</Typography>
         ) : (
@@ -103,6 +103,7 @@ export const ContributorRow = ({
             {({ field }: FieldProps) => (
               <Tooltip title={t<string>('contributors.corresponding')}>
                 <Checkbox
+                  data-testid="author-corresponding-checkbox"
                   checked={!!field.value}
                   {...field}
                   inputProps={{ 'aria-label': t('contributors.corresponding') }}
