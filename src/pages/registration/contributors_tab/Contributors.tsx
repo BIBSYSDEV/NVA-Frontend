@@ -22,7 +22,6 @@ import {
   emptyContributor,
   Identity,
   Institution,
-  UnverifiedContributor,
 } from '../../../types/contributor.types';
 import { NotificationVariant } from '../../../types/notification.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
@@ -40,8 +39,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
-  const [openContributorModal, setOpenContributorModal] = useState(false);
-  const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
+  const [openAddContributor, setOpenAddContributor] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -95,12 +93,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     setFieldValue(ContributorFieldNames.Contributors, [...otherContributors, ...newContributors]);
   };
 
-  const handleOpenContributorModal = (unverifiedContributor: UnverifiedContributor) => {
-    setUnverifiedContributor(unverifiedContributor);
-    setOpenContributorModal(true);
-  };
-
-  const onContributorSelected = (authority: Authority, role: ContributorRole) => {
+  const onContributorSelected = (authority: Authority, role: ContributorRole, index?: number) => {
     if (relevantContributors.some((contributor) => contributor.identity.id === authority.id)) {
       dispatch(setNotification(t('contributors.contributor_already_added'), NotificationVariant.Info));
       return;
@@ -113,7 +106,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       name: authority.name,
     };
 
-    if (!unverifiedContributor) {
+    if (!index) {
       const newContributor: Contributor = {
         ...emptyContributor,
         identity,
@@ -128,7 +121,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       const maxValidPage = Math.floor(relevantContributors.length / rowsPerPage);
       setCurrentPage(maxValidPage);
     } else {
-      const relevantContributor = relevantContributors[unverifiedContributor.index];
+      const relevantContributor = relevantContributors[index];
       const relevantAffiliations = relevantContributor.affiliations ?? [];
       const existingOrgunitIds: Institution[] = authority.orgunitids.map((unitUri) => ({
         type: 'Organization',
@@ -142,7 +135,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         identity,
         affiliations: relevantAffiliations,
       };
-      replace(unverifiedContributor.index, verifiedContributor);
+      replace(index, verifiedContributor);
     }
   };
 
@@ -176,17 +169,26 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
               </TableRow>
             </TableHead>
             <TableBody>
-              {contributorsToShow.map((contributor) => (
-                <ContributorRow
-                  key={`${contributor.identity.name}${contributor.sequence}`}
-                  contributor={contributor}
-                  onMoveContributor={handleMoveContributor}
-                  onRemoveContributor={handleOnRemove}
-                  openContributorModal={handleOpenContributorModal}
-                  contributorsLength={relevantContributors.length}
-                  showContributorRole={contributorRoles.length > 1}
-                />
-              ))}
+              {contributorsToShow.map((contributor) => {
+                const contributorIndex = contributors.findIndex(
+                  (c) =>
+                    c.identity.id === contributor.identity.id &&
+                    c.identity.name === contributor.identity.name &&
+                    c.role === contributor.role
+                );
+                return (
+                  <ContributorRow
+                    key={`${contributor.identity.name}${contributor.sequence}`}
+                    contributor={contributor}
+                    onMoveContributor={handleMoveContributor}
+                    onRemoveContributor={handleOnRemove}
+                    onVerifyContributor={onContributorSelected}
+                    contributorsLength={relevantContributors.length}
+                    contributorRoles={contributorRoles}
+                    contributorIndex={contributorIndex}
+                  />
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
@@ -195,9 +197,8 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       <AddContributorModal
         contributorRoles={contributorRoles}
         contributorRole={contributorRole}
-        initialSearchTerm={unverifiedContributor?.name}
-        open={openContributorModal}
-        toggleModal={() => setOpenContributorModal(!openContributorModal)}
+        open={openAddContributor}
+        toggleModal={() => setOpenAddContributor(false)}
         onContributorSelected={onContributorSelected}
       />
       {contributorsToShow.length > 0 && (
@@ -216,10 +217,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       )}
       <Button
         sx={{ marginBottom: '1rem', borderRadius: '1rem' }}
-        onClick={() => {
-          setOpenContributorModal(true);
-          setUnverifiedContributor(null);
-        }}
+        onClick={() => setOpenAddContributor(true)}
         variant="contained"
         color={contributorRoles.length === 1 ? 'primary' : 'inherit'}
         startIcon={<AddIcon />}
