@@ -19,7 +19,7 @@ describe('User administers institutions ', () => {
   it('The User should be able to add an institution', () => {
     cy.get('[data-testid=add-institution-button]').click({ force: true });
 
-    cy.get(`[data-testid=${dataTestId.institutionAdmin.nameField}]`).click({ force: true }).type('ntnu');
+    cy.get(`[data-testid=${dataTestId.organization.searchField}]`).click({ force: true }).type('ntnu');
     cy.get('[class^=MuiAutocomplete-option]')
       .contains('Norwegian University of Science and Technology')
       .click({ force: true });

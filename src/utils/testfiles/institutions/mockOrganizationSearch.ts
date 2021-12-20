@@ -1,7 +1,7 @@
 export const mockOrganizationSearch = {
   '@context': null,
   id: 'https://api.dev.nva.aws.unit.no/cristin/organization?query=ntnu&page=1&results=20',
-  size: 6,
+  size: 3,
   searchString: 'query=ntnu&page=1&results=20',
   processingTime: 4861,
   firstRecord: 1,

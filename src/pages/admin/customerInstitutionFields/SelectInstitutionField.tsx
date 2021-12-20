@@ -59,7 +59,7 @@ export const SelectInstitutionField = ({ disabled = false }: SelectInstitutionFi
             <TextField
               {...field}
               {...params}
-              data-testid={dataTestId.institutionAdmin.nameField}
+              data-testid={dataTestId.organization.searchField}
               label={t('common:institution')}
               required
               variant="outlined"
