@@ -1,5 +1,5 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Box, TableRow, TableCell, Tooltip, Typography, Checkbox, TextField, IconButton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
@@ -45,11 +45,6 @@ export const ContributorRow = ({
   );
   const baseFieldName = `${ContributorFieldNames.Contributors}[${contributorIndex}]`;
   const [sequenceValue, setSequenceValue] = useState(`${contributor.sequence}`);
-
-  useEffect(() => {
-    // Ensure sequence field is updated
-    setSequenceValue(`${contributor.sequence}`);
-  }, [contributor.sequence]);
 
   const handleOnMoveContributor = () => {
     const sequenceNumber = +sequenceValue;

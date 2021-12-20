@@ -176,9 +176,9 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
               </TableRow>
             </TableHead>
             <TableBody>
-              {contributorsToShow.map((contributor, index) => (
+              {contributorsToShow.map((contributor) => (
                 <ContributorRow
-                  key={index}
+                  key={`${contributor.identity.name}${contributor.sequence}`}
                   contributor={contributor}
                   onMoveContributor={handleMoveContributor}
                   onRemoveContributor={handleOnRemove}
