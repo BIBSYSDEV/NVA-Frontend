@@ -18,7 +18,7 @@ interface ContributorRowProps {
   contributor: Contributor;
   onMoveContributor: (newSequence: number, oldSequence: number) => void;
   onRemoveContributor: (index: number) => void;
-  onVerifyContributor: (authority: Authority, role: ContributorRole, index?: number) => void;
+  onVerifyContributor: (authority: Authority, role: ContributorRole, contributorIndex?: number) => void;
   isLastElement: boolean;
   contributorRoles: ContributorRole[];
   contributorIndex: number;

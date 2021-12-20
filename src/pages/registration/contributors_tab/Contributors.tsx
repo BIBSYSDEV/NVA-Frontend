@@ -93,7 +93,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     setFieldValue(ContributorFieldNames.Contributors, [...otherContributors, ...newContributors]);
   };
 
-  const onContributorSelected = (authority: Authority, role: ContributorRole, index?: number) => {
+  const onContributorSelected = (authority: Authority, role: ContributorRole, contributorIndex?: number) => {
     if (relevantContributors.some((contributor) => contributor.identity.id === authority.id)) {
       dispatch(setNotification(t('contributors.contributor_already_added'), NotificationVariant.Info));
       return;
@@ -106,7 +106,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       name: authority.name,
     };
 
-    if (!index) {
+    if (!contributorIndex) {
       const newContributor: Contributor = {
         ...emptyContributor,
         identity,
@@ -121,7 +121,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       const maxValidPage = Math.floor(relevantContributors.length / rowsPerPage);
       setCurrentPage(maxValidPage);
     } else {
-      const relevantContributor = relevantContributors[index];
+      const relevantContributor = relevantContributors[contributorIndex];
       const relevantAffiliations = relevantContributor.affiliations ?? [];
       const existingOrgunitIds: Institution[] = authority.orgunitids.map((unitUri) => ({
         type: 'Organization',
@@ -135,7 +135,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         identity,
         affiliations: relevantAffiliations,
       };
-      replace(index, verifiedContributor);
+      replace(contributorIndex, verifiedContributor);
     }
   };
 
