@@ -104,13 +104,15 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
             affiliation.labels && (
               <>
                 <Typography>"{getLanguageString(affiliation.labels)}"</Typography>
-                <Button
-                  startIcon={<WarningIcon />}
-                  variant="outlined"
-                  data-testid="button-set-unverified-affiliation"
-                  onClick={() => affiliation.labels && verifyAffiliationOnClick(getLanguageString(affiliation.labels))}>
-                  {t('contributors.verify_affiliation')}
-                </Button>
+                <Tooltip title={t<string>('contributors.verify_affiliation')}>
+                  <IconButton
+                    data-testid="button-set-unverified-affiliation"
+                    onClick={() =>
+                      affiliation.labels && verifyAffiliationOnClick(getLanguageString(affiliation.labels))
+                    }>
+                    <WarningIcon color="warning" />
+                  </IconButton>
+                </Tooltip>
               </>
             )
           )}
