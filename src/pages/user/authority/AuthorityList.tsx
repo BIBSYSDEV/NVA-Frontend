@@ -23,10 +23,6 @@ import { AlmaRegistration } from '../../../types/registration.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { AlmaApiPath } from '../../../api/apiPaths';
 
-const StyledTableRow = styled(TableRow)`
-  cursor: pointer;
-`;
-
 const StyledTableCell = styled(TableCell)`
   min-width: 12rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
@@ -73,7 +69,8 @@ export const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, sele
           </TableHead>
           <TableBody>
             {authorities.map((authority) => (
-              <StyledTableRow
+              <TableRow
+                sx={{ cursor: 'pointer' }}
                 data-testid="author-radio-button"
                 key={authority.id}
                 hover
@@ -103,7 +100,7 @@ export const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, sele
                     <i>{t('profile:authority.no_affiliations_found')}</i>
                   )}
                 </TableCell>
-              </StyledTableRow>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
