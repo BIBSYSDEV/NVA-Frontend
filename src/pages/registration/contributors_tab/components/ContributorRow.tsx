@@ -13,6 +13,7 @@ import { AffiliationsCell } from './AffiliationsCell';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { AddContributorModal } from '../AddContributorModal';
 import { Authority } from '../../../../types/authority.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface ContributorRowProps {
   contributor: Contributor;
@@ -96,7 +97,7 @@ export const ContributorRow = ({
             {({ field }: FieldProps) => (
               <Tooltip title={t<string>('contributors.corresponding')}>
                 <Checkbox
-                  data-testid="author-corresponding-checkbox"
+                  data-testid={dataTestId.registrationWizard.contributors.correspondingCheckbox}
                   checked={!!field.value}
                   {...field}
                   inputProps={{ 'aria-label': t('contributors.corresponding') }}
@@ -114,7 +115,9 @@ export const ContributorRow = ({
         ) : (
           <Tooltip title={t<string>('contributors.verify_person')}>
             <IconButton
-              data-testid={`button-set-unverified-contributor-${contributor.identity.name}`}
+              data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
+                contributor.identity.name
+              )}
               onClick={() => setOpenVerifyContributor(true)}>
               <WarningIcon color="warning" />
             </IconButton>
@@ -136,7 +139,7 @@ export const ContributorRow = ({
       <TableCell width="1">
         <Tooltip title={t<string>('contributors.remove_role', { role: t(`contributors.types.${contributor.role}`) })}>
           <IconButton
-            data-testid={`button-remove-contributor-${contributor.identity.name}`}
+            data-testid={dataTestId.registrationWizard.contributors.removeContributorButton(contributor.identity.name)}
             onClick={() => setOpenRemoveContributor(true)}>
             <DeleteIcon color="error" />
           </IconButton>

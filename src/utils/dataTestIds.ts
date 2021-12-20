@@ -82,6 +82,15 @@ export const dataTestId = {
     twitterButton: 'twitter-button',
   },
   registrationWizard: {
+    contributors: {
+      addAffiliationButton: 'button-add-affiliation',
+      addContributorButton: (role: string) => `add-${role}`,
+      correspondingCheckbox: 'author-corresponding-checkbox',
+      verifyAffiliationButton: 'button-set-unverified-affiliation',
+      verifyContributorButton: (name: string) => `button-set-unverified-contributor-${name}`,
+      removeAffiliationButton: 'button-remove-affiliation',
+      removeContributorButton: (name: string) => `button-remove-contributor-${name}`,
+    },
     description: {
       addVocabularyButton: 'add-vocabulary-button',
       datePublishedField: 'date-published-field',

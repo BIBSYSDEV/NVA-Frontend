@@ -30,6 +30,7 @@ import { AddContributorModal } from './AddContributorModal';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { ContributorRow } from './components/ContributorRow';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
   contributorRoles: ContributorRole[];
@@ -221,7 +222,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         variant="contained"
         color={contributorRoles.length === 1 ? 'primary' : 'inherit'}
         startIcon={<AddIcon />}
-        data-testid={`add-${contributorRole}`}>
+        data-testid={dataTestId.registrationWizard.contributors.addContributorButton(contributorRole)}>
         {t('contributors.add_as_role', {
           role:
             contributorRole === 'OtherContributor'
