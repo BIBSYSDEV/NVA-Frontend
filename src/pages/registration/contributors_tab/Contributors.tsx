@@ -107,7 +107,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       name: authority.name,
     };
 
-    if (!contributorIndex) {
+    if (contributorIndex === undefined) {
       const newContributor: Contributor = {
         ...emptyContributor,
         identity,
