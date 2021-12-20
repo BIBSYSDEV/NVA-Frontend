@@ -22,6 +22,7 @@ export const API_URL = apiHostUrlObject.toString();
 
 export const hrcsActivityBaseId = 'https://nva.unit.no/hrcs/activity';
 export const hrcsCategoryBaseId = 'https://nva.unit.no/hrcs/category';
+export const cristinBaseId = 'https://api.cristin.no/v2/';
 
 export const isErrorStatus = (status: number) => status >= 400 && status <= 599;
 export const isSuccessStatus = (status: number) => status >= 200 && status <= 299;

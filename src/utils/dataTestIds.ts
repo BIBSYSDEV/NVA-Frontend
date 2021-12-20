@@ -1,4 +1,8 @@
 export const dataTestId = {
+  organization: {
+    searchField: 'organization-search-field',
+    subSearchField: 'sub-organization-search-field',
+  },
   editor: {
     hrcsActivityButtonGroup: 'hrcs-activity-button-group',
     hrcsCategoryButtonGroup: 'hrcs-category-button-group',

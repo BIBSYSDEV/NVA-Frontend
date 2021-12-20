@@ -9,17 +9,15 @@ import {
   removeQualifierIdFromAuthority,
 } from '../../api/authorityApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { AddInstitution } from '../../components/institution/AddInstitution';
 import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../redux/actions/userActions';
-import { FormikInstitutionUnit } from '../../types/institution.types';
 import { NotificationVariant } from '../../types/notification.types';
-import { getMostSpecificUnit } from '../../utils/institutions-helpers';
 import { InstitutionCard } from './institution/InstitutionCard';
 import { User } from '../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { SelectInstitutionForm } from '../../components/institution/SelectInstitutionForm';
 
 interface UserInstituionProps {
   user: User;
@@ -68,17 +66,10 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
     setIsRemovingInstitution(false);
   };
 
-  const handleAddInstitution = async (value: FormikInstitutionUnit) => {
-    if (!value.unit) {
+  const handleAddInstitution = async (id: string) => {
+    if (!id) {
       return;
-    }
-
-    const mostSpecificUnit = getMostSpecificUnit(value.unit);
-    const newUnitId = mostSpecificUnit.id;
-
-    if (!newUnitId) {
-      return;
-    } else if (user.authority?.orgunitids.includes(newUnitId)) {
+    } else if (user.authority?.orgunitids.includes(id)) {
       dispatch(setNotification(t('feedback:info.affiliation_already_exists'), NotificationVariant.Info));
       return;
     }
@@ -87,7 +78,7 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
       const updateAuthorityResponse = await addQualifierIdForAuthority(
         user.authority.id,
         AuthorityQualifiers.OrgUnitId,
-        newUnitId
+        id
       );
       if (isErrorStatus(updateAuthorityResponse.status)) {
         dispatch(
@@ -118,7 +109,7 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
           ))}
 
         {openAddInstitutionForm ? (
-          <AddInstitution onSubmit={handleAddInstitution} onClose={toggleUnitForm} />
+          <SelectInstitutionForm onSubmit={handleAddInstitution} onClose={toggleUnitForm} />
         ) : (
           <StyledRightAlignedWrapper>
             <Button
