@@ -25,6 +25,7 @@ import { NotificationVariant } from '../../types/notification.types';
 import { RegistrationPreview, RegistrationStatus } from '../../types/registration.types';
 import { getRegistrationLandingPagePath, getRegistrationPath } from '../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { alternatingTableRowColor } from '../../themes/mainTheme';
 
 const StyledTypography = styled(Typography)`
   font-weight: bold;
@@ -77,7 +78,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
   return (
     <>
       <TableContainer>
-        <Table>
+        <Table sx={alternatingTableRowColor}>
           <caption>
             <span style={visuallyHidden}>{t('workLists:my_registrations')}</span>
           </caption>

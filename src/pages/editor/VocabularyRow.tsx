@@ -31,11 +31,6 @@ export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId, disa
   return (
     <Box
       sx={{
-        padding: '1rem',
-        bgcolor: 'background.default',
-        '&:nth-of-type(odd)': {
-          bgcolor: '#f3f0ed',
-        },
         display: 'flex',
         alignItems: 'center',
       }}>
