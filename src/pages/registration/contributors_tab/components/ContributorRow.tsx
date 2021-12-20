@@ -1,5 +1,5 @@
-import { Field, FieldProps, useFormikContext } from 'formik';
-import { useState, useEffect } from 'react';
+import { Field, FieldProps } from 'formik';
+import { useState } from 'react';
 import { Box, TableRow, TableCell, Tooltip, Typography, Checkbox, TextField, IconButton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
@@ -7,47 +7,39 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import CheckIcon from '@mui/icons-material/CheckCircleSharp';
 import DeleteIcon from '@mui/icons-material/Delete';
 import WarningIcon from '@mui/icons-material/Warning';
-import { Contributor, UnverifiedContributor } from '../../../../types/contributor.types';
-import { Registration } from '../../../../types/registration.types';
+import { Contributor, ContributorRole } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { AffiliationsCell } from './AffiliationsCell';
+import { ConfirmDialog } from '../../../../components/ConfirmDialog';
+import { AddContributorModal } from '../AddContributorModal';
+import { Authority } from '../../../../types/authority.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface ContributorRowProps {
   contributor: Contributor;
   onMoveContributor: (newSequence: number, oldSequence: number) => void;
-  onRemoveContributorClick: () => void;
-  openContributorModal: (unverifiedContributor: UnverifiedContributor) => void;
-  contributorsLength: number;
-  showContributorRole: boolean;
+  onRemoveContributor: (index: number) => void;
+  onVerifyContributor: (authority: Authority, role: ContributorRole, contributorIndex?: number) => void;
+  isLastElement: boolean;
+  contributorRoles: ContributorRole[];
+  contributorIndex: number;
 }
 
 export const ContributorRow = ({
   contributor,
   onMoveContributor,
-  onRemoveContributorClick,
-  openContributorModal,
-  contributorsLength,
-  showContributorRole,
+  onRemoveContributor,
+  onVerifyContributor,
+  isLastElement,
+  contributorRoles,
+  contributorIndex,
 }: ContributorRowProps) => {
   const { t } = useTranslation('registration');
-  const {
-    values: { entityDescription },
-  } = useFormikContext<Registration>();
+  const [openRemoveContributor, setOpenRemoveContributor] = useState(false);
+  const [openVerifyContributor, setOpenVerifyContributor] = useState(false);
 
-  const contributors = entityDescription?.contributors ?? [];
-  const contributorIndex = contributors.findIndex(
-    (c) =>
-      c.identity.id === contributor.identity.id &&
-      c.identity.name === contributor.identity.name &&
-      c.role === contributor.role
-  );
   const baseFieldName = `${ContributorFieldNames.Contributors}[${contributorIndex}]`;
   const [sequenceValue, setSequenceValue] = useState(`${contributor.sequence}`);
-
-  useEffect(() => {
-    // Ensure sequence field is updated
-    setSequenceValue(`${contributor.sequence}`);
-  }, [contributor.sequence]);
 
   const handleOnMoveContributor = () => {
     const sequenceNumber = +sequenceValue;
@@ -56,6 +48,8 @@ export const ContributorRow = ({
     }
     setSequenceValue(`${contributor.sequence}`);
   };
+
+  const showContributorRole = contributorRoles.length > 1;
 
   return (
     <TableRow>
@@ -75,7 +69,7 @@ export const ContributorRow = ({
             }}
             onBlur={handleOnMoveContributor}
           />
-          {contributor.sequence < contributorsLength && (
+          {!isLastElement && (
             <Tooltip title={t<string>('common:move_down')}>
               <IconButton
                 sx={{ minWidth: 'auto' }}
@@ -103,7 +97,7 @@ export const ContributorRow = ({
             {({ field }: FieldProps) => (
               <Tooltip title={t<string>('contributors.corresponding')}>
                 <Checkbox
-                  data-testid="author-corresponding-checkbox"
+                  data-testid={dataTestId.registrationWizard.contributors.correspondingCheckbox}
                   checked={!!field.value}
                   {...field}
                   inputProps={{ 'aria-label': t('contributors.corresponding') }}
@@ -121,8 +115,10 @@ export const ContributorRow = ({
         ) : (
           <Tooltip title={t<string>('contributors.verify_person')}>
             <IconButton
-              data-testid={`button-set-unverified-contributor-${contributor.identity.name}`}
-              onClick={() => openContributorModal({ name: contributor.identity.name, index: contributorIndex })}>
+              data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
+                contributor.identity.name
+              )}
+              onClick={() => setOpenVerifyContributor(true)}>
               <WarningIcon color="warning" />
             </IconButton>
           </Tooltip>
@@ -143,12 +139,41 @@ export const ContributorRow = ({
       <TableCell width="1">
         <Tooltip title={t<string>('contributors.remove_role', { role: t(`contributors.types.${contributor.role}`) })}>
           <IconButton
-            data-testid={`button-remove-contributor-${contributor.identity.name}`}
-            onClick={onRemoveContributorClick}>
+            data-testid={dataTestId.registrationWizard.contributors.removeContributorButton(contributor.identity.name)}
+            onClick={() => setOpenRemoveContributor(true)}>
             <DeleteIcon color="error" />
           </IconButton>
         </Tooltip>
       </TableCell>
+
+      {/* Verify contributor */}
+      <AddContributorModal
+        contributorRoles={contributorRoles}
+        contributorRole={contributor.role}
+        initialSearchTerm={contributor.identity.name}
+        open={openVerifyContributor}
+        toggleModal={() => setOpenVerifyContributor(false)}
+        onContributorSelected={(authority, role) => onVerifyContributor(authority, role, contributorIndex)}
+      />
+
+      {/* Remove contributor */}
+      <ConfirmDialog
+        open={!!openRemoveContributor}
+        title={t('contributors.remove_role', {
+          role: t(`contributors.types.${contributor.role}`).toLowerCase(),
+        })}
+        onAccept={() => {
+          onRemoveContributor(contributor.sequence - 1);
+          setOpenRemoveContributor(false);
+        }}
+        onCancel={() => setOpenRemoveContributor(false)}
+        dataTestId="confirm-remove-author-dialog">
+        <Typography>
+          {t('contributors.confirm_remove_author_text', {
+            contributorName: contributor.identity.name,
+          })}
+        </Typography>
+      </ConfirmDialog>
     </TableRow>
   );
 };

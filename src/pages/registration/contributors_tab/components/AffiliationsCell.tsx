@@ -17,6 +17,7 @@ import { SpecificContributorFieldNames } from '../../../../types/publicationFiel
 import { Registration } from '../../../../types/registration.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { SelectInstitutionForm } from '../../../../components/institution/SelectInstitutionForm';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 const StyledAffiliationsCell = styled.div`
   grid-area: affiliation;
@@ -106,7 +107,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
                 <Typography>"{getLanguageString(affiliation.labels)}"</Typography>
                 <Tooltip title={t<string>('contributors.verify_affiliation')}>
                   <IconButton
-                    data-testid="button-set-unverified-affiliation"
+                    data-testid={dataTestId.registrationWizard.contributors.verifyAffiliationButton}
                     onClick={() =>
                       affiliation.labels && verifyAffiliationOnClick(getLanguageString(affiliation.labels))
                     }>
@@ -120,7 +121,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
             <IconButton
               color="error"
               size="small"
-              data-testid={`button-remove-affiliation-${affiliation.id}`}
+              data-testid={dataTestId.registrationWizard.contributors.removeAffiliationButton}
               onClick={() => setAffiliationToRemove(affiliation)}>
               <RemoveIcon />
             </IconButton>
@@ -129,7 +130,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
       ))}
       <StyledAddAffiliationButton
         size="small"
-        data-testid="button-add-affiliation"
+        data-testid={dataTestId.registrationWizard.contributors.addAffiliationButton}
         startIcon={<AddIcon />}
         onClick={toggleAffiliationModal}>
         {t('contributors.add_affiliation')}
