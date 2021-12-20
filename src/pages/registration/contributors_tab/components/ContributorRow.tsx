@@ -19,7 +19,7 @@ interface ContributorRowProps {
   onMoveContributor: (newSequence: number, oldSequence: number) => void;
   onRemoveContributor: (index: number) => void;
   onVerifyContributor: (authority: Authority, role: ContributorRole, index?: number) => void;
-  contributorsLength: number;
+  isLastElement: boolean;
   contributorRoles: ContributorRole[];
   contributorIndex: number;
 }
@@ -29,7 +29,7 @@ export const ContributorRow = ({
   onMoveContributor,
   onRemoveContributor,
   onVerifyContributor,
-  contributorsLength,
+  isLastElement,
   contributorRoles,
   contributorIndex,
 }: ContributorRowProps) => {
@@ -68,7 +68,7 @@ export const ContributorRow = ({
             }}
             onBlur={handleOnMoveContributor}
           />
-          {contributor.sequence < contributorsLength && (
+          {!isLastElement && (
             <Tooltip title={t<string>('common:move_down')}>
               <IconButton
                 sx={{ minWidth: 'auto' }}

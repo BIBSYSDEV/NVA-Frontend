@@ -183,7 +183,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
                     onMoveContributor={handleMoveContributor}
                     onRemoveContributor={handleOnRemove}
                     onVerifyContributor={onContributorSelected}
-                    contributorsLength={relevantContributors.length}
+                    isLastElement={relevantContributors.length === contributor.sequence}
                     contributorRoles={contributorRoles}
                     contributorIndex={contributorIndex}
                   />
