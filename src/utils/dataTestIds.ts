@@ -26,6 +26,14 @@ export const dataTestId = {
     privacyLink: 'privacy-link',
     worklistLink: 'worklist-link',
   },
+  institutionAdmin: {
+    archiveNameField: 'archive-field',
+    displayNameField: 'display-name-field',
+    feideField: 'feide-field',
+    nameField: 'institution-name-field',
+    saveButton: 'save-button',
+    shortNameField: 'short-name-field',
+  },
   startPage: {
     orderBySelect: 'order-by-select',
     readMoreButton: 'button-read-more',

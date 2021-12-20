@@ -13,6 +13,7 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { alternatingTableRowColor } from '../../themes/mainTheme';
 
 const StyledTable = styled(Table)`
   width: 100%;
@@ -104,7 +105,7 @@ export const UserList = ({
         </Typography>
       ) : (
         <>
-          <StyledTable size="small">
+          <StyledTable size="small" sx={alternatingTableRowColor}>
             <caption>
               <span style={visuallyHidden}>{tableCaption}</span>
             </caption>

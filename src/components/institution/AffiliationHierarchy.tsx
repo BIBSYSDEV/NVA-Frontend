@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
-import { getNewUnitHierarchy, getUnitHierarchyNames } from '../../utils/institutions-helpers';
+import { getOrganizationHierarchy, getUnitHierarchyNames } from '../../utils/institutions-helpers';
 import { AffiliationSkeleton } from './AffiliationSkeleton';
 import { useFetchDepartment } from '../../utils/hooks/useFetchDepartment';
 import { Organization, RecursiveInstitutionUnit } from '../../types/institution.types';
@@ -25,9 +25,7 @@ const NewAffiliationHierarchy = (props: AffiliationHierarchyProps) => {
     url: props.unitUri,
     errorMessage: t('error.get_institution'),
   });
-  const unitNames = getNewUnitHierarchy(organization)
-    .map((unit) => getLanguageString(unit.name))
-    .reverse();
+  const unitNames = getOrganizationHierarchy(organization).map((unit) => getLanguageString(unit.name));
 
   return (
     <AffiliationHierarchyRender

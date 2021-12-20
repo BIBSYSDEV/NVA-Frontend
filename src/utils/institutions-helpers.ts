@@ -43,15 +43,15 @@ export const getUnitHierarchyNames = (
   }
 };
 
-export const getNewUnitHierarchy = (unit?: Organization, units: Organization[] = []) => {
+export const getOrganizationHierarchy = (unit?: Organization, result: Organization[] = []): Organization[] => {
   if (!unit) {
-    return [];
+    return result;
+  } else if (!unit.partOf) {
+    return [unit, ...result];
   }
-  units.push(unit);
-  if (unit.partOf) {
-    getNewUnitHierarchy(unit.partOf[0], units);
-  }
-  return units;
+
+  // If some Organization has multiple values for partOf, this might produce wrong output
+  return getOrganizationHierarchy(unit.partOf[0], [unit, ...result]);
 };
 
 export const getSortedSubUnits = (subUnits: Organization[] = []) => {

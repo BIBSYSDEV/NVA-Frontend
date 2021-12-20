@@ -25,6 +25,7 @@ import { SelectInstitutionField } from './customerInstitutionFields/SelectInstit
 import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { dataTestId } from '../../utils/dataTestIds';
 
 const MyCustomerInstitutionPage = () => {
   const { t } = useTranslation('admin');
@@ -45,6 +46,11 @@ const MyCustomerInstitutionPage = () => {
     }
   };
 
+  const initialValues: CustomerInstitution = {
+    ...emptyCustomerInstitution,
+    ...customerInstitution,
+  };
+
   return (
     <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('common:my_institution')}</PageHeader>
@@ -54,7 +60,7 @@ const MyCustomerInstitutionPage = () => {
         ) : (
           <Formik
             enableReinitialize
-            initialValues={{ ...emptyCustomerInstitution, ...customerInstitution }}
+            initialValues={initialValues}
             validateOnChange
             validationSchema={myInstitutionValidationSchema}
             onSubmit={handleSubmit}>
@@ -66,22 +72,22 @@ const MyCustomerInstitutionPage = () => {
                     name={CustomerInstitutionFieldNames.DisplayName}
                     label={t('display_name')}
                     required
-                    dataTestId="customer-institution-display-name-field"
+                    dataTestId={dataTestId.institutionAdmin.displayNameField}
                   />
                   <CustomerInstitutionTextField
                     name={CustomerInstitutionFieldNames.ShortName}
                     label={t('short_name')}
                     required
-                    dataTestId="customer-institution-short-name-field"
+                    dataTestId={dataTestId.institutionAdmin.shortNameField}
                   />
                   <CustomerInstitutionTextField
                     name={CustomerInstitutionFieldNames.ArchiveName}
                     label={t('archive_name')}
-                    dataTestId="customer-institution-archive-name-field"
+                    dataTestId={dataTestId.institutionAdmin.archiveNameField}
                   />
                   <StyledRightAlignedWrapper>
                     <LoadingButton
-                      data-testid="customer-institution-save-button"
+                      data-testid={dataTestId.institutionAdmin.saveButton}
                       variant="contained"
                       loading={isSubmitting}
                       startIcon={<SaveIcon />}

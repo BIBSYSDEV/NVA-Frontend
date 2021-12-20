@@ -15,10 +15,6 @@ import { useFetch } from '../../../../utils/hooks/useFetch';
 import { AuthorityApiPath } from '../../../../api/apiPaths';
 import { ContributorRole } from '../../../../types/contributor.types';
 
-const StyledTextField = styled(TextField)`
-  margin-bottom: 1rem;
-`;
-
 const StyledDialogActions = styled.div`
   display: grid;
   grid-template-areas: 'create add-self verify';
@@ -80,7 +76,7 @@ export const AddContributorModalContent = ({
           {t('registration:contributors.prefilled_name')}: <b>{initialSearchTerm}</b>
         </Typography>
       )}
-      <StyledTextField
+      <TextField
         id="search"
         data-testid="search-field"
         variant="outlined"
@@ -93,6 +89,7 @@ export const AddContributorModalContent = ({
         InputProps={{
           startAdornment: <SearchIcon />,
         }}
+        sx={{ my: '1rem' }}
       />
 
       {isLoadingAuthorities ? (

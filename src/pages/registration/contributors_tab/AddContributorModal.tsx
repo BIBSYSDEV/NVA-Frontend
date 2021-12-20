@@ -76,7 +76,7 @@ export const AddContributorModal = ({
       dataTestId="contributor-modal">
       {contributorRoles.length > 1 && (
         <TextField
-          sx={{ maxWidth: '15rem', mb: '1rem' }}
+          sx={{ maxWidth: '15rem' }}
           value={selectedContributorRole}
           onChange={(event) => {
             const role = (event.target.value as ContributorRole) ?? '';
