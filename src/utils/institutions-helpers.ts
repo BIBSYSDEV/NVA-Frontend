@@ -1,5 +1,11 @@
 import { Contributor } from '../types/contributor.types';
-import { FormikInstitutionUnit, InstitutionUnitBase, RecursiveInstitutionUnit } from '../types/institution.types';
+import {
+  FormikInstitutionUnit,
+  InstitutionUnitBase,
+  Organization,
+  RecursiveInstitutionUnit,
+} from '../types/institution.types';
+import { getLanguageString } from './translation-helpers';
 
 // Find the most specific unit in hierarchy
 export const getMostSpecificUnit = (values: FormikInstitutionUnit): InstitutionUnitBase => {
@@ -35,6 +41,30 @@ export const getUnitHierarchyNames = (
   } else {
     return getUnitHierarchyNames(queryId, unit.subunits[0], unitNames);
   }
+};
+
+export const getOrganizationHierarchy = (unit?: Organization, result: Organization[] = []): Organization[] => {
+  if (!unit) {
+    return result;
+  } else if (!unit.partOf) {
+    return [unit, ...result];
+  }
+
+  // If some Organization has multiple values for partOf, this might produce wrong output
+  return getOrganizationHierarchy(unit.partOf[0], [unit, ...result]);
+};
+
+export const getSortedSubUnits = (subUnits: Organization[] = []) => {
+  const units = getAllChildOrganizations(subUnits);
+  return units.sort((a, b) => (getLanguageString(a.name) < getLanguageString(b.name) ? -1 : 1));
+};
+
+const getAllChildOrganizations = (units: Organization[] = [], result: Organization[] = []): Organization[] => {
+  if (!units.length) {
+    return result;
+  }
+  const subUnits = units.flatMap((u) => u.hasPart ?? []);
+  return getAllChildOrganizations(subUnits, [...result, ...units]);
 };
 
 // converts from https://api.cristin.no/v2/units/7482.3.3.0
