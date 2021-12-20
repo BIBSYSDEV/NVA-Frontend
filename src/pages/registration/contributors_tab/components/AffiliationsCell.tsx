@@ -3,22 +3,20 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, IconButton, Theme, Tooltip, Typography, useMediaQuery } from '@mui/material';
+import { Button, IconButton, Tooltip, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import RemoveIcon from '@mui/icons-material/HighlightOff';
 import WarningIcon from '@mui/icons-material/Warning';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
-import { AddInstitution } from '../../../../components/institution/AddInstitution';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { Modal } from '../../../../components/Modal';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { Institution } from '../../../../types/contributor.types';
-import { FormikInstitutionUnit } from '../../../../types/institution.types';
 import { NotificationVariant } from '../../../../types/notification.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
-import { getMostSpecificUnit } from '../../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
+import { SelectInstitutionForm } from '../../../../components/institution/SelectInstitutionForm';
 
 const StyledAffiliationsCell = styled.div`
   grid-area: affiliation;
@@ -53,7 +51,6 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [affiliationToRemove, setAffiliationToRemove] = useState<Institution | null>(null);
   const [affiliationToVerify, setAffiliationToVerify] = useState('');
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
   const verifyAffiliationOnClick = (affiliationString: string) => {
@@ -61,22 +58,20 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
     toggleAffiliationModal();
   };
 
-  const addAffiliation = (value: FormikInstitutionUnit) => {
-    if (!value.unit) {
+  const addAffiliation = (id: string) => {
+    if (!id) {
       return;
     }
 
-    const mostSpecificUnit = getMostSpecificUnit(value.unit);
-
     // Avoid adding same unit twice
-    if (affiliations?.some((affiliation) => affiliation.id === mostSpecificUnit.id)) {
+    if (affiliations?.some((affiliation) => affiliation.id === id)) {
       disptach(setNotification(t('contributors.add_duplicate_affiliation'), NotificationVariant.Info));
       return;
     }
 
     const addedAffiliation: Institution = {
       type: 'Organization',
-      id: mostSpecificUnit.id,
+      id,
     };
 
     let updatedAffiliations = affiliations ? [...affiliations] : []; // Must spread affiliations in order to keep changes when switching tab
@@ -109,13 +104,15 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
             affiliation.labels && (
               <>
                 <Typography>"{getLanguageString(affiliation.labels)}"</Typography>
-                <Button
-                  startIcon={<WarningIcon />}
-                  variant="outlined"
-                  data-testid="button-set-unverified-affiliation"
-                  onClick={() => affiliation.labels && verifyAffiliationOnClick(getLanguageString(affiliation.labels))}>
-                  {t('contributors.verify_affiliation')}
-                </Button>
+                <Tooltip title={t<string>('contributors.verify_affiliation')}>
+                  <IconButton
+                    data-testid="button-set-unverified-affiliation"
+                    onClick={() =>
+                      affiliation.labels && verifyAffiliationOnClick(getLanguageString(affiliation.labels))
+                    }>
+                    <WarningIcon color="warning" />
+                  </IconButton>
+                </Tooltip>
               </>
             )
           )}
@@ -146,7 +143,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
           toggleAffiliationModal();
         }}
         maxWidth="sm"
-        fullWidth={isMobile}
+        fullWidth={true}
         headingText={t('contributors.select_institution')}
         dataTestId="affiliation-modal">
         <>
@@ -158,7 +155,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
               {t('contributors.prefilled_affiliation')}: <b>{affiliationToVerify}</b>
             </Typography>
           )}
-          <AddInstitution onClose={toggleAffiliationModal} onSubmit={addAffiliation} />
+          <SelectInstitutionForm onSubmit={addAffiliation} onClose={toggleAffiliationModal} />
         </>
       </Modal>
 
