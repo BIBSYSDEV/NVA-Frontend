@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import {
   Button,
+  InputAdornment,
   Table,
   TableBody,
   TableCell,
@@ -11,8 +12,10 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  TextField,
   Typography,
 } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { Authority } from '../../../types/authority.types';
@@ -43,12 +46,19 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   const [openAddContributor, setOpenAddContributor] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [filterInput, setFilterInput] = useState('');
 
   const contributors = values.entityDescription?.contributors ?? [];
   const relevantContributors = contributors.filter((contributor) =>
     contributorRoles.some((role) => role === contributor.role)
   );
-  const contributorsToShow = relevantContributors.slice(rowsPerPage * currentPage, rowsPerPage * (currentPage + 1));
+  const filteredRelevantContributors = relevantContributors.filter((contributor) =>
+    contributor.identity.name.toLocaleLowerCase().includes(filterInput.toLocaleLowerCase())
+  );
+  const contributorsToShow = filteredRelevantContributors.slice(
+    rowsPerPage * currentPage,
+    rowsPerPage * (currentPage + 1)
+  );
   const otherContributors = contributors.filter(
     (contributor) => !contributorRoles.some((role) => role === contributor.role)
   );
@@ -141,18 +151,38 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   };
 
   const contributorRole = contributorRoles.length === 1 ? contributorRoles[0] : 'OtherContributor';
+  const roleText =
+    contributorRole === ContributorRole.Creator
+      ? t('registration:contributors.authors')
+      : contributorRole === ContributorRole.Editor
+      ? t('registration:contributors.editors')
+      : contributorRole === ContributorRole.Supervisor
+      ? t('registration:contributors.supervisors')
+      : t('registration:heading.contributors');
 
   return (
     <div data-testid={contributorRole}>
       <Typography variant="h2" paragraph>
-        {contributorRole === ContributorRole.Creator
-          ? t('registration:contributors.authors')
-          : contributorRole === ContributorRole.Editor
-          ? t('registration:contributors.editors')
-          : contributorRole === ContributorRole.Supervisor
-          ? t('registration:contributors.supervisors')
-          : t('registration:heading.contributors')}
+        {roleText}
       </Typography>
+
+      {relevantContributors.length > 5 && (
+        <TextField
+          sx={{ mb: '1rem' }}
+          label={`Filtrer ${roleText.toLocaleLowerCase()}`}
+          variant="filled"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          onChange={(event) => {
+            setFilterInput(event.target.value);
+            setCurrentPage(0);
+          }}></TextField>
+      )}
 
       {contributorsToShow.length > 0 && (
         <TableContainer>
@@ -206,7 +236,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         <TablePagination
           rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
           component="div"
-          count={relevantContributors.length}
+          count={filteredRelevantContributors.length}
           rowsPerPage={rowsPerPage}
           page={currentPage}
           onPageChange={(_, newPage) => setCurrentPage(newPage)}
