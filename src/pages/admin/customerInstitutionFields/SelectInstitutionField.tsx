@@ -21,7 +21,7 @@ interface SelectInstitutionFieldProps {
 export const SelectInstitutionField = ({ disabled = false }: SelectInstitutionFieldProps) => {
   const { t } = useTranslation('feedback');
   const { values, setValues } = useFormikContext<CustomerInstitution>();
-  const [searchTerm, setSearchTerm] = useState(values.name);
+  const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
   const [institutions, isLoadingInstitutions] = useFetch<OrganizationsResponse>({
     url: debouncedQuery ? `${InstitutionApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
