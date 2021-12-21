@@ -15,6 +15,7 @@
     "create_new_with_role": "Opprett ny {{- role}}",
     "create_new_author_description": "Personregisteret inneholder personer med opphavsrett til publiserte vitenskapelige arbeid som er tilgjengelig i institusjonens bibliotek, vitenarkiv eller er del av Norsk Vitenskapsindeks. Også omtalte personer kan bli registrert.\n\nOm personen du søker har publisert noe vitenskapelig tidligere, eller har nylig fullført en vitenskapelig grad ved en norsk utdanningsinstitusjon, så er det sannsynlig at personen alt er registrert.\n\nEn kurator vil prøve å finne ut om dette er en ny person eller om det er en ny skrivemåte på en tidligere registrert person.",
     "editors": "Redaktører",
+    "filter": "Filtrer {{role}}",
     "known_author_identity": "Har tilknyttet forfatteridentitet",
     "prefilled_affiliation": "Forhåndsutfylt tilhørighet",
     "prefilled_name": "Forhåndsutfylt navn",

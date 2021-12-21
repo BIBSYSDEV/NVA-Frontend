@@ -169,7 +169,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       {relevantContributors.length > 5 && (
         <TextField
           sx={{ mb: '1rem' }}
-          label={`Filtrer ${roleText.toLocaleLowerCase()}`}
+          label={t('contributors.filter', { role: roleText.toLocaleLowerCase() })}
           variant="filled"
           InputProps={{
             startAdornment: (
@@ -179,9 +179,10 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
             ),
           }}
           onChange={(event) => {
-            setFilterInput(event.target.value);
             setCurrentPage(0);
-          }}></TextField>
+            setFilterInput(event.target.value);
+          }}
+        />
       )}
 
       {contributorsToShow.length > 0 && (
