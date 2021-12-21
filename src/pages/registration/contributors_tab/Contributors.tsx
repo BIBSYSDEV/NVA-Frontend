@@ -52,9 +52,11 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   const relevantContributors = contributors.filter((contributor) =>
     contributorRoles.some((role) => role === contributor.role)
   );
-  const filteredRelevantContributors = relevantContributors.filter((contributor) =>
-    contributor.identity.name.toLocaleLowerCase().includes(filterInput.toLocaleLowerCase())
-  );
+  const filteredRelevantContributors = !filterInput
+    ? relevantContributors
+    : relevantContributors.filter((contributor) =>
+        contributor.identity.name.toLocaleLowerCase().includes(filterInput.toLocaleLowerCase())
+      );
   const contributorsToShow = filteredRelevantContributors.slice(
     rowsPerPage * currentPage,
     rowsPerPage * (currentPage + 1)
