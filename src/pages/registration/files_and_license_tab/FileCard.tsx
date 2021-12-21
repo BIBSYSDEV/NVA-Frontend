@@ -136,7 +136,18 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
               {({ field }: FieldProps) => (
                 <StyledAdministrativeContract
                   data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
-                  control={<Checkbox {...field} checked={field.value} />}
+                  control={
+                    <Checkbox
+                      {...field}
+                      checked={field.value}
+                      onChange={(event) => {
+                        field.onChange(event);
+                        setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`, null);
+                        setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.License}`, null);
+                        setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`, null);
+                      }}
+                    />
+                  }
                   label={t<string>('files_and_license.administrative_contract')}
                 />
               )}
