@@ -93,8 +93,7 @@
     "remove_file": "Fjern fil",
     "remove_file_description": "Ønsker du å fjerne {{fileName}}?",
     "version": "Versjon",
-    "title": "Filnavn",
-    "uploaded_size": "Lastet opp {{size}}"
+    "title": "Filnavn"
   },
   "heading": {
     "contributors": "Bidragsytere",

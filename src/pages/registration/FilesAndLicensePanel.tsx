@@ -125,14 +125,16 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
               </Box>
             )}
 
-            <FileUploader uppy={uppy} addFile={push} />
-            {files.length === 0 &&
-              typeof (errors.fileSet as FormikErrors<FileSet>).files === 'string' &&
-              touched.fileSet && (
-                <FormHelperText error>
-                  <ErrorMessage name={name} />
-                </FormHelperText>
-              )}
+            <Paper elevation={5}>
+              <FileUploader uppy={uppy} addFile={push} />
+              {files.length === 0 &&
+                typeof (errors.fileSet as FormikErrors<FileSet>).files === 'string' &&
+                touched.fileSet && (
+                  <FormHelperText error>
+                    <ErrorMessage name={name} />
+                  </FormHelperText>
+                )}
+            </Paper>
           </div>
         )}
       </FieldArray>

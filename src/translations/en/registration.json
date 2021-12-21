@@ -93,8 +93,7 @@
     "remove_file": "Remove file",
     "remove_file_description": "Do you want to remove {{fileName}}?",
     "version": "Version",
-    "title": "File name",
-    "uploaded_size": "Uploaded {{size}}"
+    "title": "File name"
   },
   "heading": {
     "contributors": "Contributors",
