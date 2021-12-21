@@ -19,6 +19,7 @@ import {
   Tooltip,
   Typography,
   ListItemIcon,
+  Paper,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
@@ -30,7 +31,6 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { Card } from '../../../components/Card';
 
 const StyledDescription = styled(Typography)`
   font-style: italic;
@@ -97,7 +97,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
 
   return (
-    <Card data-testid="uploaded-file-card">
+    <Paper sx={{ padding: '1rem' }} elevation={5} data-testid="uploaded-file-card">
       <StyledTypography variant="h5">{file.name}</StyledTypography>
       <StyledDescription>
         {t('files_and_license.uploaded_size', { size: prettyBytes(file.size, { locale: true }) })}
@@ -273,6 +273,6 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
         onCancel={toggleOpenConfirmDialog}>
         <Typography>{t('files_and_license.remove_file_description', { fileName: file.name })}</Typography>
       </ConfirmDialog>
-    </Card>
+    </Paper>
   );
 };

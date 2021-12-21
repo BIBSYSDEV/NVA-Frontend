@@ -1,7 +1,7 @@
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, FormHelperText, Link, Typography } from '@mui/material';
+import { Box, FormHelperText, Link, Paper, Typography } from '@mui/material';
 import { UppyFile } from '@uppy/core';
 import { Modal } from '../../components/Modal';
 import { File, FileSet, licenses, Uppy } from '../../types/file.types';
@@ -15,7 +15,6 @@ import {
   getChannelRegisterJournalUrl,
   getChannelRegisterPublisherUrl,
 } from '../public_registration/PublicPublicationContext';
-import { Card } from '../../components/Card';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
@@ -74,7 +73,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   return (
     <>
       {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
-        <Card>
+        <Paper sx={{ p: '1rem', mb: '1rem' }} elevation={5}>
           <Typography variant="h2" gutterBottom>
             {t('files_and_license.info_from_channel_register')}
           </Typography>
@@ -94,7 +93,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
               <Typography paragraph>{t('files_and_license.find_series_in_channel_register')}</Typography>
             </Link>
           )}
-        </Card>
+        </Paper>
       )}
 
       <FieldArray name={FileFieldNames.Files}>
