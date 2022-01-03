@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, DialogActions } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -45,7 +45,6 @@ export const AuthorityModal = ({ closeModal, handleNextClick, user }: AuthorityM
             <AuthorityList authorities={[user.authority]} selectedArpId={user.authority.id} />
             <DialogActions>
               <Button
-                color="secondary"
                 variant="contained"
                 endIcon={<ArrowForwardIcon />}
                 data-testid="modal_next"

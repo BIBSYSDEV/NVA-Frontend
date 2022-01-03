@@ -9,7 +9,7 @@ describe('User opens registration form and can see validation errors', () => {
   before('Given that the user is logged in as Creator:', () => {
     cy.visit('/');
     cy.mocklogin();
-    cy.get('[data-testid=my-registrations]').click({ force: true });
+    cy.get('[data-testid=my-registrations-link]').click({ force: true });
     cy.get('[data-testid=edit-registration-4327439]').click({ force: true });
   });
 
@@ -335,9 +335,7 @@ describe('User opens registration form and can see validation errors', () => {
       .within(() => {
         cy.get('input').click({ force: true }).type('0101', { force: true }).blur();
         cy.get('p.Mui-error').should('be.visible');
-        cy.get('input').click({ force: true }).type('2000', { force: true });
-        cy.get('p.Mui-error').should('be.visible');
-        cy.get('input').clear().click({ force: true }).type('01013000', { force: true });
+        cy.get('input').click({ force: true }).type('3000', { force: true });
         cy.get('p.Mui-error').should('not.exist');
       });
 

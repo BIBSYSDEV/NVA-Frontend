@@ -5,7 +5,8 @@ import { FileApiPath } from './apiPaths';
 import { apiRequest, authenticatedApiRequest } from './apiRequest';
 
 interface DownloadFileResponse {
-  presignedDownloadUrl: string;
+  id: string;
+  expires: string;
 }
 
 export const downloadFile = async (registrationIdentifier: string, fileId: string) => {

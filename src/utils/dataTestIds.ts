@@ -1,24 +1,38 @@
 export const dataTestId = {
+  organization: {
+    searchField: 'organization-search-field',
+    subSearchField: 'sub-organization-search-field',
+  },
   editor: {
     hrcsActivityButtonGroup: 'hrcs-activity-button-group',
     hrcsCategoryButtonGroup: 'hrcs-category-button-group',
   },
-  footer: {
-    aboutLink: 'about-link',
-    privacyLink: 'privacy-link',
-  },
   header: {
+    aboutLink: 'about-link',
     adminUsersLink: 'admin-users-link',
     adminInstitutionLink: 'admin-institution-link',
     adminInstitutionsLink: 'admin-institutions-link',
     editorLink: 'editor-link',
+    generalMenuButton: 'general-menu-button',
     languageButton: 'language-button',
     languageMenu: 'language-menu',
     logInButton: 'log-in-link',
     logOutLink: 'log-out-link',
     menuButton: 'menu-button',
+    messagesLink: 'messages-link',
     myProfileLink: 'my-profile-link',
+    myRegistrationsLink: 'my-registrations-link',
+    newRegistrationLink: 'new-registration',
+    privacyLink: 'privacy-link',
     worklistLink: 'worklist-link',
+  },
+  institutionAdmin: {
+    archiveNameField: 'archive-field',
+    displayNameField: 'display-name-field',
+    feideField: 'feide-field',
+    nameField: 'institution-name-field',
+    saveButton: 'save-button',
+    shortNameField: 'short-name-field',
   },
   startPage: {
     orderBySelect: 'order-by-select',
@@ -68,6 +82,15 @@ export const dataTestId = {
     twitterButton: 'twitter-button',
   },
   registrationWizard: {
+    contributors: {
+      addAffiliationButton: 'button-add-affiliation',
+      addContributorButton: (role: string) => `add-${role}`,
+      correspondingCheckbox: 'author-corresponding-checkbox',
+      verifyAffiliationButton: 'button-set-unverified-affiliation',
+      verifyContributorButton: (name: string) => `button-set-unverified-contributor-${name}`,
+      removeAffiliationButton: 'button-remove-affiliation',
+      removeContributorButton: (name: string) => `button-remove-contributor-${name}`,
+    },
     description: {
       addVocabularyButton: 'add-vocabulary-button',
       datePublishedField: 'date-published-field',
@@ -119,6 +142,13 @@ export const dataTestId = {
       seriesField: 'series-search-field',
       seriesNumber: 'series-number-field',
       venueNameField: 'venue-name-field',
+    },
+    stepper: {
+      contributorsStepButton: 'nav-tabpanel-contributors',
+      descriptionStepButton: 'nav-tabpanel-description',
+      errorStep: 'error-tab',
+      filesStepButton: 'nav-tabpanel-files-and-license',
+      resourceStepButton: 'nav-tabpanel-resource-type',
     },
   },
   myInstitutionUsersPage: {

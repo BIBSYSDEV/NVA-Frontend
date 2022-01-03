@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from '@mui/material';
-import { Card } from '../../components/Card';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { PageHeader } from '../../components/PageHeader';
 import {
@@ -19,6 +18,7 @@ import { getUserPath } from '../../utils/urlPaths';
 import { MyRegistrationsList } from './MyRegistrationsList';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { PublicationsApiPath } from '../../api/apiPaths';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
 
 const StyledContainer = styled.div`
   width: 100%;
@@ -58,11 +58,7 @@ const MyRegistrations = () => {
       <StyledContainer>
         <StyledRightAlignedWrapper>
           {user?.authority && (
-            <Button
-              color="primary"
-              component={RouterLink}
-              to={getUserPath(user.authority.id)}
-              data-testid="public-profile-button">
+            <Button component={RouterLink} to={getUserPath(user.authority.id)} data-testid="public-profile-button">
               {t('go_to_public_profile')}
             </Button>
           )}
@@ -81,7 +77,7 @@ const MyRegistrations = () => {
             {t('published_registrations')} ({publishedRegistrations.length})
           </TabButton>
         </StyledTabsContainer>
-        <Card>
+        <BackgroundDiv>
           {isLoading ? (
             <ListSkeleton minWidth={100} maxWidth={100} height={100} />
           ) : (
@@ -90,7 +86,7 @@ const MyRegistrations = () => {
               refetchRegistrations={refetchRegistrations}
             />
           )}
-        </Card>
+        </BackgroundDiv>
       </StyledContainer>
     </StyledPageWrapperWithMaxWidth>
   );

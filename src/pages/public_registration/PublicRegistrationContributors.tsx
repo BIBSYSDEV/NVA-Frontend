@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Link as RouterLink } from 'react-router-dom';
 import { Button, IconButton, Link, Typography } from '@mui/material';

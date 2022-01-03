@@ -1,8 +1,7 @@
 import { Field, FieldProps, Form, Formik } from 'formik';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Button, CircularProgress, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import { LoadingButton } from '@mui/lab';
 import { InstitutionSelector } from '../../pages/user/institution/InstitutionSelector';
@@ -11,7 +10,6 @@ import { useFetchDepartment } from '../../utils/hooks/useFetchDepartment';
 import { useFetchInstitutions } from '../../utils/hooks/useFetchInstitutions';
 import { convertToInstitution } from '../../utils/institutions-helpers';
 import { InstitutionAutocomplete } from './InstitutionAutocomplete';
-import { StyledButtonContainer } from './AddInstitution';
 
 const StyledInstitutionSearchContainer = styled.div`
   width: 30rem;
@@ -68,11 +66,10 @@ export const EditInstitution = ({ initialInstitutionId, onCancel, onSubmit }: Ed
                 />
               )}
 
-              <StyledButtonContainer>
+              <Box sx={{ display: 'flex', gap: '1rem' }}>
                 <LoadingButton
                   variant="contained"
                   type="submit"
-                  color="primary"
                   startIcon={<SaveIcon />}
                   loadingPosition="start"
                   loading={isSubmitting}
@@ -84,7 +81,7 @@ export const EditInstitution = ({ initialInstitutionId, onCancel, onSubmit }: Ed
                 <Button onClick={onCancel} data-testid="institution-cancel-button" variant="text">
                   {t('cancel')}
                 </Button>
-              </StyledButtonContainer>
+              </Box>
             </StyledInstitutionSearchContainer>
           )}
         </Field>

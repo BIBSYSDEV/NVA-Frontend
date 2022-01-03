@@ -1,10 +1,8 @@
 import { Typography } from '@mui/material';
-import React from 'react';
+import InfoIcon from '@mui/icons-material/Info';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { BackgroundDiv } from '../../../../components/BackgroundDiv';
 import { RootStore } from '../../../../redux/reducers/rootReducer';
-import { lightTheme } from '../../../../themes/lightTheme';
 import { BookType, ChapterType, JournalType } from '../../../../types/publicationFieldNames';
 import { BookRegistration } from '../../../../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
@@ -17,6 +15,7 @@ import { JournalRegistration } from '../../../../types/publication_types/journal
 import { Journal, Publisher, Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
+import { Card } from '../../../../components/Card';
 
 interface NviValidationProps {
   registration: Registration;
@@ -43,7 +42,7 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
     instanceType === ChapterType.AnthologyChapter && contentType === ChapterContentType.AcademicChapter;
 
   return isNviApplicableJournalArticle || isNviApplicableBookMonograph || isNviApplicableChapterArticle ? (
-    <BackgroundDiv backgroundColor={lightTheme.palette.section.black}>
+    <>
       {isNviApplicableJournalArticle ? (
         <NviValidationJournalArticle registration={registration as JournalRegistration} />
       ) : isNviApplicableBookMonograph ? (
@@ -51,7 +50,7 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
       ) : isNviApplicableChapterArticle ? (
         <NviValidationChapterArticle registration={registration as ChapterRegistration} />
       ) : null}
-    </BackgroundDiv>
+    </>
   ) : null;
 };
 
@@ -119,17 +118,20 @@ const NviStatus = ({ level = '', isPeerReviewed = false }: NviStatusProps) => {
   const isRated = parseInt(level) > 0;
 
   return (
-    <Typography
-      data-testid={
-        isRated && isPeerReviewed
-          ? dataTestId.registrationWizard.resourceType.nviSuccess
-          : dataTestId.registrationWizard.resourceType.nviFailed
-      }>
-      {isRated
-        ? isPeerReviewed
-          ? t('resource_type.nvi.applicable')
-          : t('resource_type.nvi.not_peer_reviewed')
-        : t('resource_type.nvi.channel_not_rated')}
-    </Typography>
+    <Card sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+      <InfoIcon color="primary" fontSize="large" />
+      <Typography
+        data-testid={
+          isRated && isPeerReviewed
+            ? dataTestId.registrationWizard.resourceType.nviSuccess
+            : dataTestId.registrationWizard.resourceType.nviFailed
+        }>
+        {isRated
+          ? isPeerReviewed
+            ? t('resource_type.nvi.applicable')
+            : t('resource_type.nvi.not_peer_reviewed')
+          : t('resource_type.nvi.channel_not_rated')}
+      </Typography>
+    </Card>
   );
 };

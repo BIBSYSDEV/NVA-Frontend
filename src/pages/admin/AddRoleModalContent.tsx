@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, TextField, DialogActions, InputAdornment, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';

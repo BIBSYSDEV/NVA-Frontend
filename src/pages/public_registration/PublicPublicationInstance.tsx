@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 import { hyphenate as hyphenateIsbn } from 'isbn-utils';

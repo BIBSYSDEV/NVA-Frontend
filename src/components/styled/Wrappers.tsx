@@ -29,15 +29,12 @@ export const StyledFlexColumn = styled.div`
   flex-direction: column;
 `;
 
-export const StyledPageWrapper = styled.div`
+export const StyledPageWrapperWithMaxWidth = styled.div`
   width: 100%;
   @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
     padding: 1rem 2rem;
   }
   padding: 0.5rem;
-`;
-
-export const StyledPageWrapperWithMaxWidth = styled(StyledPageWrapper)`
   max-width: ${({ theme }) => theme.breakpoints.values.lg + 'px'};
 `;
 
@@ -45,6 +42,6 @@ export const StyledCenteredContent = styled.div`
   margin-top: 4rem;
 `;
 
-export const InputContainerBox = (props: BoxProps) => {
-  return <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }} {...props} />;
-};
+export const InputContainerBox = (props: BoxProps) => (
+  <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }} {...props} />
+);

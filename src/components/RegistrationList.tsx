@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
@@ -24,10 +23,6 @@ const StyledRegistrationTitle = styled(Typography)`
   font-size: 1rem;
   font-weight: 600;
   font-style: italic;
-`;
-
-const StyledSuperHeader = styled(Typography)`
-  color: ${({ theme }) => theme.palette.section.megaDark};
 `;
 
 interface RegistrationListProps {
@@ -59,9 +54,9 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
   return (
     <ListItem divider disableGutters>
       <ListItemText disableTypography data-testid="result-list-item">
-        <StyledSuperHeader variant="overline">
+        <Typography variant="overline" sx={{ color: 'primary.dark' }}>
           {t(entityDescription?.reference?.publicationInstance.type ?? '')} - {displayDate(entityDescription?.date)}
-        </StyledSuperHeader>
+        </Typography>
         <StyledRegistrationTitle gutterBottom>
           <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
             {entityDescription?.mainTitle}

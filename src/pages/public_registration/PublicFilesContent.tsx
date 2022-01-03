@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import LockIcon from '@mui/icons-material/Lock';
@@ -30,7 +30,7 @@ const StyledFileRow = styled.div`
   column-gap: 1rem;
   align-items: center;
   padding: 1rem;
-  background: ${({ theme }) => theme.palette.section.megaLight};
+  background: ${({ theme }) => theme.palette.background.paper};
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
     grid-template-areas:
@@ -70,7 +70,6 @@ const StyledPreviewAccordion = styled(Accordion)`
   grid-area: preview;
   margin-top: 1rem;
   max-height: 35rem;
-  background: #f6f6f6;
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
     display: none;
@@ -117,11 +116,10 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
       if (!downloadFileResponse) {
         dispatch(setNotification(t('feedback:error.download_file'), NotificationVariant.Error));
       } else {
-        const { presignedDownloadUrl } = downloadFileResponse;
         if (previewFile) {
-          setPreviewFileUrl(presignedDownloadUrl);
+          setPreviewFileUrl(downloadFileResponse.id);
         } else {
-          window.open(presignedDownloadUrl, '_blank');
+          window.open(downloadFileResponse.id, '_blank');
         }
       }
       previewFile && setIsLoadingPreviewFile(false);
@@ -170,7 +168,6 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
           <Button
             data-testid={dataTestId.registrationLandingPage.openFileButton}
             variant="contained"
-            color="secondary"
             fullWidth
             endIcon={<OpenInNewIcon />}
             onClick={() => handleDownload(false)}>

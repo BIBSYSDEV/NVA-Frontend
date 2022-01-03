@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
@@ -10,7 +9,7 @@ const MyMessages = () => {
 
   return (
     <StyledPageWrapperWithMaxWidth>
-      <PageHeader>{t('my_messages')}</PageHeader>
+      <PageHeader>{t('messages')}</PageHeader>
       <MessagesOverview role={RoleName.CREATOR} />
     </StyledPageWrapperWithMaxWidth>
   );

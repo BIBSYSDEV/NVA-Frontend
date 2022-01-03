@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Button, Collapse, IconButton, Typography } from '@mui/material';
+import { Box, Button, Collapse, IconButton, Typography } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
-import { lightTheme } from '../../themes/lightTheme';
 import { AboutContent } from '../infopages/AboutContent';
 import { dataTestId } from '../../utils/dataTestIds';
 import SearchPage from '../search/SearchPage';
@@ -19,7 +17,7 @@ const StyledDashboard = styled.div`
   width: 100%;
 `;
 
-const StyledTaglineDiv = styled(BackgroundDiv)`
+const StyledTaglineDiv = styled.div`
   grid-area: tagline;
   margin: 0;
   display: grid;
@@ -35,7 +33,7 @@ const StyledCloseButtonWrapper = styled.div`
   grid-area: close-button;
 `;
 
-const StyledDescriptionDiv = styled(BackgroundDiv)`
+const StyledDescriptionDiv = styled.div`
   grid-area: description;
   display: grid;
   grid-template-areas: '. . button .' '. text-description text-description .';
@@ -75,6 +73,7 @@ const StyledCollapse = styled(Collapse)`
 `;
 
 const StyledButtonWrapper = styled.div`
+  margin-top: 1rem;
   grid-area: button;
 `;
 
@@ -102,12 +101,11 @@ const Dashboard = () => {
         <title>{t('start_page')}</title>
       </Helmet>
       {showBanner && (
-        <>
-          <StyledTaglineDiv backgroundColor={lightTheme.palette.section.megaDark}>
+        <Box sx={{ bgcolor: 'primary.dark', p: '1rem 0.5rem', 'h1,p,li,a,svg': { color: 'white' } }}>
+          <StyledTaglineDiv>
             <StyledTagline variant="h1">{t('nva_tagline')}</StyledTagline>
             <StyledCloseButtonWrapper>
               <IconButton
-                color="primary"
                 title={t('close_forever')}
                 onClick={() => {
                   localStorage.setItem(showTaglineKey, 'false');
@@ -121,7 +119,7 @@ const Dashboard = () => {
               {t('about:short_description')}
             </StyledShortDescription>
           </StyledTaglineDiv>
-          <StyledDescriptionDiv backgroundColor={lightTheme.palette.section.megaDark}>
+          <StyledDescriptionDiv>
             <StyledCollapse in={readMore}>
               <AboutContent />
             </StyledCollapse>
@@ -135,7 +133,7 @@ const Dashboard = () => {
               </Button>
             </StyledButtonWrapper>
           </StyledDescriptionDiv>
-        </>
+        </Box>
       )}
       <SearchPage />
     </StyledDashboard>

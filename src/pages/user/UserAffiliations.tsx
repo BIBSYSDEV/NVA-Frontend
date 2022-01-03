@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Button, Typography } from '@mui/material';
@@ -8,18 +8,16 @@ import {
   AuthorityQualifiers,
   removeQualifierIdFromAuthority,
 } from '../../api/authorityApi';
-import { Card } from '../../components/Card';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { AddInstitution } from '../../components/institution/AddInstitution';
 import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../redux/actions/userActions';
-import { FormikInstitutionUnit } from '../../types/institution.types';
 import { NotificationVariant } from '../../types/notification.types';
-import { getMostSpecificUnit } from '../../utils/institutions-helpers';
 import { InstitutionCard } from './institution/InstitutionCard';
 import { User } from '../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { SelectInstitutionForm } from '../../components/institution/SelectInstitutionForm';
 
 interface UserInstituionProps {
   user: User;
@@ -68,17 +66,10 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
     setIsRemovingInstitution(false);
   };
 
-  const handleAddInstitution = async (value: FormikInstitutionUnit) => {
-    if (!value.unit) {
+  const handleAddInstitution = async (id: string) => {
+    if (!id) {
       return;
-    }
-
-    const mostSpecificUnit = getMostSpecificUnit(value.unit);
-    const newUnitId = mostSpecificUnit.id;
-
-    if (!newUnitId) {
-      return;
-    } else if (user.authority?.orgunitids.includes(newUnitId)) {
+    } else if (user.authority?.orgunitids.includes(id)) {
       dispatch(setNotification(t('feedback:info.affiliation_already_exists'), NotificationVariant.Info));
       return;
     }
@@ -87,7 +78,7 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
       const updateAuthorityResponse = await addQualifierIdForAuthority(
         user.authority.id,
         AuthorityQualifiers.OrgUnitId,
-        newUnitId
+        id
       );
       if (isErrorStatus(updateAuthorityResponse.status)) {
         dispatch(
@@ -106,7 +97,7 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
 
   return (
     <>
-      <Card>
+      <BackgroundDiv>
         <Typography variant="h2">{t('heading.affiliations')}</Typography>
         {user.authority?.orgunitids &&
           user.authority.orgunitids.map((orgunitId) => (
@@ -118,12 +109,11 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
           ))}
 
         {openAddInstitutionForm ? (
-          <AddInstitution onSubmit={handleAddInstitution} onClose={toggleUnitForm} />
+          <SelectInstitutionForm onSubmit={handleAddInstitution} onClose={toggleUnitForm} />
         ) : (
           <StyledRightAlignedWrapper>
             <Button
-              variant="contained"
-              color="secondary"
+              variant="outlined"
               onClick={toggleUnitForm}
               disabled={!user.authority}
               startIcon={<AddIcon />}
@@ -132,7 +122,7 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
             </Button>
           </StyledRightAlignedWrapper>
         )}
-      </Card>
+      </BackgroundDiv>
       <ConfirmDialog
         open={!!institutionIdToRemove}
         title={t('affiliations.confirm_remove_affiliation_title')}

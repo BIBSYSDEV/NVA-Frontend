@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Divider, Link, Typography, Skeleton } from '@mui/material';
 import styled from 'styled-components';
@@ -29,7 +28,6 @@ const StyledHeadingRow = styled(StyledProjectGrid)`
 
 const StyledProjectRow = styled(StyledProjectGrid)`
   padding: 0.5rem 1rem;
-  background: ${({ theme }) => theme.palette.section.megaLight};
   margin-bottom: 1rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     grid-template-columns: 1fr;

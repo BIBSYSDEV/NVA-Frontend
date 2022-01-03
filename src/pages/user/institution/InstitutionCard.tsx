@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -16,7 +16,7 @@ import { RootStore } from '../../../redux/reducers/rootReducer';
 import { FormikInstitutionUnit } from '../../../types/institution.types';
 import { NotificationVariant } from '../../../types/notification.types';
 import { getMostSpecificUnit } from '../../../utils/institutions-helpers';
-import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { cristinBaseId, isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
 const StyledCard = styled(Card)`
   display: grid;
@@ -55,6 +55,7 @@ export const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: Institu
   const dispatch = useDispatch();
   const { user } = useSelector((store: RootStore) => store);
 
+  // TODO: Remove when all IDs are updated (NP-3492)
   const handleEditInstitution = async (values: FormikInstitutionUnit, initialInstitution: string) => {
     if (!values.unit || !user?.authority) {
       return;
@@ -103,14 +104,15 @@ export const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: Institu
         <AffiliationHierarchy unitUri={orgunitId} />
       </StyledTextContainer>
       <StyledButtonContainer>
-        <Button
-          variant="outlined"
-          color="primary"
-          data-testid={`button-edit-institution-${orgunitId}`}
-          startIcon={<EditIcon />}
-          onClick={() => setOpenEditForm(true)}>
-          {t('edit')}
-        </Button>
+        {orgunitId.includes(cristinBaseId) && (
+          <Button
+            variant="outlined"
+            data-testid={`button-edit-institution-${orgunitId}`}
+            startIcon={<EditIcon />}
+            onClick={() => setOpenEditForm(true)}>
+            {t('edit')}
+          </Button>
+        )}
         <Button
           color="error"
           variant="outlined"

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -9,7 +9,6 @@ import { useHistory } from 'react-router-dom';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../utils/constants';
 import { OrcidModalContent } from './OrcidModalContent';
-import { Card } from '../../components/Card';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import {
   removeQualifierIdFromAuthority,
@@ -24,6 +23,7 @@ import { StyledTypographyPreWrapped } from '../../components/styled/Wrappers';
 import { User } from '../../types/user.types';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
 
 const StyledOrcidLine = styled.div`
   display: grid;
@@ -135,7 +135,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   };
 
   return (
-    <Card>
+    <BackgroundDiv>
       <Typography variant="h2">{t('orcid.orcid')}</Typography>
       {isAddingOrcid ? (
         <Skeleton width="50%" />
@@ -184,12 +184,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       ) : (
         <>
           <Typography paragraph>{t('orcid.orcid_description')}</Typography>
-          <Button
-            color="secondary"
-            data-testid="button-create-connect-orcid"
-            onClick={toggleModal}
-            variant="contained"
-            size="small">
+          <Button data-testid="button-create-connect-orcid" onClick={toggleModal} variant="contained" size="small">
             {t('orcid.connect_orcid')}
           </Button>
           <Modal
@@ -202,6 +197,6 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
           </Modal>
         </>
       )}
-    </Card>
+    </BackgroundDiv>
   );
 };

@@ -1,7 +1,5 @@
 import { useFormikContext } from 'formik';
-import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
-import { lightTheme } from '../../../themes/lightTheme';
 import { ArtisticType, ResourceFieldNames } from '../../../types/publicationFieldNames';
 import { ArtisticRegistration } from '../../../types/publication_types/artisticRegistration.types';
 import { SelectTypeField } from './components/SelectTypeField';
@@ -17,15 +15,13 @@ export const ArtisticTypeForm = ({ onChangeSubType }: ArtisticTypeFormProps) => 
 
   return (
     <>
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-        <StyledSelectWrapper>
-          <SelectTypeField
-            fieldName={ResourceFieldNames.SubType}
-            onChangeType={onChangeSubType}
-            options={Object.values(ArtisticType)}
-          />
-        </StyledSelectWrapper>
-      </BackgroundDiv>
+      <StyledSelectWrapper>
+        <SelectTypeField
+          fieldName={ResourceFieldNames.SubType}
+          onChangeType={onChangeSubType}
+          options={Object.values(ArtisticType)}
+        />
+      </StyledSelectWrapper>
 
       {subType === ArtisticType.ArtisticDesign && <ArtisticDesignForm />}
     </>

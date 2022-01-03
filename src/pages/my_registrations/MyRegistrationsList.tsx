@@ -1,4 +1,4 @@
-import React, { ChangeEvent, MouseEvent, useState } from 'react';
+import { ChangeEvent, MouseEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
@@ -25,13 +25,7 @@ import { NotificationVariant } from '../../types/notification.types';
 import { RegistrationPreview, RegistrationStatus } from '../../types/registration.types';
 import { getRegistrationLandingPagePath, getRegistrationPath } from '../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-
-const StyledTableRow = styled(TableRow)`
-  background-color: ${(props) => props.theme.palette.box.main};
-  :nth-child(odd) {
-    background-color: ${(props) => props.theme.palette.background.default};
-  }
-`;
+import { alternatingTableRowColor } from '../../themes/mainTheme';
 
 const StyledTypography = styled(Typography)`
   font-weight: bold;
@@ -84,7 +78,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
   return (
     <>
       <TableContainer>
-        <Table>
+        <Table sx={alternatingTableRowColor}>
           <caption>
             <span style={visuallyHidden}>{t('workLists:my_registrations')}</span>
           </caption>
@@ -106,7 +100,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
           </TableHead>
           <TableBody>
             {registrationsOnPage.map((registration) => (
-              <StyledTableRow key={registration.identifier}>
+              <TableRow key={registration.identifier}>
                 <TableCell component="th" scope="row" data-testid={`registration-title-${registration.identifier}`}>
                   <Typography>{registration.mainTitle || <i>[{t('common:missing_title')}]</i>}</Typography>
                 </TableCell>
@@ -118,7 +112,6 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                 </TableCell>
                 <TableCell>
                   <Button
-                    color="primary"
                     variant="outlined"
                     component={RouterLink}
                     to={getRegistrationLandingPagePath(registration.identifier)}
@@ -129,7 +122,6 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                 </TableCell>
                 <TableCell>
                   <Button
-                    color="primary"
                     variant="outlined"
                     component={RouterLink}
                     to={getRegistrationPath(registration.identifier)}
@@ -153,7 +145,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                     </Button>
                   )}
                 </TableCell>
-              </StyledTableRow>
+              </TableRow>
             ))}
           </TableBody>
         </Table>

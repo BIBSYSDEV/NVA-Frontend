@@ -10,8 +10,10 @@ describe('Search', () => {
     cy.url().should('not.include', 'from');
     cy.get(`[data-testid=${dataTestId.startPage.searchPagination}]`).contains('1-10');
     cy.get(`[data-testid=${dataTestId.startPage.searchPagination}] button`).eq(0).should('be.disabled');
-    cy.get(`[data-testid=${dataTestId.startPage.searchPagination}] button`).eq(1).should('be.enabled');
-    cy.get(`[data-testid=${dataTestId.startPage.searchPagination}] button`).eq(1).click();
+    cy.get(`[data-testid=${dataTestId.startPage.searchPagination}] button`).eq(1).should('be.disabled');
+    cy.get(`[data-testid=${dataTestId.startPage.searchPagination}] button`).eq(2).should('be.enabled');
+    cy.get(`[data-testid=${dataTestId.startPage.searchPagination}] button`).eq(3).should('be.enabled');
+    cy.get(`[data-testid=${dataTestId.startPage.searchPagination}] button`).eq(2).click();
     cy.url().should('include', 'results=10');
     cy.url().should('include', 'from=10');
   });

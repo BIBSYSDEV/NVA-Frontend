@@ -1,11 +1,22 @@
 import { FieldArrayRenderProps, move, useFormikContext } from 'formik';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
-import { Button, ThemeProvider, Typography } from '@mui/material';
+import {
+  Button,
+  InputAdornment,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  TextField,
+  Typography,
+} from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
-import { Pagination } from '@mui/material';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { Authority } from '../../../types/authority.types';
 import {
@@ -14,50 +25,41 @@ import {
   emptyContributor,
   Identity,
   Institution,
-  UnverifiedContributor,
 } from '../../../types/contributor.types';
 import { NotificationVariant } from '../../../types/notification.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
-import { useIsMobile } from '../../../utils/hooks/useIsMobile';
-import { lightTheme } from '../../../themes/lightTheme';
-import { ContributorList } from './components/ContributorList';
 import { AddContributorModal } from './AddContributorModal';
-
-const StyledButton = styled(Button)`
-  margin: 1rem 0rem;
-  border-radius: 1rem;
-`;
-
-const StyledPagination = styled(Pagination)`
-  margin-top: 1rem;
-  > ul {
-    justify-content: center;
-  }
-`;
+import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
+import { alternatingTableRowColor } from '../../../themes/mainTheme';
+import { ContributorRow } from './components/ContributorRow';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
   contributorRoles: ContributorRole[];
 }
 
-const contributorsPerPage = 5;
-
 export const Contributors = ({ contributorRoles, push, replace }: ContributorsProps) => {
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
-  const [openContributorModal, setOpenContributorModal] = useState(false);
-  const [unverifiedContributor, setUnverifiedContributor] = useState<UnverifiedContributor | null>(null);
-  const [currentPage, setCurrentPage] = useState(1); // Pagination pages are 1-indexed :/
-  const isMobile = useIsMobile();
+  const [openAddContributor, setOpenAddContributor] = useState(false);
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [filterInput, setFilterInput] = useState('');
 
   const contributors = values.entityDescription?.contributors ?? [];
   const relevantContributors = contributors.filter((contributor) =>
     contributorRoles.some((role) => role === contributor.role)
   );
-  const contributorsToShow = relevantContributors.slice(
-    contributorsPerPage * (currentPage - 1),
-    contributorsPerPage * currentPage
+  const filteredRelevantContributors = !filterInput
+    ? relevantContributors
+    : relevantContributors.filter((contributor) =>
+        contributor.identity.name.toLocaleLowerCase().includes(filterInput.toLocaleLowerCase())
+      );
+  const contributorsToShow = filteredRelevantContributors.slice(
+    rowsPerPage * currentPage,
+    rowsPerPage * (currentPage + 1)
   );
   const otherContributors = contributors.filter(
     (contributor) => !contributorRoles.some((role) => role === contributor.role)
@@ -69,8 +71,8 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
     const nextContributors = [...nextRelevantContributors, ...otherContributors];
     setFieldValue(ContributorFieldNames.Contributors, nextContributors);
+    const maxValidPage = Math.ceil(nextRelevantContributors.length / rowsPerPage) - 1;
 
-    const maxValidPage = Math.ceil(nextContributors.length / contributorsPerPage);
     if (currentPage > maxValidPage) {
       setCurrentPage(maxValidPage);
     }
@@ -104,12 +106,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     setFieldValue(ContributorFieldNames.Contributors, [...otherContributors, ...newContributors]);
   };
 
-  const handleOpenContributorModal = (unverifiedContributor: UnverifiedContributor) => {
-    setUnverifiedContributor(unverifiedContributor);
-    setOpenContributorModal(true);
-  };
-
-  const onContributorSelected = (authority: Authority, role: ContributorRole) => {
+  const onContributorSelected = (authority: Authority, role: ContributorRole, contributorIndex?: number) => {
     if (relevantContributors.some((contributor) => contributor.identity.id === authority.id)) {
       dispatch(setNotification(t('contributors.contributor_already_added'), NotificationVariant.Info));
       return;
@@ -122,7 +119,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       name: authority.name,
     };
 
-    if (!unverifiedContributor) {
+    if (contributorIndex === undefined) {
       const newContributor: Contributor = {
         ...emptyContributor,
         identity,
@@ -134,10 +131,10 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         sequence: relevantContributors.length + 1,
       };
       push(newContributor);
-      const maxValidPage = Math.ceil((relevantContributors.length + 1) / contributorsPerPage);
+      const maxValidPage = Math.floor(relevantContributors.length / rowsPerPage);
       setCurrentPage(maxValidPage);
     } else {
-      const relevantContributor = relevantContributors[unverifiedContributor.index];
+      const relevantContributor = relevantContributors[contributorIndex];
       const relevantAffiliations = relevantContributor.affiliations ?? [];
       const existingOrgunitIds: Institution[] = authority.orgunitids.map((unitUri) => ({
         type: 'Organization',
@@ -151,76 +148,121 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         identity,
         affiliations: relevantAffiliations,
       };
-      replace(unverifiedContributor.index, verifiedContributor);
+      replace(contributorIndex, verifiedContributor);
     }
   };
 
   const contributorRole = contributorRoles.length === 1 ? contributorRoles[0] : 'OtherContributor';
-
-  const addContributorButton = (
-    <StyledButton
-      onClick={() => {
-        setOpenContributorModal(true);
-        setUnverifiedContributor(null);
-      }}
-      variant="contained"
-      color={contributorRoles.length === 1 ? 'secondary' : 'inherit'}
-      startIcon={<AddIcon />}
-      data-testid={`add-${contributorRole}`}>
-      {t('contributors.add_as_role', {
-        role:
-          contributorRole === 'OtherContributor'
-            ? t('contributors.contributor')
-            : t(`contributors.types.${contributorRole}`),
-      })}
-    </StyledButton>
-  );
+  const roleText =
+    contributorRole === ContributorRole.Creator
+      ? t('registration:contributors.authors')
+      : contributorRole === ContributorRole.Editor
+      ? t('registration:contributors.editors')
+      : contributorRole === ContributorRole.Supervisor
+      ? t('registration:contributors.supervisors')
+      : t('registration:heading.contributors');
 
   return (
     <div data-testid={contributorRole}>
-      <Typography variant="h2">
-        {contributorRole === ContributorRole.Creator
-          ? t('registration:contributors.authors')
-          : contributorRole === ContributorRole.Editor
-          ? t('registration:contributors.editors')
-          : contributorRole === ContributorRole.Supervisor
-          ? t('registration:contributors.supervisors')
-          : t('registration:heading.contributors')}
+      <Typography variant="h2" paragraph>
+        {roleText}
       </Typography>
-      <ThemeProvider theme={lightTheme}>
-        {((isMobile && contributorsToShow.length >= 2) || (!isMobile && contributorsToShow.length >= 5)) &&
-          addContributorButton}
 
-        <ContributorList
-          contributors={contributorsToShow}
-          onDelete={handleOnRemove}
-          onMoveContributor={handleMoveContributor}
-          openContributorModal={handleOpenContributorModal}
-          showContributorRole={contributorRoles.length > 1}
-          contributorsLength={relevantContributors.length}
-        />
-
-        <AddContributorModal
-          contributorRoles={contributorRoles}
-          contributorRole={contributorRole}
-          initialSearchTerm={unverifiedContributor?.name}
-          open={openContributorModal}
-          toggleModal={() => setOpenContributorModal(!openContributorModal)}
-          onContributorSelected={onContributorSelected}
-        />
-      </ThemeProvider>
-      {relevantContributors.length > contributorsPerPage && (
-        <StyledPagination
-          variant="outlined"
-          color="primary"
-          size="large"
-          shape="rounded"
-          onChange={(_, page) => setCurrentPage(page)}
-          page={currentPage}
-          count={Math.ceil(relevantContributors.length / contributorsPerPage)}
+      {relevantContributors.length > 5 && (
+        <TextField
+          sx={{ mb: '1rem' }}
+          label={t('contributors.filter', { role: roleText.toLocaleLowerCase() })}
+          variant="filled"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          onChange={(event) => {
+            setCurrentPage(0);
+            setFilterInput(event.target.value);
+          }}
         />
       )}
-      {addContributorButton}
+
+      {contributorsToShow.length > 0 && (
+        <TableContainer>
+          <Table size="small" sx={alternatingTableRowColor}>
+            <TableHead>
+              <TableRow>
+                <TableCell>{t('common:order')}</TableCell>
+                <TableCell>
+                  {contributorRoles.length > 1 ? t('common:role') : t('contributors.corresponding')}
+                </TableCell>
+                <TableCell>{t('contributors.confirmed')}</TableCell>
+                <TableCell>{t('common:name')}</TableCell>
+                <TableCell>{t('common:institution')}</TableCell>
+                <TableCell>{t('common:remove')}</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {contributorsToShow.map((contributor) => {
+                const contributorIndex = contributors.findIndex(
+                  (c) =>
+                    c.identity.id === contributor.identity.id &&
+                    c.identity.name === contributor.identity.name &&
+                    c.role === contributor.role
+                );
+                return (
+                  <ContributorRow
+                    key={`${contributor.identity.name}${contributor.sequence}`}
+                    contributor={contributor}
+                    onMoveContributor={handleMoveContributor}
+                    onRemoveContributor={handleOnRemove}
+                    onVerifyContributor={onContributorSelected}
+                    isLastElement={relevantContributors.length === contributor.sequence}
+                    contributorRoles={contributorRoles}
+                    contributorIndex={contributorIndex}
+                  />
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+
+      <AddContributorModal
+        contributorRoles={contributorRoles}
+        contributorRole={contributorRole}
+        open={openAddContributor}
+        toggleModal={() => setOpenAddContributor(false)}
+        onContributorSelected={onContributorSelected}
+      />
+      {contributorsToShow.length > 0 && (
+        <TablePagination
+          rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+          component="div"
+          count={filteredRelevantContributors.length}
+          rowsPerPage={rowsPerPage}
+          page={currentPage}
+          onPageChange={(_, newPage) => setCurrentPage(newPage)}
+          onRowsPerPageChange={(event) => {
+            setRowsPerPage(parseInt(event.target.value));
+            setCurrentPage(0);
+          }}
+        />
+      )}
+      <Button
+        sx={{ marginBottom: '1rem', borderRadius: '1rem' }}
+        onClick={() => setOpenAddContributor(true)}
+        variant="contained"
+        color={contributorRoles.length === 1 ? 'primary' : 'inherit'}
+        startIcon={<AddIcon />}
+        data-testid={dataTestId.registrationWizard.contributors.addContributorButton(contributorRole)}>
+        {t('contributors.add_as_role', {
+          role:
+            contributorRole === 'OtherContributor'
+              ? t('contributors.contributor')
+              : t(`contributors.types.${contributorRole}`),
+        })}
+      </Button>
     </div>
   );
 };

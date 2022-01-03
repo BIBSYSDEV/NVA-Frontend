@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { PageHeader } from '../../components/PageHeader';
@@ -10,6 +9,7 @@ import { CustomerInstitutionMetadataForm } from './CustomerInstitutionMetadataFo
 import { useFetch } from '../../utils/hooks/useFetch';
 import { InstitutionUser } from '../../types/user.types';
 import { RoleApiPath } from '../../api/apiPaths';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
 
 const StyledCustomerInstitution = styled.section`
   display: flex;
@@ -44,7 +44,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
         {isLoadingCustomerInstitution ? (
           <PageSpinner />
         ) : (
-          <>
+          <BackgroundDiv>
             <CustomerInstitutionMetadataForm
               customerInstitution={customerInstitution ?? emptyCustomerInstitution}
               editMode={editMode}
@@ -56,7 +56,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
                 isLoadingUsers={isLoadingUsers}
               />
             )}
-          </>
+          </BackgroundDiv>
         )}
       </StyledCustomerInstitution>
     </StyledPageWrapperWithMaxWidth>

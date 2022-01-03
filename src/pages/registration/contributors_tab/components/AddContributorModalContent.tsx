@@ -1,5 +1,5 @@
 import { useFormikContext } from 'formik';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -14,10 +14,6 @@ import { AuthorityList } from '../../../user/authority/AuthorityList';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { AuthorityApiPath } from '../../../../api/apiPaths';
 import { ContributorRole } from '../../../../types/contributor.types';
-
-const StyledTextField = styled(TextField)`
-  margin-bottom: 1rem;
-`;
 
 const StyledDialogActions = styled.div`
   display: grid;
@@ -80,7 +76,7 @@ export const AddContributorModalContent = ({
           {t('registration:contributors.prefilled_name')}: <b>{initialSearchTerm}</b>
         </Typography>
       )}
-      <StyledTextField
+      <TextField
         id="search"
         data-testid="search-field"
         variant="outlined"
@@ -93,6 +89,7 @@ export const AddContributorModalContent = ({
         InputProps={{
           startAdornment: <SearchIcon />,
         }}
+        sx={{ my: '1rem' }}
       />
 
       {isLoadingAuthorities ? (
@@ -110,7 +107,6 @@ export const AddContributorModalContent = ({
 
       <StyledDialogActions>
         <StyledVerifyButton
-          color="secondary"
           data-testid="connect-author-button"
           disabled={!selectedAuthority}
           onClick={() => selectedAuthority && addContributor(selectedAuthority)}
@@ -120,11 +116,11 @@ export const AddContributorModalContent = ({
             ? t('contributors.verify_person')
             : t('common:add_custom', { name: t(`contributors.types.${roleToAdd}`) })}
         </StyledVerifyButton>
-        <StyledCreateButton color="primary" data-testid="button-create-new-author" onClick={openNewContributorModal}>
+        <StyledCreateButton data-testid="button-create-new-author" onClick={openNewContributorModal}>
           {t('contributors.create_new_with_role', { role: t(`contributors.types.${roleToAdd}`) })}
         </StyledCreateButton>
         {!isSelfAdded && !initialSearchTerm && (
-          <StyledAddSelfButton color="primary" data-testid="button-add-self-author" onClick={addSelfAsContributor}>
+          <StyledAddSelfButton data-testid="button-add-self-author" onClick={addSelfAsContributor}>
             {t('contributors.add_self_as_role', { role: t(`contributors.types.${roleToAdd}`) })}
           </StyledAddSelfButton>
         )}

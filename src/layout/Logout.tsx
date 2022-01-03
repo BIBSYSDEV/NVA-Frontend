@@ -1,4 +1,3 @@
-import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { UrlPathTemplate } from '../utils/urlPaths';
 import { REDIRECT_PATH_KEY } from '../utils/constants';

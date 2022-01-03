@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useTranslation } from 'react-i18next';
@@ -39,15 +39,10 @@ export const ConfirmDialog = ({
         <StyledDialogContentText>{children}</StyledDialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button data-testid="cancel-button" color="primary" variant="outlined" onClick={onCancel}>
+        <Button data-testid="cancel-button" variant="outlined" onClick={onCancel}>
           {t('common:no')}
         </Button>
-        <LoadingButton
-          data-testid="accept-button"
-          color="secondary"
-          variant="contained"
-          loading={isLoading}
-          onClick={onAccept}>
+        <LoadingButton data-testid="accept-button" variant="contained" loading={isLoading} onClick={onAccept}>
           {t('common:yes')}
         </LoadingButton>
       </DialogActions>

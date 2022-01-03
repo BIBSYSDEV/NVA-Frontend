@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
@@ -112,7 +111,6 @@ export const SupportRequestAccordion = ({
           <Button
             data-testid={`go-to-registration-${identifier}`}
             variant="outlined"
-            color="primary"
             endIcon={<ArrowForwardIcon />}
             component={RouterLink}
             to={getRegistrationLandingPagePath(identifier)}>

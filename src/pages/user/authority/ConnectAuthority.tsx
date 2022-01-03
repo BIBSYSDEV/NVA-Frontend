@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -98,11 +98,7 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
               searchTerm={user.name}
             />
             <StyledRightAlignedWrapper>
-              <Button
-                color="primary"
-                variant="text"
-                data-testid="button-create-authority"
-                onClick={toggleOpenNewAuthorityCard}>
+              <Button variant="text" data-testid="button-create-authority" onClick={toggleOpenNewAuthorityCard}>
                 {t('authority.create_authority')}
               </Button>
             </StyledRightAlignedWrapper>
@@ -113,7 +109,6 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
               </Button>
               <LoadingButton
                 data-testid="connect-author-button"
-                color="secondary"
                 variant="contained"
                 size="large"
                 onClick={updateAuthorityForUser}

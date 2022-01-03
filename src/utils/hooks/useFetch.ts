@@ -82,6 +82,8 @@ export const useFetch = <T>({
   useEffect(() => {
     if (url) {
       fetchData();
+    } else {
+      setData(undefined);
     }
   }, [fetchData, url]);
 

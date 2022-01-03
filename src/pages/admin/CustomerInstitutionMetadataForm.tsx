@@ -1,9 +1,8 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import { LoadingButton } from '@mui/lab';
 import {
@@ -14,14 +13,13 @@ import {
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { createCustomerInstitution, updateCustomerInstitution } from '../../api/customerInstitutionsApi';
-import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import { InputContainerBox, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { customerInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
 import { CustomerInstitutionTextField } from './customerInstitutionFields/CustomerInstitutionTextField';
 import { SelectInstitutionField } from './customerInstitutionFields/SelectInstitutionField';
 import { getAdminInstitutionPath } from '../../utils/urlPaths';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
-import { lightTheme } from '../../themes/lightTheme';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { dataTestId } from '../../utils/dataTestIds';
 
 interface CustomerInstitutionMetadataFormProps {
   customerInstitution: CustomerInstitution;
@@ -56,7 +54,7 @@ export const CustomerInstitutionMetadataForm = ({
   };
 
   return (
-    <BackgroundDiv backgroundColor={lightTheme.palette.section.megaLight}>
+    <>
       <Typography variant="h2" paragraph>
         {t('common:institution')}
       </Typography>
@@ -68,36 +66,35 @@ export const CustomerInstitutionMetadataForm = ({
         onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form noValidate>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <InputContainerBox>
               <SelectInstitutionField disabled={editMode} />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.DisplayName}
                 label={t('display_name')}
                 required
-                dataTestId="customer-institution-display-name-field"
+                dataTestId={dataTestId.institutionAdmin.displayNameField}
               />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.ShortName}
                 label={t('short_name')}
                 required
-                dataTestId="customer-institution-short-name-field"
+                dataTestId={dataTestId.institutionAdmin.shortNameField}
               />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.ArchiveName}
                 label={t('archive_name')}
-                dataTestId="customer-institution-archive-name-field"
+                dataTestId={dataTestId.institutionAdmin.archiveNameField}
               />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.FeideOrganizationId}
                 label={t('feide_organization_id')}
                 required
-                dataTestId="customer-institution-feide-organization-id-field"
+                dataTestId={dataTestId.institutionAdmin.feideField}
               />
               <StyledRightAlignedWrapper>
                 <LoadingButton
-                  data-testid="customer-institution-save-button"
+                  data-testid={dataTestId.institutionAdmin.saveButton}
                   variant="contained"
-                  color="secondary"
                   startIcon={<SaveIcon />}
                   loadingPosition="start"
                   loading={isSubmitting}
@@ -105,10 +102,10 @@ export const CustomerInstitutionMetadataForm = ({
                   {editMode ? t('common:save') : t('common:create')}
                 </LoadingButton>
               </StyledRightAlignedWrapper>
-            </Box>
+            </InputContainerBox>
           </Form>
         )}
       </Formik>
-    </BackgroundDiv>
+    </>
   );
 };

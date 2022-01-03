@@ -19,24 +19,24 @@ describe('User administers institutions ', () => {
   it('The User should be able to add an institution', () => {
     cy.get('[data-testid=add-institution-button]').click({ force: true });
 
-    cy.get('[data-testid=autocomplete-institution]').click({ force: true }).type('ntnu');
+    cy.get(`[data-testid=${dataTestId.organization.searchField}]`).click({ force: true }).type('ntnu');
     cy.get('[class^=MuiAutocomplete-option]')
       .contains('Norwegian University of Science and Technology')
       .click({ force: true });
-    cy.get('[data-testid=customer-institution-short-name-field] input').type('NTNU');
-    cy.get('[data-testid=customer-institution-archive-name-field] input').type('NTNU Open');
-    cy.get('[data-testid=customer-institution-feide-organization-id-field] input').type('NO919477822');
+    cy.get(`[data-testid=${dataTestId.institutionAdmin.shortNameField}] input`).type('NTNU');
+    cy.get(`[data-testid=${dataTestId.institutionAdmin.archiveNameField}] input`).type('NTNU Open');
+    cy.get(`[data-testid=${dataTestId.institutionAdmin.feideField}] input`).type('NO919477822');
 
-    cy.get('[data-testid=customer-institution-save-button]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.institutionAdmin.saveButton}]`).click({ force: true });
     cy.get('[data-testid=snackbar-success]').contains('Created customer institution');
   });
 
   it('The User should be able to edit an institution', () => {
     cy.get('[data-testid=edit-institution-NTNU]').click({ force: true });
 
-    cy.get('[data-testid=customer-institution-archive-name-field] input').type(' Archive');
+    cy.get(`[data-testid=${dataTestId.institutionAdmin.archiveNameField}] input`).type(' Archive');
 
-    cy.get('[data-testid=customer-institution-save-button]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.institutionAdmin.saveButton}]`).click({ force: true });
     cy.get('[data-testid=snackbar-success]').contains('Updated customer institution');
   });
 });

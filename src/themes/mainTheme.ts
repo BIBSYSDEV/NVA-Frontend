@@ -1,37 +1,19 @@
 import { CalendarPickerView, DatePickerProps } from '@mui/lab';
-import { createTheme } from '@mui/material';
-import { PaletteColor, PaletteColorOptions, SimplePaletteColorOptions } from '@mui/material/styles';
+import { createTheme, SxProps } from '@mui/material';
 import i18n from '../translations/i18n';
-import { getTranslatedLabelForDisplayedRows } from '../utils/pagination';
-import { Color } from './colors';
 
-// Extend Palette type to allow custom colors
-declare module '@mui/material/styles/createPalette' {
-  interface Palette {
-    box: PaletteColor;
-    section: ExtendedPalette;
-  }
-  interface PaletteOptions {
-    box?: PaletteColorOptions;
-    section?: ExtendedPaletteOptions;
-  }
-
-  interface TypeBackground {
-    footer: string;
-    statusBar: string;
-  }
-
-  interface ExtendedPalette extends PaletteColor {
-    megaLight: string;
-    megaDark: string;
-    black: string;
-  }
-
-  interface ExtendedPaletteOptions extends SimplePaletteColorOptions {
-    megaLight?: string;
-    megaDark?: string;
-    black?: string;
-  }
+// Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
+enum Color {
+  AlternativeBackground = '#f3f0ed',
+  Black = '#222',
+  ErrorLight = '#FF8888',
+  ErrorMain = '#C2363D',
+  Paper = '#faf7f4',
+  PrimaryMain = '#0e6d82',
+  SecondaryMain = '#FFB546',
+  SuccessMain = '#08B677',
+  TextPrimary = 'rgba(0, 0, 0, 0.87)',
+  White = '#fff',
 }
 
 enum Font {
@@ -39,7 +21,7 @@ enum Font {
   Crimson = 'Crimson Text, serif',
 }
 
-export const lightTheme = createTheme({
+export const mainTheme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
@@ -51,15 +33,10 @@ export const lightTheme = createTheme({
   },
   palette: {
     primary: {
-      main: Color.BlueMain,
+      main: Color.PrimaryMain,
     },
     secondary: {
-      light: Color.SecondaryLight,
       main: Color.SecondaryMain,
-      dark: Color.SecondaryDark,
-    },
-    box: {
-      main: Color.Box,
     },
     error: {
       main: Color.ErrorMain,
@@ -67,25 +44,10 @@ export const lightTheme = createTheme({
     },
     success: {
       main: Color.SuccessMain,
-      dark: Color.SuccessDark,
-    },
-    text: {
-      primary: Color.PrimaryText,
-      secondary: Color.SecondaryText,
-      disabled: Color.Disabled,
     },
     background: {
       default: Color.White,
-      footer: Color.Footer,
-      statusBar: Color.SecondaryMegaLight,
-    },
-    section: {
-      megaLight: Color.BlueMegaLight,
-      light: Color.BlueLight,
-      main: Color.BlueMain,
-      dark: Color.BlueDark,
-      megaDark: Color.BlueMegaDark,
-      black: Color.Black,
+      paper: Color.Paper,
     },
   },
   typography: {
@@ -122,23 +84,6 @@ export const lightTheme = createTheme({
     },
   },
   components: {
-    MuiAccordion: {
-      styleOverrides: {
-        root: {
-          background: Color.Panel,
-        },
-      },
-    },
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          background: Color.Header,
-        },
-        colorPrimary: {
-          color: Color.PrimaryText,
-        },
-      },
-    },
     MuiAutocomplete: {
       styleOverrides: {
         tag: {
@@ -156,25 +101,6 @@ export const lightTheme = createTheme({
         openText: i18n.t('common:open'),
       },
     },
-    MuiButton: {
-      styleOverrides: {
-        outlinedSecondary: {
-          color: Color.PrimaryText,
-        },
-        containedSecondary: {
-          '&:disabled': {
-            background: Color.SecondaryLight,
-          },
-        },
-      },
-    },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          backgroundColor: Color.Box,
-        },
-      },
-    },
     MuiChip: {
       styleOverrides: {
         root: {
@@ -185,45 +111,60 @@ export const lightTheme = createTheme({
           whiteSpace: 'normal', // Allow multiline chips
         },
       },
-    },
-    MuiInputBase: {
-      styleOverrides: {
-        root: {
-          background: Color.White,
-        },
+      defaultProps: {
+        variant: 'outlined',
       },
     },
     MuiLink: {
       styleOverrides: {
         root: {
-          color: Color.PrimaryText,
+          color: Color.TextPrimary,
         },
         underlineAlways: {
           textDecorationColor: Color.SecondaryMain,
         },
       },
     },
-    MuiTab: {
+    MuiStepLabel: {
       styleOverrides: {
-        root: {
-          flexDirection: 'row-reverse',
-        },
-        textColorPrimary: {
-          '&.Mui-selected': {
-            color: Color.PrimaryText,
-            fontWeight: 'bold',
+        label: {
+          opacity: 0.65,
+          textTransform: 'uppercase',
+          fontSize: '1rem',
+          '&.Mui-active': {
+            color: Color.PrimaryMain,
+            opacity: 1,
+          },
+          '&.Mui-error': {
+            color: Color.ErrorMain,
           },
         },
       },
     },
+    MuiTableHead: { styleOverrides: { root: { th: { background: Color.AlternativeBackground } } } },
     MuiTablePagination: {
       defaultProps: {
+        showFirstButton: true,
+        showLastButton: true,
         labelRowsPerPage: i18n.t('common:table_pagination.rows_per_page'),
-        labelDisplayedRows: ({ from, to, count }) => getTranslatedLabelForDisplayedRows(from, to, count),
-        backIconButtonProps: { title: i18n.t('common:table_pagination.previous_page') },
-        nextIconButtonProps: { title: i18n.t('common:table_pagination.next_page') },
+        labelDisplayedRows: ({ from, to, count }) => `${from}-${to} ${i18n.t('common:of')} ${count}`,
+        getItemAriaLabel: (type) => {
+          switch (type) {
+            case 'first':
+              return i18n.t('common:table_pagination.go_to_first_page');
+            case 'last':
+              return i18n.t('common:table_pagination.go_to_last_page');
+            case 'next':
+              return i18n.t('common:table_pagination.go_to_next_page');
+            case 'previous':
+              return i18n.t('common:table_pagination.go_to_previous_page');
+            default:
+              return '';
+          }
+        },
       },
     },
+    MuiTooltip: { defaultProps: { arrow: true } },
     MuiTypography: {
       defaultProps: {
         color: 'textPrimary',
@@ -234,15 +175,6 @@ export const lightTheme = createTheme({
         asterisk: {
           fontWeight: 'bold',
           color: Color.ErrorMain,
-        },
-        root: {
-          color: Color.Black,
-          '&.Mui-focused': {
-            color: Color.Black,
-          },
-          '&.Mui-error': {
-            color: Color.ErrorMain,
-          },
         },
       },
     },
@@ -259,19 +191,6 @@ export const lightTheme = createTheme({
         },
       },
     },
-    MuiFormHelperText: {
-      styleOverrides: {
-        root: {
-          color: Color.Black,
-          '&.Mui-error': {
-            color: Color.Black,
-            backgroundColor: Color.ErrorLight,
-            margin: 0,
-            padding: '0.25rem 0.75rem',
-          },
-        },
-      },
-    },
     MuiMenuItem: {
       styleOverrides: {
         root: {
@@ -282,20 +201,17 @@ export const lightTheme = createTheme({
         },
       },
     },
-    MuiPagination: {
-      defaultProps: {
-        getItemAriaLabel: (type: string, page: number) =>
-          type === 'previous'
-            ? i18n.t('common:go_to_previous_page')
-            : type === 'next'
-            ? i18n.t('common:go_to_next_page')
-            : type === 'page'
-            ? i18n.t('common:go_to_page', { page })
-            : '',
-      },
-    },
   },
 });
+
+export const alternatingTableRowColor: SxProps = {
+  tr: {
+    background: Color.AlternativeBackground,
+    '&:nth-of-type(odd)': {
+      background: Color.White,
+    },
+  },
+};
 
 // Default props in theme are not supported for components still in /lab
 export const datePickerTranslationProps: Pick<

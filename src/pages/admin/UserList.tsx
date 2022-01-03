@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -13,16 +13,10 @@ import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { alternatingTableRowColor } from '../../themes/mainTheme';
 
 const StyledTable = styled(Table)`
   width: 100%;
-`;
-
-const StyledTableRow = styled(TableRow)`
-  background-color: ${(props) => props.theme.palette.box.main};
-  :nth-child(odd) {
-    background-color: ${(props) => props.theme.palette.background.default};
-  }
 `;
 
 const StyledTypography = styled(Typography)`
@@ -99,15 +93,19 @@ export const UserList = ({
   const validPage = userList.length <= page * rowsPerPage ? 0 : page;
   const isLastInstitutionAdmin = roleToRemove === RoleName.INSTITUTION_ADMIN && userList.length === 1;
 
+  const sortedList = userList.sort((a, b) =>
+    `${a.givenName} ${a.familyName}`.toLocaleLowerCase() < `${b.givenName} ${b.familyName}`.toLocaleLowerCase() ? -1 : 1
+  );
+
   return (
     <>
-      {userList.length === 0 ? (
+      {sortedList.length === 0 ? (
         <Typography>
           <i>{t('users.no_users_found')}</i>
         </Typography>
       ) : (
         <>
-          <StyledTable size="small">
+          <StyledTable size="small" sx={alternatingTableRowColor}>
             <caption>
               <span style={visuallyHidden}>{tableCaption}</span>
             </caption>
@@ -123,11 +121,11 @@ export const UserList = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {userList.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((user, index) => {
+              {sortedList.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((user, index) => {
                 const isLoading = updatedRoleForUsers.includes(user.username);
                 const disableAddButton = user.roles.some((role) => role.rolename === roleToAdd);
                 return (
-                  <StyledTableRow key={index}>
+                  <TableRow key={index}>
                     <TableCell>{user.username}</TableCell>
                     <TableCell>
                       {user.givenName} {user.familyName}
@@ -146,7 +144,6 @@ export const UserList = ({
                       )}
                       {roleToAdd && (
                         <LoadingButton
-                          color="primary"
                           variant="contained"
                           size="small"
                           startIcon={<AddIcon />}
@@ -159,16 +156,16 @@ export const UserList = ({
                         </LoadingButton>
                       )}
                     </TableCell>
-                  </StyledTableRow>
+                  </TableRow>
                 );
               })}
             </TableBody>
           </StyledTable>
-          {(alwaysShowPagination || userList.length > ROWS_PER_PAGE_OPTIONS[0]) && (
+          {(alwaysShowPagination || sortedList.length > ROWS_PER_PAGE_OPTIONS[0]) && (
             <TablePagination
               rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
               component="div"
-              count={userList.length}
+              count={sortedList.length}
               rowsPerPage={rowsPerPage}
               page={validPage}
               onPageChange={(_, newPage) => setPage(newPage)}

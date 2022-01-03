@@ -1,4 +1,4 @@
-import { TableRow, TableCell, Typography, Button, ThemeProvider, Tooltip, Box } from '@mui/material';
+import { TableRow, TableCell, Typography, Button, Tooltip, Box } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import EditIcon from '@mui/icons-material/Edit';
@@ -9,7 +9,6 @@ import { Venue } from '../../../../../../types/publication_types/artisticRegistr
 import { getPeriodString } from '../../../../../../utils/registration-helpers';
 import { VenueModal } from './VenueModal';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
-import { lightTheme } from '../../../../../../themes/lightTheme';
 
 interface VenueRowProps {
   venue: Venue;
@@ -38,14 +37,14 @@ export const VenueRow = ({ updateVenue, removeVenue, moveVenue, venue, index, ma
             sx={{ display: 'grid', gridTemplateAreas: '"down up"', gridTemplateColumns: '1fr 1fr', maxWidth: '8rem' }}>
             {index !== maxIndex && (
               <Tooltip title={t<string>('common:move_down')} sx={{ gridArea: 'down' }}>
-                <Button color="secondary" onClick={() => moveVenue(index + 1)}>
+                <Button onClick={() => moveVenue(index + 1)}>
                   <ArrowDownwardIcon />
                 </Button>
               </Tooltip>
             )}
             {index !== 0 && (
               <Tooltip title={t<string>('common:move_up')} sx={{ gridArea: 'up' }}>
-                <Button color="secondary" onClick={() => moveVenue(index - 1)}>
+                <Button onClick={() => moveVenue(index - 1)}>
                   <ArrowUpwardIcon />
                 </Button>
               </Tooltip>
@@ -57,7 +56,7 @@ export const VenueRow = ({ updateVenue, removeVenue, moveVenue, venue, index, ma
         <Button onClick={() => setOpenEditVenue(true)} variant="outlined" sx={{ mr: '1rem' }} startIcon={<EditIcon />}>
           {t('common:edit')}
         </Button>
-        <Button onClick={() => setOpenRemoveVenue(true)} variant="contained" color="error" startIcon={<DeleteIcon />}>
+        <Button onClick={() => setOpenRemoveVenue(true)} variant="outlined" color="error" startIcon={<DeleteIcon />}>
           {t('common:remove')}
         </Button>
       </TableCell>
@@ -67,18 +66,16 @@ export const VenueRow = ({ updateVenue, removeVenue, moveVenue, venue, index, ma
         open={openEditVenue}
         closeModal={() => setOpenEditVenue(false)}
       />
-      <ThemeProvider theme={lightTheme}>
-        <ConfirmDialog
-          open={openRemoveVenue}
-          title={t('resource_type.remove_venue_title')}
-          onCancel={() => setOpenRemoveVenue(false)}
-          onAccept={() => {
-            removeVenue();
-            setOpenRemoveVenue(false);
-          }}>
-          {t('resource_type.remove_venue_text', { name: placeLabel })}
-        </ConfirmDialog>
-      </ThemeProvider>
+      <ConfirmDialog
+        open={openRemoveVenue}
+        title={t('resource_type.remove_venue_title')}
+        onCancel={() => setOpenRemoveVenue(false)}
+        onAccept={() => {
+          removeVenue();
+          setOpenRemoveVenue(false);
+        }}>
+        {t('resource_type.remove_venue_text', { name: placeLabel })}
+      </ConfirmDialog>
     </TableRow>
   );
 };

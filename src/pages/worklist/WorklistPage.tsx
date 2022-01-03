@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
@@ -10,7 +9,7 @@ const WorklistPage = () => {
 
   return (
     <StyledPageWrapperWithMaxWidth>
-      <PageHeader>{t('my_worklist')}</PageHeader>
+      <PageHeader>{t('worklist')}</PageHeader>
       <MessagesOverview role={RoleName.CURATOR} />
     </StyledPageWrapperWithMaxWidth>
   );

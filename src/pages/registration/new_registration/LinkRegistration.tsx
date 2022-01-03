@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
@@ -85,7 +85,6 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
         <Button
           data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
-          color="secondary"
           variant="contained"
           disabled={!doi}
           onClick={openRegistration}>

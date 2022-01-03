@@ -1,5 +1,4 @@
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { Button, DialogActions, TextField } from '@mui/material';
@@ -47,7 +46,7 @@ export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) =
                 {...field}
                 disabled={isSubmitting}
                 data-testid="message-field"
-                variant="outlined"
+                variant="filled"
                 multiline
                 rows="4"
                 fullWidth
@@ -69,7 +68,6 @@ export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) =
               data-testid="send-button"
               type="submit"
               variant="contained"
-              color="secondary"
               endIcon={<MailOutlineIcon />}
               loadingPosition="end"
               loading={isSubmitting}>

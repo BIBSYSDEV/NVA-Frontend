@@ -11,5 +11,6 @@
     "paragraph4": "NVA vil tilgjengeliggjøre institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
     "paragraph5": "Selv om NVA er etablert, er tjenesten er fortsatt under utvikling. Institusjoner som ikke har et åpent forskningsarkiv kan kontakte <0>Unit</0> for å få ta i bruk NVA som pilotinstitusjon."
   },
-  "short_description": "NVA samler informasjon om norsk forskning og gjør forskningsresultater åpent tilgjengelige."
+  "footer_text": "$t(short_description) Tjenesten er levert av Unit.",
+  "short_description": "Nasjonalt Vitenarkiv samler informasjon om norsk forskning og gjør forskningsresultater åpent tilgjengelige."
 }

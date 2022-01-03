@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
@@ -17,6 +16,7 @@ import { SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { RegistrationList } from '../../components/RegistrationList';
 import { RegistrationFieldName } from '../../types/publicationFieldNames';
+import { BackgroundDiv } from '../../components/BackgroundDiv';
 
 const StyledYearSpan = styled.span`
   padding-left: 1rem;
@@ -45,7 +45,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
   });
 
   return (
-    <>
+    <BackgroundDiv>
       <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
       <ItalicPageHeader
         superHeader={{
@@ -113,6 +113,6 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
         )}
       </div>
       <ShareOptions title={mainTitle} description={abstract ?? description ?? ''} />
-    </>
+    </BackgroundDiv>
   );
 };

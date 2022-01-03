@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Button } from '@mui/material';
@@ -29,13 +29,13 @@ export const Login = () => {
   };
 
   return user ? (
-    <Menu menuButtonLabel={user.name} handleLogout={handleLogoutWrapper} />
+    <Menu handleLogout={handleLogoutWrapper} />
   ) : isLoading ? (
-    <LoadingButton variant="contained" loading>
+    <LoadingButton variant="contained" color="secondary" loading>
       {t('common:loading')}
     </LoadingButton>
   ) : (
-    <Button variant="contained" onClick={handleLogin} data-testid={dataTestId.header.logInButton}>
+    <Button variant="contained" color="secondary" onClick={handleLogin} data-testid={dataTestId.header.logInButton}>
       {t('login')}
     </Button>
   );

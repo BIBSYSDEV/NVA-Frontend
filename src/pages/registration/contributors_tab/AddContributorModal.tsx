@@ -1,5 +1,5 @@
 import { MenuItem, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Modal } from '../../../components/Modal';
@@ -76,7 +76,7 @@ export const AddContributorModal = ({
       dataTestId="contributor-modal">
       {contributorRoles.length > 1 && (
         <TextField
-          sx={{ maxWidth: '15rem', mb: '1rem' }}
+          sx={{ maxWidth: '15rem' }}
           value={selectedContributorRole}
           onChange={(event) => {
             const role = (event.target.value as ContributorRole) ?? '';

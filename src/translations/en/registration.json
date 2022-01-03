@@ -5,6 +5,7 @@
     "add_duplicate_affiliation": "Affiliation is already added",
     "add_self_as_role": "Add me as {{- role}}",
     "authors": "Authors",
+    "confirmed": "Confirmed",
     "confirm_remove_affiliation_text": "Are you sure you want to remove this affiliation?",
     "confirm_remove_affiliation_title": "Remove affiliation?",
     "confirm_remove_author_text": "Are you sure you want to remove {{contributorName}}?",
@@ -14,6 +15,7 @@
     "create_new_with_role": "Create new {{- role}}",
     "create_new_author_description": "Personregisteret inneholder personer med opphavsrett til publiserte vitenskapelige arbeid som er tilgjengelig i institusjonens bibliotek, vitenarkiv eller er del av Norsk Vitenskapsindeks. Også omtalte personer kan bli registrert.\n\nOm personen du søker har publisert noe vitenskapelig tidligere, eller har nylig fullført en vitenskapelig grad ved en norsk utdanningsinstitusjon, så er det sannsynlig at personen alt er registrert.\n\nEn kurator vil prøve å finne ut om dette er en ny person eller om det er en ny skrivemåte på en tidligere registrert person.",
     "editors": "Editors",
+    "filter": "Filter {{role}}",
     "known_author_identity": "Connected author identity",
     "prefilled_affiliation": "Prefilled affiliation",
     "prefilled_name": "Prefilled name",
@@ -38,15 +40,13 @@
     },
     "unknown_author_identity": "Unknown author identity",
     "verify_affiliation": "Verify affiliation",
-    "verify_person": "Verify person",
-    "verified": "Verified"
+    "verify_person": "Verify person"
   },
   "description": {
     "add_vocabulary": "Add vocabulary",
     "abstract": "Abstract",
     "confirm_remove_vocabulary_text": "Are you sure you want to remove vocabulary for {{vocabulary}}?",
     "confirm_remove_vocabulary_title": "Remove vocabulary?",
-    "connect_project": "Connect to project",
     "date_picker": {
       "choose_date": "Choose date",
       "open_dialog": "Choose date, selected date is {{date}}",

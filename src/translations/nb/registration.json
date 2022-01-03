@@ -5,6 +5,7 @@
     "add_duplicate_affiliation": "Tilhørigheten er allerede lagt til",
     "add_self_as_role": "Legg meg til som {{- role}}",
     "authors": "Forfattere",
+    "confirmed": "Bekreftet",
     "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilhørigheten?",
     "confirm_remove_affiliation_title": "Fjerne tilhørighet?",
     "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",
@@ -14,6 +15,7 @@
     "create_new_with_role": "Opprett ny {{- role}}",
     "create_new_author_description": "Personregisteret inneholder personer med opphavsrett til publiserte vitenskapelige arbeid som er tilgjengelig i institusjonens bibliotek, vitenarkiv eller er del av Norsk Vitenskapsindeks. Også omtalte personer kan bli registrert.\n\nOm personen du søker har publisert noe vitenskapelig tidligere, eller har nylig fullført en vitenskapelig grad ved en norsk utdanningsinstitusjon, så er det sannsynlig at personen alt er registrert.\n\nEn kurator vil prøve å finne ut om dette er en ny person eller om det er en ny skrivemåte på en tidligere registrert person.",
     "editors": "Redaktører",
+    "filter": "Filtrer {{role}}",
     "known_author_identity": "Har tilknyttet forfatteridentitet",
     "prefilled_affiliation": "Forhåndsutfylt tilhørighet",
     "prefilled_name": "Forhåndsutfylt navn",
@@ -38,15 +40,13 @@
     },
     "unknown_author_identity": "Mangler forfatteridentitet",
     "verify_affiliation": "Verifiser tilhørighet",
-    "verify_person": "Verifiser person",
-    "verified": "Verifisert"
+    "verify_person": "Verifiser person"
   },
   "description": {
     "add_vocabulary": "Legg til vokabular",
     "abstract": "Sammendrag",
     "confirm_remove_vocabulary_text": "Er du sikker på at du ønsker å fjerne vokabular for {{vocabulary}}?",
     "confirm_remove_vocabulary_title": "Fjern vokabular?",
-    "connect_project": "Koble til prosjekt",
     "date_picker": {
       "choose_date": "Velg dato",
       "open_dialog": "Velg dato, valgt dato er {{date}}",

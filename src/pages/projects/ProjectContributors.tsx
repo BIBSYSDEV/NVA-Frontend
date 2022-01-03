@@ -13,7 +13,7 @@ const StyledProjectContributors = styled.div`
 const StyledContributorList = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-gap: 0.75rem;
+  gap: 0.75rem;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
     grid-template-columns: repeat(3, 1fr);

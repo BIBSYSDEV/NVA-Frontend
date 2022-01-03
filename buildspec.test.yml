@@ -6,10 +6,16 @@ env:
     CYPRESS_AWS_IDENTITY_POOL_ID: CognitoIdentityPoolId
     CYPRESS_AWS_USER_POOL_ID: CognitoUserPoolId
     CYPRESS_AWS_CLIENT_ID: CognitoUserPoolAppClientId
-    CYPRESS_REACT_APP_ORCID_CLIENT_ID: REACT_APP_ORCID_CLIENT_ID
-    CYPRESS_REACT_APP_ORCID_BASE_URL: REACT_APP_ORCID_BASE_URL
     CYPRESS_REACT_APP_URL:  /NVA/ApplicationDomain
-    CYPRESS_REACT_APP_API_URL: /NVA/ApiDomain
+    CYPRESS_REACT_APP_API_HOST: /NVA/ApiDomain
+
+batch:
+  fast-fail: false
+  build-list:
+    - identifier: cypress-e2e-tests
+      env:
+        variables:
+          image: public.ecr.aws/cypress-io/cypress/browsers:node14.17.0-chrome88-ff89
 
 phases:
   install:
@@ -32,7 +38,7 @@ phases:
       - cd test_data
       - python create_test_data.py
       - cd ..
-      - npx cypress run
+      - npx cypress run --browser chrome
   post_build:
     commands:
       - npm run create:test:reports
