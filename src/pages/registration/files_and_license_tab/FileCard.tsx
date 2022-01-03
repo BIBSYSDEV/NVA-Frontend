@@ -24,6 +24,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import LockIcon from '@mui/icons-material/LockOutlined';
 import { DatePicker, LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { datePickerTranslationProps } from '../../../themes/mainTheme';
@@ -101,101 +102,120 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
 
       <Divider sx={{ my: '1rem', borderWidth: 1 }} />
 
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: '3fr 1fr 3fr 3fr',
+          gap: '3rem',
+          alignItems: 'center',
+        }}>
         <Typography sx={{ fontWeight: 'bold' }}>{file.name}</Typography>
         <Typography>{prettyBytes(file.size, { locale: true })}</Typography>
 
-        <Field name={`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`}>
-          {({ field, meta: { error, touched } }: FieldProps) => (
-            <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
-              <DatePicker
-                {...datePickerTranslationProps}
-                {...field}
-                label={t('description.date_published')}
-                value={field.value ?? null}
-                onChange={(value) => setFieldValue(field.name, value)}
-                inputFormat="dd.MM.yyyy"
-                maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
-                mask="__.__.____"
-                disabled={file.administrativeAgreement}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    data-testid={dataTestId.registrationWizard.files.embargoDateField}
-                    variant="filled"
-                    onBlur={() => !touched && setFieldTouched(field.name)}
-                    error={!!error && touched}
-                    helperText={
-                      error && touched ? (
-                        <ErrorMessage name={field.name} />
-                      ) : (
-                        t('files_and_license.embargo_date_helper_text')
-                      )
-                    }
+        {file.administrativeAgreement ? (
+          <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+            <LockIcon />
+            <Typography fontStyle="italic">{t('files_and_license.file_locked')}</Typography>
+          </Box>
+        ) : (
+          <>
+            <Field name={`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`}>
+              {({ field, meta: { error, touched } }: FieldProps) => (
+                <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
+                  <DatePicker
+                    {...datePickerTranslationProps}
+                    {...field}
+                    label={t('description.date_published')}
+                    value={field.value ?? null}
+                    onChange={(value) => setFieldValue(field.name, value)}
+                    inputFormat="dd.MM.yyyy"
+                    maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+                    mask="__.__.____"
+                    disabled={file.administrativeAgreement}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        data-testid={dataTestId.registrationWizard.files.embargoDateField}
+                        variant="filled"
+                        onBlur={() => !touched && setFieldTouched(field.name)}
+                        error={!!error && touched}
+                        helperText={
+                          error && touched ? (
+                            <ErrorMessage name={field.name} />
+                          ) : (
+                            t('files_and_license.embargo_date_helper_text')
+                          )
+                        }
+                      />
+                    )}
                   />
-                )}
-              />
-            </LocalizationProvider>
-          )}
-        </Field>
+                </LocalizationProvider>
+              )}
+            </Field>
 
-        <Box sx={{ display: 'flex' }}>
-          <Field name={`${baseFieldName}.${SpecificFileFieldNames.License}`}>
-            {({ field, meta: { error, touched } }: FieldProps) => (
-              <TextField
-                id={field.name}
-                data-testid="uploaded-file-select-license"
-                select
-                sx={{ width: '18rem' }}
-                SelectProps={{
-                  renderValue: (option: any) => {
-                    const selectedLicense = licenses.find((license) => license.identifier === option);
-                    return selectedLicense ? (
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                        <img style={{ width: '5rem' }} src={selectedLicense.logo} alt={selectedLicense.identifier} />
-                        <span>{t(`licenses:labels.${option}`)}</span>
-                      </Box>
-                    ) : null;
-                  },
-                }}
-                variant="filled"
-                value={field.value?.identifier || ''}
-                error={!!error && touched}
-                helperText={<ErrorMessage name={field.name} />}
-                label={t('files_and_license.conditions_for_using_file')}
-                required
-                onChange={({ target: { value } }) =>
-                  setFieldValue(field.name, {
-                    type: 'License',
-                    identifier: value as LicenseNames,
-                    labels: { nb: value },
-                  })
-                }
-                disabled={file.administrativeAgreement}>
-                {licenses.map((license) => (
-                  <MenuItem
-                    data-testid="license-item"
-                    key={license.identifier}
-                    value={license.identifier}
-                    divider
-                    dense>
-                    <ListItemIcon>
-                      <img style={{ width: '50%' }} src={license.logo} alt={license.identifier} />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <Typography>{t(`licenses:labels.${license.identifier}`)}</Typography>
-                    </ListItemText>
-                  </MenuItem>
-                ))}
-              </TextField>
-            )}
-          </Field>
-          <Tooltip title={t<string>('common:help')}>
-            <IconButton data-testid="button-toggle-license-modal" onClick={toggleLicenseModal} size="large">
-              <HelpOutlineIcon fontSize="large" />
-            </IconButton>
-          </Tooltip>
-        </Box>
+            <Box sx={{ display: 'flex' }}>
+              <Field name={`${baseFieldName}.${SpecificFileFieldNames.License}`}>
+                {({ field, meta: { error, touched } }: FieldProps) => (
+                  <TextField
+                    id={field.name}
+                    data-testid="uploaded-file-select-license"
+                    select
+                    sx={{ width: '18rem' }}
+                    SelectProps={{
+                      renderValue: (option: any) => {
+                        const selectedLicense = licenses.find((license) => license.identifier === option);
+                        return selectedLicense ? (
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                            <img
+                              style={{ width: '5rem' }}
+                              src={selectedLicense.logo}
+                              alt={selectedLicense.identifier}
+                            />
+                            <span>{t(`licenses:labels.${option}`)}</span>
+                          </Box>
+                        ) : null;
+                      },
+                    }}
+                    variant="filled"
+                    value={field.value?.identifier || ''}
+                    error={!!error && touched}
+                    helperText={<ErrorMessage name={field.name} />}
+                    label={t('files_and_license.conditions_for_using_file')}
+                    required
+                    onChange={({ target: { value } }) =>
+                      setFieldValue(field.name, {
+                        type: 'License',
+                        identifier: value as LicenseNames,
+                        labels: { nb: value },
+                      })
+                    }
+                    disabled={file.administrativeAgreement}>
+                    {licenses.map((license) => (
+                      <MenuItem
+                        data-testid="license-item"
+                        key={license.identifier}
+                        value={license.identifier}
+                        divider
+                        dense>
+                        <ListItemIcon>
+                          <img style={{ width: '50%' }} src={license.logo} alt={license.identifier} />
+                        </ListItemIcon>
+                        <ListItemText>
+                          <Typography>{t(`licenses:labels.${license.identifier}`)}</Typography>
+                        </ListItemText>
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                )}
+              </Field>
+              <Tooltip title={t<string>('common:help')}>
+                <IconButton data-testid="button-toggle-license-modal" onClick={toggleLicenseModal}>
+                  <HelpOutlineIcon fontSize="large" />
+                </IconButton>
+              </Tooltip>
+            </Box>
+          </>
+        )}
       </Box>
 
       <Button

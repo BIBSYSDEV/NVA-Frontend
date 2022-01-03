@@ -81,6 +81,7 @@
     "conditions_for_using_file": "Betingelser for bruk",
     "embargo_date": "Åpen tilgang utsatt til",
     "embargo_date_helper_text": "Filen er låst fram til datoen",
+    "file_locked": "Filen er låst",
     "files": "Filer",
     "find_journal_in_channel_register": "Finn tidsskrift i Kanalregisteret",
     "find_publisher_in_channel_register": "Finn utgiver i Kanalregisteret",
