@@ -113,7 +113,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
           gap: { md: '3rem', xs: '1rem' },
           alignItems: 'center',
         }}>
-        <Typography sx={{ fontWeight: 'bold', gridArea: 'name' }}>{file.name}</Typography>
+        <Typography sx={{ fontWeight: 'bold', lineBreak: 'anywhere', gridArea: 'name' }}>{file.name}</Typography>
         <Typography gridArea="size">{prettyBytes(file.size, { locale: true })}</Typography>
 
         {file.administrativeAgreement ? (
@@ -165,6 +165,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                   <TextField
                     id={field.name}
                     data-testid="uploaded-file-select-license"
+                    sx={{ minWidth: '15rem' }}
                     select
                     SelectProps={{
                       renderValue: (option) => {
