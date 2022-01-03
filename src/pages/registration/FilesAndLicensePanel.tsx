@@ -73,8 +73,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   return (
     <>
       {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
-        <Paper sx={{ p: '1rem', mb: '1rem' }} elevation={5}>
-          <Typography variant="h2" gutterBottom>
+        <Paper sx={{ p: '1rem', mb: '1rem', bgcolor: 'background.default' }} elevation={5}>
+          <Typography variant="h6" component="h2" gutterBottom>
             {t('files_and_license.info_from_channel_register')}
           </Typography>
           {journalIdentifier && (
