@@ -19,7 +19,7 @@
   "entityDescription-reference-publicationInstance-type": "Publikasjonsundertype",
   "entityDescription-reference-publicationInstance-volume": "$t(registration:resource_type.volume)",
   "fileSet-files": "$t(registration:files_and_license.files)",
-  "fileSet-files-embargoDate": "$t(registration:files_and_license.embargo_date)",
+  "fileSet-files-embargoDate": "$t(registration:files_and_license.file_publish_date)",
   "fileSet-files-license": "$t(registration:files_and_license.conditions_for_using_file)",
   "fileSet-files-publisherAuthority": "$t(registration:files_and_license.published_version)"
 }

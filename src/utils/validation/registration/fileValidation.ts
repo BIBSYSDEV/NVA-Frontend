@@ -10,7 +10,7 @@ const fileErrorMessage = {
     field: i18n.t('registration:files_and_license.conditions_for_using_file'),
   }),
   embargoDateInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:files_and_license.embargo_date'),
+    field: i18n.t('registration:files_and_license.file_publish_date'),
   }),
 };
 

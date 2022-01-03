@@ -130,7 +130,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                     <DatePicker
                       {...datePickerTranslationProps}
                       {...field}
-                      label={t('description.date_published')}
+                      label={t('files_and_license.file_publish_date')}
                       value={field.value ?? null}
                       onChange={(value) => setFieldValue(field.name, value)}
                       inputFormat="dd.MM.yyyy"
@@ -148,7 +148,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                             error && touched ? (
                               <ErrorMessage name={field.name} />
                             ) : (
-                              t('files_and_license.embargo_date_helper_text')
+                              t('files_and_license.file_publish_date_helper_text')
                             )
                           }
                         />
