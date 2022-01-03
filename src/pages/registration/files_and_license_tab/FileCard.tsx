@@ -48,7 +48,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
 
   return (
     <Paper sx={{ padding: '1rem' }} elevation={5} data-testid="uploaded-file-card">
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+      <Box sx={{ display: 'flex', alignItems: 'start', gap: '2rem' }}>
         <Field name={`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`}>
           {({ field, meta: { error, touched } }: FieldProps) => (
             <FormControl
@@ -79,7 +79,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
         <Field name={`${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`}>
           {({ field }: FieldProps) => (
             <FormControlLabel
-              sx={{ maxWidth: '30rem' }}
+              sx={{ maxWidth: '30rem', pt: '1.25rem' }}
               data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
               control={
                 <Checkbox
