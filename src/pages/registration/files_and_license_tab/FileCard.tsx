@@ -105,12 +105,16 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: '3fr 1fr 3fr 3fr',
-          gap: '3rem',
+          gridTemplateAreas: {
+            md: '"name size date license"',
+            sm: '"name size" "date license"',
+            xs: '"name size" "date date" "license license"',
+          },
+          gap: { md: '3rem', xs: '1rem' },
           alignItems: 'center',
         }}>
-        <Typography sx={{ fontWeight: 'bold' }}>{file.name}</Typography>
-        <Typography>{prettyBytes(file.size, { locale: true })}</Typography>
+        <Typography sx={{ fontWeight: 'bold', gridArea: 'name' }}>{file.name}</Typography>
+        <Typography gridArea="size">{prettyBytes(file.size, { locale: true })}</Typography>
 
         {file.administrativeAgreement ? (
           <Box sx={{ display: 'flex', gap: '0.5rem' }}>
@@ -122,50 +126,51 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
             <Field name={`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`}>
               {({ field, meta: { error, touched } }: FieldProps) => (
                 <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
-                  <DatePicker
-                    {...datePickerTranslationProps}
-                    {...field}
-                    label={t('description.date_published')}
-                    value={field.value ?? null}
-                    onChange={(value) => setFieldValue(field.name, value)}
-                    inputFormat="dd.MM.yyyy"
-                    maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
-                    mask="__.__.____"
-                    disabled={file.administrativeAgreement}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        data-testid={dataTestId.registrationWizard.files.embargoDateField}
-                        variant="filled"
-                        onBlur={() => !touched && setFieldTouched(field.name)}
-                        error={!!error && touched}
-                        helperText={
-                          error && touched ? (
-                            <ErrorMessage name={field.name} />
-                          ) : (
-                            t('files_and_license.embargo_date_helper_text')
-                          )
-                        }
-                      />
-                    )}
-                  />
+                  <Box sx={{ gridArea: 'date' }}>
+                    <DatePicker
+                      {...datePickerTranslationProps}
+                      {...field}
+                      label={t('description.date_published')}
+                      value={field.value ?? null}
+                      onChange={(value) => setFieldValue(field.name, value)}
+                      inputFormat="dd.MM.yyyy"
+                      maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+                      mask="__.__.____"
+                      disabled={file.administrativeAgreement}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          data-testid={dataTestId.registrationWizard.files.embargoDateField}
+                          variant="filled"
+                          onBlur={() => !touched && setFieldTouched(field.name)}
+                          error={!!error && touched}
+                          helperText={
+                            error && touched ? (
+                              <ErrorMessage name={field.name} />
+                            ) : (
+                              t('files_and_license.embargo_date_helper_text')
+                            )
+                          }
+                        />
+                      )}
+                    />
+                  </Box>
                 </LocalizationProvider>
               )}
             </Field>
 
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: 'flex', gridArea: 'license', alignSelf: 'start' }}>
               <Field name={`${baseFieldName}.${SpecificFileFieldNames.License}`}>
                 {({ field, meta: { error, touched } }: FieldProps) => (
                   <TextField
                     id={field.name}
                     data-testid="uploaded-file-select-license"
                     select
-                    sx={{ width: '18rem' }}
                     SelectProps={{
-                      renderValue: (option: any) => {
+                      renderValue: (option) => {
                         const selectedLicense = licenses.find((license) => license.identifier === option);
                         return selectedLicense ? (
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                             <img
                               style={{ width: '5rem' }}
                               src={selectedLicense.logo}
