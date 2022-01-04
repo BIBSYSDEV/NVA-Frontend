@@ -53,13 +53,7 @@ export const AddRoleModalContent = ({
         data-testid="add-role-search-box"
       />
 
-      <UserList
-        userList={filteredUsers}
-        roleToAdd={role}
-        alwaysShowPagination
-        refetchUsers={refetchUsers}
-        tableCaption={tableCaption}
-      />
+      <UserList userList={filteredUsers} roleToAdd={role} refetchUsers={refetchUsers} tableCaption={tableCaption} />
 
       <DialogActions>
         <Button variant="outlined" onClick={closeModal} data-testid="add-role-close-button">

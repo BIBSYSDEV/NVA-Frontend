@@ -29,17 +29,9 @@ interface UserListProps {
   roleToRemove?: RoleName;
   roleToAdd?: RoleName;
   refetchUsers?: () => void;
-  alwaysShowPagination?: boolean; // If false, show pagination only if more elements than minimum rows per page
 }
 
-export const UserList = ({
-  userList,
-  tableCaption,
-  roleToRemove,
-  roleToAdd,
-  refetchUsers,
-  alwaysShowPagination = false,
-}: UserListProps) => {
+export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refetchUsers }: UserListProps) => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
@@ -106,9 +98,7 @@ export const UserList = ({
       ) : (
         <>
           <StyledTable size="small" sx={alternatingTableRowColor}>
-            <caption>
-              <span style={visuallyHidden}>{tableCaption}</span>
-            </caption>
+            <caption style={visuallyHidden}>{tableCaption}</caption>
             <TableHead>
               <TableRow>
                 <TableCell>
@@ -161,7 +151,7 @@ export const UserList = ({
               })}
             </TableBody>
           </StyledTable>
-          {(alwaysShowPagination || sortedList.length > ROWS_PER_PAGE_OPTIONS[0]) && (
+          {sortedList.length > ROWS_PER_PAGE_OPTIONS[0] && (
             <TablePagination
               rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
               component="div"
