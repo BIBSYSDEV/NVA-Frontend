@@ -48,7 +48,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
 
   return (
-    <Paper sx={{ padding: '1rem' }} elevation={5} data-testid="uploaded-file-card">
+    <Paper sx={{ padding: '1rem' }} elevation={5} data-testid={dataTestId.registrationWizard.files.fileCard}>
       <Box sx={{ display: 'flex', alignItems: 'start', gap: '2rem' }}>
         <Field name={`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`}>
           {({ field, meta: { error, touched } }: FieldProps) => (
@@ -164,7 +164,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                 {({ field, meta: { error, touched } }: FieldProps) => (
                   <TextField
                     id={field.name}
-                    data-testid="uploaded-file-select-license"
+                    data-testid={dataTestId.registrationWizard.files.selectLicenseField}
                     sx={{ minWidth: '15rem' }}
                     select
                     SelectProps={{
@@ -198,7 +198,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                     disabled={file.administrativeAgreement}>
                     {licenses.map((license) => (
                       <MenuItem
-                        data-testid="license-item"
+                        data-testid={dataTestId.registrationWizard.files.licenseItem}
                         key={license.identifier}
                         value={license.identifier}
                         divider
@@ -215,7 +215,9 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                 )}
               </Field>
               <Tooltip title={t<string>('common:help')}>
-                <IconButton data-testid="button-toggle-license-modal" onClick={toggleLicenseModal}>
+                <IconButton
+                  data-testid={dataTestId.registrationWizard.files.licenseHelpButton}
+                  onClick={toggleLicenseModal}>
                   <HelpOutlineIcon fontSize="large" />
                 </IconButton>
               </Tooltip>
@@ -228,7 +230,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
         sx={{ mt: '1rem', float: 'right' }}
         color="error"
         variant="outlined"
-        data-testid="button-remove-file"
+        data-testid={dataTestId.registrationWizard.files.removeFileButton}
         startIcon={<DeleteIcon />}
         onClick={toggleOpenConfirmDialog}>
         {t('files_and_license.remove_file')}

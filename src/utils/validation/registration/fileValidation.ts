@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import { RegistrationStatus } from '../../../types/registration.types';
 import i18n from '../../../translations/i18n';
 
 const fileErrorMessage = {
@@ -20,13 +19,7 @@ export const fileValidationSchema = Yup.object().shape({
     .nullable()
     .when('administrativeAgreement', {
       is: false,
-      then: Yup.date()
-        .nullable()
-        .when('$publicationStatus', {
-          is: RegistrationStatus.Published,
-          then: Yup.date().nullable().typeError(fileErrorMessage.embargoDateInvalid),
-          otherwise: Yup.date().nullable().typeError(fileErrorMessage.embargoDateInvalid),
-        }),
+      then: Yup.date().nullable().typeError(fileErrorMessage.embargoDateInvalid),
     }),
   publisherAuthority: Yup.boolean()
     .nullable()

@@ -100,6 +100,12 @@ export const dataTestId = {
     files: {
       administrativeAgreement: 'administrative-agreement-checkbox',
       embargoDateField: 'embargo-date-field',
+      fileCard: 'uploaded-file-card',
+      licenseHelpButton: 'license-help-button',
+      licenseItem: 'license-item',
+      licenseModal: 'license-modal',
+      removeFileButton: 'button-remove-file',
+      selectLicenseField: 'uploaded-file-select-license',
       version: 'version-radios',
     },
     new: {

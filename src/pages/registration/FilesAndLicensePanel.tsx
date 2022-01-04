@@ -15,6 +15,7 @@ import {
   getChannelRegisterJournalUrl,
   getChannelRegisterPublisherUrl,
 } from '../public_registration/PublicPublicationContext';
+import { dataTestId } from '../../utils/dataTestIds';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
@@ -98,7 +99,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
       <FieldArray name={FileFieldNames.Files}>
         {({ name, remove, push }: FieldArrayRenderProps) => (
-          <div>
+          <>
             {files.length > 0 && (
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
                 <Typography variant="h2">{t('files_and_license.files')}</Typography>
@@ -135,7 +136,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   </FormHelperText>
                 )}
             </Paper>
-          </div>
+          </>
         )}
       </FieldArray>
 
@@ -144,7 +145,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
         open={isLicenseModalOpen}
         onClose={toggleLicenseModal}
         maxWidth="sm"
-        dataTestId="license-modal">
+        dataTestId={dataTestId.registrationWizard.files.licenseModal}>
         {licenses.map((license) => (
           <Box key={license.identifier} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
             <Typography variant="h6">{t(`licenses:labels.${license.identifier}`)}</Typography>
