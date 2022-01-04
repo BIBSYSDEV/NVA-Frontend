@@ -44,7 +44,6 @@
   "no_hits": "No hits",
   "number_short": "No.",
   "nva_tagline": "NVA - Nasjonalt Vitenarkiv",
-  "of": "of",
   "open": "Open",
   "orcid": "ORCID",
   "order": "Order",
@@ -85,13 +84,6 @@
   "start_page": "Start page",
   "status": "Status",
   "support": "Support",
-  "table_pagination": {
-    "go_to_first_page": "Go to first page",
-    "go_to_last_page": "Go to last page",
-    "go_to_next_page": "Go to next page",
-    "go_to_previous_page": "Go to previous page",
-    "rows_per_page": "Rows per page:"
-  },
   "title": "Title",
   "title_expand": "Show complete title",
   "title_minimize": "Minimize title",
