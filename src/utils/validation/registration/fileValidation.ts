@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import { RegistrationStatus } from '../../../types/registration.types';
 import i18n from '../../../translations/i18n';
 
 const fileErrorMessage = {
@@ -10,7 +9,7 @@ const fileErrorMessage = {
     field: i18n.t('registration:files_and_license.conditions_for_using_file'),
   }),
   embargoDateInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:files_and_license.embargo_date'),
+    field: i18n.t('registration:files_and_license.file_publish_date'),
   }),
 };
 
@@ -20,13 +19,7 @@ export const fileValidationSchema = Yup.object().shape({
     .nullable()
     .when('administrativeAgreement', {
       is: false,
-      then: Yup.date()
-        .nullable()
-        .when('$publicationStatus', {
-          is: RegistrationStatus.Published,
-          then: Yup.date().nullable().typeError(fileErrorMessage.embargoDateInvalid),
-          otherwise: Yup.date().nullable().typeError(fileErrorMessage.embargoDateInvalid),
-        }),
+      then: Yup.date().nullable().typeError(fileErrorMessage.embargoDateInvalid),
     }),
   publisherAuthority: Yup.boolean()
     .nullable()

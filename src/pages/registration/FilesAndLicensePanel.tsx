@@ -1,7 +1,7 @@
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, FormHelperText, Link, Typography } from '@mui/material';
+import { Box, FormHelperText, Link, Paper, Typography } from '@mui/material';
 import { UppyFile } from '@uppy/core';
 import { Modal } from '../../components/Modal';
 import { File, FileSet, licenses, Uppy } from '../../types/file.types';
@@ -15,7 +15,7 @@ import {
   getChannelRegisterJournalUrl,
   getChannelRegisterPublisherUrl,
 } from '../public_registration/PublicPublicationContext';
-import { Card } from '../../components/Card';
+import { dataTestId } from '../../utils/dataTestIds';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
@@ -74,8 +74,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   return (
     <>
       {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
-        <Card>
-          <Typography variant="h2" gutterBottom>
+        <Paper sx={{ p: '1rem', mb: '1rem', bgcolor: 'background.default' }} elevation={5}>
+          <Typography variant="h6" component="h2" gutterBottom>
             {t('files_and_license.info_from_channel_register')}
           </Typography>
           {journalIdentifier && (
@@ -94,12 +94,12 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
               <Typography paragraph>{t('files_and_license.find_series_in_channel_register')}</Typography>
             </Link>
           )}
-        </Card>
+        </Paper>
       )}
 
       <FieldArray name={FileFieldNames.Files}>
         {({ name, remove, push }: FieldArrayRenderProps) => (
-          <div>
+          <>
             {files.length > 0 && (
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
                 <Typography variant="h2">{t('files_and_license.files')}</Typography>
@@ -126,15 +126,17 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
               </Box>
             )}
 
-            <FileUploader uppy={uppy} addFile={push} />
-            {files.length === 0 &&
-              typeof (errors.fileSet as FormikErrors<FileSet>).files === 'string' &&
-              touched.fileSet && (
-                <FormHelperText error>
-                  <ErrorMessage name={name} />
-                </FormHelperText>
-              )}
-          </div>
+            <Paper elevation={5}>
+              <FileUploader uppy={uppy} addFile={push} />
+              {files.length === 0 &&
+                typeof (errors.fileSet as FormikErrors<FileSet>).files === 'string' &&
+                touched.fileSet && (
+                  <FormHelperText error>
+                    <ErrorMessage name={name} />
+                  </FormHelperText>
+                )}
+            </Paper>
+          </>
         )}
       </FieldArray>
 
@@ -143,7 +145,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
         open={isLicenseModalOpen}
         onClose={toggleLicenseModal}
         maxWidth="sm"
-        dataTestId="license-modal">
+        dataTestId={dataTestId.registrationWizard.files.licenseModal}>
         {licenses.map((license) => (
           <Box key={license.identifier} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
             <Typography variant="h6">{t(`licenses:labels.${license.identifier}`)}</Typography>
