@@ -29,9 +29,17 @@ interface UserListProps {
   roleToRemove?: RoleName;
   roleToAdd?: RoleName;
   refetchUsers?: () => void;
+  showScope?: boolean;
 }
 
-export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refetchUsers }: UserListProps) => {
+export const UserList = ({
+  userList,
+  tableCaption,
+  roleToRemove,
+  roleToAdd,
+  refetchUsers,
+  showScope = false,
+}: UserListProps) => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
@@ -107,6 +115,11 @@ export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refe
                 <TableCell>
                   <StyledTypography>{t('common:name')}</StyledTypography>
                 </TableCell>
+                {showScope && (
+                  <TableCell>
+                    <StyledTypography>{t('users.area_of_responsibility')}</StyledTypography>
+                  </TableCell>
+                )}
                 <TableCell />
               </TableRow>
             </TableHead>
@@ -120,6 +133,9 @@ export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refe
                     <TableCell>
                       {user.givenName} {user.familyName}
                     </TableCell>
+                    {showScope && (
+                      <TableCell>{user.viewingScope ? user.viewingScope.includedUnits[0] : null}</TableCell>
+                    )}
                     <TableCell align="right">
                       {roleToRemove && (
                         <Button

@@ -89,6 +89,7 @@ const MyInstitutionUsersPage = () => {
               roleToRemove={RoleName.CURATOR}
               refetchUsers={fetchInstitutionUsers}
               tableCaption={t('profile:roles.curators')}
+              showScope
             />
           )}
           <StyledNewButton
