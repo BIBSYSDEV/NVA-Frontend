@@ -14,6 +14,7 @@ import { NotificationVariant } from '../../types/notification.types';
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
+import { ViewingScopeCell } from './ViewingScopeCell';
 
 const StyledTable = styled(Table)`
   width: 100%;
@@ -133,9 +134,7 @@ export const UserList = ({
                     <TableCell>
                       {user.givenName} {user.familyName}
                     </TableCell>
-                    {showScope && (
-                      <TableCell>{user.viewingScope ? user.viewingScope.includedUnits[0] : null}</TableCell>
-                    )}
+                    {showScope && <ViewingScopeCell id={user.viewingScope?.includedUnits[0] ?? ''} />}
                     <TableCell align="right">
                       {roleToRemove && (
                         <Button
