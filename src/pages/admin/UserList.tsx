@@ -1,8 +1,17 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
-import { Button, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  Button,
+  CircularProgress,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TablePagination,
+  TableRow,
+  Typography,
+} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { visuallyHidden } from '@mui/utils';
@@ -14,14 +23,11 @@ import { NotificationVariant } from '../../types/notification.types';
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
-
-const StyledTable = styled(Table)`
-  width: 100%;
-`;
-
-const StyledTypography = styled(Typography)`
-  font-weight: bold;
-`;
+import { ViewingScopeCell } from './ViewingScopeCell';
+import { RootStore } from '../../redux/reducers/rootReducer';
+import { useFetchResource } from '../../utils/hooks/useFetchResource';
+import { Organization } from '../../types/institution.types';
+import { getSortedSubUnits } from '../../utils/institutions-helpers';
 
 interface UserListProps {
   userList: InstitutionUser[];
@@ -29,7 +35,7 @@ interface UserListProps {
   roleToRemove?: RoleName;
   roleToAdd?: RoleName;
   refetchUsers?: () => void;
-  alwaysShowPagination?: boolean; // If false, show pagination only if more elements than minimum rows per page
+  showScope?: boolean;
 }
 
 export const UserList = ({
@@ -38,7 +44,7 @@ export const UserList = ({
   roleToRemove,
   roleToAdd,
   refetchUsers,
-  alwaysShowPagination = false,
+  showScope = false,
 }: UserListProps) => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
@@ -46,6 +52,10 @@ export const UserList = ({
   const [page, setPage] = useState(0);
   const [updatedRoleForUsers, setUpdatedRoleForUsers] = useState<string[]>([]);
   const [removeRoleForUser, setRemoveRoleForUser] = useState('');
+  const user = useSelector((store: RootStore) => store.user);
+  const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
+    showScope ? user?.cristinId ?? '' : ''
+  );
 
   const handleAddRoleToUser = async (user: InstitutionUser) => {
     if (roleToAdd) {
@@ -105,19 +115,22 @@ export const UserList = ({
         </Typography>
       ) : (
         <>
-          <StyledTable size="small" sx={alternatingTableRowColor}>
-            <caption>
-              <span style={visuallyHidden}>{tableCaption}</span>
-            </caption>
+          <Table size="small" sx={alternatingTableRowColor}>
+            <caption style={visuallyHidden}>{tableCaption}</caption>
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <StyledTypography>{t('users.username')}</StyledTypography>
+                  <Typography fontWeight="bold">{t('users.username')}</Typography>
                 </TableCell>
                 <TableCell>
-                  <StyledTypography>{t('common:name')}</StyledTypography>
+                  <Typography fontWeight="bold">{t('common:name')}</Typography>
                 </TableCell>
-                <TableCell />
+                {showScope && (
+                  <TableCell sx={{ minWidth: { xs: '15rem', md: '40%' } }}>
+                    <Typography fontWeight="bold">{t('users.area_of_responsibility')}</Typography>
+                  </TableCell>
+                )}
+                <TableCell width="150" />
               </TableRow>
             </TableHead>
             <TableBody>
@@ -125,11 +138,23 @@ export const UserList = ({
                 const isLoading = updatedRoleForUsers.includes(user.username);
                 const disableAddButton = user.roles.some((role) => role.rolename === roleToAdd);
                 return (
-                  <TableRow key={index}>
+                  <TableRow key={user.username}>
                     <TableCell>{user.username}</TableCell>
                     <TableCell>
                       {user.givenName} {user.familyName}
                     </TableCell>
+                    {showScope && (
+                      <TableCell>
+                        {isLoadingCurrentOrganization ? (
+                          <CircularProgress />
+                        ) : (
+                          <ViewingScopeCell
+                            user={user}
+                            options={currentOrganization ? getSortedSubUnits([currentOrganization]) : []}
+                          />
+                        )}
+                      </TableCell>
+                    )}
                     <TableCell align="right">
                       {roleToRemove && (
                         <Button
@@ -160,8 +185,8 @@ export const UserList = ({
                 );
               })}
             </TableBody>
-          </StyledTable>
-          {(alwaysShowPagination || sortedList.length > ROWS_PER_PAGE_OPTIONS[0]) && (
+          </Table>
+          {sortedList.length > ROWS_PER_PAGE_OPTIONS[0] && (
             <TablePagination
               rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
               component="div"

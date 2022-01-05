@@ -78,6 +78,7 @@
     "send_message": "Melding sendt",
     "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",
+    "update_institution_user": "Bruker er oppdatert",
     "update_registration": "Registreringen er oppdatert",
     "update_vocabulary": "{{vocabulary}} er nå {{status}}"
   },
