@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
 import {
   Button,
   CircularProgress,
@@ -29,14 +28,6 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { Organization } from '../../types/institution.types';
 import { getSortedSubUnits } from '../../utils/institutions-helpers';
-
-const StyledTable = styled(Table)`
-  width: 100%;
-`;
-
-const StyledTypography = styled(Typography)`
-  font-weight: bold;
-`;
 
 interface UserListProps {
   userList: InstitutionUser[];
@@ -124,19 +115,19 @@ export const UserList = ({
         </Typography>
       ) : (
         <>
-          <StyledTable size="small" sx={alternatingTableRowColor}>
+          <Table size="small" sx={alternatingTableRowColor}>
             <caption style={visuallyHidden}>{tableCaption}</caption>
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <StyledTypography>{t('users.username')}</StyledTypography>
+                  <Typography fontWeight="bold">{t('users.username')}</Typography>
                 </TableCell>
                 <TableCell>
-                  <StyledTypography>{t('common:name')}</StyledTypography>
+                  <Typography fontWeight="bold">{t('common:name')}</Typography>
                 </TableCell>
                 {showScope && (
                   <TableCell width="40%">
-                    <StyledTypography>{t('users.area_of_responsibility')}</StyledTypography>
+                    <Typography fontWeight="bold">{t('users.area_of_responsibility')}</Typography>
                   </TableCell>
                 )}
                 <TableCell width="150" />
@@ -194,7 +185,7 @@ export const UserList = ({
                 );
               })}
             </TableBody>
-          </StyledTable>
+          </Table>
           {sortedList.length > ROWS_PER_PAGE_OPTIONS[0] && (
             <TablePagination
               rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
