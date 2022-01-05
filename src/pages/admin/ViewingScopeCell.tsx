@@ -39,8 +39,8 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
     });
 
     if (isSuccessStatus(updateUserResponse.status)) {
-      dispatch(setNotification(t('feedback:success.update_institution_user')));
       setUserCopy(newUser);
+      dispatch(setNotification(t('feedback:success.update_institution_user')));
     } else if (isErrorStatus(updateUserResponse.status)) {
       dispatch(setNotification(t('feedback:error.update_institution_user'), NotificationVariant.Error));
     }
@@ -50,7 +50,7 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
   return (
     <Autocomplete
       aria-label={t('users.area_of_responsibility')}
-      data-testid={dataTestId.myInstitutionUsersPage.areaOfResponsibilifyField}
+      data-testid={dataTestId.myInstitutionUsersPage.areaOfResponsibilityField}
       options={options}
       value={selectedOption}
       getOptionLabel={(option) => getLanguageString(option.name)}

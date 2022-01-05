@@ -158,7 +158,7 @@ export const dataTestId = {
     },
   },
   myInstitutionUsersPage: {
-    areaOfResponsibilifyField: 'area-of-responsibility-field',
+    areaOfResponsibilityField: 'area-of-responsibility-field',
     usersAdministrators: 'users-administrators',
     usersCurators: 'users-curators',
     usersEditors: 'users-editors',
