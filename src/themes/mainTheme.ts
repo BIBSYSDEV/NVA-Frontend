@@ -1,6 +1,8 @@
 import { CalendarPickerView, DatePickerProps } from '@mui/lab';
 import { createTheme, SxProps } from '@mui/material';
+import { nbNO, enUS } from '@mui/material/locale';
 import i18n from '../translations/i18n';
+import { LanguageCodes } from '../types/language.types';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
 enum Color {
@@ -21,188 +23,170 @@ enum Font {
   Crimson = 'Crimson Text, serif',
 }
 
-export const mainTheme = createTheme({
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 960,
-      lg: 1280,
-      xl: 1920,
+const locale = i18n.language === LanguageCodes.ENGLISH ? enUS : nbNO;
+
+export const mainTheme = createTheme(
+  {
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 600,
+        md: 960,
+        lg: 1280,
+        xl: 1920,
+      },
     },
-  },
-  palette: {
-    primary: {
-      main: Color.PrimaryMain,
+    palette: {
+      primary: {
+        main: Color.PrimaryMain,
+      },
+      secondary: {
+        main: Color.SecondaryMain,
+      },
+      error: {
+        main: Color.ErrorMain,
+        light: Color.ErrorLight,
+      },
+      success: {
+        main: Color.SuccessMain,
+      },
+      background: {
+        default: Color.White,
+        paper: Color.Paper,
+      },
     },
-    secondary: {
-      main: Color.SecondaryMain,
+    typography: {
+      fontFamily: Font.Barlow,
+      h1: {
+        fontFamily: Font.Crimson,
+        fontSize: '3rem',
+        fontWeight: 400,
+      },
+      h2: {
+        fontFamily: Font.Crimson,
+        fontSize: '2.25rem',
+        fontWeight: 400,
+      },
+      h3: {
+        fontFamily: Font.Crimson,
+        fontSize: '1.5rem',
+        fontWeight: 400,
+      },
+      h4: {
+        fontSize: '1.25rem',
+        fontWeight: 700,
+      },
+      overline: {
+        fontSize: '0.75rem',
+        fontWeight: 600,
+      },
+      subtitle2: {
+        fontSize: '0.875rem',
+        fontWeight: 700,
+      },
+      caption: {
+        fontSize: '0.875rem',
+      },
     },
-    error: {
-      main: Color.ErrorMain,
-      light: Color.ErrorLight,
-    },
-    success: {
-      main: Color.SuccessMain,
-    },
-    background: {
-      default: Color.White,
-      paper: Color.Paper,
-    },
-  },
-  typography: {
-    fontFamily: Font.Barlow,
-    h1: {
-      fontFamily: Font.Crimson,
-      fontSize: '3rem',
-      fontWeight: 400,
-    },
-    h2: {
-      fontFamily: Font.Crimson,
-      fontSize: '2.25rem',
-      fontWeight: 400,
-    },
-    h3: {
-      fontFamily: Font.Crimson,
-      fontSize: '1.5rem',
-      fontWeight: 400,
-    },
-    h4: {
-      fontSize: '1.25rem',
-      fontWeight: 700,
-    },
-    overline: {
-      fontSize: '0.75rem',
-      fontWeight: 600,
-    },
-    subtitle2: {
-      fontSize: '0.875rem',
-      fontWeight: 700,
-    },
-    caption: {
-      fontSize: '0.875rem',
-    },
-  },
-  components: {
-    MuiAutocomplete: {
-      styleOverrides: {
-        tag: {
-          margin: '0.5rem 0',
-          '&:not(:last-child)': {
-            marginRight: '0.5rem',
+    components: {
+      MuiAutocomplete: {
+        styleOverrides: {
+          tag: {
+            margin: '0.5rem 0',
+            '&:not(:last-child)': {
+              marginRight: '0.5rem',
+            },
           },
         },
       },
-      defaultProps: {
-        noOptionsText: i18n.t('common:no_hits'),
-        loadingText: `${i18n.t('common:loading')}...`,
-        clearText: i18n.t('common:clear'),
-        closeText: i18n.t('common:close'),
-        openText: i18n.t('common:open'),
-      },
-    },
-    MuiChip: {
-      styleOverrides: {
-        root: {
-          height: '100%',
-          padding: '0.4rem 0',
-        },
-        label: {
-          whiteSpace: 'normal', // Allow multiline chips
-        },
-      },
-      defaultProps: {
-        variant: 'outlined',
-      },
-    },
-    MuiLink: {
-      styleOverrides: {
-        root: {
-          color: Color.TextPrimary,
-        },
-        underlineAlways: {
-          textDecorationColor: Color.SecondaryMain,
-        },
-      },
-    },
-    MuiStepLabel: {
-      styleOverrides: {
-        label: {
-          opacity: 0.65,
-          textTransform: 'uppercase',
-          fontSize: '1rem',
-          '&.Mui-active': {
-            color: Color.PrimaryMain,
-            opacity: 1,
+      MuiChip: {
+        styleOverrides: {
+          root: {
+            height: '100%',
+            padding: '0.4rem 0',
           },
-          '&.Mui-error': {
+          label: {
+            whiteSpace: 'normal', // Allow multiline chips
+          },
+        },
+        defaultProps: {
+          variant: 'outlined',
+        },
+      },
+      MuiLink: {
+        styleOverrides: {
+          root: {
+            color: Color.TextPrimary,
+          },
+          underlineAlways: {
+            textDecorationColor: Color.SecondaryMain,
+          },
+        },
+      },
+      MuiStepLabel: {
+        styleOverrides: {
+          label: {
+            opacity: 0.65,
+            textTransform: 'uppercase',
+            fontSize: '1rem',
+            '&.Mui-active': {
+              color: Color.PrimaryMain,
+              opacity: 1,
+            },
+            '&.Mui-error': {
+              color: Color.ErrorMain,
+            },
+          },
+        },
+      },
+      MuiTableHead: { styleOverrides: { root: { th: { background: Color.AlternativeBackground } } } },
+      MuiTablePagination: {
+        defaultProps: {
+          showFirstButton: true,
+          showLastButton: true,
+        },
+      },
+      MuiTooltip: { defaultProps: { arrow: true } },
+      MuiTypography: {
+        defaultProps: {
+          color: 'textPrimary',
+        },
+      },
+      MuiFormLabel: {
+        styleOverrides: {
+          asterisk: {
+            fontWeight: 'bold',
             color: Color.ErrorMain,
           },
         },
       },
-    },
-    MuiTableHead: { styleOverrides: { root: { th: { background: Color.AlternativeBackground } } } },
-    MuiTablePagination: {
-      defaultProps: {
-        showFirstButton: true,
-        showLastButton: true,
-        labelRowsPerPage: i18n.t('common:table_pagination.rows_per_page'),
-        labelDisplayedRows: ({ from, to, count }) => `${from}-${to} ${i18n.t('common:of')} ${count}`,
-        getItemAriaLabel: (type) => {
-          switch (type) {
-            case 'first':
-              return i18n.t('common:table_pagination.go_to_first_page');
-            case 'last':
-              return i18n.t('common:table_pagination.go_to_last_page');
-            case 'next':
-              return i18n.t('common:table_pagination.go_to_next_page');
-            case 'previous':
-              return i18n.t('common:table_pagination.go_to_previous_page');
-            default:
-              return '';
-          }
-        },
-      },
-    },
-    MuiTooltip: { defaultProps: { arrow: true } },
-    MuiTypography: {
-      defaultProps: {
-        color: 'textPrimary',
-      },
-    },
-    MuiFormLabel: {
-      styleOverrides: {
-        asterisk: {
-          fontWeight: 'bold',
-          color: Color.ErrorMain,
-        },
-      },
-    },
-    MuiFilledInput: {
-      styleOverrides: {
-        root: {
-          backgroundColor: Color.White,
-          '&.Mui-focused': {
+      MuiFilledInput: {
+        styleOverrides: {
+          root: {
             backgroundColor: Color.White,
-          },
-          '&:hover': {
-            backgroundColor: Color.White,
+            '&.Mui-focused': {
+              backgroundColor: Color.White,
+            },
+            '&:hover': {
+              backgroundColor: Color.White,
+            },
           },
         },
       },
-    },
-    MuiMenuItem: {
-      styleOverrides: {
-        root: {
-          color: Color.Black,
-        },
-        gutters: {
-          paddingRight: '2rem',
+      MuiMenuItem: {
+        styleOverrides: {
+          root: {
+            color: Color.Black,
+          },
+          gutters: {
+            paddingRight: '2rem',
+          },
         },
       },
     },
   },
-});
+  locale
+);
 
 export const alternatingTableRowColor: SxProps = {
   tr: {

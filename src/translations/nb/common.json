@@ -44,7 +44,6 @@
   "no_hits": "Ingen treff",
   "number_short": "Nr.",
   "nva_tagline": "NVA - Nasjonalt Vitenarkiv",
-  "of": "av",
   "open": "Åpne",
   "orcid": "ORCID",
   "order": "Rekkefølge",
@@ -85,13 +84,6 @@
   "start_page": "Startside",
   "status": "Status",
   "support": "Brukerstøtte",
-  "table_pagination": {
-    "go_to_first_page": "Gå til første side",
-    "go_to_last_page": "Gå til siste side",
-    "go_to_next_page": "Gå til neste side",
-    "go_to_previous_page": "Gå til forrige side",
-    "rows_per_page": "Rader per side:"
-  },
   "title": "Tittel",
   "title_expand": "Vis hele tittelen",
   "title_minimize": "Minimer tittelen",
