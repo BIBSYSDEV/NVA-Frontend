@@ -9,6 +9,7 @@ import { Organization } from '../../types/institution.types';
 import { NotificationVariant } from '../../types/notification.types';
 import { InstitutionUser } from '../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { dataTestId } from '../../utils/dataTestIds';
 import { getLanguageString } from '../../utils/translation-helpers';
 
 interface ViewingScopeCellProps {
@@ -18,7 +19,7 @@ interface ViewingScopeCellProps {
 
 export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
   const dispatch = useDispatch();
-  const { t } = useTranslation();
+  const { t } = useTranslation('admin');
   const [isUpdating, setIsUpdating] = useState(false);
   const selectedId = user.viewingScope?.includedUnits[0] ?? '';
   const selectedOption = options.find((option) => option.id === selectedId);
@@ -46,6 +47,8 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
 
   return (
     <Autocomplete
+      aria-label={t('users.area_of_responsibility')}
+      data-testid={dataTestId.myInstitutionUsersPage.areaOfResponsibilifyField}
       options={options}
       value={selectedOption ?? null}
       getOptionLabel={(option) => getLanguageString(option.name)}
@@ -60,9 +63,8 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
         <TextField
           {...params}
           disabled={isUpdating}
-          // data-testid={dataTestId.organization.searchField}
-          InputProps={{ ...params.InputProps, 'aria-label': t('admin:users.area_of_responsibility') }}
           fullWidth
+          placeholder={t('users.area_of_responsibility_placeholder')}
         />
       )}
     />
