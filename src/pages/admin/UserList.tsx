@@ -1,8 +1,18 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Button, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
+import {
+  Button,
+  CircularProgress,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TablePagination,
+  TableRow,
+  Typography,
+} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { visuallyHidden } from '@mui/utils';
@@ -15,6 +25,10 @@ import { InstitutionUser, RoleName } from '../../types/user.types';
 import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { ViewingScopeCell } from './ViewingScopeCell';
+import { RootStore } from '../../redux/reducers/rootReducer';
+import { useFetchResource } from '../../utils/hooks/useFetchResource';
+import { Organization } from '../../types/institution.types';
+import { getSortedSubUnits } from '../../utils/institutions-helpers';
 
 const StyledTable = styled(Table)`
   width: 100%;
@@ -47,6 +61,10 @@ export const UserList = ({
   const [page, setPage] = useState(0);
   const [updatedRoleForUsers, setUpdatedRoleForUsers] = useState<string[]>([]);
   const [removeRoleForUser, setRemoveRoleForUser] = useState('');
+  const user = useSelector((store: RootStore) => store.user);
+  const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
+    showScope ? user?.cristinId ?? '' : ''
+  );
 
   const handleAddRoleToUser = async (user: InstitutionUser) => {
     if (roleToAdd) {
@@ -117,11 +135,11 @@ export const UserList = ({
                   <StyledTypography>{t('common:name')}</StyledTypography>
                 </TableCell>
                 {showScope && (
-                  <TableCell>
+                  <TableCell width="40%">
                     <StyledTypography>{t('users.area_of_responsibility')}</StyledTypography>
                   </TableCell>
                 )}
-                <TableCell />
+                <TableCell width="150" />
               </TableRow>
             </TableHead>
             <TableBody>
@@ -134,7 +152,18 @@ export const UserList = ({
                     <TableCell>
                       {user.givenName} {user.familyName}
                     </TableCell>
-                    {showScope && <ViewingScopeCell id={user.viewingScope?.includedUnits[0] ?? ''} />}
+                    {showScope && (
+                      <TableCell>
+                        {isLoadingCurrentOrganization ? (
+                          <CircularProgress />
+                        ) : (
+                          <ViewingScopeCell
+                            user={user}
+                            options={currentOrganization ? getSortedSubUnits([currentOrganization]) : []}
+                          />
+                        )}
+                      </TableCell>
+                    )}
                     <TableCell align="right">
                       {roleToRemove && (
                         <Button
