@@ -77,6 +77,7 @@
     "removed_role": "Role removed",
     "send_message": "Message sent",
     "update_authority": "Updated authority",
+    "update_institution_user": "Updated user",
     "update_customer": "Updated customer institution",
     "update_registration": "Updated registration",
     "update_vocabulary": "{{vocabulary}} is now {{status}}"

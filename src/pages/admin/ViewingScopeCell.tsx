@@ -22,15 +22,15 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
   const { t } = useTranslation('admin');
   const [isUpdating, setIsUpdating] = useState(false);
   const selectedId = user.viewingScope?.includedUnits[0] ?? '';
-  const selectedOption = options.find((option) => option.id === selectedId);
+  const selectedOption = options.find((option) => option.id === selectedId) ?? null;
 
   const updateUser = async (newScopeId?: string) => {
     if (!newScopeId) {
       return;
     }
     setIsUpdating(true);
-    const newUser: InstitutionUser = { ...user, viewingScope: { includedUnits: [newScopeId] } };
 
+    const newUser: InstitutionUser = { ...user, viewingScope: { includedUnits: [newScopeId] } };
     const updateUserResponse = await authenticatedApiRequest({
       url: `${RoleApiPath.Users}/${user.username}`,
       method: 'PUT',
@@ -50,7 +50,7 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
       aria-label={t('users.area_of_responsibility')}
       data-testid={dataTestId.myInstitutionUsersPage.areaOfResponsibilifyField}
       options={options}
-      value={selectedOption ?? null}
+      value={selectedOption}
       getOptionLabel={(option) => getLanguageString(option.name)}
       renderOption={(props, option) => (
         <li {...props} key={option.id}>

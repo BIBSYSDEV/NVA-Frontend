@@ -126,7 +126,7 @@ export const UserList = ({
                   <Typography fontWeight="bold">{t('common:name')}</Typography>
                 </TableCell>
                 {showScope && (
-                  <TableCell width="40%">
+                  <TableCell sx={{ minWidth: { xs: '15rem', md: '40%' } }}>
                     <Typography fontWeight="bold">{t('users.area_of_responsibility')}</Typography>
                   </TableCell>
                 )}
