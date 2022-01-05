@@ -138,7 +138,7 @@ export const UserList = ({
                 const isLoading = updatedRoleForUsers.includes(user.username);
                 const disableAddButton = user.roles.some((role) => role.rolename === roleToAdd);
                 return (
-                  <TableRow key={index}>
+                  <TableRow key={user.username}>
                     <TableCell>{user.username}</TableCell>
                     <TableCell>
                       {user.givenName} {user.familyName}

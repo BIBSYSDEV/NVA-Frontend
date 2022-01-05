@@ -21,7 +21,8 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('admin');
   const [isUpdating, setIsUpdating] = useState(false);
-  const selectedId = user.viewingScope?.includedUnits[0] ?? '';
+  const [userCopy, setUserCopy] = useState(user); // Needed if empty scope before adding a new
+  const selectedId = userCopy.viewingScope?.includedUnits[0] ?? '';
   const selectedOption = options.find((option) => option.id === selectedId) ?? null;
 
   const updateUser = async (newScopeId?: string) => {
@@ -30,15 +31,16 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
     }
     setIsUpdating(true);
 
-    const newUser: InstitutionUser = { ...user, viewingScope: { includedUnits: [newScopeId] } };
+    const newUser: InstitutionUser = { ...userCopy, viewingScope: { includedUnits: [newScopeId] } };
     const updateUserResponse = await authenticatedApiRequest({
-      url: `${RoleApiPath.Users}/${user.username}`,
+      url: `${RoleApiPath.Users}/${userCopy.username}`,
       method: 'PUT',
       data: newUser,
     });
 
     if (isSuccessStatus(updateUserResponse.status)) {
       dispatch(setNotification(t('feedback:success.update_institution_user')));
+      setUserCopy(newUser);
     } else if (isErrorStatus(updateUserResponse.status)) {
       dispatch(setNotification(t('feedback:error.update_institution_user'), NotificationVariant.Error));
     }
