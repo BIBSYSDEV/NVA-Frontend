@@ -16,10 +16,10 @@
     },
     "section1": {
       "heading": "The data processor",
-      "paragraph": "Unit develops and manages the service on behalf of the data controller and has the role of data processor."
+      "paragraph": "Sikt develops and manages the service on behalf of the data controller and has the role of data processor."
     },
     "section2": {
-      "intro": "Unit user support's contact details",
+      "intro": "Sikt user support's contact details",
       "email": "Email: <0><0></0></0>",
       "telephone": "Telephone: <0><0></0></0>"
     }
@@ -30,7 +30,7 @@
     "paragraph1": "Personal data linked to users are not transferred to countries outside the EU/EEA.",
     "paragraph2": "The service is run on servers in the EU/EEA.",
     "paragraph3": {
-      "intro": "Your personal data will be disclosed to Unit, which is the service provider, and to its subcontractors:",
+      "intro": "Your personal data will be disclosed to Sikt, which is the service provider, and to its subcontractors:",
       "caption": "Overview of subcontractors whom may receive personal data",
       "table": {
         "header": {
@@ -39,11 +39,11 @@
         },
         "row0": {
           "col0": "Supplier in a framework agreement for AWS through the GÉANT collaboration",
-          "col1": "Cloud management and backup for Unit's direct services"
+          "col1": "Cloud management and backup for Sikt's direct services"
         },
         "row1": {
           "col0": "Blue Safespring AB ",
-          "col1": "Cloud management and backup for Unit's direct services"
+          "col1": "Cloud management and backup for Sikt's direct services"
         },
         "row2": {
           "col0": "UNINETT AS",
@@ -75,7 +75,7 @@
         "row2": {
           "col0": "Export of metadata from NVA to external service",
           "col1": "Export of metadata for resources to other services for presentation or cross-registration. For example, Oria to facilitate retrieval.",
-          "col2": "Unit for Oria Sources defined by the data controller"
+          "col2": "Sikt for Oria Sources defined by the data controller"
         },
         "row3": {
           "col0": "DOI and DataCite",
@@ -85,7 +85,7 @@
         "row4": {
           "col0": "Felles autoritetsregister",
           "col1": "Establish a link to the authority register for authorization of author, editor, supervisor and other creator or contributor registered in the service. To facilitate unambiguous registration and retrieval.",
-          "col2": "Unit"
+          "col2": "Sikt"
         },
         "row5": {
           "col0": "ORCID",
