@@ -39,7 +39,7 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryClassProps> {
         }
       }
 
-      window.localStorage.setItem(localstorageKey, currentTime.toString());
+      localStorage.setItem(localstorageKey, currentTime.toString());
       alert(t('common:reload_page_info'));
       window.location.reload();
     }
