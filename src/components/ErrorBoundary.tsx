@@ -21,6 +21,10 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryClassProps> {
     }
   }
 
+  componentDidCatch(error: unknown, info: unknown) {
+    console.log('ErrorBoundaryClass', error, info);
+  }
+
   render() {
     const { t, children } = this.props;
     const { hasError } = this.state;
@@ -36,6 +40,10 @@ export class BasicErrorBoundary extends Component {
 
   static getDerivedStateFromError() {
     return { hasError: true };
+  }
+
+  componentDidCatch(error: unknown, info: unknown) {
+    console.log('BasicErrorBoundary', error, info);
   }
 
   render() {
