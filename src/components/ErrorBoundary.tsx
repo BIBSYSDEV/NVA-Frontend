@@ -21,8 +21,28 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryClassProps> {
     }
   }
 
-  componentDidCatch(error: unknown, info: unknown) {
-    console.log('ErrorBoundaryClass', error, info);
+  componentDidCatch(error: any) {
+    const { t } = this.props;
+    console.log('ErrorBoundaryClass', error);
+
+    if (/Loading chunk [\d]+ failed/.test(error)) {
+      console.log('heisann, fant feilen jooo!!');
+      const localstorageKey = 'appUpdateTime';
+      const lastUpdateTime = parseInt(localStorage.getItem(localstorageKey) ?? '');
+      const currentTime = Date.now();
+
+      if (!isNaN(lastUpdateTime)) {
+        const timeSinceUpdate = currentTime - lastUpdateTime;
+        if (timeSinceUpdate < 10000) {
+          // Skip refreshing if less than 10sec since previous refresh, to avoid infinite loop
+          return;
+        }
+      }
+
+      window.localStorage.setItem(localstorageKey, currentTime.toString());
+      alert(t('common:reload_page_info'));
+      window.location.reload();
+    }
   }
 
   render() {
