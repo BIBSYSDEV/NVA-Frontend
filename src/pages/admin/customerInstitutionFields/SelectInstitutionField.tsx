@@ -28,7 +28,7 @@ export const SelectInstitutionField = ({ disabled = false }: SelectInstitutionFi
     errorMessage: t('error.get_institutions'),
   });
 
-  const options = isLoadingInstitutions ? [] : institutions?.hits.filter((institution) => !institution.partOf) ?? [];
+  const options = isLoadingInstitutions || !institutions ? [] : institutions.hits;
 
   return (
     <Field name={CustomerInstitutionFieldNames.Name}>
