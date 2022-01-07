@@ -21,12 +21,12 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryClassProps> {
     }
   }
 
+  // Force page refresh if a chunk is not found. This error is usually caused by a new
+  // version of the app being deployed, and the old chunks currently used has been invalidated.
   componentDidCatch(error: any) {
     const { t } = this.props;
-    console.log('ErrorBoundaryClass', error);
 
     if (/Loading chunk [\d]+ failed/.test(error)) {
-      console.log('heisann, fant feilen jooo!!');
       const localstorageKey = 'appUpdateTime';
       const lastUpdateTime = parseInt(localStorage.getItem(localstorageKey) ?? '');
       const currentTime = Date.now();
@@ -60,10 +60,6 @@ export class BasicErrorBoundary extends Component {
 
   static getDerivedStateFromError() {
     return { hasError: true };
-  }
-
-  componentDidCatch(error: unknown, info: unknown) {
-    console.log('BasicErrorBoundary', error, info);
   }
 
   render() {

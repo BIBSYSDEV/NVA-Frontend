@@ -6,7 +6,7 @@ import { AboutContent } from './AboutContent';
 
 const AboutPage = () => {
   const { t } = useTranslation('common');
-  throw "SyntaxError: expected expression, got '<'";
+
   return (
     <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('about_nva')}</PageHeader>
