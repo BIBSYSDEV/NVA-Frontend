@@ -21,6 +21,29 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryClassProps> {
     }
   }
 
+  // Force page refresh if a chunk is not found. This error is usually caused by a new
+  // version of the app being deployed, and the old chunks currently used has been invalidated.
+  componentDidCatch(error: any) {
+    const { t } = this.props;
+
+    if (/Loading chunk [\d]+ failed/.test(error)) {
+      const localstorageKey = 'appUpdateTime';
+      const lastUpdateTime = parseInt(localStorage.getItem(localstorageKey) ?? '');
+      const currentTime = Date.now();
+
+      if (!isNaN(lastUpdateTime)) {
+        const timeSinceUpdate = currentTime - lastUpdateTime;
+        if (timeSinceUpdate < 10000) {
+          return; // Skip refreshing if less than 10sec since previous refresh, to avoid infinite loop
+        }
+      }
+
+      alert(t('common:reload_page_info'));
+      localStorage.setItem(localstorageKey, currentTime.toString());
+      window.location.reload();
+    }
+  }
+
   render() {
     const { t, children } = this.props;
     const { hasError } = this.state;
