@@ -28,10 +28,13 @@ if ((window as any).Cypress) {
   (window as any).store = store;
 }
 
+console.log('Oppdatert');
 // Force page refresh if a chunk is not found. This error is usually caused by
 // a new version of the app available, and the old chunks currently used are invalidated.
 window.addEventListener('error', (error) => {
+  console.log('Ny error:', error);
   if (/Loading chunk [\d]+ failed/.test(error.message)) {
+    console.log('Matching err', error.message);
     const localstorageKey = 'appUpdateTime';
     const lastUpdateTime = parseInt(localStorage.getItem(localstorageKey) ?? '');
     const currentTime = Date.now();
