@@ -28,6 +28,28 @@ if ((window as any).Cypress) {
   (window as any).store = store;
 }
 
+// Force page refresh if a chunk is not found. This error is usually caused by
+// a new version of the app available, and the old chunks currently used are invalidated.
+window.addEventListener('error', (error) => {
+  if (/Loading chunk [\d]+ failed/.test(error.message)) {
+    const localstorageKey = 'appUpdateTime';
+    const lastUpdateTime = parseInt(localStorage.getItem(localstorageKey) ?? '');
+    const currentTime = Date.now();
+
+    if (!isNaN(lastUpdateTime)) {
+      const timeSinceUpdate = currentTime - lastUpdateTime;
+      if (timeSinceUpdate < 10000) {
+        // Skip refreshing if less than 10sec since previous refresh, to avoid infinite loop
+        return;
+      }
+    }
+
+    window.localStorage.setItem(localstorageKey, currentTime.toString());
+    alert(i18n.t('common:reload_page_info'));
+    window.location.reload();
+  }
+});
+
 ReactDOM.render(
   <BasicErrorBoundary>
     <I18nextProvider i18n={i18n}>
