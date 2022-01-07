@@ -33,7 +33,7 @@ console.log('Oppdatert');
 // a new version of the app available, and the old chunks currently used are invalidated.
 window.addEventListener('error', (error) => {
   console.log('Ny error:', error);
-  if (/Loading chunk [\d]+ failed/.test(error.message)) {
+  if (error.message === "SyntaxError: expected expression, got '<'") {
     console.log('Matching err', error.message);
     const localstorageKey = 'appUpdateTime';
     const lastUpdateTime = parseInt(localStorage.getItem(localstorageKey) ?? '');
