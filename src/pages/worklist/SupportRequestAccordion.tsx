@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
@@ -9,11 +9,13 @@ import { addMessage } from '../../api/registrationApi';
 import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { NotificationVariant } from '../../types/notification.types';
-import { MessageCollection, MessageType } from '../../types/publication_types/messages.types';
+import { Message, MessageCollection, MessageType } from '../../types/publication_types/messages.types';
 import { Registration } from '../../types/registration.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { MessageList } from './MessageList';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { useState } from 'react';
+import { RootStore } from '../../redux/reducers/rootReducer';
 
 const StyledAccordion = styled(Accordion)`
   width: 100%;
@@ -62,17 +64,15 @@ const StyledAccordionActionButtons = styled.div`
 interface SupportRequestAccordionProps {
   messageCollection: MessageCollection;
   registration: Registration;
-  fetchSupportRequests: () => void;
 }
 
-export const SupportRequestAccordion = ({
-  messageCollection,
-  registration,
-  fetchSupportRequests,
-}: SupportRequestAccordionProps) => {
+export const SupportRequestAccordion = ({ messageCollection, registration }: SupportRequestAccordionProps) => {
   const { t } = useTranslation('workLists');
   const dispatch = useDispatch();
+  const userId = useSelector((store: RootStore) => store.user?.id);
   const { identifier } = registration;
+
+  const [messagesCopy, setMessagesCopy] = useState(messageCollection.messages);
 
   const onClickSendMessage = async (message: string) => {
     const updateDoiRequestResponse = await addMessage(identifier, message, messageCollection.messageType);
@@ -80,7 +80,13 @@ export const SupportRequestAccordion = ({
       dispatch(setNotification(t('feedback:error.send_message'), NotificationVariant.Error));
     } else if (isSuccessStatus(updateDoiRequestResponse.status)) {
       dispatch(setNotification(t('feedback:success.send_message'), NotificationVariant.Success));
-      fetchSupportRequests();
+      const newMessage: Message = {
+        ...messagesCopy[0],
+        date: new Date().toString(),
+        sender: userId ?? '',
+        text: message,
+      };
+      setMessagesCopy([...messagesCopy, newMessage]);
     }
   };
 
@@ -99,12 +105,12 @@ export const SupportRequestAccordion = ({
         </StyledTitle>
         <StyledOwner data-testid={`message-owner-${identifier}`}>
           <Typography>{registration.owner}</Typography>
-          {new Date(messageCollection.messages[messageCollection.messages.length - 1].date).toLocaleDateString()}
+          {new Date(messagesCopy[messagesCopy.length - 1].date).toLocaleDateString()}
         </StyledOwner>
       </AccordionSummary>
       <AccordionDetails>
         <StyledMessages>
-          <MessageList messages={messageCollection.messages} />
+          <MessageList messages={messagesCopy} />
           <MessageForm confirmAction={onClickSendMessage} />
         </StyledMessages>
         <StyledAccordionActionButtons>

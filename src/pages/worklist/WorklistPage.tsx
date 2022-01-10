@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
-
 import { SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { SupportRequest } from '../../types/publication_types/messages.types';
@@ -11,6 +10,7 @@ import { MessagesOverview } from './MessagesOverview';
 interface Hit {
   _source: SupportRequest;
 }
+
 interface MessagesResponse {
   hits: {
     hits: Hit[];
@@ -20,21 +20,21 @@ interface MessagesResponse {
 const WorklistPage = () => {
   const { t } = useTranslation('workLists');
 
-  const [worklistItems, isLoadingWorklistItems, refetch] = useFetch<MessagesResponse>({
+  const [worklistResponse, isLoadingWorklistResponse] = useFetch<MessagesResponse>({
     url: SearchApiPath.Messages,
-    errorMessage: t('feedback:error.get_messages'), //todo
+    errorMessage: t('feedback:error.get_messages'),
     withAuthentication: true,
   });
 
-  const supportRequests = worklistItems?.hits.hits.map((x) => x._source) ?? [];
+  const supportRequests = worklistResponse?.hits.hits.map((x) => x._source) ?? [];
 
   return (
     <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('worklist')}</PageHeader>
-      {isLoadingWorklistItems ? (
+      {isLoadingWorklistResponse && !worklistResponse ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
-        <MessagesOverview conversations={supportRequests} refetch={refetch} />
+        <MessagesOverview conversations={supportRequests} />
       )}
     </StyledPageWrapperWithMaxWidth>
   );

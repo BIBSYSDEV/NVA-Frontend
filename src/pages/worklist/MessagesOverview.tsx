@@ -5,10 +5,9 @@ import { SupportRequestAccordion } from './SupportRequestAccordion';
 
 interface MessagesOverviewProps {
   conversations: SupportRequest[];
-  refetch: () => void;
 }
 
-export const MessagesOverview = ({ conversations, refetch }: MessagesOverviewProps) => {
+export const MessagesOverview = ({ conversations }: MessagesOverviewProps) => {
   const { t } = useTranslation('workLists');
 
   return conversations.length === 0 ? (
@@ -21,7 +20,6 @@ export const MessagesOverview = ({ conversations, refetch }: MessagesOverviewPro
             key={messageCollection.messages[0].identifier}
             registration={conversation.publication}
             messageCollection={messageCollection}
-            fetchSupportRequests={refetch}
           />
         ))
       )}

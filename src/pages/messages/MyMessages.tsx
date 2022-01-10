@@ -11,7 +11,7 @@ import { MessagesOverview } from '../worklist/MessagesOverview';
 const MyMessages = () => {
   const { t } = useTranslation('workLists');
 
-  const [supportRequestsResponse, isLoadingSupportRequests, fetchSupportRequests] = useFetch<SupportRequest[]>({
+  const [supportRequestsResponse, isLoadingSupportRequests] = useFetch<SupportRequest[]>({
     url: `${PublicationsApiPath.Messages}?role=${RoleName.CREATOR}`,
     errorMessage: t('feedback:error.get_messages'),
     withAuthentication: true,
@@ -21,10 +21,10 @@ const MyMessages = () => {
   return (
     <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('messages')}</PageHeader>
-      {isLoadingSupportRequests ? (
+      {isLoadingSupportRequests && !supportRequestsResponse ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
-        <MessagesOverview conversations={supportRequests} refetch={fetchSupportRequests} />
+        <MessagesOverview conversations={supportRequests} />
       )}
     </StyledPageWrapperWithMaxWidth>
   );
