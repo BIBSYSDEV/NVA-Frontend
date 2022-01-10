@@ -4,26 +4,38 @@ import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers'
 
 import { SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
+import { SupportRequest } from '../../types/publication_types/messages.types';
+import { ListSkeleton } from '../../components/ListSkeleton';
+import { MessagesOverview } from './MessagesOverview';
+
+interface Hit {
+  _source: SupportRequest;
+}
+interface MessagesResponse {
+  hits: {
+    hits: Hit[];
+  };
+}
 
 const WorklistPage = () => {
   const { t } = useTranslation('workLists');
 
-  const [supportMessages, isLoadingSupportMessages] = useFetch<any>({
+  const [worklistItems, isLoadingWorklistItems, refetch] = useFetch<MessagesResponse>({
     url: SearchApiPath.Messages,
     errorMessage: t('feedback:error.get_messages'), //todo
     withAuthentication: true,
   });
-  const [doiRequests, isLoadingDoiRequests] = useFetch<any>({
-    url: SearchApiPath.DoiRequests,
-    errorMessage: t('feedback:error.get_messages'), //todo
-    withAuthentication: true,
-  });
 
-  console.log(supportMessages, doiRequests);
+  const supportRequests = worklistItems?.hits.hits.map((x) => x._source) ?? [];
 
   return (
     <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('worklist')}</PageHeader>
+      {isLoadingWorklistItems ? (
+        <ListSkeleton minWidth={100} maxWidth={100} height={100} />
+      ) : (
+        <MessagesOverview conversations={supportRequests} refetch={refetch} />
+      )}
     </StyledPageWrapperWithMaxWidth>
   );
 };
