@@ -61,6 +61,7 @@
   "registration": "Registrering",
   "registrations": "Registreringer",
   "reject_doi": "Avvis DOI",
+  "reload_page_info": "En ny versjon av NVA er tilgjengelig og siden må lastes på nytt.",
   "remove": "Fjern",
   "required_description": "Felt med stjerne er obligatorisk",
   "requires_login": "Krever innlogging",

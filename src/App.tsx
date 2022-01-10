@@ -1,4 +1,4 @@
-import Amplify from 'aws-amplify';
+import { Amplify } from 'aws-amplify';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';

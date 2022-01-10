@@ -35,8 +35,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
     errorMessage: t('feedback:error.get_institutions'),
   });
 
-  // Show only top level institutions
-  const options = isLoadingInstitutions ? [] : institutions?.hits.filter((institution) => !institution.partOf) ?? [];
+  const options = isLoadingInstitutions || !institutions ? [] : institutions.hits;
 
   return (
     <Formik

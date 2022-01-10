@@ -9,7 +9,6 @@ import commonEn from './en/common.json';
 import disciplinesEn from './en/disciplines.json';
 import editorEn from './en/editor.json';
 import feedbackEn from './en/feedback.json';
-import formikValuesEn from './en/formikValues.json';
 import institutionEn from './en/institution.json';
 import languagesEn from './en/languages.json';
 import licensesEn from './en/licenses.json';
@@ -28,7 +27,6 @@ import commonNb from './nb/common.json';
 import disciplinesNb from './nb/disciplines.json';
 import editorNb from './nb/editor.json';
 import feedbackNb from './nb/feedback.json';
-import formikValuesNb from './nb/formikValues.json';
 import institutionNb from './nb/institution.json';
 import languagesNb from './nb/languages.json';
 import licensesNb from './nb/licenses.json';
@@ -52,7 +50,6 @@ i18n.use(LanguageDetector).init({
       disciplines: disciplinesEn,
       editor: editorEn,
       feedback: feedbackEn,
-      formikValues: formikValuesEn,
       institution: institutionEn,
       languages: languagesEn,
       licenses: licensesEn,
@@ -72,7 +69,6 @@ i18n.use(LanguageDetector).init({
       disciplines: disciplinesNb,
       editor: editorNb,
       feedback: feedbackNb,
-      formikValues: formikValuesNb,
       institution: institutionNb,
       languages: languagesNb,
       licenses: licensesNb,
@@ -93,7 +89,6 @@ i18n.use(LanguageDetector).init({
     'common',
     'disciplines',
     'feedback',
-    'formikValues',
     'infopages',
     'institution',
     'languages',
