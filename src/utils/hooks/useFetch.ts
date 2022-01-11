@@ -19,13 +19,11 @@ export const useFetch = <T>({
   errorMessage,
   withAuthentication = false,
 }: UseFetchConfig): [T | undefined, boolean, () => void, (value: T) => void] => {
-  console.log('useFetch');
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
   const [data, setData] = useState<T>();
   const [isLoading, setIsLoading] = useState(!!url);
   const cancelToken = useCancelToken();
-  console.log('useFetch', data);
 
   const mountedRef = useRef(false);
   useEffect(() => {
@@ -64,6 +62,7 @@ export const useFetch = <T>({
       const fetchedData = withAuthentication
         ? await authenticatedApiRequest<T>({ url, cancelToken })
         : await apiRequest<T>({ url, cancelToken });
+
       if (isErrorStatus(fetchedData.status)) {
         showErrorNotification();
       } else if (isSuccessStatus(fetchedData.status) && fetchedData.data) {

@@ -51,6 +51,7 @@ export const getIdToken = async () => {
     const cognitoUser = await Auth.currentAuthenticatedUser();
     return cognitoUser?.signInUserSession?.idToken?.jwtToken ?? null;
   } catch (error) {
+    console.log('uups, error:', error);
     if (error === 'The user is not authenticated') {
       // Expires session token
       console.log('getIdToken Error', error);

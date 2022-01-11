@@ -94,7 +94,7 @@ export const App = () => {
   useEffect(() => {
     console.log('useEff');
     if (hasExpiredToken) {
-      dispatch(setNotification('Sesjonene din har gått ut. Vennligst logg inn på nytt.', NotificationVariant.Info));
+      dispatch(setNotification('Sesjonen din har utløpt. Vennligst logg inn på nytt.', NotificationVariant.Info));
       localStorage.removeItem(expiredTokenKey);
     }
   }, [dispatch, hasExpiredToken]);
