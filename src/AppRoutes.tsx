@@ -31,7 +31,6 @@ const Logout = lazy(() => import('./layout/Logout'));
 const Login = lazy(() => import('./layout/Login'));
 
 export const AppRoutes = () => {
-  console.log('AppRoutes');
   return (
     <Suspense fallback={<DelayedFallback />}>
       <Switch>

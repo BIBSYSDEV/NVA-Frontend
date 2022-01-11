@@ -13,7 +13,6 @@ interface MessagesOverviewProps {
 
 export const MessagesOverview = ({ role }: MessagesOverviewProps) => {
   const { t } = useTranslation('workLists');
-  console.log('MessagesOverview');
   const [supportRequestsResponse, isLoadingSupportRequests, fetchSupportRequests] = useFetch<SupportRequest[]>({
     url: `${PublicationsApiPath.Messages}?role=${role}`,
     errorMessage: t('feedback:error.get_messages'),

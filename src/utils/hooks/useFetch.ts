@@ -60,25 +60,20 @@ export const useFetch = <T>({
 
   const fetchData = useCallback(async () => {
     try {
-      console.log('fetchData');
       setIsLoading(true);
       const fetchedData = withAuthentication
         ? await authenticatedApiRequest<T>({ url, cancelToken })
         : await apiRequest<T>({ url, cancelToken });
-      console.log('fetchedData', fetchedData);
       if (isErrorStatus(fetchedData.status)) {
         showErrorNotification();
       } else if (isSuccessStatus(fetchedData.status) && fetchedData.data) {
         setData(fetchedData.data);
       }
     } catch (error) {
-      console.log('fetchData Error', error);
       if (!Axios.isCancel(error)) {
-        console.log('!isCancel');
         showErrorNotification();
       }
     } finally {
-      console.log('fetchData Finally');
       if (mountedRef.current) {
         setIsLoading(false);
       }

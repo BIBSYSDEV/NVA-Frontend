@@ -5,7 +5,6 @@ import { MessagesOverview } from './MessagesOverview';
 import { RoleName } from '../../types/user.types';
 
 const WorklistPage = () => {
-  console.log('WorklistPage');
   const { t } = useTranslation('workLists');
 
   return (
