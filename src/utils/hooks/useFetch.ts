@@ -19,11 +19,13 @@ export const useFetch = <T>({
   errorMessage,
   withAuthentication = false,
 }: UseFetchConfig): [T | undefined, boolean, () => void, (value: T) => void] => {
+  console.log('useFetch');
   const dispatch = useDispatch();
   const { t } = useTranslation('feedback');
   const [data, setData] = useState<T>();
   const [isLoading, setIsLoading] = useState(!!url);
   const cancelToken = useCancelToken();
+  console.log('useFetch', data);
 
   const mountedRef = useRef(false);
   useEffect(() => {
@@ -58,21 +60,25 @@ export const useFetch = <T>({
 
   const fetchData = useCallback(async () => {
     try {
+      console.log('fetchData');
       setIsLoading(true);
       const fetchedData = withAuthentication
         ? await authenticatedApiRequest<T>({ url, cancelToken })
         : await apiRequest<T>({ url, cancelToken });
-
+      console.log('fetchedData', fetchedData);
       if (isErrorStatus(fetchedData.status)) {
         showErrorNotification();
       } else if (isSuccessStatus(fetchedData.status) && fetchedData.data) {
         setData(fetchedData.data);
       }
     } catch (error) {
+      console.log('fetchData Error', error);
       if (!Axios.isCancel(error)) {
+        console.log('!isCancel');
         showErrorNotification();
       }
     } finally {
+      console.log('fetchData Finally');
       if (mountedRef.current) {
         setIsLoading(false);
       }

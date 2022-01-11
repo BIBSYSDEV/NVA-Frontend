@@ -58,6 +58,7 @@ if (window.location.pathname === UrlPathTemplate.MyProfile && window.location.ha
 }
 
 export const App = () => {
+  console.log('App');
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation('feedback');
   const user = useSelector((store: RootStore) => store.user);

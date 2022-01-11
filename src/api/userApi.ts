@@ -40,9 +40,15 @@ export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> =>
 };
 
 export const getIdToken = async () => {
+  console.log('getIdToken');
   if (USE_MOCK_DATA) {
     return '';
   }
-  const cognitoUser = await Auth.currentAuthenticatedUser();
-  return cognitoUser?.signInUserSession?.idToken?.jwtToken || null;
+  try {
+    const cognitoUser = await Auth.currentAuthenticatedUser();
+    return cognitoUser?.signInUserSession?.idToken?.jwtToken ?? null;
+  } catch (ex) {
+    console.log('getIdToken Error', ex);
+    return null;
+  }
 };
