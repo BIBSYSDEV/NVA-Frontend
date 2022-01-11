@@ -11,7 +11,7 @@ interface Hit {
   _source: SupportRequest;
 }
 
-interface MessagesResponse {
+export interface MessagesResponse {
   hits: {
     hits: Hit[];
   };

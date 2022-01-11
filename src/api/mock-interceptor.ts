@@ -21,7 +21,7 @@ import { mockProject, mockProjectSearch } from '../utils/testfiles/mockProjects'
 import mockPublishedRegistrations from '../utils/testfiles/published_registrations.json';
 import { mockPublishersSearch } from '../utils/testfiles/mockPublishers';
 import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
-import { mockSearchResults } from '../utils/testfiles/search_results';
+import { mockSearchResults, mockSearchWorklist } from '../utils/testfiles/search_results';
 import { mockMessages, mockPublishedRegistration, mockRegistration } from '../utils/testfiles/mockRegistration';
 import {
   SearchApiPath,
@@ -88,6 +88,7 @@ export const interceptRequestsOnMock = () => {
 
   //MY MESSAGES
   mock.onGet(new RegExp(PublicationsApiPath.Messages)).reply(200, mockMessages);
+  mock.onGet(new RegExp(SearchApiPath.Messages)).reply(200, mockSearchWorklist);
 
   // PUBLICATION CHANNEL
   mock.onGet(mockJournalsSearch[0].id).reply(200, mockJournalsSearch[0]);
