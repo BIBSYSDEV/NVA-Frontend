@@ -2,6 +2,7 @@ import { Auth } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
 import { CognitoUserSession } from 'amazon-cognito-identity-js';
 import { USE_MOCK_DATA, AMPLIFY_REDIRECTED_KEY } from '../utils/constants';
+import { UrlPathTemplate } from '../utils/urlPaths';
 
 export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> => {
   try {
@@ -47,8 +48,12 @@ export const getIdToken = async () => {
   try {
     const cognitoUser = await Auth.currentAuthenticatedUser();
     return cognitoUser?.signInUserSession?.idToken?.jwtToken ?? null;
-  } catch (ex) {
-    console.log('getIdToken Error', ex);
+  } catch (error) {
+    if (error === 'The user is not authenticated') {
+      // Expires session token
+      console.log('getIdToken Error', error);
+      window.location.href = UrlPathTemplate.Home;
+    }
     return null;
   }
 };
