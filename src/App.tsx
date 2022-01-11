@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from './api/authorityApi';
-import { getCurrentUserAttributes } from './api/userApi';
+import { expiredTokenKey, getCurrentUserAttributes } from './api/userApi';
 import { AppRoutes } from './AppRoutes';
 import { Footer } from './layout/Footer';
 import { Header } from './layout/header/Header';
@@ -89,6 +89,13 @@ export const App = () => {
       Amplify.configure(awsConfig);
     }
   }, []);
+
+  const hasExpiredToken = !!localStorage.getItem(expiredTokenKey);
+  useEffect(() => {
+    if (hasExpiredToken) {
+      dispatch(setNotification('Sesjonene din har gått ut. Vennligst logg inn på nytt.', NotificationVariant.Info));
+    }
+  }, [dispatch, hasExpiredToken]);
 
   useEffect(() => {
     // Fetch attributes of authenticated user

@@ -40,6 +40,8 @@ export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> =>
   }
 };
 
+export const expiredTokenKey = 'expiredToken';
+
 export const getIdToken = async () => {
   console.log('getIdToken');
   if (USE_MOCK_DATA) {
@@ -52,6 +54,7 @@ export const getIdToken = async () => {
     if (error === 'The user is not authenticated') {
       // Expires session token
       console.log('getIdToken Error', error);
+      localStorage.setItem(expiredTokenKey, 'true');
       window.location.href = UrlPathTemplate.Home;
     }
     return null;
