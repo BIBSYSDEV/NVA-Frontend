@@ -21,7 +21,7 @@ import { mockProject, mockProjectSearch } from '../utils/testfiles/mockProjects'
 import mockPublishedRegistrations from '../utils/testfiles/published_registrations.json';
 import { mockPublishersSearch } from '../utils/testfiles/mockPublishers';
 import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
-import { mockSearchResults, mockSearchWorklist } from '../utils/testfiles/search_results';
+import { mockSearchResults, mockSearchWorklist } from '../utils/testfiles/mockSearchResults';
 import { mockMessages, mockPublishedRegistration, mockRegistration } from '../utils/testfiles/mockRegistration';
 import {
   SearchApiPath,

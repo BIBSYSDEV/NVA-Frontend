@@ -3,7 +3,7 @@ import { LanguageValues } from '../../types/language.types';
 import { JournalType } from '../../types/publicationFieldNames';
 import { PublicationChannelType, RegistrationStatus } from '../../types/registration.types';
 import { mockCustomerInstitution } from './mockCustomerInstitutions';
-import { MessageType, SupportRequest } from '../../types/publication_types/messages.types';
+import { MessageType, PublicationConversation } from '../../types/publication_types/messages.types';
 import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
 import { JournalArticleContentType } from '../../types/publication_types/content.types';
 
@@ -111,7 +111,7 @@ export const mockRegistration: JournalRegistration = {
   },
 };
 
-export const mockMessages: SupportRequest[] = [
+export const mockMessages: PublicationConversation[] = [
   {
     publication: mockRegistration,
     messageCollections: [

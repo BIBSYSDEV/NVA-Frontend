@@ -3,19 +3,9 @@ import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { SupportRequest } from '../../types/publication_types/messages.types';
+import { MessagesResponse } from '../../types/publication_types/messages.types';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { MessagesOverview } from './MessagesOverview';
-
-interface Hit {
-  _source: SupportRequest;
-}
-
-export interface MessagesResponse {
-  hits: {
-    hits: Hit[];
-  };
-}
 
 const WorklistPage = () => {
   const { t } = useTranslation('workLists');
@@ -26,12 +16,12 @@ const WorklistPage = () => {
     withAuthentication: true,
   });
 
-  const supportRequests = worklistResponse?.hits.hits.map((x) => x._source) ?? [];
+  const supportRequests = worklistResponse?.hits.hits.map((hit) => hit._source) ?? [];
 
   return (
     <StyledPageWrapperWithMaxWidth>
       <PageHeader>{t('worklist')}</PageHeader>
-      {isLoadingWorklistResponse && !worklistResponse ? (
+      {isLoadingWorklistResponse ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
         <MessagesOverview conversations={supportRequests} />

@@ -19,7 +19,17 @@ export interface MessageCollection {
   messages: Message[];
 }
 
-export interface SupportRequest {
+export interface PublicationConversation {
   messageCollections: MessageCollection[];
   publication: Registration;
+}
+
+interface Hit {
+  _source: PublicationConversation;
+}
+
+export interface MessagesResponse {
+  hits: {
+    hits: Hit[];
+  };
 }

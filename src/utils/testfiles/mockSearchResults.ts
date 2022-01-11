@@ -1,4 +1,4 @@
-import { MessagesResponse } from '../../pages/worklist/WorklistPage';
+import { MessagesResponse } from '../../types/publication_types/messages.types';
 import { SearchResult } from '../../types/registration.types';
 import { mockMessages, mockRegistration } from './mockRegistration';
 

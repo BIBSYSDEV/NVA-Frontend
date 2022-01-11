@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { SupportRequest } from '../../types/publication_types/messages.types';
+import { PublicationConversation } from '../../types/publication_types/messages.types';
 import { SupportRequestAccordion } from './SupportRequestAccordion';
 
 interface MessagesOverviewProps {
-  conversations: SupportRequest[];
+  conversations: PublicationConversation[];
 }
 
 export const MessagesOverview = ({ conversations }: MessagesOverviewProps) => {
