@@ -29,7 +29,7 @@ export const isSuccessStatus = (status: number) => status >= 200 && status <= 29
 
 export const autoHideNotificationDuration = {
   [NotificationVariant.Error]: 9000,
-  [NotificationVariant.Info]: 3000,
+  [NotificationVariant.Info]: 6000,
   [NotificationVariant.Success]: 3000,
   [NotificationVariant.Warning]: 6000,
 };

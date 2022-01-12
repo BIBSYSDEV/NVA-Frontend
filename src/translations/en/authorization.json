@@ -1,5 +1,6 @@
 {
   "back_to_home": "Back to home",
+  "expired_token_info": "Your session has expired. Please log in again.",
   "forbidden": "Forbidden",
   "forbidden_description": "You are not authorized to see the content on this page. Contact the administrator if you think this is wrong.",
   "login": "Log in",
