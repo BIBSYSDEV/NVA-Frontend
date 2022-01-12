@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { Auth } from 'aws-amplify';
-import { USE_MOCK_DATA, FEIDE_IDENTITY_PROVIDER, REDIRECT_PATH_KEY } from '../constants';
+import { USE_MOCK_DATA, FEIDE_IDENTITY_PROVIDER, LocalStorageKey } from '../constants';
 import { setUser } from '../../redux/actions/userActions';
 import { mockUser } from '../testfiles/mock_feide_user';
 import { logoutSuccess } from '../../redux/actions/authActions';
@@ -17,7 +17,7 @@ export const useAuthentication = (): UseAuthentication => {
   const dispatch = useDispatch();
 
   const handleLogin = () => {
-    localStorage.setItem(REDIRECT_PATH_KEY, getCurrentPath());
+    localStorage.setItem(LocalStorageKey.RedirectPath, getCurrentPath());
     if (USE_MOCK_DATA) {
       dispatch(setUser(mockUser));
     } else {
@@ -26,7 +26,7 @@ export const useAuthentication = (): UseAuthentication => {
   };
 
   const handleLogout = () => {
-    localStorage.setItem(REDIRECT_PATH_KEY, getCurrentPath());
+    localStorage.setItem(LocalStorageKey.RedirectPath, getCurrentPath());
     if (USE_MOCK_DATA) {
       dispatch(logoutSuccess());
       window.location.pathname = UrlPathTemplate.Logout;

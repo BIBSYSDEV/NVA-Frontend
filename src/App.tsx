@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from './api/authorityApi';
-import { expiredTokenKey, getCurrentUserAttributes } from './api/userApi';
+import { getCurrentUserAttributes } from './api/userApi';
 import { AppRoutes } from './AppRoutes';
 import { Footer } from './layout/Footer';
 import { Header } from './layout/header/Header';
@@ -18,7 +18,7 @@ import { RootStore } from './redux/reducers/rootReducer';
 import { Authority } from './types/authority.types';
 import { NotificationVariant } from './types/notification.types';
 import { awsConfig } from './utils/aws-config';
-import { isErrorStatus, isSuccessStatus, USE_MOCK_DATA } from './utils/constants';
+import { isErrorStatus, isSuccessStatus, LocalStorageKey, USE_MOCK_DATA } from './utils/constants';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { PageSpinner } from './components/PageSpinner';
 import { LanguageCodes } from './types/language.types';
@@ -89,12 +89,12 @@ export const App = () => {
     }
   }, []);
 
-  const hasExpiredToken = !!localStorage.getItem(expiredTokenKey);
+  const hasExpiredToken = !!localStorage.getItem(LocalStorageKey.ExpiredToken);
   useEffect(() => {
     // Handle expired token
     if (hasExpiredToken) {
       dispatch(setNotification(t('authorization:expired_token_info'), NotificationVariant.Info));
-      localStorage.removeItem(expiredTokenKey);
+      localStorage.removeItem(LocalStorageKey.ExpiredToken);
     }
   }, [t, dispatch, hasExpiredToken]);
 

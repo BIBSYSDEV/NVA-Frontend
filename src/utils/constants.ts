@@ -9,9 +9,6 @@ export const ORCID_USER_INFO_URL = `${ORCID_BASE_URL}/oauth/userinfo`;
 export const ORCID_SIGN_IN_URL = `${ORCID_BASE_URL}/signin?oauth&client_id=${process.env.REACT_APP_ORCID_CLIENT_ID}&response_type=token&scope=openid&redirect_uri=${process.env.REACT_APP_ORCID_REDIRECT_URI}`;
 export const FEIDE_IDENTITY_PROVIDER = 'FeideIdentityProvider';
 
-export const AMPLIFY_REDIRECTED_KEY = 'amplify-redirected-from-hosted-ui';
-export const REDIRECT_PATH_KEY = 'redirect-path';
-
 const apiHostEnv = process.env.REACT_APP_API_HOST;
 const apiHostUrlObject = apiHostEnv
   ? apiHostEnv.startsWith('http')
@@ -33,3 +30,12 @@ export const autoHideNotificationDuration = {
   [NotificationVariant.Success]: 3000,
   [NotificationVariant.Warning]: 6000,
 };
+
+export enum LocalStorageKey {
+  AppUpdateTime = 'appUpdateTime',
+  AmplifyRedirect = 'amplify-redirected-from-hosted-ui',
+  Beta = 'beta',
+  ExpiredToken = 'expiredToken',
+  ShowTagline = 'showTagline',
+  RedirectPath = 'redirect-path',
+}

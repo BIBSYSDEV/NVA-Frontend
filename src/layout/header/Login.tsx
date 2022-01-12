@@ -6,7 +6,7 @@ import { LoadingButton } from '@mui/lab';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { Menu } from './Menu';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
-import { AMPLIFY_REDIRECTED_KEY } from '../../utils/constants';
+import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 
 export const Login = () => {
@@ -16,11 +16,11 @@ export const Login = () => {
 
   // If amplify has set redirected value in localStorage we know that the user has either just logged in or out,
   // and we should wait for user object to be loaded in the case of login
-  const [isLoading, setIsLoading] = useState(!!localStorage.getItem(AMPLIFY_REDIRECTED_KEY));
+  const [isLoading, setIsLoading] = useState(!!localStorage.getItem(LocalStorageKey.AmplifyRedirect));
 
   useEffect(() => {
     // Clear amplify's redirect value in localStorage to avoid infinite isLoading=true if user signs out
-    localStorage.removeItem(AMPLIFY_REDIRECTED_KEY);
+    localStorage.removeItem(LocalStorageKey.AmplifyRedirect);
   }, []);
 
   const handleLogoutWrapper = () => {
