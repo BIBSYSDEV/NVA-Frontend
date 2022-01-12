@@ -9,7 +9,7 @@ import { addMessage } from '../../api/registrationApi';
 import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { MessageCollection, MessageType } from '../../types/publication_types/messages.types';
-import { Registration } from '../../types/registration.types';
+import { RegistrationPreview } from '../../types/registration.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { MessageList } from './MessageList';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
@@ -58,7 +58,7 @@ const StyledAccordionActionButtons = styled.div`
 
 interface SupportRequestAccordionProps {
   messageCollection: MessageCollection;
-  registration: Registration;
+  registration: RegistrationPreview;
   fetchSupportRequests: () => void;
 }
 
@@ -91,9 +91,7 @@ export const SupportRequestAccordion = ({
             ? t('types.support')
             : null}
         </StyledStatus>
-        <StyledTitle data-testid={`message-title-${identifier}`}>
-          {registration.entityDescription?.mainTitle}
-        </StyledTitle>
+        <StyledTitle data-testid={`message-title-${identifier}`}>{registration.mainTitle}</StyledTitle>
         <StyledOwner data-testid={`message-owner-${identifier}`}>
           <Typography>{registration.owner}</Typography>
           {new Date(messageCollection.messages[messageCollection.messages.length - 1].date).toLocaleDateString()}
