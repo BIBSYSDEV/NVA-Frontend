@@ -1,8 +1,9 @@
-import { MessagesResponse } from '../../types/publication_types/messages.types';
-import { SearchResult } from '../../types/registration.types';
+import { SearchResponse } from '../../types/common.types';
+import { PublicationConversation } from '../../types/publication_types/messages.types';
+import { Registration } from '../../types/registration.types';
 import { mockMessages, mockRegistration } from './mockRegistration';
 
-export const mockSearchResults: SearchResult = {
+export const mockSearchResults: SearchResponse<Registration> = {
   took: 10,
   total: 50,
   hits: [
@@ -19,7 +20,7 @@ export const mockSearchResults: SearchResult = {
   ],
 };
 
-export const mockSearchWorklist: MessagesResponse = {
+export const mockSearchWorklist: SearchResponse<PublicationConversation> = {
   took: 2,
   total: 1,
   hits: mockMessages,

@@ -7,8 +7,9 @@ import { SearchResults } from './SearchResults';
 import { SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { dataTestId } from '../../utils/dataTestIds';
-import { SearchResult } from '../../types/registration.types';
 import { SearchParam } from '../../utils/searchHelpers';
+import { SearchResponse } from '../../types/common.types';
+import { Registration } from '../../types/registration.types';
 
 export const RegistrationSearch = () => {
   const { t } = useTranslation('common');
@@ -21,7 +22,7 @@ export const RegistrationSearch = () => {
   const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[1];
   const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
 
-  const [searchResults, isLoadingSearch] = useFetch<SearchResult>({
+  const [searchResults, isLoadingSearch] = useFetch<SearchResponse<Registration>>({
     url: `${SearchApiPath.Registrations}?${params.toString()}`,
     errorMessage: t('feedback:error.search'),
   });

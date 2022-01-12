@@ -3,14 +3,15 @@ import { PageHeader } from '../../components/PageHeader';
 import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
 import { SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { MessagesResponse } from '../../types/publication_types/messages.types';
+import { PublicationConversation } from '../../types/publication_types/messages.types';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { MessagesOverview } from './MessagesOverview';
+import { SearchResponse } from '../../types/common.types';
 
 const WorklistPage = () => {
   const { t } = useTranslation('workLists');
 
-  const [worklistResponse, isLoadingWorklistResponse] = useFetch<MessagesResponse>({
+  const [worklistResponse, isLoadingWorklistResponse] = useFetch<SearchResponse<PublicationConversation>>({
     url: SearchApiPath.Messages,
     errorMessage: t('feedback:error.get_messages'),
     withAuthentication: true,

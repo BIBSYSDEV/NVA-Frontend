@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { ItalicPageHeader } from '../../components/PageHeader';
-import { Registration, SearchResult } from '../../types/registration.types';
+import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PublicFilesContent } from './PublicFilesContent';
 import { PublicGeneralContent } from './PublicGeneralContent';
@@ -17,6 +17,7 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { RegistrationList } from '../../components/RegistrationList';
 import { RegistrationFieldName } from '../../types/publicationFieldNames';
 import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { SearchResponse } from '../../types/common.types';
 
 const StyledYearSpan = styled.span`
   padding-left: 1rem;
@@ -39,7 +40,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
   const abstract = entityDescription?.abstract;
   const description = entityDescription?.description;
 
-  const [relatedRegistrations] = useFetch<SearchResult>({
+  const [relatedRegistrations] = useFetch<SearchResponse<Registration>>({
     url: `${SearchApiPath.Registrations}?query="${identifier}" AND NOT (${RegistrationFieldName.Identifier}:"${identifier}")`,
     errorMessage: t('feedback:error.search'),
   });

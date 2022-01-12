@@ -23,9 +23,3 @@ export interface PublicationConversation {
   messageCollections: MessageCollection[];
   publication: RegistrationPreview;
 }
-
-export interface MessagesResponse {
-  hits: PublicationConversation[];
-  took: number;
-  total: number;
-}

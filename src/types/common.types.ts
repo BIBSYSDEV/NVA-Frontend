@@ -13,3 +13,9 @@ export interface Period {
   from: string;
   to: string;
 }
+
+export interface SearchResponse<T> {
+  took: number;
+  total: number;
+  hits: T[];
+}
