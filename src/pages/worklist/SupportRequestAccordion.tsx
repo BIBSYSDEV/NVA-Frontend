@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { addMessage } from '../../api/registrationApi';
@@ -27,35 +27,6 @@ const StyledAccordion = styled(Accordion)`
   .MuiAccordionDetails-root {
     justify-content: space-between;
   }
-`;
-
-const StyledStatus = styled(Typography)`
-  grid-area: status;
-  font-weight: bold;
-`;
-
-const StyledTitle = styled(Typography)`
-  grid-area: title;
-  font-weight: bold;
-`;
-
-const StyledOwner = styled.div`
-  word-break: break-word;
-  grid-area: creator;
-`;
-
-const StyledMessages = styled.div`
-  width: 75%;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const StyledAccordionActionButtons = styled.div`
-  width: 20%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
 `;
 
 interface SupportRequestAccordionProps {
@@ -90,25 +61,27 @@ export const SupportRequestAccordion = ({ messageCollection, registration }: Sup
   return (
     <StyledAccordion data-testid={`message-${identifier}`}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <StyledStatus data-testid={`message-type-${identifier}`}>
+        <Typography data-testid={`message-type-${identifier}`} sx={{ gridArea: 'status', fontWeight: 'bold' }}>
           {messageCollection.messageType === MessageType.DoiRequest
             ? t('types.doi')
             : messageCollection.messageType === MessageType.Support
             ? t('types.support')
             : null}
-        </StyledStatus>
-        <StyledTitle data-testid={`message-title-${identifier}`}>{registration.mainTitle}</StyledTitle>
-        <StyledOwner data-testid={`message-owner-${identifier}`}>
+        </Typography>
+        <Typography data-testid={`message-title-${identifier}`} sx={{ gridArea: 'title', fontWeight: 'bold' }}>
+          {registration.mainTitle}
+        </Typography>
+        <Box data-testid={`message-owner-${identifier}`} sx={{ wordBreak: 'break-word', gridArea: 'creator' }}>
           <Typography>{registration.owner}</Typography>
           {new Date(messagesCopy[messagesCopy.length - 1].date).toLocaleDateString()}
-        </StyledOwner>
+        </Box>
       </AccordionSummary>
       <AccordionDetails>
-        <StyledMessages>
+        <Box sx={{ width: '75%', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <MessageList messages={messagesCopy} />
           <MessageForm confirmAction={onClickSendMessage} />
-        </StyledMessages>
-        <StyledAccordionActionButtons>
+        </Box>
+        <Box sx={{ width: '20%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
           <Button
             data-testid={`go-to-registration-${identifier}`}
             variant="outlined"
@@ -117,7 +90,7 @@ export const SupportRequestAccordion = ({ messageCollection, registration }: Sup
             to={getRegistrationLandingPagePath(identifier)}>
             {t('go_to_registration')}
           </Button>
-        </StyledAccordionActionButtons>
+        </Box>
       </AccordionDetails>
     </StyledAccordion>
   );
