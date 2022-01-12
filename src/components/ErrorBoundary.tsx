@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import commonNb from '../translations/nb/common.json';
+import { LocalStorageKey } from '../utils/constants';
 
 type ErrorBoundaryClassProps = RouteComponentProps & WithTranslation;
 
@@ -27,8 +28,7 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryClassProps> {
     const { t } = this.props;
 
     if (/Loading chunk [\d]+ failed/.test(error)) {
-      const localstorageKey = 'appUpdateTime';
-      const lastUpdateTime = parseInt(localStorage.getItem(localstorageKey) ?? '');
+      const lastUpdateTime = parseInt(localStorage.getItem(LocalStorageKey.AppUpdateTime) ?? '');
       const currentTime = Date.now();
 
       if (!isNaN(lastUpdateTime)) {
@@ -39,7 +39,7 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryClassProps> {
       }
 
       alert(t('common:reload_page_info'));
-      localStorage.setItem(localstorageKey, currentTime.toString());
+      localStorage.setItem(LocalStorageKey.AppUpdateTime, currentTime.toString());
       window.location.reload();
     }
   }

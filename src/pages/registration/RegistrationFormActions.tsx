@@ -12,7 +12,6 @@ import { LoadingButton } from '@mui/lab';
 import { updateRegistration } from '../../api/registrationApi';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
@@ -76,7 +75,7 @@ export const RegistrationFormActions = ({
     const updateRegistrationResponse = await updateRegistration(formattedValues);
     const isSuccess = isSuccessStatus(updateRegistrationResponse.status);
     if (isErrorStatus(updateRegistrationResponse.status)) {
-      dispatch(setNotification(t('feedback:error.update_registration'), NotificationVariant.Error));
+      dispatch(setNotification(t('feedback:error.update_registration'), 'error'));
       setIsSaving(false);
     } else if (isSuccess) {
       refetchRegistration();

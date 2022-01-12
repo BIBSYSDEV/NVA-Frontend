@@ -10,7 +10,6 @@ import prettyBytes from 'pretty-bytes';
 import { File, licenses } from '../../types/file.types';
 import { downloadFile } from '../../api/fileApi';
 import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { PreviewFile } from './preview_file/PreviewFile';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -114,7 +113,7 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
       previewFile && setIsLoadingPreviewFile(true);
       const downloadFileResponse = await downloadFile(registrationIdentifier, file.identifier);
       if (!downloadFileResponse) {
-        dispatch(setNotification(t('feedback:error.download_file'), NotificationVariant.Error));
+        dispatch(setNotification(t('feedback:error.download_file'), 'error'));
       } else {
         if (previewFile) {
           setPreviewFileUrl(downloadFileResponse.id);

@@ -8,7 +8,6 @@ import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../../api/au
 import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
-import { NotificationVariant } from '../../../types/notification.types';
 import { User } from '../../../types/user.types';
 import { AuthorityList } from './AuthorityList';
 import { NewAuthorityCard } from './NewAuthorityCard';
@@ -56,7 +55,7 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
           dispatch(
             setNotification(
               t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
-              NotificationVariant.Error
+              'error'
             )
           );
         } else if (isSuccessStatus(updatedAuthorityWithFeide.status)) {
@@ -74,7 +73,7 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
           dispatch(
             setNotification(
               t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
-              NotificationVariant.Error
+              'error'
             )
           );
         } else if (isSuccessStatus(updatedAuthorityWithCristinId.status)) {

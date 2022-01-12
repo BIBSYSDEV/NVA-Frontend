@@ -8,7 +8,6 @@ import { createAuthority } from '../../../api/authorityApi';
 import { StyledTypographyPreWrapped } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
-import { NotificationVariant } from '../../../types/notification.types';
 import { User } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
@@ -73,7 +72,7 @@ export const NewAuthorityCard = ({ onClickCancel, user }: NewAuthorityCardProps)
     setIsLoading(true);
     const createAuthorityResponse = await createAuthority(givenName, familyName, id, user.cristinId);
     if (isErrorStatus(createAuthorityResponse.status)) {
-      dispatch(setNotification(t('feedback:error.create_authority'), NotificationVariant.Error));
+      dispatch(setNotification(t('feedback:error.create_authority'), 'error'));
       onClickCancel();
     } else if (isSuccessStatus(createAuthorityResponse.status)) {
       dispatch(setAuthorityData(createAuthorityResponse.data));

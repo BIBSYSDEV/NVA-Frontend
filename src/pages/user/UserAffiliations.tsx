@@ -12,7 +12,6 @@ import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../redux/actions/userActions';
-import { NotificationVariant } from '../../types/notification.types';
 import { InstitutionCard } from './institution/InstitutionCard';
 import { User } from '../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
@@ -54,7 +53,7 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
       dispatch(
         setNotification(
           t('feedback:error.delete_identifier', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
-          NotificationVariant.Error
+          'error'
         )
       );
     } else if (isSuccessStatus(updateAuthorityResponse.status)) {
@@ -70,7 +69,7 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
     if (!id) {
       return;
     } else if (user.authority?.orgunitids.includes(id)) {
-      dispatch(setNotification(t('feedback:info.affiliation_already_exists'), NotificationVariant.Info));
+      dispatch(setNotification(t('feedback:info.affiliation_already_exists'), 'info'));
       return;
     }
 
@@ -84,12 +83,12 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
         dispatch(
           setNotification(
             t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
-            NotificationVariant.Error
+            'error'
           )
         );
       } else if (isSuccessStatus(updateAuthorityResponse.status)) {
         dispatch(setAuthorityData(updateAuthorityResponse.data));
-        dispatch(setNotification(t('feedback:success.added_affiliation'), NotificationVariant.Success));
+        dispatch(setNotification(t('feedback:success.added_affiliation')));
       }
     }
     setOpenAddInstitutionForm(false);

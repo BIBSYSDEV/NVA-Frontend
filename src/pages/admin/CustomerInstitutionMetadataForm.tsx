@@ -11,7 +11,6 @@ import {
   CustomerInstitutionFieldNames,
 } from '../../types/customerInstitution.types';
 import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
 import { createCustomerInstitution, updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { InputContainerBox, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { customerInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
@@ -38,7 +37,7 @@ export const CustomerInstitutionMetadataForm = ({
     if (!editMode) {
       const createCustomerResponse = await createCustomerInstitution(values);
       if (isErrorStatus(createCustomerResponse.status)) {
-        dispatch(setNotification(t('feedback:error.create_customer'), NotificationVariant.Error));
+        dispatch(setNotification(t('feedback:error.create_customer'), 'error'));
       } else if (isSuccessStatus(createCustomerResponse.status)) {
         history.push(getAdminInstitutionPath(createCustomerResponse.data.id));
         dispatch(setNotification(t('feedback:success.created_customer')));
@@ -46,7 +45,7 @@ export const CustomerInstitutionMetadataForm = ({
     } else {
       const updateCustomerResponse = await updateCustomerInstitution(values);
       if (isErrorStatus(updateCustomerResponse.status)) {
-        dispatch(setNotification(t('feedback:error.update_customer'), NotificationVariant.Error));
+        dispatch(setNotification(t('feedback:error.update_customer'), 'error'));
       } else if (isSuccessStatus(updateCustomerResponse.status)) {
         dispatch(setNotification(t('feedback:success.update_customer')));
       }

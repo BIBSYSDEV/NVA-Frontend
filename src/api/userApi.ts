@@ -1,7 +1,7 @@
 import { Auth } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
 import { CognitoUserSession } from 'amazon-cognito-identity-js';
-import { USE_MOCK_DATA, AMPLIFY_REDIRECTED_KEY } from '../utils/constants';
+import { USE_MOCK_DATA, LocalStorageKey } from '../utils/constants';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
 export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> => {
@@ -29,7 +29,7 @@ export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> =>
     }
   } catch {
     // Don't do anything if user is not supposed to be logged in
-    if (localStorage.getItem(AMPLIFY_REDIRECTED_KEY)) {
+    if (localStorage.getItem(LocalStorageKey.AmplifyRedirect)) {
       if (retryNumber < 3) {
         return await getCurrentUserAttributes(retryNumber + 1);
       } else {
@@ -40,7 +40,6 @@ export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> =>
   }
 };
 
-export const expiredTokenKey = 'expiredToken';
 export const getIdToken = async () => {
   if (USE_MOCK_DATA) {
     return '';
@@ -51,7 +50,7 @@ export const getIdToken = async () => {
   } catch (error) {
     if (error === 'The user is not authenticated') {
       // Expired session token. Set state in localStorage that App.tsx can act upon
-      localStorage.setItem(expiredTokenKey, 'true');
+      localStorage.setItem(LocalStorageKey.ExpiredToken, 'true');
       window.location.href = UrlPathTemplate.Home;
     }
     return null;

@@ -6,7 +6,6 @@ import { authenticatedApiRequest } from '../../api/apiRequest';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { VocabularyList, CustomerVocabulary, VocabularyStatus } from '../../types/customerInstitution.types';
-import { NotificationVariant } from '../../types/notification.types';
 import { isSuccessStatus, isErrorStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
@@ -78,12 +77,7 @@ export const VocabularySettings = () => {
         );
         setVocabularyList(updatedVocabularyResponse.data);
       } else if (isErrorStatus(updatedVocabularyResponse.status)) {
-        dispatch(
-          setNotification(
-            t('feedback:error.update_vocabulary', { vocabulary: vocabularyName }),
-            NotificationVariant.Error
-          )
-        );
+        dispatch(setNotification(t('feedback:error.update_vocabulary', { vocabulary: vocabularyName }), 'error'));
       }
       setIsUpdating(false);
     }

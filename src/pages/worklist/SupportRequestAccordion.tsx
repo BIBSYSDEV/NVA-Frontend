@@ -9,7 +9,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { addMessage } from '../../api/registrationApi';
 import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
 import { Message, MessageCollection, MessageType } from '../../types/publication_types/messages.types';
 import { Registration } from '../../types/registration.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
@@ -77,9 +76,9 @@ export const SupportRequestAccordion = ({ messageCollection, registration }: Sup
   const onClickSendMessage = async (message: string) => {
     const updateDoiRequestResponse = await addMessage(identifier, message, messageCollection.messageType);
     if (isErrorStatus(updateDoiRequestResponse.status)) {
-      dispatch(setNotification(t('feedback:error.send_message'), NotificationVariant.Error));
+      dispatch(setNotification(t('feedback:error.send_message'), 'error'));
     } else if (isSuccessStatus(updateDoiRequestResponse.status)) {
-      dispatch(setNotification(t('feedback:success.send_message'), NotificationVariant.Success));
+      dispatch(setNotification(t('feedback:success.send_message')));
       const newMessage: Message = {
         ...messagesCopy[0],
         date: new Date().toString(),

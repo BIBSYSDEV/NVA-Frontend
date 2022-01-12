@@ -26,7 +26,6 @@ import {
   Identity,
   Institution,
 } from '../../../types/contributor.types';
-import { NotificationVariant } from '../../../types/notification.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { AddContributorModal } from './AddContributorModal';
@@ -108,7 +107,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
 
   const onContributorSelected = (authority: Authority, role: ContributorRole, contributorIndex?: number) => {
     if (relevantContributors.some((contributor) => contributor.identity.id === authority.id)) {
-      dispatch(setNotification(t('contributors.contributor_already_added'), NotificationVariant.Info));
+      dispatch(setNotification(t('contributors.contributor_already_added'), 'info'));
       return;
     }
 
