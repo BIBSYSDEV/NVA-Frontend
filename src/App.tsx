@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from './api/authorityApi';
-import { getCurrentUserAttributes } from './api/userApi';
+import { expiredTokenKey, getCurrentUserAttributes } from './api/userApi';
 import { AppRoutes } from './AppRoutes';
 import { Footer } from './layout/Footer';
 import { Header } from './layout/header/Header';
@@ -88,6 +88,15 @@ export const App = () => {
       Amplify.configure(awsConfig);
     }
   }, []);
+
+  const hasExpiredToken = !!localStorage.getItem(expiredTokenKey);
+  useEffect(() => {
+    // Handle expired token
+    if (hasExpiredToken) {
+      dispatch(setNotification(t('authorization:expired_token_info'), NotificationVariant.Info));
+      localStorage.removeItem(expiredTokenKey);
+    }
+  }, [t, dispatch, hasExpiredToken]);
 
   useEffect(() => {
     // Fetch attributes of authenticated user
