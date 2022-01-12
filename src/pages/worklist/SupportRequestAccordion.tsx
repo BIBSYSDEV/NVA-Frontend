@@ -15,8 +15,6 @@ import { MessageList } from './MessageList';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 
 const StyledAccordion = styled(Accordion)`
-  width: 100%;
-  margin: 0 1rem;
   .MuiAccordionSummary-content {
     display: grid;
     grid-template-areas: 'status title creator';
