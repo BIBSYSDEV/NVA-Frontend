@@ -10,15 +10,13 @@ import { addMessage } from '../../api/registrationApi';
 import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { Message, MessageCollection, MessageType } from '../../types/publication_types/messages.types';
-import { Registration } from '../../types/registration.types';
+import { RegistrationPreview } from '../../types/registration.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { MessageList } from './MessageList';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { RootStore } from '../../redux/reducers/rootReducer';
 
 const StyledAccordion = styled(Accordion)`
-  width: 100%;
-  margin: 0 1rem;
   .MuiAccordionSummary-content {
     display: grid;
     grid-template-areas: 'status title creator';
@@ -62,7 +60,7 @@ const StyledAccordionActionButtons = styled.div`
 
 interface SupportRequestAccordionProps {
   messageCollection: MessageCollection;
-  registration: Registration;
+  registration: RegistrationPreview;
 }
 
 export const SupportRequestAccordion = ({ messageCollection, registration }: SupportRequestAccordionProps) => {
@@ -99,9 +97,7 @@ export const SupportRequestAccordion = ({ messageCollection, registration }: Sup
             ? t('types.support')
             : null}
         </StyledStatus>
-        <StyledTitle data-testid={`message-title-${identifier}`}>
-          {registration.entityDescription?.mainTitle}
-        </StyledTitle>
+        <StyledTitle data-testid={`message-title-${identifier}`}>{registration.mainTitle}</StyledTitle>
         <StyledOwner data-testid={`message-owner-${identifier}`}>
           <Typography>{registration.owner}</Typography>
           {new Date(messagesCopy[messagesCopy.length - 1].date).toLocaleDateString()}

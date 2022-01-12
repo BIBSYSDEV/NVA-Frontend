@@ -113,7 +113,13 @@ export const mockRegistration: JournalRegistration = {
 
 export const mockMessages: PublicationConversation[] = [
   {
-    publication: mockRegistration,
+    publication: {
+      identifier: mockRegistration.identifier,
+      mainTitle: mockRegistration.entityDescription.mainTitle,
+      createdDate: mockRegistration.createdDate,
+      status: mockRegistration.status,
+      owner: mockRegistration.owner,
+    },
     messageCollections: [
       {
         messageType: MessageType.Support,

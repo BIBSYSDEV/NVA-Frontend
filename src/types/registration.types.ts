@@ -156,10 +156,13 @@ export interface RegistrationDate {
   day: string;
 }
 
-export type RegistrationPreview = Pick<
-  Registration & JournalEntityDescription,
-  'identifier' | 'mainTitle' | 'createdDate' | 'status' | 'owner'
->;
+export interface RegistrationPreview {
+  identifier: string;
+  mainTitle: string;
+  createdDate: string;
+  status: string;
+  owner: string;
+}
 
 export interface Doi {
   identifier: string; // NVA identifier
