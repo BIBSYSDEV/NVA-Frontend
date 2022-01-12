@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useCancelToken } from './useCancelToken';
 import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
 import { apiRequest, authenticatedApiRequest } from '../../api/apiRequest';
 import { isErrorStatus, isSuccessStatus } from '../constants';
 
@@ -50,7 +49,7 @@ export const useFetch = <T>({
         setNotification(
           errorMessageRef.current ??
             tRef.current('error.fetch', { resource: url, interpolation: { escapeValue: false } }),
-          NotificationVariant.Error
+          'error'
         )
       ),
     [dispatch, url]

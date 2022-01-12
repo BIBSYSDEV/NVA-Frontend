@@ -16,7 +16,6 @@ import {
   addQualifierIdForAuthority,
 } from '../../api/authorityApi';
 import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { Modal } from '../../components/Modal';
 import { StyledTypographyPreWrapped } from '../../components/styled/Wrappers';
@@ -75,7 +74,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       const orcidId = orcidInfoResponse.data.id;
 
       if (!orcidId) {
-        dispatch(setNotification(t('feedback:error.get_orcid', NotificationVariant.Error)));
+        dispatch(setNotification(t('feedback:error.get_orcid', 'error')));
       } else if (user.authority && !user.authority.orcids.includes(orcidId)) {
         const updateAuthorityResponse = await addQualifierIdForAuthority(
           user.authority.id,
@@ -86,7 +85,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
           dispatch(
             setNotification(
               t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.Orcid}`) }),
-              NotificationVariant.Error
+              'error'
             )
           );
         } else if (isSuccessStatus(updateAuthorityResponse.status)) {
@@ -106,7 +105,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   useEffect(() => {
     const orcidError = new URLSearchParams(history.location.search).get('error');
     if (orcidError) {
-      dispatch(setNotification(t(`feedback:error.orcid.${orcidError}`), NotificationVariant.Error));
+      dispatch(setNotification(t(`feedback:error.orcid.${orcidError}`), 'error'));
     }
   }, [history.location.search, dispatch, t]);
 
@@ -124,7 +123,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       dispatch(
         setNotification(
           t('feedback:error.delete_identifier', { qualifier: t(`common:${AuthorityQualifiers.Orcid}`) }),
-          NotificationVariant.Error
+          'error'
         )
       );
     } else if (isSuccessStatus(updateAuthorityResponse.status)) {

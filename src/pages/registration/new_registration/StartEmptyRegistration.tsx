@@ -11,7 +11,6 @@ import { LoadingButton } from '@mui/lab';
 import { RegistrationAccordion } from './RegistrationAccordion';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../../types/notification.types';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -31,7 +30,7 @@ export const StartEmptyRegistration = ({ expanded, onChange }: StartRegistration
     setIsLoading(true);
     const createRegistrationResponse = await createRegistration();
     if (isErrorStatus(createRegistrationResponse.status)) {
-      dispatch(setNotification(t('feedback:error.create_registration'), NotificationVariant.Error));
+      dispatch(setNotification(t('feedback:error.create_registration'), 'error'));
       setIsLoading(false);
     } else if (isSuccessStatus(createRegistrationResponse.status)) {
       history.push(getRegistrationPath(createRegistrationResponse.data.identifier), { highestValidatedTab: -1 });

@@ -14,7 +14,6 @@ import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { FormikInstitutionUnit } from '../../../types/institution.types';
-import { NotificationVariant } from '../../../types/notification.types';
 import { getMostSpecificUnit } from '../../../utils/institutions-helpers';
 import { cristinBaseId, isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
@@ -67,7 +66,7 @@ export const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: Institu
     if (!newUnitId) {
       return;
     } else if (user.authority.orgunitids.includes(newUnitId)) {
-      dispatch(setNotification(t('feedback:info.affiliation_already_exists'), NotificationVariant.Info));
+      dispatch(setNotification(t('feedback:info.affiliation_already_exists'), 'info'));
       return;
     }
 
@@ -81,7 +80,7 @@ export const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: Institu
       dispatch(
         setNotification(
           t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
-          NotificationVariant.Error
+          'error'
         )
       );
     } else if (isSuccessStatus(updateAuthorityResponse.status)) {

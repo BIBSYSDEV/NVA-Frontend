@@ -12,7 +12,6 @@ import { AffiliationHierarchy } from '../../../../components/institution/Affilia
 import { Modal } from '../../../../components/Modal';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { Institution } from '../../../../types/contributor.types';
-import { NotificationVariant } from '../../../../types/notification.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
@@ -66,7 +65,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
 
     // Avoid adding same unit twice
     if (affiliations?.some((affiliation) => affiliation.id === id)) {
-      disptach(setNotification(t('contributors.add_duplicate_affiliation'), NotificationVariant.Info));
+      disptach(setNotification(t('contributors.add_duplicate_affiliation'), 'info'));
       return;
     }
 
