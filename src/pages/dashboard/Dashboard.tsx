@@ -8,7 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { AboutContent } from '../infopages/AboutContent';
 import { dataTestId } from '../../utils/dataTestIds';
 import SearchPage from '../search/SearchPage';
-import { REDIRECT_PATH_KEY } from '../../utils/constants';
+import { LocalStorageKey } from '../../utils/constants';
 
 const StyledDashboard = styled.div`
   display: grid;
@@ -77,20 +77,18 @@ const StyledButtonWrapper = styled.div`
   grid-area: button;
 `;
 
-const showTaglineKey = 'showTagline';
-
 const Dashboard = () => {
   const { t } = useTranslation('common');
   const history = useHistory();
-  const [showBanner, setShowBanner] = useState(localStorage.getItem(showTaglineKey) !== 'false');
+  const [showBanner, setShowBanner] = useState(localStorage.getItem(LocalStorageKey.ShowTagline) !== 'false');
   const [readMore, setReadMore] = useState(false);
 
   const toggleReadMore = () => setReadMore(!readMore);
 
   useEffect(() => {
-    const loginPath = localStorage.getItem(REDIRECT_PATH_KEY);
+    const loginPath = localStorage.getItem(LocalStorageKey.RedirectPath);
     if (loginPath) {
-      localStorage.removeItem(REDIRECT_PATH_KEY);
+      localStorage.removeItem(LocalStorageKey.RedirectPath);
       history.push(loginPath);
     }
   }, [history]);
@@ -108,7 +106,7 @@ const Dashboard = () => {
               <IconButton
                 title={t('close_forever')}
                 onClick={() => {
-                  localStorage.setItem(showTaglineKey, 'false');
+                  localStorage.setItem(LocalStorageKey.ShowTagline, 'false');
                   setShowBanner(false);
                 }}
                 size="large">
