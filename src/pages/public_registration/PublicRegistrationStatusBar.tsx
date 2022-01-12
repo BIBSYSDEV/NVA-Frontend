@@ -15,7 +15,6 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { PublicRegistrationProps } from './PublicRegistrationContent';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
 import { RegistrationStatus, DoiRequestStatus, Registration } from '../../types/registration.types';
 import { createDoiRequest, publishRegistration, updateDoiRequest } from '../../api/registrationApi';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
@@ -60,7 +59,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     setIsLoading(LoadingName.RequestDoi);
     const createDoiRequestResponse = await createDoiRequest(identifier, messageToCurator);
     if (isErrorStatus(createDoiRequestResponse.status)) {
-      dispatch(setNotification(t('feedback:error.create_doi_request'), NotificationVariant.Error));
+      dispatch(setNotification(t('feedback:error.create_doi_request'), 'error'));
       setIsLoading(LoadingName.None);
     } else if (isSuccessStatus(createDoiRequestResponse.status)) {
       // Adding DOI can take some extra time, so wait 2.5 sec before refetching
@@ -82,10 +81,10 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     }
     const updateDoiResponse = await updateDoiRequest(identifier, status);
     if (isErrorStatus(updateDoiResponse.status)) {
-      dispatch(setNotification(t('feedback:error.update_doi_request'), NotificationVariant.Error));
+      dispatch(setNotification(t('feedback:error.update_doi_request'), 'error'));
       setIsLoading(LoadingName.None);
     } else if (isSuccessStatus(updateDoiResponse.status)) {
-      dispatch(setNotification(t('feedback:success.doi_request_updated'), NotificationVariant.Success));
+      dispatch(setNotification(t('feedback:success.doi_request_updated')));
       refetchRegistration();
     }
   };
@@ -94,10 +93,10 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     setIsLoading(LoadingName.Publish);
     const publishRegistrationResponse = await publishRegistration(identifier);
     if (isErrorStatus(publishRegistrationResponse.status)) {
-      dispatch(setNotification(t('feedback:error.publish_registration'), NotificationVariant.Error));
+      dispatch(setNotification(t('feedback:error.publish_registration'), 'error'));
       setIsLoading(LoadingName.None);
     } else if (isSuccessStatus(publishRegistrationResponse.status)) {
-      dispatch(setNotification(t('feedback:success.published_registration'), NotificationVariant.Success));
+      dispatch(setNotification(t('feedback:success.published_registration')));
       refetchRegistration();
     }
   };

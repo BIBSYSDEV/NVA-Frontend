@@ -13,7 +13,6 @@ import { LinkRegistrationForm } from './LinkRegistrationForm';
 import { RegistrationAccordion } from './RegistrationAccordion';
 import { Doi } from '../../../types/registration.types';
 import { setNotification } from '../../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../../types/notification.types';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -48,7 +47,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
     const doiRegistrationResponse = await getRegistrationByDoi(doiUrl);
     if (isErrorStatus(doiRegistrationResponse.status)) {
       setNoHit(true);
-      dispatch(setNotification(t('feedback:error.get_doi'), NotificationVariant.Error));
+      dispatch(setNotification(t('feedback:error.get_doi'), 'error'));
     } else if (isSuccessStatus(doiRegistrationResponse.status)) {
       if (doiRegistrationResponse.data) {
         setDoi(doiRegistrationResponse.data);

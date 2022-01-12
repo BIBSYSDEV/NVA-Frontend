@@ -1,5 +1,3 @@
-import { NotificationVariant } from '../types/notification.types';
-
 export const USE_MOCK_DATA = process.env.REACT_APP_USE_MOCK === 'true';
 export const ROWS_PER_PAGE_OPTIONS = [5, 10, 25];
 export const DEBOUNCE_INTERVAL_INPUT = 1000;
@@ -23,13 +21,6 @@ export const cristinBaseId = 'https://api.cristin.no/v2/';
 
 export const isErrorStatus = (status: number) => status >= 400 && status <= 599;
 export const isSuccessStatus = (status: number) => status >= 200 && status <= 299;
-
-export const autoHideNotificationDuration = {
-  [NotificationVariant.Error]: 9000,
-  [NotificationVariant.Info]: 6000,
-  [NotificationVariant.Success]: 3000,
-  [NotificationVariant.Warning]: 6000,
-};
 
 export enum LocalStorageKey {
   AppUpdateTime = 'appUpdateTime',

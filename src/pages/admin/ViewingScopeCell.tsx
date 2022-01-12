@@ -6,7 +6,6 @@ import { RoleApiPath } from '../../api/apiPaths';
 import { authenticatedApiRequest } from '../../api/apiRequest';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { Organization } from '../../types/institution.types';
-import { NotificationVariant } from '../../types/notification.types';
 import { InstitutionUser } from '../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -42,7 +41,7 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
       setUserCopy(newUser);
       dispatch(setNotification(t('feedback:success.update_institution_user')));
     } else if (isErrorStatus(updateUserResponse.status)) {
-      dispatch(setNotification(t('feedback:error.update_institution_user'), NotificationVariant.Error));
+      dispatch(setNotification(t('feedback:error.update_institution_user'), 'error'));
     }
     setIsUpdating(false);
   };

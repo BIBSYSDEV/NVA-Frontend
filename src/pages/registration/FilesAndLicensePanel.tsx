@@ -5,10 +5,8 @@ import { Box, FormHelperText, Link, Paper, Typography } from '@mui/material';
 import { UppyFile } from '@uppy/core';
 import { Modal } from '../../components/Modal';
 import { File, FileSet, licenses, Uppy } from '../../types/file.types';
-import { NotificationVariant } from '../../types/notification.types';
 import { FileFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
-import { autoHideNotificationDuration } from '../../utils/constants';
 import { FileUploader } from './files_and_license_tab/FileUploader';
 import { FileCard } from './files_and_license_tab/FileCard';
 import {
@@ -44,11 +42,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     uppy.setOptions({
       onBeforeFileAdded: (currentFile: UppyFile) => {
         if (filesRef.current.some((file: File) => file.name === currentFile.name)) {
-          uppy.info(
-            t('files_and_license.no_duplicates', { fileName: currentFile.name }),
-            NotificationVariant.Info,
-            autoHideNotificationDuration[NotificationVariant.Error]
-          );
+          uppy.info(t('files_and_license.no_duplicates', { fileName: currentFile.name }), 'info', 6000);
           return false;
         }
         return true;

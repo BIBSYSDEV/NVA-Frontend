@@ -1,16 +1,14 @@
-import { Notification, NotificationVariant } from '../../types/notification.types';
+import { Notification } from '../../types/notification.types';
 import i18n from '../../translations/i18n';
+import { AlertColor } from '@mui/material';
 
 export const SET_NOTIFICATION = 'set notification';
 export const REMOVE_NOTIFICATION = 'remove notification';
 
-export const setNotification = (
-  message: string,
-  variant: NotificationVariant = NotificationVariant.Success
-): SetNotificationAction => {
+export const setNotification = (message: string, variant: AlertColor = 'success'): SetNotificationAction => {
   if (typeof message !== 'string') {
     message = i18n.t('feedback:error.an_error_occurred');
-    variant = NotificationVariant.Error;
+    variant = 'error';
   }
   return {
     type: SET_NOTIFICATION,

@@ -19,7 +19,6 @@ import { LoadingButton } from '@mui/lab';
 import { updateUser } from '../../api/roleApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
@@ -67,7 +66,7 @@ export const UserList = ({
       const updateUserResponse = await updateUser(user.username, newUser);
       if (isErrorStatus(updateUserResponse.status)) {
         setUpdatedRoleForUsers((state) => state.filter((username) => username !== user.username));
-        dispatch(setNotification(t('feedback:error.add_role'), NotificationVariant.Error));
+        dispatch(setNotification(t('feedback:error.add_role'), 'error'));
       } else if (isSuccessStatus(updateUserResponse.status)) {
         dispatch(setNotification(t('feedback:success.added_role')));
         refetchUsers?.();
@@ -90,7 +89,7 @@ export const UserList = ({
       const updateUserResponse = await updateUser(removeRoleForUser, newUser);
       if (isErrorStatus(updateUserResponse.status)) {
         setUpdatedRoleForUsers((state) => state.filter((user) => user !== removeRoleForUser));
-        dispatch(setNotification(t('feedback:error.remove_role'), NotificationVariant.Error));
+        dispatch(setNotification(t('feedback:error.remove_role'), 'error'));
       } else if (isSuccessStatus(updateUserResponse.status)) {
         dispatch(setNotification(t('feedback:success.removed_role')));
         refetchUsers?.();

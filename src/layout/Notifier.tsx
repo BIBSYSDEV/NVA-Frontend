@@ -3,7 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Alert, Fade, Snackbar, SnackbarCloseReason } from '@mui/material';
 import { removeNotification } from '../redux/actions/notificationActions';
 import { RootStore } from '../redux/reducers/rootReducer';
-import { autoHideNotificationDuration } from '../utils/constants';
+
+const autoHideNotificationDuration = {
+  error: 9000,
+  info: 6000,
+  success: 3000,
+  warning: 6000,
+};
 
 export const Notifier = () => {
   const notification = useSelector((store: RootStore) => store.notification);

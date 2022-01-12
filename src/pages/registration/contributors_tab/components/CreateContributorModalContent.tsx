@@ -9,7 +9,6 @@ import { StyledTypographyPreWrapped, StyledRightAlignedWrapper } from '../../../
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { Authority } from '../../../../types/authority.types';
 import { emptyNewContributor } from '../../../../types/contributor.types';
-import { NotificationVariant } from '../../../../types/notification.types';
 import { newContributorValidationSchema } from '../../../../utils/validation/newContributorValidation';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 
@@ -33,7 +32,7 @@ export const CreateContributorModalContent = ({
     setIsLoading(true);
     const createAuthorityResponse = await createAuthority(values.firstName, values.lastName);
     if (isErrorStatus(createAuthorityResponse.status)) {
-      dispatch(setNotification(t('feedback:error.create_authority'), NotificationVariant.Error));
+      dispatch(setNotification(t('feedback:error.create_authority'), 'error'));
     } else if (isSuccessStatus(createAuthorityResponse.status)) {
       addContributor(createAuthorityResponse.data);
     }

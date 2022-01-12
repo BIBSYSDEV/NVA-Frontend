@@ -18,7 +18,6 @@ import {
   CustomerInstitutionFieldNames,
   emptyCustomerInstitution,
 } from '../../types/customerInstitution.types';
-import { NotificationVariant } from '../../types/notification.types';
 import { myInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
 import { CustomerInstitutionTextField } from './customerInstitutionFields/CustomerInstitutionTextField';
 import { SelectInstitutionField } from './customerInstitutionFields/SelectInstitutionField';
@@ -40,7 +39,7 @@ const MyCustomerInstitutionPage = () => {
   const handleSubmit = async (values: CustomerInstitution) => {
     const updateCustomerResponse = await updateCustomerInstitution(values);
     if (isErrorStatus(updateCustomerResponse.status)) {
-      dispatch(setNotification(t('feedback:error.update_customer'), NotificationVariant.Error));
+      dispatch(setNotification(t('feedback:error.update_customer'), 'error'));
     } else if (isSuccessStatus(updateCustomerResponse.status)) {
       dispatch(setNotification(t('feedback:success.update_customer')));
     }
