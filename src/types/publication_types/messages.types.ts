@@ -24,12 +24,8 @@ export interface PublicationConversation {
   publication: RegistrationPreview;
 }
 
-interface Hit {
-  _source: PublicationConversation;
-}
-
 export interface MessagesResponse {
-  hits: {
-    hits: Hit[];
-  };
+  hits: PublicationConversation[];
+  took: number;
+  total: number;
 }

@@ -16,7 +16,7 @@ const WorklistPage = () => {
     withAuthentication: true,
   });
 
-  const supportRequests = worklistResponse?.hits.hits.map((hit) => hit._source) ?? [];
+  const supportRequests = worklistResponse?.hits ?? [];
 
   return (
     <StyledPageWrapperWithMaxWidth>

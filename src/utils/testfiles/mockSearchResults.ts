@@ -20,5 +20,7 @@ export const mockSearchResults: SearchResult = {
 };
 
 export const mockSearchWorklist: MessagesResponse = {
-  hits: { hits: mockMessages.map((message) => ({ _source: message })) },
+  took: 2,
+  total: 1,
+  hits: mockMessages,
 };
