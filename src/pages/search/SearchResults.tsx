@@ -1,25 +1,21 @@
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import { Divider, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import { RegistrationList } from '../../components/RegistrationList';
-import { SearchResult } from '../../types/registration.types';
-
-const StyledSearchResults = styled.div`
-  padding-bottom: 1rem;
-`;
+import { SearchResponse } from '../../types/common.types';
+import { Registration } from '../../types/registration.types';
 
 interface SearchResultsProps {
-  searchResult: SearchResult;
+  searchResult: SearchResponse<Registration>;
 }
 
 export const SearchResults = ({ searchResult }: SearchResultsProps) => {
   const { t } = useTranslation('search');
 
   return (
-    <StyledSearchResults data-testid="search-results">
+    <Box data-testid="search-results" sx={{ pb: '1rem' }}>
       <Typography variant="subtitle1">{t('hits', { count: searchResult.total })}:</Typography>
       <Divider />
       <RegistrationList registrations={searchResult.hits} />
-    </StyledSearchResults>
+    </Box>
   );
 };

@@ -1,18 +1,20 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { addMessage } from '../../api/registrationApi';
 import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/actions/notificationActions';
-import { MessageCollection, MessageType } from '../../types/publication_types/messages.types';
+import { Message, MessageCollection, MessageType } from '../../types/publication_types/messages.types';
 import { RegistrationPreview } from '../../types/registration.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { MessageList } from './MessageList';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { RootStore } from '../../redux/reducers/rootReducer';
 
 const StyledAccordion = styled(Accordion)`
   .MuiAccordionSummary-content {
@@ -27,49 +29,18 @@ const StyledAccordion = styled(Accordion)`
   }
 `;
 
-const StyledStatus = styled(Typography)`
-  grid-area: status;
-  font-weight: bold;
-`;
-
-const StyledTitle = styled(Typography)`
-  grid-area: title;
-  font-weight: bold;
-`;
-
-const StyledOwner = styled.div`
-  word-break: break-word;
-  grid-area: creator;
-`;
-
-const StyledMessages = styled.div`
-  width: 75%;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const StyledAccordionActionButtons = styled.div`
-  width: 20%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-`;
-
 interface SupportRequestAccordionProps {
   messageCollection: MessageCollection;
   registration: RegistrationPreview;
-  fetchSupportRequests: () => void;
 }
 
-export const SupportRequestAccordion = ({
-  messageCollection,
-  registration,
-  fetchSupportRequests,
-}: SupportRequestAccordionProps) => {
+export const SupportRequestAccordion = ({ messageCollection, registration }: SupportRequestAccordionProps) => {
   const { t } = useTranslation('workLists');
   const dispatch = useDispatch();
+  const userId = useSelector((store: RootStore) => store.user?.id);
   const { identifier } = registration;
+
+  const [messagesCopy, setMessagesCopy] = useState(messageCollection.messages);
 
   const onClickSendMessage = async (message: string) => {
     const updateDoiRequestResponse = await addMessage(identifier, message, messageCollection.messageType);
@@ -77,32 +48,40 @@ export const SupportRequestAccordion = ({
       dispatch(setNotification(t('feedback:error.send_message'), 'error'));
     } else if (isSuccessStatus(updateDoiRequestResponse.status)) {
       dispatch(setNotification(t('feedback:success.send_message')));
-      fetchSupportRequests();
+      const newMessage: Message = {
+        ...messagesCopy[0],
+        date: new Date().toString(),
+        sender: userId ?? '',
+        text: message,
+      };
+      setMessagesCopy([...messagesCopy, newMessage]);
     }
   };
 
   return (
     <StyledAccordion data-testid={`message-${identifier}`}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <StyledStatus data-testid={`message-type-${identifier}`}>
+        <Typography data-testid={`message-type-${identifier}`} sx={{ gridArea: 'status', fontWeight: 'bold' }}>
           {messageCollection.messageType === MessageType.DoiRequest
             ? t('types.doi')
             : messageCollection.messageType === MessageType.Support
             ? t('types.support')
             : null}
-        </StyledStatus>
-        <StyledTitle data-testid={`message-title-${identifier}`}>{registration.mainTitle}</StyledTitle>
-        <StyledOwner data-testid={`message-owner-${identifier}`}>
+        </Typography>
+        <Typography data-testid={`message-title-${identifier}`} sx={{ gridArea: 'title', fontWeight: 'bold' }}>
+          {registration.mainTitle}
+        </Typography>
+        <Box data-testid={`message-owner-${identifier}`} sx={{ wordBreak: 'break-word', gridArea: 'creator' }}>
           <Typography>{registration.owner}</Typography>
-          {new Date(messageCollection.messages[messageCollection.messages.length - 1].date).toLocaleDateString()}
-        </StyledOwner>
+          {new Date(messagesCopy[messagesCopy.length - 1].date).toLocaleDateString()}
+        </Box>
       </AccordionSummary>
       <AccordionDetails>
-        <StyledMessages>
-          <MessageList messages={messageCollection.messages} />
+        <Box sx={{ width: '75%', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <MessageList messages={messagesCopy} />
           <MessageForm confirmAction={onClickSendMessage} />
-        </StyledMessages>
-        <StyledAccordionActionButtons>
+        </Box>
+        <Box sx={{ width: '20%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
           <Button
             data-testid={`go-to-registration-${identifier}`}
             variant="outlined"
@@ -111,7 +90,7 @@ export const SupportRequestAccordion = ({
             to={getRegistrationLandingPagePath(identifier)}>
             {t('go_to_registration')}
           </Button>
-        </StyledAccordionActionButtons>
+        </Box>
       </AccordionDetails>
     </StyledAccordion>
   );

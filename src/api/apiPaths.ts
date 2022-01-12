@@ -50,5 +50,7 @@ export enum RoleApiPath {
 }
 
 export enum SearchApiPath {
+  DoiRequests = '/search/doirequests',
+  Messages = '/search/messages',
   Registrations = '/search/resources',
 }

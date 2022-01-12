@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { SearchApiPath } from '../../api/apiPaths';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { RegistrationList } from '../../components/RegistrationList';
+import { SearchResponse } from '../../types/common.types';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
-import { SearchResult } from '../../types/registration.types';
+import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 
@@ -14,7 +15,7 @@ interface ProjectResultsProps {
 
 export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
   const { t } = useTranslation('project');
-  const [results, isLoadingResults] = useFetch<SearchResult>({
+  const [results, isLoadingResults] = useFetch<SearchResponse<Registration>>({
     url: `${SearchApiPath.Registrations}?query=${DescriptionFieldNames.Projects}.id="${projectId}"`,
     errorMessage: t('feedback:error.search'),
   });

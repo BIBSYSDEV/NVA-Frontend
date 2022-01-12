@@ -25,7 +25,7 @@ const PublicProfile = lazy(() => import('./pages/public_profile/PublicProfile'))
 const AdminCustomerInstitutionsPage = lazy(() => import('./pages/admin/AdminCustomerInstitutionsPage'));
 const MyInstitutionPage = lazy(() => import('./pages/admin/MyInstitutionPage'));
 const MyInstitutionUsersPage = lazy(() => import('./pages/admin/MyInstitutionUsersPage'));
-const MyMessages = lazy(() => import('./pages/messages/MyMessages'));
+const MyMessagesPage = lazy(() => import('./pages/messages/MyMessagesPage'));
 const WorklistPage = lazy(() => import('./pages/worklist/WorklistPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 const Login = lazy(() => import('./layout/Login'));
@@ -49,7 +49,7 @@ export const AppRoutes = () => {
         {/* CreatorRoutes */}
         <CreatorRoute exact path={UrlPathTemplate.Registration} component={EditRegistration} />
         <CreatorRoute exact path={UrlPathTemplate.MyRegistrations} component={MyRegistrations} />
-        <CreatorRoute exact path={UrlPathTemplate.MyMessages} component={MyMessages} />
+        <CreatorRoute exact path={UrlPathTemplate.MyMessages} component={MyMessagesPage} />
 
         {/* CuratorRoutes */}
         <CuratorRoute exact path={UrlPathTemplate.Worklist} component={WorklistPage} />
