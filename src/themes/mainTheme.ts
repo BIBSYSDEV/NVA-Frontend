@@ -170,6 +170,9 @@ export const mainTheme = createTheme(
             '&:hover': {
               backgroundColor: Color.White,
             },
+            '&.Mui-disabled': {
+              backgroundColor: Color.White,
+            },
           },
         },
       },
