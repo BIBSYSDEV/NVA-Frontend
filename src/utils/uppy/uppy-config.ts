@@ -31,10 +31,11 @@ const uppyLocale =
     ? norwegianLocale
     : englishLocale;
 
-export const createUppy =
-  (shouldAllowMultipleFiles = true) =>
-  () =>
-    Uppy<Uppy.StrictTypes>({
+export const createUppy = (shouldAllowMultipleFiles = true) => {
+  console.log('create uppy');
+  return () => {
+    console.log('heia');
+    return Uppy<Uppy.StrictTypes>({
       locale: uppyLocale,
       autoProceed: true,
       restrictions: { maxNumberOfFiles: shouldAllowMultipleFiles ? null : 1 },
@@ -48,3 +49,5 @@ export const createUppy =
       prepareUploadPart: async (_: UppyFile, { uploadId, key, body, number }: UppyPrepareArgs) =>
         await prepareUploadPart(uploadId, key, body, number),
     });
+  };
+};

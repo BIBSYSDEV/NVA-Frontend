@@ -10,6 +10,7 @@ interface FileUploaderProps {
 export const FileUploader = ({ addFile, uppy }: FileUploaderProps) => {
   useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
+      console.log('add');
       uppy.on('upload-success', (file, response) => {
         const newFile = {
           ...emptyFile,
