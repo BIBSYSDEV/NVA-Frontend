@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
 import { StyledEngineProvider, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { HelmetProvider } from 'react-helmet-async';
 import { interceptRequestsOnMock } from './api/mock-interceptor';
 import { App } from './App';
 import { store } from './redux/store';
@@ -36,7 +37,9 @@ ReactDOM.render(
           <StyledComponentsThemeProvider theme={mainTheme}>
             <MuiThemeProvider theme={mainTheme}>
               <CssBaseline />
-              <App />
+              <HelmetProvider>
+                <App />
+              </HelmetProvider>
             </MuiThemeProvider>
           </StyledComponentsThemeProvider>
         </StyledEngineProvider>
