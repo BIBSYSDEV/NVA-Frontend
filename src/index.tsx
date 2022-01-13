@@ -18,6 +18,7 @@ import '@fontsource/barlow/500.css';
 import '@fontsource/barlow/600.css';
 import '@fontsource/barlow/700.css';
 import '@fontsource/crimson-text/400.css';
+import { HelmetProvider } from 'react-helmet-async';
 
 if (USE_MOCK_DATA) {
   interceptRequestsOnMock();
@@ -36,7 +37,9 @@ ReactDOM.render(
           <StyledComponentsThemeProvider theme={mainTheme}>
             <MuiThemeProvider theme={mainTheme}>
               <CssBaseline />
-              <App />
+              <HelmetProvider>
+                <App />
+              </HelmetProvider>
             </MuiThemeProvider>
           </StyledComponentsThemeProvider>
         </StyledEngineProvider>

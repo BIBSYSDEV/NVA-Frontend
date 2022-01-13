@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from './api/authorityApi';
 import { getCurrentUserAttributes } from './api/userApi';
 import { AppRoutes } from './AppRoutes';
