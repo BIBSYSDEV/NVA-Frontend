@@ -1,4 +1,4 @@
-import { Formik, FormikErrors, FormikProps, validateYupSchema, yupToFormErrors } from 'formik';
+import { Formik, FormikErrors, validateYupSchema, yupToFormErrors } from 'formik';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -79,9 +79,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
         onSubmit={() => {
           /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
         }}>
-        {(formikProps: FormikProps<Registration>) => (
-          <RegistrationFormContent {...formikProps} refetchRegistration={refetchRegistration} />
-        )}
+        {(formikProps) => <RegistrationFormContent {...formikProps} refetchRegistration={refetchRegistration} />}
       </Formik>
     </>
   ) : null;

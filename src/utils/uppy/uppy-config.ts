@@ -9,7 +9,6 @@ import {
   abortMultipartUpload,
   completeMultipartUpload,
 } from '../../api/fileApi';
-import i18n from '../../translations/i18n';
 import { LanguageCodes } from '../../types/language.types';
 
 interface UppyArgs {
@@ -26,19 +25,18 @@ interface UppyCompleteArgs extends UppyArgs {
   parts: AwsS3Part[];
 }
 
-const uppyLocale =
-  i18n.language === LanguageCodes.NORWEGIAN_BOKMAL || i18n.language === LanguageCodes.NORWEGIAN_NYNORSK
+const getUppyLocale = (language: string) =>
+  language === LanguageCodes.NORWEGIAN_BOKMAL || language === LanguageCodes.NORWEGIAN_NYNORSK
     ? norwegianLocale
     : englishLocale;
 
-export const createUppy = (shouldAllowMultipleFiles = true) => {
+export const createUppy = (language: string) => {
   console.log('create uppy');
   return () => {
     console.log('heia');
     return Uppy<Uppy.StrictTypes>({
-      locale: uppyLocale,
+      locale: getUppyLocale(language),
       autoProceed: true,
-      restrictions: { maxNumberOfFiles: shouldAllowMultipleFiles ? null : 1 },
     }).use(AwsS3Multipart, {
       abortMultipartUpload: async (_: UppyFile, { uploadId, key }: UppyArgs) =>
         await abortMultipartUpload(uploadId, key),

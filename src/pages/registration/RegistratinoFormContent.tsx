@@ -23,9 +23,9 @@ interface RegistrationFormContentProps extends FormikProps<Registration> {
 }
 
 export const RegistrationFormContent = ({ values, dirty, refetchRegistration }: RegistrationFormContentProps) => {
-  const { t } = useTranslation('registration');
+  const { t, i18n } = useTranslation('registration');
   const history = useHistory();
-  const uppy = useUppy(createUppy());
+  const uppy = useUppy(createUppy(i18n.language));
 
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
