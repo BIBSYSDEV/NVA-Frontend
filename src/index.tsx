@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import { StrictMode } from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { Provider } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
 import { StyledEngineProvider, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -34,7 +34,7 @@ ReactDOM.render(
   <StrictMode>
     <BasicErrorBoundary>
       <I18nextProvider i18n={i18n}>
-        <Provider store={store}>
+        <ReduxProvider store={store}>
           <StyledEngineProvider injectFirst>
             <StyledComponentsThemeProvider theme={mainTheme}>
               <MuiThemeProvider theme={mainTheme}>
@@ -45,7 +45,7 @@ ReactDOM.render(
               </MuiThemeProvider>
             </StyledComponentsThemeProvider>
           </StyledEngineProvider>
-        </Provider>
+        </ReduxProvider>
       </I18nextProvider>
     </BasicErrorBoundary>
   </StrictMode>,
