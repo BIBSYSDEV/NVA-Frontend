@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
 import { StyledEngineProvider, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { HelmetProvider } from 'react-helmet-async';
 import { interceptRequestsOnMock } from './api/mock-interceptor';
 import { App } from './App';
 import { store } from './redux/store';
@@ -18,7 +19,6 @@ import '@fontsource/barlow/500.css';
 import '@fontsource/barlow/600.css';
 import '@fontsource/barlow/700.css';
 import '@fontsource/crimson-text/400.css';
-import { HelmetProvider } from 'react-helmet-async';
 
 if (USE_MOCK_DATA) {
   interceptRequestsOnMock();
