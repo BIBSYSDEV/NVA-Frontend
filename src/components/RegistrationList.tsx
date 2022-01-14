@@ -19,12 +19,6 @@ const StyledContributors = styled.div`
   }
 `;
 
-const StyledRegistrationTitle = styled(Typography)`
-  font-size: 1rem;
-  font-weight: 600;
-  font-style: italic;
-`;
-
 interface RegistrationListProps {
   registrations: Registration[];
 }
@@ -57,11 +51,11 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
         <Typography variant="overline" sx={{ color: 'primary.dark' }}>
           {t(entityDescription?.reference?.publicationInstance.type ?? '')} - {displayDate(entityDescription?.date)}
         </Typography>
-        <StyledRegistrationTitle gutterBottom>
+        <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
           <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
             {entityDescription?.mainTitle}
           </MuiLink>
-        </StyledRegistrationTitle>
+        </Typography>
         <StyledContributors>
           {focusedContributors.map((contributor, index) => (
             <Typography key={index} variant="body2">

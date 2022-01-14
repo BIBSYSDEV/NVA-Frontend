@@ -1,6 +1,6 @@
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Typography } from '@mui/material';
-import { LabelTextLine } from '../../components/LabelTextLine';
+import { Box, Typography } from '@mui/material';
 import { User } from '../../types/user.types';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 
@@ -26,3 +26,16 @@ export const UserInfo = ({ user }: UserInfoProps) => {
     </BackgroundDiv>
   );
 };
+
+interface LabelTextLineProps {
+  label: string;
+  children?: ReactNode;
+  dataTestId?: string;
+}
+
+const LabelTextLine = ({ label, children, dataTestId }: LabelTextLineProps) => (
+  <Box sx={{ paddingBottom: '0.5rem', display: 'flex', flexWrap: 'wrap' }}>
+    <Typography sx={{ width: '6rem', minWidth: '6rem' }}>{label}:</Typography>
+    {children && <Typography data-testid={dataTestId}>{children}</Typography>}
+  </Box>
+);
