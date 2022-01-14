@@ -7,7 +7,7 @@ import { styled } from '@mui/system';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { Modal } from '../../components/Modal';
 import { PageHeader } from '../../components/PageHeader';
-import { SyledPageContent } from '../../components/styled/Wrappers';
+import { BackgroundDiv, SyledPageContent } from '../../components/styled/Wrappers';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import { filterUsersByRole } from '../../utils/role-helpers';
@@ -16,7 +16,6 @@ import { UserList } from './UserList';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { RoleApiPath } from '../../api/apiPaths';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
 
 const StyledContainer = styled('div')({
   marginBottom: '1rem',

@@ -8,7 +8,7 @@ import AllInboxIcon from '@mui/icons-material/AllInbox';
 import CreateIcon from '@mui/icons-material/Create';
 import { User } from '../../types/user.types';
 import { IconLabelTextLine } from '../../components/IconLabelTextLine';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 
 const StyledTypography = styled(Typography)`
   color: ${({ theme }) => theme.palette.error.main};

@@ -16,8 +16,8 @@ import { SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { RegistrationList } from '../../components/RegistrationList';
 import { RegistrationFieldName } from '../../types/publicationFieldNames';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { SearchResponse } from '../../types/common.types';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 
 const StyledYearSpan = styled.span`
   padding-left: 1rem;

@@ -9,13 +9,12 @@ import {
   removeQualifierIdFromAuthority,
 } from '../../api/authorityApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import { BackgroundDiv, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { InstitutionCard } from './institution/InstitutionCard';
 import { User } from '../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { SelectInstitutionForm } from '../../components/institution/SelectInstitutionForm';
 
 interface UserInstituionProps {

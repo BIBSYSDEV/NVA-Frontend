@@ -5,7 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { PageHeader } from '../../components/PageHeader';
-import { SyledPageContent, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import { SyledPageContent, StyledRightAlignedWrapper, BackgroundDiv } from '../../components/styled/Wrappers';
 import { TabButton } from '../../components/TabButton';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { MyRegistrationsResponse, RegistrationStatus } from '../../types/registration.types';
@@ -13,7 +13,6 @@ import { getUserPath } from '../../utils/urlPaths';
 import { MyRegistrationsList } from './MyRegistrationsList';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { PublicationsApiPath } from '../../api/apiPaths';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
 
 enum Tab {
   Published,

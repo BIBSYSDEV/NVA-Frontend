@@ -2,14 +2,13 @@ import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { PageHeader } from '../../components/PageHeader';
-import { SyledPageContent, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import { SyledPageContent, StyledRightAlignedWrapper, BackgroundDiv } from '../../components/styled/Wrappers';
 import { getAdminInstitutionPath } from '../../utils/urlPaths';
 import { InstitutionList } from './InstitutionList';
 import { PageSpinner } from '../../components/PageSpinner';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { CustomerInstitutionsResponse } from '../../types/customerInstitution.types';
 import { CustomerInstitutionApiPath } from '../../api/apiPaths';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
 
 export const AdminCustomerInstitutions = () => {
   const { t } = useTranslation('admin');

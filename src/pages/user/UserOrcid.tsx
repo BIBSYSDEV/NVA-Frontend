@@ -21,7 +21,7 @@ import { Modal } from '../../components/Modal';
 import { User } from '../../types/user.types';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 
 const StyledOrcidLine = styled.div`
   display: grid;

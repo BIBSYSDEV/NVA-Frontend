@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { PageHeader } from '../../components/PageHeader';
-import { SyledPageContent } from '../../components/styled/Wrappers';
+import { BackgroundDiv, SyledPageContent } from '../../components/styled/Wrappers';
 import { CustomerInstitution, emptyCustomerInstitution } from '../../types/customerInstitution.types';
 import { PageSpinner } from '../../components/PageSpinner';
 import { CustomerInstitutionAdminsForm } from './CustomerInstitutionAdminsForm';
@@ -9,7 +9,6 @@ import { CustomerInstitutionMetadataForm } from './CustomerInstitutionMetadataFo
 import { useFetch } from '../../utils/hooks/useFetch';
 import { InstitutionUser } from '../../types/user.types';
 import { RoleApiPath } from '../../api/apiPaths';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
 
 const StyledCustomerInstitution = styled.section`
   display: flex;

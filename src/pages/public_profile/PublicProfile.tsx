@@ -6,7 +6,7 @@ import WorkIcon from '@mui/icons-material/Work';
 import { Helmet } from 'react-helmet-async';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { PageHeader } from '../../components/PageHeader';
-import { SyledPageContent } from '../../components/styled/Wrappers';
+import { BackgroundDiv, SyledPageContent } from '../../components/styled/Wrappers';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { PageSpinner } from '../../components/PageSpinner';
@@ -15,7 +15,6 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { SearchResults } from '../search/SearchResults';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../types/publicationFieldNames';
 import { ExpressionStatement } from '../../utils/searchHelpers';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
 
 const StyledLine = styled.div`
   display: flex;

@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 import { LabelTextLine } from '../../components/LabelTextLine';
 import { User } from '../../types/user.types';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 
 interface UserInfoProps {
   user: User;
