@@ -26,12 +26,12 @@ const StyledRegistrationAccorion = styled(RegistrationAccordion)`
 `;
 
 export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
-  const { t } = useTranslation('registration');
+  const { t, i18n } = useTranslation('registration');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
-  const uppy = useUppy(createUppy());
+  const uppy = useUppy(createUppy(i18n.language));
 
   const createRegistrationWithFiles = async () => {
     setIsLoading(true);
