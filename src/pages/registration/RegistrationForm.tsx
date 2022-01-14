@@ -41,9 +41,9 @@ interface RegistrationFormProps {
 
 export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const user = useSelector((store: RootStore) => store.user);
-  const { t } = useTranslation('registration');
+  const { t, i18n } = useTranslation('registration');
   const history = useHistory();
-  const uppy = useUppy(createUppy());
+  const uppy = useUppy(createUppy(i18n.language));
   const highestValidatedTab =
     useLocation<RegistrationLocationState>().state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
   const [registration, isLoadingRegistration, refetchRegistration] = useFetch<Registration>({
