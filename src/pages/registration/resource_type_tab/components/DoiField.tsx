@@ -41,7 +41,7 @@ export const DoiField = () => {
       <TextField
         id="doi-field"
         data-testid="doi-field"
-        variant="outlined"
+        variant="filled"
         fullWidth
         label={t('registration.link_to_resource')}
         disabled

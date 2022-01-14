@@ -1,10 +1,9 @@
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { TextField, Typography } from '@mui/material';
+import { Box, TextField, Typography } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { StyledCenterAlignedContentWrapper } from '../../../../components/styled/Wrappers';
 import { BookType, ChapterType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { DoiField } from '../components/DoiField';
 import { NviValidation } from '../components/NviValidation';
@@ -13,10 +12,6 @@ import { NviFields } from '../components/nvi_fields/NviFields';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
 import { ChapterContentType } from '../../../../types/publication_types/content.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-
-const StyledDiv = styled(StyledCenterAlignedContentWrapper)`
-  gap: 1rem;
-`;
 
 const StyledPageNumberWrapper = styled.div`
   display: grid;
@@ -53,12 +48,12 @@ export const ChapterForm = () => {
   return (
     <>
       <div>
-        <StyledDiv data-testid="info-anthology">
+        <Box data-testid="info-anthology" sx={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
           <InfoIcon />
           <Typography variant="body1" paragraph>
             {t('resource_type.chapter.info_anthology')}
           </Typography>
-        </StyledDiv>
+        </Box>
 
         <DoiField />
 

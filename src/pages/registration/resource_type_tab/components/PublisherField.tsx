@@ -1,7 +1,7 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Chip, Typography } from '@mui/material';
+import { Box, Chip, Typography } from '@mui/material';
 import { Autocomplete } from '@mui/material';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
@@ -13,7 +13,6 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { getYearQuery } from '../../../../utils/registration-helpers';
-import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
@@ -97,7 +96,7 @@ export const PublisherField = () => {
           getOptionLabel={(option) => option.name}
           renderOption={(props, option, state) => (
             <li {...props}>
-              <StyledFlexColumn>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Typography variant="subtitle1">
                   <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
                 </Typography>
@@ -106,7 +105,7 @@ export const PublisherField = () => {
                     {t('resource_type.level')}: {option.level}
                   </Typography>
                 )}
-              </StyledFlexColumn>
+              </Box>
             </li>
           )}
           renderTags={(value, getTagProps) =>

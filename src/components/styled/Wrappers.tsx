@@ -1,32 +1,19 @@
-import { Box, BoxProps } from '@mui/material';
-import { styled as muiStyled } from '@mui/system';
-import styled from 'styled-components';
+import { styled } from '@mui/system';
 
-export const StyledRightAlignedWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
+export const StyledRightAlignedWrapper = styled('div')({
+  display: 'flex',
+  justifyContent: 'flex-end',
+});
 
-export const StyledCenterAlignedContentWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
+export const StyledSelectWrapper = styled('div')(({ theme }) => ({
+  width: '50%',
+  maxWidth: theme.breakpoints.values.lg,
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+  },
+}));
 
-export const StyledSelectWrapper = styled.div`
-  width: 50%;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    padding: 0 1rem;
-    width: 100%;
-  }
-`;
-
-export const StyledFlexColumn = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-export const SyledPageContent = muiStyled('div')(({ theme }) => ({
+export const SyledPageContent = styled('div')(({ theme }) => ({
   width: '100%',
   maxWidth: theme.breakpoints.values.lg,
   [theme.breakpoints.up('sm')]: {
@@ -35,6 +22,8 @@ export const SyledPageContent = muiStyled('div')(({ theme }) => ({
   padding: '0.5rem',
 }));
 
-export const InputContainerBox = (props: BoxProps) => (
-  <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }} {...props} />
-);
+export const InputContainerBox = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1.5rem',
+});
