@@ -6,7 +6,7 @@ import WorkIcon from '@mui/icons-material/Work';
 import { Helmet } from 'react-helmet-async';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { PageHeader } from '../../components/PageHeader';
-import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
+import { SyledPageContent } from '../../components/styled/Wrappers';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { PageSpinner } from '../../components/PageSpinner';
@@ -52,7 +52,7 @@ const PublicProfile = () => {
   });
 
   return (
-    <StyledPageWrapperWithMaxWidth>
+    <SyledPageContent>
       <PageHeader>{t('public_profile')}</PageHeader>
       {isLoadingUser || isLoadingRegistrations ? (
         <PageSpinner />
@@ -98,7 +98,7 @@ const PublicProfile = () => {
           </BackgroundDiv>
         )
       )}
-    </StyledPageWrapperWithMaxWidth>
+    </SyledPageContent>
   );
 };
 

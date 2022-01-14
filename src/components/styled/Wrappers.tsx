@@ -1,4 +1,5 @@
-import { Box, BoxProps, Typography } from '@mui/material';
+import { Box, BoxProps } from '@mui/material';
+import { styled as muiStyled } from '@mui/system';
 import styled from 'styled-components';
 
 export const StyledRightAlignedWrapper = styled.div`
@@ -9,10 +10,6 @@ export const StyledRightAlignedWrapper = styled.div`
 export const StyledCenterAlignedContentWrapper = styled.div`
   display: flex;
   justify-content: center;
-`;
-
-export const StyledTypographyPreWrapped = styled(Typography)`
-  white-space: pre-wrap;
 `;
 
 export const StyledSelectWrapper = styled.div`
@@ -29,18 +26,14 @@ export const StyledFlexColumn = styled.div`
   flex-direction: column;
 `;
 
-export const StyledPageWrapperWithMaxWidth = styled.div`
-  width: 100%;
-  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    padding: 1rem 2rem;
-  }
-  padding: 0.5rem;
-  max-width: ${({ theme }) => theme.breakpoints.values.lg + 'px'};
-`;
-
-export const StyledCenteredContent = styled.div`
-  margin-top: 4rem;
-`;
+export const SyledPageContent = muiStyled('div')(({ theme }) => ({
+  width: '100%',
+  maxWidth: theme.breakpoints.values.lg,
+  [theme.breakpoints.up('sm')]: {
+    padding: '1rem 2rem',
+  },
+  padding: '0.5rem',
+}));
 
 export const InputContainerBox = (props: BoxProps) => (
   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }} {...props} />

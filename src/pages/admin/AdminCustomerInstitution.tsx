@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { PageHeader } from '../../components/PageHeader';
-import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
+import { SyledPageContent } from '../../components/styled/Wrappers';
 import { CustomerInstitution, emptyCustomerInstitution } from '../../types/customerInstitution.types';
 import { PageSpinner } from '../../components/PageSpinner';
 import { CustomerInstitutionAdminsForm } from './CustomerInstitutionAdminsForm';
@@ -35,7 +35,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
   });
 
   return (
-    <StyledPageWrapperWithMaxWidth>
+    <SyledPageContent>
       <PageHeader htmlTitle={editMode ? customerInstitution?.displayName : t('add_institution')}>
         {t(editMode ? 'edit_institution' : 'add_institution')}
       </PageHeader>
@@ -59,6 +59,6 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
           </BackgroundDiv>
         )}
       </StyledCustomerInstitution>
-    </StyledPageWrapperWithMaxWidth>
+    </SyledPageContent>
   );
 };

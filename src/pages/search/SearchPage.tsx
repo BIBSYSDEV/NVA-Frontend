@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { PageHeader } from '../../components/PageHeader';
 import { SearchBar } from './SearchBar';
-import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
+import { SyledPageContent } from '../../components/styled/Wrappers';
 import { createSearchConfigFromSearchParams, createSearchQuery, SearchParam } from '../../utils/searchHelpers';
 import { RegistrationTypeFilter } from './filters/RegistrationTypeFilter';
 import { RegistrationSearch } from './RegistrationSearch';
@@ -41,7 +41,7 @@ const SearchPage = () => {
   const initialSearchParams = createSearchConfigFromSearchParams(params);
 
   return (
-    <StyledPageWrapperWithMaxWidth>
+    <SyledPageContent>
       <PageHeader backPath="/">{t('registrations')}</PageHeader>
       <Formik
         initialValues={initialSearchParams}
@@ -67,7 +67,7 @@ const SearchPage = () => {
           </StyledSearch>
         </Form>
       </Formik>
-    </StyledPageWrapperWithMaxWidth>
+    </SyledPageContent>
   );
 };
 

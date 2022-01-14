@@ -6,11 +6,7 @@ import { LoadingButton } from '@mui/lab';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { PageHeader } from '../../components/PageHeader';
-import {
-  InputContainerBox,
-  StyledPageWrapperWithMaxWidth,
-  StyledRightAlignedWrapper,
-} from '../../components/styled/Wrappers';
+import { InputContainerBox, SyledPageContent, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import {
@@ -51,7 +47,7 @@ const MyCustomerInstitutionPage = () => {
   };
 
   return (
-    <StyledPageWrapperWithMaxWidth>
+    <SyledPageContent>
       <PageHeader>{t('common:my_institution')}</PageHeader>
       <BackgroundDiv>
         {isLoadingCustomerInstitution ? (
@@ -101,7 +97,7 @@ const MyCustomerInstitutionPage = () => {
           </Formik>
         )}
       </BackgroundDiv>
-    </StyledPageWrapperWithMaxWidth>
+    </SyledPageContent>
   );
 };
 

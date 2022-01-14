@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { Button, Radio, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { createAuthority } from '../../../api/authorityApi';
-import { StyledTypographyPreWrapped } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { User } from '../../../types/user.types';
@@ -35,7 +34,8 @@ const StyledLabel = styled(Typography)`
   display: inline-grid;
 `;
 
-const StyledDescription = styled(StyledTypographyPreWrapped)`
+const StyledDescription = styled(Typography)`
+  white-space: 'pre-wrap';
   grid-area: description;
   margin-left: 0.7rem;
 `;

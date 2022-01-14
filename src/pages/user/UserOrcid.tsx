@@ -18,7 +18,6 @@ import {
 import { setNotification } from '../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../redux/actions/userActions';
 import { Modal } from '../../components/Modal';
-import { StyledTypographyPreWrapped } from '../../components/styled/Wrappers';
 import { User } from '../../types/user.types';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -171,12 +170,12 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
               onCancel={toggleConfirmDialog}
               isLoading={isRemovingOrcid}
               dataTestId="confirm-remove-orcid-connection-dialog">
-              <StyledTypographyPreWrapped>
+              <Typography sx={{ whiteSpace: 'pre-wrap' }}>
                 {t('orcid.remove_connection_info')}{' '}
                 <MuiLink href={ORCID_BASE_URL} target="_blank" rel="noopener noreferrer">
                   {ORCID_BASE_URL}
                 </MuiLink>
-              </StyledTypographyPreWrapped>
+              </Typography>
             </ConfirmDialog>
           </StyledOrcidLine>
         ))

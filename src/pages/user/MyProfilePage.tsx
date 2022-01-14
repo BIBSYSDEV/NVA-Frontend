@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from '@mui/material';
 import { PageHeader } from '../../components/PageHeader';
-import { StyledPageWrapperWithMaxWidth, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import { SyledPageContent, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { getUserPath } from '../../utils/urlPaths';
 import { UserInfo } from './UserInfo';
@@ -45,7 +45,7 @@ const MyProfilePage = () => {
   const user = useSelector((store: RootStore) => store.user)!; // If user has been empty this route would already be blocked
 
   return (
-    <StyledPageWrapperWithMaxWidth>
+    <SyledPageContent>
       <PageHeader>{t('my_profile')}</PageHeader>
       <StyledUserPage>
         {user.authority && (
@@ -65,7 +65,7 @@ const MyProfilePage = () => {
           <UserAffiliations user={user} />
         </StyledPrimaryUserInfo>
       </StyledUserPage>
-    </StyledPageWrapperWithMaxWidth>
+    </SyledPageContent>
   );
 };
 

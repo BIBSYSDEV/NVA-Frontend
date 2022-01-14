@@ -8,7 +8,7 @@ import { ListSkeleton } from '../../components/ListSkeleton';
 import { PageHeader } from '../../components/PageHeader';
 import {
   StyledCenterAlignedContentWrapper,
-  StyledPageWrapperWithMaxWidth,
+  SyledPageContent,
   StyledRightAlignedWrapper,
 } from '../../components/styled/Wrappers';
 import { TabButton } from '../../components/TabButton';
@@ -53,7 +53,7 @@ const MyRegistrations = () => {
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
   return (
-    <StyledPageWrapperWithMaxWidth>
+    <SyledPageContent>
       <PageHeader>{t('my_registrations')}</PageHeader>
       <StyledContainer>
         <StyledRightAlignedWrapper>
@@ -88,7 +88,7 @@ const MyRegistrations = () => {
           )}
         </BackgroundDiv>
       </StyledContainer>
-    </StyledPageWrapperWithMaxWidth>
+    </SyledPageContent>
   );
 };
 

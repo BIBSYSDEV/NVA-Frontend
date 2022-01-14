@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { PageHeader } from '../../components/PageHeader';
-import { StyledPageWrapperWithMaxWidth, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import { SyledPageContent, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { getAdminInstitutionPath } from '../../utils/urlPaths';
 import { InstitutionList } from './InstitutionList';
 import { PageSpinner } from '../../components/PageSpinner';
@@ -20,7 +20,7 @@ export const AdminCustomerInstitutions = () => {
   });
 
   return (
-    <StyledPageWrapperWithMaxWidth>
+    <SyledPageContent>
       <PageHeader>{t('admin_institutions')}</PageHeader>
       <BackgroundDiv>
         <StyledRightAlignedWrapper>
@@ -40,6 +40,6 @@ export const AdminCustomerInstitutions = () => {
           )
         )}
       </BackgroundDiv>
-    </StyledPageWrapperWithMaxWidth>
+    </SyledPageContent>
   );
 };

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { PageHeader } from '../../components/PageHeader';
-import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
+import { SyledPageContent } from '../../components/styled/Wrappers';
 
 const StyledPrivacyContainer = styled.div`
   display: block;
@@ -22,7 +22,7 @@ const PrivacyPolicy = () => {
   const { t } = useTranslation('privacy');
 
   return (
-    <StyledPageWrapperWithMaxWidth>
+    <SyledPageContent>
       <PageHeader>{t('privacy_statement')}</PageHeader>
 
       <StyledPrivacyContainer>
@@ -332,7 +332,7 @@ const PrivacyPolicy = () => {
           </Typography>
         </TableContainer>
       </StyledPrivacyContainer>
-    </StyledPageWrapperWithMaxWidth>
+    </SyledPageContent>
   );
 };
 

@@ -2,10 +2,10 @@ import { ErrorMessage, Field, FieldProps, Form, Formik, FormikValues } from 'for
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Button, Collapse, DialogActions, TextField } from '@mui/material';
+import { Button, Collapse, DialogActions, TextField, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { createAuthority } from '../../../../api/authorityApi';
-import { StyledTypographyPreWrapped, StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
+import { StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { Authority } from '../../../../types/authority.types';
 import { emptyNewContributor } from '../../../../types/contributor.types';
@@ -49,9 +49,9 @@ export const CreateContributorModalContent = ({
         {({ isSubmitting }) => (
           <Form noValidate>
             <Collapse in={readMore} collapsedSize="4.5rem">
-              <StyledTypographyPreWrapped>
+              <Typography sx={{ whiteSpace: 'pre-wrap' }}>
                 {t('registration:contributors.create_new_author_description')}
-              </StyledTypographyPreWrapped>
+              </Typography>
             </Collapse>
             <StyledRightAlignedWrapper>
               <Button data-testid="button-read-more" onClick={toggleReadMore}>

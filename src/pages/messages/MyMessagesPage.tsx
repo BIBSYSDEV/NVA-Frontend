@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { PublicationsApiPath } from '../../api/apiPaths';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { PageHeader } from '../../components/PageHeader';
-import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
+import { SyledPageContent } from '../../components/styled/Wrappers';
 import { PublicationConversation } from '../../types/publication_types/messages.types';
 import { RoleName } from '../../types/user.types';
 import { useFetch } from '../../utils/hooks/useFetch';
@@ -19,14 +19,14 @@ const MyMessagesPage = () => {
   const supportRequests = supportRequestsResponse ?? [];
 
   return (
-    <StyledPageWrapperWithMaxWidth>
+    <SyledPageContent>
       <PageHeader>{t('messages')}</PageHeader>
       {isLoadingSupportRequests ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
         <MessagesOverview conversations={supportRequests} />
       )}
-    </StyledPageWrapperWithMaxWidth>
+    </SyledPageContent>
   );
 };
 

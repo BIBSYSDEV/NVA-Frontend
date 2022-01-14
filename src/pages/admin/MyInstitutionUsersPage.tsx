@@ -7,7 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { Modal } from '../../components/Modal';
 import { PageHeader } from '../../components/PageHeader';
-import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
+import { SyledPageContent } from '../../components/styled/Wrappers';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import { filterUsersByRole } from '../../utils/role-helpers';
@@ -47,7 +47,7 @@ const MyInstitutionUsersPage = () => {
   });
 
   return (
-    <StyledPageWrapperWithMaxWidth>
+    <SyledPageContent>
       <PageHeader>{t('users.user_administration')}</PageHeader>
       <BackgroundDiv>
         {/* Admins */}
@@ -155,7 +155,7 @@ const MyInstitutionUsersPage = () => {
           </Modal>
         )}
       </BackgroundDiv>
-    </StyledPageWrapperWithMaxWidth>
+    </SyledPageContent>
   );
 };
 
