@@ -6,6 +6,7 @@ import { AboutContent } from './AboutContent';
 
 const AboutPage = () => {
   const { t } = useTranslation('common');
+
   return (
     <SyledPageContent>
       <PageHeader>{t('about_nva')}</PageHeader>

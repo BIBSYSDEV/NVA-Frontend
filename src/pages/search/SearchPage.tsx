@@ -1,8 +1,7 @@
-import { List, Typography } from '@mui/material';
+import { Box, List, Typography } from '@mui/material';
 import { Formik, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
 import { PageHeader } from '../../components/PageHeader';
 import { SearchBar } from './SearchBar';
 import { SyledPageContent } from '../../components/styled/Wrappers';
@@ -10,28 +9,6 @@ import { createSearchConfigFromSearchParams, createSearchQuery, SearchParam } fr
 import { RegistrationTypeFilter } from './filters/RegistrationTypeFilter';
 import { RegistrationSearch } from './RegistrationSearch';
 import { SortSelector } from './SortSelector';
-
-const StyledSearch = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 5fr 2fr;
-  grid-template-rows: auto auto 1fr;
-  grid-template-areas: 'filters searchbar sorting' 'filters advanced advanced' 'filters results results';
-  column-gap: 2rem;
-  row-gap: 1rem;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    grid-template-columns: 1fr;
-    grid-template-areas: 'searchbar' 'sorting' 'filters' 'advanced' 'results';
-  }
-`;
-
-const StyledFilters = styled(List)`
-  grid-area: filters;
-`;
-
-const StyledFilterHelperText = styled(Typography)`
-  font-weight: 500;
-`;
 
 const SearchPage = () => {
   const { t } = useTranslation('common');
@@ -56,15 +33,26 @@ const SearchPage = () => {
           history.push({ search: params.toString() });
         }}>
         <Form>
-          <StyledSearch>
-            <StyledFilters>
-              <StyledFilterHelperText>{t('search:select_filters')}</StyledFilterHelperText>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateRows: 'auto auto 1fr',
+              gridTemplateColumns: { xs: '1fr', md: '2fr 5fr 2fr' },
+              gridTemplateAreas: {
+                xs: "'searchbar' 'sorting' 'filters' 'advanced' 'results'",
+                md: "'filters searchbar sorting' 'filters advanced advanced' 'filters results results'",
+              },
+              columnGap: '2rem',
+              rowGap: '1rem',
+            }}>
+            <List sx={{ gridArea: 'filters' }}>
+              <Typography fontWeight={500}>{t('search:select_filters')}</Typography>
               <RegistrationTypeFilter />
-            </StyledFilters>
+            </List>
             <SearchBar />
             <SortSelector />
             <RegistrationSearch />
-          </StyledSearch>
+          </Box>
         </Form>
       </Formik>
     </SyledPageContent>

@@ -1,22 +1,8 @@
 import { Trans, useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { PageHeader } from '../../components/PageHeader';
 import { SyledPageContent } from '../../components/styled/Wrappers';
-
-const StyledPrivacyContainer = styled.div`
-  display: block;
-  max-width: 90vw;
-
-  table {
-    margin-bottom: 1rem;
-  }
-
-  ul {
-    margin-top: 0;
-  }
-`;
 
 const PrivacyPolicy = () => {
   const { t } = useTranslation('privacy');
@@ -25,7 +11,15 @@ const PrivacyPolicy = () => {
     <SyledPageContent>
       <PageHeader>{t('privacy_statement')}</PageHeader>
 
-      <StyledPrivacyContainer>
+      <Box
+        sx={{
+          table: {
+            mt: '0.5rem',
+          },
+          ul: {
+            marginTop: '0',
+          },
+        }}>
         <Typography variant="h2">{t('about.heading')}</Typography>
         <Typography paragraph>{t('about.paragraph')}</Typography>
 
@@ -331,7 +325,7 @@ const PrivacyPolicy = () => {
             </Trans>
           </Typography>
         </TableContainer>
-      </StyledPrivacyContainer>
+      </Box>
     </SyledPageContent>
   );
 };

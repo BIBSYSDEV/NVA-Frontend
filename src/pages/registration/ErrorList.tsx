@@ -1,13 +1,8 @@
 import { ReactNode } from 'react';
-import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Box, Typography } from '@mui/material';
 import { RegistrationTab } from '../../types/registration.types';
 import { TabErrors } from '../../utils/formik-helpers';
-
-const StyledTabHeading = styled(Typography)`
-  font-weight: 500;
-`;
 
 interface ErrorSummaryProps {
   tabErrors: TabErrors;
@@ -44,7 +39,7 @@ const ErrorListGroup = ({ heading, errorMessages }: ErrorListProps) =>
   errorMessages.length > 0 ? (
     <>
       <dt>
-        <StyledTabHeading>{heading}:</StyledTabHeading>
+        <Typography sx={{ fontWeight: 500 }}>{heading}:</Typography>
       </dt>
       {errorMessages.map((errorMessage) => (
         <dd key={errorMessage}>

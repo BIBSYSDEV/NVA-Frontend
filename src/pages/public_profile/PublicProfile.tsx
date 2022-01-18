@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
-import { IconButton, Link as MuiLink, Typography } from '@mui/material';
+import { Box, IconButton, Link as MuiLink, SxProps, Typography } from '@mui/material';
 import WorkIcon from '@mui/icons-material/Work';
 import { Helmet } from 'react-helmet-async';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
@@ -16,20 +15,15 @@ import { SearchResults } from '../search/SearchResults';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../types/publicationFieldNames';
 import { ExpressionStatement } from '../../utils/searchHelpers';
 
-const StyledLine = styled.div`
-  display: flex;
-  margin-top: 1rem;
-`;
+const textContainerSx: SxProps = {
+  width: '100%',
+};
 
-const StyledTextContainer = styled.div`
-  width: 100%;
-  margin-left: 1rem;
-`;
-
-const StyledRegistrations = styled.div`
-  margin-top: 1rem;
-  width: 100%;
-`;
+const lineSx: SxProps = {
+  display: 'flex',
+  gap: '1rem',
+  mt: '1rem',
+};
 
 const PublicProfile = () => {
   const { t } = useTranslation('profile');
@@ -63,36 +57,36 @@ const PublicProfile = () => {
             </Helmet>
             <Typography variant="h2">{authority.name}</Typography>
             {authority.orgunitids.length > 0 && (
-              <StyledLine>
+              <Box sx={lineSx}>
                 <WorkIcon />
-                <StyledTextContainer>
+                <Box sx={textContainerSx}>
                   {authority.orgunitids.map((unitId) => (
                     <AffiliationHierarchy key={unitId} unitUri={unitId} commaSeparated />
                   ))}
-                </StyledTextContainer>
-              </StyledLine>
+                </Box>
+              </Box>
             )}
             {authority.orcids.map((orcid) => (
-              <StyledLine key={orcid}>
+              <Box sx={lineSx} key={orcid}>
                 <IconButton size="small" href={orcid} target="_blank">
                   <img src={orcidIcon} height="20" alt="orcid" />
                 </IconButton>
-                <StyledTextContainer>
+                <Box sx={textContainerSx}>
                   <Typography component={MuiLink} href={orcid} target="_blank" rel="noopener noreferrer">
                     {orcid}
                   </Typography>
-                </StyledTextContainer>
-              </StyledLine>
+                </Box>
+              </Box>
             ))}
             {registrations && (
-              <StyledRegistrations>
+              <Box sx={{ mt: '1rem' }}>
                 <Typography variant="h2">{t('common:registrations')}</Typography>
                 {registrations.total > 0 ? (
                   <SearchResults searchResult={registrations} />
                 ) : (
                   <Typography>{t('common:no_hits')}</Typography>
                 )}
-              </StyledRegistrations>
+              </Box>
             )}
           </BackgroundDiv>
         )

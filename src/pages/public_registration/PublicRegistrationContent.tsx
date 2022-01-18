@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { Box } from '@mui/material';
 import { ItalicPageHeader } from '../../components/PageHeader';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -18,10 +18,6 @@ import { RegistrationList } from '../../components/RegistrationList';
 import { RegistrationFieldName } from '../../types/publicationFieldNames';
 import { SearchResponse } from '../../types/common.types';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-
-const StyledYearSpan = styled.span`
-  padding-left: 1rem;
-`;
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -56,9 +52,12 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
                 {t(`publicationTypes:${entityDescription.reference.publicationInstance.type}`)}
               </span>
               {entityDescription?.date?.year && (
-                <StyledYearSpan data-testid={dataTestId.registrationLandingPage.publicationDate}>
+                <Box
+                  data-testid={dataTestId.registrationLandingPage.publicationDate}
+                  component="span"
+                  sx={{ pl: '1rem' }}>
                   {entityDescription.date.year}
-                </StyledYearSpan>
+                </Box>
               )}
             </>
           ) : null,

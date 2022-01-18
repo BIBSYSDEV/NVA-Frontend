@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import {
   EmailShareButton,
   EmailIcon,
@@ -8,16 +9,8 @@ import {
   TwitterShareButton,
   TwitterIcon,
 } from 'react-share';
-import styled from 'styled-components';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { dataTestId } from '../../utils/dataTestIds';
-
-const StyledShareContainer = styled.div`
-  display: flex;
-  > :not(:last-child) {
-    margin-right: 0.5rem;
-  }
-`;
 
 interface ShareOptionsProps {
   title: string;
@@ -29,7 +22,7 @@ export const ShareOptions = ({ title, description }: ShareOptionsProps) => {
 
   return (
     <BetaFunctionality>
-      <StyledShareContainer>
+      <Box sx={{ display: 'flex', gap: '0.5rem' }}>
         <EmailShareButton
           url={url}
           subject={title}
@@ -50,7 +43,7 @@ export const ShareOptions = ({ title, description }: ShareOptionsProps) => {
         <TwitterShareButton url={url} title={title} data-testid={dataTestId.registrationLandingPage.twitterButton}>
           <TwitterIcon size={32} round />
         </TwitterShareButton>
-      </StyledShareContainer>
+      </Box>
     </BetaFunctionality>
   );
 };

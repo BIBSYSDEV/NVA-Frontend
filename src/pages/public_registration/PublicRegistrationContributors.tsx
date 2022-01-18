@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
-import styled from 'styled-components';
 import { Link as RouterLink } from 'react-router-dom';
-import { Button, IconButton, Link, Typography } from '@mui/material';
+import { Box, Button, IconButton, Link, Typography } from '@mui/material';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTranslation } from 'react-i18next';
@@ -11,30 +10,6 @@ import { Contributor } from '../../types/contributor.types';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
 import { mainContributorRolesPerType, splitMainContributors } from '../../utils/registration-helpers';
-
-const StyledContributorsGrid = styled.div`
-  display: grid;
-  align-items: start;
-  grid-template-columns: 1fr auto;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const StyledAffiliationsList = styled.ul`
-  margin-top: 0.5rem;
-  padding-left: 1rem;
-`;
-
-const StyedAffiliationListItem = styled.li`
-  display: flex;
-`;
-
-const StyledPublicRegistrationAuthors = styled.div`
-  padding-bottom: 1rem;
-  border-bottom: 1px solid;
-  margin-bottom: 1rem;
-`;
 
 interface PublicRegistrationContributorsProps {
   contributors: Contributor[];
@@ -60,8 +35,15 @@ export const PublicRegistrationContributors = ({
   const distinctUnits = getDistinctContributorUnits([...mainContributorsToShow, ...otherContributorsToShow]);
 
   return (
-    <StyledPublicRegistrationAuthors data-testid={dataTestId.registrationLandingPage.contributors}>
-      <StyledContributorsGrid>
+    <Box
+      data-testid={dataTestId.registrationLandingPage.contributors}
+      sx={{ pb: '1rem', borderBottom: '1px solid', mb: '1rem' }}>
+      <Box
+        sx={{
+          display: 'grid',
+          alignItems: 'start',
+          gridTemplateColumns: { xs: '1fr', sm: '1fr auto' },
+        }}>
         <div>
           <ContributorsRow
             contributors={mainContributorsToShow}
@@ -81,32 +63,19 @@ export const PublicRegistrationContributors = ({
             {showAll ? t('common:show_fewer') : t('common:show_all')}
           </Button>
         )}
-      </StyledContributorsGrid>
+      </Box>
 
-      <StyledAffiliationsList>
+      <Box sx={{ mt: '0.5rem', ml: '1rem' }}>
         {distinctUnits.map((unitUri, index) => (
-          <StyedAffiliationListItem key={unitUri}>
+          <Box key={unitUri} component="li" sx={{ display: 'flex', gap: '0.25rem' }}>
             <sup>{index + 1}</sup>
             <AffiliationHierarchy key={unitUri} unitUri={unitUri} commaSeparated />
-          </StyedAffiliationListItem>
+          </Box>
         ))}
-      </StyledAffiliationsList>
-    </StyledPublicRegistrationAuthors>
+      </Box>
+    </Box>
   );
 };
-
-const StyledContributorsList = styled.ul`
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-
-  > :not(:first-child) {
-    margin-left: 1rem;
-  }
-`;
 
 interface ContributorsRowProps {
   contributors: Contributor[];
@@ -126,7 +95,18 @@ const ContributorsRow = ({
   const { t } = useTranslation('registration');
 
   return (
-    <StyledContributorsList>
+    <Box
+      sx={{
+        listStyleType: 'none',
+        margin: 0,
+        padding: 0,
+        display: 'flex',
+        flexWrap: 'wrap',
+        alignItems: 'flex-end',
+        '> :not(:first-of-type)': {
+          ml: '1rem', // Use margin instead of gap to indent wrapped elements
+        },
+      }}>
       {isOtherContributors && <Typography component="li">{t('heading.contributors')}:</Typography>}
       {contributors.map((contributor, index) => {
         const {
@@ -167,6 +147,6 @@ const ContributorsRow = ({
       {otherCount && otherCount > 0 ? (
         <Typography component="li">{t('public_page.other_contributors', { count: otherCount })}</Typography>
       ) : null}
-    </StyledContributorsList>
+    </Box>
   );
 };
