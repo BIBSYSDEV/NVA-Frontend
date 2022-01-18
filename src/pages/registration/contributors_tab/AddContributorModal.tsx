@@ -1,4 +1,3 @@
-import { DataThresholdingOutlined } from '@mui/icons-material';
 import { MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
