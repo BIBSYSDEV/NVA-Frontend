@@ -1,3 +1,4 @@
+import { DataThresholdingOutlined } from '@mui/icons-material';
 import { MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +9,7 @@ import { Authority } from '../../../types/authority.types';
 import { ContributorRole } from '../../../types/contributor.types';
 import { AddContributorModalContent } from './components/AddContributorModalContent';
 import { CreateContributorModalContent } from './components/CreateContributorModalContent';
+import { dataTestId } from '../../../utils/dataTestIds'
 
 interface AddContributorModalProps {
   onContributorSelected: (authority: Authority, role: ContributorRole) => void;
@@ -76,7 +78,7 @@ export const AddContributorModal = ({
       dataTestId="contributor-modal">
       {contributorRoles.length > 1 && (
         <TextField
-          data-testid="select-contributor-type"
+          data-testid={dataTestId.registrationWizard.contributors.selectContributorType}
           sx={{ maxWidth: '15rem' }}
           value={selectedContributorRole}
           onChange={(event) => {
