@@ -8,7 +8,7 @@ import { Authority } from '../../../types/authority.types';
 import { ContributorRole } from '../../../types/contributor.types';
 import { AddContributorModalContent } from './components/AddContributorModalContent';
 import { CreateContributorModalContent } from './components/CreateContributorModalContent';
-import { dataTestId } from '../../../utils/dataTestIds'
+import { dataTestId } from '../../../utils/dataTestIds';
 
 interface AddContributorModalProps {
   onContributorSelected: (authority: Authority, role: ContributorRole) => void;
