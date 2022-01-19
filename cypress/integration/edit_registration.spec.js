@@ -1,3 +1,5 @@
+import { dataTestId } from "../../src/utils/dataTestIds";
+
 describe('User opens an item in the My Registrations list', () => {
   beforeEach('Given that the user is logged in as Creator:', () => {
     cy.visit('/');
@@ -11,7 +13,7 @@ describe('User opens an item in the My Registrations list', () => {
     // Edit registration
     // Description tab
     cy.get('[data-testid=edit-registration-12345678]').click({ force: true });
-    cy.get('[data-testid=registration-title-field] input').should(
+    cy.get(`[data-testid=${dataTestId.registrationWizard.description.registrationTitleField}] input`).should(
       'have.value',
       'Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting'
     );

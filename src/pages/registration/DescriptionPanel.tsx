@@ -10,6 +10,7 @@ import { DatePickerField } from './description_tab/DatePickerField';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
 import { InputContainerBox } from '../../components/styled/Wrappers';
+import { dataTestId } from '../../utils/dataTestIds';
 
 const DateAndLanguageWrapper = styled.div`
   display: grid;
@@ -35,7 +36,7 @@ export const DescriptionPanel = () => {
             id={field.name}
             value={field.value ?? ''}
             required
-            data-testid="registration-title-field"
+            data-testid={dataTestId.registrationWizard.description.registrationTitleField}
             variant="filled"
             fullWidth
             label={t('common:title')}
@@ -50,7 +51,7 @@ export const DescriptionPanel = () => {
             {...field}
             id={field.name}
             value={field.value ?? ''}
-            data-testid="registration-abstract-field"
+            data-testid={dataTestId.registrationWizard.description.registrationAbstractField}
             variant="filled"
             fullWidth
             multiline
@@ -65,7 +66,7 @@ export const DescriptionPanel = () => {
             {...field}
             id={field.name}
             value={field.value ?? ''}
-            data-testid="registration-description-field"
+            data-testid={dataTestId.registrationWizard.description.registrationDescriptionField}
             label={t('description.description_of_content')}
             multiline
             rows="4"
@@ -98,7 +99,7 @@ export const DescriptionPanel = () => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                data-testid="registration-tag-field"
+                data-testid={dataTestId.registrationWizard.description.registrationTagField}
                 label={t('description.keywords')}
                 helperText={t('description.keywords_helper')}
                 variant="filled"
@@ -120,7 +121,7 @@ export const DescriptionPanel = () => {
               {...field}
               id={field.name}
               value={field.value ?? ''}
-              data-testid="registration-language-field"
+              data-testid={dataTestId.registrationWizard.description.registrationLanguageField}
               fullWidth
               label={t('description.primary_language')}
               placeholder={t('description.primary_language')}

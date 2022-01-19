@@ -14,6 +14,7 @@ import { AuthorityList } from '../../../user/authority/AuthorityList';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { AuthorityApiPath } from '../../../../api/apiPaths';
 import { ContributorRole } from '../../../../types/contributor.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 const StyledDialogActions = styled.div`
   display: grid;
@@ -78,7 +79,7 @@ export const AddContributorModalContent = ({
       )}
       <TextField
         id="search"
-        data-testid="search-field"
+        data-testid={dataTestId.registrationWizard.contributors.searchField}
         variant="outlined"
         fullWidth
         value={searchTerm}
@@ -107,7 +108,7 @@ export const AddContributorModalContent = ({
 
       <StyledDialogActions>
         <StyledVerifyButton
-          data-testid="connect-author-button"
+          data-testid={dataTestId.registrationWizard.contributors.connectAuthorButton}
           disabled={!selectedAuthority}
           onClick={() => selectedAuthority && addContributor(selectedAuthority)}
           size="large"
