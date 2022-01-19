@@ -90,6 +90,7 @@ export const dataTestId = {
       verifyContributorButton: (name: string) => `button-set-unverified-contributor-${name}`,
       removeAffiliationButton: 'button-remove-affiliation',
       removeContributorButton: (name: string) => `button-remove-contributor-${name}`,
+      selectContributorType: 'select-contributor-type',
     },
     description: {
       addVocabularyButton: 'add-vocabulary-button',
