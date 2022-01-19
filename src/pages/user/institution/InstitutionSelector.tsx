@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-
+import { Box } from '@mui/system';
 import { Field, FieldProps } from 'formik';
 import { RecursiveInstitutionUnit } from '../../../types/institution.types';
 import { InstitutionAutocomplete } from '../../../components/institution/InstitutionAutocomplete';
-import { Box } from '@mui/system';
 
 const StyledInstitutionSelector = styled.div`
   width: 30rem;

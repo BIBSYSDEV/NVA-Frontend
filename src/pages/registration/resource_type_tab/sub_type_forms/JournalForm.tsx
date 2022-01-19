@@ -1,7 +1,6 @@
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import { TextField, Typography } from '@mui/material';
+import { Box, TextField, Typography } from '@mui/material';
 import { JournalType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { DoiField } from '../components/DoiField';
 import { NviValidation } from '../components/NviValidation';
@@ -12,22 +11,6 @@ import { JournalRegistration } from '../../../../types/publication_types/journal
 import { JournalField } from '../components/JournalField';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { InputContainerBox } from '../../../../components/styled/Wrappers';
-
-const StyledArticleDetail = styled.div`
-  display: grid;
-  grid-template-areas: 'volume issue from to or article';
-  grid-column-gap: 1rem;
-  align-content: center;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-areas: 'volume' 'issue' 'from' 'to' 'or' 'article';
-  }
-`;
-
-const StyledLabel = styled(Typography)`
-  margin-top: 1rem;
-  align-self: center;
-  justify-self: center;
-`;
 
 export const JournalForm = () => {
   const { t } = useTranslation('registration');
@@ -52,7 +35,13 @@ export const JournalForm = () => {
           <JournalField />
         )}
 
-        <StyledArticleDetail>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', sm: 'repeat(4,1fr) auto 1fr' },
+            gap: '1rem',
+            alignItems: 'center',
+          }}>
           <Field name={ResourceFieldNames.Volume}>
             {({ field, meta: { error, touched } }: FieldProps) => (
               <TextField
@@ -113,7 +102,7 @@ export const JournalForm = () => {
             )}
           </Field>
 
-          <StyledLabel>{t('resource_type.or')}</StyledLabel>
+          <Typography>{t('resource_type.or')}</Typography>
 
           <Field name={ResourceFieldNames.ArticleNumber}>
             {({ field, meta: { error, touched } }: FieldProps) => (
@@ -129,7 +118,7 @@ export const JournalForm = () => {
               />
             )}
           </Field>
-        </StyledArticleDetail>
+        </Box>
       </InputContainerBox>
 
       {instanceType === JournalType.Article && (

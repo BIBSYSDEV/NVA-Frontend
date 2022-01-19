@@ -2,7 +2,6 @@ import { ChangeEvent, MouseEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import styled from 'styled-components';
 import {
   Button,
   Table,
@@ -25,14 +24,6 @@ import { RegistrationPreview, RegistrationStatus } from '../../types/registratio
 import { getRegistrationLandingPagePath, getRegistrationPath } from '../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
-
-const StyledTypography = styled(Typography)`
-  font-weight: bold;
-`;
-
-const StyledLabel = styled(StyledTypography)`
-  min-width: 12rem;
-`;
 
 interface MyRegistrationsListProps {
   registrations: RegistrationPreview[];
@@ -84,13 +75,13 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
           <TableHead>
             <TableRow>
               <TableCell data-testid="header-registration-title">
-                <StyledLabel>{t('title')}</StyledLabel>
+                <Typography sx={{ fontWeight: 'bold', minWidth: '12rem' }}>{t('title')}</Typography>
               </TableCell>
               <TableCell data-testid="header-registration-status">
-                <StyledTypography>{t('status')}</StyledTypography>
+                <Typography fontWeight="bold">{t('status')}</Typography>
               </TableCell>
               <TableCell data-testid="header-registration-created">
-                <StyledTypography>{t('created_date')}</StyledTypography>
+                <Typography fontWeight="bold">{t('created_date')}</Typography>
               </TableCell>
               <TableCell />
               <TableCell />

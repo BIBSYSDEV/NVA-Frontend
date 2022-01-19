@@ -1,23 +1,11 @@
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import { TextField, Typography, Button } from '@mui/material';
+import { TextField, Typography, Button, Box } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
-
-const StyledDoiRow = styled.div`
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 1rem;
-  align-items: center;
-`;
-
-const StyledTypography = styled(Typography)`
-  white-space: pre-wrap;
-`;
 
 export const DoiField = () => {
   const { t } = useTranslation('registration');
@@ -37,7 +25,7 @@ export const DoiField = () => {
   const referenceDoi = values.entityDescription?.reference?.doi ?? '';
 
   return doi || referenceDoi ? (
-    <StyledDoiRow>
+    <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '1rem', alignItems: 'center' }}>
       <TextField
         id="doi-field"
         data-testid="doi-field"
@@ -60,8 +48,8 @@ export const DoiField = () => {
         onAccept={removeDoi}
         onCancel={toggleConfirmDialog}
         dataTestId="confirm-delete-doi-dialog">
-        <StyledTypography>{t('resource_type.remove_doi_text')}</StyledTypography>
+        <Typography>{t('resource_type.remove_doi_text')}</Typography>
       </ConfirmDialog>
-    </StyledDoiRow>
+    </Box>
   ) : null;
 };

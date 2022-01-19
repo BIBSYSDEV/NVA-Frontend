@@ -36,3 +36,14 @@ export const BackgroundDiv = styled(Box)(({ theme }) => ({
   },
   padding: '1rem 2rem',
 }));
+
+export const StyledGeneralInfo = styled('div')(({ theme }) => ({
+  marginBottom: '1rem',
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  columnGap: '1rem',
+
+  [theme.breakpoints.down('sm')]: {
+    gridTemplateColumns: '1fr',
+  },
+}));

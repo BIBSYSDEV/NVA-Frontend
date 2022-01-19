@@ -4,7 +4,6 @@ import { AccordionActions, AccordionDetails, AccordionSummary, Typography } from
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CloudUploadIcon from '@mui/icons-material/CloudUploadOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useUppy } from '@uppy/react';
@@ -20,10 +19,6 @@ import { UploadedFileRow } from './UploadedFileRow';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { StartRegistrationAccordionProps } from './LinkRegistration';
-
-const StyledRegistrationAccorion = styled(RegistrationAccordion)`
-  border-color: ${({ theme }) => theme.palette.secondary.main};
-`;
 
 export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
   const { t, i18n } = useTranslation('registration');
@@ -51,7 +46,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
   };
 
   return (
-    <StyledRegistrationAccorion expanded={expanded} onChange={onChange}>
+    <RegistrationAccordion expanded={expanded} onChange={onChange} sx={{ borderColor: 'secondary.main' }}>
       <AccordionSummary
         data-testid={dataTestId.registrationWizard.new.fileAccordion}
         expandIcon={<ExpandMoreIcon fontSize="large" />}>
@@ -101,6 +96,6 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
           {t('registration.start_registration')}
         </LoadingButton>
       </AccordionActions>
-    </StyledRegistrationAccorion>
+    </RegistrationAccordion>
   );
 };

@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { AuthorityQualifiers, updateQualifierIdForAuthority } from '../../../api/authorityApi';
@@ -16,32 +15,6 @@ import { RootStore } from '../../../redux/reducers/rootReducer';
 import { FormikInstitutionUnit } from '../../../types/institution.types';
 import { getMostSpecificUnit } from '../../../utils/institutions-helpers';
 import { cristinBaseId, isErrorStatus, isSuccessStatus } from '../../../utils/constants';
-
-const StyledCard = styled(Card)`
-  display: grid;
-  grid-template-areas: 'text button';
-  grid-template-columns: auto 7rem;
-  margin-top: 0.5rem;
-  padding: 0.5rem;
-  min-height: 5rem;
-  border-radius: 4px;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-areas: 'text' 'button';
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-`;
-
-const StyledTextContainer = styled.div`
-  grid-area: text;
-`;
-
-const StyledButtonContainer = styled(StyledRightAlignedWrapper)`
-  grid-area: button;
-  align-items: center;
-  display: grid;
-  gap: 1rem;
-`;
 
 interface InstitutionCardProps {
   orgunitId: string;
@@ -98,11 +71,11 @@ export const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: Institu
       />
     </Card>
   ) : (
-    <StyledCard data-testid="institution-presentation">
-      <StyledTextContainer>
+    <Card data-testid="institution-presentation">
+      <Box>
         <AffiliationHierarchy unitUri={orgunitId} />
-      </StyledTextContainer>
-      <StyledButtonContainer>
+      </Box>
+      <StyledRightAlignedWrapper sx={{ mt: '0.5rem' }}>
         {orgunitId.includes(cristinBaseId) && (
           <Button
             variant="outlined"
@@ -120,7 +93,7 @@ export const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: Institu
           onClick={() => setInstitutionIdToRemove(orgunitId)}>
           {t('remove')}
         </Button>
-      </StyledButtonContainer>
-    </StyledCard>
+      </StyledRightAlignedWrapper>
+    </Card>
   );
 };

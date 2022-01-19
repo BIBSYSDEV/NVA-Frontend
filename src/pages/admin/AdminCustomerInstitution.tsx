@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { PageHeader } from '../../components/PageHeader';
 import { BackgroundDiv, SyledPageContent } from '../../components/styled/Wrappers';
 import { CustomerInstitution, emptyCustomerInstitution } from '../../types/customerInstitution.types';
@@ -9,11 +8,6 @@ import { CustomerInstitutionMetadataForm } from './CustomerInstitutionMetadataFo
 import { useFetch } from '../../utils/hooks/useFetch';
 import { InstitutionUser } from '../../types/user.types';
 import { RoleApiPath } from '../../api/apiPaths';
-
-const StyledCustomerInstitution = styled.section`
-  display: flex;
-  flex-direction: column;
-`;
 
 interface AdminCustomerInstitutionProps {
   customerId: string;
@@ -39,25 +33,23 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
         {t(editMode ? 'edit_institution' : 'add_institution')}
       </PageHeader>
 
-      <StyledCustomerInstitution>
-        {isLoadingCustomerInstitution ? (
-          <PageSpinner />
-        ) : (
-          <BackgroundDiv>
-            <CustomerInstitutionMetadataForm
-              customerInstitution={customerInstitution ?? emptyCustomerInstitution}
-              editMode={editMode}
+      {isLoadingCustomerInstitution ? (
+        <PageSpinner />
+      ) : (
+        <BackgroundDiv>
+          <CustomerInstitutionMetadataForm
+            customerInstitution={customerInstitution ?? emptyCustomerInstitution}
+            editMode={editMode}
+          />
+          {editMode && (
+            <CustomerInstitutionAdminsForm
+              users={users ?? []}
+              refetchInstitutionUsers={refetchInstitutionUsers}
+              isLoadingUsers={isLoadingUsers}
             />
-            {editMode && (
-              <CustomerInstitutionAdminsForm
-                users={users ?? []}
-                refetchInstitutionUsers={refetchInstitutionUsers}
-                isLoadingUsers={isLoadingUsers}
-              />
-            )}
-          </BackgroundDiv>
-        )}
-      </StyledCustomerInstitution>
+          )}
+        </BackgroundDiv>
+      )}
     </SyledPageContent>
   );
 };

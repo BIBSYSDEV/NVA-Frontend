@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { Typography } from '@mui/material';
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import PeopleIcon from '@mui/icons-material/People';
@@ -9,10 +8,6 @@ import CreateIcon from '@mui/icons-material/Create';
 import { User } from '../../types/user.types';
 import { IconLabelTextLine } from '../../components/IconLabelTextLine';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-
-const StyledTypography = styled(Typography)`
-  color: ${({ theme }) => theme.palette.error.main};
-`;
 
 interface UserRolesProps {
   user: User;
@@ -30,10 +25,16 @@ export const UserRoles = ({ user }: UserRolesProps) => {
         !isInstitutionAdmin &&
         !isEditor &&
         !isCurator &&
-        !isCreator && <StyledTypography data-testid="no-roles-text">{t('roles.no_roles')}</StyledTypography>
+        !isCreator && (
+          <Typography data-testid="no-roles-text" sx={{ color: 'error.main' }}>
+            {t('roles.no_roles')}
+          </Typography>
+        )
       ) : (
         <>
-          <StyledTypography data-testid="not-customer-text">{t('roles.not_customer')}</StyledTypography>
+          <Typography data-testid="not-customer-text" sx={{ color: 'error.main' }}>
+            {t('roles.not_customer')}
+          </Typography>
           <Typography>
             {t('common:name')}: {user.institution}
           </Typography>

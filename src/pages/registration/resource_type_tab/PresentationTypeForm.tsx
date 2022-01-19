@@ -1,7 +1,6 @@
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, Box, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import countries from 'i18n-iso-countries';
 import enCountries from 'i18n-iso-countries/langs/en.json';
 import nbCountries from 'i18n-iso-countries/langs/nb.json';
@@ -15,23 +14,6 @@ import { PeriodFields } from './components/PeriodFields';
 
 countries.registerLocale(enCountries);
 countries.registerLocale(nbCountries);
-
-const StyledDatePickersContainer = styled.div`
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    display: flex;
-    flex-direction: column;
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    div:first-child {
-      margin-right: 10rem;
-    }
-  }
-`;
-
-const StyledFlagImg = styled.img`
-  margin-right: 1rem;
-`;
 
 interface PresentationTypeFormProps {
   onChangeSubType: (type: string) => void;
@@ -120,7 +102,9 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                 getOptionLabel={(option) => option.label}
                 renderOption={(props, option) => (
                   <li {...props}>
-                    <StyledFlagImg
+                    <Box
+                      component="img"
+                      sx={{ mr: '1rem' }}
                       loading="lazy"
                       src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
                       alt={option.code}
@@ -144,13 +128,13 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
             )}
           </Field>
 
-          <StyledDatePickersContainer>
+          <Box sx={{ display: 'flex', gap: '1rem' }}>
             <PeriodFields
               fromFieldName={ResourceFieldNames.PublicationContextTimeFrom}
               toFieldName={ResourceFieldNames.PublicationContextTimeTo}
               variant="filled"
             />
-          </StyledDatePickersContainer>
+          </Box>
         </>
       )}
     </>

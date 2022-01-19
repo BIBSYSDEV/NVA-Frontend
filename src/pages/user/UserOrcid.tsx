@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Button, IconButton, Typography, Link as MuiLink } from '@mui/material';
+import { Button, IconButton, Typography, Link as MuiLink, Box } from '@mui/material';
 import { Skeleton } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
@@ -22,27 +21,6 @@ import { User } from '../../types/user.types';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-
-const StyledOrcidLine = styled.div`
-  display: grid;
-  grid-template-areas: 'text button';
-  grid-template-columns: 2fr 1fr;
-  align-items: center;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-areas: 'text' 'button';
-    grid-template-columns: 1fr;
-  }
-`;
-
-const StyledButton = styled(Button)`
-  justify-self: right;
-`;
-
-const StyledLine = styled.div`
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-`;
 
 interface UserOrcidProps {
   user: User;
@@ -139,8 +117,15 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         <Skeleton width="50%" />
       ) : listOfOrcids.length > 0 ? (
         listOfOrcids.map((orcid) => (
-          <StyledOrcidLine key={orcid} data-testid="orcid-line">
-            <StyledLine>
+          <Box
+            key={orcid}
+            data-testid="orcid-line"
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', sm: '1fr auto' },
+              alignItems: 'center',
+            }}>
+            <Box sx={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
               <IconButton size="small" href={orcid}>
                 <img src={orcidIcon} height="20" alt="orcid" />
               </IconButton>
@@ -152,16 +137,16 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
                 rel="noopener noreferrer">
                 {orcid}
               </Typography>
-            </StyledLine>
+            </Box>
 
-            <StyledButton
+            <Button
               color="error"
               data-testid="button-confirm-delete-orcid"
               onClick={toggleConfirmDialog}
               startIcon={<DeleteIcon />}
               variant="outlined">
               {t('common:remove')}
-            </StyledButton>
+            </Button>
 
             <ConfirmDialog
               open={openConfirmDialog}
@@ -177,7 +162,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
                 </MuiLink>
               </Typography>
             </ConfirmDialog>
-          </StyledOrcidLine>
+          </Box>
         ))
       ) : (
         <>

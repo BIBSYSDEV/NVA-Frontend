@@ -1,16 +1,8 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { hrcsActivities } from '../../../../resources/vocabularies/hrcsActivities';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { VocabularyAutocomplete, VocabularyComponentProps } from './VocabularyAutocomplete';
-
-const StyledOptionText = styled(Typography)<{ indentations: number }>`
-  ${({ indentations }) => `
-    padding-left: ${indentations * 1.5}rem;
-    font-weight: ${indentations === 0 ? 500 : 400};
-    `}
-`;
 
 export const hrcsActivityOptions = hrcsActivities.categories
   .map((category) => {
@@ -33,7 +25,9 @@ export const HrcsActivityInput = (props: VocabularyComponentProps) => {
         const indentsCount = option.cristinIdentifier.split('.').length - 1;
         return (
           <li {...props} key={option.id}>
-            <StyledOptionText indentations={indentsCount}>{getLanguageString(option.label)}</StyledOptionText>
+            <Typography sx={{ pl: `${indentsCount * 1.5}rem`, fontWeight: indentsCount === 0 ? 500 : 400 }}>
+              {getLanguageString(option.label)}
+            </Typography>
           </li>
         );
       }}

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import styled from 'styled-components';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -15,19 +14,6 @@ import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { MessageList } from './MessageList';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { RootStore } from '../../redux/reducers/rootReducer';
-
-const StyledAccordion = styled(Accordion)`
-  .MuiAccordionSummary-content {
-    display: grid;
-    grid-template-areas: 'status title creator';
-    grid-template-columns: 1fr 5fr 1fr;
-    grid-column-gap: 1rem;
-  }
-
-  .MuiAccordionDetails-root {
-    justify-content: space-between;
-  }
-`;
 
 interface SupportRequestAccordionProps {
   messageCollection: MessageCollection;
@@ -59,8 +45,17 @@ export const SupportRequestAccordion = ({ messageCollection, registration }: Sup
   };
 
   return (
-    <StyledAccordion data-testid={`message-${identifier}`}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
+    <Accordion data-testid={`message-${identifier}`}>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon fontSize="large" />}
+        sx={{
+          '.MuiAccordionSummary-content': {
+            display: 'grid',
+            gridTemplateAreas: '"status title creator"',
+            gridTemplateColumns: '1fr 5fr 1fr',
+            columnGap: '1rem',
+          },
+        }}>
         <Typography data-testid={`message-type-${identifier}`} sx={{ gridArea: 'status', fontWeight: 'bold' }}>
           {messageCollection.messageType === MessageType.DoiRequest
             ? t('types.doi')
@@ -92,6 +87,6 @@ export const SupportRequestAccordion = ({ messageCollection, registration }: Sup
           </Button>
         </Box>
       </AccordionDetails>
-    </StyledAccordion>
+    </Accordion>
   );
 };
