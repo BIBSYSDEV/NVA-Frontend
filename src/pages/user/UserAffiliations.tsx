@@ -12,10 +12,10 @@ import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { BackgroundDiv, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../redux/actions/userActions';
-import { InstitutionCard } from './institution/InstitutionCard';
 import { User } from '../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { SelectInstitutionForm } from '../../components/institution/SelectInstitutionForm';
+import { InstitutionCard } from './InstitutionCard';
 
 interface UserInstituionProps {
   user: User;
