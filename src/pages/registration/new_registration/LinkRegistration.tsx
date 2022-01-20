@@ -52,7 +52,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
   };
 
   return (
-    <RegistrationAccordion expanded={expanded} onChange={onChange} sx={{ borderColor: 'primary.main' }}>
+    <RegistrationAccordion elevation={5} expanded={expanded} onChange={onChange} sx={{ borderColor: 'primary.main' }}>
       <AccordionSummary
         data-testid={dataTestId.registrationWizard.new.linkAccordion}
         expandIcon={<ExpandMoreIcon fontSize="large" />}>

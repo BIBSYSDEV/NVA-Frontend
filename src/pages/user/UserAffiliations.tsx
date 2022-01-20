@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Button, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import {
   addQualifierIdForAuthority,
@@ -97,14 +97,16 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
     <>
       <BackgroundDiv>
         <Typography variant="h2">{t('heading.affiliations')}</Typography>
-        {user.authority?.orgunitids &&
-          user.authority.orgunitids.map((orgunitId) => (
-            <InstitutionCard
-              key={orgunitId}
-              orgunitId={orgunitId}
-              setInstitutionIdToRemove={setInstitutionIdToRemove}
-            />
-          ))}
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '1rem' }}>
+          {user.authority?.orgunitids &&
+            user.authority.orgunitids.map((orgunitId) => (
+              <InstitutionCard
+                key={orgunitId}
+                orgunitId={orgunitId}
+                setInstitutionIdToRemove={setInstitutionIdToRemove}
+              />
+            ))}
+        </Box>
 
         {openAddInstitutionForm ? (
           <SelectInstitutionForm onSubmit={handleAddInstitution} onClose={toggleUnitForm} />

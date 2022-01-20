@@ -13,7 +13,7 @@ export const UploadedFileRow = ({ file, removeFile }: UploadedFileRowProps) => {
 
   return (
     <Box data-testid="uploaded-file" sx={{ display: 'flex', justifyContent: 'space-between' }}>
-      <Typography>{file.name}</Typography>
+      <Typography sx={{ wordBreak: 'break-all', mr: '1rem' }}>{file.name}</Typography>
       <Button
         color="error"
         data-testid="button-remove-file"

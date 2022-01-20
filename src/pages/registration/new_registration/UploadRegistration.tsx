@@ -46,7 +46,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
   };
 
   return (
-    <RegistrationAccordion expanded={expanded} onChange={onChange} sx={{ borderColor: 'secondary.main' }}>
+    <RegistrationAccordion elevation={5} expanded={expanded} onChange={onChange}>
       <AccordionSummary
         data-testid={dataTestId.registrationWizard.new.fileAccordion}
         expandIcon={<ExpandMoreIcon fontSize="large" />}>

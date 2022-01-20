@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Paper } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { AuthorityQualifiers, updateQualifierIdForAuthority } from '../../../api/authorityApi';
-import { Card } from '../../../components/Card';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import { EditInstitution } from '../../../components/institution/EditInstitution';
 import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
@@ -63,15 +62,15 @@ export const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: Institu
   };
 
   return openEditForm ? (
-    <Card>
+    <Paper sx={{ p: '1rem' }}>
       <EditInstitution
         initialInstitutionId={orgunitId}
         onSubmit={(values) => handleEditInstitution(values, orgunitId)}
         onCancel={() => setOpenEditForm(false)}
       />
-    </Card>
+    </Paper>
   ) : (
-    <Card data-testid="institution-presentation">
+    <Paper elevation={3} data-testid="institution-presentation" sx={{ p: '1rem' }}>
       <Box>
         <AffiliationHierarchy unitUri={orgunitId} />
       </Box>
@@ -94,6 +93,6 @@ export const InstitutionCard = ({ orgunitId, setInstitutionIdToRemove }: Institu
           {t('remove')}
         </Button>
       </StyledRightAlignedWrapper>
-    </Card>
+    </Paper>
   );
 };

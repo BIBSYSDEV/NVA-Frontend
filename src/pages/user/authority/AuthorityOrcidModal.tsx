@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import { AuthorityModal } from './AuthorityModal';
 import { OrcidModal } from './OrcidModal';
 import { User } from '../../../types/user.types';

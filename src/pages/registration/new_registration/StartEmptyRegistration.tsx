@@ -33,7 +33,7 @@ export const StartEmptyRegistration = ({ expanded, onChange }: StartRegistration
   };
 
   return (
-    <RegistrationAccordion expanded={expanded} onChange={onChange} sx={{ borderColor: 'primary.main' }}>
+    <RegistrationAccordion elevation={5} expanded={expanded} onChange={onChange} sx={{ borderColor: 'primary.main' }}>
       <AccordionSummary
         data-testid={dataTestId.registrationWizard.new.emptyRegistrationAccordion}
         expandIcon={<ExpandMoreIcon fontSize="large" />}>

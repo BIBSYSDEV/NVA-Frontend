@@ -2,8 +2,7 @@ import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
-import { Button, IconButton, Tooltip, Typography } from '@mui/material';
+import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import RemoveIcon from '@mui/icons-material/HighlightOff';
 import WarningIcon from '@mui/icons-material/Warning';
@@ -17,26 +16,6 @@ import { Registration } from '../../../../types/registration.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { SelectInstitutionForm } from '../../../../components/institution/SelectInstitutionForm';
 import { dataTestId } from '../../../../utils/dataTestIds';
-
-const StyledAffiliationsCell = styled.div`
-  grid-area: affiliation;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-`;
-
-const StyledCard = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const StyledAddAffiliationButton = styled(Button)`
-  grid-area: add-affiliation;
-  display: flex;
-  justify-content: flex-start;
-`;
 
 interface AffiliationsCellProps {
   affiliations?: Institution[];
@@ -95,9 +74,22 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
   };
 
   return (
-    <StyledAffiliationsCell>
+    <Box
+      sx={{
+        gridArea: 'affiliation',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0.5rem',
+      }}>
       {affiliations?.map((affiliation, index) => (
-        <StyledCard key={affiliation.id ?? index}>
+        <Box
+          key={affiliation.id ?? index}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '0.5rem',
+          }}>
           {affiliation.id ? (
             <AffiliationHierarchy unitUri={affiliation.id} />
           ) : (
@@ -125,15 +117,19 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
               <RemoveIcon />
             </IconButton>
           </Tooltip>
-        </StyledCard>
+        </Box>
       ))}
-      <StyledAddAffiliationButton
+      <Button
         size="small"
         data-testid={dataTestId.registrationWizard.contributors.addAffiliationButton}
         startIcon={<AddIcon />}
-        onClick={toggleAffiliationModal}>
+        onClick={toggleAffiliationModal}
+        sx={{
+          gridArea: 'add-affiliation',
+          justifyContent: 'flex-start',
+        }}>
         {t('contributors.add_affiliation')}
-      </StyledAddAffiliationButton>
+      </Button>
 
       {/* Modal for adding affiliation */}
       <Modal
@@ -176,6 +172,6 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
         dataTestId="confirm-remove-affiliation-dialog">
         <Typography>{t('contributors.confirm_remove_affiliation_text')}</Typography>
       </ConfirmDialog>
-    </StyledAffiliationsCell>
+    </Box>
   );
 };

@@ -1,25 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import styled from 'styled-components';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { visuallyHidden } from '@mui/utils';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { getAdminInstitutionPath } from '../../utils/urlPaths';
 
-const StyledTable = styled(Table)`
-  width: 100%;
-`;
-
-const StyledSmallCell = styled(TableCell)`
-  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    min-width: 9rem;
-  }
-`;
-
-const StyledTypography = styled(Typography)`
-  font-weight: bold;
-`;
 interface InstitutionListProps {
   institutions: CustomerInstitution[];
 }
@@ -29,17 +15,17 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
 
   return (
     <TableContainer>
-      <StyledTable data-testid="customer-institutions-list">
+      <Table data-testid="customer-institutions-list">
         <caption>
           <span style={visuallyHidden}>{t('admin:admin_institutions')}</span>
         </caption>
         <TableHead>
           <TableRow>
             <TableCell>
-              <StyledTypography>{t('name')}</StyledTypography>
+              <Typography fontWeight="bold">{t('name')}</Typography>
             </TableCell>
             <TableCell>
-              <StyledTypography>{t('date')}</StyledTypography>
+              <Typography fontWeight="bold">{t('date')}</Typography>
             </TableCell>
             <TableCell />
           </TableRow>
@@ -50,9 +36,9 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
               <TableCell component="th" scope="row">
                 <Typography>{institution.name}</Typography>
               </TableCell>
-              <StyledSmallCell>
+              <TableCell>
                 <Typography>{new Date(institution.createdDate).toLocaleDateString()}</Typography>
-              </StyledSmallCell>
+              </TableCell>
               <TableCell>
                 <Button
                   variant="outlined"
@@ -66,7 +52,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
             </TableRow>
           ))}
         </TableBody>
-      </StyledTable>
+      </Table>
     </TableContainer>
   );
 };
