@@ -97,7 +97,7 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
     <>
       <BackgroundDiv>
         <Typography variant="h2">{t('heading.affiliations')}</Typography>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '1rem' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', my: '1rem' }}>
           {user.authority?.orgunitids &&
             user.authority.orgunitids.map((orgunitId) => (
               <InstitutionCard
