@@ -8,6 +8,7 @@ import { ProjectContributors } from './ProjectContributors';
 import { ProjectGeneralInfo } from './ProjectGeneralInfo';
 import { ProjectSummary } from './ProjectSummary';
 import { ProjectResultsAccordion } from './ProjectResultsAccordion';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 
 interface ProjectLandingPageProps {
   project: CristinProject;
@@ -17,7 +18,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
   const { t } = useTranslation('project');
 
   return (
-    <>
+    <BackgroundDiv>
       <ItalicPageHeader
         superHeader={{ title: `${t('project')} - ${t(`status.${project.status}`)}`, icon: <AccountTreeIcon /> }}>
         {project.title}
@@ -41,6 +42,6 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
       </LandingPageAccordion>
 
       <ProjectResultsAccordion projectId={project.id} />
-    </>
+    </BackgroundDiv>
   );
 };
