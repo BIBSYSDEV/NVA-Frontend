@@ -9,7 +9,7 @@ interface DownloadFileResponse {
   expires: string;
 }
 
-export const downloadFile = async (registrationIdentifier: string, fileId: string) => {
+export const downloadPublicFile = async (registrationIdentifier: string, fileId: string) => {
   const authenticatedResponse = await apiRequest<DownloadFileResponse>({
     url: `${FileApiPath.PublicDownload}/${registrationIdentifier}/files/${fileId}`,
   });
