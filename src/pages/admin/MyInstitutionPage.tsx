@@ -8,8 +8,9 @@ import { ListSkeleton } from '../../components/ListSkeleton';
 import { PageHeader } from '../../components/PageHeader';
 import {
   InputContainerBox,
-  StyledPageWrapperWithMaxWidth,
+  SyledPageContent,
   StyledRightAlignedWrapper,
+  BackgroundDiv,
 } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -21,7 +22,6 @@ import {
 import { myInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
 import { CustomerInstitutionTextField } from './customerInstitutionFields/CustomerInstitutionTextField';
 import { SelectInstitutionField } from './customerInstitutionFields/SelectInstitutionField';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -51,7 +51,7 @@ const MyCustomerInstitutionPage = () => {
   };
 
   return (
-    <StyledPageWrapperWithMaxWidth>
+    <SyledPageContent>
       <PageHeader>{t('common:my_institution')}</PageHeader>
       <BackgroundDiv>
         {isLoadingCustomerInstitution ? (
@@ -101,7 +101,7 @@ const MyCustomerInstitutionPage = () => {
           </Formik>
         )}
       </BackgroundDiv>
-    </StyledPageWrapperWithMaxWidth>
+    </SyledPageContent>
   );
 };
 

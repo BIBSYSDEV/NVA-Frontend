@@ -1,11 +1,10 @@
 import { Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { CristinProject, ProjectSearchResponse, ResearchProject } from '../../../../types/project.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
@@ -61,14 +60,14 @@ export const ProjectsField = () => {
           loading={isLoadingProjects}
           renderOption={(props, option: CristinProject, state) => (
             <li {...props}>
-              <StyledFlexColumn data-testid={`project-option-${option.id}`}>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }} data-testid={`project-option-${option.id}`}>
                 <Typography variant="subtitle1">
                   <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
                   {getLanguageString(option.coordinatingInstitution.name)}
                 </Typography>
-              </StyledFlexColumn>
+              </Box>
             </li>
           )}
           renderInput={(params) => (

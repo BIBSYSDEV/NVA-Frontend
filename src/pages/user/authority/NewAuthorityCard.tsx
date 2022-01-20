@@ -1,60 +1,13 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
-import { Button, Radio, Typography } from '@mui/material';
+import { Box, Button, Radio, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { createAuthority } from '../../../api/authorityApi';
-import { StyledTypographyPreWrapped } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../../redux/actions/userActions';
 import { User } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
-
-const StyledBoxContent = styled.div`
-  display: grid;
-  grid-template-areas:
-    'authority authority authority'
-    'description description description'
-    'cancel-button . create-button';
-  grid-template-columns: 1fr 3fr 3fr;
-  padding: 1rem;
-  align-items: center;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-areas: 'authority' 'description' 'create-button' 'cancel-button';
-    grid-template-columns: 1fr;
-    padding: 0;
-  }
-`;
-
-const StyledAuthority = styled.div`
-  grid-area: authority;
-`;
-
-const StyledLabel = styled(Typography)`
-  display: inline-grid;
-`;
-
-const StyledDescription = styled(StyledTypographyPreWrapped)`
-  grid-area: description;
-  margin-left: 0.7rem;
-`;
-
-const StyledSaveButton = styled(LoadingButton)`
-  grid-area: create-button;
-  margin-top: 2rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    margin-top: 1rem;
-  }
-`;
-
-const StyledCancelButton = styled(Button)`
-  grid-area: cancel-button;
-  margin-top: 2rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    margin-top: 1rem;
-  }
-`;
 
 interface NewAuthorityCardProps {
   user: User;
@@ -83,34 +36,48 @@ export const NewAuthorityCard = ({ onClickCancel, user }: NewAuthorityCardProps)
   };
 
   return (
-    <StyledBoxContent>
-      <StyledAuthority>
+    <Box
+      sx={{
+        display: 'grid',
+        gridTemplateAreas: {
+          xs: "'authority' 'description' 'create-button' 'cancel-button'",
+          sm: `
+          'authority authority authority'
+          'description description description'
+          'cancel-button . create-button'`,
+        },
+        gridTemplateColumns: { xs: '1fr', sm: '1fr 3fr auto' },
+        gap: '1rem',
+      }}>
+      <Box sx={{ gridArea: 'authority' }}>
         <Radio checked />
-        <StyledLabel>{name}</StyledLabel>
-      </StyledAuthority>
-      <StyledDescription>
+        <Typography sx={{ display: 'inline-grid' }}>{name}</Typography>
+      </Box>
+      <Typography sx={{ whiteSpace: 'pre-wrap', gridArea: 'description', mx: '0.7rem' }}>
         {hasMatchingAuthorities
           ? t('authority.description_create_own_authority')
           : t('authority.description_no_authority_found')}
-      </StyledDescription>
-      <StyledSaveButton
+      </Typography>
+      <LoadingButton
         data-testid="create-author-button"
         variant="contained"
         size="large"
         loading={isLoading}
-        onClick={handleCreateAuthority}>
+        onClick={handleCreateAuthority}
+        sx={{ gridArea: 'create-button' }}>
         {t('authority.create_authority')}
-      </StyledSaveButton>
+      </LoadingButton>
       {hasMatchingAuthorities && (
-        <StyledCancelButton
+        <Button
           data-testid="cancel-create-author-button"
           variant="outlined"
           size="large"
           disabled={isLoading}
-          onClick={onClickCancel}>
+          onClick={onClickCancel}
+          sx={{ gridArea: 'cancel-button' }}>
           {t('common:cancel')}
-        </StyledCancelButton>
+        </Button>
       )}
-    </StyledBoxContent>
+    </Box>
   );
 };

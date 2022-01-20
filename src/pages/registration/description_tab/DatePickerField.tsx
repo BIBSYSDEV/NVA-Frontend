@@ -1,7 +1,6 @@
 import { FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { Checkbox, FormControlLabel, Typography, TextField } from '@mui/material';
 import { LocalizationProvider, DatePicker } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -10,11 +9,6 @@ import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { EntityDescription, Registration, RegistrationDate } from '../../../types/registration.types';
 import { getDateFnsLocale } from '../../../utils/date-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
-
-const StyledFormControlLabel = styled(FormControlLabel)`
-  margin-left: 0.5rem;
-  height: 100%; /* Ensure this element is as high as the DatePicker for centering */
-`;
 
 export const DatePickerField = () => {
   const { t, i18n } = useTranslation('registration');
@@ -97,7 +91,8 @@ export const DatePickerField = () => {
           )}
         />
       </LocalizationProvider>
-      <StyledFormControlLabel
+      <FormControlLabel
+        sx={{ alignSelf: 'start', mt: '0.4rem' }} // Center field regardless of error state of published date field
         control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} />}
         label={<Typography>{t('description.year_only')}</Typography>}
       />

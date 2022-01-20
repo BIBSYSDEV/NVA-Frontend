@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import TextTruncate from 'react-text-truncate';
-import styled from 'styled-components';
+import { styled } from '@mui/system';
 import {
+  Box,
   Radio,
   Skeleton,
   Table,
@@ -23,12 +24,12 @@ import { AlmaRegistration } from '../../../types/registration.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { AlmaApiPath } from '../../../api/apiPaths';
 
-const StyledTableCell = styled(TableCell)`
-  min-width: 12rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    min-width: auto;
-  }
-`;
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  minWidth: '12rem',
+  [theme.breakpoints.down('md')]: {
+    minWidth: 'auto',
+  },
+}));
 
 interface AuthorityListProps {
   authorities: Authority[];
@@ -109,17 +110,6 @@ export const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, sele
   );
 };
 
-const StyledTooltip = styled(Tooltip)`
-  padding-top: 0.5rem;
-`;
-
-const StyledTitle = styled.div`
-  display: grid;
-  grid-template-columns: 9fr 1fr;
-  gap: 0.5rem;
-  align-items: center;
-`;
-
 interface LastAlmaRegistrationCellProps {
   authority: Authority;
 }
@@ -146,7 +136,13 @@ const LastAlmaRegistrationCell = ({ authority }: LastAlmaRegistrationCellProps) 
       {isLoadingAlmaPublication ? (
         <Skeleton />
       ) : almaPublication?.title ? (
-        <StyledTitle>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: '9fr 1fr',
+            gap: '0.5rem',
+            alignItems: 'center',
+          }}>
           <TextTruncate
             element="p"
             line={showFullText ? false : 1}
@@ -155,13 +151,14 @@ const LastAlmaRegistrationCell = ({ authority }: LastAlmaRegistrationCellProps) 
             onTruncated={() => setCanBeTruncated(true)}
           />
           {canBeTruncated && (
-            <StyledTooltip
+            <Tooltip
               title={showFullText ? t<string>('common:title_minimize') : t<string>('common:title_expand')}
-              onClick={toggleFullText}>
+              onClick={toggleFullText}
+              sx={{ pt: '0.5rem' }}>
               {showFullText ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </StyledTooltip>
+            </Tooltip>
           )}
-        </StyledTitle>
+        </Box>
       ) : (
         <i>{t('authority.no_registrations_found')}</i>
       )}

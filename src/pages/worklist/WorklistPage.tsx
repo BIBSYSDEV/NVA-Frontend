@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { PageHeader } from '../../components/PageHeader';
-import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
+import { SyledPageContent } from '../../components/styled/Wrappers';
 import { SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { PublicationConversation } from '../../types/publication_types/messages.types';
@@ -20,14 +20,14 @@ const WorklistPage = () => {
   const supportRequests = worklistResponse?.hits ?? [];
 
   return (
-    <StyledPageWrapperWithMaxWidth>
+    <SyledPageContent>
       <PageHeader>{t('worklist')}</PageHeader>
       {isLoadingWorklistResponse ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
         <MessagesOverview conversations={supportRequests} />
       )}
-    </StyledPageWrapperWithMaxWidth>
+    </SyledPageContent>
   );
 };
 

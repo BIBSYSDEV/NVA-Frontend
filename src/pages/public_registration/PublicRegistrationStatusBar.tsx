@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import styled from 'styled-components';
 import { Box, Button, DialogActions, TextField, Typography } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import EditIcon from '@mui/icons-material/Edit';
@@ -23,17 +22,6 @@ import { getFirstErrorTab, getTabErrors, TabErrors } from '../../utils/formik-he
 import { ErrorList } from '../registration/ErrorList';
 import { dataTestId } from '../../utils/dataTestIds';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-
-const StyledButtonsContainer = styled.div`
-  display: flex;
-
-  button,
-  a {
-    :not(:first-child) {
-      margin-left: 1rem;
-    }
-  }
-`;
 
 enum LoadingName {
   None = '',
@@ -174,7 +162,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             })}
           </Typography>
         )}
-        <StyledButtonsContainer>
+        <Box sx={{ display: 'flex', gap: '1rem' }}>
           {registration.status === RegistrationStatus.Draft && (
             <LoadingButton
               disabled={!!isLoading || !registrationIsValid}
@@ -238,7 +226,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
               </LoadingButton>
             </>
           )}
-        </StyledButtonsContainer>
+        </Box>
 
         {!hasNvaDoi && (
           <Modal

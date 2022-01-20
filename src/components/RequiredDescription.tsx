@@ -1,30 +1,13 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-
-const StyledRequiredDescription = styled.div`
-  margin-top: 1rem;
-  margin-bottom: 0.25rem;
-  display: flex;
-`;
-
-const StyledTypography = styled(Typography)`
-  font-style: italic;
-`;
-
-const StyledAsterisk = styled(Typography)`
-  font-weight: bold;
-  color: ${({ theme }) => theme.palette.error.main};
-  margin-right: 0.5rem;
-`;
 
 export const RequiredDescription = () => {
   const { t } = useTranslation('common');
 
   return (
-    <StyledRequiredDescription>
-      <StyledAsterisk>*</StyledAsterisk>
-      <StyledTypography>{t('required_description')}</StyledTypography>
-    </StyledRequiredDescription>
+    <Box sx={{ mt: '1rem', mb: '0.25rem', display: 'flex', gap: '0.5rem' }}>
+      <Typography sx={{ fontWeight: 'bold', color: 'error.main' }}>*</Typography>
+      <Typography fontStyle="italic">{t('required_description')}</Typography>
+    </Box>
   );
 };

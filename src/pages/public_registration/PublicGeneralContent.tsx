@@ -54,7 +54,6 @@ import {
 } from './PublicPublicationInstance';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { RegistrationSummary } from './RegistrationSummary';
-import { StyledGeneralInfo } from '../../components/landing_page/SyledGeneralInfo';
 import { dataTestId } from '../../utils/dataTestIds';
 import { displayDate } from '../../utils/date-helpers';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
@@ -62,6 +61,7 @@ import {
   ArtisticPublicationContext,
   ArtisticPublicationInstance,
 } from '../../types/publication_types/artisticRegistration.types';
+import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation('registration');

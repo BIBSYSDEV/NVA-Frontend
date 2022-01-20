@@ -2,8 +2,7 @@ import ReactDOM from 'react-dom';
 import { StrictMode } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { Provider as ReduxProvider } from 'react-redux';
-import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
-import { StyledEngineProvider, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { HelmetProvider } from 'react-helmet-async';
 import { interceptRequestsOnMock } from './api/mock-interceptor';
@@ -35,16 +34,12 @@ ReactDOM.render(
     <BasicErrorBoundary>
       <I18nextProvider i18n={i18n}>
         <ReduxProvider store={store}>
-          <StyledEngineProvider injectFirst>
-            <StyledComponentsThemeProvider theme={mainTheme}>
-              <MuiThemeProvider theme={mainTheme}>
-                <CssBaseline />
-                <HelmetProvider>
-                  <App />
-                </HelmetProvider>
-              </MuiThemeProvider>
-            </StyledComponentsThemeProvider>
-          </StyledEngineProvider>
+          <ThemeProvider theme={mainTheme}>
+            <CssBaseline />
+            <HelmetProvider>
+              <App />
+            </HelmetProvider>
+          </ThemeProvider>
         </ReduxProvider>
       </I18nextProvider>
     </BasicErrorBoundary>

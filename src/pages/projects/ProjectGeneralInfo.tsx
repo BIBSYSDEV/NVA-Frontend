@@ -1,6 +1,6 @@
 import { Typography, Link } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { StyledGeneralInfo } from '../../components/landing_page/SyledGeneralInfo';
+import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 import { CristinProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getLanguageString } from '../../utils/translation-helpers';

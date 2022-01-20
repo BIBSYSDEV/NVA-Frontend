@@ -1,10 +1,8 @@
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import { TextField, Typography } from '@mui/material';
+import { Box, TextField, Typography } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { StyledCenterAlignedContentWrapper } from '../../../../components/styled/Wrappers';
 import { BookType, ChapterType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { DoiField } from '../components/DoiField';
 import { NviValidation } from '../components/NviValidation';
@@ -13,36 +11,6 @@ import { NviFields } from '../components/nvi_fields/NviFields';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
 import { ChapterContentType } from '../../../../types/publication_types/content.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-
-const StyledDiv = styled(StyledCenterAlignedContentWrapper)`
-  gap: 1rem;
-`;
-
-const StyledPageNumberWrapper = styled.div`
-  display: grid;
-  grid-template-areas: 'pages-from dash pages-to';
-  grid-template-columns: max-content 3rem max-content;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-areas: 'pages-from' 'dash' 'pages-to';
-    grid-template-columns: auto;
-  }
-`;
-
-const StyledDashIconWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 1rem;
-`;
-
-const StyledPageNumberField = styled(TextField)`
-  display: inline;
-  width: fit-content;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    display: grid;
-    width: auto;
-  }
-`;
 
 export const ChapterForm = () => {
   const { t } = useTranslation('registration');
@@ -53,12 +21,12 @@ export const ChapterForm = () => {
   return (
     <>
       <div>
-        <StyledDiv data-testid="info-anthology">
-          <InfoIcon />
-          <Typography variant="body1" paragraph>
+        <Box data-testid="info-anthology" sx={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
+          <InfoIcon color="primary" />
+          <Typography variant="body1" gutterBottom>
             {t('resource_type.chapter.info_anthology')}
           </Typography>
-        </StyledDiv>
+        </Box>
 
         <DoiField />
 
@@ -75,10 +43,10 @@ export const ChapterForm = () => {
         )}
       </div>
 
-      <StyledPageNumberWrapper>
+      <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
         <Field name={ResourceFieldNames.PagesFrom}>
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
-            <StyledPageNumberField
+            <TextField
               id={field.name}
               variant="filled"
               data-testid={dataTestId.registrationWizard.resourceType.pagesFromField}
@@ -91,13 +59,11 @@ export const ChapterForm = () => {
           )}
         </Field>
 
-        <StyledDashIconWrapper>
-          <RemoveIcon />
-        </StyledDashIconWrapper>
+        <RemoveIcon />
 
         <Field name={ResourceFieldNames.PagesTo}>
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
-            <StyledPageNumberField
+            <TextField
               id={field.name}
               data-testid={dataTestId.registrationWizard.resourceType.pagesToField}
               variant="filled"
@@ -109,7 +75,7 @@ export const ChapterForm = () => {
             />
           )}
         </Field>
-      </StyledPageNumberWrapper>
+      </Box>
 
       {instanceType === ChapterType.AnthologyChapter && (
         <>

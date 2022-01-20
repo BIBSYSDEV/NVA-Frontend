@@ -1,18 +1,13 @@
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import PeopleIcon from '@mui/icons-material/People';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 import AllInboxIcon from '@mui/icons-material/AllInbox';
 import CreateIcon from '@mui/icons-material/Create';
 import { User } from '../../types/user.types';
-import { IconLabelTextLine } from '../../components/IconLabelTextLine';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
-
-const StyledTypography = styled(Typography)`
-  color: ${({ theme }) => theme.palette.error.main};
-`;
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 
 interface UserRolesProps {
   user: User;
@@ -30,10 +25,16 @@ export const UserRoles = ({ user }: UserRolesProps) => {
         !isInstitutionAdmin &&
         !isEditor &&
         !isCurator &&
-        !isCreator && <StyledTypography data-testid="no-roles-text">{t('roles.no_roles')}</StyledTypography>
+        !isCreator && (
+          <Typography data-testid="no-roles-text" sx={{ color: 'error.main' }}>
+            {t('roles.no_roles')}
+          </Typography>
+        )
       ) : (
         <>
-          <StyledTypography data-testid="not-customer-text">{t('roles.not_customer')}</StyledTypography>
+          <Typography data-testid="not-customer-text" sx={{ color: 'error.main' }}>
+            {t('roles.not_customer')}
+          </Typography>
           <Typography>
             {t('common:name')}: {user.institution}
           </Typography>
@@ -43,7 +44,7 @@ export const UserRoles = ({ user }: UserRolesProps) => {
         </>
       )}
       {isAppAdmin && (
-        <IconLabelTextLine
+        <RoleItem
           dataTestId="user-role-app-admin"
           icon={<SettingsApplicationsIcon />}
           label={t('roles.app_admin')}
@@ -51,7 +52,7 @@ export const UserRoles = ({ user }: UserRolesProps) => {
         />
       )}
       {isInstitutionAdmin && (
-        <IconLabelTextLine
+        <RoleItem
           dataTestId="user-role-institution-admin"
           icon={<PeopleIcon />}
           label={t('roles.institution_admin')}
@@ -59,7 +60,7 @@ export const UserRoles = ({ user }: UserRolesProps) => {
         />
       )}
       {isEditor && (
-        <IconLabelTextLine
+        <RoleItem
           dataTestId="user-role-editor"
           icon={<FindInPageIcon />}
           label={t('roles.editor')}
@@ -67,7 +68,7 @@ export const UserRoles = ({ user }: UserRolesProps) => {
         />
       )}
       {isCurator && (
-        <IconLabelTextLine
+        <RoleItem
           dataTestId="user-role-curator"
           icon={<AllInboxIcon />}
           label={t('roles.curator')}
@@ -75,7 +76,7 @@ export const UserRoles = ({ user }: UserRolesProps) => {
         />
       )}
       {isCreator && (
-        <IconLabelTextLine
+        <RoleItem
           dataTestId="user-role-creator"
           icon={<CreateIcon />}
           label={t('roles.creator')}
@@ -85,3 +86,34 @@ export const UserRoles = ({ user }: UserRolesProps) => {
     </BackgroundDiv>
   );
 };
+
+interface IconLabelTextLineProps {
+  dataTestId?: string;
+  icon: ReactNode;
+  label: string;
+  text: string;
+}
+
+const RoleItem = ({ dataTestId, icon, label, text }: IconLabelTextLineProps) => (
+  <Box
+    data-testid={dataTestId}
+    sx={{
+      pt: '0.8rem',
+      display: 'grid',
+      gridTemplateAreas: "'icon label' 'text text'",
+      gridTemplateColumns: 'auto 1fr',
+      columnGap: '0.5rem',
+      borderBottom: '1px solid',
+      '&:first-of-type': {
+        borderTop: '1px solid',
+      },
+    }}>
+    <Box sx={{ gridArea: 'icon' }}>{icon}</Box>
+    <Typography variantMapping={{ body1: 'h3' }} sx={{ gridArea: 'label', fontWeight: 'bold' }}>
+      {label}
+    </Typography>
+    <Typography gutterBottom sx={{ gridArea: 'text' }}>
+      {text}
+    </Typography>
+  </Box>
+);

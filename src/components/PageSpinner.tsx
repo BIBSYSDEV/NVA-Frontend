@@ -1,14 +1,7 @@
-import { CircularProgress, CircularProgressProps } from '@mui/material';
-import styled from 'styled-components';
-
-const ProgressContainer = styled.div`
-  margin: 5rem 0;
-  display: flex;
-  justify-content: center;
-`;
+import { Box, CircularProgress, CircularProgressProps } from '@mui/material';
 
 export const PageSpinner = (props: CircularProgressProps) => (
-  <ProgressContainer>
+  <Box sx={{ margin: '5rem 0', display: 'flex', justifyContent: 'center' }}>
     <CircularProgress size={50} {...props} />
-  </ProgressContainer>
+  </Box>
 );

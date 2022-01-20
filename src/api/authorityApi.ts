@@ -41,18 +41,6 @@ export const addQualifierIdForAuthority = async (arpId: string, qualifier: Autho
     data: { identifier },
   });
 
-export const updateQualifierIdForAuthority = async (
-  arpId: string,
-  qualifier: AuthorityQualifiers,
-  identifier: string,
-  updatedIdentifier: string
-) =>
-  await authenticatedApiRequest<Authority>({
-    url: `${arpId}/identifiers/${qualifier}/update`,
-    method: 'PUT',
-    data: { identifier, updatedIdentifier },
-  });
-
 export const removeQualifierIdFromAuthority = async (
   arpId: string,
   qualifier: AuthorityQualifiers,

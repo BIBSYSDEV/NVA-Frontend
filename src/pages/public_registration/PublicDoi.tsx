@@ -1,14 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
-import { Link, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { DoiRequestStatus, Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-
-const StyledDraftSpan = styled.span`
-  margin-left: 0.5rem;
-`;
 
 interface PublicDoiProps {
   registration: Registration;
@@ -38,7 +33,11 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
           rel="noopener noreferrer">
           {doiToPresent}
         </Link>
-        {isDraftDoi && <StyledDraftSpan>({t('public_page.in_progess')})</StyledDraftSpan>}
+        {isDraftDoi && (
+          <Box component="span" sx={{ ml: '0.5rem' }}>
+            ({t('public_page.in_progess')})
+          </Box>
+        )}
       </Typography>
     </>
   ) : null;

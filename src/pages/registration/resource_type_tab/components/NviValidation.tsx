@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -15,7 +15,6 @@ import { JournalRegistration } from '../../../../types/publication_types/journal
 import { Journal, Publisher, Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
-import { Card } from '../../../../components/Card';
 
 interface NviValidationProps {
   registration: Registration;
@@ -118,7 +117,7 @@ const NviStatus = ({ level = '', isPeerReviewed = false }: NviStatusProps) => {
   const isRated = parseInt(level) > 0;
 
   return (
-    <Card sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+    <Paper elevation={5} sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', p: '1rem' }}>
       <InfoIcon color="primary" fontSize="large" />
       <Typography
         data-testid={
@@ -132,6 +131,6 @@ const NviStatus = ({ level = '', isPeerReviewed = false }: NviStatusProps) => {
             : t('resource_type.nvi.not_peer_reviewed')
           : t('resource_type.nvi.channel_not_rated')}
       </Typography>
-    </Card>
+    </Paper>
   );
 };

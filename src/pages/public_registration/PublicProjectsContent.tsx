@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Divider, Link, Typography, Skeleton } from '@mui/material';
-import styled from 'styled-components';
+import { styled } from '@mui/system';
 import { Link as RouterLink } from 'react-router-dom';
 import { CristinProject, ResearchProject } from '../../types/project.types';
 import { useFetch } from '../../utils/hooks/useFetch';
@@ -12,31 +12,15 @@ import {
 } from '../registration/description_tab/projects_field/projectHelpers';
 import { dataTestId } from '../../utils/dataTestIds';
 
-const StyledProjectGrid = styled.div`
-  display: grid;
-  grid-template-columns: 2fr auto 1fr auto 1fr auto 1fr;
-  column-gap: 1rem;
-  align-items: center;
-`;
-
-const StyledHeadingRow = styled(StyledProjectGrid)`
-  padding: 0 1rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    display: none;
-  }
-`;
-
-const StyledProjectRow = styled(StyledProjectGrid)`
-  padding: 0.5rem 1rem;
-  margin-bottom: 1rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const StyledProjectTitle = styled(Typography)`
-  font-weight: 500;
-`;
+const StyledProjectGridRow = styled('div')(({ theme }) => ({
+  display: 'grid',
+  gridTemplateColumns: '2fr auto 1fr auto 1fr auto 1fr',
+  [theme.breakpoints.down('md')]: {
+    gridTemplateColumns: '1fr',
+  },
+  columnGap: '1rem',
+  alignItems: 'center',
+}));
 
 interface PublicProjectsContentProps {
   projects: ResearchProject[];
@@ -47,7 +31,10 @@ export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) 
 
   return (
     <>
-      <StyledHeadingRow>
+      <StyledProjectGridRow
+        sx={{
+          display: { xs: 'none', md: 'grid' },
+        }}>
         <Typography variant="caption">{t('common:title')}</Typography>
         <span />
         <Typography variant="caption">{t('common:institution')}</Typography>
@@ -55,7 +42,7 @@ export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) 
         <Typography variant="caption">{t('project_manager')}</Typography>
         <span />
         <Typography variant="caption">{t('project_info')}</Typography>
-      </StyledHeadingRow>
+      </StyledProjectGridRow>
 
       {projects.map((project) => (
         <ProjectRow key={project.id} project={project} />
@@ -74,14 +61,15 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
   const projectTitle = fetchedProject?.title ?? project.name;
 
   return (
-    <StyledProjectRow>
+    <StyledProjectGridRow sx={{ ':not(:last-of-type)': { mb: '1rem' } }}>
       {isLoadingProject ? (
         <Skeleton />
       ) : (
-        <StyledProjectTitle
+        <Typography
           variant="body1"
           variantMapping={{ body1: 'h3' }}
-          data-testid={dataTestId.registrationLandingPage.projectTitle}>
+          data-testid={dataTestId.registrationLandingPage.projectTitle}
+          sx={{ fontWeight: 500 }}>
           {fetchedProject?.id ? (
             <Link component={RouterLink} to={getProjectPath(fetchedProject.id)}>
               {projectTitle}
@@ -89,7 +77,7 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
           ) : (
             projectTitle
           )}
-        </StyledProjectTitle>
+        </Typography>
       )}
       <Divider component="span" orientation="vertical" />
       {isLoadingProject ? (
@@ -114,6 +102,6 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
           </Typography>
         </div>
       ) : null}
-    </StyledProjectRow>
+    </StyledProjectGridRow>
   );
 };

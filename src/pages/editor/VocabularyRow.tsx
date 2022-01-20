@@ -1,18 +1,8 @@
 import { ToggleButtonGroup, ToggleButton, Typography, Box, SxProps } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { CustomerVocabulary, VocabularyStatus } from '../../types/customerInstitution.types';
 import { getTranslatedVocabularyName } from './VocabularySettings';
-
-const StyledButtonRow = styled.div`
-  display: flex;
-  align-items: center;
-
-  div:first-child {
-    margin-right: 1rem;
-  }
-`;
 
 const toggleButtonSx: SxProps = { width: '6rem' };
 
@@ -33,33 +23,33 @@ export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId, disa
       sx={{
         display: 'flex',
         alignItems: 'center',
+        gap: '1rem',
       }}>
-      <StyledButtonRow>
-        <ToggleButtonGroup
-          size="small"
-          data-testid={dataTestId}
-          color="primary"
-          disabled={disabled || isUpdating}
-          value={isUpdating ? null : vocabulary.status}
-          exclusive
-          onChange={async (event, value) => {
-            if (value) {
-              setIsUpdating(true);
-              await updateVocabularies({ ...vocabulary, status: value });
-              setIsUpdating(false);
-            }
-          }}>
-          <ToggleButton sx={toggleButtonSx} value={VocabularyStatus.Default}>
-            {t('default')}
-          </ToggleButton>
-          <ToggleButton sx={toggleButtonSx} value={VocabularyStatus.Allowed}>
-            {t('allowed')}
-          </ToggleButton>
-          <ToggleButton sx={toggleButtonSx} value={VocabularyStatus.Disabled}>
-            {t('disabled')}
-          </ToggleButton>
-        </ToggleButtonGroup>
-      </StyledButtonRow>
+      <ToggleButtonGroup
+        size="small"
+        data-testid={dataTestId}
+        color="primary"
+        disabled={disabled || isUpdating}
+        value={isUpdating ? null : vocabulary.status}
+        exclusive
+        onChange={async (event, value) => {
+          if (value) {
+            setIsUpdating(true);
+            await updateVocabularies({ ...vocabulary, status: value });
+            setIsUpdating(false);
+          }
+        }}>
+        <ToggleButton sx={toggleButtonSx} value={VocabularyStatus.Default}>
+          {t('default')}
+        </ToggleButton>
+        <ToggleButton sx={toggleButtonSx} value={VocabularyStatus.Allowed}>
+          {t('allowed')}
+        </ToggleButton>
+        <ToggleButton sx={toggleButtonSx} value={VocabularyStatus.Disabled}>
+          {t('disabled')}
+        </ToggleButton>
+      </ToggleButtonGroup>
+
       <Typography>{getTranslatedVocabularyName(t, vocabulary.id)}</Typography>
     </Box>
   );

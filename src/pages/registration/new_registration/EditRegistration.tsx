@@ -1,22 +1,13 @@
+import { Box } from '@mui/material';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import { PageHeader } from '../../../components/PageHeader';
-import { StyledPageWrapperWithMaxWidth } from '../../../components/styled/Wrappers';
+import { SyledPageContent } from '../../../components/styled/Wrappers';
 import { RegistrationForm } from '../RegistrationForm';
 import { LinkRegistration } from './LinkRegistration';
 import { StartEmptyRegistration } from './StartEmptyRegistration';
 import { UploadRegistration } from './UploadRegistration';
-
-const StyledEditRegistration = styled.div`
-  margin-top: 2rem;
-  max-width: 55rem;
-
-  > :not(:last-child) {
-    margin-bottom: 2rem;
-  }
-`;
 
 enum PanelName {
   Link = 'link-panel',
@@ -41,18 +32,24 @@ const EditRegistration = () => {
     setExpanded(isExpanded ? panel : false);
 
   return !showForm ? (
-    <StyledPageWrapperWithMaxWidth>
+    <SyledPageContent>
       <PageHeader>{t('new_registration')}</PageHeader>
-      <StyledEditRegistration>
+      <Box
+        sx={{
+          maxWidth: '55rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '2rem',
+        }}>
         <LinkRegistration expanded={expanded === PanelName.Link} onChange={handleChange(PanelName.Link)} />
         <UploadRegistration expanded={expanded === PanelName.File} onChange={handleChange(PanelName.File)} />
         <StartEmptyRegistration expanded={expanded === PanelName.Empty} onChange={handleChange(PanelName.Empty)} />
-      </StyledEditRegistration>
-    </StyledPageWrapperWithMaxWidth>
+      </Box>
+    </SyledPageContent>
   ) : (
-    <StyledPageWrapperWithMaxWidth>
+    <SyledPageContent>
       <RegistrationForm identifier={identifier} />
-    </StyledPageWrapperWithMaxWidth>
+    </SyledPageContent>
   );
 };
 

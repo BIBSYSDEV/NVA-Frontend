@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { Box, Button, Collapse, IconButton, Typography } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
@@ -9,73 +8,6 @@ import { AboutContent } from '../infopages/AboutContent';
 import { dataTestId } from '../../utils/dataTestIds';
 import SearchPage from '../search/SearchPage';
 import { LocalStorageKey } from '../../utils/constants';
-
-const StyledDashboard = styled.div`
-  display: grid;
-  grid-template-areas: 'tagline' 'description' 'links';
-  justify-items: center;
-  width: 100%;
-`;
-
-const StyledTaglineDiv = styled.div`
-  grid-area: tagline;
-  margin: 0;
-  display: grid;
-  grid-template-areas: '. text-tagline text-tagline close-button' '. . short-description .';
-  grid-template-columns: 1fr 1fr 2.5fr 1fr;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    grid-template-areas: 'text-tagline close-button' 'short-description short-description';
-    grid-template-columns: 1fr;
-  }
-`;
-
-const StyledCloseButtonWrapper = styled.div`
-  grid-area: close-button;
-`;
-
-const StyledDescriptionDiv = styled.div`
-  grid-area: description;
-  display: grid;
-  grid-template-areas: '. . button .' '. text-description text-description .';
-  grid-template-columns: 1fr 1fr 2.5fr 1fr;
-  margin: 0;
-  padding: 0 0 2rem 1rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    grid-template-areas: 'button' 'text-description';
-    grid-template-columns: 1fr;
-    padding: 0 0 1rem 2rem;
-  }
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    padding: 0 0 0 0.5rem;
-  }
-`;
-
-const StyledTagline = styled(Typography)`
-  font-family: 'Barlow', sans-serif;
-  font-weight: bold;
-  max-width: 40rem;
-  grid-area: text-tagline;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    font-size: 2rem;
-  }
-`;
-
-const StyledShortDescription = styled(Typography)`
-  padding-top: 1.5rem;
-  max-width: 40rem;
-  grid-area: short-description;
-  white-space: pre-wrap;
-`;
-
-const StyledCollapse = styled(Collapse)`
-  grid-area: text-description;
-  padding-top: 1rem;
-`;
-
-const StyledButtonWrapper = styled.div`
-  margin-top: 1rem;
-  grid-area: button;
-`;
 
 const Dashboard = () => {
   const { t } = useTranslation('common');
@@ -94,15 +26,40 @@ const Dashboard = () => {
   }, [history]);
 
   return (
-    <StyledDashboard>
+    <Box
+      sx={{
+        display: 'grid',
+        gridTemplateAreas: "'tagline' 'description' 'links'",
+        justifyItems: 'center',
+        width: '100%',
+      }}>
       <Helmet>
         <title>{t('start_page')}</title>
       </Helmet>
       {showBanner && (
         <Box sx={{ bgcolor: 'primary.dark', p: '1rem 0.5rem', 'h1,p,li,a,svg': { color: 'white' } }}>
-          <StyledTaglineDiv>
-            <StyledTagline variant="h1">{t('nva_tagline')}</StyledTagline>
-            <StyledCloseButtonWrapper>
+          <Box
+            sx={{
+              gridArea: 'tagline',
+              display: 'grid',
+              gridTemplateAreas: {
+                xs: "'text-tagline close-button' 'short-description short-description'",
+                md: "'. text-tagline text-tagline close-button' '. . short-description .'",
+              },
+              gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 2.5fr 1fr' },
+            }}>
+            <Typography
+              variant="h1"
+              sx={{
+                fontFamily: "'Barlow', sans-serif",
+                fontWeight: 'bold',
+                maxWidth: '40rem',
+                gridArea: 'text-tagline',
+                fontSize: { xs: '2rem', sm: '3rem' },
+              }}>
+              {t('nva_tagline')}
+            </Typography>
+            <Box sx={{ gridArea: 'close-button' }}>
               <IconButton
                 title={t('close_forever')}
                 onClick={() => {
@@ -112,16 +69,28 @@ const Dashboard = () => {
                 size="large">
                 <CloseIcon />
               </IconButton>
-            </StyledCloseButtonWrapper>
-            <StyledShortDescription variant="h3" variantMapping={{ h3: 'p' }}>
+            </Box>
+            <Typography
+              variant="h3"
+              variantMapping={{ h3: 'p' }}
+              sx={{ mt: '1.5rem', maxWidth: '40rem', gridArea: 'short-description', whiteSpace: 'pre-wrap' }}>
               {t('about:short_description')}
-            </StyledShortDescription>
-          </StyledTaglineDiv>
-          <StyledDescriptionDiv>
-            <StyledCollapse in={readMore}>
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              gridArea: 'description',
+              display: 'grid',
+              gridTemplateAreas: {
+                xs: "'button' 'text-description'",
+                md: "'. . button .' '. text-description text-description .'",
+              },
+              gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 2.5fr 1fr' },
+            }}>
+            <Collapse in={readMore} sx={{ gridArea: 'text-description', mt: '1rem' }}>
               <AboutContent />
-            </StyledCollapse>
-            <StyledButtonWrapper>
+            </Collapse>
+            <Box sx={{ mt: '1rem', gridArea: 'button' }}>
               <Button
                 color="secondary"
                 variant="contained"
@@ -129,12 +98,12 @@ const Dashboard = () => {
                 onClick={toggleReadMore}>
                 {t(readMore ? 'read_less_about_nva' : 'read_more_about_nva')}
               </Button>
-            </StyledButtonWrapper>
-          </StyledDescriptionDiv>
+            </Box>
+          </Box>
         </Box>
       )}
       <SearchPage />
-    </StyledDashboard>
+    </Box>
   );
 };
 

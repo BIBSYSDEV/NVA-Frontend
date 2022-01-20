@@ -1,7 +1,7 @@
 import { Box, ListItemText, MenuItem, MenuList, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { VocabularySettings } from './VocabularySettings';
 
 enum EditorItem {

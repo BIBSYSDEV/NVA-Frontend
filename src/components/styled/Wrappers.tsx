@@ -1,47 +1,49 @@
-import { Box, BoxProps, Typography } from '@mui/material';
-import styled from 'styled-components';
+import { Box } from '@mui/material';
+import { styled } from '@mui/system';
 
-export const StyledRightAlignedWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
+export const StyledRightAlignedWrapper = styled(Box)({
+  display: 'flex',
+  justifyContent: 'flex-end',
+});
 
-export const StyledCenterAlignedContentWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
+export const StyledSelectWrapper = styled(Box)(({ theme }) => ({
+  width: '50%',
+  maxWidth: theme.breakpoints.values.lg,
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+  },
+}));
 
-export const StyledTypographyPreWrapped = styled(Typography)`
-  white-space: pre-wrap;
-`;
+export const SyledPageContent = styled(Box)(({ theme }) => ({
+  width: '100%',
+  maxWidth: theme.breakpoints.values.lg,
+  [theme.breakpoints.up('sm')]: {
+    padding: '1rem 2rem',
+  },
+  padding: '0.5rem',
+}));
 
-export const StyledSelectWrapper = styled.div`
-  width: 50%;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    padding: 0 1rem;
-    width: 100%;
-  }
-`;
+export const InputContainerBox = styled(Box)({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1.5rem',
+});
 
-export const StyledFlexColumn = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
+export const BackgroundDiv = styled(Box)(({ theme }) => ({
+  background: theme.palette.background.paper,
+  [theme.breakpoints.down('sm')]: {
+    padding: '0.5rem',
+  },
+  padding: '1rem 2rem',
+}));
 
-export const StyledPageWrapperWithMaxWidth = styled.div`
-  width: 100%;
-  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    padding: 1rem 2rem;
-  }
-  padding: 0.5rem;
-  max-width: ${({ theme }) => theme.breakpoints.values.lg + 'px'};
-`;
+export const StyledGeneralInfo = styled('div')(({ theme }) => ({
+  marginBottom: '1rem',
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  columnGap: '1rem',
 
-export const StyledCenteredContent = styled.div`
-  margin-top: 4rem;
-`;
-
-export const InputContainerBox = (props: BoxProps) => (
-  <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }} {...props} />
-);
+  [theme.breakpoints.down('sm')]: {
+    gridTemplateColumns: '1fr',
+  },
+}));

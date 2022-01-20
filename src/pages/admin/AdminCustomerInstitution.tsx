@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { PageHeader } from '../../components/PageHeader';
-import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
+import { BackgroundDiv, SyledPageContent } from '../../components/styled/Wrappers';
 import { CustomerInstitution, emptyCustomerInstitution } from '../../types/customerInstitution.types';
 import { PageSpinner } from '../../components/PageSpinner';
 import { CustomerInstitutionAdminsForm } from './CustomerInstitutionAdminsForm';
@@ -9,12 +8,6 @@ import { CustomerInstitutionMetadataForm } from './CustomerInstitutionMetadataFo
 import { useFetch } from '../../utils/hooks/useFetch';
 import { InstitutionUser } from '../../types/user.types';
 import { RoleApiPath } from '../../api/apiPaths';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
-
-const StyledCustomerInstitution = styled.section`
-  display: flex;
-  flex-direction: column;
-`;
 
 interface AdminCustomerInstitutionProps {
   customerId: string;
@@ -35,30 +28,28 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
   });
 
   return (
-    <StyledPageWrapperWithMaxWidth>
+    <SyledPageContent>
       <PageHeader htmlTitle={editMode ? customerInstitution?.displayName : t('add_institution')}>
         {t(editMode ? 'edit_institution' : 'add_institution')}
       </PageHeader>
 
-      <StyledCustomerInstitution>
-        {isLoadingCustomerInstitution ? (
-          <PageSpinner />
-        ) : (
-          <BackgroundDiv>
-            <CustomerInstitutionMetadataForm
-              customerInstitution={customerInstitution ?? emptyCustomerInstitution}
-              editMode={editMode}
+      {isLoadingCustomerInstitution ? (
+        <PageSpinner />
+      ) : (
+        <BackgroundDiv>
+          <CustomerInstitutionMetadataForm
+            customerInstitution={customerInstitution ?? emptyCustomerInstitution}
+            editMode={editMode}
+          />
+          {editMode && (
+            <CustomerInstitutionAdminsForm
+              users={users ?? []}
+              refetchInstitutionUsers={refetchInstitutionUsers}
+              isLoadingUsers={isLoadingUsers}
             />
-            {editMode && (
-              <CustomerInstitutionAdminsForm
-                users={users ?? []}
-                refetchInstitutionUsers={refetchInstitutionUsers}
-                isLoadingUsers={isLoadingUsers}
-              />
-            )}
-          </BackgroundDiv>
-        )}
-      </StyledCustomerInstitution>
-    </StyledPageWrapperWithMaxWidth>
+          )}
+        </BackgroundDiv>
+      )}
+    </SyledPageContent>
   );
 };

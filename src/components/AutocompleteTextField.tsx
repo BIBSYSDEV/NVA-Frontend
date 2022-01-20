@@ -1,11 +1,5 @@
-import styled from 'styled-components';
 import { CircularProgress, TextField, TextFieldProps, AutocompleteRenderInputParams } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-
-const StyledSearchIcon = styled(SearchIcon)`
-  margin-left: 0.5rem;
-  color: ${({ theme }) => theme.palette.text.disabled};
-`;
 
 interface AutocompleteTextFieldProps
   extends AutocompleteRenderInputParams,
@@ -30,7 +24,7 @@ export const AutocompleteTextField = ({
       startAdornment: (
         <>
           {params.InputProps.startAdornment}
-          {showSearchIcon && <StyledSearchIcon />}
+          {showSearchIcon && <SearchIcon color="disabled" sx={{ marginLeft: '0.5rem' }} />}
         </>
       ),
       endAdornment: (

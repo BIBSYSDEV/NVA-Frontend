@@ -1,20 +1,19 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Link as MuiLink, Typography } from '@mui/material';
+import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { StyledCenteredContent } from '../../components/styled/Wrappers';
 
 export const NotPublished = () => {
   const { t } = useTranslation('authorization');
 
   return (
-    <StyledCenteredContent data-testid="not_published">
+    <Box data-testid="not_published" sx={{ mt: '4rem' }}>
       <Typography variant="h2" component="h1" paragraph>
         {t('registration_not_published')}
       </Typography>
       <MuiLink component={Link} to={UrlPathTemplate.Home}>
         <Typography>{t('back_to_home')}</Typography>
       </MuiLink>
-    </StyledCenteredContent>
+    </Box>
   );
 };
