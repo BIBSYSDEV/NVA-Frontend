@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import prettyBytes from 'pretty-bytes';
 import { File, licenses } from '../../types/file.types';
-import { downloadFile } from '../../api/fileApi';
+import { downloadPublicFile } from '../../api/fileApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { PreviewFile } from './preview_file/PreviewFile';
@@ -57,7 +57,7 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
   const handleDownload = useCallback(
     async (previewFile = false) => {
       previewFile && setIsLoadingPreviewFile(true);
-      const downloadFileResponse = await downloadFile(registrationIdentifier, file.identifier);
+      const downloadFileResponse = await downloadPublicFile(registrationIdentifier, file.identifier);
       if (!downloadFileResponse) {
         dispatch(setNotification(t('feedback:error.download_file'), 'error'));
       } else {
