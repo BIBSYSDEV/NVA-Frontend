@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Divider, Typography } from '@mui/material';
 import { RegistrationList } from '../../components/RegistrationList';
@@ -10,6 +11,12 @@ interface SearchResultsProps {
 
 export const SearchResults = ({ searchResult }: SearchResultsProps) => {
   const { t } = useTranslation('search');
+
+  useEffect(() => {
+    if (searchResult.total > 0) {
+      (window as any).MathJax.typesetPromise();
+    }
+  }, [searchResult]);
 
   return (
     <Box data-testid="search-results" sx={{ pb: '1rem' }}>

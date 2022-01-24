@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -97,6 +97,14 @@ export const PageHeader = ({
   );
 };
 
-export const ItalicPageHeader = (props: PageHeaderProps) => (
-  <PageHeader variant="h2" variantMapping={{ h2: 'h1' }} sx={{ fontWeight: '700', fontStyle: 'italic' }} {...props} />
-);
+export const ItalicPageHeader = (props: PageHeaderProps) => {
+  useEffect(() => {
+    if (props.children.includes('$')) {
+      (window as any).MathJax.typesetPromise();
+    }
+  }, [props.children]);
+
+  return (
+    <PageHeader variant="h2" variantMapping={{ h2: 'h1' }} sx={{ fontWeight: '700', fontStyle: 'italic' }} {...props} />
+  );
+};

@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, useState } from 'react';
+import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
@@ -62,6 +62,12 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
       refetchRegistrations();
     }
   };
+
+  useEffect(() => {
+    if (registrations.length > 0) {
+      (window as any).MathJax.typesetPromise();
+    }
+  }, [registrations]);
 
   const registrationsOnPage = registrations.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
 
