@@ -1,4 +1,3 @@
-import { Location } from 'history';
 import { useEffect, useState } from 'react';
 import { Prompt, useHistory } from 'react-router-dom';
 import { Typography } from '@mui/material';
@@ -16,7 +15,7 @@ export const RouteLeavingGuard = ({
   shouldBlockNavigation,
 }: RouteLeavingGuardProps) => {
   const [showModal, setShowModal] = useState(false);
-  const [nextLocation, setNextLocation] = useState<Location>();
+  const [nextPath, setNextPath] = useState('');
   const [confirmedNavigation, setConfirmedNavigation] = useState(false);
   const history = useHistory();
 
@@ -30,10 +29,10 @@ export const RouteLeavingGuard = ({
   }, [shouldBlockNavigation]);
 
   useEffect(() => {
-    if (confirmedNavigation && nextLocation) {
-      history.push(nextLocation);
+    if (confirmedNavigation && nextPath) {
+      history.push(nextPath);
     }
-  }, [history, confirmedNavigation, nextLocation]);
+  }, [history, confirmedNavigation, nextPath]);
 
   return (
     <>
@@ -41,11 +40,10 @@ export const RouteLeavingGuard = ({
         when={shouldBlockNavigation}
         message={(nextLocation) => {
           const currentPath = `${history.location.pathname}${history.location.search}`;
-          const newPath = `${nextLocation.pathname}${nextLocation.search}`;
-
+          const newPath = `${nextLocation.pathname}${nextLocation.search}${nextLocation.hash}`;
           if (!confirmedNavigation && shouldBlockNavigation && currentPath !== newPath) {
             setShowModal(true);
-            setNextLocation(nextLocation);
+            setNextPath(newPath);
             return false;
           }
           return true;
