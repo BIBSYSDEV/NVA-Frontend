@@ -20,23 +20,6 @@ export const RouteLeavingGuard = ({
   const [confirmedNavigation, setConfirmedNavigation] = useState(false);
   const history = useHistory();
 
-  const handleBlockedNavigation = (nextLocation: Location): boolean => {
-    const currentPath = `${history.location.pathname}${history.location.search}`;
-    const newPath = `${nextLocation.pathname}${nextLocation.search}`;
-
-    if (!confirmedNavigation && shouldBlockNavigation && currentPath !== newPath) {
-      setShowModal(true);
-      setNextLocation(nextLocation);
-      return false;
-    }
-    return true;
-  };
-
-  const handleConfirmNavigationClick = () => {
-    setShowModal(false);
-    setConfirmedNavigation(true);
-  };
-
   useEffect(() => {
     if (shouldBlockNavigation) {
       window.onbeforeunload = () => true;
@@ -50,15 +33,31 @@ export const RouteLeavingGuard = ({
     if (confirmedNavigation && nextLocation) {
       history.push(nextLocation);
     }
-  }, [confirmedNavigation, nextLocation, history]);
+  }, [history, confirmedNavigation, nextLocation]);
 
   return (
     <>
-      <Prompt when={shouldBlockNavigation} message={handleBlockedNavigation} />
+      <Prompt
+        when={shouldBlockNavigation}
+        message={(nextLocation) => {
+          const currentPath = `${history.location.pathname}${history.location.search}`;
+          const newPath = `${nextLocation.pathname}${nextLocation.search}`;
+
+          if (!confirmedNavigation && shouldBlockNavigation && currentPath !== newPath) {
+            setShowModal(true);
+            setNextLocation(nextLocation);
+            return false;
+          }
+          return true;
+        }}
+      />
       <ConfirmDialog
         open={showModal}
         title={modalHeading}
-        onAccept={handleConfirmNavigationClick}
+        onAccept={() => {
+          setShowModal(false);
+          setConfirmedNavigation(true);
+        }}
         onCancel={() => setShowModal(false)}
         dataTestId="confirm-leaving-registration-form-dialog">
         <Typography>{modalDescription}</Typography>
