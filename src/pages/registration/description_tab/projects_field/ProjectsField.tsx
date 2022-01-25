@@ -12,6 +12,7 @@ import { getLanguageString } from '../../../../utils/translation-helpers';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { ProjectsApiPath } from '../../../../api/apiPaths';
 import { ProjectChip } from './ProjectChip';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 export const ProjectsField = () => {
   const { t } = useTranslation('registration');
@@ -28,7 +29,7 @@ export const ProjectsField = () => {
         <Autocomplete
           id={field.name}
           aria-labelledby={`${field.name}-label`}
-          data-testid="project-search-field"
+          data-testid={dataTestId.registrationWizard.description.projectSearchField}
           options={projects?.hits ?? []}
           filterOptions={(options) => options}
           getOptionLabel={(option) => option.title}

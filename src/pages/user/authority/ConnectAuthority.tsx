@@ -11,6 +11,7 @@ import { User } from '../../../types/user.types';
 import { AuthorityList } from './AuthorityList';
 import { NewAuthorityCard } from './NewAuthorityCard';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 interface ConnectAuthorityProps {
   user: User;
@@ -95,7 +96,7 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
               {t('common:cancel')}
             </Button>
             <LoadingButton
-              data-testid="connect-author-button"
+              data-testid={dataTestId.registrationWizard.contributors.connectAuthorButton}
               variant="contained"
               size="large"
               onClick={updateAuthorityForUser}

@@ -1,3 +1,5 @@
+import { dataTestId } from "../../src/utils/dataTestIds";
+
 describe('Registration: Contributors', () => {
   beforeEach(() => {
     cy.visit('/');
@@ -17,6 +19,6 @@ describe('Registration: Contributors', () => {
     cy.get('[data-testid=add-Creator]').click({ force: true });
 
     // verify that there is a search field
-    cy.get('[data-testid=search-field] input').should('be.visible');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.searchField}] input`).should('be.visible');
   });
 });

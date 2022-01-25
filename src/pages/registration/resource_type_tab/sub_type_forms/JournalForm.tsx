@@ -48,7 +48,7 @@ export const JournalForm = () => {
                 {...field}
                 id={field.name}
                 value={field.value ?? ''}
-                data-testid="volume-field"
+                data-testid={dataTestId.registrationWizard.resourceType.volumeField}
                 variant="filled"
                 label={t('resource_type.volume')}
                 error={touched && !!error}
@@ -63,7 +63,7 @@ export const JournalForm = () => {
                 {...field}
                 id={field.name}
                 value={field.value ?? ''}
-                data-testid="issue-field"
+                data-testid={dataTestId.registrationWizard.resourceType.issueField}
                 variant="filled"
                 label={t('resource_type.issue')}
                 error={touched && !!error}
@@ -109,7 +109,7 @@ export const JournalForm = () => {
               <TextField
                 {...field}
                 id={field.name}
-                data-testid="article-number-field"
+                data-testid={dataTestId.registrationWizard.resourceType.articleNumberField}
                 value={field.value ?? ''}
                 variant="filled"
                 label={t('resource_type.article_number')}

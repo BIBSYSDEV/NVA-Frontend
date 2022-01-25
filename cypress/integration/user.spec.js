@@ -29,8 +29,8 @@ describe('User connects to their Authority', () => {
 
     // connect author
     cy.get('[data-testid=connect-author-modal]').click({ force: true });
-    cy.get('[data-testid=author-radio-button]').eq(1).click({ force: true }).contains('Test User');
-    cy.get('[data-testid=connect-author-button]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.authorRadioButton}]`).eq(1).click({ force: true }).contains('Test User');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.connectAuthorButton}]`).click({ force: true });
     cy.get('[data-testid=modal_next]').click({ force: true });
 
     // connect orcid
