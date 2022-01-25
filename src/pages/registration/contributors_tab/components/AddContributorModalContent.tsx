@@ -13,6 +13,7 @@ import { AuthorityList } from '../../../user/authority/AuthorityList';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { AuthorityApiPath } from '../../../../api/apiPaths';
 import { ContributorRole } from '../../../../types/contributor.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface AddContributorModalContentProps {
   addContributor: (selectedAuthority: Authority) => void;
@@ -53,7 +54,7 @@ export const AddContributorModalContent = ({
       )}
       <TextField
         id="search"
-        data-testid="search-field"
+        data-testid={dataTestId.registrationWizard.contributors.searchField}
         variant="outlined"
         fullWidth
         value={searchTerm}
@@ -97,7 +98,7 @@ export const AddContributorModalContent = ({
           {t('contributors.create_new_with_role', { role: t(`contributors.types.${roleToAdd}`) })}
         </Button>
         <Button
-          data-testid="connect-author-button"
+          data-testid={dataTestId.registrationWizard.contributors.connectAuthorButton}
           disabled={!selectedAuthority}
           onClick={() => selectedAuthority && addContributor(selectedAuthority)}
           size="large"

@@ -14,7 +14,7 @@ describe('Registration: Description', () => {
 
     const projectToAdd = mockProjectSearch.hits[1];
 
-    cy.get('[data-testid=project-search-field] input').click({ force: true }).type(projectToAdd.title.substring(0, 4));
+    cy.get(`[data-testid=${dataTestId.registrationWizard.description.projectSearchField}] input`).click({ force: true }).type(projectToAdd.title.substring(0, 4));
     cy.get(`[data-testid="project-option-${projectToAdd.id}"]`).click({ force: true });
     cy.get(`[data-testid="project-chip-${projectToAdd.id}"]`).should('exist');
 
