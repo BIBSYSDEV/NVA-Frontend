@@ -95,6 +95,12 @@ export const dataTestId = {
     description: {
       addVocabularyButton: 'add-vocabulary-button',
       datePublishedField: 'date-published-field',
+      projectSearchField: 'project-search-field',
+      registrationAbstractField: 'registration-abstract-field',
+      registrationDescriptionField: 'registration-description-field',
+      registrationLanguageField: 'registration-language-field',
+      registrationTagField: 'registration-tag-field',
+      registrationTitleField: 'registration-title-field',
       vocabularyMenuItem: (vocabulary: string) => `vocabulary-menu-item-${vocabulary}`,
       vocabularyRow: (vocabulary: string) => `vocabulary-row-${vocabulary}`,
     },
