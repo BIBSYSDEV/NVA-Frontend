@@ -1,3 +1,5 @@
+import { dataTestId } from '../../src/utils/dataTestIds';
+
 describe('User opens an item in the My Registrations list', () => {
   beforeEach('Given that the user is logged in as Creator:', () => {
     cy.visit('/');
