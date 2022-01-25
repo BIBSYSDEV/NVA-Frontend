@@ -1,4 +1,5 @@
 import { mockProjectSearch } from '../../src/utils/testfiles/mockProjects';
+import { dataTestId } from '../../src/utils/dataTestIds';
 
 describe('Registration: Description', () => {
   beforeEach(() => {
@@ -14,7 +15,9 @@ describe('Registration: Description', () => {
 
     const projectToAdd = mockProjectSearch.hits[1];
 
-    cy.get(`[data-testid=${dataTestId.registrationWizard.description.projectSearchField}] input`).click({ force: true }).type(projectToAdd.title.substring(0, 4));
+    cy.get(`[data-testid=${dataTestId.registrationWizard.description.projectSearchField}] input`)
+      .click({ force: true })
+      .type(projectToAdd.title.substring(0, 4));
     cy.get(`[data-testid="project-option-${projectToAdd.id}"]`).click({ force: true });
     cy.get(`[data-testid="project-chip-${projectToAdd.id}"]`).should('exist');
 
