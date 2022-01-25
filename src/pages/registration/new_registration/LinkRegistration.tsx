@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { AccordionActions, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
@@ -14,6 +14,7 @@ import { setNotification } from '../../../redux/actions/notificationActions';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 
 export interface StartRegistrationAccordionProps {
   expanded: boolean;
@@ -50,6 +51,12 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
       }
     }
   };
+
+  useEffect(() => {
+    if (stringIncludesMathJax(doi?.title)) {
+      typesetMathJax();
+    }
+  }, [doi?.title]);
 
   return (
     <RegistrationAccordion elevation={5} expanded={expanded} onChange={onChange} sx={{ borderColor: 'primary.main' }}>
