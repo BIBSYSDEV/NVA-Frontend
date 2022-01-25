@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, useState } from 'react';
+import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
@@ -24,6 +24,7 @@ import { RegistrationPreview, RegistrationStatus } from '../../types/registratio
 import { getRegistrationLandingPagePath, getRegistrationPath } from '../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
+import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
 
 interface MyRegistrationsListProps {
   registrations: RegistrationPreview[];
@@ -62,6 +63,12 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
       refetchRegistrations();
     }
   };
+
+  useEffect(() => {
+    if (registrations.some(({ mainTitle }) => stringIncludesMathJax(mainTitle))) {
+      typesetMathJax();
+    }
+  }, [registrations]);
 
   const registrationsOnPage = registrations.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
 

@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Divider, Typography } from '@mui/material';
 import { RegistrationList } from '../../components/RegistrationList';
 import { SearchResponse } from '../../types/common.types';
 import { Registration } from '../../types/registration.types';
+import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
 
 interface SearchResultsProps {
   searchResult: SearchResponse<Registration>;
@@ -10,6 +12,17 @@ interface SearchResultsProps {
 
 export const SearchResults = ({ searchResult }: SearchResultsProps) => {
   const { t } = useTranslation('search');
+
+  useEffect(() => {
+    if (
+      searchResult.hits.some(
+        ({ entityDescription }) =>
+          stringIncludesMathJax(entityDescription?.mainTitle) || stringIncludesMathJax(entityDescription?.abstract)
+      )
+    ) {
+      typesetMathJax();
+    }
+  }, [searchResult]);
 
   return (
     <Box data-testid="search-results" sx={{ pb: '1rem' }}>

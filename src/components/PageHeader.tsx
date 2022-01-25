@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -8,6 +8,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { UrlPathTemplate } from '../utils/urlPaths';
+import { stringIncludesMathJax, typesetMathJax } from '../utils/mathJaxHelpers';
 
 interface PageHeaderProps extends TypographyProps {
   backPath?: string;
@@ -97,6 +98,14 @@ export const PageHeader = ({
   );
 };
 
-export const ItalicPageHeader = (props: PageHeaderProps) => (
-  <PageHeader variant="h2" variantMapping={{ h2: 'h1' }} sx={{ fontWeight: '700', fontStyle: 'italic' }} {...props} />
-);
+export const ItalicPageHeader = (props: PageHeaderProps) => {
+  useEffect(() => {
+    if (stringIncludesMathJax(props.children)) {
+      typesetMathJax();
+    }
+  }, [props.children]);
+
+  return (
+    <PageHeader variant="h2" variantMapping={{ h2: 'h1' }} sx={{ fontWeight: '700', fontStyle: 'italic' }} {...props} />
+  );
+};
