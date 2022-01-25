@@ -132,7 +132,7 @@ export const dataTestId = {
       eventPlaceField: 'event-place-field',
       eventTitleField: 'event-title-field',
       isbnField: 'isbn-field',
-      issueFIeld: 'issue-field',
+      issueField: 'issue-field',
       journalChip: 'journal-chip',
       journalField: 'journal-search-field',
       nviFailed: 'not-nvi-applicable',
