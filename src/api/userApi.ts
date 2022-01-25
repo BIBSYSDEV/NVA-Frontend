@@ -1,5 +1,4 @@
-import { Auth } from 'aws-amplify';
-import { CognitoUser } from '@aws-amplify/auth';
+import { Auth, CognitoUser } from '@aws-amplify/auth';
 import { CognitoUserSession } from 'amazon-cognito-identity-js';
 import { USE_MOCK_DATA, LocalStorageKey } from '../utils/constants';
 import { UrlPathTemplate } from '../utils/urlPaths';

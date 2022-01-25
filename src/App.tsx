@@ -1,4 +1,4 @@
-import { Amplify } from 'aws-amplify';
+import { Auth } from '@aws-amplify/auth';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,7 +16,7 @@ import { setNotification } from './redux/actions/notificationActions';
 import { setAuthorityData, setPossibleAuthorities, setRoles, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { Authority } from './types/authority.types';
-import { awsConfig } from './utils/aws-config';
+import { authOptions } from './utils/aws-config';
 import { isErrorStatus, isSuccessStatus, LocalStorageKey, USE_MOCK_DATA } from './utils/constants';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { PageSpinner } from './components/PageSpinner';
@@ -69,7 +69,7 @@ export const App = () => {
   useEffect(() => {
     // Setup aws-amplify
     if (!USE_MOCK_DATA) {
-      Amplify.configure(awsConfig);
+      Auth.configure(authOptions);
     }
   }, []);
 

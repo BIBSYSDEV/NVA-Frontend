@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { Auth } from 'aws-amplify';
-import { USE_MOCK_DATA, FEIDE_IDENTITY_PROVIDER, LocalStorageKey } from '../constants';
+import { Auth } from '@aws-amplify/auth';
+import { USE_MOCK_DATA, LocalStorageKey } from '../constants';
 import { setUser } from '../../redux/actions/userActions';
 import { mockUser } from '../testfiles/mock_feide_user';
 import { logoutSuccess } from '../../redux/actions/authActions';
@@ -16,22 +16,22 @@ const getCurrentPath = () => `${window.location.pathname}${window.location.searc
 export const useAuthentication = (): UseAuthentication => {
   const dispatch = useDispatch();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     localStorage.setItem(LocalStorageKey.RedirectPath, getCurrentPath());
     if (USE_MOCK_DATA) {
       dispatch(setUser(mockUser));
     } else {
-      Auth.federatedSignIn({ customProvider: FEIDE_IDENTITY_PROVIDER });
+      await Auth.federatedSignIn({ customProvider: 'FeideIdentityProvider' });
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     localStorage.setItem(LocalStorageKey.RedirectPath, getCurrentPath());
     if (USE_MOCK_DATA) {
       dispatch(logoutSuccess());
       window.location.pathname = UrlPathTemplate.Logout;
     } else {
-      Auth.signOut();
+      await Auth.signOut();
     }
   };
 

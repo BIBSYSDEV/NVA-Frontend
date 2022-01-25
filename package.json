@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-amplify/auth": "^4.3.20",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@fontsource/barlow": "^4.5.0",
@@ -16,7 +17,6 @@
     "@uppy/dashboard": "^1.21.1",
     "@uppy/locales": "^1.22.0",
     "@uppy/react": "^1.12.2",
-    "aws-amplify": "^4.3.12",
     "axios": "^0.25.0",
     "date-fns": "^2.28.0",
     "deepmerge": "^4.2.2",
