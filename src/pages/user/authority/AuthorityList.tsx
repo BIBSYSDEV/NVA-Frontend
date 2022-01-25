@@ -23,6 +23,7 @@ import { Authority } from '../../../types/authority.types';
 import { AlmaRegistration } from '../../../types/registration.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { AlmaApiPath } from '../../../api/apiPaths';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   minWidth: '12rem',
@@ -72,7 +73,7 @@ export const AuthorityList = ({ authorities, searchTerm, onSelectAuthority, sele
             {authorities.map((authority) => (
               <TableRow
                 sx={{ cursor: 'pointer' }}
-                data-testid="author-radio-button"
+                data-testid={dataTestId.registrationWizard.contributors.authorRadioButton}
                 key={authority.id}
                 hover
                 onClick={() => onSelectAuthority?.(authority)}

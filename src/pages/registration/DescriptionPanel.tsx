@@ -24,7 +24,7 @@ export const DescriptionPanel = () => {
             id={field.name}
             value={field.value ?? ''}
             required
-            data-testid={dataTestId.registrationWizard.description.registrationTitleField}
+            data-testid={dataTestId.registrationWizard.description.titleField}
             variant="filled"
             fullWidth
             label={t('common:title')}
@@ -39,7 +39,7 @@ export const DescriptionPanel = () => {
             {...field}
             id={field.name}
             value={field.value ?? ''}
-            data-testid={dataTestId.registrationWizard.description.registrationAbstractField}
+            data-testid={dataTestId.registrationWizard.description.abstractField}
             variant="filled"
             fullWidth
             multiline
@@ -54,7 +54,7 @@ export const DescriptionPanel = () => {
             {...field}
             id={field.name}
             value={field.value ?? ''}
-            data-testid={dataTestId.registrationWizard.description.registrationDescriptionField}
+            data-testid={dataTestId.registrationWizard.description.descriptionField}
             label={t('description.description_of_content')}
             multiline
             rows="4"
@@ -87,7 +87,7 @@ export const DescriptionPanel = () => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                data-testid={dataTestId.registrationWizard.description.registrationTagField}
+                data-testid={dataTestId.registrationWizard.description.tagField}
                 label={t('description.keywords')}
                 helperText={t('description.keywords_helper')}
                 variant="filled"
@@ -114,7 +114,7 @@ export const DescriptionPanel = () => {
               {...field}
               id={field.name}
               value={field.value ?? ''}
-              data-testid={dataTestId.registrationWizard.description.registrationLanguageField}
+              data-testid={dataTestId.registrationWizard.description.languageField}
               fullWidth
               label={t('description.primary_language')}
               placeholder={t('description.primary_language')}

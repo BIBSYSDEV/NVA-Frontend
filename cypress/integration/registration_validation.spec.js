@@ -21,10 +21,10 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.descriptionStepButton}]`).click({ force: true });
 
     // Title field
-    cy.get(`[data-testid=${dataTestId.registrationWizard.description.registrationTitleField}] p.Mui-error`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.description.titleField}] p.Mui-error`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.descriptionStepButton}]` ).within(() => cy.get('[data-testid=error-tab]').should('exist'));
-    cy.get(`[data-testid=${dataTestId.registrationWizard.description.registrationTitleField}] input`).click({ force: true }).type('TITLE INPUT');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.description.registrationTitleField}] p.Mui-error`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.description.titleField}] input`).click({ force: true }).type('TITLE INPUT');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.description.titleField}] p.Mui-error`).should('not.exist');
 
     // Date published field
     cy.get(`[data-testid=${dataTestId.registrationWizard.description.datePublishedField}] input`).click({ force: true }).type('999');
@@ -286,20 +286,20 @@ describe('User opens registration form and can see validation errors', () => {
     // Add author
     cy.get('[data-testid=add-Creator]').first().click();
     cy.get('[data-testid=contributor-modal]').should('be.visible');
-    cy.get('[data-testid=search-field] input').type('test');
-    cy.get('[data-testid=author-radio-button]').first().click({ force: true });
-    cy.get('[data-testid=author-radio-button]').first().click({ force: true });
-    cy.get('[data-testid=connect-author-button]').click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.searchField}] input`).type('test');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.authorRadioButton}]`).first().click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.authorRadioButton}]`).first().click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.connectAuthorButton}]`).click();
     cy.get('[data-testid=contributor-modal]').should('not.exist');
     cy.get('p.Mui-error').should('be.visible');
 
     // Add supervisor
     cy.get('[data-testid=add-Supervisor]').first().click();
     cy.get('[data-testid=contributor-modal]').should('be.visible');
-    cy.get('[data-testid=search-field] input').type('test');
-    cy.get('[data-testid=author-radio-button]').last().click({ force: true });
-    cy.get('[data-testid=author-radio-button]').last().click({ force: true });
-    cy.get('[data-testid=connect-author-button]').click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.searchField}] input`).type('test');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.authorRadioButton}]`).last().click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.authorRadioButton}]`).last().click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.connectAuthorButton}]`).click();
     cy.get('[data-testid=contributor-modal]').should('not.exist');
     cy.get('p.Mui-error').should('not.exist');
 
