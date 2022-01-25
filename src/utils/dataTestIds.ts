@@ -118,6 +118,7 @@ export const dataTestId = {
     },
     resourceType: {
       addVenueButton: 'add-venue-button',
+      articleNumberField: 'article-number-field',
       artisticTypeField: 'artistic-type-field',
       artisticDescriptionField: 'artistic-description-field',
       artisticOtherTypeField: 'artistic-other-type-field',
@@ -131,6 +132,7 @@ export const dataTestId = {
       eventPlaceField: 'event-place-field',
       eventTitleField: 'event-title-field',
       isbnField: 'isbn-field',
+      issueFIeld: 'issue-field',
       journalChip: 'journal-chip',
       journalField: 'journal-search-field',
       nviFailed: 'not-nvi-applicable',
@@ -149,6 +151,7 @@ export const dataTestId = {
       seriesField: 'series-search-field',
       seriesNumber: 'series-number-field',
       venueNameField: 'venue-name-field',
+      volumeField: 'volume-field',
     },
     stepper: {
       contributorsStepButton: 'nav-tabpanel-contributors',
