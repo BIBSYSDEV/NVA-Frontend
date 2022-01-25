@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
+import { SyledPageContent } from '../../components/styled/Wrappers';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
@@ -28,7 +28,7 @@ const PublicRegistration = () => {
     userIsRegistrationCurator(user, registration);
 
   return (
-    <StyledPageWrapperWithMaxWidth>
+    <SyledPageContent>
       {isLoadingRegistration ? (
         <PageSpinner />
       ) : registration ? (
@@ -42,7 +42,7 @@ const PublicRegistration = () => {
       ) : (
         <NotFound />
       )}
-    </StyledPageWrapperWithMaxWidth>
+    </SyledPageContent>
   );
 };
 

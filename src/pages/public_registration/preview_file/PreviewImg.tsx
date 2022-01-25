@@ -1,15 +1,10 @@
-import styled from 'styled-components';
+import { Box } from '@mui/material';
 import { CommonPreviewProps } from './PreviewFile';
-
-const StyledImg = styled.img`
-  max-width: 100%;
-  max-height: 25rem;
-`;
 
 interface PreviewImgProps extends CommonPreviewProps {
   imgAlt: string;
 }
 
 export const PreviewImg = ({ url, imgAlt, ...props }: PreviewImgProps) => (
-  <StyledImg src={url} alt={imgAlt} {...props} />
+  <Box component="img" sx={{ maxWidth: '100%', maxHeight: '25rem' }} src={url} alt={imgAlt} {...props} />
 );

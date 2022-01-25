@@ -3,8 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import SaveIcon from '@mui/icons-material/Save';
@@ -17,37 +16,6 @@ import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { getFormattedRegistration } from '../../utils/registration-helpers';
-
-const StyledActionsContainer = styled.div`
-  margin-bottom: 1rem;
-  display: grid;
-  grid-template-areas: 'back-button support-button save-next-button';
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-areas: 'save-next-button save-next-button' 'back-button support-button';
-    row-gap: 1rem;
-  }
-  grid-template-columns: 2fr auto auto;
-  column-gap: 1rem;
-`;
-
-const StyledBackButtonContainer = styled.div`
-  grid-area: back-button;
-`;
-
-const StyledSaveNextButtonsContainer = styled.div`
-  grid-area: save-next-button;
-  display: grid;
-  grid-template-areas: 'save-button next-button';
-  grid-column-gap: 1rem;
-`;
-
-const StyledSupportButtonContainer = styled.div`
-  grid-area: support-button;
-`;
-
-const StyledSaveAndPresentButtonContainer = styled.div`
-  grid-area: save-next-button;
-`;
 
 interface RegistrationFormActionsProps {
   tabNumber: RegistrationTab;
@@ -94,9 +62,20 @@ export const RegistrationFormActions = ({
 
   return (
     <>
-      <StyledActionsContainer>
+      <Box
+        sx={{
+          mb: '1rem',
+          display: 'grid',
+          gridTemplateAreas: {
+            xs: "'save-next-button save-next-button' 'back-button support-button'",
+            sm: '"back-button support-button save-next-button"',
+          },
+          gridTemplateColumns: { xs: '1fr 1fr', sm: '2fr auto auto' },
+          alignItems: 'center',
+          gap: '1rem',
+        }}>
         {tabNumber > RegistrationTab.Description && (
-          <StyledBackButtonContainer>
+          <Box sx={{ gridArea: 'back-button' }}>
             <Button
               variant="outlined"
               data-testid="button-previous-tab"
@@ -106,15 +85,19 @@ export const RegistrationFormActions = ({
               {tabNumber === RegistrationTab.Contributors && t('heading.resource_type')}
               {tabNumber === RegistrationTab.FilesAndLicenses && t('heading.contributors')}
             </Button>
-          </StyledBackButtonContainer>
+          </Box>
         )}
-        <StyledSupportButtonContainer>
-          <Button data-testid="open-support-button" onClick={toggleSupportModal}>
-            {t('common:support')}
-          </Button>
-        </StyledSupportButtonContainer>
+        <Button data-testid="open-support-button" onClick={toggleSupportModal} sx={{ gridArea: 'support-button' }}>
+          {t('common:support')}
+        </Button>
         {tabNumber < RegistrationTab.FilesAndLicenses ? (
-          <StyledSaveNextButtonsContainer>
+          <Box
+            sx={{
+              gridArea: 'save-next-button',
+              display: 'grid',
+              gridTemplateAreas: '"save-button next-button"',
+              columnGap: '1rem',
+            }}>
             <LoadingButton
               variant="outlined"
               loading={isSaving}
@@ -137,21 +120,20 @@ export const RegistrationFormActions = ({
               {tabNumber === RegistrationTab.ResourceType && t('heading.contributors')}
               {tabNumber === RegistrationTab.Contributors && t('heading.files_and_license')}
             </Button>
-          </StyledSaveNextButtonsContainer>
+          </Box>
         ) : (
-          <StyledSaveAndPresentButtonContainer>
-            <LoadingButton
-              variant="contained"
-              loading={isSaving}
-              data-testid="button-save-registration"
-              endIcon={<SaveIcon />}
-              loadingPosition="end"
-              onClick={onClickSaveAndPresent}>
-              {t('common:save_and_present')}
-            </LoadingButton>
-          </StyledSaveAndPresentButtonContainer>
+          <LoadingButton
+            variant="contained"
+            loading={isSaving}
+            data-testid="button-save-registration"
+            endIcon={<SaveIcon />}
+            loadingPosition="end"
+            onClick={onClickSaveAndPresent}
+            sx={{ gridArea: 'save-next-button' }}>
+            {t('common:save_and_present')}
+          </LoadingButton>
         )}
-      </StyledActionsContainer>
+      </Box>
 
       <Modal
         open={openSupportModal}

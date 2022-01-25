@@ -1,11 +1,10 @@
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Chip, Typography } from '@mui/material';
+import { Box, Chip, Typography } from '@mui/material';
 import { Autocomplete } from '@mui/material';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { Journal, PublicationChannelType } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
@@ -105,7 +104,7 @@ export const JournalField = () => {
           getOptionLabel={(option) => option.name}
           renderOption={(props, option, state) => (
             <li {...props}>
-              <StyledFlexColumn>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Typography variant="subtitle1">
                   <EmphasizeSubstring
                     text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
@@ -117,7 +116,7 @@ export const JournalField = () => {
                     {t('resource_type.level')}: {option.level}
                   </Typography>
                 )}
-              </StyledFlexColumn>
+              </Box>
             </li>
           )}
           renderTags={(value, getTagProps) =>

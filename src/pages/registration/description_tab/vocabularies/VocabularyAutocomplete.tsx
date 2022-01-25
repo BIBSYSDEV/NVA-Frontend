@@ -25,7 +25,9 @@ export const VocabularyAutocomplete = ({
   options,
   renderOption,
 }: VocabularyAutocompleteProps) => {
-  const selectedOptions = options.filter((option) => selectedIds.includes(option.id));
+  const selectedOptions = selectedIds
+    .map((id) => options.find((option) => option.id === id))
+    .filter((item) => !!item) as Category[];
 
   return (
     <Autocomplete

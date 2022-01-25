@@ -1,13 +1,11 @@
 import { useState, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { AccordionActions, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
 import LinkIcon from '@mui/icons-material/LinkOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useDispatch } from 'react-redux';
-
 import { getRegistrationByDoi } from '../../../api/registrationApi';
 import { LinkRegistrationForm } from './LinkRegistrationForm';
 import { RegistrationAccordion } from './RegistrationAccordion';
@@ -16,10 +14,6 @@ import { setNotification } from '../../../redux/actions/notificationActions';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-
-const StyledRegistrationAccorion = styled(RegistrationAccordion)`
-  border-color: ${({ theme }) => theme.palette.primary.main};
-`;
 
 export interface StartRegistrationAccordionProps {
   expanded: boolean;
@@ -58,7 +52,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
   };
 
   return (
-    <StyledRegistrationAccorion expanded={expanded} onChange={onChange}>
+    <RegistrationAccordion elevation={5} expanded={expanded} onChange={onChange} sx={{ borderColor: 'primary.main' }}>
       <AccordionSummary
         data-testid={dataTestId.registrationWizard.new.linkAccordion}
         expandIcon={<ExpandMoreIcon fontSize="large" />}>
@@ -90,6 +84,6 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
           {t('registration:registration.start_registration')}
         </Button>
       </AccordionActions>
-    </StyledRegistrationAccorion>
+    </RegistrationAccordion>
   );
 };

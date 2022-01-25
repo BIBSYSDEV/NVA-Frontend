@@ -26,8 +26,8 @@ import { DescriptionPanel } from './DescriptionPanel';
 import { FilesAndLicensePanel } from './FilesAndLicensePanel';
 import { ResourceTypePanel } from './ResourceTypePanel';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { RequiredDescription } from '../../components/RequiredDescription';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 
 export type HighestTouchedTab = RegistrationTab | -1;
 

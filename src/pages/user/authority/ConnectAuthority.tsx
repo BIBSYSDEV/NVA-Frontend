@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
 import { Button, DialogActions } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from '../../../api/authorityApi';
@@ -13,16 +12,6 @@ import { AuthorityList } from './AuthorityList';
 import { NewAuthorityCard } from './NewAuthorityCard';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-
-const StyledAuthorityContainer = styled.div`
-  min-width: 20rem;
-  > * {
-    margin-top: 1rem;
-  }
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    min-width: auto;
-  }
-`;
 
 interface ConnectAuthorityProps {
   user: User;
@@ -88,20 +77,19 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
 
   return (
     <>
-      <StyledAuthorityContainer>
-        {user.possibleAuthorities.length > 0 && !openNewAuthorityCard ? (
-          <>
-            <AuthorityList
-              authorities={user.possibleAuthorities}
-              selectedArpId={selectedArpId}
-              onSelectAuthority={(authority) => setSelectedArpId(authority.id)}
-              searchTerm={user.name}
-            />
-            <StyledRightAlignedWrapper>
-              <Button variant="text" data-testid="button-create-authority" onClick={toggleOpenNewAuthorityCard}>
-                {t('authority.create_authority')}
-              </Button>
-            </StyledRightAlignedWrapper>
+      {user.possibleAuthorities.length > 0 && !openNewAuthorityCard ? (
+        <>
+          <AuthorityList
+            authorities={user.possibleAuthorities}
+            selectedArpId={selectedArpId}
+            onSelectAuthority={(authority) => setSelectedArpId(authority.id)}
+            searchTerm={user.name}
+          />
+          <StyledRightAlignedWrapper>
+            <Button variant="text" data-testid="button-create-authority" onClick={toggleOpenNewAuthorityCard}>
+              {t('authority.create_authority')}
+            </Button>
+          </StyledRightAlignedWrapper>
 
             <DialogActions>
               <Button variant="text" onClick={handleCloseModal}>

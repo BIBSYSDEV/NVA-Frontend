@@ -1,7 +1,6 @@
 import { useState, MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import {
   Button,
   Menu as MuiMenu,
@@ -11,6 +10,7 @@ import {
   Theme,
   useMediaQuery,
   IconButton,
+  Box,
 } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircleOutlined';
 import { useSelector } from 'react-redux';
@@ -18,20 +18,6 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { LanguageSelector } from './LanguageSelector';
 import { dataTestId } from '../../utils/dataTestIds';
-
-const StyledMenu = styled.div`
-  grid-area: user-items;
-`;
-
-const StyledMenuButton = styled(Button)`
-  text-transform: none;
-`;
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  width: 100%;
-  height: 100%;
-`;
 
 interface MenuProps {
   handleLogout: () => void;
@@ -51,21 +37,22 @@ export const Menu = ({ handleLogout }: MenuProps) => {
   const closeMenu = () => setAnchorEl(null);
 
   return (
-    <StyledMenu>
+    <Box sx={{ gridArea: 'user-items' }}>
       {isMobile ? (
         <IconButton onClick={handleClickMenuAnchor} title={name} color="inherit">
           <AccountCircle fontSize="large" />
         </IconButton>
       ) : (
-        <StyledMenuButton
+        <Button
           color="inherit"
           data-testid={dataTestId.header.menuButton}
           onClick={handleClickMenuAnchor}
-          startIcon={<AccountCircle />}>
+          startIcon={<AccountCircle />}
+          sx={{ textTransform: 'none' }}>
           <Typography noWrap color="inherit">
             {name}
           </Typography>
-        </StyledMenuButton>
+        </Button>
       )}
       <MuiMenu
         anchorEl={anchorEl}
@@ -85,8 +72,8 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               key={dataTestId.header.worklistLink}
               data-testid={dataTestId.header.worklistLink}
               onClick={closeMenu}
-              component={StyledLink}
-              to={UrlPathTemplate}>
+              component={Link}
+              to={UrlPathTemplate.Worklist}>
               <Typography>{t('workLists:worklist')}</Typography>
             </MenuItem>
           ),
@@ -95,7 +82,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               key={dataTestId.header.messagesLink}
               data-testid={dataTestId.header.messagesLink}
               onClick={closeMenu}
-              component={StyledLink}
+              component={Link}
               to={UrlPathTemplate.MyMessages}>
               <Typography>{t('workLists:messages')}</Typography>
             </MenuItem>
@@ -106,7 +93,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
             key={dataTestId.header.myRegistrationsLink}
             data-testid={dataTestId.header.myRegistrationsLink}
             onClick={closeMenu}
-            component={StyledLink}
+            component={Link}
             to={UrlPathTemplate.MyRegistrations}>
             <Typography>{t('workLists:my_registrations')}</Typography>
           </MenuItem>,
@@ -117,7 +104,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
             key={dataTestId.header.editorLink}
             data-testid={dataTestId.header.editorLink}
             onClick={closeMenu}
-            component={StyledLink}
+            component={Link}
             to={UrlPathTemplate.Editor}>
             <Typography>{t('profile:roles.editor')}</Typography>
           </MenuItem>
@@ -128,7 +115,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               key={dataTestId.header.adminInstitutionsLink}
               data-testid={dataTestId.header.adminInstitutionsLink}
               onClick={closeMenu}
-              component={StyledLink}
+              component={Link}
               to={UrlPathTemplate.AdminInstitutions}>
               <Typography>{t('common:institutions')}</Typography>
             </MenuItem>
@@ -138,7 +125,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               key={dataTestId.header.adminInstitutionLink}
               data-testid={dataTestId.header.adminInstitutionLink}
               onClick={closeMenu}
-              component={StyledLink}
+              component={Link}
               to={UrlPathTemplate.MyInstitution}>
               <Typography>{t('common:my_institution')}</Typography>
             </MenuItem>,
@@ -146,7 +133,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               key={dataTestId.header.adminUsersLink}
               data-testid={dataTestId.header.adminUsersLink}
               onClick={closeMenu}
-              component={StyledLink}
+              component={Link}
               to={UrlPathTemplate.MyInstitutionUsers}>
               <Typography>{t('common:users')}</Typography>
             </MenuItem>,
@@ -156,7 +143,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
         <MenuItem
           data-testid={dataTestId.header.myProfileLink}
           onClick={closeMenu}
-          component={StyledLink}
+          component={Link}
           to={UrlPathTemplate.MyProfile}>
           <Typography>{t('profile:my_profile')}</Typography>
         </MenuItem>
@@ -164,6 +151,6 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           {t('authorization:logout')}
         </MenuItem>
       </MuiMenu>
-    </StyledMenu>
+    </Box>
   );
 };

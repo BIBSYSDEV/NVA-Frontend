@@ -1,29 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
-import styled from 'styled-components';
-import { Link as MuiLink, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { Box, Link as MuiLink, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { displayDate } from '../utils/date-helpers';
 import { getRegistrationLandingPagePath, getUserPath } from '../utils/urlPaths';
 import { Registration } from '../types/registration.types';
 import { ErrorBoundary } from './ErrorBoundary';
-
-const StyledContributors = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  > p {
-    white-space: nowrap;
-    :not(:last-child) {
-      margin-right: 1rem;
-    }
-  }
-`;
-
-const StyledRegistrationTitle = styled(Typography)`
-  font-size: 1rem;
-  font-weight: 600;
-  font-style: italic;
-`;
 
 interface RegistrationListProps {
   registrations: Registration[];
@@ -57,12 +39,18 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
         <Typography variant="overline" sx={{ color: 'primary.dark' }}>
           {t(entityDescription?.reference?.publicationInstance.type ?? '')} - {displayDate(entityDescription?.date)}
         </Typography>
-        <StyledRegistrationTitle gutterBottom>
+        <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
           <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
             {entityDescription?.mainTitle}
           </MuiLink>
-        </StyledRegistrationTitle>
-        <StyledContributors>
+        </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            columnGap: '1rem',
+            whiteSpace: 'nowrap',
+          }}>
           {focusedContributors.map((contributor, index) => (
             <Typography key={index} variant="body2">
               {contributor.identity.id ? (
@@ -77,7 +65,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
           {countRestContributors > 0 && (
             <Typography variant="body2">({t('common:x_others', { count: countRestContributors })})</Typography>
           )}
-        </StyledContributors>
+        </Box>
 
         <Typography>
           <TextTruncate line={3} element="span" truncateText=" [...]" text={entityDescription?.abstract} />

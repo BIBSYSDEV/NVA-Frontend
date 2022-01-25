@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 import { Button, Checkbox, Divider, FormControlLabel, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { styled } from '@mui/system';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { Modal } from '../../components/Modal';
 import { PageHeader } from '../../components/PageHeader';
-import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
+import { BackgroundDiv, SyledPageContent } from '../../components/styled/Wrappers';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { InstitutionUser, RoleName } from '../../types/user.types';
 import { filterUsersByRole } from '../../utils/role-helpers';
@@ -16,15 +16,14 @@ import { UserList } from './UserList';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { RoleApiPath } from '../../api/apiPaths';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
 
-const StyledContainer = styled.div`
-  margin-bottom: 1rem;
-`;
+const StyledContainer = styled('div')({
+  marginBottom: '1rem',
+});
 
-const StyledNewButton = styled(Button)`
-  margin-top: 1rem;
-`;
+const StyledNewButton = styled(Button)({
+  marginTop: '1rem',
+});
 
 const MyInstitutionUsersPage = () => {
   const { t } = useTranslation('admin');
@@ -47,7 +46,7 @@ const MyInstitutionUsersPage = () => {
   });
 
   return (
-    <StyledPageWrapperWithMaxWidth>
+    <SyledPageContent>
       <PageHeader>{t('users.user_administration')}</PageHeader>
       <BackgroundDiv>
         {/* Admins */}
@@ -155,7 +154,7 @@ const MyInstitutionUsersPage = () => {
           </Modal>
         )}
       </BackgroundDiv>
-    </StyledPageWrapperWithMaxWidth>
+    </SyledPageContent>
   );
 };
 

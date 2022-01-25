@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Button, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import {
   addQualifierIdForAuthority,
@@ -9,14 +9,13 @@ import {
   removeQualifierIdFromAuthority,
 } from '../../api/authorityApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import { BackgroundDiv, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { setAuthorityData } from '../../redux/actions/userActions';
-import { InstitutionCard } from './institution/InstitutionCard';
 import { User } from '../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
 import { SelectInstitutionForm } from '../../components/institution/SelectInstitutionForm';
+import { InstitutionCard } from './InstitutionCard';
 
 interface UserInstituionProps {
   user: User;
@@ -98,14 +97,16 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
     <>
       <BackgroundDiv>
         <Typography variant="h2">{t('heading.affiliations')}</Typography>
-        {user.authority?.orgunitids &&
-          user.authority.orgunitids.map((orgunitId) => (
-            <InstitutionCard
-              key={orgunitId}
-              orgunitId={orgunitId}
-              setInstitutionIdToRemove={setInstitutionIdToRemove}
-            />
-          ))}
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', my: '1rem' }}>
+          {user.authority?.orgunitids &&
+            user.authority.orgunitids.map((orgunitId) => (
+              <InstitutionCard
+                key={orgunitId}
+                orgunitId={orgunitId}
+                setInstitutionIdToRemove={setInstitutionIdToRemove}
+              />
+            ))}
+        </Box>
 
         {openAddInstitutionForm ? (
           <SelectInstitutionForm onSubmit={handleAddInstitution} onClose={toggleUnitForm} />

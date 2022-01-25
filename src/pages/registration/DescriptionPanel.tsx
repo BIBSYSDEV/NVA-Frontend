@@ -1,8 +1,7 @@
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import { MenuItem, TextField, Autocomplete } from '@mui/material';
+import { MenuItem, TextField, Autocomplete, Box } from '@mui/material';
 import { LanguageCodes, registrationLanguages } from '../../types/language.types';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
@@ -11,17 +10,6 @@ import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
 import { InputContainerBox } from '../../components/styled/Wrappers';
 import { dataTestId } from '../../utils/dataTestIds';
-
-const DateAndLanguageWrapper = styled.div`
-  display: grid;
-  grid-template-areas: 'datepicker year-only language';
-  grid-template-columns: 1fr 1fr 2fr;
-  column-gap: 1rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-areas: 'datepicker' 'year-only' 'language';
-    grid-template-columns: 1fr;
-  }
-`;
 
 export const DescriptionPanel = () => {
   const { t } = useTranslation('registration');
@@ -112,7 +100,12 @@ export const DescriptionPanel = () => {
 
       <VocabularyBase />
 
-      <DateAndLanguageWrapper>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr auto', md: '1fr 1fr 2fr' },
+          gap: '1rem',
+        }}>
         <DatePickerField />
 
         <Field name={DescriptionFieldNames.Language}>
@@ -141,7 +134,7 @@ export const DescriptionPanel = () => {
             </TextField>
           )}
         </Field>
-      </DateAndLanguageWrapper>
+      </Box>
 
       <ProjectsField />
     </InputContainerBox>

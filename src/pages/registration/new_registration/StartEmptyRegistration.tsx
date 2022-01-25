@@ -4,7 +4,6 @@ import { AccordionActions, AccordionSummary, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFileOutlined';
-import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
@@ -15,10 +14,6 @@ import { getRegistrationPath } from '../../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { StartRegistrationAccordionProps } from './LinkRegistration';
-
-const StyledRegistrationAccorion = styled(RegistrationAccordion)`
-  border-color: ${({ theme }) => theme.palette.primary.main};
-`;
 
 export const StartEmptyRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
   const { t } = useTranslation('registration');
@@ -38,7 +33,7 @@ export const StartEmptyRegistration = ({ expanded, onChange }: StartRegistration
   };
 
   return (
-    <StyledRegistrationAccorion expanded={expanded} onChange={onChange}>
+    <RegistrationAccordion elevation={5} expanded={expanded} onChange={onChange} sx={{ borderColor: 'primary.main' }}>
       <AccordionSummary
         data-testid={dataTestId.registrationWizard.new.emptyRegistrationAccordion}
         expandIcon={<ExpandMoreIcon fontSize="large" />}>
@@ -60,6 +55,6 @@ export const StartEmptyRegistration = ({ expanded, onChange }: StartRegistration
           {t('registration.start_registration')}
         </LoadingButton>
       </AccordionActions>
-    </StyledRegistrationAccorion>
+    </RegistrationAccordion>
   );
 };

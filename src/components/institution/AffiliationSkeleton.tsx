@@ -1,11 +1,6 @@
 import { useRef } from 'react';
-import { Skeleton } from '@mui/material';
-import styled from 'styled-components';
+import { Box, Skeleton } from '@mui/material';
 import { getRandomWidthPercent } from '../../utils/skeleton-helpers';
-
-const StyledDiv = styled.div`
-  width: 100%;
-`;
 
 interface AffiliationSkeletonProps {
   commaSeparated?: boolean;
@@ -19,7 +14,7 @@ export const AffiliationSkeleton = ({ commaSeparated = false }: AffiliationSkele
   });
 
   return (
-    <StyledDiv>
+    <Box sx={{ width: '100%' }}>
       {commaSeparated ? (
         <Skeleton width={widthsRef.current.long} />
       ) : (
@@ -29,6 +24,6 @@ export const AffiliationSkeleton = ({ commaSeparated = false }: AffiliationSkele
           <Skeleton width={widthsRef.current.short} />
         </>
       )}
-    </StyledDiv>
+    </Box>
   );
 };

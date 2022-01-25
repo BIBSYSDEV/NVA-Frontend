@@ -1,35 +1,13 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import TextTruncate from 'react-text-truncate';
-import styled from 'styled-components';
 import { Box, Button, IconButton, Tooltip, Typography, TypographyProps } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { UrlPathTemplate } from '../utils/urlPaths';
-import { ReactNode } from 'react';
-
-const StyledHeader = styled.div`
-  width: 100%;
-  margin-bottom: 2rem;
-  word-break: break-word;
-`;
-
-const StyledTruncatableHeading = styled.div<{ canBeTruncated: boolean }>`
-  padding-bottom: 1rem;
-  border-bottom: 2px solid;
-  align-items: center;
-  display: grid;
-  grid-template-columns: ${({ canBeTruncated }) => (canBeTruncated ? '1fr auto' : '1fr')};
-  grid-column-gap: 1rem;
-
-  span {
-    display: block;
-    width: 100%;
-  }
-`;
 
 interface PageHeaderProps extends TypographyProps {
   backPath?: string;
@@ -68,7 +46,7 @@ export const PageHeader = ({
   };
 
   return (
-    <StyledHeader>
+    <Box sx={{ width: '100%', marginBottom: '2rem', wordBreak: 'break-word' }}>
       <Helmet>
         <title>{htmlTitle ?? children}</title>
       </Helmet>
@@ -85,7 +63,19 @@ export const PageHeader = ({
           </Typography>
         </Box>
       )}
-      <StyledTruncatableHeading canBeTruncated={canBeTruncated}>
+      <Box
+        sx={{
+          paddingBottom: '1rem',
+          borderBottom: '2px solid',
+          alignItems: 'center',
+          display: 'grid',
+          gridTemplateColumns: canBeTruncated ? '1fr auto' : '1fr',
+          gridColumnGap: '1rem',
+          span: {
+            display: 'block',
+            width: '100%',
+          },
+        }}>
         <Typography variant="h1" {...props}>
           <TextTruncate
             line={showFullText ? false : 2}
@@ -102,16 +92,11 @@ export const PageHeader = ({
             </IconButton>
           </Tooltip>
         )}
-      </StyledTruncatableHeading>
-    </StyledHeader>
+      </Box>
+    </Box>
   );
 };
 
-const StyledItalicPageHeader = styled(PageHeader)`
-  font-weight: 700;
-  font-style: italic;
-`;
-
 export const ItalicPageHeader = (props: PageHeaderProps) => (
-  <StyledItalicPageHeader variant="h2" variantMapping={{ h2: 'h1' }} {...props} />
+  <PageHeader variant="h2" variantMapping={{ h2: 'h1' }} sx={{ fontWeight: '700', fontStyle: 'italic' }} {...props} />
 );

@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import styled from 'styled-components';
 import { Helmet } from 'react-helmet-async';
+import { Box } from '@mui/material';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from './api/authorityApi';
 import { getCurrentUserAttributes } from './api/userApi';
 import { AppRoutes } from './AppRoutes';
@@ -27,21 +27,6 @@ import { AuthorityApiPath, RoleApiPath } from './api/apiPaths';
 import { InstitutionUser } from './types/user.types';
 import { UrlPathTemplate } from './utils/urlPaths';
 import { ErrorBoundary } from './components/ErrorBoundary';
-
-const StyledApp = styled.div`
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-`;
-
-const StyledMainContent = styled.main`
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-  width: 100%;
-  align-items: center;
-  flex-grow: 1;
-`;
 
 const getLanguageTagValue = (language: string) => {
   if (language === LanguageCodes.ENGLISH) {
@@ -177,17 +162,26 @@ export const App = () => {
         <PageSpinner />
       ) : (
         <BrowserRouter>
-          <StyledApp>
+          <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Notifier />
             <SkipLink href="#main-content">{t('common:skip_to_main_content')}</SkipLink>
             <Header />
-            <StyledMainContent id="main-content">
+            <Box
+              component="main"
+              id="main-content"
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                width: '100%',
+                alignItems: 'center',
+                flexGrow: 1,
+              }}>
               <ErrorBoundary>
                 <AppRoutes />
               </ErrorBoundary>
-            </StyledMainContent>
+            </Box>
             <Footer />
-          </StyledApp>
+          </Box>
           {user && (user.authority || user.possibleAuthorities) && <AuthorityOrcidModal user={user} />}
         </BrowserRouter>
       )}

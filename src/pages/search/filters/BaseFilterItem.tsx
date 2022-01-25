@@ -2,19 +2,6 @@ import { ListItem, Collapse, List, ListItemText, Typography, Theme, useMediaQuer
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { ReactNode, useState } from 'react';
-import styled from 'styled-components';
-
-const StyledCollapsableList = styled(List)`
-  padding-left: 1rem;
-
-  .MuiListSubheader-root {
-    line-height: 1.5rem;
-  }
-`;
-
-const StyledTitle = styled(Typography)`
-  font-weight: 600;
-`;
 
 interface BaseFilterItemProps {
   title: string;
@@ -30,12 +17,21 @@ export const BaseFilterItem = ({ title, children }: BaseFilterItemProps) => {
     <>
       <ListItem button onClick={toggleOpen}>
         <ListItemText disableTypography>
-          <StyledTitle>{title}</StyledTitle>
+          <Typography fontWeight={600}>{title}</Typography>
         </ListItemText>
         {isOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
-        <StyledCollapsableList disablePadding>{children}</StyledCollapsableList>
+        <List
+          disablePadding
+          sx={{
+            pl: '1rem',
+            '.MuiListSubheader-root': {
+              lineHeight: '1.5rem',
+            },
+          }}>
+          {children}
+        </List>
       </Collapse>
     </>
   );

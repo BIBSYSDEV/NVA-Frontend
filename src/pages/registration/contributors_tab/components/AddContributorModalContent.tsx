@@ -2,8 +2,7 @@ import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
-import { Button, TextField, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { RootStore } from '../../../../redux/reducers/rootReducer';
@@ -15,30 +14,6 @@ import { useFetch } from '../../../../utils/hooks/useFetch';
 import { AuthorityApiPath } from '../../../../api/apiPaths';
 import { ContributorRole } from '../../../../types/contributor.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-
-const StyledDialogActions = styled.div`
-  display: grid;
-  grid-template-areas: 'create add-self verify';
-  justify-content: end;
-  gap: 1rem;
-  margin-top: 1rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-areas: 'add-self verify' 'create';
-    justify-content: center;
-  }
-`;
-
-const StyledVerifyButton = styled(Button)`
-  grid-area: verify;
-`;
-
-const StyledCreateButton = styled(Button)`
-  grid-area: create;
-`;
-
-const StyledAddSelfButton = styled(Button)`
-  grid-area: add-self;
-`;
 
 interface AddContributorModalContentProps {
   addContributor: (selectedAuthority: Authority) => void;
@@ -106,9 +81,24 @@ export const AddContributorModalContent = ({
         debouncedSearchTerm && <Typography>{t('common:no_hits')}</Typography>
       )}
 
-      <StyledDialogActions>
-        <StyledVerifyButton
-          data-testid={dataTestId.registrationWizard.contributors.connectAuthorButton}
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'end',
+          gap: '0.5rem',
+          mt: '1rem',
+        }}>
+        {!isSelfAdded && !initialSearchTerm && (
+          <Button data-testid="button-add-self-author" onClick={addSelfAsContributor}>
+            {t('contributors.add_self_as_role', { role: t(`contributors.types.${roleToAdd}`) })}
+          </Button>
+        )}
+        <Button data-testid="button-create-new-author" onClick={openNewContributorModal}>
+          {t('contributors.create_new_with_role', { role: t(`contributors.types.${roleToAdd}`) })}
+        </Button>
+        <Button
+          data-testid="connect-author-button"
           disabled={!selectedAuthority}
           onClick={() => selectedAuthority && addContributor(selectedAuthority)}
           size="large"
@@ -116,16 +106,8 @@ export const AddContributorModalContent = ({
           {initialSearchTerm
             ? t('contributors.verify_person')
             : t('common:add_custom', { name: t(`contributors.types.${roleToAdd}`) })}
-        </StyledVerifyButton>
-        <StyledCreateButton data-testid="button-create-new-author" onClick={openNewContributorModal}>
-          {t('contributors.create_new_with_role', { role: t(`contributors.types.${roleToAdd}`) })}
-        </StyledCreateButton>
-        {!isSelfAdded && !initialSearchTerm && (
-          <StyledAddSelfButton data-testid="button-add-self-author" onClick={addSelfAsContributor}>
-            {t('contributors.add_self_as_role', { role: t(`contributors.types.${roleToAdd}`) })}
-          </StyledAddSelfButton>
-        )}
-      </StyledDialogActions>
+        </Button>
+      </Box>
     </>
   );
 };

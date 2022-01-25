@@ -110,6 +110,11 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
             sm: '"name size" "date license"',
             xs: '"name size" "date date" "license license"',
           },
+          gridTemplateColumns: {
+            md: '1fr auto 1fr 1fr',
+            sm: '3fr 1fr',
+            xs: '3fr 1fr',
+          },
           gap: { md: '3rem', xs: '1rem' },
           alignItems: 'center',
         }}>

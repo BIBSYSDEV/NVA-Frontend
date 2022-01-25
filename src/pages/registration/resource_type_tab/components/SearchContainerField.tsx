@@ -1,10 +1,9 @@
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useState } from 'react';
-import { Chip, Typography, Autocomplete } from '@mui/material';
+import { Chip, Typography, Autocomplete, Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
 import { RegistrationSubtype, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { Journal, Publisher, Registration, RegistrationDate } from '../../../../types/registration.types';
 import { displayDate } from '../../../../utils/date-helpers';
@@ -87,7 +86,7 @@ export const SearchContainerField = ({
             getOptionLabel={(option) => option.entityDescription?.mainTitle ?? ''}
             renderOption={(props, option, state) => (
               <li {...props}>
-                <StyledFlexColumn>
+                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                   <Typography variant="subtitle1">
                     <EmphasizeSubstring
                       text={option.entityDescription?.mainTitle ?? ''}
@@ -102,7 +101,7 @@ export const SearchContainerField = ({
                   ) : (
                     <ContainerAndLevelText registration={option} />
                   )}
-                </StyledFlexColumn>
+                </Box>
               </li>
             )}
             renderTags={(value, getTagProps) =>
