@@ -8,6 +8,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { UrlPathTemplate } from '../utils/urlPaths';
+import { stringIncludesMathJax, typesetMathJax } from '../utils/mathJaxHelpers';
 
 interface PageHeaderProps extends TypographyProps {
   backPath?: string;
@@ -99,8 +100,8 @@ export const PageHeader = ({
 
 export const ItalicPageHeader = (props: PageHeaderProps) => {
   useEffect(() => {
-    if (props.children.includes('$')) {
-      (window as any).MathJax.typesetPromise();
+    if (stringIncludesMathJax(props.children)) {
+      typesetMathJax();
     }
   }, [props.children]);
 

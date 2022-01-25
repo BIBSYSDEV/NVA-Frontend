@@ -24,6 +24,7 @@ import { RegistrationPreview, RegistrationStatus } from '../../types/registratio
 import { getRegistrationLandingPagePath, getRegistrationPath } from '../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
+import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
 
 interface MyRegistrationsListProps {
   registrations: RegistrationPreview[];
@@ -64,8 +65,8 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
   };
 
   useEffect(() => {
-    if (registrations.length > 0) {
-      (window as any).MathJax.typesetPromise();
+    if (registrations.some(({ mainTitle }) => stringIncludesMathJax(mainTitle))) {
+      typesetMathJax();
     }
   }, [registrations]);
 
