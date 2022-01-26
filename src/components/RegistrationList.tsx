@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import TextTruncate from 'react-text-truncate';
 import { Box, Link as MuiLink, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { displayDate } from '../utils/date-helpers';
 import { getRegistrationLandingPagePath, getUserPath } from '../utils/urlPaths';
 import { Registration } from '../types/registration.types';
 import { ErrorBoundary } from './ErrorBoundary';
+import { TruncateableTypography } from './TruncatableTypography';
 
 interface RegistrationListProps {
   registrations: Registration[];
@@ -67,9 +67,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
           )}
         </Box>
 
-        <Typography>
-          <TextTruncate line={3} element="span" truncateText=" [...]" text={entityDescription?.abstract} />
-        </Typography>
+        <TruncateableTypography lines={2}>{entityDescription?.abstract}</TruncateableTypography>
       </ListItemText>
     </ListItem>
   );
