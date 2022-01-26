@@ -5,7 +5,7 @@ import { displayDate } from '../utils/date-helpers';
 import { getRegistrationLandingPagePath, getUserPath } from '../utils/urlPaths';
 import { Registration } from '../types/registration.types';
 import { ErrorBoundary } from './ErrorBoundary';
-import { TruncateableTypography } from './TruncatableTypography';
+import { TruncatableTypography } from './TruncatableTypography';
 
 interface RegistrationListProps {
   registrations: Registration[];
@@ -67,7 +67,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
           )}
         </Box>
 
-        <TruncateableTypography lines={2}>{entityDescription?.abstract}</TruncateableTypography>
+        <TruncatableTypography lines={3}>{entityDescription?.abstract}</TruncatableTypography>
       </ListItemText>
     </ListItem>
   );

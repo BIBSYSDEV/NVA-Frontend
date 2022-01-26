@@ -1,14 +1,12 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import TextTruncate from 'react-text-truncate';
-import { Box, Button, IconButton, Tooltip, Typography, TypographyProps } from '@mui/material';
+import { Box, Button, Typography, TypographyProps } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { UrlPathTemplate } from '../utils/urlPaths';
 import { stringIncludesMathJax, typesetMathJax } from '../utils/mathJaxHelpers';
+import { TruncatableTypography } from './TruncatableTypography';
 
 interface PageHeaderProps extends TypographyProps {
   backPath?: string;
@@ -31,10 +29,6 @@ export const PageHeader = ({
 }: PageHeaderProps) => {
   const { t } = useTranslation('common');
   const history = useHistory();
-  const [showFullText, setShowFullText] = useState(false);
-  const [canBeTruncated, setCanBeTruncated] = useState(false);
-
-  const toggleFullText = () => setShowFullText(!showFullText);
 
   const onBackClick = () => {
     if (backPath) {
@@ -64,35 +58,15 @@ export const PageHeader = ({
           </Typography>
         </Box>
       )}
+
       <Box
         sx={{
           paddingBottom: '1rem',
           borderBottom: '2px solid',
-          alignItems: 'center',
-          display: 'grid',
-          gridTemplateColumns: canBeTruncated ? '1fr auto' : '1fr',
-          gridColumnGap: '1rem',
-          span: {
-            display: 'block',
-            width: '100%',
-          },
         }}>
-        <Typography variant="h1" {...props}>
-          <TextTruncate
-            line={showFullText ? false : 2}
-            truncateText="..."
-            text={children}
-            element="span"
-            onTruncated={() => setCanBeTruncated(true)}
-          />
-        </Typography>
-        {canBeTruncated && (
-          <Tooltip title={showFullText ? t<string>('title_minimize') : t<string>('title_expand')}>
-            <IconButton color="primary" onClick={toggleFullText}>
-              {showFullText ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          </Tooltip>
-        )}
+        <TruncatableTypography variant="h1" {...props} lines={3}>
+          {children}
+        </TruncatableTypography>
       </Box>
     </Box>
   );
