@@ -1,5 +1,5 @@
 import { TypographyProps, Typography, styled, Tooltip } from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface StyledTruncatableTypographyProps {
@@ -20,26 +20,18 @@ const StyledTruncatableTypography = styled(Typography, {
 }));
 
 interface TruncatableTypographyProps extends TypographyProps {
-  lines?: number; // Number of lines to show before truncation (Default: 3)
+  lines?: number; // Number of lines to show before truncation
 }
 
 export const TruncatableTypography = ({ lines = 3, ...props }: TruncatableTypographyProps) => {
   const { t } = useTranslation('common');
-  const typographyRef = useRef<HTMLElement | null>(null);
   const [lineClamp, setLineClamp] = useState<number | undefined>(lines);
-  const [isTruncated, setIsTruncated] = useState(isOverflown(typographyRef.current));
-
-  useEffect(() => {
-    // Avoid bug where typographyRef did not get any value
-    if (typographyRef.current) {
-      setIsTruncated(isOverflown(typographyRef.current));
-    }
-  }, []);
+  const [isTruncated, setIsTruncated] = useState(false);
 
   return (
     <Tooltip followCursor title={isTruncated && lineClamp !== undefined ? t<string>('click_to_show_all') : ''}>
       <StyledTruncatableTypography
-        ref={typographyRef}
+        ref={(ref) => setIsTruncated(isOverflown(ref))}
         lineClamp={lineClamp}
         isTruncated={isTruncated}
         onClick={() => isTruncated && setLineClamp(undefined)}
@@ -49,8 +41,8 @@ export const TruncatableTypography = ({ lines = 3, ...props }: TruncatableTypogr
   );
 };
 
-// https://stackoverflow.com/a/9541579
-const isOverflown = (element: HTMLElement | null) => {
-  // Add 3 to clientHeight, otherwise some headers might give false positive
-  return !!element && (element.scrollHeight > element.clientHeight + 3 || element.scrollWidth > element.clientWidth);
-};
+// Find out if DOM element is overflowing. Inspired by: https://stackoverflow.com/a/9541579
+const heightOffset = 4; // Add a small offset to clientHeight. Otherwise, some h-tags might give false positives.
+const isOverflown = (element: HTMLSpanElement | null) =>
+  !!element &&
+  (element.scrollHeight > element.clientHeight + heightOffset || element.scrollWidth > element.clientWidth);
