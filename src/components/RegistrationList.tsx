@@ -67,7 +67,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
           )}
         </Box>
 
-        <TruncatableTypography lines={3}>{entityDescription?.abstract}</TruncatableTypography>
+        <TruncatableTypography>{entityDescription?.abstract}</TruncatableTypography>
       </ListItemText>
     </ListItem>
   );

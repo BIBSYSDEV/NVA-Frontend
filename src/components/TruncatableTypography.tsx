@@ -1,5 +1,5 @@
 import { TypographyProps, Typography, styled } from '@mui/material';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 interface StyledTruncatableTypographyProps {
   lineClamp: number | undefined;
@@ -23,15 +23,14 @@ interface TruncatableTypographyProps extends TypographyProps {
 }
 
 export const TruncatableTypography = ({ lines = 3, ...props }: TruncatableTypographyProps) => {
-  const [elementId] = useState(getRandomId);
   const [lineClamp, setLineClamp] = useState<number | undefined>(lines);
-
-  const isTruncated = isOverflown(document.getElementById(elementId));
+  const typographyRef = useRef<HTMLElement | null>(null);
+  const isTruncated = isOverflown(typographyRef.current);
 
   return (
     // TODO: tooltip om man kan vise hele?
     <StyledTruncatableTypography
-      id={elementId}
+      ref={typographyRef}
       lineClamp={lineClamp}
       isTruncated={isTruncated}
       onClick={() => isTruncated && setLineClamp(undefined)}
@@ -40,7 +39,7 @@ export const TruncatableTypography = ({ lines = 3, ...props }: TruncatableTypogr
   );
 };
 
-const getRandomId = () => Math.random().toString();
-
-const isOverflown = (element: HTMLElement | null) =>
-  !!element && (element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth);
+// https://stackoverflow.com/questions/9333379/check-if-an-elements-content-is-overflowing
+const isOverflown = (element: HTMLElement | null) => {
+  return !!element && (element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth);
+};

@@ -64,7 +64,7 @@ export const PageHeader = ({
           paddingBottom: '1rem',
           borderBottom: '2px solid',
         }}>
-        <TruncatableTypography variant="h1" {...props} lines={3}>
+        <TruncatableTypography variant="h1" {...props}>
           {children}
         </TruncatableTypography>
       </Box>
