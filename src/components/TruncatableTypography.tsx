@@ -4,19 +4,19 @@ import { useTranslation } from 'react-i18next';
 
 interface StyledTruncatableTypographyProps {
   lineClamp: number | undefined;
-  isTruncated: boolean;
+  isExpandable: boolean;
 }
 
 const StyledTruncatableTypography = styled(Typography, {
-  shouldForwardProp: (prop) => prop !== 'lineClamp' && prop !== 'isTruncated',
-})(({ lineClamp, isTruncated }: StyledTruncatableTypographyProps) => ({
+  shouldForwardProp: (prop) => prop !== 'lineClamp' && prop !== 'isExpandable',
+})(({ lineClamp, isExpandable }: StyledTruncatableTypographyProps) => ({
   overflow: 'hidden',
   display: '-webkit-box',
   textOverflow: 'ellipsis',
   WebkitBoxOrient: 'vertical',
   WebkitLineClamp: lineClamp,
   lineClamp: lineClamp,
-  cursor: isTruncated && lineClamp !== undefined ? 'pointer' : 'auto',
+  cursor: isExpandable ? 'pointer' : 'auto',
 }));
 
 interface TruncatableTypographyProps extends TypographyProps {
@@ -28,12 +28,14 @@ export const TruncatableTypography = ({ lines = 3, ...props }: TruncatableTypogr
   const [lineClamp, setLineClamp] = useState<number | undefined>(lines);
   const [isTruncated, setIsTruncated] = useState(false);
 
+  const isExpandable = isTruncated && lineClamp !== undefined;
+
   return (
-    <Tooltip followCursor title={isTruncated && lineClamp !== undefined ? t<string>('click_to_show_all') : ''}>
+    <Tooltip followCursor title={isExpandable ? t<string>('click_to_show_all') : ''}>
       <StyledTruncatableTypography
         ref={(ref) => setIsTruncated(isOverflown(ref))}
         lineClamp={lineClamp}
-        isTruncated={isTruncated}
+        isExpandable={isExpandable}
         onClick={() => isTruncated && setLineClamp(undefined)}
         {...props}
       />
