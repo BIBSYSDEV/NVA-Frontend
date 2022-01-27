@@ -40,6 +40,7 @@ export const dataTestId = {
     searchButton: 'search-button',
     searchField: 'search-field',
     searchPagination: 'search-pagination',
+    searchResultItem: 'result-list-item',
   },
   projectLandingPage: {
     generalInfoBox: 'general-info',

@@ -6,6 +6,7 @@ import { getRegistrationLandingPagePath, getUserPath } from '../utils/urlPaths';
 import { Registration } from '../types/registration.types';
 import { ErrorBoundary } from './ErrorBoundary';
 import { TruncatableTypography } from './TruncatableTypography';
+import { dataTestId } from '../utils/dataTestIds';
 
 interface RegistrationListProps {
   registrations: Registration[];
@@ -35,7 +36,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
 
   return (
     <ListItem divider disableGutters>
-      <ListItemText disableTypography data-testid="result-list-item">
+      <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Typography variant="overline" sx={{ color: 'primary.dark' }}>
           {t(entityDescription?.reference?.publicationInstance.type ?? '')} - {displayDate(entityDescription?.date)}
         </Typography>
