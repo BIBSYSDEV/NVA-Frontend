@@ -51,9 +51,9 @@ export const PageHeader = ({
         </Button>
       )}
       {superHeader && (
-        <Box sx={{ color: 'primary.dark' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', color: 'primary.dark' }}>
           {superHeader.icon}
-          <Typography variant="overline" paragraph color="inherit">
+          <Typography variant="overline" color="inherit">
             {superHeader.title}
           </Typography>
         </Box>

@@ -11,7 +11,7 @@ const StyledTruncatableTypography = styled(Typography, {
 })(({ lineClamp, isTruncated }: StyledTruncatableTypographyProps) => ({
   overflow: 'hidden',
   display: '-webkit-box',
-  // textOverflow: '"[...]"', // TODO?
+  textOverflow: 'ellipsis',
   WebkitBoxOrient: 'vertical',
   WebkitLineClamp: lineClamp,
   lineClamp: lineClamp,
@@ -39,7 +39,8 @@ export const TruncatableTypography = ({ lines = 3, ...props }: TruncatableTypogr
   );
 };
 
-// https://stackoverflow.com/questions/9333379/check-if-an-elements-content-is-overflowing
+// https://stackoverflow.com/a/9541579
 const isOverflown = (element: HTMLElement | null) => {
-  return !!element && (element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth);
+  // Add 3 to clientHeight, otherwise some headers might give false positive
+  return !!element && (element.scrollHeight > element.clientHeight + 3 || element.scrollWidth > element.clientWidth);
 };
