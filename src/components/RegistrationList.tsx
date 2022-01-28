@@ -1,11 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import TextTruncate from 'react-text-truncate';
 import { Box, Link as MuiLink, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { displayDate } from '../utils/date-helpers';
 import { getRegistrationLandingPagePath, getUserPath } from '../utils/urlPaths';
 import { Registration } from '../types/registration.types';
 import { ErrorBoundary } from './ErrorBoundary';
+import { TruncatableTypography } from './TruncatableTypography';
+import { dataTestId } from '../utils/dataTestIds';
 
 interface RegistrationListProps {
   registrations: Registration[];
@@ -35,7 +36,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
 
   return (
     <ListItem divider disableGutters>
-      <ListItemText disableTypography data-testid="result-list-item">
+      <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Typography variant="overline" sx={{ color: 'primary.dark' }}>
           {t(entityDescription?.reference?.publicationInstance.type ?? '')} - {displayDate(entityDescription?.date)}
         </Typography>
@@ -67,9 +68,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
           )}
         </Box>
 
-        <Typography>
-          <TextTruncate line={3} element="span" truncateText=" [...]" text={entityDescription?.abstract} />
-        </Typography>
+        <TruncatableTypography>{entityDescription?.abstract}</TruncatableTypography>
       </ListItemText>
     </ListItem>
   );

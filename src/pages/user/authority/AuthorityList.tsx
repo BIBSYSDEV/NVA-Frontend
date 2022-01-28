@@ -1,9 +1,6 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import TextTruncate from 'react-text-truncate';
 import { styled } from '@mui/system';
 import {
-  Box,
   Radio,
   Skeleton,
   Table,
@@ -12,11 +9,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Tooltip,
   Typography,
 } from '@mui/material';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { visuallyHidden } from '@mui/utils';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import { Authority } from '../../../types/authority.types';
@@ -24,6 +18,7 @@ import { AlmaRegistration } from '../../../types/registration.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { AlmaApiPath } from '../../../api/apiPaths';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { TruncatableTypography } from '../../../components/TruncatableTypography';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   minWidth: '12rem',
@@ -127,39 +122,12 @@ const LastAlmaRegistrationCell = ({ authority }: LastAlmaRegistrationCellProps) 
     errorMessage: t('feedback:error.get_last_registration'),
   });
 
-  const [canBeTruncated, setCanBeTruncated] = useState(false);
-  const [showFullText, setShowFullText] = useState(false);
-
-  const toggleFullText = () => setShowFullText(!showFullText);
-
   return (
     <>
       {isLoadingAlmaPublication ? (
         <Skeleton />
       ) : almaPublication?.title ? (
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: '9fr 1fr',
-            gap: '0.5rem',
-            alignItems: 'center',
-          }}>
-          <TextTruncate
-            element="p"
-            line={showFullText ? false : 1}
-            truncateText=" [...]"
-            text={almaPublication.title}
-            onTruncated={() => setCanBeTruncated(true)}
-          />
-          {canBeTruncated && (
-            <Tooltip
-              title={showFullText ? t<string>('common:title_minimize') : t<string>('common:title_expand')}
-              onClick={toggleFullText}
-              sx={{ pt: '0.5rem' }}>
-              {showFullText ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </Tooltip>
-          )}
-        </Box>
+        <TruncatableTypography>{almaPublication.title}</TruncatableTypography>
       ) : (
         <i>{t('authority.no_registrations_found')}</i>
       )}

@@ -17,6 +17,14 @@ describe('Search', () => {
     cy.url().should('include', 'from=10');
   });
 
+  it('The user should see formulas correctly formatted with MathJax', () => {
+    cy.get(`[data-testid=${dataTestId.startPage.searchResultItem}]`).eq(0).should('not.contain', '$');
+    cy.get(`[data-testid=${dataTestId.startPage.searchResultItem}]`)
+      .eq(0)
+      .get('mjx-container')
+      .should('have.length', 4);
+  });
+
   it('The user should see a result-list when searching', () => {
     const searchTerm = 'test';
     cy.get(`[data-testid=${dataTestId.startPage.searchField}] input`).type(searchTerm);

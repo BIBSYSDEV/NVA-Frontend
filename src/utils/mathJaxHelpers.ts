@@ -8,7 +8,7 @@ interface MathJaxWindow extends Window {
 
 export const typesetMathJax = () => {
   const mathJaxWindow = window as MathJaxWindow;
-  if (mathJaxWindow.MathJax) {
+  if (mathJaxWindow.MathJax?.typesetPromise) {
     mathJaxWindow.MathJax.typesetPromise();
   }
 };
