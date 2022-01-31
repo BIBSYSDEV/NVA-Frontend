@@ -25,6 +25,7 @@ const PublicProfile = lazy(() => import('./pages/public_profile/PublicProfile'))
 const AdminCustomerInstitutionsPage = lazy(() => import('./pages/admin/AdminCustomerInstitutionsPage'));
 const MyInstitutionPage = lazy(() => import('./pages/admin/MyInstitutionPage'));
 const MyInstitutionUsersPage = lazy(() => import('./pages/admin/MyInstitutionUsersPage'));
+const CristinUsersPage = lazy(() => import('./pages/admin/CristinUsersPage'));
 const MyMessagesPage = lazy(() => import('./pages/messages/MyMessagesPage'));
 const WorklistPage = lazy(() => import('./pages/worklist/WorklistPage'));
 const Logout = lazy(() => import('./layout/Logout'));
@@ -57,6 +58,11 @@ export const AppRoutes = () => {
         {/* InstitutionAdminRoutes */}
         <InstitutionAdminRoute exact path={UrlPathTemplate.MyInstitution} component={MyInstitutionPage} />
         <InstitutionAdminRoute exact path={UrlPathTemplate.MyInstitutionUsers} component={MyInstitutionUsersPage} />
+        <InstitutionAdminRoute
+          exact
+          path={`${UrlPathTemplate.MyInstitutionUsers}/cristin`}
+          component={CristinUsersPage}
+        />
 
         {/* AppAdminRoutes */}
         <AppAdminRoute exact path={UrlPathTemplate.AdminInstitutions} component={AdminCustomerInstitutionsPage} />

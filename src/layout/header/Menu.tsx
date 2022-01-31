@@ -18,6 +18,7 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { LanguageSelector } from './LanguageSelector';
 import { dataTestId } from '../../utils/dataTestIds';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 
 interface MenuProps {
   handleLogout: () => void;
@@ -137,6 +138,11 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               to={UrlPathTemplate.MyInstitutionUsers}>
               <Typography>{t('common:users')}</Typography>
             </MenuItem>,
+            <BetaFunctionality>
+              <MenuItem onClick={closeMenu} component={Link} to={'/my-institution-users/cristin'}>
+                Cristin-brukere
+              </MenuItem>
+            </BetaFunctionality>,
           ],
           <Divider key="divider1" />,
         ]}
