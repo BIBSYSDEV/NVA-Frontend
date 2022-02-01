@@ -66,7 +66,7 @@ const MyCustomerInstitutionPage = () => {
             {({ isSubmitting }) => (
               <Form noValidate>
                 <InputContainerBox>
-                  <SelectInstitutionField disabled />
+                  <SelectInstitutionField fieldName={CustomerInstitutionFieldNames.Name} disabled />
                   <CustomerInstitutionTextField
                     name={CustomerInstitutionFieldNames.DisplayName}
                     label={t('display_name')}

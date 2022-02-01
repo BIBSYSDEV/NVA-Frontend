@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Form, Formik } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
 import { useHistory } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
@@ -19,6 +19,7 @@ import { SelectInstitutionField } from './customerInstitutionFields/SelectInstit
 import { getAdminInstitutionPath } from '../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { getLanguageString } from '../../utils/translation-helpers';
 
 interface CustomerInstitutionMetadataFormProps {
   customerInstitution: CustomerInstitution;
@@ -63,10 +64,22 @@ export const CustomerInstitutionMetadataForm = ({
         validateOnChange
         validationSchema={customerInstitutionValidationSchema}
         onSubmit={handleSubmit}>
-        {({ isSubmitting }) => (
+        {({ isSubmitting, setValues }: FormikProps<CustomerInstitution>) => (
           <Form noValidate>
             <InputContainerBox>
-              <SelectInstitutionField disabled={editMode} />
+              <SelectInstitutionField
+                fieldName={CustomerInstitutionFieldNames.Name}
+                disabled={editMode}
+                onChange={(selectedInstitution) => {
+                  const name = selectedInstitution?.name ? getLanguageString(selectedInstitution.name) : '';
+                  setValues({
+                    ...emptyCustomerInstitution,
+                    name,
+                    [CustomerInstitutionFieldNames.DisplayName]: name,
+                    [CustomerInstitutionFieldNames.CristinId]: selectedInstitution?.id ?? '',
+                  });
+                }}
+              />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.DisplayName}
                 label={t('display_name')}
