@@ -316,7 +316,7 @@ describe('User opens registration form and can see validation errors', () => {
 
     cy.mockFileUpload();
 
-    cy.get('input[type=file]').selectFile('img.jpg');
+    cy.get('input[type=file]').first().selectFile('img.jpg', { force: true });
     cy.get('[data-testid=uploaded-file-card]').should('be.visible');
     cy.get('p.Mui-error').should('not.exist');
 
