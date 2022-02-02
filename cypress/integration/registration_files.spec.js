@@ -1,5 +1,3 @@
-import 'cypress-file-upload';
-
 describe('Registration: File upload', () => {
   beforeEach(() => {
     cy.visit('/');
@@ -16,7 +14,7 @@ describe('Registration: File upload', () => {
 
     cy.mockFileUpload();
 
-    cy.get('input[type=file]').attachFile('img.jpg');
+    cy.get('input[type=file]').selectFile('img.jpg');
     cy.get('[data-testid=uploaded-file-card]').should('be.visible');
   });
 });

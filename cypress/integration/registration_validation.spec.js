@@ -1,4 +1,3 @@
-import 'cypress-file-upload';
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { JournalArticleContentType, BookMonographContentType } from '../../src/types/publication_types/content.types';
 import { DesignType } from '../../src/types/publication_types/artisticRegistration.types';
@@ -317,7 +316,7 @@ describe('User opens registration form and can see validation errors', () => {
 
     cy.mockFileUpload();
 
-    cy.get('input[type=file]').attachFile('img.jpg');
+    cy.get('input[type=file]').selectFile('img.jpg');
     cy.get('[data-testid=uploaded-file-card]').should('be.visible');
     cy.get('p.Mui-error').should('not.exist');
 
