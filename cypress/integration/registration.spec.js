@@ -35,7 +35,8 @@ describe('Registration', () => {
 
     cy.mockFileUpload();
 
-    cy.get('input[type=file]').first().selectFile('img.jpg', { force: true });
+    cy.fixture('img.jpg').as('file')
+    cy.get('input[type=file]').first().selectFile('@file', { force: true });
     cy.get('[data-testid=uploaded-file]').should('be.visible');
 
     cy.get(`[data-testid=${dataTestId.registrationWizard.new.startRegistrationButton}]`).filter(':visible').click();
