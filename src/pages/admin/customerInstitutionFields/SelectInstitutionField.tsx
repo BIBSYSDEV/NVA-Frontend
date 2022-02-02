@@ -9,7 +9,6 @@ import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { useFetchResource } from '../../../utils/hooks/useFetchResource';
 
 interface SelectInstitutionFieldProps {
   fieldName: string;
