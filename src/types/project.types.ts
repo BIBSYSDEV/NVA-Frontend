@@ -29,7 +29,7 @@ interface ProjectIdentifier {
   value: string;
 }
 
-interface CoordinatingInstitution {
+export interface CoordinatingInstitution {
   type: OrganizationType;
   id: string;
   name: LanguageString;
