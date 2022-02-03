@@ -18,9 +18,9 @@ import { useTranslation } from 'react-i18next';
 import { apiRequest } from '../../../../api/apiRequest';
 import { InputContainerBox } from '../../../../components/styled/Wrappers';
 import { datePickerTranslationProps } from '../../../../themes/mainTheme';
-import i18n from '../../../../translations/i18n';
-import { LanguageString, SearchResponse } from '../../../../types/common.types';
+import { SearchResponse } from '../../../../types/common.types';
 import { CoordinatingInstitution, CristinProject, ProjectContributor } from '../../../../types/project.types';
+import { CristinUser } from '../../../../types/user.types';
 import { isSuccessStatus } from '../../../../utils/constants';
 import { getDateFnsLocale } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
@@ -28,41 +28,13 @@ import { useFetch } from '../../../../utils/hooks/useFetch';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { OrganizationSearchField } from '../../../admin/customerInstitutionFields/SelectInstitutionField';
 
-// interface CreateProjectDialogProps extends DialogProps {}
-
-interface CristinAffiliation {
-  active: boolean;
-  organization: string;
-  role: {
-    labels: LanguageString;
-  };
-}
-
-interface CristinIdentifier {
-  type: 'CristinIdentifier' | 'NationalIdentificationNumber';
-  value: string;
-}
-
-interface CristinName {
-  type: 'FirstName' | 'LastName';
-  value: string;
-}
-
-interface CristinUser {
-  id: string;
-  affiliations: CristinAffiliation[];
-  identifiers: CristinIdentifier[];
-  names: CristinName[];
-}
-
 interface CristinArrayValue {
   type: string;
   value: string;
 }
 
-const getValueByKey = (key: string, items?: CristinArrayValue[]) => {
-  return items?.find((item) => item.type === key)?.value ?? '';
-};
+const getValueByKey = (key: string, items?: CristinArrayValue[]) =>
+  items?.find((item) => item.type === key)?.value ?? '';
 
 type BasicCristinProject = Pick<CristinProject, 'title' | 'startDate' | 'coordinatingInstitution' | 'contributors'>;
 
@@ -78,13 +50,13 @@ const initialValues: BasicCristinProject = {
 };
 
 export const CreateProjectDialog = (props: DialogProps) => {
-  const { t } = useTranslation('registration');
+  const { t, i18n } = useTranslation('registration');
 
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
   const [searchByNameResults, isLoadingSearchByName] = useFetch<SearchResponse<CristinUser>>({
-    url: debouncedSearchTerm ? `/cristin/person?query=${debouncedSearchTerm}` : '',
+    url: debouncedSearchTerm ? `/cristin/person?results=50&query=${debouncedSearchTerm}` : '',
   });
 
   return (
@@ -217,6 +189,7 @@ export const CreateProjectDialog = (props: DialogProps) => {
                       renderInput={(params) => (
                         <TextField
                           {...params}
+                          required
                           label={t('Cristin-person')}
                           placeholder="Søk etter person"
                           variant="filled"

@@ -1,4 +1,5 @@
 import { Authority } from './authority.types';
+import { LanguageString } from './common.types';
 
 export enum RoleName {
   INSTITUTION_ADMIN = 'Institution-admin',
@@ -74,4 +75,29 @@ export interface FeideUser {
   'custom:cristinId'?: string;
   given_name: string;
   family_name: string;
+}
+
+interface CristinPersonAffiliation {
+  active: boolean;
+  organization: string;
+  role: {
+    labels: LanguageString;
+  };
+}
+
+interface CristinPersonIdentifier {
+  type: 'CristinIdentifier' | 'NationalIdentificationNumber';
+  value: string;
+}
+
+interface CristinPersonName {
+  type: 'FirstName' | 'LastName';
+  value: string;
+}
+
+export interface CristinUser {
+  id: string;
+  affiliations: CristinPersonAffiliation[];
+  identifiers: CristinPersonIdentifier[];
+  names: CristinPersonName[];
 }
