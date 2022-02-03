@@ -151,9 +151,9 @@ export const CreateProjectDialog = (props: DialogProps) => {
                 </Typography>
               </InputContainerBox>
 
-              {values.contributors.length === 0 ? (
-                <FieldArray name="contributors">
-                  {({ push, remove }: FieldArrayRenderProps) => (
+              <FieldArray name="contributors">
+                {({ push, remove }: FieldArrayRenderProps) =>
+                  values.contributors.length === 0 ? (
                     <Autocomplete
                       options={searchByNameResults?.hits ?? []}
                       inputMode="search"
@@ -167,39 +167,50 @@ export const CreateProjectDialog = (props: DialogProps) => {
                         }
                       }}
                       onChange={async (_, selectedUser) => {
-                        const orgId = selectedUser?.affiliations[0].organization ?? '';
+                        if (!selectedUser) {
+                          if (values.contributors.length > 0) {
+                            remove(0);
+                          }
+                        } else {
+                          const orgId =
+                            selectedUser.affiliations.length > 0 ? selectedUser.affiliations[0].organization ?? '' : '';
 
-                        const institutionResponse = await apiRequest<any>({ url: orgId }); // todo: type
-                        if (isSuccessStatus(institutionResponse.status)) {
-                          const newUser: ProjectContributor = {
+                          const newUser: Partial<ProjectContributor> = {
                             type: 'ProjectManager',
                             identity: {
                               type: 'Person',
-                              id: selectedUser?.id ?? '',
+                              id: selectedUser.id ?? '',
                               firstName: getValueByKey('FirstName', selectedUser?.names),
                               lastName: getValueByKey('LastName', selectedUser?.names),
                             },
-                            affiliation: {
-                              type: 'Organization',
-                              id: orgId,
-                              name: institutionResponse.data.unit_name,
-                            },
                           };
-                          push(newUser);
-                        }
 
-                        setSearchTerm('');
+                          if (orgId) {
+                            const institutionResponse = await apiRequest<any>({ url: orgId }); // todo: type
+                            if (isSuccessStatus(institutionResponse.status)) {
+                              newUser.affiliation = {
+                                type: 'Organization',
+                                id: orgId,
+                                name: institutionResponse.data.unit_name,
+                              };
+                            }
+                          }
+                          push(newUser);
+                          setSearchTerm('');
+                        }
                       }}
                       loading={isLoadingSearchByName}
-                      renderOption={(props, option: CristinUser, state) => (
-                        <li {...props}>
+                      renderOption={(props, option) => (
+                        <li {...props} key={option.id}>
                           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                             <Typography variant="subtitle1">
                               {getValueByKey('FirstName', option.names)} {getValueByKey('LastName', option.names)}
                             </Typography>
-                            <Typography variant="body2" color="textSecondary">
-                              {getLanguageString(option.affiliations[0].role.labels)}
-                            </Typography>
+                            {option.affiliations.length > 0 && (
+                              <Typography variant="body2" color="textSecondary">
+                                {getLanguageString(option.affiliations[0].role.labels ?? {})}
+                              </Typography>
+                            )}
                           </Box>
                         </li>
                       )}
@@ -214,13 +225,18 @@ export const CreateProjectDialog = (props: DialogProps) => {
                         />
                       )}
                     />
-                  )}
-                </FieldArray>
-              ) : (
-                <Typography>
-                  {values.contributors[0].identity.firstName} {values.contributors[0].identity.lastName}
-                </Typography>
-              )}
+                  ) : (
+                    <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                      <Typography>
+                        {values.contributors[0].identity.firstName} {values.contributors[0].identity.lastName}
+                      </Typography>
+                      <Button size="small" variant="outlined" color="error" onClick={() => remove(0)}>
+                        Fjern
+                      </Button>
+                    </Box>
+                  )
+                }
+              </FieldArray>
             </DialogContent>
 
             <DialogActions>
