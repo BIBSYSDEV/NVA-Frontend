@@ -1,5 +1,9 @@
 {
   "financing": "Finansiering",
+  "form": {
+    "project_manager": "Prosjektleder",
+    "start_date": "Startdato"
+  },
   "grant_id": "GrantID",
   "no_participants": "Ingen registrerte deltakere.",
   "no_results": "Ingen publiserte resultater.",

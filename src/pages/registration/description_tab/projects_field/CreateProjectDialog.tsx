@@ -12,7 +12,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { apiRequest } from '../../../../api/apiRequest';
@@ -26,6 +26,7 @@ import { getDateFnsLocale } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { getLanguageString } from '../../../../utils/translation-helpers';
+import { basicProjectValidationSchema } from '../../../../utils/validation/project/BasicProjectValidation';
 import { OrganizationSearchField } from '../../../admin/customerInstitutionFields/SelectInstitutionField';
 
 interface CristinArrayValue {
@@ -63,9 +64,12 @@ export const CreateProjectDialog = (props: DialogProps) => {
     <Dialog {...props}>
       <DialogTitle>Opprett prosjekt</DialogTitle>
 
-      <Formik initialValues={initialValues} onSubmit={(values) => console.log('Values', values)}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={basicProjectValidationSchema}
+        onSubmit={(values) => console.log('Values', values)}>
         {({ values }: FormikProps<BasicCristinProject>) => (
-          <Form>
+          <Form noValidate>
             <DialogContent>
               <InputContainerBox>
                 <Field name={'title'}>
@@ -81,7 +85,7 @@ export const CreateProjectDialog = (props: DialogProps) => {
                     />
                   )}
                 </Field>
-                <Box sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1rem', alignItems: 'center' }}>
+                <Box sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1rem', alignItems: 'start' }}>
                   <Field name={'coordinatingInstitution.id'}>
                     {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps) => (
                       <OrganizationSearchField
@@ -93,7 +97,8 @@ export const CreateProjectDialog = (props: DialogProps) => {
                           };
                           setFieldValue('coordinatingInstitution', newOrg);
                         }}
-                        selectedOrganizationId={field.value}
+                        errorMessage={touched && !!error ? error : undefined}
+                        fieldInputProps={field}
                       />
                     )}
                   </Field>
@@ -112,7 +117,16 @@ export const CreateProjectDialog = (props: DialogProps) => {
                           value={field.value ? new Date(field.value) : null}
                           inputFormat="dd.MM.yyyy"
                           mask="__.__.____"
-                          renderInput={(params) => <TextField {...params} variant="filled" required />}
+                          renderInput={(params) => (
+                            <TextField
+                              {...field}
+                              {...params}
+                              variant="filled"
+                              required
+                              error={touched && !!error}
+                              helperText={<ErrorMessage name={field.name} />}
+                            />
+                          )}
                         />
                       </LocalizationProvider>
                     )}
@@ -123,9 +137,9 @@ export const CreateProjectDialog = (props: DialogProps) => {
                 </Typography>
               </InputContainerBox>
 
-              <FieldArray name="contributors">
-                {({ push, remove }: FieldArrayRenderProps) =>
-                  values.contributors.length === 0 ? (
+              <Field name={'contributors'}>
+                {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps) =>
+                  field.value.length === 0 ? (
                     <Autocomplete
                       options={searchByNameResults?.hits ?? []}
                       inputMode="search"
@@ -140,8 +154,8 @@ export const CreateProjectDialog = (props: DialogProps) => {
                       }}
                       onChange={async (_, selectedUser) => {
                         if (!selectedUser) {
-                          if (values.contributors.length > 0) {
-                            remove(0);
+                          if (field.value.length > 0) {
+                            setFieldValue(field.name, []);
                           }
                         } else {
                           const orgId =
@@ -167,7 +181,7 @@ export const CreateProjectDialog = (props: DialogProps) => {
                               };
                             }
                           }
-                          push(newUser);
+                          setFieldValue(field.name, [newUser]);
                           setSearchTerm('');
                         }
                       }}
@@ -188,28 +202,35 @@ export const CreateProjectDialog = (props: DialogProps) => {
                       )}
                       renderInput={(params) => (
                         <TextField
+                          onBlur={field.onBlur}
+                          value={field.value}
+                          name={field.name}
                           {...params}
                           required
                           label={t('Cristin-person')}
                           placeholder="Søk etter person"
                           variant="filled"
-                          // error={touched && !!error}
-                          // helperText={<ErrorMessage name={field.name} />}
+                          error={touched && !!error}
+                          helperText={<ErrorMessage name={field.name} />}
                         />
                       )}
                     />
                   ) : (
                     <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                       <Typography>
-                        {values.contributors[0].identity.firstName} {values.contributors[0].identity.lastName}
+                        {field.value[0].identity.firstName} {field.value[0].identity.lastName}
                       </Typography>
-                      <Button size="small" variant="outlined" color="error" onClick={() => remove(0)}>
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        color="error"
+                        onClick={() => setFieldValue(field.name, [])}>
                         Fjern
                       </Button>
                     </Box>
                   )
                 }
-              </FieldArray>
+              </Field>
             </DialogContent>
 
             <DialogActions>

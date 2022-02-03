@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
+import { ErrorMessage, Field, FieldInputProps, FieldProps, useFormikContext } from 'formik';
 import { Autocomplete, TextField } from '@mui/material';
 import { CustomerInstitution } from '../../../types/customerInstitution.types';
 import { InstitutionApiPath } from '../../../api/apiPaths';
@@ -72,12 +72,15 @@ interface OrganizationSearchFieldProps {
   onChange?: (selectedInstitution: Organization | null) => void;
   disabled?: boolean;
   selectedOrganizationId?: string;
+  errorMessage?: string;
+  fieldInputProps?: FieldInputProps<string>;
 }
 
 export const OrganizationSearchField = ({
   onChange,
   disabled = false,
-  selectedOrganizationId,
+  errorMessage,
+  fieldInputProps,
 }: OrganizationSearchFieldProps) => {
   const { t } = useTranslation('feedback');
   const [searchTerm, setSearchTerm] = useState('');
@@ -86,10 +89,6 @@ export const OrganizationSearchField = ({
     url: debouncedQuery ? `${InstitutionApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
     errorMessage: t('error.get_institutions'),
   });
-  // const [selectedInstitution, isLoadingSelectedInstitution] = useFetchResource<Organization>(
-  //   selectedOrganizationId ?? '',
-  //   t('error.get_institution')
-  // );
 
   const options = isLoadingInstitutionOptions || !institutionOptions ? [] : institutionOptions.hits;
 
@@ -114,6 +113,9 @@ export const OrganizationSearchField = ({
       loading={isLoadingInstitutionOptions}
       renderInput={(params) => (
         <TextField
+          onBlur={fieldInputProps?.onBlur}
+          value={fieldInputProps?.value}
+          name={fieldInputProps?.name}
           {...params}
           data-testid={dataTestId.organization.searchField}
           label={t('common:institution')}
@@ -121,8 +123,8 @@ export const OrganizationSearchField = ({
           placeholder="Søk etter institusjon"
           variant="filled"
           fullWidth
-          // error={touched && !!error}
-          // helperText={<ErrorMessage name={field.name} />}
+          error={!!errorMessage}
+          helperText={errorMessage}
         />
       )}
     />

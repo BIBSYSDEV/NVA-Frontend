@@ -1,5 +1,9 @@
 {
   "financing": "Financing",
+  "form": {
+    "project_manager": "Project manager",
+    "start_date": "Start date"
+  },
   "grant_id": "GrantID",
   "no_participants": "No registered participants.",
   "no_results": "No published results.",
