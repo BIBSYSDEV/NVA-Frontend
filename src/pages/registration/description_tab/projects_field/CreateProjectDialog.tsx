@@ -138,7 +138,7 @@ export const CreateProjectDialog = (props: DialogProps) => {
               </InputContainerBox>
 
               <Field name={'contributors'}>
-                {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps) =>
+                {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<ProjectContributor[]>) =>
                   field.value.length === 0 ? (
                     <Autocomplete
                       options={searchByNameResults?.hits ?? []}
@@ -218,7 +218,12 @@ export const CreateProjectDialog = (props: DialogProps) => {
                   ) : (
                     <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                       <Typography>
-                        {field.value[0].identity.firstName} {field.value[0].identity.lastName}
+                        {[
+                          `${field.value[0].identity.firstName} ${field.value[0].identity.lastName}`,
+                          getLanguageString(field.value[0].affiliation?.name),
+                        ]
+                          .filter((item) => !!item)
+                          .join(' - ')}
                       </Typography>
                       <Button
                         size="small"

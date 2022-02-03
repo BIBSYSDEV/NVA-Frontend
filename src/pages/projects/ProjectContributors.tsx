@@ -62,7 +62,7 @@ const ContributorList = ({ contributors }: ContributorListProps) => (
         <Typography variant="subtitle2" component="p">
           {contributor.identity.firstName} {contributor.identity.lastName}
         </Typography>
-        <Typography variant="body2">{getLanguageString(contributor.affiliation.name)}</Typography>
+        <Typography variant="body2">{getLanguageString(contributor.affiliation?.name)}</Typography>
       </div>
     ))}
   </Box>

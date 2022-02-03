@@ -43,7 +43,7 @@ export interface ProjectContributor {
     firstName: string;
     lastName: string;
   };
-  affiliation: {
+  affiliation?: {
     id: string;
     type: OrganizationType;
     name: LanguageString;
