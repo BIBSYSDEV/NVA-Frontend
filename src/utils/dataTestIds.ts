@@ -60,6 +60,7 @@ export const dataTestId = {
     emailButton: 'email-button',
     facebookButton: 'facebook-button',
     filesAccordion: 'files-accordion',
+    generalInfo: 'public-registration-general-info',
     keywords: 'public-registration-keywords',
     license: 'public-registration-license',
     linkedInButton: 'linkedin-button',
