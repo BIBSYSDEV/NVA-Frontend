@@ -21,7 +21,7 @@ export const useAuthentication = (): UseAuthentication => {
     if (USE_MOCK_DATA) {
       dispatch(setUser(mockUser));
     } else {
-      await Auth.federatedSignIn({ customProvider: 'FeideIdentityProvider' });
+      await Auth.federatedSignIn({ customProvider: 'Dataporten' });
     }
   };
 
