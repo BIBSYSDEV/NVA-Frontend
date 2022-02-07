@@ -1,4 +1,3 @@
-import 'cypress-file-upload';
 import { dataTestId } from '../../src/utils/dataTestIds';
 
 describe('Registration', () => {
@@ -36,7 +35,8 @@ describe('Registration', () => {
 
     cy.mockFileUpload();
 
-    cy.get('input[type=file]').attachFile('img.jpg');
+    cy.fixture('img.jpg').as('file')
+    cy.get('input[type=file]').first().selectFile('@file', { force: true });
     cy.get('[data-testid=uploaded-file]').should('be.visible');
 
     cy.get(`[data-testid=${dataTestId.registrationWizard.new.startRegistrationButton}]`).filter(':visible').click();
