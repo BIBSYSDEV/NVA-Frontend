@@ -50,8 +50,12 @@ const initialValues: BasicCristinProject = {
   },
 };
 
-export const CreateProjectDialog = (props: DialogProps) => {
-  const { t, i18n } = useTranslation('registration');
+interface CreateProjectDialogProps extends DialogProps {
+  onClose: () => void;
+}
+
+export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
+  const { t, i18n } = useTranslation('project');
 
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -62,7 +66,7 @@ export const CreateProjectDialog = (props: DialogProps) => {
 
   return (
     <Dialog {...props}>
-      <DialogTitle>Opprett prosjekt</DialogTitle>
+      <DialogTitle>{t('create_project')}</DialogTitle>
 
       <Formik
         initialValues={initialValues}
@@ -75,7 +79,7 @@ export const CreateProjectDialog = (props: DialogProps) => {
                 {({ field, meta: { touched, error } }: FieldProps) => (
                   <TextField
                     {...field}
-                    label={'Tittel'}
+                    label={t('common:title')}
                     required
                     variant="filled"
                     fullWidth
@@ -107,7 +111,7 @@ export const CreateProjectDialog = (props: DialogProps) => {
                     <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
                       <DatePicker
                         {...datePickerTranslationProps}
-                        label={t('Startdato')}
+                        label={t('start_date')}
                         onChange={(date: Date | null) => {
                           if (date instanceof Date && !isNaN(date.getTime())) {
                             setFieldValue(field.name, date.toISOString());
@@ -132,7 +136,7 @@ export const CreateProjectDialog = (props: DialogProps) => {
                 </Field>
               </Box>
               <Typography variant="h3" gutterBottom>
-                Prosjektleder
+                {t('project_manager')}
               </Typography>
             </InputContainerBox>
 
@@ -181,8 +185,8 @@ export const CreateProjectDialog = (props: DialogProps) => {
                           }
                         }
                         setFieldValue(field.name, [newUser]);
-                        setSearchTerm('');
                       }
+                      setSearchTerm('');
                     }}
                     loading={isLoadingSearchByName}
                     renderOption={(props, option) => (
@@ -206,8 +210,8 @@ export const CreateProjectDialog = (props: DialogProps) => {
                         name={field.name}
                         {...params}
                         required
-                        label={t('Cristin-person')}
-                        placeholder="Søk etter person"
+                        label={t('person')}
+                        placeholder={t('search_for_person')}
                         variant="filled"
                         error={touched && !!error}
                         helperText={<ErrorMessage name={field.name} />}
@@ -225,7 +229,7 @@ export const CreateProjectDialog = (props: DialogProps) => {
                         .join(' - ')}
                     </Typography>
                     <Button size="small" variant="outlined" color="error" onClick={() => setFieldValue(field.name, [])}>
-                      Fjern
+                      {t('common:remove')}
                     </Button>
                   </Box>
                 )
@@ -234,9 +238,9 @@ export const CreateProjectDialog = (props: DialogProps) => {
           </DialogContent>
 
           <DialogActions>
-            <Button>Avbryt</Button>
+            <Button onClick={props.onClose}>{t('common:cancel')}</Button>
             <Button variant="contained" type="submit">
-              Lagre
+              {t('common:save')}
             </Button>
           </DialogActions>
         </Form>

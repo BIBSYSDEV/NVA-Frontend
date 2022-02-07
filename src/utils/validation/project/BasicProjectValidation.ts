@@ -3,13 +3,13 @@ import i18n from '../../../translations/i18n';
 
 const basicProjectErrorMessage = {
   contributorRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('project:form.project_manager'),
+    field: i18n.t('project:project_manager'),
   }),
   titleRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:title'),
   }),
   startDateRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('project:form.start_date'),
+    field: i18n.t('project:start_date'),
   }),
   institutionRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:institution'),

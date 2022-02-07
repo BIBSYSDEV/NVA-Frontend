@@ -1,14 +1,12 @@
 {
+  "create_project": "Opprett prosjekt",
   "financing": "Finansiering",
-  "form": {
-    "project_manager": "Prosjektleder",
-    "start_date": "Startdato"
-  },
   "grant_id": "GrantID",
   "no_participants": "Ingen registrerte deltakere.",
   "no_results": "Ingen publiserte resultater.",
   "no_summary": "Ingen registrerte sammendrag.",
   "period": "Prosjektperiode",
+  "person": "Person",
   "popular_science_summary": "Populærvitenskapelig sammendrag",
   "project": "Prosjekt",
   "project_info": "Prosjektinfo",
@@ -17,6 +15,8 @@
   "project_participants": "Prosjektdeltakere",
   "results": "Resultater",
   "scientific_summary": "Vitenskapelig sammendrag",
+  "search_for_person": "Søk etter person",
+  "start_date": "Startdato",
   "status": {
     "ACTIVE": "Aktivt",
     "CONCLUDED": "Avsluttet",

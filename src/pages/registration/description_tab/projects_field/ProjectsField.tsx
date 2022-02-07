@@ -88,7 +88,7 @@ export const ProjectsField = () => {
       </Field>
       <BetaFunctionality>
         <Button sx={{ mt: '0.5rem' }} onClick={() => setOpenNewProject(true)}>
-          Opprett prosjekt
+          {t('project:create_project')}
         </Button>
       </BetaFunctionality>
       <CreateProjectDialog open={openNewProject} onClose={() => setOpenNewProject(false)} maxWidth="lg" />
