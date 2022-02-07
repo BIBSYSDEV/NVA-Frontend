@@ -3,7 +3,7 @@ import { TextField, TextFieldProps } from '@mui/material';
 
 interface CustomerInstitutionTextFieldProps
   extends Pick<FieldInputProps<string>, 'name'>,
-    Pick<TextFieldProps, 'label' | 'required'> {
+    Pick<TextFieldProps, 'label' | 'required' | 'disabled'> {
   dataTestId?: string;
 }
 
@@ -12,6 +12,7 @@ export const CustomerInstitutionTextField = ({
   label,
   dataTestId,
   required,
+  disabled,
 }: CustomerInstitutionTextFieldProps) => (
   <Field name={name}>
     {({ field, meta: { touched, error } }: FieldProps) => (
@@ -21,6 +22,7 @@ export const CustomerInstitutionTextField = ({
         id={dataTestId}
         label={label}
         required={required}
+        disabled={disabled}
         fullWidth
         value={field.value ?? ''}
         variant="filled"

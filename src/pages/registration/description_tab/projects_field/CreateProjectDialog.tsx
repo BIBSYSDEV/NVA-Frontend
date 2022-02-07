@@ -30,7 +30,7 @@ import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { basicProjectValidationSchema } from '../../../../utils/validation/project/BasicProjectValidation';
-import { OrganizationSearchField } from '../../../admin/customerInstitutionFields/SelectInstitutionField';
+import { OrganizationSearchField } from '../../../admin/customerInstitutionFields/OrganizationSearchField';
 
 interface CristinArrayValue {
   type: string;

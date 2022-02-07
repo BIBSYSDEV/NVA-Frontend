@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Form, Formik, FormikProps } from 'formik';
+import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useHistory } from 'react-router-dom';
-import { Typography } from '@mui/material';
+import { TextField, Typography } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import { LoadingButton } from '@mui/lab';
 import {
@@ -15,7 +15,7 @@ import { createCustomerInstitution, updateCustomerInstitution } from '../../api/
 import { InputContainerBox, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { customerInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
 import { CustomerInstitutionTextField } from './customerInstitutionFields/CustomerInstitutionTextField';
-import { SelectInstitutionField } from './customerInstitutionFields/SelectInstitutionField';
+import { OrganizationSearchField } from './customerInstitutionFields/OrganizationSearchField';
 import { getAdminInstitutionPath } from '../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -67,19 +67,27 @@ export const CustomerInstitutionMetadataForm = ({
         {({ isSubmitting, setValues }: FormikProps<CustomerInstitution>) => (
           <Form noValidate>
             <InputContainerBox>
-              <SelectInstitutionField
-                fieldName={CustomerInstitutionFieldNames.Name}
-                disabled={editMode}
-                onChange={(selectedInstitution) => {
-                  const name = selectedInstitution?.name ? getLanguageString(selectedInstitution.name) : '';
-                  setValues({
-                    ...emptyCustomerInstitution,
-                    name,
-                    [CustomerInstitutionFieldNames.DisplayName]: name,
-                    [CustomerInstitutionFieldNames.CristinId]: selectedInstitution?.id ?? '',
-                  });
-                }}
-              />
+              <Field name={CustomerInstitutionFieldNames.Name}>
+                {({ field, meta: { touched, error } }: FieldProps<string>) =>
+                  !editMode ? (
+                    <OrganizationSearchField
+                      onChange={(selectedInstitution) => {
+                        const name = selectedInstitution?.name ? getLanguageString(selectedInstitution.name) : '';
+                        setValues({
+                          ...emptyCustomerInstitution,
+                          name,
+                          [CustomerInstitutionFieldNames.DisplayName]: name,
+                          [CustomerInstitutionFieldNames.CristinId]: selectedInstitution?.id ?? '',
+                        });
+                      }}
+                      errorMessage={touched && !!error ? error : undefined}
+                      fieldInputProps={field}
+                    />
+                  ) : (
+                    <TextField variant="filled" label={t('common:institution')} required disabled {...field} />
+                  )
+                }
+              </Field>
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.DisplayName}
                 label={t('display_name')}

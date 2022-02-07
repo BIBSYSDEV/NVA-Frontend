@@ -21,7 +21,6 @@ import {
 } from '../../types/customerInstitution.types';
 import { myInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
 import { CustomerInstitutionTextField } from './customerInstitutionFields/CustomerInstitutionTextField';
-import { SelectInstitutionField } from './customerInstitutionFields/SelectInstitutionField';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -66,7 +65,12 @@ const MyCustomerInstitutionPage = () => {
             {({ isSubmitting }) => (
               <Form noValidate>
                 <InputContainerBox>
-                  <SelectInstitutionField fieldName={CustomerInstitutionFieldNames.Name} disabled />
+                  <CustomerInstitutionTextField
+                    name={CustomerInstitutionFieldNames.Name}
+                    label={t('common:institution')}
+                    required
+                    disabled
+                  />
                   <CustomerInstitutionTextField
                     name={CustomerInstitutionFieldNames.DisplayName}
                     label={t('display_name')}
