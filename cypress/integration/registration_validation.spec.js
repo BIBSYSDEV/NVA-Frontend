@@ -356,9 +356,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.files.embargoDateField}]`)
       .parent()
       .within(() => {
-        cy.get('input').click({ force: true }).type('0101', { force: true }).blur();
-        cy.get('p.Mui-error').should('be.visible');
-        cy.get('input').click({ force: true }).type('3000', { force: true });
+        cy.get('input').click({ force: true }).type('01013000').blur();
         cy.get('p.Mui-error').should('not.exist');
       });
 
