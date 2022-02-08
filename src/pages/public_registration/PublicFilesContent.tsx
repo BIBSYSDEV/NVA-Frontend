@@ -3,7 +3,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import LockIcon from '@mui/icons-material/Lock';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Accordion,
   AccordionDetails,
@@ -15,11 +15,12 @@ import {
 } from '@mui/material';
 import prettyBytes from 'pretty-bytes';
 import { File, licenses } from '../../types/file.types';
-import { downloadPublicFile } from '../../api/fileApi';
+import { downloadPrivateFile, downloadPublicFile } from '../../api/fileApi';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { PreviewFile } from './preview_file/PreviewFile';
 import { dataTestId } from '../../utils/dataTestIds';
+import { RootStore } from '../../redux/reducers/rootReducer';
 
 const maxFileSize = 10000000; //10 MB
 
@@ -50,6 +51,7 @@ interface FileRowProps {
 const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('common');
+  const user = useSelector((store: RootStore) => store.user);
   const [openPreviewAccordion, setOpenPreviewAccordion] = useState(openPreviewByDefault);
   const [isLoadingPreviewFile, setIsLoadingPreviewFile] = useState(false);
   const [previewFileUrl, setPreviewFileUrl] = useState('');
@@ -57,7 +59,9 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
   const handleDownload = useCallback(
     async (previewFile = false) => {
       previewFile && setIsLoadingPreviewFile(true);
-      const downloadFileResponse = await downloadPublicFile(registrationIdentifier, file.identifier);
+      const downloadFileResponse = user
+        ? await downloadPrivateFile(registrationIdentifier, file.identifier)
+        : await downloadPublicFile(registrationIdentifier, file.identifier);
       if (!downloadFileResponse) {
         dispatch(setNotification(t('feedback:error.download_file'), 'error'));
       } else {
@@ -69,7 +73,7 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
       }
       previewFile && setIsLoadingPreviewFile(false);
     },
-    [t, dispatch, registrationIdentifier, file.identifier]
+    [t, dispatch, user, registrationIdentifier, file.identifier]
   );
 
   useEffect(() => {
