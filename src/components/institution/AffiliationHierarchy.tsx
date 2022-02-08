@@ -1,12 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
-import { getOrganizationHierarchy, getUnitHierarchyNames } from '../../utils/institutions-helpers';
+import { getOrganizationHierarchy } from '../../utils/institutions-helpers';
 import { AffiliationSkeleton } from './AffiliationSkeleton';
-import { useFetchDepartment } from '../../utils/hooks/useFetchDepartment';
 import { Organization, RecursiveInstitutionUnit } from '../../types/institution.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getLanguageString } from '../../utils/translation-helpers';
-import { cristinBaseId } from '../../utils/constants';
 
 interface AffiliationHierarchyProps {
   unitUri: string;
@@ -15,11 +13,6 @@ interface AffiliationHierarchyProps {
 }
 
 export const AffiliationHierarchy = (props: AffiliationHierarchyProps) => {
-  const isNewUri = !props.unitUri.includes(cristinBaseId);
-  return isNewUri ? <NewAffiliationHierarchy {...props} /> : <OldAffiliationHierarchy {...props} />;
-};
-
-const NewAffiliationHierarchy = (props: AffiliationHierarchyProps) => {
   const { t } = useTranslation('feedback');
   const [organization, isLoadingOrganization] = useFetch<Organization>({
     url: props.unitUri,
@@ -33,20 +26,6 @@ const NewAffiliationHierarchy = (props: AffiliationHierarchyProps) => {
       isLoading={isLoadingOrganization}
       unitNames={unitNames}
       department={organization}
-    />
-  );
-};
-
-const OldAffiliationHierarchy = (props: AffiliationHierarchyProps) => {
-  const [department, isLoadingDepartment] = useFetchDepartment(props.unitUri);
-  const unitNames = getUnitHierarchyNames(props.unitUri, department);
-
-  return (
-    <AffiliationHierarchyRender
-      {...props}
-      isLoading={isLoadingDepartment}
-      unitNames={unitNames}
-      department={department}
     />
   );
 };

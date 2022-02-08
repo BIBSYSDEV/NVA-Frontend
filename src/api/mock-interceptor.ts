@@ -5,10 +5,6 @@ import { OrcidResponse } from '../types/orcid.types';
 import { emptyRegistration } from '../types/registration.types';
 import { ORCID_USER_INFO_URL } from '../utils/constants';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
-import mockNtnuResponse from '../utils/testfiles/institutions/institution_ntnu.json';
-import mockInstitutionResponse from '../utils/testfiles/institutions/institution_query.json';
-import mockNtnuSubunitResponse from '../utils/testfiles/institutions/institution_subunit_ntnu.json';
-import { mockSchoolOfSportDepartment } from '../utils/testfiles/institutions/school_of_sport_department';
 import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
 import { mockRoles } from '../utils/testfiles/mock_feide_user';
 import {
@@ -31,11 +27,9 @@ import {
   PublicationChannelApiPath,
   AuthorityApiPath,
   CustomerInstitutionApiPath,
-  InstitutionApiPath,
   RoleApiPath,
   AlmaApiPath,
 } from './apiPaths';
-import { mockOrganizationSearch } from '../utils/testfiles/institutions/mockOrganizationSearch';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -154,17 +148,6 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(CustomerInstitutionApiPath.Customer)).reply(200, mockCustomerInstitution);
   mock.onPut(new RegExp(CustomerInstitutionApiPath.Customer)).reply(200, mockCustomerInstitution);
   mock.onPost(new RegExp(CustomerInstitutionApiPath.Customer)).reply(201, mockCustomerInstitution);
-
-  // Institution Registry
-  mock.onGet(new RegExp(InstitutionApiPath.Institutions)).reply(200, mockInstitutionResponse);
-  mock.onGet(new RegExp(`${InstitutionApiPath.Departments}\\?uri=.*194&language=.*`)).reply(200, mockNtnuResponse);
-  mock
-    .onGet(new RegExp(`${InstitutionApiPath.Departments}\\?uri=.*194.65.20.10&language=.*`))
-    .reply(200, mockNtnuSubunitResponse);
-  mock
-    .onGet(new RegExp(`${InstitutionApiPath.Departments}\\?uri=.*150.4.1.0&language=.*`))
-    .reply(200, mockSchoolOfSportDepartment);
-  mock.onGet(new RegExp(InstitutionApiPath.Organization)).reply(200, mockOrganizationSearch);
 
   // Roles
   mock.onGet(new RegExp(RoleApiPath.InstitutionUsers)).reply(200, []);

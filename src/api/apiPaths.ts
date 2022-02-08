@@ -21,8 +21,6 @@ export enum FileApiPath {
 }
 
 export enum InstitutionApiPath {
-  Institutions = '/institution/institutions',
-  Departments = '/institution/departments',
   Organization = '/cristin/organization/',
 }
 
