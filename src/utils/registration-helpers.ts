@@ -119,7 +119,7 @@ export const getNewDateValue = (date: Date | null, keyboardInput?: string) => {
   const isValidDate = date && date && !isNaN(date.getTime());
   const isValidInput = keyboardInput?.length === 10;
   if (isValidDate) {
-    return date.toISOString();
+    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())).toISOString();
   } else if (!isValidDate || !isValidInput) {
     return '';
   } else {
