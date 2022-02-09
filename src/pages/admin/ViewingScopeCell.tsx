@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { RoleApiPath } from '../../api/apiPaths';
 import { authenticatedApiRequest } from '../../api/apiRequest';
 import { setNotification } from '../../redux/actions/notificationActions';
-import { Organization } from '../../types/institution.types';
+import { Organization } from '../../types/organization.types';
 import { InstitutionUser } from '../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';

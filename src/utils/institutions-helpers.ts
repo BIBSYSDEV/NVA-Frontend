@@ -1,6 +1,6 @@
 import { InstitutionApiPath } from '../api/apiPaths';
 import { Contributor } from '../types/contributor.types';
-import { Organization } from '../types/institution.types';
+import { Organization } from '../types/organization.types';
 import { API_URL } from './constants';
 import { getLanguageString } from './translation-helpers';
 

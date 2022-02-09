@@ -1,10 +1,5 @@
 import { LanguageString } from './common.types';
 
-export enum FormikInstitutionUnitFieldNames {
-  SubUnit = 'subunit',
-  Unit = 'unit',
-}
-
 export interface Organization {
   id: string;
   name: LanguageString;
@@ -12,6 +7,7 @@ export interface Organization {
   hasPart?: Organization[];
 }
 
-export interface OrganizationsResponse {
+export interface OrganizationSearch {
+  size: number;
   hits: Organization[];
 }

@@ -1,4 +1,4 @@
-import { Organization } from '../../types/institution.types';
+import { Organization } from '../../types/organization.types';
 import { CristinProject } from '../../types/project.types';
 import { Journal, Publisher, Registration } from '../../types/registration.types';
 

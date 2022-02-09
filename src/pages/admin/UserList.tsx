@@ -25,7 +25,7 @@ import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { ViewingScopeCell } from './ViewingScopeCell';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
-import { Organization } from '../../types/institution.types';
+import { Organization } from '../../types/organization.types';
 import { getSortedSubUnits } from '../../utils/institutions-helpers';
 
 interface UserListProps {

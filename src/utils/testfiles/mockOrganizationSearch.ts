@@ -1,6 +1,7 @@
-import { OrganizationsResponse } from '../../types/institution.types';
+import { OrganizationSearch } from '../../types/organization.types';
 
-export const mockOrganizationSearch: OrganizationsResponse = {
+export const mockOrganizationSearch: OrganizationSearch = {
+  size: 1,
   hits: [
     {
       id: 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0',
