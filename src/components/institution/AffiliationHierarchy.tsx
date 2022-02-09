@@ -12,7 +12,7 @@ interface AffiliationHierarchyProps {
   boldTopLevel?: boolean; // Only relevant if commaSeparated=false
 }
 
-export const AffiliationHierarchy = ({ unitUri, commaSeparated, boldTopLevel }: AffiliationHierarchyProps) => {
+export const AffiliationHierarchy = ({ unitUri, commaSeparated, boldTopLevel = true }: AffiliationHierarchyProps) => {
   const { t } = useTranslation('feedback');
   const [organization, isLoadingOrganization] = useFetchResource<Organization>(unitUri, t('error.get_institution'));
   const unitNames = getOrganizationHierarchy(organization).map((unit) => getLanguageString(unit.name));
