@@ -1,9 +1,11 @@
+import { InstitutionApiPath } from '../api/apiPaths';
 import { Contributor } from '../types/contributor.types';
 import { Organization } from '../types/institution.types';
+import { API_URL } from './constants';
 import { getLanguageString } from './translation-helpers';
 
 // Find distinct unit URIs for a set of contributors' affiliations
-const unitIdToIgnore = 'https://api.cristin.no/v2/units/0.0.0.0';
+const unitIdToIgnore = `${API_URL}${InstitutionApiPath.Organization.substring(1)}/0.0.0.0`;
 export const getDistinctContributorUnits = (contributors: Contributor[]) => {
   const unitIds = contributors
     .flatMap((contributor) => contributor.affiliations)
