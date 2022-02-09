@@ -14,6 +14,9 @@ export const getPreferredLanguageCode = (language?: string) => {
 
 // Get label based on selected language
 export const getLanguageString = (labels: LanguageString) => {
+  if (!labels) {
+    return '';
+  }
   const preferredLanguageCode = getPreferredLanguageCode();
   if (Object.keys(labels).includes(preferredLanguageCode)) {
     return labels[preferredLanguageCode];

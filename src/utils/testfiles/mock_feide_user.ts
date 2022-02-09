@@ -3,7 +3,7 @@ import { FeideUser, InstitutionUser, RoleName } from '../../types/user.types';
 export const mockUser: FeideUser = {
   name: 'Test User',
   email: 'testuser@unit.no',
-  'custom:cristinId': 'https://api.cristin.no/v2/institutions/20202',
+  'custom:cristinId': 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0',
   'custom:orgName': 'unit',
   'custom:orgNumber': 'NO123456789',
   'custom:applicationRoles': `${RoleName.CREATOR},${RoleName.INSTITUTION_ADMIN},${RoleName.APP_ADMIN}`,
@@ -26,5 +26,5 @@ export const mockRoles: InstitutionUser = {
     { type: 'Role', rolename: RoleName.INSTITUTION_ADMIN },
   ],
   username: 'tu@unit.no',
-  institution: 'https://api.cristin.no/v2/institutions/20202',
+  institution: 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0',
 };

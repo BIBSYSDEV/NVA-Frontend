@@ -5,7 +5,7 @@ import { OrcidResponse } from '../types/orcid.types';
 import { emptyRegistration } from '../types/registration.types';
 import { ORCID_USER_INFO_URL } from '../utils/constants';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
-import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
+import { mockAuthorities } from '../utils/testfiles/mockAuthorities';
 import { mockRoles } from '../utils/testfiles/mock_feide_user';
 import {
   mockCustomerInstitution,
@@ -29,7 +29,9 @@ import {
   CustomerInstitutionApiPath,
   RoleApiPath,
   AlmaApiPath,
+  InstitutionApiPath,
 } from './apiPaths';
+import { mockOrganizationSearch } from '../utils/testfiles/mockOrganizationSearch';
 
 const mockOrcidResponse: OrcidResponse = {
   id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
@@ -44,7 +46,7 @@ const mockSingleAuthorityResponse: Authority = {
   id: 'https://api.dev.nva.aws.unit.no/person/901790000000',
   feideids: ['tu@unit.no'],
   orcids: [],
-  orgunitids: ['https://api.cristin.no/v2/units/150.4.1.0'],
+  orgunitids: ['https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0'],
   handles: [],
   birthDate: '1941-04-25 00:00:00.000',
 };
@@ -52,7 +54,10 @@ const mockSingleAuthorityResponse: Authority = {
 const mockSingleAuthorityResponseWithOrcid: Authority = {
   ...mockSingleAuthorityResponse,
   orcids: ['https://sandbox.orcid.org/0000-0001-2345-6789'],
-  orgunitids: [...mockSingleAuthorityResponse.orgunitids, 'https://api.cristin.no/v2/units/194.65.20.10'],
+  orgunitids: [
+    ...mockSingleAuthorityResponse.orgunitids,
+    'https://api.dev.nva.aws.unit.no/cristin/organization/20754.1.0.0',
+  ],
 };
 
 export const mockFileUploadUrl = 'http://localhost:3000/api/file-upload/';
@@ -114,17 +119,18 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
 
   // Authority Registry
-  mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?name=*`)).reply(200, mockAuthoritiesResponse);
-  mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?feideid=*`)).reply(200, mockAuthoritiesResponse);
+  mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?name=*`)).reply(200, mockAuthorities);
+  mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?feideid=*`)).reply(200, mockAuthorities);
   mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?arpId=901790000000`)).reply(200, mockSingleAuthorityResponse);
 
   // update authority
   mock
     .onPost(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/*/update`))
     .replyOnce(200, mockSingleAuthorityResponse);
-  mock
-    .onPost(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/orgunitid/add`))
-    .replyOnce(200, mockSingleAuthorityResponse);
+  mock.onPost(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/orgunitid/add`)).replyOnce(200, {
+    ...mockSingleAuthorityResponse,
+    orgunitids: [...mockSingleAuthorityResponse.orgunitids, mockOrganizationSearch.hits[0].hasPart?.[0].id],
+  });
   mock
     .onPost(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/orcid/add`))
     .reply(200, mockSingleAuthorityResponseWithOrcid);
@@ -148,6 +154,11 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(CustomerInstitutionApiPath.Customer)).reply(200, mockCustomerInstitution);
   mock.onPut(new RegExp(CustomerInstitutionApiPath.Customer)).reply(200, mockCustomerInstitution);
   mock.onPost(new RegExp(CustomerInstitutionApiPath.Customer)).reply(201, mockCustomerInstitution);
+
+  // Organizations
+  mock.onGet(new RegExp(`${InstitutionApiPath.Organization}\\?query=*`)).reply(200, mockOrganizationSearch);
+  mock.onGet(mockOrganizationSearch.hits[0].id).reply(200, mockOrganizationSearch.hits[0]);
+  mock.onGet(mockOrganizationSearch.hits[0].hasPart?.[0].id).reply(200, mockOrganizationSearch.hits[0].hasPart?.[0]);
 
   // Roles
   mock.onGet(new RegExp(RoleApiPath.InstitutionUsers)).reply(200, []);
