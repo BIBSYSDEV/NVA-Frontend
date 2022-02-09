@@ -2,9 +2,9 @@ import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 import { getOrganizationHierarchy } from '../../utils/institutions-helpers';
 import { AffiliationSkeleton } from './AffiliationSkeleton';
-import { Organization, RecursiveInstitutionUnit } from '../../types/institution.types';
-import { useFetch } from '../../utils/hooks/useFetch';
+import { Organization } from '../../types/institution.types';
 import { getLanguageString } from '../../utils/translation-helpers';
+import { useFetchResource } from '../../utils/hooks/useFetchResource';
 
 interface AffiliationHierarchyProps {
   unitUri: string;
@@ -12,43 +12,14 @@ interface AffiliationHierarchyProps {
   boldTopLevel?: boolean; // Only relevant if commaSeparated=false
 }
 
-export const AffiliationHierarchy = (props: AffiliationHierarchyProps) => {
+export const AffiliationHierarchy = ({ unitUri, commaSeparated, boldTopLevel }: AffiliationHierarchyProps) => {
   const { t } = useTranslation('feedback');
-  const [organization, isLoadingOrganization] = useFetch<Organization>({
-    url: props.unitUri,
-    errorMessage: t('error.get_institution'),
-  });
+  const [organization, isLoadingOrganization] = useFetchResource<Organization>(unitUri, t('error.get_institution'));
   const unitNames = getOrganizationHierarchy(organization).map((unit) => getLanguageString(unit.name));
 
-  return (
-    <AffiliationHierarchyRender
-      {...props}
-      isLoading={isLoadingOrganization}
-      unitNames={unitNames}
-      department={organization}
-    />
-  );
-};
-
-interface AffiliationHierarchyRenderProps extends AffiliationHierarchyProps {
-  isLoading: boolean;
-  unitNames: string[];
-  department?: Organization | RecursiveInstitutionUnit;
-}
-
-const AffiliationHierarchyRender = ({
-  unitUri,
-  commaSeparated = false,
-  boldTopLevel = true,
-  isLoading,
-  department,
-  unitNames,
-}: AffiliationHierarchyRenderProps) => {
-  const { t } = useTranslation('feedback');
-
-  return isLoading ? (
+  return isLoadingOrganization ? (
     <AffiliationSkeleton commaSeparated={commaSeparated} />
-  ) : department ? (
+  ) : organization ? (
     commaSeparated ? (
       <i>
         <Typography>{unitNames.join(', ')}</Typography>
