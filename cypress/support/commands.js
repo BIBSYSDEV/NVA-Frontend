@@ -1,6 +1,6 @@
 import { setRoles } from '../../src/redux/actions/userActions';
 import { setNotification, removeNotification } from '../../src/redux/actions/notificationActions';
-import { mockFileUploadUrl } from '../../src/api/mock-interceptor';
+import { mockFileUploadUrl } from '../../src/utils/testfiles/mockFiles';
 import { dataTestId } from '../../src/utils/dataTestIds';
 
 Cypress.Commands.add('mocklogin', () => {
