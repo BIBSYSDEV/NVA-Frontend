@@ -9,12 +9,22 @@ interface DownloadFileResponse {
   expires: string;
 }
 
+export const downloadPrivateFile = async (registrationIdentifier: string, fileId: string) => {
+  const downloadFileResponse = await authenticatedApiRequest<DownloadFileResponse>({
+    url: `${FileApiPath.Download}/${registrationIdentifier}/files/${fileId}`,
+  });
+  if (isSuccessStatus(downloadFileResponse.status)) {
+    return downloadFileResponse.data;
+  }
+  return null;
+};
+
 export const downloadPublicFile = async (registrationIdentifier: string, fileId: string) => {
-  const authenticatedResponse = await apiRequest<DownloadFileResponse>({
+  const downloadFileResponse = await apiRequest<DownloadFileResponse>({
     url: `${FileApiPath.PublicDownload}/${registrationIdentifier}/files/${fileId}`,
   });
-  if (isSuccessStatus(authenticatedResponse.status)) {
-    return authenticatedResponse.data;
+  if (isSuccessStatus(downloadFileResponse.status)) {
+    return downloadFileResponse.data;
   }
   return null;
 };
