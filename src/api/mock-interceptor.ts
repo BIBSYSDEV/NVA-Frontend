@@ -1,11 +1,9 @@
 import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Authority } from '../types/authority.types';
-import { OrcidResponse } from '../types/orcid.types';
 import { emptyRegistration } from '../types/registration.types';
 import { ORCID_USER_INFO_URL } from '../utils/constants';
 import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
-import { mockAuthorities } from '../utils/testfiles/mockAuthorities';
+import { mockAuthorities, mockOrcidResponse } from '../utils/testfiles/mockAuthorities';
 import { mockRoles } from '../utils/testfiles/mock_feide_user';
 import {
   mockCustomerInstitution,
@@ -32,39 +30,7 @@ import {
   InstitutionApiPath,
 } from './apiPaths';
 import { mockOrganizationSearch } from '../utils/testfiles/mockOrganizationSearch';
-
-const mockOrcidResponse: OrcidResponse = {
-  id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
-  sub: '0000-0001-2345-6789',
-  name: 'Sofia Garcia',
-  family_name: 'Garcia',
-  given_name: 'Sofia',
-};
-
-const mockSingleAuthorityResponse: Authority = {
-  name: 'Test User',
-  id: 'https://api.dev.nva.aws.unit.no/person/901790000000',
-  feideids: ['tu@unit.no'],
-  orcids: [],
-  orgunitids: ['https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0'],
-  handles: [],
-  birthDate: '1941-04-25 00:00:00.000',
-};
-
-const mockSingleAuthorityResponseWithOrcid: Authority = {
-  ...mockSingleAuthorityResponse,
-  orcids: ['https://sandbox.orcid.org/0000-0001-2345-6789'],
-  orgunitids: [
-    ...mockSingleAuthorityResponse.orgunitids,
-    'https://api.dev.nva.aws.unit.no/cristin/organization/20754.1.0.0',
-  ],
-};
-
-export const mockFileUploadUrl = 'http://localhost:3000/api/file-upload/';
-const mockCreateUpload = { uploadId: 'upoadId', key: 'key' };
-const mockPrepareUpload = { url: mockFileUploadUrl };
-const mockCompleteUpload = { location: '123-123-123' };
-const mockDownload = { presignedDownloadUrl: 'http://localhost:3000/api/file-download/' };
+import { mockDownload, mockCreateUpload, mockPrepareUpload, mockCompleteUpload } from '../utils/testfiles/mockFiles';
 
 // AXIOS INTERCEPTOR
 export const interceptRequestsOnMock = () => {
@@ -121,30 +87,31 @@ export const interceptRequestsOnMock = () => {
   // Authority Registry
   mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?name=*`)).reply(200, mockAuthorities);
   mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?feideid=*`)).reply(200, mockAuthorities);
-  mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?arpId=901790000000`)).reply(200, mockSingleAuthorityResponse);
+  mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?arpId=901790000000`)).reply(200, mockAuthorities[1]);
 
   // update authority
   mock
     .onPost(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/*/update`))
-    .replyOnce(200, mockSingleAuthorityResponse);
+    .replyOnce(200, mockAuthorities[1]);
   mock.onPost(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/orgunitid/add`)).replyOnce(200, {
-    ...mockSingleAuthorityResponse,
-    orgunitids: [...mockSingleAuthorityResponse.orgunitids, mockOrganizationSearch.hits[0].hasPart?.[0].id],
+    ...mockAuthorities[1],
+    orgunitids: [...mockAuthorities[1].orgunitids, mockOrganizationSearch.hits[0].hasPart?.[0].id],
   });
   mock
     .onPost(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/orcid/add`))
-    .reply(200, mockSingleAuthorityResponseWithOrcid);
-  mock
-    .onPost(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/orgunitid/add`))
-    .reply(200, mockSingleAuthorityResponseWithOrcid);
+    .reply(200, { ...mockAuthorities[1], orcids: ['https://sandbox.orcid.org/0000-0001-2345-6789'] });
+  mock.onPost(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/orgunitid/add`)).reply(200, {
+    ...mockAuthorities[1],
+    orgunitids: [...mockAuthorities[1].orgunitids, 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.1.0.0'],
+  });
 
   // Remove orgunitid from Authority
   mock
     .onDelete(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/orgunitid/delete`))
-    .reply(200, mockSingleAuthorityResponse);
+    .reply(200, mockAuthorities[1]);
 
   // create authority
-  mock.onPost(new RegExp(AuthorityApiPath.Person)).reply(200, mockSingleAuthorityResponse);
+  mock.onPost(new RegExp(AuthorityApiPath.Person)).reply(200, mockAuthorities[1]);
 
   //memberinstitutions
   mock
