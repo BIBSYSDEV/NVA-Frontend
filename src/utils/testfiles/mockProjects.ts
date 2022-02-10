@@ -24,7 +24,7 @@ export const mockProject: CristinProject = {
   startDate: '2001-01-01T00:00:00Z',
   endDate: '2001-12-31T00:00:00Z',
   coordinatingInstitution: {
-    id: 'https://api.cristin.no/v2/institutions/186',
+    id: 'https://api.dev.nva.aws.unit.no/cristin/organization/186.0.0.0',
     type: 'Organization',
     name: {
       nb: 'UiT Norges arktiske universitet',
@@ -34,13 +34,13 @@ export const mockProject: CristinProject = {
     {
       type: 'ProjectManager',
       identity: {
-        id: 'https://api.cristin.no/v2/persons/328549',
+        id: 'https://api.dev.nva.aws.unit.no/cristin/person/328549',
         type: 'Person',
         firstName: 'Name',
         lastName: 'Nameson',
       },
       affiliation: {
-        id: 'https://api.cristin.no/v2/institutions/186',
+        id: 'https://api.dev.nva.aws.unit.no/cristin/organization/186.0.0.0',
         type: 'Organization',
         name: {
           nb: 'UiT Norges arktiske universitet',
@@ -50,13 +50,13 @@ export const mockProject: CristinProject = {
     {
       type: 'ProjectParticipant',
       identity: {
-        id: 'https://api.cristin.no/v2/persons/53368',
+        id: 'https://api.dev.nva.aws.unit.no/cristin/person/53368',
         type: 'Person',
         firstName: 'arvid',
         lastName: 'viken',
       },
       affiliation: {
-        id: 'https://api.cristin.no/v2/institutions/186',
+        id: 'https://api.dev.nva.aws.unit.no/cristin/organization/186.0.0.0',
         type: 'Organization',
         name: {
           nb: 'UiT Norges arktiske universitet',
@@ -66,13 +66,13 @@ export const mockProject: CristinProject = {
     {
       type: 'ProjectParticipant',
       identity: {
-        id: 'https://api.cristin.no/v2/persons/325305',
+        id: 'https://api.dev.nva.aws.unit.no/cristin/person/325305',
         type: 'Person',
         firstName: 'Peder',
         lastName: 'Pedersen',
       },
       affiliation: {
-        id: 'https://api.cristin.no/v2/institutions/186',
+        id: 'https://api.dev.nva.aws.unit.no/cristin/organization/186.0.0.0',
         type: 'Organization',
         name: {
           nb: 'UiT Norges arktiske universitet',
@@ -107,7 +107,7 @@ const mockProjects: CristinProject[] = [
     startDate: '1998-11-01T00:00:00Z',
     endDate: '2001-06-30T00:00:00Z',
     coordinatingInstitution: {
-      id: 'https://api.cristin.no/v2/institutions/222',
+      id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
       type: 'Organization',
       name: {
         nb: 'Universitetet i Sørøst-Norge',
@@ -117,13 +117,13 @@ const mockProjects: CristinProject[] = [
       {
         type: 'ProjectManager',
         identity: {
-          id: 'https://api.cristin.no/v2/persons/319749',
+          id: 'https://api.dev.nva.aws.unit.no/cristin/person/319749',
           type: 'Person',
           firstName: 'Kari',
           lastName: 'Karisen',
         },
         affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/222',
+          id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
           type: 'Organization',
           name: {
             nb: 'Universitetet i Sørøst-Norge',
@@ -155,7 +155,7 @@ const mockProjects: CristinProject[] = [
     startDate: '1995-01-01T00:00:00Z',
     endDate: '2002-12-31T00:00:00Z',
     coordinatingInstitution: {
-      id: 'https://api.cristin.no/v2/institutions/222',
+      id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
       type: 'Organization',
       name: {
         nb: 'Universitetet i Sørøst-Norge',
@@ -165,13 +165,13 @@ const mockProjects: CristinProject[] = [
       {
         type: 'ProjectManager',
         identity: {
-          id: 'https://api.cristin.no/v2/persons/27546',
+          id: 'https://api.dev.nva.aws.unit.no/cristin/person/27546',
           type: 'Person',
           firstName: 'Anonym',
           lastName: 'Person',
         },
         affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/222',
+          id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
           type: 'Organization',
           name: {
             nb: 'Universitetet i Sørøst-Norge',
@@ -203,7 +203,7 @@ const mockProjects: CristinProject[] = [
     startDate: '1999-03-01T00:00:00Z',
     endDate: '2002-02-28T00:00:00Z',
     coordinatingInstitution: {
-      id: 'https://api.cristin.no/v2/institutions/222',
+      id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
       type: 'Organization',
       name: {
         nb: 'Universitetet i Sørøst-Norge',
@@ -213,13 +213,13 @@ const mockProjects: CristinProject[] = [
       {
         type: 'ProjectManager',
         identity: {
-          id: 'https://api.cristin.no/v2/persons/43310',
+          id: 'https://api.dev.nva.aws.unit.no/cristin/person/43310',
           type: 'Person',
           firstName: 'Guri',
           lastName: 'Malla',
         },
         affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/222',
+          id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
           type: 'Organization',
           name: {
             nb: 'Universitetet i Sørøst-Norge',
@@ -229,13 +229,13 @@ const mockProjects: CristinProject[] = [
       {
         type: 'ProjectParticipant',
         identity: {
-          id: 'https://api.cristin.no/v2/persons/26002',
+          id: 'https://api.dev.nva.aws.unit.no/cristin/person/26002',
           type: 'Person',
           firstName: 'Sopp',
           lastName: 'Soppesen',
         },
         affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/222',
+          id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
           type: 'Organization',
           name: {
             nb: 'Universitetet i Sørøst-Norge',
@@ -245,13 +245,13 @@ const mockProjects: CristinProject[] = [
       {
         type: 'ProjectParticipant',
         identity: {
-          id: 'https://api.cristin.no/v2/persons/26022',
+          id: 'https://api.dev.nva.aws.unit.no/cristin/person/26022',
           type: 'Person',
           firstName: 'Ost',
           lastName: 'Loff',
         },
         affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/222',
+          id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
           type: 'Organization',
           name: {
             nb: 'Universitetet i Sørøst-Norge',
@@ -283,7 +283,7 @@ const mockProjects: CristinProject[] = [
     startDate: '1995-01-01T00:00:00Z',
     endDate: '1998-12-31T00:00:00Z',
     coordinatingInstitution: {
-      id: 'https://api.cristin.no/v2/institutions/222',
+      id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
       type: 'Organization',
       name: {
         nb: 'Universitetet i Sørøst-Norge',
@@ -293,13 +293,13 @@ const mockProjects: CristinProject[] = [
       {
         type: 'ProjectManager',
         identity: {
-          id: 'https://api.cristin.no/v2/persons/319632',
+          id: 'https://api.dev.nva.aws.unit.no/cristin/person/319632',
           type: 'Person',
           firstName: 'Knut',
           lastName: 'Kebab',
         },
         affiliation: {
-          id: 'https://api.cristin.no/v2/institutions/222',
+          id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
           type: 'Organization',
           name: {
             nb: 'Universitetet i Sørøst-Norge',
