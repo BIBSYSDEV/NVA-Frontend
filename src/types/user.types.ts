@@ -39,6 +39,7 @@ export interface User {
   possibleAuthorities: Authority[];
   roles: RoleName[];
   orgNumber: string;
+  viewingScope: string[];
 }
 
 interface UserRole {
