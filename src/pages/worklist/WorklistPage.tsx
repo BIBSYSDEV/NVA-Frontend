@@ -1,4 +1,6 @@
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { CircularProgress, Typography } from '@mui/material';
 import { PageHeader } from '../../components/PageHeader';
 import { SyledPageContent } from '../../components/styled/Wrappers';
 import { SearchApiPath } from '../../api/apiPaths';
@@ -7,18 +9,16 @@ import { PublicationConversation } from '../../types/publication_types/messages.
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { MessagesOverview } from './MessagesOverview';
 import { SearchResponse } from '../../types/common.types';
-import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { Organization } from '../../types/institution.types';
 import { getLanguageString } from '../../utils/translation-helpers';
-import { CircularProgress, Typography } from '@mui/material';
 
 const WorklistPage = () => {
   const { t } = useTranslation('workLists');
   const user = useSelector((store: RootStore) => store.user);
-  const scopeUnitId = user && user.viewingScope.length > 0 ? user.viewingScope[0] : '';
-  const [scopeUnit, isLoadingScopeUnit] = useFetchResource<Organization>(scopeUnitId);
+  const viewingScopeId = user && user.viewingScope.length > 0 ? user.viewingScope[0] : '';
+  const [viewingScopeOrganization, isLoadingViewingScopeOrganization] = useFetchResource<Organization>(viewingScopeId);
 
   const [worklistResponse, isLoadingWorklistResponse] = useFetch<SearchResponse<PublicationConversation>>({
     url: SearchApiPath.Messages,
@@ -35,11 +35,13 @@ const WorklistPage = () => {
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
         <>
-          {isLoadingScopeUnit ? (
+          {isLoadingViewingScopeOrganization ? (
             <CircularProgress />
           ) : (
             <Typography paragraph sx={{ fontWeight: 'bold' }}>
-              {t('limited_to', { name: scopeUnit ? getLanguageString(scopeUnit.name) : '' })}
+              {t('limited_to', {
+                name: viewingScopeOrganization ? getLanguageString(viewingScopeOrganization.name) : '',
+              })}
             </Typography>
           )}
           <MessagesOverview conversations={supportRequests} />

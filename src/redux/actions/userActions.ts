@@ -6,7 +6,7 @@ export const SET_USER_SUCCESS = 'set user';
 export const SET_AUTHORITY_DATA = 'set authority data';
 export const SET_POSSIBLE_AUTHORITIES = 'set possible authorities';
 export const SET_ROLES = 'set roles';
-export const SET_SCOPE = 'set scope';
+export const SET_VIEWING_SCOPE = 'set viewing scope';
 
 // ACTION CREATORS
 export const setUser = (user: FeideUser): SetUserAction => ({
@@ -29,14 +29,14 @@ export const setRoles = (roles: RoleName[]): SetRolesAction => ({
   roles,
 });
 
-export const setViewingScope = (scope: string[]): SetScopeAction => ({
-  type: SET_SCOPE,
-  scope,
+export const setViewingScope = (viewingScope: string[]): SetViewingScopeAction => ({
+  type: SET_VIEWING_SCOPE,
+  viewingScope,
 });
 
-interface SetScopeAction {
-  type: typeof SET_SCOPE;
-  scope: string[];
+interface SetViewingScopeAction {
+  type: typeof SET_VIEWING_SCOPE;
+  viewingScope: string[];
 }
 
 interface SetRolesAction {
@@ -64,4 +64,4 @@ export type UserActions =
   | SetAuthorityAction
   | SetPossibleAuthoritiesAction
   | SetRolesAction
-  | SetScopeAction;
+  | SetViewingScopeAction;
