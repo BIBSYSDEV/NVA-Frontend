@@ -30,7 +30,10 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
     }
     setIsUpdating(true);
 
-    const newUser: InstitutionUser = { ...userCopy, viewingScope: { includedUnits: [newScopeId] } };
+    const newUser: InstitutionUser = {
+      ...userCopy,
+      viewingScope: { type: 'ViewingScope', includedUnits: [newScopeId] },
+    };
     const updateUserResponse = await authenticatedApiRequest({
       url: `${RoleApiPath.Users}/${userCopy.username}`,
       method: 'PUT',
