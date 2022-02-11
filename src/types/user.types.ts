@@ -40,6 +40,7 @@ export interface User {
   possibleAuthorities: Authority[];
   roles: RoleName[];
   orgNumber: string;
+  viewingScope: string[];
 }
 
 interface UserRole {
@@ -54,6 +55,7 @@ export interface InstitutionUser {
   roles: UserRole[];
   username: string;
   viewingScope?: {
+    type: 'ViewingScope';
     includedUnits: string[];
   };
 }

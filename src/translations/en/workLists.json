@@ -3,6 +3,7 @@
   "delete_registration_message": "Do you want to delete \"{{title}}\"?",
   "go_to_public_profile": "My public profile",
   "go_to_registration": "Go to registration",
+  "limited_to": "Limited to: \"{{name}}\"",
   "messages": "Messages",
   "my_registrations": "My registrations",
   "no_messages": "You don't have any messages",
