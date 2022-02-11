@@ -4,6 +4,7 @@ import {
   SET_AUTHORITY_DATA,
   SET_POSSIBLE_AUTHORITIES,
   SET_ROLES,
+  SET_VIEWING_SCOPE,
   SET_USER_SUCCESS,
   UserActions,
 } from '../actions/userActions';
@@ -49,7 +50,11 @@ export const userReducer = (
         isCurator: !!state?.customerId && action.roles.some((role) => role === RoleName.CURATOR),
         isEditor: !!state?.customerId && action.roles.some((role) => role === RoleName.EDITOR),
       };
-
+    case SET_VIEWING_SCOPE:
+      return {
+        ...state,
+        viewingScope: action.viewingScope,
+      };
     case SET_AUTHORITY_DATA:
       return {
         ...state,
