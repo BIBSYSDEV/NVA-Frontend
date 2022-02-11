@@ -8,7 +8,7 @@ import { useDebounce } from '../../utils/hooks/useDebounce';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { getSortedSubUnits } from '../../utils/institutions-helpers';
-import { InstitutionApiPath } from '../../api/apiPaths';
+import { CristinApiPath } from '../../api/apiPaths';
 import { dataTestId } from '../../utils/dataTestIds';
 
 enum FormikInstitutionUnitFieldNames {
@@ -36,7 +36,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
   const [institutions, isLoadingInstitutions] = useFetch<OrganizationSearch>({
-    url: debouncedQuery ? `${InstitutionApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
+    url: debouncedQuery ? `${CristinApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
     errorMessage: t('feedback:error.get_institutions'),
   });
 

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FieldInputProps } from 'formik';
 import { Autocomplete, TextField } from '@mui/material';
-import { InstitutionApiPath } from '../../../api/apiPaths';
+import { CristinApiPath } from '../../../api/apiPaths';
 import { Organization, OrganizationSearch } from '../../../types/organization.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../utils/hooks/useFetch';
@@ -27,7 +27,7 @@ export const OrganizationSearchField = ({
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
   const [institutionOptions, isLoadingInstitutionOptions] = useFetch<OrganizationSearch>({
-    url: debouncedQuery ? `${InstitutionApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
+    url: debouncedQuery ? `${CristinApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
     errorMessage: t('error.get_institutions'),
   });
 

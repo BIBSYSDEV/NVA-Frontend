@@ -9,7 +9,7 @@ import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { useFetch } from '../../../../utils/hooks/useFetch';
-import { ProjectsApiPath } from '../../../../api/apiPaths';
+import { CristinApiPath } from '../../../../api/apiPaths';
 import { ProjectChip } from './ProjectChip';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { CreateProjectDialog } from './CreateProjectDialog';
@@ -21,7 +21,7 @@ export const ProjectsField = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
   const [projects, isLoadingProjects] = useFetch<ProjectSearchResponse>({
-    url: debouncedSearchTerm ? `${ProjectsApiPath.Project}?query=${encodeURIComponent(debouncedSearchTerm)}` : '',
+    url: debouncedSearchTerm ? `${CristinApiPath.Project}?query=${encodeURIComponent(debouncedSearchTerm)}` : '',
     errorMessage: t('feedback:error.get_project'),
   });
 

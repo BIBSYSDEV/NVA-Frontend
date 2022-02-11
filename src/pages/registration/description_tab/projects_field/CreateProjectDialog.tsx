@@ -16,7 +16,7 @@ import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { ProjectsApiPath } from '../../../../api/apiPaths';
+import { CristinApiPath } from '../../../../api/apiPaths';
 import { apiRequest, authenticatedApiRequest } from '../../../../api/apiRequest';
 import { InputContainerBox } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/actions/notificationActions';
@@ -65,12 +65,12 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
   const debouncedSearchTerm = useDebounce(searchTerm);
 
   const [searchByNameResults, isLoadingSearchByName] = useFetch<SearchResponse<CristinUser>>({
-    url: debouncedSearchTerm ? `/cristin/person?results=50&query=${debouncedSearchTerm}` : '',
+    url: debouncedSearchTerm ? `${CristinApiPath.Person}?results=50&query=${debouncedSearchTerm}` : '',
   });
 
   const createProject = async (values: BasicCristinProject) => {
     const createProjectResponse = await authenticatedApiRequest({
-      url: ProjectsApiPath.Project,
+      url: CristinApiPath.Project,
       method: 'POST',
       data: values,
     });
