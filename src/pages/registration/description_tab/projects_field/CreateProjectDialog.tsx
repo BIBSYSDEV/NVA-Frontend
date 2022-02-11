@@ -28,6 +28,7 @@ import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 import { getDateFnsLocale } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
+import { getNewDateValue } from '../../../../utils/registration-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { basicProjectValidationSchema } from '../../../../utils/validation/project/BasicProjectValidation';
 import { OrganizationSearchField } from '../../../admin/customerInstitutionFields/OrganizationSearchField';
@@ -88,7 +89,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
       <DialogTitle>{t('create_project')}</DialogTitle>
 
       <Formik initialValues={initialValues} validationSchema={basicProjectValidationSchema} onSubmit={createProject}>
-        {({ isSubmitting }) => (
+        {({ isSubmitting, setFieldValue }) => (
           <Form noValidate>
             <DialogContent>
               <InputContainerBox>
@@ -107,7 +108,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                 </Field>
                 <Box sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1rem', alignItems: 'start' }}>
                   <Field name="coordinatingInstitution.id">
-                    {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
+                    {({ field, meta: { touched, error } }: FieldProps<string>) => (
                       <OrganizationSearchField
                         label={t('project:coordinating_institution')}
                         onChange={(selectedInstitution) => {
@@ -125,16 +126,14 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                   </Field>
 
                   <Field name="startDate">
-                    {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
+                    {({ field, meta: { touched, error } }: FieldProps<string>) => (
                       <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
                         <DatePicker
                           {...datePickerTranslationProps}
                           label={t('start_date')}
-                          onChange={(date: Date | null) => {
-                            if (date instanceof Date && !isNaN(date.getTime())) {
-                              const midnightDate = new Date(date.setUTCHours(0, 0, 0, 0));
-                              setFieldValue(field.name, midnightDate.toISOString());
-                            }
+                          onChange={(date: Date | null, keyboardValue) => {
+                            const newDate = getNewDateValue(date, keyboardValue);
+                            setFieldValue(field.name, newDate);
                           }}
                           value={field.value ? new Date(field.value) : null}
                           inputFormat="dd.MM.yyyy"
@@ -160,7 +159,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                 {t('project_manager')}
               </Typography>
               <Field name="contributors">
-                {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<ProjectContributor[]>) =>
+                {({ field, meta: { touched, error } }: FieldProps<ProjectContributor[]>) =>
                   field.value.length === 0 ? (
                     <Autocomplete
                       options={searchByNameResults?.hits ?? []}
