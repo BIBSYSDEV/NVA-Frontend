@@ -8,11 +8,12 @@ import {
   emptyCustomerInstitution,
 } from '../../../types/customerInstitution.types';
 import { InstitutionApiPath } from '../../../api/apiPaths';
-import { OrganizationsResponse } from '../../../types/institution.types';
+import { Organization } from '../../../types/institution.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { SearchResponse } from '../../../types/common.types';
 
 interface SelectInstitutionFieldProps {
   disabled?: boolean;
@@ -23,7 +24,7 @@ export const SelectInstitutionField = ({ disabled = false }: SelectInstitutionFi
   const { values, setValues } = useFormikContext<CustomerInstitution>();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
-  const [institutions, isLoadingInstitutions] = useFetch<OrganizationsResponse>({
+  const [institutions, isLoadingInstitutions] = useFetch<SearchResponse<Organization>>({
     url: debouncedQuery ? `${InstitutionApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
     errorMessage: t('error.get_institutions'),
   });

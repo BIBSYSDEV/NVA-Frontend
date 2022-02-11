@@ -81,7 +81,7 @@ const PublicProfile = () => {
             {registrations && (
               <Box sx={{ mt: '1rem' }}>
                 <Typography variant="h2">{t('common:registrations')}</Typography>
-                {registrations.total > 0 ? (
+                {registrations.size > 0 ? (
                   <SearchResults searchResult={registrations} />
                 ) : (
                   <Typography>{t('common:no_hits')}</Typography>

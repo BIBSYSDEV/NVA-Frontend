@@ -3,13 +3,14 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Autocomplete, Button, Box, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { FormikInstitutionUnitFieldNames, Organization, OrganizationsResponse } from '../../types/institution.types';
+import { FormikInstitutionUnitFieldNames, Organization } from '../../types/institution.types';
 import { useDebounce } from '../../utils/hooks/useDebounce';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { getSortedSubUnits } from '../../utils/institutions-helpers';
 import { InstitutionApiPath } from '../../api/apiPaths';
 import { dataTestId } from '../../utils/dataTestIds';
+import { SearchResponse } from '../../types/common.types';
 
 interface OrganizationForm {
   unit: Organization | null;
@@ -30,7 +31,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
   const { t } = useTranslation('common');
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
-  const [institutions, isLoadingInstitutions] = useFetch<OrganizationsResponse>({
+  const [institutions, isLoadingInstitutions] = useFetch<SearchResponse<Organization>>({
     url: debouncedQuery ? `${InstitutionApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
     errorMessage: t('feedback:error.get_institutions'),
   });
