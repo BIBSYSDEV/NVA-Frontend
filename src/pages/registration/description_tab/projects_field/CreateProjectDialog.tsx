@@ -23,7 +23,7 @@ import { setNotification } from '../../../../redux/actions/notificationActions';
 import { datePickerTranslationProps } from '../../../../themes/mainTheme';
 import { SearchResponse } from '../../../../types/common.types';
 import { CoordinatingInstitution, CristinProject, ProjectContributor } from '../../../../types/project.types';
-import { CristinUser } from '../../../../types/user.types';
+import { CristinArrayValue, CristinUser } from '../../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 import { getDateFnsLocale } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
@@ -33,13 +33,11 @@ import { getLanguageString } from '../../../../utils/translation-helpers';
 import { basicProjectValidationSchema } from '../../../../utils/validation/project/BasicProjectValidation';
 import { OrganizationSearchField } from '../../../admin/customerInstitutionFields/OrganizationSearchField';
 
-interface CristinArrayValue {
-  type: string;
-  value: string;
-}
-
 const getValueByKey = (key: string, items?: CristinArrayValue[]) =>
   items?.find((item) => item.type === key)?.value ?? '';
+
+const getFullName = (names: CristinArrayValue[]) =>
+  `${getValueByKey('FirstName', names)} ${getValueByKey('LastName', names)}`;
 
 type BasicCristinProject = Pick<CristinProject, 'title' | 'startDate' | 'coordinatingInstitution' | 'contributors'>;
 
@@ -164,9 +162,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                     <Autocomplete
                       options={searchByNameResults?.hits ?? []}
                       inputMode="search"
-                      getOptionLabel={(option) =>
-                        `${getValueByKey('FirstName', option.names)} ${getValueByKey('LastName', option.names)}`
-                      }
+                      getOptionLabel={(option) => getFullName(option.names)}
                       filterOptions={(options) => options}
                       onInputChange={(_, value, reason) => {
                         if (reason !== 'reset') {
@@ -210,9 +206,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                       renderOption={(props, option) => (
                         <li {...props} key={option.id}>
                           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                            <Typography variant="subtitle1">
-                              {getValueByKey('FirstName', option.names)} {getValueByKey('LastName', option.names)}
-                            </Typography>
+                            <Typography variant="subtitle1">{getFullName(option.names)}</Typography>
                             {option.affiliations.length > 0 && (
                               <Typography variant="body2" color="textSecondary">
                                 {getLanguageString(option.affiliations[0].role.labels ?? {})}

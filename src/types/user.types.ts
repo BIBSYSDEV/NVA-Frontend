@@ -87,14 +87,17 @@ interface CristinPersonAffiliation {
   };
 }
 
-interface CristinPersonIdentifier {
-  type: 'CristinIdentifier' | 'NationalIdentificationNumber';
+export interface CristinArrayValue {
+  type: string;
   value: string;
 }
 
-interface CristinPersonName {
+interface CristinPersonIdentifier extends CristinArrayValue {
+  type: 'CristinIdentifier' | 'NationalIdentificationNumber';
+}
+
+interface CristinPersonName extends CristinArrayValue {
   type: 'FirstName' | 'LastName';
-  value: string;
 }
 
 export interface CristinUser {

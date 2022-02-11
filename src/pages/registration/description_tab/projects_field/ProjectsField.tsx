@@ -17,7 +17,7 @@ import { BetaFunctionality } from '../../../../components/BetaFunctionality';
 
 export const ProjectsField = () => {
   const { t } = useTranslation('registration');
-  const [openNewProject, setOpenNewProject] = useState(false);
+  const [openNewProjectDialog, setOpenNewProjectDialog] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
   const [projects, isLoadingProjects] = useFetch<ProjectSearchResponse>({
@@ -87,11 +87,9 @@ export const ProjectsField = () => {
         )}
       </Field>
       <BetaFunctionality>
-        <Button sx={{ mt: '0.5rem' }} onClick={() => setOpenNewProject(true)}>
-          {t('project:create_project')}
-        </Button>
+        <Button onClick={() => setOpenNewProjectDialog(true)}>{t('project:create_project')}</Button>
+        <CreateProjectDialog open={openNewProjectDialog} onClose={() => setOpenNewProjectDialog(false)} maxWidth="lg" />
       </BetaFunctionality>
-      <CreateProjectDialog open={openNewProject} onClose={() => setOpenNewProject(false)} maxWidth="lg" />
     </Box>
   );
 };
