@@ -1,4 +1,5 @@
 {
+  "coordinating_institution": "Coordinating institution",
   "create_project": "Create project",
   "financing": "Financing",
   "grant_id": "GrantID",
@@ -11,10 +12,10 @@
   "project": "Project",
   "project_info": "Project info",
   "project_manager": "Project manager",
-  "project_owner": "Project owner",
   "project_participants": "Project participants",
   "results": "Results",
   "scientific_summary": "Scientific summary",
+  "search_for_institution": "Search for institution",
   "search_for_person": "Search for person",
   "start_date": "Start date",
   "status": {

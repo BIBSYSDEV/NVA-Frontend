@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FieldInputProps } from 'formik';
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, TextField, TextFieldProps } from '@mui/material';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { Organization, OrganizationSearch } from '../../../types/organization.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
@@ -9,10 +9,9 @@ import { useFetch } from '../../../utils/hooks/useFetch';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
 
-interface OrganizationSearchFieldProps {
+interface OrganizationSearchFieldProps extends Pick<TextFieldProps, 'label'> {
   onChange?: (selectedInstitution: Organization | null) => void;
   disabled?: boolean;
-  selectedOrganizationId?: string;
   errorMessage?: string;
   fieldInputProps?: FieldInputProps<string>;
 }
@@ -22,6 +21,7 @@ export const OrganizationSearchField = ({
   disabled = false,
   errorMessage,
   fieldInputProps,
+  label,
 }: OrganizationSearchFieldProps) => {
   const { t } = useTranslation('feedback');
   const [searchTerm, setSearchTerm] = useState('');
@@ -59,9 +59,9 @@ export const OrganizationSearchField = ({
           name={fieldInputProps?.name}
           {...params}
           data-testid={dataTestId.organization.searchField}
-          label={t('common:institution')}
+          label={label ?? t('common:institution')}
           required
-          placeholder="Søk etter institusjon"
+          placeholder={t('project:search_for_institution')}
           variant="filled"
           fullWidth
           error={!!errorMessage}

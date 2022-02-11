@@ -21,7 +21,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
     <StyledGeneralInfo data-testid={dataTestId.projectLandingPage.generalInfoBox}>
       <div>
         <Typography variant="overline" component="h2">
-          {t('project_owner')}
+          {t('coordinating_institution')}
         </Typography>
         <Typography>{getProjectCoordinatingInstitutionName(project) ?? '-'}</Typography>
         <Typography variant="overline" component="h2">

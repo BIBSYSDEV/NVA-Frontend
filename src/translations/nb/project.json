@@ -1,4 +1,5 @@
 {
+  "coordinating_institution": "Koordinerende institusjon",
   "create_project": "Opprett prosjekt",
   "financing": "Finansiering",
   "grant_id": "GrantID",
@@ -11,10 +12,10 @@
   "project": "Prosjekt",
   "project_info": "Prosjektinfo",
   "project_manager": "Prosjektleder",
-  "project_owner": "Prosjekteier",
   "project_participants": "Prosjektdeltakere",
   "results": "Resultater",
   "scientific_summary": "Vitenskapelig sammendrag",
+  "search_for_institution": "Søk etter institusjon",
   "search_for_person": "Søk etter person",
   "start_date": "Startdato",
   "status": {

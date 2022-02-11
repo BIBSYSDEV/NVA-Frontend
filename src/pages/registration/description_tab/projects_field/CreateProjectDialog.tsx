@@ -92,7 +92,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
           <Form noValidate>
             <DialogContent>
               <InputContainerBox>
-                <Field name={'title'}>
+                <Field name="title">
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <TextField
                       {...field}
@@ -106,9 +106,10 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                   )}
                 </Field>
                 <Box sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1rem', alignItems: 'start' }}>
-                  <Field name={'coordinatingInstitution.id'}>
+                  <Field name="coordinatingInstitution.id">
                     {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
                       <OrganizationSearchField
+                        label={t('project:coordinating_institution')}
                         onChange={(selectedInstitution) => {
                           const newOrg: CoordinatingInstitution = {
                             type: 'Organization',
@@ -123,7 +124,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                     )}
                   </Field>
 
-                  <Field name={'startDate'}>
+                  <Field name="startDate">
                     {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
                       <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
                         <DatePicker
@@ -153,12 +154,12 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                     )}
                   </Field>
                 </Box>
-                <Typography variant="h3" gutterBottom>
-                  {t('project_manager')}
-                </Typography>
               </InputContainerBox>
 
-              <Field name={'contributors'}>
+              <Typography variant="h3" gutterBottom sx={{ mt: '1rem' }}>
+                {t('project_manager')}
+              </Typography>
+              <Field name="contributors">
                 {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<ProjectContributor[]>) =>
                   field.value.length === 0 ? (
                     <Autocomplete

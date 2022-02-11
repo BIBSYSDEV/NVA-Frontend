@@ -12,7 +12,7 @@ const basicProjectErrorMessage = {
     field: i18n.t('project:start_date'),
   }),
   institutionRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('common:institution'),
+    field: i18n.t('project:coordinating_institution'),
   }),
 };
 

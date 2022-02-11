@@ -75,7 +75,7 @@ export const CustomerInstitutionMetadataForm = ({
                         const name = selectedInstitution?.name ? getLanguageString(selectedInstitution.name) : '';
                         setValues({
                           ...emptyCustomerInstitution,
-                          name,
+                          [CustomerInstitutionFieldNames.Name]: name,
                           [CustomerInstitutionFieldNames.DisplayName]: name,
                           [CustomerInstitutionFieldNames.CristinId]: selectedInstitution?.id ?? '',
                         });
