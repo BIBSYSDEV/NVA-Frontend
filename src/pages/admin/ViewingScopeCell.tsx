@@ -1,10 +1,12 @@
 import { Autocomplete, TextField } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RoleApiPath } from '../../api/apiPaths';
 import { authenticatedApiRequest } from '../../api/apiRequest';
 import { setNotification } from '../../redux/actions/notificationActions';
+import { setViewingScope } from '../../redux/actions/userActions';
+import { RootStore } from '../../redux/reducers/rootReducer';
 import { Organization } from '../../types/institution.types';
 import { InstitutionUser } from '../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
@@ -19,6 +21,7 @@ interface ViewingScopeCellProps {
 export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('admin');
+  const authenticatedUser = useSelector((store: RootStore) => store.user);
   const [isUpdating, setIsUpdating] = useState(false);
   const [userCopy, setUserCopy] = useState(user); // Needed if empty scope before adding a new
   const selectedId = userCopy.viewingScope?.includedUnits[0] ?? '';
@@ -30,7 +33,10 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
     }
     setIsUpdating(true);
 
-    const newUser: InstitutionUser = { ...userCopy, viewingScope: { includedUnits: [newScopeId] } };
+    const newUser: InstitutionUser = {
+      ...userCopy,
+      viewingScope: { type: 'ViewingScope', includedUnits: [newScopeId] },
+    };
     const updateUserResponse = await authenticatedApiRequest({
       url: `${RoleApiPath.Users}/${userCopy.username}`,
       method: 'PUT',
@@ -40,6 +46,9 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
     if (isSuccessStatus(updateUserResponse.status)) {
       setUserCopy(newUser);
       dispatch(setNotification(t('feedback:success.update_institution_user')));
+      if (user.username === authenticatedUser?.id) {
+        dispatch(setViewingScope([newScopeId]));
+      }
     } else if (isErrorStatus(updateUserResponse.status)) {
       dispatch(setNotification(t('feedback:error.update_institution_user'), 'error'));
     }
