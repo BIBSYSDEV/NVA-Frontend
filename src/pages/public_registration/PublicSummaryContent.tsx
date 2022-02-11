@@ -75,6 +75,7 @@ const TagsList = ({ title, values }: TagsListProps) => (
       gridTemplateColumns: { xs: '1fr', md: 'auto 1fr' },
       columnGap: '1rem',
       alignItems: 'center',
+      marginBottom: '0.5rem',
     }}>
     <Typography variant="overline" component="h3" color="primary">
       {title}
