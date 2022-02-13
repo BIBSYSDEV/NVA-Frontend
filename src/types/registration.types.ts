@@ -156,6 +156,8 @@ export interface RegistrationPreview {
   createdDate: string;
   status: string;
   owner: string;
+  publicationDate?: RegistrationDate;
+  contributors?: Contributor[];
 }
 
 export interface Doi {
