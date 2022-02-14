@@ -45,7 +45,8 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
 
   const sendDoiRequest = async () => {
     setIsLoading(LoadingName.RequestDoi);
-    const createDoiRequestResponse = await createDoiRequest(identifier, messageToCurator);
+    const message = isPublishedRegistration ? messageToCurator : t('public_page.reserve_doi_message');
+    const createDoiRequestResponse = await createDoiRequest(identifier, message);
     if (isErrorStatus(createDoiRequestResponse.status)) {
       dispatch(setNotification(t('feedback:error.create_doi_request'), 'error'));
       setIsLoading(LoadingName.None);
