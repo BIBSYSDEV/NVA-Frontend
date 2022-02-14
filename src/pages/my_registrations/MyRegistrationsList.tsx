@@ -68,7 +68,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
     if (registrations.some(({ mainTitle }) => stringIncludesMathJax(mainTitle))) {
       typesetMathJax();
     }
-  }, [registrations]);
+  }, [registrations, page, rowsPerPage]);
 
   const registrationsOnPage = registrations.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
 
