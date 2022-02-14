@@ -16,17 +16,18 @@ export interface ArtisticPublicationInstance {
   type: ArtisticType | '';
   subtype: DesignSubtype | null;
   description: string;
+  venues: Venue[];
 }
 
 export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {
   type: '',
   subtype: { type: '' },
   description: '',
+  venues: [],
 };
 
 export interface ArtisticPublicationContext {
   type: PublicationType.Artistic;
-  venues: Venue[];
 }
 
 interface ArtisticReference extends BaseReference {
