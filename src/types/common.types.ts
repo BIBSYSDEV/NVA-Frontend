@@ -20,7 +20,7 @@ export interface Instant {
 }
 
 export interface SearchResponse<T> {
-  took: number;
-  total: number;
+  processingTime: number;
+  size: number;
   hits: T[];
 }

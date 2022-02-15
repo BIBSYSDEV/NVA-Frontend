@@ -11,7 +11,3 @@ export interface Organization {
   partOf?: Organization[];
   hasPart?: Organization[];
 }
-
-export interface OrganizationsResponse {
-  hits: Organization[];
-}

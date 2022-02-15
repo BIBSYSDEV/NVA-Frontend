@@ -1,6 +1,9 @@
-import { OrganizationsResponse } from '../../types/institution.types';
+import { SearchResponse } from '../../types/common.types';
+import { Organization } from '../../types/institution.types';
 
-export const mockOrganizationSearch: OrganizationsResponse = {
+export const mockOrganizationSearch: SearchResponse<Organization> = {
+  processingTime: 10,
+  size: 1,
   hits: [
     {
       id: 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0',
