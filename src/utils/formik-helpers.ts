@@ -260,15 +260,15 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
           reference: {
             publicationContext: {
               type: true,
-              venues: venues.map((_) => ({
-                name: true,
-                time: { from: true, to: true },
-              })),
             },
             publicationInstance: {
               type: true,
               subtype: { type: true, description: true },
               description: true,
+              venues: venues.map(() => ({
+                name: true,
+                time: { from: true, to: true },
+              })),
             },
           },
         },

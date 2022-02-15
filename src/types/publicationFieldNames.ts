@@ -49,7 +49,6 @@ export enum PresentationType {
 
 export enum ArtisticType {
   ArtisticDesign = 'ArtisticDesign',
-  Architecture = 'Architecture',
 }
 
 export type RegistrationSubtype =

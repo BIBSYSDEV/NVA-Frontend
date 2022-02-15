@@ -66,7 +66,7 @@ export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {
   venues: [],
 };
 
-export interface ArtisticPublicationContext {
+interface ArtisticPublicationContext {
   type: PublicationType.Artistic;
 }
 
