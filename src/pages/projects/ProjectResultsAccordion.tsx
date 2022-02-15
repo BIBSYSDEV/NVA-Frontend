@@ -23,10 +23,10 @@ export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
   return (
     <LandingPageAccordion
       data-testid={dataTestId.projectLandingPage.resultsAccordion}
-      heading={results ? `${t('results')} (${results.total})` : t('results')}>
+      heading={results ? `${t('results')} (${results.size})` : t('results')}>
       {isLoadingResults ? (
         <CircularProgress />
-      ) : results && results.total > 0 ? (
+      ) : results && results.size > 0 ? (
         <RegistrationList registrations={results.hits} />
       ) : (
         <Typography>{t('no_results')}</Typography>

@@ -4,8 +4,8 @@ import { Registration } from '../../types/registration.types';
 import { mockMathJaxRegistration, mockMessages, mockRegistration } from './mockRegistration';
 
 export const mockSearchResults: SearchResponse<Registration> = {
-  took: 10,
-  total: 50,
+  processingTime: 10,
+  size: 50,
   hits: [
     mockMathJaxRegistration,
     mockRegistration,
@@ -21,7 +21,7 @@ export const mockSearchResults: SearchResponse<Registration> = {
 };
 
 export const mockSearchWorklist: SearchResponse<PublicationConversation> = {
-  took: 2,
-  total: 1,
+  processingTime: 2,
+  size: 1,
   hits: mockMessages,
 };
