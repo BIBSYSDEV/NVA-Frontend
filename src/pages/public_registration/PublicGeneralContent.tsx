@@ -177,7 +177,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           ) : isPresentation(publicationInstance.type) ? (
             <PublicPresentation publicationContext={publicationContext as PresentationPublicationContext} />
           ) : isArtistic(publicationInstance.type) ? (
-            <PublicVenues venues={(publicationInstance as ArtisticPublicationInstance).venues} />
+            <PublicVenues venues={(publicationInstance as ArtisticPublicationInstance).venues ?? []} />
           ) : null)}
       </div>
     </StyledGeneralInfo>

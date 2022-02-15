@@ -28,7 +28,9 @@ export const ArtisticDesignForm = () => {
   const { t } = useTranslation('registration');
   const { values, errors, touched } = useFormikContext<ArtisticRegistration>();
   const [openNewVenueModal, setOpenNewVenueModal] = useState(false);
-  const { venues, subtype } = values.entityDescription.reference.publicationInstance;
+  const { publicationInstance } = values.entityDescription.reference;
+  const { subtype } = publicationInstance;
+  const venues = publicationInstance.venues ?? [];
 
   return (
     <>
