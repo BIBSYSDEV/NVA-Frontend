@@ -17,7 +17,6 @@ interface Competition {
   name: string;
   description: string;
   date: Instant;
-  otherInformation: string;
   sequence: number;
 }
 
