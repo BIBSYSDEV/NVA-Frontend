@@ -370,7 +370,7 @@ export const venueValidationSchema = Yup.object().shape({
   time: periodField,
 });
 
-const artisticPublicationInstance = Yup.object().shape({
+const artisticDesignPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(ArtisticType)).required(resourceErrorMessage.typeRequired),
   subtype: Yup.object().shape({
     type: Yup.string().nullable().required(resourceErrorMessage.typeWorkRequired),
@@ -385,6 +385,6 @@ const artisticPublicationInstance = Yup.object().shape({
   venues: Yup.array().of(venueValidationSchema).min(1, resourceErrorMessage.exhibitionRequired),
 });
 
-export const artisticReference = baseReference.shape({
-  publicationInstance: artisticPublicationInstance,
+export const artisticDesignReference = baseReference.shape({
+  publicationInstance: artisticDesignPublicationInstance,
 });
