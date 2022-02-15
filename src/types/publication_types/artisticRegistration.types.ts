@@ -1,4 +1,4 @@
-import { Period, Place } from '../common.types';
+import { Instant, Period, Place } from '../common.types';
 import { ArtisticType, PublicationType } from '../publicationFieldNames';
 import { BaseRegistration, BaseReference, BaseEntityDescription } from '../registration.types';
 
@@ -12,21 +12,62 @@ export interface Venue {
   time: Period | null;
 }
 
+interface Competition {
+  type: 'Competition';
+  name: string;
+  description: string;
+  date: Instant;
+  sequence: number;
+}
+
+interface MentionInPublication {
+  type: 'MentionInPublication';
+  title: string;
+  issue: string;
+  date: Instant;
+  otherInformation: string;
+  sequence: number;
+}
+
+interface Award {
+  type: 'Award';
+  name: string;
+  organizer: string;
+  date: Instant;
+  otherInformation: string;
+  ranking: number;
+  sequence: number;
+}
+
+interface Exhibition {
+  type: 'Exhibition';
+  name: string;
+  organizer: string;
+  place: Place | null;
+  date: Period | null;
+  otherInformation: string;
+  sequence: number;
+}
+
+type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
+
 export interface ArtisticPublicationInstance {
   type: ArtisticType | '';
   subtype: DesignSubtype | null;
   description: string;
+  venues?: Venue[];
+  architectureOutput?: ArchitectureOutput[];
 }
 
 export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {
   type: '',
   subtype: { type: '' },
   description: '',
+  venues: [],
 };
 
-export interface ArtisticPublicationContext {
+interface ArtisticPublicationContext {
   type: PublicationType.Artistic;
-  venues: Venue[];
 }
 
 interface ArtisticReference extends BaseReference {

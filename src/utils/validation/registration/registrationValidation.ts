@@ -1,9 +1,9 @@
 import * as Yup from 'yup';
-import { PublicationType } from '../../../types/publicationFieldNames';
+import { ArtisticType, PublicationType } from '../../../types/publicationFieldNames';
 import { contributorsValidationSchema } from './contributorValidation';
 import { fileValidationSchema } from './fileValidation';
 import {
-  artisticReference,
+  artisticDesignReference,
   baseReference,
   bookReference,
   chapterReference,
@@ -67,7 +67,12 @@ export const registrationValidationSchema = Yup.object().shape({
         case PublicationType.Presentation:
           return presentationReference;
         case PublicationType.Artistic:
-          return artisticReference;
+          switch (publicationInstanceType) {
+            case ArtisticType.ArtisticDesign:
+              return artisticDesignReference;
+            default:
+              return baseReference;
+          }
         default:
           return baseReference;
       }

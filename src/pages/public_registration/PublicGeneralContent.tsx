@@ -57,10 +57,7 @@ import { RegistrationSummary } from './RegistrationSummary';
 import { dataTestId } from '../../utils/dataTestIds';
 import { displayDate } from '../../utils/date-helpers';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
-import {
-  ArtisticPublicationContext,
-  ArtisticPublicationInstance,
-} from '../../types/publication_types/artisticRegistration.types';
+import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
@@ -180,7 +177,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           ) : isPresentation(publicationInstance.type) ? (
             <PublicPresentation publicationContext={publicationContext as PresentationPublicationContext} />
           ) : isArtistic(publicationInstance.type) ? (
-            <PublicVenues venues={(publicationContext as ArtisticPublicationContext).venues} />
+            <PublicVenues venues={(publicationInstance as ArtisticPublicationInstance).venues ?? []} />
           ) : null)}
       </div>
     </StyledGeneralInfo>
