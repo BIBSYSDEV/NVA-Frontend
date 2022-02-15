@@ -211,9 +211,10 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                         key={license.identifier}
                         value={license.identifier}
                         divider
-                        dense>
+                        dense
+                        sx={{ gap: '1rem' }}>
                         <ListItemIcon>
-                          <img style={{ width: '50%' }} src={license.logo} alt={license.identifier} />
+                          <img style={{ width: '5rem' }} src={license.logo} alt={license.identifier} />
                         </ListItemIcon>
                         <ListItemText>
                           <Typography>{t(`licenses:labels.${license.identifier}`)}</Typography>
