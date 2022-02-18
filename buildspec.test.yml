@@ -24,10 +24,7 @@ phases:
       python: 3.x
   pre_build:
     commands:
-      - export SECRET_STRING=$(aws secretsmanager get-secret-value --secret-id XrayApiKey | jq -r .SecretString)
-      - export CLIENT_ID=$(echo $SECRET_STRING | jq -r .XrayClientId)
-      - export CLIENT_SECRET=$(echo $SECRET_STRING | jq -r .XrayClientSecret)
-      - export AUTH_BODY=$(jq --null-input --arg clientId "$CLIENT_ID" --arg secretId "$CLIENT_SECRET" "{\"client_id\":$clientId, \"client_secret\":$secretId}")
+      - ./xray_import.bsh
       - wget https://github.com/BIBSYSDEV/NVA-end-to-end-testing/archive/refs/heads/test-deploy.zip
       - unzip test-deploy.zip
       - cd NVA-end-to-end-testing-test-deploy
