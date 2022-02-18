@@ -26,7 +26,7 @@ export const SearchResults = ({ searchResult }: SearchResultsProps) => {
 
   return (
     <Box data-testid="search-results" sx={{ pb: '1rem' }}>
-      <Typography variant="subtitle1">{t('hits', { count: searchResult.total })}:</Typography>
+      <Typography variant="subtitle1">{t('hits', { count: searchResult.size })}:</Typography>
       <Divider />
       <RegistrationList registrations={searchResult.hits} />
     </Box>
