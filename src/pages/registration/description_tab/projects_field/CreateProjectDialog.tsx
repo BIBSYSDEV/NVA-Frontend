@@ -22,6 +22,7 @@ import { InputContainerBox } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { datePickerTranslationProps } from '../../../../themes/mainTheme';
 import { SearchResponse } from '../../../../types/common.types';
+import { Organization } from '../../../../types/organization.types';
 import { CoordinatingInstitution, CristinProject, ProjectContributor } from '../../../../types/project.types';
 import { CristinArrayValue, CristinUser } from '../../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
@@ -187,14 +188,13 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                               lastName: getValueByKey('LastName', selectedUser?.names),
                             },
                           };
-
                           if (orgId) {
-                            const institutionResponse = await apiRequest<any>({ url: orgId }); // todo: type
+                            const institutionResponse = await apiRequest<Organization>({ url: orgId });
                             if (isSuccessStatus(institutionResponse.status)) {
                               newUser.affiliation = {
                                 type: 'Organization',
                                 id: orgId,
-                                name: institutionResponse.data.unit_name,
+                                name: institutionResponse.data.name,
                               };
                             }
                           }
