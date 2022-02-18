@@ -40,11 +40,18 @@ const getValueByKey = (key: string, items?: CristinArrayValue[]) =>
 const getFullName = (names: CristinArrayValue[]) =>
   `${getValueByKey('FirstName', names)} ${getValueByKey('LastName', names)}`;
 
-type BasicCristinProject = Pick<CristinProject, 'title' | 'startDate' | 'coordinatingInstitution' | 'contributors'>;
+type BasicCristinProject = Pick<
+  CristinProject,
+  'title' | 'startDate' | 'endDate' | 'coordinatingInstitution' | 'contributors' | 'status' | 'type' | 'language'
+>;
 
 const initialValues: BasicCristinProject = {
+  type: 'Project',
   title: '',
+  language: 'http://lexvo.org/id/iso639-3/nor',
   startDate: '',
+  endDate: '',
+  status: 'ACTIVE',
   contributors: [],
   coordinatingInstitution: {
     type: 'Organization',
@@ -68,7 +75,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
     url: debouncedSearchTerm ? `${CristinApiPath.Person}?results=50&query=${debouncedSearchTerm}` : '',
   });
 
-  const createProject = async (values: BasicCristinProject) => {
+  const createProject = async (values: Partial<CristinProject>) => {
     const createProjectResponse = await authenticatedApiRequest({
       url: CristinApiPath.Project,
       method: 'POST',
@@ -105,31 +112,58 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                     />
                   )}
                 </Field>
-                <Box sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1rem', alignItems: 'start' }}>
-                  <Field name="coordinatingInstitution.id">
-                    {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                      <OrganizationSearchField
-                        label={t('project:coordinating_institution')}
-                        onChange={(selectedInstitution) => {
-                          const newOrg: CoordinatingInstitution = {
-                            type: 'Organization',
-                            id: selectedInstitution?.id ?? '',
-                            name: selectedInstitution?.name ?? {},
-                          };
-                          setFieldValue('coordinatingInstitution', newOrg);
-                        }}
-                        errorMessage={touched && !!error ? error : undefined}
-                        fieldInputProps={field}
-                      />
-                    )}
-                  </Field>
+                <Field name="coordinatingInstitution.id">
+                  {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                    <OrganizationSearchField
+                      label={t('project:coordinating_institution')}
+                      onChange={(selectedInstitution) => {
+                        const newOrg: CoordinatingInstitution = {
+                          type: 'Organization',
+                          id: selectedInstitution?.id ?? '',
+                          name: selectedInstitution?.name ?? {},
+                        };
+                        setFieldValue('coordinatingInstitution', newOrg);
+                      }}
+                      errorMessage={touched && !!error ? error : undefined}
+                      fieldInputProps={field}
+                    />
+                  )}
+                </Field>
 
-                  <Field name="startDate">
-                    {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                      <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
+                <Box sx={{ display: 'flex', gap: '1rem' }}>
+                  <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
+                    <Field name="startDate">
+                      {({ field, meta: { touched, error } }: FieldProps<string>) => (
                         <DatePicker
                           {...datePickerTranslationProps}
                           label={t('start_date')}
+                          onChange={(date: Date | null, keyboardValue) => {
+                            const newDate = getNewDateValue(date, keyboardValue);
+                            // TODO: exactly midnight is not allowed(!)
+                            setFieldValue(field.name, newDate);
+                          }}
+                          value={field.value ? new Date(field.value) : null}
+                          inputFormat="dd.MM.yyyy"
+                          mask="__.__.____"
+                          renderInput={(params) => (
+                            <TextField
+                              {...field}
+                              {...params}
+                              variant="filled"
+                              required
+                              error={touched && !!error}
+                              helperText={<ErrorMessage name={field.name} />}
+                            />
+                          )}
+                        />
+                      )}
+                    </Field>
+
+                    <Field name="endDate">
+                      {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                        <DatePicker
+                          {...datePickerTranslationProps}
+                          label={t('end_date')}
                           onChange={(date: Date | null, keyboardValue) => {
                             const newDate = getNewDateValue(date, keyboardValue);
                             setFieldValue(field.name, newDate);
@@ -148,9 +182,9 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                             />
                           )}
                         />
-                      </LocalizationProvider>
-                    )}
-                  </Field>
+                      )}
+                    </Field>
+                  </LocalizationProvider>
                 </Box>
               </InputContainerBox>
 
