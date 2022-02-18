@@ -3,13 +3,14 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Autocomplete, Button, Box, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { Organization, OrganizationSearch } from '../../types/organization.types';
 import { useDebounce } from '../../utils/hooks/useDebounce';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { getSortedSubUnits } from '../../utils/institutions-helpers';
 import { CristinApiPath } from '../../api/apiPaths';
 import { dataTestId } from '../../utils/dataTestIds';
+import { SearchResponse } from '../../types/common.types';
+import { Organization } from '../../types/organization.types';
 
 enum FormikInstitutionUnitFieldNames {
   SubUnit = 'subunit',
@@ -35,7 +36,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
   const { t } = useTranslation('common');
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
-  const [institutions, isLoadingInstitutions] = useFetch<OrganizationSearch>({
+  const [institutions, isLoadingInstitutions] = useFetch<SearchResponse<Organization>>({
     url: debouncedQuery ? `${CristinApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
     errorMessage: t('feedback:error.get_institutions'),
   });

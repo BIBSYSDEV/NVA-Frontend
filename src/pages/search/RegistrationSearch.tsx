@@ -44,7 +44,7 @@ export const RegistrationSearch = () => {
             data-testid={dataTestId.startPage.searchPagination}
             rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
             component="div"
-            count={searchResults.total}
+            count={searchResults.size}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={(_, newPage) => updatePath((newPage * rowsPerPage).toString(), rowsPerPage.toString())}

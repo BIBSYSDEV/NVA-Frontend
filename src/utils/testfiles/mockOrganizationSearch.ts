@@ -1,6 +1,8 @@
-import { OrganizationSearch } from '../../types/organization.types';
+import { SearchResponse } from '../../types/common.types';
+import { Organization } from '../../types/organization.types';
 
-export const mockOrganizationSearch: OrganizationSearch = {
+export const mockOrganizationSearch: SearchResponse<Organization> = {
+  processingTime: 10,
   size: 1,
   hits: [
     {

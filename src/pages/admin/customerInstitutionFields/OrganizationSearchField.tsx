@@ -3,11 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { FieldInputProps } from 'formik';
 import { Autocomplete, TextField, TextFieldProps } from '@mui/material';
 import { CristinApiPath } from '../../../api/apiPaths';
-import { Organization, OrganizationSearch } from '../../../types/organization.types';
+import { Organization } from '../../../types/organization.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { SearchResponse } from '../../../types/common.types';
 
 interface OrganizationSearchFieldProps extends Pick<TextFieldProps, 'label'> {
   onChange?: (selectedInstitution: Organization | null) => void;
@@ -26,7 +27,7 @@ export const OrganizationSearchField = ({
   const { t } = useTranslation('feedback');
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
-  const [institutionOptions, isLoadingInstitutionOptions] = useFetch<OrganizationSearch>({
+  const [institutionOptions, isLoadingInstitutionOptions] = useFetch<SearchResponse<Organization>>({
     url: debouncedQuery ? `${CristinApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
     errorMessage: t('error.get_institutions'),
   });

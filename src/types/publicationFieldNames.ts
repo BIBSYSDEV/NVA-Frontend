@@ -107,7 +107,7 @@ export enum ResourceFieldNames {
   SeriesTitle = 'entityDescription.reference.publicationContext.series.title',
   SeriesType = 'entityDescription.reference.publicationContext.series.type',
   SubType = 'entityDescription.reference.publicationInstance.type',
-  Venues = 'entityDescription.reference.publicationContext.venues',
+  Venues = 'entityDescription.reference.publicationInstance.venues',
   Volume = 'entityDescription.reference.publicationInstance.volume',
 }
 

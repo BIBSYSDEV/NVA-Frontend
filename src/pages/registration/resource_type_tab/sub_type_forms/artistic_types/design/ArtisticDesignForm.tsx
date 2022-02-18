@@ -28,7 +28,9 @@ export const ArtisticDesignForm = () => {
   const { t } = useTranslation('registration');
   const { values, errors, touched } = useFormikContext<ArtisticRegistration>();
   const [openNewVenueModal, setOpenNewVenueModal] = useState(false);
-  const { venues } = values.entityDescription.reference.publicationContext;
+  const { publicationInstance } = values.entityDescription.reference;
+  const { subtype } = publicationInstance;
+  const venues = publicationInstance.venues ?? [];
 
   return (
     <>
@@ -56,7 +58,7 @@ export const ArtisticDesignForm = () => {
         )}
       </Field>
 
-      {values.entityDescription.reference.publicationInstance.subtype?.type === DesignType.Other && (
+      {subtype?.type === DesignType.Other && (
         <Field name={ResourceFieldNames.PublicationInstanceSubtypeDescription}>
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <TextField
@@ -107,7 +109,7 @@ export const ArtisticDesignForm = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {values.entityDescription.reference.publicationContext.venues.map((venue, index) => (
+                    {venues.map((venue, index) => (
                       <VenueRow
                         key={index}
                         venue={venue}
@@ -121,8 +123,8 @@ export const ArtisticDesignForm = () => {
                   </TableBody>
                 </Table>
               )}
-              {!!touched.entityDescription?.reference?.publicationContext?.venues &&
-                typeof errors.entityDescription?.reference?.publicationContext?.venues === 'string' && (
+              {!!touched.entityDescription?.reference?.publicationInstance?.venues &&
+                typeof errors.entityDescription?.reference?.publicationInstance?.venues === 'string' && (
                   <Box mt="1rem">
                     <FormHelperText error>
                       <ErrorMessage name={name} />

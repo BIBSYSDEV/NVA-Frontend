@@ -12,7 +12,7 @@ import {
   SpecificContributorFieldNames,
   SpecificFileFieldNames,
 } from '../types/publicationFieldNames';
-import { ArtisticPublicationContext } from '../types/publication_types/artisticRegistration.types';
+import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
 import { Registration, RegistrationTab } from '../types/registration.types';
 import { getMainRegistrationType } from './registration-helpers';
 
@@ -252,23 +252,23 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
         },
       };
     case PublicationType.Artistic: {
-      const artisticPublicationContext = registration.entityDescription?.reference
-        ?.publicationContext as ArtisticPublicationContext;
-
+      const artisticPublicationInstance = registration.entityDescription?.reference
+        ?.publicationInstance as ArtisticPublicationInstance;
+      const venues = artisticPublicationInstance.venues ?? [];
       return {
         entityDescription: {
           reference: {
             publicationContext: {
               type: true,
-              venues: artisticPublicationContext.venues.map((_) => ({
-                name: true,
-                time: { from: true, to: true },
-              })),
             },
             publicationInstance: {
               type: true,
               subtype: { type: true, description: true },
               description: true,
+              venues: venues.map(() => ({
+                name: true,
+                time: { from: true, to: true },
+              })),
             },
           },
         },

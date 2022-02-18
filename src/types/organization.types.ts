@@ -6,8 +6,3 @@ export interface Organization {
   partOf?: Organization[];
   hasPart?: Organization[];
 }
-
-export interface OrganizationSearch {
-  size: number;
-  hits: Organization[];
-}

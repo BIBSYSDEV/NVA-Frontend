@@ -2,7 +2,7 @@ import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { emptyRegistration } from '../types/registration.types';
 import { ORCID_USER_INFO_URL } from '../utils/constants';
-import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
+import { mockDoiLookup } from '../utils/testfiles/mockDoiLookup';
 import { mockAuthorities, mockOrcidResponse } from '../utils/testfiles/mockAuthorities';
 import { mockRoles } from '../utils/testfiles/mock_feide_user';
 import {
@@ -10,9 +10,8 @@ import {
   mockCustomerInstitutions,
   mockCustomerInstitutionVocabularies,
 } from '../utils/testfiles/mockCustomerInstitutions';
-import mockMyRegistrations from '../utils/testfiles/my_registrations.json';
+import { mockMyRegistrations } from '../utils/testfiles/mockMyRegistrations';
 import { mockProject, mockProjectSearch } from '../utils/testfiles/mockProjects';
-import mockPublishedRegistrations from '../utils/testfiles/published_registrations.json';
 import { mockPublishersSearch } from '../utils/testfiles/mockPublishers';
 import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
 import { mockSearchResults, mockSearchWorklist } from '../utils/testfiles/mockSearchResults';
@@ -44,9 +43,6 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(FileApiPath.Prepare)).reply(200, mockPrepareUpload);
   mock.onPost(new RegExp(FileApiPath.Complete)).reply(200, mockCompleteUpload);
 
-  // PUBLICATION LIST
-  mock.onGet(PublicationsApiPath.Registration).reply(200, mockPublishedRegistrations);
-
   //MY PUBLICATIONS
   mock.onGet(new RegExp(PublicationsApiPath.RegistrationsByOwner)).reply(200, mockMyRegistrations);
 
@@ -74,7 +70,7 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(PublicationsApiPath.Registration)).reply(200, mockRegistration);
 
   // lookup DOI
-  mock.onPost(new RegExp(PublicationsApiPath.DoiLookup)).reply(200, mockDoiLookupResponse);
+  mock.onPost(new RegExp(PublicationsApiPath.DoiLookup)).reply(200, mockDoiLookup);
 
   // PROJECT
   mock.onGet(new RegExp(`${CristinApiPath.Project}/1`)).reply(200, mockProject);
