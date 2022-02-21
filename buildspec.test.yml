@@ -24,8 +24,6 @@ phases:
       python: 3.x
   pre_build:
     commands:
-      - chmod 755 xray_import.bsh
-      - ./xray_import.bsh
       - wget https://github.com/BIBSYSDEV/NVA-end-to-end-testing/archive/refs/heads/test-deploy.zip
       - unzip test-deploy.zip
       - cd NVA-end-to-end-testing-test-deploy
