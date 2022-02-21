@@ -19,15 +19,10 @@ import { useDispatch } from 'react-redux';
 import { CristinApiPath } from '../../../../api/apiPaths';
 import { authenticatedApiRequest } from '../../../../api/apiRequest';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
-import { InputContainerBox } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { datePickerTranslationProps } from '../../../../themes/mainTheme';
 import { SearchResponse } from '../../../../types/common.types';
-import {
-  BasicCoordinatingInstitution,
-  BasicProjectContributor,
-  PostCristinProject,
-} from '../../../../types/project.types';
+import { BasicProjectContributor, PostCristinProject } from '../../../../types/project.types';
 import { CristinArrayValue, CristinUser } from '../../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 import { getDateFnsLocale } from '../../../../utils/date-helpers';
@@ -68,7 +63,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
-  const [searchByNameResults, isLoadingSearchByName] = useFetch<SearchResponse<CristinUser>>({
+  const [personSearchResult, isLoadingPersonSearchResult] = useFetch<SearchResponse<CristinUser>>({
     url: debouncedSearchTerm ? `${CristinApiPath.Person}?results=20&query=${debouncedSearchTerm}` : '',
   });
 
@@ -95,7 +90,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
         {({ isSubmitting, setFieldValue }) => (
           <Form noValidate>
             <DialogContent>
-              <InputContainerBox>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <Field name="title">
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <TextField
@@ -113,13 +108,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <OrganizationSearchField
                       label={t('project:coordinating_institution')}
-                      onChange={(selectedInstitution) => {
-                        const newOrg: BasicCoordinatingInstitution = {
-                          type: 'Organization',
-                          id: selectedInstitution?.id ?? '',
-                        };
-                        setFieldValue('coordinatingInstitution', newOrg);
-                      }}
+                      onChange={(selectedInstitution) => setFieldValue(field.name, selectedInstitution?.id ?? '')}
                       errorMessage={touched && !!error ? error : undefined}
                       fieldInputProps={field}
                     />
@@ -182,7 +171,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                     </Field>
                   </LocalizationProvider>
                 </Box>
-              </InputContainerBox>
+              </Box>
 
               <Typography variant="h3" gutterBottom sx={{ mt: '1rem' }}>
                 {t('project_manager')}
@@ -191,7 +180,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                 {({ field, meta: { touched, error } }: FieldProps<BasicProjectContributor[]>) =>
                   field.value.length === 0 ? (
                     <Autocomplete
-                      options={searchByNameResults?.hits ?? []}
+                      options={personSearchResult?.hits ?? []}
                       inputMode="search"
                       getOptionLabel={(option) => getFullName(option.names)}
                       filterOptions={(options) => options}
@@ -206,6 +195,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                             setFieldValue(field.name, []);
                           }
                         } else {
+                          // Pick first affiliation
                           const orgId =
                             selectedUser.affiliations.length > 0 ? selectedUser.affiliations[0].organization ?? '' : '';
 
@@ -226,7 +216,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                         }
                         setSearchTerm('');
                       }}
-                      loading={isLoadingSearchByName}
+                      loading={isLoadingPersonSearchResult}
                       renderOption={(props, option) => {
                         const orgId = option.affiliations.length > 0 ? option.affiliations[0].organization ?? '' : '';
                         return (

@@ -27,7 +27,7 @@ interface ProjectIdentifier {
   value: string;
 }
 
-export interface BasicCoordinatingInstitution {
+interface BasicCoordinatingInstitution {
   type: 'Organization';
   id: string;
 }
