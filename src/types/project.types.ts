@@ -41,7 +41,7 @@ interface BasicContributorAffiliation {
   id: string;
 }
 
-interface ContributorAffiliaiton extends BasicContributorAffiliation {
+interface ContributorAffiliation extends BasicContributorAffiliation {
   name: LanguageString;
 }
 
@@ -57,7 +57,7 @@ export interface BasicProjectContributor {
 }
 
 export interface ProjectContributor extends BasicProjectContributor {
-  affiliation?: ContributorAffiliaiton;
+  affiliation?: ContributorAffiliation;
 }
 
 interface Funding {
