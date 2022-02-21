@@ -74,6 +74,7 @@ export interface PostCristinProject {
   endDate: string;
   coordinatingInstitution: BasicCoordinatingInstitution;
   contributors: BasicProjectContributor[];
+  status: string;
 }
 
 export interface CristinProject extends PostCristinProject {

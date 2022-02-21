@@ -54,6 +54,7 @@ const initialValues: PostCristinProject = {
     type: 'Organization',
     id: '',
   },
+  status: 'ACTIVE',
 };
 
 interface CreateProjectDialogProps extends DialogProps {
@@ -133,8 +134,9 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                           {...datePickerTranslationProps}
                           label={t('start_date')}
                           onChange={(date: Date | null, keyboardValue) => {
-                            const newDate = getNewDateValue(date, keyboardValue, 12);
-                            setFieldValue(field.name, newDate);
+                            // Add 1ms as Cristin does not allow 0ms for startDate/endDate ¯\_(ツ)_/¯
+                            const newDateString = getNewDateValue(date, keyboardValue, 1);
+                            setFieldValue(field.name, newDateString);
                           }}
                           value={field.value ? new Date(field.value) : null}
                           inputFormat="dd.MM.yyyy"
@@ -159,8 +161,8 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                           {...datePickerTranslationProps}
                           label={t('end_date')}
                           onChange={(date: Date | null, keyboardValue) => {
-                            const newDate = getNewDateValue(date, keyboardValue, 12);
-                            setFieldValue(field.name, newDate);
+                            const newDateString = getNewDateValue(date, keyboardValue, 1);
+                            setFieldValue(field.name, newDateString);
                           }}
                           value={field.value ? new Date(field.value) : null}
                           inputFormat="dd.MM.yyyy"
