@@ -86,7 +86,12 @@ export const ProjectsField = () => {
         )}
       </Field>
       <Button onClick={() => setOpenNewProjectDialog(true)}>{t('project:create_project')}</Button>
-      <CreateProjectDialog open={openNewProjectDialog} onClose={() => setOpenNewProjectDialog(false)} maxWidth="sm" />
+      <CreateProjectDialog
+        open={openNewProjectDialog}
+        onClose={() => setOpenNewProjectDialog(false)}
+        maxWidth="md"
+        fullWidth
+      />
     </Box>
   );
 };

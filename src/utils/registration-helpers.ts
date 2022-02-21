@@ -115,11 +115,11 @@ export const getFormattedRegistration = (registration: Registration) => {
   return formattedRegistration;
 };
 
-export const getNewDateValue = (date: Date | null, keyboardInput?: string) => {
+export const getNewDateValue = (date: Date | null, keyboardInput?: string, defaultHours?: number) => {
   const isValidDate = date && date && !isNaN(date.getTime());
   const isValidInput = keyboardInput?.length === 10;
   if (isValidDate) {
-    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())).toISOString();
+    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), defaultHours ?? 0)).toISOString();
   } else if (!isValidDate || !isValidInput) {
     return '';
   } else {

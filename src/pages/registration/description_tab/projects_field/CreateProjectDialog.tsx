@@ -17,20 +17,23 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { CristinApiPath } from '../../../../api/apiPaths';
-import { apiRequest, authenticatedApiRequest } from '../../../../api/apiRequest';
+import { authenticatedApiRequest } from '../../../../api/apiRequest';
+import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { InputContainerBox } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { datePickerTranslationProps } from '../../../../themes/mainTheme';
 import { SearchResponse } from '../../../../types/common.types';
-import { Organization } from '../../../../types/organization.types';
-import { CoordinatingInstitution, CristinProject, ProjectContributor } from '../../../../types/project.types';
+import {
+  BasicCoordinatingInstitution,
+  BasicProjectContributor,
+  PostCristinProject,
+} from '../../../../types/project.types';
 import { CristinArrayValue, CristinUser } from '../../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 import { getDateFnsLocale } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { getNewDateValue } from '../../../../utils/registration-helpers';
-import { getLanguageString } from '../../../../utils/translation-helpers';
 import { basicProjectValidationSchema } from '../../../../utils/validation/project/BasicProjectValidation';
 import { OrganizationSearchField } from '../../../admin/customerInstitutionFields/OrganizationSearchField';
 
@@ -40,23 +43,16 @@ const getValueByKey = (key: string, items?: CristinArrayValue[]) =>
 const getFullName = (names: CristinArrayValue[]) =>
   `${getValueByKey('FirstName', names)} ${getValueByKey('LastName', names)}`;
 
-type BasicCristinProject = Pick<
-  CristinProject,
-  'title' | 'startDate' | 'endDate' | 'coordinatingInstitution' | 'contributors' | 'status' | 'type' | 'language'
->;
-
-const initialValues: BasicCristinProject = {
+const initialValues: PostCristinProject = {
   type: 'Project',
   title: '',
   language: 'http://lexvo.org/id/iso639-3/nor',
   startDate: '',
   endDate: '',
-  status: 'ACTIVE',
   contributors: [],
   coordinatingInstitution: {
     type: 'Organization',
     id: '',
-    name: {},
   },
 };
 
@@ -72,10 +68,10 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
   const debouncedSearchTerm = useDebounce(searchTerm);
 
   const [searchByNameResults, isLoadingSearchByName] = useFetch<SearchResponse<CristinUser>>({
-    url: debouncedSearchTerm ? `${CristinApiPath.Person}?results=50&query=${debouncedSearchTerm}` : '',
+    url: debouncedSearchTerm ? `${CristinApiPath.Person}?results=20&query=${debouncedSearchTerm}` : '',
   });
 
-  const createProject = async (values: Partial<CristinProject>) => {
+  const createProject = async (values: PostCristinProject) => {
     const createProjectResponse = await authenticatedApiRequest({
       url: CristinApiPath.Project,
       method: 'POST',
@@ -117,10 +113,9 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                     <OrganizationSearchField
                       label={t('project:coordinating_institution')}
                       onChange={(selectedInstitution) => {
-                        const newOrg: CoordinatingInstitution = {
+                        const newOrg: BasicCoordinatingInstitution = {
                           type: 'Organization',
                           id: selectedInstitution?.id ?? '',
-                          name: selectedInstitution?.name ?? {},
                         };
                         setFieldValue('coordinatingInstitution', newOrg);
                       }}
@@ -138,8 +133,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                           {...datePickerTranslationProps}
                           label={t('start_date')}
                           onChange={(date: Date | null, keyboardValue) => {
-                            const newDate = getNewDateValue(date, keyboardValue);
-                            // TODO: exactly midnight is not allowed(!)
+                            const newDate = getNewDateValue(date, keyboardValue, 12);
                             setFieldValue(field.name, newDate);
                           }}
                           value={field.value ? new Date(field.value) : null}
@@ -165,7 +159,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                           {...datePickerTranslationProps}
                           label={t('end_date')}
                           onChange={(date: Date | null, keyboardValue) => {
-                            const newDate = getNewDateValue(date, keyboardValue);
+                            const newDate = getNewDateValue(date, keyboardValue, 12);
                             setFieldValue(field.name, newDate);
                           }}
                           value={field.value ? new Date(field.value) : null}
@@ -192,7 +186,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                 {t('project_manager')}
               </Typography>
               <Field name="contributors">
-                {({ field, meta: { touched, error } }: FieldProps<ProjectContributor[]>) =>
+                {({ field, meta: { touched, error } }: FieldProps<BasicProjectContributor[]>) =>
                   field.value.length === 0 ? (
                     <Autocomplete
                       options={searchByNameResults?.hits ?? []}
@@ -213,7 +207,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                           const orgId =
                             selectedUser.affiliations.length > 0 ? selectedUser.affiliations[0].organization ?? '' : '';
 
-                          const newUser: Partial<ProjectContributor> = {
+                          const newUser: BasicProjectContributor = {
                             type: 'ProjectManager',
                             identity: {
                               type: 'Person',
@@ -221,35 +215,27 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                               firstName: getValueByKey('FirstName', selectedUser?.names),
                               lastName: getValueByKey('LastName', selectedUser?.names),
                             },
+                            affiliation: {
+                              type: 'Organization',
+                              id: orgId,
+                            },
                           };
                           setFieldValue(field.name, [newUser]);
-                          if (orgId) {
-                            const institutionResponse = await apiRequest<Organization>({ url: orgId });
-                            if (isSuccessStatus(institutionResponse.status)) {
-                              newUser.affiliation = {
-                                type: 'Organization',
-                                id: orgId,
-                                name: institutionResponse.data.name,
-                              };
-                              setFieldValue(field.name, [newUser]);
-                            }
-                          }
                         }
                         setSearchTerm('');
                       }}
                       loading={isLoadingSearchByName}
-                      renderOption={(props, option) => (
-                        <li {...props} key={option.id}>
-                          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                            <Typography variant="subtitle1">{getFullName(option.names)}</Typography>
-                            {option.affiliations.length > 0 && (
-                              <Typography variant="body2" color="textSecondary">
-                                {getLanguageString(option.affiliations[0].role.labels ?? {})}
-                              </Typography>
-                            )}
-                          </Box>
-                        </li>
-                      )}
+                      renderOption={(props, option) => {
+                        const orgId = option.affiliations.length > 0 ? option.affiliations[0].organization ?? '' : '';
+                        return (
+                          <li {...props} key={option.id}>
+                            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                              <Typography variant="subtitle1">{getFullName(option.names)}</Typography>
+                              {orgId && <AffiliationHierarchy unitUri={orgId} commaSeparated />}
+                            </Box>
+                          </li>
+                        );
+                      }}
                       renderInput={(params) => (
                         <TextField
                           onBlur={field.onBlur}
@@ -268,13 +254,11 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                   ) : (
                     <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                       <Typography>
-                        {[
-                          `${field.value[0].identity.firstName} ${field.value[0].identity.lastName}`,
-                          getLanguageString(field.value[0].affiliation?.name),
-                        ]
-                          .filter((item) => !!item)
-                          .join(' - ')}
+                        {`${field.value[0].identity.firstName} ${field.value[0].identity.lastName}`}
                       </Typography>
+                      {field.value[0].affiliation?.id && (
+                        <AffiliationHierarchy unitUri={field.value[0].affiliation.id} commaSeparated />
+                      )}
                       <Button
                         size="small"
                         variant="outlined"
