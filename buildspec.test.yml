@@ -29,7 +29,7 @@ phases:
       - export CLIENT_SECRET=$(echo $SECRET_STRING | jq -r .XrayClientSecret)
       - "export PAYLOAD='{\"client_id\": '$CLIENT_ID', \"client_secret\": '$CLIENT_SECRET'}'"
       - echo $PAYLOAD
-      - export AUTH_BODY=$(jq --null-input --arg clientId "$CLIENT_ID" --arg secretId "$CLIENT_SECRET" "$PAYLOAD")
+      - "export AUTH_BODY='{\"client_id\": '$CLIENT_ID', \"client_secret\": '$CLIENT_SECRET'}'"
       - export BEARER_TOKEN=$(curl -H "Content-Type:application/json" -X POST --data "$AUTH_BODY" https://xray.cloud.getxray.app/api/v2/authenticate | tr -d '"')
       - for f in cypress/cucumber-json/*; do curl -H "Content-Type:application/json" -X POST -H "Authorization:Bearer $BEARER_TOKEN"  --data @"$f" https://xray.cloud.getxray.app/api/v2/import/execution/cucumber; done
       - wget https://github.com/BIBSYSDEV/NVA-end-to-end-testing/archive/refs/heads/test-deploy.zip
