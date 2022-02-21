@@ -222,6 +222,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                               lastName: getValueByKey('LastName', selectedUser?.names),
                             },
                           };
+                          setFieldValue(field.name, [newUser]);
                           if (orgId) {
                             const institutionResponse = await apiRequest<Organization>({ url: orgId });
                             if (isSuccessStatus(institutionResponse.status)) {
@@ -230,9 +231,9 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                                 id: orgId,
                                 name: institutionResponse.data.name,
                               };
+                              setFieldValue(field.name, [newUser]);
                             }
                           }
-                          setFieldValue(field.name, [newUser]);
                         }
                         setSearchTerm('');
                       }}
