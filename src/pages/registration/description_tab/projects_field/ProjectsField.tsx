@@ -13,6 +13,7 @@ import { CristinApiPath } from '../../../../api/apiPaths';
 import { ProjectChip } from './ProjectChip';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { CreateProjectDialog } from './CreateProjectDialog';
+import { BetaFunctionality } from '../../../../components/BetaFunctionality';
 
 export const ProjectsField = () => {
   const { t } = useTranslation('registration');
@@ -85,13 +86,15 @@ export const ProjectsField = () => {
           />
         )}
       </Field>
-      <Button onClick={() => setOpenNewProjectDialog(true)}>{t('project:create_project')}</Button>
-      <CreateProjectDialog
-        open={openNewProjectDialog}
-        onClose={() => setOpenNewProjectDialog(false)}
-        maxWidth="md"
-        fullWidth
-      />
+      <BetaFunctionality>
+        <Button onClick={() => setOpenNewProjectDialog(true)}>{t('project:create_project')}</Button>
+        <CreateProjectDialog
+          open={openNewProjectDialog}
+          onClose={() => setOpenNewProjectDialog(false)}
+          maxWidth="md"
+          fullWidth
+        />
+      </BetaFunctionality>
     </Box>
   );
 };

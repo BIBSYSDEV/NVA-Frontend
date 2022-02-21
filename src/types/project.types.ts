@@ -36,6 +36,15 @@ interface CoordinatingInstitution extends BasicCoordinatingInstitution {
   name: LanguageString;
 }
 
+interface BasicContributorAffiliation {
+  type: 'Organization';
+  id: string;
+}
+
+interface ContributorAffiliaiton extends BasicContributorAffiliation {
+  name: LanguageString;
+}
+
 export interface BasicProjectContributor {
   type: 'ProjectManager' | 'ProjectParticipant';
   identity: {
@@ -44,18 +53,11 @@ export interface BasicProjectContributor {
     firstName: string;
     lastName: string;
   };
-  affiliation?: {
-    type: 'Organization';
-    id: string;
-  };
+  affiliation?: BasicContributorAffiliation;
 }
 
 export interface ProjectContributor extends BasicProjectContributor {
-  affiliation?: {
-    type: 'Organization';
-    id: string;
-    name: LanguageString;
-  };
+  affiliation?: ContributorAffiliaiton;
 }
 
 interface Funding {
@@ -74,7 +76,7 @@ export interface PostCristinProject {
   endDate: string;
   coordinatingInstitution: BasicCoordinatingInstitution;
   contributors: BasicProjectContributor[];
-  status: string;
+  status: 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED'; // TODO: move to CristinProject
 }
 
 export interface CristinProject extends PostCristinProject {
