@@ -27,7 +27,7 @@ phases:
       - export SECRET_STRING=$(aws secretsmanager get-secret-value --secret-id XrayApiKey | jq -r .SecretString)
       - export CLIENT_ID=$(echo $SECRET_STRING | jq -r .XrayClientId)
       - export CLIENT_SECRET=$(echo $SECRET_STRING | jq -r .XrayClientSecret)
-      - export PAYLOAD=$({"client_id":'$clientId', "client_secret":'$secretId'})
+      - export PAYLOAD=$({\"client_id\":$CLIENT_ID, \"client_secret\":$SECRET_ID})
       - echo $PAYLOAD
       - export AUTH_BODY=$(jq --null-input --arg clientId "$CLIENT_ID" --arg secretId "$CLIENT_SECRET" "$PAYLOAD")
       - export BEARER_TOKEN=$(curl -H "Content-Type:application/json" -X POST --data "$AUTH_BODY" https://xray.cloud.getxray.app/api/v2/authenticate | tr -d '"')
