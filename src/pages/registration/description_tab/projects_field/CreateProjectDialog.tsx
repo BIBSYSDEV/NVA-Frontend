@@ -41,7 +41,7 @@ const getFullName = (names: CristinArrayValue[]) =>
 const initialValues: PostCristinProject = {
   type: 'Project',
   title: '',
-  language: 'http://lexvo.org/id/iso639-3/nor',
+  language: 'http://lexvo.org/id/iso639-3/nob',
   startDate: '',
   endDate: '',
   contributors: [],
