@@ -1,5 +1,5 @@
 import { SearchResponse } from '../../types/common.types';
-import { Organization } from '../../types/institution.types';
+import { Organization } from '../../types/organization.types';
 
 export const mockOrganizationSearch: SearchResponse<Organization> = {
   processingTime: 10,

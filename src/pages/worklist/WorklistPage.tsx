@@ -11,7 +11,7 @@ import { MessagesOverview } from './MessagesOverview';
 import { SearchResponse } from '../../types/common.types';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
-import { Organization } from '../../types/institution.types';
+import { Organization } from '../../types/organization.types';
 import { getLanguageString } from '../../utils/translation-helpers';
 
 const WorklistPage = () => {

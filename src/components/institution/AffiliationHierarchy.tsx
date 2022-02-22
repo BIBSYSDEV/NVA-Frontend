@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 import { getOrganizationHierarchy } from '../../utils/institutions-helpers';
 import { AffiliationSkeleton } from './AffiliationSkeleton';
-import { Organization } from '../../types/institution.types';
+import { Organization } from '../../types/organization.types';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 

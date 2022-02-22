@@ -20,13 +20,12 @@ import {
   SearchApiPath,
   FileApiPath,
   PublicationsApiPath,
-  ProjectsApiPath,
+  CristinApiPath,
   PublicationChannelApiPath,
   AuthorityApiPath,
   CustomerInstitutionApiPath,
   RoleApiPath,
   AlmaApiPath,
-  InstitutionApiPath,
 } from './apiPaths';
 import { mockOrganizationSearch } from '../utils/testfiles/mockOrganizationSearch';
 import { mockDownload, mockCreateUpload, mockPrepareUpload, mockCompleteUpload } from '../utils/testfiles/mockFiles';
@@ -74,8 +73,8 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(PublicationsApiPath.DoiLookup)).reply(200, mockDoiLookup);
 
   // PROJECT
-  mock.onGet(new RegExp(`${ProjectsApiPath.Project}/1`)).reply(200, mockProject);
-  mock.onGet(new RegExp(ProjectsApiPath.Project)).reply(200, mockProjectSearch);
+  mock.onGet(new RegExp(`${CristinApiPath.Project}/1`)).reply(200, mockProject);
+  mock.onGet(new RegExp(CristinApiPath.Project)).reply(200, mockProjectSearch);
 
   // ORCID
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
@@ -119,7 +118,7 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(CustomerInstitutionApiPath.Customer)).reply(201, mockCustomerInstitution);
 
   // Organizations
-  mock.onGet(new RegExp(`${InstitutionApiPath.Organization}\\?query=*`)).reply(200, mockOrganizationSearch);
+  mock.onGet(new RegExp(`${CristinApiPath.Organization}\\?query=*`)).reply(200, mockOrganizationSearch);
   mock.onGet(mockOrganizationSearch.hits[0].id).reply(200, mockOrganizationSearch.hits[0]);
   mock.onGet(mockOrganizationSearch.hits[0].hasPart?.[0].id).reply(200, mockOrganizationSearch.hits[0].hasPart?.[0]);
 

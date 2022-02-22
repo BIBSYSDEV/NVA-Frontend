@@ -20,11 +20,9 @@ export enum FileApiPath {
   PublicDownload = '/download/public',
 }
 
-export enum InstitutionApiPath {
+export enum CristinApiPath {
   Organization = '/cristin/organization',
-}
-
-export enum ProjectsApiPath {
+  Person = '/cristin/person',
   Project = '/cristin/project',
 }
 

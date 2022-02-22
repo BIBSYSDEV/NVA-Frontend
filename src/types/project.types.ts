@@ -22,20 +22,30 @@ interface Approval {
   date: Date;
 }
 
-type OrganizationType = 'Organization';
-
 interface ProjectIdentifier {
   type: 'CristinIdentifier';
   value: string;
 }
 
-interface CoordinatingInstitution {
-  type: OrganizationType;
+interface BasicCoordinatingInstitution {
+  type: 'Organization';
   id: string;
+}
+
+interface CoordinatingInstitution extends BasicCoordinatingInstitution {
   name: LanguageString;
 }
 
-export interface ProjectContributor {
+interface BasicContributorAffiliation {
+  type: 'Organization';
+  id: string;
+}
+
+interface ContributorAffiliation extends BasicContributorAffiliation {
+  name: LanguageString;
+}
+
+export interface BasicProjectContributor {
   type: 'ProjectManager' | 'ProjectParticipant';
   identity: {
     type: 'Person';
@@ -43,11 +53,11 @@ export interface ProjectContributor {
     firstName: string;
     lastName: string;
   };
-  affiliation: {
-    id: string;
-    type: OrganizationType;
-    name: LanguageString;
-  };
+  affiliation?: BasicContributorAffiliation;
+}
+
+export interface ProjectContributor extends BasicProjectContributor {
+  affiliation?: ContributorAffiliation;
 }
 
 interface Funding {
@@ -58,15 +68,21 @@ interface Funding {
   code: string;
 }
 
-export interface CristinProject {
+export interface PostCristinProject {
   type: 'Project';
-  id: string;
-  identifier: ProjectIdentifier[];
   title: string;
-  alternativeTitles: LanguageString[];
   language: string;
   startDate: string;
-  endDate?: string;
+  endDate: string;
+  coordinatingInstitution: BasicCoordinatingInstitution;
+  contributors: BasicProjectContributor[];
+  status: 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED'; // TODO: move to CristinProject
+}
+
+export interface CristinProject extends PostCristinProject {
+  id: string;
+  identifier: ProjectIdentifier[];
+  alternativeTitles: LanguageString[];
   coordinatingInstitution: CoordinatingInstitution;
   contributors: ProjectContributor[];
   status: 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
