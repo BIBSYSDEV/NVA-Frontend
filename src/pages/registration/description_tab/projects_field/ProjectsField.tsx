@@ -1,6 +1,7 @@
 import { Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import AddIcon from '@mui/icons-material/Add';
 import { Autocomplete, Box, Button, Typography } from '@mui/material';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
@@ -87,7 +88,9 @@ export const ProjectsField = () => {
         )}
       </Field>
       <BetaFunctionality>
-        <Button onClick={() => setOpenNewProjectDialog(true)}>{t('project:create_project')}</Button>
+        <Button onClick={() => setOpenNewProjectDialog(true)} startIcon={<AddIcon />}>
+          {t('project:create_project')}
+        </Button>
         <CreateProjectDialog
           open={openNewProjectDialog}
           onClose={() => setOpenNewProjectDialog(false)}
