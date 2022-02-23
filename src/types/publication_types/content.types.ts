@@ -1,5 +1,5 @@
 export enum JournalArticleContentType {
-  ResearchArticle = 'Research article',
+  AcademicArticle = 'Research article',
   ReviewArticle = 'Review article',
   CaseReport = 'Case report',
   StudyProtocol = 'Study protocol',
@@ -24,7 +24,7 @@ export enum ChapterContentType {
 }
 
 export const nviApplicableContentTypes: string[] = [
-  JournalArticleContentType.ResearchArticle,
+  JournalArticleContentType.AcademicArticle,
   JournalArticleContentType.ReviewArticle,
   BookMonographContentType.AcademicMonograph,
   ChapterContentType.AcademicChapter,

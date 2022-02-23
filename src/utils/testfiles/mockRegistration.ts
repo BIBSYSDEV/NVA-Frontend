@@ -100,7 +100,7 @@ export const mockRegistration: JournalRegistration = {
         issue: '2',
         volume: '3',
         corrigendumFor: '',
-        contentType: JournalArticleContentType.ResearchArticle,
+        contentType: JournalArticleContentType.AcademicArticle,
       },
       publicationContext: {
         type: PublicationChannelType.Journal,
