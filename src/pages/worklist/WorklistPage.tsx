@@ -21,7 +21,7 @@ const WorklistPage = () => {
   const [viewingScopeOrganization, isLoadingViewingScopeOrganization] = useFetchResource<Organization>(viewingScopeId);
 
   const [worklistResponse, isLoadingWorklistResponse] = useFetch<SearchResponse<PublicationConversation>>({
-    url: SearchApiPath.Messages,
+    url: SearchApiPath.Worklist,
     errorMessage: t('feedback:error.get_messages'),
     withAuthentication: true,
   });
