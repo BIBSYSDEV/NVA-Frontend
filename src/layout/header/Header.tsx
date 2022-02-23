@@ -9,7 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { getRegistrationPath, UrlPathTemplate } from '../../utils/urlPaths';
-import { Login } from './Login';
+import { LoginButton } from './LoginButton';
 import { Logo } from './Logo';
 import { GeneralMenu } from './GeneralMenu';
 import { LanguageSelector } from './LanguageSelector';
@@ -111,7 +111,7 @@ export const Header = () => {
             </>
           )}
 
-          <Login />
+          <LoginButton />
         </Box>
       </Box>
     </AppBar>

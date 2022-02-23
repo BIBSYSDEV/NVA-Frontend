@@ -9,7 +9,7 @@ import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 
-export const Login = () => {
+export const LoginButton = () => {
   const user = useSelector((state: RootStore) => state.user);
   const { t } = useTranslation('authorization');
   const { handleLogin, handleLogout } = useAuthentication();
