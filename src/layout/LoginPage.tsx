@@ -1,8 +1,10 @@
 import { Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Redirect, useLocation } from 'react-router-dom';
 import { PageHeader } from '../components/PageHeader';
 import { SyledPageContent } from '../components/styled/Wrappers';
+import { RootStore } from '../redux/reducers/rootReducer';
 import { LocalStorageKey } from '../utils/constants';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
 import { UrlPathTemplate } from '../utils/urlPaths';
@@ -13,9 +15,15 @@ export interface PreviousPathState {
 
 const LoginPage = () => {
   const { t } = useTranslation('authorization');
-  const { handleLogin } = useAuthentication();
-  const betaEnabled = localStorage.getItem(LocalStorageKey.Beta) === 'true';
+  const user = useSelector((store: RootStore) => store.user);
   const location = useLocation<PreviousPathState>();
+  const { handleLogin } = useAuthentication();
+
+  if (user) {
+    return <Redirect to={UrlPathTemplate.Home} />;
+  }
+
+  const betaEnabled = localStorage.getItem(LocalStorageKey.Beta) === 'true';
   const redirectPath = location.state?.previousPath ?? UrlPathTemplate.Home;
 
   // TODO: Fetch CustomerInstitutions (NP-4821)
