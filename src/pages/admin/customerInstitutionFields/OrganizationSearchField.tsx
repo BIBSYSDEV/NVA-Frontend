@@ -8,13 +8,13 @@ import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { SearchResponse } from '../../../types/common.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 interface OrganizationSearchFieldProps extends Pick<TextFieldProps, 'label'> {
   onChange?: (selectedInstitution: Organization | null) => void;
   disabled?: boolean;
   errorMessage?: string;
   fieldInputProps?: FieldInputProps<string>;
-  dataTestId?: string;
 }
 
 export const OrganizationSearchField = ({
@@ -23,7 +23,6 @@ export const OrganizationSearchField = ({
   errorMessage,
   fieldInputProps,
   label,
-  dataTestId,
 }: OrganizationSearchFieldProps) => {
   const { t } = useTranslation('feedback');
   const [searchTerm, setSearchTerm] = useState('');
@@ -60,7 +59,7 @@ export const OrganizationSearchField = ({
           value={fieldInputProps?.value}
           name={fieldInputProps?.name}
           {...params}
-          data-testid={dataTestId}
+          data-testid={dataTestId.organization.searchField}
           label={label ?? t('common:institution')}
           required
           placeholder={t('project:search_for_institution')}

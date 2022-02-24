@@ -115,7 +115,6 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                       onChange={(selectedInstitution) => setFieldValue(field.name, selectedInstitution?.id ?? '')}
                       errorMessage={touched && !!error ? error : undefined}
                       fieldInputProps={field}
-                      dataTestId={dataTestId.registrationWizard.description.projectForm.coordinatingInstitutionField}
                     />
                   )}
                 </Field>
