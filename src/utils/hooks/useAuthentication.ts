@@ -13,13 +13,12 @@ interface UseAuthentication {
   handleLogout: () => void;
 }
 
-const getCurrentPath = () => `${window.location.pathname}${window.location.search}`;
+export const getCurrentPath = () => `${window.location.pathname}${window.location.search}`;
 
 export const useAuthentication = (): UseAuthentication => {
   const dispatch = useDispatch();
 
   const handleLogin = async (loginProvider: LoginProvider) => {
-    // localStorage.setItem(LocalStorageKey.RedirectPath, getCurrentPath());
     if (USE_MOCK_DATA) {
       dispatch(setUser(mockUser));
     } else {

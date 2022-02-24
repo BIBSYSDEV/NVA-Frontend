@@ -6,10 +6,11 @@ import { LoadingButton } from '@mui/lab';
 import { Link as RouterLink } from 'react-router-dom';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { Menu } from './Menu';
-import { useAuthentication } from '../../utils/hooks/useAuthentication';
+import { getCurrentPath, useAuthentication } from '../../utils/hooks/useAuthentication';
 import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { PreviousPathState } from '../LoginPage';
 
 export const LoginButton = () => {
   const user = useSelector((state: RootStore) => state.user);
@@ -30,6 +31,8 @@ export const LoginButton = () => {
     handleLogout();
   };
 
+  const previousPathState: PreviousPathState = { previousPath: getCurrentPath() };
+
   return user ? (
     <Menu handleLogout={handleLogoutWrapper} />
   ) : isLoading ? (
@@ -42,7 +45,7 @@ export const LoginButton = () => {
       color="secondary"
       data-testid={dataTestId.header.logInButton}
       component={RouterLink}
-      to={UrlPathTemplate.Login}>
+      to={{ pathname: UrlPathTemplate.Login, state: previousPathState }}>
       {t('login')}
     </Button>
   );
