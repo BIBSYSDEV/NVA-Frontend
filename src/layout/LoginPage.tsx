@@ -18,17 +18,17 @@ const LoginPage = () => {
         <PageHeader>{t('login')}</PageHeader>
 
         <Typography variant="h2" paragraph>
-          Pålogging via Feide
+          {t('login_with_feide')}
         </Typography>
         <Button variant="contained" color="secondary" onClick={() => handleLogin('FeideIdentityProvider')}>
           {t('login')}
         </Button>
       </SyledPageContent>
     );
+  } else {
+    handleLogin('FeideIdentityProvider');
+    return null;
   }
-
-  handleLogin('FeideIdentityProvider');
-  return null;
 };
 
 export default LoginPage;
