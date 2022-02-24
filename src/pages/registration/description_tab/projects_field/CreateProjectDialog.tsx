@@ -38,6 +38,9 @@ const getValueByKey = (key: string, items?: CristinArrayValue[]) =>
 const getFullName = (names: CristinArrayValue[]) =>
   `${getValueByKey('FirstName', names)} ${getValueByKey('LastName', names)}`;
 
+// Add 1ms to Project dates as Cristin does not allow 0ms for startDate/endDate ¯\_(ツ)_/¯
+const getProjectDate = (date: Date | null, keyboardValue?: string) => getNewDateValue(date, keyboardValue, 1);
+
 const initialValues: PostCristinProject = {
   type: 'Project',
   title: '',
@@ -49,7 +52,6 @@ const initialValues: PostCristinProject = {
     type: 'Organization',
     id: '',
   },
-  status: 'ACTIVE',
 };
 
 interface CreateProjectDialogProps extends DialogProps {
@@ -123,8 +125,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                           {...datePickerTranslationProps}
                           label={t('start_date')}
                           onChange={(date: Date | null, keyboardValue) => {
-                            // Add 1ms as Cristin does not allow 0ms for startDate/endDate ¯\_(ツ)_/¯
-                            const newDateString = getNewDateValue(date, keyboardValue, 1);
+                            const newDateString = getProjectDate(date, keyboardValue);
                             setFieldValue(field.name, newDateString);
                           }}
                           value={field.value ? new Date(field.value) : null}
@@ -150,7 +151,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                           {...datePickerTranslationProps}
                           label={t('end_date')}
                           onChange={(date: Date | null, keyboardValue) => {
-                            const newDateString = getNewDateValue(date, keyboardValue, 1);
+                            const newDateString = getProjectDate(date, keyboardValue);
                             setFieldValue(field.name, newDateString);
                           }}
                           value={field.value ? new Date(field.value) : null}

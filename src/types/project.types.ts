@@ -76,16 +76,15 @@ export interface PostCristinProject {
   endDate: string;
   coordinatingInstitution: BasicCoordinatingInstitution;
   contributors: BasicProjectContributor[];
-  status: 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED'; // TODO: move to CristinProject
 }
 
 export interface CristinProject extends PostCristinProject {
   id: string;
   identifier: ProjectIdentifier[];
+  status: 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
   alternativeTitles: LanguageString[];
   coordinatingInstitution: CoordinatingInstitution;
   contributors: ProjectContributor[];
-  status: 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
   academicSummary: LanguageString;
   popularScientificSummary: LanguageString;
   funding: Funding[];
