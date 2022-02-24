@@ -25,6 +25,7 @@ import { SearchResponse } from '../../../../types/common.types';
 import { BasicProjectContributor, PostCristinProject } from '../../../../types/project.types';
 import { CristinArrayValue, CristinUser } from '../../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
+import { dataTestId } from '../../../../utils/dataTestIds';
 import { getDateFnsLocale } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
@@ -97,6 +98,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <TextField
                       {...field}
+                      data-testid={dataTestId.registrationWizard.description.projectForm.titleField}
                       label={t('common:title')}
                       required
                       variant="filled"
@@ -113,6 +115,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                       onChange={(selectedInstitution) => setFieldValue(field.name, selectedInstitution?.id ?? '')}
                       errorMessage={touched && !!error ? error : undefined}
                       fieldInputProps={field}
+                      dataTestId={dataTestId.registrationWizard.description.projectForm.coordinatingInstitutionField}
                     />
                   )}
                 </Field>
@@ -135,6 +138,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                             <TextField
                               {...field}
                               {...params}
+                              data-testid={dataTestId.registrationWizard.description.projectForm.startDateField}
                               variant="filled"
                               required
                               error={touched && !!error}
@@ -161,6 +165,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                             <TextField
                               {...field}
                               {...params}
+                              data-testid={dataTestId.registrationWizard.description.projectForm.endDateField}
                               variant="filled"
                               required
                               error={touched && !!error}
@@ -234,6 +239,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                           onBlur={field.onBlur}
                           value={field.value}
                           name={field.name}
+                          data-testid={dataTestId.registrationWizard.description.projectForm.contributorsSearchField}
                           {...params}
                           required
                           label={t('person')}
