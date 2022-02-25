@@ -25,6 +25,7 @@ import { SearchResponse } from '../../../../types/common.types';
 import { BasicProjectContributor, PostCristinProject } from '../../../../types/project.types';
 import { CristinArrayValue, CristinUser } from '../../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
+import { dataTestId } from '../../../../utils/dataTestIds';
 import { getDateFnsLocale } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
@@ -38,6 +39,9 @@ const getValueByKey = (key: string, items?: CristinArrayValue[]) =>
 const getFullName = (names: CristinArrayValue[]) =>
   `${getValueByKey('FirstName', names)} ${getValueByKey('LastName', names)}`;
 
+// Add 1ms to Project dates as Cristin does not allow 0ms for startDate/endDate ¯\_(ツ)_/¯
+const getProjectDate = (date: Date | null, keyboardValue?: string) => getNewDateValue(date, keyboardValue, 1);
+
 const initialValues: PostCristinProject = {
   type: 'Project',
   title: '',
@@ -49,7 +53,6 @@ const initialValues: PostCristinProject = {
     type: 'Organization',
     id: '',
   },
-  status: 'ACTIVE',
 };
 
 interface CreateProjectDialogProps extends DialogProps {
@@ -95,6 +98,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <TextField
                       {...field}
+                      data-testid={dataTestId.registrationWizard.description.projectForm.titleField}
                       label={t('common:title')}
                       required
                       variant="filled"
@@ -123,8 +127,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                           {...datePickerTranslationProps}
                           label={t('start_date')}
                           onChange={(date: Date | null, keyboardValue) => {
-                            // Add 1ms as Cristin does not allow 0ms for startDate/endDate ¯\_(ツ)_/¯
-                            const newDateString = getNewDateValue(date, keyboardValue, 1);
+                            const newDateString = getProjectDate(date, keyboardValue);
                             setFieldValue(field.name, newDateString);
                           }}
                           value={field.value ? new Date(field.value) : null}
@@ -134,6 +137,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                             <TextField
                               {...field}
                               {...params}
+                              data-testid={dataTestId.registrationWizard.description.projectForm.startDateField}
                               variant="filled"
                               required
                               error={touched && !!error}
@@ -150,7 +154,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                           {...datePickerTranslationProps}
                           label={t('end_date')}
                           onChange={(date: Date | null, keyboardValue) => {
-                            const newDateString = getNewDateValue(date, keyboardValue, 1);
+                            const newDateString = getProjectDate(date, keyboardValue);
                             setFieldValue(field.name, newDateString);
                           }}
                           value={field.value ? new Date(field.value) : null}
@@ -160,6 +164,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                             <TextField
                               {...field}
                               {...params}
+                              data-testid={dataTestId.registrationWizard.description.projectForm.endDateField}
                               variant="filled"
                               required
                               error={touched && !!error}
@@ -233,6 +238,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                           onBlur={field.onBlur}
                           value={field.value}
                           name={field.name}
+                          data-testid={dataTestId.registrationWizard.description.projectForm.contributorsSearchField}
                           {...params}
                           required
                           label={t('person')}

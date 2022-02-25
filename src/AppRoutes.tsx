@@ -28,7 +28,7 @@ const MyInstitutionUsersPage = lazy(() => import('./pages/admin/MyInstitutionUse
 const MyMessagesPage = lazy(() => import('./pages/messages/MyMessagesPage'));
 const WorklistPage = lazy(() => import('./pages/messages/WorklistPage'));
 const Logout = lazy(() => import('./layout/Logout'));
-const Login = lazy(() => import('./layout/Login'));
+const LoginPage = lazy(() => import('./layout/LoginPage'));
 
 export const AppRoutes = () => {
   return (
@@ -40,7 +40,7 @@ export const AppRoutes = () => {
         <Route exact path={UrlPathTemplate.User} component={PublicProfile} />
         <Route exact path={UrlPathTemplate.RegistrationLandingPage} component={PublicRegistration} />
         <Route exact path={UrlPathTemplate.Projects} component={ProjectsPage} />
-        <Route exact path={UrlPathTemplate.Login} component={Login} />
+        <Route exact path={UrlPathTemplate.Login} component={LoginPage} />
         <Route exact path={UrlPathTemplate.Logout} component={Logout} />
 
         {/* LoggedInRoute */}

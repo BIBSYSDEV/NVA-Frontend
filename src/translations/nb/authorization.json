@@ -4,6 +4,7 @@
   "forbidden": "Forbudt",
   "forbidden_description": "Du er ikke autorisert til å se innholdet på denne siden. Kontakt administrator om dette ikke stemmer.",
   "login": "Logg inn",
+  "login_with_feide": "Pålogging via Feide",
   "logout": "Logg ut",
   "registration_not_published": "Denne registreringen er ikke publisert enda."
 }

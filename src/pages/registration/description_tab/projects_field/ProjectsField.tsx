@@ -64,7 +64,7 @@ export const ProjectsField = () => {
             getOptionDisabled={(option) => field.value.some((project) => project.id === option.id)}
             loading={isLoadingProjects}
             renderOption={(props, option: CristinProject, state) => (
-              <li {...props}>
+              <li {...props} key={option.id}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }} data-testid={`project-option-${option.id}`}>
                   <Typography variant="subtitle1">
                     <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
