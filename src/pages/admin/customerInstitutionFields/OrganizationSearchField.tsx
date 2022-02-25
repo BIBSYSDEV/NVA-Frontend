@@ -7,8 +7,8 @@ import { Organization } from '../../../types/organization.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { dataTestId } from '../../../utils/dataTestIds';
 import { SearchResponse } from '../../../types/common.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 interface OrganizationSearchFieldProps extends Pick<TextFieldProps, 'label'> {
   onChange?: (selectedInstitution: Organization | null) => void;

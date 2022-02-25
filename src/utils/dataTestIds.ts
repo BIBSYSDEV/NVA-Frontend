@@ -100,6 +100,12 @@ export const dataTestId = {
     description: {
       addVocabularyButton: 'add-vocabulary-button',
       datePublishedField: 'date-published-field',
+      projectForm: {
+        contributorsSearchField: 'project-contributors-search-field',
+        endDateField: 'project-end-date-field',
+        startDateField: 'project-start-date-field',
+        titleField: 'project-title-field',
+      },
       projectSearchField: 'project-search-field',
       abstractField: 'registration-abstract-field',
       descriptionField: 'registration-description-field',
