@@ -12,7 +12,7 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { Organization } from '../../types/organization.types';
 import { getLanguageString } from '../../utils/translation-helpers';
-import { WorklistItems } from './WokrlistItems';
+import { WorklistItems } from './WorklistItems';
 
 const WorklistPage = () => {
   const { t } = useTranslation('workLists');

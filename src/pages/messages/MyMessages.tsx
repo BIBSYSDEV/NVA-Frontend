@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PublicationConversation } from '../../types/publication_types/messages.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
-import { SupportRequestAccordion } from '../worklist/SupportRequestAccordion';
+import { SupportRequestAccordion } from './SupportRequestAccordion';
 
 interface MyMessagesProps {
   conversations: PublicationConversation[];
