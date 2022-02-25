@@ -14,6 +14,7 @@ import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { MessageList } from './MessageList';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
 
 interface SupportRequestAccordionProps {
   messageType: MessageType;
@@ -46,48 +47,50 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
   };
 
   return (
-    <Accordion data-testid={`message-${identifier}`}>
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon fontSize="large" />}
-        sx={{
-          '.MuiAccordionSummary-content': {
-            display: 'grid',
-            gridTemplateAreas: '"status title creator"',
-            gridTemplateColumns: '1fr 5fr 1fr',
-            columnGap: '1rem',
-          },
-        }}>
-        <Typography data-testid={`message-type-${identifier}`} sx={{ gridArea: 'status', fontWeight: 'bold' }}>
-          {messageType === MessageType.DoiRequest
-            ? t('types.doi')
-            : messageType === MessageType.Support
-            ? t('types.support')
-            : null}
-        </Typography>
-        <Typography data-testid={`message-title-${identifier}`} sx={{ gridArea: 'title', fontWeight: 'bold' }}>
-          {registration.mainTitle}
-        </Typography>
-        <Box data-testid={`message-owner-${identifier}`} sx={{ wordBreak: 'break-word', gridArea: 'creator' }}>
-          <Typography>{registration.owner}</Typography>
-          {new Date(messagesCopy[messagesCopy.length - 1].date).toLocaleDateString()}
-        </Box>
-      </AccordionSummary>
-      <AccordionDetails>
-        <Box sx={{ width: '75%', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <MessageList messages={messagesCopy} />
-          <MessageForm confirmAction={onClickSendMessage} />
-        </Box>
-        <Box sx={{ width: '20%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-          <Button
-            data-testid={`go-to-registration-${identifier}`}
-            variant="outlined"
-            endIcon={<ArrowForwardIcon />}
-            component={RouterLink}
-            to={getRegistrationLandingPagePath(identifier)}>
-            {t('go_to_registration')}
-          </Button>
-        </Box>
-      </AccordionDetails>
-    </Accordion>
+    <ErrorBoundary>
+      <Accordion data-testid={`message-${identifier}`}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon fontSize="large" />}
+          sx={{
+            '.MuiAccordionSummary-content': {
+              display: 'grid',
+              gridTemplateAreas: '"status title creator"',
+              gridTemplateColumns: '1fr 5fr 1fr',
+              columnGap: '1rem',
+            },
+          }}>
+          <Typography data-testid={`message-type-${identifier}`} sx={{ gridArea: 'status', fontWeight: 'bold' }}>
+            {messageType === MessageType.DoiRequest
+              ? t('types.doi')
+              : messageType === MessageType.Support
+              ? t('types.support')
+              : null}
+          </Typography>
+          <Typography data-testid={`message-title-${identifier}`} sx={{ gridArea: 'title', fontWeight: 'bold' }}>
+            {registration.mainTitle}
+          </Typography>
+          <Box data-testid={`message-owner-${identifier}`} sx={{ wordBreak: 'break-word', gridArea: 'creator' }}>
+            <Typography>{registration.owner}</Typography>
+            {new Date(messagesCopy[messagesCopy.length - 1].date).toLocaleDateString()}
+          </Box>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Box sx={{ width: '75%', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <MessageList messages={messagesCopy} />
+            <MessageForm confirmAction={onClickSendMessage} />
+          </Box>
+          <Box sx={{ width: '20%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+            <Button
+              data-testid={`go-to-registration-${identifier}`}
+              variant="outlined"
+              endIcon={<ArrowForwardIcon />}
+              component={RouterLink}
+              to={getRegistrationLandingPagePath(identifier)}>
+              {t('go_to_registration')}
+            </Button>
+          </Box>
+        </AccordionDetails>
+      </Accordion>
+    </ErrorBoundary>
   );
 };

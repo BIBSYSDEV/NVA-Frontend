@@ -9,11 +9,11 @@ import {
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
 import { SupportRequestAccordion } from './SupportRequestAccordion';
 
-interface MessagesOverviewProps {
+interface WorklistItemsProps {
   conversations: (PublicationConversation | DoiRequestConversation)[];
 }
 
-export const MessagesOverview = ({ conversations }: MessagesOverviewProps) => {
+export const WorklistItems = ({ conversations }: WorklistItemsProps) => {
   const { t } = useTranslation('workLists');
 
   useEffect(() => {
@@ -21,6 +21,7 @@ export const MessagesOverview = ({ conversations }: MessagesOverviewProps) => {
       typesetMathJax();
     }
   }, [conversations]);
+
   return conversations.length === 0 ? (
     <Typography>{t('no_messages')}</Typography>
   ) : (

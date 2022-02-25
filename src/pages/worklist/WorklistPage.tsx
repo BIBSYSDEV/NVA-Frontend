@@ -7,12 +7,12 @@ import { SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { DoiRequestConversation, PublicationConversation } from '../../types/publication_types/messages.types';
 import { ListSkeleton } from '../../components/ListSkeleton';
-import { MessagesOverview } from './MessagesOverview';
 import { SearchResponse } from '../../types/common.types';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { Organization } from '../../types/organization.types';
 import { getLanguageString } from '../../utils/translation-helpers';
+import { WorklistItems } from './WokrlistItems';
 
 const WorklistPage = () => {
   const { t } = useTranslation('workLists');
@@ -46,7 +46,7 @@ const WorklistPage = () => {
               })}
             </Typography>
           )}
-          <MessagesOverview conversations={supportRequests} />
+          <WorklistItems conversations={supportRequests} />
         </>
       )}
     </SyledPageContent>
