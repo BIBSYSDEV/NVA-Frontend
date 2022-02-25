@@ -8,7 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { addMessage } from '../../api/registrationApi';
 import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/actions/notificationActions';
-import { Message, MessageCollection, MessageType } from '../../types/publication_types/messages.types';
+import { Message, MessageType } from '../../types/publication_types/messages.types';
 import { RegistrationPreview } from '../../types/registration.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { MessageList } from './MessageList';
@@ -16,20 +16,21 @@ import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { RootStore } from '../../redux/reducers/rootReducer';
 
 interface SupportRequestAccordionProps {
-  messageCollection: MessageCollection;
+  messageType: MessageType;
+  messages: Message[];
   registration: RegistrationPreview;
 }
 
-export const SupportRequestAccordion = ({ messageCollection, registration }: SupportRequestAccordionProps) => {
+export const SupportRequestAccordion = ({ registration, messageType, messages }: SupportRequestAccordionProps) => {
   const { t } = useTranslation('workLists');
   const dispatch = useDispatch();
   const userId = useSelector((store: RootStore) => store.user?.id);
   const { identifier } = registration;
 
-  const [messagesCopy, setMessagesCopy] = useState(messageCollection.messages);
+  const [messagesCopy, setMessagesCopy] = useState(messages);
 
   const onClickSendMessage = async (message: string) => {
-    const updateDoiRequestResponse = await addMessage(identifier, message, messageCollection.messageType);
+    const updateDoiRequestResponse = await addMessage(identifier, message, messageType);
     if (isErrorStatus(updateDoiRequestResponse.status)) {
       dispatch(setNotification(t('feedback:error.send_message'), 'error'));
     } else if (isSuccessStatus(updateDoiRequestResponse.status)) {
@@ -57,9 +58,9 @@ export const SupportRequestAccordion = ({ messageCollection, registration }: Sup
           },
         }}>
         <Typography data-testid={`message-type-${identifier}`} sx={{ gridArea: 'status', fontWeight: 'bold' }}>
-          {messageCollection.messageType === MessageType.DoiRequest
+          {messageType === MessageType.DoiRequest
             ? t('types.doi')
-            : messageCollection.messageType === MessageType.Support
+            : messageType === MessageType.Support
             ? t('types.support')
             : null}
         </Typography>

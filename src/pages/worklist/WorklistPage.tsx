@@ -5,7 +5,7 @@ import { PageHeader } from '../../components/PageHeader';
 import { SyledPageContent } from '../../components/styled/Wrappers';
 import { SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { PublicationConversation } from '../../types/publication_types/messages.types';
+import { DoiRequestConversation, PublicationConversation } from '../../types/publication_types/messages.types';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { MessagesOverview } from './MessagesOverview';
 import { SearchResponse } from '../../types/common.types';
@@ -20,8 +20,10 @@ const WorklistPage = () => {
   const viewingScopeId = user && user.viewingScope.length > 0 ? user.viewingScope[0] : '';
   const [viewingScopeOrganization, isLoadingViewingScopeOrganization] = useFetchResource<Organization>(viewingScopeId);
 
-  const [worklistResponse, isLoadingWorklistResponse] = useFetch<SearchResponse<PublicationConversation>>({
-    url: SearchApiPath.Worklist,
+  const [worklistResponse, isLoadingWorklistResponse] = useFetch<
+    SearchResponse<PublicationConversation | DoiRequestConversation>
+  >({
+    url: `${SearchApiPath.Worklist}?results=9`,
     errorMessage: t('feedback:error.get_messages'),
     withAuthentication: true,
   });

@@ -1,4 +1,4 @@
-import { RegistrationPreview } from '../registration.types';
+import { DoiRequest, RegistrationPreview } from '../registration.types';
 
 export enum MessageType {
   DoiRequest = 'DoiRequest',
@@ -20,6 +20,11 @@ export interface MessageCollection {
 }
 
 export interface PublicationConversation {
+  type: 'PublicationConversation';
   messageCollections: MessageCollection[];
+  publication: RegistrationPreview;
+}
+
+export interface DoiRequestConversation extends DoiRequest {
   publication: RegistrationPreview;
 }
