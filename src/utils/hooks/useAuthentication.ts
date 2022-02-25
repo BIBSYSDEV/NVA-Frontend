@@ -6,22 +6,23 @@ import { mockUser } from '../testfiles/mock_feide_user';
 import { logoutSuccess } from '../../redux/actions/authActions';
 import { UrlPathTemplate } from '../urlPaths';
 
+type LoginProvider = 'FeideIdentityProvider';
+
 interface UseAuthentication {
-  handleLogin: () => void;
+  handleLogin: (loginProvider: LoginProvider) => void;
   handleLogout: () => void;
 }
 
-const getCurrentPath = () => `${window.location.pathname}${window.location.search}`;
+export const getCurrentPath = () => `${window.location.pathname}${window.location.search}`;
 
 export const useAuthentication = (): UseAuthentication => {
   const dispatch = useDispatch();
 
-  const handleLogin = async () => {
-    localStorage.setItem(LocalStorageKey.RedirectPath, getCurrentPath());
+  const handleLogin = async (loginProvider: LoginProvider) => {
     if (USE_MOCK_DATA) {
       dispatch(setUser(mockUser));
     } else {
-      await Auth.federatedSignIn({ customProvider: 'FeideIdentityProvider' });
+      await Auth.federatedSignIn({ customProvider: loginProvider });
     }
   };
 
