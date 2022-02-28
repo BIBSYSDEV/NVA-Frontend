@@ -111,6 +111,7 @@ export const CustomerInstitutionMetadataForm = ({
                 required
                 dataTestId={dataTestId.institutionAdmin.feideField}
               />
+
               <StyledRightAlignedWrapper>
                 <LoadingButton
                   data-testid={dataTestId.institutionAdmin.saveButton}

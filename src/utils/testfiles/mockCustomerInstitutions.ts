@@ -37,6 +37,11 @@ export const mockCustomerInstitution: CustomerInstitution = {
   institutionDns: '1.1.1.1',
   feideOrganizationId: 'NO919477822',
   vocabularies: mockCustomerInstitutionVocabularies.vocabularies,
+  loginMethods: {
+    feide: true,
+    minId: false,
+    helseId: false,
+  },
 };
 
 export const mockCustomerInstitutions: CustomerList = {
@@ -55,6 +60,11 @@ export const mockCustomerInstitutions: CustomerList = {
       institutionDns: 'xxx',
       feideOrganizationId: 'xxx',
       vocabularies: [],
+      loginMethods: {
+        feide: true,
+        minId: false,
+        helseId: false,
+      },
     },
     {
       id: 'https://api.dev.nva.aws.unit.no/customer/3',
@@ -69,6 +79,11 @@ export const mockCustomerInstitutions: CustomerList = {
       institutionDns: 'xxx',
       feideOrganizationId: 'xxx',
       vocabularies: [],
+      loginMethods: {
+        feide: true,
+        minId: false,
+        helseId: false,
+      },
     },
     {
       id: 'https://api.dev.nva.aws.unit.no/customer/4',
@@ -83,6 +98,11 @@ export const mockCustomerInstitutions: CustomerList = {
       institutionDns: 'xxx',
       feideOrganizationId: 'xxx',
       vocabularies: [],
+      loginMethods: {
+        feide: true,
+        minId: true,
+        helseId: true,
+      },
     },
     {
       id: 'https://api.dev.nva.aws.unit.no/customer/5',
@@ -97,6 +117,11 @@ export const mockCustomerInstitutions: CustomerList = {
       institutionDns: 'xxx',
       feideOrganizationId: 'xxx',
       vocabularies: [],
+      loginMethods: {
+        feide: false,
+        minId: true,
+        helseId: false,
+      },
     },
   ],
 };

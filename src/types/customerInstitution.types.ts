@@ -13,6 +13,11 @@ export interface CustomerInstitution {
   modifiedDate?: string;
   shortName: string;
   vocabularies: CustomerVocabulary[];
+  loginMethods: {
+    feide: boolean;
+    minId: boolean;
+    helseId: boolean;
+  };
 }
 
 export enum VocabularyStatus {
@@ -42,6 +47,11 @@ export const emptyCustomerInstitution: CustomerInstitution = {
   name: '',
   shortName: '',
   vocabularies: [],
+  loginMethods: {
+    feide: false,
+    minId: false,
+    helseId: false,
+  },
 };
 
 export enum CustomerInstitutionFieldNames {
