@@ -23,7 +23,7 @@ const WorklistPage = () => {
   const [worklistResponse, isLoadingWorklistResponse] = useFetch<
     SearchResponse<PublicationConversation | DoiRequestConversation>
   >({
-    url: `${SearchApiPath.Worklist}?results=9`,
+    url: SearchApiPath.Worklist,
     errorMessage: t('feedback:error.get_messages'),
     withAuthentication: true,
   });
