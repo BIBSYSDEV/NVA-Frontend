@@ -26,7 +26,7 @@ const AdminCustomerInstitutionsPage = lazy(() => import('./pages/admin/AdminCust
 const MyInstitutionPage = lazy(() => import('./pages/admin/MyInstitutionPage'));
 const MyInstitutionUsersPage = lazy(() => import('./pages/admin/MyInstitutionUsersPage'));
 const MyMessagesPage = lazy(() => import('./pages/messages/MyMessagesPage'));
-const WorklistPage = lazy(() => import('./pages/worklist/WorklistPage'));
+const WorklistPage = lazy(() => import('./pages/messages/WorklistPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 const LoginPage = lazy(() => import('./layout/LoginPage'));
 

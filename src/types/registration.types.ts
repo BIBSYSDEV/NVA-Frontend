@@ -12,6 +12,7 @@ import { Contributor } from './contributor.types';
 import { LanguageValues } from './language.types';
 import { PresentationEntityDescription } from './publication_types/presentationRegistration.types';
 import { ArtisticEntityDescription } from './publication_types/artisticRegistration.types';
+import { MessageCollection } from './publication_types/messages.types';
 
 export enum RegistrationStatus {
   Deleted = 'DRAFT_FOR_DELETION',
@@ -65,18 +66,12 @@ export enum DoiRequestStatus {
   Requested = 'REQUESTED',
 }
 
-interface DoiRequestMessage {
-  text: string;
-  author: string;
-  timestamp: string;
-}
-
-interface DoiRequest {
-  type: string;
+export interface DoiRequest {
+  type: 'DoiRequest';
   createdDate: string;
   modifiedDate: string;
   status: DoiRequestStatus;
-  messages?: DoiRequestMessage[];
+  messages?: MessageCollection;
 }
 
 interface RegistrationPublisher {

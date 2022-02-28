@@ -5,13 +5,12 @@ import { PublicationConversation } from '../../types/publication_types/messages.
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
 import { SupportRequestAccordion } from './SupportRequestAccordion';
 
-interface MessagesOverviewProps {
+interface MyMessagesProps {
   conversations: PublicationConversation[];
 }
 
-export const MessagesOverview = ({ conversations }: MessagesOverviewProps) => {
+export const MyMessages = ({ conversations }: MyMessagesProps) => {
   const { t } = useTranslation('workLists');
-
   useEffect(() => {
     if (conversations.some(({ publication }) => stringIncludesMathJax(publication.mainTitle))) {
       typesetMathJax();
@@ -27,7 +26,8 @@ export const MessagesOverview = ({ conversations }: MessagesOverviewProps) => {
           <SupportRequestAccordion
             key={messageCollection.messages[0].identifier}
             registration={conversation.publication}
-            messageCollection={messageCollection}
+            messageType={messageCollection.messageType}
+            messages={messageCollection.messages}
           />
         ))
       )}

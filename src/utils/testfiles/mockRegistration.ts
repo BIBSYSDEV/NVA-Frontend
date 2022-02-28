@@ -123,6 +123,7 @@ export const mockMathJaxRegistration: JournalRegistration = {
 
 export const mockMessages: PublicationConversation[] = [
   {
+    type: 'PublicationConversation',
     publication: {
       identifier: mockRegistration.identifier,
       mainTitle: mockRegistration.entityDescription.mainTitle,

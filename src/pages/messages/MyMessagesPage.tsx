@@ -6,7 +6,7 @@ import { SyledPageContent } from '../../components/styled/Wrappers';
 import { PublicationConversation } from '../../types/publication_types/messages.types';
 import { RoleName } from '../../types/user.types';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { MessagesOverview } from '../worklist/MessagesOverview';
+import { MyMessages } from './MyMessages';
 
 const MyMessagesPage = () => {
   const { t } = useTranslation('workLists');
@@ -24,7 +24,7 @@ const MyMessagesPage = () => {
       {isLoadingSupportRequests ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
-        <MessagesOverview conversations={supportRequests} />
+        <MyMessages conversations={supportRequests} />
       )}
     </SyledPageContent>
   );
