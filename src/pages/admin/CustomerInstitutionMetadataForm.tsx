@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useHistory } from 'react-router-dom';
-import { TextField, Typography } from '@mui/material';
+import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, TextField, Typography } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import { LoadingButton } from '@mui/lab';
 import {
@@ -64,7 +64,7 @@ export const CustomerInstitutionMetadataForm = ({
         validateOnChange
         validationSchema={customerInstitutionValidationSchema}
         onSubmit={handleSubmit}>
-        {({ isSubmitting, setValues }: FormikProps<CustomerInstitution>) => (
+        {({ isSubmitting, setValues, setFieldValue, values }: FormikProps<CustomerInstitution>) => (
           <Form noValidate>
             <InputContainerBox>
               <Field name={CustomerInstitutionFieldNames.Name}>
@@ -111,6 +111,45 @@ export const CustomerInstitutionMetadataForm = ({
                 required
                 dataTestId={dataTestId.institutionAdmin.feideField}
               />
+
+              <FormControl component="fieldset">
+                <FormLabel>{t('login.login_method')}</FormLabel>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={values.loginMethods.feide}
+                        onChange={() =>
+                          setFieldValue(CustomerInstitutionFieldNames.LoginMethodFeide, !values.loginMethods.feide)
+                        }
+                      />
+                    }
+                    label={t<string>('login.feide')}
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={values.loginMethods.minId}
+                        onChange={() =>
+                          setFieldValue(CustomerInstitutionFieldNames.LoginMethodMinId, !values.loginMethods.minId)
+                        }
+                      />
+                    }
+                    label={t<string>('login.min_id')}
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={values.loginMethods.helseId}
+                        onChange={() =>
+                          setFieldValue(CustomerInstitutionFieldNames.LoginMethodHelseId, !values.loginMethods.helseId)
+                        }
+                      />
+                    }
+                    label={t<string>('login.helse_id')}
+                  />
+                </FormGroup>
+              </FormControl>
 
               <StyledRightAlignedWrapper>
                 <LoadingButton

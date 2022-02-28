@@ -62,6 +62,9 @@ export enum CustomerInstitutionFieldNames {
   FeideOrganizationId = 'feideOrganizationId',
   Identifier = 'identifier',
   InstitutionDns = 'institutionDns',
+  LoginMethodFeide = 'loginMethods.feide',
+  LoginMethodHelseId = 'loginMethods.helseId',
+  LoginMethodMinId = 'loginMethods.minId',
   Name = 'name',
   ShortName = 'shortName',
 }
