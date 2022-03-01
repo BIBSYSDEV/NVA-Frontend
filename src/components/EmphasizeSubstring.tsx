@@ -8,14 +8,11 @@ interface EmphasizeSubstringProps {
 
 export const EmphasizeSubstring = ({ text, emphasized }: EmphasizeSubstringProps) => {
   const indexOfMatch = text.toLocaleLowerCase().indexOf(emphasized.toLocaleLowerCase());
+  const lastIndex = indexOfMatch + emphasized.length;
   const textParts =
     indexOfMatch === -1
       ? [text]
-      : [
-          text.substr(0, indexOfMatch),
-          text.substr(indexOfMatch, emphasized.length),
-          text.substr(indexOfMatch + emphasized.length),
-        ];
+      : [text.substring(0, indexOfMatch), text.substring(indexOfMatch, lastIndex), text.substring(lastIndex)];
 
   useEffect(() => {
     if (stringIncludesMathJax(text)) {
