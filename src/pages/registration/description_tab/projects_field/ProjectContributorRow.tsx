@@ -3,12 +3,15 @@ import { Field, FieldProps, ErrorMessage } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CristinApiPath } from '../../../../api/apiPaths';
+import { apiRequest } from '../../../../api/apiRequest';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { SearchResponse } from '../../../../types/common.types';
+import { Organization } from '../../../../types/organization.types';
 import { CristinArrayValue, CristinUser } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
+import { getTopLevelOrganization } from '../../../../utils/institutions-helpers';
 import { OrganizationSearchField } from '../../../admin/customerInstitutionFields/OrganizationSearchField';
 
 const getValueByKey = (key: string, items?: CristinArrayValue[]) =>
@@ -25,6 +28,16 @@ export const ProjectContributorRow = () => {
   const [personSearchResult, isLoadingPersonSearchResult] = useFetch<SearchResponse<CristinUser>>({
     url: debouncedSearchTerm ? `${CristinApiPath.Person}?results=20&query=${debouncedSearchTerm}` : '',
   });
+  const [defaultInstitutionOptions, setDefaultInstitutionOptions] = useState<Organization[]>([]);
+
+  const fetchSuggestedInstitutions = async (ids: string[]) => {
+    const defaultInstitutionsPromise = ids.map(async (id) => {
+      const organizationResponse = await apiRequest<Organization>({ url: id }); // todo: handle error
+      return getTopLevelOrganization(organizationResponse.data);
+    });
+    const defaultInstitutions = await Promise.all(defaultInstitutionsPromise);
+    setDefaultInstitutionOptions(defaultInstitutions);
+  };
 
   return (
     <>
@@ -61,6 +74,11 @@ export const ProjectContributorRow = () => {
                   setFieldValue(field.name, '');
                 } else {
                   setFieldValue(field.name, selectedUser.id ?? '');
+                  if (selectedUser.affiliations) {
+                    fetchSuggestedInstitutions(
+                      selectedUser.affiliations.map((affiliation) => affiliation.organization)
+                    );
+                  }
                 }
                 setSearchTerm('');
               }}
@@ -100,6 +118,7 @@ export const ProjectContributorRow = () => {
               onChange={(institution) => setFieldValue(field.name, institution?.id ?? '')}
               fieldInputProps={field}
               errorMessage={touched && !!error ? error : ''}
+              defaultOptions={defaultInstitutionOptions}
             />
           )}
         </Field>

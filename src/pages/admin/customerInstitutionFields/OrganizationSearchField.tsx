@@ -15,6 +15,7 @@ interface OrganizationSearchFieldProps extends Pick<TextFieldProps, 'label'> {
   disabled?: boolean;
   errorMessage?: string;
   fieldInputProps?: FieldInputProps<string>;
+  defaultOptions?: Organization[];
 }
 
 export const OrganizationSearchField = ({
@@ -23,6 +24,7 @@ export const OrganizationSearchField = ({
   errorMessage,
   fieldInputProps,
   label,
+  defaultOptions = [],
 }: OrganizationSearchFieldProps) => {
   const { t } = useTranslation('feedback');
   const [searchTerm, setSearchTerm] = useState('');
@@ -32,7 +34,7 @@ export const OrganizationSearchField = ({
     errorMessage: t('error.get_institutions'),
   });
 
-  const options = isLoadingInstitutionOptions || !institutionOptions ? [] : institutionOptions.hits;
+  const options = isLoadingInstitutionOptions || !institutionOptions ? defaultOptions : institutionOptions.hits;
 
   return (
     <Autocomplete
