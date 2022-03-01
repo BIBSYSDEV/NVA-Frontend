@@ -32,6 +32,7 @@ export const ProjectContributorRow = () => {
         <Field name="contributors[0].type">
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
+              data-testid={dataTestId.registrationWizard.description.projectForm.roleField}
               {...field}
               disabled
               select
