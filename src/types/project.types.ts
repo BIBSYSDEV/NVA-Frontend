@@ -36,7 +36,7 @@ interface CoordinatingInstitution extends BasicCoordinatingInstitution {
   name: LanguageString;
 }
 
-interface BasicContributorAffiliation {
+export interface BasicContributorAffiliation {
   type: 'Organization';
   id: string;
 }
@@ -45,19 +45,25 @@ interface ContributorAffiliation extends BasicContributorAffiliation {
   name: LanguageString;
 }
 
+interface BasicContributorIdentity {
+  type: 'Person';
+  id: string;
+}
+
+interface ContributorIdentity extends BasicContributorIdentity {
+  firstName: string;
+  lastName: string;
+}
+
 export interface BasicProjectContributor {
   type: 'ProjectManager' | 'ProjectParticipant';
-  identity: {
-    type: 'Person';
-    id: string;
-    firstName: string;
-    lastName: string;
-  };
+  identity: BasicContributorIdentity;
   affiliation?: BasicContributorAffiliation;
 }
 
 export interface ProjectContributor extends BasicProjectContributor {
   affiliation?: ContributorAffiliation;
+  identity: ContributorIdentity;
 }
 
 interface Funding {

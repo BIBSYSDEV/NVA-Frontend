@@ -48,7 +48,9 @@ const initialValues: PostCristinProject = {
   language: 'http://lexvo.org/id/iso639-3/nob',
   startDate: '',
   endDate: '',
-  contributors: [],
+  contributors: [
+    { type: 'ProjectManager', identity: { type: 'Person', id: '' }, affiliation: { type: 'Organization', id: '' } },
+  ],
   coordinatingInstitution: {
     type: 'Organization',
     id: '',
@@ -181,9 +183,10 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
               <Typography variant="h3" gutterBottom sx={{ mt: '1rem' }}>
                 {t('project_manager')}
               </Typography>
+
               <Field name="contributors">
-                {({ field, meta: { touched, error } }: FieldProps<BasicProjectContributor[]>) =>
-                  field.value.length === 0 ? (
+                {({ field, meta: { touched, error } }: FieldProps<BasicProjectContributor[]>) => (
+                  <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                     <Autocomplete
                       options={personSearchResult?.hits ?? []}
                       inputMode="search"
@@ -196,28 +199,9 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                       }}
                       onChange={async (_, selectedUser) => {
                         if (!selectedUser) {
-                          if (field.value.length > 0) {
-                            setFieldValue(field.name, []);
-                          }
+                          setFieldValue('contributors[0].identity.id', '');
                         } else {
-                          // Pick first affiliation
-                          const orgId =
-                            selectedUser.affiliations.length > 0 ? selectedUser.affiliations[0].organization ?? '' : '';
-
-                          const newUser: BasicProjectContributor = {
-                            type: 'ProjectManager',
-                            identity: {
-                              type: 'Person',
-                              id: selectedUser.id ?? '',
-                              firstName: getValueByKey('FirstName', selectedUser?.names),
-                              lastName: getValueByKey('LastName', selectedUser?.names),
-                            },
-                            affiliation: {
-                              type: 'Organization',
-                              id: orgId,
-                            },
-                          };
-                          setFieldValue(field.name, [newUser]);
+                          setFieldValue('contributors[0].identity.id', selectedUser.id ?? '');
                         }
                         setSearchTerm('');
                       }}
@@ -249,24 +233,14 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                         />
                       )}
                     />
-                  ) : (
-                    <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                      <Typography>
-                        {`${field.value[0].identity.firstName} ${field.value[0].identity.lastName}`}
-                      </Typography>
-                      {field.value[0].affiliation?.id && (
-                        <AffiliationHierarchy unitUri={field.value[0].affiliation.id} commaSeparated />
-                      )}
-                      <Button
-                        size="small"
-                        variant="outlined"
-                        color="error"
-                        onClick={() => setFieldValue(field.name, [])}>
-                        {t('common:remove')}
-                      </Button>
-                    </Box>
-                  )
-                }
+                    <OrganizationSearchField
+                      disabled={!field.value[0]?.identity.id}
+                      onChange={(institution) => {
+                        setFieldValue('contributors[0].affiliation.id', institution?.id ?? '');
+                      }}
+                    />
+                  </Box>
+                )}
               </Field>
             </DialogContent>
 
