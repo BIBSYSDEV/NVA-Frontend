@@ -9,7 +9,7 @@
     "@fontsource/barlow": "^4.5.2",
     "@fontsource/crimson-text": "^4.5.0",
     "@mui/icons-material": "^5.4.2",
-    "@mui/lab": "5.0.0-alpha.70",
+    "@mui/lab": "5.0.0-alpha.71",
     "@mui/material": "^5.4.4",
     "@mui/styles": "^5.4.2",
     "@uppy/aws-s3-multipart": "^1.8.18",
