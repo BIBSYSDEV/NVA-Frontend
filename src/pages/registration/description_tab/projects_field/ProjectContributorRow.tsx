@@ -28,7 +28,7 @@ export const ProjectContributorRow = () => {
 
   return (
     <>
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 2fr 3fr' }, gap: '0.5rem 1rem' }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 2fr 3fr' }, gap: '0.5rem 1rem' }}>
         <Field name="contributors[0].type">
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
@@ -97,9 +97,7 @@ export const ProjectContributorRow = () => {
         <Field name="contributors[0].affiliation.id">
           {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
             <OrganizationSearchField
-              onChange={(institution) => {
-                setFieldValue(field.name, institution?.id ?? '');
-              }}
+              onChange={(institution) => setFieldValue(field.name, institution?.id ?? '')}
               fieldInputProps={field}
               errorMessage={touched && !!error ? error : ''}
             />

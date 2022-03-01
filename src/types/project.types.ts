@@ -1,4 +1,3 @@
-import { AdbSharp } from '@mui/icons-material';
 import { LanguageString } from './common.types';
 
 export interface ResearchProject {
