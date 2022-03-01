@@ -162,7 +162,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
               </Box>
 
               <Typography variant="h6" component="h3" gutterBottom sx={{ mt: '1rem' }}>
-                {t('contributors')}
+                {t('project_participants')}
               </Typography>
               <ProjectContributorRow />
             </DialogContent>

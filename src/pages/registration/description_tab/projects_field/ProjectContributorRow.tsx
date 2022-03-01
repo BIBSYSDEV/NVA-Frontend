@@ -28,15 +28,16 @@ export const ProjectContributorRow = () => {
 
   return (
     <>
-      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 2fr 2fr', gap: '1rem' }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 2fr 3fr' }, gap: '0.5rem 1rem' }}>
         <Field name="contributors[0].type">
-          {({ field }: FieldProps<string>) => (
+          {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
               {...field}
               disabled
               select
               label={t('common:role')}
               variant="filled"
+              error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}>
               <MenuItem value="ProjectManager">{t('project_manager')}</MenuItem>
             </TextField>
