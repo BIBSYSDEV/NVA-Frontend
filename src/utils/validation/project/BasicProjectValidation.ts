@@ -14,6 +14,9 @@ const basicProjectErrorMessage = {
   personRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('project:person'),
   }),
+  roleRequired: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('common:role'),
+  }),
   titleRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:title'),
   }),
@@ -23,6 +26,7 @@ const basicProjectErrorMessage = {
 };
 
 const contributorValidationSchema = Yup.object().shape({
+  type: Yup.string().required(basicProjectErrorMessage.roleRequired),
   identity: Yup.object().shape({ id: Yup.string().required(basicProjectErrorMessage.personRequired) }),
   affiliation: Yup.object().shape({ id: Yup.string().required(basicProjectErrorMessage.institutionRequired) }),
 });

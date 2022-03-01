@@ -1,4 +1,4 @@
-import { Box, Autocomplete, Typography, TextField } from '@mui/material';
+import { Box, Autocomplete, Typography, TextField, MenuItem } from '@mui/material';
 import { Field, FieldProps, ErrorMessage } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -28,7 +28,20 @@ export const ProjectContributorRow = () => {
 
   return (
     <>
-      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 2fr 2fr', gap: '1rem' }}>
+        <Field name="contributors[0].type">
+          {({ field }: FieldProps<string>) => (
+            <TextField
+              {...field}
+              disabled
+              select
+              label={t('common:role')}
+              variant="filled"
+              helperText={<ErrorMessage name={field.name} />}>
+              <MenuItem value="ProjectManager">{t('project_manager')}</MenuItem>
+            </TextField>
+          )}
+        </Field>
         <Field name="contributors[0].identity.id">
           {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
             <Autocomplete

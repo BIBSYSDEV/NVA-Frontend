@@ -1,3 +1,4 @@
+import { AdbSharp } from '@mui/icons-material';
 import { LanguageString } from './common.types';
 
 export interface ResearchProject {
@@ -36,7 +37,7 @@ interface CoordinatingInstitution extends BasicCoordinatingInstitution {
   name: LanguageString;
 }
 
-export interface BasicContributorAffiliation {
+interface BasicContributorAffiliation {
   type: 'Organization';
   id: string;
 }
@@ -55,7 +56,7 @@ interface ContributorIdentity extends BasicContributorIdentity {
   lastName: string;
 }
 
-export interface BasicProjectContributor {
+interface BasicProjectContributor {
   type: 'ProjectManager' | 'ProjectParticipant';
   identity: BasicContributorIdentity;
   affiliation?: BasicContributorAffiliation;
