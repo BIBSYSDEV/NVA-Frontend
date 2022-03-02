@@ -84,7 +84,14 @@ export const CustomerInstitutionMetadataForm = ({
                       fieldInputProps={field}
                     />
                   ) : (
-                    <TextField variant="filled" label={t('common:institution')} required disabled {...field} />
+                    <TextField
+                      variant="filled"
+                      label={t('common:institution')}
+                      data-testid={dataTestId.organization.searchField}
+                      required
+                      disabled
+                      {...field}
+                    />
                   )
                 }
               </Field>
