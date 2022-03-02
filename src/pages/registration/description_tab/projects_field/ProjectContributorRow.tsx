@@ -3,12 +3,17 @@ import { Field, FieldProps, ErrorMessage } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CristinApiPath } from '../../../../api/apiPaths';
+import { apiRequest } from '../../../../api/apiRequest';
+import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { SearchResponse } from '../../../../types/common.types';
+import { Organization } from '../../../../types/organization.types';
 import { CristinArrayValue, CristinUser } from '../../../../types/user.types';
+import { isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
+import { getTopLevelOrganization } from '../../../../utils/institutions-helpers';
 import { OrganizationSearchField } from '../../../admin/customerInstitutionFields/OrganizationSearchField';
 
 const getValueByKey = (key: string, items?: CristinArrayValue[]) =>
@@ -25,6 +30,25 @@ export const ProjectContributorRow = () => {
   const [personSearchResult, isLoadingPersonSearchResult] = useFetch<SearchResponse<CristinUser>>({
     url: debouncedSearchTerm ? `${CristinApiPath.Person}?results=20&query=${debouncedSearchTerm}` : '',
   });
+
+  const [isLoadingDefaultOptions, setIsLoadingDefaultOptions] = useState(false);
+  const [defaultInstitutionOptions, setDefaultInstitutionOptions] = useState<Organization[]>([]);
+  const fetchSuggestedInstitutions = async (affiliationIds: string[]) => {
+    if (affiliationIds.length > 0) {
+      setIsLoadingDefaultOptions(true);
+    }
+    const defaultInstitutionsPromises = affiliationIds.map(async (id) => {
+      const organizationResponse = await apiRequest<Organization>({ url: id });
+      if (isSuccessStatus(organizationResponse.status)) {
+        return getTopLevelOrganization(organizationResponse.data);
+      }
+    });
+    const defaultInstitutions = (await Promise.all(defaultInstitutionsPromises)).filter(
+      (institution) => institution // Remove null/undefined objects
+    ) as Organization[];
+    setDefaultInstitutionOptions(defaultInstitutions);
+    setIsLoadingDefaultOptions(false);
+  };
 
   return (
     <>
@@ -61,6 +85,11 @@ export const ProjectContributorRow = () => {
                   setFieldValue(field.name, '');
                 } else {
                   setFieldValue(field.name, selectedUser.id ?? '');
+                  if (selectedUser.affiliations) {
+                    fetchSuggestedInstitutions(
+                      selectedUser.affiliations.map((affiliation) => affiliation.organization)
+                    );
+                  }
                 }
                 setSearchTerm('');
               }}
@@ -77,7 +106,7 @@ export const ProjectContributorRow = () => {
                 );
               }}
               renderInput={(params) => (
-                <TextField
+                <AutocompleteTextField
                   onBlur={field.onBlur}
                   value={field.value}
                   name={field.name}
@@ -86,9 +115,9 @@ export const ProjectContributorRow = () => {
                   required
                   label={t('person')}
                   placeholder={t('search_for_person')}
-                  variant="filled"
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
+                  errorMessage={touched && !!error ? error : ''}
+                  isLoading={isLoadingPersonSearchResult}
+                  showSearchIcon={!field.value}
                 />
               )}
             />
@@ -100,6 +129,8 @@ export const ProjectContributorRow = () => {
               onChange={(institution) => setFieldValue(field.name, institution?.id ?? '')}
               fieldInputProps={field}
               errorMessage={touched && !!error ? error : ''}
+              isLoadingDefaultOptions={isLoadingDefaultOptions}
+              defaultOptions={defaultInstitutionOptions.filter((institution) => institution.id !== field.value)}
             />
           )}
         </Field>

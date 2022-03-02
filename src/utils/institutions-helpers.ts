@@ -37,3 +37,6 @@ const getAllChildOrganizations = (units: Organization[] = [], result: Organizati
   const subUnits = units.flatMap((u) => u.hasPart ?? []);
   return getAllChildOrganizations(subUnits, [...result, ...units]);
 };
+
+export const getTopLevelOrganization = (organization: Organization): Organization =>
+  !organization.partOf ? organization : getTopLevelOrganization(organization.partOf[0]);
