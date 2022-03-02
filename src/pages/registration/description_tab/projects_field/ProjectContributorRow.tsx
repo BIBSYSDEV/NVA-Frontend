@@ -30,9 +30,13 @@ export const ProjectContributorRow = () => {
   const [personSearchResult, isLoadingPersonSearchResult] = useFetch<SearchResponse<CristinUser>>({
     url: debouncedSearchTerm ? `${CristinApiPath.Person}?results=20&query=${debouncedSearchTerm}` : '',
   });
-  const [defaultInstitutionOptions, setDefaultInstitutionOptions] = useState<Organization[]>([]);
 
+  const [isLoadingDefaultOptions, setIsLoadingDefaultOptions] = useState(false);
+  const [defaultInstitutionOptions, setDefaultInstitutionOptions] = useState<Organization[]>([]);
   const fetchSuggestedInstitutions = async (ids: string[]) => {
+    if (ids.length > 0) {
+      setIsLoadingDefaultOptions(true);
+    }
     const defaultInstitutionsPromise = ids.map(async (id) => {
       const organizationResponse = await apiRequest<Organization>({ url: id });
       if (isSuccessStatus(organizationResponse.status)) {
@@ -43,6 +47,7 @@ export const ProjectContributorRow = () => {
       (institution) => institution // Remove null/undefined objects
     ) as Organization[];
     setDefaultInstitutionOptions(defaultInstitutions);
+    setIsLoadingDefaultOptions(false);
   };
 
   return (
@@ -125,6 +130,7 @@ export const ProjectContributorRow = () => {
               onChange={(institution) => setFieldValue(field.name, institution?.id ?? '')}
               fieldInputProps={field}
               errorMessage={touched && !!error ? error : ''}
+              isLoadingDefaultOptions={isLoadingDefaultOptions}
               defaultOptions={defaultInstitutionOptions.filter((institution) => institution.id !== field.value)}
             />
           )}
