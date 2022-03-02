@@ -3,7 +3,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 interface AutocompleteTextFieldProps
   extends AutocompleteRenderInputParams,
-    Pick<TextFieldProps, 'placeholder' | 'label' | 'required' | 'error' | 'helperText' | 'name' | 'value' | 'onBlur'> {
+    Pick<TextFieldProps, 'placeholder' | 'label' | 'required' | 'name' | 'value' | 'onBlur'> {
   isLoading: boolean;
   showSearchIcon?: boolean;
   errorMessage?: string;
@@ -35,5 +35,7 @@ export const AutocompleteTextField = ({
         </>
       ),
     }}
+    error={!!errorMessage}
+    helperText={errorMessage}
   />
 );

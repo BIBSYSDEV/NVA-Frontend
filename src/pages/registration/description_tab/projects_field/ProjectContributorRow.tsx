@@ -115,8 +115,7 @@ export const ProjectContributorRow = () => {
                   required
                   label={t('person')}
                   placeholder={t('search_for_person')}
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
+                  errorMessage={touched && !!error ? error : ''}
                   isLoading={isLoadingPersonSearchResult}
                   showSearchIcon={!field.value}
                 />

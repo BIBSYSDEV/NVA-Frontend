@@ -69,8 +69,7 @@ export const OrganizationSearchField = ({
           label={label ?? t('common:institution')}
           required
           placeholder={t('project:search_for_institution')}
-          error={!!errorMessage}
-          helperText={errorMessage}
+          errorMessage={errorMessage}
           isLoading={isLoading}
           showSearchIcon={!fieldInputProps?.value}
         />
