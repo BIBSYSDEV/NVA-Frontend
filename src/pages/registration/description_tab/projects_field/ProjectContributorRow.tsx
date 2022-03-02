@@ -33,17 +33,17 @@ export const ProjectContributorRow = () => {
 
   const [isLoadingDefaultOptions, setIsLoadingDefaultOptions] = useState(false);
   const [defaultInstitutionOptions, setDefaultInstitutionOptions] = useState<Organization[]>([]);
-  const fetchSuggestedInstitutions = async (ids: string[]) => {
-    if (ids.length > 0) {
+  const fetchSuggestedInstitutions = async (affiliationIds: string[]) => {
+    if (affiliationIds.length > 0) {
       setIsLoadingDefaultOptions(true);
     }
-    const defaultInstitutionsPromise = ids.map(async (id) => {
+    const defaultInstitutionsPromises = affiliationIds.map(async (id) => {
       const organizationResponse = await apiRequest<Organization>({ url: id });
       if (isSuccessStatus(organizationResponse.status)) {
         return getTopLevelOrganization(organizationResponse.data);
       }
     });
-    const defaultInstitutions = (await Promise.all(defaultInstitutionsPromise)).filter(
+    const defaultInstitutions = (await Promise.all(defaultInstitutionsPromises)).filter(
       (institution) => institution // Remove null/undefined objects
     ) as Organization[];
     setDefaultInstitutionOptions(defaultInstitutions);

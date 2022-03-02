@@ -7,7 +7,6 @@ interface AutocompleteTextFieldProps
   isLoading: boolean;
   showSearchIcon?: boolean;
   errorMessage?: string;
-  dataTestId?: string;
 }
 
 export const AutocompleteTextField = ({
