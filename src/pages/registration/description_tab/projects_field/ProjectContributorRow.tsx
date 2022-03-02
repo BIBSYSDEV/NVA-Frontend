@@ -9,6 +9,7 @@ import { AffiliationHierarchy } from '../../../../components/institution/Affilia
 import { SearchResponse } from '../../../../types/common.types';
 import { Organization } from '../../../../types/organization.types';
 import { CristinArrayValue, CristinUser } from '../../../../types/user.types';
+import { isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
@@ -33,10 +34,14 @@ export const ProjectContributorRow = () => {
 
   const fetchSuggestedInstitutions = async (ids: string[]) => {
     const defaultInstitutionsPromise = ids.map(async (id) => {
-      const organizationResponse = await apiRequest<Organization>({ url: id }); // todo: handle error
-      return getTopLevelOrganization(organizationResponse.data);
+      const organizationResponse = await apiRequest<Organization>({ url: id });
+      if (isSuccessStatus(organizationResponse.status)) {
+        return getTopLevelOrganization(organizationResponse.data);
+      }
     });
-    const defaultInstitutions = await Promise.all(defaultInstitutionsPromise);
+    const defaultInstitutions = (await Promise.all(defaultInstitutionsPromise)).filter(
+      (institution) => institution // Remove null/undefined objects
+    ) as Organization[];
     setDefaultInstitutionOptions(defaultInstitutions);
   };
 
@@ -120,7 +125,7 @@ export const ProjectContributorRow = () => {
               onChange={(institution) => setFieldValue(field.name, institution?.id ?? '')}
               fieldInputProps={field}
               errorMessage={touched && !!error ? error : ''}
-              defaultOptions={defaultInstitutionOptions}
+              defaultOptions={defaultInstitutionOptions.filter((institution) => institution.id !== field.value)}
             />
           )}
         </Field>
