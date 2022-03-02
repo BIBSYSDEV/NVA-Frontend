@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CristinApiPath } from '../../../../api/apiPaths';
 import { apiRequest } from '../../../../api/apiRequest';
+import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { SearchResponse } from '../../../../types/common.types';
 import { Organization } from '../../../../types/organization.types';
@@ -95,7 +96,7 @@ export const ProjectContributorRow = () => {
                 );
               }}
               renderInput={(params) => (
-                <TextField
+                <AutocompleteTextField
                   onBlur={field.onBlur}
                   value={field.value}
                   name={field.name}
@@ -104,9 +105,10 @@ export const ProjectContributorRow = () => {
                   required
                   label={t('person')}
                   placeholder={t('search_for_person')}
-                  variant="filled"
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
+                  isLoading={isLoadingPersonSearchResult}
+                  showSearchIcon={!field.value}
                 />
               )}
             />

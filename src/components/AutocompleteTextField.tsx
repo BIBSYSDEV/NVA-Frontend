@@ -3,10 +3,11 @@ import SearchIcon from '@mui/icons-material/Search';
 
 interface AutocompleteTextFieldProps
   extends AutocompleteRenderInputParams,
-    Pick<TextFieldProps, 'placeholder' | 'label' | 'required'> {
+    Pick<TextFieldProps, 'placeholder' | 'label' | 'required' | 'error' | 'helperText' | 'name' | 'value' | 'onBlur'> {
   isLoading: boolean;
   showSearchIcon?: boolean;
   errorMessage?: string;
+  dataTestId?: string;
 }
 
 export const AutocompleteTextField = ({
@@ -24,7 +25,7 @@ export const AutocompleteTextField = ({
       startAdornment: (
         <>
           {params.InputProps.startAdornment}
-          {showSearchIcon && <SearchIcon color="disabled" sx={{ marginLeft: '0.5rem' }} />}
+          {showSearchIcon && <SearchIcon color="disabled" />}
         </>
       ),
       endAdornment: (
@@ -34,7 +35,5 @@ export const AutocompleteTextField = ({
         </>
       ),
     }}
-    error={!!errorMessage}
-    helperText={errorMessage}
   />
 );

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FieldInputProps } from 'formik';
-import { Autocomplete, TextField, TextFieldProps } from '@mui/material';
+import { Autocomplete, TextFieldProps } from '@mui/material';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { Organization } from '../../../types/organization.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
@@ -9,6 +9,7 @@ import { useFetch } from '../../../utils/hooks/useFetch';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { SearchResponse } from '../../../types/common.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 
 interface OrganizationSearchFieldProps extends Pick<TextFieldProps, 'label'> {
   onChange?: (selectedInstitution: Organization | null) => void;
@@ -56,7 +57,7 @@ export const OrganizationSearchField = ({
       }}
       loading={isLoadingInstitutionOptions}
       renderInput={(params) => (
-        <TextField
+        <AutocompleteTextField
           onBlur={fieldInputProps?.onBlur}
           value={fieldInputProps?.value}
           name={fieldInputProps?.name}
@@ -65,10 +66,10 @@ export const OrganizationSearchField = ({
           label={label ?? t('common:institution')}
           required
           placeholder={t('project:search_for_institution')}
-          variant="filled"
-          fullWidth
           error={!!errorMessage}
           helperText={errorMessage}
+          isLoading={isLoadingInstitutionOptions}
+          showSearchIcon={!fieldInputProps?.value}
         />
       )}
     />
