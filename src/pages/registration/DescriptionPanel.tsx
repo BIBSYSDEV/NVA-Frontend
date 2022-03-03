@@ -11,7 +11,7 @@ import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
 import { InputContainerBox } from '../../components/styled/Wrappers';
 import { dataTestId } from '../../utils/dataTestIds';
 
-const registrationLanguages = [
+const languageOptions = [
   getLanguageByIso6393Code('eng'),
   getLanguageByIso6393Code('nob'),
   getLanguageByIso6393Code('nno'),
@@ -139,13 +139,13 @@ export const DescriptionPanel = () => {
               placeholder={t('description.primary_language')}
               select
               variant="filled">
-              {!registrationLanguages.some((registrationLanguage) => registrationLanguage.uri === field.value) && (
+              {!languageOptions.some((language) => language.uri === field.value) && (
                 // Show if Registration has a language that's currently not supported
                 <MenuItem value={field.value} disabled>
                   {i18n.language === 'nob' ? getLanguageByIso6393Code('und').nob : getLanguageByIso6393Code('und').eng}
                 </MenuItem>
               )}
-              {registrationLanguages.map(({ uri, nob, eng }) => (
+              {languageOptions.map(({ uri, nob, eng }) => (
                 <MenuItem value={uri} key={uri} data-testid={`registration-language-${uri}`}>
                   {i18n.language === 'nob' ? nob : eng}
                 </MenuItem>
