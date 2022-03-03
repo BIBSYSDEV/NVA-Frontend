@@ -26,7 +26,6 @@ import { authOptions } from './utils/aws-config';
 import { isErrorStatus, isSuccessStatus, LocalStorageKey, USE_MOCK_DATA } from './utils/constants';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { PageSpinner } from './components/PageSpinner';
-import { LanguageCodes } from './types/language.types';
 import { SkipLink } from './components/SkipLink';
 import { useFetch } from './utils/hooks/useFetch';
 import { AuthorityApiPath, RoleApiPath } from './api/apiPaths';
@@ -35,7 +34,7 @@ import { UrlPathTemplate } from './utils/urlPaths';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
 const getLanguageTagValue = (language: string) => {
-  if (language === LanguageCodes.ENGLISH) {
+  if (language === 'eng') {
     return 'en';
   }
   return 'no';

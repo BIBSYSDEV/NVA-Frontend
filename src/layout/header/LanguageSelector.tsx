@@ -2,18 +2,20 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Menu, MenuItem } from '@mui/material';
 import LanguageIcon from '@mui/icons-material/Language';
-import { LanguageCodes } from '../../types/language.types';
+import { getLanguageByIso6393Code } from 'nva-language';
 import { dataTestId } from '../../utils/dataTestIds';
 
 interface LanguageSelectorProps {
   isMobile?: boolean;
 }
 
+const englishLanguage = getLanguageByIso6393Code('eng');
+
 export const LanguageSelector = ({ isMobile }: LanguageSelectorProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
-  const setLanguage = (languageCode: LanguageCodes) => {
+  const setLanguage = (languageCode: string) => {
     setAnchorEl(null);
     i18n.changeLanguage(languageCode);
   };
@@ -26,7 +28,7 @@ export const LanguageSelector = ({ isMobile }: LanguageSelectorProps) => {
         data-testid={dataTestId.header.languageButton}
         startIcon={<LanguageIcon />}
         onClick={(event) => setAnchorEl(event.currentTarget)}>
-        {i18n.language === LanguageCodes.NORWEGIAN_BOKMAL ? t('languages:nor') : t(`languages:${i18n.language}`)}
+        {i18n.language === 'nob' ? 'Norsk' : englishLanguage.eng}
       </Button>
       <Menu
         data-testid={dataTestId.header.languageMenu}
@@ -38,13 +40,11 @@ export const LanguageSelector = ({ isMobile }: LanguageSelectorProps) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        <MenuItem
-          disabled={i18n.language === LanguageCodes.NORWEGIAN_BOKMAL}
-          onClick={() => setLanguage(LanguageCodes.NORWEGIAN_BOKMAL)}>
-          {t('languages:nor')}
+        <MenuItem disabled={i18n.language === 'nob'} onClick={() => setLanguage('nob')}>
+          Norsk
         </MenuItem>
-        <MenuItem disabled={i18n.language === LanguageCodes.ENGLISH} onClick={() => setLanguage(LanguageCodes.ENGLISH)}>
-          {t('languages:eng')}
+        <MenuItem disabled={i18n.language === 'eng'} onClick={() => setLanguage('eng')}>
+          {englishLanguage.eng}
         </MenuItem>
       </Menu>
     </>

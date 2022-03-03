@@ -1,11 +1,10 @@
 import i18n from '../translations/i18n';
 import { LanguageString } from '../types/common.types';
-import { LanguageCodes } from '../types/language.types';
 
 // Map from three letter language to two ("nob" -> "no")
 export const getPreferredLanguageCode = (language?: string) => {
   const currentLanguage = language || i18n.language;
-  if (currentLanguage === LanguageCodes.NORWEGIAN_BOKMAL || currentLanguage === LanguageCodes.NORWEGIAN_NYNORSK) {
+  if (currentLanguage === 'nob') {
     return 'nb';
   } else {
     return 'en';
