@@ -103,6 +103,7 @@ export const dataTestId = {
       projectForm: {
         contributorsSearchField: 'project-contributors-search-field',
         endDateField: 'project-end-date-field',
+        roleField: 'project-participant-role-field',
         startDateField: 'project-start-date-field',
         titleField: 'project-title-field',
       },

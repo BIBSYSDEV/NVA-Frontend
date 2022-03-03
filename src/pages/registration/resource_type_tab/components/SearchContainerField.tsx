@@ -1,5 +1,5 @@
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Chip, Typography, Autocomplete, Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
@@ -14,6 +14,7 @@ import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { Contributor } from '../../../../types/contributor.types';
 import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
 import { ExpressionStatement } from '../../../../utils/searchHelpers';
+import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -49,6 +50,12 @@ export const SearchContainerField = ({
     getIn(values, fieldName),
     fetchErrorMessage
   );
+
+  useEffect(() => {
+    if (stringIncludesMathJax(selectedContainer?.entityDescription?.mainTitle)) {
+      typesetMathJax();
+    }
+  }, [selectedContainer]);
 
   return (
     <Field name={fieldName}>

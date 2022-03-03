@@ -1,5 +1,4 @@
 import { nb as norwegianLocale, enUS as englishLocale } from 'date-fns/locale';
-import { LanguageCodes } from '../types/language.types';
 import { RegistrationDate } from '../types/registration.types';
 
 export const displayDate = (date: RegistrationDate | undefined) => {
@@ -13,7 +12,7 @@ export const displayDate = (date: RegistrationDate | undefined) => {
 };
 
 export const getDateFnsLocale = (language: string) => {
-  if (language === LanguageCodes.NORWEGIAN_BOKMAL || language === LanguageCodes.NORWEGIAN_NYNORSK) {
+  if (language === 'nob') {
     return norwegianLocale;
   }
   return englishLocale;

@@ -2,7 +2,6 @@ import { CalendarPickerView, DatePickerProps } from '@mui/lab';
 import { createTheme, SxProps } from '@mui/material';
 import { nbNO, enUS } from '@mui/material/locale';
 import i18n from '../translations/i18n';
-import { LanguageCodes } from '../types/language.types';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
 enum Color {
@@ -23,7 +22,7 @@ enum Font {
   Crimson = 'Crimson Text, serif',
 }
 
-const locale = i18n.language === LanguageCodes.ENGLISH ? enUS : nbNO;
+const locale = i18n.language === 'eng' ? enUS : nbNO;
 
 export const mainTheme = createTheme(
   {

@@ -1,7 +1,6 @@
 import { LocalizationProvider, DatePicker, LoadingButton } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {
-  Autocomplete,
   Box,
   Button,
   Dialog,
@@ -13,31 +12,20 @@ import {
   Typography,
 } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { CristinApiPath } from '../../../../api/apiPaths';
 import { authenticatedApiRequest } from '../../../../api/apiRequest';
-import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { setNotification } from '../../../../redux/actions/notificationActions';
 import { datePickerTranslationProps } from '../../../../themes/mainTheme';
-import { SearchResponse } from '../../../../types/common.types';
-import { BasicProjectContributor, PostCristinProject } from '../../../../types/project.types';
-import { CristinArrayValue, CristinUser } from '../../../../types/user.types';
+import { PostCristinProject } from '../../../../types/project.types';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getDateFnsLocale } from '../../../../utils/date-helpers';
-import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { useFetch } from '../../../../utils/hooks/useFetch';
 import { getNewDateValue } from '../../../../utils/registration-helpers';
 import { basicProjectValidationSchema } from '../../../../utils/validation/project/BasicProjectValidation';
 import { OrganizationSearchField } from '../../../admin/customerInstitutionFields/OrganizationSearchField';
-
-const getValueByKey = (key: string, items?: CristinArrayValue[]) =>
-  items?.find((item) => item.type === key)?.value ?? '';
-
-const getFullName = (names: CristinArrayValue[]) =>
-  `${getValueByKey('FirstName', names)} ${getValueByKey('LastName', names)}`;
+import { ProjectContributorRow } from './ProjectContributorRow';
 
 // Add 1ms to Project dates as Cristin does not allow 0ms for startDate/endDate ¯\_(ツ)_/¯
 const getProjectDate = (date: Date | null, keyboardValue?: string) => getNewDateValue(date, keyboardValue, 1);
@@ -48,7 +36,9 @@ const initialValues: PostCristinProject = {
   language: 'http://lexvo.org/id/iso639-3/nob',
   startDate: '',
   endDate: '',
-  contributors: [],
+  contributors: [
+    { type: 'ProjectManager', identity: { type: 'Person', id: '' }, affiliation: { type: 'Organization', id: '' } },
+  ],
   coordinatingInstitution: {
     type: 'Organization',
     id: '',
@@ -62,13 +52,6 @@ interface CreateProjectDialogProps extends DialogProps {
 export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
   const { t, i18n } = useTranslation('project');
   const dispatch = useDispatch();
-
-  const [searchTerm, setSearchTerm] = useState('');
-  const debouncedSearchTerm = useDebounce(searchTerm);
-
-  const [personSearchResult, isLoadingPersonSearchResult] = useFetch<SearchResponse<CristinUser>>({
-    url: debouncedSearchTerm ? `${CristinApiPath.Person}?results=20&query=${debouncedSearchTerm}` : '',
-  });
 
   const createProject = async (values: PostCristinProject) => {
     const createProjectResponse = await authenticatedApiRequest({
@@ -178,96 +161,10 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                 </Box>
               </Box>
 
-              <Typography variant="h3" gutterBottom sx={{ mt: '1rem' }}>
-                {t('project_manager')}
+              <Typography variant="h6" component="h3" gutterBottom sx={{ mt: '1rem' }}>
+                {t('project_participants')}
               </Typography>
-              <Field name="contributors">
-                {({ field, meta: { touched, error } }: FieldProps<BasicProjectContributor[]>) =>
-                  field.value.length === 0 ? (
-                    <Autocomplete
-                      options={personSearchResult?.hits ?? []}
-                      inputMode="search"
-                      getOptionLabel={(option) => getFullName(option.names)}
-                      filterOptions={(options) => options}
-                      onInputChange={(_, value, reason) => {
-                        if (reason !== 'reset') {
-                          setSearchTerm(value);
-                        }
-                      }}
-                      onChange={async (_, selectedUser) => {
-                        if (!selectedUser) {
-                          if (field.value.length > 0) {
-                            setFieldValue(field.name, []);
-                          }
-                        } else {
-                          // Pick first affiliation
-                          const orgId =
-                            selectedUser.affiliations.length > 0 ? selectedUser.affiliations[0].organization ?? '' : '';
-
-                          const newUser: BasicProjectContributor = {
-                            type: 'ProjectManager',
-                            identity: {
-                              type: 'Person',
-                              id: selectedUser.id ?? '',
-                              firstName: getValueByKey('FirstName', selectedUser?.names),
-                              lastName: getValueByKey('LastName', selectedUser?.names),
-                            },
-                            affiliation: {
-                              type: 'Organization',
-                              id: orgId,
-                            },
-                          };
-                          setFieldValue(field.name, [newUser]);
-                        }
-                        setSearchTerm('');
-                      }}
-                      loading={isLoadingPersonSearchResult}
-                      renderOption={(props, option) => {
-                        const orgId = option.affiliations.length > 0 ? option.affiliations[0].organization ?? '' : '';
-                        return (
-                          <li {...props} key={option.id}>
-                            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                              <Typography variant="subtitle1">{getFullName(option.names)}</Typography>
-                              {orgId && <AffiliationHierarchy unitUri={orgId} commaSeparated />}
-                            </Box>
-                          </li>
-                        );
-                      }}
-                      renderInput={(params) => (
-                        <TextField
-                          onBlur={field.onBlur}
-                          value={field.value}
-                          name={field.name}
-                          data-testid={dataTestId.registrationWizard.description.projectForm.contributorsSearchField}
-                          {...params}
-                          required
-                          label={t('person')}
-                          placeholder={t('search_for_person')}
-                          variant="filled"
-                          error={touched && !!error}
-                          helperText={<ErrorMessage name={field.name} />}
-                        />
-                      )}
-                    />
-                  ) : (
-                    <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                      <Typography>
-                        {`${field.value[0].identity.firstName} ${field.value[0].identity.lastName}`}
-                      </Typography>
-                      {field.value[0].affiliation?.id && (
-                        <AffiliationHierarchy unitUri={field.value[0].affiliation.id} commaSeparated />
-                      )}
-                      <Button
-                        size="small"
-                        variant="outlined"
-                        color="error"
-                        onClick={() => setFieldValue(field.name, [])}>
-                        {t('common:remove')}
-                      </Button>
-                    </Box>
-                  )
-                }
-              </Field>
+              <ProjectContributorRow />
             </DialogContent>
 
             <DialogActions>

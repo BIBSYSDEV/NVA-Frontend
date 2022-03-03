@@ -9,7 +9,6 @@ import { BookEntityDescription } from './publication_types/bookRegistration.type
 import { ReportEntityDescription } from './publication_types/reportRegistration.types';
 import { ChapterEntityDescription } from './publication_types/chapterRegistration.types';
 import { Contributor } from './contributor.types';
-import { LanguageValues } from './language.types';
 import { PresentationEntityDescription } from './publication_types/presentationRegistration.types';
 import { ArtisticEntityDescription } from './publication_types/artisticRegistration.types';
 import { MessageCollection } from './publication_types/messages.types';
@@ -100,7 +99,7 @@ export interface BaseEntityDescription {
   contributors: Contributor[];
   date?: RegistrationDate;
   description: string;
-  language: LanguageValues;
+  language: string;
   mainTitle: string;
   npiSubjectHeading: string;
   tags: string[];
