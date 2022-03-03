@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
+import { getLanguageByUri } from 'nva-language';
 import {
   BookPublicationContext,
   BookPublicationInstance,
@@ -58,7 +59,6 @@ import { displayDate } from '../../utils/date-helpers';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
-import { getLanguageByUri } from 'nva-language';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t, i18n } = useTranslation('registration');

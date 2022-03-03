@@ -9,13 +9,14 @@ interface LanguageSelectorProps {
   isMobile?: boolean;
 }
 
-const englishLanguage = getLanguageByIso6393Code('eng');
+const englishTitle = getLanguageByIso6393Code('eng').eng;
+const norwegianTitle = 'Norsk';
 
 export const LanguageSelector = ({ isMobile }: LanguageSelectorProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const { i18n } = useTranslation();
 
-  const setLanguage = (languageCode: string) => {
+  const setLanguage = (languageCode: 'nob' | 'eng') => {
     setAnchorEl(null);
     i18n.changeLanguage(languageCode);
   };
@@ -28,7 +29,7 @@ export const LanguageSelector = ({ isMobile }: LanguageSelectorProps) => {
         data-testid={dataTestId.header.languageButton}
         startIcon={<LanguageIcon />}
         onClick={(event) => setAnchorEl(event.currentTarget)}>
-        {i18n.language === 'nob' ? 'Norsk' : englishLanguage.eng}
+        {i18n.language === 'nob' ? norwegianTitle : englishTitle}
       </Button>
       <Menu
         data-testid={dataTestId.header.languageMenu}
@@ -41,10 +42,10 @@ export const LanguageSelector = ({ isMobile }: LanguageSelectorProps) => {
           horizontal: 'left',
         }}>
         <MenuItem disabled={i18n.language === 'nob'} onClick={() => setLanguage('nob')}>
-          Norsk
+          {norwegianTitle}
         </MenuItem>
         <MenuItem disabled={i18n.language === 'eng'} onClick={() => setLanguage('eng')}>
-          {englishLanguage.eng}
+          {englishTitle}
         </MenuItem>
       </Menu>
     </>

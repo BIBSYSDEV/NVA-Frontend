@@ -2,7 +2,7 @@ declare module 'nva-language' {
   interface Language {
     uri: string;
     iso6391Code: string;
-    iso6392Codes: string;
+    iso6392Codes: string[];
     iso6393Code: string;
     eng: string;
     nob: string;
