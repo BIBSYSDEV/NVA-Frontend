@@ -1,4 +1,3 @@
-import { LanguageValues } from '../../types/language.types';
 import { CristinProject, ProjectSearchResponse } from '../../types/project.types';
 
 export const mockProject: CristinProject = {
@@ -15,7 +14,7 @@ export const mockProject: CristinProject = {
   popularScientificSummary: {},
   status: 'ACTIVE',
   title: 'A dummy project',
-  language: LanguageValues.ENGLISH,
+  language: 'http://lexvo.org/id/iso639-3/eng',
   alternativeTitles: [
     {
       en: 'A dummy project',
@@ -98,7 +97,7 @@ const mockProjects: CristinProject[] = [
     popularScientificSummary: {},
     status: 'ACTIVE',
     title: 'Ornitologisk kartlegging i og ved Semsøyene naturreservat',
-    language: LanguageValues.ENGLISH,
+    language: 'http://lexvo.org/id/iso639-3/eng',
     alternativeTitles: [
       {
         en: 'Ornithological taxonomy at Semsøyene Islands Nature Preserve',
@@ -146,7 +145,7 @@ const mockProjects: CristinProject[] = [
     popularScientificSummary: {},
     status: 'ACTIVE',
     title: 'Naturbasert avløpsteknologi',
-    language: LanguageValues.ENGLISH,
+    language: 'http://lexvo.org/id/iso639-3/eng',
     alternativeTitles: [
       {
         en: 'Natural Treatment Systems',
@@ -194,7 +193,7 @@ const mockProjects: CristinProject[] = [
     popularScientificSummary: {},
     status: 'CONCLUDED',
     title: 'Tørking og duggpunktbestemmelse av naturgass',
-    language: LanguageValues.ENGLISH,
+    language: 'http://lexvo.org/id/iso639-3/eng',
     alternativeTitles: [
       {
         en: 'Natural Gas dehydration and Dewpointing',
@@ -274,7 +273,7 @@ const mockProjects: CristinProject[] = [
     popularScientificSummary: {},
     status: 'NOTSTARTED',
     title: 'Antikkens syn på mennesket og naturen',
-    language: LanguageValues.ENGLISH,
+    language: 'http://lexvo.org/id/iso639-3/eng',
     alternativeTitles: [
       {
         en: 'The View of Man and Nature in Greek Culture',

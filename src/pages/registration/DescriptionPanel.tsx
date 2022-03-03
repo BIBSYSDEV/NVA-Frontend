@@ -2,7 +2,7 @@ import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MenuItem, TextField, Autocomplete, Box } from '@mui/material';
-import { LanguageCodes, registrationLanguages } from '../../types/language.types';
+import { getLanguageByIso6393Code } from 'nva-language';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { DatePickerField } from './description_tab/DatePickerField';
@@ -11,8 +11,27 @@ import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
 import { InputContainerBox } from '../../components/styled/Wrappers';
 import { dataTestId } from '../../utils/dataTestIds';
 
+const languageOptions = [
+  getLanguageByIso6393Code('eng'),
+  getLanguageByIso6393Code('nob'),
+  getLanguageByIso6393Code('nno'),
+  getLanguageByIso6393Code('dan'),
+  getLanguageByIso6393Code('fin'),
+  getLanguageByIso6393Code('fra'),
+  getLanguageByIso6393Code('isl'),
+  getLanguageByIso6393Code('ita'),
+  getLanguageByIso6393Code('nld'),
+  getLanguageByIso6393Code('por'),
+  getLanguageByIso6393Code('rus'),
+  getLanguageByIso6393Code('sme'),
+  getLanguageByIso6393Code('spa'),
+  getLanguageByIso6393Code('swe'),
+  getLanguageByIso6393Code('deu'),
+  getLanguageByIso6393Code('mis'),
+];
+
 export const DescriptionPanel = () => {
-  const { t } = useTranslation('registration');
+  const { t, i18n } = useTranslation('registration');
   const { setFieldValue } = useFormikContext<Registration>();
 
   return (
@@ -120,15 +139,15 @@ export const DescriptionPanel = () => {
               placeholder={t('description.primary_language')}
               select
               variant="filled">
-              {!registrationLanguages.some((registrationLanguage) => registrationLanguage.value === field.value) && (
+              {!languageOptions.some((language) => language.uri === field.value) && (
                 // Show if Registration has a language that's currently not supported
                 <MenuItem value={field.value} disabled>
-                  {t(`languages:${LanguageCodes.Undefined}`)}
+                  {i18n.language === 'nob' ? getLanguageByIso6393Code('und').nob : getLanguageByIso6393Code('und').eng}
                 </MenuItem>
               )}
-              {registrationLanguages.map(({ id, value }) => (
-                <MenuItem value={value} key={id} data-testid={`registration-language-${id}`}>
-                  {t(`languages:${id}`)}
+              {languageOptions.map(({ uri, nob, eng }) => (
+                <MenuItem value={uri} key={uri} data-testid={`registration-language-${uri}`}>
+                  {i18n.language === 'nob' ? nob : eng}
                 </MenuItem>
               ))}
             </TextField>
