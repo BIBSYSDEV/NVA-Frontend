@@ -70,7 +70,7 @@ const MyCustomerInstitutionPage = () => {
                     label={t('common:institution')}
                     required
                     disabled
-                    data-testid={dataTestId.organization.searchField}
+                    dataTestId={dataTestId.organization.searchField}
                   />
                   <CustomerInstitutionTextField
                     name={CustomerInstitutionFieldNames.DisplayName}
