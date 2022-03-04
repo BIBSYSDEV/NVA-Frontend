@@ -6,7 +6,6 @@ import {
   PublicationChannelType,
 } from '../registration.types';
 import { JournalType } from '../publicationFieldNames';
-import { LanguageValues } from '../language.types';
 import { emptyPagesRange, PagesRange } from './pages.types';
 import { JournalArticleContentType } from './content.types';
 
@@ -73,7 +72,7 @@ export const emptyRegistrationEntityDescription: JournalEntityDescription = {
     day: '',
   },
   description: '',
-  language: LanguageValues.NONE,
+  language: '',
   mainTitle: '',
   npiSubjectHeading: '',
   reference: emptyReference,

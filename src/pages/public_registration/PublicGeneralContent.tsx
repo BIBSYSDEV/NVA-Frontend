@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
-import { LanguageCodes, registrationLanguages } from '../../types/language.types';
+import { getLanguageByUri } from 'nva-language';
 import {
   BookPublicationContext,
   BookPublicationInstance,
@@ -61,7 +61,7 @@ import { ArtisticPublicationInstance } from '../../types/publication_types/artis
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
-  const { t } = useTranslation('registration');
+  const { t, i18n } = useTranslation('registration');
   const { entityDescription } = registration;
 
   const publicationContext = entityDescription?.reference?.publicationContext;
@@ -69,6 +69,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   const journalPublicationInstance = entityDescription?.reference?.publicationInstance as
     | JournalPublicationInstance
     | undefined;
+
+  const language = entityDescription?.language ? getLanguageByUri(entityDescription.language) : null;
 
   return (
     <StyledGeneralInfo>
@@ -83,16 +85,9 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
 
         {journalPublicationInstance?.peerReviewed && <Typography>{t('resource_type.peer_reviewed')}</Typography>}
 
-        {entityDescription?.language && (
+        {language && (
           <Typography data-testid={dataTestId.registrationLandingPage.primaryLanguage}>
-            {t('common:language')}:{' '}
-            {t(
-              `languages:${
-                registrationLanguages.find(
-                  (registrationLanguage) => registrationLanguage.value === entityDescription.language
-                )?.id ?? LanguageCodes.Undefined
-              }`
-            )}
+            {t('common:language')}: {i18n.language === 'nob' ? language.nob : language.eng}
           </Typography>
         )}
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FieldInputProps } from 'formik';
-import { Autocomplete, TextField, TextFieldProps } from '@mui/material';
+import { Autocomplete, TextFieldProps } from '@mui/material';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { Organization } from '../../../types/organization.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
@@ -9,12 +9,15 @@ import { useFetch } from '../../../utils/hooks/useFetch';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { SearchResponse } from '../../../types/common.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 
 interface OrganizationSearchFieldProps extends Pick<TextFieldProps, 'label'> {
   onChange?: (selectedInstitution: Organization | null) => void;
   disabled?: boolean;
   errorMessage?: string;
   fieldInputProps?: FieldInputProps<string>;
+  isLoadingDefaultOptions?: boolean;
+  defaultOptions?: Organization[];
 }
 
 export const OrganizationSearchField = ({
@@ -23,6 +26,8 @@ export const OrganizationSearchField = ({
   errorMessage,
   fieldInputProps,
   label,
+  isLoadingDefaultOptions = false,
+  defaultOptions = [],
 }: OrganizationSearchFieldProps) => {
   const { t } = useTranslation('feedback');
   const [searchTerm, setSearchTerm] = useState('');
@@ -32,7 +37,8 @@ export const OrganizationSearchField = ({
     errorMessage: t('error.get_institutions'),
   });
 
-  const options = isLoadingInstitutionOptions || !institutionOptions ? [] : institutionOptions.hits;
+  const isLoading = isLoadingDefaultOptions || isLoadingInstitutionOptions;
+  const options = isLoadingInstitutionOptions || !institutionOptions ? defaultOptions : institutionOptions.hits;
 
   return (
     <Autocomplete
@@ -52,9 +58,9 @@ export const OrganizationSearchField = ({
         }
         setSearchTerm('');
       }}
-      loading={isLoadingInstitutionOptions}
+      loading={isLoading}
       renderInput={(params) => (
-        <TextField
+        <AutocompleteTextField
           onBlur={fieldInputProps?.onBlur}
           value={fieldInputProps?.value}
           name={fieldInputProps?.name}
@@ -63,10 +69,9 @@ export const OrganizationSearchField = ({
           label={label ?? t('common:institution')}
           required
           placeholder={t('project:search_for_institution')}
-          variant="filled"
-          fullWidth
-          error={!!errorMessage}
-          helperText={errorMessage}
+          errorMessage={errorMessage}
+          isLoading={isLoading}
+          showSearchIcon={!fieldInputProps?.value}
         />
       )}
     />

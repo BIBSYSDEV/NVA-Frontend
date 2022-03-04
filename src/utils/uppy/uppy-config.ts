@@ -9,7 +9,6 @@ import {
   abortMultipartUpload,
   completeMultipartUpload,
 } from '../../api/fileApi';
-import { LanguageCodes } from '../../types/language.types';
 
 interface UppyArgs {
   uploadId: string;
@@ -25,10 +24,7 @@ interface UppyCompleteArgs extends UppyArgs {
   parts: AwsS3Part[];
 }
 
-const getUppyLocale = (language: string) =>
-  language === LanguageCodes.NORWEGIAN_BOKMAL || language === LanguageCodes.NORWEGIAN_NYNORSK
-    ? norwegianLocale
-    : englishLocale;
+const getUppyLocale = (language: string) => (language === 'nob' ? norwegianLocale : englishLocale);
 
 export const createUppy = (language: string) => () =>
   Uppy<StrictTypes>({

@@ -1,6 +1,5 @@
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import { LanguageCodes } from '../types/language.types';
 
 import aboutEn from './en/about.json';
 import adminEn from './en/admin.json';
@@ -10,7 +9,6 @@ import disciplinesEn from './en/disciplines.json';
 import editorEn from './en/editor.json';
 import feedbackEn from './en/feedback.json';
 import institutionEn from './en/institution.json';
-import languagesEn from './en/languages.json';
 import licensesEn from './en/licenses.json';
 import privacyEn from './en/privacy.json';
 import profileEn from './en/profile.json';
@@ -28,7 +26,6 @@ import disciplinesNb from './nb/disciplines.json';
 import editorNb from './nb/editor.json';
 import feedbackNb from './nb/feedback.json';
 import institutionNb from './nb/institution.json';
-import languagesNb from './nb/languages.json';
 import licensesNb from './nb/licenses.json';
 import privacyNb from './nb/privacy.json';
 import profileNb from './nb/profile.json';
@@ -37,8 +34,6 @@ import publicationTypesNb from './nb/publicationTypes.json';
 import registrationNb from './nb/registration.json';
 import searchNb from './nb/search.json';
 import workListsNb from './nb/workLists.json';
-
-const fallbackLanguage = LanguageCodes.NORWEGIAN_BOKMAL;
 
 i18n.use(LanguageDetector).init({
   resources: {
@@ -51,7 +46,6 @@ i18n.use(LanguageDetector).init({
       editor: editorEn,
       feedback: feedbackEn,
       institution: institutionEn,
-      languages: languagesEn,
       licenses: licensesEn,
       privacy: privacyEn,
       profile: profileEn,
@@ -70,7 +64,6 @@ i18n.use(LanguageDetector).init({
       editor: editorNb,
       feedback: feedbackNb,
       institution: institutionNb,
-      languages: languagesNb,
       licenses: licensesNb,
       privacy: privacyNb,
       profile: profileNb,
@@ -81,7 +74,7 @@ i18n.use(LanguageDetector).init({
       workLists: workListsNb,
     },
   },
-  fallbackLng: fallbackLanguage,
+  fallbackLng: 'nob',
   debug: false,
   ns: [
     'admin',
@@ -91,7 +84,6 @@ i18n.use(LanguageDetector).init({
     'feedback',
     'infopages',
     'institution',
-    'languages',
     'licenses',
     'profile',
     'publicationTypes',
