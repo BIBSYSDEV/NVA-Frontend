@@ -116,11 +116,13 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       return;
     }
 
+    const orcId = selectedContributor.identifiers.find((identifier) => identifier.type === 'ORCID')?.value ?? '';
+
     const identity: Identity = {
       type: 'Identity',
       id: selectedContributor.id,
-      // orcId: authority.orcids.length > 0 ? authority.orcids[0] : '',
       name: getFullName(selectedContributor.names),
+      orcId,
     };
 
     const activeAffiliations = selectedContributor.affiliations.filter((affiliation) => affiliation.active);
