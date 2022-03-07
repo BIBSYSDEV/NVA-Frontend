@@ -19,7 +19,7 @@ import { OrganizationSearchField } from '../../../admin/customerInstitutionField
 const getValueByKey = (key: string, items?: CristinArrayValue[]) =>
   items?.find((item) => item.type === key)?.value ?? '';
 
-const getFullName = (names: CristinArrayValue[]) =>
+export const getFullName = (names: CristinArrayValue[]) =>
   `${getValueByKey('FirstName', names)} ${getValueByKey('LastName', names)}`;
 
 export const ProjectContributorRow = () => {

@@ -18,7 +18,6 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import { setNotification } from '../../../redux/actions/notificationActions';
-import { Authority } from '../../../types/authority.types';
 import {
   Contributor,
   ContributorRole,
@@ -33,6 +32,8 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { ContributorRow } from './components/ContributorRow';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { CristinUser } from '../../../types/user.types';
+import { getFullName } from '../description_tab/projects_field/ProjectContributorRow';
 
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
   contributorRoles: ContributorRole[];
@@ -105,26 +106,32 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     setFieldValue(ContributorFieldNames.Contributors, [...otherContributors, ...newContributors]);
   };
 
-  const onContributorSelected = (authority: Authority, role: ContributorRole, contributorIndex?: number) => {
-    if (relevantContributors.some((contributor) => contributor.identity.id === authority.id)) {
+  const onContributorSelected = (
+    selectedContributor: CristinUser,
+    role: ContributorRole,
+    contributorIndex?: number
+  ) => {
+    if (relevantContributors.some((contributor) => contributor.identity.id === selectedContributor.id)) {
       dispatch(setNotification(t('contributors.contributor_already_added'), 'info'));
       return;
     }
 
     const identity: Identity = {
       type: 'Identity',
-      id: authority.id,
-      orcId: authority.orcids.length > 0 ? authority.orcids[0] : '',
-      name: authority.name,
+      id: selectedContributor.id,
+      // orcId: authority.orcids.length > 0 ? authority.orcids[0] : '',
+      name: getFullName(selectedContributor.names),
     };
+
+    const activeAffiliations = selectedContributor.affiliations.filter((affiliation) => affiliation.active);
 
     if (contributorIndex === undefined) {
       const newContributor: Contributor = {
         ...emptyContributor,
         identity,
-        affiliations: authority.orgunitids.map((unitUri) => ({
+        affiliations: activeAffiliations.map((affiliation) => ({
           type: 'Organization',
-          id: unitUri,
+          id: affiliation.organization,
         })),
         role,
         sequence: relevantContributors.length + 1,
@@ -135,9 +142,9 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     } else {
       const relevantContributor = relevantContributors[contributorIndex];
       const relevantAffiliations = relevantContributor.affiliations ?? [];
-      const existingOrgunitIds: Institution[] = authority.orgunitids.map((unitUri) => ({
+      const existingOrgunitIds: Institution[] = activeAffiliations.map((affiliation) => ({
         type: 'Organization',
-        id: unitUri,
+        id: affiliation.organization,
       }));
       relevantAffiliations.push(...existingOrgunitIds);
 

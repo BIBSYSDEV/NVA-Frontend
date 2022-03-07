@@ -6,18 +6,19 @@ import { Box, Button, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { RootStore } from '../../../../redux/reducers/rootReducer';
-import { Authority } from '../../../../types/authority.types';
 import { Registration } from '../../../../types/registration.types';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { AuthorityList } from '../../../user/authority/AuthorityList';
 import { useFetch } from '../../../../utils/hooks/useFetch';
-import { AuthorityApiPath } from '../../../../api/apiPaths';
+import { CristinApiPath } from '../../../../api/apiPaths';
 import { ContributorRole } from '../../../../types/contributor.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { SearchResponse } from '../../../../types/common.types';
+import { CristinUser } from '../../../../types/user.types';
+import { CristinPersonList } from './CristinPersonList';
 
 interface AddContributorModalContentProps {
-  addContributor: (selectedAuthority: Authority) => void;
-  addSelfAsContributor: () => void;
+  addContributor: (selectedUser: CristinUser) => void;
+  addSelfAsContributor?: () => void;
   openNewContributorModal: () => void;
   initialSearchTerm?: string;
   roleToAdd: ContributorRole;
@@ -31,11 +32,13 @@ export const AddContributorModalContent = ({
   roleToAdd,
 }: AddContributorModalContentProps) => {
   const { t } = useTranslation('registration');
-  const [selectedAuthority, setSelectedAuthority] = useState<Authority | null>(null);
+  const [selectedUser, setSelectedUser] = useState<CristinUser | null>(null);
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const debouncedSearchTerm = useDebounce(searchTerm);
-  const [authorities, isLoadingAuthorities] = useFetch<Authority[]>({
-    url: debouncedSearchTerm ? `${AuthorityApiPath.Person}?name=${encodeURIComponent(debouncedSearchTerm)}` : '',
+  const [userSearch, isLoadingUserSearch] = useFetch<SearchResponse<CristinUser>>({
+    url: debouncedSearchTerm
+      ? `${CristinApiPath.Person}?query=${encodeURIComponent(debouncedSearchTerm)}&results=10`
+      : '',
     errorMessage: t('feedback:error.get_authorities'),
   });
   const user = useSelector((store: RootStore) => store.user);
@@ -68,13 +71,13 @@ export const AddContributorModalContent = ({
         sx={{ my: '1rem' }}
       />
 
-      {isLoadingAuthorities ? (
+      {isLoadingUserSearch ? (
         <ListSkeleton arrayLength={3} minWidth={100} height={80} />
-      ) : authorities && authorities.length > 0 && debouncedSearchTerm ? (
-        <AuthorityList
-          authorities={authorities}
-          selectedArpId={selectedAuthority?.id}
-          onSelectAuthority={setSelectedAuthority}
+      ) : userSearch && userSearch.size > 0 && debouncedSearchTerm ? (
+        <CristinPersonList
+          personSearch={userSearch}
+          selectedArpId={selectedUser?.id}
+          onSelectContributor={setSelectedUser}
           searchTerm={debouncedSearchTerm}
         />
       ) : (
@@ -89,7 +92,7 @@ export const AddContributorModalContent = ({
           gap: '0.5rem',
           mt: '1rem',
         }}>
-        {!isSelfAdded && !initialSearchTerm && (
+        {!isSelfAdded && !initialSearchTerm && addSelfAsContributor && (
           <Button data-testid="button-add-self-author" onClick={addSelfAsContributor}>
             {t('contributors.add_self_as_role', { role: t(`contributors.types.${roleToAdd}`) })}
           </Button>
@@ -99,8 +102,8 @@ export const AddContributorModalContent = ({
         </Button>
         <Button
           data-testid={dataTestId.registrationWizard.contributors.connectAuthorButton}
-          disabled={!selectedAuthority}
-          onClick={() => selectedAuthority && addContributor(selectedAuthority)}
+          disabled={!selectedUser}
+          onClick={() => selectedUser && addContributor(selectedUser)}
           size="large"
           variant="contained">
           {initialSearchTerm
