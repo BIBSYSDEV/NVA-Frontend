@@ -89,7 +89,7 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
 
   return (
     <Box
-      data-testid={dataTestId.registrationLandingPage.file} 
+      data-testid={dataTestId.registrationLandingPage.file}
       sx={{
         display: 'grid',
         gridTemplateAreas: {
