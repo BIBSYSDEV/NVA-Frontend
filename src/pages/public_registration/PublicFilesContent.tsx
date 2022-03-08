@@ -101,11 +101,15 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
         alignItems: 'center',
         marginBottom: '2rem',
       }}>
-      <Typography sx={{ gridArea: 'name', fontSize: '1rem', fontWeight: 700, lineBreak: 'anywhere' }}>
+      <Typography
+        data-testid={dataTestId.registrationLandingPage.fileName}
+        sx={{ gridArea: 'name', fontSize: '1rem', fontWeight: 700, lineBreak: 'anywhere' }}>
         {file.name}
       </Typography>
-      <Typography sx={{ gridArea: 'size' }}>{prettyBytes(file.size, { locale: true })}</Typography>
-      <Typography sx={{ gridArea: 'version' }}>
+      <Typography data-testid={dataTestId.registrationLandingPage.fileSize} sx={{ gridArea: 'size' }}>
+        {prettyBytes(file.size, { locale: true })}
+      </Typography>
+      <Typography data-testid={dataTestId.registrationLandingPage.fileVersion} sx={{ gridArea: 'version' }}>
         {file.publisherAuthority
           ? t('registration:files_and_license.published_version')
           : t('registration:files_and_license.accepted_version')}
