@@ -50,13 +50,3 @@ export const emptyContributor: Contributor = {
   sequence: 0,
   type: 'Contributor',
 };
-
-interface NewContributor {
-  firstName: string;
-  lastName: string;
-}
-
-export const emptyNewContributor: NewContributor = {
-  firstName: '',
-  lastName: '',
-};

@@ -33,7 +33,7 @@ import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { ContributorRow } from './components/ContributorRow';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { CristinUser } from '../../../types/user.types';
-import { getFullName } from '../description_tab/projects_field/ProjectContributorRow';
+import { getFullCristinName, getValueByKey } from '../../../utils/user-helpers';
 
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
   contributorRoles: ContributorRole[];
@@ -116,12 +116,12 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       return;
     }
 
-    const orcId = selectedContributor.identifiers.find((identifier) => identifier.type === 'ORCID')?.value ?? '';
+    const orcId = getValueByKey('ORCID', selectedContributor.identifiers);
 
     const identity: Identity = {
       type: 'Identity',
       id: selectedContributor.id,
-      name: getFullName(selectedContributor.names),
+      name: getFullCristinName(selectedContributor.names),
       orcId,
     };
 

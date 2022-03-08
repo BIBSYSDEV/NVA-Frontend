@@ -5,7 +5,7 @@ import { AffiliationHierarchy } from '../../../../components/institution/Affilia
 import { SearchResponse } from '../../../../types/common.types';
 import { CristinUser } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { getFullName } from '../../description_tab/projects_field/ProjectContributorRow';
+import { getFullCristinName } from '../../../../utils/user-helpers';
 
 interface CristinPersonListProps {
   personSearch: SearchResponse<CristinUser>;
@@ -62,7 +62,7 @@ export const CristinPersonList = ({
                     />
                   </TableCell>
                   <TableCell>
-                    <Typography>{getFullName(cristinUser.names)}</Typography>
+                    <Typography>{getFullCristinName(cristinUser.names)}</Typography>
                   </TableCell>
                   <TableCell>
                     {activeAffiliations.length > 0 ? (

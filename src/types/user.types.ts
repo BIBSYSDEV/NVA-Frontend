@@ -79,7 +79,7 @@ export interface FeideUser {
   family_name: string;
 }
 
-interface CristinPersonAffiliation {
+export interface CristinPersonAffiliation {
   active: boolean;
   organization: string;
   role: {
@@ -92,12 +92,14 @@ export interface CristinArrayValue {
   value: string;
 }
 
+export type CristinPersonIdentifierType = 'CristinIdentifier' | 'NationalIdentificationNumber' | 'ORCID';
 interface CristinPersonIdentifier extends CristinArrayValue {
-  type: 'CristinIdentifier' | 'NationalIdentificationNumber' | 'ORCID';
+  type: CristinPersonIdentifierType;
 }
 
+export type CristinPersonNameType = 'FirstName' | 'LastName';
 interface CristinPersonName extends CristinArrayValue {
-  type: 'FirstName' | 'LastName';
+  type: CristinPersonNameType;
 }
 
 export interface CristinUser {

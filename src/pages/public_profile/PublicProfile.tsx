@@ -9,11 +9,13 @@ import { BackgroundDiv, SyledPageContent } from '../../components/styled/Wrapper
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { PageSpinner } from '../../components/PageSpinner';
-import { Authority } from '../../types/authority.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { SearchResults } from '../search/SearchResults';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../types/publicationFieldNames';
 import { ExpressionStatement } from '../../utils/searchHelpers';
+import { CristinUser } from '../../types/user.types';
+import { filterActiveAffiliations, getFullCristinName, getValueByKey } from '../../utils/user-helpers';
+import { ORCID_BASE_URL } from '../../utils/constants';
 
 const textContainerSx: SxProps = {
   width: '100%',
@@ -28,56 +30,67 @@ const lineSx: SxProps = {
 const PublicProfile = () => {
   const { t } = useTranslation('profile');
   const history = useHistory();
-  const arpId = new URLSearchParams(history.location.search).get('id') ?? '';
+  const personId = new URLSearchParams(history.location.search).get('id') ?? '';
 
-  const [authority, isLoadingUser] = useFetch<Authority>({
-    url: arpId,
+  const [person, isLoadingPerson] = useFetch<CristinUser>({
+    url: personId,
     errorMessage: t('feedback:error.get_authority'),
+    withAuthentication: true, // TODO: remove
   });
+
   const [registrations, isLoadingRegistrations] = useSearchRegistrations({
     properties: [
       {
         fieldName: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Id}`,
-        value: arpId,
+        value: personId,
         operator: ExpressionStatement.Contains,
       },
     ],
   });
 
+  const fullName = person?.names ? getFullCristinName(person.names) : '';
+  const orcid = getValueByKey('ORCID', person?.identifiers);
+  const orcidUrl = orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
+  const affiliaitons = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
+
   return (
     <SyledPageContent>
       <PageHeader>{t('public_profile')}</PageHeader>
-      {isLoadingUser || isLoadingRegistrations ? (
+      {isLoadingPerson || isLoadingRegistrations ? (
         <PageSpinner />
       ) : (
-        authority && (
+        person && (
           <BackgroundDiv>
             <Helmet>
-              <title>{authority.name}</title>
+              <title>{fullName}</title>
             </Helmet>
-            <Typography variant="h2">{authority.name}</Typography>
-            {authority.orgunitids.length > 0 && (
+            <Typography variant="h2">{fullName}</Typography>
+            {affiliaitons.length > 0 && (
               <Box sx={lineSx}>
                 <WorkIcon />
                 <Box sx={textContainerSx}>
-                  {authority.orgunitids.map((unitId) => (
-                    <AffiliationHierarchy key={unitId} unitUri={unitId} commaSeparated />
+                  {affiliaitons.map((affiliation) => (
+                    <AffiliationHierarchy
+                      key={affiliation.organization}
+                      unitUri={affiliation.organization}
+                      commaSeparated
+                    />
                   ))}
                 </Box>
               </Box>
             )}
-            {authority.orcids.map((orcid) => (
-              <Box sx={lineSx} key={orcid}>
-                <IconButton size="small" href={orcid} target="_blank">
+            {orcidUrl && (
+              <Box sx={lineSx}>
+                <IconButton size="small" href={orcidUrl} target="_blank">
                   <img src={orcidIcon} height="20" alt="orcid" />
                 </IconButton>
                 <Box sx={textContainerSx}>
-                  <Typography component={MuiLink} href={orcid} target="_blank" rel="noopener noreferrer">
-                    {orcid}
+                  <Typography component={MuiLink} href={orcidUrl} target="_blank" rel="noopener noreferrer">
+                    {orcidUrl}
                   </Typography>
                 </Box>
               </Box>
-            ))}
+            )}
             {registrations && (
               <Box sx={{ mt: '1rem' }}>
                 <Typography variant="h2">{t('common:registrations')}</Typography>
