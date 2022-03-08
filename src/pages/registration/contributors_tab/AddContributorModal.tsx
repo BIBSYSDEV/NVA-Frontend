@@ -94,7 +94,9 @@ export const AddContributorModal = ({
         </TextField>
       )}
       {selectedContributorRole &&
-        (createNewContributor ? null : ( // <CreateContributorModalContent addContributor={addContributor} handleCloseModal={handleCloseModal} />
+        (createNewContributor ? (
+          <CreateContributorModalContent addContributor={addContributor} handleCloseModal={handleCloseModal} />
+        ) : (
           <AddContributorModalContent
             addContributor={addContributor}
             openNewContributorModal={() => setCreateNewContributor(true)}

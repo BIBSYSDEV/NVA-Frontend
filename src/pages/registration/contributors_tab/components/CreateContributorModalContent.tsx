@@ -1,19 +1,39 @@
-import { ErrorMessage, Field, FieldProps, Form, Formik, FormikValues } from 'formik';
+import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
+import * as Yup from 'yup';
+import i18n from '../../../../translations/i18n';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Button, Collapse, DialogActions, TextField, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { createAuthority } from '../../../../api/authorityApi';
-import { StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
+import { InputContainerBox, StyledRightAlignedWrapper } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/actions/notificationActions';
-import { Authority } from '../../../../types/authority.types';
-import { emptyNewContributor } from '../../../../types/contributor.types';
-import { newContributorValidationSchema } from '../../../../utils/validation/newContributorValidation';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
+import { CristinUser } from '../../../../types/user.types';
+import { authenticatedApiRequest } from '../../../../api/apiRequest';
+import { CristinApiPath } from '../../../../api/apiPaths';
+
+interface SimpleUser {
+  firstName: string;
+  lastName: string;
+}
+
+const initialValuesUser: SimpleUser = {
+  firstName: '',
+  lastName: '',
+};
+
+const newUserValidationSchema = Yup.object().shape({
+  firstName: Yup.string().required(i18n.t('feedback:validation.is_required', { field: i18n.t('common:first_name') })),
+  lastName: Yup.string().required(
+    i18n.t('feedback:validation.is_required', {
+      field: i18n.t('common:last_name'),
+    })
+  ),
+});
 
 interface CreateContributorModalContentProps {
-  addContributor: (authority: Authority) => void;
+  addContributor: (newContributor: CristinUser) => void;
   handleCloseModal: () => void;
 }
 
@@ -21,83 +41,90 @@ export const CreateContributorModalContent = ({
   addContributor,
   handleCloseModal,
 }: CreateContributorModalContentProps) => {
-  const [readMore, setReadMore] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation('common');
+
+  const [readMore, setReadMore] = useState(false);
   const dispatch = useDispatch();
 
   const toggleReadMore = () => setReadMore(!readMore);
 
-  const handleSubmit = async (values: FormikValues) => {
-    setIsLoading(true);
-    const createAuthorityResponse = await createAuthority(values.firstName, values.lastName);
-    if (isErrorStatus(createAuthorityResponse.status)) {
-      dispatch(setNotification(t('feedback:error.create_authority'), 'error'));
-    } else if (isSuccessStatus(createAuthorityResponse.status)) {
-      addContributor(createAuthorityResponse.data);
-    }
+  const handleSubmit = async (values: SimpleUser) => {
+    const cristinUser: Partial<CristinUser> = {
+      // TODO: Must have National Identification Number to be created
+      names: [
+        { type: 'FirstName', value: values.firstName },
+        { type: 'LastName', value: values.lastName },
+      ],
+    };
 
-    handleCloseModal();
+    const createUserResponse = await authenticatedApiRequest<CristinUser>({
+      url: CristinApiPath.Person,
+      method: 'POST',
+      data: cristinUser,
+    });
+
+    if (isErrorStatus(createUserResponse.status)) {
+      dispatch(setNotification(t('feedback:error.created_cristin_user'), 'error'));
+    } else if (isSuccessStatus(createUserResponse.status)) {
+      dispatch(setNotification(t('feedback:success.created_cristin_user')));
+      addContributor(createUserResponse.data);
+      handleCloseModal();
+    }
   };
 
   return (
     <>
-      <Formik
-        initialValues={emptyNewContributor}
-        validationSchema={newContributorValidationSchema}
-        onSubmit={handleSubmit}>
+      <Collapse in={readMore} collapsedSize="4.5rem">
+        <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+          {t('registration:contributors.create_new_author_description')}
+        </Typography>
+      </Collapse>
+      <StyledRightAlignedWrapper>
+        <Button data-testid="button-read-more" onClick={toggleReadMore}>
+          {t(readMore ? 'read_less' : 'read_more')}
+        </Button>
+      </StyledRightAlignedWrapper>
+
+      <Formik initialValues={initialValuesUser} validationSchema={newUserValidationSchema} onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form noValidate>
-            <Collapse in={readMore} collapsedSize="4.5rem">
-              <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                {t('registration:contributors.create_new_author_description')}
-              </Typography>
-            </Collapse>
-            <StyledRightAlignedWrapper>
-              <Button data-testid="button-read-more" onClick={toggleReadMore}>
-                {t(readMore ? 'read_less' : 'read_more')}
-              </Button>
-            </StyledRightAlignedWrapper>
-            <Field name="firstName">
-              {({ field, meta: { error, touched } }: FieldProps) => (
-                <TextField
-                  sx={{ mb: '1rem' }}
-                  {...field}
-                  id={field.name}
-                  fullWidth
-                  label={t('first_name')}
-                  required
-                  disabled={isSubmitting}
-                  variant="outlined"
-                  error={!!error && touched}
-                  data-testid="create-contributor-first-name"
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            </Field>
-            <Field name="lastName">
-              {({ field, meta: { error, touched } }: FieldProps) => (
-                <TextField
-                  {...field}
-                  id={field.name}
-                  fullWidth
-                  label={t('last_name')}
-                  required
-                  disabled={isSubmitting}
-                  variant="outlined"
-                  error={!!error && touched}
-                  data-testid="create-contributor-last-name"
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            </Field>
+            <InputContainerBox>
+              <Field name="firstName">
+                {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    required
+                    disabled={isSubmitting}
+                    label={t('first_name')}
+                    value={field.value ?? ''}
+                    variant="filled"
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
+              </Field>
+              <Field name="lastName">
+                {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    required
+                    disabled={isSubmitting}
+                    label={t('last_name')}
+                    value={field.value ?? ''}
+                    variant="filled"
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
+              </Field>
+            </InputContainerBox>
             <DialogActions>
               <Button onClick={handleCloseModal}>{t('common:close')}</Button>
               <LoadingButton
                 data-testid="button-create-authority"
                 type="submit"
                 variant="contained"
-                loading={isLoading}
+                loading={isSubmitting}
                 disabled={isSubmitting}>
                 {t('common:create')}
               </LoadingButton>

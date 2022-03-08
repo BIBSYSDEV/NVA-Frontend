@@ -97,9 +97,10 @@ export const AddContributorModalContent = ({
             {t('contributors.add_self_as_role', { role: t(`contributors.types.${roleToAdd}`) })}
           </Button>
         )}
-        <Button data-testid="button-create-new-author" onClick={openNewContributorModal}>
+        {/* TODO: Cannot create user without National Identification Number */}
+        {/* <Button data-testid="button-create-new-author" onClick={openNewContributorModal}>
           {t('contributors.create_new_with_role', { role: t(`contributors.types.${roleToAdd}`) })}
-        </Button>
+        </Button> */}
         <Button
           data-testid={dataTestId.registrationWizard.contributors.connectAuthorButton}
           disabled={!selectedUser}
