@@ -51,7 +51,7 @@ const PublicProfile = () => {
   const fullName = person?.names ? getFullCristinName(person.names) : '';
   const orcid = getValueByKey('ORCID', person?.identifiers);
   const orcidUrl = orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
-  const affiliaitons = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
+  const affiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
 
   return (
     <SyledPageContent>
@@ -65,16 +65,12 @@ const PublicProfile = () => {
               <title>{fullName}</title>
             </Helmet>
             <Typography variant="h2">{fullName}</Typography>
-            {affiliaitons.length > 0 && (
+            {affiliations.length > 0 && (
               <Box sx={lineSx}>
                 <WorkIcon />
                 <Box sx={textContainerSx}>
-                  {affiliaitons.map((affiliation) => (
-                    <AffiliationHierarchy
-                      key={affiliation.organization}
-                      unitUri={affiliation.organization}
-                      commaSeparated
-                    />
+                  {affiliations.map(({ organization }) => (
+                    <AffiliationHierarchy key={organization} unitUri={organization} commaSeparated />
                   ))}
                 </Box>
               </Box>

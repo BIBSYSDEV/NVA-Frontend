@@ -11,6 +11,5 @@ export const getValueByKey = (key: CristinPersonIdentifierType | CristinPersonNa
 export const getFullCristinName = (names: CristinArrayValue[]) =>
   `${getValueByKey('FirstName', names)} ${getValueByKey('LastName', names)}`;
 
-export const filterActiveAffiliations = (affiliations: CristinPersonAffiliation[]) => {
-  return affiliations.filter((affiliation) => affiliation.active);
-};
+export const filterActiveAffiliations = (affiliations: CristinPersonAffiliation[]) =>
+  affiliations.filter((affiliation) => affiliation.active);

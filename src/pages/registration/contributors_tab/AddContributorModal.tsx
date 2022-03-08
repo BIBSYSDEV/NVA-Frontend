@@ -36,7 +36,7 @@ export const AddContributorModal = ({
     handleCloseModal();
   };
 
-  // TODO: Implement when login uses Cristin instead of ARP
+  // TODO: Implement when login uses Cristin instead of ARP (NP-4815)
   // const addSelfAsContributor = () => {
   //   if (user?.authority) {
   //     onContributorSelected(user.authority, selectedContributorRole as ContributorRole);

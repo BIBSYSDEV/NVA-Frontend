@@ -76,7 +76,7 @@ export const AddContributorModalContent = ({
       ) : userSearch && userSearch.size > 0 && debouncedSearchTerm ? (
         <CristinPersonList
           personSearch={userSearch}
-          selectedArpId={selectedUser?.id}
+          userId={selectedUser?.id}
           onSelectContributor={setSelectedUser}
           searchTerm={debouncedSearchTerm}
         />

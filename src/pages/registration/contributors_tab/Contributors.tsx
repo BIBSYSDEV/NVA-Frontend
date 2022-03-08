@@ -33,7 +33,7 @@ import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { ContributorRow } from './components/ContributorRow';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { CristinUser } from '../../../types/user.types';
-import { getFullCristinName, getValueByKey } from '../../../utils/user-helpers';
+import { filterActiveAffiliations, getFullCristinName, getValueByKey } from '../../../utils/user-helpers';
 
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
   contributorRoles: ContributorRole[];
@@ -116,25 +116,24 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       return;
     }
 
-    const orcId = getValueByKey('ORCID', selectedContributor.identifiers);
-
     const identity: Identity = {
       type: 'Identity',
       id: selectedContributor.id,
       name: getFullCristinName(selectedContributor.names),
-      orcId,
+      orcId: getValueByKey('ORCID', selectedContributor.identifiers),
     };
 
-    const activeAffiliations = selectedContributor.affiliations.filter((affiliation) => affiliation.active);
+    const activeAffiliations = filterActiveAffiliations(selectedContributor.affiliations);
+    const existingOrgunitIds: Institution[] = activeAffiliations.map(({ organization }) => ({
+      type: 'Organization',
+      id: organization,
+    }));
 
     if (contributorIndex === undefined) {
       const newContributor: Contributor = {
         ...emptyContributor,
         identity,
-        affiliations: activeAffiliations.map((affiliation) => ({
-          type: 'Organization',
-          id: affiliation.organization,
-        })),
+        affiliations: existingOrgunitIds,
         role,
         sequence: relevantContributors.length + 1,
       };
@@ -144,10 +143,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     } else {
       const relevantContributor = relevantContributors[contributorIndex];
       const relevantAffiliations = relevantContributor.affiliations ?? [];
-      const existingOrgunitIds: Institution[] = activeAffiliations.map((affiliation) => ({
-        type: 'Organization',
-        id: affiliation.organization,
-      }));
+
       relevantAffiliations.push(...existingOrgunitIds);
 
       const verifiedContributor: Contributor = {

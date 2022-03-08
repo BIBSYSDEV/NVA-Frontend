@@ -32,10 +32,9 @@ export const CreateContributorModalContent = ({
   handleCloseModal,
 }: CreateContributorModalContentProps) => {
   const { t } = useTranslation('common');
-
-  const [readMore, setReadMore] = useState(false);
   const dispatch = useDispatch();
 
+  const [readMore, setReadMore] = useState(false);
   const toggleReadMore = () => setReadMore(!readMore);
 
   const handleSubmit = async (values: SimpleUser) => {

@@ -5,20 +5,20 @@ import { AffiliationHierarchy } from '../../../../components/institution/Affilia
 import { SearchResponse } from '../../../../types/common.types';
 import { CristinUser } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { getFullCristinName } from '../../../../utils/user-helpers';
+import { filterActiveAffiliations, getFullCristinName } from '../../../../utils/user-helpers';
 
 interface CristinPersonListProps {
   personSearch: SearchResponse<CristinUser>;
   searchTerm?: string;
   onSelectContributor?: (selectedContributor: CristinUser) => void;
-  selectedArpId?: string;
+  userId?: string;
 }
 
 export const CristinPersonList = ({
   personSearch,
   searchTerm,
   onSelectContributor,
-  selectedArpId,
+  userId,
 }: CristinPersonListProps) => {
   const { t } = useTranslation('common');
 
@@ -32,21 +32,19 @@ export const CristinPersonList = ({
 
       <TableContainer>
         <Table size="medium">
-          <caption>
-            <span style={visuallyHidden}>{t('registration:contributors.authors')}</span>
-          </caption>
+          <caption style={visuallyHidden}>{t('registration:contributors.authors')}</caption>
           <TableHead>
             <TableRow>
               <TableCell id="selected-heading" padding="checkbox">
                 {t('common:selected')}
               </TableCell>
-              <TableCell data-testid="author-name-column">{t('name')}</TableCell>
-              <TableCell data-testid="author-organizations-column">{t('profile:heading.affiliations')}</TableCell>
+              <TableCell>{t('name')}</TableCell>
+              <TableCell>{t('profile:heading.affiliations')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {personSearch.hits.map((cristinUser) => {
-              const activeAffiliations = cristinUser.affiliations.filter((affiliation) => affiliation.active);
+              const activeAffiliations = filterActiveAffiliations(cristinUser.affiliations);
               return (
                 <TableRow
                   sx={{ cursor: 'pointer' }}
@@ -54,12 +52,9 @@ export const CristinPersonList = ({
                   key={cristinUser.id}
                   hover
                   onClick={() => onSelectContributor?.(cristinUser)}
-                  selected={cristinUser.id === selectedArpId}>
+                  selected={cristinUser.id === userId}>
                   <TableCell padding="checkbox">
-                    <Radio
-                      inputProps={{ 'aria-labelledby': 'selected-heading' }}
-                      checked={cristinUser.id === selectedArpId}
-                    />
+                    <Radio inputProps={{ 'aria-labelledby': 'selected-heading' }} checked={cristinUser.id === userId} />
                   </TableCell>
                   <TableCell>
                     <Typography>{getFullCristinName(cristinUser.names)}</Typography>
