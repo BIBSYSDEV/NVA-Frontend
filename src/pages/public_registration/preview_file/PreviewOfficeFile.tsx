@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { CommonPreviewProps } from './PreviewFile';
 
 interface PreviewOfficeFileProps extends CommonPreviewProps {
@@ -10,6 +11,7 @@ export const PreviewOfficeFile = ({ url, iframeTitle, ...props }: PreviewOfficeF
 
   return (
     <Box
+      data-testid={dataTestId.registrationLandingPage.filePreview}
       component="iframe"
       title={iframeTitle}
       src={officeViewerUrl}

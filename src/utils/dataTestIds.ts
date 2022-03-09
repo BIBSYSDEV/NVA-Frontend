@@ -61,6 +61,7 @@ export const dataTestId = {
     facebookButton: 'facebook-button',
     file: 'file',
     fileName: 'file-name',
+    filePreview: 'file-preview',
     fileSize: 'file-size',
     fileVersion: 'file-version',
     filesAccordion: 'files-accordion',
