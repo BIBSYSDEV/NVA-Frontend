@@ -62,10 +62,9 @@ export const CristinPersonList = ({
                   <TableCell>
                     {activeAffiliations.length > 0 ? (
                       <>
-                        <AffiliationHierarchy unitUri={activeAffiliations[0].organization} commaSeparated />
-                        {activeAffiliations.length > 1 && (
-                          <i>{t('profile:authority.other_affiliations', { count: activeAffiliations.length - 1 })}</i>
-                        )}
+                        {activeAffiliations.map(({ organization }) => (
+                          <AffiliationHierarchy unitUri={organization} commaSeparated />
+                        ))}
                       </>
                     ) : (
                       <i>{t('profile:authority.no_affiliations_found')}</i>
