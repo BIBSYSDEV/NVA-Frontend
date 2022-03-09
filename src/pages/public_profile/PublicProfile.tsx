@@ -14,8 +14,7 @@ import { SearchResults } from '../search/SearchResults';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../types/publicationFieldNames';
 import { ExpressionStatement } from '../../utils/searchHelpers';
 import { CristinUser } from '../../types/user.types';
-import { filterActiveAffiliations, getFullCristinName, getValueByKey } from '../../utils/user-helpers';
-import { ORCID_BASE_URL } from '../../utils/constants';
+import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../utils/user-helpers';
 
 const textContainerSx: SxProps = {
   width: '100%',
@@ -49,8 +48,7 @@ const PublicProfile = () => {
   });
 
   const fullName = person?.names ? getFullCristinName(person.names) : '';
-  const orcid = getValueByKey('ORCID', person?.identifiers);
-  const orcidUrl = orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
+  const orcidUri = getOrcidUri(person?.identifiers);
   const affiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
 
   return (
@@ -75,14 +73,14 @@ const PublicProfile = () => {
                 </Box>
               </Box>
             )}
-            {orcidUrl && (
+            {orcidUri && (
               <Box sx={lineSx}>
-                <IconButton size="small" href={orcidUrl} target="_blank">
+                <IconButton size="small" href={orcidUri} target="_blank">
                   <img src={orcidIcon} height="20" alt="orcid" />
                 </IconButton>
                 <Box sx={textContainerSx}>
-                  <Typography component={MuiLink} href={orcidUrl} target="_blank" rel="noopener noreferrer">
-                    {orcidUrl}
+                  <Typography component={MuiLink} href={orcidUri} target="_blank" rel="noopener noreferrer">
+                    {orcidUri}
                   </Typography>
                 </Box>
               </Box>

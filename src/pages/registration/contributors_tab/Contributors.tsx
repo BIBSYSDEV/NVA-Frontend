@@ -33,7 +33,7 @@ import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { ContributorRow } from './components/ContributorRow';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { CristinUser } from '../../../types/user.types';
-import { filterActiveAffiliations, getFullCristinName, getValueByKey } from '../../../utils/user-helpers';
+import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../../utils/user-helpers';
 
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
   contributorRoles: ContributorRole[];
@@ -120,7 +120,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       type: 'Identity',
       id: selectedContributor.id,
       name: getFullCristinName(selectedContributor.names),
-      orcId: getValueByKey('ORCID', selectedContributor.identifiers),
+      orcId: getOrcidUri(selectedContributor.identifiers),
     };
 
     const activeAffiliations = filterActiveAffiliations(selectedContributor.affiliations);

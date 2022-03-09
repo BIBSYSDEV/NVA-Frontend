@@ -93,7 +93,7 @@ export interface CristinArrayValue {
 }
 
 export type CristinPersonIdentifierType = 'CristinIdentifier' | 'NationalIdentificationNumber' | 'ORCID';
-interface CristinPersonIdentifier extends CristinArrayValue {
+export interface CristinPersonIdentifier extends CristinArrayValue {
   type: CristinPersonIdentifierType;
 }
 
