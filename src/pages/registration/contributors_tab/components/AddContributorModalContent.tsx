@@ -2,7 +2,7 @@ import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, TablePagination, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { RootStore } from '../../../../redux/reducers/rootReducer';
@@ -15,6 +15,8 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { SearchResponse } from '../../../../types/common.types';
 import { CristinUser } from '../../../../types/user.types';
 import { CristinPersonList } from './CristinPersonList';
+
+const resultsPerPage = 10;
 
 interface AddContributorModalContentProps {
   addContributor: (selectedUser: CristinUser) => void;
@@ -35,9 +37,12 @@ export const AddContributorModalContent = ({
   const [selectedUser, setSelectedUser] = useState<CristinUser | null>(null);
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const debouncedSearchTerm = useDebounce(searchTerm);
+
+  const [page, setPage] = useState(0);
+
   const [userSearch, isLoadingUserSearch] = useFetch<SearchResponse<CristinUser>>({
     url: debouncedSearchTerm
-      ? `${CristinApiPath.Person}?query=${encodeURIComponent(debouncedSearchTerm)}&results=10`
+      ? `${CristinApiPath.Person}?query=${debouncedSearchTerm}&results=${resultsPerPage}&page=${page + 1}`
       : '',
     errorMessage: t('feedback:error.get_authorities'),
   });
@@ -61,7 +66,12 @@ export const AddContributorModalContent = ({
         variant="outlined"
         fullWidth
         value={searchTerm}
-        onChange={(event) => setSearchTerm(event.target.value)}
+        onChange={(event) => {
+          setSearchTerm(event.target.value);
+          if (page !== 0) {
+            setPage(0);
+          }
+        }}
         autoFocus
         placeholder={t('common:search_placeholder')}
         label={t('common:search')}
@@ -74,12 +84,22 @@ export const AddContributorModalContent = ({
       {isLoadingUserSearch ? (
         <ListSkeleton arrayLength={3} minWidth={100} height={80} />
       ) : userSearch && userSearch.size > 0 && debouncedSearchTerm ? (
-        <CristinPersonList
-          personSearch={userSearch}
-          userId={selectedUser?.id}
-          onSelectContributor={setSelectedUser}
-          searchTerm={debouncedSearchTerm}
-        />
+        <>
+          <CristinPersonList
+            personSearch={userSearch}
+            userId={selectedUser?.id}
+            onSelectContributor={setSelectedUser}
+            searchTerm={debouncedSearchTerm}
+          />
+          <TablePagination
+            rowsPerPageOptions={[resultsPerPage]}
+            component="div"
+            count={userSearch.size}
+            rowsPerPage={resultsPerPage}
+            page={page}
+            onPageChange={(_, newPage) => setPage(newPage)}
+          />
+        </>
       ) : (
         debouncedSearchTerm && <Typography>{t('common:no_hits')}</Typography>
       )}
