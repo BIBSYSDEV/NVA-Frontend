@@ -1,0 +1,68 @@
+import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
+import { useTranslation } from 'react-i18next';
+import { Box, Button, DialogActions, TextField, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import * as Yup from 'yup';
+import i18n from '../../../../translations/i18n';
+import { Contributor, emptyContributor } from '../../../../types/contributor.types';
+
+export const newUserValidationSchema = Yup.object().shape({
+  identity: Yup.object().shape({
+    name: Yup.string().required(i18n.t('feedback:validation.is_required', { field: i18n.t('common:name') })),
+  }),
+});
+
+interface AddUnverifiedContributorFormProps {
+  onAddUnverifiedContributor: (newContributor: Contributor) => void;
+  handleCloseModal: () => void;
+}
+
+export const AddUnverifiedContributorForm = ({
+  onAddUnverifiedContributor,
+  handleCloseModal,
+}: AddUnverifiedContributorFormProps) => {
+  const { t } = useTranslation('common');
+
+  const handleSubmit = async (values: Contributor) => {
+    onAddUnverifiedContributor(values);
+    handleCloseModal();
+  };
+
+  return (
+    <Formik initialValues={emptyContributor} validationSchema={newUserValidationSchema} onSubmit={handleSubmit}>
+      {({ isSubmitting }) => (
+        <Form noValidate>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
+            <Typography>{t('registration:contributors.add_unverified_contributor')}</Typography>
+            <Field name="identity.name">
+              {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                <TextField
+                  {...field}
+                  required
+                  disabled={isSubmitting}
+                  label={t('name')}
+                  value={field.value ?? ''}
+                  variant="filled"
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={field.name} />}
+                />
+              )}
+            </Field>
+          </Box>
+
+          <DialogActions>
+            <Button onClick={handleCloseModal}>{t('common:close')}</Button>
+            <LoadingButton
+              data-testid="button-create-authority"
+              type="submit"
+              variant="contained"
+              loading={isSubmitting}
+              disabled={isSubmitting}>
+              {t('common:add')}
+            </LoadingButton>
+          </DialogActions>
+        </Form>
+      )}
+    </Formik>
+  );
+};

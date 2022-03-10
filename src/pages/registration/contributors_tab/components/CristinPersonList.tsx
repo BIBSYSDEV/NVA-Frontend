@@ -63,7 +63,7 @@ export const CristinPersonList = ({
                     {activeAffiliations.length > 0 ? (
                       <>
                         {activeAffiliations.map(({ organization }) => (
-                          <AffiliationHierarchy unitUri={organization} commaSeparated />
+                          <AffiliationHierarchy key={organization} unitUri={organization} commaSeparated />
                         ))}
                       </>
                     ) : (

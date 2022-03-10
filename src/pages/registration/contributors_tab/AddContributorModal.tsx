@@ -2,14 +2,15 @@ import { MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from '../../../components/Modal';
-import { ContributorRole } from '../../../types/contributor.types';
-import { AddContributorModalContent } from './components/AddContributorModalContent';
-import { CreateContributorModalContent } from './components/CreateContributorModalContent';
+import { Contributor, ContributorRole } from '../../../types/contributor.types';
+import { AddContributorForm } from './components/AddContributorForm';
+import { AddUnverifiedContributorForm } from './components/AddUnverifiedContributorForm';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { CristinUser } from '../../../types/user.types';
 
 interface AddContributorModalProps {
   onContributorSelected: (newContributor: CristinUser, role: ContributorRole) => void;
+  onAddUnverifiedContributor?: (contributor: Contributor) => void;
   open: boolean;
   toggleModal: () => void;
   contributorRoles: ContributorRole[];
@@ -19,6 +20,7 @@ interface AddContributorModalProps {
 
 export const AddContributorModal = ({
   onContributorSelected,
+  onAddUnverifiedContributor,
   toggleModal,
   open,
   contributorRoles,
@@ -55,11 +57,7 @@ export const AddContributorModal = ({
   return (
     <Modal
       headingText={
-        createNewContributor
-          ? contributorRole === 'OtherContributor'
-            ? t('contributors.create_new_with_role', { role: t('contributors.contributor').toLowerCase() })
-            : t('contributors.create_new_with_role', { role: t(`contributors.types.${contributorRole}`).toLowerCase() })
-          : initialSearchTerm
+        initialSearchTerm
           ? t('contributors.verify_person')
           : t('contributors.add_as_role', {
               role:
@@ -94,10 +92,17 @@ export const AddContributorModal = ({
         </TextField>
       )}
       {selectedContributorRole &&
-        (createNewContributor ? (
-          <CreateContributorModalContent addContributor={addContributor} handleCloseModal={handleCloseModal} />
+        (createNewContributor && onAddUnverifiedContributor ? (
+          <AddUnverifiedContributorForm
+            onAddUnverifiedContributor={(newContributor) => {
+              newContributor.role = selectedContributorRole;
+              onAddUnverifiedContributor?.(newContributor);
+              handleCloseModal();
+            }}
+            handleCloseModal={handleCloseModal}
+          />
         ) : (
-          <AddContributorModalContent
+          <AddContributorForm
             addContributor={addContributor}
             openNewContributorModal={() => setCreateNewContributor(true)}
             initialSearchTerm={initialSearchTerm}

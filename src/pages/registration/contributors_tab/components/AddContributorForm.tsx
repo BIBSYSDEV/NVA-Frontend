@@ -18,7 +18,7 @@ import { CristinPersonList } from './CristinPersonList';
 
 const resultsPerPage = 10;
 
-interface AddContributorModalContentProps {
+interface AddContributorFormProps {
   addContributor: (selectedUser: CristinUser) => void;
   addSelfAsContributor?: () => void;
   openNewContributorModal: () => void;
@@ -26,15 +26,15 @@ interface AddContributorModalContentProps {
   roleToAdd: ContributorRole;
 }
 
-export const AddContributorModalContent = ({
+export const AddContributorForm = ({
   addContributor,
   addSelfAsContributor,
   openNewContributorModal,
   initialSearchTerm = '',
   roleToAdd,
-}: AddContributorModalContentProps) => {
+}: AddContributorFormProps) => {
   const { t } = useTranslation('registration');
-  const [selectedUser, setSelectedUser] = useState<CristinUser | null>(null);
+  const [selectedUser, setSelectedUser] = useState<CristinUser>();
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const debouncedSearchTerm = useDebounce(searchTerm);
 
@@ -117,10 +117,11 @@ export const AddContributorModalContent = ({
             {t('contributors.add_self_as_role', { role: t(`contributors.types.${roleToAdd}`) })}
           </Button>
         )}
-        {/* TODO: Cannot create user without National Identification Number */}
-        {/* <Button data-testid="button-create-new-author" onClick={openNewContributorModal}>
-          {t('contributors.create_new_with_role', { role: t(`contributors.types.${roleToAdd}`) })}
-        </Button> */}
+        {!initialSearchTerm && (
+          <Button data-testid="button-create-new-author" onClick={openNewContributorModal}>
+            {t('contributors.user_not_found')}
+          </Button>
+        )}
         <Button
           data-testid={dataTestId.registrationWizard.contributors.connectAuthorButton}
           disabled={!selectedUser}

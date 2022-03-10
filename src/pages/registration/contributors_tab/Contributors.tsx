@@ -106,6 +106,11 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     setFieldValue(ContributorFieldNames.Contributors, [...otherContributors, ...newContributors]);
   };
 
+  const goToLastPage = () => {
+    const maxValidPage = Math.floor(relevantContributors.length / rowsPerPage);
+    setCurrentPage(maxValidPage);
+  };
+
   const onContributorSelected = (
     selectedContributor: CristinUser,
     role: ContributorRole,
@@ -138,8 +143,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         sequence: relevantContributors.length + 1,
       };
       push(newContributor);
-      const maxValidPage = Math.floor(relevantContributors.length / rowsPerPage);
-      setCurrentPage(maxValidPage);
+      goToLastPage();
     } else {
       const relevantContributor = relevantContributors[contributorIndex];
       const relevantAffiliations = relevantContributor.affiliations ?? [];
@@ -238,6 +242,11 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         open={openAddContributor}
         toggleModal={() => setOpenAddContributor(false)}
         onContributorSelected={onContributorSelected}
+        onAddUnverifiedContributor={(contributor) => {
+          contributor.sequence = relevantContributors.length + 1;
+          push(contributor);
+          goToLastPage();
+        }}
       />
       {contributorsToShow.length > 0 && (
         <TablePagination
