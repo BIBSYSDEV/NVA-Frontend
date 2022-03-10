@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import i18n from '../../../../translations/i18n';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
 
-export const newUserValidationSchema = Yup.object().shape({
+const newUserValidationSchema = Yup.object().shape({
   identity: Yup.object().shape({
     name: Yup.string().required(i18n.t('feedback:validation.is_required', { field: i18n.t('common:name') })),
   }),

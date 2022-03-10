@@ -7,7 +7,7 @@ import {
 } from '../types/user.types';
 import { ORCID_BASE_URL } from './constants';
 
-export const getValueByKey = (key: CristinPersonIdentifierType | CristinPersonNameType, items?: CristinArrayValue[]) =>
+const getValueByKey = (key: CristinPersonIdentifierType | CristinPersonNameType, items?: CristinArrayValue[]) =>
   items?.find((item) => item.type === key)?.value ?? '';
 
 export const getFullCristinName = (names: CristinArrayValue[]) =>
