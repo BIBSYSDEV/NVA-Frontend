@@ -48,7 +48,7 @@ export const mockCristinUserSearch: SearchResponse<CristinUser> = {
         {
           organization: mockOrganizationSearch.hits[0].id,
           active: true,
-          role: { labels: { nob: 'Manager' } },
+          role: { labels: { nb: 'Manager' } },
         },
       ],
     },

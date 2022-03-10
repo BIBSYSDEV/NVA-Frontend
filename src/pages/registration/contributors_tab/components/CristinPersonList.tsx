@@ -7,6 +7,8 @@ import { CristinUser } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { filterActiveAffiliations, getFullCristinName } from '../../../../utils/user-helpers';
 
+const radioHeadingId = 'selected-heading';
+
 interface CristinPersonListProps {
   personSearch: SearchResponse<CristinUser>;
   searchTerm?: string;
@@ -35,7 +37,7 @@ export const CristinPersonList = ({
           <caption style={visuallyHidden}>{t('registration:contributors.authors')}</caption>
           <TableHead>
             <TableRow>
-              <TableCell id="selected-heading" padding="checkbox">
+              <TableCell id={radioHeadingId} padding="checkbox">
                 {t('common:selected')}
               </TableCell>
               <TableCell>{t('name')}</TableCell>
@@ -45,6 +47,7 @@ export const CristinPersonList = ({
           <TableBody>
             {personSearch.hits.map((cristinUser) => {
               const activeAffiliations = filterActiveAffiliations(cristinUser.affiliations);
+              const isSelected = cristinUser.id === userId;
               return (
                 <TableRow
                   sx={{ cursor: 'pointer' }}
@@ -52,9 +55,9 @@ export const CristinPersonList = ({
                   key={cristinUser.id}
                   hover
                   onClick={() => onSelectContributor?.(cristinUser)}
-                  selected={cristinUser.id === userId}>
+                  selected={isSelected}>
                   <TableCell padding="checkbox">
-                    <Radio inputProps={{ 'aria-labelledby': 'selected-heading' }} checked={cristinUser.id === userId} />
+                    <Radio inputProps={{ 'aria-labelledby': radioHeadingId }} checked={isSelected} />
                   </TableCell>
                   <TableCell>
                     <Typography>{getFullCristinName(cristinUser.names)}</Typography>

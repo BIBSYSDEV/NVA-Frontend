@@ -21,7 +21,7 @@ const resultsPerPage = 10;
 interface AddContributorFormProps {
   addContributor: (selectedUser: CristinUser) => void;
   addSelfAsContributor?: () => void;
-  openNewContributorModal: () => void;
+  openAddUnverifiedContributor: () => void;
   initialSearchTerm?: string;
   roleToAdd: ContributorRole;
 }
@@ -29,7 +29,7 @@ interface AddContributorFormProps {
 export const AddContributorForm = ({
   addContributor,
   addSelfAsContributor,
-  openNewContributorModal,
+  openAddUnverifiedContributor,
   initialSearchTerm = '',
   roleToAdd,
 }: AddContributorFormProps) => {
@@ -44,7 +44,7 @@ export const AddContributorForm = ({
     url: debouncedSearchTerm
       ? `${CristinApiPath.Person}?query=${debouncedSearchTerm}&results=${resultsPerPage}&page=${page + 1}`
       : '',
-    errorMessage: t('feedback:error.get_authorities'),
+    errorMessage: t('feedback:error.search'),
   });
   const user = useSelector((store: RootStore) => store.user);
 
@@ -118,7 +118,7 @@ export const AddContributorForm = ({
           </Button>
         )}
         {!initialSearchTerm && (
-          <Button data-testid="button-create-new-author" onClick={openNewContributorModal}>
+          <Button data-testid="button-create-new-author" onClick={openAddUnverifiedContributor}>
             {t('contributors.user_not_found')}
           </Button>
         )}

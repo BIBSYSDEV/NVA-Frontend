@@ -28,6 +28,7 @@
     "get_monograph": "Could not fetch monograph",
     "get_orcid": "Could not get data from ORCID",
     "get_parent_units": "Could not retrieve institutions",
+    "get_person": "Could not retrieve person",
     "get_project": "Search for projects failed",
     "get_publisher": "Could not retrieve publisher",
     "get_publishers": "Search for publishers failed",

@@ -129,7 +129,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     };
 
     const activeAffiliations = filterActiveAffiliations(selectedContributor.affiliations);
-    const existingOrgunitIds: Institution[] = activeAffiliations.map(({ organization }) => ({
+    const existingAffiliations: Institution[] = activeAffiliations.map(({ organization }) => ({
       type: 'Organization',
       id: organization,
     }));
@@ -138,7 +138,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       const newContributor: Contributor = {
         ...emptyContributor,
         identity,
-        affiliations: existingOrgunitIds,
+        affiliations: existingAffiliations,
         role,
         sequence: relevantContributors.length + 1,
       };
@@ -148,7 +148,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       const relevantContributor = relevantContributors[contributorIndex];
       const relevantAffiliations = relevantContributor.affiliations ?? [];
 
-      relevantAffiliations.push(...existingOrgunitIds);
+      relevantAffiliations.push(...existingAffiliations);
 
       const verifiedContributor: Contributor = {
         ...relevantContributor,
@@ -242,7 +242,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         open={openAddContributor}
         toggleModal={() => setOpenAddContributor(false)}
         onContributorSelected={onContributorSelected}
-        onAddUnverifiedContributor={(contributor) => {
+        addUnverifiedContributor={(contributor) => {
           contributor.sequence = relevantContributors.length + 1;
           push(contributor);
           goToLastPage();

@@ -10,7 +10,7 @@ import { CristinUser } from '../../../types/user.types';
 
 interface AddContributorModalProps {
   onContributorSelected: (newContributor: CristinUser, role: ContributorRole) => void;
-  onAddUnverifiedContributor?: (contributor: Contributor) => void;
+  addUnverifiedContributor?: (contributor: Contributor) => void;
   open: boolean;
   toggleModal: () => void;
   contributorRoles: ContributorRole[];
@@ -20,7 +20,7 @@ interface AddContributorModalProps {
 
 export const AddContributorModal = ({
   onContributorSelected,
-  onAddUnverifiedContributor,
+  addUnverifiedContributor,
   toggleModal,
   open,
   contributorRoles,
@@ -28,7 +28,7 @@ export const AddContributorModal = ({
   initialSearchTerm,
 }: AddContributorModalProps) => {
   const { t } = useTranslation('registration');
-  const [createNewContributor, setCreateNewContributor] = useState(false);
+  const [openAddUnverifiedContributor, setOpenAddUnverifiedContributor] = useState(false);
   const [selectedContributorRole, setSelectedContributorRole] = useState<ContributorRole | ''>(
     contributorRoles.length === 1 ? contributorRoles[0] : ''
   );
@@ -51,7 +51,7 @@ export const AddContributorModal = ({
     if (contributorRoles.length > 1) {
       setSelectedContributorRole('');
     }
-    setCreateNewContributor(false);
+    setOpenAddUnverifiedContributor(false);
   };
 
   return (
@@ -92,19 +92,19 @@ export const AddContributorModal = ({
         </TextField>
       )}
       {selectedContributorRole &&
-        (createNewContributor && onAddUnverifiedContributor ? (
+        (openAddUnverifiedContributor && !initialSearchTerm ? (
           <AddUnverifiedContributorForm
-            onAddUnverifiedContributor={(newContributor) => {
+            addUnverifiedContributor={(newContributor) => {
               newContributor.role = selectedContributorRole;
-              onAddUnverifiedContributor?.(newContributor);
-              handleCloseModal();
+              addUnverifiedContributor?.(newContributor);
             }}
             handleCloseModal={handleCloseModal}
           />
         ) : (
           <AddContributorForm
             addContributor={addContributor}
-            openNewContributorModal={() => setCreateNewContributor(true)}
+            // addSelfAsContributor={addSelfAsContributor} // TODO
+            openAddUnverifiedContributor={() => setOpenAddUnverifiedContributor(true)}
             initialSearchTerm={initialSearchTerm}
             roleToAdd={selectedContributorRole}
           />

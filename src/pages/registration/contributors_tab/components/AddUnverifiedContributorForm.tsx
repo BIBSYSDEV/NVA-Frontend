@@ -13,18 +13,18 @@ const newUserValidationSchema = Yup.object().shape({
 });
 
 interface AddUnverifiedContributorFormProps {
-  onAddUnverifiedContributor: (newContributor: Contributor) => void;
+  addUnverifiedContributor: (newContributor: Contributor) => void;
   handleCloseModal: () => void;
 }
 
 export const AddUnverifiedContributorForm = ({
-  onAddUnverifiedContributor,
+  addUnverifiedContributor,
   handleCloseModal,
 }: AddUnverifiedContributorFormProps) => {
   const { t } = useTranslation('common');
 
-  const handleSubmit = async (values: Contributor) => {
-    onAddUnverifiedContributor(values);
+  const handleSubmit = (values: Contributor) => {
+    addUnverifiedContributor(values);
     handleCloseModal();
   };
 

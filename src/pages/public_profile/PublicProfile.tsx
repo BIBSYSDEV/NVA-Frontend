@@ -33,7 +33,7 @@ const PublicProfile = () => {
 
   const [person, isLoadingPerson] = useFetch<CristinUser>({
     url: personId,
-    errorMessage: t('feedback:error.get_authority'),
+    errorMessage: t('feedback:error.get_person'),
     withAuthentication: true, // TODO: remove
   });
 
@@ -49,7 +49,7 @@ const PublicProfile = () => {
 
   const fullName = person?.names ? getFullCristinName(person.names) : '';
   const orcidUri = getOrcidUri(person?.identifiers);
-  const affiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
+  const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
 
   return (
     <SyledPageContent>
@@ -63,11 +63,11 @@ const PublicProfile = () => {
               <title>{fullName}</title>
             </Helmet>
             <Typography variant="h2">{fullName}</Typography>
-            {affiliations.length > 0 && (
+            {activeAffiliations.length > 0 && (
               <Box sx={lineSx}>
                 <WorkIcon />
                 <Box sx={textContainerSx}>
-                  {affiliations.map(({ organization }) => (
+                  {activeAffiliations.map(({ organization }) => (
                     <AffiliationHierarchy key={organization} unitUri={organization} commaSeparated />
                   ))}
                 </Box>
