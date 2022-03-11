@@ -4,7 +4,6 @@
     "confirm_remove_affiliation_text": "Are you sure you want to remove this affiliation?",
     "confirm_remove_affiliation_title": "Remove affiliation?"
   },
-  "applications": "Applications",
   "authority": {
     "cancel_connect_authority_text": "You must connect to the author register to proceed. If you cancel, you will be logged out. Do you want to cancel?",
     "cancel_connect_authority_title": "Do you want to cancel?",
@@ -19,6 +18,8 @@
     "no_registrations_found": "No registrations found",
     "other_affiliations": "+ {{count}} other affiliation",
     "other_affiliations_plural": "+ {{count}} other affiliations",
+    "other_registrations": "+ {{count}} other registration",
+    "other_registrations_plural": "+ {{count}} other registrations",
     "see_profile": "See author profile"
   },
   "heading": {

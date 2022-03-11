@@ -6,6 +6,7 @@ import { SearchResponse } from '../../../../types/common.types';
 import { CristinUser } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { filterActiveAffiliations, getFullCristinName } from '../../../../utils/user-helpers';
+import { LastRegistrationTableCellContent } from './LastRegistrationTableCellContent';
 
 const radioHeadingId = 'selected-heading';
 
@@ -42,6 +43,7 @@ export const CristinPersonList = ({
               </TableCell>
               <TableCell>{t('name')}</TableCell>
               <TableCell>{t('profile:heading.affiliations')}</TableCell>
+              <TableCell>{t('common:registrations')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -72,6 +74,9 @@ export const CristinPersonList = ({
                     ) : (
                       <i>{t('profile:authority.no_affiliations_found')}</i>
                     )}
+                  </TableCell>
+                  <TableCell>
+                    <LastRegistrationTableCellContent personId={cristinUser.id} />
                   </TableCell>
                 </TableRow>
               );

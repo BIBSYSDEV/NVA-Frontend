@@ -1,6 +1,7 @@
 import { TypographyProps, Typography, styled, Tooltip } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { stringIncludesMathJax, typesetMathJax } from '../utils/mathJaxHelpers';
 
 interface StyledTruncatableTypographyProps {
   lineClamp: number | undefined;
@@ -29,6 +30,12 @@ export const TruncatableTypography = ({ lines = 3, ...props }: TruncatableTypogr
   const [isTruncated, setIsTruncated] = useState(false);
 
   const isExpandable = isTruncated && lineClamp !== undefined;
+
+  useEffect(() => {
+    if (stringIncludesMathJax(props.children?.toString())) {
+      typesetMathJax();
+    }
+  }, [props.children]);
 
   return (
     <Tooltip followCursor title={isExpandable ? t<string>('click_to_show_all') : ''}>
