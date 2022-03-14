@@ -130,7 +130,7 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
       />
       <Box sx={{ gridArea: 'download' }}>
         {fileIsEmbargoed ? (
-          <Typography>
+          <Typography data-testid={dataTestId.registrationLandingPage.fileEmbargoDate}>
             <LockIcon />
             {t('will_be_available')} {fileEmbargoDate?.toLocaleDateString()}
           </Typography>
