@@ -202,7 +202,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
               </TableRow>
             </TableHead>
             <TableBody>
-              {contributorsToShow.map((contributor) => {
+              {contributorsToShow.map((contributor, index) => {
                 const contributorIndex = contributors.findIndex(
                   (c) =>
                     c.identity.id === contributor.identity.id &&
@@ -211,7 +211,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
                 );
                 return (
                   <ContributorRow
-                    key={`${contributor.identity.name}${contributor.sequence}`}
+                    key={`${contributor.identity.name}${index}`}
                     contributor={contributor}
                     onMoveContributor={handleMoveContributor}
                     onRemoveContributor={handleOnRemove}
