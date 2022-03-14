@@ -17,8 +17,8 @@
     "example_publication": "Eksempel på publikasjon",
     "no_affiliations_found": "Ingen tilhørigheter funnet",
     "no_registrations_found": "Ingen registreringer funnet",
-    "other_affiliations": "+ {{count}} annen tilhørighet",
-    "other_affiliations_plural": "+ {{count}} andre tilhørigheter",
+    "other_affiliations_one": "+ {{count}} annen tilhørighet",
+    "other_affiliations_other": "+ {{count}} andre tilhørigheter",
     "see_profile": "Se forfatterprofil"
   },
   "heading": {
