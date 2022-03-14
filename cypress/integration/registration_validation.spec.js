@@ -307,7 +307,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.authorRadioButton}]`)
       .first()
       .click({ force: true });
-    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.connectAuthorButton}]`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.selectUserButton}]`).click();
     cy.get('[data-testid=contributor-modal]').should('not.exist');
     cy.get('p.Mui-error').should('be.visible');
 
@@ -321,7 +321,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.authorRadioButton}]`)
       .last()
       .click({ force: true });
-    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.connectAuthorButton}]`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.selectUserButton}]`).click();
     cy.get('[data-testid=contributor-modal]').should('not.exist');
     cy.get('p.Mui-error').should('not.exist');
 

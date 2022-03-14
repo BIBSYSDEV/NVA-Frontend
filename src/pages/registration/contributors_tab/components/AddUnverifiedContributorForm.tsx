@@ -5,8 +5,9 @@ import { LoadingButton } from '@mui/lab';
 import * as Yup from 'yup';
 import i18n from '../../../../translations/i18n';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
-const newUserValidationSchema = Yup.object().shape({
+const unverifiedContributorValidationSchema = Yup.object().shape({
   identity: Yup.object().shape({
     name: Yup.string().required(i18n.t('feedback:validation.is_required', { field: i18n.t('common:name') })),
   }),
@@ -29,7 +30,10 @@ export const AddUnverifiedContributorForm = ({
   };
 
   return (
-    <Formik initialValues={emptyContributor} validationSchema={newUserValidationSchema} onSubmit={handleSubmit}>
+    <Formik
+      initialValues={emptyContributor}
+      validationSchema={unverifiedContributorValidationSchema}
+      onSubmit={handleSubmit}>
       {({ isSubmitting }) => (
         <Form noValidate>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
@@ -53,7 +57,7 @@ export const AddUnverifiedContributorForm = ({
           <DialogActions>
             <Button onClick={handleCloseModal}>{t('common:close')}</Button>
             <LoadingButton
-              data-testid="button-create-authority"
+              data-testid={dataTestId.registrationWizard.contributors.selectUserButton}
               type="submit"
               variant="contained"
               loading={isSubmitting}

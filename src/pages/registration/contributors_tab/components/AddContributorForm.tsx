@@ -113,17 +113,19 @@ export const AddContributorForm = ({
           mt: '1rem',
         }}>
         {!isSelfAdded && !initialSearchTerm && addSelfAsContributor && (
-          <Button data-testid="button-add-self-author" onClick={addSelfAsContributor}>
+          <Button data-testid={dataTestId.registrationWizard.contributors.addSelfButton} onClick={addSelfAsContributor}>
             {t('contributors.add_self_as_role', { role: t(`contributors.types.${roleToAdd}`) })}
           </Button>
         )}
         {!initialSearchTerm && (
-          <Button data-testid="button-create-new-author" onClick={openAddUnverifiedContributor}>
+          <Button
+            data-testid={dataTestId.registrationWizard.contributors.addUnverifiedContributorButton}
+            onClick={openAddUnverifiedContributor}>
             {t('contributors.user_not_found')}
           </Button>
         )}
         <Button
-          data-testid={dataTestId.registrationWizard.contributors.connectAuthorButton}
+          data-testid={dataTestId.registrationWizard.contributors.selectUserButton}
           disabled={!selectedUser}
           onClick={() => selectedUser && addContributor(selectedUser)}
           size="large"
