@@ -6,7 +6,7 @@
     "@aws-amplify/auth": "^4.4.2",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
-    "@fontsource/barlow": "^4.5.2",
+    "@fontsource/barlow": "^4.5.3",
     "@fontsource/crimson-text": "^4.5.0",
     "@mui/icons-material": "^5.5.0",
     "@mui/lab": "5.0.0-alpha.72",
