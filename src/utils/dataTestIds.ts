@@ -60,6 +60,7 @@ export const dataTestId = {
     emailButton: 'email-button',
     facebookButton: 'facebook-button',
     file: 'file',
+    fileEmbargoDate: 'file-embargo-date',
     fileName: 'file-name',
     filePreview: 'file-preview',
     fileSize: 'file-size',
