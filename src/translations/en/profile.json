@@ -16,10 +16,10 @@
     "example_publication": "Example of publication",
     "no_affiliations_found": "No affiliations found",
     "no_registrations_found": "No registrations found",
-    "other_affiliations": "+ {{count}} other affiliation",
-    "other_affiliations_plural": "+ {{count}} other affiliations",
-    "other_registrations": "+ {{count}} other registration",
-    "other_registrations_plural": "+ {{count}} other registrations",
+    "other_affiliations_one": "+ {{count}} other affiliation",
+    "other_affiliations_other": "+ {{count}} other affiliations",
+    "other_registrations_one": "+ {{count}} other registration",
+    "other_registrations_other": "+ {{count}} other registrations",
     "see_profile": "See author profile"
   },
   "heading": {

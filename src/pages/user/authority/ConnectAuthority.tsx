@@ -96,7 +96,7 @@ export const ConnectAuthority = ({ user, handleCloseModal }: ConnectAuthorityPro
               {t('common:cancel')}
             </Button>
             <LoadingButton
-              data-testid={dataTestId.registrationWizard.contributors.connectAuthorButton}
+              data-testid={dataTestId.registrationWizard.contributors.selectUserButton}
               variant="contained"
               size="large"
               onClick={updateAuthorityForUser}
