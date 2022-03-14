@@ -32,7 +32,7 @@ export const TruncatableTypography = ({ lines = 3, ...props }: TruncatableTypogr
   const isExpandable = isTruncated && lineClamp !== undefined;
 
   useEffect(() => {
-    if (stringIncludesMathJax(props.children?.toString())) {
+    if (props.children && stringIncludesMathJax(props.children.toString())) {
       typesetMathJax();
     }
   }, [props.children]);
