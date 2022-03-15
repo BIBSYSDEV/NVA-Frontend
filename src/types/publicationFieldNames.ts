@@ -72,6 +72,7 @@ export const contextTypeBaseFieldName = 'entityDescription.reference.publication
 export const instanceTypeBaseFieldName = 'entityDescription.reference.publicationInstance';
 
 export enum ResourceFieldNames {
+  ArchitectureOutput = 'entityDescription.reference.publicationInstance.architectureOutput',
   ArticleNumber = 'entityDescription.reference.publicationInstance.articleNumber',
   ContentType = 'entityDescription.reference.publicationInstance.contentType',
   CorrigendumFor = 'entityDescription.reference.publicationInstance.corrigendumFor',

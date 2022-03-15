@@ -12,7 +12,7 @@ export interface Venue {
   time: Period | null;
 }
 
-interface Competition {
+export interface Competition {
   type: 'Competition';
   name: string;
   description: string;
