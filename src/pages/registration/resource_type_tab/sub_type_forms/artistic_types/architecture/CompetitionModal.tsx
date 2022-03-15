@@ -1,8 +1,13 @@
+import { DatePicker, LocalizationProvider } from '@mui/lab';
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { datePickerTranslationProps } from '../../../../../../themes/mainTheme';
 import { Competition } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { getNewDateValue } from '../../../../../../utils/registration-helpers';
+import { getDateFnsLocale } from '../../../../../../utils/date-helpers';
 
 interface CopetitionModalProps {
   competition: Competition | null;
@@ -26,12 +31,12 @@ const emptyCompetition: Competition = {
 };
 
 export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: CopetitionModalProps) => {
-  const { t } = useTranslation('registration');
+  const { t, i18n } = useTranslation('registration');
 
   return (
-    <Dialog open={open} onClose={closeModal}>
+    <Dialog open={open} onClose={closeModal} fullWidth>
       <DialogTitle>
-        {competition ? t('resource_type.edit_exhibition_place') : t('resource_type.add_exhibition_place')}
+        {competition ? t('resource_type.artistic.edit_competition') : t('resource_type.artistic.add_competition')}
       </DialogTitle>
       <Formik
         initialValues={competition ?? emptyCompetition}
@@ -41,15 +46,14 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
           closeModal();
         }}>
         <Form noValidate>
-          <DialogContent>
+          <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <Field name={CompetitionFieldName.Name}>
               {({ field, meta: { touched, error } }: FieldProps<string>) => (
                 <TextField
                   {...field}
-                  data-testid={dataTestId.registrationWizard.resourceType.venueNameField}
-                  variant="outlined"
+                  variant="filled"
                   fullWidth
-                  label={t('resource_type.exhibition_place')}
+                  label={t('resource_type.artistic.competition_name')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -61,10 +65,9 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
               {({ field, meta: { touched, error } }: FieldProps<string>) => (
                 <TextField
                   {...field}
-                  data-testid={dataTestId.registrationWizard.resourceType.venueNameField}
-                  variant="outlined"
+                  variant="filled"
                   fullWidth
-                  label={t('resource_type.exhibition_place')}
+                  label={t('resource_type.artistic.competition_rank')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -73,17 +76,35 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
             </Field>
 
             <Field name={CompetitionFieldName.Date}>
-              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                <TextField
-                  {...field}
-                  data-testid={dataTestId.registrationWizard.resourceType.venueNameField}
-                  variant="outlined"
-                  fullWidth
-                  label={t('resource_type.exhibition_place')}
-                  required
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
+              {({ field, form: { setFieldTouched, setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
+                <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
+                  <DatePicker
+                    {...datePickerTranslationProps}
+                    label={t('resource_type.artistic.competition_date')}
+                    value={field.value ?? null}
+                    onChange={(date: any, keyboardInput) => {
+                      !touched && setFieldTouched(field.name, true, false);
+                      const newValue = getNewDateValue(date, keyboardInput);
+                      if (newValue !== null) {
+                        setFieldValue(field.name, newValue);
+                      }
+                    }}
+                    inputFormat="dd.MM.yyyy"
+                    views={['year', 'month', 'day']}
+                    mask="__.__.____"
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        data-testid={dataTestId.registrationWizard.resourceType.dateFromField}
+                        variant="filled"
+                        required
+                        onBlur={() => !touched && setFieldTouched(field.name)}
+                        error={touched && !!error}
+                        helperText={<ErrorMessage name={field.name} />}
+                      />
+                    )}
+                  />
+                </LocalizationProvider>
               )}
             </Field>
           </DialogContent>

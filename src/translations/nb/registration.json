@@ -149,6 +149,14 @@
       "PlanningProposal": "Planforsalg"
     },
     "article_number": "Artikkelnummer",
+    "artistic": {
+      "add_competition": "Legg til konkurranse",
+      "edit_competition": "Endre konkurranse",
+      "architecture_publications": "Offentliggjøringer",
+      "competition_date": "Dato for offentliggjøring",
+      "competition_name": "Navn på konkurranse/arrangør/innbyder",
+      "competition_rank": "Rangering/innkjøp/omtale/invitert"
+    },
     "chapter": {
       "info_anthology": "Antologien hvor kapittelet er publisert i må være publisert først",
       "published_in": "Publisert i",

@@ -149,6 +149,14 @@
       "PlanningProposal": "Planning proposal"
     },
     "article_number": "Article number",
+    "artistic": {
+      "add_competition": "Add competititon",
+      "edit_competition": "Edit competition",
+      "architecture_publications": "Announcement",
+      "competition_date": "Date for announcement",
+      "competition_name": "Name on competition/organizer",
+      "competition_rank": "Rank/purchase/mention/invited"
+    },
     "chapter": {
       "info_anthology": "The anthology where this chapter is published in must be published in advance",
       "published_in": "Published in",

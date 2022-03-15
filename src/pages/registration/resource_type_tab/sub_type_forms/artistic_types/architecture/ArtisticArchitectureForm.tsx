@@ -98,10 +98,10 @@ export const ArtisticArchitectureForm = () => {
       </Field>
 
       <div>
+        <Typography variant="h3">{t('resource_type.artistic.architecture_publications')}</Typography>
         <FieldArray name={ResourceFieldNames.ArchitectureOutput}>
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
-              <Typography variant="h3">{t('resource_type.offentliggjøringer')}</Typography>
               {architectureOutput.length > 0 && (
                 <Table>
                   <TableHead>
@@ -143,7 +143,7 @@ export const ArtisticArchitectureForm = () => {
                 variant="outlined"
                 sx={{ mt: '1rem' }}
                 startIcon={<AddCircleOutlineIcon />}>
-                {t('resource_type.add_exhibition_place')}
+                {t('resource_type.artistic.add_competition')}
               </Button>
               <CompetitionModal
                 competition={null}
