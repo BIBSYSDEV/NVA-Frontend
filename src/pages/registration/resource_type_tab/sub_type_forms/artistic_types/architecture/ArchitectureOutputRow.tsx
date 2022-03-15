@@ -64,7 +64,7 @@ export const ArchitectureOutputRow = ({
       </TableCell>
       <TableCell>
         <Button onClick={() => setOpenEditItem(true)} variant="outlined" sx={{ mr: '1rem' }} startIcon={<EditIcon />}>
-          {t('common:edit')}
+          {t('common:show')}/{t('common:edit')}
         </Button>
         <Button onClick={() => setOpenRemoveItem(true)} variant="outlined" color="error" startIcon={<DeleteIcon />}>
           {t('common:remove')}
