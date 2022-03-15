@@ -49,7 +49,7 @@ interface Exhibition {
   sequence: number;
 }
 
-type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
+export type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
 
 export interface ArtisticPublicationInstance {
   type: ArtisticType | '';

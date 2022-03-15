@@ -151,11 +151,17 @@
     "article_number": "Article number",
     "artistic": {
       "add_competition": "Add competititon",
+      "architecture_output_type": {
+        "Competition": "Competition"
+      },
       "edit_competition": "Edit competition",
       "architecture_publications": "Announcement",
       "competition_date": "Date for announcement",
       "competition_name": "Name on competition/organizer",
-      "competition_rank": "Rank/purchase/mention/invited"
+      "competition_rank": "Rank/purchase/mention/invited",
+      "name_or_title": "Name/title",
+      "remove_announcement": "Remove announcement",
+      "remove_announcement_description": "Are you sure you want to remove \"{{name}}\" from list over announcements?"
     },
     "chapter": {
       "info_anthology": "The anthology where this chapter is published in must be published in advance",

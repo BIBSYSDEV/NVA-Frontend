@@ -23,6 +23,7 @@ import {
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { useState } from 'react';
 import { CompetitionModal } from './CompetitionModal';
+import { ArchitectureOutputRow } from './ArchitectureOutputRow';
 
 const architectureTypes = Object.values(ArchitectureType);
 type ArtisticArchitectureModalType = '' | 'Competition';
@@ -98,7 +99,9 @@ export const ArtisticArchitectureForm = () => {
       </Field>
 
       <div>
-        <Typography variant="h3">{t('resource_type.artistic.architecture_publications')}</Typography>
+        <Typography variant="h3" gutterBottom>
+          {t('resource_type.artistic.architecture_publications')}
+        </Typography>
         <FieldArray name={ResourceFieldNames.ArchitectureOutput}>
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
@@ -106,25 +109,24 @@ export const ArtisticArchitectureForm = () => {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>{t('resource_type.offentliggjort gjennom')}</TableCell>
-                      <TableCell>{t('common:date')}</TableCell>
+                      <TableCell>{t('common:type')}</TableCell>
+                      <TableCell>{t('resource_type.artistic.name_or_title')}</TableCell>
                       <TableCell>{t('common:order')}</TableCell>
                       <TableCell></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {architectureOutput.map(
-                      (output, index) => null
-                      // <VenueRow
-                      //   key={index}
-                      //   venue={venue}
-                      //   updateVenue={(newVenue) => replace(index, newVenue)}
-                      //   removeVenue={() => remove(index)}
-                      //   moveVenue={(newIndex) => move(index, newIndex)}
-                      //   index={index}
-                      //   maxIndex={architectureOutput.length - 1}
-                      // />
-                    )}
+                    {architectureOutput.map((output, index) => (
+                      <ArchitectureOutputRow
+                        key={index}
+                        item={output}
+                        updateItem={(newItem) => replace(index, newItem)}
+                        removeItem={() => remove(index)}
+                        moveItem={(newIndex) => move(index, newIndex)}
+                        index={index}
+                        maxIndex={architectureOutput.length - 1}
+                      />
+                    ))}
                   </TableBody>
                 </Table>
               )}
