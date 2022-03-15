@@ -141,6 +141,13 @@
   },
   "resource_type": {
     "add_exhibition_place": "Add exhibition place",
+    "architecture_type": {
+      "Building": "Building",
+      "Interior": "Interior",
+      "LandscapeArchitecture": "Landscape architecture",
+      "Other": "Other",
+      "PlanningProposal": "Planning proposal"
+    },
     "article_number": "Article number",
     "chapter": {
       "info_anthology": "The anthology where this chapter is published in must be published in advance",

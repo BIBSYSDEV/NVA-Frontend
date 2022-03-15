@@ -53,7 +53,7 @@ type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibitio
 
 export interface ArtisticPublicationInstance {
   type: ArtisticType | '';
-  subtype: DesignSubtype | null;
+  subtype: ArtisticSubtype | null;
   description: string;
   venues?: Venue[];
   architectureOutput?: ArchitectureOutput[];
@@ -79,8 +79,8 @@ export interface ArtisticEntityDescription extends BaseEntityDescription {
   reference: ArtisticReference;
 }
 
-interface DesignSubtype {
-  type: DesignType | '';
+interface ArtisticSubtype {
+  type: DesignType | ArchitectureType | '';
   description?: string;
 }
 
@@ -95,5 +95,13 @@ export enum DesignType {
   WebDesign = 'WebDesign',
   InteractionDesign = 'InteractionDesign',
   ServiceDesign = 'ServiceDesign',
+  Other = 'Other',
+}
+
+export enum ArchitectureType {
+  Building = 'Building',
+  PlanningProposal = 'PlanningProposal',
+  LandscapeArchitecture = 'LandscapeArchitecture',
+  Interior = 'Interior',
   Other = 'Other',
 }
