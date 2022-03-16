@@ -140,7 +140,6 @@
     "start_with_uploading_file_title": "Start med å laste opp fil"
   },
   "resource_type": {
-    "add_exhibition_place": "Legg til visningssted",
     "architecture_type": {
       "Building": "Bygg",
       "Interior": "Interiør",
@@ -151,11 +150,16 @@
     "article_number": "Artikkelnummer",
     "artistic": {
       "add_competition": "Legg til konkurranse",
-      "edit_competition": "Endre konkurranse",
+      "add_exhibition_place": "Legg til visningssted",
+      "add_publication_mention": "Legg til publisering/omtale",
       "architecture_publications": "Offentliggjøringer",
       "competition_date": "Dato for offentliggjøring",
       "competition_name": "Navn på konkurranse/arrangør/innbyder",
       "competition_rank": "Rangering/innkjøp/omtale/invitert",
+      "edit_competition": "Endre konkurranse",
+      "edit_exhibition_place": "Endre visningsted",
+      "exhibition_place": "Visningssted",
+      "exhibition_places": "Visningssteder",
       "name_or_title": "Navn/tittel",
       "output_type": {
         "Competition": "Konkurranse",
@@ -205,9 +209,6 @@
       "Other": "Annet",
       "WebDesign": "Webdesign"
     },
-    "edit_exhibition_place": "Endre visningsted",
-    "exhibition_place": "Visningssted",
-    "exhibition_places": "Visningssteder",
     "form": "Form",
     "isbn": "ISBN",
     "issn": "ISSN",

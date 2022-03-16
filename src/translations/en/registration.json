@@ -140,7 +140,6 @@
     "start_with_uploading_file_title": "Start with uploading file"
   },
   "resource_type": {
-    "add_exhibition_place": "Add exhibition place",
     "architecture_type": {
       "Building": "Building",
       "Interior": "Interior",
@@ -151,11 +150,16 @@
     "article_number": "Article number",
     "artistic": {
       "add_competition": "Add competititon",
-      "edit_competition": "Edit competition",
+      "add_exhibition_place": "Add exhibition place",
+      "add_publication_mention": "Add publication/mention",
       "architecture_publications": "Announcement",
       "competition_date": "Date for announcement",
       "competition_name": "Name on competition/organizer",
       "competition_rank": "Rank/purchase/mention/invited",
+      "edit_competition": "Edit competition",
+      "edit_exhibition_place": "Edit exhibition place",
+      "exhibition_place": "Exhibition place",
+      "exhibition_places": "Exhibition places",
       "name_or_title": "Name/title",
       "output_type": {
         "Competition": "Competition",
@@ -205,9 +209,6 @@
       "Other": "Other",
       "WebDesign": "Web design"
     },
-    "edit_exhibition_place": "Edit exhibition place",
-    "exhibition_place": "Exhibition place",
-    "exhibition_places": "Exhibition places",
     "form": "Form",
     "isbn": "ISBN",
     "issn": "ISSN",
