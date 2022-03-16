@@ -7,6 +7,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import {
   ArchitectureOutput,
+  Award,
   Competition,
   MentionInPublication,
   Venue,
@@ -15,6 +16,7 @@ import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import { CompetitionModal } from './architecture/CompetitionModal';
 import { VenueModal } from './design/VenueModal';
 import { PublicationMentionModal } from './architecture/PublicationMentionModal';
+import { AwardModal } from './architecture/AwardModal';
 
 type ItemType = ArchitectureOutput | Venue;
 
@@ -44,12 +46,14 @@ export const OutputRow = ({
   let title = '';
   let removeItemTitle = '';
   let removeItemDescription = '';
-  if (item.type === 'Competition') {
-    title = (item as Competition).name;
-    removeItemTitle = t('resource_type.artistic.remove_announcement');
-    removeItemDescription = t('resource_type.artistic.remove_announcement_description', { name: title });
-  } else if (item.type === 'MentionInPublication') {
-    title = (item as MentionInPublication).title;
+  if (item.type === 'Competition' || item.type === 'MentionInPublication' || item.type === 'Award') {
+    if (item.type === 'Competition') {
+      title = (item as Competition).name;
+    } else if (item.type === 'MentionInPublication') {
+      title = (item as MentionInPublication).title;
+    } else if (item.type === 'Award') {
+      title = (item as Award).name;
+    }
     removeItemTitle = t('resource_type.artistic.remove_announcement');
     removeItemDescription = t('resource_type.artistic.remove_announcement_description', { name: title });
   } else if (item.type === 'Venue') {
@@ -116,6 +120,14 @@ export const OutputRow = ({
       {item.type === 'MentionInPublication' && (
         <PublicationMentionModal
           mentionInPublication={item as MentionInPublication}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      )}
+      {item.type === 'Award' && (
+        <AwardModal
+          award={item as Award}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}

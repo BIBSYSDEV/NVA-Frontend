@@ -29,7 +29,7 @@ export interface MentionInPublication {
   sequence: number;
 }
 
-interface Award {
+export interface Award {
   type: 'Award';
   name: string;
   organizer: string;
