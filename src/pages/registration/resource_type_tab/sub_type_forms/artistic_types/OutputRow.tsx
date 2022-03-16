@@ -5,39 +5,60 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import { ArchitectureOutput, Competition } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
-import { CompetitionModal } from './CompetitionModal';
+import {
+  ArchitectureOutput,
+  Competition,
+  Venue,
+} from '../../../../../types/publication_types/artisticRegistration.types';
+import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
+import { CompetitionModal } from './architecture/CompetitionModal';
+import { VenueModal } from './design/VenueModal';
 
-interface ArchitectureOutputRowProps {
-  item: ArchitectureOutput;
-  updateItem: (item: ArchitectureOutput) => void;
+type ItemType = ArchitectureOutput | Venue;
+
+interface OutputRowProps {
+  item: ItemType;
+  updateItem: (item: ItemType) => void;
   removeItem: () => void;
   moveItem: (to: number) => void;
   index: number;
   maxIndex: number;
+  showTypeColumn?: boolean;
 }
 
-export const ArchitectureOutputRow = ({
+export const OutputRow = ({
   updateItem,
   removeItem,
   moveItem,
   item,
   index,
   maxIndex,
-}: ArchitectureOutputRowProps) => {
+  showTypeColumn = false,
+}: OutputRowProps) => {
   const { t } = useTranslation('registration');
   const [openEditItem, setOpenEditItem] = useState(false);
   const [openRemoveItem, setOpenRemoveItem] = useState(false);
 
-  const object = item.type === 'Competition' ? (item as Competition) : null;
-  const title = object?.name ?? '';
+  let title = '';
+  let removeItemTitle = '';
+  let removeItemDescription = '';
+  if (item.type === 'Competition') {
+    title = (item as Competition).name;
+    removeItemTitle = t('resource_type.artistic.remove_announcement');
+    removeItemDescription = t('resource_type.artistic.remove_announcement_description', { name: title });
+  } else if (item.type === 'Venue') {
+    title = (item as Venue).place?.label ?? '';
+    removeItemTitle = t('resource_type.artistic.remove_venue_title');
+    removeItemDescription = t('resource_type.artistic.remove_venue_text', { name: title });
+  }
 
   return (
     <TableRow>
-      <TableCell>
-        <Typography>{t(`resource_type.artistic.architecture_output_type.${item.type}`)}</Typography>
-      </TableCell>
+      {showTypeColumn && (
+        <TableCell>
+          <Typography>{t(`resource_type.artistic.output_type.${item.type}`)}</Typography>
+        </TableCell>
+      )}
       <TableCell>
         <Typography>{title}</Typography>
       </TableCell>
@@ -70,21 +91,31 @@ export const ArchitectureOutputRow = ({
           {t('common:remove')}
         </Button>
       </TableCell>
-      <CompetitionModal
-        competition={object}
-        onSubmit={updateItem}
-        open={openEditItem}
-        closeModal={() => setOpenEditItem(false)}
-      />
+      {item.type === 'Competition' && (
+        <CompetitionModal
+          competition={item as Competition}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      )}
+      {item.type === 'Venue' && (
+        <VenueModal
+          venue={item as Venue}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      )}
       <ConfirmDialog
         open={openRemoveItem}
-        title={t('resource_type.artistic.remove_announcement')}
+        title={removeItemTitle}
         onCancel={() => setOpenRemoveItem(false)}
         onAccept={() => {
           removeItem();
           setOpenRemoveItem(false);
         }}>
-        {t('resource_type.artistic.remove_announcement_description', { name: title })}
+        {removeItemDescription}
       </ConfirmDialog>
     </TableRow>
   );

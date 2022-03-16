@@ -23,7 +23,7 @@ import {
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { useState } from 'react';
 import { CompetitionModal } from './CompetitionModal';
-import { ArchitectureOutputRow } from './ArchitectureOutputRow';
+import { OutputRow } from '../OutputRow';
 
 const architectureTypes = Object.values(ArchitectureType);
 type ArtisticArchitectureModalType = '' | 'Competition';
@@ -117,7 +117,7 @@ export const ArtisticArchitectureForm = () => {
                   </TableHead>
                   <TableBody>
                     {architectureOutput.map((output, index) => (
-                      <ArchitectureOutputRow
+                      <OutputRow
                         key={index}
                         item={output}
                         updateItem={(newItem) => replace(index, newItem)}
@@ -125,6 +125,7 @@ export const ArtisticArchitectureForm = () => {
                         moveItem={(newIndex) => move(index, newIndex)}
                         index={index}
                         maxIndex={architectureOutput.length - 1}
+                        showTypeColumn
                       />
                     ))}
                   </TableBody>

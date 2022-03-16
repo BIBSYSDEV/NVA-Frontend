@@ -151,17 +151,20 @@
     "article_number": "Article number",
     "artistic": {
       "add_competition": "Add competititon",
-      "architecture_output_type": {
-        "Competition": "Competition"
-      },
       "edit_competition": "Edit competition",
       "architecture_publications": "Announcement",
       "competition_date": "Date for announcement",
       "competition_name": "Name on competition/organizer",
       "competition_rank": "Rank/purchase/mention/invited",
       "name_or_title": "Name/title",
+      "output_type": {
+        "Competition": "Competition",
+        "Venue": "Venue"
+      },
       "remove_announcement": "Remove announcement",
-      "remove_announcement_description": "Are you sure you want to remove \"{{name}}\" from list over announcements?"
+      "remove_announcement_description": "Are you sure you want to remove \"{{name}}\" from list over announcements?",
+      "remove_venue_title": "Remove exhibition place?",
+      "remove_venue_text": "Are you sure you want to remove \"{{name}}\" from list over exhibition places?"
     },
     "chapter": {
       "info_anthology": "The anthology where this chapter is published in must be published in advance",
@@ -236,8 +239,6 @@
     "remove_doi_text": "You can remove the DOI that was used when starting registration.\nDo you wish to remove connection to the original DOI?",
     "remove_journal": "Remove journal",
     "remove_publisher": "Remove publisher",
-    "remove_venue_title": "Remove exhibition place?",
-    "remove_venue_text": "Are you sure you want to remove \"{{name}}\" from list over exhibition places?",
     "search_for_journal": "Search for journals",
     "search_for_original_article": "Search for original article",
     "search_for_publisher": "Search for publisher",
