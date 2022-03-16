@@ -149,6 +149,7 @@
     },
     "article_number": "Artikkelnummer",
     "artistic": {
+      "add_award": "Legg til pris/utmerkelse",
       "add_competition": "Legg til konkurranse",
       "add_exhibition_place": "Legg til visningssted",
       "add_publication_mention": "Legg til publisering/omtale",

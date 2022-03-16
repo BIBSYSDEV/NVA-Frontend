@@ -149,6 +149,7 @@
     },
     "article_number": "Article number",
     "artistic": {
+      "add_award": "Add prize/award",
       "add_competition": "Add competititon",
       "add_exhibition_place": "Add exhibition place",
       "add_publication_mention": "Add publication/mention",

@@ -27,7 +27,7 @@ import { OutputRow } from '../OutputRow';
 import { PublicationMentionModal } from './PublicationMentionModal';
 
 const architectureTypes = Object.values(ArchitectureType);
-type ArtisticArchitectureModalType = '' | 'Competition' | 'MentionInPublication';
+type ArtisticArchitectureModalType = '' | 'Competition' | 'MentionInPublication' | 'Award';
 
 export const ArtisticArchitectureForm = () => {
   const { t } = useTranslation('registration');
@@ -174,6 +174,13 @@ export const ArtisticArchitectureForm = () => {
             variant="outlined"
             startIcon={<AddCircleOutlineIcon />}>
             {t('resource_type.artistic.add_publication_mention')}
+          </Button>
+          <Button
+            data-testid={dataTestId.registrationWizard.resourceType.addAwardButton}
+            onClick={() => setOpenModal('Award')}
+            variant="outlined"
+            startIcon={<AddCircleOutlineIcon />}>
+            {t('resource_type.artistic.add_award')}
           </Button>
         </Box>
       </div>
