@@ -20,7 +20,7 @@ import { ResourceFieldNames } from '../../../../../../types/publicationFieldName
 import { ArtisticRegistration, DesignType } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { VenueModal } from './VenueModal';
-import { VenueRow } from './VenueRow';
+import { OutputRow } from '../OutputRow';
 
 const designTypes = Object.values(DesignType);
 
@@ -94,28 +94,29 @@ export const ArtisticDesignForm = () => {
       </Field>
 
       <div>
+        <Typography variant="h3" component="h2" gutterBottom>
+          {t('resource_type.exhibition_places')}
+        </Typography>
         <FieldArray name={ResourceFieldNames.Venues}>
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
-              <Typography variant="h3">{t('resource_type.exhibition_places')}</Typography>
               {venues.length > 0 && (
                 <Table>
                   <TableHead>
                     <TableRow>
                       <TableCell>{t('resource_type.exhibition_place')}</TableCell>
-                      <TableCell>{t('common:date')}</TableCell>
                       <TableCell>{t('common:order')}</TableCell>
                       <TableCell></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {venues.map((venue, index) => (
-                      <VenueRow
+                      <OutputRow
                         key={index}
-                        venue={venue}
-                        updateVenue={(newVenue) => replace(index, newVenue)}
-                        removeVenue={() => remove(index)}
-                        moveVenue={(newIndex) => move(index, newIndex)}
+                        item={venue}
+                        updateItem={(newVenue) => replace(index, newVenue)}
+                        removeItem={() => remove(index)}
+                        moveItem={(newIndex) => move(index, newIndex)}
                         index={index}
                         maxIndex={venues.length - 1}
                       />

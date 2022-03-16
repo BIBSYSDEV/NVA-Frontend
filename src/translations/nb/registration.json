@@ -149,6 +149,23 @@
       "PlanningProposal": "Planforsalg"
     },
     "article_number": "Artikkelnummer",
+    "artistic": {
+      "add_competition": "Legg til konkurranse",
+      "edit_competition": "Endre konkurranse",
+      "architecture_publications": "Offentliggjøringer",
+      "competition_date": "Dato for offentliggjøring",
+      "competition_name": "Navn på konkurranse/arrangør/innbyder",
+      "competition_rank": "Rangering/innkjøp/omtale/invitert",
+      "name_or_title": "Navn/tittel",
+      "output_type": {
+        "Competition": "Konkurranse",
+        "Venue": "Visningssted"
+      },
+      "remove_announcement": "Fjern offentliggjøring",
+      "remove_announcement_description": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over offentliggjøringer?",
+      "remove_venue_title": "Fjern visningssted?",
+      "remove_venue_text": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over visningssteder?"
+    },
     "chapter": {
       "info_anthology": "Antologien hvor kapittelet er publisert i må være publisert først",
       "published_in": "Publisert i",
@@ -222,8 +239,6 @@
     "remove_doi_text": "Du kan fjerne DOI som ble brukt ved registreringsstart.\nØnsker du å fjerne kobling til original DOI?",
     "remove_journal": "Fjern tidsskrift",
     "remove_publisher": "Fjern utgiver",
-    "remove_venue_title": "Fjern visningssted?",
-    "remove_venue_text": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over visningssteder?",
     "search_for_journal": "Søk etter tidsskrift",
     "search_for_original_article": "Søk etter original artikkel",
     "search_for_publisher": "Søk etter utgiver",

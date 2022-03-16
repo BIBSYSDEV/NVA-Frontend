@@ -1,6 +1,20 @@
-import { TextField, MenuItem } from '@mui/material';
-import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
+import { useState } from 'react';
+import {
+  TextField,
+  MenuItem,
+  Box,
+  Button,
+  FormHelperText,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
+import { Field, FieldProps, ErrorMessage, useFormikContext, FieldArray, FieldArrayRenderProps } from 'formik';
 import { useTranslation } from 'react-i18next';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import {
@@ -8,13 +22,20 @@ import {
   ArchitectureType,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { CompetitionModal } from './CompetitionModal';
+import { OutputRow } from '../OutputRow';
 
 const architectureTypes = Object.values(ArchitectureType);
+type ArtisticArchitectureModalType = '' | 'Competition';
 
 export const ArtisticArchitectureForm = () => {
   const { t } = useTranslation('registration');
-  const { values } = useFormikContext<ArtisticRegistration>();
-  const { subtype } = values.entityDescription.reference.publicationInstance;
+  const { values, errors, touched } = useFormikContext<ArtisticRegistration>();
+
+  const [openModal, setOpenModal] = useState<ArtisticArchitectureModalType>('');
+
+  const { publicationInstance } = values.entityDescription.reference;
+  const architectureOutput = publicationInstance.architectureOutput ?? [];
 
   return (
     <>
@@ -42,7 +63,7 @@ export const ArtisticArchitectureForm = () => {
         )}
       </Field>
 
-      {subtype?.type === ArchitectureType.Other && (
+      {publicationInstance.subtype?.type === ArchitectureType.Other && (
         <Field name={ResourceFieldNames.PublicationInstanceSubtypeDescription}>
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <TextField
@@ -76,6 +97,70 @@ export const ArtisticArchitectureForm = () => {
           />
         )}
       </Field>
+
+      <div>
+        <Typography variant="h3" component="h2" gutterBottom>
+          {t('resource_type.artistic.architecture_publications')}
+        </Typography>
+        <FieldArray name={ResourceFieldNames.ArchitectureOutput}>
+          {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
+            <>
+              {architectureOutput.length > 0 && (
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>{t('common:type')}</TableCell>
+                      <TableCell>{t('resource_type.artistic.name_or_title')}</TableCell>
+                      <TableCell>{t('common:order')}</TableCell>
+                      <TableCell></TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {architectureOutput.map((output, index) => (
+                      <OutputRow
+                        key={index}
+                        item={output}
+                        updateItem={(newItem) => replace(index, newItem)}
+                        removeItem={() => remove(index)}
+                        moveItem={(newIndex) => move(index, newIndex)}
+                        index={index}
+                        maxIndex={architectureOutput.length - 1}
+                        showTypeColumn
+                      />
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
+              {!!touched.entityDescription?.reference?.publicationInstance?.architectureOutput &&
+                typeof errors.entityDescription?.reference?.publicationInstance?.architectureOutput === 'string' && (
+                  <Box mt="1rem">
+                    <FormHelperText error>
+                      <ErrorMessage name={name} />
+                    </FormHelperText>
+                  </Box>
+                )}
+
+              <CompetitionModal
+                competition={null}
+                onSubmit={(newCompetition) => {
+                  newCompetition.sequence = architectureOutput.length + 1;
+                  push(newCompetition);
+                }}
+                open={openModal === 'Competition'}
+                closeModal={() => setOpenModal('')}
+              />
+            </>
+          )}
+        </FieldArray>
+        <Button
+          data-testid={dataTestId.registrationWizard.resourceType.addCompetitionButton}
+          onClick={() => setOpenModal('Competition')}
+          variant="outlined"
+          sx={{ mt: '0.5rem' }}
+          startIcon={<AddCircleOutlineIcon />}>
+          {t('resource_type.artistic.add_competition')}
+        </Button>
+      </div>
     </>
   );
 };

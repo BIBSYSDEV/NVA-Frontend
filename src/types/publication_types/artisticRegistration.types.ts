@@ -12,7 +12,7 @@ export interface Venue {
   time: Period | null;
 }
 
-interface Competition {
+export interface Competition {
   type: 'Competition';
   name: string;
   description: string;
@@ -49,7 +49,7 @@ interface Exhibition {
   sequence: number;
 }
 
-type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
+export type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
 
 export interface ArtisticPublicationInstance {
   type: ArtisticType | '';

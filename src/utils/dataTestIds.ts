@@ -141,6 +141,7 @@ export const dataTestId = {
       startRegistrationButton: 'registration-start-button',
     },
     resourceType: {
+      addCompetitionButton: 'add-competition-button',
       addVenueButton: 'add-venue-button',
       articleNumberField: 'article-number-field',
       artisticTypeField: 'artistic-type-field',
