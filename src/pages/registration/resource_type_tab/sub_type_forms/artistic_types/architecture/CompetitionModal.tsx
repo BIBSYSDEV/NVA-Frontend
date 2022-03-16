@@ -5,11 +5,10 @@ import { useTranslation } from 'react-i18next';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { datePickerTranslationProps } from '../../../../../../themes/mainTheme';
 import { Competition } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import { getDateFnsLocale } from '../../../../../../utils/date-helpers';
 
-interface CopetitionModalProps {
+interface CompetitionModalProps {
   competition: Competition | null;
   onSubmit: (venue: Competition) => void;
   open: boolean;
@@ -30,7 +29,7 @@ const emptyCompetition: Competition = {
   sequence: 0,
 };
 
-export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: CopetitionModalProps) => {
+export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: CompetitionModalProps) => {
   const { t, i18n } = useTranslation('registration');
 
   return (
@@ -40,7 +39,7 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
       </DialogTitle>
       <Formik
         initialValues={competition ?? emptyCompetition}
-        validationSchema={null}
+        validationSchema={null} // TODO
         onSubmit={(values) => {
           onSubmit(values);
           closeModal();
@@ -82,7 +81,7 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
                     {...datePickerTranslationProps}
                     label={t('resource_type.artistic.competition_date')}
                     value={field.value ?? null}
-                    onChange={(date: any, keyboardInput) => {
+                    onChange={(date: Date | null, keyboardInput) => {
                       !touched && setFieldTouched(field.name, true, false);
                       const newValue = getNewDateValue(date, keyboardInput);
                       if (newValue !== null) {
@@ -95,7 +94,6 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        data-testid={dataTestId.registrationWizard.resourceType.dateFromField}
                         variant="filled"
                         required
                         onBlur={() => !touched && setFieldTouched(field.name)}
@@ -112,10 +110,7 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
             <Button variant="outlined" onClick={closeModal}>
               {t('common:cancel')}
             </Button>
-            <Button
-              data-testid={dataTestId.registrationWizard.resourceType.saveVenueButton}
-              variant="contained"
-              type="submit">
+            <Button variant="contained" type="submit">
               {competition ? t('common:save') : t('common:add')}
             </Button>
           </DialogActions>

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   TextField,
   MenuItem,
@@ -21,7 +22,6 @@ import {
   ArchitectureType,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { useState } from 'react';
 import { CompetitionModal } from './CompetitionModal';
 import { OutputRow } from '../OutputRow';
 
@@ -99,7 +99,7 @@ export const ArtisticArchitectureForm = () => {
       </Field>
 
       <div>
-        <Typography variant="h3" gutterBottom>
+        <Typography variant="h3" component="h2" gutterBottom>
           {t('resource_type.artistic.architecture_publications')}
         </Typography>
         <FieldArray name={ResourceFieldNames.ArchitectureOutput}>
@@ -140,14 +140,6 @@ export const ArtisticArchitectureForm = () => {
                   </Box>
                 )}
 
-              <Button
-                data-testid={dataTestId.registrationWizard.resourceType.addVenueButton}
-                onClick={() => setOpenModal('Competition')}
-                variant="outlined"
-                sx={{ mt: '1rem' }}
-                startIcon={<AddCircleOutlineIcon />}>
-                {t('resource_type.artistic.add_competition')}
-              </Button>
               <CompetitionModal
                 competition={null}
                 onSubmit={(newCompetition) => {
@@ -160,6 +152,14 @@ export const ArtisticArchitectureForm = () => {
             </>
           )}
         </FieldArray>
+        <Button
+          data-testid={dataTestId.registrationWizard.resourceType.addCompetitionButton}
+          onClick={() => setOpenModal('Competition')}
+          variant="outlined"
+          sx={{ mt: '0.5rem' }}
+          startIcon={<AddCircleOutlineIcon />}>
+          {t('resource_type.artistic.add_competition')}
+        </Button>
       </div>
     </>
   );

@@ -94,10 +94,12 @@ export const ArtisticDesignForm = () => {
       </Field>
 
       <div>
+        <Typography variant="h3" component="h2" gutterBottom>
+          {t('resource_type.exhibition_places')}
+        </Typography>
         <FieldArray name={ResourceFieldNames.Venues}>
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
-              <Typography variant="h3">{t('resource_type.exhibition_places')}</Typography>
               {venues.length > 0 && (
                 <Table>
                   <TableHead>
