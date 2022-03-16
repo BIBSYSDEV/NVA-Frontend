@@ -169,7 +169,7 @@ export const ArtisticArchitectureForm = () => {
             {t('resource_type.artistic.add_competition')}
           </Button>
           <Button
-            data-testid={dataTestId.registrationWizard.resourceType.addCompetitionButton}
+            data-testid={dataTestId.registrationWizard.resourceType.addMentionInPublicationButton}
             onClick={() => setOpenModal('MentionInPublication')}
             variant="outlined"
             startIcon={<AddCircleOutlineIcon />}>
