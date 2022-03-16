@@ -24,6 +24,7 @@ import {
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { CompetitionModal } from './CompetitionModal';
 import { OutputRow } from '../OutputRow';
+import { PublicationMentionModal } from './PublicationMentionModal';
 
 const architectureTypes = Object.values(ArchitectureType);
 type ArtisticArchitectureModalType = '' | 'Competition' | 'MentionInPublication';
@@ -147,6 +148,15 @@ export const ArtisticArchitectureForm = () => {
                   push(newCompetition);
                 }}
                 open={openModal === 'Competition'}
+                closeModal={() => setOpenModal('')}
+              />
+              <PublicationMentionModal
+                mentionInPublication={null}
+                onSubmit={(newMention) => {
+                  newMention.sequence = architectureOutput.length + 1;
+                  push(newMention);
+                }}
+                open={openModal === 'MentionInPublication'}
                 closeModal={() => setOpenModal('')}
               />
             </>

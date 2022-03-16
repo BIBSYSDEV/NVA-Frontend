@@ -20,7 +20,7 @@ export interface Competition {
   sequence: number;
 }
 
-interface MentionInPublication {
+export interface MentionInPublication {
   type: 'MentionInPublication';
   title: string;
   issue: string;

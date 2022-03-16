@@ -158,11 +158,15 @@
       "competition_rank": "Rank/purchase/mention/invited",
       "edit_competition": "Edit competition",
       "edit_exhibition_place": "Edit exhibition place",
+      "edit_publication_mention": "Edit publication/mention",
       "exhibition_place": "Exhibition place",
       "exhibition_places": "Exhibition places",
+      "mention_other": "Other (publisher, ISBN, etc.)",
+      "mention_title": "Journal/Book/medium",
       "name_or_title": "Name/title",
       "output_type": {
         "Competition": "Competition",
+        "MentionInPublication": "Publication/mention",
         "Venue": "Venue"
       },
       "remove_announcement": "Remove announcement",

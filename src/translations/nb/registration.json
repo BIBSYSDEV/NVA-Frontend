@@ -158,11 +158,15 @@
       "competition_rank": "Rangering/innkjøp/omtale/invitert",
       "edit_competition": "Endre konkurranse",
       "edit_exhibition_place": "Endre visningsted",
+      "edit_publication_mention": "Endre publisering/omtale",
       "exhibition_place": "Visningssted",
       "exhibition_places": "Visningssteder",
+      "mention_other": "Annet (utgiver, ISBN, m.m.)",
+      "mention_title": "Tidsskrift/Boktittel/medium",
       "name_or_title": "Navn/tittel",
       "output_type": {
         "Competition": "Konkurranse",
+        "MentionInPublication": "Publisering/omtale",
         "Venue": "Visningssted"
       },
       "remove_announcement": "Fjern offentliggjøring",
