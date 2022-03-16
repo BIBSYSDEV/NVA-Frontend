@@ -95,7 +95,7 @@ export const ArtisticDesignForm = () => {
 
       <div>
         <Typography variant="h3" component="h2" gutterBottom>
-          {t('resource_type.exhibition_places')}
+          {t('resource_type.artistic.exhibition_places')}
         </Typography>
         <FieldArray name={ResourceFieldNames.Venues}>
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
@@ -104,7 +104,7 @@ export const ArtisticDesignForm = () => {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>{t('resource_type.exhibition_place')}</TableCell>
+                      <TableCell>{t('resource_type.artistic.exhibition_place')}</TableCell>
                       <TableCell>{t('common:order')}</TableCell>
                       <TableCell></TableCell>
                     </TableRow>
@@ -139,10 +139,9 @@ export const ArtisticDesignForm = () => {
                 variant="outlined"
                 sx={{ mt: '1rem' }}
                 startIcon={<AddCircleOutlineIcon />}>
-                {t('resource_type.add_exhibition_place')}
+                {t('resource_type.artistic.add_exhibition_place')}
               </Button>
               <VenueModal
-                venue={null}
                 onSubmit={(newVenue) => push(newVenue)}
                 open={openNewVenueModal}
                 closeModal={() => setOpenNewVenueModal(false)}

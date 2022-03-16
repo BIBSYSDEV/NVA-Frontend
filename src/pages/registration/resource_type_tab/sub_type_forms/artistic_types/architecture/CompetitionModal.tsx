@@ -9,7 +9,7 @@ import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import { getDateFnsLocale } from '../../../../../../utils/date-helpers';
 
 interface CompetitionModalProps {
-  competition: Competition | null;
+  competition?: Competition;
   onSubmit: (venue: Competition) => void;
   open: boolean;
   closeModal: () => void;

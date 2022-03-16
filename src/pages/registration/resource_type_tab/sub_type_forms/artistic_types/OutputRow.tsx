@@ -8,11 +8,13 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import {
   ArchitectureOutput,
   Competition,
+  MentionInPublication,
   Venue,
 } from '../../../../../types/publication_types/artisticRegistration.types';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import { CompetitionModal } from './architecture/CompetitionModal';
 import { VenueModal } from './design/VenueModal';
+import { PublicationMentionModal } from './architecture/PublicationMentionModal';
 
 type ItemType = ArchitectureOutput | Venue;
 
@@ -44,6 +46,10 @@ export const OutputRow = ({
   let removeItemDescription = '';
   if (item.type === 'Competition') {
     title = (item as Competition).name;
+    removeItemTitle = t('resource_type.artistic.remove_announcement');
+    removeItemDescription = t('resource_type.artistic.remove_announcement_description', { name: title });
+  } else if (item.type === 'MentionInPublication') {
+    title = (item as MentionInPublication).title;
     removeItemTitle = t('resource_type.artistic.remove_announcement');
     removeItemDescription = t('resource_type.artistic.remove_announcement_description', { name: title });
   } else if (item.type === 'Venue') {
@@ -102,6 +108,14 @@ export const OutputRow = ({
       {item.type === 'Venue' && (
         <VenueModal
           venue={item as Venue}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      )}
+      {item.type === 'MentionInPublication' && (
+        <PublicationMentionModal
+          mentionInPublication={item as MentionInPublication}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}

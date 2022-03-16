@@ -7,7 +7,7 @@ import { venueValidationSchema } from '../../../../../../utils/validation/regist
 import { PeriodFields } from '../../../components/PeriodFields';
 
 interface VenueModalProps {
-  venue: Venue | null;
+  venue?: Venue;
   onSubmit: (venue: Venue) => void;
   open: boolean;
   closeModal: () => void;
@@ -31,7 +31,7 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
   return (
     <Dialog open={open} onClose={closeModal}>
       <DialogTitle>
-        {venue ? t('resource_type.edit_exhibition_place') : t('resource_type.add_exhibition_place')}
+        {venue ? t('resource_type.artistic.edit_exhibition_place') : t('resource_type.artistic.add_exhibition_place')}
       </DialogTitle>
       <Formik
         initialValues={venue ?? emptyVenue}
@@ -50,7 +50,7 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
                     data-testid={dataTestId.registrationWizard.resourceType.venueNameField}
                     variant="outlined"
                     fullWidth
-                    label={t('resource_type.exhibition_place')}
+                    label={t('resource_type.artistic.exhibition_place')}
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}

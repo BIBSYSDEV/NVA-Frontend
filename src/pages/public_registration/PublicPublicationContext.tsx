@@ -199,7 +199,7 @@ export const PublicVenues = ({ venues }: PublicVenuesProps) => {
 
   return venues && venues.length > 0 ? (
     <>
-      <Typography variant="overline">{t('resource_type.exhibition_places')}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.exhibition_places')}</Typography>
       {venues.map((venue, index) => {
         const periodString = getPeriodString(venue.time);
         const placeLabel = venue.place?.label ?? '';

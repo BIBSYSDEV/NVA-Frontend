@@ -24,9 +24,10 @@ import {
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { CompetitionModal } from './CompetitionModal';
 import { OutputRow } from '../OutputRow';
+import { PublicationMentionModal } from './PublicationMentionModal';
 
 const architectureTypes = Object.values(ArchitectureType);
-type ArtisticArchitectureModalType = '' | 'Competition';
+type ArtisticArchitectureModalType = '' | 'Competition' | 'MentionInPublication';
 
 export const ArtisticArchitectureForm = () => {
   const { t } = useTranslation('registration');
@@ -141,7 +142,6 @@ export const ArtisticArchitectureForm = () => {
                 )}
 
               <CompetitionModal
-                competition={null}
                 onSubmit={(newCompetition) => {
                   newCompetition.sequence = architectureOutput.length + 1;
                   push(newCompetition);
@@ -149,17 +149,33 @@ export const ArtisticArchitectureForm = () => {
                 open={openModal === 'Competition'}
                 closeModal={() => setOpenModal('')}
               />
+              <PublicationMentionModal
+                onSubmit={(newMention) => {
+                  newMention.sequence = architectureOutput.length + 1;
+                  push(newMention);
+                }}
+                open={openModal === 'MentionInPublication'}
+                closeModal={() => setOpenModal('')}
+              />
             </>
           )}
         </FieldArray>
-        <Button
-          data-testid={dataTestId.registrationWizard.resourceType.addCompetitionButton}
-          onClick={() => setOpenModal('Competition')}
-          variant="outlined"
-          sx={{ mt: '0.5rem' }}
-          startIcon={<AddCircleOutlineIcon />}>
-          {t('resource_type.artistic.add_competition')}
-        </Button>
+        <Box sx={{ display: 'flex', gap: '1rem', mt: '0.5rem' }}>
+          <Button
+            data-testid={dataTestId.registrationWizard.resourceType.addCompetitionButton}
+            onClick={() => setOpenModal('Competition')}
+            variant="outlined"
+            startIcon={<AddCircleOutlineIcon />}>
+            {t('resource_type.artistic.add_competition')}
+          </Button>
+          <Button
+            data-testid={dataTestId.registrationWizard.resourceType.addMentionInPublicationButton}
+            onClick={() => setOpenModal('MentionInPublication')}
+            variant="outlined"
+            startIcon={<AddCircleOutlineIcon />}>
+            {t('resource_type.artistic.add_publication_mention')}
+          </Button>
+        </Box>
       </div>
     </>
   );
