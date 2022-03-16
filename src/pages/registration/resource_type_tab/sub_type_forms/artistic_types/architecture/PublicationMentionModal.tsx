@@ -9,7 +9,7 @@ import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import { getDateFnsLocale } from '../../../../../../utils/date-helpers';
 
 interface PublicationMentionModalProps {
-  mentionInPublication: MentionInPublication | null;
+  mentionInPublication?: MentionInPublication;
   onSubmit: (mentionInPublication: MentionInPublication) => void;
   open: boolean;
   closeModal: () => void;

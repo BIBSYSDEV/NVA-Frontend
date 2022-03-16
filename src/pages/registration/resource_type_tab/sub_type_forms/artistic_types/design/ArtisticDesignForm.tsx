@@ -142,7 +142,6 @@ export const ArtisticDesignForm = () => {
                 {t('resource_type.artistic.add_exhibition_place')}
               </Button>
               <VenueModal
-                venue={null}
                 onSubmit={(newVenue) => push(newVenue)}
                 open={openNewVenueModal}
                 closeModal={() => setOpenNewVenueModal(false)}

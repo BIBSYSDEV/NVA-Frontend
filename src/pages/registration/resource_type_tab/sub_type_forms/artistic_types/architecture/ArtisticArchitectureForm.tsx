@@ -142,7 +142,6 @@ export const ArtisticArchitectureForm = () => {
                 )}
 
               <CompetitionModal
-                competition={null}
                 onSubmit={(newCompetition) => {
                   newCompetition.sequence = architectureOutput.length + 1;
                   push(newCompetition);
@@ -151,7 +150,6 @@ export const ArtisticArchitectureForm = () => {
                 closeModal={() => setOpenModal('')}
               />
               <PublicationMentionModal
-                mentionInPublication={null}
                 onSubmit={(newMention) => {
                   newMention.sequence = architectureOutput.length + 1;
                   push(newMention);

@@ -7,7 +7,7 @@ import { venueValidationSchema } from '../../../../../../utils/validation/regist
 import { PeriodFields } from '../../../components/PeriodFields';
 
 interface VenueModalProps {
-  venue: Venue | null;
+  venue?: Venue;
   onSubmit: (venue: Venue) => void;
   open: boolean;
   closeModal: () => void;
