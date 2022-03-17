@@ -4,7 +4,6 @@
     "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilhørigheten?",
     "confirm_remove_affiliation_title": "Fjerne tilhørighet?"
   },
-  "applications": "Applikasjoner",
   "authority": {
     "cancel_connect_authority_text": "Du må koble deg til forfatterregisteret for å gå videre. Hvis du avbryter, blir du logget ut. Ønsker du å avbryte?",
     "cancel_connect_authority_title": "Ønsker du å avbryte?",
@@ -19,6 +18,8 @@
     "no_registrations_found": "Ingen registreringer funnet",
     "other_affiliations_one": "+ {{count}} annen tilhørighet",
     "other_affiliations_other": "+ {{count}} andre tilhørigheter",
+    "other_registrations_one": "+ {{count}} annen registrering",
+    "other_registrations_other": "+ {{count}} andre registreringer",
     "see_profile": "Se forfatterprofil"
   },
   "heading": {
