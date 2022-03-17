@@ -96,7 +96,7 @@
     "has_invalid_format": "{{field}} has invalid format",
     "isbn_too_short": "ISBN must have 13 digits",
     "not_selected": "{{field}} is not selected",
-    "is_required": "{{field}} is required",
+    "is_required": "{{-field}} is required",
     "minimum_one_file": "You need to upload at least one file for this registration",
     "must_be_bigger_than": "{{field}} cannot be smaller than {{limit}}",
     "must_be_in_future": "{{field}} must be in future",
