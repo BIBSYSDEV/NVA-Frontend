@@ -103,11 +103,12 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
             </Field>
 
             <Field name="ranking">
-              {({ field, meta: { touched, error } }: FieldProps<string>) => (
+              {({ field, meta: { touched, error } }: FieldProps<number>) => (
                 <TextField
                   {...field}
                   variant="filled"
                   fullWidth
+                  type="number"
                   label={t('resource_type.artistic.award_ranking')}
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
