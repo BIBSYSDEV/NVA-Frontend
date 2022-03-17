@@ -39,7 +39,7 @@ export interface Award {
   sequence: number;
 }
 
-interface Exhibition {
+export interface Exhibition {
   type: 'Exhibition';
   name: string;
   organizer: string;

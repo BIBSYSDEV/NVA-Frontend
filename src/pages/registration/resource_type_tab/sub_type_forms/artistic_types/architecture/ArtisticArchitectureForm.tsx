@@ -26,9 +26,10 @@ import { CompetitionModal } from './CompetitionModal';
 import { OutputRow } from '../OutputRow';
 import { PublicationMentionModal } from './PublicationMentionModal';
 import { AwardModal } from './AwardModal';
+import { ExhibitionModal } from './ExhibitionModal';
 
 const architectureTypes = Object.values(ArchitectureType);
-type ArtisticArchitectureModalType = '' | 'Competition' | 'MentionInPublication' | 'Award';
+type ArtisticArchitectureModalType = '' | 'Competition' | 'MentionInPublication' | 'Award' | 'Exhibition';
 
 export const ArtisticArchitectureForm = () => {
   const { t } = useTranslation('registration');
@@ -166,6 +167,14 @@ export const ArtisticArchitectureForm = () => {
                 open={openModal === 'Award'}
                 closeModal={() => setOpenModal('')}
               />
+              <ExhibitionModal
+                onSubmit={(newExhibition) => {
+                  newExhibition.sequence = architectureOutput.length + 1;
+                  push(newExhibition);
+                }}
+                open={openModal === 'Exhibition'}
+                closeModal={() => setOpenModal('')}
+              />
             </>
           )}
         </FieldArray>
@@ -190,6 +199,13 @@ export const ArtisticArchitectureForm = () => {
             variant="outlined"
             startIcon={<AddCircleOutlineIcon />}>
             {t('resource_type.artistic.add_award')}
+          </Button>
+          <Button
+            data-testid={dataTestId.registrationWizard.resourceType.addExhibitionButton}
+            onClick={() => setOpenModal('Exhibition')}
+            variant="outlined"
+            startIcon={<AddCircleOutlineIcon />}>
+            {t('resource_type.artistic.add_exhibition')}
           </Button>
         </Box>
       </div>
