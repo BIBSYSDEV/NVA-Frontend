@@ -14,7 +14,7 @@ interface PeriodFieldsProps extends Pick<TextFieldProps, 'variant'> {
   toFieldName: string;
 }
 
-export const PeriodFields = ({ fromFieldName, toFieldName, variant }: PeriodFieldsProps) => {
+export const PeriodFields = ({ fromFieldName, toFieldName, variant = 'filled' }: PeriodFieldsProps) => {
   const { t } = useTranslation('registration');
   const { values, setFieldValue, setFieldTouched } = useFormikContext();
   const maxDate = new Date(new Date().getFullYear() + 5, 11, 31);
