@@ -60,6 +60,7 @@ export const dataTestId = {
     emailButton: 'email-button',
     facebookButton: 'facebook-button',
     file: 'file',
+    fileEmbargoDate: 'file-embargo-date',
     fileName: 'file-name',
     filePreview: 'file-preview',
     fileSize: 'file-size',
@@ -142,6 +143,10 @@ export const dataTestId = {
       startRegistrationButton: 'registration-start-button',
     },
     resourceType: {
+      addCompetitionButton: 'add-competition-button',
+      addExhibitionButton: 'add-exhibition-button',
+      addMentionInPublicationButton: 'add-mention-in-publication-button',
+      addAwardButton: 'add-award-button',
       addVenueButton: 'add-venue-button',
       articleNumberField: 'article-number-field',
       artisticTypeField: 'artistic-type-field',

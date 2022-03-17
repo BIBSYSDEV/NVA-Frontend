@@ -7,7 +7,7 @@ import { venueValidationSchema } from '../../../../../../utils/validation/regist
 import { PeriodFields } from '../../../components/PeriodFields';
 
 interface VenueModalProps {
-  venue: Venue | null;
+  venue?: Venue;
   onSubmit: (venue: Venue) => void;
   open: boolean;
   closeModal: () => void;
@@ -31,7 +31,7 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
   return (
     <Dialog open={open} onClose={closeModal}>
       <DialogTitle>
-        {venue ? t('resource_type.edit_exhibition_place') : t('resource_type.add_exhibition_place')}
+        {venue ? t('resource_type.artistic.edit_exhibition_place') : t('resource_type.artistic.add_exhibition_place')}
       </DialogTitle>
       <Formik
         initialValues={venue ?? emptyVenue}
@@ -40,40 +40,38 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
           onSubmit(values);
           closeModal();
         }}>
-        {() => (
-          <Form noValidate>
-            <DialogContent>
-              <Field name={VenueFieldName.Label}>
-                {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                  <TextField
-                    {...field}
-                    data-testid={dataTestId.registrationWizard.resourceType.venueNameField}
-                    variant="outlined"
-                    fullWidth
-                    label={t('resource_type.exhibition_place')}
-                    required
-                    error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}
-                  />
-                )}
-              </Field>
-              <Box sx={{ display: 'flex', gap: '3rem', mt: '1rem' }}>
-                <PeriodFields fromFieldName={VenueFieldName.From} toFieldName={VenueFieldName.To} />
-              </Box>
-            </DialogContent>
-            <DialogActions>
-              <Button variant="outlined" onClick={closeModal}>
-                {t('common:cancel')}
-              </Button>
-              <Button
-                data-testid={dataTestId.registrationWizard.resourceType.saveVenueButton}
-                variant="contained"
-                type="submit">
-                {venue ? t('common:save') : t('common:add')}
-              </Button>
-            </DialogActions>
-          </Form>
-        )}
+        <Form noValidate>
+          <DialogContent>
+            <Field name={VenueFieldName.Label}>
+              {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                <TextField
+                  {...field}
+                  data-testid={dataTestId.registrationWizard.resourceType.venueNameField}
+                  variant="filled"
+                  fullWidth
+                  label={t('resource_type.artistic.exhibition_place')}
+                  required
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={field.name} />}
+                />
+              )}
+            </Field>
+            <Box sx={{ display: 'flex', gap: '3rem', mt: '1rem' }}>
+              <PeriodFields fromFieldName={VenueFieldName.From} toFieldName={VenueFieldName.To} />
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button variant="outlined" onClick={closeModal}>
+              {t('common:cancel')}
+            </Button>
+            <Button
+              data-testid={dataTestId.registrationWizard.resourceType.saveVenueButton}
+              variant="contained"
+              type="submit">
+              {venue ? t('common:save') : t('common:add')}
+            </Button>
+          </DialogActions>
+        </Form>
       </Formik>
     </Dialog>
   );

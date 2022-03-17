@@ -44,7 +44,7 @@ const resourceErrorMessage = {
     field: i18n.t('registration:resource_type.title_of_event'),
   }),
   exhibitionNameRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('registration:resource_type.exhibition_place'),
+    field: i18n.t('registration:resource_type.artistic.exhibition_place'),
   }),
   exhibitionRequired: i18n.t('feedback:validation.exhibition_place_required'),
   fromMustBeBeforeTo: i18n.t('feedback:validation.cannot_be_after', {
