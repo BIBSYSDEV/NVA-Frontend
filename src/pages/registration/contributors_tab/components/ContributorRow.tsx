@@ -12,14 +12,14 @@ import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../.
 import { AffiliationsCell } from './AffiliationsCell';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { AddContributorModal } from '../AddContributorModal';
-import { Authority } from '../../../../types/authority.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { CristinUser } from '../../../../types/user.types';
 
 interface ContributorRowProps {
   contributor: Contributor;
   onMoveContributor: (newSequence: number, oldSequence: number) => void;
   onRemoveContributor: (index: number) => void;
-  onVerifyContributor: (authority: Authority, role: ContributorRole, contributorIndex?: number) => void;
+  onVerifyContributor: (selectedContributor: CristinUser, role: ContributorRole, contributorIndex?: number) => void;
   isLastElement: boolean;
   contributorRoles: ContributorRole[];
   contributorIndex: number;
@@ -153,7 +153,9 @@ export const ContributorRow = ({
         initialSearchTerm={contributor.identity.name}
         open={openVerifyContributor}
         toggleModal={() => setOpenVerifyContributor(false)}
-        onContributorSelected={(authority, role) => onVerifyContributor(authority, role, contributorIndex)}
+        onContributorSelected={(selectedContributor, role) =>
+          onVerifyContributor(selectedContributor, role, contributorIndex)
+        }
       />
 
       {/* Remove contributor */}

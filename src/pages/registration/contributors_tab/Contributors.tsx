@@ -18,7 +18,6 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import { setNotification } from '../../../redux/actions/notificationActions';
-import { Authority } from '../../../types/authority.types';
 import {
   Contributor,
   ContributorRole,
@@ -33,6 +32,8 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { ContributorRow } from './components/ContributorRow';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { CristinUser } from '../../../types/user.types';
+import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../../utils/user-helpers';
 
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
   contributorRoles: ContributorRole[];
@@ -105,41 +106,49 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     setFieldValue(ContributorFieldNames.Contributors, [...otherContributors, ...newContributors]);
   };
 
-  const onContributorSelected = (authority: Authority, role: ContributorRole, contributorIndex?: number) => {
-    if (relevantContributors.some((contributor) => contributor.identity.id === authority.id)) {
+  const goToLastPage = () => {
+    const maxValidPage = Math.floor(relevantContributors.length / rowsPerPage);
+    setCurrentPage(maxValidPage);
+  };
+
+  const onContributorSelected = (
+    selectedContributor: CristinUser,
+    role: ContributorRole,
+    contributorIndex?: number
+  ) => {
+    if (relevantContributors.some((contributor) => contributor.identity.id === selectedContributor.id)) {
       dispatch(setNotification(t('contributors.contributor_already_added'), 'info'));
       return;
     }
 
     const identity: Identity = {
       type: 'Identity',
-      id: authority.id,
-      orcId: authority.orcids.length > 0 ? authority.orcids[0] : '',
-      name: authority.name,
+      id: selectedContributor.id,
+      name: getFullCristinName(selectedContributor.names),
+      orcId: getOrcidUri(selectedContributor.identifiers),
     };
+
+    const activeAffiliations = filterActiveAffiliations(selectedContributor.affiliations);
+    const existingAffiliations: Institution[] = activeAffiliations.map(({ organization }) => ({
+      type: 'Organization',
+      id: organization,
+    }));
 
     if (contributorIndex === undefined) {
       const newContributor: Contributor = {
         ...emptyContributor,
         identity,
-        affiliations: authority.orgunitids.map((unitUri) => ({
-          type: 'Organization',
-          id: unitUri,
-        })),
+        affiliations: existingAffiliations,
         role,
         sequence: relevantContributors.length + 1,
       };
       push(newContributor);
-      const maxValidPage = Math.floor(relevantContributors.length / rowsPerPage);
-      setCurrentPage(maxValidPage);
+      goToLastPage();
     } else {
       const relevantContributor = relevantContributors[contributorIndex];
       const relevantAffiliations = relevantContributor.affiliations ?? [];
-      const existingOrgunitIds: Institution[] = authority.orgunitids.map((unitUri) => ({
-        type: 'Organization',
-        id: unitUri,
-      }));
-      relevantAffiliations.push(...existingOrgunitIds);
+
+      relevantAffiliations.push(...existingAffiliations);
 
       const verifiedContributor: Contributor = {
         ...relevantContributor,
@@ -233,6 +242,11 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         open={openAddContributor}
         toggleModal={() => setOpenAddContributor(false)}
         onContributorSelected={onContributorSelected}
+        addUnverifiedContributor={(contributor) => {
+          contributor.sequence = relevantContributors.length + 1;
+          push(contributor);
+          goToLastPage();
+        }}
       />
       {contributorsToShow.length > 0 && (
         <TablePagination

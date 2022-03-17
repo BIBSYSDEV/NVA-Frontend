@@ -6,7 +6,7 @@ import { dataTestId } from '../../src/utils/dataTestIds';
 Cypress.Commands.add('mocklogin', () => {
   cy.get(`[data-testid=${dataTestId.header.logInButton}]`).click({ force: true });
   cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.authorRadioButton}]`).eq(1).click({ force: true });
-  cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.connectAuthorButton}]`).click({ force: true });
+  cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.selectUserButton}]`).click({ force: true });
   cy.get('[data-testid=modal_next]').click({ force: true });
   cy.get('[data-testid=cancel-connect-to-orcid]').click({ force: true });
 

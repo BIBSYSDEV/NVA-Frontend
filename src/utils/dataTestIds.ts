@@ -93,8 +93,9 @@ export const dataTestId = {
     contributors: {
       addAffiliationButton: 'button-add-affiliation',
       addContributorButton: (role: string) => `add-${role}`,
+      addSelfButton: 'add-self-button',
+      addUnverifiedContributorButton: 'add-unverified-contributor-button',
       authorRadioButton: 'author-radio-button',
-      connectAuthorButton: 'connect-author-button',
       correspondingCheckbox: 'author-corresponding-checkbox',
       verifyAffiliationButton: 'button-set-unverified-affiliation',
       verifyContributorButton: (name: string) => `button-set-unverified-contributor-${name}`,
@@ -102,6 +103,7 @@ export const dataTestId = {
       removeContributorButton: (name: string) => `button-remove-contributor-${name}`,
       searchField: 'search-field',
       selectContributorType: 'select-contributor-type',
+      selectUserButton: 'select-user-button',
     },
     description: {
       addVocabularyButton: 'add-vocabulary-button',

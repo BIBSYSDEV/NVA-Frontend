@@ -8,19 +8,14 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { SearchResponse } from '../../../../types/common.types';
 import { Organization } from '../../../../types/organization.types';
-import { CristinArrayValue, CristinUser } from '../../../../types/user.types';
+import { CristinUser } from '../../../../types/user.types';
 import { isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { getTopLevelOrganization } from '../../../../utils/institutions-helpers';
+import { getFullCristinName } from '../../../../utils/user-helpers';
 import { OrganizationSearchField } from '../../../admin/customerInstitutionFields/OrganizationSearchField';
-
-const getValueByKey = (key: string, items?: CristinArrayValue[]) =>
-  items?.find((item) => item.type === key)?.value ?? '';
-
-const getFullName = (names: CristinArrayValue[]) =>
-  `${getValueByKey('FirstName', names)} ${getValueByKey('LastName', names)}`;
 
 export const ProjectContributorRow = () => {
   const { t } = useTranslation('project');
@@ -73,7 +68,7 @@ export const ProjectContributorRow = () => {
             <Autocomplete
               options={personSearchResult?.hits ?? []}
               inputMode="search"
-              getOptionLabel={(option) => getFullName(option.names)}
+              getOptionLabel={(option) => getFullCristinName(option.names)}
               filterOptions={(options) => options}
               onInputChange={(_, value, reason) => {
                 if (reason !== 'reset') {
@@ -99,7 +94,7 @@ export const ProjectContributorRow = () => {
                 return (
                   <li {...props} key={option.id}>
                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                      <Typography variant="subtitle1">{getFullName(option.names)}</Typography>
+                      <Typography variant="subtitle1">{getFullCristinName(option.names)}</Typography>
                       {orgId && <AffiliationHierarchy unitUri={orgId} commaSeparated />}
                     </Box>
                   </li>

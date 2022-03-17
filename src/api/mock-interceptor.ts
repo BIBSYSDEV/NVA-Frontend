@@ -29,6 +29,7 @@ import {
 } from './apiPaths';
 import { mockOrganizationSearch } from '../utils/testfiles/mockOrganizationSearch';
 import { mockDownload, mockCreateUpload, mockPrepareUpload, mockCompleteUpload } from '../utils/testfiles/mockFiles';
+import { mockCristinUserSearch } from '../utils/testfiles/mockCristinUserSearch';
 
 // AXIOS INTERCEPTOR
 export const interceptRequestsOnMock = () => {
@@ -83,6 +84,7 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?name=*`)).reply(200, mockAuthorities);
   mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?feideid=*`)).reply(200, mockAuthorities);
   mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?arpId=901790000000`)).reply(200, mockAuthorities[1]);
+  mock.onGet(new RegExp(`${CristinApiPath.Person}\\?query=*`)).reply(200, mockCristinUserSearch);
 
   // update authority
   mock
