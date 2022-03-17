@@ -3,10 +3,12 @@ import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } 
 import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import * as Yup from 'yup';
 import { datePickerTranslationProps } from '../../../../../../themes/mainTheme';
 import { Award } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import { getDateFnsLocale } from '../../../../../../utils/date-helpers';
+import i18n from '../../../../../../translations/i18n';
 
 interface AwardModalProps {
   award?: Award;
@@ -25,6 +27,26 @@ const emptyAward: Award = {
   sequence: 0,
 };
 
+const validationSchema = Yup.object().shape({
+  name: Yup.string().required(
+    i18n.t('feedback:validation.is_required', {
+      field: i18n.t('registration:resource_type.artistic.award_name'),
+    })
+  ),
+  organizer: Yup.string().required(
+    i18n.t('feedback:validation.is_required', {
+      field: i18n.t('registration:resource_type.artistic.award_organizer'),
+    })
+  ),
+  date: Yup.object().shape({
+    value: Yup.date().required(
+      i18n.t('feedback:validation.is_required', {
+        field: i18n.t('common:year'),
+      })
+    ),
+  }),
+});
+
 export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProps) => {
   const { t, i18n } = useTranslation('registration');
 
@@ -35,7 +57,7 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
       </DialogTitle>
       <Formik
         initialValues={award ?? emptyAward}
-        validationSchema={null} // TODO
+        validationSchema={validationSchema}
         onSubmit={(values) => {
           onSubmit(values);
           closeModal();
