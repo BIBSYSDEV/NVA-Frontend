@@ -254,7 +254,11 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
     case PublicationType.Artistic: {
       const artisticPublicationInstance = registration.entityDescription?.reference
         ?.publicationInstance as ArtisticPublicationInstance;
-      const venues = artisticPublicationInstance.venues ?? [];
+      const venues = (artisticPublicationInstance.venues ?? []).map(() => ({
+        name: true,
+        time: { from: true, to: true },
+      }));
+
       return {
         entityDescription: {
           reference: {
@@ -265,10 +269,8 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
               type: true,
               subtype: { type: true, description: true },
               description: true,
-              venues: venues.map(() => ({
-                name: true,
-                time: { from: true, to: true },
-              })),
+              venues,
+              architectureOutput: [],
             },
           },
         },

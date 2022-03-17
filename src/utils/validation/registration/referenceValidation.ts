@@ -19,6 +19,7 @@ import {
 import { DesignType } from '../../../types/publication_types/artisticRegistration.types';
 
 const resourceErrorMessage = {
+  architectureOutputRequired: i18n.t('feedback:validation.architecture_output_required'),
   contentTypeRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.content'),
   }),
@@ -382,7 +383,21 @@ const artisticDesignPublicationInstance = Yup.object().shape({
       }),
   }),
   description: Yup.string().nullable(),
-  venues: Yup.array().of(venueValidationSchema).min(1, resourceErrorMessage.exhibitionRequired),
+  venues: Yup.array().when('$publicationInstanceType', {
+    is: ArtisticType.ArtisticDesign,
+    then: Yup.array()
+      .of(venueValidationSchema)
+      .min(1, resourceErrorMessage.exhibitionRequired)
+      .required(resourceErrorMessage.exhibitionRequired),
+    otherwise: Yup.array().nullable(),
+  }),
+  architectureOutput: Yup.array().when('$publicationInstanceType', {
+    is: ArtisticType.ArtisticArchitecture,
+    then: Yup.array()
+      .min(1, resourceErrorMessage.architectureOutputRequired)
+      .required(resourceErrorMessage.architectureOutputRequired),
+    otherwise: Yup.array().nullable(),
+  }),
 });
 
 export const artisticDesignReference = baseReference.shape({
