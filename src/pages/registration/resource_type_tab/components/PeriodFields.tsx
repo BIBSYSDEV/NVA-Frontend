@@ -1,7 +1,7 @@
 import { DatePicker, LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { TextField } from '@mui/material';
-import { Field, FieldProps, getIn, useFormikContext } from 'formik';
+import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { datePickerTranslationProps } from '../../../../themes/mainTheme';
 import i18n from '../../../../translations/i18n';
@@ -49,7 +49,7 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
                 required
                 onBlur={() => !touched && setFieldTouched(field.name)}
                 error={touched && !!error}
-                helperText={touched && error}
+                helperText={<ErrorMessage name={field.name} />}
               />
             )}
           />
