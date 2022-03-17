@@ -149,13 +149,19 @@
     },
     "article_number": "Artikkelnummer",
     "artistic": {
+      "add_award": "Legg til pris/utmerkelse",
       "add_competition": "Legg til konkurranse",
       "add_exhibition_place": "Legg til visningssted",
       "add_publication_mention": "Legg til publisering/omtale",
       "architecture_publications": "Offentliggjøringer",
+      "award_name": "Prisnavn",
+      "award_organizer": "Prisutdeler/arrangør",
+      "award_other": "Annet",
+      "award_ranking": "Rangering",
       "competition_date": "Dato for offentliggjøring",
       "competition_name": "Navn på konkurranse/arrangør/innbyder",
       "competition_rank": "Rangering/innkjøp/omtale/invitert",
+      "edit_award": "Endre pris/utmerkelse",
       "edit_competition": "Endre konkurranse",
       "edit_exhibition_place": "Endre visningsted",
       "edit_publication_mention": "Endre publisering/omtale",
@@ -165,6 +171,7 @@
       "mention_title": "Tidsskrift/Boktittel/medium",
       "name_or_title": "Navn/tittel",
       "output_type": {
+        "Award": "Pris/utmerkelse",
         "Competition": "Konkurranse",
         "MentionInPublication": "Publisering/omtale",
         "Venue": "Visningssted"
