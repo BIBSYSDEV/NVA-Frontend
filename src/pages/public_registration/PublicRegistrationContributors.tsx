@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Box, Button, IconButton, Link, Typography } from '@mui/material';
+import { Box, Button, IconButton, Link, Tooltip, Typography } from '@mui/material';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,7 @@ import { Contributor } from '../../types/contributor.types';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
 import { mainContributorRolesPerType, splitMainContributors } from '../../utils/registration-helpers';
+import { getUserPath } from '../../utils/urlPaths';
 
 interface PublicRegistrationContributorsProps {
   contributors: Contributor[];
@@ -123,7 +124,7 @@ const ContributorsRow = ({
             {id ? (
               <Link
                 component={RouterLink}
-                to={`/user?id=${encodedId}`}
+                to={getUserPath(encodedId)}
                 data-testid={dataTestId.registrationLandingPage.authorLink(encodedId)}>
                 {name}
               </Link>
@@ -135,9 +136,11 @@ const ContributorsRow = ({
               <sup>
                 {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
                 {orcId && (
-                  <IconButton size="small" href={orcId} target="_blank">
-                    <img src={OrcidLogo} height="20" alt="orcid" />
-                  </IconButton>
+                  <Tooltip title={t<string>('contributors.orcid_profile')}>
+                    <IconButton size="small" href={orcId} target="_blank">
+                      <img src={OrcidLogo} height="20" alt="orcid" />
+                    </IconButton>
+                  </Tooltip>
                 )}
               </sup>
             )}

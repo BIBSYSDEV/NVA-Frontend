@@ -29,7 +29,7 @@ export const getRegistrationPath = (identifier?: string) =>
     ? UrlPathTemplate.Registration.replace(':identifier?', encodeURIComponent(identifier))
     : UrlPathTemplate.Registration.replace('/:identifier?', '');
 
-export const getUserPath = (authorityId: string) => `${UrlPathTemplate.User}?id=${encodeURIComponent(authorityId)}`;
+export const getUserPath = (userId: string) => `${UrlPathTemplate.User}?id=${encodeURIComponent(userId)}`;
 
 export const getAdminInstitutionPath = (id: string) =>
   `${UrlPathTemplate.AdminInstitutions}?id=${encodeURIComponent(id)}`;

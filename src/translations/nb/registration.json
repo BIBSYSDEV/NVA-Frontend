@@ -16,6 +16,7 @@
     "editors": "Redaktører",
     "filter": "Filtrer {{role}}",
     "known_author_identity": "Har tilknyttet forfatteridentitet",
+    "orcid_profile": "ORCID-profil",
     "prefilled_affiliation": "Forhåndsutfylt tilhørighet",
     "prefilled_name": "Forhåndsutfylt navn",
     "remove_affiliation": "Fjern tilhørighet",

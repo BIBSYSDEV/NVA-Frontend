@@ -14,6 +14,7 @@ import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { AddContributorModal } from '../AddContributorModal';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { CristinUser } from '../../../../types/user.types';
+import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
 
 interface ContributorRowProps {
   contributor: Contributor;
@@ -108,21 +109,31 @@ export const ContributorRow = ({
         )}
       </TableCell>
       <TableCell align="center" width="1">
-        {contributor.identity.id ? (
-          <Tooltip title={t<string>('contributors.known_author_identity')}>
-            <CheckIcon color="primary" />
-          </Tooltip>
-        ) : (
-          <Tooltip title={t<string>('contributors.verify_person')}>
-            <IconButton
-              data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
-                contributor.identity.name
-              )}
-              onClick={() => setOpenVerifyContributor(true)}>
-              <WarningIcon color="warning" />
-            </IconButton>
-          </Tooltip>
-        )}
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          {contributor.identity.id ? (
+            <Tooltip title={t<string>('contributors.known_author_identity')}>
+              <CheckIcon color="primary" />
+            </Tooltip>
+          ) : (
+            <Tooltip title={t<string>('contributors.verify_person')}>
+              <IconButton
+                size="small"
+                data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
+                  contributor.identity.name
+                )}
+                onClick={() => setOpenVerifyContributor(true)}>
+                <WarningIcon color="warning" />
+              </IconButton>
+            </Tooltip>
+          )}
+          {contributor.identity.orcId && (
+            <Tooltip title={t<string>('contributors.orcid_profile')}>
+              <IconButton size="small" href={contributor.identity.orcId} target="_blank">
+                <img src={OrcidLogo} height="20" alt="orcid" />
+              </IconButton>
+            </Tooltip>
+          )}
+        </Box>
       </TableCell>
       <TableCell>
         <Typography>{contributor.identity.name}</Typography>

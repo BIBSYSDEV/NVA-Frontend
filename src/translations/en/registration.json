@@ -16,6 +16,7 @@
     "editors": "Editors",
     "filter": "Filter {{role}}",
     "known_author_identity": "Connected author identity",
+    "orcid_profile": "ORCID profile",
     "prefilled_affiliation": "Prefilled affiliation",
     "prefilled_name": "Prefilled name",
     "remove_affiliation": "Remove affiliation",
