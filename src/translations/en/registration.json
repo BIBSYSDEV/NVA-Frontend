@@ -151,6 +151,7 @@
     "artistic": {
       "add_award": "Add prize/award",
       "add_competition": "Add competititon",
+      "add_exhibition": "Add exhibition",
       "add_exhibition_place": "Add exhibition place",
       "add_publication_mention": "Add publication/mention",
       "architecture_publications": "Announcement",
@@ -163,16 +164,19 @@
       "competition_rank": "Rank/purchase/mention/invited",
       "edit_award": "Edit prize/award",
       "edit_competition": "Edit competition",
+      "edit_exhibition": "Edit exhibition",
       "edit_exhibition_place": "Edit exhibition place",
       "edit_publication_mention": "Edit publication/mention",
       "exhibition_place": "Exhibition place",
       "exhibition_places": "Exhibition places",
+      "exhibition_title": "Exhibition title",
       "mention_other": "Other (publisher, ISBN, etc.)",
       "mention_title": "Journal/Book/medium",
       "name_or_title": "Name/title",
       "output_type": {
         "Award": "Prize/award",
         "Competition": "Competition",
+        "Exhibition": "Exhibition",
         "MentionInPublication": "Publication/mention",
         "Venue": "Venue"
       },

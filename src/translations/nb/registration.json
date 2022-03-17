@@ -151,6 +151,7 @@
     "artistic": {
       "add_award": "Legg til pris/utmerkelse",
       "add_competition": "Legg til konkurranse",
+      "add_exhibition": "Legg til utstilling",
       "add_exhibition_place": "Legg til visningssted",
       "add_publication_mention": "Legg til publisering/omtale",
       "architecture_publications": "Offentliggjøringer",
@@ -163,16 +164,19 @@
       "competition_rank": "Rangering/innkjøp/omtale/invitert",
       "edit_award": "Endre pris/utmerkelse",
       "edit_competition": "Endre konkurranse",
+      "edit_exhibition": "Endre utstilling",
       "edit_exhibition_place": "Endre visningsted",
       "edit_publication_mention": "Endre publisering/omtale",
       "exhibition_place": "Visningssted",
       "exhibition_places": "Visningssteder",
+      "exhibition_title": "Utstillingstittel",
       "mention_other": "Annet (utgiver, ISBN, m.m.)",
       "mention_title": "Tidsskrift/Boktittel/medium",
       "name_or_title": "Navn/tittel",
       "output_type": {
         "Award": "Pris/utmerkelse",
         "Competition": "Konkurranse",
+        "Exhibition": "Utstilling",
         "MentionInPublication": "Publisering/omtale",
         "Venue": "Visningssted"
       },

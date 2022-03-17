@@ -9,6 +9,7 @@ import {
   ArchitectureOutput,
   Award,
   Competition,
+  Exhibition,
   MentionInPublication,
   Venue,
 } from '../../../../../types/publication_types/artisticRegistration.types';
@@ -17,6 +18,7 @@ import { CompetitionModal } from './architecture/CompetitionModal';
 import { VenueModal } from './design/VenueModal';
 import { PublicationMentionModal } from './architecture/PublicationMentionModal';
 import { AwardModal } from './architecture/AwardModal';
+import { ExhibitionModal } from './architecture/ExhibitionModal';
 
 type ItemType = ArchitectureOutput | Venue;
 
@@ -46,13 +48,20 @@ export const OutputRow = ({
   let title = '';
   let removeItemTitle = '';
   let removeItemDescription = '';
-  if (item.type === 'Competition' || item.type === 'MentionInPublication' || item.type === 'Award') {
+  if (
+    item.type === 'Competition' ||
+    item.type === 'MentionInPublication' ||
+    item.type === 'Award' ||
+    item.type === 'Exhibition'
+  ) {
     if (item.type === 'Competition') {
       title = (item as Competition).name;
     } else if (item.type === 'MentionInPublication') {
       title = (item as MentionInPublication).title;
     } else if (item.type === 'Award') {
       title = (item as Award).name;
+    } else if (item.type === 'Exhibition') {
+      title = (item as Exhibition).name;
     }
     removeItemTitle = t('resource_type.artistic.remove_announcement');
     removeItemDescription = t('resource_type.artistic.remove_announcement_description', { name: title });
@@ -128,6 +137,14 @@ export const OutputRow = ({
       {item.type === 'Award' && (
         <AwardModal
           award={item as Award}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      )}
+      {item.type === 'Exhibition' && (
+        <ExhibitionModal
+          exhibition={item as Exhibition}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}

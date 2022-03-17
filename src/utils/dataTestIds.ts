@@ -142,6 +142,7 @@ export const dataTestId = {
     },
     resourceType: {
       addCompetitionButton: 'add-competition-button',
+      addExhibitionButton: 'add-exhibition-button',
       addMentionInPublicationButton: 'add-mention-in-publication-button',
       addAwardButton: 'add-award-button',
       addVenueButton: 'add-venue-button',
