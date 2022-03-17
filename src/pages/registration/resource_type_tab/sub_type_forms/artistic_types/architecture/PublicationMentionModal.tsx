@@ -3,10 +3,12 @@ import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, B
 import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import * as Yup from 'yup';
 import { datePickerTranslationProps } from '../../../../../../themes/mainTheme';
 import { MentionInPublication } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import { getDateFnsLocale } from '../../../../../../utils/date-helpers';
+import i18n from '../../../../../../translations/i18n';
 
 interface PublicationMentionModalProps {
   mentionInPublication?: MentionInPublication;
@@ -23,6 +25,26 @@ const emptyMentionInPublication: MentionInPublication = {
   otherInformation: '',
   sequence: 0,
 };
+
+const validationSchema = Yup.object().shape({
+  title: Yup.string().required(
+    i18n.t('feedback:validation.is_required', {
+      field: i18n.t('registration:resource_type.artistic.mention_title'),
+    })
+  ),
+  issue: Yup.string().required(
+    i18n.t('feedback:validation.is_required', {
+      field: i18n.t('registration:resource_type.issue'),
+    })
+  ),
+  date: Yup.object().shape({
+    value: Yup.date().required(
+      i18n.t('feedback:validation.is_required', {
+        field: i18n.t('common:date'),
+      })
+    ),
+  }),
+});
 
 export const PublicationMentionModal = ({
   mentionInPublication,
@@ -41,7 +63,7 @@ export const PublicationMentionModal = ({
       </DialogTitle>
       <Formik
         initialValues={mentionInPublication ?? emptyMentionInPublication}
-        validationSchema={null} // TODO
+        validationSchema={validationSchema}
         onSubmit={(values) => {
           onSubmit(values);
           closeModal();
