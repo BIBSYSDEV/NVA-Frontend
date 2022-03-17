@@ -34,7 +34,6 @@ const PublicProfile = () => {
   const [person, isLoadingPerson] = useFetch<CristinUser>({
     url: personId,
     errorMessage: t('feedback:error.get_person'),
-    withAuthentication: true, // TODO: remove
   });
 
   const [registrations, isLoadingRegistrations] = useSearchRegistrations({
