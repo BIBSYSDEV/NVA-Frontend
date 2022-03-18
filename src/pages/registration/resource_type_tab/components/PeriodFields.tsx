@@ -1,12 +1,9 @@
-import { DatePicker, LocalizationProvider } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { DatePicker } from '@mui/lab';
 import { TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { datePickerTranslationProps } from '../../../../themes/mainTheme';
-import i18n from '../../../../translations/i18n';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { getDateFnsLocale } from '../../../../utils/date-helpers';
 import { getNewDateValue } from '../../../../utils/registration-helpers';
 
 interface PeriodFieldsProps {
@@ -23,7 +20,7 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
   const toValue = getIn(values, toFieldName);
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
+    <>
       <Field name={fromFieldName}>
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <DatePicker
@@ -87,6 +84,6 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
           />
         )}
       </Field>
-    </LocalizationProvider>
+    </>
   );
 };
