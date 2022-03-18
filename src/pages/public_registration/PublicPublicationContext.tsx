@@ -1,5 +1,18 @@
 import { useTranslation } from 'react-i18next';
-import { Link, Typography } from '@mui/material';
+import {
+  Button,
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Link,
+  Tooltip,
+  Typography,
+} from '@mui/material';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { useState } from 'react';
 import { BookPublicationContext, ContextPublisher } from '../../types/publication_types/bookRegistration.types';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
@@ -200,14 +213,47 @@ export const PublicVenues = ({ venues }: PublicVenuesProps) => {
   return venues && venues.length > 0 ? (
     <>
       <Typography variant="overline">{t('resource_type.artistic.exhibition_places')}</Typography>
-      {venues.map((venue, index) => {
-        const periodString = getPeriodString(venue.time);
-        const placeLabel = venue.place?.label ?? '';
-        const venueStringRepresentation = periodString ? `${placeLabel} (${periodString})` : placeLabel;
-        return <Typography key={index}>{venueStringRepresentation}</Typography>;
-      })}
+      {venues.map((venue, index) => (
+        <PublicVenueItem venue={venue} key={index} />
+      ))}
     </>
   ) : null;
+};
+
+interface PublicVenueItemProps {
+  venue: Venue;
+}
+
+const PublicVenueItem = ({ venue }: PublicVenueItemProps) => {
+  const { t } = useTranslation('registration');
+  const [openModal, setOpenModal] = useState(false);
+  const toggleModal = () => setOpenModal(!openModal);
+
+  return (
+    <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+      <Typography>{getArtisticOutputName(venue)}</Typography>
+      <Tooltip title={t<string>('common:show_details')}>
+        <IconButton size="small" color="primary" onClick={toggleModal}>
+          <OpenInNewIcon fontSize="small" />
+        </IconButton>
+      </Tooltip>
+
+      <Dialog open={openModal} onClose={toggleModal} fullWidth>
+        <DialogTitle>{t('resource_type.artistic.exhibition_place')}</DialogTitle>
+        <DialogContent>
+          <Typography variant="overline">{t('resource_type.artistic.exhibition_place')}</Typography>
+          <Typography paragraph>{venue.place?.label ?? ''}</Typography>
+          <Typography variant="overline">{t('common:date')}</Typography>
+          <Typography>{getPeriodString(venue.time)}</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="outlined" onClick={toggleModal}>
+            {t('common:close')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
+  );
 };
 
 interface PublicArchitectureOutputProps {
