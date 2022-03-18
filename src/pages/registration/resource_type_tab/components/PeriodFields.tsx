@@ -81,7 +81,7 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
                 required
                 onBlur={() => !touched && setFieldTouched(field.name)}
                 error={touched && !!error}
-                helperText={touched && error}
+                helperText={<ErrorMessage name={field.name} />}
               />
             )}
           />

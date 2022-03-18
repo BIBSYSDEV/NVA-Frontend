@@ -161,7 +161,7 @@ const pagesRangeField = Yup.object()
       }),
   });
 
-const periodField = Yup.object().shape({
+export const periodField = Yup.object().shape({
   from: Yup.string()
     .nullable()
     .test('from-test', resourceErrorMessage.fromMustBeBeforeTo, (fromValue, context) => {
@@ -364,13 +364,6 @@ export const presentationReference = baseReference.shape({
 });
 
 // Artistic
-export const venueValidationSchema = Yup.object().shape({
-  place: Yup.object().shape({
-    label: Yup.string().nullable().required(resourceErrorMessage.exhibitionNameRequired),
-  }),
-  time: periodField,
-});
-
 const artisticDesignPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(ArtisticType)).required(resourceErrorMessage.typeRequired),
   subtype: Yup.object().shape({
@@ -385,10 +378,7 @@ const artisticDesignPublicationInstance = Yup.object().shape({
   description: Yup.string().nullable(),
   venues: Yup.array().when('$publicationInstanceType', {
     is: ArtisticType.ArtisticDesign,
-    then: Yup.array()
-      .of(venueValidationSchema)
-      .min(1, resourceErrorMessage.exhibitionRequired)
-      .required(resourceErrorMessage.exhibitionRequired),
+    then: Yup.array().min(1, resourceErrorMessage.exhibitionRequired).required(resourceErrorMessage.exhibitionRequired),
     otherwise: Yup.array().nullable(),
   }),
   architectureOutput: Yup.array().when('$publicationInstanceType', {
