@@ -9,8 +9,8 @@ import { RegistrationSummary } from './RegistrationSummary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
-import { getPeriodString } from '../../utils/registration-helpers';
-import { Venue } from '../../types/publication_types/artisticRegistration.types';
+import { getArtisticOutputName, getPeriodString } from '../../utils/registration-helpers';
+import { ArchitectureOutput, Venue } from '../../types/publication_types/artisticRegistration.types';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
@@ -208,4 +208,27 @@ export const PublicVenues = ({ venues }: PublicVenuesProps) => {
       })}
     </>
   ) : null;
+};
+
+interface PublicArchitectureOutputProps {
+  outputs: ArchitectureOutput[];
+}
+
+export const PublicArchitectureOutput = ({ outputs }: PublicArchitectureOutputProps) => {
+  const { t } = useTranslation('registration');
+
+  return !outputs || outputs.length === 0 ? null : (
+    <>
+      <Typography variant="overline">{t('resource_type.artistic.architecture_publications')}</Typography>
+      {outputs.map((output, index) => {
+        const typeString = t(`resource_type.artistic.output_type.${output.type}`);
+        const nameString = getArtisticOutputName(output);
+        return (
+          <Typography key={index}>
+            {nameString} ({typeString})
+          </Typography>
+        );
+      })}
+    </>
+  );
 };
