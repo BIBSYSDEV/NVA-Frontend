@@ -1,6 +1,8 @@
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, Box } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
+import * as Yup from 'yup';
+import i18n from '../../../../../../translations/i18n';
 import { Exhibition } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { PeriodFields } from '../../../components/PeriodFields';
 
@@ -21,6 +23,38 @@ const emptyExhibition: Exhibition = {
   sequence: 0,
 };
 
+const validationSchema = Yup.object().shape({
+  name: Yup.string().required(
+    i18n.t('feedback:validation.is_required', {
+      field: i18n.t('registration:resource_type.artistic.exhibition_title'),
+    })
+  ),
+  organizer: Yup.string().required(
+    i18n.t('feedback:validation.is_required', {
+      field: i18n.t('registration:resource_type.organizer'),
+    })
+  ),
+  place: Yup.object().shape({
+    label: Yup.string().required(
+      i18n.t('feedback:validation.is_required', {
+        field: i18n.t('common:place'),
+      })
+    ),
+  }),
+  date: Yup.object().shape({
+    from: Yup.date().required(
+      i18n.t('feedback:validation.is_required', {
+        field: i18n.t('registration:resource_type.date_from'),
+      })
+    ),
+    to: Yup.date().required(
+      i18n.t('feedback:validation.is_required', {
+        field: i18n.t('registration:resource_type.date_to'),
+      })
+    ),
+  }),
+});
+
 export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: ExhibitionModalProps) => {
   const { t } = useTranslation('registration');
 
@@ -31,7 +65,7 @@ export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: Exhi
       </DialogTitle>
       <Formik
         initialValues={exhibition ?? emptyExhibition}
-        validationSchema={null} //TODO
+        validationSchema={validationSchema}
         onSubmit={(values) => {
           onSubmit(values);
           closeModal();
@@ -78,7 +112,7 @@ export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: Exhi
               )}
             </Field>
             <Box sx={{ display: 'flex', gap: '3rem' }}>
-              <PeriodFields fromFieldName="time.from" toFieldName="time.to" />
+              <PeriodFields fromFieldName="date.from" toFieldName="date.to" />
             </Box>
             <Field name="otherInformation">
               {({ field, meta: { touched, error } }: FieldProps<string>) => (

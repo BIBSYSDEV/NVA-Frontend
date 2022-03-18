@@ -1,9 +1,11 @@
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, Box } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
+import * as Yup from 'yup';
+import i18n from '../../../../../../translations/i18n';
 import { Venue } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { venueValidationSchema } from '../../../../../../utils/validation/registration/referenceValidation';
+import { periodField } from '../../../../../../utils/validation/registration/referenceValidation';
 import { PeriodFields } from '../../../components/PeriodFields';
 
 interface VenueModalProps {
@@ -13,17 +15,24 @@ interface VenueModalProps {
   closeModal: () => void;
 }
 
-enum VenueFieldName {
-  Label = 'place.label',
-  From = 'time.from',
-  To = 'time.to',
-}
-
 const emptyVenue: Venue = {
   type: 'Venue',
   place: { type: 'UnconfirmedPlace', label: '', country: '' },
   time: { type: 'Period', from: '', to: '' },
 };
+
+const validationSchema = Yup.object().shape({
+  place: Yup.object().shape({
+    label: Yup.string()
+      .nullable()
+      .required(
+        i18n.t('feedback:validation.is_required', {
+          field: i18n.t('registration:resource_type.artistic.exhibition_place'),
+        })
+      ),
+  }),
+  time: periodField,
+});
 
 export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProps) => {
   const { t } = useTranslation('registration');
@@ -35,14 +44,14 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
       </DialogTitle>
       <Formik
         initialValues={venue ?? emptyVenue}
-        validationSchema={venueValidationSchema}
+        validationSchema={validationSchema}
         onSubmit={(values) => {
           onSubmit(values);
           closeModal();
         }}>
         <Form noValidate>
           <DialogContent>
-            <Field name={VenueFieldName.Label}>
+            <Field name="place.label">
               {({ field, meta: { touched, error } }: FieldProps<string>) => (
                 <TextField
                   {...field}
@@ -57,7 +66,7 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
               )}
             </Field>
             <Box sx={{ display: 'flex', gap: '3rem', mt: '1rem' }}>
-              <PeriodFields fromFieldName={VenueFieldName.From} toFieldName={VenueFieldName.To} />
+              <PeriodFields fromFieldName="time.from" toFieldName="time.to" />
             </Box>
           </DialogContent>
           <DialogActions>

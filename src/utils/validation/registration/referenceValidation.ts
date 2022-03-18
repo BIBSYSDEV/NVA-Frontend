@@ -19,6 +19,7 @@ import {
 import { DesignType } from '../../../types/publication_types/artisticRegistration.types';
 
 const resourceErrorMessage = {
+  architectureOutputRequired: i18n.t('feedback:validation.architecture_output_required'),
   contentTypeRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.content'),
   }),
@@ -42,9 +43,6 @@ const resourceErrorMessage = {
   }),
   eventTitleRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.title_of_event'),
-  }),
-  exhibitionNameRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('registration:resource_type.artistic.exhibition_place'),
   }),
   exhibitionRequired: i18n.t('feedback:validation.exhibition_place_required'),
   fromMustBeBeforeTo: i18n.t('feedback:validation.cannot_be_after', {
@@ -160,7 +158,7 @@ const pagesRangeField = Yup.object()
       }),
   });
 
-const periodField = Yup.object().shape({
+export const periodField = Yup.object().shape({
   from: Yup.string()
     .nullable()
     .test('from-test', resourceErrorMessage.fromMustBeBeforeTo, (fromValue, context) => {
@@ -363,13 +361,6 @@ export const presentationReference = baseReference.shape({
 });
 
 // Artistic
-export const venueValidationSchema = Yup.object().shape({
-  place: Yup.object().shape({
-    label: Yup.string().nullable().required(resourceErrorMessage.exhibitionNameRequired),
-  }),
-  time: periodField,
-});
-
 const artisticDesignPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(ArtisticType)).required(resourceErrorMessage.typeRequired),
   subtype: Yup.object().shape({
@@ -382,7 +373,18 @@ const artisticDesignPublicationInstance = Yup.object().shape({
       }),
   }),
   description: Yup.string().nullable(),
-  venues: Yup.array().of(venueValidationSchema).min(1, resourceErrorMessage.exhibitionRequired),
+  venues: Yup.array().when('$publicationInstanceType', {
+    is: ArtisticType.ArtisticDesign,
+    then: Yup.array().min(1, resourceErrorMessage.exhibitionRequired).required(resourceErrorMessage.exhibitionRequired),
+    otherwise: Yup.array().nullable(),
+  }),
+  architectureOutput: Yup.array().when('$publicationInstanceType', {
+    is: ArtisticType.ArtisticArchitecture,
+    then: Yup.array()
+      .min(1, resourceErrorMessage.architectureOutputRequired)
+      .required(resourceErrorMessage.architectureOutputRequired),
+    otherwise: Yup.array().nullable(),
+  }),
 });
 
 export const artisticDesignReference = baseReference.shape({

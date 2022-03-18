@@ -3,10 +3,12 @@ import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } 
 import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import * as Yup from 'yup';
 import { datePickerTranslationProps } from '../../../../../../themes/mainTheme';
 import { Competition } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import { getDateFnsLocale } from '../../../../../../utils/date-helpers';
+import i18n from '../../../../../../translations/i18n';
 
 interface CompetitionModalProps {
   competition?: Competition;
@@ -29,6 +31,26 @@ const emptyCompetition: Competition = {
   sequence: 0,
 };
 
+const validationSchema = Yup.object().shape({
+  name: Yup.string().required(
+    i18n.t('feedback:validation.is_required', {
+      field: i18n.t('registration:resource_type.artistic.competition_name'),
+    })
+  ),
+  description: Yup.string().required(
+    i18n.t('feedback:validation.is_required', {
+      field: i18n.t('registration:resource_type.artistic.competition_rank'),
+    })
+  ),
+  date: Yup.object().shape({
+    value: Yup.date().required(
+      i18n.t('feedback:validation.is_required', {
+        field: i18n.t('registration:resource_type.artistic.competition_date'),
+      })
+    ),
+  }),
+});
+
 export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: CompetitionModalProps) => {
   const { t, i18n } = useTranslation('registration');
 
@@ -39,7 +61,7 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
       </DialogTitle>
       <Formik
         initialValues={competition ?? emptyCompetition}
-        validationSchema={null} // TODO
+        validationSchema={validationSchema}
         onSubmit={(values) => {
           onSubmit(values);
           closeModal();
