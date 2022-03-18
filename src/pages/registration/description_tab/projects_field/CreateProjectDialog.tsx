@@ -1,5 +1,4 @@
-import { LocalizationProvider, DatePicker, LoadingButton } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { DatePicker, LoadingButton } from '@mui/lab';
 import {
   Box,
   Button,
@@ -21,7 +20,6 @@ import { datePickerTranslationProps } from '../../../../themes/mainTheme';
 import { PostCristinProject } from '../../../../types/project.types';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { getDateFnsLocale } from '../../../../utils/date-helpers';
 import { getNewDateValue } from '../../../../utils/registration-helpers';
 import { basicProjectValidationSchema } from '../../../../utils/validation/project/BasicProjectValidation';
 import { OrganizationSearchField } from '../../../admin/customerInstitutionFields/OrganizationSearchField';
@@ -50,7 +48,7 @@ interface CreateProjectDialogProps extends DialogProps {
 }
 
 export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
-  const { t, i18n } = useTranslation('project');
+  const { t } = useTranslation('project');
   const dispatch = useDispatch();
 
   const createProject = async (values: PostCristinProject) => {
@@ -103,61 +101,59 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                 </Field>
 
                 <Box sx={{ display: 'flex', gap: '1rem' }}>
-                  <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
-                    <Field name="startDate">
-                      {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                        <DatePicker
-                          {...datePickerTranslationProps}
-                          label={t('start_date')}
-                          onChange={(date: Date | null, keyboardValue) => {
-                            const newDateString = getProjectDate(date, keyboardValue);
-                            setFieldValue(field.name, newDateString);
-                          }}
-                          value={field.value ? new Date(field.value) : null}
-                          inputFormat="dd.MM.yyyy"
-                          mask="__.__.____"
-                          renderInput={(params) => (
-                            <TextField
-                              {...field}
-                              {...params}
-                              data-testid={dataTestId.registrationWizard.description.projectForm.startDateField}
-                              variant="filled"
-                              required
-                              error={touched && !!error}
-                              helperText={<ErrorMessage name={field.name} />}
-                            />
-                          )}
-                        />
-                      )}
-                    </Field>
+                  <Field name="startDate">
+                    {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                      <DatePicker
+                        {...datePickerTranslationProps}
+                        label={t('start_date')}
+                        onChange={(date: Date | null, keyboardValue) => {
+                          const newDateString = getProjectDate(date, keyboardValue);
+                          setFieldValue(field.name, newDateString);
+                        }}
+                        value={field.value ? new Date(field.value) : null}
+                        inputFormat="dd.MM.yyyy"
+                        mask="__.__.____"
+                        renderInput={(params) => (
+                          <TextField
+                            {...field}
+                            {...params}
+                            data-testid={dataTestId.registrationWizard.description.projectForm.startDateField}
+                            variant="filled"
+                            required
+                            error={touched && !!error}
+                            helperText={<ErrorMessage name={field.name} />}
+                          />
+                        )}
+                      />
+                    )}
+                  </Field>
 
-                    <Field name="endDate">
-                      {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                        <DatePicker
-                          {...datePickerTranslationProps}
-                          label={t('end_date')}
-                          onChange={(date: Date | null, keyboardValue) => {
-                            const newDateString = getProjectDate(date, keyboardValue);
-                            setFieldValue(field.name, newDateString);
-                          }}
-                          value={field.value ? new Date(field.value) : null}
-                          inputFormat="dd.MM.yyyy"
-                          mask="__.__.____"
-                          renderInput={(params) => (
-                            <TextField
-                              {...field}
-                              {...params}
-                              data-testid={dataTestId.registrationWizard.description.projectForm.endDateField}
-                              variant="filled"
-                              required
-                              error={touched && !!error}
-                              helperText={<ErrorMessage name={field.name} />}
-                            />
-                          )}
-                        />
-                      )}
-                    </Field>
-                  </LocalizationProvider>
+                  <Field name="endDate">
+                    {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                      <DatePicker
+                        {...datePickerTranslationProps}
+                        label={t('end_date')}
+                        onChange={(date: Date | null, keyboardValue) => {
+                          const newDateString = getProjectDate(date, keyboardValue);
+                          setFieldValue(field.name, newDateString);
+                        }}
+                        value={field.value ? new Date(field.value) : null}
+                        inputFormat="dd.MM.yyyy"
+                        mask="__.__.____"
+                        renderInput={(params) => (
+                          <TextField
+                            {...field}
+                            {...params}
+                            data-testid={dataTestId.registrationWizard.description.projectForm.endDateField}
+                            variant="filled"
+                            required
+                            error={touched && !!error}
+                            helperText={<ErrorMessage name={field.name} />}
+                          />
+                        )}
+                      />
+                    )}
+                  </Field>
                 </Box>
               </Box>
 

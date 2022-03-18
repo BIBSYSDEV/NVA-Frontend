@@ -1,13 +1,11 @@
-import { DatePicker, LocalizationProvider } from '@mui/lab';
+import { DatePicker } from '@mui/lab';
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import * as Yup from 'yup';
 import { datePickerTranslationProps } from '../../../../../../themes/mainTheme';
 import { Award } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
-import { getDateFnsLocale } from '../../../../../../utils/date-helpers';
 import i18n from '../../../../../../translations/i18n';
 
 interface AwardModalProps {
@@ -48,7 +46,7 @@ const validationSchema = Yup.object().shape({
 });
 
 export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProps) => {
-  const { t, i18n } = useTranslation('registration');
+  const { t } = useTranslation('registration');
 
   return (
     <Dialog open={open} onClose={closeModal} fullWidth>
@@ -94,33 +92,31 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
 
             <Field name="date.value">
               {({ field, form: { setFieldTouched, setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
-                <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
-                  <DatePicker
-                    {...datePickerTranslationProps}
-                    label={t('common:year')}
-                    value={field.value ?? null}
-                    onChange={(date: Date | null, keyboardInput) => {
-                      !touched && setFieldTouched(field.name, true, false);
-                      const newValue = getNewDateValue(date, keyboardInput);
-                      if (newValue !== null) {
-                        setFieldValue(field.name, newValue);
-                      }
-                    }}
-                    inputFormat="yyyy"
-                    views={['year']}
-                    mask="____"
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="filled"
-                        required
-                        onBlur={() => !touched && setFieldTouched(field.name)}
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
-                      />
-                    )}
-                  />
-                </LocalizationProvider>
+                <DatePicker
+                  {...datePickerTranslationProps}
+                  label={t('common:year')}
+                  value={field.value ?? null}
+                  onChange={(date: Date | null, keyboardInput) => {
+                    !touched && setFieldTouched(field.name, true, false);
+                    const newValue = getNewDateValue(date, keyboardInput);
+                    if (newValue !== null) {
+                      setFieldValue(field.name, newValue);
+                    }
+                  }}
+                  inputFormat="yyyy"
+                  views={['year']}
+                  mask="____"
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="filled"
+                      required
+                      onBlur={() => !touched && setFieldTouched(field.name)}
+                      error={touched && !!error}
+                      helperText={<ErrorMessage name={field.name} />}
+                    />
+                  )}
+                />
               )}
             </Field>
 

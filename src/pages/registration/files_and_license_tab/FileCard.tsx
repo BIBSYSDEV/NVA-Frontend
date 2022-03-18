@@ -25,12 +25,10 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import LockIcon from '@mui/icons-material/LockOutlined';
-import { DatePicker, LocalizationProvider } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { DatePicker } from '@mui/lab';
 import { datePickerTranslationProps } from '../../../themes/mainTheme';
 import { File, LicenseNames, licenses } from '../../../types/file.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
-import { getDateFnsLocale } from '../../../utils/date-helpers';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getNewDateValue } from '../../../utils/registration-helpers';
@@ -43,7 +41,7 @@ interface FileCardProps {
 }
 
 export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileCardProps) => {
-  const { t, i18n } = useTranslation('registration');
+  const { t } = useTranslation('registration');
   const { setFieldValue, setFieldTouched } = useFormikContext();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
@@ -131,40 +129,38 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
           <>
             <Field name={`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`}>
               {({ field, meta: { error, touched } }: FieldProps) => (
-                <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
-                  <Box sx={{ gridArea: 'date' }}>
-                    <DatePicker
-                      {...datePickerTranslationProps}
-                      {...field}
-                      label={t('files_and_license.file_publish_date')}
-                      value={field.value ?? null}
-                      onChange={(date, keyboardInput) => {
-                        const newDate = getNewDateValue(date, keyboardInput);
-                        setFieldValue(field.name, newDate);
-                      }}
-                      inputFormat="dd.MM.yyyy"
-                      maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
-                      mask="__.__.____"
-                      disabled={file.administrativeAgreement}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          data-testid={dataTestId.registrationWizard.files.embargoDateField}
-                          variant="filled"
-                          onBlur={() => !touched && setFieldTouched(field.name)}
-                          error={!!error && touched}
-                          helperText={
-                            error && touched ? (
-                              <ErrorMessage name={field.name} />
-                            ) : (
-                              t('files_and_license.file_publish_date_helper_text')
-                            )
-                          }
-                        />
-                      )}
-                    />
-                  </Box>
-                </LocalizationProvider>
+                <Box sx={{ gridArea: 'date' }}>
+                  <DatePicker
+                    {...datePickerTranslationProps}
+                    {...field}
+                    label={t('files_and_license.file_publish_date')}
+                    value={field.value ?? null}
+                    onChange={(date, keyboardInput) => {
+                      const newDate = getNewDateValue(date, keyboardInput);
+                      setFieldValue(field.name, newDate);
+                    }}
+                    inputFormat="dd.MM.yyyy"
+                    maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+                    mask="__.__.____"
+                    disabled={file.administrativeAgreement}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        data-testid={dataTestId.registrationWizard.files.embargoDateField}
+                        variant="filled"
+                        onBlur={() => !touched && setFieldTouched(field.name)}
+                        error={!!error && touched}
+                        helperText={
+                          error && touched ? (
+                            <ErrorMessage name={field.name} />
+                          ) : (
+                            t('files_and_license.file_publish_date_helper_text')
+                          )
+                        }
+                      />
+                    )}
+                  />
+                </Box>
               )}
             </Field>
 

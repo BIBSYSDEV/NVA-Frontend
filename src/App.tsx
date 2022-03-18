@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Box } from '@mui/material';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { LocalizationProvider } from '@mui/lab';
+import { getDateFnsLocale } from './utils/date-helpers';
 import { addQualifierIdForAuthority, AuthorityQualifiers } from './api/authorityApi';
 import { getCurrentUserAttributes } from './api/userApi';
 import { AppRoutes } from './AppRoutes';
@@ -184,7 +187,9 @@ export const App = () => {
                 flexGrow: 1,
               }}>
               <ErrorBoundary>
-                <AppRoutes />
+                <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
+                  <AppRoutes />
+                </LocalizationProvider>
               </ErrorBoundary>
             </Box>
             <Footer />
