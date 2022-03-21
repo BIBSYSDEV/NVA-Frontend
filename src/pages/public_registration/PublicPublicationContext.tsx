@@ -31,6 +31,7 @@ import {
   MentionInPublication,
   Venue,
 } from '../../types/publication_types/artisticRegistration.types';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
@@ -250,14 +251,15 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
 
       <Dialog open={openModal} onClose={toggleModal} fullWidth>
         <DialogTitle>{heading}</DialogTitle>
-
-        {output.type === 'Venue' && <PublicVenueDialogContent venue={output as Venue} />}
-        {output.type === 'Competition' && <PublicCompetitionDialogContent competition={output as Competition} />}
-        {output.type === 'Award' && <PublicAwardDialogContent award={output as Award} />}
-        {output.type === 'MentionInPublication' && (
-          <PublicMentionDialogContent mention={output as MentionInPublication} />
-        )}
-        {output.type === 'Exhibition' && <PublicExhibitionDialogContent exhibition={output as Exhibition} />}
+        <ErrorBoundary>
+          {output.type === 'Venue' && <PublicVenueDialogContent venue={output as Venue} />}
+          {output.type === 'Competition' && <PublicCompetitionDialogContent competition={output as Competition} />}
+          {output.type === 'Award' && <PublicAwardDialogContent award={output as Award} />}
+          {output.type === 'MentionInPublication' && (
+            <PublicMentionDialogContent mention={output as MentionInPublication} />
+          )}
+          {output.type === 'Exhibition' && <PublicExhibitionDialogContent exhibition={output as Exhibition} />}
+        </ErrorBoundary>
 
         <DialogActions>
           <Button variant="outlined" onClick={toggleModal}>
