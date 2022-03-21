@@ -23,7 +23,7 @@ import { ListSkeleton } from '../../components/ListSkeleton';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 import { getArtisticOutputName, getPeriodString } from '../../utils/registration-helpers';
-import { ArchitectureOutput, Venue } from '../../types/publication_types/artisticRegistration.types';
+import { ArchitectureOutput, Competition, Venue } from '../../types/publication_types/artisticRegistration.types';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
@@ -244,6 +244,7 @@ export const PublicOutputRow = ({ output, heading, showType = false }: PublicOut
         <DialogTitle>{heading}</DialogTitle>
 
         {output.type === 'Venue' && <PublicVenueDialogContent venue={output as Venue} />}
+        {output.type === 'Competition' && <PublicCompetitionDialogContent competition={output as Competition} />}
 
         <DialogActions>
           <Button variant="outlined" onClick={toggleModal}>
@@ -255,21 +256,28 @@ export const PublicOutputRow = ({ output, heading, showType = false }: PublicOut
   );
 };
 
-interface PublicVenueDialogContentProps {
-  venue: Venue;
-}
-
-const PublicVenueDialogContent = ({ venue }: PublicVenueDialogContentProps) => {
+const PublicVenueDialogContent = ({ venue }: { venue: Venue }) => {
   const { t } = useTranslation('common');
-
   return (
-    <>
-      <DialogContent>
-        <Typography variant="overline">{t('place')}</Typography>
-        <Typography paragraph>{venue.place?.label ?? ''}</Typography>
-        <Typography variant="overline">{t('date')}</Typography>
-        <Typography>{getPeriodString(venue.time)}</Typography>
-      </DialogContent>
-    </>
+    <DialogContent>
+      <Typography variant="overline">{t('place')}</Typography>
+      <Typography paragraph>{venue.place?.label ?? ''}</Typography>
+      <Typography variant="overline">{t('date')}</Typography>
+      <Typography>{getPeriodString(venue.time)}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicCompetitionDialogContent = ({ competition }: { competition: Competition }) => {
+  const { t } = useTranslation('registrations');
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('resource_type.artistic.competition_name')}</Typography>
+      <Typography paragraph>{competition.name}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.competition_rank')}</Typography>
+      <Typography paragraph>{competition.description}</Typography>
+      <Typography variant="overline">{t('common:date')}</Typography>
+      <Typography>{new Date(competition.date.value).toLocaleDateString()}</Typography>
+    </DialogContent>
   );
 };
