@@ -230,7 +230,7 @@ interface PublicOutputRowProps {
   showType?: boolean;
 }
 
-export const PublicOutputRow = ({ output, heading, showType = false }: PublicOutputRowProps) => {
+const PublicOutputRow = ({ output, heading, showType = false }: PublicOutputRowProps) => {
   const { t } = useTranslation('registration');
   const [openModal, setOpenModal] = useState(false);
   const toggleModal = () => setOpenModal(!openModal);
