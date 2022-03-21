@@ -180,15 +180,19 @@ export const splitMainContributors = (contributors: Contributor[], registrationT
   return [mainContributors, otherContributors];
 };
 
-export const getArtisticOutputName = (item: Venue | ArchitectureOutput) =>
-  item.type === 'Competition'
-    ? (item as Competition).name
-    : item.type === 'MentionInPublication'
-    ? (item as MentionInPublication).title
-    : item.type === 'Award'
-    ? (item as Award).name
-    : item.type === 'Exhibition'
-    ? (item as Exhibition).name
-    : item.type === 'Venue'
-    ? (item as Venue).place?.label ?? ''
-    : '';
+export const getArtisticOutputName = (item: Venue | ArchitectureOutput) => {
+  switch (item.type) {
+    case 'Venue':
+      return (item as Venue).place?.label ?? '';
+    case 'Competition':
+      return (item as Competition).name;
+    case 'MentionInPublication':
+      return (item as MentionInPublication).title;
+    case 'Award':
+      return (item as Award).name;
+    case 'Exhibition':
+      return (item as Exhibition).name;
+    default:
+      return '';
+  }
+};
