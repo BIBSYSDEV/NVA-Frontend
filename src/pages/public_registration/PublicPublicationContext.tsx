@@ -203,35 +203,37 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
   );
 };
 
-interface PublicVenuesProps {
-  venues: Venue[];
+interface PublicArtisticOutputProps {
+  outputs: (Venue | ArchitectureOutput)[];
+  heading: string;
 }
 
-export const PublicVenues = ({ venues }: PublicVenuesProps) => {
-  const { t } = useTranslation('registration');
+export const PublicArtisticOutput = ({ outputs, heading }: PublicArtisticOutputProps) => (
+  <>
+    <Typography variant="overline">{heading}</Typography>
+    {outputs.map((output, index) => (
+      <PublicOutputRow output={output} key={index} heading={heading} />
+    ))}
+  </>
+);
 
-  return venues && venues.length > 0 ? (
-    <>
-      <Typography variant="overline">{t('resource_type.artistic.exhibition_places')}</Typography>
-      {venues.map((venue, index) => (
-        <PublicVenueItem venue={venue} key={index} />
-      ))}
-    </>
-  ) : null;
-};
-
-interface PublicVenueItemProps {
-  venue: Venue;
+interface PublicOutputRowProps {
+  output: ArchitectureOutput | Venue;
+  heading: string;
+  showType?: boolean;
 }
 
-const PublicVenueItem = ({ venue }: PublicVenueItemProps) => {
+export const PublicOutputRow = ({ output, heading, showType = false }: PublicOutputRowProps) => {
   const { t } = useTranslation('registration');
   const [openModal, setOpenModal] = useState(false);
   const toggleModal = () => setOpenModal(!openModal);
 
+  const nameString = getArtisticOutputName(output);
+  const rowString = showType ? `${nameString} (${t(`resource_type.artistic.output_type.${output.type}`)})` : nameString;
+
   return (
     <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-      <Typography>{getArtisticOutputName(venue)}</Typography>
+      <Typography>{rowString}</Typography>
       <Tooltip title={t<string>('common:show_details')}>
         <IconButton size="small" color="primary" onClick={toggleModal}>
           <OpenInNewIcon fontSize="small" />
@@ -239,13 +241,10 @@ const PublicVenueItem = ({ venue }: PublicVenueItemProps) => {
       </Tooltip>
 
       <Dialog open={openModal} onClose={toggleModal} fullWidth>
-        <DialogTitle>{t('resource_type.artistic.exhibition_place')}</DialogTitle>
-        <DialogContent>
-          <Typography variant="overline">{t('resource_type.artistic.exhibition_place')}</Typography>
-          <Typography paragraph>{venue.place?.label ?? ''}</Typography>
-          <Typography variant="overline">{t('common:date')}</Typography>
-          <Typography>{getPeriodString(venue.time)}</Typography>
-        </DialogContent>
+        <DialogTitle>{heading}</DialogTitle>
+
+        {output.type === 'Venue' && <PublicVenueDialogContent venue={output as Venue} />}
+
         <DialogActions>
           <Button variant="outlined" onClick={toggleModal}>
             {t('common:close')}
@@ -256,25 +255,21 @@ const PublicVenueItem = ({ venue }: PublicVenueItemProps) => {
   );
 };
 
-interface PublicArchitectureOutputProps {
-  outputs: ArchitectureOutput[];
+interface PublicVenueDialogContentProps {
+  venue: Venue;
 }
 
-export const PublicArchitectureOutput = ({ outputs }: PublicArchitectureOutputProps) => {
-  const { t } = useTranslation('registration');
+const PublicVenueDialogContent = ({ venue }: PublicVenueDialogContentProps) => {
+  const { t } = useTranslation('common');
 
-  return !outputs || outputs.length === 0 ? null : (
+  return (
     <>
-      <Typography variant="overline">{t('resource_type.artistic.architecture_publications')}</Typography>
-      {outputs.map((output, index) => {
-        const typeString = t(`resource_type.artistic.output_type.${output.type}`);
-        const nameString = getArtisticOutputName(output);
-        return (
-          <Typography key={index}>
-            {nameString} ({typeString})
-          </Typography>
-        );
-      })}
+      <DialogContent>
+        <Typography variant="overline">{t('place')}</Typography>
+        <Typography paragraph>{venue.place?.label ?? ''}</Typography>
+        <Typography variant="overline">{t('date')}</Typography>
+        <Typography>{getPeriodString(venue.time)}</Typography>
+      </DialogContent>
     </>
   );
 };
