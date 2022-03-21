@@ -181,6 +181,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               <PublicArtisticOutput
                 outputs={(publicationInstance as ArtisticPublicationInstance).architectureOutput ?? []}
                 heading={t('resource_type.artistic.architecture_publications')}
+                showType
               />
             ) : null
           ) : null)}

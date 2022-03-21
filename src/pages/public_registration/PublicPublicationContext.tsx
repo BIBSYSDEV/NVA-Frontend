@@ -213,13 +213,14 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
 interface PublicArtisticOutputProps {
   outputs: (Venue | ArchitectureOutput)[];
   heading: string;
+  showType?: boolean;
 }
 
-export const PublicArtisticOutput = ({ outputs, heading }: PublicArtisticOutputProps) => (
+export const PublicArtisticOutput = ({ outputs, heading, showType = false }: PublicArtisticOutputProps) => (
   <>
     <Typography variant="overline">{heading}</Typography>
     {outputs.map((output, index) => (
-      <PublicOutputRow output={output} key={index} heading={heading} />
+      <PublicOutputRow key={index} output={output} heading={heading} showType={showType} />
     ))}
   </>
 );
@@ -227,10 +228,10 @@ export const PublicArtisticOutput = ({ outputs, heading }: PublicArtisticOutputP
 interface PublicOutputRowProps {
   output: ArchitectureOutput | Venue;
   heading: string;
-  showType?: boolean;
+  showType: boolean;
 }
 
-const PublicOutputRow = ({ output, heading, showType = false }: PublicOutputRowProps) => {
+const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) => {
   const { t } = useTranslation('registration');
   const [openModal, setOpenModal] = useState(false);
   const toggleModal = () => setOpenModal(!openModal);
