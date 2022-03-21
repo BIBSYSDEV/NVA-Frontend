@@ -13,6 +13,7 @@ import { UrlPathTemplate } from './utils/urlPaths';
 
 const AboutPage = lazy(() => import('./pages/infopages/AboutPage'));
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
+const DataPage = lazy(() => import('./pages/data/DataPage'));
 const EditorPage = lazy(() => import('./pages/editor/EditorPage'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
 const MyRegistrations = lazy(() => import('./pages/my_registrations/MyRegistrations'));
@@ -57,6 +58,7 @@ export const AppRoutes = () => {
         {/* InstitutionAdminRoutes */}
         <InstitutionAdminRoute exact path={UrlPathTemplate.MyInstitution} component={MyInstitutionPage} />
         <InstitutionAdminRoute exact path={UrlPathTemplate.MyInstitutionUsers} component={MyInstitutionUsersPage} />
+        <InstitutionAdminRoute exact path={UrlPathTemplate.Data} component={DataPage} />
 
         {/* AppAdminRoutes */}
         <AppAdminRoute exact path={UrlPathTemplate.AdminInstitutions} component={AdminCustomerInstitutionsPage} />

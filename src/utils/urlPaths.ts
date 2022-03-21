@@ -1,6 +1,7 @@
 export enum UrlPathTemplate {
   About = '/about',
   AdminInstitutions = '/admin-institutions',
+  Data = '/data',
   Editor = '/editor',
   Home = '/',
   Login = '/login',
