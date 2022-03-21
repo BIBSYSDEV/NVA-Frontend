@@ -23,7 +23,14 @@ import { ListSkeleton } from '../../components/ListSkeleton';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 import { getArtisticOutputName, getPeriodString } from '../../utils/registration-helpers';
-import { ArchitectureOutput, Competition, Venue } from '../../types/publication_types/artisticRegistration.types';
+import {
+  ArchitectureOutput,
+  Award,
+  Competition,
+  Exhibition,
+  MentionInPublication,
+  Venue,
+} from '../../types/publication_types/artisticRegistration.types';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
@@ -245,6 +252,11 @@ export const PublicOutputRow = ({ output, heading, showType = false }: PublicOut
 
         {output.type === 'Venue' && <PublicVenueDialogContent venue={output as Venue} />}
         {output.type === 'Competition' && <PublicCompetitionDialogContent competition={output as Competition} />}
+        {output.type === 'Award' && <PublicAwardDialogContent award={output as Award} />}
+        {output.type === 'MentionInPublication' && (
+          <PublicMentionDialogContent mention={output as MentionInPublication} />
+        )}
+        {output.type === 'Exhibition' && <PublicExhibitionDialogContent exhibition={output as Exhibition} />}
 
         <DialogActions>
           <Button variant="outlined" onClick={toggleModal}>
@@ -278,6 +290,56 @@ const PublicCompetitionDialogContent = ({ competition }: { competition: Competit
       <Typography paragraph>{competition.description}</Typography>
       <Typography variant="overline">{t('common:date')}</Typography>
       <Typography>{new Date(competition.date.value).toLocaleDateString()}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicAwardDialogContent = ({ award }: { award: Award }) => {
+  const { t } = useTranslation('registrations');
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('resource_type.artistic.competition_name')}</Typography>
+      <Typography paragraph>{award.name}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.award_organizer')}</Typography>
+      <Typography paragraph>{award.organizer}</Typography>
+      <Typography variant="overline">{t('common:year')}</Typography>
+      <Typography>{new Date(award.date.value).getFullYear()}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.award_ranking')}</Typography>
+      <Typography paragraph>{award.ranking}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.award_other')}</Typography>
+      <Typography paragraph>{award.otherInformation}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicMentionDialogContent = ({ mention }: { mention: MentionInPublication }) => {
+  const { t } = useTranslation('registrations');
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('resource_type.artistic.mention_title')}</Typography>
+      <Typography paragraph>{mention.title}</Typography>
+      <Typography variant="overline">{t('resource_type.issue')}</Typography>
+      <Typography paragraph>{mention.issue}</Typography>
+      <Typography variant="overline">{t('common:date')}</Typography>
+      <Typography>{new Date(mention.date.value).toLocaleDateString()}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.mention_other')}</Typography>
+      <Typography paragraph>{mention.otherInformation}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicExhibitionDialogContent = ({ exhibition }: { exhibition: Exhibition }) => {
+  const { t } = useTranslation('registrations');
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('resource_type.artistic.exhibition_title')}</Typography>
+      <Typography paragraph>{exhibition.name}</Typography>
+      <Typography variant="overline">{t('common:place')}</Typography>
+      <Typography paragraph>{exhibition.place?.label ?? ''}</Typography>
+      <Typography variant="overline">{t('resource_type.organizer')}</Typography>
+      <Typography>{exhibition.organizer}</Typography>
+      <Typography variant="overline">{t('common:other')}</Typography>
+      <Typography paragraph>{exhibition.otherInformation}</Typography>
     </DialogContent>
   );
 };
