@@ -19,6 +19,7 @@ import { VenueModal } from './design/VenueModal';
 import { PublicationMentionModal } from './architecture/PublicationMentionModal';
 import { AwardModal } from './architecture/AwardModal';
 import { ExhibitionModal } from './architecture/ExhibitionModal';
+import { getArtisticOutputName } from '../../../../../utils/registration-helpers';
 
 type ItemType = ArchitectureOutput | Venue;
 
@@ -45,7 +46,7 @@ export const OutputRow = ({
   const [openEditItem, setOpenEditItem] = useState(false);
   const [openRemoveItem, setOpenRemoveItem] = useState(false);
 
-  let title = '';
+  const title = getArtisticOutputName(item);
   let removeItemTitle = '';
   let removeItemDescription = '';
   if (
@@ -54,19 +55,9 @@ export const OutputRow = ({
     item.type === 'Award' ||
     item.type === 'Exhibition'
   ) {
-    if (item.type === 'Competition') {
-      title = (item as Competition).name;
-    } else if (item.type === 'MentionInPublication') {
-      title = (item as MentionInPublication).title;
-    } else if (item.type === 'Award') {
-      title = (item as Award).name;
-    } else if (item.type === 'Exhibition') {
-      title = (item as Exhibition).name;
-    }
     removeItemTitle = t('resource_type.artistic.remove_announcement');
     removeItemDescription = t('resource_type.artistic.remove_announcement_description', { name: title });
   } else if (item.type === 'Venue') {
-    title = (item as Venue).place?.label ?? '';
     removeItemTitle = t('resource_type.artistic.remove_venue_title');
     removeItemDescription = t('resource_type.artistic.remove_venue_text', { name: title });
   }

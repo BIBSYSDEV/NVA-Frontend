@@ -14,6 +14,14 @@ import i18n from '../translations/i18n';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
 import { Period } from '../types/common.types';
 import { Contributor, ContributorRole } from '../types/contributor.types';
+import {
+  ArchitectureOutput,
+  Award,
+  Competition,
+  Exhibition,
+  MentionInPublication,
+  Venue,
+} from '../types/publication_types/artisticRegistration.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -170,4 +178,21 @@ export const splitMainContributors = (contributors: Contributor[], registrationT
   });
 
   return [mainContributors, otherContributors];
+};
+
+export const getArtisticOutputName = (item: Venue | ArchitectureOutput) => {
+  switch (item.type) {
+    case 'Venue':
+      return (item as Venue).place?.label ?? '';
+    case 'Competition':
+      return (item as Competition).name;
+    case 'MentionInPublication':
+      return (item as MentionInPublication).title;
+    case 'Award':
+      return (item as Award).name;
+    case 'Exhibition':
+      return (item as Exhibition).name;
+    default:
+      return '';
+  }
 };
