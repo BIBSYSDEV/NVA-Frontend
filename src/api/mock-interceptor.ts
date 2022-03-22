@@ -64,7 +64,7 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(PublicationsApiPath.Registration)).reply(201, mockRegistration);
   mock
     .onGet(new RegExp(`${PublicationsApiPath.Registration}/4327439`))
-    .reply(200, { ...emptyRegistration, owner: 'tu@unit.no' });
+    .reply(200, { ...emptyRegistration, resourceOwner: { owner: 'tu@unit.no' } });
   mock
     .onGet(new RegExp(`${PublicationsApiPath.Registration}/${mockPublishedRegistration.identifier}`))
     .reply(200, mockPublishedRegistration);

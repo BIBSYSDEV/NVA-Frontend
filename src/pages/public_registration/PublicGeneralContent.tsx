@@ -24,7 +24,7 @@ import {
   ReportPublicationInstance,
   ReportRegistration,
 } from '../../types/publication_types/reportRegistration.types';
-import { DegreeType, JournalType } from '../../types/publicationFieldNames';
+import { ArtisticType, DegreeType, JournalType } from '../../types/publicationFieldNames';
 import {
   isArtistic,
   isBook,
@@ -36,12 +36,12 @@ import {
 } from '../../utils/registration-helpers';
 import { PublicDoi } from './PublicDoi';
 import {
+  PublicArtisticOutput,
   PublicJournal,
   PublicPartOfContent,
   PublicPresentation,
   PublicPublisher,
   PublicSeries,
-  PublicVenues,
 } from './PublicPublicationContext';
 import {
   PublicIsbnContent,
@@ -172,7 +172,18 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           ) : isPresentation(publicationInstance.type) ? (
             <PublicPresentation publicationContext={publicationContext as PresentationPublicationContext} />
           ) : isArtistic(publicationInstance.type) ? (
-            <PublicVenues venues={(publicationInstance as ArtisticPublicationInstance).venues ?? []} />
+            (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.ArtisticDesign ? (
+              <PublicArtisticOutput
+                outputs={(publicationInstance as ArtisticPublicationInstance).venues ?? []}
+                heading={t('resource_type.artistic.exhibition_place')}
+              />
+            ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.ArtisticArchitecture ? (
+              <PublicArtisticOutput
+                outputs={(publicationInstance as ArtisticPublicationInstance).architectureOutput ?? []}
+                heading={t('resource_type.artistic.architecture_publications')}
+                showType
+              />
+            ) : null
           ) : null)}
       </div>
     </StyledGeneralInfo>

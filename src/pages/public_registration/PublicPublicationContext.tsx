@@ -1,5 +1,18 @@
 import { useTranslation } from 'react-i18next';
-import { Link, Typography } from '@mui/material';
+import {
+  Button,
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Link,
+  Tooltip,
+  Typography,
+} from '@mui/material';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { useState } from 'react';
 import { BookPublicationContext, ContextPublisher } from '../../types/publication_types/bookRegistration.types';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
@@ -9,8 +22,16 @@ import { RegistrationSummary } from './RegistrationSummary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
-import { getPeriodString } from '../../utils/registration-helpers';
-import { Venue } from '../../types/publication_types/artisticRegistration.types';
+import { getArtisticOutputName, getPeriodString } from '../../utils/registration-helpers';
+import {
+  ArchitectureOutput,
+  Award,
+  Competition,
+  Exhibition,
+  MentionInPublication,
+  Venue,
+} from '../../types/publication_types/artisticRegistration.types';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
@@ -190,22 +211,138 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
   );
 };
 
-interface PublicVenuesProps {
-  venues: Venue[];
+interface PublicArtisticOutputProps {
+  outputs: (Venue | ArchitectureOutput)[];
+  heading: string;
+  showType?: boolean;
 }
 
-export const PublicVenues = ({ venues }: PublicVenuesProps) => {
-  const { t } = useTranslation('registration');
+export const PublicArtisticOutput = ({ outputs, heading, showType = false }: PublicArtisticOutputProps) => (
+  <>
+    <Typography variant="overline">{heading}</Typography>
+    {outputs.map((output, index) => (
+      <PublicOutputRow key={index} output={output} heading={heading} showType={showType} />
+    ))}
+  </>
+);
 
-  return venues && venues.length > 0 ? (
-    <>
-      <Typography variant="overline">{t('resource_type.artistic.exhibition_places')}</Typography>
-      {venues.map((venue, index) => {
-        const periodString = getPeriodString(venue.time);
-        const placeLabel = venue.place?.label ?? '';
-        const venueStringRepresentation = periodString ? `${placeLabel} (${periodString})` : placeLabel;
-        return <Typography key={index}>{venueStringRepresentation}</Typography>;
-      })}
-    </>
-  ) : null;
+interface PublicOutputRowProps {
+  output: ArchitectureOutput | Venue;
+  heading: string;
+  showType: boolean;
+}
+
+const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) => {
+  const { t } = useTranslation('registration');
+  const [openModal, setOpenModal] = useState(false);
+  const toggleModal = () => setOpenModal(!openModal);
+
+  const nameString = getArtisticOutputName(output);
+  const rowString = showType ? `${nameString} (${t(`resource_type.artistic.output_type.${output.type}`)})` : nameString;
+
+  return (
+    <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+      <Typography>{rowString}</Typography>
+      <Tooltip title={t<string>('common:show_details')}>
+        <IconButton size="small" color="primary" onClick={toggleModal}>
+          <OpenInNewIcon fontSize="small" />
+        </IconButton>
+      </Tooltip>
+
+      <Dialog open={openModal} onClose={toggleModal} fullWidth>
+        <DialogTitle>{heading}</DialogTitle>
+        <ErrorBoundary>
+          {output.type === 'Venue' && <PublicVenueDialogContent venue={output as Venue} />}
+          {output.type === 'Competition' && <PublicCompetitionDialogContent competition={output as Competition} />}
+          {output.type === 'Award' && <PublicAwardDialogContent award={output as Award} />}
+          {output.type === 'MentionInPublication' && (
+            <PublicMentionDialogContent mention={output as MentionInPublication} />
+          )}
+          {output.type === 'Exhibition' && <PublicExhibitionDialogContent exhibition={output as Exhibition} />}
+        </ErrorBoundary>
+
+        <DialogActions>
+          <Button variant="outlined" onClick={toggleModal}>
+            {t('common:close')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
+  );
+};
+
+const PublicVenueDialogContent = ({ venue }: { venue: Venue }) => {
+  const { t } = useTranslation('common');
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('place')}</Typography>
+      <Typography paragraph>{venue.place?.label ?? ''}</Typography>
+      <Typography variant="overline">{t('date')}</Typography>
+      <Typography>{getPeriodString(venue.time)}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicCompetitionDialogContent = ({ competition }: { competition: Competition }) => {
+  const { t } = useTranslation('registrations');
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('resource_type.artistic.competition_name')}</Typography>
+      <Typography paragraph>{competition.name}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.competition_rank')}</Typography>
+      <Typography paragraph>{competition.description}</Typography>
+      <Typography variant="overline">{t('common:date')}</Typography>
+      <Typography>{new Date(competition.date.value).toLocaleDateString()}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicAwardDialogContent = ({ award }: { award: Award }) => {
+  const { t } = useTranslation('registrations');
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('resource_type.artistic.competition_name')}</Typography>
+      <Typography paragraph>{award.name}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.award_organizer')}</Typography>
+      <Typography paragraph>{award.organizer}</Typography>
+      <Typography variant="overline">{t('common:year')}</Typography>
+      <Typography>{new Date(award.date.value).getFullYear()}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.award_ranking')}</Typography>
+      <Typography paragraph>{award.ranking}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.award_other')}</Typography>
+      <Typography paragraph>{award.otherInformation}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicMentionDialogContent = ({ mention }: { mention: MentionInPublication }) => {
+  const { t } = useTranslation('registrations');
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('resource_type.artistic.mention_title')}</Typography>
+      <Typography paragraph>{mention.title}</Typography>
+      <Typography variant="overline">{t('resource_type.issue')}</Typography>
+      <Typography paragraph>{mention.issue}</Typography>
+      <Typography variant="overline">{t('common:date')}</Typography>
+      <Typography>{new Date(mention.date.value).toLocaleDateString()}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.mention_other')}</Typography>
+      <Typography paragraph>{mention.otherInformation}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicExhibitionDialogContent = ({ exhibition }: { exhibition: Exhibition }) => {
+  const { t } = useTranslation('registrations');
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('resource_type.artistic.exhibition_title')}</Typography>
+      <Typography paragraph>{exhibition.name}</Typography>
+      <Typography variant="overline">{t('common:place')}</Typography>
+      <Typography paragraph>{exhibition.place?.label ?? ''}</Typography>
+      <Typography variant="overline">{t('resource_type.organizer')}</Typography>
+      <Typography>{exhibition.organizer}</Typography>
+      <Typography variant="overline">{t('common:other')}</Typography>
+      <Typography paragraph>{exhibition.otherInformation}</Typography>
+    </DialogContent>
+  );
 };
