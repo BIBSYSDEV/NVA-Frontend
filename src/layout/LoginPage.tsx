@@ -63,7 +63,8 @@ const LoginPage = () => {
               'aria-label': t('Velg institutsjon'),
             }}
             placeholder={t('project:search_for_institution')}
-            sx={{ width: '40rem' }}
+            fullWidth
+            sx={{ maxWidth: '40rem' }}
           />
         )}
       />
@@ -78,6 +79,7 @@ const LoginPage = () => {
             color="secondary"
             onClick={() => {
               localStorage.setItem(LocalStorageKey.RedirectPath, redirectPath);
+              localStorage.setItem(LocalStorageKey.LoginInstitutionId, selectedCustomerId);
               handleLogin('FeideIdentityProvider');
             }}>
             {t('login')}
