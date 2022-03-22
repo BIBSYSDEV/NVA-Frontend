@@ -42,7 +42,7 @@ export const AddContributorForm = ({
 
   const [userSearch, isLoadingUserSearch] = useFetch<SearchResponse<CristinUser>>({
     url: debouncedSearchTerm
-      ? `${CristinApiPath.Person}?query=${debouncedSearchTerm}&results=${resultsPerPage}&page=${page + 1}`
+      ? `${CristinApiPath.Person}?name=${debouncedSearchTerm}&results=${resultsPerPage}&page=${page + 1}`
       : '',
     errorMessage: t('feedback:error.search'),
   });
