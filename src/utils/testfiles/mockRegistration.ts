@@ -12,7 +12,10 @@ export const mockRegistration: JournalRegistration = {
   identifier: '12345679',
   createdDate: new Date(2020, 1).toISOString(),
   modifiedDate: new Date(2020, 2).toISOString(),
-  owner: 'tu@unit.no',
+  resourceOwner: {
+    owner: 'tu@unit.no',
+    ownerAffiliation: 'https://nva.unit.no/institution/1',
+  },
   status: RegistrationStatus.Draft,
   projects: [
     { type: 'ResearchProject', id: 'https://api.dev.nva.aws.unit.no/cristin/project/1', name: 'A dummy project' },
@@ -128,7 +131,7 @@ export const mockMessages: PublicationConversation[] = [
       mainTitle: mockRegistration.entityDescription.mainTitle,
       createdDate: mockRegistration.createdDate,
       status: mockRegistration.status,
-      owner: mockRegistration.owner,
+      owner: mockRegistration.resourceOwner.owner,
     },
     messageCollections: [
       {
