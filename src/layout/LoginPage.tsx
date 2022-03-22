@@ -49,7 +49,7 @@ const LoginPage = () => {
       <PageHeader>{t('login')}</PageHeader>
 
       <Typography variant="h2" paragraph>
-        {t('Velg institutsjon')}
+        {t('select_institution')}
       </Typography>
       <Autocomplete
         options={customers}
@@ -60,11 +60,11 @@ const LoginPage = () => {
           <TextField
             {...params}
             InputLabelProps={{
-              'aria-label': t('Velg institutsjon'),
+              'aria-label': t('select_institution'),
             }}
             placeholder={t('project:search_for_institution')}
-            fullWidth
             sx={{ maxWidth: '40rem' }}
+            fullWidth
           />
         )}
       />
