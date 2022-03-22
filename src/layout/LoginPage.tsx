@@ -1,4 +1,5 @@
 import { Autocomplete, Button, TextField, Typography } from '@mui/material';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
@@ -21,6 +22,7 @@ const LoginPage = () => {
   const user = useSelector((store: RootStore) => store.user);
   const location = useLocation<PreviousPathState>();
   const { handleLogin } = useAuthentication();
+  const [selectedCustomerId, setSelectedCustomerId] = useState('');
   const [customerResponse, isLoadingCustomers] = useFetch<CustomerList>({
     url: CustomerInstitutionApiPath.Customer,
     errorMessage: t('feedback:error.get_customers'),
@@ -53,6 +55,7 @@ const LoginPage = () => {
         options={customers}
         getOptionLabel={(option) => option.displayName}
         loading={isLoadingCustomers}
+        onChange={(_, value) => setSelectedCustomerId(value?.id ?? '')}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -65,18 +68,22 @@ const LoginPage = () => {
         )}
       />
 
-      <Typography variant="h2" paragraph sx={{ mt: '2rem' }}>
-        {t('login_with_feide')}
-      </Typography>
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={() => {
-          localStorage.setItem(LocalStorageKey.RedirectPath, redirectPath);
-          handleLogin('FeideIdentityProvider');
-        }}>
-        {t('login')}
-      </Button>
+      {selectedCustomerId && (
+        <>
+          <Typography variant="h2" paragraph sx={{ mt: '2rem' }}>
+            {t('login_with_feide')}
+          </Typography>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => {
+              localStorage.setItem(LocalStorageKey.RedirectPath, redirectPath);
+              handleLogin('FeideIdentityProvider');
+            }}>
+            {t('login')}
+          </Button>
+        </>
+      )}
     </SyledPageContent>
   );
 };
