@@ -1,9 +1,7 @@
 import { Box, Typography, ListItemText, MenuItem, MenuList } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-
 import { AddEmployee } from './AddEmployee';
 
 enum DataItem {
@@ -17,6 +15,9 @@ const DataPage = () => {
   return (
     <Box sx={{ width: '100%', p: '1rem', display: 'grid', gridTemplateColumns: '1fr 5fr', gap: '1rem' }}>
       <BackgroundDiv>
+        <Typography variant="h3" component="h1">
+          Grunndata
+        </Typography>
         <MenuList>
           <MenuItem onClick={() => setSelectedItem(DataItem.Person)}>
             <ListItemText>
