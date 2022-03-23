@@ -9,7 +9,7 @@ import { getFullCristinName } from '../../utils/user-helpers';
 import { CristinApiPath } from '../../api/apiPaths';
 
 export const AddEmployee = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('basicData');
   const [nationalNumber, setNationalNumber] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState<CristinUser | null>();
@@ -35,14 +35,16 @@ export const AddEmployee = () => {
   return (
     <>
       <Typography variant="h3" component="h2" paragraph>
-        {t('basicData:Legg til i ditt personregister')}
+        {t('add_to_your_person_registry')}
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', gap: '1rem' }}>
         <TextField
           variant="filled"
-          label={t('basicData:search_for_national_id')}
+          label={t('search_for_national_id')}
           value={nationalNumber}
           onChange={(event) => setNationalNumber(event.target.value)}
+          fullWidth
+          sx={{ maxWidth: '22rem' }}
           InputProps={{
             endAdornment: (
               <IconButton onClick={searchByNationalId} title={t('common:search')} size="large">

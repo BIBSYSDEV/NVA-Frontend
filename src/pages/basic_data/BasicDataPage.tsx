@@ -9,14 +9,14 @@ enum BasicDataItem {
 }
 
 const BasicDataPage = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('basicData');
   const [selectedItem, setSelectedItem] = useState(BasicDataItem.Person);
 
   return (
     <Box sx={{ width: '100%', p: '1rem', display: 'grid', gridTemplateColumns: '1fr 5fr', gap: '1rem' }}>
       <BackgroundDiv>
         <Typography variant="h3" component="h1">
-          Grunndata
+          {t('basic_data')}
         </Typography>
         <MenuList>
           <MenuItem onClick={() => setSelectedItem(BasicDataItem.Person)}>
@@ -29,7 +29,7 @@ const BasicDataPage = () => {
                 }}
                 color="primary"
                 fontSize="1rem">
-                {t('legg til ansatt')}
+                {t('add_employee')}
               </Typography>
             </ListItemText>
           </MenuItem>
