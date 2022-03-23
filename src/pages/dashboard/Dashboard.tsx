@@ -8,6 +8,7 @@ import { AboutContent } from '../infopages/AboutContent';
 import { dataTestId } from '../../utils/dataTestIds';
 import SearchPage from '../search/SearchPage';
 import { LocalStorageKey } from '../../utils/constants';
+import { authenticatedApiRequest } from '../../api/apiRequest';
 
 const Dashboard = () => {
   const { t } = useTranslation('common');
@@ -18,6 +19,22 @@ const Dashboard = () => {
   const toggleReadMore = () => setReadMore(!readMore);
 
   useEffect(() => {
+    // Handle selected Customer set before login
+    const customerId = localStorage.getItem(LocalStorageKey.LoginInstitutionId);
+
+    if (customerId) {
+      localStorage.removeItem(LocalStorageKey.LoginInstitutionId);
+      const setCustomer = async () => {
+        const setCustomerResponse = await authenticatedApiRequest({ url: '/', method: 'POST', data: { customerId } });
+        // TODO: Handle response
+      };
+      // TODO: check if selected customer is in allowedCustomers (from login)
+      setCustomer();
+    }
+  }, []);
+
+  useEffect(() => {
+    // Redirect to previously set path (after login)
     const loginPath = localStorage.getItem(LocalStorageKey.RedirectPath);
     if (loginPath) {
       localStorage.removeItem(LocalStorageKey.RedirectPath);
