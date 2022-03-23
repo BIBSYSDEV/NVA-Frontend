@@ -11,6 +11,7 @@ import { CustomerList } from '../types/customerInstitution.types';
 import { LocalStorageKey } from '../utils/constants';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
 import { useFetch } from '../utils/hooks/useFetch';
+import { sortCustomerInstitutions } from '../utils/institutions-helpers';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
 export interface PreviousPathState {
@@ -27,9 +28,6 @@ const LoginPage = () => {
     url: CustomerInstitutionApiPath.Customer,
     errorMessage: t('feedback:error.get_customers'),
   });
-  const customers = (customerResponse?.customers ?? []).sort((a, b) =>
-    a.displayName.toUpperCase() < b.displayName.toUpperCase() ? -1 : 1
-  );
 
   if (user) {
     return <Redirect to={UrlPathTemplate.Home} />;
@@ -52,7 +50,7 @@ const LoginPage = () => {
         {t('select_institution')}
       </Typography>
       <Autocomplete
-        options={customers}
+        options={sortCustomerInstitutions(customerResponse?.customers)}
         getOptionLabel={(option) => option.displayName}
         loading={isLoadingCustomers}
         onChange={(_, value) => setSelectedCustomerId(value?.id ?? '')}
