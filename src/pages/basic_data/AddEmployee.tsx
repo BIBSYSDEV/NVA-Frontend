@@ -1,11 +1,11 @@
 import { TextField, CircularProgress, IconButton, Typography, Box } from '@mui/material';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
 import { authenticatedApiRequest } from '../../api/apiRequest';
 import { CristinUser } from '../../types/user.types';
 import { isSuccessStatus } from '../../utils/constants';
-import { getFullCristinName } from '../../utils/user-helpers';
+import { getValueByKey } from '../../utils/user-helpers';
 import { CristinApiPath } from '../../api/apiPaths';
 
 export const AddEmployee = () => {
@@ -14,7 +14,7 @@ export const AddEmployee = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState<CristinUser | null>();
 
-  const searchByNationalId = async () => {
+  const searchByNationalId = useCallback(async () => {
     setIsLoading(true);
     const searchResponse = await authenticatedApiRequest<CristinUser>({
       url: CristinApiPath.PersonIdentityNumer,
@@ -30,7 +30,14 @@ export const AddEmployee = () => {
       setUser(null);
     }
     setIsLoading(false);
-  };
+  }, [nationalNumber]);
+
+  useEffect(() => {
+    // Search when user has entered 11 chars as a Norwegian National ID is 11 chars long
+    if (nationalNumber.length === 11) {
+      searchByNationalId();
+    }
+  }, [searchByNationalId, nationalNumber]);
 
   return (
     <>
@@ -56,7 +63,20 @@ export const AddEmployee = () => {
         {isLoading ? (
           <CircularProgress />
         ) : user ? (
-          <p>{getFullCristinName(user.names)}</p>
+          <>
+            <TextField
+              disabled
+              variant="filled"
+              label={t('common:first_name')}
+              value={getValueByKey('FirstName', user.names)}
+            />
+            <TextField
+              disabled
+              variant="filled"
+              label={t('common:last_name')}
+              value={getValueByKey('LastName', user.names)}
+            />
+          </>
         ) : user === null ? (
           <p>{t('common:no_hits')}</p>
         ) : null}
