@@ -114,8 +114,8 @@ export const interceptRequestsOnMock = () => {
   mock
     .onGet(new RegExp(`${CustomerInstitutionApiPath.Customer}/.+/vocabularies`))
     .reply(200, mockCustomerInstitutionVocabularies);
-  mock.onGet(new RegExp(CustomerInstitutionApiPath.Customer)).replyOnce(200, mockCustomerInstitutions);
-  mock.onGet(new RegExp(CustomerInstitutionApiPath.Customer)).reply(200, mockCustomerInstitution);
+  mock.onGet(new RegExp(`${CustomerInstitutionApiPath.Customer}/.+`)).reply(200, mockCustomerInstitution);
+  mock.onGet(new RegExp(CustomerInstitutionApiPath.Customer)).reply(200, mockCustomerInstitutions);
   mock.onPut(new RegExp(CustomerInstitutionApiPath.Customer)).reply(200, mockCustomerInstitution);
   mock.onPost(new RegExp(CustomerInstitutionApiPath.Customer)).reply(201, mockCustomerInstitution);
 
