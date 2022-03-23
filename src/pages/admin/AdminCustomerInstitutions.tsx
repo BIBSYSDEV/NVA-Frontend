@@ -7,12 +7,13 @@ import { getAdminInstitutionPath } from '../../utils/urlPaths';
 import { InstitutionList } from './InstitutionList';
 import { PageSpinner } from '../../components/PageSpinner';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { CustomerInstitutionsResponse } from '../../types/customerInstitution.types';
+import { CustomerList } from '../../types/customerInstitution.types';
 import { CustomerInstitutionApiPath } from '../../api/apiPaths';
+import { sortCustomerInstitutions } from '../../utils/institutions-helpers';
 
 export const AdminCustomerInstitutions = () => {
   const { t } = useTranslation('admin');
-  const [customerInstitutions, isLoadingCustomerInstitutions] = useFetch<CustomerInstitutionsResponse>({
+  const [customerInstitutions, isLoadingCustomerInstitutions] = useFetch<CustomerList>({
     url: CustomerInstitutionApiPath.Customer,
     withAuthentication: true,
     errorMessage: t('feedback:error.get_customers'),
@@ -31,11 +32,7 @@ export const AdminCustomerInstitutions = () => {
           <PageSpinner />
         ) : (
           customerInstitutions && (
-            <InstitutionList
-              institutions={customerInstitutions.customers.sort((a, b) =>
-                a.displayName.toLocaleLowerCase() < b.displayName.toLocaleLowerCase() ? -1 : 1
-              )}
-            />
+            <InstitutionList institutions={sortCustomerInstitutions(customerInstitutions.customers)} />
           )
         )}
       </BackgroundDiv>

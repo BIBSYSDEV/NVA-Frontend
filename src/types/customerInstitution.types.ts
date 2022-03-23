@@ -60,10 +60,6 @@ export interface CustomerList {
   customers: CustomerInstitution[];
 }
 
-export interface CustomerInstitutionsResponse {
-  customers: CustomerInstitution[];
-}
-
 export interface VocabularyList {
   type: 'VocabularyList';
   id: string;

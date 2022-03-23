@@ -35,7 +35,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   const dispatch = useDispatch();
   const { t } = useTranslation('registration');
   const user = useSelector((store: RootStore) => store.user);
-  const { identifier, owner, doi, doiRequest, publisher } = registration;
+  const { identifier, resourceOwner, doi, doiRequest, publisher } = registration;
 
   const [messageToCurator, setMessageToCurator] = useState('');
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
@@ -110,7 +110,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   const firstErrorTab = getFirstErrorTab(tabErrors);
   const registrationIsValid = !tabErrors || firstErrorTab === -1;
 
-  const isOwner = user && user.isCreator && owner === user.id;
+  const isOwner = user && user.isCreator && resourceOwner.owner === user.id;
   const isCurator = user && user.isCurator && user.customerId === publisher.id;
   const hasNvaDoi = !!doi || doiRequest;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;

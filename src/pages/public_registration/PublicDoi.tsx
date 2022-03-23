@@ -17,7 +17,8 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
   const nvaDoi = registration.doi;
   const hasApprovedDoiRequest = registration.doiRequest?.status === DoiRequestStatus.Approved;
   const canSeeDraftDoi =
-    user && ((user.isCurator && registration.publisher.id === user.customerId) || user.id === registration.owner);
+    user &&
+    ((user.isCurator && registration.publisher.id === user.customerId) || user.id === registration.resourceOwner.owner);
 
   const doiToPresent = nvaDoi && (hasApprovedDoiRequest || canSeeDraftDoi) ? nvaDoi : originalDoi;
   const isDraftDoi = nvaDoi && !hasApprovedDoiRequest && canSeeDraftDoi;

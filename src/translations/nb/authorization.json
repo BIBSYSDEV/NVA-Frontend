@@ -6,5 +6,6 @@
   "login": "Logg inn",
   "login_with_feide": "Pålogging via Feide",
   "logout": "Logg ut",
-  "registration_not_published": "Denne registreringen er ikke publisert enda."
+  "registration_not_published": "Denne registreringen er ikke publisert enda.",
+  "select_institution": "Velg institusjon"
 }

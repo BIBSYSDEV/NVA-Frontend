@@ -84,7 +84,10 @@ export interface BaseRegistration extends RegistrationFileSet {
   readonly createdDate: string;
   readonly modifiedDate: string;
   readonly publishedDate?: string;
-  readonly owner: string;
+  readonly resourceOwner: {
+    readonly owner: string;
+    readonly ownerAffiliation: string;
+  };
   readonly status: RegistrationStatus;
   readonly doi?: string;
   readonly doiRequest?: DoiRequest;
@@ -165,7 +168,10 @@ export const emptyRegistration: Registration = {
   identifier: '',
   createdDate: '',
   modifiedDate: '',
-  owner: '',
+  resourceOwner: {
+    owner: '',
+    ownerAffiliation: '',
+  },
   status: RegistrationStatus.New,
   entityDescription: emptyRegistrationEntityDescription,
   fileSet: {
