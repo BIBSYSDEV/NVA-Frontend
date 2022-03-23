@@ -35,17 +35,17 @@ export const AddEmployee = () => {
   return (
     <>
       <Typography variant="h3" component="h2" paragraph>
-        Legg til i ditt personregister
+        {t('basicData:Legg til i ditt personregister')}
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', gap: '1rem' }}>
         <TextField
           variant="filled"
-          label="Søk på fødselsnummer"
+          label={t('basicData:search_for_national_id')}
           value={nationalNumber}
           onChange={(event) => setNationalNumber(event.target.value)}
           InputProps={{
             endAdornment: (
-              <IconButton onClick={searchByNationalId} title={t('search')} size="large">
+              <IconButton onClick={searchByNationalId} title={t('common:search')} size="large">
                 <SearchIcon />
               </IconButton>
             ),
@@ -56,7 +56,7 @@ export const AddEmployee = () => {
         ) : user ? (
           <p>{getFullCristinName(user.names)}</p>
         ) : user === null ? (
-          <p>ingen treff</p>
+          <p>{t('common:no_hits')}</p>
         ) : null}
       </Box>
     </>

@@ -4,13 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { AddEmployee } from './AddEmployee';
 
-enum DataItem {
+enum BasicDataItem {
   Person,
 }
 
-const DataPage = () => {
+const BasicDataPage = () => {
   const { t } = useTranslation();
-  const [selectedItem, setSelectedItem] = useState(DataItem.Person);
+  const [selectedItem, setSelectedItem] = useState(BasicDataItem.Person);
 
   return (
     <Box sx={{ width: '100%', p: '1rem', display: 'grid', gridTemplateColumns: '1fr 5fr', gap: '1rem' }}>
@@ -19,12 +19,12 @@ const DataPage = () => {
           Grunndata
         </Typography>
         <MenuList>
-          <MenuItem onClick={() => setSelectedItem(DataItem.Person)}>
+          <MenuItem onClick={() => setSelectedItem(BasicDataItem.Person)}>
             <ListItemText>
               <Typography
                 variant="overline"
                 sx={{
-                  textDecoration: selectedItem === DataItem.Person ? 'underline 2px' : undefined,
+                  textDecoration: selectedItem === BasicDataItem.Person ? 'underline 2px' : undefined,
                   textUnderlinePosition: 'under',
                 }}
                 color="primary"
@@ -35,9 +35,9 @@ const DataPage = () => {
           </MenuItem>
         </MenuList>
       </BackgroundDiv>
-      <BackgroundDiv>{selectedItem === DataItem.Person && <AddEmployee />}</BackgroundDiv>
+      <BackgroundDiv>{selectedItem === BasicDataItem.Person && <AddEmployee />}</BackgroundDiv>
     </Box>
   );
 };
 
-export default DataPage;
+export default BasicDataPage;
