@@ -81,10 +81,10 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
 
   // Authority Registry
+  mock.onGet(new RegExp(`${CristinApiPath.Person}\\?name=*`)).reply(200, mockCristinUserSearch);
   mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?name=*`)).reply(200, mockAuthorities);
   mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?feideid=*`)).reply(200, mockAuthorities);
   mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?arpId=901790000000`)).reply(200, mockAuthorities[1]);
-  mock.onGet(new RegExp(`${CristinApiPath.Person}\\?name=*`)).reply(200, mockCristinUserSearch);
 
   // update authority
   mock
