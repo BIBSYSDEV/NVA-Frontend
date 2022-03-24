@@ -23,7 +23,7 @@ export const ProjectContributorRow = () => {
   const debouncedSearchTerm = useDebounce(searchTerm);
 
   const [personSearchResult, isLoadingPersonSearchResult] = useFetch<SearchResponse<CristinUser>>({
-    url: debouncedSearchTerm ? `${CristinApiPath.Person}?results=20&query=${debouncedSearchTerm}` : '',
+    url: debouncedSearchTerm ? `${CristinApiPath.Person}?results=20&name=${debouncedSearchTerm}` : '',
   });
 
   const [isLoadingDefaultOptions, setIsLoadingDefaultOptions] = useState(false);
