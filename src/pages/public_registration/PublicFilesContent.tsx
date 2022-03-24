@@ -158,7 +158,9 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
           expanded={openPreviewAccordion}
           onChange={() => setOpenPreviewAccordion(!openPreviewAccordion)}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography data-testid={dataTestId.registrationLandingPage.filePreviewHeader} variant="button">{t('registration:public_page.preview')}</Typography>
+            <Typography data-testid={dataTestId.registrationLandingPage.filePreviewHeader} variant="button">
+              {t('registration:public_page.preview')}
+            </Typography>
           </AccordionSummary>
           <AccordionDetails>
             {isLoadingPreviewFile ? <CircularProgress /> : <PreviewFile url={previewFileUrl} file={file} />}
