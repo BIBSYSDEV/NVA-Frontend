@@ -13,7 +13,15 @@ const BasicDataPage = () => {
   const [selectedItem, setSelectedItem] = useState(BasicDataItem.Person);
 
   return (
-    <Box sx={{ width: '100%', p: '1rem', display: 'grid', gridTemplateColumns: '1fr 5fr', gap: '1rem' }}>
+    <Box
+      sx={{
+        width: '100%',
+        minHeight: '50vh',
+        p: '1rem',
+        display: 'grid',
+        gridTemplateColumns: '1fr 5fr',
+        gap: '1rem',
+      }}>
       <BackgroundDiv>
         <Typography variant="h3" component="h1">
           {t('basic_data')}

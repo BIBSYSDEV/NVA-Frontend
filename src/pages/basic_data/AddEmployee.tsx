@@ -1,4 +1,4 @@
-import { TextField, CircularProgress, IconButton, Typography, Box, Divider, styled } from '@mui/material';
+import { TextField, CircularProgress, IconButton, Typography, Box, Divider, styled, Button } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import LooksOneIcon from '@mui/icons-material/LooksOne';
 import LooksTwoIcon from '@mui/icons-material/LooksTwo';
@@ -11,7 +11,7 @@ import { isSuccessStatus } from '../../utils/constants';
 import { getValueByKey } from '../../utils/user-helpers';
 import { CristinApiPath } from '../../api/apiPaths';
 
-const StyledIconContainer = styled(Box)({
+const StyledCenterContainer = styled(Box)({
   width: '100%',
   display: 'flex',
   justifyContent: 'space-around',
@@ -55,9 +55,9 @@ export const AddEmployee = () => {
       </Typography>
       <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr auto 1fr', gap: '2rem', mt: '2rem' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', gap: '1rem' }}>
-          <StyledIconContainer>
+          <StyledCenterContainer>
             <LooksOneIcon color="primary" fontSize="large" sx={{ float: 'center' }} />
-          </StyledIconContainer>
+          </StyledCenterContainer>
           <TextField
             variant="filled"
             label={t('search_for_national_id')}
@@ -97,17 +97,22 @@ export const AddEmployee = () => {
         </Box>
         <Divider orientation="vertical" />
         <Box>
-          <StyledIconContainer>
+          <StyledCenterContainer>
             <LooksTwoIcon color="primary" fontSize="large" />
-          </StyledIconContainer>
+          </StyledCenterContainer>
         </Box>
         <Divider orientation="vertical" />
         <Box>
-          <StyledIconContainer>
+          <StyledCenterContainer>
             <LooksThreeIcon color="primary" fontSize="large" />
-          </StyledIconContainer>
+          </StyledCenterContainer>
         </Box>
       </Box>
+      <StyledCenterContainer>
+        <Button variant="contained" size="large" disabled>
+          {t('common:create')}
+        </Button>
+      </StyledCenterContainer>
     </>
   );
 };
