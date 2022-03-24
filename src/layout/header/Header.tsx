@@ -90,8 +90,8 @@ export const Header = () => {
                 flexItem
               />
               <LanguageSelector />
-              <BetaFunctionality>
-                {user?.isInstitutionAdmin && (
+              {user?.isInstitutionAdmin && (
+                <BetaFunctionality>
                   <Button
                     color="inherit"
                     component={RouterLink}
@@ -100,8 +100,8 @@ export const Header = () => {
                     startIcon={<BusinessCenterIcon />}>
                     {t('basicData:basic_data')}
                   </Button>
-                )}
-              </BetaFunctionality>
+                </BetaFunctionality>
+              )}
               {user?.isCurator && (
                 <Button
                   color="inherit"

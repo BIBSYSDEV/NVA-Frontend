@@ -10,6 +10,8 @@ import { CristinUser } from '../../types/user.types';
 import { isSuccessStatus } from '../../utils/constants';
 import { getValueByKey } from '../../utils/user-helpers';
 import { CristinApiPath } from '../../api/apiPaths';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { SearchResponse } from '../../types/common.types';
 
 const StyledCenterContainer = styled(Box)({
   width: '100%',
@@ -22,6 +24,13 @@ export const AddEmployee = () => {
   const [nationalNumber, setNationalNumber] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState<CristinUser | null>();
+
+  const cristinPersonId = getValueByKey('CristinIdentifier', user?.identifiers);
+  const [currentAffiliations, isLoadingAffiliations] = useFetch<SearchResponse<any>>({
+    url: cristinPersonId ? `${CristinApiPath.Person}/${cristinPersonId}/employment` : '',
+    errorMessage: 'todo',
+    withAuthentication: true,
+  });
 
   const searchByNationalId = useCallback(async () => {
     setIsLoading(true);
@@ -90,6 +99,9 @@ export const AddEmployee = () => {
                 label={t('common:last_name')}
                 value={getValueByKey('LastName', user.names)}
               />
+              <Typography variant="overline">
+                {t('employments')}: {isLoadingAffiliations ? <CircularProgress /> : currentAffiliations?.size}
+              </Typography>
             </>
           ) : user === null ? (
             <Typography>{t('common:no_hits')}</Typography>
