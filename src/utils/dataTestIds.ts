@@ -63,6 +63,7 @@ export const dataTestId = {
     fileEmbargoDate: 'file-embargo-date',
     fileName: 'file-name',
     filePreview: 'file-preview',
+    filePreviewHeader: 'file-preview-header',
     fileSize: 'file-size',
     fileVersion: 'file-version',
     filesAccordion: 'files-accordion',
