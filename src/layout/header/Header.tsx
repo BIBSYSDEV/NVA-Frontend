@@ -7,6 +7,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import MailIcon from '@mui/icons-material/MailOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { getRegistrationPath, UrlPathTemplate } from '../../utils/urlPaths';
 import { LoginButton } from './LoginButton';
@@ -14,6 +15,7 @@ import { Logo } from './Logo';
 import { GeneralMenu } from './GeneralMenu';
 import { LanguageSelector } from './LanguageSelector';
 import { dataTestId } from '../../utils/dataTestIds';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 
 export const Header = () => {
   const { t } = useTranslation('registration');
@@ -88,6 +90,18 @@ export const Header = () => {
                 flexItem
               />
               <LanguageSelector />
+              <BetaFunctionality>
+                {user?.isInstitutionAdmin && (
+                  <Button
+                    color="inherit"
+                    component={RouterLink}
+                    data-testid={dataTestId.header.basicDataLink}
+                    to={UrlPathTemplate.BasicData}
+                    startIcon={<BusinessCenterIcon />}>
+                    {t('basicData:basic_data')}
+                  </Button>
+                )}
+              </BetaFunctionality>
               {user?.isCurator && (
                 <Button
                   color="inherit"
