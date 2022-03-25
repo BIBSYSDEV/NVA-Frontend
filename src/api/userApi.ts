@@ -39,13 +39,13 @@ export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> =>
   }
 };
 
-export const getIdToken = async () => {
+export const getToken = async () => {
   if (USE_MOCK_DATA) {
     return '';
   }
   try {
     const cognitoUser = await Auth.currentAuthenticatedUser();
-    return cognitoUser?.signInUserSession?.idToken?.jwtToken ?? null;
+    return cognitoUser?.signInUserSession?.accessToken?.jwtToken ?? null;
   } catch (error) {
     if (error === 'The user is not authenticated') {
       // Expired session token. Set state in localStorage that App.tsx can act upon
