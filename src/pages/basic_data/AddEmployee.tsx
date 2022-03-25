@@ -20,13 +20,25 @@ import LooksThreeIcon from '@mui/icons-material/Looks3';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
 import { authenticatedApiRequest } from '../../api/apiRequest';
-import { CristinUser, RoleName } from '../../types/user.types';
+import { CristinUser, FlatCristinUser, RoleName } from '../../types/user.types';
 import { isSuccessStatus } from '../../utils/constants';
 import { getValueByKey } from '../../utils/user-helpers';
 import { CristinApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { SearchResponse } from '../../types/common.types';
 import { SelectInstitutionForm } from '../../components/institution/SelectInstitutionForm';
+
+interface AddEmployeeData {
+  user: FlatCristinUser;
+  affiliation: any;
+  roles: RoleName[];
+}
+
+const initialValues: AddEmployeeData = {
+  user: { nationalId: '', firstName: '', lastName: '' },
+  affiliation: null,
+  roles: [RoleName.CREATOR],
+};
 
 const StyledCenterContainer = styled(Box)({
   width: '100%',

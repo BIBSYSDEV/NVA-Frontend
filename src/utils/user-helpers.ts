@@ -1,9 +1,11 @@
 import {
+  CreateCristinUser,
   CristinArrayValue,
   CristinPersonAffiliation,
   CristinPersonIdentifier,
   CristinPersonIdentifierType,
   CristinPersonNameType,
+  FlatCristinUser,
 } from '../types/user.types';
 import { ORCID_BASE_URL } from './constants';
 
@@ -25,3 +27,17 @@ export const getOrcidUri = (identifiers: CristinPersonIdentifier[] = []) => {
   const orcid = getValueByKey('ORCID', identifiers);
   return orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
 };
+
+export const convertToCristinUser = (user: FlatCristinUser): CreateCristinUser => ({
+  identifiers: [{ type: 'NationalIdentificationNumber', value: user.nationalId }],
+  names: [
+    { type: 'FirstName', value: user.firstName },
+    { type: 'LastName', value: user.lastName },
+  ],
+});
+
+export const convertToFlatCristinUser = (user: CreateCristinUser): FlatCristinUser => ({
+  nationalId: getValueByKey('NationalIdentificationNumber', user.identifiers),
+  firstName: getValueByKey('FirstName', user.names),
+  lastName: getValueByKey('LastName', user.names),
+});
