@@ -7,6 +7,7 @@ import { datePickerTranslationProps } from '../../../../../../themes/mainTheme';
 import { MentionInPublication } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import i18n from '../../../../../../translations/i18n';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 
 interface PublicationMentionModalProps {
   mentionInPublication?: MentionInPublication;
@@ -78,6 +79,7 @@ export const PublicationMentionModal = ({
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
+                  data-testid={dataTestId.registrationWizard.resourceType.publicationMentionTitle}
                 />
               )}
             </Field>
@@ -93,6 +95,7 @@ export const PublicationMentionModal = ({
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.publicationMentionIssue}
                   />
                 )}
               </Field>
@@ -127,6 +130,7 @@ export const PublicationMentionModal = ({
                         helperText={<ErrorMessage name={field.name} />}
                       />
                     )}
+                    data-testid={dataTestId.registrationWizard.resourceType.publicationMentionDate}
                   />
                 )}
               </Field>
@@ -141,15 +145,22 @@ export const PublicationMentionModal = ({
                   label={t('resource_type.artistic.mention_other')}
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
+                  data-testid={dataTestId.registrationWizard.resourceType.publicationMentionOther}
                 />
               )}
             </Field>
           </DialogContent>
           <DialogActions>
-            <Button variant="outlined" onClick={closeModal}>
+            <Button
+              variant="outlined"
+              onClick={closeModal}
+              data-testid={dataTestId.registrationWizard.resourceType.publicationMentionSaveButton}>
               {t('common:cancel')}
             </Button>
-            <Button variant="contained" type="submit">
+            <Button
+              variant="contained"
+              type="submit"
+              data-testid={dataTestId.registrationWizard.resourceType.publicationMentionCancelButton}>
               {mentionInPublication ? t('common:save') : t('common:add')}
             </Button>
           </DialogActions>

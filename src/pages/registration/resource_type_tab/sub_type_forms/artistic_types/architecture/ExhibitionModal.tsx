@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
 import { Exhibition } from '../../../../../../types/publication_types/artisticRegistration.types';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { PeriodFields } from '../../../components/PeriodFields';
 
 interface ExhibitionModalProps {
@@ -82,6 +83,7 @@ export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: Exhi
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
+                  data-testid={dataTestId.registrationWizard.resourceType.exhibitionName}
                 />
               )}
             </Field>
@@ -95,6 +97,7 @@ export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: Exhi
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
+                  data-testid={dataTestId.registrationWizard.resourceType.exhibitionPlace}
                 />
               )}
             </Field>
@@ -108,6 +111,7 @@ export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: Exhi
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
+                  data-testid={dataTestId.registrationWizard.resourceType.exhibitionOrganizer}
                 />
               )}
             </Field>
@@ -123,15 +127,22 @@ export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: Exhi
                   label={t('common:other')}
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
+                  data-testid={dataTestId.registrationWizard.resourceType.exhibitionOther}
                 />
               )}
             </Field>
           </DialogContent>
           <DialogActions>
-            <Button variant="outlined" onClick={closeModal}>
+            <Button
+              variant="outlined"
+              onClick={closeModal}
+              data-testid={dataTestId.registrationWizard.resourceType.competitionSaveButton}>
               {t('common:cancel')}
             </Button>
-            <Button variant="contained" type="submit">
+            <Button
+              variant="contained"
+              type="submit"
+              data-testid={dataTestId.registrationWizard.resourceType.competitionSaveButton}>
               {exhibition ? t('common:save') : t('common:add')}
             </Button>
           </DialogActions>

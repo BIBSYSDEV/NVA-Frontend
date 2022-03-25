@@ -7,6 +7,7 @@ import { datePickerTranslationProps } from '../../../../../../themes/mainTheme';
 import { Award } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import i18n from '../../../../../../translations/i18n';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 
 interface AwardModalProps {
   award?: Award;
@@ -72,6 +73,7 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
+                  data-testid={dataTestId.registrationWizard.resourceType.awardName}
                 />
               )}
             </Field>
@@ -86,6 +88,7 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
+                  data-testid={dataTestId.registrationWizard.resourceType.awardOrganizer}
                 />
               )}
             </Field>
@@ -116,6 +119,7 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                       helperText={<ErrorMessage name={field.name} />}
                     />
                   )}
+                  data-testid={dataTestId.registrationWizard.resourceType.awardDate}
                 />
               )}
             </Field>
@@ -130,6 +134,7 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                   label={t('resource_type.artistic.award_ranking')}
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
+                  data-testid={dataTestId.registrationWizard.resourceType.awardRanking}
                 />
               )}
             </Field>
@@ -143,15 +148,22 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                   label={t('resource_type.artistic.award_other')}
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
+                  data-testid={dataTestId.registrationWizard.resourceType.awardOther}
                 />
               )}
             </Field>
           </DialogContent>
           <DialogActions>
-            <Button variant="outlined" onClick={closeModal}>
+            <Button
+              variant="outlined"
+              onClick={closeModal}
+              data-testid={dataTestId.registrationWizard.resourceType.awardSaveButton}>
               {t('common:cancel')}
             </Button>
-            <Button variant="contained" type="submit">
+            <Button
+              variant="contained"
+              type="submit"
+              data-testid={dataTestId.registrationWizard.resourceType.awardCancelButton}>
               {award ? t('common:save') : t('common:add')}
             </Button>
           </DialogActions>
