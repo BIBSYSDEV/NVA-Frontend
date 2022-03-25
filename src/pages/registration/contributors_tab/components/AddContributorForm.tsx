@@ -46,6 +46,7 @@ export const AddContributorForm = ({
       : '',
     errorMessage: t('feedback:error.search'),
   });
+
   const user = useSelector((store: RootStore) => store.user);
 
   const { values } = useFormikContext<Registration>();
