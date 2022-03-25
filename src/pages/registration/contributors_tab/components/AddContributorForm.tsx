@@ -83,9 +83,7 @@ export const AddContributorForm = ({
       />
 
       {isLoadingUserSearch ? (
-        <>
-          <ListSkeleton arrayLength={3} minWidth={100} height={80} />
-        </>
+        <ListSkeleton arrayLength={3} minWidth={100} height={80} />
       ) : userSearch && userSearch.size > 0 && debouncedSearchTerm ? (
         <>
           <CristinPersonList
@@ -104,12 +102,7 @@ export const AddContributorForm = ({
           />
         </>
       ) : (
-        <>
-          {console.log(userSearch)}
-          {console.log(userSearch, userSearch && userSearch.size > 0, debouncedSearchTerm)}
-          {console.log(debouncedSearchTerm)}
-          {debouncedSearchTerm && <Typography>{t('common:no_hits')}</Typography>}
-        </>
+        debouncedSearchTerm && <Typography>{t('common:no_hits')}</Typography>
       )}
 
       <Box
