@@ -6,7 +6,7 @@ import { UrlPathTemplate } from '../utils/urlPaths';
 export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> => {
   try {
     const currentSession: CognitoUserSession = await Auth.currentSession();
-    const currentSessionData = currentSession.getIdToken().payload;
+    const currentSessionData = currentSession.getAccessToken().payload;
 
     if (
       !currentSession.isValid() ||
@@ -21,7 +21,7 @@ export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> =>
           resolve(session);
         });
       });
-      const refreshedSessionData = refreshedSession.getIdToken().payload;
+      const refreshedSessionData = refreshedSession.getAccessToken().payload;
       return refreshedSessionData;
     } else {
       return currentSessionData;
