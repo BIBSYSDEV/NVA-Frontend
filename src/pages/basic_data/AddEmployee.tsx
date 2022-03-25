@@ -26,6 +26,7 @@ import { getValueByKey } from '../../utils/user-helpers';
 import { CristinApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { SearchResponse } from '../../types/common.types';
+import { SelectInstitutionForm } from '../../components/institution/SelectInstitutionForm';
 
 const StyledCenterContainer = styled(Box)({
   width: '100%',
@@ -46,7 +47,7 @@ export const AddEmployee = () => {
     withAuthentication: true,
   });
 
-  const [selectedRoles, setSelectedRoles] = useState<RoleName[]>([]);
+  const [selectedRoles, setSelectedRoles] = useState([RoleName.CREATOR]);
   const onChangeRoles = (event: ChangeEvent<HTMLInputElement>) => {
     const roleName = event.target.value as RoleName;
     if (selectedRoles.includes(roleName)) {
@@ -87,7 +88,7 @@ export const AddEmployee = () => {
         {t('add_to_your_person_registry')}
       </Typography>
       <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr auto 1fr', gap: '2rem', mt: '2rem' }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', gap: '1rem' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <StyledCenterContainer>
             <LooksOneIcon color="primary" fontSize="large" sx={{ float: 'center' }} />
           </StyledCenterContainer>
@@ -132,10 +133,20 @@ export const AddEmployee = () => {
           ) : null}
         </Box>
         <Divider orientation="vertical" />
-        <Box>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <StyledCenterContainer>
             <LooksTwoIcon color="primary" fontSize="large" />
           </StyledCenterContainer>
+          <SelectInstitutionForm onSubmit={(id) => console.log(id)} />
+
+          <Box display={{ display: 'flex', gap: '1rem' }}>
+            <TextField fullWidth variant="filled" label={t('position')} />
+            <TextField fullWidth variant="filled" label={t('position_percent')} />
+          </Box>
+          <Box display={{ display: 'flex', gap: '1rem' }}>
+            <TextField fullWidth variant="filled" label={t('common:start_date')} />
+            <TextField fullWidth variant="filled" label={t('common:end_date')} />
+          </Box>
         </Box>
         <Divider orientation="vertical" />
         <Box>
@@ -163,6 +174,7 @@ export const AddEmployee = () => {
                 }
               />
               <FormControlLabel
+                disabled
                 control={
                   <Checkbox
                     checked={selectedRoles.includes(RoleName.CREATOR)}

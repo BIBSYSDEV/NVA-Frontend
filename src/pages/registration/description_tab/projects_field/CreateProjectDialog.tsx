@@ -105,7 +105,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                     {({ field, meta: { touched, error } }: FieldProps<string>) => (
                       <DatePicker
                         {...datePickerTranslationProps}
-                        label={t('start_date')}
+                        label={t('common:start_date')}
                         onChange={(date: Date | null, keyboardValue) => {
                           const newDateString = getProjectDate(date, keyboardValue);
                           setFieldValue(field.name, newDateString);
@@ -132,7 +132,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                     {({ field, meta: { touched, error } }: FieldProps<string>) => (
                       <DatePicker
                         {...datePickerTranslationProps}
-                        label={t('end_date')}
+                        label={t('common:end_date')}
                         onChange={(date: Date | null, keyboardValue) => {
                           const newDateString = getProjectDate(date, keyboardValue);
                           setFieldValue(field.name, newDateString);

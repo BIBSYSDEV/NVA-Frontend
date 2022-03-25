@@ -6,7 +6,7 @@ const basicProjectErrorMessage = {
     field: i18n.t('project:coordinating_institution'),
   }),
   endDateRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('project:end_date'),
+    field: i18n.t('common:end_date'),
   }),
   institutionRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:institution'),
@@ -21,7 +21,7 @@ const basicProjectErrorMessage = {
     field: i18n.t('common:title'),
   }),
   startDateRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('project:start_date'),
+    field: i18n.t('common:start_date'),
   }),
 };
 
