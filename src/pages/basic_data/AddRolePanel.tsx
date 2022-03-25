@@ -3,7 +3,7 @@ import LooksThreeIcon from '@mui/icons-material/Looks3';
 import { useState, ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RoleName } from '../../types/user.types';
-import { StyledCenterContainer } from './FindPersonPanel';
+import { StyledCenterContainer } from '../../components/styled/Wrappers';
 
 export const AddRolePanel = () => {
   const { t } = useTranslation('basicData');

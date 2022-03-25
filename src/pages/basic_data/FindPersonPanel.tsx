@@ -1,4 +1,4 @@
-import { Box, CircularProgress, IconButton, styled, TextField, Typography } from '@mui/material';
+import { CircularProgress, IconButton, TextField, Typography } from '@mui/material';
 import LooksOneIcon from '@mui/icons-material/LooksOne';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
@@ -10,12 +10,7 @@ import { CristinUser } from '../../types/user.types';
 import { isSuccessStatus } from '../../utils/constants';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { SearchResponse } from '../../types/common.types';
-
-export const StyledCenterContainer = styled(Box)({
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'space-around',
-});
+import { StyledCenterContainer } from '../../components/styled/Wrappers';
 
 export const FindPersonPanel = () => {
   const { t } = useTranslation('basicData');

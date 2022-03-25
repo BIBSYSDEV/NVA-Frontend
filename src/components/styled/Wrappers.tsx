@@ -47,3 +47,9 @@ export const StyledGeneralInfo = styled('div')(({ theme }) => ({
     gridTemplateColumns: '1fr',
   },
 }));
+
+export const StyledCenterContainer = styled(Box)({
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'space-around',
+});
