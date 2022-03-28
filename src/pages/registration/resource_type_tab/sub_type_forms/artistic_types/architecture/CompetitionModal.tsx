@@ -132,7 +132,7 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
             <Button
               variant="outlined"
               onClick={closeModal}
-              data-testid={dataTestId.registrationWizard.resourceType.competitionSaveButton}>
+              data-testid={dataTestId.registrationWizard.resourceType.competitionCancelButton}>
               {t('common:cancel')}
             </Button>
             <Button
