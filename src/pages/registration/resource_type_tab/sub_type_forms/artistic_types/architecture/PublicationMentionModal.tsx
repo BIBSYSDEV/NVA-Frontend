@@ -128,9 +128,9 @@ export const PublicationMentionModal = ({
                         onBlur={() => !touched && setFieldTouched(field.name)}
                         error={touched && !!error}
                         helperText={<ErrorMessage name={field.name} />}
+                        data-testid={dataTestId.registrationWizard.resourceType.publicationMentionDate}
                       />
                     )}
-                    data-testid={dataTestId.registrationWizard.resourceType.publicationMentionDate}
                   />
                 )}
               </Field>
