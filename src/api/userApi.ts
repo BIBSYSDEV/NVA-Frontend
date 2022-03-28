@@ -4,9 +4,12 @@ import { USE_MOCK_DATA, LocalStorageKey } from '../utils/constants';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
 export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> => {
+  console.log('getCurrentUserAttributes try:', retryNumber);
   try {
     const currentSession: CognitoUserSession = await Auth.currentSession();
+    console.log('currentSession', currentSession);
     const currentSessionData = currentSession.getAccessToken().payload;
+    console.log('currentSessionData', currentSessionData);
 
     if (
       !currentSession.isValid() ||
@@ -26,7 +29,8 @@ export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> =>
     } else {
       return currentSessionData;
     }
-  } catch {
+  } catch (ex) {
+    console.log(`getCurrentUserAttributes catch`, ex);
     // Don't do anything if user is not supposed to be logged in
     if (localStorage.getItem(LocalStorageKey.AmplifyRedirect)) {
       if (retryNumber < 3) {
@@ -40,6 +44,7 @@ export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> =>
 };
 
 export const getToken = async () => {
+  console.log('get token');
   if (USE_MOCK_DATA) {
     return '';
   }
@@ -47,6 +52,7 @@ export const getToken = async () => {
     const cognitoUser = await Auth.currentAuthenticatedUser();
     return cognitoUser?.signInUserSession?.accessToken?.jwtToken ?? null;
   } catch (error) {
+    console.log('getToken catch', error);
     if (error === 'The user is not authenticated') {
       // Expired session token. Set state in localStorage that App.tsx can act upon
       localStorage.setItem(LocalStorageKey.ExpiredToken, 'true');

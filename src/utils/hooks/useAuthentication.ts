@@ -6,10 +6,10 @@ import { mockUser } from '../testfiles/mock_feide_user';
 import { logoutSuccess } from '../../redux/actions/authActions';
 import { UrlPathTemplate } from '../urlPaths';
 
-type LoginProvider = 'FeideIdentityProvider';
+type LoginProvider = 'FeideIdentityProvider' | 'Dataporten';
 
 interface UseAuthentication {
-  handleLogin: (loginProvider: LoginProvider) => void;
+  handleLogin: (loginProvider?: LoginProvider) => void;
   handleLogout: () => void;
 }
 
@@ -18,7 +18,7 @@ export const getCurrentPath = () => `${window.location.pathname}${window.locatio
 export const useAuthentication = (): UseAuthentication => {
   const dispatch = useDispatch();
 
-  const handleLogin = async (loginProvider: LoginProvider) => {
+  const handleLogin = async (loginProvider: LoginProvider = 'Dataporten') => {
     if (USE_MOCK_DATA) {
       dispatch(setUser(mockUser));
     } else {
