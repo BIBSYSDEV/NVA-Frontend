@@ -7,6 +7,7 @@ import { datePickerTranslationProps } from '../../../../../../themes/mainTheme';
 import { Competition } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import i18n from '../../../../../../translations/i18n';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 
 interface CompetitionModalProps {
   competition?: Competition;
@@ -76,6 +77,7 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
+                  data-testid={dataTestId.registrationWizard.resourceType.competitionName}
                 />
               )}
             </Field>
@@ -90,6 +92,7 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
+                  data-testid={dataTestId.registrationWizard.resourceType.competitionDescription}
                 />
               )}
             </Field>
@@ -113,6 +116,7 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
                   renderInput={(params) => (
                     <TextField
                       {...params}
+                      data-testid={dataTestId.registrationWizard.resourceType.competitionDate}
                       variant="filled"
                       required
                       onBlur={() => !touched && setFieldTouched(field.name)}
@@ -120,15 +124,22 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
                       helperText={<ErrorMessage name={field.name} />}
                     />
                   )}
+                  data-testid={dataTestId.registrationWizard.resourceType.competitionDate}
                 />
               )}
             </Field>
           </DialogContent>
           <DialogActions>
-            <Button variant="outlined" onClick={closeModal}>
+            <Button
+              variant="outlined"
+              onClick={closeModal}
+              data-testid={dataTestId.registrationWizard.resourceType.competitionCancelButton}>
               {t('common:cancel')}
             </Button>
-            <Button variant="contained" type="submit">
+            <Button
+              variant="contained"
+              type="submit"
+              data-testid={dataTestId.registrationWizard.resourceType.competitionSaveButton}>
               {competition ? t('common:save') : t('common:add')}
             </Button>
           </DialogActions>
