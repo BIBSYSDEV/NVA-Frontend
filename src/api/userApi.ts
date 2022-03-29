@@ -8,7 +8,7 @@ export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> =>
   try {
     const currentSession: CognitoUserSession = await Auth.currentSession();
     console.log('currentSession', currentSession);
-    const currentSessionData = currentSession.getAccessToken().payload;
+    const currentSessionData = currentSession.getIdToken().payload;
     console.log('currentSessionData', currentSessionData);
 
     if (
@@ -24,7 +24,7 @@ export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> =>
           resolve(session);
         });
       });
-      const refreshedSessionData = refreshedSession.getAccessToken().payload;
+      const refreshedSessionData = refreshedSession.getIdToken().payload;
       return refreshedSessionData;
     } else {
       return currentSessionData;
