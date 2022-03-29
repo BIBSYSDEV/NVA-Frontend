@@ -2,8 +2,8 @@ import { CircularProgress, IconButton, TextField, Typography } from '@mui/materi
 import LooksOneIcon from '@mui/icons-material/LooksOne';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
-import { Field, FieldProps } from 'formik';
-import { convertToFlatCristinUser, getValueByKey } from '../../utils/user-helpers';
+import { Field, FieldProps, useFormikContext } from 'formik';
+import { convertToFlatCristinUser } from '../../utils/user-helpers';
 import { useState, useCallback, useEffect } from 'react';
 import { CristinApiPath } from '../../api/apiPaths';
 import { authenticatedApiRequest } from '../../api/apiRequest';
@@ -12,15 +12,15 @@ import { isSuccessStatus } from '../../utils/constants';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { SearchResponse } from '../../types/common.types';
 import { StyledCenterContainer } from '../../components/styled/Wrappers';
+import { AddEmployeeData, emptyUser } from './AddEmployee';
 
 export const FindPersonPanel = () => {
   const { t } = useTranslation('basicData');
+  const { values, setFieldValue } = useFormikContext<AddEmployeeData>();
   const [isLoading, setIsLoading] = useState(false);
-  const [user, setUser] = useState<CristinUser | null>();
   const [nationalNumber, setNationalNumber] = useState('');
-  const cristinPersonId = getValueByKey('CristinIdentifier', user?.identifiers);
   const [currentAffiliations, isLoadingAffiliations] = useFetch<SearchResponse<any>>({
-    url: cristinPersonId ? `${CristinApiPath.Person}/${cristinPersonId}/employment` : '',
+    url: values.user.id ? `${values.user.id}/employment` : '',
     errorMessage: 'todo',
     withAuthentication: true,
   });
@@ -36,19 +36,22 @@ export const FindPersonPanel = () => {
       },
     });
     if (isSuccessStatus(searchResponse.status)) {
-      setUser(searchResponse.data);
+      const foundUser = convertToFlatCristinUser(searchResponse.data);
+      setFieldValue('user', foundUser);
     } else {
-      setUser(null);
+      setFieldValue('user', { ...emptyUser, nationalId: nationalNumber });
     }
     setIsLoading(false);
-  }, [nationalNumber]);
+  }, [setFieldValue, nationalNumber]);
 
   useEffect(() => {
     // Search when user has entered 11 chars as a Norwegian National ID is 11 chars long
     if (nationalNumber.length === 11) {
       searchByNationalId();
+    } else {
+      setFieldValue('user', emptyUser);
     }
-  }, [searchByNationalId, nationalNumber]);
+  }, [setFieldValue, searchByNationalId, nationalNumber]);
 
   return (
     <>
@@ -71,42 +74,38 @@ export const FindPersonPanel = () => {
       />
       {isLoading ? (
         <CircularProgress />
-      ) : user ? (
-        <>
-          <TextField
-            disabled
-            fullWidth
-            variant="filled"
-            label={t('common:first_name')}
-            value={getValueByKey('FirstName', user.names)}
-          />
-          <TextField
-            disabled
-            fullWidth
-            variant="filled"
-            label={t('common:last_name')}
-            value={getValueByKey('LastName', user.names)}
-          />
-          <Typography variant="overline">
-            {t('employments')}: {isLoadingAffiliations ? <CircularProgress /> : currentAffiliations?.size}
-          </Typography>
-        </>
-      ) : user === null && nationalNumber.length === 11 ? (
-        <>
-          <Typography>{t('no_matching_persons_found')}</Typography>
-          <Typography variant="h3">{t('create_person')}</Typography>
-          <Field name="user.firstName">
-            {({ field }: FieldProps<string>) => (
-              <TextField {...field} fullWidth variant="filled" label={t('common:first_name')} />
-            )}
-          </Field>
-          <Field name="user.lastName">
-            {({ field }: FieldProps<string>) => (
-              <TextField {...field} fullWidth variant="filled" label={t('common:last_name')} />
-            )}
-          </Field>
-          <TextField disabled fullWidth variant="filled" label={t('national_id')} value={nationalNumber} />
-        </>
+      ) : nationalNumber.length === 11 ? (
+        values.user.id ? (
+          <>
+            <TextField
+              disabled
+              fullWidth
+              variant="filled"
+              label={t('common:first_name')}
+              value={values.user.firstName}
+            />
+            <TextField disabled fullWidth variant="filled" label={t('common:last_name')} value={values.user.lastName} />
+            <Typography variant="overline">
+              {t('employments')}: {isLoadingAffiliations ? <CircularProgress /> : currentAffiliations?.size}
+            </Typography>
+          </>
+        ) : (
+          <>
+            <Typography>{t('no_matching_persons_found')}</Typography>
+            <Typography variant="h3">{t('create_person')}</Typography>
+            <Field name="user.firstName">
+              {({ field }: FieldProps<string>) => (
+                <TextField {...field} fullWidth variant="filled" label={t('common:first_name')} />
+              )}
+            </Field>
+            <Field name="user.lastName">
+              {({ field }: FieldProps<string>) => (
+                <TextField {...field} fullWidth variant="filled" label={t('common:last_name')} />
+              )}
+            </Field>
+            <TextField disabled fullWidth variant="filled" label={t('national_id')} value={nationalNumber} />
+          </>
+        )
       ) : null}
     </>
   );

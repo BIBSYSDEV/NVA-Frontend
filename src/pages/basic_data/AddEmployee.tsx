@@ -7,14 +7,21 @@ import { AddAffiliationPanel } from './AddAffiliationPanel';
 import { AddRolePanel } from './AddRolePanel';
 import { StyledCenterContainer } from '../../components/styled/Wrappers';
 
-interface AddEmployeeData {
+export interface AddEmployeeData {
   user: FlatCristinUser;
   affiliation: any;
   roles: RoleName[];
 }
 
+export const emptyUser: FlatCristinUser = {
+  nationalId: '',
+  firstName: '',
+  lastName: '',
+  id: '',
+};
+
 const initialValues: AddEmployeeData = {
-  user: { nationalId: '', firstName: '', lastName: '' },
+  user: emptyUser,
   affiliation: null,
   roles: [RoleName.CREATOR],
 };

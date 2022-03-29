@@ -5,6 +5,7 @@ import {
   CristinPersonIdentifier,
   CristinPersonIdentifierType,
   CristinPersonNameType,
+  CristinUser,
   FlatCristinUser,
 } from '../types/user.types';
 import { ORCID_BASE_URL } from './constants';
@@ -36,8 +37,9 @@ export const convertToCristinUser = (user: FlatCristinUser): CreateCristinUser =
   ],
 });
 
-export const convertToFlatCristinUser = (user: CreateCristinUser): FlatCristinUser => ({
+export const convertToFlatCristinUser = (user: CristinUser): FlatCristinUser => ({
   nationalId: getValueByKey('NationalIdentificationNumber', user.identifiers),
   firstName: getValueByKey('FirstName', user.names),
   lastName: getValueByKey('LastName', user.names),
+  id: user.id,
 });
