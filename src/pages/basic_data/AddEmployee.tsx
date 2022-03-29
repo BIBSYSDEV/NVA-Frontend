@@ -1,11 +1,11 @@
 import { Typography, Box, Divider, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { Form, Formik } from 'formik';
 import { FlatCristinUser, RoleName } from '../../types/user.types';
 import { FindPersonPanel } from './FindPersonPanel';
 import { AddAffiliationPanel } from './AddAffiliationPanel';
 import { AddRolePanel } from './AddRolePanel';
 import { StyledCenterContainer } from '../../components/styled/Wrappers';
-import { Form, Formik } from 'formik';
 
 interface AddEmployeeData {
   user: FlatCristinUser;

@@ -2,7 +2,10 @@
   "add_employee": "Legg til ansatt",
   "add_to_your_person_registry": "Legg til i ditt personregister",
   "basic_data": "Grunndata",
+  "create_person": "Opprett person",
   "employments": "Ansettelser",
+  "national_id": "Fødselsnummer",
+  "no_matching_persons_found": "Ingen samsvarende personer funnet i Personregisteret",
   "position": "Stilling",
   "position_percent": "Stillingsprosent",
   "search_for_national_id": "Søk opp person med fødselsnummer"

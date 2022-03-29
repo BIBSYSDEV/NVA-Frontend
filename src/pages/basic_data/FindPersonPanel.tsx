@@ -2,7 +2,8 @@ import { CircularProgress, IconButton, TextField, Typography } from '@mui/materi
 import LooksOneIcon from '@mui/icons-material/LooksOne';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
-import { getValueByKey } from '../../utils/user-helpers';
+import { Field, FieldProps } from 'formik';
+import { convertToFlatCristinUser, getValueByKey } from '../../utils/user-helpers';
 import { useState, useCallback, useEffect } from 'react';
 import { CristinApiPath } from '../../api/apiPaths';
 import { authenticatedApiRequest } from '../../api/apiRequest';
@@ -58,7 +59,7 @@ export const FindPersonPanel = () => {
         variant="filled"
         label={t('search_for_national_id')}
         value={nationalNumber}
-        onChange={(event) => setNationalNumber(event.target.value)}
+        onChange={(event) => event.target.value.length <= 11 && setNationalNumber(event.target.value)}
         fullWidth
         InputProps={{
           endAdornment: (
@@ -90,8 +91,22 @@ export const FindPersonPanel = () => {
             {t('employments')}: {isLoadingAffiliations ? <CircularProgress /> : currentAffiliations?.size}
           </Typography>
         </>
-      ) : user === null ? (
-        <Typography>{t('common:no_hits')}</Typography>
+      ) : user === null && nationalNumber.length === 11 ? (
+        <>
+          <Typography>{t('no_matching_persons_found')}</Typography>
+          <Typography variant="h3">{t('create_person')}</Typography>
+          <Field name="user.firstName">
+            {({ field }: FieldProps<string>) => (
+              <TextField {...field} fullWidth variant="filled" label={t('common:first_name')} />
+            )}
+          </Field>
+          <Field name="user.lastName">
+            {({ field }: FieldProps<string>) => (
+              <TextField {...field} fullWidth variant="filled" label={t('common:last_name')} />
+            )}
+          </Field>
+          <TextField disabled fullWidth variant="filled" label={t('national_id')} value={nationalNumber} />
+        </>
       ) : null}
     </>
   );

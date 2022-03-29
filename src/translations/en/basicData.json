@@ -2,7 +2,10 @@
   "add_employee": "Add employee",
   "add_to_your_person_registry": "Add to your person registry",
   "basic_data": "Basic data",
+  "create_person": "Create person",
   "employments": "Employments",
+  "national_id": "National ID",
+  "no_matching_persons_found": "No matching persons found in the Person Registry",
   "position": "Position",
   "position_percent": "Position percent",
   "search_for_national_id": "Search for user with National ID number"
