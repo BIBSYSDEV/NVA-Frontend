@@ -6,6 +6,7 @@ import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { dataTestId } from '../../utils/dataTestIds';
+import AdminCustomerInstitutionsPage from '../admin/AdminCustomerInstitutionsPage';
 import { AddEmployee } from './AddEmployee';
 import { CentralImport } from './app_admin/CentralImport';
 
@@ -37,16 +38,11 @@ const BasicDataPage = () => {
         <MenuList>
           {user?.isInstitutionAdmin && (
             <BetaFunctionality>
-              <MenuItem onClick={() => setSelectedItem(BasicDataItem.AddEmployee)}>
+              <MenuItem
+                onClick={() => setSelectedItem(BasicDataItem.AddEmployee)}
+                selected={selectedItem === BasicDataItem.AddEmployee}>
                 <ListItemText>
-                  <Typography
-                    variant="overline"
-                    sx={{
-                      textDecoration: selectedItem === BasicDataItem.AddEmployee ? 'underline 2px' : undefined,
-                      textUnderlinePosition: 'under',
-                    }}
-                    color="primary"
-                    fontSize="1rem">
+                  <Typography variant="overline" color="primary" fontSize="1rem">
                     {t('add_employee')}
                   </Typography>
                 </ListItemText>
@@ -55,16 +51,12 @@ const BasicDataPage = () => {
           )}
           <Divider orientation="horizontal" sx={{ my: '0.5rem', borderWidth: 1 }} />
           {user?.isAppAdmin && [
-            <MenuItem onClick={() => setSelectedItem(BasicDataItem.CentralImport)} key="central-import">
+            <MenuItem
+              onClick={() => setSelectedItem(BasicDataItem.CentralImport)}
+              key="central-import"
+              selected={selectedItem === BasicDataItem.CentralImport}>
               <ListItemText>
-                <Typography
-                  variant="overline"
-                  sx={{
-                    textDecoration: selectedItem === BasicDataItem.CentralImport ? 'underline 2px' : undefined,
-                    textUnderlinePosition: 'under',
-                  }}
-                  color="primary"
-                  fontSize="1rem">
+                <Typography variant="overline" color="primary" fontSize="1rem">
                   {t('central_import')}
                 </Typography>
               </ListItemText>
@@ -72,16 +64,10 @@ const BasicDataPage = () => {
             <MenuItem
               onClick={() => setSelectedItem(BasicDataItem.Institutions)}
               key={dataTestId.header.adminInstitutionsLink}
-              data-testid={dataTestId.header.adminInstitutionsLink}>
+              data-testid={dataTestId.header.adminInstitutionsLink}
+              selected={selectedItem === BasicDataItem.Institutions}>
               <ListItemText>
-                <Typography
-                  variant="overline"
-                  sx={{
-                    textDecoration: selectedItem === BasicDataItem.Institutions ? 'underline 2px' : undefined,
-                    textUnderlinePosition: 'under',
-                  }}
-                  color="primary"
-                  fontSize="1rem">
+                <Typography variant="overline" color="primary" fontSize="1rem">
                   {t('common:institutions')}
                 </Typography>
               </ListItemText>
@@ -90,11 +76,13 @@ const BasicDataPage = () => {
         </MenuList>
       </BackgroundDiv>
       <BackgroundDiv>
-        {/* TODO: Current item should be based on URL path, not state */}
+        {/* TODO: Current item should be based on URL path, not state: https://v5.reactrouter.com/web/example/nesting */}
         {selectedItem === BasicDataItem.AddEmployee ? (
           <AddEmployee />
         ) : selectedItem === BasicDataItem.CentralImport ? (
           <CentralImport />
+        ) : selectedItem === BasicDataItem.Institutions ? (
+          <AdminCustomerInstitutionsPage />
         ) : null}
       </BackgroundDiv>
     </Box>
