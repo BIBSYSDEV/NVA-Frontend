@@ -117,4 +117,5 @@ export interface FlatCristinUser {
   lastName: string;
   nationalId: string;
   id: string;
+  cristinIdentifier: string;
 }

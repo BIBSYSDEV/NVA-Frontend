@@ -42,4 +42,5 @@ export const convertToFlatCristinUser = (user: CristinUser): FlatCristinUser => 
   firstName: getValueByKey('FirstName', user.names),
   lastName: getValueByKey('LastName', user.names),
   id: user.id,
+  cristinIdentifier: getValueByKey('CristinIdentifier', user.identifiers),
 });

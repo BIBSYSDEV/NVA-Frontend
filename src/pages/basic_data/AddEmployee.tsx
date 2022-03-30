@@ -18,6 +18,7 @@ export const emptyUser: FlatCristinUser = {
   firstName: '',
   lastName: '',
   id: '',
+  cristinIdentifier: '',
 };
 
 const initialValues: AddEmployeeData = {
