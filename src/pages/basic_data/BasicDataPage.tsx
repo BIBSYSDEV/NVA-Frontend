@@ -8,7 +8,7 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AppAdminRoute, InstitutionAdminRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import AdminCustomerInstitutionsPage from './app_admin/AdminCustomerInstitutionsPage';
+import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
 import { AddEmployee } from './AddEmployee';
 import { CentralImport } from './app_admin/CentralImport';
 
@@ -69,7 +69,11 @@ const BasicDataPage = () => {
       </BackgroundDiv>
       <BackgroundDiv>
         <Switch>
-          <AppAdminRoute exact path={UrlPathTemplate.BasicDataInstitutions} component={AdminCustomerInstitutionsPage} />
+          <AppAdminRoute
+            exact
+            path={UrlPathTemplate.BasicDataInstitutions}
+            component={AdminCustomerInstitutionsContainer}
+          />
           <AppAdminRoute exact path={UrlPathTemplate.BasicDataCentralImport} component={CentralImport} />
           <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataAddEmployee} component={AddEmployee} />
         </Switch>
