@@ -1,7 +1,10 @@
 import { Box, Typography, ListItemText, MenuItem, MenuList } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { RootStore } from '../../redux/reducers/rootReducer';
 import { AddEmployee } from './AddEmployee';
 
 enum BasicDataItem {
@@ -10,7 +13,8 @@ enum BasicDataItem {
 
 const BasicDataPage = () => {
   const { t } = useTranslation('basicData');
-  const [selectedItem, setSelectedItem] = useState(BasicDataItem.Person);
+  const user = useSelector((store: RootStore) => store.user);
+  const [selectedItem, setSelectedItem] = useState<BasicDataItem>();
 
   return (
     <Box
@@ -27,20 +31,24 @@ const BasicDataPage = () => {
           {t('basic_data')}
         </Typography>
         <MenuList>
-          <MenuItem onClick={() => setSelectedItem(BasicDataItem.Person)}>
-            <ListItemText>
-              <Typography
-                variant="overline"
-                sx={{
-                  textDecoration: selectedItem === BasicDataItem.Person ? 'underline 2px' : undefined,
-                  textUnderlinePosition: 'under',
-                }}
-                color="primary"
-                fontSize="1rem">
-                {t('add_employee')}
-              </Typography>
-            </ListItemText>
-          </MenuItem>
+          {user?.isInstitutionAdmin && (
+            <BetaFunctionality>
+              <MenuItem onClick={() => setSelectedItem(BasicDataItem.Person)}>
+                <ListItemText>
+                  <Typography
+                    variant="overline"
+                    sx={{
+                      textDecoration: selectedItem === BasicDataItem.Person ? 'underline 2px' : undefined,
+                      textUnderlinePosition: 'under',
+                    }}
+                    color="primary"
+                    fontSize="1rem">
+                    {t('add_employee')}
+                  </Typography>
+                </ListItemText>
+              </MenuItem>
+            </BetaFunctionality>
+          )}
         </MenuList>
       </BackgroundDiv>
       <BackgroundDiv>{selectedItem === BasicDataItem.Person && <AddEmployee />}</BackgroundDiv>

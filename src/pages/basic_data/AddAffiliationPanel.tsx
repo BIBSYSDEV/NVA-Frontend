@@ -18,21 +18,26 @@ export const AddAffiliationPanel = () => {
       <Field name="affiliation.organization">
         {({ field, form }: FieldProps<string>) => (
           <>
-            <Button variant="outlined" onClick={() => setOpen(true)}>
-              Velg institusjon
-            </Button>
-            <Dialog open={open} fullWidth onClose={() => setOpen(false)}>
-              <DialogTitle>Velg institusjon</DialogTitle>
-              <DialogContent>
-                <SelectInstitutionForm
-                  onSubmit={(id) => {
-                    console.log(id);
-                    form.setFieldValue(field.name, id);
-                    setOpen(false);
-                  }}
-                />
-              </DialogContent>
-            </Dialog>
+            {field.value ? (
+              <p>Valgt institutsjon: {field.value}</p>
+            ) : (
+              <>
+                <Button variant="outlined" onClick={() => setOpen(true)}>
+                  Velg institusjon
+                </Button>
+                <Dialog open={open} fullWidth onClose={() => setOpen(false)}>
+                  <DialogTitle>Velg institusjon</DialogTitle>
+                  <DialogContent>
+                    <SelectInstitutionForm
+                      onSubmit={(id) => {
+                        form.setFieldValue(field.name, id);
+                        setOpen(false);
+                      }}
+                    />
+                  </DialogContent>
+                </Dialog>
+              </>
+            )}
           </>
         )}
       </Field>

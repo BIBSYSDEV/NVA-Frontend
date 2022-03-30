@@ -15,7 +15,6 @@ import { Logo } from './Logo';
 import { GeneralMenu } from './GeneralMenu';
 import { LanguageSelector } from './LanguageSelector';
 import { dataTestId } from '../../utils/dataTestIds';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 
 export const Header = () => {
   const { t } = useTranslation('registration');
@@ -90,17 +89,15 @@ export const Header = () => {
                 flexItem
               />
               <LanguageSelector />
-              {user?.isInstitutionAdmin && (
-                <BetaFunctionality>
-                  <Button
-                    color="inherit"
-                    component={RouterLink}
-                    data-testid={dataTestId.header.basicDataLink}
-                    to={UrlPathTemplate.BasicData}
-                    startIcon={<BusinessCenterIcon />}>
-                    {t('basicData:basic_data')}
-                  </Button>
-                </BetaFunctionality>
+              {(user?.isInstitutionAdmin || user?.isAppAdmin) && (
+                <Button
+                  color="inherit"
+                  component={RouterLink}
+                  data-testid={dataTestId.header.basicDataLink}
+                  to={UrlPathTemplate.BasicData}
+                  startIcon={<BusinessCenterIcon />}>
+                  {t('basicData:basic_data')}
+                </Button>
               )}
               {user?.isCurator && (
                 <Button

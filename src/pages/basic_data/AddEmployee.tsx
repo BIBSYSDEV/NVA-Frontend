@@ -31,7 +31,8 @@ export const AddEmployee = () => {
   const { t } = useTranslation('basicData');
 
   const onSubmit = (values: AddEmployeeData) => {
-    console.log(values);
+    //eslint-disable-next-line no-console
+    console.log('Submit:', values);
   };
 
   return (
