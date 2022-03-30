@@ -8,7 +8,7 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AppAdminRoute, InstitutionAdminRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import AdminCustomerInstitutionsPage from '../admin/AdminCustomerInstitutionsPage';
+import AdminCustomerInstitutionsPage from './app_admin/AdminCustomerInstitutionsPage';
 import { AddEmployee } from './AddEmployee';
 import { CentralImport } from './app_admin/CentralImport';
 

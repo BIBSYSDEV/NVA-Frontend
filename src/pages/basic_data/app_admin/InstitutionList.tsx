@@ -3,8 +3,8 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { visuallyHidden } from '@mui/utils';
-import { CustomerInstitution } from '../../types/customerInstitution.types';
-import { getAdminInstitutionPath } from '../../utils/urlPaths';
+import { CustomerInstitution } from '../../../types/customerInstitution.types';
+import { getAdminInstitutionPath } from '../../../utils/urlPaths';
 
 interface InstitutionListProps {
   institutions: CustomerInstitution[];

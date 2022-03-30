@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
-import { InstitutionUser, RoleName } from '../../types/user.types';
-import { filterUsersByRole } from '../../utils/role-helpers';
-import { UserList } from './UserList';
-import { Modal } from '../../components/Modal';
-import { AddRoleModalContent } from './AddRoleModalContent';
-import { ListSkeleton } from '../../components/ListSkeleton';
+import { InstitutionUser, RoleName } from '../../../types/user.types';
+import { filterUsersByRole } from '../../../utils/role-helpers';
+import { UserList } from '../../admin/UserList';
+import { Modal } from '../../../components/Modal';
+import { AddRoleModalContent } from '../../admin/AddRoleModalContent';
+import { ListSkeleton } from '../../../components/ListSkeleton';
 
 interface CustomerInstitutionAdminsFormProps {
   users: InstitutionUser[];

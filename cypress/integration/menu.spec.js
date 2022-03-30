@@ -53,7 +53,7 @@ describe('Menu', () => {
     cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=forbidden]').should('be.visible');
 
-    cy.visit('/admin-institutions');
+    cy.visit('/basic-data');
     cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=forbidden]').should('be.visible');
 
