@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { DelayedFallback } from './components/DelayedFallback';
 import {
   AppAdminRoute,
+  BasicDataRoute,
   CreatorRoute,
   CuratorRoute,
   EditorRoute,
@@ -58,7 +59,9 @@ export const AppRoutes = () => {
         {/* InstitutionAdminRoutes */}
         <InstitutionAdminRoute exact path={UrlPathTemplate.MyInstitution} component={MyInstitutionPage} />
         <InstitutionAdminRoute exact path={UrlPathTemplate.MyInstitutionUsers} component={MyInstitutionUsersPage} />
-        <InstitutionAdminRoute exact path={UrlPathTemplate.BasicData} component={BasicDataPage} />
+
+        {/* BasicDataRoutes */}
+        <BasicDataRoute exact path={UrlPathTemplate.BasicData} component={BasicDataPage} />
 
         {/* AppAdminRoutes */}
         <AppAdminRoute exact path={UrlPathTemplate.AdminInstitutions} component={AdminCustomerInstitutionsPage} />

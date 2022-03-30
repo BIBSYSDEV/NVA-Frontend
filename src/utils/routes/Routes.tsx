@@ -55,3 +55,15 @@ export const EditorRoute = ({ component, ...rest }: LoggedInRouteProps) => {
 
   return <PrivateRoute {...rest} component={component} isAuthorized={!!user && !!user.customerId && user.isEditor} />;
 };
+
+export const BasicDataRoute = ({ component, ...rest }: LoggedInRouteProps) => {
+  const user = useSelector((store: RootStore) => store.user);
+
+  return (
+    <PrivateRoute
+      {...rest}
+      component={component}
+      isAuthorized={!!user && !!user.customerId && (user.isInstitutionAdmin || user.isAppAdmin)}
+    />
+  );
+};

@@ -120,7 +120,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               <Typography>{t('common:institutions')}</Typography>
             </MenuItem>
           ),
-          user.isInstitutionAdmin && isMobile && (
+          isMobile && (
             <MenuItem
               key={dataTestId.header.basicDataLink}
               data-testid={dataTestId.header.basicDataLink}

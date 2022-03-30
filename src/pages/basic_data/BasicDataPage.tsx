@@ -51,7 +51,7 @@ const BasicDataPage = () => {
           )}
         </MenuList>
       </BackgroundDiv>
-      <BackgroundDiv>{selectedItem === BasicDataItem.Person && <AddEmployee />}</BackgroundDiv>
+      <BackgroundDiv>{selectedItem === BasicDataItem.Person ? <AddEmployee /> : null}</BackgroundDiv>
     </Box>
   );
 };
