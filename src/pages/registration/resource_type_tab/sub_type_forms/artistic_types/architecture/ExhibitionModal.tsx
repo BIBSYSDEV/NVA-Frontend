@@ -136,13 +136,13 @@ export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: Exhi
             <Button
               variant="outlined"
               onClick={closeModal}
-              data-testid={dataTestId.registrationWizard.resourceType.competitionSaveButton}>
+              data-testid={dataTestId.registrationWizard.resourceType.exhibitionCancelButton}>
               {t('common:cancel')}
             </Button>
             <Button
               variant="contained"
               type="submit"
-              data-testid={dataTestId.registrationWizard.resourceType.competitionSaveButton}>
+              data-testid={dataTestId.registrationWizard.resourceType.exhibitionSaveButton}>
               {exhibition ? t('common:save') : t('common:add')}
             </Button>
           </DialogActions>

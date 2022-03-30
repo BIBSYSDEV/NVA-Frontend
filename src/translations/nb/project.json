@@ -1,7 +1,6 @@
 {
   "coordinating_institution": "Koordinerende institusjon",
   "create_project": "Opprett prosjekt",
-  "end_date": "Sluttdato",
   "financing": "Finansiering",
   "grant_id": "GrantID",
   "no_participants": "Ingen registrerte deltakere.",
@@ -18,7 +17,6 @@
   "scientific_summary": "Vitenskapelig sammendrag",
   "search_for_institution": "Søk etter institusjon",
   "search_for_person": "Søk etter person",
-  "start_date": "Startdato",
   "status": {
     "ACTIVE": "Aktivt",
     "CONCLUDED": "Avsluttet",

@@ -9,17 +9,17 @@ import {
   CustomerInstitution,
   emptyCustomerInstitution,
   CustomerInstitutionFieldNames,
-} from '../../types/customerInstitution.types';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { createCustomerInstitution, updateCustomerInstitution } from '../../api/customerInstitutionsApi';
-import { InputContainerBox, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
-import { customerInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
-import { CustomerInstitutionTextField } from './customerInstitutionFields/CustomerInstitutionTextField';
-import { OrganizationSearchField } from './customerInstitutionFields/OrganizationSearchField';
-import { getAdminInstitutionPath } from '../../utils/urlPaths';
-import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { dataTestId } from '../../utils/dataTestIds';
-import { getLanguageString } from '../../utils/translation-helpers';
+} from '../../../types/customerInstitution.types';
+import { setNotification } from '../../../redux/actions/notificationActions';
+import { createCustomerInstitution, updateCustomerInstitution } from '../../../api/customerInstitutionsApi';
+import { InputContainerBox, StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
+import { customerInstitutionValidationSchema } from '../../../utils/validation/customerInstitutionValidation';
+import { CustomerInstitutionTextField } from '../../admin/customerInstitutionFields/CustomerInstitutionTextField';
+import { OrganizationSearchField } from '../../admin/customerInstitutionFields/OrganizationSearchField';
+import { getAdminInstitutionPath } from '../../../utils/urlPaths';
+import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface CustomerInstitutionMetadataFormProps {
   customerInstitution: CustomerInstitution;

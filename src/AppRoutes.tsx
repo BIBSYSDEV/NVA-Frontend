@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { DelayedFallback } from './components/DelayedFallback';
 import {
-  AppAdminRoute,
+  BasicDataRoute,
   CreatorRoute,
   CuratorRoute,
   EditorRoute,
@@ -13,6 +13,7 @@ import { UrlPathTemplate } from './utils/urlPaths';
 
 const AboutPage = lazy(() => import('./pages/infopages/AboutPage'));
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
+const BasicDataPage = lazy(() => import('./pages/basic_data/BasicDataPage'));
 const EditorPage = lazy(() => import('./pages/editor/EditorPage'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
 const MyRegistrations = lazy(() => import('./pages/my_registrations/MyRegistrations'));
@@ -22,7 +23,6 @@ const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
 const PrivacyPolicy = lazy(() => import('./pages/infopages/PrivacyPolicy'));
 const ProjectsPage = lazy(() => import('./pages/projects/ProjectsPage'));
 const PublicProfile = lazy(() => import('./pages/public_profile/PublicProfile'));
-const AdminCustomerInstitutionsPage = lazy(() => import('./pages/admin/AdminCustomerInstitutionsPage'));
 const MyInstitutionPage = lazy(() => import('./pages/admin/MyInstitutionPage'));
 const MyInstitutionUsersPage = lazy(() => import('./pages/admin/MyInstitutionUsersPage'));
 const MyMessagesPage = lazy(() => import('./pages/messages/MyMessagesPage'));
@@ -58,8 +58,8 @@ export const AppRoutes = () => {
         <InstitutionAdminRoute exact path={UrlPathTemplate.MyInstitution} component={MyInstitutionPage} />
         <InstitutionAdminRoute exact path={UrlPathTemplate.MyInstitutionUsers} component={MyInstitutionUsersPage} />
 
-        {/* AppAdminRoutes */}
-        <AppAdminRoute exact path={UrlPathTemplate.AdminInstitutions} component={AdminCustomerInstitutionsPage} />
+        {/* BasicDataRoutes */}
+        <BasicDataRoute path={UrlPathTemplate.BasicData} component={BasicDataPage} />
 
         {/* EditorRoutes */}
         <EditorRoute exact path={UrlPathTemplate.Editor} component={EditorPage} />

@@ -116,6 +116,7 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
                   renderInput={(params) => (
                     <TextField
                       {...params}
+                      data-testid={dataTestId.registrationWizard.resourceType.competitionDate}
                       variant="filled"
                       required
                       onBlur={() => !touched && setFieldTouched(field.name)}
@@ -132,7 +133,7 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
             <Button
               variant="outlined"
               onClick={closeModal}
-              data-testid={dataTestId.registrationWizard.resourceType.competitionSaveButton}>
+              data-testid={dataTestId.registrationWizard.resourceType.competitionCancelButton}>
               {t('common:cancel')}
             </Button>
             <Button

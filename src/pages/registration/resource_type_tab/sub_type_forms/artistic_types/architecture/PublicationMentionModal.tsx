@@ -128,9 +128,9 @@ export const PublicationMentionModal = ({
                         onBlur={() => !touched && setFieldTouched(field.name)}
                         error={touched && !!error}
                         helperText={<ErrorMessage name={field.name} />}
+                        data-testid={dataTestId.registrationWizard.resourceType.publicationMentionDate}
                       />
                     )}
-                    data-testid={dataTestId.registrationWizard.resourceType.publicationMentionDate}
                   />
                 )}
               </Field>
@@ -154,13 +154,13 @@ export const PublicationMentionModal = ({
             <Button
               variant="outlined"
               onClick={closeModal}
-              data-testid={dataTestId.registrationWizard.resourceType.publicationMentionSaveButton}>
+              data-testid={dataTestId.registrationWizard.resourceType.publicationMentionCancelButton}>
               {t('common:cancel')}
             </Button>
             <Button
               variant="contained"
               type="submit"
-              data-testid={dataTestId.registrationWizard.resourceType.publicationMentionCancelButton}>
+              data-testid={dataTestId.registrationWizard.resourceType.publicationMentionSaveButton}>
               {mentionInPublication ? t('common:save') : t('common:add')}
             </Button>
           </DialogActions>

@@ -117,9 +117,9 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                       onBlur={() => !touched && setFieldTouched(field.name)}
                       error={touched && !!error}
                       helperText={<ErrorMessage name={field.name} />}
+                      data-testid={dataTestId.registrationWizard.resourceType.awardDate}
                     />
                   )}
-                  data-testid={dataTestId.registrationWizard.resourceType.awardDate}
                 />
               )}
             </Field>
@@ -157,13 +157,13 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
             <Button
               variant="outlined"
               onClick={closeModal}
-              data-testid={dataTestId.registrationWizard.resourceType.awardSaveButton}>
+              data-testid={dataTestId.registrationWizard.resourceType.awardCancelButton}>
               {t('common:cancel')}
             </Button>
             <Button
               variant="contained"
               type="submit"
-              data-testid={dataTestId.registrationWizard.resourceType.awardCancelButton}>
+              data-testid={dataTestId.registrationWizard.resourceType.awardSaveButton}>
               {award ? t('common:save') : t('common:add')}
             </Button>
           </DialogActions>

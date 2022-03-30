@@ -1,6 +1,9 @@
 export enum UrlPathTemplate {
   About = '/about',
-  AdminInstitutions = '/admin-institutions',
+  BasicData = '/basic-data',
+  BasicDataAddEmployee = '/basic-data/add-employee',
+  BasicDataCentralImport = '/basic-data/central-import',
+  BasicDataInstitutions = '/basic-data/institutions',
   Editor = '/editor',
   Home = '/',
   Login = '/login',
@@ -32,6 +35,6 @@ export const getRegistrationPath = (identifier?: string) =>
 export const getUserPath = (userId: string) => `${UrlPathTemplate.User}?id=${encodeURIComponent(userId)}`;
 
 export const getAdminInstitutionPath = (id: string) =>
-  `${UrlPathTemplate.AdminInstitutions}?id=${encodeURIComponent(id)}`;
+  `${UrlPathTemplate.BasicDataInstitutions}?id=${encodeURIComponent(id)}`;
 
 export const getProjectPath = (id: string) => `${UrlPathTemplate.Projects}?id=${encodeURIComponent(id)}`;

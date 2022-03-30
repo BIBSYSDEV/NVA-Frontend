@@ -4,6 +4,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import aboutEn from './en/about.json';
 import adminEn from './en/admin.json';
 import authorizationEn from './en/authorization.json';
+import basicDataEn from './en/basicData.json';
 import commonEn from './en/common.json';
 import disciplinesEn from './en/disciplines.json';
 import editorEn from './en/editor.json';
@@ -21,6 +22,7 @@ import workListsEn from './en/workLists.json';
 import aboutNb from './nb/about.json';
 import adminNb from './nb/admin.json';
 import authorizationNb from './nb/authorization.json';
+import basicDataNb from './nb/basicData.json';
 import commonNb from './nb/common.json';
 import disciplinesNb from './nb/disciplines.json';
 import editorNb from './nb/editor.json';
@@ -41,6 +43,7 @@ i18n.use(LanguageDetector).init({
       about: aboutEn,
       admin: adminEn,
       authorization: authorizationEn,
+      basicData: basicDataEn,
       common: commonEn,
       disciplines: disciplinesEn,
       editor: editorEn,
@@ -59,6 +62,7 @@ i18n.use(LanguageDetector).init({
       about: aboutNb,
       admin: adminNb,
       authorization: authorizationNb,
+      basicData: basicDataNb,
       common: commonNb,
       disciplines: disciplinesNb,
       editor: editorNb,
