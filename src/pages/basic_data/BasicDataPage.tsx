@@ -1,14 +1,18 @@
-import { Box, Typography, ListItemText, MenuItem, MenuList } from '@mui/material';
+import { Box, Typography, ListItemText, MenuItem, MenuList, Divider } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootStore } from '../../redux/reducers/rootReducer';
+import { dataTestId } from '../../utils/dataTestIds';
 import { AddEmployee } from './AddEmployee';
+import { CentralImport } from './app_admin/CentralImport';
 
 enum BasicDataItem {
-  Person,
+  AddEmployee,
+  CentralImport,
+  Institutions,
 }
 
 const BasicDataPage = () => {
@@ -33,12 +37,12 @@ const BasicDataPage = () => {
         <MenuList>
           {user?.isInstitutionAdmin && (
             <BetaFunctionality>
-              <MenuItem onClick={() => setSelectedItem(BasicDataItem.Person)}>
+              <MenuItem onClick={() => setSelectedItem(BasicDataItem.AddEmployee)}>
                 <ListItemText>
                   <Typography
                     variant="overline"
                     sx={{
-                      textDecoration: selectedItem === BasicDataItem.Person ? 'underline 2px' : undefined,
+                      textDecoration: selectedItem === BasicDataItem.AddEmployee ? 'underline 2px' : undefined,
                       textUnderlinePosition: 'under',
                     }}
                     color="primary"
@@ -49,9 +53,50 @@ const BasicDataPage = () => {
               </MenuItem>
             </BetaFunctionality>
           )}
+          <Divider orientation="horizontal" sx={{ my: '0.5rem', borderWidth: 1 }} />
+          {user?.isAppAdmin && [
+            <MenuItem onClick={() => setSelectedItem(BasicDataItem.CentralImport)} key="central-import">
+              <ListItemText>
+                <Typography
+                  variant="overline"
+                  sx={{
+                    textDecoration: selectedItem === BasicDataItem.CentralImport ? 'underline 2px' : undefined,
+                    textUnderlinePosition: 'under',
+                  }}
+                  color="primary"
+                  fontSize="1rem">
+                  {t('central_import')}
+                </Typography>
+              </ListItemText>
+            </MenuItem>,
+            <MenuItem
+              onClick={() => setSelectedItem(BasicDataItem.Institutions)}
+              key={dataTestId.header.adminInstitutionsLink}
+              data-testid={dataTestId.header.adminInstitutionsLink}>
+              <ListItemText>
+                <Typography
+                  variant="overline"
+                  sx={{
+                    textDecoration: selectedItem === BasicDataItem.Institutions ? 'underline 2px' : undefined,
+                    textUnderlinePosition: 'under',
+                  }}
+                  color="primary"
+                  fontSize="1rem">
+                  {t('common:institutions')}
+                </Typography>
+              </ListItemText>
+            </MenuItem>,
+          ]}
         </MenuList>
       </BackgroundDiv>
-      <BackgroundDiv>{selectedItem === BasicDataItem.Person ? <AddEmployee /> : null}</BackgroundDiv>
+      <BackgroundDiv>
+        {/* TODO: Current item should be based on URL path, not state */}
+        {selectedItem === BasicDataItem.AddEmployee ? (
+          <AddEmployee />
+        ) : selectedItem === BasicDataItem.CentralImport ? (
+          <CentralImport />
+        ) : null}
+      </BackgroundDiv>
     </Box>
   );
 };
