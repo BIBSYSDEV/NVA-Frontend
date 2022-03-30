@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next';
-import { PageHeader } from '../../components/PageHeader';
-import { BackgroundDiv, SyledPageContent } from '../../components/styled/Wrappers';
-import { CustomerInstitution, emptyCustomerInstitution } from '../../types/customerInstitution.types';
-import { PageSpinner } from '../../components/PageSpinner';
+import { RoleApiPath } from '../../../api/apiPaths';
+import { PageHeader } from '../../../components/PageHeader';
+import { PageSpinner } from '../../../components/PageSpinner';
+import { SyledPageContent, BackgroundDiv } from '../../../components/styled/Wrappers';
+import { CustomerInstitution, emptyCustomerInstitution } from '../../../types/customerInstitution.types';
+import { InstitutionUser } from '../../../types/user.types';
+import { useFetch } from '../../../utils/hooks/useFetch';
 import { CustomerInstitutionAdminsForm } from './CustomerInstitutionAdminsForm';
 import { CustomerInstitutionMetadataForm } from './CustomerInstitutionMetadataForm';
-import { useFetch } from '../../utils/hooks/useFetch';
-import { InstitutionUser } from '../../types/user.types';
-import { RoleApiPath } from '../../api/apiPaths';
 
 interface AdminCustomerInstitutionProps {
   customerId: string;

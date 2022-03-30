@@ -2,7 +2,6 @@ import { lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { DelayedFallback } from './components/DelayedFallback';
 import {
-  AppAdminRoute,
   BasicDataRoute,
   CreatorRoute,
   CuratorRoute,
@@ -24,7 +23,6 @@ const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
 const PrivacyPolicy = lazy(() => import('./pages/infopages/PrivacyPolicy'));
 const ProjectsPage = lazy(() => import('./pages/projects/ProjectsPage'));
 const PublicProfile = lazy(() => import('./pages/public_profile/PublicProfile'));
-const AdminCustomerInstitutionsPage = lazy(() => import('./pages/admin/AdminCustomerInstitutionsPage'));
 const MyInstitutionPage = lazy(() => import('./pages/admin/MyInstitutionPage'));
 const MyInstitutionUsersPage = lazy(() => import('./pages/admin/MyInstitutionUsersPage'));
 const MyMessagesPage = lazy(() => import('./pages/messages/MyMessagesPage'));
@@ -61,10 +59,7 @@ export const AppRoutes = () => {
         <InstitutionAdminRoute exact path={UrlPathTemplate.MyInstitutionUsers} component={MyInstitutionUsersPage} />
 
         {/* BasicDataRoutes */}
-        <BasicDataRoute exact path={UrlPathTemplate.BasicData} component={BasicDataPage} />
-
-        {/* AppAdminRoutes */}
-        <AppAdminRoute exact path={UrlPathTemplate.AdminInstitutions} component={AdminCustomerInstitutionsPage} />
+        <BasicDataRoute path={UrlPathTemplate.BasicData} component={BasicDataPage} />
 
         {/* EditorRoutes */}
         <EditorRoute exact path={UrlPathTemplate.Editor} component={EditorPage} />

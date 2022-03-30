@@ -6,8 +6,7 @@ describe('User administers institutions ', () => {
     cy.visit('/');
     cy.mocklogin();
     cy.setUserRolesInRedux([RoleName.APP_ADMIN]);
-    // Open administer institutions page
-    cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).click({ force: true });
     cy.get(`[data-testid=${dataTestId.header.adminInstitutionsLink}]`).click({ force: true });
   });
 
