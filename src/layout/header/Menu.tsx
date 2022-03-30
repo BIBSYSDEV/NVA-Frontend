@@ -110,16 +110,6 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           </MenuItem>
         )}
         {(user?.isAppAdmin || user?.isInstitutionAdmin) && [
-          user.isAppAdmin && (
-            <MenuItem
-              key={dataTestId.header.adminInstitutionsLink}
-              data-testid={dataTestId.header.adminInstitutionsLink}
-              onClick={closeMenu}
-              component={Link}
-              to={UrlPathTemplate.AdminInstitutions}>
-              <Typography>{t('common:institutions')}</Typography>
-            </MenuItem>
-          ),
           isMobile && (
             <MenuItem
               key={dataTestId.header.basicDataLink}
