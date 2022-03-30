@@ -7,6 +7,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import MailIcon from '@mui/icons-material/MailOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { getRegistrationPath, UrlPathTemplate } from '../../utils/urlPaths';
 import { LoginButton } from './LoginButton';
@@ -88,6 +89,16 @@ export const Header = () => {
                 flexItem
               />
               <LanguageSelector />
+              {(user?.isInstitutionAdmin || user?.isAppAdmin) && (
+                <Button
+                  color="inherit"
+                  component={RouterLink}
+                  data-testid={dataTestId.header.basicDataLink}
+                  to={UrlPathTemplate.BasicData}
+                  startIcon={<BusinessCenterIcon />}>
+                  {t('basicData:basic_data')}
+                </Button>
+              )}
               {user?.isCurator && (
                 <Button
                   color="inherit"

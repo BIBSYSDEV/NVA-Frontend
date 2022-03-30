@@ -102,9 +102,20 @@ interface CristinPersonName extends CristinArrayValue {
   type: CristinPersonNameType;
 }
 
-export interface CristinUser {
-  id: string;
-  affiliations: CristinPersonAffiliation[];
+export interface CreateCristinUser {
   identifiers: CristinPersonIdentifier[];
   names: CristinPersonName[];
+}
+
+export interface CristinUser extends CreateCristinUser {
+  id: string;
+  affiliations: CristinPersonAffiliation[];
+}
+
+export interface FlatCristinUser {
+  firstName: string;
+  lastName: string;
+  nationalId: string;
+  id: string;
+  cristinIdentifier: string;
 }
