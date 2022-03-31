@@ -25,9 +25,6 @@ import { basicProjectValidationSchema } from '../../../../utils/validation/proje
 import { OrganizationSearchField } from '../../../admin/customerInstitutionFields/OrganizationSearchField';
 import { ProjectContributorRow } from './ProjectContributorRow';
 
-// Add 1ms to Project dates as Cristin does not allow 0ms for startDate/endDate ¯\_(ツ)_/¯
-const getProjectDate = (date: Date | null, keyboardValue?: string) => getNewDateValue(date, keyboardValue, 1);
-
 const initialValues: PostCristinProject = {
   type: 'Project',
   title: '',
@@ -107,7 +104,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                         {...datePickerTranslationProps}
                         label={t('common:start_date')}
                         onChange={(date: Date | null, keyboardValue) => {
-                          const newDateString = getProjectDate(date, keyboardValue);
+                          const newDateString = getNewDateValue(date, keyboardValue);
                           setFieldValue(field.name, newDateString);
                         }}
                         value={field.value ? new Date(field.value) : null}
@@ -134,7 +131,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                         {...datePickerTranslationProps}
                         label={t('common:end_date')}
                         onChange={(date: Date | null, keyboardValue) => {
-                          const newDateString = getProjectDate(date, keyboardValue);
+                          const newDateString = getNewDateValue(date, keyboardValue);
                           setFieldValue(field.name, newDateString);
                         }}
                         value={field.value ? new Date(field.value) : null}
