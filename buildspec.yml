@@ -2,7 +2,6 @@ version: 0.2
 
 env:
   parameter-store:
-    REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID: CognitoIdentityPoolId # from nva-identity-service
     REACT_APP_AWS_USER_POOLS_ID: CognitoUserPoolId # from nva-identity-service
     REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID: CognitoUserPoolAppClientId # from nva-identity-service
     REACT_APP_DOMAIN: CognitoAuthenticationDomain # from nva-identity-service
