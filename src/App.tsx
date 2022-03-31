@@ -19,7 +19,7 @@ import { setNotification } from './redux/actions/notificationActions';
 import {
   setAuthorityData,
   setPossibleAuthorities,
-  setRoles,
+  // setRoles,
   setUser,
   setViewingScope,
 } from './redux/actions/userActions';
@@ -113,8 +113,8 @@ export const App = () => {
 
   useEffect(() => {
     if (user && !user.roles && institutionUser) {
-      const roles = institutionUser.roles.map((role) => role.rolename);
-      dispatch(setRoles(roles));
+      // const roles = institutionUser.roles.map((role) => role.rolename);
+      // dispatch(setRoles(roles));
       const viewingScope = institutionUser.viewingScope?.includedUnits ?? [];
       dispatch(setViewingScope(viewingScope));
     }

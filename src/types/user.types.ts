@@ -75,6 +75,9 @@ export interface FeideUser {
   'custom:affiliation': string;
   'custom:customerId'?: string;
   'custom:cristinId'?: string;
+  'custom:roles': string;
+  'custom:firstName': string;
+  'custom:lastName': string;
   given_name: string;
   family_name: string;
 }

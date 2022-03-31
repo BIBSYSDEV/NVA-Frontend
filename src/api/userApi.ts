@@ -7,7 +7,6 @@ export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> =>
   console.log('getCurrentUserAttributes try:', retryNumber);
   try {
     const currentSession: CognitoUserSession = await Auth.currentSession();
-    console.log('currentSession', currentSession);
     const currentSessionData = currentSession.getIdToken().payload;
     console.log('currentSessionData', currentSessionData);
 

@@ -23,24 +23,34 @@ export const userReducer = (
             .map((affiliationString) => affiliationString.trim())
             .filter((affiliation) => affiliation) as Affiliation[])
         : [];
+      const roleItems = action.user['custom:roles'].split(',');
+      const roles = roleItems.map((roleItem) => roleItem.split('@')[0] as RoleName);
+      const customerId = action.user['custom:customerId']?.endsWith('/customer/None')
+        ? ''
+        : action.user['custom:customerId'];
 
       const user: Partial<User> = {
-        name: action.user.name,
+        name: `${action.user['custom:firstName']} ${action.user['custom:lastName']}`,
         email: action.user.email,
         id: action.user['custom:feideId'],
         institution: action.user['custom:orgName'],
         cristinId: action.user['custom:cristinId'] ?? action.user.cristinId,
-        customerId: action.user['custom:customerId']?.endsWith('/customer/None')
-          ? ''
-          : action.user['custom:customerId'],
+        customerId,
         affiliations,
         givenName: action.user.given_name,
         familyName: action.user.family_name,
         orgNumber: action.user['custom:orgNumber'],
+        roles: roles,
+        isCreator: !!(customerId && roles.some((role) => role === RoleName.CREATOR)),
+        isAppAdmin: !!customerId && roles.some((role) => role === RoleName.APP_ADMIN),
+        isInstitutionAdmin: !!customerId && roles.some((role) => role === RoleName.INSTITUTION_ADMIN),
+        isCurator: !!customerId && roles.some((role) => role === RoleName.CURATOR),
+        isEditor: !!customerId && roles.some((role) => role === RoleName.EDITOR),
       };
       return user;
     }
     case SET_ROLES:
+      //TODO: remove?
       return {
         ...state,
         roles: action.roles,
