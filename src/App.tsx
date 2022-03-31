@@ -16,13 +16,7 @@ import { Header } from './layout/header/Header';
 import { Notifier } from './layout/Notifier';
 import { AuthorityOrcidModal } from './pages/user/authority/AuthorityOrcidModal';
 import { setNotification } from './redux/actions/notificationActions';
-import {
-  setAuthorityData,
-  setPossibleAuthorities,
-  // setRoles,
-  setUser,
-  setViewingScope,
-} from './redux/actions/userActions';
+import { setAuthorityData, setPossibleAuthorities, setUser, setViewingScope } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { Authority } from './types/authority.types';
 import { authOptions } from './utils/aws-config';
@@ -113,8 +107,6 @@ export const App = () => {
 
   useEffect(() => {
     if (user && !user.roles && institutionUser) {
-      // const roles = institutionUser.roles.map((role) => role.rolename);
-      // dispatch(setRoles(roles));
       const viewingScope = institutionUser.viewingScope?.includedUnits ?? [];
       dispatch(setViewingScope(viewingScope));
     }

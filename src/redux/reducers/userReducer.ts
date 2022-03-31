@@ -3,7 +3,6 @@ import { AuthActions, LOGOUT_SUCCESS } from '../actions/authActions';
 import {
   SET_AUTHORITY_DATA,
   SET_POSSIBLE_AUTHORITIES,
-  SET_ROLES,
   SET_VIEWING_SCOPE,
   SET_USER_SUCCESS,
   UserActions,
@@ -46,20 +45,10 @@ export const userReducer = (
         isInstitutionAdmin: !!customerId && roles.some((role) => role === RoleName.INSTITUTION_ADMIN),
         isCurator: !!customerId && roles.some((role) => role === RoleName.CURATOR),
         isEditor: !!customerId && roles.some((role) => role === RoleName.EDITOR),
+        viewingScope: [],
       };
       return user;
     }
-    case SET_ROLES:
-      //TODO: remove?
-      return {
-        ...state,
-        roles: action.roles,
-        isCreator: !!(state?.customerId && action.roles.some((role) => role === RoleName.CREATOR)),
-        isAppAdmin: !!state?.customerId && action.roles.some((role) => role === RoleName.APP_ADMIN),
-        isInstitutionAdmin: !!state?.customerId && action.roles.some((role) => role === RoleName.INSTITUTION_ADMIN),
-        isCurator: !!state?.customerId && action.roles.some((role) => role === RoleName.CURATOR),
-        isEditor: !!state?.customerId && action.roles.some((role) => role === RoleName.EDITOR),
-      };
     case SET_VIEWING_SCOPE:
       return {
         ...state,

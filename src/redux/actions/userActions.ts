@@ -1,11 +1,10 @@
 import { Authority } from '../../types/authority.types';
-import { FeideUser, RoleName } from '../../types/user.types';
+import { FeideUser } from '../../types/user.types';
 
 // ACTION TYPES
 export const SET_USER_SUCCESS = 'set user';
 export const SET_AUTHORITY_DATA = 'set authority data';
 export const SET_POSSIBLE_AUTHORITIES = 'set possible authorities';
-export const SET_ROLES = 'set roles';
 export const SET_VIEWING_SCOPE = 'set viewing scope';
 
 // ACTION CREATORS
@@ -24,11 +23,6 @@ export const setPossibleAuthorities = (possibleAuthorities: Authority[]): SetPos
   possibleAuthorities,
 });
 
-export const setRoles = (roles: RoleName[]): SetRolesAction => ({
-  type: SET_ROLES,
-  roles,
-});
-
 export const setViewingScope = (viewingScope: string[]): SetViewingScopeAction => ({
   type: SET_VIEWING_SCOPE,
   viewingScope,
@@ -37,11 +31,6 @@ export const setViewingScope = (viewingScope: string[]): SetViewingScopeAction =
 interface SetViewingScopeAction {
   type: typeof SET_VIEWING_SCOPE;
   viewingScope: string[];
-}
-
-interface SetRolesAction {
-  type: typeof SET_ROLES;
-  roles: RoleName[];
 }
 
 interface SetUserAction {
@@ -59,9 +48,4 @@ interface SetPossibleAuthoritiesAction {
   possibleAuthorities: Authority[];
 }
 
-export type UserActions =
-  | SetUserAction
-  | SetAuthorityAction
-  | SetPossibleAuthoritiesAction
-  | SetRolesAction
-  | SetViewingScopeAction;
+export type UserActions = SetUserAction | SetAuthorityAction | SetPossibleAuthoritiesAction | SetViewingScopeAction;
