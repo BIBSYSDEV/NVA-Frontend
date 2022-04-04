@@ -123,13 +123,11 @@ export const getFormattedRegistration = (registration: Registration) => {
   return formattedRegistration;
 };
 
-export const getNewDateValue = (date: Date | null, keyboardInput?: string, defaultMs?: number) => {
+export const getNewDateValue = (date: Date | null, keyboardInput?: string) => {
   const isValidDate = date && date && !isNaN(date.getTime());
   const isValidInput = keyboardInput?.length === 10;
   if (isValidDate) {
-    return new Date(
-      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, defaultMs ?? 0)
-    ).toISOString();
+    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0)).toISOString();
   } else if (!isValidDate || !isValidInput) {
     return '';
   } else {
