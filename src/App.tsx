@@ -106,7 +106,7 @@ export const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (user && !user.roles && institutionUser) {
+    if (user && institutionUser) {
       const viewingScope = institutionUser.viewingScope?.includedUnits ?? [];
       dispatch(setViewingScope(viewingScope));
     }

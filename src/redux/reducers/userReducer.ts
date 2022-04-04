@@ -14,25 +14,28 @@ export const userReducer = (
 ): User | Partial<User> | null => {
   switch (action.type) {
     case SET_USER_SUCCESS: {
-      const roleItems = action.user['custom:roles']?.split(',') ?? [];
-      const roles = roleItems.map((roleItem) => roleItem.split('@')[0] as RoleName);
       const customerId = action.user['custom:customerId']?.endsWith('/customer/None')
         ? ''
         : action.user['custom:customerId'];
+      const roleItems =
+        action.user['custom:roles']?.split(',').map((roleItem) => roleItem.split('@') as [RoleName, string]) ?? [];
+      const roles = roleItems.filter(([_, thisCustomerId]) => thisCustomerId === customerId).map(([role]) => role);
+      const firstName = action.user['custom:firstName'] ?? '';
+      const lastName = action.user['custom:lastName'] ?? '';
 
       const user: Partial<User> = {
-        name: `${action.user['custom:firstName']} ${action.user['custom:lastName']}`,
-        givenName: action.user['custom:firstName'],
-        familyName: action.user['custom:lastName'],
-        id: action.user['custom:feideId'],
+        name: `${firstName} ${lastName}`,
+        givenName: firstName,
+        familyName: lastName,
+        id: action.user['custom:feideId'] ?? '',
         cristinId: action.user['custom:cristinId'],
         customerId,
-        roles: roles,
-        isCreator: !!(customerId && roles.some((role) => role === RoleName.CREATOR)),
-        isAppAdmin: !!customerId && roles.some((role) => role === RoleName.APP_ADMIN),
-        isInstitutionAdmin: !!customerId && roles.some((role) => role === RoleName.INSTITUTION_ADMIN),
-        isCurator: !!customerId && roles.some((role) => role === RoleName.CURATOR),
-        isEditor: !!customerId && roles.some((role) => role === RoleName.EDITOR),
+        roles,
+        isCreator: !!(customerId && roles.includes(RoleName.CREATOR)),
+        isAppAdmin: !!customerId && roles.includes(RoleName.APP_ADMIN),
+        isInstitutionAdmin: !!customerId && roles.includes(RoleName.INSTITUTION_ADMIN),
+        isCurator: !!customerId && roles.includes(RoleName.CURATOR),
+        isEditor: !!customerId && roles.includes(RoleName.EDITOR),
         viewingScope: [],
       };
       return user;
