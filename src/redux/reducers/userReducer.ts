@@ -1,4 +1,4 @@
-import { Affiliation, RoleName, User } from '../../types/user.types';
+import { RoleName, User } from '../../types/user.types';
 import { AuthActions, LOGOUT_SUCCESS } from '../actions/authActions';
 import {
   SET_AUTHORITY_DATA,
@@ -14,15 +14,7 @@ export const userReducer = (
 ): User | Partial<User> | null => {
   switch (action.type) {
     case SET_USER_SUCCESS: {
-      const feideAffiliations = action.user['custom:affiliation'];
-      const affiliations = feideAffiliations
-        ? (feideAffiliations
-            .replace(/[[\]]/g, '')
-            .split(',')
-            .map((affiliationString) => affiliationString.trim())
-            .filter((affiliation) => affiliation) as Affiliation[])
-        : [];
-      const roleItems = action.user['custom:roles'].split(',');
+      const roleItems = action.user['custom:roles']?.split(',') ?? [];
       const roles = roleItems.map((roleItem) => roleItem.split('@')[0] as RoleName);
       const customerId = action.user['custom:customerId']?.endsWith('/customer/None')
         ? ''
@@ -30,15 +22,11 @@ export const userReducer = (
 
       const user: Partial<User> = {
         name: `${action.user['custom:firstName']} ${action.user['custom:lastName']}`,
-        email: action.user.email,
+        givenName: action.user['custom:firstName'],
+        familyName: action.user['custom:lastName'],
         id: action.user['custom:feideId'],
-        institution: action.user['custom:orgName'],
-        cristinId: action.user['custom:cristinId'] ?? action.user.cristinId,
+        cristinId: action.user['custom:cristinId'],
         customerId,
-        affiliations,
-        givenName: action.user.given_name,
-        familyName: action.user.family_name,
-        orgNumber: action.user['custom:orgNumber'],
         roles: roles,
         isCreator: !!(customerId && roles.some((role) => role === RoleName.CREATOR)),
         isAppAdmin: !!customerId && roles.some((role) => role === RoleName.APP_ADMIN),

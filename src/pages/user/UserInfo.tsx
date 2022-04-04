@@ -20,9 +20,6 @@ export const UserInfo = ({ user }: UserInfoProps) => {
       <LabelTextLine dataTestId="user-id" label={t('id')}>
         {user.id}
       </LabelTextLine>
-      <LabelTextLine dataTestId="user-email" label={t('common:email')}>
-        {user.email}
-      </LabelTextLine>
     </BackgroundDiv>
   );
 };
