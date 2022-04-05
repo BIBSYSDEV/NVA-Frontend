@@ -31,7 +31,7 @@ export const userReducer = (
         cristinId: action.user['custom:cristinId'],
         customerId,
         roles,
-        isCreator: !!(customerId && roles.includes(RoleName.CREATOR)),
+        isCreator: !!customerId && roles.includes(RoleName.CREATOR),
         isAppAdmin: !!customerId && roles.includes(RoleName.APP_ADMIN),
         isInstitutionAdmin: !!customerId && roles.includes(RoleName.INSTITUTION_ADMIN),
         isCurator: !!customerId && roles.includes(RoleName.CURATOR),
