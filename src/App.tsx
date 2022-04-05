@@ -47,7 +47,7 @@ export const App = () => {
   const [isLoadingUserAttributes, setIsLoadingUserAttributes] = useState(true);
 
   const [institutionUser, isLoadingInstitutionUser] = useFetch<InstitutionUser>({
-    url: user?.id && !user.roles ? `${RoleApiPath.Users}/${encodeURIComponent(user.id)}` : '',
+    url: user?.username ? `${RoleApiPath.Users}/${user.username}` : '',
     errorMessage: t('feedback:error.get_roles'),
     withAuthentication: true,
   });
@@ -90,11 +90,11 @@ export const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (user && institutionUser) {
+    if (institutionUser) {
       const viewingScope = institutionUser.viewingScope?.includedUnits ?? [];
       dispatch(setViewingScope(viewingScope));
     }
-  }, [dispatch, institutionUser, user]);
+  }, [dispatch, institutionUser]);
 
   return (
     <>

@@ -23,6 +23,7 @@ export interface User {
   isEditor: boolean;
   roles: RoleName[];
   viewingScope: string[];
+  username: string;
 }
 
 interface UserRole {

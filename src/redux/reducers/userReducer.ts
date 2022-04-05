@@ -23,6 +23,7 @@ export const userReducer = (
         familyName: lastName,
         id: action.user['custom:feideId'] ?? '',
         cristinId: action.user['custom:cristinId'],
+        username: action.user['custom:nvaUsername'],
         customerId,
         roles,
         isCreator: !!customerId && roles.includes(RoleName.CREATOR),
