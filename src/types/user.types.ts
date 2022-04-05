@@ -45,6 +45,11 @@ export interface InstitutionUser {
   };
 }
 
+export interface UserList {
+  type: 'UserList';
+  users: InstitutionUser[];
+}
+
 export interface FeideUser {
   'custom:feideId'?: string;
   'custom:firstName'?: string;
