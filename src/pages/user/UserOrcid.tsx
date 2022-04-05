@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -6,16 +6,10 @@ import { Button, IconButton, Typography, Link as MuiLink, Box } from '@mui/mater
 import { Skeleton } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
-import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../utils/constants';
+import { ORCID_BASE_URL } from '../../utils/constants';
 import { OrcidModalContent } from './OrcidModalContent';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
-import {
-  removeQualifierIdFromAuthority,
-  AuthorityQualifiers,
-  addQualifierIdForAuthority,
-} from '../../api/authorityApi';
 import { setNotification } from '../../redux/actions/notificationActions';
-import { setAuthorityData } from '../../redux/actions/userActions';
 import { Modal } from '../../components/Modal';
 import { User } from '../../types/user.types';
 import { getOrcidInfo } from '../../api/external/orcidApi';
@@ -28,7 +22,7 @@ interface UserOrcidProps {
 
 export const UserOrcid = ({ user }: UserOrcidProps) => {
   const { t } = useTranslation('profile');
-  const listOfOrcids = user.authority ? user.authority.orcids : [];
+  const listOfOrcids: string[] = useMemo(() => [], []);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [isAddingOrcid, setIsAddingOrcid] = useState(false);
@@ -52,22 +46,8 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
 
       if (!orcidId) {
         dispatch(setNotification(t('feedback:error.get_orcid', 'error')));
-      } else if (user.authority && !user.authority.orcids.includes(orcidId)) {
-        const updateAuthorityResponse = await addQualifierIdForAuthority(
-          user.authority.id,
-          AuthorityQualifiers.Orcid,
-          orcidId
-        );
-        if (isErrorStatus(updateAuthorityResponse.status)) {
-          dispatch(
-            setNotification(
-              t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.Orcid}`) }),
-              'error'
-            )
-          );
-        } else if (isSuccessStatus(updateAuthorityResponse.status)) {
-          dispatch(setAuthorityData(updateAuthorityResponse.data));
-        }
+      } else if (!listOfOrcids.includes(orcidId)) {
+        // TODO: Add ORCID
       }
       history.push(UrlPathTemplate.MyProfile);
       setIsAddingOrcid(false);
@@ -77,7 +57,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
     if (orcidAccessToken) {
       addOrcid(orcidAccessToken);
     }
-  }, [t, dispatch, user.authority, history]);
+  }, [t, dispatch, history, listOfOrcids]);
 
   useEffect(() => {
     const orcidError = new URLSearchParams(history.location.search).get('error');
@@ -87,26 +67,8 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   }, [history.location.search, dispatch, t]);
 
   const removeOrcid = async (id: string) => {
-    if (!user.authority) {
-      return;
-    }
     setIsRemovingOrcid(true);
-    const updateAuthorityResponse = await removeQualifierIdFromAuthority(
-      user.authority.id,
-      AuthorityQualifiers.Orcid,
-      id
-    );
-    if (isErrorStatus(updateAuthorityResponse.status)) {
-      dispatch(
-        setNotification(
-          t('feedback:error.delete_identifier', { qualifier: t(`common:${AuthorityQualifiers.Orcid}`) }),
-          'error'
-        )
-      );
-    } else if (isSuccessStatus(updateAuthorityResponse.status)) {
-      dispatch(setAuthorityData(updateAuthorityResponse.data));
-      dispatch(setNotification(t('feedback:success.delete_affiliation')));
-    }
+    // TODO: Remove ORCID
     toggleConfirmDialog();
   };
 
@@ -167,7 +129,12 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       ) : (
         <>
           <Typography paragraph>{t('orcid.orcid_description')}</Typography>
-          <Button data-testid="button-create-connect-orcid" onClick={toggleModal} variant="contained" size="small">
+          <Button
+            data-testid="button-create-connect-orcid"
+            onClick={toggleModal}
+            variant="contained"
+            size="small"
+            disabled>
             {t('orcid.connect_orcid')}
           </Button>
           <Modal

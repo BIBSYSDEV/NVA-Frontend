@@ -1,4 +1,3 @@
-import { Authority } from './authority.types';
 import { LanguageString } from './common.types';
 
 export enum RoleName {
@@ -10,7 +9,6 @@ export enum RoleName {
 }
 
 export interface User {
-  authority?: Authority;
   createdDate?: string;
   cristinId?: string;
   name: string;
@@ -23,7 +21,6 @@ export interface User {
   isInstitutionAdmin: boolean;
   isCreator: boolean;
   isEditor: boolean;
-  possibleAuthorities: Authority[];
   roles: RoleName[];
   viewingScope: string[];
 }

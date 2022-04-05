@@ -1,12 +1,6 @@
 import { RoleName, User } from '../../types/user.types';
 import { AuthActions, LOGOUT_SUCCESS } from '../actions/authActions';
-import {
-  SET_AUTHORITY_DATA,
-  SET_POSSIBLE_AUTHORITIES,
-  SET_VIEWING_SCOPE,
-  SET_USER_SUCCESS,
-  UserActions,
-} from '../actions/userActions';
+import { SET_VIEWING_SCOPE, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
 
 export const userReducer = (
   state: User | null = null,
@@ -44,18 +38,6 @@ export const userReducer = (
       return {
         ...state,
         viewingScope: action.viewingScope,
-      };
-    case SET_AUTHORITY_DATA:
-      return {
-        ...state,
-        authority: action.authority,
-        possibleAuthorities: undefined,
-      };
-    case SET_POSSIBLE_AUTHORITIES:
-      return {
-        ...state,
-        authority: undefined,
-        possibleAuthorities: action.possibleAuthorities,
       };
     case LOGOUT_SUCCESS:
       return null;
