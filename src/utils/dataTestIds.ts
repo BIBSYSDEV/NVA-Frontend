@@ -106,6 +106,7 @@ export const dataTestId = {
       searchField: 'search-field',
       selectContributorType: 'select-contributor-type',
       selectUserButton: 'select-user-button',
+      unverifiedContributorName: 'unverified-contributor-name',
     },
     description: {
       addVocabularyButton: 'add-vocabulary-button',
