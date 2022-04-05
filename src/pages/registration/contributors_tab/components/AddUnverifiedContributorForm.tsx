@@ -49,6 +49,7 @@ export const AddUnverifiedContributorForm = ({
                   variant="filled"
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
+                  data-testid={dataTestId.registrationWizard.contributors.unverifiedContributorName}
                 />
               )}
             </Field>
