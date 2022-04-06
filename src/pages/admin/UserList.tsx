@@ -53,7 +53,7 @@ export const UserList = ({
   const [removeRoleForUser, setRemoveRoleForUser] = useState('');
   const user = useSelector((store: RootStore) => store.user);
   const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
-    showScope ? user?.cristinId ?? '' : ''
+    showScope ? user?.topOrgCristinId ?? '' : ''
   );
 
   const handleAddRoleToUser = async (user: InstitutionUser) => {

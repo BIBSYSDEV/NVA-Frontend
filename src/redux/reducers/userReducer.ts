@@ -26,6 +26,7 @@ export const userReducer = (
         username: action.user['custom:nvaUsername'],
         customerId,
         roles,
+        topOrgCristinId: action.user['custom:topOrgCristinId'],
         isCreator: !!customerId && roles.includes(RoleName.CREATOR),
         isAppAdmin: !!customerId && roles.includes(RoleName.APP_ADMIN),
         isInstitutionAdmin: !!customerId && roles.includes(RoleName.INSTITUTION_ADMIN),
