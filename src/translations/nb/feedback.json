@@ -45,10 +45,10 @@
     "remove_role": "Kunne ikke fjerne rolle",
     "search": "Søk feilet",
     "send_message": "Kunne ikke sende melding",
-    "update_authority": "Kunne ikke oppdatere {{qualifier}} for autoritet",
     "update_customer": "Kunne ikke oppdatere institusjon",
     "update_doi_request": "Kunne ikke oppdatere DOI-forespørsel",
     "update_institution_user": "Kunne ikke oppdatere bruker",
+    "update_orcid": "Oppdatering av ORCID-kobling feilet",
     "update_registration": "Kunne ikke oppdatere registrering",
     "update_vocabulary": "Oppdatering av {{vocabulary}} feilet",
     "orcid": {
@@ -77,9 +77,9 @@
     "published_registration": "Registreringen ble publisert",
     "removed_role": "Rollen ble fjernet",
     "send_message": "Melding sendt",
-    "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",
     "update_institution_user": "Bruker er oppdatert",
+    "update_orcid": "ORCID-kobling ble oppdatert",
     "update_registration": "Registreringen er oppdatert",
     "update_vocabulary": "{{vocabulary}} er nå {{status}}"
   },

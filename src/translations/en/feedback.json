@@ -45,10 +45,10 @@
     "remove_role": "Could not remove role",
     "search": "Search failed",
     "send_message": "Could not send message",
-    "update_authority": "Could not update {{qualifier}} for authority",
     "update_customer": "Could not update customer institution",
     "update_doi_request": "Could not update DOI request",
     "update_institution_user": "Could not update user",
+    "update_orcid": "Could not update ORCID",
     "update_registration": "Could not update registration",
     "update_vocabulary": "Failed to update {{vocabulary}}",
     "orcid": {
@@ -77,9 +77,9 @@
     "published_registration": "Registration was published",
     "removed_role": "Role removed",
     "send_message": "Message sent",
-    "update_authority": "Updated authority",
     "update_institution_user": "Updated user",
     "update_customer": "Updated customer institution",
+    "update_orcid": "Successfully updated ORCID",
     "update_registration": "Updated registration",
     "update_vocabulary": "{{vocabulary}} is now {{status}}"
   },

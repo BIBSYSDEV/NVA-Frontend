@@ -11,6 +11,7 @@ export enum RoleName {
 export interface User {
   createdDate?: string;
   cristinId?: string;
+  cristinIdentifier?: string;
   name: string;
   customerId?: string;
   topOrgCristinId?: string;
@@ -25,6 +26,7 @@ export interface User {
   roles: RoleName[];
   viewingScope: string[];
   username: string;
+  orcid: string;
 }
 
 interface UserRole {

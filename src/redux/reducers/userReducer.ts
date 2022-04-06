@@ -16,13 +16,16 @@ export const userReducer = (
       const roles = roleItems.filter(([_, thisCustomerId]) => thisCustomerId === customerId).map(([role]) => role);
       const firstName = action.user['custom:firstName'] ?? '';
       const lastName = action.user['custom:lastName'] ?? '';
+      const cristinId = action.user['custom:cristinId'] ?? '';
+      const cristinIdentifier = cristinId ? cristinId.split('/').pop() : '';
 
       const user: Partial<User> = {
         name: `${firstName} ${lastName}`,
         givenName: firstName,
         familyName: lastName,
         id: action.user['custom:feideId'] ?? '',
-        cristinId: action.user['custom:cristinId'],
+        cristinId,
+        cristinIdentifier,
         username: action.user['custom:nvaUsername'],
         customerId,
         roles,
