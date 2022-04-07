@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@aws-amplify/auth": "^4.5.1",
-    "@emotion/react": "^11.8.2",
+    "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@fontsource/barlow": "^4.5.6",
     "@fontsource/crimson-text": "^4.5.2",
