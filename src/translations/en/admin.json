@@ -6,7 +6,7 @@
   "cname": "CNAME",
   "display_name": "Display name for the institution",
   "edit_institution": "Edit institution",
-  "feide_organization_id": "Organization id in Feide",
+  "feide_organization_domain": "Organization domain in Feide",
   "institution_dns": "DNS for the institution",
   "institution_logo": "Institution logo",
   "organization_register_name": "Name in organization registry",

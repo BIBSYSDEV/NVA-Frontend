@@ -3,8 +3,8 @@ import MockAdapter from 'axios-mock-adapter';
 import { emptyRegistration } from '../types/registration.types';
 import { ORCID_USER_INFO_URL } from '../utils/constants';
 import { mockDoiLookup } from '../utils/testfiles/mockDoiLookup';
-import { mockAuthorities, mockOrcidResponse } from '../utils/testfiles/mockAuthorities';
-import { mockRoles } from '../utils/testfiles/mock_feide_user';
+import { mockOrcidResponse } from '../utils/testfiles/mockAuthorities';
+import { mockRoles, mockUser } from '../utils/testfiles/mock_feide_user';
 import {
   mockCustomerInstitution,
   mockCustomerInstitutions,
@@ -22,10 +22,8 @@ import {
   PublicationsApiPath,
   CristinApiPath,
   PublicationChannelApiPath,
-  AuthorityApiPath,
   CustomerInstitutionApiPath,
   RoleApiPath,
-  AlmaApiPath,
 } from './apiPaths';
 import { mockOrganizationSearch } from '../utils/testfiles/mockOrganizationSearch';
 import { mockDownload, mockCreateUpload, mockPrepareUpload, mockCompleteUpload } from '../utils/testfiles/mockFiles';
@@ -64,7 +62,7 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(PublicationsApiPath.Registration)).reply(201, mockRegistration);
   mock
     .onGet(new RegExp(`${PublicationsApiPath.Registration}/4327439`))
-    .reply(200, { ...emptyRegistration, resourceOwner: { owner: 'tu@unit.no' } });
+    .reply(200, { ...emptyRegistration, resourceOwner: { owner: mockUser['custom:nvaUsername'] } });
   mock
     .onGet(new RegExp(`${PublicationsApiPath.Registration}/${mockPublishedRegistration.identifier}`))
     .reply(200, mockPublishedRegistration);
@@ -80,35 +78,8 @@ export const interceptRequestsOnMock = () => {
   // ORCID
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
 
-  // Authority Registry
+  // person Registry
   mock.onGet(new RegExp(`${CristinApiPath.Person}\\?name=*`)).reply(200, mockCristinUserSearch);
-  mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?name=*`)).reply(200, mockAuthorities);
-  mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?feideid=*`)).reply(200, mockAuthorities);
-  mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?arpId=901790000000`)).reply(200, mockAuthorities[1]);
-
-  // update authority
-  mock
-    .onPost(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/*/update`))
-    .replyOnce(200, mockAuthorities[1]);
-  mock.onPost(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/orgunitid/add`)).replyOnce(200, {
-    ...mockAuthorities[1],
-    orgunitids: [...mockAuthorities[1].orgunitids, mockOrganizationSearch.hits[0].hasPart?.[0].id],
-  });
-  mock
-    .onPost(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/orcid/add`))
-    .reply(200, { ...mockAuthorities[1], orcids: ['https://sandbox.orcid.org/0000-0001-2345-6789'] });
-  mock.onPost(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/orgunitid/add`)).reply(200, {
-    ...mockAuthorities[1],
-    orgunitids: [...mockAuthorities[1].orgunitids, 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.1.0.0'],
-  });
-
-  // Remove orgunitid from Authority
-  mock
-    .onDelete(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/orgunitid/delete`))
-    .reply(200, mockAuthorities[1]);
-
-  // create authority
-  mock.onPost(new RegExp(AuthorityApiPath.Person)).reply(200, mockAuthorities[1]);
 
   //memberinstitutions
   mock
@@ -127,9 +98,6 @@ export const interceptRequestsOnMock = () => {
   // Roles
   mock.onGet(new RegExp(RoleApiPath.InstitutionUsers)).reply(200, []);
   mock.onGet(new RegExp(RoleApiPath.Users)).reply(200, mockRoles);
-
-  // Alma registrations
-  mock.onGet(new RegExp(AlmaApiPath.Alma)).reply(200, undefined);
 
   mock.onAny().reply((config) => {
     throw new Error('Could not find mock for ' + config.url);

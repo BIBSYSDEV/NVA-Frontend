@@ -9,7 +9,7 @@ import { Modal } from '../../components/Modal';
 import { PageHeader } from '../../components/PageHeader';
 import { BackgroundDiv, SyledPageContent } from '../../components/styled/Wrappers';
 import { RootStore } from '../../redux/reducers/rootReducer';
-import { InstitutionUser, RoleName } from '../../types/user.types';
+import { RoleName, UserList as UserListType } from '../../types/user.types';
 import { filterUsersByRole } from '../../utils/role-helpers';
 import { AddRoleModalContent } from './AddRoleModalContent';
 import { UserList } from './UserList';
@@ -28,12 +28,12 @@ const StyledNewButton = styled(Button)({
 const MyInstitutionUsersPage = () => {
   const { t } = useTranslation('admin');
   const user = useSelector((store: RootStore) => store.user);
-  const [institutionUsers, isLoading, fetchInstitutionUsers] = useFetch<InstitutionUser[]>({
+  const [institutionUsers, isLoading, fetchInstitutionUsers] = useFetch<UserListType>({
     url: user?.customerId ? `${RoleApiPath.InstitutionUsers}?institution=${encodeURIComponent(user.customerId)}` : '',
     errorMessage: t('feedback:error.get_users_for_institution'),
     withAuthentication: true,
   });
-  const users = institutionUsers ?? [];
+  const users = institutionUsers?.users ?? [];
   const [autoAssignCreators, setAutoAssignCreators] = useState(true);
   const [roleToAdd, setRoleToAdd] = useState<RoleName>();
 

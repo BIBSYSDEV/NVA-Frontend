@@ -34,7 +34,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
           {institutions.map((institution) => (
             <TableRow key={institution.identifier}>
               <TableCell component="th" scope="row">
-                <Typography>{institution.name}</Typography>
+                <Typography>{institution.displayName}</Typography>
               </TableCell>
               <TableCell>
                 <Typography>{new Date(institution.createdDate).toLocaleDateString()}</Typography>

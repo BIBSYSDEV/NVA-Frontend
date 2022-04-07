@@ -1,11 +1,3 @@
-export enum AlmaApiPath {
-  Alma = '/alma',
-}
-
-export enum AuthorityApiPath {
-  Person = '/person',
-}
-
 export enum CustomerInstitutionApiPath {
   Customer = '/customer',
 }

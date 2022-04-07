@@ -51,10 +51,6 @@ export interface Publisher {
   level: string;
 }
 
-export interface AlmaRegistration {
-  title: string;
-}
-
 export interface MyRegistrationsResponse {
   publications?: RegistrationPreview[]; // "publications" is undefined if user has no registrations
 }

@@ -42,8 +42,8 @@ const MyRegistrations = () => {
     <SyledPageContent>
       <PageHeader>{t('my_registrations')}</PageHeader>
       <StyledRightAlignedWrapper>
-        {user?.authority && (
-          <Button component={RouterLink} to={getUserPath(user.authority.id)} data-testid="public-profile-button">
+        {user?.cristinId && (
+          <Button component={RouterLink} to={getUserPath(user.cristinId)} data-testid="public-profile-button">
             {t('go_to_public_profile')}
           </Button>
         )}

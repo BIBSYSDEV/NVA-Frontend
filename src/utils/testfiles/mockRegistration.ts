@@ -5,6 +5,7 @@ import { mockCustomerInstitution } from './mockCustomerInstitutions';
 import { MessageType, PublicationConversation } from '../../types/publication_types/messages.types';
 import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
 import { JournalArticleContentType } from '../../types/publication_types/content.types';
+import { mockUser } from './mock_feide_user';
 
 export const mockRegistration: JournalRegistration = {
   type: 'Publication',
@@ -13,8 +14,8 @@ export const mockRegistration: JournalRegistration = {
   createdDate: new Date(2020, 1).toISOString(),
   modifiedDate: new Date(2020, 2).toISOString(),
   resourceOwner: {
-    owner: 'tu@unit.no',
-    ownerAffiliation: 'https://nva.unit.no/institution/1',
+    owner: mockUser['custom:nvaUsername'] ?? '',
+    ownerAffiliation: 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0',
   },
   status: RegistrationStatus.Draft,
   projects: [

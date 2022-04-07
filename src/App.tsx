@@ -8,30 +8,21 @@ import { Box } from '@mui/material';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { LocalizationProvider } from '@mui/lab';
 import { getDateFnsLocale } from './utils/date-helpers';
-import { addQualifierIdForAuthority, AuthorityQualifiers } from './api/authorityApi';
 import { getCurrentUserAttributes } from './api/userApi';
 import { AppRoutes } from './AppRoutes';
 import { Footer } from './layout/Footer';
 import { Header } from './layout/header/Header';
 import { Notifier } from './layout/Notifier';
-import { AuthorityOrcidModal } from './pages/user/authority/AuthorityOrcidModal';
 import { setNotification } from './redux/actions/notificationActions';
-import {
-  setAuthorityData,
-  setPossibleAuthorities,
-  setRoles,
-  setUser,
-  setViewingScope,
-} from './redux/actions/userActions';
+import { setUser, setViewingScope } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
-import { Authority } from './types/authority.types';
 import { authOptions } from './utils/aws-config';
-import { isErrorStatus, isSuccessStatus, LocalStorageKey, USE_MOCK_DATA } from './utils/constants';
+import { LocalStorageKey, USE_MOCK_DATA } from './utils/constants';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { PageSpinner } from './components/PageSpinner';
 import { SkipLink } from './components/SkipLink';
 import { useFetch } from './utils/hooks/useFetch';
-import { AuthorityApiPath, RoleApiPath } from './api/apiPaths';
+import { RoleApiPath } from './api/apiPaths';
 import { InstitutionUser } from './types/user.types';
 import { UrlPathTemplate } from './utils/urlPaths';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -53,23 +44,10 @@ export const App = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation('feedback');
   const user = useSelector((store: RootStore) => store.user);
-  const [isLoading, setIsLoading] = useState({ userAttributes: true, userAuthority: true });
-
-  const [authoritiesById, isLoadingAuthoritiesById] = useFetch<Authority[]>({
-    url: user?.id ? `${AuthorityApiPath.Person}?feideid=${encodeURIComponent(user.id)}` : '',
-    errorMessage: t('feedback:error.get_authorities'),
-  });
-
-  const [authoritiesByName, isLoadingAuthoritiesByName] = useFetch<Authority[]>({
-    url:
-      authoritiesById?.length === 0 && user?.name
-        ? `${AuthorityApiPath.Person}?name=${encodeURIComponent(user.name)}`
-        : '',
-    errorMessage: t('feedback:error.get_authorities'),
-  });
+  const [isLoadingUserAttributes, setIsLoadingUserAttributes] = useState(true);
 
   const [institutionUser, isLoadingInstitutionUser] = useFetch<InstitutionUser>({
-    url: user?.id && !user.roles ? `${RoleApiPath.Users}/${encodeURIComponent(user.id)}` : '',
+    url: user?.username ? `${RoleApiPath.Users}/${user.username}` : '',
     errorMessage: t('feedback:error.get_roles'),
     withAuthentication: true,
   });
@@ -96,79 +74,34 @@ export const App = () => {
       const feideUser = await getCurrentUserAttributes();
       if (!feideUser) {
         // User is not authenticated
-        setIsLoading({ userAttributes: false, userAuthority: false });
+        setIsLoadingUserAttributes(false);
       } else {
         dispatch(setUser(feideUser));
       }
-      setIsLoading((state) => ({ ...state, userAttributes: false }));
+      setIsLoadingUserAttributes(false);
     };
 
     if (USE_MOCK_DATA) {
       setUser(mockUser);
-      setIsLoading({ userAttributes: false, userAuthority: false });
+      setIsLoadingUserAttributes(false);
     } else {
       getUser();
     }
   }, [dispatch]);
 
   useEffect(() => {
-    if (user && !user.roles && institutionUser) {
-      const roles = institutionUser.roles.map((role) => role.rolename);
-      dispatch(setRoles(roles));
+    if (institutionUser) {
       const viewingScope = institutionUser.viewingScope?.includedUnits ?? [];
       dispatch(setViewingScope(viewingScope));
     }
-  }, [dispatch, institutionUser, user]);
-
-  useEffect(() => {
-    if (authoritiesById && user && !user.authority && !user.possibleAuthorities) {
-      if (authoritiesById.length === 1) {
-        const authority = authoritiesById[0];
-        dispatch(setAuthorityData(authority));
-        const addQualifier = async () => {
-          if (user.cristinId && !authority.orgunitids.includes(user.cristinId)) {
-            // Add cristinId to Authority's orgunitids
-            const authorityWithOrgId = await addQualifierIdForAuthority(
-              authority.id,
-              AuthorityQualifiers.OrgUnitId,
-              user.cristinId
-            );
-            if (isErrorStatus(authorityWithOrgId.status)) {
-              dispatch(
-                setNotification(
-                  t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
-                  'error'
-                )
-              );
-              dispatch(setAuthorityData(authority));
-            } else if (isSuccessStatus(authorityWithOrgId.status)) {
-              dispatch(setAuthorityData(authorityWithOrgId.data));
-            }
-          }
-        };
-        addQualifier();
-      } else if (authoritiesById.length > 1) {
-        dispatch(setPossibleAuthorities(authoritiesById));
-      }
-    }
-    setIsLoading((state) => ({ ...state, userAuthority: false }));
-  }, [dispatch, t, authoritiesById, user]);
-
-  useEffect(() => {
-    if (authoritiesByName && user && !user.authority && !user.possibleAuthorities) {
-      dispatch(setPossibleAuthorities(authoritiesByName));
-    }
-  }, [dispatch, t, authoritiesByName, user]);
+  }, [dispatch, institutionUser]);
 
   return (
     <>
       <Helmet defaultTitle={t('common:page_title')} titleTemplate={`%s - ${t('common:page_title')}`}>
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
-      {Object.values(isLoading).some((isLoading) => isLoading) ||
-      isLoadingAuthoritiesById ||
-      isLoadingAuthoritiesByName ||
-      isLoadingInstitutionUser ? (
+      {isLoadingUserAttributes || isLoadingInstitutionUser ? (
         <PageSpinner />
       ) : (
         <BrowserRouter>
@@ -194,7 +127,6 @@ export const App = () => {
             </Box>
             <Footer />
           </Box>
-          {user && (user.authority || user.possibleAuthorities) && <AuthorityOrcidModal user={user} />}
         </BrowserRouter>
       )}
     </>
