@@ -17,7 +17,6 @@ export const userReducer = (
       const firstName = action.user['custom:firstName'] ?? '';
       const lastName = action.user['custom:lastName'] ?? '';
       const cristinId = action.user['custom:cristinId'] ?? '';
-      const cristinIdentifier = cristinId ? cristinId.split('/').pop() : '';
 
       const user: Partial<User> = {
         name: `${firstName} ${lastName}`,
@@ -25,7 +24,6 @@ export const userReducer = (
         familyName: lastName,
         id: action.user['custom:feideId'] ?? '',
         cristinId,
-        cristinIdentifier,
         username: action.user['custom:nvaUsername'],
         customerId,
         roles,
