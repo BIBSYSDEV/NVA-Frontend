@@ -2,8 +2,8 @@ import { FeideUser, RoleName } from '../../types/user.types';
 
 // ACTION TYPES
 export const SET_USER_SUCCESS = 'set user';
-export const SET_VIEWING_SCOPE = 'set viewing scope';
 export const SET_ROLES = 'set roles';
+export const SET_VIEWING_SCOPE = 'set viewing scope';
 
 // ACTION CREATORS
 export const setUser = (user: FeideUser): SetUserAction => ({

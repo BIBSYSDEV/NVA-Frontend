@@ -37,11 +37,6 @@ export const userReducer = (
       };
       return user;
     }
-    case SET_VIEWING_SCOPE:
-      return {
-        ...state,
-        viewingScope: action.viewingScope,
-      };
     case SET_ROLES:
       // This is used to update roles from cypress
       return {
@@ -52,6 +47,11 @@ export const userReducer = (
         isInstitutionAdmin: !!state?.customerId && action.roles.includes(RoleName.INSTITUTION_ADMIN),
         isCurator: !!state?.customerId && action.roles.includes(RoleName.CURATOR),
         isEditor: !!state?.customerId && action.roles.includes(RoleName.EDITOR),
+      };
+    case SET_VIEWING_SCOPE:
+      return {
+        ...state,
+        viewingScope: action.viewingScope,
       };
     case LOGOUT_SUCCESS:
       return null;
