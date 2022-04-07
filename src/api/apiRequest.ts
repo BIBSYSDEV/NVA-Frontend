@@ -1,13 +1,13 @@
 import Axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import { getToken } from './userApi';
+import { getAccessToken } from './userApi';
 import { setAxiosDefaults } from '../utils/axios-config';
 
 // Set axios defaults only once through the app's lifetime
 setAxiosDefaults();
 
 export const authenticatedApiRequest = async <T>(axiosRequestConfig: AxiosRequestConfig) => {
-  const token = await getToken();
+  const token = await getAccessToken();
   axiosRequestConfig.headers = {
     ...axiosRequestConfig.headers,
     Authorization: `Bearer ${token}`,

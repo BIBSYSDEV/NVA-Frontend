@@ -26,7 +26,7 @@ export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> =>
     } else {
       return currentSessionData;
     }
-  } catch (ex) {
+  } catch {
     // Don't do anything if user is not supposed to be logged in
     if (localStorage.getItem(LocalStorageKey.AmplifyRedirect)) {
       if (retryNumber < 3) {
@@ -39,7 +39,7 @@ export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> =>
   }
 };
 
-export const getToken = async () => {
+export const getAccessToken = async () => {
   if (USE_MOCK_DATA) {
     return '';
   }
