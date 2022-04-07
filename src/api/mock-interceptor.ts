@@ -4,7 +4,7 @@ import { emptyRegistration } from '../types/registration.types';
 import { ORCID_USER_INFO_URL } from '../utils/constants';
 import { mockDoiLookup } from '../utils/testfiles/mockDoiLookup';
 import { mockOrcidResponse } from '../utils/testfiles/mockAuthorities';
-import { mockRoles } from '../utils/testfiles/mock_feide_user';
+import { mockRoles, mockUser } from '../utils/testfiles/mock_feide_user';
 import {
   mockCustomerInstitution,
   mockCustomerInstitutions,
@@ -62,7 +62,7 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(PublicationsApiPath.Registration)).reply(201, mockRegistration);
   mock
     .onGet(new RegExp(`${PublicationsApiPath.Registration}/4327439`))
-    .reply(200, { ...emptyRegistration, resourceOwner: { owner: 'tu@unit.no' } });
+    .reply(200, { ...emptyRegistration, resourceOwner: { owner: mockUser['custom:nvaUsername'] } });
   mock
     .onGet(new RegExp(`${PublicationsApiPath.Registration}/${mockPublishedRegistration.identifier}`))
     .reply(200, mockPublishedRegistration);

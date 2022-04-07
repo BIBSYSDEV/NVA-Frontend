@@ -1,6 +1,6 @@
 import { RoleName, User } from '../../types/user.types';
 import { AuthActions, LOGOUT_SUCCESS } from '../actions/authActions';
-import { SET_VIEWING_SCOPE, SET_USER_SUCCESS, UserActions } from '../actions/userActions';
+import { SET_VIEWING_SCOPE, SET_USER_SUCCESS, UserActions, SET_ROLES } from '../actions/userActions';
 
 export const userReducer = (
   state: User | null = null,
@@ -43,6 +43,17 @@ export const userReducer = (
       return {
         ...state,
         viewingScope: action.viewingScope,
+      };
+    case SET_ROLES:
+      // This is used to update roles from cypress
+      return {
+        ...state,
+        roles: action.roles,
+        isCreator: !!state?.customerId && action.roles.includes(RoleName.CREATOR),
+        isAppAdmin: !!state?.customerId && action.roles.includes(RoleName.APP_ADMIN),
+        isInstitutionAdmin: !!state?.customerId && action.roles.includes(RoleName.INSTITUTION_ADMIN),
+        isCurator: !!state?.customerId && action.roles.includes(RoleName.CURATOR),
+        isEditor: !!state?.customerId && action.roles.includes(RoleName.EDITOR),
       };
     case LOGOUT_SUCCESS:
       return null;

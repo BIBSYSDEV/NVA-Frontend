@@ -56,7 +56,7 @@ export const isPresentation = (instanceType: string) =>
 export const isArtistic = (instanceType: string) => Object.values(ArtisticType).some((type) => type === instanceType);
 
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
-  !!user && !!registration && user.isCreator && user.id === registration.resourceOwner.owner;
+  !!user && !!registration && user.isCreator && user.username === registration.resourceOwner.owner;
 
 export const userIsRegistrationCurator = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCurator && user.customerId === registration.publisher.id;

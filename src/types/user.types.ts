@@ -11,7 +11,7 @@ export enum RoleName {
 export interface User {
   createdDate?: string;
   cristinId?: string;
-  cristinIdentifier?: string;
+  cristinIdentifier?: string; // TODO: unused?
   name: string;
   customerId?: string;
   topOrgCristinId?: string;
