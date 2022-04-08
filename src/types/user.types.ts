@@ -95,6 +95,7 @@ export interface CreateCristinUser {
 export interface CristinUser extends CreateCristinUser {
   id: string;
   affiliations: CristinPersonAffiliation[];
+  NationalIdentificationNumber?: string;
 }
 
 export interface FlatCristinUser {

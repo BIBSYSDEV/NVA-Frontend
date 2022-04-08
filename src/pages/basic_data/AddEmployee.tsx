@@ -39,8 +39,15 @@ export const AddEmployee = () => {
   const { t } = useTranslation('basicData');
 
   const onSubmit = (values: AddEmployeeData) => {
-    //eslint-disable-next-line no-console
     console.log('Submit:', values);
+
+    // TODO:
+
+    // Create user if it does not exist
+
+    // Add affiliation
+
+    // Add roles
   };
 
   return (
