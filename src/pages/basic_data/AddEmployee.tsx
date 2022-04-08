@@ -9,7 +9,13 @@ import { StyledCenterContainer } from '../../components/styled/Wrappers';
 
 export interface AddEmployeeData {
   user: FlatCristinUser;
-  affiliation: any;
+  affiliation: {
+    type: string;
+    organization: string;
+    startDate: string;
+    endDate: string;
+    fullTimeEquivalentPercentage: string;
+  };
   roles: RoleName[];
 }
 
@@ -23,7 +29,7 @@ export const emptyUser: FlatCristinUser = {
 
 const initialValues: AddEmployeeData = {
   user: emptyUser,
-  affiliation: null,
+  affiliation: { type: '', organization: '', startDate: '', endDate: '', fullTimeEquivalentPercentage: '' },
   roles: [RoleName.CREATOR],
 };
 
