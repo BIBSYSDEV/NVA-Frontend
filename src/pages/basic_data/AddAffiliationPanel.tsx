@@ -1,10 +1,9 @@
-import { Autocomplete, Box, Button, Dialog, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { Autocomplete, Box, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import LooksTwoIcon from '@mui/icons-material/LooksTwo';
-import { useState } from 'react';
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import { DatePicker } from '@mui/lab';
-import { SelectInstitutionForm } from '../../components/institution/SelectInstitutionForm';
+import { useSelector } from 'react-redux';
 import { StyledCenterContainer } from '../../components/styled/Wrappers';
 import { CristinApiPath } from '../../api/apiPaths';
 import { LanguageString } from '../../types/common.types';
@@ -12,6 +11,10 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { datePickerTranslationProps } from '../../themes/mainTheme';
 import { getNewDateValue } from '../../utils/registration-helpers';
+import { RootStore } from '../../redux/reducers/rootReducer';
+import { Organization } from '../../types/organization.types';
+import { useFetchResource } from '../../utils/hooks/useFetchResource';
+import { getSortedSubUnits } from '../../utils/institutions-helpers';
 
 export interface Position {
   id: string;
@@ -24,8 +27,12 @@ interface PositionResponse {
 
 export const AddAffiliationPanel = () => {
   const { t } = useTranslation('basicData');
+  const user = useSelector((store: RootStore) => store.user);
+  const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
+    user?.topOrgCristinId ?? ''
+  );
+  const organizationOptions = currentOrganization ? getSortedSubUnits([currentOrganization]) : [];
   const [positionResponse, isLoadingPositions] = useFetch<PositionResponse>({ url: CristinApiPath.Position });
-  const [open, setOpen] = useState(false);
 
   const positions = (positionResponse?.positions ?? []).filter((position) => position.enabled); // TODO: fetch only active positions (NP-9070)
 
@@ -36,28 +43,21 @@ export const AddAffiliationPanel = () => {
       </StyledCenterContainer>
       <Field name="affiliation.organization">
         {({ field, form }: FieldProps<string>) => (
-          <>
-            {field.value ? (
-              <p>Valgt institutsjon: {field.value}</p>
-            ) : (
-              <>
-                <Button variant="outlined" onClick={() => setOpen(true)}>
-                  Velg institusjon
-                </Button>
-                <Dialog open={open} fullWidth onClose={() => setOpen(false)}>
-                  <DialogTitle>Velg institusjon</DialogTitle>
-                  <DialogContent>
-                    <SelectInstitutionForm
-                      onSubmit={(id) => {
-                        form.setFieldValue(field.name, id);
-                        setOpen(false);
-                      }}
-                    />
-                  </DialogContent>
-                </Dialog>
-              </>
+          <Autocomplete
+            options={organizationOptions}
+            value={organizationOptions.find((option) => option.id === field.value)}
+            getOptionLabel={(option) => getLanguageString(option.name)}
+            renderOption={(props, option) => (
+              <li {...props} key={option.id}>
+                {getLanguageString(option.name)}
+              </li>
             )}
-          </>
+            loading={isLoadingCurrentOrganization}
+            onChange={(_, value) => form.setFieldValue(field.name, value?.id)}
+            renderInput={(params) => (
+              <TextField {...params} label={t('common:institution')} variant="filled" fullWidth />
+            )}
+          />
         )}
       </Field>
       <Box display={{ display: 'flex', gap: '1rem' }}>
@@ -108,7 +108,6 @@ export const AddAffiliationPanel = () => {
               }}
               inputFormat="dd.MM.yyyy"
               views={['year', 'month', 'day']}
-              // maxDate={toValue ? new Date(toValue) : maxDate}
               mask="__.__.____"
               renderInput={(params) => (
                 <TextField
@@ -136,7 +135,6 @@ export const AddAffiliationPanel = () => {
               }}
               inputFormat="dd.MM.yyyy"
               views={['year', 'month', 'day']}
-              // maxDate={toValue ? new Date(toValue) : maxDate}
               mask="__.__.____"
               renderInput={(params) => (
                 <TextField

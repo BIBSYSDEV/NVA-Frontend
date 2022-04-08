@@ -7,15 +7,17 @@ import { AddAffiliationPanel } from './AddAffiliationPanel';
 import { AddRolePanel } from './AddRolePanel';
 import { StyledCenterContainer } from '../../components/styled/Wrappers';
 
+interface Employment {
+  type: string;
+  organization: string;
+  startDate: string;
+  endDate: string;
+  fullTimeEquivalentPercentage: string;
+}
+
 export interface AddEmployeeData {
   user: FlatCristinUser;
-  affiliation: {
-    type: string;
-    organization: string;
-    startDate: string;
-    endDate: string;
-    fullTimeEquivalentPercentage: string;
-  };
+  affiliation: Employment;
   roles: RoleName[];
 }
 
