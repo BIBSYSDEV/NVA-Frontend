@@ -17,6 +17,7 @@ import {
   nviApplicableContentTypes,
 } from '../../../types/publication_types/content.types';
 import { DesignType } from '../../../types/publication_types/artisticRegistration.types';
+import { validateDateInterval } from '../validationHelpers';
 
 const resourceErrorMessage = {
   architectureOutputRequired: i18n.t('feedback:validation.architecture_output_required'),
@@ -161,25 +162,15 @@ const pagesRangeField = Yup.object()
 export const periodField = Yup.object().shape({
   from: Yup.string()
     .nullable()
-    .test('from-test', resourceErrorMessage.fromMustBeBeforeTo, (fromValue, context) => {
-      const fromDate = fromValue ? new Date(fromValue) : null;
-      const toDate = context.parent.to ? new Date(context.parent.to) : null;
-      if (fromDate && toDate) {
-        return fromDate <= toDate;
-      }
-      return true;
-    })
+    .test('from-test', resourceErrorMessage.fromMustBeBeforeTo, (fromValue, context) =>
+      validateDateInterval(fromValue, context.parent.to)
+    )
     .required(resourceErrorMessage.dateFromRequired),
   to: Yup.string()
     .nullable()
-    .test('to-test', resourceErrorMessage.toMustBeAfterFrom, (toValue, context) => {
-      const fromDate = context.parent.from ? new Date(context.parent.from) : null;
-      const toDate = toValue ? new Date(toValue) : null;
-      if (fromDate && toDate) {
-        return fromDate <= toDate;
-      }
-      return true;
-    })
+    .test('to-test', resourceErrorMessage.toMustBeAfterFrom, (toValue, context) =>
+      validateDateInterval(context.parent.from, toValue)
+    )
     .required(resourceErrorMessage.dateToRequired),
 });
 

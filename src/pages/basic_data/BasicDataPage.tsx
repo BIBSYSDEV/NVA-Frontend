@@ -32,15 +32,13 @@ const BasicDataPage = () => {
         </Typography>
         <MenuList>
           {user?.isInstitutionAdmin && (
-            <BetaFunctionality>
-              <MenuItem component={Link} to={UrlPathTemplate.BasicDataAddEmployee}>
-                <ListItemText>
-                  <Typography variant="overline" color="primary" fontSize="1rem">
-                    {t('add_employee')}
-                  </Typography>
-                </ListItemText>
-              </MenuItem>
-            </BetaFunctionality>
+            <MenuItem component={Link} to={UrlPathTemplate.BasicDataAddEmployee}>
+              <ListItemText>
+                <Typography variant="overline" color="primary" fontSize="1rem">
+                  {t('add_employee')}
+                </Typography>
+              </ListItemText>
+            </MenuItem>
           )}
           <Divider orientation="horizontal" sx={{ my: '0.5rem', borderWidth: 1 }} />
           {user?.isAppAdmin && [

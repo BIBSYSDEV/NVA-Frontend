@@ -2,28 +2,24 @@ import { CircularProgress, IconButton, TextField, Typography } from '@mui/materi
 import LooksOneIcon from '@mui/icons-material/LooksOne';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
-import { Field, FieldProps, useFormikContext } from 'formik';
-import { convertToFlatCristinUser } from '../../utils/user-helpers';
+import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useState, useCallback, useEffect } from 'react';
+import { Box } from '@mui/system';
+import { convertToFlatCristinUser } from '../../utils/user-helpers';
 import { CristinApiPath } from '../../api/apiPaths';
 import { authenticatedApiRequest } from '../../api/apiRequest';
 import { CristinUser } from '../../types/user.types';
 import { isSuccessStatus } from '../../utils/constants';
-import { useFetch } from '../../utils/hooks/useFetch';
-import { SearchResponse } from '../../types/common.types';
 import { StyledCenterContainer } from '../../components/styled/Wrappers';
 import { AddEmployeeData, emptyUser } from './AddEmployee';
+import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
+import { getLanguageString } from '../../utils/translation-helpers';
 
 export const FindPersonPanel = () => {
   const { t } = useTranslation('basicData');
   const { values, setFieldValue } = useFormikContext<AddEmployeeData>();
   const [isLoading, setIsLoading] = useState(false);
   const [nationalNumber, setNationalNumber] = useState('');
-  const [currentAffiliations, isLoadingAffiliations] = useFetch<SearchResponse<any>>({
-    url: values.user.id ? `${values.user.id}/employment` : '',
-    errorMessage: 'todo',
-    withAuthentication: true,
-  });
 
   const searchByNationalId = useCallback(async () => {
     setIsLoading(true);
@@ -79,31 +75,67 @@ export const FindPersonPanel = () => {
           <>
             <TextField
               disabled
+              required
               fullWidth
               variant="filled"
               label={t('common:first_name')}
               value={values.user.firstName}
             />
-            <TextField disabled fullWidth variant="filled" label={t('common:last_name')} value={values.user.lastName} />
-            <Typography variant="overline">
-              {t('employments')}: {isLoadingAffiliations ? <CircularProgress /> : currentAffiliations?.size}
-            </Typography>
+            <TextField
+              disabled
+              required
+              fullWidth
+              variant="filled"
+              label={t('common:last_name')}
+              value={values.user.lastName}
+            />
+            <Typography variant="overline">{t('employments')}</Typography>
+            <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
+              {values.user.affiliations.map((affiliation) => (
+                <li key={affiliation.organization}>
+                  <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+                    {getLanguageString(affiliation.role.labels)}:
+                    <AffiliationHierarchy
+                      key={affiliation.organization}
+                      unitUri={affiliation.organization}
+                      commaSeparated
+                    />
+                  </Box>
+                </li>
+              ))}
+            </Box>
           </>
         ) : (
           <>
             <Typography>{t('no_matching_persons_found')}</Typography>
             <Typography variant="h3">{t('create_person')}</Typography>
             <Field name="user.firstName">
-              {({ field }: FieldProps<string>) => (
-                <TextField {...field} fullWidth variant="filled" label={t('common:first_name')} />
+              {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                <TextField
+                  {...field}
+                  required
+                  fullWidth
+                  variant="filled"
+                  label={t('common:first_name')}
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={field.name} />}
+                />
               )}
             </Field>
             <Field name="user.lastName">
-              {({ field }: FieldProps<string>) => (
-                <TextField {...field} fullWidth variant="filled" label={t('common:last_name')} />
+              {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                <TextField
+                  {...field}
+                  required
+                  fullWidth
+                  variant="filled"
+                  label={t('common:last_name')}
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={field.name} />}
+                />
               )}
             </Field>
-            <TextField disabled fullWidth variant="filled" label={t('national_id')} value={nationalNumber} />
+            <TextField disabled required fullWidth variant="filled" label={t('national_id')} value={nationalNumber} />
           </>
         )
       ) : null}
