@@ -44,4 +44,5 @@ export const convertToFlatCristinUser = (user: CristinUser): FlatCristinUser => 
   lastName: getValueByKey('LastName', user.names),
   id: user.id,
   cristinIdentifier: getValueByKey('CristinIdentifier', user.identifiers),
+  affiliations: user.affiliations,
 });

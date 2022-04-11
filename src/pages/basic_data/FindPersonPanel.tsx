@@ -9,21 +9,17 @@ import { CristinApiPath } from '../../api/apiPaths';
 import { authenticatedApiRequest } from '../../api/apiRequest';
 import { CristinUser } from '../../types/user.types';
 import { isSuccessStatus } from '../../utils/constants';
-import { useFetch } from '../../utils/hooks/useFetch';
-import { SearchResponse } from '../../types/common.types';
 import { StyledCenterContainer } from '../../components/styled/Wrappers';
 import { AddEmployeeData, emptyUser } from './AddEmployee';
+import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
+import { Box } from '@mui/system';
+import { getLanguageString } from '../../utils/translation-helpers';
 
 export const FindPersonPanel = () => {
   const { t } = useTranslation('basicData');
   const { values, setFieldValue } = useFormikContext<AddEmployeeData>();
   const [isLoading, setIsLoading] = useState(false);
   const [nationalNumber, setNationalNumber] = useState('');
-  const [currentAffiliations, isLoadingAffiliations] = useFetch<SearchResponse<any>>({
-    url: values.user.id ? `${values.user.id}/employment` : '',
-    errorMessage: 'todo',
-    withAuthentication: true,
-  });
 
   const searchByNationalId = useCallback(async () => {
     setIsLoading(true);
@@ -85,9 +81,21 @@ export const FindPersonPanel = () => {
               value={values.user.firstName}
             />
             <TextField disabled fullWidth variant="filled" label={t('common:last_name')} value={values.user.lastName} />
-            <Typography variant="overline">
-              {t('employments')}: {isLoadingAffiliations ? <CircularProgress /> : currentAffiliations?.size}
-            </Typography>
+            <Typography variant="overline">{t('employments')}</Typography>
+            <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
+              {values.user.affiliations.map((affiliation) => (
+                <li key={affiliation.organization}>
+                  <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+                    {getLanguageString(affiliation.role.labels)}:
+                    <AffiliationHierarchy
+                      key={affiliation.organization}
+                      unitUri={affiliation.organization}
+                      commaSeparated
+                    />
+                  </Box>
+                </li>
+              ))}
+            </Box>
           </>
         ) : (
           <>

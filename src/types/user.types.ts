@@ -104,4 +104,5 @@ export interface FlatCristinUser {
   nationalId: string;
   id: string;
   cristinIdentifier: string;
+  affiliations: CristinPersonAffiliation[];
 }
