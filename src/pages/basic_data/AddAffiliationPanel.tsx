@@ -17,7 +17,7 @@ import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { getSortedSubUnits } from '../../utils/institutions-helpers';
 import { AddEmployeeData } from './AddEmployee';
 
-export interface Position {
+interface Position {
   id: string;
   enabled: boolean;
   name: LanguageString;
@@ -79,6 +79,7 @@ export const AddAffiliationPanel = () => {
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <Autocomplete
               disabled={isDisabled}
+              value={positions.find((option) => option.id === field.value) ?? null}
               options={positions.sort((a, b) =>
                 getLanguageString(a.name).toLowerCase() > getLanguageString(b.name).toLowerCase() ? 1 : -1
               )}
@@ -129,7 +130,7 @@ export const AddAffiliationPanel = () => {
               {...datePickerTranslationProps}
               disabled={isDisabled}
               label={t('common:start_date')}
-              value={field.value ?? null}
+              value={field.value ? field.value : null}
               onChange={(date: Date | null, keyboardInput) => {
                 const newValue = getNewDateValue(date, keyboardInput);
                 if (newValue !== null) {
@@ -160,7 +161,7 @@ export const AddAffiliationPanel = () => {
               {...datePickerTranslationProps}
               disabled={isDisabled}
               label={t('common:end_date')}
-              value={field.value ?? null}
+              value={field.value ? field.value : null}
               onChange={(date: Date | null, keyboardInput) => {
                 const newValue = getNewDateValue(date, keyboardInput);
                 if (newValue !== null) {
