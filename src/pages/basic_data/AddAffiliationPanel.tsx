@@ -46,7 +46,7 @@ export const AddAffiliationPanel = () => {
         <LooksTwoIcon color="primary" fontSize="large" />
       </StyledCenterContainer>
       <Field name="affiliation.organization">
-        {({ field }: FieldProps<string>) => (
+        {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <Autocomplete
             disabled={isDisabled}
             value={organizationOptions.find((option) => option.id === field.value) ?? null}
@@ -60,14 +60,23 @@ export const AddAffiliationPanel = () => {
             loading={isLoadingCurrentOrganization}
             onChange={(_, value) => setFieldValue(field.name, value?.id)}
             renderInput={(params) => (
-              <TextField {...params} label={t('common:institution')} variant="filled" fullWidth />
+              <TextField
+                {...field}
+                {...params}
+                required
+                label={t('common:institution')}
+                variant="filled"
+                fullWidth
+                error={touched && !!error}
+                helperText={<ErrorMessage name={field.name} />}
+              />
             )}
           />
         )}
       </Field>
       <Box display={{ display: 'flex', gap: '1rem' }}>
         <Field name="affiliation.type">
-          {({ field }: FieldProps<Position>) => (
+          {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <Autocomplete
               disabled={isDisabled}
               options={positions.sort((a, b) =>
@@ -82,20 +91,33 @@ export const AddAffiliationPanel = () => {
               getOptionLabel={(option) => getLanguageString(option.name)}
               fullWidth
               loading={isLoadingPositions}
-              renderInput={(params) => <TextField {...field} {...params} label={t('position')} variant="filled" />}
+              renderInput={(params) => (
+                <TextField
+                  {...field}
+                  {...params}
+                  required
+                  label={t('position')}
+                  variant="filled"
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={field.name} />}
+                />
+              )}
             />
           )}
         </Field>
         <Field name="affiliation.fullTimeEquivalentPercentage">
-          {({ field }: FieldProps<string>) => (
+          {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <TextField
               {...field}
+              required
               disabled={isDisabled}
               fullWidth
               type="number"
               inputProps={{ min: '0', max: '100' }}
               variant="filled"
               label={t('position_percent')}
+              error={touched && !!error}
+              helperText={<ErrorMessage name={field.name} />}
             />
           )}
         </Field>
@@ -117,9 +139,12 @@ export const AddAffiliationPanel = () => {
               inputFormat="dd.MM.yyyy"
               views={['year', 'month', 'day']}
               mask="__.__.____"
+              maxDate={values.affiliation.endDate ? new Date(values.affiliation.endDate) : undefined}
               renderInput={(params) => (
                 <TextField
+                  {...field}
                   {...params}
+                  required
                   variant="filled"
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -145,8 +170,10 @@ export const AddAffiliationPanel = () => {
               inputFormat="dd.MM.yyyy"
               views={['year', 'month', 'day']}
               mask="__.__.____"
+              minDate={values.affiliation.startDate ? new Date(values.affiliation.startDate) : undefined}
               renderInput={(params) => (
                 <TextField
+                  {...field}
                   {...params}
                   variant="filled"
                   error={touched && !!error}

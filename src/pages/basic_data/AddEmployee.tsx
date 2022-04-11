@@ -1,6 +1,7 @@
-import { Typography, Box, Divider, Button } from '@mui/material';
+import { Typography, Box, Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Form, Formik } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
+import { LoadingButton } from '@mui/lab';
 import { CreateCristinUser, CristinUser, FlatCristinUser, RoleName } from '../../types/user.types';
 import { FindPersonPanel } from './FindPersonPanel';
 import { AddAffiliationPanel } from './AddAffiliationPanel';
@@ -12,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/actions/notificationActions';
 import { CristinApiPath } from '../../api/apiPaths';
 import { convertToCristinUser } from '../../utils/user-helpers';
+import { addEmployeeValidationSchema } from '../../utils/validation/basic_data/addEmployeeValidation';
 
 interface Employment {
   type: string;
@@ -86,27 +88,29 @@ export const AddEmployee = () => {
       <Typography variant="h3" component="h2" paragraph>
         {t('add_to_your_person_registry')}
       </Typography>
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        <Form>
-          <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr auto 1fr', gap: '2rem', mt: '2rem' }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <FindPersonPanel />
+      <Formik initialValues={initialValues} validationSchema={addEmployeeValidationSchema} onSubmit={onSubmit}>
+        {({ isValid, isSubmitting }: FormikProps<AddEmployeeData>) => (
+          <Form noValidate>
+            <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr auto 1fr', gap: '2rem', mt: '2rem' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <FindPersonPanel />
+              </Box>
+              <Divider orientation="vertical" />
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <AddAffiliationPanel />
+              </Box>
+              <Divider orientation="vertical" />
+              <Box>
+                <AddRolePanel />
+              </Box>
             </Box>
-            <Divider orientation="vertical" />
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <AddAffiliationPanel />
-            </Box>
-            <Divider orientation="vertical" />
-            <Box>
-              <AddRolePanel />
-            </Box>
-          </Box>
-          <StyledCenterContainer>
-            <Button variant="contained" size="large" type="submit">
-              {t('common:create')}
-            </Button>
-          </StyledCenterContainer>
-        </Form>
+            <StyledCenterContainer>
+              <LoadingButton variant="contained" size="large" loading={isSubmitting} disabled={!isValid} type="submit">
+                {t('common:create')}
+              </LoadingButton>
+            </StyledCenterContainer>
+          </Form>
+        )}
       </Formik>
     </>
   );

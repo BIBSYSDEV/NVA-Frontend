@@ -2,7 +2,7 @@ import { CircularProgress, IconButton, TextField, Typography } from '@mui/materi
 import LooksOneIcon from '@mui/icons-material/LooksOne';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
-import { Field, FieldProps, useFormikContext } from 'formik';
+import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { convertToFlatCristinUser } from '../../utils/user-helpers';
 import { useState, useCallback, useEffect } from 'react';
 import { CristinApiPath } from '../../api/apiPaths';
@@ -75,12 +75,20 @@ export const FindPersonPanel = () => {
           <>
             <TextField
               disabled
+              required
               fullWidth
               variant="filled"
               label={t('common:first_name')}
               value={values.user.firstName}
             />
-            <TextField disabled fullWidth variant="filled" label={t('common:last_name')} value={values.user.lastName} />
+            <TextField
+              disabled
+              required
+              fullWidth
+              variant="filled"
+              label={t('common:last_name')}
+              value={values.user.lastName}
+            />
             <Typography variant="overline">{t('employments')}</Typography>
             <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
               {values.user.affiliations.map((affiliation) => (
@@ -102,16 +110,32 @@ export const FindPersonPanel = () => {
             <Typography>{t('no_matching_persons_found')}</Typography>
             <Typography variant="h3">{t('create_person')}</Typography>
             <Field name="user.firstName">
-              {({ field }: FieldProps<string>) => (
-                <TextField {...field} fullWidth variant="filled" label={t('common:first_name')} />
+              {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                <TextField
+                  {...field}
+                  required
+                  fullWidth
+                  variant="filled"
+                  label={t('common:first_name')}
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={field.name} />}
+                />
               )}
             </Field>
             <Field name="user.lastName">
-              {({ field }: FieldProps<string>) => (
-                <TextField {...field} fullWidth variant="filled" label={t('common:last_name')} />
+              {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                <TextField
+                  {...field}
+                  required
+                  fullWidth
+                  variant="filled"
+                  label={t('common:last_name')}
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={field.name} />}
+                />
               )}
             </Field>
-            <TextField disabled fullWidth variant="filled" label={t('national_id')} value={nationalNumber} />
+            <TextField disabled required fullWidth variant="filled" label={t('national_id')} value={nationalNumber} />
           </>
         )
       ) : null}
