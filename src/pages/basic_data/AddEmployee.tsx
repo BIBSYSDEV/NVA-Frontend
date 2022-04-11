@@ -1,11 +1,17 @@
 import { Typography, Box, Divider, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik } from 'formik';
-import { FlatCristinUser, RoleName } from '../../types/user.types';
+import { CreateCristinUser, CristinUser, FlatCristinUser, RoleName } from '../../types/user.types';
 import { FindPersonPanel } from './FindPersonPanel';
 import { AddAffiliationPanel } from './AddAffiliationPanel';
 import { AddRolePanel } from './AddRolePanel';
 import { StyledCenterContainer } from '../../components/styled/Wrappers';
+import { authenticatedApiRequest } from '../../api/apiRequest';
+import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { useDispatch } from 'react-redux';
+import { setNotification } from '../../redux/actions/notificationActions';
+import { CristinApiPath } from '../../api/apiPaths';
+import { convertToCristinUser } from '../../utils/user-helpers';
 
 interface Employment {
   type: string;
@@ -38,18 +44,41 @@ const initialValues: AddEmployeeData = {
 
 export const AddEmployee = () => {
   const { t } = useTranslation('basicData');
+  const disaptch = useDispatch();
 
-  const onSubmit = (values: AddEmployeeData) => {
-    console.log('Submit:', values);
+  const onSubmit = async (values: AddEmployeeData) => {
+    let userId = values.user.id;
 
-    // TODO:
-    if (!values.user.id) {
-      // Create user if it does not exist
-    } else {
-      // Add affiliation
+    if (!userId) {
+      // Create user if it does not yet exist in Cristin
+      const cristinUser: CreateCristinUser = convertToCristinUser(values.user);
+      const createPersonResponse = await authenticatedApiRequest<CristinUser>({
+        url: CristinApiPath.Person,
+        method: 'POST',
+        data: cristinUser,
+      });
+      if (isErrorStatus(createPersonResponse.status)) {
+        disaptch(setNotification(t('feedback:error.add_employment'), 'error'));
+      } else if (isSuccessStatus(createPersonResponse.status)) {
+        userId = createPersonResponse.data.id;
+      }
     }
 
-    // Add roles
+    if (userId) {
+      // Add employment (affiliation)
+      const addAffiliationResponse = await authenticatedApiRequest<Employment>({
+        url: `${values.user.id}/employment`,
+        method: 'POST',
+        data: values.affiliation,
+      });
+      if (isSuccessStatus(addAffiliationResponse.status)) {
+        disaptch(setNotification(t('feedback:success.add_employment')));
+      } else if (isErrorStatus(addAffiliationResponse.status)) {
+        disaptch(setNotification(t('feedback:error.add_employment'), 'error'));
+      }
+    }
+
+    // TODO: Add roles? This will lead to two ways of creating user: login and by admin here
   };
 
   return (

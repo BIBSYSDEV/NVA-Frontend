@@ -1,6 +1,7 @@
 {
   "error": {
     "404_page": "The page you requested could not be found",
+    "add_employment": "Could not add employment",
     "add_role": "Could not add role",
     "an_error_occurred": "An error occurred",
     "create_authority": "Could not create authority",
@@ -8,6 +9,7 @@
     "create_doi_request": "Could not create DOI request",
     "create_project": "Could not create project",
     "create_registration": "Could not create registration",
+    "create_user": "Could not create user",
     "delete_identifier": "Could not delete {{qualifier}}",
     "delete_registration": "Could not delete registration",
     "download_file": "Could not download file",
@@ -60,6 +62,7 @@
     "user_already_exists": "User already exists"
   },
   "success": {
+    "add_employment": "Employment added",
     "added_affiliation": "Affiliation was added",
     "added_role": "Role was added",
     "admin_added": "User added as administrator",
