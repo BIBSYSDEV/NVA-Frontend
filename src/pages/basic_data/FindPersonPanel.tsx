@@ -3,8 +3,9 @@ import LooksOneIcon from '@mui/icons-material/LooksOne';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
-import { convertToFlatCristinUser } from '../../utils/user-helpers';
 import { useState, useCallback, useEffect } from 'react';
+import { Box } from '@mui/system';
+import { convertToFlatCristinUser } from '../../utils/user-helpers';
 import { CristinApiPath } from '../../api/apiPaths';
 import { authenticatedApiRequest } from '../../api/apiRequest';
 import { CristinUser } from '../../types/user.types';
@@ -12,7 +13,6 @@ import { isSuccessStatus } from '../../utils/constants';
 import { StyledCenterContainer } from '../../components/styled/Wrappers';
 import { AddEmployeeData, emptyUser } from './AddEmployee';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
-import { Box } from '@mui/system';
 import { getLanguageString } from '../../utils/translation-helpers';
 
 export const FindPersonPanel = () => {
