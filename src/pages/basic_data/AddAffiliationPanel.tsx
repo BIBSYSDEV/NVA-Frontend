@@ -15,6 +15,7 @@ import { RootStore } from '../../redux/reducers/rootReducer';
 import { Organization } from '../../types/organization.types';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { getSortedSubUnits } from '../../utils/institutions-helpers';
+import { AddEmployeeData } from './AddEmployee';
 
 export interface Position {
   id: string;
@@ -27,7 +28,7 @@ interface PositionResponse {
 
 export const AddAffiliationPanel = () => {
   const { t } = useTranslation('basicData');
-  const { setFieldValue } = useFormikContext();
+  const { values, setFieldValue } = useFormikContext<AddEmployeeData>();
   const user = useSelector((store: RootStore) => store.user);
   const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
     user?.topOrgCristinId ?? ''
@@ -37,6 +38,8 @@ export const AddAffiliationPanel = () => {
 
   const positions = (positionResponse?.positions ?? []).filter((position) => position.enabled); // TODO: fetch only active positions (NP-9070)
 
+  const isDisabled = !values.user.firstName || !values.user.lastName || !values.user.nationalId;
+
   return (
     <>
       <StyledCenterContainer>
@@ -45,6 +48,7 @@ export const AddAffiliationPanel = () => {
       <Field name="affiliation.organization">
         {({ field }: FieldProps<string>) => (
           <Autocomplete
+            disabled={isDisabled}
             value={organizationOptions.find((option) => option.id === field.value) ?? null}
             options={organizationOptions}
             getOptionLabel={(option) => getLanguageString(option.name)}
@@ -65,6 +69,7 @@ export const AddAffiliationPanel = () => {
         <Field name="affiliation.type">
           {({ field }: FieldProps<Position>) => (
             <Autocomplete
+              disabled={isDisabled}
               options={positions.sort((a, b) =>
                 getLanguageString(a.name).toLowerCase() > getLanguageString(b.name).toLowerCase() ? 1 : -1
               )}
@@ -85,6 +90,7 @@ export const AddAffiliationPanel = () => {
           {({ field }: FieldProps<string>) => (
             <TextField
               {...field}
+              disabled={isDisabled}
               fullWidth
               type="number"
               inputProps={{ min: '0', max: '100' }}
@@ -99,6 +105,7 @@ export const AddAffiliationPanel = () => {
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <DatePicker
               {...datePickerTranslationProps}
+              disabled={isDisabled}
               label={t('common:start_date')}
               value={field.value ?? null}
               onChange={(date: Date | null, keyboardInput) => {
@@ -126,6 +133,7 @@ export const AddAffiliationPanel = () => {
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <DatePicker
               {...datePickerTranslationProps}
+              disabled={isDisabled}
               label={t('common:end_date')}
               value={field.value ?? null}
               onChange={(date: Date | null, keyboardInput) => {

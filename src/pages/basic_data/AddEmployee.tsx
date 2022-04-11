@@ -67,7 +67,7 @@ export const AddEmployee = () => {
     if (userId) {
       // Add employment (affiliation)
       const addAffiliationResponse = await authenticatedApiRequest<Employment>({
-        url: `${values.user.id}/employment`,
+        url: `${userId}/employment`,
         method: 'POST',
         data: values.affiliation,
       });
