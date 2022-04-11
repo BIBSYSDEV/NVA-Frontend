@@ -43,10 +43,11 @@ export const AddEmployee = () => {
     console.log('Submit:', values);
 
     // TODO:
-
-    // Create user if it does not exist
-
-    // Add affiliation
+    if (!values.user.id) {
+      // Create user if it does not exist
+    } else {
+      // Add affiliation
+    }
 
     // Add roles
   };

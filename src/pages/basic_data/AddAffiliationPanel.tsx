@@ -1,7 +1,7 @@
 import { Autocomplete, Box, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import LooksTwoIcon from '@mui/icons-material/LooksTwo';
-import { ErrorMessage, Field, FieldProps } from 'formik';
+import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { DatePicker } from '@mui/lab';
 import { useSelector } from 'react-redux';
 import { StyledCenterContainer } from '../../components/styled/Wrappers';
@@ -27,6 +27,7 @@ interface PositionResponse {
 
 export const AddAffiliationPanel = () => {
   const { t } = useTranslation('basicData');
+  const { setFieldValue } = useFormikContext();
   const user = useSelector((store: RootStore) => store.user);
   const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
     user?.topOrgCristinId ?? ''
@@ -42,10 +43,10 @@ export const AddAffiliationPanel = () => {
         <LooksTwoIcon color="primary" fontSize="large" />
       </StyledCenterContainer>
       <Field name="affiliation.organization">
-        {({ field, form }: FieldProps<string>) => (
+        {({ field }: FieldProps<string>) => (
           <Autocomplete
+            value={organizationOptions.find((option) => option.id === field.value) ?? null}
             options={organizationOptions}
-            value={organizationOptions.find((option) => option.id === field.value)}
             getOptionLabel={(option) => getLanguageString(option.name)}
             renderOption={(props, option) => (
               <li {...props} key={option.id}>
@@ -53,7 +54,7 @@ export const AddAffiliationPanel = () => {
               </li>
             )}
             loading={isLoadingCurrentOrganization}
-            onChange={(_, value) => form.setFieldValue(field.name, value?.id)}
+            onChange={(_, value) => setFieldValue(field.name, value?.id)}
             renderInput={(params) => (
               <TextField {...params} label={t('common:institution')} variant="filled" fullWidth />
             )}
@@ -62,7 +63,7 @@ export const AddAffiliationPanel = () => {
       </Field>
       <Box display={{ display: 'flex', gap: '1rem' }}>
         <Field name="affiliation.type">
-          {({ field, form: { setFieldValue } }: FieldProps<Position>) => (
+          {({ field }: FieldProps<Position>) => (
             <Autocomplete
               options={positions.sort((a, b) =>
                 getLanguageString(a.name).toLowerCase() > getLanguageString(b.name).toLowerCase() ? 1 : -1
@@ -95,7 +96,7 @@ export const AddAffiliationPanel = () => {
       </Box>
       <Box display={{ display: 'flex', gap: '1rem' }}>
         <Field name="affiliation.startDate">
-          {({ field, form: { setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
+          {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <DatePicker
               {...datePickerTranslationProps}
               label={t('common:start_date')}
@@ -122,7 +123,7 @@ export const AddAffiliationPanel = () => {
         </Field>
 
         <Field name="affiliation.endDate">
-          {({ field, form: { setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
+          {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <DatePicker
               {...datePickerTranslationProps}
               label={t('common:end_date')}
