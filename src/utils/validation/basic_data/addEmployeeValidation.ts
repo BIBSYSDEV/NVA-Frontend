@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
+import { validateDateInterval } from '../validationHelpers';
 
 const employeeErrorMessage = {
   firstNameRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('common:first_name') }),
@@ -53,22 +54,12 @@ export const addEmployeeValidationSchema = Yup.object().shape({
       .max(100, employeeErrorMessage.affiliationPercentageMax)
       .required(employeeErrorMessage.affiliationPercentageRequired),
     startDate: Yup.string()
-      .test('start-test', employeeErrorMessage.affiliationStartDateBeforeEnd, (startValue, context) => {
-        const startDate = startValue ? new Date(startValue) : null;
-        const endDate = context.parent.endDate ? new Date(context.parent.endDate) : null;
-        if (startDate && endDate) {
-          return startDate <= endDate;
-        }
-        return true;
-      })
+      .test('start-test', employeeErrorMessage.affiliationStartDateBeforeEnd, (startValue, context) =>
+        validateDateInterval(startValue, context.parent.endDate)
+      )
       .required(employeeErrorMessage.affiliationStartDateRequired),
-    endDate: Yup.string().test('end-test', employeeErrorMessage.affiliationEndDateAfterStart, (endValue, context) => {
-      const startDate = context.parent.startDate ? new Date(context.parent.startDate) : null;
-      const endDate = endValue ? new Date(endValue) : null;
-      if (startDate && endDate) {
-        return startDate <= endDate;
-      }
-      return true;
-    }),
+    endDate: Yup.string().test('end-test', employeeErrorMessage.affiliationEndDateAfterStart, (endValue, context) =>
+      validateDateInterval(context.parent.startDate, endValue)
+    ),
   }),
 });
