@@ -19,7 +19,7 @@ export const FindPersonPanel = () => {
   const { t } = useTranslation('basicData');
   const { values, setFieldValue } = useFormikContext<AddEmployeeData>();
   const [isLoading, setIsLoading] = useState(false);
-  const [nationalNumber, setNationalNumber] = useState('');
+  const nationalNumber = values.searchIdNumber;
 
   const searchByNationalId = useCallback(async () => {
     setIsLoading(true);
@@ -54,20 +54,24 @@ export const FindPersonPanel = () => {
       <StyledCenterContainer>
         <LooksOneIcon color="primary" fontSize="large" sx={{ float: 'center' }} />
       </StyledCenterContainer>
-      <TextField
-        variant="filled"
-        label={t('search_for_national_id')}
-        value={nationalNumber}
-        onChange={(event) => event.target.value.length <= 11 && setNationalNumber(event.target.value)}
-        fullWidth
-        InputProps={{
-          endAdornment: (
-            <IconButton onClick={searchByNationalId} title={t('common:search')}>
-              <SearchIcon />
-            </IconButton>
-          ),
-        }}
-      />
+      <Field name="searchIdNumber">
+        {({ field }: FieldProps<string>) => (
+          <TextField
+            {...field}
+            variant="filled"
+            label={t('search_for_national_id')}
+            onChange={(event) => event.target.value.length <= 11 && field.onChange(event)}
+            fullWidth
+            InputProps={{
+              endAdornment: (
+                <IconButton onClick={searchByNationalId} title={t('common:search')}>
+                  <SearchIcon />
+                </IconButton>
+              ),
+            }}
+          />
+        )}
+      </Field>
       {isLoading ? (
         <CircularProgress />
       ) : nationalNumber.length === 11 ? (
