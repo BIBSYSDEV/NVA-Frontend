@@ -1,6 +1,6 @@
 import { Typography, Box, Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Form, Formik, FormikProps } from 'formik';
+import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch } from 'react-redux';
 import { CreateCristinUser, CristinUser, FlatCristinUser, RoleName } from '../../../types/user.types';
@@ -24,6 +24,7 @@ interface Employment {
 }
 
 export interface AddEmployeeData {
+  searchIdNumber: string;
   user: FlatCristinUser;
   affiliation: Employment;
   roles: RoleName[];
@@ -39,6 +40,7 @@ export const emptyUser: FlatCristinUser = {
 };
 
 const initialValues: AddEmployeeData = {
+  searchIdNumber: '',
   user: emptyUser,
   affiliation: { type: '', organization: '', startDate: '', endDate: '', fullTimeEquivalentPercentage: '' },
   roles: [RoleName.CREATOR],
@@ -48,7 +50,7 @@ export const AddEmployeePage = () => {
   const { t } = useTranslation('basicData');
   const disaptch = useDispatch();
 
-  const onSubmit = async (values: AddEmployeeData) => {
+  const onSubmit = async (values: AddEmployeeData, { resetForm }: FormikHelpers<AddEmployeeData>) => {
     let userId = values.user.id;
 
     if (!userId) {
@@ -75,6 +77,7 @@ export const AddEmployeePage = () => {
       });
       if (isSuccessStatus(addAffiliationResponse.status)) {
         disaptch(setNotification(t('feedback:success.add_employment')));
+        resetForm();
       } else if (isErrorStatus(addAffiliationResponse.status)) {
         disaptch(setNotification(t('feedback:error.add_employment'), 'error'));
       }
