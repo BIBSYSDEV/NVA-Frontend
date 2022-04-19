@@ -34,7 +34,11 @@ const BasicDataPage = () => {
         </Typography>
         <MenuList>
           {user?.isInstitutionAdmin && [
-            <MenuItem key="add-employee" component={Link} to={UrlPathTemplate.BasicDataAddEmployee}>
+            <MenuItem
+              key={dataTestId.basicData.addEmployeeLink}
+              data-testid={dataTestId.basicData.addEmployeeLink}
+              component={Link}
+              to={UrlPathTemplate.BasicDataAddEmployee}>
               <ListItemText>
                 <Typography variant="overline" color="primary" fontSize="1rem">
                   {t('add_employee')}
@@ -42,8 +46,8 @@ const BasicDataPage = () => {
               </ListItemText>
             </MenuItem>,
             <MenuItem
-              key={dataTestId.header.adminInstitutionLink}
-              data-testid={dataTestId.header.adminInstitutionLink}
+              key={dataTestId.basicData.adminInstitutionLink}
+              data-testid={dataTestId.basicData.adminInstitutionLink}
               component={Link}
               to={UrlPathTemplate.BasicDataMyInstitution}>
               <ListItemText>
@@ -53,8 +57,8 @@ const BasicDataPage = () => {
               </ListItemText>
             </MenuItem>,
             <MenuItem
-              key={dataTestId.header.adminUsersLink}
-              data-testid={dataTestId.header.adminUsersLink}
+              key={dataTestId.basicData.adminUsersLink}
+              data-testid={dataTestId.basicData.adminUsersLink}
               component={Link}
               to={UrlPathTemplate.BasicDataUsers}>
               <ListItemText>
@@ -67,7 +71,11 @@ const BasicDataPage = () => {
           <Divider orientation="horizontal" sx={{ my: '0.5rem', borderWidth: 1 }} />
           {user?.isAppAdmin && [
             <BetaFunctionality key="central-import">
-              <MenuItem component={Link} to={UrlPathTemplate.BasicDataCentralImport}>
+              <MenuItem
+                key={dataTestId.basicData.centralImportLink}
+                data-testid={dataTestId.basicData.centralImportLink}
+                component={Link}
+                to={UrlPathTemplate.BasicDataCentralImport}>
                 <ListItemText>
                   <Typography variant="overline" color="primary" fontSize="1rem">
                     {t('central_import')}
@@ -76,8 +84,8 @@ const BasicDataPage = () => {
               </MenuItem>
             </BetaFunctionality>,
             <MenuItem
-              key={dataTestId.header.adminInstitutionsLink}
-              data-testid={dataTestId.header.adminInstitutionsLink}
+              key={dataTestId.basicData.adminInstitutionsLink}
+              data-testid={dataTestId.basicData.adminInstitutionsLink}
               component={Link}
               to={UrlPathTemplate.BasicDataInstitutions}>
               <ListItemText>
