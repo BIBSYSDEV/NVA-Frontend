@@ -2,18 +2,18 @@ import { Typography, Box, Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikProps } from 'formik';
 import { LoadingButton } from '@mui/lab';
-import { CreateCristinUser, CristinUser, FlatCristinUser, RoleName } from '../../types/user.types';
+import { useDispatch } from 'react-redux';
+import { CreateCristinUser, CristinUser, FlatCristinUser, RoleName } from '../../../types/user.types';
 import { FindPersonPanel } from './FindPersonPanel';
 import { AddAffiliationPanel } from './AddAffiliationPanel';
 import { AddRolePanel } from './AddRolePanel';
-import { StyledCenterContainer } from '../../components/styled/Wrappers';
-import { authenticatedApiRequest } from '../../api/apiRequest';
-import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { useDispatch } from 'react-redux';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { CristinApiPath } from '../../api/apiPaths';
-import { convertToCristinUser } from '../../utils/user-helpers';
-import { addEmployeeValidationSchema } from '../../utils/validation/basic_data/addEmployeeValidation';
+import { StyledCenterContainer } from '../../../components/styled/Wrappers';
+import { authenticatedApiRequest } from '../../../api/apiRequest';
+import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { setNotification } from '../../../redux/actions/notificationActions';
+import { CristinApiPath } from '../../../api/apiPaths';
+import { convertToCristinUser } from '../../../utils/user-helpers';
+import { addEmployeeValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
 
 interface Employment {
   type: string;
@@ -44,7 +44,7 @@ const initialValues: AddEmployeeData = {
   roles: [RoleName.CREATOR],
 };
 
-export const AddEmployee = () => {
+export const AddEmployeePage = () => {
   const { t } = useTranslation('basicData');
   const disaptch = useDispatch();
 

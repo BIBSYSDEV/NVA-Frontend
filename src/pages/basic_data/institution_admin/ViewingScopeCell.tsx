@@ -2,16 +2,16 @@ import { Autocomplete, TextField } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { RoleApiPath } from '../../api/apiPaths';
-import { authenticatedApiRequest } from '../../api/apiRequest';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { Organization } from '../../types/organization.types';
-import { setViewingScope } from '../../redux/actions/userActions';
-import { RootStore } from '../../redux/reducers/rootReducer';
-import { InstitutionUser } from '../../types/user.types';
-import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { dataTestId } from '../../utils/dataTestIds';
-import { getLanguageString } from '../../utils/translation-helpers';
+import { RoleApiPath } from '../../../api/apiPaths';
+import { authenticatedApiRequest } from '../../../api/apiRequest';
+import { setNotification } from '../../../redux/actions/notificationActions';
+import { Organization } from '../../../types/organization.types';
+import { setViewingScope } from '../../../redux/actions/userActions';
+import { RootStore } from '../../../redux/reducers/rootReducer';
+import { InstitutionUser } from '../../../types/user.types';
+import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface ViewingScopeCellProps {
   user: InstitutionUser;

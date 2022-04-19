@@ -1,4 +1,3 @@
-import { lazy } from 'react';
 import { Box, Typography, ListItemText, MenuItem, MenuList, Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -10,11 +9,10 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { AppAdminRoute, InstitutionAdminRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
-import { AddEmployee } from './AddEmployee';
-import { CentralImport } from './app_admin/CentralImport';
-
-const MyInstitutionPage = lazy(() => import('../../pages/admin/MyInstitutionPage'));
-const MyInstitutionUsersPage = lazy(() => import('../../pages/admin/MyInstitutionUsersPage'));
+import { AddEmployeePage } from './institution_admin/AddEmployeePage';
+import { CentralImportPage } from './app_admin/CentralImportPage';
+import { MyCustomerInstitutionPage } from './institution_admin/MyInstitutionPage';
+import { MyInstitutionUsersPage } from './institution_admin/MyInstitutionUsersPage';
 
 const BasicDataPage = () => {
   const { t } = useTranslation('basicData');
@@ -98,9 +96,13 @@ const BasicDataPage = () => {
             path={UrlPathTemplate.BasicDataInstitutions}
             component={AdminCustomerInstitutionsContainer}
           />
-          <AppAdminRoute exact path={UrlPathTemplate.BasicDataCentralImport} component={CentralImport} />
-          <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataAddEmployee} component={AddEmployee} />
-          <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataMyInstitution} component={MyInstitutionPage} />
+          <AppAdminRoute exact path={UrlPathTemplate.BasicDataCentralImport} component={CentralImportPage} />
+          <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataAddEmployee} component={AddEmployeePage} />
+          <InstitutionAdminRoute
+            exact
+            path={UrlPathTemplate.BasicDataMyInstitution}
+            component={MyCustomerInstitutionPage}
+          />
           <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataUsers} component={MyInstitutionUsersPage} />
         </Switch>
       </BackgroundDiv>

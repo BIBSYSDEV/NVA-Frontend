@@ -15,7 +15,7 @@ import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { getTopLevelOrganization } from '../../../../utils/institutions-helpers';
 import { getFullCristinName } from '../../../../utils/user-helpers';
-import { OrganizationSearchField } from '../../../admin/customerInstitutionFields/OrganizationSearchField';
+import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
 
 export const ProjectContributorRow = () => {
   const { t } = useTranslation('project');

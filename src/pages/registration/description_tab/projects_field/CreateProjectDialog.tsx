@@ -22,7 +22,7 @@ import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getNewDateValue } from '../../../../utils/registration-helpers';
 import { basicProjectValidationSchema } from '../../../../utils/validation/project/BasicProjectValidation';
-import { OrganizationSearchField } from '../../../admin/customerInstitutionFields/OrganizationSearchField';
+import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
 import { ProjectContributorRow } from './ProjectContributorRow';
 
 const initialValues: PostCristinProject = {

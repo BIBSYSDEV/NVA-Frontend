@@ -2,9 +2,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, TextField, DialogActions, InputAdornment, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-
-import { RoleName, InstitutionUser } from '../../types/user.types';
 import { UserList } from './UserList';
+import { RoleName, InstitutionUser } from '../../../types/user.types';
 
 interface AddRoleModalContentProps {
   role: RoleName;
