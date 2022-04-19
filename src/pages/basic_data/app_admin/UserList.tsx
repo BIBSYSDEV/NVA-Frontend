@@ -16,17 +16,17 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { visuallyHidden } from '@mui/utils';
 import { LoadingButton } from '@mui/lab';
-import { updateUser } from '../../api/roleApi';
-import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { InstitutionUser, RoleName } from '../../types/user.types';
-import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
-import { alternatingTableRowColor } from '../../themes/mainTheme';
-import { ViewingScopeCell } from './ViewingScopeCell';
-import { RootStore } from '../../redux/reducers/rootReducer';
-import { useFetchResource } from '../../utils/hooks/useFetchResource';
-import { Organization } from '../../types/organization.types';
-import { getSortedSubUnits } from '../../utils/institutions-helpers';
+import { updateUser } from '../../../api/roleApi';
+import { ConfirmDialog } from '../../../components/ConfirmDialog';
+import { setNotification } from '../../../redux/actions/notificationActions';
+import { InstitutionUser, RoleName } from '../../../types/user.types';
+import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
+import { alternatingTableRowColor } from '../../../themes/mainTheme';
+import { ViewingScopeCell } from '../institution_admin/ViewingScopeCell';
+import { RootStore } from '../../../redux/reducers/rootReducer';
+import { useFetchResource } from '../../../utils/hooks/useFetchResource';
+import { Organization } from '../../../types/organization.types';
+import { getSortedSubUnits } from '../../../utils/institutions-helpers';
 
 interface UserListProps {
   userList: InstitutionUser[];

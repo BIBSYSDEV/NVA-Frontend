@@ -7,7 +7,7 @@ describe('User administers institutions ', () => {
     cy.mocklogin();
     cy.setUserRolesInRedux([RoleName.APP_ADMIN]);
     cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).click({ force: true });
-    cy.get(`[data-testid=${dataTestId.header.adminInstitutionsLink}]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.basicData.adminInstitutionsLink}]`).click({ force: true });
   });
 
   it('The User should be able to open admin page for institutions from the menu', () => {

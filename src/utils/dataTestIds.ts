@@ -1,4 +1,11 @@
 export const dataTestId = {
+  basicData: {
+    addEmployeeLink: 'add-employee-link',
+    adminInstitutionLink: 'admin-institution-link',
+    adminInstitutionsLink: 'admin-institutions-link',
+    adminUsersLink: 'admin-users-link',
+    centralImportLink: 'central-import-link',
+  },
   organization: {
     searchField: 'organization-search-field',
     subSearchField: 'sub-organization-search-field',
@@ -9,9 +16,6 @@ export const dataTestId = {
   },
   header: {
     aboutLink: 'about-link',
-    adminUsersLink: 'admin-users-link',
-    adminInstitutionLink: 'admin-institution-link',
-    adminInstitutionsLink: 'admin-institutions-link',
     basicDataLink: 'basic-data-link',
     editorLink: 'editor-link',
     generalMenuButton: 'general-menu-button',

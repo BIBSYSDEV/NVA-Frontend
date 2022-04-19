@@ -2,10 +2,10 @@ import { FormControl, FormLabel, FormGroup, FormControlLabel, Checkbox, Typograp
 import LooksThreeIcon from '@mui/icons-material/Looks3';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RoleName } from '../../types/user.types';
-import { StyledCenterContainer } from '../../components/styled/Wrappers';
+import { RoleName } from '../../../types/user.types';
+import { StyledCenterContainer } from '../../../components/styled/Wrappers';
 import { FieldArray, FieldArrayRenderProps } from 'formik';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
+import { BetaFunctionality } from '../../../components/BetaFunctionality';
 
 export const AddRolePanel = () => {
   const { t } = useTranslation('basicData');

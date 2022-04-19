@@ -3,29 +3,29 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import SaveIcon from '@mui/icons-material/Save';
 import { LoadingButton } from '@mui/lab';
-import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
-import { ListSkeleton } from '../../components/ListSkeleton';
-import { PageHeader } from '../../components/PageHeader';
+import { updateCustomerInstitution } from '../../../api/customerInstitutionsApi';
+import { ListSkeleton } from '../../../components/ListSkeleton';
+import { PageHeader } from '../../../components/PageHeader';
 import {
   InputContainerBox,
   SyledPageContent,
   StyledRightAlignedWrapper,
   BackgroundDiv,
-} from '../../components/styled/Wrappers';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { RootStore } from '../../redux/reducers/rootReducer';
+} from '../../../components/styled/Wrappers';
+import { setNotification } from '../../../redux/actions/notificationActions';
+import { RootStore } from '../../../redux/reducers/rootReducer';
 import {
   CustomerInstitution,
   CustomerInstitutionFieldNames,
   emptyCustomerInstitution,
-} from '../../types/customerInstitution.types';
-import { myInstitutionValidationSchema } from '../../utils/validation/customerInstitutionValidation';
-import { CustomerInstitutionTextField } from './customerInstitutionFields/CustomerInstitutionTextField';
-import { useFetch } from '../../utils/hooks/useFetch';
-import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { dataTestId } from '../../utils/dataTestIds';
+} from '../../../types/customerInstitution.types';
+import { myInstitutionValidationSchema } from '../../../utils/validation/customerInstitutionValidation';
+import { useFetch } from '../../../utils/hooks/useFetch';
+import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { CustomerInstitutionTextField } from '../app_admin/CustomerInstitutionTextField';
 
-const MyCustomerInstitutionPage = () => {
+export const MyCustomerInstitutionPage = () => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
   const { user } = useSelector((store: RootStore) => store);
@@ -109,5 +109,3 @@ const MyCustomerInstitutionPage = () => {
     </SyledPageContent>
   );
 };
-
-export default MyCustomerInstitutionPage;

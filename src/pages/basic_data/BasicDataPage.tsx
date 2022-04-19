@@ -9,8 +9,10 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { AppAdminRoute, InstitutionAdminRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
-import { AddEmployee } from './AddEmployee';
-import { CentralImport } from './app_admin/CentralImport';
+import { AddEmployeePage } from './institution_admin/AddEmployeePage';
+import { CentralImportPage } from './app_admin/CentralImportPage';
+import { MyCustomerInstitutionPage } from './institution_admin/MyInstitutionPage';
+import { MyInstitutionUsersPage } from './institution_admin/MyInstitutionUsersPage';
 
 const BasicDataPage = () => {
   const { t } = useTranslation('basicData');
@@ -31,19 +33,49 @@ const BasicDataPage = () => {
           {t('basic_data')}
         </Typography>
         <MenuList>
-          {user?.isInstitutionAdmin && (
-            <MenuItem component={Link} to={UrlPathTemplate.BasicDataAddEmployee}>
+          {user?.isInstitutionAdmin && [
+            <MenuItem
+              key={dataTestId.basicData.addEmployeeLink}
+              data-testid={dataTestId.basicData.addEmployeeLink}
+              component={Link}
+              to={UrlPathTemplate.BasicDataAddEmployee}>
               <ListItemText>
                 <Typography variant="overline" color="primary" fontSize="1rem">
                   {t('add_employee')}
                 </Typography>
               </ListItemText>
-            </MenuItem>
-          )}
+            </MenuItem>,
+            <MenuItem
+              key={dataTestId.basicData.adminInstitutionLink}
+              data-testid={dataTestId.basicData.adminInstitutionLink}
+              component={Link}
+              to={UrlPathTemplate.BasicDataMyInstitution}>
+              <ListItemText>
+                <Typography variant="overline" color="primary" fontSize="1rem">
+                  {t('common:my_institution')}
+                </Typography>
+              </ListItemText>
+            </MenuItem>,
+            <MenuItem
+              key={dataTestId.basicData.adminUsersLink}
+              data-testid={dataTestId.basicData.adminUsersLink}
+              component={Link}
+              to={UrlPathTemplate.BasicDataUsers}>
+              <ListItemText>
+                <Typography variant="overline" color="primary" fontSize="1rem">
+                  {t('common:users')}
+                </Typography>
+              </ListItemText>
+            </MenuItem>,
+          ]}
           <Divider orientation="horizontal" sx={{ my: '0.5rem', borderWidth: 1 }} />
           {user?.isAppAdmin && [
             <BetaFunctionality key="central-import">
-              <MenuItem component={Link} to={UrlPathTemplate.BasicDataCentralImport}>
+              <MenuItem
+                key={dataTestId.basicData.centralImportLink}
+                data-testid={dataTestId.basicData.centralImportLink}
+                component={Link}
+                to={UrlPathTemplate.BasicDataCentralImport}>
                 <ListItemText>
                   <Typography variant="overline" color="primary" fontSize="1rem">
                     {t('central_import')}
@@ -52,8 +84,8 @@ const BasicDataPage = () => {
               </MenuItem>
             </BetaFunctionality>,
             <MenuItem
-              key={dataTestId.header.adminInstitutionsLink}
-              data-testid={dataTestId.header.adminInstitutionsLink}
+              key={dataTestId.basicData.adminInstitutionsLink}
+              data-testid={dataTestId.basicData.adminInstitutionsLink}
               component={Link}
               to={UrlPathTemplate.BasicDataInstitutions}>
               <ListItemText>
@@ -72,8 +104,14 @@ const BasicDataPage = () => {
             path={UrlPathTemplate.BasicDataInstitutions}
             component={AdminCustomerInstitutionsContainer}
           />
-          <AppAdminRoute exact path={UrlPathTemplate.BasicDataCentralImport} component={CentralImport} />
-          <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataAddEmployee} component={AddEmployee} />
+          <AppAdminRoute exact path={UrlPathTemplate.BasicDataCentralImport} component={CentralImportPage} />
+          <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataAddEmployee} component={AddEmployeePage} />
+          <InstitutionAdminRoute
+            exact
+            path={UrlPathTemplate.BasicDataMyInstitution}
+            component={MyCustomerInstitutionPage}
+          />
+          <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataUsers} component={MyInstitutionUsersPage} />
         </Switch>
       </BackgroundDiv>
     </Box>

@@ -4,18 +4,18 @@ import { useSelector } from 'react-redux';
 import { Button, Checkbox, Divider, FormControlLabel, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { styled } from '@mui/system';
-import { ListSkeleton } from '../../components/ListSkeleton';
-import { Modal } from '../../components/Modal';
-import { PageHeader } from '../../components/PageHeader';
-import { BackgroundDiv, SyledPageContent } from '../../components/styled/Wrappers';
-import { RootStore } from '../../redux/reducers/rootReducer';
-import { RoleName, UserList as UserListType } from '../../types/user.types';
-import { filterUsersByRole } from '../../utils/role-helpers';
-import { AddRoleModalContent } from './AddRoleModalContent';
-import { UserList } from './UserList';
-import { dataTestId } from '../../utils/dataTestIds';
-import { useFetch } from '../../utils/hooks/useFetch';
-import { RoleApiPath } from '../../api/apiPaths';
+import { ListSkeleton } from '../../../components/ListSkeleton';
+import { Modal } from '../../../components/Modal';
+import { PageHeader } from '../../../components/PageHeader';
+import { BackgroundDiv, SyledPageContent } from '../../../components/styled/Wrappers';
+import { RootStore } from '../../../redux/reducers/rootReducer';
+import { RoleName, UserList as UserListType } from '../../../types/user.types';
+import { filterUsersByRole } from '../../../utils/role-helpers';
+import { UserList } from '../app_admin/UserList';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { useFetch } from '../../../utils/hooks/useFetch';
+import { RoleApiPath } from '../../../api/apiPaths';
+import { AddRoleModalContent } from '../app_admin/AddRoleModalContent';
 
 const StyledContainer = styled('div')({
   marginBottom: '1rem',
@@ -25,7 +25,7 @@ const StyledNewButton = styled(Button)({
   marginTop: '1rem',
 });
 
-const MyInstitutionUsersPage = () => {
+export const MyInstitutionUsersPage = () => {
   const { t } = useTranslation('admin');
   const user = useSelector((store: RootStore) => store.user);
   const [institutionUsers, isLoading, fetchInstitutionUsers] = useFetch<UserListType>({
@@ -157,5 +157,3 @@ const MyInstitutionUsersPage = () => {
     </SyledPageContent>
   );
 };
-
-export default MyInstitutionUsersPage;
