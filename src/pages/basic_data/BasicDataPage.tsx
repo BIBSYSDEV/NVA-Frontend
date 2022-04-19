@@ -1,7 +1,8 @@
+import { useEffect } from 'react';
 import { Box, Typography, ListItemText, MenuItem, MenuList, Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Switch } from 'react-router-dom';
+import { Link, Switch, useHistory } from 'react-router-dom';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -17,6 +18,18 @@ import { MyInstitutionUsersPage } from './institution_admin/MyInstitutionUsersPa
 const BasicDataPage = () => {
   const { t } = useTranslation('basicData');
   const user = useSelector((store: RootStore) => store.user);
+  const history = useHistory();
+  const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
+
+  useEffect(() => {
+    if (currentPath === UrlPathTemplate.BasicData) {
+      if (user?.isInstitutionAdmin) {
+        history.replace(UrlPathTemplate.BasicDataUsers);
+      } else if (user?.isAppAdmin) {
+        history.replace(UrlPathTemplate.BasicDataInstitutions);
+      }
+    }
+  }, [history, currentPath, user?.isInstitutionAdmin, user?.isAppAdmin]);
 
   return (
     <Box
@@ -38,6 +51,7 @@ const BasicDataPage = () => {
               key={dataTestId.basicData.addEmployeeLink}
               data-testid={dataTestId.basicData.addEmployeeLink}
               component={Link}
+              selected={currentPath === UrlPathTemplate.BasicDataAddEmployee}
               to={UrlPathTemplate.BasicDataAddEmployee}>
               <ListItemText>
                 <Typography variant="overline" color="primary" fontSize="1rem">
@@ -49,6 +63,7 @@ const BasicDataPage = () => {
               key={dataTestId.basicData.adminInstitutionLink}
               data-testid={dataTestId.basicData.adminInstitutionLink}
               component={Link}
+              selected={currentPath === UrlPathTemplate.BasicDataMyInstitution}
               to={UrlPathTemplate.BasicDataMyInstitution}>
               <ListItemText>
                 <Typography variant="overline" color="primary" fontSize="1rem">
@@ -60,6 +75,7 @@ const BasicDataPage = () => {
               key={dataTestId.basicData.adminUsersLink}
               data-testid={dataTestId.basicData.adminUsersLink}
               component={Link}
+              selected={currentPath === UrlPathTemplate.BasicDataUsers}
               to={UrlPathTemplate.BasicDataUsers}>
               <ListItemText>
                 <Typography variant="overline" color="primary" fontSize="1rem">
@@ -75,6 +91,7 @@ const BasicDataPage = () => {
                 key={dataTestId.basicData.centralImportLink}
                 data-testid={dataTestId.basicData.centralImportLink}
                 component={Link}
+                selected={currentPath === UrlPathTemplate.BasicDataCentralImport}
                 to={UrlPathTemplate.BasicDataCentralImport}>
                 <ListItemText>
                   <Typography variant="overline" color="primary" fontSize="1rem">
@@ -87,6 +104,7 @@ const BasicDataPage = () => {
               key={dataTestId.basicData.adminInstitutionsLink}
               data-testid={dataTestId.basicData.adminInstitutionsLink}
               component={Link}
+              selected={currentPath === UrlPathTemplate.BasicDataInstitutions}
               to={UrlPathTemplate.BasicDataInstitutions}>
               <ListItemText>
                 <Typography variant="overline" color="primary" fontSize="1rem">
