@@ -1,3 +1,4 @@
+import { lazy } from 'react';
 import { Box, Typography, ListItemText, MenuItem, MenuList, Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -11,6 +12,9 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
 import { AddEmployee } from './AddEmployee';
 import { CentralImport } from './app_admin/CentralImport';
+
+const MyInstitutionPage = lazy(() => import('../../pages/admin/MyInstitutionPage'));
+const MyInstitutionUsersPage = lazy(() => import('../../pages/admin/MyInstitutionUsersPage'));
 
 const BasicDataPage = () => {
   const { t } = useTranslation('basicData');
@@ -31,15 +35,37 @@ const BasicDataPage = () => {
           {t('basic_data')}
         </Typography>
         <MenuList>
-          {user?.isInstitutionAdmin && (
-            <MenuItem component={Link} to={UrlPathTemplate.BasicDataAddEmployee}>
+          {user?.isInstitutionAdmin && [
+            <MenuItem key="add-employee" component={Link} to={UrlPathTemplate.BasicDataAddEmployee}>
               <ListItemText>
                 <Typography variant="overline" color="primary" fontSize="1rem">
                   {t('add_employee')}
                 </Typography>
               </ListItemText>
-            </MenuItem>
-          )}
+            </MenuItem>,
+            <MenuItem
+              key={dataTestId.header.adminInstitutionLink}
+              data-testid={dataTestId.header.adminInstitutionLink}
+              component={Link}
+              to={UrlPathTemplate.BasicDataMyInstitution}>
+              <ListItemText>
+                <Typography variant="overline" color="primary" fontSize="1rem">
+                  {t('common:my_institution')}
+                </Typography>
+              </ListItemText>
+            </MenuItem>,
+            <MenuItem
+              key={dataTestId.header.adminUsersLink}
+              data-testid={dataTestId.header.adminUsersLink}
+              component={Link}
+              to={UrlPathTemplate.BasicDataUsers}>
+              <ListItemText>
+                <Typography variant="overline" color="primary" fontSize="1rem">
+                  {t('common:users')}
+                </Typography>
+              </ListItemText>
+            </MenuItem>,
+          ]}
           <Divider orientation="horizontal" sx={{ my: '0.5rem', borderWidth: 1 }} />
           {user?.isAppAdmin && [
             <BetaFunctionality key="central-import">
@@ -74,6 +100,8 @@ const BasicDataPage = () => {
           />
           <AppAdminRoute exact path={UrlPathTemplate.BasicDataCentralImport} component={CentralImport} />
           <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataAddEmployee} component={AddEmployee} />
+          <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataMyInstitution} component={MyInstitutionPage} />
+          <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataUsers} component={MyInstitutionUsersPage} />
         </Switch>
       </BackgroundDiv>
     </Box>

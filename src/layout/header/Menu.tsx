@@ -1,17 +1,7 @@
 import { useState, MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import {
-  Button,
-  Menu as MuiMenu,
-  MenuItem,
-  Typography,
-  Divider,
-  Theme,
-  useMediaQuery,
-  IconButton,
-  Box,
-} from '@mui/material';
+import { Button, Menu as MuiMenu, MenuItem, Typography, Theme, useMediaQuery, IconButton, Box } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircleOutlined';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
@@ -109,37 +99,16 @@ export const Menu = ({ handleLogout }: MenuProps) => {
             <Typography>{t('profile:roles.editor')}</Typography>
           </MenuItem>
         )}
-        {(user?.isAppAdmin || user?.isInstitutionAdmin) && [
-          isMobile && (
-            <MenuItem
-              key={dataTestId.header.basicDataLink}
-              data-testid={dataTestId.header.basicDataLink}
-              onClick={closeMenu}
-              component={Link}
-              to={UrlPathTemplate.BasicData}>
-              <Typography>{t('basicData:basic_data')}</Typography>
-            </MenuItem>
-          ),
-          user.isInstitutionAdmin && [
-            <MenuItem
-              key={dataTestId.header.adminInstitutionLink}
-              data-testid={dataTestId.header.adminInstitutionLink}
-              onClick={closeMenu}
-              component={Link}
-              to={UrlPathTemplate.MyInstitution}>
-              <Typography>{t('common:my_institution')}</Typography>
-            </MenuItem>,
-            <MenuItem
-              key={dataTestId.header.adminUsersLink}
-              data-testid={dataTestId.header.adminUsersLink}
-              onClick={closeMenu}
-              component={Link}
-              to={UrlPathTemplate.MyInstitutionUsers}>
-              <Typography>{t('common:users')}</Typography>
-            </MenuItem>,
-          ],
-          <Divider key="divider1" />,
-        ]}
+        {(user?.isAppAdmin || user?.isInstitutionAdmin) && isMobile && (
+          <MenuItem
+            key={dataTestId.header.basicDataLink}
+            data-testid={dataTestId.header.basicDataLink}
+            onClick={closeMenu}
+            component={Link}
+            to={UrlPathTemplate.BasicData}>
+            <Typography>{t('basicData:basic_data')}</Typography>
+          </MenuItem>
+        )}
         <MenuItem
           data-testid={dataTestId.header.myProfileLink}
           onClick={closeMenu}
