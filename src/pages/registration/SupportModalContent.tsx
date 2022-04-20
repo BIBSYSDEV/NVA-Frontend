@@ -5,7 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { MessageForm } from '../../components/MessageForm';
 import { addMessage } from '../../api/registrationApi';
 import { useDispatch } from 'react-redux';
-import { setNotification } from '../../redux/actions/notificationActions';
+import { setNotification } from '../../redux/notificationSlice';
 import { MessageType } from '../../types/publication_types/messages.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 

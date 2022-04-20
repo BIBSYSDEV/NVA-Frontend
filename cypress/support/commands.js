@@ -1,5 +1,5 @@
 import { setRoles } from '../../src/redux/actions/userActions';
-import { setNotification, removeNotification } from '../../src/redux/actions/notificationActions';
+import { setNotification, removeNotification } from '../../src/redux/notificationSlice';
 import { mockFileUploadUrl } from '../../src/utils/testfiles/mockFiles';
 import { dataTestId } from '../../src/utils/dataTestIds';
 

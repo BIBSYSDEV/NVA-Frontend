@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { RoleApiPath } from '../../../api/apiPaths';
 import { authenticatedApiRequest } from '../../../api/apiRequest';
-import { setNotification } from '../../../redux/actions/notificationActions';
+import { setNotification } from '../../../redux/notificationSlice';
 import { Organization } from '../../../types/organization.types';
 import { setViewingScope } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
@@ -45,12 +45,12 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
 
     if (isSuccessStatus(updateUserResponse.status)) {
       setUserCopy(newUser);
-      dispatch(setNotification(t('feedback:success.update_institution_user')));
+      dispatch(setNotification({ message: t('feedback:success.update_institution_user'), variant: 'success' }));
       if (user.username === authenticatedUser?.id) {
         dispatch(setViewingScope([newScopeId]));
       }
     } else if (isErrorStatus(updateUserResponse.status)) {
-      dispatch(setNotification(t('feedback:error.update_institution_user'), 'error'));
+      dispatch(setNotification({ message: t('feedback:error.update_institution_user'), variant: 'error' }));
     }
     setIsUpdating(false);
   };

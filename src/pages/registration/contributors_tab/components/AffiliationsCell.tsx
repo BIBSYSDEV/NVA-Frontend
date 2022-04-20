@@ -9,7 +9,7 @@ import WarningIcon from '@mui/icons-material/Warning';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { Modal } from '../../../../components/Modal';
-import { setNotification } from '../../../../redux/actions/notificationActions';
+import { setNotification } from '../../../../redux/notificationSlice';
 import { Institution } from '../../../../types/contributor.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
@@ -44,7 +44,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
 
     // Avoid adding same unit twice
     if (affiliations?.some((affiliation) => affiliation.id === id)) {
-      disptach(setNotification(t('contributors.add_duplicate_affiliation'), 'info'));
+      disptach(setNotification({ message: t('contributors.add_duplicate_affiliation'), variant: 'info' }));
       return;
     }
 

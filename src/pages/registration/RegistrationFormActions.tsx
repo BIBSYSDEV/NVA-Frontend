@@ -10,7 +10,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import { LoadingButton } from '@mui/lab';
 import { updateRegistration } from '../../api/registrationApi';
 import { Modal } from '../../components/Modal';
-import { setNotification } from '../../redux/actions/notificationActions';
+import { setNotification } from '../../redux/notificationSlice';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
@@ -43,11 +43,11 @@ export const RegistrationFormActions = ({
     const updateRegistrationResponse = await updateRegistration(formattedValues);
     const isSuccess = isSuccessStatus(updateRegistrationResponse.status);
     if (isErrorStatus(updateRegistrationResponse.status)) {
-      dispatch(setNotification(t('feedback:error.update_registration'), 'error'));
+      dispatch(setNotification({ message: t('feedback:error.update_registration'), variant: 'error' }));
       setIsSaving(false);
     } else if (isSuccess) {
       refetchRegistration();
-      dispatch(setNotification(t('feedback:success.update_registration')));
+      dispatch(setNotification({ message: t('feedback:success.update_registration'), variant: 'success' }));
     }
 
     return isSuccess;

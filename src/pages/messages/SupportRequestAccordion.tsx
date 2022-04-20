@@ -7,7 +7,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { addMessage } from '../../api/registrationApi';
 import { MessageForm } from '../../components/MessageForm';
-import { setNotification } from '../../redux/actions/notificationActions';
+import { setNotification } from '../../redux/notificationSlice';
 import { Message, MessageType } from '../../types/publication_types/messages.types';
 import { RegistrationPreview } from '../../types/registration.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
@@ -32,9 +32,9 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
   const onClickSendMessage = async (message: string) => {
     const updateDoiRequestResponse = await addMessage(registration.identifier, message, messageType);
     if (isErrorStatus(updateDoiRequestResponse.status)) {
-      dispatch(setNotification(t('feedback:error.send_message'), 'error'));
+      dispatch(setNotification({ message: t('feedback:error.send_message'), variant: 'error' }));
     } else if (isSuccessStatus(updateDoiRequestResponse.status)) {
-      dispatch(setNotification(t('feedback:success.send_message')));
+      dispatch(setNotification({ message: t('feedback:success.send_message'), variant: 'success' }));
       const newMessage: Message = {
         ...messagesCopy[0],
         date: new Date().toString(),

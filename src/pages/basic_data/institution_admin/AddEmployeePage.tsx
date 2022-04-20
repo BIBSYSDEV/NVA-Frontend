@@ -10,7 +10,7 @@ import { AddRolePanel } from './AddRolePanel';
 import { StyledCenterContainer } from '../../../components/styled/Wrappers';
 import { authenticatedApiRequest } from '../../../api/apiRequest';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
-import { setNotification } from '../../../redux/actions/notificationActions';
+import { setNotification } from '../../../redux/notificationSlice';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { convertToCristinUser } from '../../../utils/user-helpers';
 import { addEmployeeValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
@@ -62,7 +62,7 @@ export const AddEmployeePage = () => {
         data: cristinUser,
       });
       if (isErrorStatus(createPersonResponse.status)) {
-        disaptch(setNotification(t('feedback:error.add_employment'), 'error'));
+        disaptch(setNotification({ message: t('feedback:error.add_employment'), variant: 'error' }));
       } else if (isSuccessStatus(createPersonResponse.status)) {
         userId = createPersonResponse.data.id;
       }
@@ -76,10 +76,10 @@ export const AddEmployeePage = () => {
         data: values.affiliation,
       });
       if (isSuccessStatus(addAffiliationResponse.status)) {
-        disaptch(setNotification(t('feedback:success.add_employment')));
+        disaptch(setNotification({ message: t('feedback:success.add_employment'), variant: 'success' }));
         resetForm();
       } else if (isErrorStatus(addAffiliationResponse.status)) {
-        disaptch(setNotification(t('feedback:error.add_employment'), 'error'));
+        disaptch(setNotification({ message: t('feedback:error.add_employment'), variant: 'error' }));
       }
     }
 

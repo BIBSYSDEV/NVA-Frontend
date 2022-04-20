@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { notificationReducer } from './reducers/notificationReducer';
+import notificationReducer from './notificationSlice';
 import resourcesReducer from './resourcesSlice';
 import { userReducer } from './reducers/userReducer';
 
