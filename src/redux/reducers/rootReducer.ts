@@ -12,8 +12,8 @@ export interface RootStore {
   resources: { [id: string]: ResourceType };
 }
 
-export const rootReducer = combineReducers({
-  notification: notificationReducer,
-  user: userReducer,
-  resources: resourcesReducer,
-});
+// export const rootReducer = combineReducers({
+//   notification: notificationReducer,
+//   user: userReducer,
+//   resources: resourcesReducer,
+// });

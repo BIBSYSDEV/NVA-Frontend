@@ -1,3 +1,4 @@
+import { AnyAction } from '@reduxjs/toolkit';
 import { Organization } from '../../types/organization.types';
 import { CristinProject } from '../../types/project.types';
 import { Journal, Publisher, Registration } from '../../types/registration.types';
@@ -16,4 +17,4 @@ interface SetResourcesAction {
   resource: ResourceType;
 }
 
-export type ResourcesActions = SetResourcesAction;
+export type ResourcesActions = AnyAction | SetResourcesAction;

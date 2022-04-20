@@ -2,10 +2,7 @@ import { RoleName, User } from '../../types/user.types';
 import { AuthActions, LOGOUT_SUCCESS } from '../actions/authActions';
 import { SET_VIEWING_SCOPE, SET_USER_SUCCESS, UserActions, SET_ROLES } from '../actions/userActions';
 
-export const userReducer = (
-  state: User | null = null,
-  action: UserActions | AuthActions
-): User | Partial<User> | null => {
+export const userReducer = (state: User | null = null, action: UserActions | AuthActions): User | null => {
   switch (action.type) {
     case SET_USER_SUCCESS: {
       const customerId = action.user['custom:customerId']?.endsWith('/customer/None')
@@ -18,13 +15,13 @@ export const userReducer = (
       const lastName = action.user['custom:lastName'] ?? '';
       const cristinId = action.user['custom:cristinId'] ?? '';
 
-      const user: Partial<User> = {
+      const user: User = {
         name: `${firstName} ${lastName}`,
         givenName: firstName,
         familyName: lastName,
         id: action.user['custom:feideId'] ?? '',
         cristinId,
-        username: action.user['custom:nvaUsername'],
+        username: action.user['custom:nvaUsername'] ?? '',
         customerId,
         roles,
         topOrgCristinId: action.user['custom:topOrgCristinId'],
@@ -47,12 +44,12 @@ export const userReducer = (
         isInstitutionAdmin: !!state?.customerId && action.roles.includes(RoleName.INSTITUTION_ADMIN),
         isCurator: !!state?.customerId && action.roles.includes(RoleName.CURATOR),
         isEditor: !!state?.customerId && action.roles.includes(RoleName.EDITOR),
-      };
+      } as User;
     case SET_VIEWING_SCOPE:
       return {
         ...state,
         viewingScope: action.viewingScope,
-      };
+      } as User;
     case LOGOUT_SUCCESS:
       return null;
     default:

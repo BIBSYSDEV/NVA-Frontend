@@ -1,7 +1,12 @@
-import { applyMiddleware, createStore } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
+import { notificationReducer } from './reducers/notificationReducer';
+import { resourcesReducer } from './reducers/ResourcesReducer';
+import { userReducer } from './reducers/userReducer';
 
-import { rootReducer } from './reducers/rootReducer';
-
-export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
+export const store = configureStore({
+  reducer: {
+    notification: notificationReducer,
+    user: userReducer,
+    resources: resourcesReducer,
+  },
+});
