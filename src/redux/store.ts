@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { notificationReducer } from './reducers/notificationReducer';
-import { resourcesReducer } from './reducers/ResourcesReducer';
+import resourcesReducer from './resourcesSlice';
 import { userReducer } from './reducers/userReducer';
 
 export const store = configureStore({
