@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
 import { InstitutionUser, RoleName } from '../../../types/user.types';
 import { filterUsersByRole } from '../../../utils/role-helpers';
-import { UserList } from '../../admin/UserList';
+import { UserList } from './UserList';
 import { Modal } from '../../../components/Modal';
-import { AddRoleModalContent } from '../../admin/AddRoleModalContent';
 import { ListSkeleton } from '../../../components/ListSkeleton';
+import { AddRoleModalContent } from './AddRoleModalContent';
 
 interface CustomerInstitutionAdminsFormProps {
   users: InstitutionUser[];

@@ -31,17 +31,9 @@ export const UserRoles = ({ user }: UserRolesProps) => {
           </Typography>
         )
       ) : (
-        <>
-          <Typography data-testid="not-customer-text" sx={{ color: 'error.main' }}>
-            {t('roles.not_customer')}
-          </Typography>
-          <Typography>
-            {t('common:name')}: {user.institution}
-          </Typography>
-          <Typography>
-            {t('common:organization_number')}: {user.orgNumber}
-          </Typography>
-        </>
+        <Typography data-testid="not-customer-text" sx={{ color: 'error.main' }}>
+          {t('roles.not_customer')}
+        </Typography>
       )}
       {isAppAdmin && (
         <RoleItem

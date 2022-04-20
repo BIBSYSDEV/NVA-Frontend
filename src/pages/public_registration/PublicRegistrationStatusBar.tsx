@@ -110,7 +110,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   const firstErrorTab = getFirstErrorTab(tabErrors);
   const registrationIsValid = !tabErrors || firstErrorTab === -1;
 
-  const isOwner = user && user.isCreator && resourceOwner.owner === user.id;
+  const isOwner = user && user.isCreator && resourceOwner.owner === user.username;
   const isCurator = user && user.isCurator && user.customerId === publisher.id;
   const hasNvaDoi = !!doi || doiRequest;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;

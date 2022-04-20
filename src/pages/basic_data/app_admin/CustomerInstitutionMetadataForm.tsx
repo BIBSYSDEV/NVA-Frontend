@@ -14,12 +14,12 @@ import { setNotification } from '../../../redux/actions/notificationActions';
 import { createCustomerInstitution, updateCustomerInstitution } from '../../../api/customerInstitutionsApi';
 import { InputContainerBox, StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 import { customerInstitutionValidationSchema } from '../../../utils/validation/customerInstitutionValidation';
-import { CustomerInstitutionTextField } from '../../admin/customerInstitutionFields/CustomerInstitutionTextField';
-import { OrganizationSearchField } from '../../admin/customerInstitutionFields/OrganizationSearchField';
 import { getAdminInstitutionPath } from '../../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { OrganizationSearchField } from './OrganizationSearchField';
+import { CustomerInstitutionTextField } from './CustomerInstitutionTextField';
 
 interface CustomerInstitutionMetadataFormProps {
   customerInstitution: CustomerInstitution;
@@ -113,8 +113,8 @@ export const CustomerInstitutionMetadataForm = ({
                 dataTestId={dataTestId.institutionAdmin.archiveNameField}
               />
               <CustomerInstitutionTextField
-                name={CustomerInstitutionFieldNames.FeideOrganizationId}
-                label={t('feide_organization_id')}
+                name={CustomerInstitutionFieldNames.FeideOrganizationDomain}
+                label={t('feide_organization_domain')}
                 required
                 dataTestId={dataTestId.institutionAdmin.feideField}
               />

@@ -38,9 +38,11 @@ export const convertToCristinUser = (user: FlatCristinUser): CreateCristinUser =
 });
 
 export const convertToFlatCristinUser = (user: CristinUser): FlatCristinUser => ({
-  nationalId: getValueByKey('NationalIdentificationNumber', user.identifiers),
+  nationalId:
+    getValueByKey('NationalIdentificationNumber', user.identifiers) || user.NationalIdentificationNumber || '',
   firstName: getValueByKey('FirstName', user.names),
   lastName: getValueByKey('LastName', user.names),
   id: user.id,
   cristinIdentifier: getValueByKey('CristinIdentifier', user.identifiers),
+  affiliations: user.affiliations,
 });

@@ -35,7 +35,7 @@ export const mockCustomerInstitution: CustomerInstitution = {
   cname: 'ntnu.unit.nva.no',
   cristinId: 'https://api.dev.nva.aws.unit.no/cristin/organization/194.0.0.0',
   institutionDns: '1.1.1.1',
-  feideOrganizationId: 'NO919477822',
+  feideOrganizationDomain: 'ntnu.no',
   vocabularies: mockCustomerInstitutionVocabularies.vocabularies,
 };
 
@@ -53,7 +53,7 @@ export const mockCustomerInstitutions: CustomerList = {
       cname: 'xxx',
       cristinId: 'https://api.dev.nva.aws.unit.no/cristin/organization/1.0.0.0',
       institutionDns: 'xxx',
-      feideOrganizationId: 'xxx',
+      feideOrganizationDomain: 'xxx.no',
       vocabularies: [],
     },
     {
@@ -67,7 +67,7 @@ export const mockCustomerInstitutions: CustomerList = {
       cname: 'xxx',
       cristinId: 'https://api.dev.nva.aws.unit.no/cristin/organization/3',
       institutionDns: 'xxx',
-      feideOrganizationId: 'xxx',
+      feideOrganizationDomain: 'xxx.no',
       vocabularies: [],
     },
     {
@@ -81,7 +81,7 @@ export const mockCustomerInstitutions: CustomerList = {
       cname: 'xxx',
       cristinId: 'https://api.dev.nva.aws.unit.no/cristin/organization/4',
       institutionDns: 'xxx',
-      feideOrganizationId: 'xxx',
+      feideOrganizationDomain: 'xxx.no',
       vocabularies: [],
     },
     {
@@ -95,7 +95,7 @@ export const mockCustomerInstitutions: CustomerList = {
       cname: 'xxx',
       cristinId: 'https://api.dev.nva.aws.unit.no/cristin/organization/5',
       institutionDns: 'xxx',
-      feideOrganizationId: 'xxx',
+      feideOrganizationDomain: 'xxx.no',
       vocabularies: [],
     },
   ],

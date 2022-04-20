@@ -52,7 +52,7 @@ export const AddContributorForm = ({
   const { values } = useFormikContext<Registration>();
   const contributors = values.entityDescription?.contributors ?? [];
 
-  const isSelfAdded = contributors.some((contributor) => contributor.identity.id === user?.authority?.id);
+  const isSelfAdded = user?.cristinId && contributors.some((contributor) => contributor.identity.id === user.cristinId);
 
   return (
     <>

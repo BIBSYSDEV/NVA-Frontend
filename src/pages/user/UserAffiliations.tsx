@@ -1,137 +1,35 @@
-import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { Box, Button, Typography } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import {
-  addQualifierIdForAuthority,
-  AuthorityQualifiers,
-  removeQualifierIdFromAuthority,
-} from '../../api/authorityApi';
-import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { BackgroundDiv, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { setAuthorityData } from '../../redux/actions/userActions';
-import { User } from '../../types/user.types';
-import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { SelectInstitutionForm } from '../../components/institution/SelectInstitutionForm';
-import { InstitutionCard } from './InstitutionCard';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { CristinUser, User } from '../../types/user.types';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { filterActiveAffiliations } from '../../utils/user-helpers';
+import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 
 interface UserInstituionProps {
   user: User;
 }
 
 export const UserAffiliations = ({ user }: UserInstituionProps) => {
-  const [openAddInstitutionForm, setOpenAddInstitutionForm] = useState(false);
-  const [institutionIdToRemove, setInstitutionIdToRemove] = useState('');
-  const [isRemovingInstitution, setIsRemovingInstitution] = useState(false);
-
-  const { t, i18n } = useTranslation('profile');
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    // Close institution form if user changes language, since selected values will be invalid
-    setOpenAddInstitutionForm(false);
-  }, [i18n.language]);
-
-  const toggleUnitForm = () => {
-    setOpenAddInstitutionForm(!openAddInstitutionForm);
-  };
-
-  const removeInstitution = async () => {
-    if (!user.authority || !institutionIdToRemove) {
-      return;
-    }
-    setIsRemovingInstitution(true);
-    const updateAuthorityResponse = await removeQualifierIdFromAuthority(
-      user.authority.id,
-      AuthorityQualifiers.OrgUnitId,
-      institutionIdToRemove
-    );
-    if (isErrorStatus(updateAuthorityResponse.status)) {
-      dispatch(
-        setNotification(
-          t('feedback:error.delete_identifier', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
-          'error'
-        )
-      );
-    } else if (isSuccessStatus(updateAuthorityResponse.status)) {
-      dispatch(setAuthorityData(updateAuthorityResponse.data));
-      dispatch(setNotification(t('feedback:success.delete_affiliation')));
-    }
-
-    setInstitutionIdToRemove('');
-    setIsRemovingInstitution(false);
-  };
-
-  const handleAddInstitution = async (id: string) => {
-    if (!id) {
-      return;
-    } else if (user.authority?.orgunitids.includes(id)) {
-      dispatch(setNotification(t('feedback:info.affiliation_already_exists'), 'info'));
-      return;
-    }
-
-    if (user.authority) {
-      const updateAuthorityResponse = await addQualifierIdForAuthority(
-        user.authority.id,
-        AuthorityQualifiers.OrgUnitId,
-        id
-      );
-      if (isErrorStatus(updateAuthorityResponse.status)) {
-        dispatch(
-          setNotification(
-            t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
-            'error'
-          )
-        );
-      } else if (isSuccessStatus(updateAuthorityResponse.status)) {
-        dispatch(setAuthorityData(updateAuthorityResponse.data));
-        dispatch(setNotification(t('feedback:success.added_affiliation')));
-      }
-    }
-    setOpenAddInstitutionForm(false);
-  };
+  const { t } = useTranslation('profile');
+  const [person, isLoadingPerson] = useFetch<CristinUser>({
+    url: user.cristinId ?? '',
+    errorMessage: t('feedback:error.get_person'),
+  });
+  const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
 
   return (
-    <>
-      <BackgroundDiv>
-        <Typography variant="h2">{t('heading.affiliations')}</Typography>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', my: '1rem' }}>
-          {user.authority?.orgunitids &&
-            user.authority.orgunitids.map((orgunitId) => (
-              <InstitutionCard
-                key={orgunitId}
-                orgunitId={orgunitId}
-                setInstitutionIdToRemove={setInstitutionIdToRemove}
-              />
-            ))}
-        </Box>
-
-        {openAddInstitutionForm ? (
-          <SelectInstitutionForm onSubmit={handleAddInstitution} onClose={toggleUnitForm} />
+    <BackgroundDiv>
+      <Typography variant="h2">{t('heading.affiliations')}</Typography>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', my: '1rem' }}>
+        {isLoadingPerson ? (
+          <CircularProgress />
         ) : (
-          <StyledRightAlignedWrapper>
-            <Button
-              variant="outlined"
-              onClick={toggleUnitForm}
-              disabled={!user.authority}
-              startIcon={<AddIcon />}
-              data-testid="add-new-institution-button">
-              {t('affiliations.add_affiliation')}
-            </Button>
-          </StyledRightAlignedWrapper>
+          activeAffiliations.map((affiliation) => (
+            <AffiliationHierarchy key={affiliation.organization} unitUri={affiliation.organization} />
+          ))
         )}
-      </BackgroundDiv>
-      <ConfirmDialog
-        open={!!institutionIdToRemove}
-        title={t('affiliations.confirm_remove_affiliation_title')}
-        onAccept={removeInstitution}
-        onCancel={() => setInstitutionIdToRemove('')}
-        isLoading={isRemovingInstitution}
-        dataTestId="confirm-remove-affiliation-dialog">
-        <Typography>{t('affiliations.confirm_remove_affiliation_text')}</Typography>
-      </ConfirmDialog>
-    </>
+      </Box>
+    </BackgroundDiv>
   );
 };

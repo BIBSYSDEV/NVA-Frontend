@@ -4,7 +4,7 @@ import { PageHeader } from '../../../components/PageHeader';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { SyledPageContent, BackgroundDiv } from '../../../components/styled/Wrappers';
 import { CustomerInstitution, emptyCustomerInstitution } from '../../../types/customerInstitution.types';
-import { InstitutionUser } from '../../../types/user.types';
+import { UserList } from '../../../types/user.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { CustomerInstitutionAdminsForm } from './CustomerInstitutionAdminsForm';
 import { CustomerInstitutionMetadataForm } from './CustomerInstitutionMetadataForm';
@@ -21,7 +21,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
     errorMessage: t('feedback:error.get_customer'),
     withAuthentication: true,
   });
-  const [users, isLoadingUsers, refetchInstitutionUsers] = useFetch<InstitutionUser[]>({
+  const [userList, isLoadingUsers, refetchInstitutionUsers] = useFetch<UserList>({
     url: customerId ? `${RoleApiPath.InstitutionUsers}?institution=${encodeURIComponent(customerId)}` : '',
     errorMessage: t('feedback:error.get_users_for_institution'),
     withAuthentication: true,
@@ -43,7 +43,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
           />
           {editMode && (
             <CustomerInstitutionAdminsForm
-              users={users ?? []}
+              users={userList?.users ?? []}
               refetchInstitutionUsers={refetchInstitutionUsers}
               isLoadingUsers={isLoadingUsers}
             />

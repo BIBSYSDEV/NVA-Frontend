@@ -2,15 +2,16 @@ import { FormControl, FormLabel, FormGroup, FormControlLabel, Checkbox, Typograp
 import LooksThreeIcon from '@mui/icons-material/Looks3';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RoleName } from '../../types/user.types';
-import { StyledCenterContainer } from '../../components/styled/Wrappers';
+import { RoleName } from '../../../types/user.types';
+import { StyledCenterContainer } from '../../../components/styled/Wrappers';
 import { FieldArray, FieldArrayRenderProps } from 'formik';
+import { BetaFunctionality } from '../../../components/BetaFunctionality';
 
 export const AddRolePanel = () => {
   const { t } = useTranslation('basicData');
 
   return (
-    <>
+    <BetaFunctionality>
       <FieldArray name="roles">
         {({
           push,
@@ -24,6 +25,7 @@ export const AddRolePanel = () => {
               <LooksThreeIcon color="primary" fontSize="large" />
             </StyledCenterContainer>
             <FormControl
+              disabled
               component="fieldset"
               onChange={(event: ChangeEvent<any>) => {
                 const role = event.target.value as RoleName;
@@ -88,6 +90,6 @@ export const AddRolePanel = () => {
           </>
         )}
       </FieldArray>
-    </>
+    </BetaFunctionality>
   );
 };

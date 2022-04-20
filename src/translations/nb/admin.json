@@ -6,7 +6,7 @@
   "cname": "CNAME",
   "display_name": "Visningsnavn på institusjonen",
   "edit_institution": "Endre institusjon",
-  "feide_organization_id": "Organisasjonens id i Feide",
+  "feide_organization_domain": "Organisasjonens domene i Feide",
   "institution_dns": "Institusjonens DNS",
   "institution_logo": "Institutionslogo",
   "organization_register_name": "Navn i organisasjonsregister",

@@ -38,7 +38,7 @@ const LoginPage = () => {
 
   if (!betaEnabled) {
     localStorage.setItem(LocalStorageKey.RedirectPath, redirectPath);
-    handleLogin('FeideIdentityProvider');
+    handleLogin();
     return null;
   }
 
@@ -78,7 +78,7 @@ const LoginPage = () => {
             onClick={() => {
               localStorage.setItem(LocalStorageKey.RedirectPath, redirectPath);
               localStorage.setItem(LocalStorageKey.LoginInstitutionId, selectedCustomerId);
-              handleLogin('FeideIdentityProvider');
+              handleLogin();
             }}>
             {t('login')}
           </Button>

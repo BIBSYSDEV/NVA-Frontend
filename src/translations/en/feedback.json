@@ -1,6 +1,7 @@
 {
   "error": {
     "404_page": "The page you requested could not be found",
+    "add_employment": "Could not add employment",
     "add_role": "Could not add role",
     "an_error_occurred": "An error occurred",
     "create_authority": "Could not create authority",
@@ -8,13 +9,13 @@
     "create_doi_request": "Could not create DOI request",
     "create_project": "Could not create project",
     "create_registration": "Could not create registration",
+    "create_user": "Could not create user",
     "delete_identifier": "Could not delete {{qualifier}}",
     "delete_registration": "Could not delete registration",
     "download_file": "Could not download file",
     "fetch": "Could not fetch {{resource}}",
     "get_affiliation_name": "Could not retrieve affiliation name for {{unitUri}}",
     "get_authority": "Could not retrieve authority",
-    "get_authorities": "Could not retrieve authorities",
     "get_customer": "Could not retrieve customer institution",
     "get_customers": "Could not retrieve customer institutions",
     "get_doi": "Could not retrieve link data",
@@ -23,7 +24,6 @@
     "get_journal": "Could not retrieve journal",
     "get_journals": "Could not retrieve journals",
     "get_journal_article": "Could not fetch journal article",
-    "get_last_registration": "Could not retrieve last registration",
     "get_messages": "Could not retrieve messages",
     "get_monograph": "Could not fetch monograph",
     "get_orcid": "Could not get data from ORCID",
@@ -47,10 +47,10 @@
     "remove_role": "Could not remove role",
     "search": "Search failed",
     "send_message": "Could not send message",
-    "update_authority": "Could not update {{qualifier}} for authority",
     "update_customer": "Could not update customer institution",
     "update_doi_request": "Could not update DOI request",
     "update_institution_user": "Could not update user",
+    "update_orcid": "Could not update ORCID",
     "update_registration": "Could not update registration",
     "update_vocabulary": "Failed to update {{vocabulary}}",
     "orcid": {
@@ -62,6 +62,7 @@
     "user_already_exists": "User already exists"
   },
   "success": {
+    "add_employment": "Employment added",
     "added_affiliation": "Affiliation was added",
     "added_role": "Role was added",
     "admin_added": "User added as administrator",
@@ -79,9 +80,9 @@
     "published_registration": "Registration was published",
     "removed_role": "Role removed",
     "send_message": "Message sent",
-    "update_authority": "Updated authority",
     "update_institution_user": "Updated user",
     "update_customer": "Updated customer institution",
+    "update_orcid": "Successfully updated ORCID",
     "update_registration": "Updated registration",
     "update_vocabulary": "{{vocabulary}} is now {{status}}"
   },

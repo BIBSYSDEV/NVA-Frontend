@@ -30,9 +30,9 @@ const MyProfilePage = () => {
           },
           gridTemplateColumns: { xs: '1fr', md: '1fr 3fr' },
         }}>
-        {user.authority && (
+        {user.cristinId && (
           <StyledRightAlignedWrapper sx={{ gridArea: 'top' }}>
-            <Button component={RouterLink} to={getUserPath(user.authority.id)} data-testid="public-profile-button">
+            <Button component={RouterLink} to={getUserPath(user.cristinId)} data-testid="public-profile-button">
               {t('workLists:go_to_public_profile')}
             </Button>
           </StyledRightAlignedWrapper>

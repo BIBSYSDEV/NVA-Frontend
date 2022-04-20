@@ -1,6 +1,7 @@
 {
   "error": {
     "404_page": "Beklager, men vi kan ikke finne siden du ser etter",
+    "add_employment": "Kunne ikke legge til ansettelse",
     "add_role": "Kunne ikke legge til rolle",
     "an_error_occurred": "En feil oppstod",
     "create_authority": "Kunne ikke opprette autoritet",
@@ -8,13 +9,13 @@
     "create_doi_request": "Kunne ikke opprette DOI-forespørsel",
     "create_project": "Kunne ikke opprette prosjekt",
     "create_registration": "Kunne ikke opprette registrering",
+    "create_user": "Kunne ikke opprette bruker",
     "delete_identifier": "Kunne ikke slette {{qualifier}}",
     "delete_registration": "Kunne ikke slette registrering",
     "download_file": "Kunne ikke laste ned fil",
     "fetch": "Kunne ikke hente {{resource}}",
     "get_affiliation_name": "Kunne ikke hente navn på tilhørighet for {{unitUri}}",
     "get_authority": "Kunne ikke hente autoritet",
-    "get_authorities": "Kunne ikke hente autoriteter",
     "get_customer": "Kunne ikke hente institusjon",
     "get_customers": "Kunne ikke hente institusjoner",
     "get_doi": "Kunne ikke hente lenkedata",
@@ -23,7 +24,6 @@
     "get_journal": "Kunne ikke hente tidsskrift",
     "get_journals": "Kunne ikke hente tidsskrifter",
     "get_journal_article": "Kunne ikke hente artikkel i tidsskrift",
-    "get_last_registration": "Kunne ikke hente tidligere registrering",
     "get_messages": "Kunne ikke hente meldinger",
     "get_monograph": "Kunne ikke hente monografi",
     "get_orcid": "Kunne ikke hente data fra ORCID",
@@ -47,10 +47,10 @@
     "remove_role": "Kunne ikke fjerne rolle",
     "search": "Søk feilet",
     "send_message": "Kunne ikke sende melding",
-    "update_authority": "Kunne ikke oppdatere {{qualifier}} for autoritet",
     "update_customer": "Kunne ikke oppdatere institusjon",
     "update_doi_request": "Kunne ikke oppdatere DOI-forespørsel",
     "update_institution_user": "Kunne ikke oppdatere bruker",
+    "update_orcid": "Oppdatering av ORCID-kobling feilet",
     "update_registration": "Kunne ikke oppdatere registrering",
     "update_vocabulary": "Oppdatering av {{vocabulary}} feilet",
     "orcid": {
@@ -62,6 +62,7 @@
     "user_already_exists": "Brukeren finnes allerede"
   },
   "success": {
+    "add_employment": "Ansettelse lagt til",
     "added_affiliation": "Tilhørigheten er lagt til",
     "added_role": "Rolle ble lagt til",
     "admin_added": "Bruker lagt til som administrator",
@@ -79,9 +80,9 @@
     "published_registration": "Registreringen ble publisert",
     "removed_role": "Rollen ble fjernet",
     "send_message": "Melding sendt",
-    "update_authority": "Forfatter er oppdatert",
     "update_customer": "Institusjon er oppdatert",
     "update_institution_user": "Bruker er oppdatert",
+    "update_orcid": "ORCID-kobling ble oppdatert",
     "update_registration": "Registreringen er oppdatert",
     "update_vocabulary": "{{vocabulary}} er nå {{status}}"
   },

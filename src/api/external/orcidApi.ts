@@ -3,6 +3,7 @@ import { ORCID_USER_INFO_URL } from '../../utils/constants';
 
 interface OrcidInfo {
   id: string;
+  sub: string;
 }
 
 export const getOrcidInfo = async (orcidAccessToken: string) =>

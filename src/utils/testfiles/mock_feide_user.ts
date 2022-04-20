@@ -1,21 +1,18 @@
 import { FeideUser, InstitutionUser, RoleName } from '../../types/user.types';
 
 export const mockUser: FeideUser = {
-  name: 'Test User',
-  email: 'testuser@unit.no',
-  'custom:cristinId': 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0',
-  'custom:orgName': 'unit',
-  'custom:orgNumber': 'NO123456789',
-  'custom:applicationRoles': `${RoleName.CREATOR},${RoleName.INSTITUTION_ADMIN},${RoleName.APP_ADMIN}`,
-  'custom:commonName': 'Unit',
-  'custom:feideId': 'tu@unit.no',
-  sub: 'jasdfahkf-341-sdfdsf-12321',
-  email_verfied: true,
-  'custom:affiliation': '[member, employee, staff]',
-  'custom:customerId': 'https://api.dev.nva.aws.unit.no/customer/f54c8aa9-073a-46a1-8f7c-dde66c853934',
-  identities: "[{'userId':'91829182'}]",
-  family_name: 'User',
-  given_name: 'Test',
+  'custom:feideId': 'tu@sikt.no',
+  'custom:firstName': 'Test',
+  'custom:lastName': 'User',
+  'custom:orgFeideDomain': 'sikt.no',
+  'custom:cristinId': 'https://api.dev.nva.aws.unit.no/cristin/person/1',
+  'custom:customerId': 'https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a',
+  'custom:topOrgCristinId': 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0',
+  'custom:nvaUsername': '1@20754.0.0.0',
+  'custom:roles':
+    'Creator@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a,Curator@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a,App-admin@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a,Institution-admin@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a',
+  'custom:accessRights': '',
+  'custom:allowedCustomers': 'https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a',
 };
 
 export const mockRoles: InstitutionUser = {

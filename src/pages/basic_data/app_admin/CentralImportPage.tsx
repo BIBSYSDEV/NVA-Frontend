@@ -63,7 +63,7 @@ const ResultItem = ({ publication }: ResultItemProps) => {
   );
 };
 
-export const CentralImport = () => {
+export const CentralImportPage = () => {
   const { t } = useTranslation('basicData');
   return (
     <>
