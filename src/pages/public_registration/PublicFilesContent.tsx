@@ -16,7 +16,7 @@ import {
 import prettyBytes from 'pretty-bytes';
 import { File, licenses } from '../../types/file.types';
 import { downloadPrivateFile, downloadPublicFile } from '../../api/fileApi';
-import { setNotification } from '../../redux/actions/notificationActions';
+import { setNotification } from '../../redux/notificationSlice';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { PreviewFile } from './preview_file/PreviewFile';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -63,7 +63,7 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
         ? await downloadPrivateFile(registrationIdentifier, file.identifier)
         : await downloadPublicFile(registrationIdentifier, file.identifier);
       if (!downloadFileResponse) {
-        dispatch(setNotification(t('feedback:error.download_file'), 'error'));
+        dispatch(setNotification({ message: t('feedback:error.download_file'), variant: 'error' }));
       } else {
         if (previewFile) {
           setPreviewFileUrl(downloadFileResponse.id);

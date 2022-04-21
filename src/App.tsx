@@ -13,7 +13,7 @@ import { AppRoutes } from './AppRoutes';
 import { Footer } from './layout/Footer';
 import { Header } from './layout/header/Header';
 import { Notifier } from './layout/Notifier';
-import { setNotification } from './redux/actions/notificationActions';
+import { setNotification } from './redux/notificationSlice';
 import { setUser, setViewingScope } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { authOptions } from './utils/aws-config';
@@ -63,7 +63,7 @@ export const App = () => {
   useEffect(() => {
     // Handle expired token
     if (hasExpiredToken) {
-      dispatch(setNotification(t('authorization:expired_token_info'), 'info'));
+      dispatch(setNotification({ message: t('authorization:expired_token_info'), variant: 'info' }));
       localStorage.removeItem(LocalStorageKey.ExpiredToken);
     }
   }, [t, dispatch, hasExpiredToken]);

@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { CristinApiPath } from '../../../../api/apiPaths';
 import { authenticatedApiRequest } from '../../../../api/apiRequest';
-import { setNotification } from '../../../../redux/actions/notificationActions';
+import { setNotification } from '../../../../redux/notificationSlice';
 import { datePickerTranslationProps } from '../../../../themes/mainTheme';
 import { PostCristinProject } from '../../../../types/project.types';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
@@ -56,10 +56,10 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
     });
 
     if (isSuccessStatus(createProjectResponse.status)) {
-      dispatch(setNotification(t('feedback:success.create_project')));
+      dispatch(setNotification({ message: t('feedback:success.create_project'), variant: 'success' }));
       props.onClose();
     } else if (isErrorStatus(createProjectResponse.status)) {
-      dispatch(setNotification(t('feedback:error.create_project'), 'error'));
+      dispatch(setNotification({ message: t('feedback:error.create_project'), variant: 'error' }));
     }
   };
 

@@ -1,5 +1,5 @@
 import { setRoles } from '../../src/redux/actions/userActions';
-import { setNotification, removeNotification } from '../../src/redux/actions/notificationActions';
+import { setNotification, removeNotification } from '../../src/redux/notificationSlice';
 import { mockFileUploadUrl } from '../../src/utils/testfiles/mockFiles';
 import { dataTestId } from '../../src/utils/dataTestIds';
 
@@ -35,10 +35,10 @@ Cypress.Commands.add('setUserRolesInRedux', (roles) => {
     .then((store) => store.dispatch(setRoles(roles)));
 });
 
-Cypress.Commands.add('setNotificationInRedux', (message, variant) => {
+Cypress.Commands.add('setNotificationInRedux', (notification) => {
   cy.window()
     .its('store') // Redux store must be exposed via window.store
-    .then((store) => store.dispatch(setNotification(message, variant)));
+    .then((store) => store.dispatch(setNotification(notification)));
 });
 
 Cypress.Commands.add('removeNotificationInRedux', () => {

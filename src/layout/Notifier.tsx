@@ -1,7 +1,7 @@
 import { SyntheticEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert, Fade, Snackbar, SnackbarCloseReason } from '@mui/material';
-import { removeNotification } from '../redux/actions/notificationActions';
+import { removeNotification } from '../redux/notificationSlice';
 import { RootStore } from '../redux/reducers/rootReducer';
 
 const autoHideNotificationDuration = {

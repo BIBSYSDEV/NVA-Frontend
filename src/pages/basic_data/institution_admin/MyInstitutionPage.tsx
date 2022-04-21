@@ -12,7 +12,7 @@ import {
   StyledRightAlignedWrapper,
   BackgroundDiv,
 } from '../../../components/styled/Wrappers';
-import { setNotification } from '../../../redux/actions/notificationActions';
+import { setNotification } from '../../../redux/notificationSlice';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import {
   CustomerInstitution,
@@ -38,9 +38,9 @@ export const MyCustomerInstitutionPage = () => {
   const handleSubmit = async (values: CustomerInstitution) => {
     const updateCustomerResponse = await updateCustomerInstitution(values);
     if (isErrorStatus(updateCustomerResponse.status)) {
-      dispatch(setNotification(t('feedback:error.update_customer'), 'error'));
+      dispatch(setNotification({ message: t('feedback:error.update_customer'), variant: 'error' }));
     } else if (isSuccessStatus(updateCustomerResponse.status)) {
-      dispatch(setNotification(t('feedback:success.update_customer')));
+      dispatch(setNotification({ message: t('feedback:success.update_customer'), variant: 'success' }));
     }
   };
 
