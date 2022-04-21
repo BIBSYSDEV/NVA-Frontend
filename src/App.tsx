@@ -26,6 +26,7 @@ import { RoleApiPath } from './api/apiPaths';
 import { InstitutionUser } from './types/user.types';
 import { UrlPathTemplate } from './utils/urlPaths';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInstitutionDialog';
 
 const getLanguageTagValue = (language: string) => {
   if (language === 'eng') {
@@ -127,6 +128,10 @@ export const App = () => {
             </Box>
             <Footer />
           </Box>
+          {!!user &&
+            user.allowedCustomers.length > 1 && ( // TODO: Hide when user has customerId?
+              <SelectCustomerInstitutionDialog allowedCustomerIds={user.allowedCustomers} />
+            )}
         </BrowserRouter>
       )}
     </>

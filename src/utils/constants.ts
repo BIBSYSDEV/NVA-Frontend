@@ -25,7 +25,6 @@ export enum LocalStorageKey {
   AmplifyRedirect = 'amplify-redirected-from-hosted-ui',
   Beta = 'beta',
   ExpiredToken = 'expiredToken',
-  LoginInstitutionId = 'loginInstitutionId',
   ShowTagline = 'showTagline',
   RedirectPath = 'redirect-path',
 }
