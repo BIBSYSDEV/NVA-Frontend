@@ -1,10 +1,11 @@
 import { Divider, Grid, Link, ListItem, ListItemText, Typography } from '@mui/material';
+import { Registration } from '../../../types/registration.types';
 
-interface ResultItemProps {
-  publication: any;
+interface CentralImportResultItemProps {
+  publication: Registration;
 }
 
-export const ResultItem = ({ publication }: ResultItemProps) => {
+export const CentralImportResultItem = ({ publication }: CentralImportResultItemProps) => {
   return (
     <>
       <ListItem>
@@ -20,20 +21,20 @@ export const ResultItem = ({ publication }: ResultItemProps) => {
                 </Typography>
               </Link>
               <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
-                {publication.title}
+                {publication.entityDescription?.mainTitle}
               </Typography>
-              {publication.contributors.map((contributor: any, index: number) => (
-                <Typography display="inline" variant="body2" key={index}>
-                  {contributor}
-                  {'; '}
-                </Typography>
-              ))}
+              {/*{publication.contributors.map((contributor: any, index: number) => (*/}
+              {/*  <Typography display="inline" variant="body2" key={index}>*/}
+              {/*    {contributor}*/}
+              {/*    {'; '}*/}
+              {/*  </Typography>*/}
+              {/*))}*/}
             </Grid>
             <Grid item md={2} xs={12}>
-              <Typography variant="body1">({publication.confirmedContributors})</Typography>
+              <Typography variant="body1">({/*publication.confirmedContributors*/})</Typography>
             </Grid>
             <Grid item md={3} xs={12}>
-              <Typography variant="body1">{publication.institution}</Typography>
+              <Typography variant="body1">{/*publication.institution*/}</Typography>
             </Grid>
           </Grid>
         </ListItemText>

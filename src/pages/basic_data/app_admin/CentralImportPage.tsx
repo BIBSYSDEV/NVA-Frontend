@@ -5,6 +5,7 @@ import { Registration } from '../../../types/registration.types';
 import { SearchApiPath } from '../../../api/apiPaths';
 import { SearchResponse } from '../../../types/common.types';
 import { ListSkeleton } from '../../../components/ListSkeleton';
+import { CentralImportResultItem } from './CentralImportResultItem';
 
 export const CentralImportPage = () => {
   const { t } = useTranslation('basicData');
@@ -27,7 +28,7 @@ export const CentralImportPage = () => {
             {results?.size}
             <List>
               {publications.map((publication, index) => (
-                <ResultItem publication={publication} key={index} />
+                <CentralImportResultItem publication={publication} key={index} />
               ))}
             </List>
           </>
