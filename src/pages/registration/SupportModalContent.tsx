@@ -5,7 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { MessageForm } from '../../components/MessageForm';
 import { addMessage } from '../../api/registrationApi';
 import { useDispatch } from 'react-redux';
-import { setNotification } from '../../redux/actions/notificationActions';
+import { setNotification } from '../../redux/notificationSlice';
 import { MessageType } from '../../types/publication_types/messages.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 
@@ -21,9 +21,9 @@ export const SupportModalContent = ({ closeModal }: SupportModalContentProps) =>
   const sendMessage = async (message: string) => {
     const messageResponse = await addMessage(identifier, message, MessageType.Support);
     if (isErrorStatus(messageResponse.status)) {
-      dispatch(setNotification(t('error.send_message')));
+      dispatch(setNotification({ message: t('error.send_message'), variant: 'error' }));
     } else if (isSuccessStatus(messageResponse.status)) {
-      dispatch(setNotification(t('success.send_message')));
+      dispatch(setNotification({ message: t('success.send_message'), variant: 'success' }));
       closeModal();
     }
   };

@@ -25,7 +25,7 @@ export interface User {
   roles: RoleName[];
   viewingScope: string[];
   username: string;
-  orcid: string;
+  orcid?: string;
 }
 
 interface UserRole {

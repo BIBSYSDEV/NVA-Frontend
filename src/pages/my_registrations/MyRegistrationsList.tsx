@@ -19,7 +19,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { visuallyHidden } from '@mui/utils';
 import { deleteRegistration } from '../../api/registrationApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { setNotification } from '../../redux/actions/notificationActions';
+import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationPreview, RegistrationStatus } from '../../types/registration.types';
 import { getRegistrationLandingPagePath, getRegistrationPath } from '../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
@@ -56,10 +56,10 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
     setIsDeleting(true);
     const deleteRegistrationResponse = await deleteRegistration(registrationToDelete.identifier);
     if (isErrorStatus(deleteRegistrationResponse.status)) {
-      dispatch(setNotification(t('feedback:error.delete_registration'), 'error'));
+      dispatch(setNotification({ message: t('feedback:error.delete_registration'), variant: 'error' }));
       setIsDeleting(false);
     } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
-      dispatch(setNotification(t('feedback:success.delete_registration')));
+      dispatch(setNotification({ message: t('feedback:success.delete_registration'), variant: 'success' }));
       refetchRegistrations();
     }
   };

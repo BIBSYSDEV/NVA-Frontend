@@ -11,7 +11,7 @@ import { LoadingButton } from '@mui/lab';
 import { RegistrationAccordion } from './RegistrationAccordion';
 import { File, RegistrationFileSet } from '../../../types/file.types';
 import { createRegistration } from '../../../api/registrationApi';
-import { setNotification } from '../../../redux/actions/notificationActions';
+import { setNotification } from '../../../redux/notificationSlice';
 import { FileUploader } from '../files_and_license_tab/FileUploader';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { createUppy } from '../../../utils/uppy/uppy-config';
@@ -38,7 +38,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
     };
     const createRegistrationResponse = await createRegistration(registrationPayload);
     if (isErrorStatus(createRegistrationResponse.status)) {
-      dispatch(setNotification(t('feedback:error.create_registration'), 'error'));
+      dispatch(setNotification({ message: t('feedback:error.create_registration'), variant: 'error' }));
       setIsLoading(false);
     } else if (isSuccessStatus(createRegistrationResponse.status)) {
       history.push(getRegistrationPath(createRegistrationResponse.data.identifier), { highestValidatedTab: -1 });

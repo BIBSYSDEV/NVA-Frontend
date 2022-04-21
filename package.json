@@ -12,6 +12,7 @@
     "@mui/lab": "5.0.0-alpha.78",
     "@mui/material": "^5.6.2",
     "@mui/styles": "^5.6.2",
+    "@reduxjs/toolkit": "^1.8.1",
     "@uppy/aws-s3-multipart": "^1.8.18",
     "@uppy/core": "^1.20.1",
     "@uppy/dashboard": "^1.21.1",
@@ -36,9 +37,6 @@
     "react-router-dom": "^5.3.0",
     "react-scripts": "^4.0.3",
     "react-share": "^4.4.0",
-    "redux": "^4.2.0",
-    "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^2.4.1",
     "yup": "^0.32.11"
   },
   "scripts": {
