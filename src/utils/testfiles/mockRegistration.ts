@@ -114,6 +114,154 @@ export const mockRegistration: JournalRegistration = {
   },
 };
 
+export const mockRegistration2 = {
+  type: 'Publication',
+  publicationContextUris: ['https://api.dev.nva.aws.unit.no/publication-channels/journal/476390/2022'],
+  '@context': {
+    '@vocab': 'https://bibsysdev.github.io/src/nva/ontology.ttl#',
+    id: '@id',
+    type: '@type',
+    contributors: {
+      '@container': '@set',
+    },
+    additionalIdentifiers: {
+      '@container': '@set',
+    },
+    affiliations: {
+      '@container': '@set',
+    },
+    subjects: {
+      '@container': '@set',
+    },
+    projects: {
+      '@container': '@set',
+    },
+    tags: {
+      '@container': '@set',
+    },
+    isbnList: {
+      '@container': '@set',
+    },
+    venues: {
+      '@container': '@set',
+    },
+    files: {
+      '@container': '@set',
+    },
+    grants: {
+      '@container': '@set',
+    },
+    approvals: {
+      '@container': '@set',
+    },
+    messages: {
+      '@container': '@set',
+    },
+  },
+  id: 'https://api.dev.nva.aws.unit.no/publication/0180185106c4-3d675f50-024a-4430-a9ae-656fa798067f',
+  createdDate: '2022-04-11T11:10:04.991455Z',
+  doi: 'https://handle.stage.datacite.org/10.16903/8dds-cp02',
+  entityDescription: {
+    type: 'EntityDescription',
+    abstract: 'Hewldfsldkj',
+    contributors: [
+      {
+        type: 'Contributor',
+        affiliations: [
+          {
+            id: 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0',
+            type: 'Organization',
+          },
+        ],
+        correspondingAuthor: false,
+        identity: {
+          id: 'https://api.dev.nva.aws.unit.no/cristin/person/33311',
+          type: 'Identity',
+          name: 'Orestis Gkorgkas',
+        },
+        role: 'Creator',
+        sequence: 1,
+      },
+    ],
+    date: {
+      type: 'PublicationDate',
+      day: '11',
+      month: '4',
+      year: '2022',
+    },
+    description: 'dsfsdf',
+    language: 'http://lexvo.org/id/iso639-3/eng',
+    mainTitle: 'Orestis test 2022-04-11',
+    reference: {
+      type: 'Reference',
+      publicationContext: {
+        id: 'https://api.dev.nva.aws.unit.no/publication-channels/journal/476390/2022',
+        type: 'Journal',
+        active: true,
+        identifier: '476390',
+        language: {
+          id: 'http://lexvo.org/id/iso639-3/eng',
+        },
+        level: '2',
+        name: 'Proceedings of the VLDB Endowment',
+        npiDomain: 'Informatikk og datateknikk',
+        onlineIssn: '2150-8097',
+        publisherId: 'https://api.dev.nva.aws.unit.no/publication-channels/publisher/18077/2022',
+        website: {
+          id: 'http://www.eecs.umich.edu/db/pvldb/',
+        },
+      },
+      publicationInstance: {
+        type: 'JournalArticle',
+        articleNumber: '1',
+        contentType: 'Research article',
+        originalResearch: false,
+        pages: {
+          type: 'Range',
+        },
+        peerReviewed: true,
+      },
+    },
+    tags: ['sdf'],
+  },
+  fileSet: {
+    type: 'FileSet',
+    files: [
+      {
+        type: 'File',
+        administrativeAgreement: false,
+        identifier: '7f18c81a-f354-4605-b6ff-95d4153b8825',
+        license: {
+          type: 'License',
+          identifier: 'CC0',
+          labels: {
+            nb: 'CC0',
+          },
+        },
+        mimeType: 'application/pdf',
+        name: 'vldb09-677233.pdf',
+        publisherAuthority: true,
+        size: 428244,
+      },
+    ],
+  },
+  identifier: '0180185106c4-3d675f50-024a-4430-a9ae-656fa798067f',
+  modelVersion: '0.16.0',
+  modifiedDate: '2022-04-11T11:12:35.172098Z',
+  owner: '33311@20754.0.0.0',
+  publishedDate: '2022-04-11T11:12:35.487774Z',
+  publisher: {
+    id: 'https://api.dev.nva.aws.unit.no/customer/f50dff3a-e244-48c7-891d-cc4d75597321',
+    type: 'Organization',
+  },
+  resourceOwner: {
+    owner: '33311@20754.0.0.0',
+    ownerAffiliation: 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0',
+  },
+  status: 'PUBLISHED',
+  subjects: ['https://nva.unit.no/hrcs/activity/hrcs_ra_2_5'],
+};
+
 export const mockMathJaxRegistration: JournalRegistration = {
   ...mockRegistration,
   entityDescription: {

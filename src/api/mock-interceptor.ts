@@ -14,19 +14,19 @@ import { mockMyRegistrations } from '../utils/testfiles/mockMyRegistrations';
 import { mockProject, mockProjectSearch } from '../utils/testfiles/mockProjects';
 import { mockPublishersSearch } from '../utils/testfiles/mockPublishers';
 import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
-import { mockSearchResults, mockSearchWorklist } from '../utils/testfiles/mockSearchResults';
+import { mockSearchResults2, mockSearchWorklist } from '../utils/testfiles/mockSearchResults';
 import { mockMessages, mockPublishedRegistration, mockRegistration } from '../utils/testfiles/mockRegistration';
 import {
-  SearchApiPath,
-  FileApiPath,
-  PublicationsApiPath,
   CristinApiPath,
-  PublicationChannelApiPath,
   CustomerInstitutionApiPath,
+  FileApiPath,
+  PublicationChannelApiPath,
+  PublicationsApiPath,
   RoleApiPath,
+  SearchApiPath,
 } from './apiPaths';
 import { mockOrganizationSearch } from '../utils/testfiles/mockOrganizationSearch';
-import { mockDownload, mockCreateUpload, mockPrepareUpload, mockCompleteUpload } from '../utils/testfiles/mockFiles';
+import { mockCompleteUpload, mockCreateUpload, mockDownload, mockPrepareUpload } from '../utils/testfiles/mockFiles';
 import { mockCristinUserSearch } from '../utils/testfiles/mockCristinUserSearch';
 
 // AXIOS INTERCEPTOR
@@ -34,7 +34,7 @@ export const interceptRequestsOnMock = () => {
   const mock = new MockAdapter(Axios);
 
   // SEARCH
-  mock.onGet(new RegExp(SearchApiPath.Registrations)).reply(200, mockSearchResults);
+  mock.onGet(new RegExp(SearchApiPath.Registrations)).reply(200, mockSearchResults2);
 
   // File
   mock.onGet(new RegExp(FileApiPath.Download)).reply(200, mockDownload);

@@ -1,27 +1,13 @@
 import { Divider, Grid, Link, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-
-const mockPublication = {
-  title: 'The Title',
-  description: 'The Description',
-  type: 'Article',
-  doi: 'https://doi.org/10.1038/s41467-021-25342423',
-  contributors: ['Peder Botten', 'Gregor Garbrielsen', 'Oddny Osteloff'],
-  institution: 'The Institution',
-  confirmedContributors: '0 of 2',
-};
-
-const mockPublicationList = [
-  mockPublication,
-  mockPublication,
-  mockPublication,
-  mockPublication,
-  mockPublication,
-  mockPublication,
-];
+import { useFetch } from '../../../utils/hooks/useFetch';
+import { Registration } from '../../../types/registration.types';
+import { SearchApiPath } from '../../../api/apiPaths';
+import { SearchResponse } from '../../../types/common.types';
+import { ListSkeleton } from '../../../components/ListSkeleton';
 
 interface ResultItemProps {
-  publication: any;
+  publication: Registration;
 }
 
 const ResultItem = ({ publication }: ResultItemProps) => {
@@ -40,20 +26,20 @@ const ResultItem = ({ publication }: ResultItemProps) => {
                 </Typography>
               </Link>
               <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
-                {publication.title}
+                {publication.entityDescription?.mainTitle}
               </Typography>
-              {publication.contributors.map((contributor: any, index: number) => (
-                <Typography display="inline" variant="body2" key={index}>
-                  {contributor}
-                  {'; '}
-                </Typography>
-              ))}
+              {/*{publication.contributors.map((contributor: any, index: number) => (*/}
+              {/*  <Typography display="inline" variant="body2" key={index}>*/}
+              {/*    {contributor}*/}
+              {/*    {'; '}*/}
+              {/*  </Typography>*/}
+              {/*))}*/}
             </Grid>
             <Grid item md={2} xs={12}>
-              <Typography variant="body1">({publication.confirmedContributors})</Typography>
+              <Typography variant="body1">({/*publication.confirmedContributors*/})</Typography>
             </Grid>
             <Grid item md={3} xs={12}>
-              <Typography variant="body1">{publication.institution}</Typography>
+              <Typography variant="body1">{/*publication.institution*/}</Typography>
             </Grid>
           </Grid>
         </ListItemText>
@@ -65,16 +51,31 @@ const ResultItem = ({ publication }: ResultItemProps) => {
 
 export const CentralImportPage = () => {
   const { t } = useTranslation('basicData');
+
+  const [results, isLoadingResults] = useFetch<SearchResponse<Registration>>({
+    url: `${SearchApiPath.Registrations}"`,
+    errorMessage: t('feedback:error.search'),
+  });
+  const publications = results?.hits ?? [];
   return (
     <>
       <Typography variant="h3" component="h2" paragraph>
         {t('Publikasjoner')}
       </Typography>
-      <List>
-        {mockPublicationList.map((publication, index) => (
-          <ResultItem publication={publication} key={index} />
-        ))}
-      </List>
+      {isLoadingResults ? (
+        <ListSkeleton minWidth={100} maxWidth={100} height={100} />
+      ) : (
+        publications && (
+          <>
+            {results?.size}
+            <List>
+              {publications.map((publication, index) => (
+                <ResultItem publication={publication} key={index} />
+              ))}
+            </List>
+          </>
+        )
+      )}
     </>
   );
 };
