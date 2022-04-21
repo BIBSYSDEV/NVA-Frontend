@@ -21,9 +21,9 @@ export const SupportModalContent = ({ closeModal }: SupportModalContentProps) =>
   const sendMessage = async (message: string) => {
     const messageResponse = await addMessage(identifier, message, MessageType.Support);
     if (isErrorStatus(messageResponse.status)) {
-      dispatch(setNotification(t('error.send_message')));
+      dispatch(setNotification({ message: t('error.send_message'), variant: 'error' }));
     } else if (isSuccessStatus(messageResponse.status)) {
-      dispatch(setNotification(t('success.send_message')));
+      dispatch(setNotification({ message: t('success.send_message'), variant: 'success' }));
       closeModal();
     }
   };
