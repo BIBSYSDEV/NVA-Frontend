@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { TFunction, useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { authenticatedApiRequest } from '../../api/apiRequest';
-import { setNotification } from '../../redux/actions/notificationActions';
+import { setNotification } from '../../redux/notificationSlice';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { VocabularyList, CustomerVocabulary, VocabularyStatus } from '../../types/customerInstitution.types';
 import { isSuccessStatus, isErrorStatus } from '../../utils/constants';
@@ -68,16 +68,22 @@ export const VocabularySettings = () => {
 
       if (isSuccessStatus(updatedVocabularyResponse.status)) {
         dispatch(
-          setNotification(
-            t('feedback:success.update_vocabulary', {
+          setNotification({
+            message: t('feedback:success.update_vocabulary', {
               vocabulary: vocabularyName,
               status: t(newVocabulary.status.toLowerCase()).toLowerCase(),
-            })
-          )
+            }),
+            variant: 'success',
+          })
         );
         setVocabularyList(updatedVocabularyResponse.data);
       } else if (isErrorStatus(updatedVocabularyResponse.status)) {
-        dispatch(setNotification(t('feedback:error.update_vocabulary', { vocabulary: vocabularyName }), 'error'));
+        dispatch(
+          setNotification({
+            message: t('feedback:error.update_vocabulary', { vocabulary: vocabularyName }),
+            variant: 'error',
+          })
+        );
       }
       setIsUpdating(false);
     }

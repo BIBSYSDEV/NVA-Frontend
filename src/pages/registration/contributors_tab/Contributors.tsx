@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
-import { setNotification } from '../../../redux/actions/notificationActions';
+import { setNotification } from '../../../redux/notificationSlice';
 import {
   Contributor,
   ContributorRole,
@@ -117,7 +117,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     contributorIndex?: number
   ) => {
     if (relevantContributors.some((contributor) => contributor.identity.id === selectedContributor.id)) {
-      dispatch(setNotification(t('contributors.contributor_already_added'), 'info'));
+      dispatch(setNotification({ message: t('contributors.contributor_already_added'), variant: 'info' }));
       return;
     }
 

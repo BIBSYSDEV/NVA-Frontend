@@ -13,7 +13,7 @@ import { LoadingButton } from '@mui/lab';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { PublicRegistrationProps } from './PublicRegistrationContent';
 import { Modal } from '../../components/Modal';
-import { setNotification } from '../../redux/actions/notificationActions';
+import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationStatus, DoiRequestStatus, Registration } from '../../types/registration.types';
 import { createDoiRequest, publishRegistration, updateDoiRequest } from '../../api/registrationApi';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
@@ -48,7 +48,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     const message = isPublishedRegistration ? messageToCurator : t('public_page.reserve_doi_message');
     const createDoiRequestResponse = await createDoiRequest(identifier, message);
     if (isErrorStatus(createDoiRequestResponse.status)) {
-      dispatch(setNotification(t('feedback:error.create_doi_request'), 'error'));
+      dispatch(setNotification({ message: t('feedback:error.create_doi_request'), variant: 'error' }));
       setIsLoading(LoadingName.None);
     } else if (isSuccessStatus(createDoiRequestResponse.status)) {
       // Adding DOI can take some extra time, so wait 2.5 sec before refetching
@@ -56,7 +56,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
         if (openRequestDoiModal) {
           toggleRequestDoiModal();
         }
-        dispatch(setNotification(t('feedback:success.doi_request_sent')));
+        dispatch(setNotification({ message: t('feedback:success.doi_request_sent'), variant: 'success' }));
         refetchRegistration();
       }, 2500);
     }
@@ -70,10 +70,10 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     }
     const updateDoiResponse = await updateDoiRequest(identifier, status);
     if (isErrorStatus(updateDoiResponse.status)) {
-      dispatch(setNotification(t('feedback:error.update_doi_request'), 'error'));
+      dispatch(setNotification({ message: t('feedback:error.update_doi_request'), variant: 'error' }));
       setIsLoading(LoadingName.None);
     } else if (isSuccessStatus(updateDoiResponse.status)) {
-      dispatch(setNotification(t('feedback:success.doi_request_updated')));
+      dispatch(setNotification({ message: t('feedback:success.doi_request_updated'), variant: 'success' }));
       refetchRegistration();
     }
   };
@@ -82,10 +82,10 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     setIsLoading(LoadingName.Publish);
     const publishRegistrationResponse = await publishRegistration(identifier);
     if (isErrorStatus(publishRegistrationResponse.status)) {
-      dispatch(setNotification(t('feedback:error.publish_registration'), 'error'));
+      dispatch(setNotification({ message: t('feedback:error.publish_registration'), variant: 'error' }));
       setIsLoading(LoadingName.None);
     } else if (isSuccessStatus(publishRegistrationResponse.status)) {
-      dispatch(setNotification(t('feedback:success.published_registration')));
+      dispatch(setNotification({ message: t('feedback:success.published_registration'), variant: 'success' }));
       refetchRegistration();
     }
   };

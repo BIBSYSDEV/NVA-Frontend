@@ -18,7 +18,7 @@ import { visuallyHidden } from '@mui/utils';
 import { LoadingButton } from '@mui/lab';
 import { updateUser } from '../../../api/roleApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
-import { setNotification } from '../../../redux/actions/notificationActions';
+import { setNotification } from '../../../redux/notificationSlice';
 import { InstitutionUser, RoleName } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
@@ -66,9 +66,9 @@ export const UserList = ({
       const updateUserResponse = await updateUser(user.username, newUser);
       if (isErrorStatus(updateUserResponse.status)) {
         setUpdatedRoleForUsers((state) => state.filter((username) => username !== user.username));
-        dispatch(setNotification(t('feedback:error.add_role'), 'error'));
+        dispatch(setNotification({ message: t('feedback:error.add_role'), variant: 'error' }));
       } else if (isSuccessStatus(updateUserResponse.status)) {
-        dispatch(setNotification(t('feedback:success.added_role')));
+        dispatch(setNotification({ message: t('feedback:success.added_role'), variant: 'success' }));
         refetchUsers?.();
       }
     }
@@ -89,9 +89,9 @@ export const UserList = ({
       const updateUserResponse = await updateUser(removeRoleForUser, newUser);
       if (isErrorStatus(updateUserResponse.status)) {
         setUpdatedRoleForUsers((state) => state.filter((user) => user !== removeRoleForUser));
-        dispatch(setNotification(t('feedback:error.remove_role'), 'error'));
+        dispatch(setNotification({ message: t('feedback:error.remove_role'), variant: 'error' }));
       } else if (isSuccessStatus(updateUserResponse.status)) {
-        dispatch(setNotification(t('feedback:success.removed_role')));
+        dispatch(setNotification({ message: t('feedback:success.removed_role'), variant: 'success' }));
         refetchUsers?.();
       }
     }

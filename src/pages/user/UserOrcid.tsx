@@ -9,7 +9,7 @@ import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../utils/constants';
 import { OrcidModalContent } from './OrcidModalContent';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { setNotification } from '../../redux/actions/notificationActions';
+import { setNotification } from '../../redux/notificationSlice';
 import { Modal } from '../../components/Modal';
 import { CristinUser, User } from '../../types/user.types';
 import { getOrcidInfo } from '../../api/external/orcidApi';
@@ -49,7 +49,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       const orcid = orcidInfoResponse.data.sub;
 
       if (!orcid) {
-        dispatch(setNotification(t('feedback:error.get_orcid', 'error')));
+        dispatch(setNotification({ message: t('feedback:error.get_orcid'), variant: 'error' }));
       } else if (userCristinId) {
         const addOrcidResponse = await authenticatedApiRequest({
           url: userCristinId,
@@ -57,10 +57,10 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
           data: { orcid },
         });
         if (isSuccessStatus(addOrcidResponse.status)) {
-          dispatch(setNotification(t('feedback:success.update_orcid')));
+          dispatch(setNotification({ message: t('feedback:success.update_orcid'), variant: 'success' }));
           refetchCristinUser();
         } else if (isErrorStatus(addOrcidResponse.status)) {
-          dispatch(setNotification(t('feedback:error.update_orcid')));
+          dispatch(setNotification({ message: t('feedback:error.update_orcid'), variant: 'success' }));
         }
       }
       history.push(UrlPathTemplate.MyProfile);
@@ -76,7 +76,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   useEffect(() => {
     const orcidError = new URLSearchParams(history.location.search).get('error');
     if (orcidError) {
-      dispatch(setNotification(t(`feedback:error.orcid.${orcidError}`), 'error'));
+      dispatch(setNotification({ message: t(`feedback:error.orcid.${orcidError}`), variant: 'error' }));
     }
   }, [history.location.search, dispatch, t]);
 
@@ -89,10 +89,10 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         data: { orcid: null },
       });
       if (isSuccessStatus(removeOrcidResponse.status)) {
-        dispatch(setNotification(t('feedback:success.update_orcid')));
+        dispatch(setNotification({ message: t('feedback:success.update_orcid'), variant: 'success' }));
         refetchCristinUser();
       } else if (isErrorStatus(removeOrcidResponse.status)) {
-        dispatch(setNotification(t('feedback:error.update_orcid')));
+        dispatch(setNotification({ message: t('feedback:error.update_orcid'), variant: 'success' }));
       }
     }
     toggleConfirmDialog();
