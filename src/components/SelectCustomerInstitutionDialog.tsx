@@ -2,19 +2,27 @@ import { LoadingButton } from '@mui/lab';
 import { Dialog, DialogTitle, DialogContent, Autocomplete, TextField, DialogActions } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { RoleApiPath } from '../api/apiPaths';
 import { apiRequest, authenticatedApiRequest } from '../api/apiRequest';
 import { getCurrentUserAttributes } from '../api/userApi';
+import { setUser } from '../redux/actions/userActions';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import { isSuccessStatus } from '../utils/constants';
 import { sortCustomerInstitutions } from '../utils/institutions-helpers';
 
 interface SelectCustomerInstitutionDialogProps {
   allowedCustomerIds: string[];
+  openDefault: boolean;
 }
 
-export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCustomerInstitutionDialogProps) => {
+export const SelectCustomerInstitutionDialog = ({
+  allowedCustomerIds,
+  openDefault,
+}: SelectCustomerInstitutionDialogProps) => {
   const { t } = useTranslation('authorization');
+  const dispatch = useDispatch();
+  const [openDialog, setOpenDialog] = useState(openDefault);
   const [allowedCustomers, setAllowedCustomers] = useState<CustomerInstitution[]>([]);
   const [isLoadingCustomers, setIsLoadingCustomers] = useState(true);
   const [isSelectingCustomer, setIsSelectingCustomer] = useState(false);
@@ -47,17 +55,16 @@ export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCu
         data: { customerId },
       });
       if (isSuccessStatus(response.status)) {
-        // TODO: get userinfo
-        const newData = await getCurrentUserAttributes();
-        console.log('newData', newData);
+        const newUserInfo = await getCurrentUserAttributes();
+        dispatch(setUser(newUserInfo));
+        setOpenDialog(false);
       }
-      console.log(response);
     }
     setIsSelectingCustomer(false);
   };
 
   return (
-    <Dialog open={true} fullWidth maxWidth="sm">
+    <Dialog open={openDialog} fullWidth maxWidth="sm">
       <DialogTitle>{t('select_institution')}</DialogTitle>
       <DialogContent>
         <Autocomplete

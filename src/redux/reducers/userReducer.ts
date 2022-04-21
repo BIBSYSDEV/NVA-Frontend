@@ -14,7 +14,7 @@ export const userReducer = (state: User | null = null, action: UserActions | Aut
       const firstName = action.user['custom:firstName'] ?? '';
       const lastName = action.user['custom:lastName'] ?? '';
       const cristinId = action.user['custom:cristinId'] ?? '';
-      // const allowedCustomers = action.user['custom:allowedCustomers']?.split(',') ?? [];
+      const allowedCustomers = action.user['custom:allowedCustomers']?.split(',') ?? [];
 
       const user: User = {
         name: `${firstName} ${lastName}`,
@@ -32,10 +32,7 @@ export const userReducer = (state: User | null = null, action: UserActions | Aut
         isCurator: !!customerId && roles.includes(RoleName.CURATOR),
         isEditor: !!customerId && roles.includes(RoleName.EDITOR),
         viewingScope: [],
-        allowedCustomers: [
-          'https://api.dev.nva.aws.unit.no/customer/f50dff3a-e244-48c7-891d-cc4d75597321',
-          'https://api.dev.nva.aws.unit.no/customer/1bd2e3f7-a570-442a-b444-cb02e6cc70e4',
-        ],
+        allowedCustomers,
       };
       return user;
     }

@@ -128,10 +128,12 @@ export const App = () => {
             </Box>
             <Footer />
           </Box>
-          {!!user &&
-            user.allowedCustomers.length > 1 && ( // TODO: Hide when user has customerId?
-              <SelectCustomerInstitutionDialog allowedCustomerIds={user.allowedCustomers} />
-            )}
+          {user && (
+            <SelectCustomerInstitutionDialog
+              allowedCustomerIds={user.allowedCustomers}
+              openDefault={user.allowedCustomers.length > 1}
+            />
+          )}
         </BrowserRouter>
       )}
     </>

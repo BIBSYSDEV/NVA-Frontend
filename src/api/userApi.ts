@@ -6,25 +6,25 @@ import { UrlPathTemplate } from '../utils/urlPaths';
 export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> => {
   try {
     const currentSession: CognitoUserSession = await Auth.currentSession();
-    const currentSessionData = currentSession.getIdToken().payload;
-    console.log(currentSessionData);
+    const userInfo = (await Auth.currentUserInfo()).attributes;
+
     if (
       !currentSession.isValid() ||
-      currentSessionData['custom:cristinId'] === undefined ||
-      currentSessionData['custom:customerId'] === undefined
+      userInfo['custom:cristinId'] === undefined ||
+      userInfo['custom:customerId'] === undefined
     ) {
       const cognitoUser: CognitoUser = await Auth.currentAuthenticatedUser();
 
       // Refresh session
-      const refreshedSession: CognitoUserSession = await new Promise((resolve) => {
+      await new Promise((resolve) => {
         cognitoUser.refreshSession(currentSession.getRefreshToken(), (error, session) => {
           resolve(session);
         });
       });
-      const refreshedSessionData = refreshedSession.getIdToken().payload;
-      return refreshedSessionData;
+      const refreshedUserInfo = (await Auth.currentUserInfo()).attributes;
+      return refreshedUserInfo;
     } else {
-      return currentSessionData;
+      return userInfo;
     }
   } catch {
     // Don't do anything if user is not supposed to be logged in
