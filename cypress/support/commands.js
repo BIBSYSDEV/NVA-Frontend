@@ -35,10 +35,10 @@ Cypress.Commands.add('setUserRolesInRedux', (roles) => {
     .then((store) => store.dispatch(setRoles(roles)));
 });
 
-Cypress.Commands.add('setNotificationInRedux', (message, variant) => {
+Cypress.Commands.add('setNotificationInRedux', (notification) => {
   cy.window()
     .its('store') // Redux store must be exposed via window.store
-    .then((store) => store.dispatch(setNotification(message, variant)));
+    .then((store) => store.dispatch(setNotification(notification)));
 });
 
 Cypress.Commands.add('removeNotificationInRedux', () => {
