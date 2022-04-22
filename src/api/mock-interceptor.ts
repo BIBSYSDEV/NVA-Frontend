@@ -14,7 +14,7 @@ import { mockMyRegistrations } from '../utils/testfiles/mockMyRegistrations';
 import { mockProject, mockProjectSearch } from '../utils/testfiles/mockProjects';
 import { mockPublishersSearch } from '../utils/testfiles/mockPublishers';
 import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
-import { mockSearchResultsCentralImport, mockSearchWorklist } from '../utils/testfiles/mockSearchResults';
+import { mockSearchResults, mockSearchWorklist } from '../utils/testfiles/mockSearchResults';
 import { mockMessages, mockPublishedRegistration, mockRegistration } from '../utils/testfiles/mockRegistration';
 import {
   CristinApiPath,
@@ -34,7 +34,7 @@ export const interceptRequestsOnMock = () => {
   const mock = new MockAdapter(Axios);
 
   // SEARCH
-  mock.onGet(new RegExp(SearchApiPath.Registrations)).reply(200, mockSearchResultsCentralImport);
+  mock.onGet(new RegExp(SearchApiPath.Registrations)).reply(200, mockSearchResults);
 
   // File
   mock.onGet(new RegExp(FileApiPath.Download)).reply(200, mockDownload);

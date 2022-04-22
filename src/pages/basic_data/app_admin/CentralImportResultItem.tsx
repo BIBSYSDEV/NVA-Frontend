@@ -49,7 +49,7 @@ export const CentralImportResultItem = ({ publication }: CentralImportResultItem
               {publication.entityDescription?.contributors && (
                 <Typography display="inline" variant="body2">
                   {publication.entityDescription.contributors
-                    .map((contributor, index) => contributor.identity.name)
+                    .map((contributor) => contributor.identity.name)
                     .join('; ')}
                 </Typography>
               )}
