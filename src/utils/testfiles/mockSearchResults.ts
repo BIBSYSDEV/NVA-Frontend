@@ -16,6 +16,7 @@ export const mockSearchResults: SearchResponse<Registration> = {
     mockRegistration,
     mockRegistration,
     mockRegistration,
+    mockRegistration,
   ],
 };
 
