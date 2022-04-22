@@ -36,17 +36,19 @@ export const userReducer = (state: User | null = null, action: UserActions | Aut
       };
       return user;
     }
-    case SET_ROLES:
+    case SET_ROLES: {
       // This is used to update roles from cypress
+      const hasCustomerId = !!state?.customerId;
       return {
         ...state,
         roles: action.roles,
-        isCreator: !!state?.customerId && action.roles.includes(RoleName.CREATOR),
-        isAppAdmin: !!state?.customerId && action.roles.includes(RoleName.APP_ADMIN),
-        isInstitutionAdmin: !!state?.customerId && action.roles.includes(RoleName.INSTITUTION_ADMIN),
-        isCurator: !!state?.customerId && action.roles.includes(RoleName.CURATOR),
-        isEditor: !!state?.customerId && action.roles.includes(RoleName.EDITOR),
+        isCreator: hasCustomerId && action.roles.includes(RoleName.CREATOR),
+        isAppAdmin: hasCustomerId && action.roles.includes(RoleName.APP_ADMIN),
+        isInstitutionAdmin: hasCustomerId && action.roles.includes(RoleName.INSTITUTION_ADMIN),
+        isCurator: hasCustomerId && action.roles.includes(RoleName.CURATOR),
+        isEditor: hasCustomerId && action.roles.includes(RoleName.EDITOR),
       } as User;
+    }
     case SET_VIEWING_SCOPE:
       return {
         ...state,
