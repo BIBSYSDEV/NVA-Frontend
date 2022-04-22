@@ -9,16 +9,16 @@ interface CentralImportResultItemProps {
 
 export const CentralImportResultItem = ({ publication }: CentralImportResultItemProps) => {
   const { t } = useTranslation('publicationTypes');
+
   const numberOfVerifiedContributors =
     publication.entityDescription?.contributors.filter((contributor) => !!contributor.identity.id).length ?? 0;
   const numberOfContributors = publication.entityDescription?.contributors.length ?? 0;
+
   const allContributorInstitutions = publication.entityDescription?.contributors.map((contributor) =>
-    contributor.affiliations?.map(
-      (affiliation) => (affiliation.labels && getLanguageString(affiliation.labels)) ?? null
-    )
+    contributor.affiliations?.map((affiliation) => affiliation.labels && getLanguageString(affiliation.labels))
   );
   const institutions = new Set(allContributorInstitutions?.flat() ?? []);
-  //debugger;
+
   return (
     <>
       <ListItem>
@@ -43,9 +43,11 @@ export const CentralImportResultItem = ({ publication }: CentralImportResultItem
                   </Typography>
                 </Link>
               )}
-              <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
-                {publication.entityDescription?.mainTitle}
-              </Typography>
+              {publication.entityDescription?.mainTitle && (
+                <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
+                  {publication.entityDescription.mainTitle}
+                </Typography>
+              )}
               {publication.entityDescription?.contributors && (
                 <Typography display="inline" variant="body2">
                   {publication.entityDescription.contributors
