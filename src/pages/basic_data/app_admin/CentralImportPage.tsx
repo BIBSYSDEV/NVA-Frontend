@@ -24,14 +24,11 @@ export const CentralImportPage = () => {
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
         publications && (
-          <>
-            {results?.size}
-            <List>
-              {publications.map((publication, index) => (
-                <CentralImportResultItem publication={publication} key={index} />
-              ))}
-            </List>
-          </>
+          <List>
+            {publications.map((publication, index) => (
+              <CentralImportResultItem publication={publication} key={index} />
+            ))}
+          </List>
         )
       )}
     </>
