@@ -102,6 +102,12 @@ export const App = () => {
       <Helmet defaultTitle={t('common:page_title')} titleTemplate={`%s - ${t('common:page_title')}`}>
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
+      {user && (
+        <SelectCustomerInstitutionDialog
+          allowedCustomerIds={user.allowedCustomers}
+          openDefault={user.allowedCustomers.length > 1}
+        />
+      )}
       {isLoadingUserAttributes || isLoadingInstitutionUser ? (
         <PageSpinner />
       ) : (
@@ -128,12 +134,6 @@ export const App = () => {
             </Box>
             <Footer />
           </Box>
-          {user && (
-            <SelectCustomerInstitutionDialog
-              allowedCustomerIds={user.allowedCustomers}
-              openDefault={user.allowedCustomers.length > 1}
-            />
-          )}
         </BrowserRouter>
       )}
     </>
