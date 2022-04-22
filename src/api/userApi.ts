@@ -1,31 +1,22 @@
 import { Auth, CognitoUser } from '@aws-amplify/auth';
-import { CognitoUserSession } from 'amazon-cognito-identity-js';
 import { USE_MOCK_DATA, LocalStorageKey } from '../utils/constants';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
 export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> => {
   try {
-    const currentSession: CognitoUserSession = await Auth.currentSession();
-    const userInfo = (await Auth.currentUserInfo()).attributes;
+    const currentSession = await Auth.currentSession();
 
-    if (
-      !currentSession.isValid() ||
-      userInfo['custom:cristinId'] === undefined ||
-      userInfo['custom:customerId'] === undefined
-    ) {
+    if (!currentSession.isValid()) {
       const cognitoUser: CognitoUser = await Auth.currentAuthenticatedUser();
-
       // Refresh session
       await new Promise((resolve) => {
         cognitoUser.refreshSession(currentSession.getRefreshToken(), (error, session) => {
           resolve(session);
         });
       });
-      const refreshedUserInfo = (await Auth.currentUserInfo()).attributes;
-      return refreshedUserInfo;
-    } else {
-      return userInfo;
     }
+    const userInfo = await Auth.currentUserInfo();
+    return userInfo.attributes;
   } catch {
     // Don't do anything if user is not supposed to be logged in
     if (localStorage.getItem(LocalStorageKey.AmplifyRedirect)) {
