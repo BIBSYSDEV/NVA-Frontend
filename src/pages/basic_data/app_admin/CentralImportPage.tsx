@@ -11,7 +11,7 @@ export const CentralImportPage = () => {
   const { t } = useTranslation('basicData');
 
   const [results, isLoadingResults] = useFetch<SearchResponse<Registration>>({
-    url: `${SearchApiPath.Registrations}`,
+    url: SearchApiPath.Registrations,
     errorMessage: t('feedback:error.search'),
   });
   const publications = results?.hits ?? [];
