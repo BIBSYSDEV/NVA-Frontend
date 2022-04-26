@@ -36,6 +36,7 @@ export enum PublicationsApiPath {
 
 export enum RoleApiPath {
   InstitutionUsers = '/users-roles/institutions/users',
+  Login = '/users-roles/login',
   Users = '/users-roles/users',
 }
 

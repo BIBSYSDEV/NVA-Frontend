@@ -4,7 +4,6 @@
   "forbidden": "Forbidden",
   "forbidden_description": "You are not authorized to see the content on this page. Contact the administrator if you think this is wrong.",
   "login": "Log in",
-  "login_with_feide": "Log in with Feide",
   "logout": "Log out",
   "registration_not_published": "This registration is not published yet.",
   "select_institution": "Select institution"
