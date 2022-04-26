@@ -26,7 +26,7 @@ export const CentralImportPage = () => {
         publications && (
           <List>
             {publications.map((publication, index) => (
-              <CentralImportResultItem publication={publication} key={index} />
+              <CentralImportResultItem publication={publication} key={publication.identifier} />
             ))}
           </List>
         )
