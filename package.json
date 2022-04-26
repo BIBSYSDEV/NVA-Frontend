@@ -2,6 +2,34 @@
   "name": "nva-frontend",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "build": "react-scripts build",
+    "start": "react-scripts -r @cypress/instrument-cra start",
+    "start:mock": "set REACT_APP_USE_MOCK=true&& npm start",
+    "test": "cypress run",
+    "test:cypress": "start-server-and-test start:mock http://localhost:3000 test",
+    "test:react": "react-scripts test --coverage --watchAll=false"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-typescript"
+  },
   "dependencies": {
     "@aws-amplify/auth": "^4.5.2",
     "@emotion/react": "^11.9.0",
@@ -38,34 +66,6 @@
     "react-scripts": "^4.0.3",
     "react-share": "^4.4.0",
     "yup": "^0.32.11"
-  },
-  "scripts": {
-    "start": "react-scripts -r @cypress/instrument-cra start",
-    "start:mock": "set REACT_APP_USE_MOCK=true&& npm start",
-    "build": "react-scripts build",
-    "test:cypress": "start-server-and-test start:mock http://localhost:3000 test",
-    "test:react": "react-scripts test --coverage --watchAll=false",
-    "test": "cypress run"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "nyc": {
-    "extends": "@istanbuljs/nyc-config-typescript"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.9.12",
