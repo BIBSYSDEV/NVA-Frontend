@@ -13,8 +13,8 @@ export const userReducer = (state: User | null = null, action: UserActions | Aut
       const roles = roleItems.filter(([_, thisCustomerId]) => thisCustomerId === customerId).map(([role]) => role);
       const firstName = action.user['custom:firstName'] ?? '';
       const lastName = action.user['custom:lastName'] ?? '';
-      const cristinId = action.user['custom:cristinId'] ?? '';
-      const allowedCustomers = action.user['custom:allowedCustomers']?.split(',') ?? [];
+      const cristinId = ''; // action.user['custom:cristinId'] ?? '';
+      // const allowedCustomers = action.user['custom:allowedCustomers']?.split(',') ?? [];
 
       const user: User = {
         name: `${firstName} ${lastName}`,
@@ -23,7 +23,7 @@ export const userReducer = (state: User | null = null, action: UserActions | Aut
         id: action.user['custom:feideId'] ?? '',
         cristinId,
         username: action.user['custom:nvaUsername'] ?? '',
-        customerId,
+        customerId: '',
         roles,
         topOrgCristinId: action.user['custom:topOrgCristinId'],
         isCreator: !!customerId && roles.includes(RoleName.CREATOR),
@@ -32,7 +32,7 @@ export const userReducer = (state: User | null = null, action: UserActions | Aut
         isCurator: !!customerId && roles.includes(RoleName.CURATOR),
         isEditor: !!customerId && roles.includes(RoleName.EDITOR),
         viewingScope: [],
-        allowedCustomers,
+        allowedCustomers: [],
       };
       return user;
     }
