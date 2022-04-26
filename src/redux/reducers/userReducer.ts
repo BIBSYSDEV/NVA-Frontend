@@ -14,6 +14,7 @@ export const userReducer = (state: User | null = null, action: UserActions | Aut
       const firstName = action.user['custom:firstName'] ?? '';
       const lastName = action.user['custom:lastName'] ?? '';
       const cristinId = action.user['custom:cristinId'] ?? '';
+      const allowedCustomers = action.user['custom:allowedCustomers']?.split(',') ?? [];
 
       const user: User = {
         name: `${firstName} ${lastName}`,
@@ -31,20 +32,23 @@ export const userReducer = (state: User | null = null, action: UserActions | Aut
         isCurator: !!customerId && roles.includes(RoleName.CURATOR),
         isEditor: !!customerId && roles.includes(RoleName.EDITOR),
         viewingScope: [],
+        allowedCustomers,
       };
       return user;
     }
-    case SET_ROLES:
+    case SET_ROLES: {
       // This is used to update roles from cypress
+      const hasCustomerId = !!state?.customerId;
       return {
         ...state,
         roles: action.roles,
-        isCreator: !!state?.customerId && action.roles.includes(RoleName.CREATOR),
-        isAppAdmin: !!state?.customerId && action.roles.includes(RoleName.APP_ADMIN),
-        isInstitutionAdmin: !!state?.customerId && action.roles.includes(RoleName.INSTITUTION_ADMIN),
-        isCurator: !!state?.customerId && action.roles.includes(RoleName.CURATOR),
-        isEditor: !!state?.customerId && action.roles.includes(RoleName.EDITOR),
+        isCreator: hasCustomerId && action.roles.includes(RoleName.CREATOR),
+        isAppAdmin: hasCustomerId && action.roles.includes(RoleName.APP_ADMIN),
+        isInstitutionAdmin: hasCustomerId && action.roles.includes(RoleName.INSTITUTION_ADMIN),
+        isCurator: hasCustomerId && action.roles.includes(RoleName.CURATOR),
+        isEditor: hasCustomerId && action.roles.includes(RoleName.EDITOR),
       } as User;
+    }
     case SET_VIEWING_SCOPE:
       return {
         ...state,
