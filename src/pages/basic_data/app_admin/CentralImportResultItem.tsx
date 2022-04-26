@@ -10,9 +10,9 @@ interface CentralImportResultItemProps {
 export const CentralImportResultItem = ({ publication }: CentralImportResultItemProps) => {
   const { t } = useTranslation('publicationTypes');
 
-  const numberOfVerifiedContributors =
+  const verifiedContributorCount =
     publication.entityDescription?.contributors.filter((contributor) => !!contributor.identity.id).length ?? 0;
-  const numberOfContributors = publication.entityDescription?.contributors.length ?? 0;
+  const contributorsCount = publication.entityDescription?.contributors.length ?? 0;
 
   const allContributorInstitutions = publication.entityDescription?.contributors.map((contributor) =>
     contributor.affiliations?.map((affiliation) => affiliation.labels && getLanguageString(affiliation.labels))
@@ -58,7 +58,7 @@ export const CentralImportResultItem = ({ publication }: CentralImportResultItem
             </Grid>
             <Grid item md={2} xs={12}>
               <Typography variant="body1">
-                ({numberOfVerifiedContributors} {t('common:of')} {numberOfContributors})
+                {t('basicData:verifiedContributorCount', { verifiedContributorCount, contributorsCount })}
               </Typography>
             </Grid>
             <Grid item md={3} xs={12}>

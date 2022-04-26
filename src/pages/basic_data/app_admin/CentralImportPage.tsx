@@ -23,9 +23,9 @@ export const CentralImportPage = () => {
       {isLoadingResults ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
-        publications && (
+        publications.length > 0 && (
           <List>
-            {publications.map((publication, index) => (
+            {publications.map((publication) => (
               <CentralImportResultItem publication={publication} key={publication.identifier} />
             ))}
           </List>
