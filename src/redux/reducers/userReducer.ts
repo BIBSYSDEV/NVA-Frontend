@@ -20,6 +20,7 @@ export const userReducer = (state: User | null = null, action: UserActions | Aut
         name: `${firstName} ${lastName}`,
         givenName: firstName,
         familyName: lastName,
+        nationalIdNumber: action.user['custom:feideIdNin'] ?? '',
         id: action.user['custom:feideId'] ?? '',
         cristinId,
         username: action.user['custom:nvaUsername'] ?? '',

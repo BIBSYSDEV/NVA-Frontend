@@ -9,6 +9,7 @@ export enum RoleName {
 }
 
 export interface User {
+  nationalIdNumber: string;
   createdDate?: string;
   cristinId?: string;
   name: string;
@@ -63,6 +64,7 @@ export interface FeideUser {
   'custom:roles'?: string;
   'custom:accessRights'?: string;
   'custom:allowedCustomers'?: string;
+  'custom:feideIdNin'?: string;
 }
 
 export interface CristinPersonAffiliation {

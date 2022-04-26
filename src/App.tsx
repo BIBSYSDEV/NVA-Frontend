@@ -110,7 +110,7 @@ export const App = () => {
             openDefault={user.allowedCustomers.length > 1}
           />
         ) : (
-          <CreateCristinUserDialog />
+          <CreateCristinUserDialog user={user} />
         ))}
       {isLoadingUserAttributes || isLoadingInstitutionUser ? (
         <PageSpinner />
