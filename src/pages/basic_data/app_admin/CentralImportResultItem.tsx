@@ -14,7 +14,7 @@ export const CentralImportResultItem = ({ publication }: CentralImportResultItem
   const verifiedContributorCount = contributors.filter((contributor) => !!contributor.identity.id).length;
   const contributorsCount = contributors.length;
 
-  const allContributorInstitutions = publication.entityDescription?.contributors.map((contributor) =>
+  const allContributorInstitutions = contributors.map((contributor) =>
     contributor.affiliations?.map((affiliation) => affiliation.labels && getLanguageString(affiliation.labels))
   );
   const institutions = new Set(allContributorInstitutions?.flat() ?? []);
