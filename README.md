@@ -21,7 +21,6 @@ Info about all environment variables are listed in the table below. Note that yo
 | REACT_APP_USE_MOCK                     | `false`                                      | Whether to use local mock data or not. If `true`, no more variables are needed.                            |
 | REACT_APP_REDIRECT_SIGN_IN             | `http://localhost:3000`                      | Callback URI for successfull login.                                                                        |
 | REACT_APP_REDIRECT_SIGN_OUT            | `http://localhost:3000/logout`               | Callback URI for successfull logout.                                                                       |
-| REACT_APP_AWS_REGION                   | `eu-west-1`                                  | Value can be found by logging in to the Parameter Store in AWS. (???)                                      |
 | REACT_APP_AWS_USER_POOLS_ID            | `eu-west-1:XXXXXXXXXX`                       | Value can be found by logging in to the Parameter Store in AWS. (CognitoUserPoolId)                        |
 | REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID | `XXXXXXXXXX`                                 | Value can be found by logging in to the Parameter Store in AWS. (CognitoUserPoolAppClientId)               |
 | REACT_APP_DOMAIN                       | `XXXXXXXXX.auth.eu-west-1.amazoncognito.com` | Value can be found by logging in to the Parameter Store in AWS. (CognitoAuthenticationDomain)              |
