@@ -8,6 +8,7 @@ import {
   Typography,
   FormControlLabel,
   Checkbox,
+  Button,
 } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useState } from 'react';
@@ -21,6 +22,7 @@ import { setUser } from '../redux/actions/userActions';
 import { setNotification } from '../redux/notificationSlice';
 import { CreateCristinUser, CristinUser, FlatCristinUser, User } from '../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../utils/constants';
+import { useAuthentication } from '../utils/hooks/useAuthentication';
 import { convertToCristinUser } from '../utils/user-helpers';
 import { userValidationSchema } from '../utils/validation/basic_data/addEmployeeValidation';
 
@@ -31,6 +33,7 @@ interface CreateCristinUserDialogProps {
 export const CreateCristinUserDialog = ({ user }: CreateCristinUserDialogProps) => {
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
+  const { handleLogout } = useAuthentication();
   const [acceptTermsValue, setAcceptTermsValue] = useState(false);
 
   const createUser = async (values: FlatCristinUser) => {
@@ -94,12 +97,16 @@ export const CreateCristinUserDialog = ({ user }: CreateCristinUserDialogProps) 
               <FormControlLabel
                 label={t('authorization:accept_terms_to_create_user')}
                 control={
-                  <Checkbox checked={acceptTermsValue} onChange={() => setAcceptTermsValue(!acceptTermsValue)} />
+                  <Checkbox
+                    required
+                    checked={acceptTermsValue}
+                    onChange={() => setAcceptTermsValue(!acceptTermsValue)}
+                  />
                 }
               />
             </DialogContent>
             <DialogActions>
-              {/* TODO: Cancel button to log out */}
+              <Button onClick={() => handleLogout()}>{t('common:cancel')}</Button>
               <LoadingButton type="submit" variant="contained" disabled={!acceptTermsValue} loading={isSubmitting}>
                 {t('common:create')}
               </LoadingButton>
