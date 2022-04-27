@@ -10,7 +10,6 @@
     "connect_authority": "Connect to the national register of authors",
     "connect_to_select_authority": "Connect to selected author",
     "connected_authority": "Your author identity is connected",
-    "create_authority": "Create new author",
     "description_create_own_authority": "Do not create a new author in the author register if you are already registered. Check Example of publication to make sure you are not creating a duplicate.\n\nIf your name is misspelled for Example of publication, please link to this author. Contact the curator at your institution to correct typing errors in the author register. [Lenke til kontaktskjema]\n\nIf you get more than one Example of publication where you are definitely an author, connect to one of the authors. Contact the curator at your institution to clear duplicates in the author register. [Lenke til kontaktskjema]\n\nIf the name at the top of this page is not yours, cancel and contact the curator at your institution to correct the error. [Lenke til kontaktskjema]",
     "description_no_authority_found": "Your name is not in the author register and must be added before you can continue.",
     "example_publication": "Example of publication",
