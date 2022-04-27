@@ -1,6 +1,6 @@
 import { LoadingButton } from '@mui/lab';
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
-import { Field, FieldProps, Formik } from 'formik';
+import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { CristinApiPath } from '../api/apiPaths';
@@ -12,6 +12,7 @@ import { setNotification } from '../redux/notificationSlice';
 import { CreateCristinUser, CristinUser, FlatCristinUser, User } from '../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../utils/constants';
 import { convertToCristinUser } from '../utils/user-helpers';
+import { userValidationSchema } from '../utils/validation/basic_data/addEmployeeValidation';
 
 interface CreateCristinUserDialogProps {
   user: User;
@@ -40,18 +41,35 @@ export const CreateCristinUserDialog = ({ user }: CreateCristinUserDialogProps) 
   return (
     <Dialog open={true} fullWidth maxWidth="sm">
       <DialogTitle>{t('authorization:your_user_profile')}</DialogTitle>
-      <Formik initialValues={{ ...emptyUser, nationalId: user.nationalIdNumber }} onSubmit={createUser}>
+      <Formik
+        initialValues={{ ...emptyUser, nationalId: user.nationalIdNumber }}
+        validationSchema={userValidationSchema}
+        onSubmit={createUser}>
         {({ isSubmitting }) => (
-          <>
+          <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <Field name="firstName">
-                {({ field }: FieldProps<string>) => (
-                  <TextField {...field} variant="filled" label={t('first_name')} required />
+                {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    label={t('first_name')}
+                    required
+                    error={!!error && touched}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
                 )}
               </Field>
               <Field name="lastName">
-                {({ field }: FieldProps<string>) => (
-                  <TextField {...field} variant="filled" label={t('last_name')} required />
+                {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    label={t('last_name')}
+                    required
+                    error={!!error && touched}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
                 )}
               </Field>
               <TextField
@@ -67,7 +85,7 @@ export const CreateCristinUserDialog = ({ user }: CreateCristinUserDialogProps) 
                 {t('common:create')}
               </LoadingButton>
             </DialogActions>
-          </>
+          </Form>
         )}
       </Formik>
     </Dialog>
