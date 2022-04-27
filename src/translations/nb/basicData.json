@@ -10,5 +10,6 @@
   "position": "Stilling",
   "position_percent": "Stillingsprosent",
   "publications": "Publikasjoner",
-  "search_for_national_id": "Søk opp person med fødselsnummer"
+  "search_for_national_id": "Søk opp person med fødselsnummer",
+  "verifiedContributorCount": "({{verifiedContributorCount}} av {{contributorsCount}})"
 }

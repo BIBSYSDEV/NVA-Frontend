@@ -17,16 +17,16 @@ import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
 import { mockSearchResults, mockSearchWorklist } from '../utils/testfiles/mockSearchResults';
 import { mockMessages, mockPublishedRegistration, mockRegistration } from '../utils/testfiles/mockRegistration';
 import {
-  SearchApiPath,
-  FileApiPath,
-  PublicationsApiPath,
   CristinApiPath,
-  PublicationChannelApiPath,
   CustomerInstitutionApiPath,
+  FileApiPath,
+  PublicationChannelApiPath,
+  PublicationsApiPath,
   RoleApiPath,
+  SearchApiPath,
 } from './apiPaths';
 import { mockOrganizationSearch } from '../utils/testfiles/mockOrganizationSearch';
-import { mockDownload, mockCreateUpload, mockPrepareUpload, mockCompleteUpload } from '../utils/testfiles/mockFiles';
+import { mockCompleteUpload, mockCreateUpload, mockDownload, mockPrepareUpload } from '../utils/testfiles/mockFiles';
 import { mockCristinUserSearch } from '../utils/testfiles/mockCristinUserSearch';
 
 // AXIOS INTERCEPTOR
