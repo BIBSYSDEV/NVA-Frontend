@@ -14,10 +14,10 @@ export const userReducer = (state: User | null = null, action: UserActions | Aut
       const firstName = action.user['custom:firstName'] ?? '';
       const lastName = action.user['custom:lastName'] ?? '';
       const cristinId = ''; // action.user['custom:cristinId'] ?? '';
-      // const allowedCustomers = action.user['custom:allowedCustomers']?.split(',') ?? [];
+      const allowedCustomers = action.user['custom:allowedCustomers']?.split(',') ?? [];
 
       const user: User = {
-        name: `${firstName} ${lastName}`,
+        name: '', //`${firstName} ${lastName}`,
         givenName: firstName,
         familyName: lastName,
         nationalIdNumber: action.user['custom:feideIdNin'] ?? '',
@@ -33,7 +33,7 @@ export const userReducer = (state: User | null = null, action: UserActions | Aut
         isCurator: !!customerId && roles.includes(RoleName.CURATOR),
         isEditor: !!customerId && roles.includes(RoleName.EDITOR),
         viewingScope: [],
-        allowedCustomers: [],
+        allowedCustomers,
       };
       return user;
     }

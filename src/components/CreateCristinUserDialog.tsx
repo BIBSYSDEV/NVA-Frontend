@@ -1,6 +1,16 @@
 import { LoadingButton } from '@mui/lab';
-import { Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Typography,
+  FormControlLabel,
+  Checkbox,
+} from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { CristinApiPath } from '../api/apiPaths';
@@ -21,6 +31,7 @@ interface CreateCristinUserDialogProps {
 export const CreateCristinUserDialog = ({ user }: CreateCristinUserDialogProps) => {
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
+  const [acceptTermsValue, setAcceptTermsValue] = useState(false);
 
   const createUser = async (values: FlatCristinUser) => {
     const cristinUser: CreateCristinUser = convertToCristinUser(values);
@@ -39,7 +50,7 @@ export const CreateCristinUserDialog = ({ user }: CreateCristinUserDialogProps) 
   };
 
   return (
-    <Dialog open={true} fullWidth maxWidth="sm">
+    <Dialog open={true} fullWidth maxWidth="xs">
       <DialogTitle>{t('authorization:your_user_profile')}</DialogTitle>
       <Formik
         initialValues={{ ...emptyUser, nationalId: user.nationalIdNumber }}
@@ -48,6 +59,7 @@ export const CreateCristinUserDialog = ({ user }: CreateCristinUserDialogProps) 
         {({ isSubmitting }) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Typography>{t('authorization:create_user_info')}</Typography>
               <Field name="firstName">
                 {({ field, meta: { error, touched } }: FieldProps<string>) => (
                   <TextField
@@ -79,9 +91,16 @@ export const CreateCristinUserDialog = ({ user }: CreateCristinUserDialogProps) 
                 required
                 value={user.nationalIdNumber}
               />
+              <FormControlLabel
+                label={t('authorization:accept_terms_to_create_user')}
+                control={
+                  <Checkbox checked={acceptTermsValue} onChange={() => setAcceptTermsValue(!acceptTermsValue)} />
+                }
+              />
             </DialogContent>
             <DialogActions>
-              <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
+              {/* TODO: Cancel button to log out */}
+              <LoadingButton type="submit" variant="contained" disabled={!acceptTermsValue} loading={isSubmitting}>
                 {t('common:create')}
               </LoadingButton>
             </DialogActions>

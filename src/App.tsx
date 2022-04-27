@@ -109,9 +109,9 @@ export const App = () => {
             allowedCustomerIds={user.allowedCustomers}
             openDefault={user.allowedCustomers.length > 1}
           />
-        ) : (
+        ) : !user.name ? (
           <CreateCristinUserDialog user={user} />
-        ))}
+        ) : null)}
       {isLoadingUserAttributes || isLoadingInstitutionUser ? (
         <PageSpinner />
       ) : (
