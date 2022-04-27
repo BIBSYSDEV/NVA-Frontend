@@ -26,6 +26,7 @@ import { RoleApiPath } from './api/apiPaths';
 import { InstitutionUser } from './types/user.types';
 import { UrlPathTemplate } from './utils/urlPaths';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInstitutionDialog';
 
 const getLanguageTagValue = (language: string) => {
   if (language === 'eng') {
@@ -101,6 +102,12 @@ export const App = () => {
       <Helmet defaultTitle={t('common:page_title')} titleTemplate={`%s - ${t('common:page_title')}`}>
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
+      {user && (
+        <SelectCustomerInstitutionDialog
+          allowedCustomerIds={user.allowedCustomers}
+          openDefault={user.allowedCustomers.length > 1}
+        />
+      )}
       {isLoadingUserAttributes || isLoadingInstitutionUser ? (
         <PageSpinner />
       ) : (

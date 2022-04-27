@@ -10,5 +10,6 @@
   "position": "Position",
   "position_percent": "Position percent",
   "publications": "Publications",
-  "search_for_national_id": "Search for user with National ID number"
+  "search_for_national_id": "Search for user with National ID number",
+  "verifiedContributorCount": "({{verifiedContributorCount}} av {{contributorsCount}})"
 }

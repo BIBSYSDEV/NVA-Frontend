@@ -1,38 +1,36 @@
 import { List, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { ResultItem } from './CentralImportResultItem';
-
-const mockPublication = {
-  title: 'The Title',
-  description: 'The Description',
-  type: 'Article',
-  doi: 'https://doi.org/10.1038/s41467-021-25342423',
-  contributors: ['Peder Botten', 'Gregor Garbrielsen', 'Oddny Osteloff'],
-  institution: 'The Institution',
-  confirmedContributors: '0 of 2',
-};
-
-const mockPublicationList = [
-  mockPublication,
-  mockPublication,
-  mockPublication,
-  mockPublication,
-  mockPublication,
-  mockPublication,
-];
+import { useFetch } from '../../../utils/hooks/useFetch';
+import { Registration } from '../../../types/registration.types';
+import { SearchApiPath } from '../../../api/apiPaths';
+import { SearchResponse } from '../../../types/common.types';
+import { ListSkeleton } from '../../../components/ListSkeleton';
+import { CentralImportResultItem } from './CentralImportResultItem';
 
 export const CentralImportPage = () => {
   const { t } = useTranslation('basicData');
+
+  const [results, isLoadingResults] = useFetch<SearchResponse<Registration>>({
+    url: SearchApiPath.Registrations,
+    errorMessage: t('feedback:error.search'),
+  });
+  const publications = results?.hits ?? [];
   return (
     <>
       <Typography variant="h3" component="h2" paragraph>
         {t('publications')}
       </Typography>
-      <List>
-        {mockPublicationList.map((publication, index) => (
-          <ResultItem publication={publication} key={index} />
-        ))}
-      </List>
+      {isLoadingResults ? (
+        <ListSkeleton minWidth={100} maxWidth={100} height={100} />
+      ) : (
+        publications.length > 0 && (
+          <List>
+            {publications.map((publication) => (
+              <CentralImportResultItem publication={publication} key={publication.identifier} />
+            ))}
+          </List>
+        )
+      )}
     </>
   );
 };

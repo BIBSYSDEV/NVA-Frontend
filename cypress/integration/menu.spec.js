@@ -6,12 +6,9 @@ const noRoles = [];
 const allRoles = Object.values(RoleName);
 
 describe('Menu', () => {
-  beforeEach(() => {
-    cy.visit('/my-profile');
-    cy.mocklogin();
-  });
-
   it('Authorized user should see protected menu options', () => {
+    cy.visit(UrlPathTemplate.MyProfile);
+    cy.mocklogin();
     cy.setUserRolesInRedux(allRoles);
     cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click({ force: true });
     cy.get(`[data-testid=${dataTestId.header.myProfileLink}]`).should('be.visible');
@@ -23,6 +20,8 @@ describe('Menu', () => {
   });
 
   it('Unauthorized user should not see protected menu options', () => {
+    cy.visit(UrlPathTemplate.MyProfile);
+    cy.mocklogin();
     cy.setUserRolesInRedux(noRoles);
     cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click({ force: true });
     cy.get(`[data-testid=${dataTestId.header.myProfileLink}]`).should('be.visible');
@@ -35,30 +34,37 @@ describe('Menu', () => {
 
   it('Unauthorized user should see Forbidden page when visiting protected URLs', () => {
     cy.visit(UrlPathTemplate.NewRegistration);
+    cy.mocklogin();
     cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=forbidden]').should('be.visible');
 
     cy.visit(UrlPathTemplate.MyRegistrations);
+    cy.mocklogin();
     cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=forbidden]').should('be.visible');
 
     cy.visit(UrlPathTemplate.Worklist);
+    cy.mocklogin();
     cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=forbidden]').should('be.visible');
 
     cy.visit(UrlPathTemplate.BasicData);
+    cy.mocklogin();
     cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=forbidden]').should('be.visible');
 
     cy.visit(UrlPathTemplate.BasicDataMyInstitution);
+    cy.mocklogin();
     cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=forbidden]').should('be.visible');
 
     cy.visit(UrlPathTemplate.BasicDataUsers);
+    cy.mocklogin();
     cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=forbidden]').should('be.visible');
 
     cy.visit(UrlPathTemplate.Editor);
+    cy.mocklogin();
     cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=forbidden]').should('be.visible');
   });
