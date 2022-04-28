@@ -1,6 +1,5 @@
 import i18n from '../translations/i18n';
 import { LanguageString } from '../types/common.types';
-import isEmpty from 'just-is-empty';
 
 // Map from three letter language to two ("nob" -> "no")
 export const getPreferredLanguageCode = (language?: string) => {
@@ -14,12 +13,12 @@ export const getPreferredLanguageCode = (language?: string) => {
 
 // Get label based on selected language
 export const getLanguageString = (labels?: LanguageString) => {
-  if (!labels) {
+  if (!labels || Object.keys(labels).length === 0) {
     return '';
   }
   const preferredLanguageCode = getPreferredLanguageCode();
   if (Object.keys(labels).includes(preferredLanguageCode)) {
     return labels[preferredLanguageCode];
   }
-  return isEmpty(Object.values(labels)[0]) ? '' : Object.values(labels)[0];
+  return Object.values(labels)[0];
 };
