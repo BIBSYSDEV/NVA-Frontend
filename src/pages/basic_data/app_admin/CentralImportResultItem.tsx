@@ -2,6 +2,7 @@ import { Grid, Link, ListItem, ListItemText, Typography } from '@mui/material';
 import { Registration } from '../../../types/registration.types';
 import { useTranslation } from 'react-i18next';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 interface CentralImportResultItemProps {
   publication: Registration;
@@ -22,7 +23,7 @@ export const CentralImportResultItem = ({ publication }: CentralImportResultItem
   const publicationInstanceType = publication.entityDescription?.reference?.publicationInstance.type ?? '';
 
   return (
-    <ListItem divider>
+    <ListItem divider data-testid={`${dataTestId.basicData.centralImport.resultItem}-${publication.identifier}`}>
       <ListItemText disableTypography>
         <Grid container spacing={2} justifyContent="space-between" alignItems="baseline">
           <Grid item md={2} xs={12}>
