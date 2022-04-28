@@ -36,12 +36,7 @@ export const CentralImportPage = () => {
   const publications = searchResults?.hits ?? [];
 
   useEffect(() => {
-    if (
-      searchResults?.hits.some(
-        ({ entityDescription }) =>
-          stringIncludesMathJax(entityDescription?.mainTitle) || stringIncludesMathJax(entityDescription?.abstract)
-      )
-    ) {
+    if (searchResults?.hits.some(({ entityDescription }) => stringIncludesMathJax(entityDescription?.mainTitle))) {
       typesetMathJax();
     }
   }, [searchResults]);
@@ -51,11 +46,10 @@ export const CentralImportPage = () => {
       <Typography variant="h3" component="h2" paragraph>
         {t('publications')}
       </Typography>
-      {isLoadingSearchResults && !searchResults ? (
+      {isLoadingSearchResults ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
-        searchResults &&
-        publications.length > 0 && (
+        searchResults && (
           <>
             <Typography variant="subtitle1">{t('search:hits', { count: searchResults.size })}:</Typography>
             <Divider />
@@ -64,16 +58,18 @@ export const CentralImportPage = () => {
                 <CentralImportResultItem publication={publication} key={publication.identifier + index} />
               ))}
             </List>
-            <TablePagination
-              data-testid={dataTestId.basicData.centralImport.searchPagination}
-              rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-              component="div"
-              count={searchResults.size}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={(_, newPage) => updatePath((newPage * rowsPerPage).toString(), rowsPerPage.toString())}
-              onRowsPerPageChange={(event) => updatePath('0', event.target.value)}
-            />
+            {publications.length > 0 && (
+              <TablePagination
+                data-testid={dataTestId.basicData.centralImport.searchPagination}
+                rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+                component="div"
+                count={searchResults.size}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={(_, newPage) => updatePath((newPage * rowsPerPage).toString(), rowsPerPage.toString())}
+                onRowsPerPageChange={(event) => updatePath('0', event.target.value)}
+              />
+            )}
           </>
         )
       )}

@@ -20,5 +20,5 @@ export const getLanguageString = (labels?: LanguageString) => {
   if (Object.keys(labels).includes(preferredLanguageCode)) {
     return labels[preferredLanguageCode];
   }
-  return Object.values(labels)[0];
+  return Object.values(labels)[0].length > 0 ? Object.values(labels)[0] : '';
 };
