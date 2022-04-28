@@ -10,7 +10,7 @@ describe('Central Import', () => {
     window.localStorage.setItem('beta', 'true');
   });
 
-  it('shows a list of imported central-import posts', () => {
+  it('should show a list of imported central-import publications', () => {
     const resultItemTestId = `${dataTestId.basicData.centralImport.resultItem}-${mockSearchResults.hits[1].identifier}`;
     cy.get(`[data-testid=${resultItemTestId}]`).contains(mockSearchResults.hits[1].entityDescription.mainTitle);
     cy.get(`[data-testid=${resultItemTestId}]`).contains('Journal article');
@@ -21,6 +21,18 @@ describe('Central Import', () => {
     cy.get(`[data-testid=${resultItemTestId}]`).contains(
       mockSearchResults.hits[1].entityDescription.contributors[1].affiliations[0].labels.en
     );
+  });
+
+  it('should show working pagination', () => {
+    cy.url().should('not.include', 'results');
+    cy.url().should('not.include', 'from');
+    cy.get(`[data-testid=${dataTestId.basicData.centralImport.searchPagination}] button`).eq(0).should('be.disabled');
+    cy.get(`[data-testid=${dataTestId.basicData.centralImport.searchPagination}] button`).eq(1).should('be.disabled');
+    cy.get(`[data-testid=${dataTestId.basicData.centralImport.searchPagination}] button`).eq(2).should('be.enabled');
+    cy.get(`[data-testid=${dataTestId.basicData.centralImport.searchPagination}] button`).eq(3).should('be.enabled');
+    cy.get(`[data-testid=${dataTestId.basicData.centralImport.searchPagination}] button`).eq(2).click();
+    cy.url().should('include', 'results=10');
+    cy.url().should('include', 'from=10');
   });
 
   it('central import is found via menu', () => {
