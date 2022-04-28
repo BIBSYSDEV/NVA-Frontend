@@ -10,7 +10,6 @@ export enum PublicationType {
 
 export enum JournalType {
   Article = 'JournalArticle',
-  FeatureArticle = 'FeatureArticle',
   Letter = 'JournalLetter',
   Review = 'JournalReview',
   Leader = 'JournalLeader',
