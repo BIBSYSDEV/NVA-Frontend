@@ -1,6 +1,7 @@
 import { RoleName } from '../../src/types/user.types';
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { mockSearchResults } from '../../src/utils/testfiles/mockSearchResults';
+import { UrlPathTemplate } from '../../src/utils/urlPaths';
 
 describe('Central Import', () => {
   beforeEach(() => {
@@ -38,9 +39,9 @@ describe('Central Import', () => {
   it('central import is found via menu', () => {
     cy.visit('/');
     cy.mocklogin();
-    cy.get('[data-testid=basic-data-link]').click();
-    cy.get('[data-testid=central-import-link]').click();
-    cy.url().should('include', '/basic-data/central-import');
+    cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).click();
+    cy.get(`[data-testid=${dataTestId.basicData.centralImportLink}]`).click();
+    cy.url().should('include', UrlPathTemplate.BasicDataCentralImport);
   });
 
   afterEach(() => {
