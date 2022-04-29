@@ -5,6 +5,7 @@
   "central_import": {
     "central_import":  "Sentralimport",
     "duplicate_check":  "Duplikatsjekk",
+    "import_publication":  "Import publication",
     "verifiedContributorCount": "({{verifiedContributorCount}} av {{contributorsCount}})"
   },
   "create_person": "Opprett person",

@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { Registration } from '../../../../types/registration.types';
@@ -25,6 +25,8 @@ export const CentralImportDuplicationCheckPage = () => {
     }
   }, [registration]);
 
+  const contributors = registration?.entityDescription?.contributors ?? [];
+
   return (
     <>
       <Typography variant="h3" component="h2" paragraph>
@@ -35,8 +37,28 @@ export const CentralImportDuplicationCheckPage = () => {
           <PageSpinner />
         ) : registration ? (
           <>
-            <div>Valgt post:</div>
-            <div>{registration.id}</div>
+            <Typography variant="h3" component="h2" paragraph>
+              {t('central_import.import_publication')}:
+            </Typography>
+            <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
+              {registration.entityDescription?.mainTitle}
+            </Typography>
+            {contributors && (
+              <Typography display="inline" variant="body2">
+                {contributors.map((contributor) => contributor.identity.name).join('; ')}
+              </Typography>
+            )}
+            {registration.entityDescription?.reference?.doi && (
+              <MuiLink
+                underline="hover"
+                href={registration.entityDescription.reference.doi}
+                target="_blank"
+                rel="noopener noreferrer">
+                <Typography gutterBottom variant="body2" sx={{ color: 'primary.dark' }}>
+                  {registration.entityDescription.reference.doi}
+                </Typography>
+              </MuiLink>
+            )}
           </>
         ) : (
           <NotFound />
