@@ -7,6 +7,7 @@ export const dataTestId = {
     centralImportLink: 'central-import-link',
     centralImport: {
       searchPagination: 'search-pagination',
+      resultItem: 'central-import-result-item',
     },
   },
   organization: {
