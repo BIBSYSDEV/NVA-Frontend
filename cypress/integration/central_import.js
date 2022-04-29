@@ -8,7 +8,7 @@ describe('Central Import', () => {
     cy.visit('/basic-data/central-import');
     cy.mocklogin();
     cy.setUserRolesInRedux([RoleName.APP_ADMIN]);
-    window.localStorage.setItem('beta', 'true');
+    window.localStorage.setItem('beta', 'true'); // TODO: remove when not beta anymore
   });
 
   it('should show a list of imported central-import publications', () => {
@@ -45,6 +45,6 @@ describe('Central Import', () => {
   });
 
   afterEach(() => {
-    window.localStorage.removeItem('beta');
+    window.localStorage.removeItem('beta'); // TODO: remove when not beta anymore
   });
 });
