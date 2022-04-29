@@ -18,7 +18,7 @@ describe('Central Import', () => {
     cy.get(`[data-testid=${resultItemTestId}]`).contains(
       mockSearchResults.hits[1].entityDescription.contributors[1].identity.name
     );
-    cy.get(`[data-testid=${resultItemTestId}]`).contains('(1 av 2)');
+    cy.get(`[data-testid=${resultItemTestId}]`).contains('(1 of 2)');
     cy.get(`[data-testid=${resultItemTestId}]`).contains(
       mockSearchResults.hits[1].entityDescription.contributors[1].affiliations[0].labels.en
     );
