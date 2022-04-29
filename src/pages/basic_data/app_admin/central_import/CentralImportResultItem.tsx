@@ -1,8 +1,7 @@
 import { Grid, Link as MuiLink, ListItem, ListItemText, Typography } from '@mui/material';
 import { Registration } from '../../../../types/registration.types';
 import { useTranslation } from 'react-i18next';
-import { getLanguageString } from '../../../utils/translation-helpers';
-import { dataTestId } from '../../../utils/dataTestIds';
+import { dataTestId } from '../../../../utils/dataTestIds';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { getDuplicateCheckPagePath } from '../../../../utils/urlPaths';
 import { Link } from 'react-router-dom';
