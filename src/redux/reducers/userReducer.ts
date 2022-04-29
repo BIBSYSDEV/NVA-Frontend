@@ -17,14 +17,14 @@ export const userReducer = (state: User | null = null, action: UserActions | Aut
       const allowedCustomers = action.user['custom:allowedCustomers']?.split(',') ?? [];
 
       const user: User = {
-        name: '', //`${firstName} ${lastName}`,
+        name: `${firstName} ${lastName}`,
         givenName: firstName,
         familyName: lastName,
         nationalIdNumber: action.user['custom:feideIdNin'] ?? '',
         id: action.user['custom:feideId'] ?? '',
         cristinId,
         username: action.user['custom:nvaUsername'] ?? '',
-        customerId: '',
+        customerId,
         roles,
         topOrgCristinId: action.user['custom:topOrgCristinId'],
         isCreator: !!customerId && roles.includes(RoleName.CREATOR),

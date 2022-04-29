@@ -56,7 +56,12 @@ export const CreateCristinUserDialog = ({ user }: CreateCristinUserDialogProps) 
     <Dialog open={true} fullWidth maxWidth="xs">
       <DialogTitle>{t('authorization:your_user_profile')}</DialogTitle>
       <Formik
-        initialValues={{ ...emptyUser, nationalId: user.nationalIdNumber }}
+        initialValues={{
+          ...emptyUser,
+          nationalId: user.nationalIdNumber,
+          firstName: user.givenName,
+          lastName: user.familyName,
+        }}
         validationSchema={userValidationSchema}
         onSubmit={createUser}>
         {({ isSubmitting }) => (
