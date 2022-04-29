@@ -1,7 +1,9 @@
-import { Grid, Link, ListItem, ListItemText, Typography } from '@mui/material';
-import { Registration } from '../../../types/registration.types';
+import { Grid, Link as MuiLink, ListItem, ListItemText, Typography } from '@mui/material';
+import { Registration } from '../../../../types/registration.types';
 import { useTranslation } from 'react-i18next';
-import { getLanguageString } from '../../../utils/translation-helpers';
+import { getLanguageString } from '../../../../utils/translation-helpers';
+import { getDuplicateCheckPagePath } from '../../../../utils/urlPaths';
+import { Link } from 'react-router-dom';
 
 interface CentralImportResultItemProps {
   publication: Registration;
@@ -30,7 +32,7 @@ export const CentralImportResultItem = ({ publication }: CentralImportResultItem
           </Grid>
           <Grid item md={5} xs={12}>
             {publication.entityDescription?.reference?.doi && (
-              <Link
+              <MuiLink
                 underline="hover"
                 href={publication.entityDescription.reference.doi}
                 target="_blank"
@@ -38,13 +40,15 @@ export const CentralImportResultItem = ({ publication }: CentralImportResultItem
                 <Typography gutterBottom variant="body2" sx={{ color: 'primary.dark', wordBreak: 'break-word' }}>
                   {publication.entityDescription.reference.doi}
                 </Typography>
-              </Link>
+              </MuiLink>
             )}
             {publication.entityDescription?.mainTitle && (
               <Typography
                 gutterBottom
                 sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic', wordBreak: 'break-word' }}>
-                {publication.entityDescription.mainTitle}
+                <MuiLink component={Link} to={`${getDuplicateCheckPagePath(publication.identifier)}`}>
+                  {publication.entityDescription.mainTitle}
+                </MuiLink>
               </Typography>
             )}
             {contributors && (
@@ -55,7 +59,7 @@ export const CentralImportResultItem = ({ publication }: CentralImportResultItem
           </Grid>
           <Grid item md={2} xs={12}>
             <Typography variant="body1">
-              {t('basicData:verifiedContributorCount', { verifiedContributorCount, contributorsCount })}
+              {t('basicData:central_import.verifiedContributorCount', { verifiedContributorCount, contributorsCount })}
             </Typography>
           </Grid>
           <Grid item md={3} xs={12}>
