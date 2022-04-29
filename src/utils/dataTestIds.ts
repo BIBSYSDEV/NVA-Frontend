@@ -5,6 +5,9 @@ export const dataTestId = {
     adminInstitutionsLink: 'admin-institutions-link',
     adminUsersLink: 'admin-users-link',
     centralImportLink: 'central-import-link',
+    centralImport: {
+      searchPagination: 'search-pagination',
+    },
   },
   organization: {
     searchField: 'organization-search-field',

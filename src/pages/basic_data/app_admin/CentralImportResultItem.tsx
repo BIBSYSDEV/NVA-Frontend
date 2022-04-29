@@ -41,7 +41,9 @@ export const CentralImportResultItem = ({ publication }: CentralImportResultItem
               </Link>
             )}
             {publication.entityDescription?.mainTitle && (
-              <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
+              <Typography
+                gutterBottom
+                sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic', wordBreak: 'break-word' }}>
                 {publication.entityDescription.mainTitle}
               </Typography>
             )}
