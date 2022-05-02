@@ -5,9 +5,8 @@ import AddIcon from '@mui/icons-material/Add';
 import { InstitutionUser, RoleName } from '../../../types/user.types';
 import { filterUsersByRole } from '../../../utils/role-helpers';
 import { UserList } from './UserList';
-import { Modal } from '../../../components/Modal';
 import { ListSkeleton } from '../../../components/ListSkeleton';
-import { AddRoleModalContent } from './AddRoleModalContent';
+import { AddAdminDialog } from './AddAdminDialog';
 
 interface CustomerInstitutionAdminsFormProps {
   users: InstitutionUser[];
@@ -49,22 +48,9 @@ export const CustomerInstitutionAdminsForm = ({
             onClick={toggleOpenAddAdminModal}>
             {addAdminText}
           </Button>
+          <AddAdminDialog open={openAddAdminModal} toggleOpen={toggleOpenAddAdminModal} />
         </>
       )}
-
-      <Modal
-        open={openAddAdminModal}
-        onClose={toggleOpenAddAdminModal}
-        headingText={addAdminText}
-        dataTestId="add-role-modal">
-        <AddRoleModalContent
-          role={RoleName.INSTITUTION_ADMIN}
-          users={users}
-          closeModal={toggleOpenAddAdminModal}
-          refetchUsers={refetchInstitutionUsers}
-          tableCaption={addAdminText}
-        />
-      </Modal>
     </>
   );
 };
