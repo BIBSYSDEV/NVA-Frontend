@@ -107,3 +107,12 @@ export interface FlatCristinUser {
   cristinIdentifier: string;
   affiliations: CristinPersonAffiliation[];
 }
+
+interface Position {
+  id: string;
+  enabled: boolean;
+  name: LanguageString;
+}
+export interface PositionResponse {
+  positions: Position[];
+}

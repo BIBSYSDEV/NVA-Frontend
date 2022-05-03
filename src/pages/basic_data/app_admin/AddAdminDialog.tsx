@@ -8,19 +8,19 @@ import {
   DialogProps,
   DialogTitle,
   TextField,
-  Typography,
 } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
+import { Form, Formik } from 'formik';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { authenticatedApiRequest } from '../../../api/apiRequest';
-import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import { FlatCristinUser, CristinUser } from '../../../types/user.types';
 import { isSuccessStatus } from '../../../utils/constants';
-import { getLanguageString } from '../../../utils/translation-helpers';
 import { convertToFlatCristinUser } from '../../../utils/user-helpers';
+import { StartDateField } from '../fields/StartDateField';
+import { PositionField } from '../fields/PositionField';
 
 interface AddAdminDialogProps extends Pick<DialogProps, 'open'> {
   toggleOpen: () => void;
@@ -57,60 +57,60 @@ export const AddAdminDialog = ({ open, toggleOpen }: AddAdminDialogProps) => {
     }
   }, [nationalIdNumber]);
 
-  const addAdmin = () => {
+  const addAdmin = (values: any) => {
     // TODO: Add (Cristin) employment
     // TODO: Create NVA User, and admin role
     toggleOpen();
   };
 
   return (
-    <Dialog open={open} onClose={toggleOpen}>
+    <Dialog open={open} onClose={toggleOpen} fullWidth>
       <DialogTitle>{t('common:add_custom', { name: t('profile:roles.institution_admin') })}</DialogTitle>
-      <DialogContent>
-        <Box sx={{ mt: '1rem' }}>
-          <TextField
-            variant="filled"
-            label={t('basicData:search_for_national_id')}
-            sx={{ minWidth: '20rem' }}
-            onChange={(event) => event.target.value.length <= 11 && setNationalIdNumber(event.target.value)}
-            InputProps={{
-              endAdornment: <SearchIcon color="disabled" />,
-            }}
-          />
-          {isLoading ? (
-            <CircularProgress />
-          ) : cristinUser ? (
-            <>
-              <Typography variant="h3" component="p" sx={{ mt: '1rem' }}>
-                {cristinUser.firstName} {cristinUser.lastName}
-              </Typography>
-              <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
-                {cristinUser.affiliations.map((affiliation) => {
-                  const roleString = getLanguageString(affiliation.role.labels);
-                  return (
-                    <li key={affiliation.organization}>
-                      <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-                        {roleString && <Typography>{roleString}:</Typography>}
-                        <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
-                      </Box>
-                    </li>
-                  );
-                })}
-              </Box>
-            </>
-          ) : null}
-        </Box>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={toggleOpen}>{t('common:cancel')}</Button>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          disabled={!cristinUser || nationalIdNumber.length !== 11}
-          onClick={addAdmin}>
-          {t('common:add')}
-        </Button>
-      </DialogActions>
+      <Formik initialValues={{}} onSubmit={addAdmin}>
+        <Form>
+          <DialogContent>
+            <TextField
+              variant="filled"
+              label={t('basicData:search_for_national_id')}
+              sx={{ minWidth: '20rem' }}
+              onChange={(event) => event.target.value.length <= 11 && setNationalIdNumber(event.target.value)}
+              InputProps={{
+                endAdornment: <SearchIcon color="disabled" />,
+              }}
+            />
+            <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {isLoading ? (
+                <CircularProgress />
+              ) : cristinUser ? (
+                <>
+                  <TextField
+                    variant="filled"
+                    disabled
+                    label={t('common:name')}
+                    required
+                    fullWidth
+                    value={`${cristinUser.firstName} ${cristinUser.lastName}`}
+                  />
+                  <Box sx={{ display: 'flex', gap: '1rem', width: '100%' }}>
+                    <StartDateField fieldName="startDate" />
+                    <PositionField fieldName="position" />
+                  </Box>
+                </>
+              ) : null}
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={toggleOpen}>{t('common:cancel')}</Button>
+            <Button
+              variant="contained"
+              startIcon={<AddIcon />}
+              disabled={!cristinUser || nationalIdNumber.length !== 11}
+              onClick={addAdmin}>
+              {t('common:add')}
+            </Button>
+          </DialogActions>
+        </Form>
+      </Formik>
     </Dialog>
   );
 };
