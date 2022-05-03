@@ -6,12 +6,7 @@ import { LoadingButton } from '@mui/lab';
 import { updateCustomerInstitution } from '../../../api/customerInstitutionsApi';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { PageHeader } from '../../../components/PageHeader';
-import {
-  InputContainerBox,
-  SyledPageContent,
-  StyledRightAlignedWrapper,
-  BackgroundDiv,
-} from '../../../components/styled/Wrappers';
+import { InputContainerBox, SyledPageContent, StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import {
@@ -52,60 +47,58 @@ export const MyCustomerInstitutionPage = () => {
   return (
     <SyledPageContent>
       <PageHeader>{t('common:my_institution')}</PageHeader>
-      <BackgroundDiv>
-        {isLoadingCustomerInstitution ? (
-          <ListSkeleton arrayLength={4} minWidth={100} height={80} />
-        ) : (
-          <Formik
-            enableReinitialize
-            initialValues={initialValues}
-            validateOnChange
-            validationSchema={myInstitutionValidationSchema}
-            onSubmit={handleSubmit}>
-            {({ isSubmitting }) => (
-              <Form noValidate>
-                <InputContainerBox>
-                  <CustomerInstitutionTextField
-                    name={CustomerInstitutionFieldNames.Name}
-                    label={t('common:institution')}
-                    required
-                    disabled
-                    dataTestId={dataTestId.organization.searchField}
-                  />
-                  <CustomerInstitutionTextField
-                    name={CustomerInstitutionFieldNames.DisplayName}
-                    label={t('display_name')}
-                    required
-                    dataTestId={dataTestId.institutionAdmin.displayNameField}
-                  />
-                  <CustomerInstitutionTextField
-                    name={CustomerInstitutionFieldNames.ShortName}
-                    label={t('short_name')}
-                    required
-                    dataTestId={dataTestId.institutionAdmin.shortNameField}
-                  />
-                  <CustomerInstitutionTextField
-                    name={CustomerInstitutionFieldNames.ArchiveName}
-                    label={t('archive_name')}
-                    dataTestId={dataTestId.institutionAdmin.archiveNameField}
-                  />
-                  <StyledRightAlignedWrapper>
-                    <LoadingButton
-                      data-testid={dataTestId.institutionAdmin.saveButton}
-                      variant="contained"
-                      loading={isSubmitting}
-                      startIcon={<SaveIcon />}
-                      loadingPosition="start"
-                      type="submit">
-                      {t('common:save')}
-                    </LoadingButton>
-                  </StyledRightAlignedWrapper>
-                </InputContainerBox>
-              </Form>
-            )}
-          </Formik>
-        )}
-      </BackgroundDiv>
+      {isLoadingCustomerInstitution ? (
+        <ListSkeleton arrayLength={4} minWidth={100} height={80} />
+      ) : (
+        <Formik
+          enableReinitialize
+          initialValues={initialValues}
+          validateOnChange
+          validationSchema={myInstitutionValidationSchema}
+          onSubmit={handleSubmit}>
+          {({ isSubmitting }) => (
+            <Form noValidate>
+              <InputContainerBox>
+                <CustomerInstitutionTextField
+                  name={CustomerInstitutionFieldNames.Name}
+                  label={t('common:institution')}
+                  required
+                  disabled
+                  dataTestId={dataTestId.organization.searchField}
+                />
+                <CustomerInstitutionTextField
+                  name={CustomerInstitutionFieldNames.DisplayName}
+                  label={t('display_name')}
+                  required
+                  dataTestId={dataTestId.institutionAdmin.displayNameField}
+                />
+                <CustomerInstitutionTextField
+                  name={CustomerInstitutionFieldNames.ShortName}
+                  label={t('short_name')}
+                  required
+                  dataTestId={dataTestId.institutionAdmin.shortNameField}
+                />
+                <CustomerInstitutionTextField
+                  name={CustomerInstitutionFieldNames.ArchiveName}
+                  label={t('archive_name')}
+                  dataTestId={dataTestId.institutionAdmin.archiveNameField}
+                />
+                <StyledRightAlignedWrapper>
+                  <LoadingButton
+                    data-testid={dataTestId.institutionAdmin.saveButton}
+                    variant="contained"
+                    loading={isSubmitting}
+                    startIcon={<SaveIcon />}
+                    loadingPosition="start"
+                    type="submit">
+                    {t('common:save')}
+                  </LoadingButton>
+                </StyledRightAlignedWrapper>
+              </InputContainerBox>
+            </Form>
+          )}
+        </Formik>
+      )}
     </SyledPageContent>
   );
 };
