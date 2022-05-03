@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch } from 'react-redux';
-import { CreateCristinUser, CristinUser, FlatCristinUser, RoleName } from '../../../types/user.types';
+import { CreateCristinUser, CristinUser, Employment, FlatCristinUser, RoleName } from '../../../types/user.types';
 import { FindPersonPanel } from './FindPersonPanel';
 import { AddAffiliationPanel } from './AddAffiliationPanel';
 import { AddRolePanel } from './AddRolePanel';
@@ -14,14 +14,6 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { convertToCristinUser } from '../../../utils/user-helpers';
 import { addEmployeeValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
-
-interface Employment {
-  type: string;
-  organization: string;
-  startDate: string;
-  endDate: string;
-  fullTimeEquivalentPercentage: string;
-}
 
 export interface AddEmployeeData {
   searchIdNumber: string;

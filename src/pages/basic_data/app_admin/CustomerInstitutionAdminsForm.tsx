@@ -12,12 +12,14 @@ interface CustomerInstitutionAdminsFormProps {
   users: InstitutionUser[];
   refetchInstitutionUsers: () => void;
   isLoadingUsers: boolean;
+  cristinInstitutionId: string;
 }
 
 export const CustomerInstitutionAdminsForm = ({
   users,
   refetchInstitutionUsers,
   isLoadingUsers,
+  cristinInstitutionId,
 }: CustomerInstitutionAdminsFormProps) => {
   const { t } = useTranslation('admin');
   const [openAddAdminModal, setOpenAddAdminModal] = useState(false);
@@ -48,7 +50,11 @@ export const CustomerInstitutionAdminsForm = ({
             onClick={toggleOpenAddAdminModal}>
             {addAdminText}
           </Button>
-          <AddAdminDialog open={openAddAdminModal} toggleOpen={toggleOpenAddAdminModal} />
+          <AddAdminDialog
+            open={openAddAdminModal}
+            toggleOpen={toggleOpenAddAdminModal}
+            cristinInstitutionId={cristinInstitutionId}
+          />
         </>
       )}
     </>

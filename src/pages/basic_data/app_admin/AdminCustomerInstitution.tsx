@@ -43,11 +43,12 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
             customerInstitution={customerInstitution ?? emptyCustomerInstitution}
             editMode={editMode}
           />
-          {editMode && (
+          {editMode && customerInstitution?.cristinId && (
             <CustomerInstitutionAdminsForm
               users={admins}
               refetchInstitutionUsers={refetchInstitutionUsers}
               isLoadingUsers={isLoadingUsers}
+              cristinInstitutionId={customerInstitution.cristinId}
             />
           )}
         </BackgroundDiv>

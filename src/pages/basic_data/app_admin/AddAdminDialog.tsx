@@ -8,26 +8,39 @@ import {
   DialogProps,
   DialogTitle,
   TextField,
+  Typography,
 } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
-import { Form, Formik } from 'formik';
+import { Form, Formik, FormikHelpers } from 'formik';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { authenticatedApiRequest } from '../../../api/apiRequest';
-import { FlatCristinUser, CristinUser } from '../../../types/user.types';
-import { isSuccessStatus } from '../../../utils/constants';
+import { FlatCristinUser, CristinUser, Employment } from '../../../types/user.types';
+import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { convertToFlatCristinUser } from '../../../utils/user-helpers';
 import { StartDateField } from '../fields/StartDateField';
 import { PositionField } from '../fields/PositionField';
+import { addCustomerAdminValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
+import { useDispatch } from 'react-redux';
+import { setNotification } from '../../../redux/notificationSlice';
 
 interface AddAdminDialogProps extends Pick<DialogProps, 'open'> {
   toggleOpen: () => void;
+  cristinInstitutionId: string;
 }
 
-export const AddAdminDialog = ({ open, toggleOpen }: AddAdminDialogProps) => {
-  const { t } = useTranslation('admin');
+interface AddAdminFormData {
+  startDate: string;
+  position: string;
+}
+
+const addAdminInitialValues: AddAdminFormData = { startDate: '', position: '' };
+
+export const AddAdminDialog = ({ open, toggleOpen, cristinInstitutionId }: AddAdminDialogProps) => {
+  const { t } = useTranslation('basicData');
+  const dispatch = useDispatch();
   const [nationalIdNumber, setNationalIdNumber] = useState('');
   const [cristinUser, setCristinUser] = useState<FlatCristinUser>();
   const [isLoading, setIsLoading] = useState(false);
@@ -47,6 +60,8 @@ export const AddAdminDialog = ({ open, toggleOpen }: AddAdminDialogProps) => {
         });
         if (isSuccessStatus(searchResponse.status)) {
           setCristinUser(convertToFlatCristinUser(searchResponse.data));
+        } else if (isErrorStatus(searchResponse.status)) {
+          dispatch(setNotification({ message: t('feedback:error.search'), variant: 'error' }));
         }
         setIsLoading(false);
       };
@@ -55,19 +70,41 @@ export const AddAdminDialog = ({ open, toggleOpen }: AddAdminDialogProps) => {
     } else {
       setCristinUser(undefined);
     }
-  }, [nationalIdNumber]);
+  }, [t, dispatch, nationalIdNumber]);
 
-  const addAdmin = (values: any) => {
-    // TODO: Add (Cristin) employment
-    // TODO: Create NVA User, and admin role
-    toggleOpen();
+  const addAdmin = async (values: AddAdminFormData, { resetForm }: FormikHelpers<AddAdminFormData>) => {
+    if (cristinUser) {
+      // Add employment/affiliation (in Cristin)
+      const addAffiliationResponse = await authenticatedApiRequest<Employment>({
+        url: `${cristinUser.id}/employment`,
+        method: 'POST',
+        data: {
+          type: values.position,
+          startDate: values.startDate,
+          organization: cristinInstitutionId,
+        },
+      });
+      if (isSuccessStatus(addAffiliationResponse.status)) {
+        dispatch(setNotification({ message: t('feedback:success.add_employment'), variant: 'success' }));
+        // TODO: Create NVA User with admin role (NP-9076)
+        toggleOpen();
+        resetForm();
+        setNationalIdNumber('');
+        setCristinUser(undefined);
+      } else if (isErrorStatus(addAffiliationResponse.status)) {
+        dispatch(setNotification({ message: t('feedback:error.add_employment'), variant: 'error' }));
+      }
+    }
   };
 
   return (
     <Dialog open={open} onClose={toggleOpen} fullWidth>
       <DialogTitle>{t('common:add_custom', { name: t('profile:roles.institution_admin') })}</DialogTitle>
-      <Formik initialValues={{}} onSubmit={addAdmin}>
-        <Form>
+      <Formik
+        initialValues={addAdminInitialValues}
+        validationSchema={addCustomerAdminValidationSchema}
+        onSubmit={addAdmin}>
+        <Form noValidate>
           <DialogContent>
             <TextField
               variant="filled"
@@ -96,16 +133,18 @@ export const AddAdminDialog = ({ open, toggleOpen }: AddAdminDialogProps) => {
                     <PositionField fieldName="position" />
                   </Box>
                 </>
-              ) : null}
+              ) : (
+                nationalIdNumber.length === 11 && <Typography>{t('no_matching_persons_found')}</Typography>
+              )}
             </Box>
           </DialogContent>
           <DialogActions>
             <Button onClick={toggleOpen}>{t('common:cancel')}</Button>
             <Button
+              type="submit"
               variant="contained"
               startIcon={<AddIcon />}
-              disabled={!cristinUser || nationalIdNumber.length !== 11}
-              onClick={addAdmin}>
+              disabled={!cristinUser || nationalIdNumber.length !== 11}>
               {t('common:add')}
             </Button>
           </DialogActions>

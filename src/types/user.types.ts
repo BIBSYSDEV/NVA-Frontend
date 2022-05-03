@@ -116,3 +116,11 @@ interface Position {
 export interface PositionResponse {
   positions: Position[];
 }
+
+export interface Employment {
+  type: string;
+  organization: string;
+  startDate: string;
+  endDate: string;
+  fullTimeEquivalentPercentage: string;
+}
