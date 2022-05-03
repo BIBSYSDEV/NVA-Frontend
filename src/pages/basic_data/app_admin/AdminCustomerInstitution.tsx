@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { RoleApiPath } from '../../../api/apiPaths';
 import { PageHeader } from '../../../components/PageHeader';
 import { PageSpinner } from '../../../components/PageSpinner';
-import { SyledPageContent, BackgroundDiv } from '../../../components/styled/Wrappers';
+import { SyledPageContent } from '../../../components/styled/Wrappers';
 import { CustomerInstitution, emptyCustomerInstitution } from '../../../types/customerInstitution.types';
 import { UserList } from '../../../types/user.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
@@ -36,7 +36,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
       {isLoadingCustomerInstitution ? (
         <PageSpinner />
       ) : (
-        <BackgroundDiv>
+        <>
           <CustomerInstitutionMetadataForm
             customerInstitution={customerInstitution ?? emptyCustomerInstitution}
             editMode={editMode}
@@ -48,7 +48,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
               isLoadingUsers={isLoadingUsers}
             />
           )}
-        </BackgroundDiv>
+        </>
       )}
     </SyledPageContent>
   );

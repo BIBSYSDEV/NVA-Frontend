@@ -32,7 +32,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
         </TableHead>
         <TableBody>
           {institutions.map((institution) => (
-            <TableRow key={institution.identifier}>
+            <TableRow key={institution.id}>
               <TableCell component="th" scope="row">
                 <Typography>{institution.displayName}</Typography>
               </TableCell>
