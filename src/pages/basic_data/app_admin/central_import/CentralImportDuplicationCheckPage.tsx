@@ -1,4 +1,4 @@
-import { Link as MuiLink, Typography } from '@mui/material';
+import { Box, Divider, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { Registration } from '../../../../types/registration.types';
@@ -9,6 +9,7 @@ import { PageSpinner } from '../../../../components/PageSpinner';
 import NotFound from '../../../errorpages/NotFound';
 import { useEffect } from 'react';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
+import { CentralImportDuplicateSearch } from './CentralImportDuplicateSearch';
 
 export const CentralImportDuplicationCheckPage = () => {
   const { t } = useTranslation('basicData');
@@ -59,6 +60,13 @@ export const CentralImportDuplicationCheckPage = () => {
                 </Typography>
               </MuiLink>
             )}
+            <Divider sx={{ marginBottom: '2rem' }} />
+            <Typography variant="h3" component="h2" paragraph>
+              {t('central_import.search_for_duplicates')}:
+            </Typography>
+            <Box sx={{ border: '1px solid black', padding: { xs: '0.5rem', sm: '0.5rem 2rem' } }}>
+              <CentralImportDuplicateSearch publication={registration} />
+            </Box>
           </>
         ) : (
           <NotFound />

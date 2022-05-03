@@ -6,6 +6,7 @@
     "central_import":  "Central import",
     "duplicate_check":  "Duplikatsjekk",
     "import_publication":  "Importpublikasjon",
+    "search_for_duplicates": "Search for duplicates",
     "verifiedContributorCount": "({{verifiedContributorCount}} of {{contributorsCount}})"
   },
   "create_person": "Create person",

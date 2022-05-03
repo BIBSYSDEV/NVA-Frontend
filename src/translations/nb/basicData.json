@@ -6,6 +6,7 @@
     "central_import":  "Sentralimport",
     "duplicate_check":  "Duplikatsjekk",
     "import_publication":  "Import publication",
+    "search_for_duplicates": "Søk etter duplikater",
     "verifiedContributorCount": "({{verifiedContributorCount}} av {{contributorsCount}})"
   },
   "create_person": "Opprett person",
