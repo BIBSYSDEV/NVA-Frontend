@@ -3,11 +3,11 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { visuallyHidden } from '@mui/utils';
-import { CustomerInstitution } from '../../../types/customerInstitution.types';
+import { SimpleCustomerInstitution } from '../../../types/customerInstitution.types';
 import { getAdminInstitutionPath } from '../../../utils/urlPaths';
 
 interface InstitutionListProps {
-  institutions: CustomerInstitution[];
+  institutions: SimpleCustomerInstitution[];
 }
 
 export const InstitutionList = ({ institutions }: InstitutionListProps) => {
@@ -44,7 +44,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
                   variant="outlined"
                   startIcon={<EditIcon />}
                   component={RouterLink}
-                  data-testid={`edit-institution-${institution.shortName}`}
+                  data-testid={`edit-institution-${institution.displayName}`}
                   to={getAdminInstitutionPath(institution.id)}>
                   <Typography>{t('edit')}</Typography>
                 </Button>
