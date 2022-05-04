@@ -28,13 +28,6 @@ export const CentralImportDuplicateSearch = ({ publication }: CentralImportDupli
       }
     : {};
 
-  //TODO:
-  //   issn :  reference.publicationContext.printIssn
-  //   issn:  reference.publicationContext.onlineIssn
-  //   publication-year?: entityDescription.date.year
-  //   contributor: entityDescription.contributors.identity.name
-  //   title:  https://api.nva.unit.no/search/resources?from=0&query="tulletittel"+AND+(entityDescription.contributors.identity.name:"tullenavn")
-
   const searchQuery = createSearchQuery(searchConfig);
   const numberOfResults = ROWS_PER_PAGE_OPTIONS[1];
   const [searchResults, isLoadingSearchResults] = useFetch<SearchResponse<Registration>>({
