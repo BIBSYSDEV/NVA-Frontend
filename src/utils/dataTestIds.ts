@@ -9,6 +9,11 @@ export const dataTestId = {
       searchPagination: 'search-pagination',
       resultItem: 'central-import-result-item',
     },
+    customers: {
+      addCustomerButton: 'add-institution-button',
+      customerList: 'customer-institutions-list',
+      editInstitutionButton: (name: string) => `edit-institution-button-${name.toLowerCase().replaceAll(' ', '-')}`,
+    },
   },
   organization: {
     searchField: 'organization-search-field',

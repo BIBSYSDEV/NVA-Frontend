@@ -1,5 +1,6 @@
 import { RoleName } from '../../src/types/user.types';
 import { dataTestId } from '../../src/utils/dataTestIds';
+import { mockCustomerInstitution } from '../../src/utils/testfiles/mockCustomerInstitutions';
 
 describe('User administers institutions ', () => {
   beforeEach('Given that the user is logged in as Application administrator:', () => {
@@ -11,12 +12,12 @@ describe('User administers institutions ', () => {
   });
 
   it('The User should be able to open admin page for institutions from the menu', () => {
-    cy.get('[data-testid=customer-institutions-list]');
-    cy.contains('Norwegian University of Science and Technology');
+    cy.get(`[data-testid=${dataTestId.basicData.customers.customerList}]`);
+    cy.contains(mockCustomerInstitution.displayName);
   });
 
   it('The User should be able to add an institution', () => {
-    cy.get('[data-testid=add-institution-button]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.basicData.customers.addCustomerButton}]`).click({ force: true });
 
     cy.get(`[data-testid=${dataTestId.organization.searchField}]`).click({ force: true }).type('sikt');
     cy.get('[class^=MuiAutocomplete-option]').contains('Sikt').click({ force: true });
@@ -29,7 +30,9 @@ describe('User administers institutions ', () => {
   });
 
   it('The User should be able to edit an institution', () => {
-    cy.get('[data-testid=edit-institution-NTNU]').click({ force: true });
+    cy.get(
+      `[data-testid=${dataTestId.basicData.customers.editInstitutionButton(mockCustomerInstitution.displayName)}]`
+    ).click();
 
     cy.get(`[data-testid=${dataTestId.institutionAdmin.archiveNameField}] input`).type(' Archive');
 
