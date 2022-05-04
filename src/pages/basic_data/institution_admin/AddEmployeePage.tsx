@@ -40,7 +40,7 @@ const initialValues: AddEmployeeData = {
 
 export const AddEmployeePage = () => {
   const { t } = useTranslation('basicData');
-  const disaptch = useDispatch();
+  const dispatch = useDispatch();
 
   const onSubmit = async (values: AddEmployeeData, { resetForm }: FormikHelpers<AddEmployeeData>) => {
     let userId = values.user.id;
@@ -54,7 +54,7 @@ export const AddEmployeePage = () => {
         data: cristinUser,
       });
       if (isErrorStatus(createPersonResponse.status)) {
-        disaptch(setNotification({ message: t('feedback:error.add_employment'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback:error.add_employment'), variant: 'error' }));
       } else if (isSuccessStatus(createPersonResponse.status)) {
         userId = createPersonResponse.data.id;
       }
@@ -68,10 +68,10 @@ export const AddEmployeePage = () => {
         data: values.affiliation,
       });
       if (isSuccessStatus(addAffiliationResponse.status)) {
-        disaptch(setNotification({ message: t('feedback:success.add_employment'), variant: 'success' }));
+        dispatch(setNotification({ message: t('feedback:success.add_employment'), variant: 'success' }));
         resetForm();
       } else if (isErrorStatus(addAffiliationResponse.status)) {
-        disaptch(setNotification({ message: t('feedback:error.add_employment'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback:error.add_employment'), variant: 'error' }));
       }
     }
 
