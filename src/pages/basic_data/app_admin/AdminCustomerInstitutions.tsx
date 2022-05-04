@@ -10,6 +10,7 @@ import { useFetch } from '../../../utils/hooks/useFetch';
 import { CustomerList } from '../../../types/customerInstitution.types';
 import { CustomerInstitutionApiPath } from '../../../api/apiPaths';
 import { sortCustomerInstitutions } from '../../../utils/institutions-helpers';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 export const AdminCustomerInstitutions = () => {
   const { t } = useTranslation('admin');
@@ -23,7 +24,10 @@ export const AdminCustomerInstitutions = () => {
     <SyledPageContent>
       <PageHeader>{t('admin_institutions')}</PageHeader>
       <StyledRightAlignedWrapper>
-        <Button component={RouterLink} to={getAdminInstitutionPath('new')} data-testid="add-institution-button">
+        <Button
+          component={RouterLink}
+          to={getAdminInstitutionPath('new')}
+          data-testid={dataTestId.basicData.customers.addCustomerButton}>
           {t('add_institution')}
         </Button>
       </StyledRightAlignedWrapper>

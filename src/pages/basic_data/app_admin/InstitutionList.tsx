@@ -5,6 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { visuallyHidden } from '@mui/utils';
 import { SimpleCustomerInstitution } from '../../../types/customerInstitution.types';
 import { getAdminInstitutionPath } from '../../../utils/urlPaths';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 interface InstitutionListProps {
   institutions: SimpleCustomerInstitution[];
@@ -15,7 +16,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
 
   return (
     <TableContainer>
-      <Table data-testid="customer-institutions-list">
+      <Table data-testid={dataTestId.basicData.customers.customerList}>
         <caption>
           <span style={visuallyHidden}>{t('admin:admin_institutions')}</span>
         </caption>
@@ -44,7 +45,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
                   variant="outlined"
                   startIcon={<EditIcon />}
                   component={RouterLink}
-                  data-testid={`edit-institution-${institution.displayName.replaceAll(' ', '-')}`}
+                  data-testid={dataTestId.basicData.customers.editInstitutionButton(institution.displayName)}
                   to={getAdminInstitutionPath(institution.id)}>
                   <Typography>{t('edit')}</Typography>
                 </Button>
