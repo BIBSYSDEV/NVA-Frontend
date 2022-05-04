@@ -44,7 +44,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
                   variant="outlined"
                   startIcon={<EditIcon />}
                   component={RouterLink}
-                  data-testid={`edit-institution-${institution.displayName}`}
+                  data-testid={`edit-institution-${institution.displayName.replaceAll(' ', '-')}`}
                   to={getAdminInstitutionPath(institution.id)}>
                   <Typography>{t('edit')}</Typography>
                 </Button>
