@@ -5,6 +5,15 @@ export const dataTestId = {
     adminInstitutionsLink: 'admin-institutions-link',
     adminUsersLink: 'admin-users-link',
     centralImportLink: 'central-import-link',
+    centralImport: {
+      searchPagination: 'search-pagination',
+      resultItem: 'central-import-result-item',
+    },
+    customers: {
+      addCustomerButton: 'add-institution-button',
+      customerList: 'customer-institutions-list',
+      editInstitutionButton: (name: string) => `edit-institution-button-${name.toLowerCase().replaceAll(' ', '-')}`,
+    },
   },
   organization: {
     searchField: 'organization-search-field',

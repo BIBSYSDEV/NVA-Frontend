@@ -1,7 +1,6 @@
 import { AuthOptions } from '@aws-amplify/auth/lib-esm/types';
 
 export const authOptions: AuthOptions = {
-  region: process.env.REACT_APP_AWS_REGION,
   userPoolId: process.env.REACT_APP_AWS_USER_POOLS_ID,
   userPoolWebClientId: process.env.REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID,
   oauth: {

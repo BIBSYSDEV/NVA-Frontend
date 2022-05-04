@@ -20,7 +20,7 @@ describe('User opens an item in the My Registrations list', () => {
 
     // Resource Type tab
     cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
-    cy.contains('Contribution to journal');
+    cy.contains('Publication in journal');
 
     // Contributors tab
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });

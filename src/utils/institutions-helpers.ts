@@ -1,6 +1,6 @@
 import { CristinApiPath } from '../api/apiPaths';
 import { Contributor } from '../types/contributor.types';
-import { CustomerInstitution } from '../types/customerInstitution.types';
+import { SimpleCustomerInstitution } from '../types/customerInstitution.types';
 import { Organization } from '../types/organization.types';
 import { API_URL } from './constants';
 import { getLanguageString } from './translation-helpers';
@@ -42,5 +42,5 @@ const getAllChildOrganizations = (units: Organization[] = [], result: Organizati
 export const getTopLevelOrganization = (organization: Organization): Organization =>
   !organization.partOf ? organization : getTopLevelOrganization(organization.partOf[0]);
 
-export const sortCustomerInstitutions = (customers: CustomerInstitution[] = []) =>
+export const sortCustomerInstitutions = <T extends SimpleCustomerInstitution>(customers: T[] = []) =>
   customers.sort((a, b) => (a.displayName.toLocaleLowerCase() < b.displayName.toLocaleLowerCase() ? -1 : 1));
