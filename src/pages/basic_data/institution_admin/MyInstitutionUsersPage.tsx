@@ -7,7 +7,7 @@ import { styled } from '@mui/system';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { Modal } from '../../../components/Modal';
 import { PageHeader } from '../../../components/PageHeader';
-import { BackgroundDiv, SyledPageContent } from '../../../components/styled/Wrappers';
+import { SyledPageContent } from '../../../components/styled/Wrappers';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { RoleName, UserList as UserListType } from '../../../types/user.types';
 import { filterUsersByRole } from '../../../utils/role-helpers';
@@ -48,112 +48,110 @@ export const MyInstitutionUsersPage = () => {
   return (
     <SyledPageContent>
       <PageHeader>{t('users.user_administration')}</PageHeader>
-      <BackgroundDiv>
-        {/* Admins */}
-        <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersAdministrators}>
-          <Typography variant="h3" component="h2">
-            {t('profile:roles.institution_admins')}
-          </Typography>
-          <Divider />
-          {isLoading ? (
-            <ListSkeleton maxWidth={25} />
-          ) : (
-            <UserList
-              userList={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)}
-              roleToRemove={RoleName.INSTITUTION_ADMIN}
-              refetchUsers={fetchInstitutionUsers}
-              tableCaption={t('profile:roles.institution_admins')}
-            />
-          )}
-          <StyledNewButton
-            variant="outlined"
-            startIcon={<AddIcon />}
-            data-testid="button-add-institution-admin"
-            onClick={() => setRoleToAdd(RoleName.INSTITUTION_ADMIN)}>
-            {t('common:add_custom', { name: t('profile:roles.institution_admin') })}
-          </StyledNewButton>
-        </StyledContainer>
-
-        {/* Curators */}
-        <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersCurators}>
-          <Typography variant="h3" component="h2">
-            {t('profile:roles.curators')}
-          </Typography>
-          <Divider />
-          {isLoading ? (
-            <ListSkeleton maxWidth={25} />
-          ) : (
-            <UserList
-              userList={filterUsersByRole(users, RoleName.CURATOR)}
-              roleToRemove={RoleName.CURATOR}
-              refetchUsers={fetchInstitutionUsers}
-              tableCaption={t('profile:roles.curators')}
-              showScope
-            />
-          )}
-          <StyledNewButton
-            variant="outlined"
-            startIcon={<AddIcon />}
-            data-testid="button-add-curator"
-            onClick={() => setRoleToAdd(RoleName.CURATOR)}>
-            {t('common:add_custom', { name: t('profile:roles.curator') })}
-          </StyledNewButton>
-        </StyledContainer>
-
-        {/* Editors */}
-        <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersEditors}>
-          <Typography variant="h3" component="h2">
-            {t('profile:roles.editors')}
-          </Typography>
-          <Divider />
-          {isLoading ? (
-            <ListSkeleton maxWidth={25} />
-          ) : (
-            <UserList
-              userList={filterUsersByRole(users, RoleName.EDITOR)}
-              roleToRemove={RoleName.EDITOR}
-              refetchUsers={fetchInstitutionUsers}
-              tableCaption={t('profile:roles.editors')}
-            />
-          )}
-          <StyledNewButton
-            variant="outlined"
-            startIcon={<AddIcon />}
-            data-testid="button-add-editor"
-            onClick={() => setRoleToAdd(RoleName.EDITOR)}>
-            {t('common:add_custom', { name: t('profile:roles.editor') })}
-          </StyledNewButton>
-        </StyledContainer>
-
-        <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersCreators}>
-          <Typography variant="h3" component="h2">
-            {t('profile:roles.creator')}
-          </Typography>
-          <Divider />
-          <Typography>{t('users.creator_info')}</Typography>
-          <FormControlLabel
-            control={<Checkbox disabled checked={autoAssignCreators} data-testid="checkbox-assign-creators" />}
-            onChange={handleCheckAutoAssignCreators}
-            label={t<string>('users.auto_assign_creators')}
+      {/* Admins */}
+      <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersAdministrators}>
+        <Typography variant="h3" component="h2">
+          {t('profile:roles.institution_admins')}
+        </Typography>
+        <Divider />
+        {isLoading ? (
+          <ListSkeleton maxWidth={25} />
+        ) : (
+          <UserList
+            userList={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)}
+            roleToRemove={RoleName.INSTITUTION_ADMIN}
+            refetchUsers={fetchInstitutionUsers}
+            tableCaption={t('profile:roles.institution_admins')}
           />
-        </StyledContainer>
-
-        {roleToAdd && (
-          <Modal
-            open={true}
-            onClose={() => setRoleToAdd(undefined)}
-            headingText={roleToAddTitle}
-            dataTestId="add-role-modal">
-            <AddRoleModalContent
-              role={roleToAdd}
-              users={users}
-              closeModal={() => setRoleToAdd(undefined)}
-              refetchUsers={fetchInstitutionUsers}
-              tableCaption={roleToAddTitle}
-            />
-          </Modal>
         )}
-      </BackgroundDiv>
+        <StyledNewButton
+          variant="outlined"
+          startIcon={<AddIcon />}
+          data-testid="button-add-institution-admin"
+          onClick={() => setRoleToAdd(RoleName.INSTITUTION_ADMIN)}>
+          {t('common:add_custom', { name: t('profile:roles.institution_admin') })}
+        </StyledNewButton>
+      </StyledContainer>
+
+      {/* Curators */}
+      <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersCurators}>
+        <Typography variant="h3" component="h2">
+          {t('profile:roles.curators')}
+        </Typography>
+        <Divider />
+        {isLoading ? (
+          <ListSkeleton maxWidth={25} />
+        ) : (
+          <UserList
+            userList={filterUsersByRole(users, RoleName.CURATOR)}
+            roleToRemove={RoleName.CURATOR}
+            refetchUsers={fetchInstitutionUsers}
+            tableCaption={t('profile:roles.curators')}
+            showScope
+          />
+        )}
+        <StyledNewButton
+          variant="outlined"
+          startIcon={<AddIcon />}
+          data-testid="button-add-curator"
+          onClick={() => setRoleToAdd(RoleName.CURATOR)}>
+          {t('common:add_custom', { name: t('profile:roles.curator') })}
+        </StyledNewButton>
+      </StyledContainer>
+
+      {/* Editors */}
+      <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersEditors}>
+        <Typography variant="h3" component="h2">
+          {t('profile:roles.editors')}
+        </Typography>
+        <Divider />
+        {isLoading ? (
+          <ListSkeleton maxWidth={25} />
+        ) : (
+          <UserList
+            userList={filterUsersByRole(users, RoleName.EDITOR)}
+            roleToRemove={RoleName.EDITOR}
+            refetchUsers={fetchInstitutionUsers}
+            tableCaption={t('profile:roles.editors')}
+          />
+        )}
+        <StyledNewButton
+          variant="outlined"
+          startIcon={<AddIcon />}
+          data-testid="button-add-editor"
+          onClick={() => setRoleToAdd(RoleName.EDITOR)}>
+          {t('common:add_custom', { name: t('profile:roles.editor') })}
+        </StyledNewButton>
+      </StyledContainer>
+
+      <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersCreators}>
+        <Typography variant="h3" component="h2">
+          {t('profile:roles.creator')}
+        </Typography>
+        <Divider />
+        <Typography>{t('users.creator_info')}</Typography>
+        <FormControlLabel
+          control={<Checkbox disabled checked={autoAssignCreators} data-testid="checkbox-assign-creators" />}
+          onChange={handleCheckAutoAssignCreators}
+          label={t<string>('users.auto_assign_creators')}
+        />
+      </StyledContainer>
+
+      {roleToAdd && (
+        <Modal
+          open={true}
+          onClose={() => setRoleToAdd(undefined)}
+          headingText={roleToAddTitle}
+          dataTestId="add-role-modal">
+          <AddRoleModalContent
+            role={roleToAdd}
+            users={users}
+            closeModal={() => setRoleToAdd(undefined)}
+            refetchUsers={fetchInstitutionUsers}
+            tableCaption={roleToAddTitle}
+          />
+        </Modal>
+      )}
     </SyledPageContent>
   );
 };
