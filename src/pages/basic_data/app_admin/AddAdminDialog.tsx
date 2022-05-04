@@ -43,13 +43,13 @@ export const AddAdminDialog = ({ open, toggleOpen, cristinInstitutionId }: AddAd
   const dispatch = useDispatch();
   const [nationalIdNumber, setNationalIdNumber] = useState('');
   const [cristinUser, setCristinUser] = useState<FlatCristinUser>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingSearch, setIsLoadingSearch] = useState(false);
 
   useEffect(() => {
     // Search when user has entered 11 chars as a Norwegian National ID is 11 chars long
     if (nationalIdNumber.length === 11) {
       const searchByNationalId = async () => {
-        setIsLoading(true);
+        setIsLoadingSearch(true);
         const searchResponse = await authenticatedApiRequest<CristinUser>({
           url: CristinApiPath.PersonIdentityNumer,
           method: 'POST',
@@ -63,7 +63,7 @@ export const AddAdminDialog = ({ open, toggleOpen, cristinInstitutionId }: AddAd
         } else if (isErrorStatus(searchResponse.status)) {
           dispatch(setNotification({ message: t('feedback:error.search'), variant: 'error' }));
         }
-        setIsLoading(false);
+        setIsLoadingSearch(false);
       };
 
       searchByNationalId();
@@ -74,25 +74,35 @@ export const AddAdminDialog = ({ open, toggleOpen, cristinInstitutionId }: AddAd
 
   const addAdmin = async (values: AddAdminFormData, { resetForm }: FormikHelpers<AddAdminFormData>) => {
     if (cristinUser) {
-      // Add employment/affiliation (in Cristin)
-      const addAffiliationResponse = await authenticatedApiRequest<Employment>({
-        url: `${cristinUser.id}/employment`,
-        method: 'POST',
-        data: {
-          type: values.position,
-          startDate: values.startDate,
-          organization: cristinInstitutionId,
-        },
-      });
-      if (isSuccessStatus(addAffiliationResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:success.add_employment'), variant: 'success' }));
+      // Add employment/affiliation (in Cristin) if user don't have one yet
+
+      const isEmployed = cristinUser.affiliations.some(
+        (affiliation) =>
+          affiliation.active &&
+          cristinInstitutionId.startsWith(affiliation.organization.split('.').slice(0, -3).join('.')) // Remove last 3 subunit values to find out if user already has an employment in this institution
+      );
+
+      if (!isEmployed) {
+        const addAffiliationResponse = await authenticatedApiRequest<Employment>({
+          url: `${cristinUser.id}/employment`,
+          method: 'POST',
+          data: {
+            type: values.position,
+            startDate: values.startDate,
+            organization: cristinInstitutionId,
+          },
+        });
+        if (isErrorStatus(addAffiliationResponse.status)) {
+          dispatch(setNotification({ message: t('feedback:error.add_employment'), variant: 'error' }));
+          return;
+        }
+
         // TODO: Create NVA User with admin role (NP-9076)
+
         toggleOpen();
         resetForm();
         setNationalIdNumber('');
         setCristinUser(undefined);
-      } else if (isErrorStatus(addAffiliationResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:error.add_employment'), variant: 'error' }));
       }
     }
   };
@@ -116,7 +126,7 @@ export const AddAdminDialog = ({ open, toggleOpen, cristinInstitutionId }: AddAd
               }}
             />
             <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {isLoading ? (
+              {isLoadingSearch ? (
                 <CircularProgress />
               ) : cristinUser ? (
                 <>
