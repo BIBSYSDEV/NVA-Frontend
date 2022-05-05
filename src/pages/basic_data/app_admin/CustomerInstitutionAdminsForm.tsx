@@ -3,20 +3,19 @@ import { Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
 import { InstitutionUser, RoleName } from '../../../types/user.types';
-import { filterUsersByRole } from '../../../utils/role-helpers';
 import { UserList } from './UserList';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { AddAdminDialog } from './AddAdminDialog';
 
 interface CustomerInstitutionAdminsFormProps {
-  users: InstitutionUser[];
+  admins: InstitutionUser[];
   refetchInstitutionUsers: () => void;
   isLoadingUsers: boolean;
   cristinInstitutionId: string;
 }
 
 export const CustomerInstitutionAdminsForm = ({
-  users,
+  admins,
   refetchInstitutionUsers,
   isLoadingUsers,
   cristinInstitutionId,
@@ -37,7 +36,7 @@ export const CustomerInstitutionAdminsForm = ({
       ) : (
         <>
           <UserList
-            userList={filterUsersByRole(users, RoleName.InstitutionAdmin)}
+            userList={admins}
             roleToRemove={RoleName.InstitutionAdmin}
             refetchUsers={refetchInstitutionUsers}
             tableCaption={t('profile:roles.institution_admins')}

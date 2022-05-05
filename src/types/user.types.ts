@@ -113,6 +113,7 @@ interface Position {
   enabled: boolean;
   name: LanguageString;
 }
+
 export interface PositionResponse {
   positions: Position[];
 }

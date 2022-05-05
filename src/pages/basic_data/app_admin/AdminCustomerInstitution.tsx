@@ -38,20 +38,22 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
       {isLoadingCustomerInstitution ? (
         <PageSpinner />
       ) : (
-        <>
-          <CustomerInstitutionMetadataForm
-            customerInstitution={customerInstitution ?? emptyCustomerInstitution}
-            editMode={editMode}
-          />
-          {editMode && customerInstitution?.cristinId && (
-            <CustomerInstitutionAdminsForm
-              users={admins}
-              refetchInstitutionUsers={refetchInstitutionUsers}
-              isLoadingUsers={isLoadingUsers}
-              cristinInstitutionId={customerInstitution.cristinId}
+        customerInstitution && (
+          <>
+            <CustomerInstitutionMetadataForm
+              customerInstitution={customerInstitution ?? emptyCustomerInstitution}
+              editMode={editMode}
             />
-          )}
-        </>
+            {editMode && (
+              <CustomerInstitutionAdminsForm
+                admins={admins}
+                refetchInstitutionUsers={refetchInstitutionUsers}
+                isLoadingUsers={isLoadingUsers}
+                cristinInstitutionId={customerInstitution.cristinId}
+              />
+            )}
+          </>
+        )
       )}
     </SyledPageContent>
   );

@@ -64,6 +64,7 @@ interface NationalNumberSearchData {
   type: 'NationalIdentificationNumber';
   value: string;
 }
+
 export const searchByNationalIdNumber = async (nationalIdNumber: string) => {
   const data: NationalNumberSearchData = {
     type: 'NationalIdentificationNumber',

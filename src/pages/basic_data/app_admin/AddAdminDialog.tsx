@@ -57,7 +57,6 @@ export const AddAdminDialog = ({ open, toggleOpen, cristinInstitutionId }: AddAd
         }
         setIsLoadingSearch(false);
       };
-
       searchByNationalId();
     } else {
       setCristinUser(undefined);
@@ -67,13 +66,13 @@ export const AddAdminDialog = ({ open, toggleOpen, cristinInstitutionId }: AddAd
   const addAdmin = async (values: AddAdminFormData, { resetForm }: FormikHelpers<AddAdminFormData>) => {
     if (cristinUser) {
       // Add employment/affiliation (in Cristin) if user don't have one in the current institution
-      const isEmployed = cristinUser.affiliations.some(
+      const isEmployedInThisOrganization = cristinUser.affiliations.some(
         (affiliation) =>
           affiliation.active &&
           cristinInstitutionId.startsWith(affiliation.organization.split('.').slice(0, -3).join('.')) // Remove last 3 subunit values to find out if user already has an employment in this institution
       );
 
-      if (!isEmployed) {
+      if (!isEmployedInThisOrganization) {
         const addAffiliationResponse = await addEmployment(cristinUser.id, {
           type: values.position,
           startDate: values.startDate,
@@ -87,15 +86,19 @@ export const AddAdminDialog = ({ open, toggleOpen, cristinInstitutionId }: AddAd
 
       // TODO: Create NVA User with admin role (NP-9076)
 
-      toggleOpen();
+      closeDialog();
       resetForm();
-      setNationalIdNumber('');
-      setCristinUser(undefined);
     }
   };
 
+  const closeDialog = () => {
+    toggleOpen();
+    setNationalIdNumber('');
+    setCristinUser(undefined);
+  };
+
   return (
-    <Dialog open={open} onClose={toggleOpen} fullWidth>
+    <Dialog open={open} onClose={closeDialog} fullWidth>
       <DialogTitle>{t('common:add_custom', { name: t('profile:roles.institution_admin') })}</DialogTitle>
       <Formik
         initialValues={addAdminInitialValues}
@@ -106,7 +109,7 @@ export const AddAdminDialog = ({ open, toggleOpen, cristinInstitutionId }: AddAd
             <TextField
               variant="filled"
               label={t('basicData:search_for_national_id')}
-              sx={{ minWidth: '20rem' }}
+              fullWidth
               onChange={(event) => event.target.value.length <= 11 && setNationalIdNumber(event.target.value)}
               InputProps={{
                 endAdornment: <SearchIcon color="disabled" />,
@@ -136,7 +139,7 @@ export const AddAdminDialog = ({ open, toggleOpen, cristinInstitutionId }: AddAd
             </Box>
           </DialogContent>
           <DialogActions>
-            <Button onClick={toggleOpen}>{t('common:cancel')}</Button>
+            <Button onClick={closeDialog}>{t('common:cancel')}</Button>
             <Button
               type="submit"
               variant="contained"
