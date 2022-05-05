@@ -1,11 +1,11 @@
 import { LanguageString } from './common.types';
 
 export enum RoleName {
-  INSTITUTION_ADMIN = 'Institution-admin',
-  APP_ADMIN = 'App-admin',
-  CURATOR = 'Curator',
-  CREATOR = 'Creator',
-  EDITOR = 'Editor',
+  InstitutionAdmin = 'Institution-admin',
+  AppAdmin = 'App-admin',
+  Curator = 'Curator',
+  Creator = 'Creator',
+  Editor = 'Editor',
 }
 
 export interface User {

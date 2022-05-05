@@ -26,11 +26,11 @@ export const userReducer = (state: User | null = null, action: UserActions | Aut
         customerId,
         roles,
         topOrgCristinId: action.user['custom:topOrgCristinId'],
-        isCreator: !!customerId && roles.includes(RoleName.CREATOR),
-        isAppAdmin: !!customerId && roles.includes(RoleName.APP_ADMIN),
-        isInstitutionAdmin: !!customerId && roles.includes(RoleName.INSTITUTION_ADMIN),
-        isCurator: !!customerId && roles.includes(RoleName.CURATOR),
-        isEditor: !!customerId && roles.includes(RoleName.EDITOR),
+        isCreator: !!customerId && roles.includes(RoleName.Creator),
+        isAppAdmin: !!customerId && roles.includes(RoleName.AppAdmin),
+        isInstitutionAdmin: !!customerId && roles.includes(RoleName.InstitutionAdmin),
+        isCurator: !!customerId && roles.includes(RoleName.Curator),
+        isEditor: !!customerId && roles.includes(RoleName.Editor),
         viewingScope: [],
         allowedCustomers,
       };
@@ -42,11 +42,11 @@ export const userReducer = (state: User | null = null, action: UserActions | Aut
       return {
         ...state,
         roles: action.roles,
-        isCreator: hasCustomerId && action.roles.includes(RoleName.CREATOR),
-        isAppAdmin: hasCustomerId && action.roles.includes(RoleName.APP_ADMIN),
-        isInstitutionAdmin: hasCustomerId && action.roles.includes(RoleName.INSTITUTION_ADMIN),
-        isCurator: hasCustomerId && action.roles.includes(RoleName.CURATOR),
-        isEditor: hasCustomerId && action.roles.includes(RoleName.EDITOR),
+        isCreator: hasCustomerId && action.roles.includes(RoleName.Creator),
+        isAppAdmin: hasCustomerId && action.roles.includes(RoleName.AppAdmin),
+        isInstitutionAdmin: hasCustomerId && action.roles.includes(RoleName.InstitutionAdmin),
+        isCurator: hasCustomerId && action.roles.includes(RoleName.Curator),
+        isEditor: hasCustomerId && action.roles.includes(RoleName.Editor),
       } as User;
     }
     case SET_VIEWING_SCOPE:

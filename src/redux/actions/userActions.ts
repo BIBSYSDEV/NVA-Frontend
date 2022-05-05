@@ -5,7 +5,7 @@ export const SET_USER_SUCCESS = 'set user';
 export const SET_ROLES = 'set roles';
 export const SET_VIEWING_SCOPE = 'set viewing scope';
 
-// ACTION CREATORS
+// ACTION CreatorS
 export const setUser = (user: FeideUser): SetUserAction => ({
   type: SET_USER_SUCCESS,
   user,

@@ -6,7 +6,7 @@ describe('User administers institutions ', () => {
   beforeEach('Given that the user is logged in as Application administrator:', () => {
     cy.visit('/');
     cy.mocklogin();
-    cy.setUserRolesInRedux([RoleName.APP_ADMIN]);
+    cy.setUserRolesInRedux([RoleName.AppAdmin]);
     cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).click({ force: true });
     cy.get(`[data-testid=${dataTestId.basicData.adminInstitutionsLink}]`).click({ force: true });
   });
