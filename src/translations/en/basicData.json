@@ -4,8 +4,8 @@
   "basic_data": "Basic data",
   "central_import": {
     "central_import":  "Central import",
-    "duplicate_check":  "Duplikatsjekk",
-    "import_publication":  "Importpublikasjon",
+    "duplicate_check":  "Duplicate check",
+    "import_publication":  "Import publication",
     "search_for_duplicates": "Search for duplicates",
     "verifiedContributorCount": "({{verifiedContributorCount}} of {{contributorsCount}})"
   },
