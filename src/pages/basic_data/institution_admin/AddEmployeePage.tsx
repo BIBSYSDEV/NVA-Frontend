@@ -14,6 +14,7 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { convertToCristinUser } from '../../../utils/user-helpers';
 import { addEmployeeValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
+import { addEmployment } from '../../../api/userApi';
 
 export interface AddEmployeeData {
   searchIdNumber: string;
@@ -62,11 +63,7 @@ export const AddEmployeePage = () => {
 
     if (userId) {
       // Add employment (affiliation)
-      const addAffiliationResponse = await authenticatedApiRequest<Employment>({
-        url: `${userId}/employment`,
-        method: 'POST',
-        data: values.affiliation,
-      });
+      const addAffiliationResponse = await addEmployment(userId, values.affiliation);
       if (isSuccessStatus(addAffiliationResponse.status)) {
         dispatch(setNotification({ message: t('feedback:success.add_employment'), variant: 'success' }));
         resetForm();

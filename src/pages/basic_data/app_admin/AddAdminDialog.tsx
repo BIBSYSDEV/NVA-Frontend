@@ -15,16 +15,17 @@ import { useTranslation } from 'react-i18next';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import { Form, Formik, FormikHelpers } from 'formik';
+import { useDispatch } from 'react-redux';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { authenticatedApiRequest } from '../../../api/apiRequest';
-import { FlatCristinUser, CristinUser, Employment } from '../../../types/user.types';
+import { FlatCristinUser, CristinUser } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { convertToFlatCristinUser } from '../../../utils/user-helpers';
 import { StartDateField } from '../fields/StartDateField';
 import { PositionField } from '../fields/PositionField';
 import { addCustomerAdminValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
-import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../redux/notificationSlice';
+import { addEmployment } from '../../../api/userApi';
 
 interface AddAdminDialogProps extends Pick<DialogProps, 'open'> {
   toggleOpen: () => void;
@@ -82,29 +83,23 @@ export const AddAdminDialog = ({ open, toggleOpen, cristinInstitutionId }: AddAd
       );
 
       if (!isEmployed) {
-        const employment: Pick<Employment, 'type' | 'startDate' | 'organization'> = {
+        const addAffiliationResponse = await addEmployment(cristinUser.id, {
           type: values.position,
           startDate: values.startDate,
           organization: cristinInstitutionId,
-        };
-
-        const addAffiliationResponse = await authenticatedApiRequest<Employment>({
-          url: `${cristinUser.id}/employment`,
-          method: 'POST',
-          data: employment,
         });
         if (isErrorStatus(addAffiliationResponse.status)) {
           dispatch(setNotification({ message: t('feedback:error.add_employment'), variant: 'error' }));
           return;
         }
-
-        // TODO: Create NVA User with admin role (NP-9076)
-
-        toggleOpen();
-        resetForm();
-        setNationalIdNumber('');
-        setCristinUser(undefined);
       }
+
+      // TODO: Create NVA User with admin role (NP-9076)
+
+      toggleOpen();
+      resetForm();
+      setNationalIdNumber('');
+      setCristinUser(undefined);
     }
   };
 

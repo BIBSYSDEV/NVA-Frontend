@@ -1,6 +1,8 @@
 import { Auth, CognitoUser } from '@aws-amplify/auth';
+import { Employment } from '../types/user.types';
 import { USE_MOCK_DATA, LocalStorageKey } from '../utils/constants';
 import { UrlPathTemplate } from '../utils/urlPaths';
+import { authenticatedApiRequest } from './apiRequest';
 
 export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> => {
   try {
@@ -46,3 +48,13 @@ export const getAccessToken = async () => {
     return null;
   }
 };
+
+type PostEmployment = Omit<Employment, 'endDate' | 'fullTimeEquivalentPercentage'> &
+  Partial<Pick<Employment, 'endDate' | 'fullTimeEquivalentPercentage'>>;
+
+export const addEmployment = async (userId: string, employment: PostEmployment) =>
+  await authenticatedApiRequest<Employment>({
+    url: `${userId}/employment`,
+    method: 'POST',
+    data: employment,
+  });
