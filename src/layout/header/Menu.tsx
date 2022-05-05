@@ -67,7 +67,15 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               <Typography>{t('workLists:worklist')}</Typography>
             </MenuItem>
           ),
-          user?.isCreator && (
+          user?.isCreator && [
+            <MenuItem
+              key={dataTestId.header.newRegistrationLink}
+              data-testid={dataTestId.header.newRegistrationLink}
+              onClick={closeMenu}
+              component={Link}
+              to={UrlPathTemplate.NewRegistration}>
+              <Typography>{t('registration:new_registration')}</Typography>
+            </MenuItem>,
             <MenuItem
               key={dataTestId.header.messagesLink}
               data-testid={dataTestId.header.messagesLink}
@@ -75,8 +83,8 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               component={Link}
               to={UrlPathTemplate.MyMessages}>
               <Typography>{t('workLists:messages')}</Typography>
-            </MenuItem>
-          ),
+            </MenuItem>,
+          ],
         ]}
         {user?.isCreator && [
           <MenuItem
