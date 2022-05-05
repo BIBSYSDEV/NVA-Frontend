@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch } from 'react-redux';
-import { CreateCristinUser, CristinUser, FlatCristinUser, RoleName } from '../../../types/user.types';
+import { CreateCristinUser, FlatCristinUser, RoleName } from '../../../types/user.types';
 import { FindPersonPanel } from './FindPersonPanel';
 import { AddAffiliationPanel } from './AddAffiliationPanel';
 import { AddRolePanel } from './AddRolePanel';
@@ -11,9 +11,9 @@ import { StyledCenterContainer } from '../../../components/styled/Wrappers';
 import { authenticatedApiRequest } from '../../../api/apiRequest';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { setNotification } from '../../../redux/notificationSlice';
-import { CristinApiPath } from '../../../api/apiPaths';
 import { convertToCristinUser } from '../../../utils/user-helpers';
 import { addEmployeeValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
+import { createCristinPerson } from '../../../api/userApi';
 
 interface Employment {
   type: string;
@@ -56,11 +56,7 @@ export const AddEmployeePage = () => {
     if (!userId) {
       // Create user if it does not yet exist in Cristin
       const cristinUser: CreateCristinUser = convertToCristinUser(values.user);
-      const createPersonResponse = await authenticatedApiRequest<CristinUser>({
-        url: CristinApiPath.Person,
-        method: 'POST',
-        data: cristinUser,
-      });
+      const createPersonResponse = await createCristinPerson(cristinUser);
       if (isErrorStatus(createPersonResponse.status)) {
         dispatch(setNotification({ message: t('feedback:error.add_employment'), variant: 'error' }));
       } else if (isSuccessStatus(createPersonResponse.status)) {

@@ -14,13 +14,11 @@ import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { CristinApiPath } from '../api/apiPaths';
-import { authenticatedApiRequest } from '../api/apiRequest';
-import { getCurrentUserAttributes } from '../api/userApi';
+import { createCristinPerson, getCurrentUserAttributes } from '../api/userApi';
 import { emptyUser } from '../pages/basic_data/institution_admin/AddEmployeePage';
 import { setUser } from '../redux/actions/userActions';
 import { setNotification } from '../redux/notificationSlice';
-import { CreateCristinUser, CristinUser, FlatCristinUser, User } from '../types/user.types';
+import { CreateCristinUser, FlatCristinUser, User } from '../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../utils/constants';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
 import { convertToCristinUser } from '../utils/user-helpers';
@@ -38,11 +36,7 @@ export const CreateCristinUserDialog = ({ user }: CreateCristinUserDialogProps) 
 
   const createUser = async (values: FlatCristinUser) => {
     const cristinUser: CreateCristinUser = convertToCristinUser(values);
-    const createPersonResponse = await authenticatedApiRequest<CristinUser>({
-      url: CristinApiPath.Person,
-      method: 'POST',
-      data: cristinUser,
-    });
+    const createPersonResponse = await createCristinPerson(cristinUser);
     if (isErrorStatus(createPersonResponse.status)) {
       dispatch(setNotification({ message: t('feedback:error.create_user'), variant: 'error' }));
     } else if (isSuccessStatus(createPersonResponse.status)) {
