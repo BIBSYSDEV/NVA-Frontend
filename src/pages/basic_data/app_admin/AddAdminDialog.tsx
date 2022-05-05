@@ -16,16 +16,14 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { useDispatch } from 'react-redux';
-import { CristinApiPath } from '../../../api/apiPaths';
-import { authenticatedApiRequest } from '../../../api/apiRequest';
-import { FlatCristinUser, CristinUser } from '../../../types/user.types';
+import { FlatCristinUser } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { convertToFlatCristinUser } from '../../../utils/user-helpers';
 import { StartDateField } from '../fields/StartDateField';
 import { PositionField } from '../fields/PositionField';
 import { addCustomerAdminValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
 import { setNotification } from '../../../redux/notificationSlice';
-import { addEmployment } from '../../../api/userApi';
+import { addEmployment, searchByNationalIdNumber } from '../../../api/userApi';
 
 interface AddAdminDialogProps extends Pick<DialogProps, 'open'> {
   toggleOpen: () => void;
@@ -51,14 +49,7 @@ export const AddAdminDialog = ({ open, toggleOpen, cristinInstitutionId }: AddAd
     if (nationalIdNumber.length === 11) {
       const searchByNationalId = async () => {
         setIsLoadingSearch(true);
-        const searchResponse = await authenticatedApiRequest<CristinUser>({
-          url: CristinApiPath.PersonIdentityNumer,
-          method: 'POST',
-          data: {
-            type: 'NationalIdentificationNumber',
-            value: nationalIdNumber,
-          },
-        });
+        const searchResponse = await searchByNationalIdNumber(nationalIdNumber);
         if (isSuccessStatus(searchResponse.status)) {
           setCristinUser(convertToFlatCristinUser(searchResponse.data));
         } else if (isErrorStatus(searchResponse.status)) {
