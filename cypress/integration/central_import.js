@@ -7,7 +7,7 @@ describe('Central Import', () => {
   beforeEach(() => {
     cy.visit('/basic-data/central-import');
     cy.mocklogin();
-    cy.setUserRolesInRedux([RoleName.APP_ADMIN]);
+    cy.setUserRolesInRedux([RoleName.AppAdmin]);
     window.localStorage.setItem('beta', 'true'); // TODO: remove when not beta anymore
   });
 

@@ -37,8 +37,8 @@ export const CustomerInstitutionAdminsForm = ({
       ) : (
         <>
           <UserList
-            userList={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)}
-            roleToRemove={RoleName.INSTITUTION_ADMIN}
+            userList={filterUsersByRole(users, RoleName.InstitutionAdmin)}
+            roleToRemove={RoleName.InstitutionAdmin}
             refetchUsers={refetchInstitutionUsers}
             tableCaption={t('profile:roles.institution_admins')}
           />

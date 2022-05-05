@@ -39,7 +39,7 @@ export const AddRolePanel = () => {
               <FormLabel component="legend">{t('profile:heading.roles')}</FormLabel>
               <FormGroup sx={{ gap: '0.5rem' }}>
                 <FormControlLabel
-                  control={<Checkbox checked={roles.includes(RoleName.CURATOR)} value={RoleName.CURATOR} />}
+                  control={<Checkbox checked={roles.includes(RoleName.Curator)} value={RoleName.Curator} />}
                   label={
                     <>
                       <Typography variant="overline" sx={{ fontSize: '0.9rem' }}>
@@ -51,7 +51,7 @@ export const AddRolePanel = () => {
                 />
                 <FormControlLabel
                   disabled
-                  control={<Checkbox checked={roles.includes(RoleName.CREATOR)} value={RoleName.CREATOR} />}
+                  control={<Checkbox checked={roles.includes(RoleName.Creator)} value={RoleName.Creator} />}
                   label={
                     <>
                       <Typography variant="overline" sx={{ fontSize: '0.9rem' }}>
@@ -62,7 +62,7 @@ export const AddRolePanel = () => {
                   }
                 />
                 <FormControlLabel
-                  control={<Checkbox checked={roles.includes(RoleName.EDITOR)} value={RoleName.EDITOR} />}
+                  control={<Checkbox checked={roles.includes(RoleName.Editor)} value={RoleName.Editor} />}
                   label={
                     <>
                       <Typography variant="overline" sx={{ fontSize: '0.9rem' }}>
@@ -74,7 +74,7 @@ export const AddRolePanel = () => {
                 />
                 <FormControlLabel
                   control={
-                    <Checkbox checked={roles.includes(RoleName.INSTITUTION_ADMIN)} value={RoleName.INSTITUTION_ADMIN} />
+                    <Checkbox checked={roles.includes(RoleName.InstitutionAdmin)} value={RoleName.InstitutionAdmin} />
                   }
                   label={
                     <>

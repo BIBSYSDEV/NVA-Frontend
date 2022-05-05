@@ -27,7 +27,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
     errorMessage: t('feedback:error.get_users_for_institution'),
     withAuthentication: true,
   });
-  const admins = filterUsersByRole(userList?.users ?? [], RoleName.INSTITUTION_ADMIN);
+  const admins = filterUsersByRole(userList?.users ?? [], RoleName.InstitutionAdmin);
 
   return (
     <SyledPageContent>
