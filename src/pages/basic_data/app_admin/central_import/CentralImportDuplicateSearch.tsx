@@ -1,14 +1,14 @@
+import { Divider, List, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { Registration } from '../../../../types/registration.types';
 import { SearchApiPath } from '../../../../api/apiPaths';
 import { SearchResponse } from '../../../../types/common.types';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
-import { Divider, List, Typography } from '@mui/material';
 import { CentralImportResultItem } from './CentralImportResultItem';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { createSearchQuery, ExpressionStatement, SearchConfig } from '../../../../utils/searchHelpers';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
+import { createSearchQuery, ExpressionStatement, SearchConfig } from '../../../../utils/searchHelpers';
 
 interface CentralImportDuplicateSearchProps {
   publication: Registration;
@@ -35,8 +35,6 @@ export const CentralImportDuplicateSearch = ({ publication }: CentralImportDupli
     errorMessage: t('feedback:error.search'),
   });
 
-  const publications = searchResults?.hits ?? [];
-
   return (
     <>
       {isLoadingSearchResults ? (
@@ -47,7 +45,7 @@ export const CentralImportDuplicateSearch = ({ publication }: CentralImportDupli
             <Typography variant="subtitle1">{t('search:hits', { count: searchResults.size })}:</Typography>
             <Divider />
             <List>
-              {publications.map((publication) => (
+              {searchResults.hits.map((publication) => (
                 <CentralImportResultItem publication={publication} key={publication.identifier} />
               ))}
             </List>

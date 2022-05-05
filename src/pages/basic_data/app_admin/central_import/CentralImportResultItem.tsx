@@ -1,10 +1,10 @@
 import { Grid, Link as MuiLink, ListItem, ListItemText, Typography } from '@mui/material';
-import { Registration } from '../../../../types/registration.types';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { getDuplicateCheckPagePath } from '../../../../utils/urlPaths';
-import { Link } from 'react-router-dom';
 
 interface CentralImportResultItemProps {
   publication: Registration;

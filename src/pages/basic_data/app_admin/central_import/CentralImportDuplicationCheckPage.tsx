@@ -1,15 +1,15 @@
 import { Box, Divider, Link as MuiLink, Typography } from '@mui/material';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { Registration } from '../../../../types/registration.types';
 import { PublicationsApiPath } from '../../../../api/apiPaths';
-import { useParams } from 'react-router-dom';
 import { SyledPageContent } from '../../../../components/styled/Wrappers';
 import { PageSpinner } from '../../../../components/PageSpinner';
-import NotFound from '../../../errorpages/NotFound';
-import { useEffect } from 'react';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { CentralImportDuplicateSearch } from './CentralImportDuplicateSearch';
+import NotFound from '../../../errorpages/NotFound';
 
 export const CentralImportDuplicationCheckPage = () => {
   const { t } = useTranslation('basicData');
