@@ -2,7 +2,13 @@
   "add_employee": "Legg til ansatt",
   "add_to_your_person_registry": "Legg til i ditt personregister",
   "basic_data": "Grunndata",
-  "central_import": "Sentralimport",
+  "central_import": {
+    "central_import":  "Sentralimport",
+    "duplicate_check":  "Duplikatsjekk",
+    "import_publication":  "Import publication",
+    "search_for_duplicates": "Søk etter duplikater",
+    "verifiedContributorCount": "({{verifiedContributorCount}} av {{contributorsCount}})"
+  },
   "create_person": "Opprett person",
   "employments": "Ansettelser",
   "national_id": "Fødselsnummer",
@@ -10,6 +16,5 @@
   "position": "Stilling",
   "position_percent": "Stillingsprosent",
   "publications": "Publikasjoner",
-  "search_for_national_id": "Søk opp person med fødselsnummer",
-  "verifiedContributorCount": "({{verifiedContributorCount}} av {{contributorsCount}})"
+  "search_for_national_id": "Søk opp person med fødselsnummer"
 }

@@ -2,7 +2,13 @@
   "add_employee": "Add employee",
   "add_to_your_person_registry": "Add to your person registry",
   "basic_data": "Basic data",
-  "central_import": "Central import",
+  "central_import": {
+    "central_import":  "Central import",
+    "duplicate_check":  "Duplicate check",
+    "import_publication":  "Import publication",
+    "search_for_duplicates": "Search for duplicates",
+    "verifiedContributorCount": "({{verifiedContributorCount}} of {{contributorsCount}})"
+  },
   "create_person": "Create person",
   "employments": "Employments",
   "national_id": "National ID",
@@ -10,6 +16,5 @@
   "position": "Position",
   "position_percent": "Position percent",
   "publications": "Publications",
-  "search_for_national_id": "Search for user with National ID number",
-  "verifiedContributorCount": "({{verifiedContributorCount}} of {{contributorsCount}})"
+  "search_for_national_id": "Search for user with National ID number"
 }
