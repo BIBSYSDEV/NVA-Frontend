@@ -43,7 +43,7 @@ const initialValues: AddEmployeeData = {
   searchIdNumber: '',
   user: emptyUser,
   affiliation: { type: '', organization: '', startDate: '', endDate: '', fullTimeEquivalentPercentage: '' },
-  roles: [RoleName.CREATOR],
+  roles: [RoleName.Creator],
 };
 
 export const AddEmployeePage = () => {

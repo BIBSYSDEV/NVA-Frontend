@@ -6,7 +6,7 @@ describe('My messages', () => {
   beforeEach(() => {
     cy.visit('/my-profile');
     cy.mocklogin();
-    cy.setUserRolesInRedux([RoleName.CREATOR]);
+    cy.setUserRolesInRedux([RoleName.Creator]);
     cy.get(`[data-testid=${dataTestId.header.messagesLink}]`).click({ force: true });
   });
 
