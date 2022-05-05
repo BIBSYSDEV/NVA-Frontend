@@ -74,8 +74,7 @@ export const AddAdminDialog = ({ open, toggleOpen, cristinInstitutionId }: AddAd
 
   const addAdmin = async (values: AddAdminFormData, { resetForm }: FormikHelpers<AddAdminFormData>) => {
     if (cristinUser) {
-      // Add employment/affiliation (in Cristin) if user don't have one yet
-
+      // Add employment/affiliation (in Cristin) if user don't have one in the current institution
       const isEmployed = cristinUser.affiliations.some(
         (affiliation) =>
           affiliation.active &&
@@ -83,14 +82,16 @@ export const AddAdminDialog = ({ open, toggleOpen, cristinInstitutionId }: AddAd
       );
 
       if (!isEmployed) {
+        const employment: Pick<Employment, 'type' | 'startDate' | 'organization'> = {
+          type: values.position,
+          startDate: values.startDate,
+          organization: cristinInstitutionId,
+        };
+
         const addAffiliationResponse = await authenticatedApiRequest<Employment>({
           url: `${cristinUser.id}/employment`,
           method: 'POST',
-          data: {
-            type: values.position,
-            startDate: values.startDate,
-            organization: cristinInstitutionId,
-          },
+          data: employment,
         });
         if (isErrorStatus(addAffiliationResponse.status)) {
           dispatch(setNotification({ message: t('feedback:error.add_employment'), variant: 'error' }));
