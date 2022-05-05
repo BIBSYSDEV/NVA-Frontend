@@ -44,11 +44,9 @@ export const CentralImportDuplicationCheckPage = () => {
             <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
               {registration.entityDescription?.mainTitle}
             </Typography>
-            {contributors && (
-              <Typography display="inline" variant="body2">
-                {contributors.map((contributor) => contributor.identity.name).join('; ')}
-              </Typography>
-            )}
+            <Typography display="inline" variant="body2">
+              {contributors.map((contributor) => contributor.identity.name).join('; ')}
+            </Typography>
             {registration.entityDescription?.reference?.doi && (
               <MuiLink
                 underline="hover"
