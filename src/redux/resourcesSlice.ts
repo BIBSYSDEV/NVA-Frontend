@@ -5,6 +5,10 @@ import { Journal, Publisher, Registration } from '../types/registration.types';
 
 export type ResourceType = Journal | Publisher | Registration | CristinProject | Organization;
 
+type SetResourcePayload = ResourceType & {
+  reduxKey: string;
+};
+
 interface ResourceState {
   [id: string]: ResourceType;
 }
@@ -15,8 +19,9 @@ const resourcesSlice = createSlice({
   name: 'resources',
   initialState,
   reducers: {
-    setResource: (state, action: PayloadAction<ResourceType>) => {
-      state[action.payload.id] = action.payload;
+    setResource: (state, action: PayloadAction<SetResourcePayload>) => {
+      const { reduxKey, ...data } = action.payload;
+      state[reduxKey] = data;
     },
   },
 });

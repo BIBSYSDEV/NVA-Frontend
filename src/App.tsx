@@ -22,11 +22,12 @@ import { mockUser } from './utils/testfiles/mock_feide_user';
 import { PageSpinner } from './components/PageSpinner';
 import { SkipLink } from './components/SkipLink';
 import { useFetch } from './utils/hooks/useFetch';
-import { RoleApiPath } from './api/apiPaths';
+import { CristinApiPath, RoleApiPath } from './api/apiPaths';
 import { InstitutionUser } from './types/user.types';
 import { UrlPathTemplate } from './utils/urlPaths';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInstitutionDialog';
+import { useFetchResource } from './utils/hooks/useFetchResource';
 
 const getLanguageTagValue = (language: string) => {
   if (language === 'eng') {
@@ -52,6 +53,8 @@ export const App = () => {
     errorMessage: t('feedback:error.get_roles'),
     withAuthentication: true,
   });
+
+  useFetchResource<any>(CristinApiPath.Position);
 
   useEffect(() => {
     // Setup aws-amplify
