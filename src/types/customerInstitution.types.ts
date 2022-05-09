@@ -1,11 +1,14 @@
-export interface CustomerInstitution {
-  type?: 'Customer';
+export interface SimpleCustomerInstitution {
   id: string;
+  createdDate: string;
+  displayName: string;
+}
+
+export interface CustomerInstitution extends SimpleCustomerInstitution {
+  type?: 'Customer';
   archiveName: string;
   cname: string;
-  createdDate: string;
   cristinId: string;
-  displayName: string;
   feideOrganizationDomain: string;
   identifier: string;
   institutionDns: string;
@@ -57,7 +60,7 @@ export enum CustomerInstitutionFieldNames {
 }
 
 export interface CustomerList {
-  customers: CustomerInstitution[];
+  customers: SimpleCustomerInstitution[];
 }
 
 export interface VocabularyList {

@@ -12,7 +12,7 @@ const MyMessagesPage = () => {
   const { t } = useTranslation('workLists');
 
   const [supportRequestsResponse, isLoadingSupportRequests] = useFetch<PublicationConversation[]>({
-    url: `${PublicationsApiPath.Messages}?role=${RoleName.CREATOR}`,
+    url: `${PublicationsApiPath.Messages}?role=${RoleName.Creator}`,
     errorMessage: t('feedback:error.get_messages'),
     withAuthentication: true,
   });
