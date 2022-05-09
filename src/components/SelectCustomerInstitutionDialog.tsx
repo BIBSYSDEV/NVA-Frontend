@@ -7,6 +7,7 @@ import { RoleApiPath } from '../api/apiPaths';
 import { apiRequest, authenticatedApiRequest } from '../api/apiRequest';
 import { getCurrentUserAttributes } from '../api/userApi';
 import { setUser } from '../redux/actions/userActions';
+import { setNotification } from '../redux/notificationSlice';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import { isSuccessStatus } from '../utils/constants';
 import { sortCustomerInstitutions } from '../utils/institutions-helpers';
@@ -44,20 +45,23 @@ export const SelectCustomerInstitutionDialog = ({
     };
     fetchAllowedCustomers();
   }, [allowedCustomerIds]);
-
   const selectCustomer = async () => {
     setIsSelectingCustomer(true);
     const customerId = selectedCustomer?.id;
     if (customerId) {
-      const response = await authenticatedApiRequest({
-        url: RoleApiPath.Login,
-        method: 'POST',
-        data: { customerId },
-      });
-      if (isSuccessStatus(response.status)) {
-        const newUserInfo = await getCurrentUserAttributes();
-        dispatch(setUser(newUserInfo));
-        setOpenDialog(false);
+      try {
+        const response = await authenticatedApiRequest({
+          url: RoleApiPath.Login,
+          method: 'POST',
+          data: { customerId },
+        });
+        if (isSuccessStatus(response.status)) {
+          const newUserInfo = await getCurrentUserAttributes();
+          dispatch(setUser(newUserInfo));
+          setOpenDialog(false);
+        }
+      } catch {
+        dispatch(setNotification({ message: t('feedback:error.an_error_occurred'), variant: 'error' }));
       }
     }
     setIsSelectingCustomer(false);
