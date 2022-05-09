@@ -16,4 +16,4 @@ export const updateUser = async (username: string, newUser: InstitutionUser) =>
   });
 
 export const createUser = async (newUserPayload: CreateUserPayload) =>
-  await authenticatedApiRequest({ url: RoleApiPath.Users, method: 'POST', data: newUserPayload });
+  await authenticatedApiRequest<InstitutionUser>({ url: RoleApiPath.Users, method: 'POST', data: newUserPayload });
