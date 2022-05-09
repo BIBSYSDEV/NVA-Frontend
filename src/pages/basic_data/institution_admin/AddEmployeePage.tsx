@@ -89,7 +89,7 @@ export const AddEmployeePage = () => {
   return (
     <>
       <Typography variant="h3" component="h2" paragraph>
-        {t('add_to_your_person_registry')}
+        {t('add_to_person_registry')}
       </Typography>
       <Formik initialValues={initialValues} validationSchema={addEmployeeValidationSchema} onSubmit={onSubmit}>
         {({ isValid, isSubmitting }: FormikProps<AddEmployeeData>) => (
