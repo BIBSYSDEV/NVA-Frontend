@@ -1,17 +1,17 @@
-import { Divider, List, TablePagination, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { useFetch } from '../../../utils/hooks/useFetch';
-import { Registration } from '../../../types/registration.types';
-import { SearchApiPath } from '../../../api/apiPaths';
-import { SearchResponse } from '../../../types/common.types';
-import { ListSkeleton } from '../../../components/ListSkeleton';
-import { CentralImportResultItem } from './CentralImportResultItem';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
-import { SearchParam } from '../../../utils/searchHelpers';
-import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Divider, List, TablePagination, Typography } from '@mui/material';
+import { useFetch } from '../../../../utils/hooks/useFetch';
+import { Registration } from '../../../../types/registration.types';
+import { SearchApiPath } from '../../../../api/apiPaths';
+import { SearchResponse } from '../../../../types/common.types';
+import { ListSkeleton } from '../../../../components/ListSkeleton';
+import { CentralImportResultItem } from './CentralImportResultItem';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
+import { SearchParam } from '../../../../utils/searchHelpers';
+import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 
 export const CentralImportPage = () => {
   const { t } = useTranslation('basicData');
