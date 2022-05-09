@@ -1,12 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PositionResponse } from '../pages/basic_data/institution_admin/AddAffiliationPanel';
 import { Organization } from '../types/organization.types';
 import { CristinProject } from '../types/project.types';
 import { Journal, Publisher, Registration } from '../types/registration.types';
 
-export type ResourceType = Journal | Publisher | Registration | CristinProject | Organization;
+export type ResourceType = Journal | Publisher | Registration | CristinProject | Organization | PositionResponse;
 
-type SetResourcePayload = ResourceType & {
-  reduxKey: string;
+type SetResourcePayload = {
+  data: ResourceType;
+  key: string;
 };
 
 interface ResourceState {
@@ -20,8 +22,7 @@ const resourcesSlice = createSlice({
   initialState,
   reducers: {
     setResource: (state, action: PayloadAction<SetResourcePayload>) => {
-      const { reduxKey, ...data } = action.payload;
-      state[reduxKey] = data;
+      state[action.payload.key] = action.payload.data;
     },
   },
 });

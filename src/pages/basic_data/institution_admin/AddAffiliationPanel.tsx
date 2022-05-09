@@ -22,7 +22,7 @@ interface Position {
   enabled: boolean;
   name: LanguageString;
 }
-interface PositionResponse {
+export interface PositionResponse {
   positions: Position[];
 }
 
