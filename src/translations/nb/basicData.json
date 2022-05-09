@@ -1,11 +1,11 @@
 {
   "add_employee": "Legg til ansatt",
-  "add_to_your_person_registry": "Legg til i ditt personregister",
+  "add_to_person_registry": "Legg til i personregister",
   "basic_data": "Grunndata",
   "central_import": {
-    "central_import":  "Sentralimport",
-    "duplicate_check":  "Duplikatsjekk",
-    "import_publication":  "Import publication",
+    "central_import": "Sentralimport",
+    "duplicate_check": "Duplikatsjekk",
+    "import_publication": "Import publication",
     "search_for_duplicates": "Søk etter duplikater",
     "verifiedContributorCount": "({{verifiedContributorCount}} av {{contributorsCount}})"
   },
