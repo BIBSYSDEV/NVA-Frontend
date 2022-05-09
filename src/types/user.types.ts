@@ -29,7 +29,7 @@ export interface User {
   allowedCustomers: string[];
 }
 
-interface UserRole {
+export interface UserRole {
   type: 'Role';
   rolename: RoleName;
 }

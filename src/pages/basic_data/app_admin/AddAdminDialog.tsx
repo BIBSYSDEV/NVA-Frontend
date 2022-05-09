@@ -16,7 +16,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { useDispatch } from 'react-redux';
-import { FlatCristinUser } from '../../../types/user.types';
+import { FlatCristinUser, RoleName } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { convertToFlatCristinUser } from '../../../utils/user-helpers';
 import { StartDateField } from '../fields/StartDateField';
@@ -24,6 +24,8 @@ import { PositionField } from '../fields/PositionField';
 import { addCustomerAdminValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
 import { setNotification } from '../../../redux/notificationSlice';
 import { addEmployment, searchByNationalIdNumber } from '../../../api/userApi';
+import { useLocation } from 'react-router-dom';
+import { createUser } from '../../../api/roleApi';
 
 interface AddAdminDialogProps extends Pick<DialogProps, 'open'> {
   toggleOpen: () => void;
@@ -40,6 +42,7 @@ const addAdminInitialValues: AddAdminFormData = { startDate: '', position: '' };
 export const AddAdminDialog = ({ open, toggleOpen, cristinInstitutionId }: AddAdminDialogProps) => {
   const { t } = useTranslation('basicData');
   const dispatch = useDispatch();
+  const location = useLocation();
   const [nationalIdNumber, setNationalIdNumber] = useState('');
   const [cristinUser, setCristinUser] = useState<FlatCristinUser>();
   const [isLoadingSearch, setIsLoadingSearch] = useState(false);
@@ -84,10 +87,24 @@ export const AddAdminDialog = ({ open, toggleOpen, cristinInstitutionId }: AddAd
         }
       }
 
-      // TODO: Create NVA User with admin role (NP-9076)
+      // Create NVA User with admin role
+      const customerId = new URLSearchParams(location.search).get('id') as string;
 
-      closeDialog();
-      resetForm();
+      const createNvaUserResponse = await createUser({
+        nationalIdentityNumber: nationalIdNumber,
+        customerId,
+        roles: [
+          { type: 'Role', rolename: RoleName.InstitutionAdmin },
+          { type: 'Role', rolename: RoleName.Creator },
+        ],
+      });
+      if (isErrorStatus(createNvaUserResponse.status)) {
+        dispatch(setNotification({ message: t('feedback:error.create_user'), variant: 'error' }));
+      } else if (isSuccessStatus(createNvaUserResponse.status)) {
+        dispatch(setNotification({ message: t('feedback:success.admin_added'), variant: 'success' }));
+        closeDialog();
+        resetForm();
+      }
     }
   };
 
