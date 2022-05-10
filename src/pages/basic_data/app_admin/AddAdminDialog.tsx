@@ -14,9 +14,10 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
-import { Form, Formik, FormikHelpers } from 'formik';
+import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { LoadingButton } from '@mui/lab';
 import { FlatCristinUser, RoleName } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { convertToFlatCristinUser } from '../../../utils/user-helpers';
@@ -53,6 +54,11 @@ export const AddAdminDialog = ({
   const [cristinUser, setCristinUser] = useState<FlatCristinUser>();
   const [isLoadingSearch, setIsLoadingSearch] = useState(false);
 
+  const isEmployedInThisOrganization = cristinUser?.affiliations.some(
+    (affiliation) =>
+      affiliation.active && cristinInstitutionId.startsWith(affiliation.organization.split('.').slice(0, -3).join('.')) // Remove last 3 subunit values to find out if user already has an employment in this institution
+  );
+
   useEffect(() => {
     // Search when user has entered 11 chars as a Norwegian National ID is 11 chars long
     if (nationalIdNumber.length === 11) {
@@ -63,6 +69,7 @@ export const AddAdminDialog = ({
           setCristinUser(convertToFlatCristinUser(searchResponse.data));
         } else if (isErrorStatus(searchResponse.status)) {
           dispatch(setNotification({ message: t('feedback:error.search'), variant: 'error' }));
+          setCristinUser(undefined);
         }
         setIsLoadingSearch(false);
       };
@@ -75,12 +82,6 @@ export const AddAdminDialog = ({
   const addAdmin = async (values: AddAdminFormData, { resetForm }: FormikHelpers<AddAdminFormData>) => {
     if (cristinUser) {
       // Add employment/affiliation (in Cristin) if user don't have one in the current institution
-      const isEmployedInThisOrganization = cristinUser.affiliations.some(
-        (affiliation) =>
-          affiliation.active &&
-          cristinInstitutionId.startsWith(affiliation.organization.split('.').slice(0, -3).join('.')) // Remove last 3 subunit values to find out if user already has an employment in this institution
-      );
-
       if (!isEmployedInThisOrganization) {
         const addAffiliationResponse = await addEmployment(cristinUser.id, {
           type: values.position,
@@ -126,54 +127,59 @@ export const AddAdminDialog = ({
       <DialogTitle>{t('common:add_custom', { name: t('profile:roles.institution_admin') })}</DialogTitle>
       <Formik
         initialValues={addAdminInitialValues}
-        validationSchema={addCustomerAdminValidationSchema}
+        validationSchema={!isEmployedInThisOrganization ? addCustomerAdminValidationSchema : null}
         onSubmit={addAdmin}>
-        <Form noValidate>
-          <DialogContent>
-            <TextField
-              variant="filled"
-              label={t('basicData:search_for_national_id')}
-              fullWidth
-              onChange={(event) => event.target.value.length <= 11 && setNationalIdNumber(event.target.value)}
-              InputProps={{
-                endAdornment: <SearchIcon color="disabled" />,
-              }}
-            />
-            <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {isLoadingSearch ? (
-                <CircularProgress />
-              ) : cristinUser ? (
-                <>
-                  {/* TODO: Remove if user has affiliation already */}
-                  <TextField
-                    variant="filled"
-                    disabled
-                    label={t('common:name')}
-                    required
-                    fullWidth
-                    value={`${cristinUser.firstName} ${cristinUser.lastName}`}
-                  />
-                  <Box sx={{ display: 'flex', gap: '1rem', width: '100%' }}>
-                    <StartDateField fieldName="startDate" />
-                    <PositionField fieldName="position" />
-                  </Box>
-                </>
-              ) : (
-                nationalIdNumber.length === 11 && <Typography>{t('no_matching_persons_found')}</Typography>
-              )}
-            </Box>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={closeDialog}>{t('common:cancel')}</Button>
-            <Button
-              type="submit"
-              variant="contained"
-              startIcon={<AddIcon />}
-              disabled={!cristinUser || nationalIdNumber.length !== 11}>
-              {t('common:add')}
-            </Button>
-          </DialogActions>
-        </Form>
+        {({ isSubmitting }: FormikProps<AddAdminFormData>) => (
+          <Form noValidate>
+            <DialogContent>
+              <TextField
+                variant="filled"
+                label={t('basicData:search_for_national_id')}
+                disabled={isSubmitting}
+                fullWidth
+                onChange={(event) => event.target.value.length <= 11 && setNationalIdNumber(event.target.value)}
+                InputProps={{
+                  endAdornment: <SearchIcon color="disabled" />,
+                }}
+              />
+              <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {isLoadingSearch ? (
+                  <CircularProgress />
+                ) : cristinUser ? (
+                  <>
+                    <TextField
+                      variant="filled"
+                      disabled
+                      label={t('common:name')}
+                      required
+                      fullWidth
+                      value={`${cristinUser.firstName} ${cristinUser.lastName}`}
+                    />
+                    {!isEmployedInThisOrganization && (
+                      <Box sx={{ display: 'flex', gap: '1rem', width: '100%' }}>
+                        <StartDateField fieldName="startDate" disabled={isSubmitting} />
+                        <PositionField fieldName="position" disabled={isSubmitting} />
+                      </Box>
+                    )}
+                  </>
+                ) : (
+                  nationalIdNumber.length === 11 && <Typography>{t('no_matching_persons_found')}</Typography>
+                )}
+              </Box>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={closeDialog}>{t('common:cancel')}</Button>
+              <LoadingButton
+                type="submit"
+                variant="contained"
+                loading={isSubmitting}
+                startIcon={<AddIcon />}
+                disabled={!cristinUser || nationalIdNumber.length !== 11}>
+                {t('common:add')}
+              </LoadingButton>
+            </DialogActions>
+          </Form>
+        )}
       </Formik>
     </Dialog>
   );
