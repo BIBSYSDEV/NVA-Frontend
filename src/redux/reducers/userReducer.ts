@@ -15,12 +15,13 @@ export const userReducer = (state: User | null = null, action: UserActions | Aut
       const lastName = action.user['custom:lastName'] ?? '';
       const cristinId = ''; // action.user['custom:cristinId'] ?? '';
       const allowedCustomers = action.user['custom:allowedCustomers']?.split(',') ?? [];
+      const nationalIdNumber = action.user['custom:feideIdNin'] ?? action.user['custom:nin'] ?? '';
 
       const user: User = {
         name: `${firstName} ${lastName}`,
         givenName: firstName,
         familyName: lastName,
-        nationalIdNumber: action.user['custom:feideIdNin'] ?? '',
+        nationalIdNumber,
         id: action.user['custom:feideId'] ?? '',
         cristinId,
         username: action.user['custom:nvaUsername'] ?? '',

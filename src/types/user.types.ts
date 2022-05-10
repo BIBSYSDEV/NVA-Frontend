@@ -65,6 +65,7 @@ export interface FeideUser {
   'custom:accessRights'?: string;
   'custom:allowedCustomers'?: string;
   'custom:feideIdNin'?: string;
+  'custom:nin'?: string;
 }
 
 export interface CristinPersonAffiliation {
