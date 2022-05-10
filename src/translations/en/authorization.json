@@ -1,6 +1,8 @@
 {
   "accept_terms_to_create_user": "I accept to be created as a user in NVA",
   "back_to_home": "Back to home",
+  "cancel_create_user_text": "You must create a user to proceed. If you cancel, you will be logged out. Do you want to cancel?",
+  "cancel_create_user_title": "Do you want to cancel?",
   "create_user_info": "As a user you will be visible for all users that adds authors or other contributors to results.",
   "expired_token_info": "Your session has expired. Please log in again.",
   "forbidden": "Forbidden",
