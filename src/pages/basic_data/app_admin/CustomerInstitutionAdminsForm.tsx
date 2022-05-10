@@ -53,6 +53,7 @@ export const CustomerInstitutionAdminsForm = ({
             open={openAddAdminModal}
             toggleOpen={toggleOpenAddAdminModal}
             cristinInstitutionId={cristinInstitutionId}
+            refetchInstitutionUsers={refetchInstitutionUsers}
           />
         </>
       )}

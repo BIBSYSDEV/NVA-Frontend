@@ -16,6 +16,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { FlatCristinUser, RoleName } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { convertToFlatCristinUser } from '../../../utils/user-helpers';
@@ -24,11 +25,11 @@ import { PositionField } from '../fields/PositionField';
 import { addCustomerAdminValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
 import { setNotification } from '../../../redux/notificationSlice';
 import { addEmployment, searchByNationalIdNumber } from '../../../api/userApi';
-import { useLocation } from 'react-router-dom';
 import { createUser } from '../../../api/roleApi';
 
 interface AddAdminDialogProps extends Pick<DialogProps, 'open'> {
   toggleOpen: () => void;
+  refetchInstitutionUsers: () => void;
   cristinInstitutionId: string;
 }
 
@@ -39,7 +40,12 @@ interface AddAdminFormData {
 
 const addAdminInitialValues: AddAdminFormData = { startDate: '', position: '' };
 
-export const AddAdminDialog = ({ open, toggleOpen, cristinInstitutionId }: AddAdminDialogProps) => {
+export const AddAdminDialog = ({
+  open,
+  toggleOpen,
+  refetchInstitutionUsers,
+  cristinInstitutionId,
+}: AddAdminDialogProps) => {
   const { t } = useTranslation('basicData');
   const dispatch = useDispatch();
   const location = useLocation();
@@ -104,6 +110,7 @@ export const AddAdminDialog = ({ open, toggleOpen, cristinInstitutionId }: AddAd
         dispatch(setNotification({ message: t('feedback:success.admin_added'), variant: 'success' }));
         closeDialog();
         resetForm();
+        refetchInstitutionUsers();
       }
     }
   };
@@ -137,6 +144,7 @@ export const AddAdminDialog = ({ open, toggleOpen, cristinInstitutionId }: AddAd
                 <CircularProgress />
               ) : cristinUser ? (
                 <>
+                  {/* TODO: Remove if user has affiliation already */}
                   <TextField
                     variant="filled"
                     disabled
