@@ -27,7 +27,7 @@ import { InstitutionUser } from './types/user.types';
 import { UrlPathTemplate } from './utils/urlPaths';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInstitutionDialog';
-import { CreateCristinUserDialog } from './components/CreateCristinUserDialog';
+import { CreateCristinPersonDialog } from './components/CreateCristinPersonDialog';
 
 const getLanguageTagValue = (language: string) => {
   if (language === 'eng') {
@@ -110,7 +110,7 @@ export const App = () => {
             openDefault={user.allowedCustomers.length > 1}
           />
         ) : (
-          <CreateCristinUserDialog user={user} />
+          <CreateCristinPersonDialog user={user} />
         ))}
       {isLoadingUserAttributes || isLoadingInstitutionUser ? (
         <PageSpinner />

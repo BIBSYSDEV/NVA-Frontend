@@ -10,7 +10,7 @@ import {
   Checkbox,
   Button,
 } from '@mui/material';
-import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -24,17 +24,17 @@ import { useAuthentication } from '../utils/hooks/useAuthentication';
 import { convertToCristinUser } from '../utils/user-helpers';
 import { userValidationSchema } from '../utils/validation/basic_data/addEmployeeValidation';
 
-interface CreateCristinUserDialogProps {
+interface CreateCristinPersonDialogProps {
   user: User;
 }
 
-export const CreateCristinUserDialog = ({ user }: CreateCristinUserDialogProps) => {
+export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogProps) => {
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const { handleLogout } = useAuthentication();
-  const [acceptTermsValue, setAcceptTermsValue] = useState(false);
+  const [acceptedTermsValue, setAcceptedTermsValue] = useState(false);
 
-  const createUser = async (values: FlatCristinUser) => {
+  const createPerson = async (values: FlatCristinUser) => {
     const cristinUser: CreateCristinUser = convertToCristinUser(values);
     const createPersonResponse = await createCristinPerson(cristinUser);
     if (isErrorStatus(createPersonResponse.status)) {
@@ -57,8 +57,8 @@ export const CreateCristinUserDialog = ({ user }: CreateCristinUserDialogProps) 
           lastName: user.familyName,
         }}
         validationSchema={userValidationSchema}
-        onSubmit={createUser}>
-        {({ isSubmitting }) => (
+        onSubmit={createPerson}>
+        {({ isSubmitting }: FormikProps<FlatCristinUser>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <Typography>{t('authorization:create_user_info')}</Typography>
@@ -98,15 +98,15 @@ export const CreateCristinUserDialog = ({ user }: CreateCristinUserDialogProps) 
                 control={
                   <Checkbox
                     required
-                    checked={acceptTermsValue}
-                    onChange={() => setAcceptTermsValue(!acceptTermsValue)}
+                    checked={acceptedTermsValue}
+                    onChange={() => setAcceptedTermsValue(!acceptedTermsValue)}
                   />
                 }
               />
             </DialogContent>
             <DialogActions>
               <Button onClick={() => handleLogout()}>{t('common:cancel')}</Button>
-              <LoadingButton type="submit" variant="contained" disabled={!acceptTermsValue} loading={isSubmitting}>
+              <LoadingButton type="submit" variant="contained" disabled={!acceptedTermsValue} loading={isSubmitting}>
                 {t('common:create')}
               </LoadingButton>
             </DialogActions>
