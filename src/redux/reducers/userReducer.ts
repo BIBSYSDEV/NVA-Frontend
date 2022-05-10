@@ -1,6 +1,6 @@
 import { RoleName, User } from '../../types/user.types';
 import { AuthActions, LOGOUT_SUCCESS } from '../actions/authActions';
-import { SET_VIEWING_SCOPE, SET_USER_SUCCESS, UserActions, SET_ROLES } from '../actions/userActions';
+import { SET_VIEWING_SCOPE, SET_USER_SUCCESS, UserActions, SET_ROLES, SET_CRISTIN_ID } from '../actions/userActions';
 
 export const userReducer = (state: User | null = null, action: UserActions | AuthActions): User | null => {
   switch (action.type) {
@@ -38,6 +38,8 @@ export const userReducer = (state: User | null = null, action: UserActions | Aut
       };
       return user;
     }
+    case SET_CRISTIN_ID:
+      return { ...state, cristinId: action.cristinId } as User;
     case SET_ROLES: {
       // This is used to update roles from cypress
       const hasCustomerId = !!state?.customerId;
