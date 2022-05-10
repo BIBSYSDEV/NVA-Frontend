@@ -1,7 +1,7 @@
 {
   "accept_terms_to_create_user": "I accept to be created as a user in NVA",
   "back_to_home": "Back to home",
-  "create_user_info": "The method you used to log in does not deliver your first- and last name. To be a user you must supply this.",
+  "create_user_info": "As a user you will be visible for all users that adds authors or other contributors to results.",
   "expired_token_info": "Your session has expired. Please log in again.",
   "forbidden": "Forbidden",
   "forbidden_description": "You are not authorized to see the content on this page. Contact the administrator if you think this is wrong.",

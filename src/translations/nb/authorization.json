@@ -1,7 +1,7 @@
 {
   "accept_terms_to_create_user": "Jeg samtykker i å bli opprettet som bruker i NVA",
   "back_to_home": "Tilbake til startsiden",
-  "create_user_info": "Metoden du har brukt for å logge inn leverer ikke ditt for- og etternavn. For å bli bruker må du oppgi dette.",
+  "create_user_info": "Som bruker blir du tilgjengelig for alle som skal legge til forfatter eller annen bidragsyter på resultater.",
   "expired_token_info": "Sesjonen din har utløpt. Vennligst logg inn på nytt.",
   "forbidden": "Forbudt",
   "forbidden_description": "Du er ikke autorisert til å se innholdet på denne siden. Kontakt administrator om dette ikke stemmer.",
