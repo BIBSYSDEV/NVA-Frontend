@@ -13,7 +13,10 @@ interface PositionFieldProps {
 
 export const PositionField = ({ fieldName, disabled }: PositionFieldProps) => {
   const { t } = useTranslation('basicData');
-  const [positionResponse, isLoadingPositions] = useFetch<PositionResponse>({ url: CristinApiPath.Position });
+  const [positionResponse, isLoadingPositions] = useFetch<PositionResponse>({
+    url: CristinApiPath.Position,
+    errorMessage: t('feedback:error.get_positions'),
+  });
   const positions = positionResponse?.positions ?? [];
 
   return (
