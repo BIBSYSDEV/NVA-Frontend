@@ -16,7 +16,7 @@ export enum CristinApiPath {
   Organization = '/cristin/organization',
   Person = '/cristin/person',
   PersonIdentityNumer = '/cristin/person/identityNumber',
-  Position = '/cristin/position',
+  Position = '/cristin/position?active=true',
   Project = '/cristin/project',
 }
 

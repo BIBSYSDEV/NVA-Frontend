@@ -96,7 +96,6 @@ export const AddAdminDialog = ({
 
       // Create NVA User with admin role
       const customerId = new URLSearchParams(location.search).get('id') as string;
-
       const createNvaUserResponse = await createUser({
         nationalIdentityNumber: nationalIdNumber,
         customerId,
@@ -137,7 +136,7 @@ export const AddAdminDialog = ({
                 label={t('basicData:search_for_national_id')}
                 disabled={isSubmitting}
                 fullWidth
-                onChange={(event) => event.target.value.length <= 11 && setNationalIdNumber(event.target.value)}
+                onChange={({ target: { value } }) => value.length <= 11 && setNationalIdNumber(value)}
                 InputProps={{
                   endAdornment: <SearchIcon color="disabled" />,
                 }}

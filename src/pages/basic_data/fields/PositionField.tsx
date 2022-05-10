@@ -14,7 +14,7 @@ interface PositionFieldProps {
 export const PositionField = ({ fieldName, disabled }: PositionFieldProps) => {
   const { t } = useTranslation('basicData');
   const [positionResponse, isLoadingPositions] = useFetch<PositionResponse>({ url: CristinApiPath.Position });
-  const positions = (positionResponse?.positions ?? []).filter((position) => position.enabled); // TODO: fetch only active positions (NP-9070)
+  const positions = positionResponse?.positions ?? [];
 
   return (
     <Field name={fieldName}>
