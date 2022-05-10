@@ -45,8 +45,8 @@ export const CentralImportDuplicateSearch = ({ publication }: CentralImportDupli
             <Typography variant="subtitle1">{t('search:hits', { count: searchResults.size })}:</Typography>
             <Divider />
             <List>
-              {searchResults.hits.map((publication) => (
-                <CentralImportResultItem publication={publication} key={publication.identifier} />
+              {searchResults.hits.map((publication, index) => (
+                <CentralImportResultItem publication={publication} key={publication.identifier + index} />
               ))}
             </List>
           </>
