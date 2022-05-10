@@ -4,8 +4,9 @@ import { PageHeader } from '../../../components/PageHeader';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { SyledPageContent } from '../../../components/styled/Wrappers';
 import { CustomerInstitution, emptyCustomerInstitution } from '../../../types/customerInstitution.types';
-import { UserList } from '../../../types/user.types';
+import { RoleName, UserList } from '../../../types/user.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
+import { filterUsersByRole } from '../../../utils/role-helpers';
 import { CustomerInstitutionAdminsForm } from './CustomerInstitutionAdminsForm';
 import { CustomerInstitutionMetadataForm } from './CustomerInstitutionMetadataForm';
 
@@ -26,6 +27,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
     errorMessage: t('feedback:error.get_users_for_institution'),
     withAuthentication: true,
   });
+  const admins = filterUsersByRole(userList?.users ?? [], RoleName.InstitutionAdmin);
 
   return (
     <SyledPageContent>
@@ -41,11 +43,12 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
             customerInstitution={customerInstitution ?? emptyCustomerInstitution}
             editMode={editMode}
           />
-          {editMode && (
+          {editMode && customerInstitution && (
             <CustomerInstitutionAdminsForm
-              users={userList?.users ?? []}
+              admins={admins}
               refetchInstitutionUsers={refetchInstitutionUsers}
               isLoadingUsers={isLoadingUsers}
+              cristinInstitutionId={customerInstitution.cristinId}
             />
           )}
         </>

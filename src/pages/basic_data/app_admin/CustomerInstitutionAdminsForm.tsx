@@ -3,22 +3,22 @@ import { Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
 import { InstitutionUser, RoleName } from '../../../types/user.types';
-import { filterUsersByRole } from '../../../utils/role-helpers';
 import { UserList } from './UserList';
-import { Modal } from '../../../components/Modal';
 import { ListSkeleton } from '../../../components/ListSkeleton';
-import { AddRoleModalContent } from './AddRoleModalContent';
+import { AddAdminDialog } from './AddAdminDialog';
 
 interface CustomerInstitutionAdminsFormProps {
-  users: InstitutionUser[];
+  admins: InstitutionUser[];
   refetchInstitutionUsers: () => void;
   isLoadingUsers: boolean;
+  cristinInstitutionId: string;
 }
 
 export const CustomerInstitutionAdminsForm = ({
-  users,
+  admins,
   refetchInstitutionUsers,
   isLoadingUsers,
+  cristinInstitutionId,
 }: CustomerInstitutionAdminsFormProps) => {
   const { t } = useTranslation('admin');
   const [openAddAdminModal, setOpenAddAdminModal] = useState(false);
@@ -36,7 +36,7 @@ export const CustomerInstitutionAdminsForm = ({
       ) : (
         <>
           <UserList
-            userList={filterUsersByRole(users, RoleName.InstitutionAdmin)}
+            userList={admins}
             roleToRemove={RoleName.InstitutionAdmin}
             refetchUsers={refetchInstitutionUsers}
             tableCaption={t('profile:roles.institution_admins')}
@@ -49,22 +49,14 @@ export const CustomerInstitutionAdminsForm = ({
             onClick={toggleOpenAddAdminModal}>
             {addAdminText}
           </Button>
+          <AddAdminDialog
+            open={openAddAdminModal}
+            toggleOpen={toggleOpenAddAdminModal}
+            cristinInstitutionId={cristinInstitutionId}
+            refetchInstitutionUsers={refetchInstitutionUsers}
+          />
         </>
       )}
-
-      <Modal
-        open={openAddAdminModal}
-        onClose={toggleOpenAddAdminModal}
-        headingText={addAdminText}
-        dataTestId="add-role-modal">
-        <AddRoleModalContent
-          role={RoleName.InstitutionAdmin}
-          users={users}
-          closeModal={toggleOpenAddAdminModal}
-          refetchUsers={refetchInstitutionUsers}
-          tableCaption={addAdminText}
-        />
-      </Modal>
     </>
   );
 };

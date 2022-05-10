@@ -29,7 +29,7 @@ export interface User {
   allowedCustomers: string[];
 }
 
-interface UserRole {
+export interface UserRole {
   type: 'Role';
   rolename: RoleName;
 }
@@ -106,4 +106,22 @@ export interface FlatCristinUser {
   id: string;
   cristinIdentifier: string;
   affiliations: CristinPersonAffiliation[];
+}
+
+interface Position {
+  id: string;
+  enabled: boolean;
+  name: LanguageString;
+}
+
+export interface PositionResponse {
+  positions: Position[];
+}
+
+export interface Employment {
+  type: string;
+  organization: string;
+  startDate: string;
+  endDate: string;
+  fullTimeEquivalentPercentage: string;
 }
