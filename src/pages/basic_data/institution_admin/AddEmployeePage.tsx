@@ -3,25 +3,16 @@ import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch } from 'react-redux';
-import { CreateCristinUser, FlatCristinUser, RoleName } from '../../../types/user.types';
+import { CreateCristinUser, Employment, FlatCristinUser, RoleName } from '../../../types/user.types';
 import { FindPersonPanel } from './FindPersonPanel';
 import { AddAffiliationPanel } from './AddAffiliationPanel';
 import { AddRolePanel } from './AddRolePanel';
 import { StyledCenterContainer } from '../../../components/styled/Wrappers';
-import { authenticatedApiRequest } from '../../../api/apiRequest';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { setNotification } from '../../../redux/notificationSlice';
 import { convertToCristinUser } from '../../../utils/user-helpers';
 import { addEmployeeValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
-import { createCristinPerson } from '../../../api/userApi';
-
-interface Employment {
-  type: string;
-  organization: string;
-  startDate: string;
-  endDate: string;
-  fullTimeEquivalentPercentage: string;
-}
+import { addEmployment, createCristinPerson } from '../../../api/userApi';
 
 export interface AddEmployeeData {
   searchIdNumber: string;
@@ -66,11 +57,7 @@ export const AddEmployeePage = () => {
 
     if (userId) {
       // Add employment (affiliation)
-      const addAffiliationResponse = await authenticatedApiRequest<Employment>({
-        url: `${userId}/employment`,
-        method: 'POST',
-        data: values.affiliation,
-      });
+      const addAffiliationResponse = await addEmployment(userId, values.affiliation);
       if (isSuccessStatus(addAffiliationResponse.status)) {
         dispatch(setNotification({ message: t('feedback:success.add_employment'), variant: 'success' }));
         resetForm();

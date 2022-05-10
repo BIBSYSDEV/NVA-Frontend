@@ -65,3 +65,8 @@ export const addEmployeeValidationSchema = Yup.object().shape({
     ),
   }),
 });
+
+export const addCustomerAdminValidationSchema = Yup.object().shape({
+  startDate: Yup.date().required(employeeErrorMessage.affiliationStartDateRequired),
+  position: Yup.string().required(employeeErrorMessage.affiliationTypeRequired),
+});
