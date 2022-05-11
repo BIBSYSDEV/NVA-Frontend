@@ -74,6 +74,7 @@ export const interceptRequestsOnMock = () => {
 
   // PROJECT
   mock.onGet(mockProject.id).reply(200, mockProject);
+  mock.onGet(mockProjectSearch.hits?.[1].id).reply(200, mockProjectSearch.hits?.[1]);
   mock.onGet(new RegExp(CristinApiPath.Project)).reply(200, mockProjectSearch);
 
   // ORCID
