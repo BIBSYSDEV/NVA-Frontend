@@ -13,7 +13,7 @@ export const userReducer = (state: User | null = null, action: UserActions | Aut
       const roles = roleItems.filter(([_, thisCustomerId]) => thisCustomerId === customerId).map(([role]) => role);
       const firstName = action.user['custom:firstName'] ?? '';
       const lastName = action.user['custom:lastName'] ?? '';
-      const cristinId = ''; // action.user['custom:cristinId'] ?? '';
+      const cristinId = action.user['custom:cristinId'] ?? '';
       const allowedCustomers = action.user['custom:allowedCustomers']?.split(',') ?? [];
       const nationalIdNumber = action.user['custom:feideIdNin'] ?? action.user['custom:nin'] ?? '';
 
