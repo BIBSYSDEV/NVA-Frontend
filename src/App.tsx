@@ -14,7 +14,7 @@ import { Footer } from './layout/Footer';
 import { Header } from './layout/header/Header';
 import { Notifier } from './layout/Notifier';
 import { setNotification } from './redux/notificationSlice';
-import { setUser, setViewingScope } from './redux/actions/userActions';
+import { setPartialUser, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { authOptions } from './utils/aws-config';
 import { LocalStorageKey, USE_MOCK_DATA } from './utils/constants';
@@ -94,7 +94,7 @@ export const App = () => {
   useEffect(() => {
     if (institutionUser) {
       const viewingScope = institutionUser.viewingScope?.includedUnits ?? [];
-      dispatch(setViewingScope(viewingScope));
+      dispatch(setPartialUser({ viewingScope }));
     }
   }, [dispatch, institutionUser]);
 
