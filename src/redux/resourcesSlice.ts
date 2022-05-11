@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PositionResponse } from '../pages/basic_data/institution_admin/AddAffiliationPanel';
+import { PositionResponse } from '../types/user.types';
 import { Organization } from '../types/organization.types';
 import { CristinProject } from '../types/project.types';
 import { Journal, Publisher, Registration } from '../types/registration.types';

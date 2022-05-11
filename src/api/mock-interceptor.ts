@@ -28,6 +28,7 @@ import {
 import { mockOrganizationSearch } from '../utils/testfiles/mockOrganizationSearch';
 import { mockCompleteUpload, mockCreateUpload, mockDownload, mockPrepareUpload } from '../utils/testfiles/mockFiles';
 import { mockCristinUserSearch } from '../utils/testfiles/mockCristinUserSearch';
+import { mockPositionResponse } from '../utils/testfiles/mockPositions';
 
 // AXIOS INTERCEPTOR
 export const interceptRequestsOnMock = () => {
@@ -78,8 +79,12 @@ export const interceptRequestsOnMock = () => {
   // ORCID
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
 
-  // person Registry
+  // Person Registry
   mock.onGet(new RegExp(`${CristinApiPath.Person}\\?name=*`)).reply(200, mockCristinUserSearch);
+  mock.onPost(new RegExp(CristinApiPath.PersonIdentityNumer)).reply(201, mockCristinUserSearch.hits[0]);
+
+  // Positions
+  mock.onGet(new RegExp(CristinApiPath.Position)).reply(200, mockPositionResponse);
 
   //memberinstitutions
   mock

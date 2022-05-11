@@ -23,12 +23,11 @@ import { PageSpinner } from './components/PageSpinner';
 import { SkipLink } from './components/SkipLink';
 import { useFetch } from './utils/hooks/useFetch';
 import { CristinApiPath, RoleApiPath } from './api/apiPaths';
-import { InstitutionUser } from './types/user.types';
+import { InstitutionUser, PositionResponse } from './types/user.types';
 import { UrlPathTemplate } from './utils/urlPaths';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInstitutionDialog';
 import { useFetchResource } from './utils/hooks/useFetchResource';
-import { PositionResponse } from './pages/basic_data/institution_admin/AddAffiliationPanel';
 
 const getLanguageTagValue = (language: string) => {
   if (language === 'eng') {

@@ -6,14 +6,12 @@ import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useState, useCallback, useEffect } from 'react';
 import { Box } from '@mui/system';
 import { convertToFlatCristinUser } from '../../../utils/user-helpers';
-import { CristinApiPath } from '../../../api/apiPaths';
-import { authenticatedApiRequest } from '../../../api/apiRequest';
-import { CristinUser } from '../../../types/user.types';
 import { isSuccessStatus } from '../../../utils/constants';
 import { StyledCenterContainer } from '../../../components/styled/Wrappers';
 import { AddEmployeeData, emptyUser } from './AddEmployeePage';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { searchByNationalIdNumber } from '../../../api/userApi';
 
 export const FindPersonPanel = () => {
   const { t } = useTranslation('basicData');
@@ -23,14 +21,7 @@ export const FindPersonPanel = () => {
 
   const searchByNationalId = useCallback(async () => {
     setIsLoading(true);
-    const searchResponse = await authenticatedApiRequest<CristinUser>({
-      url: CristinApiPath.PersonIdentityNumer,
-      method: 'POST',
-      data: {
-        type: 'NationalIdentificationNumber',
-        value: nationalNumber,
-      },
-    });
+    const searchResponse = await searchByNationalIdNumber(nationalNumber);
     if (isSuccessStatus(searchResponse.status)) {
       const foundUser = convertToFlatCristinUser(searchResponse.data);
       setFieldValue('user', foundUser);
