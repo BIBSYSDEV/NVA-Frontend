@@ -14,9 +14,9 @@ import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'form
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { createCristinPerson, getCurrentUserAttributes } from '../api/userApi';
+import { createCristinPerson } from '../api/userApi';
 import { emptyUser } from '../pages/basic_data/institution_admin/AddEmployeePage';
-import { setUser } from '../redux/actions/userActions';
+import { setCristinId } from '../redux/actions/userActions';
 import { setNotification } from '../redux/notificationSlice';
 import { CreateCristinUser, FlatCristinUser, User } from '../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../utils/constants';
@@ -43,13 +43,12 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
       dispatch(setNotification({ message: t('feedback:error.create_user'), variant: 'error' }));
     } else if (isSuccessStatus(createPersonResponse.status)) {
       dispatch(setNotification({ message: t('feedback:success.create_user'), variant: 'success' }));
-      const newUserInfo = await getCurrentUserAttributes();
-      dispatch(setUser(newUserInfo));
+      dispatch(setCristinId(createPersonResponse.data.id));
     }
   };
 
   return (
-    <Dialog open={true} fullWidth maxWidth="xs">
+    <Dialog open={!user.cristinId} fullWidth maxWidth="xs">
       <DialogTitle>{t('your_user_profile')}</DialogTitle>
       <Formik
         initialValues={{

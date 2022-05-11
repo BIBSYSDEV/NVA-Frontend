@@ -4,6 +4,7 @@ import { FeideUser, RoleName } from '../../types/user.types';
 export const SET_USER_SUCCESS = 'set user';
 export const SET_ROLES = 'set roles';
 export const SET_VIEWING_SCOPE = 'set viewing scope';
+export const SET_CRISTIN_ID = 'set cristin id';
 
 // ACTION CreatorS
 export const setUser = (user: FeideUser): SetUserAction => ({
@@ -21,6 +22,16 @@ export const setViewingScope = (viewingScope: string[]): SetViewingScopeAction =
   viewingScope,
 });
 
+export const setCristinId = (cristinId: string): SetCristinIdAction => ({
+  type: SET_CRISTIN_ID,
+  cristinId,
+});
+
+interface SetCristinIdAction {
+  type: typeof SET_CRISTIN_ID;
+  cristinId: string;
+}
+
 interface SetViewingScopeAction {
   type: typeof SET_VIEWING_SCOPE;
   viewingScope: string[];
@@ -36,4 +47,4 @@ interface SetUserAction {
   user: FeideUser;
 }
 
-export type UserActions = SetUserAction | SetViewingScopeAction | SetRolesAction;
+export type UserActions = SetUserAction | SetViewingScopeAction | SetRolesAction | SetCristinIdAction;
