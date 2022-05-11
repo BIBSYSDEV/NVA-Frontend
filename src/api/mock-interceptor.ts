@@ -73,8 +73,7 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(PublicationsApiPath.DoiLookup)).reply(200, mockDoiLookup);
 
   // PROJECT
-  mock.onGet(mockProject.id).reply(200, mockProject);
-  mock.onGet(mockProjectSearch.hits?.[1].id).reply(200, mockProjectSearch.hits?.[1]);
+  mock.onGet(new RegExp(`${CristinApiPath.Project}/1`)).reply(200, mockProject);
   mock.onGet(new RegExp(CristinApiPath.Project)).reply(200, mockProjectSearch);
 
   // ORCID
