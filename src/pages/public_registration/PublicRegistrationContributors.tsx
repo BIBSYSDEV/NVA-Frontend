@@ -117,15 +117,14 @@ const ContributorsRow = ({
           ?.map((affiliation) => affiliation.id && distinctUnits.indexOf(affiliation.id) + 1)
           .filter((affiliationIndex) => affiliationIndex)
           .sort();
-        const encodedId = id ? encodeURIComponent(id) : '';
 
         return (
           <Typography key={index} component="li">
             {id ? (
               <Link
                 component={RouterLink}
-                to={getUserPath(encodedId)}
-                data-testid={dataTestId.registrationLandingPage.authorLink(encodedId)}>
+                to={getUserPath(id)}
+                data-testid={dataTestId.registrationLandingPage.authorLink(id)}>
                 {name}
               </Link>
             ) : (
