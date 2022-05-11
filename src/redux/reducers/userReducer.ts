@@ -1,6 +1,6 @@
 import { RoleName, User } from '../../types/user.types';
 import { AuthActions, LOGOUT_SUCCESS } from '../actions/authActions';
-import { SET_VIEWING_SCOPE, SET_USER_SUCCESS, UserActions, SET_ROLES, SET_CRISTIN_ID } from '../actions/userActions';
+import { SET_VIEWING_SCOPE, SET_USER_SUCCESS, UserActions, SET_ROLES, SET_PARTIAL_USER } from '../actions/userActions';
 
 export const userReducer = (state: User | null = null, action: UserActions | AuthActions): User | null => {
   switch (action.type) {
@@ -38,26 +38,30 @@ export const userReducer = (state: User | null = null, action: UserActions | Aut
       };
       return user;
     }
-    case SET_CRISTIN_ID:
-      return { ...state, cristinId: action.cristinId } as User;
+    case SET_PARTIAL_USER:
+      return state ? { ...state, ...action.partialData } : null;
     case SET_ROLES: {
       // This is used to update roles from cypress
       const hasCustomerId = !!state?.customerId;
-      return {
-        ...state,
-        roles: action.roles,
-        isCreator: hasCustomerId && action.roles.includes(RoleName.Creator),
-        isAppAdmin: hasCustomerId && action.roles.includes(RoleName.AppAdmin),
-        isInstitutionAdmin: hasCustomerId && action.roles.includes(RoleName.InstitutionAdmin),
-        isCurator: hasCustomerId && action.roles.includes(RoleName.Curator),
-        isEditor: hasCustomerId && action.roles.includes(RoleName.Editor),
-      } as User;
+      return state
+        ? {
+            ...state,
+            roles: action.roles,
+            isCreator: hasCustomerId && action.roles.includes(RoleName.Creator),
+            isAppAdmin: hasCustomerId && action.roles.includes(RoleName.AppAdmin),
+            isInstitutionAdmin: hasCustomerId && action.roles.includes(RoleName.InstitutionAdmin),
+            isCurator: hasCustomerId && action.roles.includes(RoleName.Curator),
+            isEditor: hasCustomerId && action.roles.includes(RoleName.Editor),
+          }
+        : null;
     }
     case SET_VIEWING_SCOPE:
-      return {
-        ...state,
-        viewingScope: action.viewingScope,
-      } as User;
+      return state
+        ? {
+            ...state,
+            viewingScope: action.viewingScope,
+          }
+        : null;
     case LOGOUT_SUCCESS:
       return null;
     default:
