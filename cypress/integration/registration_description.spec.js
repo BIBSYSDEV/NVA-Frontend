@@ -14,7 +14,6 @@ describe('Registration: Description', () => {
     cy.startRegistrationWithDoi();
 
     const projectToAdd = mockProjectSearch.hits[1];
-    console.log(projectToAdd);
     cy.get(`[data-testid=${dataTestId.registrationWizard.description.projectSearchField}] input`)
       .click()
       .type(projectToAdd.title.substring(0, 4));
