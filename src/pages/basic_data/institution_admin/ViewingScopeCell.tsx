@@ -6,7 +6,7 @@ import { RoleApiPath } from '../../../api/apiPaths';
 import { authenticatedApiRequest } from '../../../api/apiRequest';
 import { setNotification } from '../../../redux/notificationSlice';
 import { Organization } from '../../../types/organization.types';
-import { setPartialUser } from '../../../redux/actions/userActions';
+import { setPartialUser } from '../../../redux/userSlice';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { InstitutionUser } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';

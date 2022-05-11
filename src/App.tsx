@@ -14,7 +14,7 @@ import { Footer } from './layout/Footer';
 import { Header } from './layout/header/Header';
 import { Notifier } from './layout/Notifier';
 import { setNotification } from './redux/notificationSlice';
-import { setPartialUser, setUser } from './redux/actions/userActions';
+import { setPartialUser, setUser } from './redux/userSlice';
 import { RootStore } from './redux/reducers/rootReducer';
 import { authOptions } from './utils/aws-config';
 import { LocalStorageKey, USE_MOCK_DATA } from './utils/constants';
