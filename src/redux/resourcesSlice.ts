@@ -1,18 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PositionResponse } from '../types/user.types';
-import { Organization } from '../types/organization.types';
-import { CristinProject } from '../types/project.types';
-import { Journal, Publisher, Registration } from '../types/registration.types';
-
-export type ResourceType = Journal | Publisher | Registration | CristinProject | Organization | PositionResponse;
 
 type SetResourcePayload = {
-  data: ResourceType;
+  data: unknown;
   key: string;
 };
 
 interface ResourceState {
-  [id: string]: ResourceType;
+  [id: string]: unknown;
 }
 
 const initialState: ResourceState = {};
