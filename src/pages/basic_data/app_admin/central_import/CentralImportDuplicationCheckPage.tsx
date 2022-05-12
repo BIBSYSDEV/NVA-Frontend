@@ -1,5 +1,5 @@
 import { Box, Divider, Link as MuiLink, Typography } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../../../utils/hooks/useFetch';
@@ -10,11 +10,12 @@ import { PageSpinner } from '../../../../components/PageSpinner';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { CentralImportDuplicateSearch } from './CentralImportDuplicateSearch';
 import NotFound from '../../../errorpages/NotFound';
-import { DuplicateSearchFilterForm, DuplicateSearchFilters } from './DuplicateSearchFilterForm';
+import { DuplicateSearchFilterForm, emptyDuplicateSearchFilter } from './DuplicateSearchFilterForm';
 
 export const CentralImportDuplicationCheckPage = () => {
   const { t } = useTranslation('basicData');
   const { identifier } = useParams<{ identifier: string }>();
+  const [duplicateSearchFilters, setDuplicateSearchFilters] = useState(emptyDuplicateSearchFilter);
 
   const [registration, isLoadingRegistration] = useFetch<Registration>({
     url: `${PublicationsApiPath.Registration}/${identifier}`,
@@ -27,12 +28,14 @@ export const CentralImportDuplicationCheckPage = () => {
     }
   }, [registration]);
 
-  const contributors = registration?.entityDescription?.contributors ?? [];
+  useEffect(() => {
+    setDuplicateSearchFilters({
+      ...emptyDuplicateSearchFilter,
+      doi: registration?.entityDescription?.reference?.doi ?? '',
+    });
+  }, [registration]);
 
-  const retrySearch = (filters: DuplicateSearchFilters) => {
-    console.log('@PCB', filters);
-    //TODO: implement search
-  };
+  const contributors = registration?.entityDescription?.contributors ?? [];
 
   return (
     <>
@@ -68,9 +71,12 @@ export const CentralImportDuplicationCheckPage = () => {
             <Typography variant="h3" component="h2" paragraph>
               {t('central_import.search_for_duplicates')}:
             </Typography>
-            <DuplicateSearchFilterForm publication={registration} retrySearch={retrySearch} />
+            <DuplicateSearchFilterForm
+              publication={registration}
+              setDuplicateSearchFilters={setDuplicateSearchFilters}
+            />
             <Box sx={{ border: '1px solid black', padding: { xs: '0.5rem', sm: '0.5rem 2rem' } }}>
-              <CentralImportDuplicateSearch publication={registration} />
+              <CentralImportDuplicateSearch duplicateSearchFilters={duplicateSearchFilters} />
             </Box>
           </>
         ) : (

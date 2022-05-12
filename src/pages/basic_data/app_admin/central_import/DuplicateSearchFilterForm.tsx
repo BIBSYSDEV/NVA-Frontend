@@ -29,6 +29,7 @@ const StyledFormControlLabel = muiStyled(FormControlLabel)({
   minWidth: '11rem',
 });
 
+//TODO: move out
 export interface DuplicateSearchFilters {
   doi: string;
   title: string;
@@ -36,6 +37,15 @@ export interface DuplicateSearchFilters {
   yearPublished: string;
   issn: string;
 }
+
+//TODO: move out
+export const emptyDuplicateSearchFilter = {
+  doi: '',
+  title: '',
+  author: '',
+  yearPublished: '',
+  issn: '',
+};
 
 const StyledButtonWrapper = muiStyled('div')({
   display: 'flex',
@@ -46,14 +56,17 @@ const StyledButtonWrapper = muiStyled('div')({
 
 interface DuplicateSearchFilterFormProps {
   publication: Registration;
-  retrySearch: (filters: DuplicateSearchFilters) => void;
+  setDuplicateSearchFilters: any;
 }
 
-export const DuplicateSearchFilterForm = ({ publication, retrySearch }: DuplicateSearchFilterFormProps) => {
+export const DuplicateSearchFilterForm = ({
+  publication,
+  setDuplicateSearchFilters,
+}: DuplicateSearchFilterFormProps) => {
   const { t } = useTranslation('basicData');
 
   const initialSearchParams = {
-    doi: publication.entityDescription?.mainTitle ?? '', //publication.entityDescription?.reference?.doi ?? '',
+    doi: publication.entityDescription?.reference?.doi ?? '',
     title: publication.entityDescription?.mainTitle ?? '',
     author: publication.entityDescription?.contributors[0]?.identity.name ?? '',
     issn: '',
@@ -69,12 +82,12 @@ export const DuplicateSearchFilterForm = ({ publication, retrySearch }: Duplicat
     <Formik
       initialValues={initialSearchParams}
       onSubmit={(values) => {
-        retrySearch({
-          doi: values.doi,
-          title: values.title,
-          author: values.author,
-          issn: values.issn,
-          yearPublished: values.yearPublished,
+        setDuplicateSearchFilters({
+          doi: values.isDoiChecked ? values.doi : '',
+          title: values.isTitleChecked ? values.title : '',
+          author: values.isAuthorChecked ? values.author : '',
+          issn: values.isIssnChecked ? values.issn : '',
+          yearPublished: values.isYearPublishedChecked ? values.yearPublished : '',
         });
       }}>
       {(formikProps: FormikProps<any>) => (

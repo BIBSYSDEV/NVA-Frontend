@@ -6,35 +6,35 @@ import { SearchApiPath } from '../../../../api/apiPaths';
 import { SearchResponse } from '../../../../types/common.types';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { CentralImportResultItem } from './CentralImportResultItem';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { DescriptionFieldNames, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
-import { createSearchQuery, ExpressionStatement, SearchConfig } from '../../../../utils/searchHelpers';
-
-const RESULTS_TO_SHOW = 5;
+import { DuplicateSearchFilters } from './DuplicateSearchFilterForm';
 
 interface CentralImportDuplicateSearchProps {
-  publication: Registration;
+  duplicateSearchFilters: DuplicateSearchFilters;
 }
 
-export const CentralImportDuplicateSearch = ({ publication }: CentralImportDuplicateSearchProps) => {
+export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: CentralImportDuplicateSearchProps) => {
   const { t } = useTranslation('basicData');
 
-  const searchConfig: SearchConfig = publication.entityDescription?.reference?.doi
-    ? {
-        properties: [
-          {
-            fieldName: ResourceFieldNames.Doi,
-            value: publication.entityDescription.reference.doi,
-            operator: ExpressionStatement.Contains,
-          },
-        ],
-      }
-    : {};
+  const maxHits = ROWS_PER_PAGE_OPTIONS[0];
+  const queryArray = [];
+  duplicateSearchFilters.doi.length > 0 && queryArray.push(`${ResourceFieldNames.Doi}:"${duplicateSearchFilters.doi}"`);
+  duplicateSearchFilters.title.length > 0 &&
+    queryArray.push(`${DescriptionFieldNames.Title}:"${duplicateSearchFilters.title}"`);
+  duplicateSearchFilters.author.length > 0 &&
+    queryArray.push(`entityDescription.contributors.identity.name:"${duplicateSearchFilters.author}"`);
+  duplicateSearchFilters.issn.length > 0 &&
+    queryArray.push(`reference.publicationContext.printIssn:"${duplicateSearchFilters.issn}"`);
+  duplicateSearchFilters.yearPublished.length > 0 &&
+    queryArray.push(`${DescriptionFieldNames.PublicationYear}:"${duplicateSearchFilters.yearPublished}"`);
+  const searchQuery = `(${queryArray.join(' AND ')})`;
+  const url = `${SearchApiPath.Registrations}?query=${searchQuery}&results=${maxHits}`;
 
-  const searchQuery = createSearchQuery(searchConfig);
-  const numberOfResults = ROWS_PER_PAGE_OPTIONS[1];
+  console.log(url);
+
   const [searchResults, isLoadingSearchResults] = useFetch<SearchResponse<Registration>>({
-    url: `${SearchApiPath.Registrations}?query=${searchQuery}&results=${numberOfResults}`,
+    url,
     errorMessage: t('feedback:error.search'),
   });
 
@@ -48,7 +48,7 @@ export const CentralImportDuplicateSearch = ({ publication }: CentralImportDupli
             {/* TODO: fjern indexen */}
             <Typography variant="subtitle1">
               {t('central_import.duplicate_search_hits_shown', {
-                ShownResultsCount: RESULTS_TO_SHOW,
+                ShownResultsCount: searchResults.hits.length,
                 TotalResultsCount: searchResults.size,
               })}
               :
