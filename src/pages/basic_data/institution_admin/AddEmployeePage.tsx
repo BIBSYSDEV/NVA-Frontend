@@ -2,7 +2,7 @@ import { Typography, Box, Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { LoadingButton } from '@mui/lab';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CreateCristinUser, CristinUser, Employment, FlatCristinUser, RoleName } from '../../../types/user.types';
 import { FindPersonPanel } from './FindPersonPanel';
 import { AddAffiliationPanel } from './AddAffiliationPanel';
@@ -15,6 +15,8 @@ import { CristinApiPath } from '../../../api/apiPaths';
 import { convertToCristinUser } from '../../../utils/user-helpers';
 import { addEmployeeValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
 import { addEmployment } from '../../../api/userApi';
+import { createUser } from '../../../api/roleApi';
+import { RootStore } from '../../../redux/reducers/rootReducer';
 
 export interface AddEmployeeData {
   searchIdNumber: string;
@@ -42,8 +44,13 @@ const initialValues: AddEmployeeData = {
 export const AddEmployeePage = () => {
   const { t } = useTranslation('basicData');
   const dispatch = useDispatch();
+  const customerId = useSelector((store: RootStore) => store.user?.customerId);
 
   const onSubmit = async (values: AddEmployeeData, { resetForm }: FormikHelpers<AddEmployeeData>) => {
+    if (!customerId) {
+      return;
+    }
+
     let userId = values.user.id;
 
     if (!userId) {
@@ -55,7 +62,7 @@ export const AddEmployeePage = () => {
         data: cristinUser,
       });
       if (isErrorStatus(createPersonResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:error.add_employment'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback:error.create_user'), variant: 'error' }));
       } else if (isSuccessStatus(createPersonResponse.status)) {
         userId = createPersonResponse.data.id;
       }
@@ -65,14 +72,22 @@ export const AddEmployeePage = () => {
       // Add employment (affiliation)
       const addAffiliationResponse = await addEmployment(userId, values.affiliation);
       if (isSuccessStatus(addAffiliationResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:success.add_employment'), variant: 'success' }));
-        resetForm();
+        // Create NVA User with roles
+        const createUserResponse = await createUser({
+          nationalIdentityNumber: values.searchIdNumber,
+          customerId,
+          roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
+        });
+        if (isSuccessStatus(createUserResponse.status)) {
+          dispatch(setNotification({ message: t('feedback:success.add_employment'), variant: 'success' }));
+          resetForm();
+        } else if (isErrorStatus(createUserResponse.status)) {
+          dispatch(setNotification({ message: t('feedback:error.add_role'), variant: 'error' }));
+        }
       } else if (isErrorStatus(addAffiliationResponse.status)) {
         dispatch(setNotification({ message: t('feedback:error.add_employment'), variant: 'error' }));
       }
     }
-
-    // TODO: Add roles? This will lead to two ways of creating user: login and by admin here
   };
 
   return (
