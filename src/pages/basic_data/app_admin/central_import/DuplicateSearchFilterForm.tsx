@@ -29,6 +29,14 @@ const StyledFormControlLabel = muiStyled(FormControlLabel)({
   minWidth: '11rem',
 });
 
+export interface DuplicateSearchFilters {
+  doi: string;
+  title: string;
+  author: string;
+  yearPublished: string;
+  issn: string;
+}
+
 const StyledButtonWrapper = muiStyled('div')({
   display: 'flex',
   justifyContent: 'flex-start',
@@ -38,18 +46,18 @@ const StyledButtonWrapper = muiStyled('div')({
 
 interface DuplicateSearchFilterFormProps {
   publication: Registration;
-  // retrySearch: ()=>{}
+  retrySearch: (filters: DuplicateSearchFilters) => void;
 }
 
-export const DuplicateSearchFilterForm = ({ publication }: DuplicateSearchFilterFormProps) => {
+export const DuplicateSearchFilterForm = ({ publication, retrySearch }: DuplicateSearchFilterFormProps) => {
   const { t } = useTranslation('basicData');
 
   const initialSearchParams = {
     doi: publication.entityDescription?.mainTitle ?? '', //publication.entityDescription?.reference?.doi ?? '',
     title: publication.entityDescription?.mainTitle ?? '',
     author: publication.entityDescription?.contributors[0]?.identity.name ?? '',
-    yearPublished: '',
     issn: '',
+    yearPublished: '',
     isDoiChecked: true,
     isTitleChecked: false,
     isAuthorChecked: false,
@@ -61,7 +69,13 @@ export const DuplicateSearchFilterForm = ({ publication }: DuplicateSearchFilter
     <Formik
       initialValues={initialSearchParams}
       onSubmit={(values) => {
-        console.log('submitted', values);
+        retrySearch({
+          doi: values.doi,
+          title: values.title,
+          author: values.author,
+          issn: values.issn,
+          yearPublished: values.yearPublished,
+        });
       }}>
       {(formikProps: FormikProps<any>) => (
         <Form>
@@ -73,7 +87,7 @@ export const DuplicateSearchFilterForm = ({ publication }: DuplicateSearchFilter
                   type="checkbox"
                   name="isDoiChecked"
                   control={<Checkbox />}
-                  label="DOI"
+                  label={t('central_import.doi')}
                   data-testid="duplicate-search-doi-checkbox"
                   onClick={(event: any) => {
                     if (event.target.value) {
@@ -99,7 +113,7 @@ export const DuplicateSearchFilterForm = ({ publication }: DuplicateSearchFilter
               </StyledFormElementWrapper>
 
               <StyledCenterWrapper>
-                <Typography>eller søk på</Typography>
+                <Typography>{t('central_import.or_search_with')}</Typography>
               </StyledCenterWrapper>
 
               <StyledFormElementWrapper>
@@ -108,7 +122,7 @@ export const DuplicateSearchFilterForm = ({ publication }: DuplicateSearchFilter
                   type="checkbox"
                   name="isTitleChecked"
                   control={<Checkbox />}
-                  label="Tittel"
+                  label={t('central_import.title')}
                   onClick={(event: any) => {
                     if (event.target.value) {
                       formikProps.setFieldValue('isDoiChecked', false);
@@ -135,7 +149,7 @@ export const DuplicateSearchFilterForm = ({ publication }: DuplicateSearchFilter
                   type="checkbox"
                   name="isAuthorChecked"
                   control={<Checkbox />}
-                  label="Søk med forfatter"
+                  label={t('central_import.author')}
                   onClick={(event: any) => {
                     if (event.target.value) {
                       formikProps.setFieldValue('isDoiChecked', false);
@@ -188,7 +202,7 @@ export const DuplicateSearchFilterForm = ({ publication }: DuplicateSearchFilter
                   type="checkbox"
                   name="isYearPublishedChecked"
                   control={<Checkbox />}
-                  label="Publiseringsår"
+                  label={t('central_import.year_published')}
                   onClick={(event: any) => {
                     if (event.target.value) {
                       formikProps.setFieldValue('isDoiChecked', false);
@@ -210,15 +224,15 @@ export const DuplicateSearchFilterForm = ({ publication }: DuplicateSearchFilter
 
               <StyledButtonWrapper>
                 <Button
-                  data-testid="search-panel-reset-search-button"
+                  data-testid="duplicate-search-reset-button"
                   variant="outlined"
                   color="primary"
                   onClick={() => formikProps.resetForm()}>
-                  Tilbakestill søkeverdier
+                  {t('central_import.reset_search_values')}
                 </Button>
                 <Button
                   style={{ marginLeft: '1rem' }}
-                  data-testid="search-panel-retry-search-button"
+                  data-testid="duplicate-search-retry-button"
                   variant="contained"
                   type="submit"
                   disabled={
@@ -231,7 +245,7 @@ export const DuplicateSearchFilterForm = ({ publication }: DuplicateSearchFilter
                     )
                   }
                   color="primary">
-                  Søk på nytt
+                  {t('central_import.search_again')}
                 </Button>
               </StyledButtonWrapper>
             </FormGroup>

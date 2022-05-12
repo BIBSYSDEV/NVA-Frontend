@@ -10,7 +10,7 @@ import { PageSpinner } from '../../../../components/PageSpinner';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { CentralImportDuplicateSearch } from './CentralImportDuplicateSearch';
 import NotFound from '../../../errorpages/NotFound';
-import { DuplicateSearchFilterForm } from './DuplicateSearchFilterForm';
+import { DuplicateSearchFilterForm, DuplicateSearchFilters } from './DuplicateSearchFilterForm';
 
 export const CentralImportDuplicationCheckPage = () => {
   const { t } = useTranslation('basicData');
@@ -28,6 +28,11 @@ export const CentralImportDuplicationCheckPage = () => {
   }, [registration]);
 
   const contributors = registration?.entityDescription?.contributors ?? [];
+
+  const retrySearch = (filters: DuplicateSearchFilters) => {
+    console.log('@PCB', filters);
+    //TODO: implement search
+  };
 
   return (
     <>
@@ -63,7 +68,7 @@ export const CentralImportDuplicationCheckPage = () => {
             <Typography variant="h3" component="h2" paragraph>
               {t('central_import.search_for_duplicates')}:
             </Typography>
-            <DuplicateSearchFilterForm publication={registration}></DuplicateSearchFilterForm>
+            <DuplicateSearchFilterForm publication={registration} retrySearch={retrySearch} />
             <Box sx={{ border: '1px solid black', padding: { xs: '0.5rem', sm: '0.5rem 2rem' } }}>
               <CentralImportDuplicateSearch publication={registration} />
             </Box>

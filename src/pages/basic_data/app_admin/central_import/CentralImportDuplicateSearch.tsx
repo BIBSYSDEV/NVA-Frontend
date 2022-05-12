@@ -10,9 +10,12 @@ import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 import { createSearchQuery, ExpressionStatement, SearchConfig } from '../../../../utils/searchHelpers';
 
+const RESULTS_TO_SHOW = 5;
+
 interface CentralImportDuplicateSearchProps {
   publication: Registration;
 }
+
 export const CentralImportDuplicateSearch = ({ publication }: CentralImportDuplicateSearchProps) => {
   const { t } = useTranslation('basicData');
 
@@ -42,7 +45,14 @@ export const CentralImportDuplicateSearch = ({ publication }: CentralImportDupli
       ) : (
         searchResults && (
           <>
-            <Typography variant="subtitle1">{t('search:hits', { count: searchResults.size })}:</Typography>
+            {/* TODO: fjern indexen */}
+            <Typography variant="subtitle1">
+              {t('central_import.duplicate_search_hits_shown', {
+                ShownResultsCount: RESULTS_TO_SHOW,
+                TotalResultsCount: searchResults.size,
+              })}
+              :
+            </Typography>
             <Divider />
             <List>
               {searchResults.hits.map((publication, index) => (
