@@ -17,10 +17,11 @@ export const PositionField = ({ fieldName, disabled }: PositionFieldProps) => {
     CristinApiPath.Position,
     t('feedback:error.get_positions')
   );
-  const positions = positionResponse?.positions ?? [];
-  const sortedPositions = [...positions].sort((a, b) =>
-    getLanguageString(a.name).toLowerCase() > getLanguageString(b.name).toLowerCase() ? 1 : -1
-  );
+  const sortedPositions = positionResponse
+    ? [...positionResponse.positions].sort((a, b) =>
+        getLanguageString(a.name).toLowerCase() > getLanguageString(b.name).toLowerCase() ? 1 : -1
+      )
+    : [];
 
   return (
     <Field name={fieldName}>
