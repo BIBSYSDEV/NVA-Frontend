@@ -3,7 +3,7 @@ import { Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { PositionResponse } from '../../../types/user.types';
-import { useFetchResource } from '../../../utils/hooks/useFetchResource';
+import { useFetch } from '../../../utils/hooks/useFetch';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface PositionFieldProps {
@@ -13,10 +13,10 @@ interface PositionFieldProps {
 
 export const PositionField = ({ fieldName, disabled }: PositionFieldProps) => {
   const { t } = useTranslation('basicData');
-  const [positionResponse, isLoadingPositions] = useFetchResource<PositionResponse>(
-    CristinApiPath.Position,
-    t('feedback:error.get_positions')
-  );
+  const [positionResponse, isLoadingPositions] = useFetch<PositionResponse>({
+    url: CristinApiPath.Position,
+    errorMessage: t('feedback:error.get_positions'),
+  });
   const positions = positionResponse?.positions ?? [];
 
   return (
