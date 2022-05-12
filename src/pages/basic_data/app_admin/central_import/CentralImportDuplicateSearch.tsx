@@ -31,8 +31,6 @@ export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: Central
   const searchQuery = `(${queryArray.join(' AND ')})`;
   const url = `${SearchApiPath.Registrations}?query=${searchQuery}&results=${maxHits}`;
 
-  console.log(url);
-
   const [searchResults, isLoadingSearchResults] = useFetch<SearchResponse<Registration>>({
     url,
     errorMessage: t('feedback:error.search'),
