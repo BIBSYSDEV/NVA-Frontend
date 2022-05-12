@@ -15,8 +15,6 @@ export const useFetchResource = <T extends ResourceType>(
   const resourcesState = useSelector((store: RootStore) => store.resources);
   const resource = resourcesState[key] as T | undefined;
 
-  // console.log(id, key, resource);
-
   const [fetchedResource, isLoading] = useFetch<T>({
     url: !resource ? id : '',
     errorMessage,
