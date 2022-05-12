@@ -6,7 +6,7 @@ import { RoleApiPath } from '../../../api/apiPaths';
 import { authenticatedApiRequest } from '../../../api/apiRequest';
 import { setNotification } from '../../../redux/notificationSlice';
 import { Organization } from '../../../types/organization.types';
-import { setViewingScope } from '../../../redux/actions/userActions';
+import { setPartialUser } from '../../../redux/actions/userActions';
 import { RootStore } from '../../../redux/reducers/rootReducer';
 import { InstitutionUser } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
@@ -47,7 +47,7 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
       setUserCopy(newUser);
       dispatch(setNotification({ message: t('feedback:success.update_institution_user'), variant: 'success' }));
       if (user.username === authenticatedUser?.id) {
-        dispatch(setViewingScope([newScopeId]));
+        dispatch(setPartialUser({ viewingScope: [newScopeId] }));
       }
     } else if (isErrorStatus(updateUserResponse.status)) {
       dispatch(setNotification({ message: t('feedback:error.update_institution_user'), variant: 'error' }));

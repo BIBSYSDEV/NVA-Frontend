@@ -16,12 +16,12 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { createCristinPerson } from '../api/userApi';
 import { emptyUser } from '../pages/basic_data/institution_admin/AddEmployeePage';
-import { setCristinId } from '../redux/actions/userActions';
+import { setPartialUser } from '../redux/actions/userActions';
 import { setNotification } from '../redux/notificationSlice';
 import { CreateCristinUser, FlatCristinUser, User } from '../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../utils/constants';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
-import { convertToCristinUser } from '../utils/user-helpers';
+import { convertToCristinUser, convertToFlatCristinUser } from '../utils/user-helpers';
 import { userValidationSchema } from '../utils/validation/basic_data/addEmployeeValidation';
 import { ConfirmDialog } from './ConfirmDialog';
 
@@ -43,12 +43,20 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
       dispatch(setNotification({ message: t('feedback:error.create_user'), variant: 'error' }));
     } else if (isSuccessStatus(createPersonResponse.status)) {
       dispatch(setNotification({ message: t('feedback:success.create_user'), variant: 'success' }));
-      dispatch(setCristinId(createPersonResponse.data.id));
+      const flatCristinPerson = convertToFlatCristinUser(createPersonResponse.data);
+      dispatch(
+        setPartialUser({
+          cristinId: flatCristinPerson.id,
+          givenName: flatCristinPerson.firstName,
+          familyName: flatCristinPerson.lastName,
+          name: `${flatCristinPerson.firstName} ${flatCristinPerson.lastName}`,
+        })
+      );
     }
   };
 
   return (
-    <Dialog open={true} fullWidth maxWidth="xs">
+    <Dialog open={!user.cristinId} fullWidth maxWidth="xs">
       <DialogTitle>{t('your_user_profile')}</DialogTitle>
       <Formik
         initialValues={{
