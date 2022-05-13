@@ -7,7 +7,13 @@ export const dataTestId = {
     centralImportLink: 'central-import-link',
     centralImport: {
       searchPagination: 'search-pagination',
+      resetButton: 'duplicate-search-reset-button',
       resultItem: 'central-import-result-item',
+      searchButton: 'duplicate-search-retry-button',
+      textFieldAuthor: 'duplicate-search-author-textfield',
+      textFieldIssn: 'duplicate-search-issn-textfield',
+      textFieldTitle: 'duplicate-search-title-textfield',
+      textFieldYear: 'duplicate-search-year-textfield',
     },
     customers: {
       addCustomerButton: 'add-institution-button',

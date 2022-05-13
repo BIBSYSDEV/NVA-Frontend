@@ -5,6 +5,7 @@ import { styled as muiStyled } from '@mui/system';
 import { Box, Button, Checkbox, FormControlLabel, FormGroup, TextField, Typography } from '@mui/material';
 import { Registration } from '../../../../types/registration.types';
 import { DuplicateSearchFilters, DuplicateSearchForm } from '../../../../types/duplicateSearchTypes';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 const StyledCenterWrapper = muiStyled('div')({
   display: 'flex',
@@ -54,7 +55,8 @@ export const DuplicateSearchFilterForm = ({
     isYearPublishedChecked: false,
   };
 
-  //TODO Bruker bør ikke kunne søke med tomme verdier i avsjekkede felter.
+  //TODO: Bruker bør ikke kunne søke med tomme verdier i avsjekkede felter.
+  //TODO: Implementer tester ;-)
 
   return (
     <Formik
@@ -129,7 +131,7 @@ export const DuplicateSearchFilterForm = ({
                 <Field name={'title'}>
                   {({ field }: FieldProps<string>) => (
                     <TextField
-                      data-testid="duplicate-search-title-textfield"
+                      data-testid={dataTestId.basicData.centralImport.textFieldTitle}
                       fullWidth
                       {...field}
                       variant="outlined"
@@ -156,7 +158,7 @@ export const DuplicateSearchFilterForm = ({
                 <Field name={'author'}>
                   {({ field }: FieldProps<string>) => (
                     <TextField
-                      data-testid="duplicate-search-author-textfield"
+                      data-testid={dataTestId.basicData.centralImport.textFieldAuthor}
                       fullWidth
                       {...field}
                       variant="outlined"
@@ -183,7 +185,7 @@ export const DuplicateSearchFilterForm = ({
                 <Field name={'issn'}>
                   {({ field }: FieldProps<string>) => (
                     <TextField
-                      data-testid="duplicate-search-issn-textfield"
+                      data-testid={dataTestId.basicData.centralImport.textFieldIssn}
                       fullWidth
                       {...field}
                       variant="outlined"
@@ -209,7 +211,7 @@ export const DuplicateSearchFilterForm = ({
                 <Field name={'yearPublished'}>
                   {({ field }: FieldProps<string>) => (
                     <TextField
-                      data-testid="duplicate-search-year-textfield"
+                      data-testid={dataTestId.basicData.centralImport.textFieldYear}
                       fullWidth
                       {...field}
                       variant="outlined"
@@ -221,7 +223,7 @@ export const DuplicateSearchFilterForm = ({
 
               <StyledButtonWrapper>
                 <Button
-                  data-testid="duplicate-search-reset-button"
+                  data-testid={dataTestId.basicData.centralImport.resetButton}
                   variant="outlined"
                   color="primary"
                   onClick={() => formikProps.resetForm()}>
@@ -229,7 +231,7 @@ export const DuplicateSearchFilterForm = ({
                 </Button>
                 <Button
                   style={{ marginLeft: '1rem' }}
-                  data-testid="duplicate-search-retry-button"
+                  data-testid={dataTestId.basicData.centralImport.searchButton}
                   variant="contained"
                   type="submit"
                   disabled={
