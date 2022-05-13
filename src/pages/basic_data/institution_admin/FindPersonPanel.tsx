@@ -15,7 +15,7 @@ import { searchByNationalIdNumber } from '../../../api/userApi';
 
 export const FindPersonPanel = () => {
   const { t } = useTranslation('basicData');
-  const { values, setFieldValue } = useFormikContext<AddEmployeeData>();
+  const { values, setFieldValue, isSubmitting } = useFormikContext<AddEmployeeData>();
   const [isLoading, setIsLoading] = useState(false);
   const nationalNumber = values.searchIdNumber;
 
@@ -49,6 +49,7 @@ export const FindPersonPanel = () => {
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
+            disabled={isSubmitting}
             variant="filled"
             label={t('search_for_national_id')}
             onChange={(event) => event.target.value.length <= 11 && field.onChange(event)}
@@ -109,6 +110,7 @@ export const FindPersonPanel = () => {
               {({ field, meta: { touched, error } }: FieldProps<string>) => (
                 <TextField
                   {...field}
+                  disabled={isSubmitting}
                   required
                   fullWidth
                   variant="filled"
@@ -122,6 +124,7 @@ export const FindPersonPanel = () => {
               {({ field, meta: { touched, error } }: FieldProps<string>) => (
                 <TextField
                   {...field}
+                  disabled={isSubmitting}
                   required
                   fullWidth
                   variant="filled"
