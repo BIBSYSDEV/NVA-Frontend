@@ -54,6 +54,8 @@ export const DuplicateSearchFilterForm = ({
     isYearPublishedChecked: false,
   };
 
+  //TODO Bruker bør ikke kunne søke med tomme verdier i avsjekkede felter.
+
   return (
     <Formik
       initialValues={initialSearchParams}
