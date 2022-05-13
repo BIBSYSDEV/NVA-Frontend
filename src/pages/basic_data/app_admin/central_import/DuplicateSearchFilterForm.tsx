@@ -111,7 +111,7 @@ export const DuplicateSearchFilterForm = ({
                   }}
                 />
                 <Field name={'doi'}>
-                  {({ field }: FieldProps) => (
+                  {({ field }: FieldProps<string>) => (
                     <TextField
                       data-testid="duplicate-search-doi-textfield"
                       variant="outlined"
