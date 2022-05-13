@@ -73,17 +73,19 @@ export const AddEmployeePage = () => {
       const addAffiliationResponse = await addEmployment(userId, values.affiliation);
       if (isSuccessStatus(addAffiliationResponse.status)) {
         // Create NVA User with roles
-        const createUserResponse = await createUser({
-          nationalIdentityNumber: values.searchIdNumber,
-          customerId,
-          roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
-        });
-        if (isSuccessStatus(createUserResponse.status)) {
-          dispatch(setNotification({ message: t('feedback:success.add_employment'), variant: 'success' }));
-          resetForm();
-        } else if (isErrorStatus(createUserResponse.status)) {
-          dispatch(setNotification({ message: t('feedback:error.add_role'), variant: 'error' }));
-        }
+        setTimeout(async () => {
+          const createUserResponse = await createUser({
+            nationalIdentityNumber: values.searchIdNumber,
+            customerId,
+            roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
+          });
+          if (isSuccessStatus(createUserResponse.status)) {
+            dispatch(setNotification({ message: t('feedback:success.add_employment'), variant: 'success' }));
+            resetForm();
+          } else if (isErrorStatus(createUserResponse.status)) {
+            dispatch(setNotification({ message: t('feedback:error.add_role'), variant: 'error' }));
+          }
+        }, 10_000); // TODO: NP-9121
       } else if (isErrorStatus(addAffiliationResponse.status)) {
         dispatch(setNotification({ message: t('feedback:error.add_employment'), variant: 'error' }));
       }
