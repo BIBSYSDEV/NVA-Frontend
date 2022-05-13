@@ -142,7 +142,7 @@ export const DuplicateSearchFilterForm = ({
                   }}
                 />
                 <Field name={'title'}>
-                  {({ field }: FieldProps) => (
+                  {({ field }: FieldProps<string>) => (
                     <TextField
                       data-testid="duplicate-search-title-textfield"
                       fullWidth
@@ -169,7 +169,7 @@ export const DuplicateSearchFilterForm = ({
                   }}
                 />
                 <Field name={'author'}>
-                  {({ field }: FieldProps) => (
+                  {({ field }: FieldProps<string>) => (
                     <TextField
                       data-testid="duplicate-search-author-textfield"
                       fullWidth
@@ -196,7 +196,7 @@ export const DuplicateSearchFilterForm = ({
                   }}
                 />
                 <Field name={'issn'}>
-                  {({ field }: FieldProps) => (
+                  {({ field }: FieldProps<string>) => (
                     <TextField
                       data-testid="duplicate-search-issn-textfield"
                       fullWidth
@@ -222,7 +222,7 @@ export const DuplicateSearchFilterForm = ({
                   }}
                 />
                 <Field name={'yearPublished'}>
-                  {({ field }: FieldProps) => (
+                  {({ field }: FieldProps<string>) => (
                     <TextField
                       data-testid="duplicate-search-year-textfield"
                       fullWidth
