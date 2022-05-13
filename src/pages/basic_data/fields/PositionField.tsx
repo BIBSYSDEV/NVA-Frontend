@@ -29,9 +29,7 @@ export const PositionField = ({ fieldName, disabled }: PositionFieldProps) => {
         <Autocomplete
           disabled={disabled}
           value={sortedPositions.find((option) => option.id === field.value) ?? null}
-          options={sortedPositions.sort((a, b) =>
-            getLanguageString(a.name).toLowerCase() > getLanguageString(b.name).toLowerCase() ? 1 : -1
-          )}
+          options={sortedPositions}
           renderOption={(props, option) => (
             <li {...props} key={option.id}>
               {getLanguageString(option.name)}
