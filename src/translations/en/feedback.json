@@ -1,6 +1,7 @@
 {
   "error": {
     "404_page": "The page you requested could not be found",
+    "add_contributor": "Could not add contributor",
     "add_employment": "Could not add employment",
     "add_role": "Could not add role",
     "an_error_occurred": "An error occurred",

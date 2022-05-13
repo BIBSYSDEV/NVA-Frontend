@@ -1,16 +1,12 @@
 import { MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { Modal } from '../../../components/Modal';
 import { Contributor, ContributorRole } from '../../../types/contributor.types';
 import { AddContributorForm } from './components/AddContributorForm';
 import { AddUnverifiedContributorForm } from './components/AddUnverifiedContributorForm';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { CristinUser } from '../../../types/user.types';
-import { RootStore } from '../../../redux/reducers/rootReducer';
-import { apiRequest } from '../../../api/apiRequest';
-import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
 interface AddContributorModalProps {
   onContributorSelected: (newContributor: CristinUser, role: ContributorRole) => void;
@@ -32,7 +28,6 @@ export const AddContributorModal = ({
   initialSearchTerm,
 }: AddContributorModalProps) => {
   const { t } = useTranslation('registration');
-  const user = useSelector((store: RootStore) => store.user);
   const [openAddUnverifiedContributor, setOpenAddUnverifiedContributor] = useState(false);
   const [selectedContributorRole, setSelectedContributorRole] = useState<ContributorRole | ''>(
     contributorRoles.length === 1 ? contributorRoles[0] : ''
@@ -41,19 +36,6 @@ export const AddContributorModal = ({
   const addContributor = (newContributor: CristinUser) => {
     onContributorSelected(newContributor, selectedContributorRole as ContributorRole);
     handleCloseModal();
-  };
-
-  // TODO: Implement when login uses Cristin instead of ARP (NP-4815)
-  const addSelfAsContributor = async () => {
-    if (user?.cristinId) {
-      const getCurrentPersonResponse = await apiRequest<CristinUser>({ url: user.cristinId });
-      if (isErrorStatus(getCurrentPersonResponse.status)) {
-        // TODO
-      } else if (isSuccessStatus(getCurrentPersonResponse.status)) {
-        onContributorSelected(getCurrentPersonResponse.data, selectedContributorRole as ContributorRole);
-        handleCloseModal();
-      }
-    }
   };
 
   const handleCloseModal = () => {
@@ -113,7 +95,6 @@ export const AddContributorModal = ({
         ) : (
           <AddContributorForm
             addContributor={addContributor}
-            addSelfAsContributor={addSelfAsContributor} // TODO
             openAddUnverifiedContributor={() => setOpenAddUnverifiedContributor(true)}
             initialSearchTerm={initialSearchTerm}
             roleToAdd={selectedContributorRole}
