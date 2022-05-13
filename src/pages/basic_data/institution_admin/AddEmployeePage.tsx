@@ -67,6 +67,7 @@ export const AddEmployeePage = () => {
       const addAffiliationResponse = await addEmployment(userId, values.affiliation);
       if (isSuccessStatus(addAffiliationResponse.status)) {
         // Create NVA User with roles
+        await new Promise((resolve) => setTimeout(resolve, 10_000)); // Wait 10sec before creating NVA User. TODO: NP-9121
         const createUserResponse = await createUser({
           nationalIdentityNumber: values.searchIdNumber,
           customerId,
