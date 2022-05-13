@@ -18,14 +18,14 @@ import { PositionField } from '../fields/PositionField';
 
 export const AddAffiliationPanel = () => {
   const { t } = useTranslation('basicData');
-  const { values, setFieldValue } = useFormikContext<AddEmployeeData>();
+  const { values, setFieldValue, isSubmitting } = useFormikContext<AddEmployeeData>();
   const user = useSelector((store: RootStore) => store.user);
   const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
     user?.topOrgCristinId ?? ''
   );
   const organizationOptions = currentOrganization ? getSortedSubUnits([currentOrganization]) : [];
 
-  const isDisabled = !values.user.firstName || !values.user.lastName || !values.user.nationalId;
+  const isDisabled = !values.user.firstName || !values.user.lastName || !values.user.nationalId || isSubmitting;
 
   return (
     <>

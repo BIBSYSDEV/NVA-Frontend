@@ -17,17 +17,19 @@ export const PositionField = ({ fieldName, disabled }: PositionFieldProps) => {
     CristinApiPath.Position,
     t('feedback:error.get_positions')
   );
-  const positions = positionResponse?.positions ?? [];
+  const sortedPositions = positionResponse
+    ? [...positionResponse.positions].sort((a, b) =>
+        getLanguageString(a.name).toLowerCase() > getLanguageString(b.name).toLowerCase() ? 1 : -1
+      )
+    : [];
 
   return (
     <Field name={fieldName}>
       {({ field, form: { setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
         <Autocomplete
           disabled={disabled}
-          value={positions.find((option) => option.id === field.value) ?? null}
-          options={positions.sort((a, b) =>
-            getLanguageString(a.name).toLowerCase() > getLanguageString(b.name).toLowerCase() ? 1 : -1
-          )}
+          value={sortedPositions.find((option) => option.id === field.value) ?? null}
+          options={sortedPositions}
           renderOption={(props, option) => (
             <li {...props} key={option.id}>
               {getLanguageString(option.name)}
