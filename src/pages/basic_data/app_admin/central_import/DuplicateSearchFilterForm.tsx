@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
-import { Dispatch, SetStateAction } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { styled as muiStyled } from '@mui/system';
 import { Box, Button, Checkbox, FormControlLabel, FormGroup, TextField, Typography } from '@mui/material';
 import { Registration } from '../../../../types/registration.types';
@@ -101,7 +101,7 @@ export const DuplicateSearchFilterForm = ({
                   control={<Checkbox />}
                   label={t('central_import.doi')}
                   data-testid="duplicate-search-doi-checkbox"
-                  onClick={(event: any) => {
+                  onClick={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.value) {
                       formikProps.setFieldValue('isTitleChecked', false);
                       formikProps.setFieldValue('isAuthorChecked', false);
@@ -162,7 +162,7 @@ export const DuplicateSearchFilterForm = ({
                   name="isAuthorChecked"
                   control={<Checkbox />}
                   label={t('central_import.author')}
-                  onClick={(event: any) => {
+                  onClick={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.value) {
                       formikProps.setFieldValue('isDoiChecked', false);
                     }
@@ -188,8 +188,8 @@ export const DuplicateSearchFilterForm = ({
                   type="checkbox"
                   name="isIssnChecked"
                   control={<Checkbox />}
-                  label="ISSN"
-                  onClick={(event: any) => {
+                  label={t('central_import.issn')}
+                  onClick={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.value) {
                       formikProps.setFieldValue('isDoiChecked', false);
                     }
@@ -215,7 +215,7 @@ export const DuplicateSearchFilterForm = ({
                   name="isYearPublishedChecked"
                   control={<Checkbox />}
                   label={t('central_import.year_published')}
-                  onClick={(event: any) => {
+                  onClick={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.value) {
                       formikProps.setFieldValue('isDoiChecked', false);
                     }
