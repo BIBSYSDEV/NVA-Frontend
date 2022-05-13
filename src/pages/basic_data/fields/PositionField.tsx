@@ -3,7 +3,7 @@ import { Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { PositionResponse } from '../../../types/user.types';
-import { useFetch } from '../../../utils/hooks/useFetch';
+import { useFetchResource } from '../../../utils/hooks/useFetchResource';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface PositionFieldProps {
@@ -13,21 +13,23 @@ interface PositionFieldProps {
 
 export const PositionField = ({ fieldName, disabled }: PositionFieldProps) => {
   const { t } = useTranslation('basicData');
-  const [positionResponse, isLoadingPositions] = useFetch<PositionResponse>({
-    url: CristinApiPath.Position,
-    errorMessage: t('feedback:error.get_positions'),
-  });
-  const positions = positionResponse?.positions ?? [];
+  const [positionResponse, isLoadingPositions] = useFetchResource<PositionResponse>(
+    CristinApiPath.Position,
+    t('feedback:error.get_positions')
+  );
+  const sortedPositions = positionResponse
+    ? [...positionResponse.positions].sort((a, b) =>
+        getLanguageString(a.name).toLowerCase() > getLanguageString(b.name).toLowerCase() ? 1 : -1
+      )
+    : [];
 
   return (
     <Field name={fieldName}>
       {({ field, form: { setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
         <Autocomplete
           disabled={disabled}
-          value={positions.find((option) => option.id === field.value) ?? null}
-          options={positions.sort((a, b) =>
-            getLanguageString(a.name).toLowerCase() > getLanguageString(b.name).toLowerCase() ? 1 : -1
-          )}
+          value={sortedPositions.find((option) => option.id === field.value) ?? null}
+          options={sortedPositions}
           renderOption={(props, option) => (
             <li {...props} key={option.id}>
               {getLanguageString(option.name)}
