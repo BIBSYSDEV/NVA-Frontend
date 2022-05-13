@@ -10,7 +10,8 @@ import { PageSpinner } from '../../../../components/PageSpinner';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { CentralImportDuplicateSearch } from './CentralImportDuplicateSearch';
 import NotFound from '../../../errorpages/NotFound';
-import { DuplicateSearchFilterForm, emptyDuplicateSearchFilter } from './DuplicateSearchFilterForm';
+import { DuplicateSearchFilterForm } from './DuplicateSearchFilterForm';
+import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
 
 export const CentralImportDuplicationCheckPage = () => {
   const { t } = useTranslation('basicData');

@@ -8,7 +8,7 @@ import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { CentralImportResultItem } from './CentralImportResultItem';
 import { DescriptionFieldNames, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
-import { DuplicateSearchFilters } from './DuplicateSearchFilterForm';
+import { DuplicateSearchFilters } from '../../../../types/duplicateSearchTypes';
 
 interface CentralImportDuplicateSearchProps {
   duplicateSearchFilters: DuplicateSearchFilters;

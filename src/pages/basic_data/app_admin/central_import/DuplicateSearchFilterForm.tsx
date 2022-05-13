@@ -4,6 +4,7 @@ import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { styled as muiStyled } from '@mui/system';
 import { Box, Button, Checkbox, FormControlLabel, FormGroup, TextField, Typography } from '@mui/material';
 import { Registration } from '../../../../types/registration.types';
+import { DuplicateSearchFilters, DuplicateSearchForm } from '../../../../types/duplicateSearchTypes';
 
 const StyledCenterWrapper = muiStyled('div')({
   display: 'flex',
@@ -21,24 +22,6 @@ const StyledFormElementWrapper = muiStyled('div')({
 const StyledFormControlLabel = muiStyled(FormControlLabel)({
   minWidth: '11rem',
 });
-
-//TODO: move out
-export interface DuplicateSearchFilters {
-  doi: string;
-  title: string;
-  author: string;
-  yearPublished: string;
-  issn: string;
-}
-
-//TODO: move out
-export const emptyDuplicateSearchFilter = {
-  doi: '',
-  title: '',
-  author: '',
-  yearPublished: '',
-  issn: '',
-};
 
 const StyledButtonWrapper = muiStyled('div')({
   display: 'flex',
@@ -58,7 +41,7 @@ export const DuplicateSearchFilterForm = ({
 }: DuplicateSearchFilterFormProps) => {
   const { t } = useTranslation('basicData');
 
-  const initialSearchParams = {
+  const initialSearchParams: DuplicateSearchForm = {
     doi: publication.entityDescription?.reference?.doi ?? '',
     title: publication.entityDescription?.mainTitle ?? '',
     author: publication.entityDescription?.contributors[0]?.identity.name ?? '',
@@ -83,7 +66,7 @@ export const DuplicateSearchFilterForm = ({
           yearPublished: values.isYearPublishedChecked ? values.yearPublished : '',
         });
       }}>
-      {(formikProps: FormikProps<any>) => (
+      {(formikProps: FormikProps<DuplicateSearchForm>) => (
         <Form>
           <Box
             sx={{
