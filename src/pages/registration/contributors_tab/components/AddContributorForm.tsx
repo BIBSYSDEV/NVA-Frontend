@@ -39,7 +39,7 @@ export const AddContributorForm = ({
   const dispatch = useDispatch();
   const user = useSelector((store: RootStore) => store.user);
 
-  const [isAddingMyUser, setIsAddingMyUser] = useState(false);
+  const [isAddingSelf, setIsAddingSelf] = useState(false);
   const [selectedUser, setSelectedUser] = useState<CristinUser>();
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -60,14 +60,14 @@ export const AddContributorForm = ({
 
   const addSelfAsContributor = async () => {
     if (user?.cristinId) {
-      setIsAddingMyUser(true);
+      setIsAddingSelf(true);
       const getCurrentPersonResponse = await apiRequest<CristinUser>({ url: user.cristinId });
       if (isErrorStatus(getCurrentPersonResponse.status)) {
         dispatch(setNotification({ message: t('feedback:error.add_contributor'), variant: 'error' }));
       } else if (isSuccessStatus(getCurrentPersonResponse.status)) {
         addContributor(getCurrentPersonResponse.data);
       }
-      setIsAddingMyUser(false);
+      setIsAddingSelf(false);
     }
   };
 
@@ -134,7 +134,7 @@ export const AddContributorForm = ({
           <LoadingButton
             data-testid={dataTestId.registrationWizard.contributors.addSelfButton}
             onClick={addSelfAsContributor}
-            loading={isAddingMyUser}>
+            loading={isAddingSelf}>
             {t('contributors.add_self_as_role', { role: t(`contributors.types.${roleToAdd}`) })}
           </LoadingButton>
         )}
