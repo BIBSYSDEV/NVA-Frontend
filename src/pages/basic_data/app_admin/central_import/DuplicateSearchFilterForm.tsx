@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { Dispatch, SetStateAction } from 'react';
 import { styled as muiStyled } from '@mui/system';
-import { Button, Checkbox, FormControlLabel, FormGroup, TextField, Typography } from '@mui/material';
+import { Box, Button, Checkbox, FormControlLabel, FormGroup, TextField, Typography } from '@mui/material';
 import { Registration } from '../../../../types/registration.types';
 
 const StyledCenterWrapper = muiStyled('div')({
@@ -11,13 +11,6 @@ const StyledCenterWrapper = muiStyled('div')({
   justifyContent: 'center',
   marginBottom: '1rem',
   alignItems: 'center',
-});
-
-const StyledFormWrapper = muiStyled('div')({
-  display: 'flex',
-  flexDirection: 'column',
-  marginTop: '1rem',
-  marginBottom: '1rem',
 });
 
 const StyledFormElementWrapper = muiStyled('div')({
@@ -92,7 +85,13 @@ export const DuplicateSearchFilterForm = ({
       }}>
       {(formikProps: FormikProps<any>) => (
         <Form>
-          <StyledFormWrapper>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              marginTop: '1rem',
+              marginBottom: '1rem',
+            }}>
             <FormGroup>
               <StyledFormElementWrapper>
                 <Field
@@ -262,7 +261,7 @@ export const DuplicateSearchFilterForm = ({
                 </Button>
               </StyledButtonWrapper>
             </FormGroup>
-          </StyledFormWrapper>
+          </Box>
         </Form>
       )}
     </Formik>
