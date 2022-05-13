@@ -54,8 +54,8 @@ export const CentralImportPage = () => {
             <Typography variant="subtitle1">{t('search:hits', { count: searchResults.size })}:</Typography>
             <Divider />
             <List>
-              {publications.map((publication, index) => (
-                <CentralImportResultItem publication={publication} key={publication.identifier + index} />
+              {publications.map((publication) => (
+                <CentralImportResultItem publication={publication} key={publication.identifier} />
               ))}
             </List>
             {publications.length > 0 && (

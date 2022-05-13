@@ -43,7 +43,6 @@ export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: Central
       ) : (
         searchResults && (
           <>
-            {/* TODO: fjern indexen */}
             <Typography variant="subtitle1">
               {t('central_import.duplicate_search_hits_shown', {
                 ShownResultsCount: searchResults.hits.length,
@@ -53,8 +52,8 @@ export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: Central
             </Typography>
             <Divider />
             <List>
-              {searchResults.hits.map((publication, index) => (
-                <CentralImportResultItem publication={publication} key={publication.identifier + index} />
+              {searchResults.hits.map((publication) => (
+                <CentralImportResultItem publication={publication} key={publication.identifier} />
               ))}
             </List>
           </>
