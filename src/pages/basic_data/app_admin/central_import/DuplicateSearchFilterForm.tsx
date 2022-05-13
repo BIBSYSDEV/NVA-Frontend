@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
-import { Button, Checkbox, FormControlLabel, FormGroup, TextField, Typography } from '@mui/material';
-
-import { Registration } from '../../../../types/registration.types';
+import { Dispatch, SetStateAction } from 'react';
 import { styled as muiStyled } from '@mui/system';
+import { Button, Checkbox, FormControlLabel, FormGroup, TextField, Typography } from '@mui/material';
+import { Registration } from '../../../../types/registration.types';
 
 const StyledCenterWrapper = muiStyled('div')({
   display: 'flex',
@@ -56,7 +56,7 @@ const StyledButtonWrapper = muiStyled('div')({
 
 interface DuplicateSearchFilterFormProps {
   publication: Registration;
-  setDuplicateSearchFilters: any;
+  setDuplicateSearchFilters: Dispatch<SetStateAction<DuplicateSearchFilters>>;
 }
 
 export const DuplicateSearchFilterForm = ({
