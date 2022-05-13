@@ -49,6 +49,7 @@ export const FindPersonPanel = () => {
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
+            disabled={isSubmitting}
             variant="filled"
             label={t('search_for_national_id')}
             onChange={(event) => event.target.value.length <= 11 && field.onChange(event)}
