@@ -135,7 +135,7 @@ export const DuplicateSearchFilterForm = ({
                   name="isTitleChecked"
                   control={<Checkbox />}
                   label={t('central_import.title')}
-                  onClick={(event: any) => {
+                  onClick={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.value) {
                       formikProps.setFieldValue('isDoiChecked', false);
                     }
