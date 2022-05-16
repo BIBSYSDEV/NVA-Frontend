@@ -7,14 +7,6 @@ import { Registration } from '../../../../types/registration.types';
 import { DuplicateSearchFilters, DuplicateSearchForm } from '../../../../types/duplicateSearchTypes';
 import { dataTestId } from '../../../../utils/dataTestIds';
 
-const StyledCenterWrapper = muiStyled('div')({
-  display: 'flex',
-  width: '100%',
-  justifyContent: 'center',
-  marginBottom: '1rem',
-  alignItems: 'center',
-});
-
 const StyledFormElementWrapper = muiStyled('div')({
   display: 'flex',
   marginBottom: '1rem',
@@ -22,13 +14,6 @@ const StyledFormElementWrapper = muiStyled('div')({
 
 const StyledFormControlLabel = muiStyled(FormControlLabel)({
   minWidth: '11rem',
-});
-
-const StyledButtonWrapper = muiStyled('div')({
-  display: 'flex',
-  justifyContent: 'flex-start',
-  marginBottom: '1rem',
-  alignItems: 'center',
 });
 
 interface DuplicateSearchFilterFormProps {
@@ -70,7 +55,7 @@ export const DuplicateSearchFilterForm = ({
           yearPublished: values.isYearPublishedChecked ? values.yearPublished : '',
         });
       }}>
-      {(formikProps: FormikProps<DuplicateSearchForm>) => (
+      {({ setFieldValue, values, resetForm }: FormikProps<DuplicateSearchForm>) => (
         <Form>
           <Box
             sx={{
@@ -87,33 +72,40 @@ export const DuplicateSearchFilterForm = ({
                   name="isDoiChecked"
                   control={<Checkbox />}
                   label={t('central_import.doi')}
-                  data-testid="duplicate-search-doi-checkbox"
+                  data-testid={dataTestId.basicData.centralImport.checkboxDoi}
                   onClick={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.value) {
-                      formikProps.setFieldValue('isTitleChecked', false);
-                      formikProps.setFieldValue('isAuthorChecked', false);
-                      formikProps.setFieldValue('isIssnChecked', false);
-                      formikProps.setFieldValue('isYearPublishedChecked', false);
+                      setFieldValue('isTitleChecked', false);
+                      setFieldValue('isAuthorChecked', false);
+                      setFieldValue('isIssnChecked', false);
+                      setFieldValue('isYearPublishedChecked', false);
                     }
                   }}
                 />
                 <Field name={'doi'}>
                   {({ field }: FieldProps<string>) => (
                     <TextField
-                      data-testid="duplicate-search-doi-textfield"
+                      data-testid={dataTestId.basicData.centralImport.textFieldDoi}
                       variant="outlined"
                       {...field}
                       fullWidth
                       multiline
-                      disabled={!formikProps.values.isDoiChecked}
+                      disabled={!values.isDoiChecked}
                     />
                   )}
                 </Field>
               </StyledFormElementWrapper>
 
-              <StyledCenterWrapper>
+              <Box
+                sx={{
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'center',
+                  marginBottom: '1rem',
+                  alignItems: 'center',
+                }}>
                 <Typography>{t('central_import.or_search_with')}</Typography>
-              </StyledCenterWrapper>
+              </Box>
 
               <StyledFormElementWrapper>
                 <Field
@@ -122,9 +114,10 @@ export const DuplicateSearchFilterForm = ({
                   name="isTitleChecked"
                   control={<Checkbox />}
                   label={t('central_import.title')}
+                  data-testid={dataTestId.basicData.centralImport.checkboxTitle}
                   onClick={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.value) {
-                      formikProps.setFieldValue('isDoiChecked', false);
+                      setFieldValue('isDoiChecked', false);
                     }
                   }}
                 />
@@ -135,7 +128,7 @@ export const DuplicateSearchFilterForm = ({
                       fullWidth
                       {...field}
                       variant="outlined"
-                      disabled={!formikProps.values.isTitleChecked}
+                      disabled={!values.isTitleChecked}
                       multiline
                     />
                   )}
@@ -149,9 +142,10 @@ export const DuplicateSearchFilterForm = ({
                   name="isAuthorChecked"
                   control={<Checkbox />}
                   label={t('central_import.author')}
+                  data-testid={dataTestId.basicData.centralImport.checkboxAuthor}
                   onClick={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.value) {
-                      formikProps.setFieldValue('isDoiChecked', false);
+                      setFieldValue('isDoiChecked', false);
                     }
                   }}
                 />
@@ -162,7 +156,7 @@ export const DuplicateSearchFilterForm = ({
                       fullWidth
                       {...field}
                       variant="outlined"
-                      disabled={!formikProps.values.isAuthorChecked}
+                      disabled={!values.isAuthorChecked}
                       multiline
                     />
                   )}
@@ -176,9 +170,10 @@ export const DuplicateSearchFilterForm = ({
                   name="isIssnChecked"
                   control={<Checkbox />}
                   label={t('central_import.issn')}
+                  data-testid={dataTestId.basicData.centralImport.checkboxIssn}
                   onClick={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.value) {
-                      formikProps.setFieldValue('isDoiChecked', false);
+                      setFieldValue('isDoiChecked', false);
                     }
                   }}
                 />
@@ -189,7 +184,7 @@ export const DuplicateSearchFilterForm = ({
                       fullWidth
                       {...field}
                       variant="outlined"
-                      disabled={!formikProps.values.isIssnChecked}
+                      disabled={!values.isIssnChecked}
                     />
                   )}
                 </Field>
@@ -202,9 +197,10 @@ export const DuplicateSearchFilterForm = ({
                   name="isYearPublishedChecked"
                   control={<Checkbox />}
                   label={t('central_import.year_published')}
+                  data-testid={dataTestId.basicData.centralImport.checkboxYear}
                   onClick={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.value) {
-                      formikProps.setFieldValue('isDoiChecked', false);
+                      setFieldValue('isDoiChecked', false);
                     }
                   }}
                 />
@@ -215,18 +211,18 @@ export const DuplicateSearchFilterForm = ({
                       fullWidth
                       {...field}
                       variant="outlined"
-                      disabled={!formikProps.values.isYearPublishedChecked}
+                      disabled={!values.isYearPublishedChecked}
                     />
                   )}
                 </Field>
               </StyledFormElementWrapper>
 
-              <StyledButtonWrapper>
+              <Box sx={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '1rem', alignItems: 'center' }}>
                 <Button
                   data-testid={dataTestId.basicData.centralImport.resetButton}
                   variant="outlined"
                   color="primary"
-                  onClick={() => formikProps.resetForm()}>
+                  onClick={() => resetForm()}>
                   {t('central_import.reset_search_values')}
                 </Button>
                 <Button
@@ -236,17 +232,17 @@ export const DuplicateSearchFilterForm = ({
                   type="submit"
                   disabled={
                     !(
-                      formikProps.values.isYearPublishedChecked ||
-                      formikProps.values.isIssnChecked ||
-                      formikProps.values.isAuthorChecked ||
-                      formikProps.values.isTitleChecked ||
-                      formikProps.values.isDoiChecked
+                      values.isYearPublishedChecked ||
+                      values.isIssnChecked ||
+                      values.isAuthorChecked ||
+                      values.isTitleChecked ||
+                      values.isDoiChecked
                     )
                   }
                   color="primary">
                   {t('central_import.search_again')}
                 </Button>
-              </StyledButtonWrapper>
+              </Box>
             </FormGroup>
           </Box>
         </Form>

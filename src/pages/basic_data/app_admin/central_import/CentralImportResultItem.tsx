@@ -20,7 +20,7 @@ export const CentralImportResultItem = ({ publication }: CentralImportResultItem
   const allContributorInstitutions = contributors.map((contributor) =>
     contributor.affiliations?.map((affiliation) => affiliation.labels && getLanguageString(affiliation.labels))
   );
-  const institutions = new Set(allContributorInstitutions?.flat() ?? []);
+  const institutions = allContributorInstitutions ? [...new Set(allContributorInstitutions.flat())] : [];
 
   const publicationInstanceType = publication.entityDescription?.reference?.publicationInstance.type ?? '';
 
@@ -29,7 +29,7 @@ export const CentralImportResultItem = ({ publication }: CentralImportResultItem
       <ListItemText disableTypography>
         <Grid container spacing={2} justifyContent="space-between" alignItems="baseline">
           <Grid item md={2} xs={12}>
-            {publicationInstanceType && <Typography variant="body1">{t(publicationInstanceType)}</Typography>}
+            {publicationInstanceType && <Typography>{t(publicationInstanceType)}</Typography>}
           </Grid>
           <Grid item md={5} xs={12}>
             {publication.entityDescription?.reference?.doi && (
@@ -59,7 +59,7 @@ export const CentralImportResultItem = ({ publication }: CentralImportResultItem
             )}
           </Grid>
           <Grid item md={2} xs={12}>
-            <Typography variant="body1">
+            <Typography>
               {t('basicData:central_import.verified_contributor_count', {
                 verifiedContributorCount,
                 contributorsCount,
@@ -67,7 +67,7 @@ export const CentralImportResultItem = ({ publication }: CentralImportResultItem
             </Typography>
           </Grid>
           <Grid item md={3} xs={12}>
-            {institutions && <Typography variant="body1">{Array.from(institutions).join(', ')}</Typography>}
+            {institutions && <Typography variant="body1">{institutions.join('; ')}</Typography>}
           </Grid>
         </Grid>
       </ListItemText>
