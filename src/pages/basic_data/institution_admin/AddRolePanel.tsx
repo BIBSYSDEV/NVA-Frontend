@@ -2,12 +2,14 @@ import { FormControl, FormLabel, FormGroup, FormControlLabel, Checkbox, Typograp
 import LooksThreeIcon from '@mui/icons-material/Looks3';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { RoleName } from '../../../types/user.types';
 import { StyledCenterContainer } from '../../../components/styled/Wrappers';
-import { FieldArray, FieldArrayRenderProps } from 'formik';
+import { AddEmployeeData } from './AddEmployeePage';
 
 export const AddRolePanel = () => {
   const { t } = useTranslation('basicData');
+  const { isSubmitting } = useFormikContext<AddEmployeeData>();
 
   return (
     <FieldArray name="roles">
@@ -32,7 +34,8 @@ export const AddRolePanel = () => {
               } else {
                 push(role);
               }
-            }}>
+            }}
+            disabled={isSubmitting}>
             <FormLabel component="legend">{t('profile:heading.roles')}</FormLabel>
             <FormGroup sx={{ gap: '0.5rem' }}>
               <FormControlLabel

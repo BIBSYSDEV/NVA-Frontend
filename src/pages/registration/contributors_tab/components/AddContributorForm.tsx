@@ -1,9 +1,10 @@
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, TablePagination, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { LoadingButton } from '@mui/lab';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { RootStore } from '../../../../redux/reducers/rootReducer';
 import { Registration } from '../../../../types/registration.types';
@@ -15,12 +16,14 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { SearchResponse } from '../../../../types/common.types';
 import { CristinUser } from '../../../../types/user.types';
 import { CristinPersonList } from './CristinPersonList';
+import { apiRequest } from '../../../../api/apiRequest';
+import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
+import { setNotification } from '../../../../redux/notificationSlice';
 
 const resultsPerPage = 10;
 
 interface AddContributorFormProps {
   addContributor: (selectedUser: CristinUser) => void;
-  addSelfAsContributor?: () => void;
   openAddUnverifiedContributor: () => void;
   initialSearchTerm?: string;
   roleToAdd: ContributorRole;
@@ -28,12 +31,15 @@ interface AddContributorFormProps {
 
 export const AddContributorForm = ({
   addContributor,
-  addSelfAsContributor,
   openAddUnverifiedContributor,
   initialSearchTerm = '',
   roleToAdd,
 }: AddContributorFormProps) => {
   const { t } = useTranslation('registration');
+  const dispatch = useDispatch();
+  const user = useSelector((store: RootStore) => store.user);
+
+  const [isAddingSelf, setIsAddingSelf] = useState(false);
   const [selectedUser, setSelectedUser] = useState<CristinUser>();
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -47,12 +53,23 @@ export const AddContributorForm = ({
     errorMessage: t('feedback:error.search'),
   });
 
-  const user = useSelector((store: RootStore) => store.user);
-
   const { values } = useFormikContext<Registration>();
   const contributors = values.entityDescription?.contributors ?? [];
 
   const isSelfAdded = user?.cristinId && contributors.some((contributor) => contributor.identity.id === user.cristinId);
+
+  const addSelfAsContributor = async () => {
+    if (user?.cristinId) {
+      setIsAddingSelf(true);
+      const getCurrentPersonResponse = await apiRequest<CristinUser>({ url: user.cristinId });
+      if (isErrorStatus(getCurrentPersonResponse.status)) {
+        dispatch(setNotification({ message: t('feedback:error.add_contributor'), variant: 'error' }));
+      } else if (isSuccessStatus(getCurrentPersonResponse.status)) {
+        addContributor(getCurrentPersonResponse.data);
+      }
+      setIsAddingSelf(false);
+    }
+  };
 
   return (
     <>
@@ -113,10 +130,13 @@ export const AddContributorForm = ({
           gap: '0.5rem',
           mt: '1rem',
         }}>
-        {!isSelfAdded && !initialSearchTerm && addSelfAsContributor && (
-          <Button data-testid={dataTestId.registrationWizard.contributors.addSelfButton} onClick={addSelfAsContributor}>
+        {!isSelfAdded && !initialSearchTerm && (
+          <LoadingButton
+            data-testid={dataTestId.registrationWizard.contributors.addSelfButton}
+            onClick={addSelfAsContributor}
+            loading={isAddingSelf}>
             {t('contributors.add_self_as_role', { role: t(`contributors.types.${roleToAdd}`) })}
-          </Button>
+          </LoadingButton>
         )}
         {!initialSearchTerm && (
           <Button
