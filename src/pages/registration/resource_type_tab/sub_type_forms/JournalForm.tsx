@@ -43,7 +43,7 @@ export const JournalForm = () => {
             alignItems: 'center',
           }}>
           <Field name={ResourceFieldNames.Volume}>
-            {({ field, meta: { error, touched } }: FieldProps) => (
+            {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
                 {...field}
                 id={field.name}
@@ -58,7 +58,7 @@ export const JournalForm = () => {
           </Field>
 
           <Field name={ResourceFieldNames.Issue}>
-            {({ field, meta: { error, touched } }: FieldProps) => (
+            {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
                 {...field}
                 id={field.name}
@@ -73,7 +73,7 @@ export const JournalForm = () => {
           </Field>
 
           <Field name={ResourceFieldNames.PagesFrom}>
-            {({ field, meta: { error, touched } }: FieldProps) => (
+            {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
                 {...field}
                 id={field.name}
@@ -88,7 +88,7 @@ export const JournalForm = () => {
           </Field>
 
           <Field name={ResourceFieldNames.PagesTo}>
-            {({ field, meta: { error, touched } }: FieldProps) => (
+            {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
                 {...field}
                 id={field.name}
@@ -105,7 +105,7 @@ export const JournalForm = () => {
           <Typography>{t('resource_type.or')}</Typography>
 
           <Field name={ResourceFieldNames.ArticleNumber}>
-            {({ field, meta: { error, touched } }: FieldProps) => (
+            {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
                 {...field}
                 id={field.name}
