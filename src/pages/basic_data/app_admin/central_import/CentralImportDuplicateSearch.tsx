@@ -29,10 +29,10 @@ export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: Central
   duplicateSearchFilters.yearPublished.length > 0 &&
     queryArray.push(`${DescriptionFieldNames.PublicationYear}:"${duplicateSearchFilters.yearPublished}"`);
 
-  const searchQuery = queryArray.length > 0 ? `(${queryArray.join(' AND ')})` : '*';
-  const url = `${SearchApiPath.Registrations}?query=${searchQuery}&results=${maxHits}`;
+  const searchQuery = queryArray.length > 0 ? `query=(${queryArray.join(' AND ')})` : '';
+
   const [searchResults, isLoadingSearchResults] = useFetch<SearchResponse<Registration>>({
-    url,
+    url: `${SearchApiPath.Registrations}?${searchQuery}&results=${maxHits}`,
     errorMessage: t('feedback:error.search'),
   });
 
