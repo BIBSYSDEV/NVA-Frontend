@@ -211,8 +211,8 @@ export const datePickerTranslationProps: Pick<
   | 'todayText'
   | 'toolbarTitle'
 > = {
-  cancelText: i18n.t('common:cancel'),
-  clearText: i18n.t('common:clear'),
+  cancelText: i18n.t<string>('common:cancel'),
+  clearText: i18n.t<string>('common:clear'),
   getOpenDialogAriaText: (value) =>
     value
       ? i18n.t('registration:description.date_picker.open_dialog', {
@@ -225,6 +225,6 @@ export const datePickerTranslationProps: Pick<
       : i18n.t('registration:description.date_picker.go_to_year_view'),
   leftArrowButtonText: i18n.t('registration:description.date_picker.previous_month'),
   rightArrowButtonText: i18n.t('registration:description.date_picker.next_month'),
-  todayText: i18n.t('registration:description.date_picker.today'),
-  toolbarTitle: i18n.t('registration:description.date_picker.select_date'),
+  todayText: i18n.t<string>('registration:description.date_picker.today'),
+  toolbarTitle: i18n.t<string>('registration:description.date_picker.select_date'),
 };

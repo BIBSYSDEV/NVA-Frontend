@@ -1,11 +1,11 @@
-import { ComponentType, ReactNode } from 'react';
+import { ComponentType, PropsWithChildren, ReactNode } from 'react';
 import { RouteProps } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../../redux/reducers/rootReducer';
 import { PrivateRoute } from './PrivateRoute';
 
 interface LoggedInRouteProps extends RouteProps {
-  component: ComponentType<ReactNode>;
+  component: ComponentType<PropsWithChildren<ReactNode>>;
 }
 
 export const LoggedInRoute = ({ component, ...rest }: LoggedInRouteProps) => {

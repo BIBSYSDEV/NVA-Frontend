@@ -1,5 +1,5 @@
-import ReactDOM from 'react-dom';
 import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import { I18nextProvider } from 'react-i18next';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ThemeProvider } from '@mui/material/styles';
@@ -29,7 +29,9 @@ if ((window as any).Cypress) {
   (window as any).store = store;
 }
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container!);
+root.render(
   <StrictMode>
     <BasicErrorBoundary>
       <I18nextProvider i18n={i18n}>
@@ -43,6 +45,5 @@ ReactDOM.render(
         </ReduxProvider>
       </I18nextProvider>
     </BasicErrorBoundary>
-  </StrictMode>,
-  document.getElementById('root')
+  </StrictMode>
 );
