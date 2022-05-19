@@ -8,6 +8,6 @@ phases:
   build:
     commands:
       - npm run build
-      - npm run test:react
+      # - npm run test:react
       - npm run test:cypress --coverage
       - npx nyc report
