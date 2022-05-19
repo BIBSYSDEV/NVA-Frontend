@@ -17,7 +17,7 @@ env:
 phases:
   install:
     runtime-versions:
-      nodejs: 10
+      nodejs: 12
     commands:
       - echo "install cypress dependencies..."
       - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
