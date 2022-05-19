@@ -20,7 +20,7 @@ phases:
     runtime-versions:
       nodejs: 10
     commands:
-      - env
+      # - env
       - npm ci
   # pre_build:
   #   commands:
