@@ -117,7 +117,7 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
       </Typography>
       <Box
         component="img"
-        sx={{ gridArea: 'license', maxHeight: '3rem', cursor: 'pointer' }}
+        sx={{ gridArea: 'license', cursor: 'pointer' }}
         onClick={() => {
           if (licenseData?.link) {
             window.open(licenseData.link);
