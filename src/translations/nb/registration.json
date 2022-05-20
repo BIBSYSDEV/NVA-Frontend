@@ -195,6 +195,7 @@
     "content_types": {
       "Academic Chapter": "Vitenskapelig kapittel",
       "Academic Monograph": "Vitenskapelig monografi",
+      "Case report": "Kasuistikk",
       "CaseReport": "Kasuistikk",
       "Encyclopedia": "Oppslagsverk",
       "Encyclopedia Chapter": "Kapittel i oppslagsverk",
@@ -203,10 +204,15 @@
       "Popular Science Monograph": "Populærvitenskapelig monografi",
       "Popular Science Chapter": "Populærvitenskapelig kapittel",
       "PopularScienceArticle": "Populærvitenskapelig artikkel",
+      "Popular science article": "Populærvitenskapelig artikkel",
       "ProfessionalArticle": "Fagartikkel",
+      "Professional article": "Fagartikkel",
       "AcademicArticle": "Vitenskapelig artikkel",
+      "Research article": "Vitenskapelig artikkel",
       "AcademicLiteratureReview": "Vitenskapelig oversiktsartikkel",
+      "Review article": "Vitenskapelig oversiktsartikkel",
       "StudyProtocol": "Studieprotokoll",
+      "Study protocol": "Studieprotokoll",
       "Textbook": "Lærebok",
       "Textbook Chapter": "Kapittel i lærebok"
     },

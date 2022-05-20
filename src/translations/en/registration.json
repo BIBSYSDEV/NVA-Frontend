@@ -195,6 +195,7 @@
     "content_types": {
       "Academic Chapter": "Academic chapter",
       "Academic Monograph": "Academic monograph",
+      "Case report": "Case report",
       "CaseReport": "Case report",
       "Encyclopedia": "Encyclopedia",
       "Encyclopedia Chapter": "Encyclopedia chapter",
@@ -203,10 +204,15 @@
       "Popular Science Monograph": "Popular science monograph",
       "Popular Science Chapter": "Popular science chapter",
       "PopularScienceArticle": "Popular science article",
+      "Popular science article": "Popular science article",
       "ProfessionalArticle": "Professional article",
+      "Professional article": "Professional article",
       "AcademicArticle": "Academic article",
+      "Research article": "Academic article",
       "AcademicLiteratureReview": "Academic literature review",
+      "Review article": "Academic literature review",
       "StudyProtocol": "Study protocol",
+      "Study protocol": "Study protocol",
       "Textbook": "Textbook",
       "Textbook Chapter": "Textbook chapter"
     },
