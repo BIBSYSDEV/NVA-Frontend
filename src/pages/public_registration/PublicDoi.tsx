@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Box, Link, Typography } from '@mui/material';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { RootState } from '../../redux/store';
 import { DoiRequestStatus, Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 
@@ -11,7 +11,7 @@ interface PublicDoiProps {
 
 export const PublicDoi = ({ registration }: PublicDoiProps) => {
   const { t } = useTranslation('registration');
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
 
   const originalDoi = registration.entityDescription?.reference?.doi ?? '';
   const nvaDoi = registration.doi;

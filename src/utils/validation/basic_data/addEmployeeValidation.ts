@@ -40,12 +40,14 @@ const employeeErrorMessage = {
   }),
 };
 
+export const userValidationSchema = Yup.object().shape({
+  firstName: Yup.string().required(employeeErrorMessage.firstNameRequired),
+  lastName: Yup.string().required(employeeErrorMessage.lastNameRequired),
+  nationalId: Yup.string().required(),
+});
+
 export const addEmployeeValidationSchema = Yup.object().shape({
-  user: Yup.object().shape({
-    firstName: Yup.string().required(employeeErrorMessage.firstNameRequired),
-    lastName: Yup.string().required(employeeErrorMessage.lastNameRequired),
-    nationalId: Yup.string().required(),
-  }),
+  user: userValidationSchema,
   affiliation: Yup.object().shape({
     type: Yup.string().required(employeeErrorMessage.affiliationTypeRequired),
     organization: Yup.string().required(employeeErrorMessage.affiliationOrganizationRequired),
@@ -62,4 +64,9 @@ export const addEmployeeValidationSchema = Yup.object().shape({
       validateDateInterval(context.parent.startDate, endValue)
     ),
   }),
+});
+
+export const addCustomerAdminValidationSchema = Yup.object().shape({
+  startDate: Yup.date().required(employeeErrorMessage.affiliationStartDateRequired),
+  position: Yup.string().required(employeeErrorMessage.affiliationTypeRequired),
 });

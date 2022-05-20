@@ -8,7 +8,7 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { PageHeader } from '../../../components/PageHeader';
 import { InputContainerBox, SyledPageContent, StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/notificationSlice';
-import { RootStore } from '../../../redux/reducers/rootReducer';
+import { RootState } from '../../../redux/store';
 import {
   CustomerInstitution,
   CustomerInstitutionFieldNames,
@@ -23,7 +23,7 @@ import { CustomerInstitutionTextField } from '../app_admin/CustomerInstitutionTe
 export const MyCustomerInstitutionPage = () => {
   const { t } = useTranslation('admin');
   const dispatch = useDispatch();
-  const { user } = useSelector((store: RootStore) => store);
+  const { user } = useSelector((store: RootState) => store);
   const [customerInstitution, isLoadingCustomerInstitution] = useFetch<CustomerInstitution>({
     url: user?.customerId ?? '',
     errorMessage: t('feedback:error.get_customer'),

@@ -5,40 +5,27 @@ import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { DatePicker } from '@mui/lab';
 import { useSelector } from 'react-redux';
 import { StyledCenterContainer } from '../../../components/styled/Wrappers';
-import { CristinApiPath } from '../../../api/apiPaths';
-import { LanguageString } from '../../../types/common.types';
-import { useFetch } from '../../../utils/hooks/useFetch';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { datePickerTranslationProps } from '../../../themes/mainTheme';
 import { getNewDateValue } from '../../../utils/registration-helpers';
-import { RootStore } from '../../../redux/reducers/rootReducer';
+import { RootState } from '../../../redux/store';
 import { Organization } from '../../../types/organization.types';
 import { useFetchResource } from '../../../utils/hooks/useFetchResource';
 import { getSortedSubUnits } from '../../../utils/institutions-helpers';
 import { AddEmployeeData } from './AddEmployeePage';
-
-interface Position {
-  id: string;
-  enabled: boolean;
-  name: LanguageString;
-}
-interface PositionResponse {
-  positions: Position[];
-}
+import { StartDateField } from '../fields/StartDateField';
+import { PositionField } from '../fields/PositionField';
 
 export const AddAffiliationPanel = () => {
   const { t } = useTranslation('basicData');
-  const { values, setFieldValue } = useFormikContext<AddEmployeeData>();
-  const user = useSelector((store: RootStore) => store.user);
+  const { values, setFieldValue, isSubmitting } = useFormikContext<AddEmployeeData>();
+  const user = useSelector((store: RootState) => store.user);
   const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
     user?.topOrgCristinId ?? ''
   );
   const organizationOptions = currentOrganization ? getSortedSubUnits([currentOrganization]) : [];
-  const [positionResponse, isLoadingPositions] = useFetch<PositionResponse>({ url: CristinApiPath.Position });
 
-  const positions = (positionResponse?.positions ?? []).filter((position) => position.enabled); // TODO: fetch only active positions (NP-9070)
-
-  const isDisabled = !values.user.firstName || !values.user.lastName || !values.user.nationalId;
+  const isDisabled = !values.user.firstName || !values.user.lastName || !values.user.nationalId || isSubmitting;
 
   return (
     <>
@@ -75,37 +62,8 @@ export const AddAffiliationPanel = () => {
         )}
       </Field>
       <Box display={{ display: 'flex', gap: '1rem' }}>
-        <Field name="affiliation.type">
-          {({ field, meta: { error, touched } }: FieldProps<string>) => (
-            <Autocomplete
-              disabled={isDisabled}
-              value={positions.find((option) => option.id === field.value) ?? null}
-              options={positions.sort((a, b) =>
-                getLanguageString(a.name).toLowerCase() > getLanguageString(b.name).toLowerCase() ? 1 : -1
-              )}
-              renderOption={(props, option) => (
-                <li {...props} key={option.id}>
-                  {getLanguageString(option.name)}
-                </li>
-              )}
-              onChange={(_, value) => setFieldValue(field.name, value?.id ?? '')}
-              getOptionLabel={(option) => getLanguageString(option.name)}
-              fullWidth
-              loading={isLoadingPositions}
-              renderInput={(params) => (
-                <TextField
-                  {...field}
-                  {...params}
-                  required
-                  label={t('position')}
-                  variant="filled"
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            />
-          )}
-        </Field>
+        <PositionField fieldName="affiliation.type" disabled={isDisabled} />
+
         <Field name="affiliation.fullTimeEquivalentPercentage">
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <TextField
@@ -124,36 +82,11 @@ export const AddAffiliationPanel = () => {
         </Field>
       </Box>
       <Box display={{ display: 'flex', gap: '1rem' }}>
-        <Field name="affiliation.startDate">
-          {({ field, meta: { error, touched } }: FieldProps<string>) => (
-            <DatePicker
-              {...datePickerTranslationProps}
-              disabled={isDisabled}
-              label={t('common:start_date')}
-              value={field.value ? field.value : null}
-              onChange={(date: Date | null, keyboardInput) => {
-                const newValue = getNewDateValue(date, keyboardInput);
-                if (newValue !== null) {
-                  setFieldValue(field.name, newValue);
-                }
-              }}
-              inputFormat="dd.MM.yyyy"
-              views={['year', 'month', 'day']}
-              mask="__.__.____"
-              maxDate={values.affiliation.endDate ? new Date(values.affiliation.endDate) : undefined}
-              renderInput={(params) => (
-                <TextField
-                  {...field}
-                  {...params}
-                  required
-                  variant="filled"
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            />
-          )}
-        </Field>
+        <StartDateField
+          fieldName="affiliation.startDate"
+          disabled={isDisabled}
+          maxDate={values.affiliation.endDate ? new Date(values.affiliation.endDate) : undefined}
+        />
 
         <Field name="affiliation.endDate">
           {({ field, meta: { error, touched } }: FieldProps<string>) => (

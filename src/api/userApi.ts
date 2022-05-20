@@ -1,6 +1,9 @@
 import { Auth, CognitoUser } from '@aws-amplify/auth';
+import { CreateCristinUser, CristinUser, Employment } from '../types/user.types';
 import { USE_MOCK_DATA, LocalStorageKey } from '../utils/constants';
 import { UrlPathTemplate } from '../utils/urlPaths';
+import { CristinApiPath } from './apiPaths';
+import { authenticatedApiRequest } from './apiRequest';
 
 export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> => {
   try {
@@ -45,4 +48,38 @@ export const getAccessToken = async () => {
     }
     return null;
   }
+};
+
+export const createCristinPerson = async (cristinPerson: CreateCristinUser) =>
+  await authenticatedApiRequest<CristinUser>({
+    url: CristinApiPath.Person,
+    method: 'POST',
+    data: cristinPerson,
+  });
+
+type EmploymentData = Omit<Employment, 'endDate' | 'fullTimeEquivalentPercentage'> &
+  Partial<Pick<Employment, 'endDate' | 'fullTimeEquivalentPercentage'>>;
+
+export const addEmployment = async (userId: string, employment: EmploymentData) =>
+  await authenticatedApiRequest<Employment>({
+    url: `${userId}/employment`,
+    method: 'POST',
+    data: employment,
+  });
+
+interface NationalNumberSearchData {
+  type: 'NationalIdentificationNumber';
+  value: string;
+}
+
+export const searchByNationalIdNumber = async (nationalIdNumber: string) => {
+  const data: NationalNumberSearchData = {
+    type: 'NationalIdentificationNumber',
+    value: nationalIdNumber,
+  };
+  return await authenticatedApiRequest<CristinUser>({
+    url: CristinApiPath.PersonIdentityNumer,
+    method: 'POST',
+    data: data,
+  });
 };

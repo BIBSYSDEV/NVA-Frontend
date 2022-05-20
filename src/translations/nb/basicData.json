@@ -1,8 +1,23 @@
 {
   "add_employee": "Legg til ansatt",
-  "add_to_your_person_registry": "Legg til i ditt personregister",
+  "add_to_person_registry": "Legg til i personregister",
   "basic_data": "Grunndata",
-  "central_import": "Sentralimport",
+  "central_import": {
+    "author": "Forfatter",
+    "central_import": "Sentralimport",
+    "doi": "DOI",
+    "duplicate_check": "Duplikatsjekk",
+    "duplicate_search_hits_shown": "Søket ga følgende treff: (viser {{ShownResultsCount}} av {{TotalResultsCount}})",
+    "import_publication": "Import publication",
+    "issn": "ISSN",
+    "or_search_with": "eller søk med",
+    "reset_search_values": "Tilbakestill verdier",
+    "search_again": "Søk igjen",
+    "search_for_duplicates": "Søk etter duplikater",
+    "title": "Tittel",
+    "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}})",
+    "year_published": "Publiseringsår"
+  },
   "create_person": "Opprett person",
   "employments": "Ansettelser",
   "national_id": "Fødselsnummer",
@@ -10,6 +25,5 @@
   "position": "Stilling",
   "position_percent": "Stillingsprosent",
   "publications": "Publikasjoner",
-  "search_for_national_id": "Søk opp person med fødselsnummer",
-  "verifiedContributorCount": "({{verifiedContributorCount}} av {{contributorsCount}})"
+  "search_for_national_id": "Søk opp person med fødselsnummer"
 }

@@ -5,19 +5,20 @@ import { useSelector } from 'react-redux';
 import { Link, Switch, useHistory } from 'react-router-dom';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AppAdminRoute, InstitutionAdminRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
 import { AddEmployeePage } from './institution_admin/AddEmployeePage';
-import { CentralImportPage } from './app_admin/CentralImportPage';
+import { CentralImportPage } from './app_admin/central_import/CentralImportPage';
 import { MyCustomerInstitutionPage } from './institution_admin/MyInstitutionPage';
 import { MyInstitutionUsersPage } from './institution_admin/MyInstitutionUsersPage';
+import { CentralImportDuplicationCheckPage } from './app_admin/central_import/CentralImportDuplicationCheckPage';
 
 const BasicDataPage = () => {
   const { t } = useTranslation('basicData');
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
@@ -95,7 +96,7 @@ const BasicDataPage = () => {
                 to={UrlPathTemplate.BasicDataCentralImport}>
                 <ListItemText>
                   <Typography variant="overline" color="primary" fontSize="1rem">
-                    {t('central_import')}
+                    {t('central_import.central_import')}
                   </Typography>
                 </ListItemText>
               </MenuItem>
@@ -123,6 +124,11 @@ const BasicDataPage = () => {
             component={AdminCustomerInstitutionsContainer}
           />
           <AppAdminRoute exact path={UrlPathTemplate.BasicDataCentralImport} component={CentralImportPage} />
+          <AppAdminRoute
+            exact
+            path={UrlPathTemplate.BasicDataCentralImportDuplicateCheck}
+            component={CentralImportDuplicationCheckPage}
+          />
           <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataAddEmployee} component={AddEmployeePage} />
           <InstitutionAdminRoute
             exact

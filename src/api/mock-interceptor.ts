@@ -28,6 +28,7 @@ import {
 import { mockOrganizationSearch } from '../utils/testfiles/mockOrganizationSearch';
 import { mockCompleteUpload, mockCreateUpload, mockDownload, mockPrepareUpload } from '../utils/testfiles/mockFiles';
 import { mockCristinUserSearch } from '../utils/testfiles/mockCristinUserSearch';
+import { mockPositionResponse } from '../utils/testfiles/mockPositions';
 
 // AXIOS INTERCEPTOR
 export const interceptRequestsOnMock = () => {
@@ -72,14 +73,19 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(PublicationsApiPath.DoiLookup)).reply(200, mockDoiLookup);
 
   // PROJECT
-  mock.onGet(new RegExp(`${CristinApiPath.Project}/1`)).reply(200, mockProject);
+  mock.onGet(mockProject.id).reply(200, mockProject);
+  mock.onGet(mockProjectSearch.hits?.[1].id).reply(200, mockProjectSearch.hits?.[1]);
   mock.onGet(new RegExp(CristinApiPath.Project)).reply(200, mockProjectSearch);
 
   // ORCID
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
 
-  // person Registry
+  // Person Registry
   mock.onGet(new RegExp(`${CristinApiPath.Person}\\?name=*`)).reply(200, mockCristinUserSearch);
+  mock.onPost(new RegExp(CristinApiPath.PersonIdentityNumer)).reply(201, mockCristinUserSearch.hits[0]);
+
+  // Positions
+  mock.onGet(new RegExp(CristinApiPath.Position)).reply(200, mockPositionResponse);
 
   //memberinstitutions
   mock

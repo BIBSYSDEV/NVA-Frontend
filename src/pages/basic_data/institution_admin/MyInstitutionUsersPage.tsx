@@ -8,7 +8,7 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { Modal } from '../../../components/Modal';
 import { PageHeader } from '../../../components/PageHeader';
 import { SyledPageContent } from '../../../components/styled/Wrappers';
-import { RootStore } from '../../../redux/reducers/rootReducer';
+import { RootState } from '../../../redux/store';
 import { RoleName, UserList as UserListType } from '../../../types/user.types';
 import { filterUsersByRole } from '../../../utils/role-helpers';
 import { UserList } from '../app_admin/UserList';
@@ -27,7 +27,7 @@ const StyledNewButton = styled(Button)({
 
 export const MyInstitutionUsersPage = () => {
   const { t } = useTranslation('admin');
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
   const [institutionUsers, isLoading, fetchInstitutionUsers] = useFetch<UserListType>({
     url: user?.customerId ? `${RoleApiPath.InstitutionUsers}?institution=${encodeURIComponent(user.customerId)}` : '',
     errorMessage: t('feedback:error.get_users_for_institution'),
@@ -58,8 +58,8 @@ export const MyInstitutionUsersPage = () => {
           <ListSkeleton maxWidth={25} />
         ) : (
           <UserList
-            userList={filterUsersByRole(users, RoleName.INSTITUTION_ADMIN)}
-            roleToRemove={RoleName.INSTITUTION_ADMIN}
+            userList={filterUsersByRole(users, RoleName.InstitutionAdmin)}
+            roleToRemove={RoleName.InstitutionAdmin}
             refetchUsers={fetchInstitutionUsers}
             tableCaption={t('profile:roles.institution_admins')}
           />
@@ -68,7 +68,7 @@ export const MyInstitutionUsersPage = () => {
           variant="outlined"
           startIcon={<AddIcon />}
           data-testid="button-add-institution-admin"
-          onClick={() => setRoleToAdd(RoleName.INSTITUTION_ADMIN)}>
+          onClick={() => setRoleToAdd(RoleName.InstitutionAdmin)}>
           {t('common:add_custom', { name: t('profile:roles.institution_admin') })}
         </StyledNewButton>
       </StyledContainer>
@@ -83,8 +83,8 @@ export const MyInstitutionUsersPage = () => {
           <ListSkeleton maxWidth={25} />
         ) : (
           <UserList
-            userList={filterUsersByRole(users, RoleName.CURATOR)}
-            roleToRemove={RoleName.CURATOR}
+            userList={filterUsersByRole(users, RoleName.Curator)}
+            roleToRemove={RoleName.Curator}
             refetchUsers={fetchInstitutionUsers}
             tableCaption={t('profile:roles.curators')}
             showScope
@@ -94,7 +94,7 @@ export const MyInstitutionUsersPage = () => {
           variant="outlined"
           startIcon={<AddIcon />}
           data-testid="button-add-curator"
-          onClick={() => setRoleToAdd(RoleName.CURATOR)}>
+          onClick={() => setRoleToAdd(RoleName.Curator)}>
           {t('common:add_custom', { name: t('profile:roles.curator') })}
         </StyledNewButton>
       </StyledContainer>
@@ -109,8 +109,8 @@ export const MyInstitutionUsersPage = () => {
           <ListSkeleton maxWidth={25} />
         ) : (
           <UserList
-            userList={filterUsersByRole(users, RoleName.EDITOR)}
-            roleToRemove={RoleName.EDITOR}
+            userList={filterUsersByRole(users, RoleName.Editor)}
+            roleToRemove={RoleName.Editor}
             refetchUsers={fetchInstitutionUsers}
             tableCaption={t('profile:roles.editors')}
           />
@@ -119,7 +119,7 @@ export const MyInstitutionUsersPage = () => {
           variant="outlined"
           startIcon={<AddIcon />}
           data-testid="button-add-editor"
-          onClick={() => setRoleToAdd(RoleName.EDITOR)}>
+          onClick={() => setRoleToAdd(RoleName.Editor)}>
           {t('common:add_custom', { name: t('profile:roles.editor') })}
         </StyledNewButton>
       </StyledContainer>

@@ -38,14 +38,6 @@ export const AddContributorModal = ({
     handleCloseModal();
   };
 
-  // TODO: Implement when login uses Cristin instead of ARP (NP-4815)
-  // const addSelfAsContributor = () => {
-  //   if (user?.authority) {
-  //     onContributorSelected(user.authority, selectedContributorRole as ContributorRole);
-  //   }
-  //   handleCloseModal();
-  // };
-
   const handleCloseModal = () => {
     toggleModal();
     if (contributorRoles.length > 1) {
@@ -103,7 +95,6 @@ export const AddContributorModal = ({
         ) : (
           <AddContributorForm
             addContributor={addContributor}
-            // addSelfAsContributor={addSelfAsContributor} // TODO
             openAddUnverifiedContributor={() => setOpenAddUnverifiedContributor(true)}
             initialSearchTerm={initialSearchTerm}
             roleToAdd={selectedContributorRole}

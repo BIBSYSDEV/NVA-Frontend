@@ -23,7 +23,7 @@ import { InstitutionUser, RoleName } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { ViewingScopeCell } from '../institution_admin/ViewingScopeCell';
-import { RootStore } from '../../../redux/reducers/rootReducer';
+import { RootState } from '../../../redux/store';
 import { useFetchResource } from '../../../utils/hooks/useFetchResource';
 import { Organization } from '../../../types/organization.types';
 import { getSortedSubUnits } from '../../../utils/institutions-helpers';
@@ -51,7 +51,7 @@ export const UserList = ({
   const [page, setPage] = useState(0);
   const [updatedRoleForUsers, setUpdatedRoleForUsers] = useState<string[]>([]);
   const [removeRoleForUser, setRemoveRoleForUser] = useState('');
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
   const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
     showScope ? user?.topOrgCristinId ?? '' : ''
   );
@@ -100,7 +100,7 @@ export const UserList = ({
 
   // Ensure selected page is not out of bounds due to manipulated userList
   const validPage = userList.length <= page * rowsPerPage ? 0 : page;
-  const isLastInstitutionAdmin = roleToRemove === RoleName.INSTITUTION_ADMIN && userList.length === 1;
+  const isLastInstitutionAdmin = roleToRemove === RoleName.InstitutionAdmin && userList.length === 1;
 
   const sortedList = userList.sort((a, b) =>
     `${a.givenName} ${a.familyName}`.toLocaleLowerCase() < `${b.givenName} ${b.familyName}`.toLocaleLowerCase() ? -1 : 1

@@ -1,14 +1,15 @@
 import { LanguageString } from './common.types';
 
 export enum RoleName {
-  INSTITUTION_ADMIN = 'Institution-admin',
-  APP_ADMIN = 'App-admin',
-  CURATOR = 'Curator',
-  CREATOR = 'Creator',
-  EDITOR = 'Editor',
+  InstitutionAdmin = 'Institution-admin',
+  AppAdmin = 'App-admin',
+  Curator = 'Curator',
+  Creator = 'Creator',
+  Editor = 'Editor',
 }
 
 export interface User {
+  nationalIdNumber: string;
   createdDate?: string;
   cristinId?: string;
   name: string;
@@ -29,7 +30,7 @@ export interface User {
   allowedCustomers: string[];
 }
 
-interface UserRole {
+export interface UserRole {
   type: 'Role';
   rolename: RoleName;
 }
@@ -63,6 +64,8 @@ export interface FeideUser {
   'custom:roles'?: string;
   'custom:accessRights'?: string;
   'custom:allowedCustomers'?: string;
+  'custom:feideIdNin'?: string;
+  'custom:nin'?: string;
 }
 
 export interface CristinPersonAffiliation {
@@ -106,4 +109,22 @@ export interface FlatCristinUser {
   id: string;
   cristinIdentifier: string;
   affiliations: CristinPersonAffiliation[];
+}
+
+interface Position {
+  id: string;
+  enabled: boolean;
+  name: LanguageString;
+}
+
+export interface PositionResponse {
+  positions: Position[];
+}
+
+export interface Employment {
+  type: string;
+  organization: string;
+  startDate: string;
+  endDate: string;
+  fullTimeEquivalentPercentage: string;
 }
