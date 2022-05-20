@@ -1,5 +1,6 @@
-import { setRoles } from '../../src/redux/actions/userActions';
+import { setPartialUser } from '../../src/redux/userSlice';
 import { setNotification, removeNotification } from '../../src/redux/notificationSlice';
+import { RoleName } from '../../src/types/user.types';
 import { mockFileUploadUrl } from '../../src/utils/testfiles/mockFiles';
 import { dataTestId } from '../../src/utils/dataTestIds';
 
@@ -32,7 +33,18 @@ Cypress.Commands.add('selectNpiDiscipline', (npiDiscipline) => {
 Cypress.Commands.add('setUserRolesInRedux', (roles) => {
   cy.window()
     .its('store') // Redux store must be exposed via window.store
-    .then((store) => store.dispatch(setRoles(roles)));
+    .then((store) =>
+      store.dispatch(
+        setPartialUser({
+          roles: roles,
+          isCreator: roles.includes(RoleName.Creator),
+          isAppAdmin: roles.includes(RoleName.AppAdmin),
+          isInstitutionAdmin: roles.includes(RoleName.InstitutionAdmin),
+          isCurator: roles.includes(RoleName.Curator),
+          isEditor: roles.includes(RoleName.Editor),
+        })
+      )
+    );
 });
 
 Cypress.Commands.add('setNotificationInRedux', (notification) => {

@@ -1,10 +1,10 @@
 export enum JournalArticleContentType {
-  AcademicArticle = 'Research article',
-  AcademicLiteratureReview = 'Review article',
-  CaseReport = 'Case report',
-  StudyProtocol = 'Study protocol',
-  ProfessionalArticle = 'Professional article',
-  PopularScienceArticle = 'Popular science article',
+  AcademicArticle = 'AcademicArticle',
+  AcademicLiteratureReview = 'AcademicLiteratureReview',
+  CaseReport = 'CaseReport',
+  StudyProtocol = 'StudyProtocol',
+  ProfessionalArticle = 'ProfessionalArticle',
+  PopularScienceArticle = 'PopularScienceArticle',
 }
 
 export enum BookMonographContentType {

@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import { PageHeader } from '../../components/PageHeader';
 import { SyledPageContent, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { RootState } from '../../redux/store';
 import { getUserPath } from '../../utils/urlPaths';
 import { UserInfo } from './UserInfo';
 import { UserOrcid } from './UserOrcid';
@@ -14,7 +14,7 @@ import { UserAffiliations } from './UserAffiliations';
 const MyProfilePage = () => {
   const { t } = useTranslation('profile');
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const user = useSelector((store: RootStore) => store.user)!; // If user has been empty this route would already be blocked
+  const user = useSelector((store: RootState) => store.user)!; // If user has been empty this route would already be blocked
 
   return (
     <SyledPageContent>

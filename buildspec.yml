@@ -21,10 +21,10 @@ env:
 phases:
   install:
     runtime-versions:
-      nodejs: 12
+      nodejs: latest
     commands:
       - env
-      - npm install
+      - npm ci
   pre_build:
     commands:
       - export REACT_APP_ORCID_REDIRECT_URI=https://${REACT_APP_APP_HOST}/my-profile

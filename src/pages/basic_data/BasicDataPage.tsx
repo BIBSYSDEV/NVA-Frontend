@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { Link, Switch, useHistory } from 'react-router-dom';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AppAdminRoute, InstitutionAdminRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -18,7 +18,7 @@ import { CentralImportDuplicationCheckPage } from './app_admin/central_import/Ce
 
 const BasicDataPage = () => {
   const { t } = useTranslation('basicData');
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
 

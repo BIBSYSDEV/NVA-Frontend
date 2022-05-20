@@ -6,7 +6,7 @@ import { Box, Button, TablePagination, TextField, Typography } from '@mui/materi
 import SearchIcon from '@mui/icons-material/Search';
 import { LoadingButton } from '@mui/lab';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
-import { RootStore } from '../../../../redux/reducers/rootReducer';
+import { RootState } from '../../../../redux/store';
 import { Registration } from '../../../../types/registration.types';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
@@ -37,7 +37,7 @@ export const AddContributorForm = ({
 }: AddContributorFormProps) => {
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
 
   const [isAddingSelf, setIsAddingSelf] = useState(false);
   const [selectedUser, setSelectedUser] = useState<CristinUser>();
