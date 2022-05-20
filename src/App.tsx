@@ -14,7 +14,7 @@ import { Footer } from './layout/Footer';
 import { Header } from './layout/header/Header';
 import { Notifier } from './layout/Notifier';
 import { setNotification } from './redux/notificationSlice';
-import { setUser, setViewingScope } from './redux/actions/userActions';
+import { setPartialUser, setUser } from './redux/actions/userActions';
 import { RootStore } from './redux/reducers/rootReducer';
 import { authOptions } from './utils/aws-config';
 import { LocalStorageKey, USE_MOCK_DATA } from './utils/constants';
@@ -27,6 +27,7 @@ import { InstitutionUser } from './types/user.types';
 import { UrlPathTemplate } from './utils/urlPaths';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInstitutionDialog';
+import { CreateCristinPersonDialog } from './components/CreateCristinPersonDialog';
 
 const getLanguageTagValue = (language: string) => {
   if (language === 'eng') {
@@ -93,7 +94,7 @@ export const App = () => {
   useEffect(() => {
     if (institutionUser) {
       const viewingScope = institutionUser.viewingScope?.includedUnits ?? [];
-      dispatch(setViewingScope(viewingScope));
+      dispatch(setPartialUser({ viewingScope }));
     }
   }, [dispatch, institutionUser]);
 
@@ -102,12 +103,15 @@ export const App = () => {
       <Helmet defaultTitle={t('common:page_title')} titleTemplate={`%s - ${t('common:page_title')}`}>
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
-      {user && (
-        <SelectCustomerInstitutionDialog
-          allowedCustomerIds={user.allowedCustomers}
-          openDefault={user.allowedCustomers.length > 1}
-        />
-      )}
+      {user &&
+        (user.cristinId ? (
+          <SelectCustomerInstitutionDialog
+            allowedCustomerIds={user.allowedCustomers}
+            openDefault={user.allowedCustomers.length > 1}
+          />
+        ) : (
+          <CreateCristinPersonDialog user={user} />
+        ))}
       {isLoadingUserAttributes || isLoadingInstitutionUser ? (
         <PageSpinner />
       ) : (
