@@ -37,15 +37,19 @@ const WorklistPage = () => {
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
         <>
-          {isLoadingViewingScopeOrganization ? (
-            <CircularProgress />
-          ) : (
-            <Typography paragraph sx={{ fontWeight: 'bold' }}>
-              {t('limited_to', {
-                name: viewingScopeOrganization ? getLanguageString(viewingScopeOrganization.name) : '',
-              })}
-            </Typography>
-          )}
+          {viewingScopeId ? (
+            isLoadingViewingScopeOrganization ? (
+              <CircularProgress />
+            ) : (
+              viewingScopeOrganization && (
+                <Typography paragraph sx={{ fontWeight: 'bold' }}>
+                  {t('limited_to', {
+                    name: getLanguageString(viewingScopeOrganization.name),
+                  })}
+                </Typography>
+              )
+            )
+          ) : null}
           <WorklistItems conversations={supportRequests} />
         </>
       )}

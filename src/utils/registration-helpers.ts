@@ -22,6 +22,7 @@ import {
   MentionInPublication,
   Venue,
 } from '../types/publication_types/artisticRegistration.types';
+import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -99,7 +100,26 @@ export const getFormattedRegistration = (registration: Registration) => {
     formattedRegistration.fileSet.type = 'FileSet';
   }
 
-  if (isPresentation(type)) {
+  if (isJournal(type)) {
+    const journalRegistration = formattedRegistration as JournalRegistration;
+    if (journalRegistration.entityDescription.reference) {
+      const { pages } = journalRegistration.entityDescription.reference.publicationInstance;
+
+      formattedRegistration = {
+        ...journalRegistration,
+        entityDescription: {
+          ...journalRegistration.entityDescription,
+          reference: {
+            ...journalRegistration.entityDescription.reference,
+            publicationInstance: {
+              ...journalRegistration.entityDescription.reference.publicationInstance,
+              pages: pages ? { ...pages, type: 'Range' } : null,
+            },
+          },
+        },
+      };
+    }
+  } else if (isPresentation(type)) {
     const presentationRegistration = formattedRegistration as PresentationRegistration;
     const { time, agent, place } = presentationRegistration.entityDescription.reference.publicationContext;
 
