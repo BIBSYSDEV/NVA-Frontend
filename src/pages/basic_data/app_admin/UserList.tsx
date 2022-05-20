@@ -23,7 +23,7 @@ import { InstitutionUser, RoleName } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { ViewingScopeCell } from '../institution_admin/ViewingScopeCell';
-import { RootStore } from '../../../redux/reducers/rootReducer';
+import { RootState } from '../../../redux/store';
 import { useFetchResource } from '../../../utils/hooks/useFetchResource';
 import { Organization } from '../../../types/organization.types';
 import { getSortedSubUnits } from '../../../utils/institutions-helpers';
@@ -51,7 +51,7 @@ export const UserList = ({
   const [page, setPage] = useState(0);
   const [updatedRoleForUsers, setUpdatedRoleForUsers] = useState<string[]>([]);
   const [removeRoleForUser, setRemoveRoleForUser] = useState('');
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
   const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
     showScope ? user?.topOrgCristinId ?? '' : ''
   );

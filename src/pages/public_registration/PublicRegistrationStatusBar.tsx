@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { validateYupSchema, yupToFormErrors } from 'formik';
 import { Link as RouterLink } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { RootState } from '../../redux/store';
 import { PublicRegistrationProps } from './PublicRegistrationContent';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
@@ -34,7 +34,7 @@ enum LoadingName {
 export const PublicRegistrationStatusBar = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('registration');
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
   const { identifier, resourceOwner, doi, doiRequest, publisher } = registration;
 
   const [messageToCurator, setMessageToCurator] = useState('');

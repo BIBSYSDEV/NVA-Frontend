@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button, Menu as MuiMenu, MenuItem, Typography, Theme, useMediaQuery, IconButton, Box } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircleOutlined';
 import { useSelector } from 'react-redux';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { RootState } from '../../redux/store';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { LanguageSelector } from './LanguageSelector';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -15,7 +15,7 @@ interface MenuProps {
 
 export const Menu = ({ handleLogout }: MenuProps) => {
   const { t } = useTranslation();
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const name = user?.name ?? '';

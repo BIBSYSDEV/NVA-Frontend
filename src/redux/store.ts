@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import notificationReducer from './notificationSlice';
 import resourcesReducer from './resourcesSlice';
-import { userReducer } from './reducers/userReducer';
+import userReducer from './userSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,3 +10,5 @@ export const store = configureStore({
     resources: resourcesReducer,
   },
 });
+
+export type RootState = ReturnType<typeof store.getState>;

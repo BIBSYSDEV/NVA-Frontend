@@ -1,4 +1,4 @@
-import { setPartialUser } from '../../src/redux/actions/userActions';
+import { setPartialUser } from '../../src/redux/userSlice';
 import { setNotification, removeNotification } from '../../src/redux/notificationSlice';
 import { RoleName } from '../../src/types/user.types';
 import { mockFileUploadUrl } from '../../src/utils/testfiles/mockFiles';

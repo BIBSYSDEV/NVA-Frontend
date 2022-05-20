@@ -20,7 +20,7 @@ import { setNotification } from '../../redux/notificationSlice';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { PreviewFile } from './preview_file/PreviewFile';
 import { dataTestId } from '../../utils/dataTestIds';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { RootState } from '../../redux/store';
 
 const maxFileSize = 10000000; //10 MB
 
@@ -51,7 +51,7 @@ interface FileRowProps {
 const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('common');
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
   const [openPreviewAccordion, setOpenPreviewAccordion] = useState(openPreviewByDefault);
   const [isLoadingPreviewFile, setIsLoadingPreviewFile] = useState(false);
   const [previewFileUrl, setPreviewFileUrl] = useState('');

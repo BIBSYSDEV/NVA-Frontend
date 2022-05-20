@@ -2,7 +2,7 @@ import { SyntheticEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert, Fade, Snackbar, SnackbarCloseReason } from '@mui/material';
 import { removeNotification } from '../redux/notificationSlice';
-import { RootStore } from '../redux/reducers/rootReducer';
+import { RootState } from '../redux/store';
 
 const autoHideNotificationDuration = {
   error: 9000,
@@ -12,7 +12,7 @@ const autoHideNotificationDuration = {
 };
 
 export const Notifier = () => {
-  const notification = useSelector((store: RootStore) => store.notification);
+  const notification = useSelector((store: RootState) => store.notification);
   const dispatch = useDispatch();
 
   const handleClose = (_: Event | SyntheticEvent, reason?: SnackbarCloseReason) => {

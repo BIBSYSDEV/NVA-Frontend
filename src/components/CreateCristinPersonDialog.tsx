@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { createCristinPerson } from '../api/userApi';
 import { emptyUser } from '../pages/basic_data/institution_admin/AddEmployeePage';
-import { setPartialUser } from '../redux/actions/userActions';
+import { setPartialUser } from '../redux/userSlice';
 import { setNotification } from '../redux/notificationSlice';
 import { CreateCristinUser, FlatCristinUser, User } from '../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../utils/constants';

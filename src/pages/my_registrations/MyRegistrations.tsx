@@ -7,7 +7,7 @@ import { ListSkeleton } from '../../components/ListSkeleton';
 import { PageHeader } from '../../components/PageHeader';
 import { SyledPageContent, StyledRightAlignedWrapper, BackgroundDiv } from '../../components/styled/Wrappers';
 import { TabButton } from '../../components/TabButton';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { RootState } from '../../redux/store';
 import { MyRegistrationsResponse, RegistrationStatus } from '../../types/registration.types';
 import { getUserPath } from '../../utils/urlPaths';
 import { MyRegistrationsList } from './MyRegistrationsList';
@@ -21,7 +21,7 @@ enum Tab {
 
 const MyRegistrations = () => {
   const { t } = useTranslation('workLists');
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
   const [selectedTab, setSelectedTab] = useState(Tab.Unpublished);
   const [myRegistrationsResponse, isLoading, refetchRegistrations] = useFetch<MyRegistrationsResponse>({
     url: PublicationsApiPath.RegistrationsByOwner,

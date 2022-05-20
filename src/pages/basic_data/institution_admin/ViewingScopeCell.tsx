@@ -6,8 +6,8 @@ import { RoleApiPath } from '../../../api/apiPaths';
 import { authenticatedApiRequest } from '../../../api/apiRequest';
 import { setNotification } from '../../../redux/notificationSlice';
 import { Organization } from '../../../types/organization.types';
-import { setPartialUser } from '../../../redux/actions/userActions';
-import { RootStore } from '../../../redux/reducers/rootReducer';
+import { setPartialUser } from '../../../redux/userSlice';
+import { RootState } from '../../../redux/store';
 import { InstitutionUser } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -21,7 +21,7 @@ interface ViewingScopeCellProps {
 export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('admin');
-  const authenticatedUser = useSelector((store: RootStore) => store.user);
+  const authenticatedUser = useSelector((store: RootState) => store.user);
   const [isUpdating, setIsUpdating] = useState(false);
   const [userCopy, setUserCopy] = useState(user); // Needed if empty scope before adding a new
   const selectedId = userCopy.viewingScope?.includedUnits[0] ?? '';

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFetch } from './useFetch';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { RootState } from '../../redux/store';
 import { setResource } from '../../redux/resourcesSlice';
 import { API_URL } from '../constants';
 
@@ -9,7 +9,7 @@ import { API_URL } from '../constants';
 export const useFetchResource = <T>(id: string, errorMessage?: string): [T | undefined, boolean] => {
   const dispatch = useDispatch();
   const key = getKeyValue(id);
-  const resourcesState = useSelector((store: RootStore) => store.resources);
+  const resourcesState = useSelector((store: RootState) => store.resources);
   const resource = resourcesState[key] as T | undefined;
 
   const [fetchedResource, isLoading] = useFetch<T>({

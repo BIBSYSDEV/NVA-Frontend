@@ -8,7 +8,7 @@ import { useUppy } from '@uppy/react';
 import { ItalicPageHeader } from '../../components/PageHeader';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { RootState } from '../../redux/store';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
@@ -40,7 +40,7 @@ interface RegistrationFormProps {
 }
 
 export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
   const { t, i18n } = useTranslation('registration');
   const history = useHistory();
   const uppy = useUppy(createUppy(i18n.language));

@@ -14,8 +14,8 @@ import { Footer } from './layout/Footer';
 import { Header } from './layout/header/Header';
 import { Notifier } from './layout/Notifier';
 import { setNotification } from './redux/notificationSlice';
-import { setPartialUser, setUser } from './redux/actions/userActions';
-import { RootStore } from './redux/reducers/rootReducer';
+import { setPartialUser, setUser } from './redux/userSlice';
+import { RootState } from './redux/store';
 import { authOptions } from './utils/aws-config';
 import { LocalStorageKey, USE_MOCK_DATA } from './utils/constants';
 import { mockUser } from './utils/testfiles/mock_feide_user';
@@ -45,7 +45,7 @@ if (window.location.pathname === UrlPathTemplate.MyProfile && window.location.ha
 export const App = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation('feedback');
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
   const [isLoadingUserAttributes, setIsLoadingUserAttributes] = useState(true);
 
   const [institutionUser, isLoadingInstitutionUser] = useFetch<InstitutionUser>({

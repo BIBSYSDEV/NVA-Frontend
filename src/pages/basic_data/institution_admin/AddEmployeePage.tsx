@@ -14,7 +14,7 @@ import { convertToCristinUser } from '../../../utils/user-helpers';
 import { addEmployeeValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
 import { addEmployment, createCristinPerson } from '../../../api/userApi';
 import { createUser } from '../../../api/roleApi';
-import { RootStore } from '../../../redux/reducers/rootReducer';
+import { RootState } from '../../../redux/store';
 
 export interface AddEmployeeData {
   searchIdNumber: string;
@@ -42,7 +42,7 @@ const initialValues: AddEmployeeData = {
 export const AddEmployeePage = () => {
   const { t } = useTranslation('basicData');
   const dispatch = useDispatch();
-  const customerId = useSelector((store: RootStore) => store.user?.customerId);
+  const customerId = useSelector((store: RootState) => store.user?.customerId);
 
   const onSubmit = async (values: AddEmployeeData, { resetForm }: FormikHelpers<AddEmployeeData>) => {
     if (!customerId) {

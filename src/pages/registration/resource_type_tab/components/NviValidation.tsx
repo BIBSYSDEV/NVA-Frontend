@@ -2,7 +2,7 @@ import { Paper, Typography } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { RootStore } from '../../../../redux/reducers/rootReducer';
+import { RootState } from '../../../../redux/store';
 import { BookType, ChapterType, JournalType } from '../../../../types/publicationFieldNames';
 import { BookRegistration } from '../../../../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
@@ -56,7 +56,7 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
 const NviValidationJournalArticle = ({ registration }: { registration: JournalRegistration }) => {
   const { reference } = registration.entityDescription;
 
-  const resourceState = useSelector((store: RootStore) => store.resources);
+  const resourceState = useSelector((store: RootState) => store.resources);
   const journal = reference?.publicationContext.id ? (resourceState[reference.publicationContext.id] as Journal) : null;
 
   return <NviStatus level={journal?.level} isPeerReviewed={!!reference?.publicationInstance.peerReviewed} />;
@@ -65,7 +65,7 @@ const NviValidationJournalArticle = ({ registration }: { registration: JournalRe
 const NviValidationBookMonograph = ({ registration }: { registration: BookRegistration }) => {
   const { reference } = registration.entityDescription;
 
-  const resourceState = useSelector((store: RootStore) => store.resources);
+  const resourceState = useSelector((store: RootState) => store.resources);
   const publisher = reference?.publicationContext.publisher?.id
     ? (resourceState[reference.publicationContext.publisher.id] as Publisher)
     : null;
@@ -83,7 +83,7 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
 
 const NviValidationChapterArticle = ({ registration }: { registration: ChapterRegistration }) => {
   const { t } = useTranslation('feedback');
-  const resourceState = useSelector((store: RootStore) => store.resources);
+  const resourceState = useSelector((store: RootState) => store.resources);
 
   const { reference } = registration.entityDescription;
 
