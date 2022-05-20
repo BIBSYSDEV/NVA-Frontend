@@ -8,7 +8,7 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { DoiRequestConversation, PublicationConversation } from '../../types/publication_types/messages.types';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { SearchResponse } from '../../types/common.types';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { RootState } from '../../redux/store';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { Organization } from '../../types/organization.types';
 import { getLanguageString } from '../../utils/translation-helpers';
@@ -16,7 +16,7 @@ import { WorklistItems } from './WorklistItems';
 
 const WorklistPage = () => {
   const { t } = useTranslation('workLists');
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
   const viewingScopeId = user && user.viewingScope.length > 0 ? user.viewingScope[0] : '';
   const [viewingScopeOrganization, isLoadingViewingScopeOrganization] = useFetchResource<Organization>(viewingScopeId);
 

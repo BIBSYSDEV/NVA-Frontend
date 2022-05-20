@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Button } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { Link as RouterLink } from 'react-router-dom';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { RootState } from '../../redux/store';
 import { Menu } from './Menu';
 import { getCurrentPath, useAuthentication } from '../../utils/hooks/useAuthentication';
 import { LocalStorageKey } from '../../utils/constants';
@@ -13,7 +13,7 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 import { PreviousPathState } from '../LoginPage';
 
 export const LoginButton = () => {
-  const user = useSelector((state: RootStore) => state.user);
+  const user = useSelector((state: RootState) => state.user);
   const { t } = useTranslation('authorization');
   const { handleLogout } = useAuthentication();
 

@@ -10,3 +10,5 @@ export const store = configureStore({
     resources: resourcesReducer,
   },
 });
+
+export type RootState = ReturnType<typeof store.getState>;

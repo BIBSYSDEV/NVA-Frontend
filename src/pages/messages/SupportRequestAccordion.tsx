@@ -13,7 +13,7 @@ import { RegistrationPreview } from '../../types/registration.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { MessageList } from './MessageList';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { RootState } from '../../redux/store';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 
 interface SupportRequestAccordionProps {
@@ -25,7 +25,7 @@ interface SupportRequestAccordionProps {
 export const SupportRequestAccordion = ({ registration, messageType, messages }: SupportRequestAccordionProps) => {
   const { t } = useTranslation('workLists');
   const dispatch = useDispatch();
-  const userId = useSelector((store: RootStore) => store.user?.id);
+  const userId = useSelector((store: RootState) => store.user?.id);
 
   const [messagesCopy, setMessagesCopy] = useState(messages);
 

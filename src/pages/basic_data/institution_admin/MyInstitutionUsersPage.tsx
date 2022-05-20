@@ -8,7 +8,7 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { Modal } from '../../../components/Modal';
 import { PageHeader } from '../../../components/PageHeader';
 import { SyledPageContent } from '../../../components/styled/Wrappers';
-import { RootStore } from '../../../redux/reducers/rootReducer';
+import { RootState } from '../../../redux/store';
 import { RoleName, UserList as UserListType } from '../../../types/user.types';
 import { filterUsersByRole } from '../../../utils/role-helpers';
 import { UserList } from '../app_admin/UserList';
@@ -27,7 +27,7 @@ const StyledNewButton = styled(Button)({
 
 export const MyInstitutionUsersPage = () => {
   const { t } = useTranslation('admin');
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
   const [institutionUsers, isLoading, fetchInstitutionUsers] = useFetch<UserListType>({
     url: user?.customerId ? `${RoleApiPath.InstitutionUsers}?institution=${encodeURIComponent(user.customerId)}` : '',
     errorMessage: t('feedback:error.get_users_for_institution'),

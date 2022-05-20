@@ -8,7 +8,7 @@ import { StyledCenterContainer } from '../../../components/styled/Wrappers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { datePickerTranslationProps } from '../../../themes/mainTheme';
 import { getNewDateValue } from '../../../utils/registration-helpers';
-import { RootStore } from '../../../redux/reducers/rootReducer';
+import { RootState } from '../../../redux/store';
 import { Organization } from '../../../types/organization.types';
 import { useFetchResource } from '../../../utils/hooks/useFetchResource';
 import { getSortedSubUnits } from '../../../utils/institutions-helpers';
@@ -19,7 +19,7 @@ import { PositionField } from '../fields/PositionField';
 export const AddAffiliationPanel = () => {
   const { t } = useTranslation('basicData');
   const { values, setFieldValue, isSubmitting } = useFormikContext<AddEmployeeData>();
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
   const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
     user?.topOrgCristinId ?? ''
   );

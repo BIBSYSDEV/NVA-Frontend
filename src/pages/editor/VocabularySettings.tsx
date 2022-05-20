@@ -4,7 +4,7 @@ import { TFunction, useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { authenticatedApiRequest } from '../../api/apiRequest';
 import { setNotification } from '../../redux/notificationSlice';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { RootState } from '../../redux/store';
 import { VocabularyList, CustomerVocabulary, VocabularyStatus } from '../../types/customerInstitution.types';
 import { isSuccessStatus, isErrorStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -34,7 +34,7 @@ export const getTranslatedVocabularyName = (t: TFunction<'editor'>, id: string) 
 
 export const VocabularySettings = () => {
   const { t } = useTranslation('editor');
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
   const dispatch = useDispatch();
   const [isUpdating, setIsUpdating] = useState(false);
 
