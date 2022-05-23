@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { Contributor, ContributorRole } from '../../../types/contributor.types';
-import { BookType } from '../../../types/publicationFieldNames';
+import { BookType, ReportType } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
 import { isArtistic, isDegree, isPresentation } from '../../registration-helpers';
 
@@ -35,6 +35,8 @@ export const contributorsValidationSchema = Yup.array().when(
         .test('editor-test', contributorErrorMessage.editorRequired, (contributors) =>
           hasRole(contributors, ContributorRole.Editor)
         );
+    } else if (publicationInstanceType === ReportType.BookOfAbstract) {
+      return Yup.array().of(contributorValidationSchema);
     } else if (isPresentation(publicationInstanceType) || isArtistic(publicationInstanceType)) {
       return Yup.array().of(contributorValidationSchema).min(1, contributorErrorMessage.contributorRequired);
     } else {
