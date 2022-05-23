@@ -5,11 +5,9 @@ import englishLocale from '@uppy/locales/lib/en_US';
 import { FileApiPath } from '../../api/apiPaths';
 import { authenticatedApiRequest } from '../../api/apiRequest';
 
-const getUppyLocale = (language: string) => (language === 'nob' ? norwegianLocale : englishLocale);
-
 export const createUppy = (language: string) => () =>
   new Uppy({
-    locale: getUppyLocale(language),
+    locale: language === 'nob' ? norwegianLocale : englishLocale,
     autoProceed: true,
   }).use(AwsS3Multipart, {
     abortMultipartUpload: async (file, opts) => {
