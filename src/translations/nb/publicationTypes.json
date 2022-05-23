@@ -33,8 +33,9 @@
   "OtherPublication": "Annen publikasjon",
   "OtherStudentWork": "Annen studentoppgave",
   "Report": "Rapport",
+  "ReportBasic": "Annen rapport",
+  "ReportBookOfAbstract": "Abstraktsamling",
   "ReportPolicy": "Policyrapport",
   "ReportResearch": "Forskningsrapport",
-  "ReportWorkingPaper": "Arbeidsnotat",
-  "ReportBasic": "Annen rapport"
+  "ReportWorkingPaper": "Arbeidsnotat"
 }
