@@ -13,6 +13,7 @@ export enum BookMonographContentType {
   PopularScienceMonograph = 'Popular Science Monograph',
   Textbook = 'Textbook',
   Encyclopedia = 'Encyclopedia',
+  ExhititionCatalog = 'Exhibition catalog',
 }
 
 export enum ChapterContentType {
