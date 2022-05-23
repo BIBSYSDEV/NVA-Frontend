@@ -32,6 +32,7 @@ export enum DegreeType {
   Bachelor = 'DegreeBachelor',
   Master = 'DegreeMaster',
   Phd = 'DegreePhd',
+  Licentiate = 'DegreeLicentiate',
   Other = 'OtherStudentWork',
 }
 
