@@ -21,6 +21,8 @@ export enum ChapterContentType {
   PopularScienceChapter = 'Popular Science Chapter',
   TextbookChapter = 'Textbook Chapter',
   EncyclopediaChapter = 'Encyclopedia Chapter',
+  Introduction = 'Introduction',
+  ExhibitionCatalogChapter = 'Exhibition Catalog Chapter',
 }
 
 export const nviApplicableContentTypes: string[] = [
