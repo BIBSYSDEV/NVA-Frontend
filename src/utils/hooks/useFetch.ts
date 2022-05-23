@@ -3,8 +3,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useCancelToken } from './useCancelToken';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
+import { setNotification } from '../../redux/notificationSlice';
 import { apiRequest, authenticatedApiRequest } from '../../api/apiRequest';
 import { isErrorStatus, isSuccessStatus } from '../constants';
 
@@ -47,11 +46,12 @@ export const useFetch = <T>({
   const showErrorNotification = useCallback(
     () =>
       dispatch(
-        setNotification(
-          errorMessageRef.current ??
+        setNotification({
+          message:
+            errorMessageRef.current ??
             tRef.current('error.fetch', { resource: url, interpolation: { escapeValue: false } }),
-          NotificationVariant.Error
-        )
+          variant: 'error',
+        })
       ),
     [dispatch, url]
   );
@@ -82,6 +82,8 @@ export const useFetch = <T>({
   useEffect(() => {
     if (url) {
       fetchData();
+    } else {
+      setData(undefined);
     }
   }, [fetchData, url]);
 

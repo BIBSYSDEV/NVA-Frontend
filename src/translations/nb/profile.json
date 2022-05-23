@@ -4,22 +4,13 @@
     "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilhørigheten?",
     "confirm_remove_affiliation_title": "Fjerne tilhørighet?"
   },
-  "applications": "Applikasjoner",
   "authority": {
-    "cancel_connect_authority_text": "Du må koble deg til forfatterregisteret for å gå videre. Hvis du avbryter, blir du logget ut. Ønsker du å avbryte?",
-    "cancel_connect_authority_title": "Ønsker du å avbryte?",
-    "connect_authority": "Koble til nasjonalt register over forfattere",
-    "connect_to_select_authority": "Koble til valgt forfatter",
-    "connected_authority": "Din forfatteridentitet er koblet til",
-    "create_authority": "Opprett ny forfatter",
-    "description_create_own_authority": "Ikke opprett ny forfatter i forfatterregisteret hvis du allerede er registrert. Sjekk Eksempel på publikasjon for å være sikker på at du ikke oppretter en dublett.\n\nEr navnet ditt skrevet feil for Eksempel på publikasjon, koble allikevel til denne forfatteren. Kontakt kurator ved din institusjon for å få rettet skrivefeil i forfatterregisteret. [Lenke til kontaktskjema]\n\nFår du flere treff med riktig Eksempel på publikasjon hvor du helt sikkert er forfatter, koble til en av forfatterne. Kontakt kurator ved din institusjon for å få ryddet dubletter i forfatterregisteret. [Lenke til kontaktskjema]\n\nHvis navnet øverst på denne siden ikke er ditt, avbryt og kontakt kurator ved din institusjon for å få rettet feilen. [Lenke til kontaktskjema]  ",
-    "description_no_authority_found": "Navnet ditt finnes ikke i forfatterregisteret og må legges til før du kan fortsette.",
-    "example_publication": "Eksempel på publikasjon",
     "no_affiliations_found": "Ingen tilhørigheter funnet",
     "no_registrations_found": "Ingen registreringer funnet",
-    "other_affiliations": "+ {{count}} annen tilhørighet",
-    "other_affiliations_plural": "+ {{count}} andre tilhørigheter",
-    "see_profile": "Se forfatterprofil"
+    "other_affiliations_one": "+ {{count}} annen tilhørighet",
+    "other_affiliations_other": "+ {{count}} andre tilhørigheter",
+    "other_registrations_one": "+ {{count}} annen registrering",
+    "other_registrations_other": "+ {{count}} andre registreringer"
   },
   "heading": {
     "affiliations": "Tilhørigheter",
@@ -41,8 +32,7 @@
     "orcid": "ORCID",
     "orcid_description": "Koble din ORCID iD ved å logge på ORCID. Eller registrer deg for å få en ORCID iD og koble denne. Da blir det enklere å identifisere deg",
     "remove_connection": "Fjern kobling til ORCID",
-    "remove_connection_info": "Er du sikker på at du vil fjerne koblingen til ORCID? \n\nDersom du ønsker å trekke tilbake Units godkjenning til å lese din ORCID, må du gå inn på din ORCID-profil.",
-    "skip_this_step": "Hopp over (kan gjøres senere)"
+    "remove_connection_info": "Er du sikker på at du vil fjerne koblingen til ORCID? \n\nDersom du ønsker å trekke tilbake Sikts godkjenning til å lese din ORCID, må du gå inn på din ORCID-profil."
   },
   "public_profile": "Offentlig profil",
   "roles": {

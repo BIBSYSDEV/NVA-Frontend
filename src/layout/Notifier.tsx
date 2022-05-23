@@ -1,16 +1,21 @@
-import React, { SyntheticEvent } from 'react';
+import { SyntheticEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Fade, Snackbar, SnackbarCloseReason } from '@mui/material';
-import Alert from '@mui/material/Alert';
-import { removeNotification } from '../redux/actions/notificationActions';
-import { RootStore } from '../redux/reducers/rootReducer';
-import { autoHideNotificationDuration } from '../utils/constants';
+import { Alert, Fade, Snackbar, SnackbarCloseReason } from '@mui/material';
+import { removeNotification } from '../redux/notificationSlice';
+import { RootState } from '../redux/store';
+
+const autoHideNotificationDuration = {
+  error: 9000,
+  info: 6000,
+  success: 3000,
+  warning: 6000,
+};
 
 export const Notifier = () => {
-  const notification = useSelector((store: RootStore) => store.notification);
+  const notification = useSelector((store: RootState) => store.notification);
   const dispatch = useDispatch();
 
-  const handleClose = (_: SyntheticEvent, reason?: SnackbarCloseReason) => {
+  const handleClose = (_: Event | SyntheticEvent, reason?: SnackbarCloseReason) => {
     if (reason !== 'clickaway') {
       dispatch(removeNotification());
     }

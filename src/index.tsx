@@ -1,14 +1,14 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
+import { StrictMode } from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { Provider } from 'react-redux';
-import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components';
-import { StyledEngineProvider, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+import { Provider as ReduxProvider } from 'react-redux';
+import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { HelmetProvider } from 'react-helmet-async';
 import { interceptRequestsOnMock } from './api/mock-interceptor';
 import { App } from './App';
 import { store } from './redux/store';
-import { lightTheme } from './themes/lightTheme';
+import { mainTheme } from './themes/mainTheme';
 import i18n from './translations/i18n';
 import { USE_MOCK_DATA } from './utils/constants';
 import { BasicErrorBoundary } from './components/ErrorBoundary';
@@ -30,19 +30,19 @@ if ((window as any).Cypress) {
 }
 
 ReactDOM.render(
-  <BasicErrorBoundary>
-    <I18nextProvider i18n={i18n}>
-      <Provider store={store}>
-        <StyledEngineProvider injectFirst>
-          <StyledComponentsThemeProvider theme={lightTheme}>
-            <MuiThemeProvider theme={lightTheme}>
-              <CssBaseline />
+  <StrictMode>
+    <BasicErrorBoundary>
+      <I18nextProvider i18n={i18n}>
+        <ReduxProvider store={store}>
+          <ThemeProvider theme={mainTheme}>
+            <CssBaseline />
+            <HelmetProvider>
               <App />
-            </MuiThemeProvider>
-          </StyledComponentsThemeProvider>
-        </StyledEngineProvider>
-      </Provider>
-    </I18nextProvider>
-  </BasicErrorBoundary>,
+            </HelmetProvider>
+          </ThemeProvider>
+        </ReduxProvider>
+      </I18nextProvider>
+    </BasicErrorBoundary>
+  </StrictMode>,
   document.getElementById('root')
 );

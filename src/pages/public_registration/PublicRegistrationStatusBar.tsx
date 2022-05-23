@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import styled from 'styled-components';
-import { Button, DialogActions, TextField, Typography } from '@mui/material';
+import { Box, Button, DialogActions, TextField, Typography } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
@@ -10,37 +9,19 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import { useTranslation } from 'react-i18next';
 import { validateYupSchema, yupToFormErrors } from 'formik';
 import { Link as RouterLink } from 'react-router-dom';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { LoadingButton } from '@mui/lab';
+import { RootState } from '../../redux/store';
 import { PublicRegistrationProps } from './PublicRegistrationContent';
 import { Modal } from '../../components/Modal';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
-import { ButtonWithProgress } from '../../components/ButtonWithProgress';
+import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationStatus, DoiRequestStatus, Registration } from '../../types/registration.types';
 import { createDoiRequest, publishRegistration, updateDoiRequest } from '../../api/registrationApi';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { getRegistrationPath } from '../../utils/urlPaths';
 import { getFirstErrorTab, getTabErrors, TabErrors } from '../../utils/formik-helpers';
 import { ErrorList } from '../registration/ErrorList';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
-import { lightTheme } from '../../themes/lightTheme';
 import { dataTestId } from '../../utils/dataTestIds';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-
-const StyledBackgroundDiv = styled(BackgroundDiv)`
-  margin-bottom: 1rem;
-`;
-
-const StyledButtonsContainer = styled.div`
-  display: flex;
-
-  button,
-  a {
-    :not(:first-child) {
-      margin-left: 1rem;
-    }
-  }
-`;
 
 enum LoadingName {
   None = '',
@@ -53,8 +34,8 @@ enum LoadingName {
 export const PublicRegistrationStatusBar = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('registration');
-  const user = useSelector((store: RootStore) => store.user);
-  const { identifier, owner, doi, doiRequest, publisher } = registration;
+  const user = useSelector((store: RootState) => store.user);
+  const { identifier, resourceOwner, doi, doiRequest, publisher } = registration;
 
   const [messageToCurator, setMessageToCurator] = useState('');
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
@@ -64,9 +45,10 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
 
   const sendDoiRequest = async () => {
     setIsLoading(LoadingName.RequestDoi);
-    const createDoiRequestResponse = await createDoiRequest(identifier, messageToCurator);
+    const message = isPublishedRegistration ? messageToCurator : t('public_page.reserve_doi_message');
+    const createDoiRequestResponse = await createDoiRequest(identifier, message);
     if (isErrorStatus(createDoiRequestResponse.status)) {
-      dispatch(setNotification(t('feedback:error.create_doi_request'), NotificationVariant.Error));
+      dispatch(setNotification({ message: t('feedback:error.create_doi_request'), variant: 'error' }));
       setIsLoading(LoadingName.None);
     } else if (isSuccessStatus(createDoiRequestResponse.status)) {
       // Adding DOI can take some extra time, so wait 2.5 sec before refetching
@@ -74,7 +56,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
         if (openRequestDoiModal) {
           toggleRequestDoiModal();
         }
-        dispatch(setNotification(t('feedback:success.doi_request_sent')));
+        dispatch(setNotification({ message: t('feedback:success.doi_request_sent'), variant: 'success' }));
         refetchRegistration();
       }, 2500);
     }
@@ -88,10 +70,10 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     }
     const updateDoiResponse = await updateDoiRequest(identifier, status);
     if (isErrorStatus(updateDoiResponse.status)) {
-      dispatch(setNotification(t('feedback:error.update_doi_request'), NotificationVariant.Error));
+      dispatch(setNotification({ message: t('feedback:error.update_doi_request'), variant: 'error' }));
       setIsLoading(LoadingName.None);
     } else if (isSuccessStatus(updateDoiResponse.status)) {
-      dispatch(setNotification(t('feedback:success.doi_request_updated'), NotificationVariant.Success));
+      dispatch(setNotification({ message: t('feedback:success.doi_request_updated'), variant: 'success' }));
       refetchRegistration();
     }
   };
@@ -100,10 +82,10 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     setIsLoading(LoadingName.Publish);
     const publishRegistrationResponse = await publishRegistration(identifier);
     if (isErrorStatus(publishRegistrationResponse.status)) {
-      dispatch(setNotification(t('feedback:error.publish_registration'), NotificationVariant.Error));
+      dispatch(setNotification({ message: t('feedback:error.publish_registration'), variant: 'error' }));
       setIsLoading(LoadingName.None);
     } else if (isSuccessStatus(publishRegistrationResponse.status)) {
-      dispatch(setNotification(t('feedback:success.published_registration'), NotificationVariant.Success));
+      dispatch(setNotification({ message: t('feedback:success.published_registration'), variant: 'success' }));
       refetchRegistration();
     }
   };
@@ -128,14 +110,14 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   const firstErrorTab = getFirstErrorTab(tabErrors);
   const registrationIsValid = !tabErrors || firstErrorTab === -1;
 
-  const isOwner = user && user.isCreator && owner === user.id;
+  const isOwner = user && user.isCreator && resourceOwner.owner === user.username;
   const isCurator = user && user.isCurator && user.customerId === publisher.id;
   const hasNvaDoi = !!doi || doiRequest;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
   const editRegistrationUrl = getRegistrationPath(identifier);
 
   return isOwner || isCurator ? (
-    <>
+    <Box>
       {!registrationIsValid && tabErrors && (
         <ErrorList
           tabErrors={tabErrors}
@@ -162,8 +144,8 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           }
         />
       )}
-      <StyledBackgroundDiv
-        backgroundColor={lightTheme.palette.background.statusBar}
+      <Box
+        sx={{ bgcolor: 'background.paper', p: '1rem', mb: '1rem', borderBottom: '2px dotted' }}
         data-testid={dataTestId.registrationLandingPage.status}>
         {!isPublishedRegistration && registrationIsValid && (
           <>
@@ -181,66 +163,71 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             })}
           </Typography>
         )}
-        <StyledButtonsContainer>
+        <Box sx={{ display: 'flex', gap: '1rem' }}>
           {registration.status === RegistrationStatus.Draft && (
-            <ButtonWithProgress
+            <LoadingButton
               disabled={!!isLoading || !registrationIsValid}
               data-testid={dataTestId.registrationLandingPage.publishButton}
               color="secondary"
+              variant="contained"
               endIcon={<CloudUploadIcon />}
+              loadingPosition="end"
               onClick={onClickPublish}
-              isLoading={isLoading === LoadingName.Publish}>
+              loading={isLoading === LoadingName.Publish}>
               {t('common:publish')}
-            </ButtonWithProgress>
+            </LoadingButton>
           )}
 
           <Button
             component={RouterLink}
             to={editRegistrationUrl}
             variant="outlined"
-            color="secondary"
             endIcon={<EditIcon />}
             data-testid={dataTestId.registrationLandingPage.editButton}>
             {t('edit_registration')}
           </Button>
 
           {!hasNvaDoi && (
-            <ButtonWithProgress
+            <LoadingButton
               variant="outlined"
-              color="secondary"
               endIcon={<LocalOfferIcon />}
-              isLoading={isLoading === LoadingName.RequestDoi}
-              data-testid={dataTestId.registrationLandingPage.requestDoiButton}
+              loadingPosition="end"
+              loading={isLoading === LoadingName.RequestDoi}
+              data-testid={
+                isPublishedRegistration
+                  ? dataTestId.registrationLandingPage.requestDoiButton
+                  : dataTestId.registrationLandingPage.reserveDoiButton
+              }
               onClick={() => (isPublishedRegistration ? toggleRequestDoiModal() : sendDoiRequest())}>
               {isPublishedRegistration ? t('public_page.request_doi') : t('public_page.reserve_doi')}
-            </ButtonWithProgress>
+            </LoadingButton>
           )}
 
           {isCurator && isPublishedRegistration && doiRequest?.status === DoiRequestStatus.Requested && (
             <>
-              <ButtonWithProgress
-                color="secondary"
+              <LoadingButton
                 variant="contained"
                 data-testid={dataTestId.registrationLandingPage.rejectDoiButton}
                 endIcon={<CloseIcon />}
+                loadingPosition="end"
                 onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Rejected)}
-                isLoading={isLoading === LoadingName.RejectDoi}
+                loading={isLoading === LoadingName.RejectDoi}
                 disabled={!!isLoading}>
                 {t('common:reject_doi')}
-              </ButtonWithProgress>
-              <ButtonWithProgress
-                color="secondary"
+              </LoadingButton>
+              <LoadingButton
                 variant="contained"
                 data-testid={dataTestId.registrationLandingPage.createDoiButton}
                 endIcon={<CheckIcon />}
+                loadingPosition="end"
                 onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Approved)}
-                isLoading={isLoading === LoadingName.ApproveDoi}
+                loading={isLoading === LoadingName.ApproveDoi}
                 disabled={!!isLoading || !registrationIsValid}>
                 {t('common:create_doi')}
-              </ButtonWithProgress>
+              </LoadingButton>
             </>
           )}
-        </StyledButtonsContainer>
+        </Box>
 
         {!hasNvaDoi && (
           <Modal
@@ -248,7 +235,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             onClose={toggleRequestDoiModal}
             headingText={t('public_page.request_doi')}
             dataTestId={dataTestId.registrationLandingPage.requestDoiModal}>
-            <Typography>{t('public_page.request_doi_description')}</Typography>
+            <Typography paragraph>{t('public_page.request_doi_description')}</Typography>
             <TextField
               variant="outlined"
               multiline
@@ -260,18 +247,17 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             />
             <DialogActions>
               <Button onClick={toggleRequestDoiModal}>{t('common:cancel')}</Button>
-              <ButtonWithProgress
+              <LoadingButton
                 variant="contained"
-                color="primary"
                 data-testid={dataTestId.registrationLandingPage.sendDoiButton}
                 onClick={sendDoiRequest}
-                isLoading={isLoading === LoadingName.RequestDoi}>
+                loading={isLoading === LoadingName.RequestDoi}>
                 {t('common:send')}
-              </ButtonWithProgress>
+              </LoadingButton>
             </DialogActions>
           </Modal>
         )}
-      </StyledBackgroundDiv>
-    </>
+      </Box>
+    </Box>
   ) : null;
 };

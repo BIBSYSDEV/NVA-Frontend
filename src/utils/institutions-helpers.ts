@@ -1,16 +1,12 @@
+import { CristinApiPath } from '../api/apiPaths';
 import { Contributor } from '../types/contributor.types';
-import { FormikInstitutionUnit, InstitutionUnitBase, RecursiveInstitutionUnit } from '../types/institution.types';
-
-// Find the most specific unit in hierarchy
-export const getMostSpecificUnit = (values: FormikInstitutionUnit): InstitutionUnitBase => {
-  if (values.subunit) {
-    return getMostSpecificUnit(values.subunit);
-  }
-  return values as InstitutionUnitBase;
-};
+import { SimpleCustomerInstitution } from '../types/customerInstitution.types';
+import { Organization } from '../types/organization.types';
+import { API_URL } from './constants';
+import { getLanguageString } from './translation-helpers';
 
 // Find distinct unit URIs for a set of contributors' affiliations
-const unitIdToIgnore = 'https://api.cristin.no/v2/units/0.0.0.0';
+const unitIdToIgnore = `${API_URL}${CristinApiPath.Organization.substring(1)}/0.0.0.0`;
 export const getDistinctContributorUnits = (contributors: Contributor[]) => {
   const unitIds = contributors
     .flatMap((contributor) => contributor.affiliations)
@@ -19,41 +15,32 @@ export const getDistinctContributorUnits = (contributors: Contributor[]) => {
   return [...new Set(unitIds)];
 };
 
-// Returns top-down unit names: ["Level1", "Level2", (etc.)]
-export const getUnitHierarchyNames = (
-  queryId: string,
-  unit?: RecursiveInstitutionUnit,
-  unitNames: string[] = []
-): string[] => {
+export const getOrganizationHierarchy = (unit?: Organization, result: Organization[] = []): Organization[] => {
   if (!unit) {
-    return unitNames;
+    return result;
+  } else if (!unit.partOf) {
+    return [unit, ...result];
   }
-  unitNames.push(unit.name);
 
-  if (queryId === unit.id || queryId === convertToInstitution(unit.id) || !unit.subunits) {
-    return unitNames;
-  } else {
-    return getUnitHierarchyNames(queryId, unit.subunits[0], unitNames);
-  }
+  // If some Organization has multiple values for partOf, this might produce wrong output
+  return getOrganizationHierarchy(unit.partOf[0], [unit, ...result]);
 };
 
-// converts from https://api.cristin.no/v2/units/7482.3.3.0
-//            to https://api.cristin.no/v2/institutions/7482
-export const convertToInstitution = (unitId: string) => {
-  if (unitId.includes('/institutions/')) {
-    return unitId;
-  } else {
-    const id = unitId.split('https://api.cristin.no/v2/units/').pop();
-    const institutionId = id?.split('.').reverse().pop();
-    return `https://api.cristin.no/v2/institutions/${institutionId}`;
-  }
+export const getSortedSubUnits = (subUnits: Organization[] = []) => {
+  const units = getAllChildOrganizations(subUnits);
+  return units.sort((a, b) => (getLanguageString(a.name) < getLanguageString(b.name) ? -1 : 1));
 };
 
-export const sortInstitutionsAlphabetically = (institutions: InstitutionUnitBase[]) =>
-  institutions.sort((institution1, institution2) => {
-    if (institution1.name.toLocaleLowerCase() < institution2.name.toLocaleLowerCase()) {
-      return -1;
-    } else {
-      return 1;
-    }
-  });
+const getAllChildOrganizations = (units: Organization[] = [], result: Organization[] = []): Organization[] => {
+  if (!units.length) {
+    return result;
+  }
+  const subUnits = units.flatMap((u) => u.hasPart ?? []);
+  return getAllChildOrganizations(subUnits, [...result, ...units]);
+};
+
+export const getTopLevelOrganization = (organization: Organization): Organization =>
+  !organization.partOf ? organization : getTopLevelOrganization(organization.partOf[0]);
+
+export const sortCustomerInstitutions = <T extends SimpleCustomerInstitution>(customers: T[] = []) =>
+  customers.sort((a, b) => (a.displayName.toLocaleLowerCase() < b.displayName.toLocaleLowerCase() ? -1 : 1));

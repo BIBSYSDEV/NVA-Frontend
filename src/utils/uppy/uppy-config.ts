@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Uppy from '@uppy/core';
 import AwsS3Multipart from '@uppy/aws-s3-multipart';
 import norwegianLocale from '@uppy/locales/lib/nb_NO';
@@ -6,12 +7,37 @@ import i18n from '../../translations/i18n';
 import { LanguageCodes } from '../../types/language.types';
 import { FileApiPath } from '../../api/apiPaths';
 import { authenticatedApiRequest } from '../../api/apiRequest';
+=======
+import Uppy, { StrictTypes, UppyFile } from '@uppy/core';
+import AwsS3Multipart, { AwsS3Part } from '@uppy/aws-s3-multipart';
+import norwegianLocale from '@uppy/locales/lib/nb_NO';
+import englishLocale from '@uppy/locales/lib/en_US';
+import {
+  createMultipartUpload,
+  listParts,
+  prepareUploadPart,
+  abortMultipartUpload,
+  completeMultipartUpload,
+} from '../../api/fileApi';
 
-const uppyLocale =
-  i18n.language === LanguageCodes.NORWEGIAN_BOKMAL || i18n.language === LanguageCodes.NORWEGIAN_NYNORSK
-    ? norwegianLocale
-    : englishLocale;
+interface UppyArgs {
+  uploadId: string;
+  key: string;
+}
 
+interface UppyPrepareArgs extends UppyArgs {
+  body: Blob;
+  number: number;
+}
+
+interface UppyCompleteArgs extends UppyArgs {
+  parts: AwsS3Part[];
+}
+>>>>>>> aa38c16b57f6e49d9ec076fc12a6068a27d4e076
+
+const getUppyLocale = (language: string) => (language === 'nob' ? norwegianLocale : englishLocale);
+
+<<<<<<< HEAD
 export const createUppy =
   (shouldAllowMultipleFiles = true) =>
   () =>
@@ -67,3 +93,18 @@ export const createUppy =
         return prepareResponse.data;
       },
     });
+=======
+export const createUppy = (language: string) => () =>
+  Uppy<StrictTypes>({
+    locale: getUppyLocale(language),
+    autoProceed: true,
+  }).use(AwsS3Multipart, {
+    abortMultipartUpload: async (_: UppyFile, { uploadId, key }: UppyArgs) => await abortMultipartUpload(uploadId, key),
+    completeMultipartUpload: async (_: UppyFile, { uploadId, key, parts }: UppyCompleteArgs) =>
+      await completeMultipartUpload(uploadId, key, parts),
+    createMultipartUpload: async (file: UppyFile) => await createMultipartUpload(file),
+    listParts: async (_: UppyFile, { uploadId, key }: UppyArgs) => await listParts(uploadId, key),
+    prepareUploadPart: async (_: UppyFile, { uploadId, key, body, number }: UppyPrepareArgs) =>
+      await prepareUploadPart(uploadId, key, body, number),
+  });
+>>>>>>> aa38c16b57f6e49d9ec076fc12a6068a27d4e076

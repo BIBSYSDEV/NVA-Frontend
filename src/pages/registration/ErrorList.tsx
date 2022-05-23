@@ -1,15 +1,8 @@
-import React, { ReactNode } from 'react';
-import styled from 'styled-components';
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { RegistrationTab } from '../../types/registration.types';
-import { BackgroundDiv } from '../../components/BackgroundDiv';
-import { lightTheme } from '../../themes/lightTheme';
 import { TabErrors } from '../../utils/formik-helpers';
-
-const StyledTabHeading = styled(Typography)`
-  font-weight: 500;
-`;
 
 interface ErrorSummaryProps {
   tabErrors: TabErrors;
@@ -21,7 +14,7 @@ export const ErrorList = ({ tabErrors, description, actions }: ErrorSummaryProps
   const { t } = useTranslation('registration');
 
   return (
-    <BackgroundDiv backgroundColor={lightTheme.palette.error.light} data-testid="error-list-div">
+    <Box sx={{ bgcolor: 'error.light', padding: { xs: '0.5rem', sm: '0.5rem 2rem' } }} data-testid="error-list-div">
       {description}
       <dl>
         <ErrorListGroup heading={t('heading.description')} errorMessages={tabErrors[RegistrationTab.Description]} />
@@ -33,7 +26,7 @@ export const ErrorList = ({ tabErrors, description, actions }: ErrorSummaryProps
         />
       </dl>
       {actions}
-    </BackgroundDiv>
+    </Box>
   );
 };
 
@@ -46,7 +39,7 @@ const ErrorListGroup = ({ heading, errorMessages }: ErrorListProps) =>
   errorMessages.length > 0 ? (
     <>
       <dt>
-        <StyledTabHeading>{heading}:</StyledTabHeading>
+        <Typography sx={{ fontWeight: 500 }}>{heading}:</Typography>
       </dt>
       {errorMessages.map((errorMessage) => (
         <dd key={errorMessage}>

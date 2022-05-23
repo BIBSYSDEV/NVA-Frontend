@@ -1,3 +1,5 @@
+import { dataTestId } from '../../src/utils/dataTestIds';
+
 describe('User opens an item in the My Registrations list', () => {
   beforeEach('Given that the user is logged in as Creator:', () => {
     cy.visit('/');
@@ -6,19 +8,19 @@ describe('User opens an item in the My Registrations list', () => {
 
   it('The User should be able to edit an item in the My Registrations list', () => {
     // Open My Registrations
-    cy.get('[data-testid=my-registrations]').click({ force: true });
+    cy.get('[data-testid=my-registrations-link]').click({ force: true });
 
     // Edit registration
     // Description tab
     cy.get('[data-testid=edit-registration-12345678]').click({ force: true });
-    cy.get('[data-testid=registration-title-field] input').should(
+    cy.get(`[data-testid=${dataTestId.registrationWizard.description.titleField}] input`).should(
       'have.value',
       'Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting'
     );
 
     // Resource Type tab
     cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
-    cy.contains('Contribution to journal');
+    cy.contains('Publication in journal');
 
     // Contributors tab
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });

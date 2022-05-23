@@ -1,12 +1,9 @@
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
-import React, { useState } from 'react';
-import { Chip, ThemeProvider, Typography } from '@mui/material';
-import { Autocomplete } from '@mui/material';
-import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { Chip, Typography, Autocomplete, Box } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { StyledFlexColumn } from '../../../../components/styled/Wrappers';
-import { lightTheme } from '../../../../themes/lightTheme';
 import { RegistrationSubtype, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { Journal, Publisher, Registration, RegistrationDate } from '../../../../types/registration.types';
 import { displayDate } from '../../../../utils/date-helpers';
@@ -15,12 +12,9 @@ import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistr
 import { dataTestId as dataTestIds } from '../../../../utils/dataTestIds';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { Contributor } from '../../../../types/contributor.types';
-import { useTranslation } from 'react-i18next';
 import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
-
-const StyledChip = styled(Chip)`
-  height: 100%;
-`;
+import { ExpressionStatement } from '../../../../utils/searchHelpers';
+import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -47,7 +41,9 @@ export const SearchContainerField = ({
 
   const [searchContainerOptions, isLoadingSearchContainerOptions] = useSearchRegistrations({
     searchTerm: debouncedQuery,
-    properties: [{ fieldName: ResourceFieldNames.SubType, value: searchSubtypes }],
+    properties: [
+      { fieldName: ResourceFieldNames.SubType, value: searchSubtypes, operator: ExpressionStatement.Contains },
+    ],
   });
 
   const [selectedContainer, isLoadingSelectedContainer] = useFetchResource<Registration>(
@@ -55,98 +51,102 @@ export const SearchContainerField = ({
     fetchErrorMessage
   );
 
+  useEffect(() => {
+    if (stringIncludesMathJax(selectedContainer?.entityDescription?.mainTitle)) {
+      typesetMathJax();
+    }
+  }, [selectedContainer]);
+
   return (
-    <ThemeProvider theme={lightTheme}>
-      <Field name={fieldName}>
-        {({ field, meta }: FieldProps<string>) => (
-          <>
-            <Autocomplete
-              multiple
-              id={dataTestId}
-              data-testid={dataTestId}
-              aria-labelledby={`${dataTestId}-label`}
-              popupIcon={null}
-              options={
-                query === debouncedQuery && !isLoadingSearchContainerOptions ? searchContainerOptions?.hits ?? [] : []
+    <Field name={fieldName}>
+      {({ field, meta }: FieldProps<string>) => (
+        <>
+          <Autocomplete
+            multiple
+            id={dataTestId}
+            data-testid={dataTestId}
+            aria-labelledby={`${dataTestId}-label`}
+            popupIcon={null}
+            options={
+              query === debouncedQuery && !isLoadingSearchContainerOptions ? searchContainerOptions?.hits ?? [] : []
+            }
+            filterOptions={(options) => options}
+            inputValue={query}
+            onInputChange={(_, newInputValue, reason) => {
+              if (reason !== 'reset') {
+                setQuery(newInputValue);
               }
-              filterOptions={(options) => options}
-              inputValue={query}
-              onInputChange={(_, newInputValue, reason) => {
-                if (reason !== 'reset') {
-                  setQuery(newInputValue);
-                }
-              }}
-              onBlur={() => setFieldTouched(field.name, true, false)}
-              blurOnSelect
-              disableClearable={!query}
-              value={field.value && selectedContainer ? [selectedContainer] : []}
-              onChange={(_, inputValue, reason) => {
-                if (reason === 'selectOption') {
-                  setFieldValue(field.name, inputValue.pop()?.id);
-                } else if (reason === 'removeOption') {
-                  setFieldValue(field.name, undefined);
-                }
-                setQuery('');
-              }}
-              loading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
-              getOptionLabel={(option) => option.entityDescription?.mainTitle ?? ''}
-              renderOption={(props, option, state) => (
-                <li {...props}>
-                  <StyledFlexColumn>
-                    <Typography variant="subtitle1">
-                      <EmphasizeSubstring
-                        text={option.entityDescription?.mainTitle ?? ''}
-                        emphasized={state.inputValue}
-                      />
-                    </Typography>
-                    {descriptionToShow === 'year-and-contributors' ? (
-                      <YearAndContributorsText
-                        date={option.entityDescription?.date}
-                        contributors={option.entityDescription?.contributors ?? []}
-                      />
-                    ) : (
-                      <ContainerAndLevelText registration={option} />
-                    )}
-                  </StyledFlexColumn>
-                </li>
-              )}
-              renderTags={(value, getTagProps) =>
-                value.map((option, index) => (
-                  <StyledChip
-                    {...getTagProps({ index })}
-                    data-testid={dataTestIds.registrationWizard.resourceType.journalChip}
-                    label={
-                      <>
-                        <Typography variant="subtitle1">{option.entityDescription?.mainTitle ?? ''}</Typography>
-                        {descriptionToShow === 'year-and-contributors' ? (
-                          <YearAndContributorsText
-                            date={option.entityDescription?.date}
-                            contributors={option.entityDescription?.contributors ?? []}
-                          />
-                        ) : (
-                          <ContainerAndLevelText registration={option} />
-                        )}
-                      </>
-                    }
-                  />
-                ))
+            }}
+            onBlur={() => setFieldTouched(field.name, true, false)}
+            blurOnSelect
+            disableClearable={!query}
+            value={field.value && selectedContainer ? [selectedContainer] : []}
+            onChange={(_, inputValue, reason) => {
+              if (reason === 'selectOption') {
+                setFieldValue(field.name, inputValue.pop()?.id);
+              } else if (reason === 'removeOption') {
+                setFieldValue(field.name, undefined);
               }
-              renderInput={(params) => (
-                <AutocompleteTextField
-                  {...params}
-                  required
-                  label={label}
-                  isLoading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
-                  placeholder={!field.value ? placeholder : ''}
-                  showSearchIcon={!field.value}
-                  errorMessage={meta.touched && !!meta.error ? meta.error : ''}
+              setQuery('');
+            }}
+            loading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
+            getOptionLabel={(option) => option.entityDescription?.mainTitle ?? ''}
+            renderOption={(props, option, state) => (
+              <li {...props}>
+                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                  <Typography variant="subtitle1">
+                    <EmphasizeSubstring
+                      text={option.entityDescription?.mainTitle ?? ''}
+                      emphasized={state.inputValue}
+                    />
+                  </Typography>
+                  {descriptionToShow === 'year-and-contributors' ? (
+                    <YearAndContributorsText
+                      date={option.entityDescription?.date}
+                      contributors={option.entityDescription?.contributors ?? []}
+                    />
+                  ) : (
+                    <ContainerAndLevelText registration={option} />
+                  )}
+                </Box>
+              </li>
+            )}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
+                <Chip
+                  {...getTagProps({ index })}
+                  data-testid={dataTestIds.registrationWizard.resourceType.journalChip}
+                  label={
+                    <>
+                      <Typography variant="subtitle1">{option.entityDescription?.mainTitle ?? ''}</Typography>
+                      {descriptionToShow === 'year-and-contributors' ? (
+                        <YearAndContributorsText
+                          date={option.entityDescription?.date}
+                          contributors={option.entityDescription?.contributors ?? []}
+                        />
+                      ) : (
+                        <ContainerAndLevelText registration={option} />
+                      )}
+                    </>
+                  }
                 />
-              )}
-            />
-          </>
-        )}
-      </Field>
-    </ThemeProvider>
+              ))
+            }
+            renderInput={(params) => (
+              <AutocompleteTextField
+                {...params}
+                required
+                label={label}
+                isLoading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
+                placeholder={!field.value ? placeholder : ''}
+                showSearchIcon={!field.value}
+                errorMessage={meta.touched && !!meta.error ? meta.error : ''}
+              />
+            )}
+          />
+        </>
+      )}
+    </Field>
   );
 };
 

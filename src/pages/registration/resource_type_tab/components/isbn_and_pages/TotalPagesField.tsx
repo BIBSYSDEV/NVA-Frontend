@@ -1,14 +1,8 @@
 import { ErrorMessage, Field, FieldProps } from 'formik';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { TextField } from '@mui/material';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../../utils/dataTestIds';
-
-const StyledTextField = styled(TextField)`
-  width: fit-content;
-`;
 
 export const TotalPagesField = () => {
   const { t } = useTranslation('registration');
@@ -16,7 +10,7 @@ export const TotalPagesField = () => {
   return (
     <Field name={ResourceFieldNames.PagesPages}>
       {({ field, meta: { touched, error } }: FieldProps) => (
-        <StyledTextField
+        <TextField
           id={field.name}
           data-testid={dataTestId.registrationWizard.resourceType.pagesField}
           variant="filled"
@@ -25,6 +19,7 @@ export const TotalPagesField = () => {
           value={field.value ?? ''}
           error={touched && !!error}
           helperText={<ErrorMessage name={field.name} />}
+          sx={{ width: 'fit-content' }}
         />
       )}
     </Field>

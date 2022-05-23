@@ -1,6 +1,4 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -8,11 +6,6 @@ import { ErrorMessage, Field, FieldProps } from 'formik';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import disciplines from '../../../../resources/disciplines.json';
 import { dataTestId } from '../../../../utils/dataTestIds';
-
-const StyledSearchIcon = styled(SearchIcon)`
-  margin-left: 0.5rem;
-  color: ${({ theme }) => theme.palette.text.disabled};
-`;
 
 const disciplineOptions = disciplines
   .map((mainDiscipline) =>
@@ -63,7 +56,7 @@ export const NpiDisciplineField = () => {
                   startAdornment: (
                     <>
                       {params.InputProps.startAdornment}
-                      {!value && <StyledSearchIcon />}
+                      {!value && <SearchIcon color="disabled" sx={{ marginLeft: '0.5rem' }} />}
                     </>
                   ),
                 }}

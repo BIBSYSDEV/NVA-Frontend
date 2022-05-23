@@ -1,26 +1,20 @@
-import React, { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { AccordionActions, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
 import LinkIcon from '@mui/icons-material/LinkOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useDispatch } from 'react-redux';
-
 import { getRegistrationByDoi } from '../../../api/registrationApi';
 import { LinkRegistrationForm } from './LinkRegistrationForm';
 import { RegistrationAccordion } from './RegistrationAccordion';
 import { Doi } from '../../../types/registration.types';
-import { setNotification } from '../../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../../types/notification.types';
+import { setNotification } from '../../../redux/notificationSlice';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-
-const StyledRegistrationAccorion = styled(RegistrationAccordion)`
-  border-color: ${({ theme }) => theme.palette.primary.main};
-`;
+import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 
 export interface StartRegistrationAccordionProps {
   expanded: boolean;
@@ -34,7 +28,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const createRegistration = async () => {
+  const openRegistration = async () => {
     if (!doi) {
       return;
     }
@@ -48,7 +42,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
     const doiRegistrationResponse = await getRegistrationByDoi(doiUrl);
     if (isErrorStatus(doiRegistrationResponse.status)) {
       setNoHit(true);
-      dispatch(setNotification(t('feedback:error.get_doi'), NotificationVariant.Error));
+      dispatch(setNotification({ message: t('feedback:error.get_doi'), variant: 'error' }));
     } else if (isSuccessStatus(doiRegistrationResponse.status)) {
       if (doiRegistrationResponse.data) {
         setDoi(doiRegistrationResponse.data);
@@ -58,8 +52,14 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
     }
   };
 
+  useEffect(() => {
+    if (stringIncludesMathJax(doi?.title)) {
+      typesetMathJax();
+    }
+  }, [doi?.title]);
+
   return (
-    <StyledRegistrationAccorion expanded={expanded} onChange={onChange}>
+    <RegistrationAccordion elevation={5} expanded={expanded} onChange={onChange} sx={{ borderColor: 'primary.main' }}>
       <AccordionSummary
         data-testid={dataTestId.registrationWizard.new.linkAccordion}
         expandIcon={<ExpandMoreIcon fontSize="large" />}>
@@ -85,13 +85,12 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
         <Button
           data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
-          color="secondary"
           variant="contained"
           disabled={!doi}
-          onClick={createRegistration}>
+          onClick={openRegistration}>
           {t('registration:registration.start_registration')}
         </Button>
       </AccordionActions>
-    </StyledRegistrationAccorion>
+    </RegistrationAccordion>
   );
 };

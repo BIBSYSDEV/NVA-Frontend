@@ -1,40 +1,16 @@
-import React, { useRef, useState } from 'react';
-import styled from 'styled-components';
+import { useRef, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Button, IconButton, Link, Typography } from '@mui/material';
+import { Box, Button, IconButton, Link, Tooltip, Typography } from '@mui/material';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTranslation } from 'react-i18next';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import OrcidLogo from '../../resources/images/orcid_logo.svg';
-import { Contributor, ContributorRole } from '../../types/contributor.types';
+import { Contributor } from '../../types/contributor.types';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
-import { BookType } from '../../types/publicationFieldNames';
 import { dataTestId } from '../../utils/dataTestIds';
-
-const StyledContributorsGrid = styled.div`
-  display: grid;
-  align-items: start;
-  grid-template-columns: 1fr auto;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const StyledAffiliationsList = styled.ul`
-  margin-top: 0.5rem;
-  padding-left: 1rem;
-`;
-
-const StyedAffiliationListItem = styled.li`
-  display: flex;
-`;
-
-const StyledPublicRegistrationAuthors = styled.div`
-  padding-bottom: 1rem;
-  border-bottom: 1px solid;
-  margin-bottom: 1rem;
-`;
+import { mainContributorRolesPerType, splitMainContributors } from '../../utils/registration-helpers';
+import { getUserPath } from '../../utils/urlPaths';
 
 interface PublicRegistrationContributorsProps {
   contributors: Contributor[];
@@ -46,32 +22,35 @@ export const PublicRegistrationContributors = ({
   registrationType,
 }: PublicRegistrationContributorsProps) => {
   const { t } = useTranslation('registration');
-  const [showAll, setShowAll] = useState(false);
+  const [mainContributors, otherContributors] = splitMainContributors(contributors, registrationType);
+
+  const [showAll, setShowAll] = useState(mainContributors.length === 0);
   const toggleShowAll = () => setShowAll(!showAll);
 
-  const mainContributors =
-    registrationType === BookType.Anthology
-      ? contributors.filter((contributor) => contributor.role === ContributorRole.Editor)
-      : contributors.filter((contributor) => contributor.role === ContributorRole.Creator);
   const mainContributorsToShow = showAll ? mainContributors : mainContributors.slice(0, 10);
-
-  const otherContributors =
-    registrationType === BookType.Anthology
-      ? contributors.filter((contributor) => contributor.role !== ContributorRole.Editor)
-      : contributors.filter((contributor) => contributor.role !== ContributorRole.Creator);
+  const mainRoles = mainContributorRolesPerType[registrationType];
+  const showRolesForMainContributors = mainRoles && mainRoles.length > 1;
   const otherContributorsToShow = showAll ? otherContributors : [];
 
   const hiddenContributorsCount = useRef(contributors.length - mainContributorsToShow.length);
   const distinctUnits = getDistinctContributorUnits([...mainContributorsToShow, ...otherContributorsToShow]);
 
   return (
-    <StyledPublicRegistrationAuthors data-testid={dataTestId.registrationLandingPage.contributors}>
-      <StyledContributorsGrid>
+    <Box
+      data-testid={dataTestId.registrationLandingPage.contributors}
+      sx={{ pb: '1rem', borderBottom: '1px solid', mb: '1rem' }}>
+      <Box
+        sx={{
+          display: 'grid',
+          alignItems: 'start',
+          gridTemplateColumns: { xs: '1fr', sm: '1fr auto' },
+        }}>
         <div>
           <ContributorsRow
             contributors={mainContributorsToShow}
             distinctUnits={distinctUnits}
             otherCount={showAll ? undefined : hiddenContributorsCount.current}
+            showRole={showRolesForMainContributors}
           />
           {showAll && otherContributorsToShow.length > 0 && (
             <ContributorsRow contributors={otherContributorsToShow} distinctUnits={distinctUnits} isOtherContributors />
@@ -85,37 +64,25 @@ export const PublicRegistrationContributors = ({
             {showAll ? t('common:show_fewer') : t('common:show_all')}
           </Button>
         )}
-      </StyledContributorsGrid>
+      </Box>
 
-      <StyledAffiliationsList>
+      <Box sx={{ mt: '0.5rem', ml: '1rem' }}>
         {distinctUnits.map((unitUri, index) => (
-          <StyedAffiliationListItem key={unitUri}>
+          <Box key={unitUri} component="li" sx={{ display: 'flex', gap: '0.25rem' }}>
             <sup>{index + 1}</sup>
             <AffiliationHierarchy key={unitUri} unitUri={unitUri} commaSeparated />
-          </StyedAffiliationListItem>
+          </Box>
         ))}
-      </StyledAffiliationsList>
-    </StyledPublicRegistrationAuthors>
+      </Box>
+    </Box>
   );
 };
-
-const StyledContributorsList = styled.ul`
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-
-  > :not(:first-child) {
-    margin-left: 1rem;
-  }
-`;
 
 interface ContributorsRowProps {
   contributors: Contributor[];
   distinctUnits: string[];
   isOtherContributors?: boolean;
+  showRole?: boolean;
   otherCount?: number;
 }
 
@@ -123,12 +90,24 @@ const ContributorsRow = ({
   contributors,
   distinctUnits,
   isOtherContributors = false,
+  showRole = isOtherContributors,
   otherCount,
 }: ContributorsRowProps) => {
   const { t } = useTranslation('registration');
 
   return (
-    <StyledContributorsList>
+    <Box
+      sx={{
+        listStyleType: 'none',
+        margin: 0,
+        padding: 0,
+        display: 'flex',
+        flexWrap: 'wrap',
+        alignItems: 'flex-end',
+        '> :not(:first-of-type)': {
+          ml: '1rem', // Use margin instead of gap to indent wrapped elements
+        },
+      }}>
       {isOtherContributors && <Typography component="li">{t('heading.contributors')}:</Typography>}
       {contributors.map((contributor, index) => {
         const {
@@ -138,28 +117,29 @@ const ContributorsRow = ({
           ?.map((affiliation) => affiliation.id && distinctUnits.indexOf(affiliation.id) + 1)
           .filter((affiliationIndex) => affiliationIndex)
           .sort();
-        const encodedId = id ? encodeURIComponent(id) : '';
 
         return (
           <Typography key={index} component="li">
             {id ? (
               <Link
                 component={RouterLink}
-                to={`/user?id=${encodedId}`}
-                data-testid={dataTestId.registrationLandingPage.authorLink(encodedId)}>
+                to={getUserPath(id)}
+                data-testid={dataTestId.registrationLandingPage.authorLink(id)}>
                 {name}
               </Link>
             ) : (
               name
             )}
-            {isOtherContributors && ` (${t(`contributors.types.${contributor.role}`)})`}
+            {showRole && ` (${t(`contributors.types.${contributor.role}`)})`}
             {(orcId || (affiliationIndexes && affiliationIndexes.length > 0)) && (
               <sup>
                 {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
                 {orcId && (
-                  <IconButton size="small" href={orcId} target="_blank">
-                    <img src={OrcidLogo} height="20" alt="orcid" />
-                  </IconButton>
+                  <Tooltip title={t<string>('contributors.orcid_profile')}>
+                    <IconButton size="small" href={orcId} target="_blank">
+                      <img src={OrcidLogo} height="20" alt="orcid" />
+                    </IconButton>
+                  </Tooltip>
                 )}
               </sup>
             )}
@@ -169,6 +149,6 @@ const ContributorsRow = ({
       {otherCount && otherCount > 0 ? (
         <Typography component="li">{t('public_page.other_contributors', { count: otherCount })}</Typography>
       ) : null}
-    </StyledContributorsList>
+    </Box>
   );
 };

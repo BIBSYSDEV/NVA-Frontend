@@ -1,11 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
+import { Box } from '@mui/material';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { CommonPreviewProps } from './PreviewFile';
-
-const StyledIframe = styled.iframe`
-  width: 100%;
-  height: 25rem;
-`;
 
 interface PreviewOfficeFileProps extends CommonPreviewProps {
   iframeTitle: string;
@@ -14,5 +9,14 @@ interface PreviewOfficeFileProps extends CommonPreviewProps {
 export const PreviewOfficeFile = ({ url, iframeTitle, ...props }: PreviewOfficeFileProps) => {
   const officeViewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}`;
 
-  return <StyledIframe title={iframeTitle} src={officeViewerUrl} {...props} />;
+  return (
+    <Box
+      data-testid={dataTestId.registrationLandingPage.filePreview}
+      component="iframe"
+      title={iframeTitle}
+      src={officeViewerUrl}
+      sx={{ width: '100%', height: '25rem' }}
+      {...props}
+    />
+  );
 };

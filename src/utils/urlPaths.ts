@@ -1,12 +1,16 @@
 export enum UrlPathTemplate {
   About = '/about',
-  AdminInstitutions = '/admin-institutions',
+  BasicData = '/basic-data',
+  BasicDataAddEmployee = '/basic-data/add-employee',
+  BasicDataCentralImport = '/basic-data/central-import',
+  BasicDataCentralImportDuplicateCheck = '/basic-data/central-import-duplicate-check/:identifier',
+  BasicDataInstitutions = '/basic-data/institutions',
+  BasicDataMyInstitution = '/basic-data/my-institution',
+  BasicDataUsers = '/basic-data/users',
   Editor = '/editor',
   Home = '/',
   Login = '/login',
   Logout = '/logout',
-  MyInstitution = '/my-institution',
-  MyInstitutionUsers = '/my-institution-users',
   MyMessages = '/my-messages',
   MyProfile = '/my-profile',
   MyRegistrations = '/my-registrations',
@@ -24,14 +28,17 @@ export enum UrlPathTemplate {
 export const getRegistrationLandingPagePath = (identifier: string) =>
   UrlPathTemplate.RegistrationLandingPage.replace(':identifier', encodeURIComponent(identifier));
 
+export const getDuplicateCheckPagePath = (identifier: string) =>
+  UrlPathTemplate.BasicDataCentralImportDuplicateCheck.replace(':identifier', encodeURIComponent(identifier));
+
 export const getRegistrationPath = (identifier?: string) =>
   identifier
     ? UrlPathTemplate.Registration.replace(':identifier?', encodeURIComponent(identifier))
     : UrlPathTemplate.Registration.replace('/:identifier?', '');
 
-export const getUserPath = (authorityId: string) => `${UrlPathTemplate.User}?id=${encodeURIComponent(authorityId)}`;
+export const getUserPath = (userId: string) => `${UrlPathTemplate.User}?id=${encodeURIComponent(userId)}`;
 
 export const getAdminInstitutionPath = (id: string) =>
-  `${UrlPathTemplate.AdminInstitutions}?id=${encodeURIComponent(id)}`;
+  `${UrlPathTemplate.BasicDataInstitutions}?id=${encodeURIComponent(id)}`;
 
 export const getProjectPath = (id: string) => `${UrlPathTemplate.Projects}?id=${encodeURIComponent(id)}`;

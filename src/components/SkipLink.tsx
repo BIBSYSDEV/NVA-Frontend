@@ -1,30 +1,30 @@
-import React from 'react';
-import styled from 'styled-components';
 import { LinkProps, Link, Typography } from '@mui/material';
 
-const StyledSkipLink = styled(Link)`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 3rem;
-  background: ${({ theme }) => theme.palette.section.black};
-  clip-path: circle(0%);
-
-  :focus {
-    position: static;
-    clip-path: none;
-  }
-`;
-
-const StyledTypography = styled(Typography)`
-  color: ${({ theme }) => theme.palette.background.default};
-  outline: 3px solid ${({ theme }) => theme.palette.secondary.main};
-  outline-offset: 3px;
-`;
-
 export const SkipLink = ({ children, ...props }: LinkProps) => (
-  <StyledSkipLink underline="none" {...props}>
-    <StyledTypography>{children}</StyledTypography>
-  </StyledSkipLink>
+  <Link
+    underline="none"
+    sx={{
+      position: 'absolute',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '3rem',
+      background: 'black',
+      clipPath: 'circle(0%)',
+
+      ':focus': {
+        position: 'static',
+        clipPath: 'none',
+      },
+    }}
+    {...props}>
+    <Typography
+      sx={{
+        color: 'white',
+        outline: '3px solid orange',
+        outlineOffset: '3px',
+      }}>
+      {children}
+    </Typography>
+  </Link>
 );

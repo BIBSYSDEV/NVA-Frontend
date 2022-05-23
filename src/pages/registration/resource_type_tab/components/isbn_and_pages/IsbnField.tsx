@@ -1,12 +1,12 @@
 import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik';
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '@mui/material';
 import { IMaskInput } from 'react-imask';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 
-const isbnFormat = '000-0-00-000000-0';
+const isbnFormat = '000-00-000-0000-0';
 
 interface MaskIsbnInputProps {
   onChange: (event: { target: { name: string; value: string } }) => void;

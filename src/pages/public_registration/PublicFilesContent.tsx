@@ -1,81 +1,26 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import styled from 'styled-components';
+import { useCallback, useEffect, useState } from 'react';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import LockIcon from '@mui/icons-material/Lock';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { Accordion, AccordionDetails, AccordionSummary, Button, CircularProgress, Typography } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
+  CircularProgress,
+  Typography,
+} from '@mui/material';
 import prettyBytes from 'pretty-bytes';
 import { File, licenses } from '../../types/file.types';
-import { downloadFile } from '../../api/fileApi';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
+import { downloadPrivateFile, downloadPublicFile } from '../../api/fileApi';
+import { setNotification } from '../../redux/notificationSlice';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { PreviewFile } from './preview_file/PreviewFile';
 import { dataTestId } from '../../utils/dataTestIds';
-
-const StyledFileRowContainer = styled.div`
-  > :not(:last-child) {
-    margin-bottom: 1rem;
-  }
-`;
-
-const StyledFileRow = styled.div`
-  display: grid;
-  grid-template-areas:
-    'name     size    version license download'
-    'preview  preview preview preview preview ';
-  grid-template-columns: 5fr 1fr 2fr 2fr 2fr;
-  column-gap: 1rem;
-  align-items: center;
-  padding: 1rem;
-  background: ${({ theme }) => theme.palette.section.megaLight};
-
-  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
-    grid-template-areas:
-      'name     size    '
-      'version  license '
-      'download download';
-    grid-template-columns: auto auto;
-    row-gap: 1rem;
-  }
-`;
-
-const StyledFileName = styled(Typography)`
-  grid-area: name;
-  font-size: 1rem;
-  font-weight: 700;
-  line-break: anywhere;
-`;
-
-const StyledSize = styled(Typography)`
-  grid-area: size;
-`;
-
-const StyledVersion = styled(Typography)`
-  grid-area: version;
-`;
-
-const StyledLicenseImg = styled.img`
-  grid-area: license;
-  cursor: pointer;
-`;
-
-const StyledDownload = styled.div`
-  grid-area: download;
-`;
-
-const StyledPreviewAccordion = styled(Accordion)`
-  grid-area: preview;
-  margin-top: 1rem;
-  max-height: 35rem;
-  background: #f6f6f6;
-
-  @media (max-width: ${({ theme }) => `${theme.breakpoints.values.sm}px`}) {
-    display: none;
-  }
-`;
+import { RootState } from '../../redux/store';
 
 const maxFileSize = 10000000; //10 MB
 
@@ -84,7 +29,7 @@ export const PublicFilesContent = ({ registration }: PublicRegistrationContentPr
   const publiclyAvailableFiles = files.filter((file) => !file.administrativeAgreement);
 
   return (
-    <StyledFileRowContainer>
+    <>
       {publiclyAvailableFiles.map((file, index) => (
         <FileRow
           key={file.identifier}
@@ -93,7 +38,7 @@ export const PublicFilesContent = ({ registration }: PublicRegistrationContentPr
           openPreviewByDefault={index === 0 && publiclyAvailableFiles[0].size < maxFileSize}
         />
       ))}
-    </StyledFileRowContainer>
+    </>
   );
 };
 
@@ -106,6 +51,7 @@ interface FileRowProps {
 const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('common');
+  const user = useSelector((store: RootState) => store.user);
   const [openPreviewAccordion, setOpenPreviewAccordion] = useState(openPreviewByDefault);
   const [isLoadingPreviewFile, setIsLoadingPreviewFile] = useState(false);
   const [previewFileUrl, setPreviewFileUrl] = useState('');
@@ -113,20 +59,21 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
   const handleDownload = useCallback(
     async (previewFile = false) => {
       previewFile && setIsLoadingPreviewFile(true);
-      const downloadFileResponse = await downloadFile(registrationIdentifier, file.identifier);
+      const downloadFileResponse = user
+        ? await downloadPrivateFile(registrationIdentifier, file.identifier)
+        : await downloadPublicFile(registrationIdentifier, file.identifier);
       if (!downloadFileResponse) {
-        dispatch(setNotification(t('feedback:error.download_file'), NotificationVariant.Error));
+        dispatch(setNotification({ message: t('feedback:error.download_file'), variant: 'error' }));
       } else {
-        const { presignedDownloadUrl } = downloadFileResponse;
         if (previewFile) {
-          setPreviewFileUrl(presignedDownloadUrl);
+          setPreviewFileUrl(downloadFileResponse.id);
         } else {
-          window.open(presignedDownloadUrl, '_blank');
+          window.open(downloadFileResponse.id, '_blank');
         }
       }
       previewFile && setIsLoadingPreviewFile(false);
     },
-    [t, dispatch, registrationIdentifier, file.identifier]
+    [t, dispatch, user, registrationIdentifier, file.identifier]
   );
 
   useEffect(() => {
@@ -141,15 +88,36 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
   const licenseTitle = file.license?.identifier ? t(`licenses:labels.${file.license.identifier}`) : '';
 
   return (
-    <StyledFileRow>
-      <StyledFileName>{file.name}</StyledFileName>
-      <StyledSize>{prettyBytes(file.size, { locale: true })}</StyledSize>
-      <StyledVersion>
+    <Box
+      data-testid={dataTestId.registrationLandingPage.file}
+      sx={{
+        display: 'grid',
+        gridTemplateAreas: {
+          xs: `"name size" "version license" "download download"`,
+          sm: `"name size version license download" "preview preview preview preview preview"`,
+        },
+        gridTemplateColumns: { xs: '4fr 1fr', sm: '5fr 1fr 2fr 2fr 2fr' },
+        rowGap: { xs: '1rem', sm: 0 },
+        columnGap: '1rem',
+        alignItems: 'center',
+        marginBottom: '2rem',
+      }}>
+      <Typography
+        data-testid={dataTestId.registrationLandingPage.fileName}
+        sx={{ gridArea: 'name', fontSize: '1rem', fontWeight: 700, lineBreak: 'anywhere' }}>
+        {file.name}
+      </Typography>
+      <Typography data-testid={dataTestId.registrationLandingPage.fileSize} sx={{ gridArea: 'size' }}>
+        {prettyBytes(file.size, { locale: true })}
+      </Typography>
+      <Typography data-testid={dataTestId.registrationLandingPage.fileVersion} sx={{ gridArea: 'version' }}>
         {file.publisherAuthority
           ? t('registration:files_and_license.published_version')
           : t('registration:files_and_license.accepted_version')}
-      </StyledVersion>
-      <StyledLicenseImg
+      </Typography>
+      <Box
+        component="img"
+        sx={{ gridArea: 'license', maxHeight: '3rem', cursor: 'pointer' }}
         onClick={() => {
           if (licenseData?.link) {
             window.open(licenseData.link);
@@ -160,9 +128,9 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
         src={licenseData?.logo}
         data-testid={dataTestId.registrationLandingPage.license}
       />
-      <StyledDownload>
+      <Box sx={{ gridArea: 'download' }}>
         {fileIsEmbargoed ? (
-          <Typography>
+          <Typography data-testid={dataTestId.registrationLandingPage.fileEmbargoDate}>
             <LockIcon />
             {t('will_be_available')} {fileEmbargoDate?.toLocaleDateString()}
           </Typography>
@@ -170,28 +138,35 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
           <Button
             data-testid={dataTestId.registrationLandingPage.openFileButton}
             variant="contained"
-            color="secondary"
             fullWidth
             endIcon={<OpenInNewIcon />}
             onClick={() => handleDownload(false)}>
             {t('open')}
           </Button>
         )}
-      </StyledDownload>
+      </Box>
       {!fileIsEmbargoed && (
-        <StyledPreviewAccordion
+        <Accordion
+          sx={{
+            gridArea: 'preview',
+            marginTop: '1rem',
+            maxHeight: '35rem',
+            display: { xs: 'none', sm: 'block' },
+          }}
           variant="outlined"
           square
           expanded={openPreviewAccordion}
           onChange={() => setOpenPreviewAccordion(!openPreviewAccordion)}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="button">{t('registration:public_page.preview')}</Typography>
+            <Typography data-testid={dataTestId.registrationLandingPage.filePreviewHeader} variant="button">
+              {t('registration:public_page.preview')}
+            </Typography>
           </AccordionSummary>
           <AccordionDetails>
             {isLoadingPreviewFile ? <CircularProgress /> : <PreviewFile url={previewFileUrl} file={file} />}
           </AccordionDetails>
-        </StyledPreviewAccordion>
+        </Accordion>
       )}
-    </StyledFileRow>
+    </Box>
   );
 };

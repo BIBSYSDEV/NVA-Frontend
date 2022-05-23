@@ -1,8 +1,5 @@
 import { useFormikContext } from 'formik';
-import React from 'react';
-import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
-import { lightTheme } from '../../../themes/lightTheme';
 import { DegreeType, ResourceFieldNames } from '../../../types/publicationFieldNames';
 import { DegreeRegistration } from '../../../types/publication_types/degreeRegistration.types';
 import { SelectTypeField } from './components/SelectTypeField';
@@ -18,15 +15,13 @@ export const DegreeTypeForm = ({ onChangeSubType }: DegreeTypeFormProps) => {
 
   return (
     <>
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-        <StyledSelectWrapper>
-          <SelectTypeField
-            fieldName={ResourceFieldNames.SubType}
-            onChangeType={onChangeSubType}
-            options={Object.values(DegreeType)}
-          />
-        </StyledSelectWrapper>
-      </BackgroundDiv>
+      <StyledSelectWrapper>
+        <SelectTypeField
+          fieldName={ResourceFieldNames.SubType}
+          onChangeType={onChangeSubType}
+          options={Object.values(DegreeType)}
+        />
+      </StyledSelectWrapper>
 
       {subType && <DegreeForm subType={subType} />}
     </>

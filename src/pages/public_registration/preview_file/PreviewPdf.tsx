@@ -1,28 +1,22 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import { Box } from '@mui/material';
+import { useState } from 'react';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { CommonPreviewProps } from './PreviewFile';
 import { PreviewUnavailable } from './PreviewUnavailable';
-
-interface ObjectProps {
-  readonly successfullyLoadedPdf: boolean;
-}
-
-const StyledObject = styled.object<ObjectProps>`
-  width: 100%;
-  height: ${({ successfullyLoadedPdf }) => (successfullyLoadedPdf ? '25rem' : null)};
-`;
 
 export const PreviewPdf = ({ url, ...props }: CommonPreviewProps) => {
   const [successfullyLoadedPdf, setSuccessfullyLoadedPdf] = useState(false);
 
   return (
-    <StyledObject
+    <Box
+      data-testid={dataTestId.registrationLandingPage.filePreview}
+      component="object"
       type="application/pdf"
       data={url}
       {...props}
       onLoad={() => setSuccessfullyLoadedPdf(true)}
-      successfullyLoadedPdf={successfullyLoadedPdf}>
+      sx={{ width: '100%', height: successfullyLoadedPdf ? '25rem' : 0 }}>
       <PreviewUnavailable />
-    </StyledObject>
+    </Box>
   );
 };

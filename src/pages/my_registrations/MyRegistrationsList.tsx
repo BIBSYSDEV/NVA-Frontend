@@ -1,8 +1,7 @@
-import React, { ChangeEvent, MouseEvent, useState } from 'react';
+import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import styled from 'styled-components';
 import {
   Button,
   Table,
@@ -20,26 +19,12 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { visuallyHidden } from '@mui/utils';
 import { deleteRegistration } from '../../api/registrationApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { setNotification } from '../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../types/notification.types';
+import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationPreview, RegistrationStatus } from '../../types/registration.types';
 import { getRegistrationLandingPagePath, getRegistrationPath } from '../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-
-const StyledTableRow = styled(TableRow)`
-  background-color: ${(props) => props.theme.palette.box.main};
-  :nth-child(odd) {
-    background-color: ${(props) => props.theme.palette.background.default};
-  }
-`;
-
-const StyledTypography = styled(Typography)`
-  font-weight: bold;
-`;
-
-const StyledLabel = styled(StyledTypography)`
-  min-width: 12rem;
-`;
+import { alternatingTableRowColor } from '../../themes/mainTheme';
+import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
 
 interface MyRegistrationsListProps {
   registrations: RegistrationPreview[];
@@ -71,33 +56,39 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
     setIsDeleting(true);
     const deleteRegistrationResponse = await deleteRegistration(registrationToDelete.identifier);
     if (isErrorStatus(deleteRegistrationResponse.status)) {
-      dispatch(setNotification(t('feedback:error.delete_registration'), NotificationVariant.Error));
+      dispatch(setNotification({ message: t('feedback:error.delete_registration'), variant: 'error' }));
       setIsDeleting(false);
     } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
-      dispatch(setNotification(t('feedback:success.delete_registration'), NotificationVariant.Success));
+      dispatch(setNotification({ message: t('feedback:success.delete_registration'), variant: 'success' }));
       refetchRegistrations();
     }
   };
+
+  useEffect(() => {
+    if (registrations.some(({ mainTitle }) => stringIncludesMathJax(mainTitle))) {
+      typesetMathJax();
+    }
+  }, [registrations, page, rowsPerPage]);
 
   const registrationsOnPage = registrations.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
 
   return (
     <>
       <TableContainer>
-        <Table>
+        <Table sx={alternatingTableRowColor}>
           <caption>
             <span style={visuallyHidden}>{t('workLists:my_registrations')}</span>
           </caption>
           <TableHead>
             <TableRow>
               <TableCell data-testid="header-registration-title">
-                <StyledLabel>{t('title')}</StyledLabel>
+                <Typography sx={{ fontWeight: 'bold', minWidth: '12rem' }}>{t('title')}</Typography>
               </TableCell>
               <TableCell data-testid="header-registration-status">
-                <StyledTypography>{t('status')}</StyledTypography>
+                <Typography fontWeight="bold">{t('status')}</Typography>
               </TableCell>
               <TableCell data-testid="header-registration-created">
-                <StyledTypography>{t('created_date')}</StyledTypography>
+                <Typography fontWeight="bold">{t('created_date')}</Typography>
               </TableCell>
               <TableCell />
               <TableCell />
@@ -106,7 +97,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
           </TableHead>
           <TableBody>
             {registrationsOnPage.map((registration) => (
-              <StyledTableRow key={registration.identifier}>
+              <TableRow key={registration.identifier}>
                 <TableCell component="th" scope="row" data-testid={`registration-title-${registration.identifier}`}>
                   <Typography>{registration.mainTitle || <i>[{t('common:missing_title')}]</i>}</Typography>
                 </TableCell>
@@ -118,7 +109,6 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                 </TableCell>
                 <TableCell>
                   <Button
-                    color="primary"
                     variant="outlined"
                     component={RouterLink}
                     to={getRegistrationLandingPagePath(registration.identifier)}
@@ -129,7 +119,6 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                 </TableCell>
                 <TableCell>
                   <Button
-                    color="primary"
                     variant="outlined"
                     component={RouterLink}
                     to={getRegistrationPath(registration.identifier)}
@@ -153,7 +142,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                     </Button>
                   )}
                 </TableCell>
-              </StyledTableRow>
+              </TableRow>
             ))}
           </TableBody>
         </Table>

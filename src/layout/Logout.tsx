@@ -1,7 +1,7 @@
-import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { useEffect } from 'react';
 import { UrlPathTemplate } from '../utils/urlPaths';
-import { REDIRECT_PATH_KEY } from '../utils/constants';
+import { LocalStorageKey } from '../utils/constants';
 
 const registrationLandingPageParts = UrlPathTemplate.RegistrationLandingPage.split('/');
 const isPublicPage = (path: string) => {
@@ -18,9 +18,9 @@ const isPublicPage = (path: string) => {
 };
 
 const Logout = () => {
-  const previousPath = localStorage.getItem(REDIRECT_PATH_KEY);
+  const previousPath = localStorage.getItem(LocalStorageKey.RedirectPath);
   const redirectPath = previousPath && isPublicPage(previousPath) ? previousPath : UrlPathTemplate.Home;
-  localStorage.removeItem(REDIRECT_PATH_KEY);
+  useEffect(() => () => localStorage.removeItem(LocalStorageKey.RedirectPath), []);
 
   return <Redirect to={redirectPath} />;
 };

@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { SearchApiPath } from '../../api/apiPaths';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { RegistrationList } from '../../components/RegistrationList';
+import { SearchResponse } from '../../types/common.types';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
-import { SearchResult } from '../../types/registration.types';
+import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 
@@ -14,7 +15,7 @@ interface ProjectResultsProps {
 
 export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
   const { t } = useTranslation('project');
-  const [results, isLoadingResults] = useFetch<SearchResult>({
+  const [results, isLoadingResults] = useFetch<SearchResponse<Registration>>({
     url: `${SearchApiPath.Registrations}?query=${DescriptionFieldNames.Projects}.id="${projectId}"`,
     errorMessage: t('feedback:error.search'),
   });
@@ -22,10 +23,10 @@ export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
   return (
     <LandingPageAccordion
       data-testid={dataTestId.projectLandingPage.resultsAccordion}
-      heading={results ? `${t('results')} (${results.total})` : t('results')}>
+      heading={results ? `${t('results')} (${results.size})` : t('results')}>
       {isLoadingResults ? (
         <CircularProgress />
-      ) : results && results.total > 0 ? (
+      ) : results && results.size > 0 ? (
         <RegistrationList registrations={results.hits} />
       ) : (
         <Typography>{t('no_results')}</Typography>

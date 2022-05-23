@@ -1,16 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
 import { CircularProgress, TextField, TextFieldProps, AutocompleteRenderInputParams } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-const StyledSearchIcon = styled(SearchIcon)`
-  margin-left: 0.5rem;
-  color: ${({ theme }) => theme.palette.text.disabled};
-`;
-
 interface AutocompleteTextFieldProps
   extends AutocompleteRenderInputParams,
-    Pick<TextFieldProps, 'placeholder' | 'label' | 'required'> {
+    Pick<TextFieldProps, 'placeholder' | 'label' | 'required' | 'name' | 'value' | 'onBlur'> {
   isLoading: boolean;
   showSearchIcon?: boolean;
   errorMessage?: string;
@@ -31,12 +24,12 @@ export const AutocompleteTextField = ({
       startAdornment: (
         <>
           {params.InputProps.startAdornment}
-          {showSearchIcon && <StyledSearchIcon />}
+          {showSearchIcon && <SearchIcon color="disabled" />}
         </>
       ),
       endAdornment: (
         <>
-          {isLoading && <CircularProgress color="inherit" size={20} />}
+          {isLoading && <CircularProgress size={20} />}
           {params.InputProps.endAdornment}
         </>
       ),

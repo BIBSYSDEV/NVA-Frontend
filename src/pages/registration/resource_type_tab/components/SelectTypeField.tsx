@@ -1,5 +1,4 @@
 import { ErrorMessage, Field, FieldProps } from 'formik';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { MenuItem, TextField } from '@mui/material';
 

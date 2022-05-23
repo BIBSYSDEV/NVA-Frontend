@@ -1,9 +1,8 @@
-import { Button, Menu, MenuItem, Typography } from '@mui/material';
+import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { HrcsActivityInput } from './HrcsActivityInput';
@@ -13,27 +12,7 @@ import { Registration } from '../../../../types/registration.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { VocabularyComponentProps } from './VocabularyAutocomplete';
 import { hrcsActivityBaseId, hrcsCategoryBaseId } from '../../../../utils/constants';
-
-const StyledAddButton = styled(Button)`
-  margin-top: 1rem;
-`;
-
-const StyledRemoveButton = styled(Button)`
-  margin-top: 1rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    margin-top: 0.5rem;
-  }
-`;
-
-const StyledVocabularyRow = styled.div`
-  display: grid;
-  grid-template-columns: 5fr 1fr;
-  column-gap: 2rem;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-columns: 1fr;
-  }
-`;
+import { InputContainerBox } from '../../../../components/styled/Wrappers';
 
 interface VocabularyConfig {
   [key: string]: { baseId: string; i18nKey: string; component: (props: VocabularyComponentProps) => JSX.Element };
@@ -85,7 +64,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
   const addableVocabularies = allowedVocabularyKeys.filter((vocabulary) => !visibleVocabularies.includes(vocabulary));
 
   return (
-    <>
+    <InputContainerBox>
       <FieldArray name={DescriptionFieldNames.Subjects}>
         {({ name, remove, push }: FieldArrayRenderProps) => (
           <>
@@ -95,9 +74,15 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
               const selectedIds = subjects.filter((keyword) => keyword.startsWith(baseId));
 
               return (
-                <StyledVocabularyRow
+                <Box
                   key={vocabulary}
-                  data-testid={dataTestId.registrationWizard.description.vocabularyRow(vocabulary)}>
+                  data-testid={dataTestId.registrationWizard.description.vocabularyRow(vocabulary)}
+                  sx={{
+                    display: 'grid',
+                    gridTemplateColumns: { xs: '1fr', sm: '4fr auto' },
+                    columnGap: '2rem',
+                    rowGap: '0.5rem',
+                  }}>
                   <VocabularyComponent
                     selectedIds={selectedIds}
                     addValue={push}
@@ -111,12 +96,12 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                   />
                   {!defaultVocabularyKeys.includes(vocabulary) && (
                     <>
-                      <StyledRemoveButton
+                      <Button
                         color="error"
                         startIcon={<RemoveCircleIcon />}
                         onClick={() => setVocabularyToRemove(vocabulary)}>
                         {t('description.remove_vocabulary')}
-                      </StyledRemoveButton>
+                      </Button>
 
                       <ConfirmDialog
                         open={vocabularyToRemove === vocabulary}
@@ -138,7 +123,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                       </ConfirmDialog>
                     </>
                   )}
-                </StyledVocabularyRow>
+                </Box>
               );
             })}
           </>
@@ -166,13 +151,14 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
       )}
 
       {addableVocabularies.length > 0 && (
-        <StyledAddButton
+        <Button
           data-testid={dataTestId.registrationWizard.description.addVocabularyButton}
           onClick={(event) => setNewVocabularyAnchor(event.currentTarget)}
-          startIcon={<AddIcon />}>
+          startIcon={<AddIcon />}
+          sx={{ alignSelf: 'flex-start' }}>
           {t('description.add_vocabulary')}
-        </StyledAddButton>
+        </Button>
       )}
-    </>
+    </InputContainerBox>
   );
 };

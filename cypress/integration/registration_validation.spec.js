@@ -1,4 +1,3 @@
-import 'cypress-file-upload';
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { JournalArticleContentType, BookMonographContentType } from '../../src/types/publication_types/content.types';
 import { DesignType } from '../../src/types/publication_types/artisticRegistration.types';
@@ -9,7 +8,7 @@ describe('User opens registration form and can see validation errors', () => {
   before('Given that the user is logged in as Creator:', () => {
     cy.visit('/');
     cy.mocklogin();
-    cy.get('[data-testid=my-registrations]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.header.myRegistrationsLink}]`).click({ force: true });
     cy.get('[data-testid=edit-registration-4327439]').click({ force: true });
   });
 
@@ -18,31 +17,46 @@ describe('User opens registration form and can see validation errors', () => {
   });
 
   it('The User should be able to see validation errors on description tab', () => {
-    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.descriptionStepButton}]`).click({ force: true });
 
     // Title field
-    cy.get('[data-testid=registration-title-field] p.Mui-error').should('be.visible');
-    cy.get('[data-testid=nav-tabpanel-description]').within(() => cy.get('[data-testid=error-tab]').should('exist'));
-    cy.get('[data-testid=registration-title-field] input').click({ force: true }).type('TITLE INPUT');
-    cy.get('[data-testid=registration-title-field] p.Mui-error').should('not.exist');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.description.titleField}] p.Mui-error`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.descriptionStepButton}]`).within(() =>
+      cy.get('[data-testid=error-tab]').should('exist')
+    );
+    cy.get(`[data-testid=${dataTestId.registrationWizard.description.titleField}] input`)
+      .click({ force: true })
+      .type('TITLE INPUT');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.description.titleField}] p.Mui-error`).should('not.exist');
 
     // Date published field
-    cy.get('[data-testid=date-published-field] input').click({ force: true }).type('999');
-    cy.get('[data-testid=date-published-field] p.Mui-error').should('be.visible');
-    cy.get('[data-testid=date-published-field] input').clear().click({ force: true }).type('01.01.2000');
-    cy.get('[data-testid=date-published-field] p.Mui-error').should('not.exist');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.description.datePublishedField}] input`)
+      .click({ force: true })
+      .type('999');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.description.datePublishedField}] p.Mui-error`).should(
+      'be.visible'
+    );
+    cy.get(`[data-testid=${dataTestId.registrationWizard.description.datePublishedField}] input`)
+      .clear()
+      .click({ force: true })
+      .type('01.01.2000');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.description.datePublishedField}] p.Mui-error`).should(
+      'not.exist'
+    );
 
-    cy.get('[data-testid=nav-tabpanel-description]').within(() =>
+    cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.descriptionStepButton}]`).within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
     );
   });
 
   it('The User should be able to see validation errors on resource tab (Journal)', () => {
-    cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
-    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
-    cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.resourceStepButton}]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.descriptionStepButton}]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.resourceStepButton}]`).click({ force: true });
     cy.get('[data-testid=publication-context-type] .Mui-error').should('be.visible');
-    cy.get('[data-testid=nav-tabpanel-resource-type]').within(() => cy.get('[data-testid=error-tab]').should('exist'));
+    cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.resourceStepButton}]`).within(() =>
+      cy.get('[data-testid=error-tab]').should('exist')
+    );
 
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-context-type-Journal]').click({ force: true });
@@ -52,8 +66,8 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=publication-instance-type-JournalArticle]').click({ force: true });
     cy.get('p.Mui-error').should('not.exist');
 
-    cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
-    cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.descriptionStepButton}]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.resourceStepButton}]`).click({ force: true });
     cy.get('p.Mui-error').should('have.length', 2);
 
     // Journal (publicationContext) field
@@ -95,7 +109,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}] p.Mui-error`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}]`).click();
-    cy.get(`[data-value="${JournalArticleContentType.ResearchArticle}"]`).click();
+    cy.get(`[data-value="${JournalArticleContentType.AcademicArticle}"]`).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).eq(0).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}] p.Mui-error`).should('not.exist');
 
@@ -286,20 +300,28 @@ describe('User opens registration form and can see validation errors', () => {
     // Add author
     cy.get('[data-testid=add-Creator]').first().click();
     cy.get('[data-testid=contributor-modal]').should('be.visible');
-    cy.get('[data-testid=search-field] input').type('test');
-    cy.get('[data-testid=author-radio-button]').first().click({ force: true });
-    cy.get('[data-testid=author-radio-button]').first().click({ force: true });
-    cy.get('[data-testid=connect-author-button]').click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.searchField}] input`).type('test');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.authorRadioButton}]`)
+      .first()
+      .click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.authorRadioButton}]`)
+      .first()
+      .click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.selectUserButton}]`).click();
     cy.get('[data-testid=contributor-modal]').should('not.exist');
     cy.get('p.Mui-error').should('be.visible');
 
     // Add supervisor
     cy.get('[data-testid=add-Supervisor]').first().click();
     cy.get('[data-testid=contributor-modal]').should('be.visible');
-    cy.get('[data-testid=search-field] input').type('test');
-    cy.get('[data-testid=author-radio-button]').last().click({ force: true });
-    cy.get('[data-testid=author-radio-button]').last().click({ force: true });
-    cy.get('[data-testid=connect-author-button]').click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.searchField}] input`).type('test');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.authorRadioButton}]`)
+      .last()
+      .click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.authorRadioButton}]`)
+      .last()
+      .click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.selectUserButton}]`).click();
     cy.get('[data-testid=contributor-modal]').should('not.exist');
     cy.get('p.Mui-error').should('not.exist');
 
@@ -317,7 +339,8 @@ describe('User opens registration form and can see validation errors', () => {
 
     cy.mockFileUpload();
 
-    cy.get('input[type=file]').attachFile('img.jpg');
+    cy.fixture('img.jpg').as('file');
+    cy.get('input[type=file]').first().selectFile('@file', { force: true });
     cy.get('[data-testid=uploaded-file-card]').should('be.visible');
     cy.get('p.Mui-error').should('not.exist');
 
@@ -333,11 +356,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.files.embargoDateField}]`)
       .parent()
       .within(() => {
-        cy.get('input').click({ force: true }).type('0101', { force: true }).blur();
-        cy.get('p.Mui-error').should('be.visible');
-        cy.get('input').click({ force: true }).type('2000', { force: true });
-        cy.get('p.Mui-error').should('be.visible');
-        cy.get('input').clear().click({ force: true }).type('01013000', { force: true });
+        cy.get('input').click({ force: true }).type('01013000').blur();
         cy.get('p.Mui-error').should('not.exist');
       });
 

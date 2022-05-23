@@ -13,6 +13,16 @@ import { User } from '../types/user.types';
 import i18n from '../translations/i18n';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
 import { Period } from '../types/common.types';
+import { Contributor, ContributorRole } from '../types/contributor.types';
+import {
+  ArchitectureOutput,
+  Award,
+  Competition,
+  Exhibition,
+  MentionInPublication,
+  Venue,
+} from '../types/publication_types/artisticRegistration.types';
+import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -47,7 +57,7 @@ export const isPresentation = (instanceType: string) =>
 export const isArtistic = (instanceType: string) => Object.values(ArtisticType).some((type) => type === instanceType);
 
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
-  !!user && !!registration && user.isCreator && user.id === registration.owner;
+  !!user && !!registration && user.isCreator && user.username === registration.resourceOwner.owner;
 
 export const userIsRegistrationCurator = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCurator && user.customerId === registration.publisher.id;
@@ -80,8 +90,37 @@ export const getFormattedRegistration = (registration: Registration) => {
   const type = registration.entityDescription?.reference?.publicationInstance.type ?? '';
   let formattedRegistration = registration;
 
-  if (isPresentation(type)) {
-    const presentationRegistration = registration as PresentationRegistration;
+  if (formattedRegistration.entityDescription && !formattedRegistration.entityDescription.type) {
+    formattedRegistration.entityDescription.type = 'EntityDescription';
+  }
+  if (formattedRegistration.entityDescription?.reference && !formattedRegistration.entityDescription.reference.type) {
+    formattedRegistration.entityDescription.reference.type = 'Reference';
+  }
+  if (formattedRegistration.fileSet && !formattedRegistration.fileSet?.type) {
+    formattedRegistration.fileSet.type = 'FileSet';
+  }
+
+  if (isJournal(type)) {
+    const journalRegistration = formattedRegistration as JournalRegistration;
+    if (journalRegistration.entityDescription.reference) {
+      const { pages } = journalRegistration.entityDescription.reference.publicationInstance;
+
+      formattedRegistration = {
+        ...journalRegistration,
+        entityDescription: {
+          ...journalRegistration.entityDescription,
+          reference: {
+            ...journalRegistration.entityDescription.reference,
+            publicationInstance: {
+              ...journalRegistration.entityDescription.reference.publicationInstance,
+              pages: pages ? { ...pages, type: 'Range' } : null,
+            },
+          },
+        },
+      };
+    }
+  } else if (isPresentation(type)) {
+    const presentationRegistration = formattedRegistration as PresentationRegistration;
     const { time, agent, place } = presentationRegistration.entityDescription.reference.publicationContext;
 
     formattedRegistration = {
@@ -108,7 +147,7 @@ export const getNewDateValue = (date: Date | null, keyboardInput?: string) => {
   const isValidDate = date && date && !isNaN(date.getTime());
   const isValidInput = keyboardInput?.length === 10;
   if (isValidDate) {
-    return date.toISOString();
+    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0)).toISOString();
   } else if (!isValidDate || !isValidInput) {
     return '';
   } else {
@@ -124,5 +163,54 @@ export const getPeriodString = (period: Period | null) => {
     return '';
   } else {
     return fromDate === toDate ? fromDate : `${fromDate ?? '?'} - ${toDate ?? '?'}`;
+  }
+};
+
+const mainDegreeRoles = [ContributorRole.Creator, ContributorRole.Supervisor];
+
+export const mainContributorRolesPerType: { [type: string]: ContributorRole[] | undefined } = {
+  [DegreeType.Bachelor]: mainDegreeRoles,
+  [DegreeType.Master]: mainDegreeRoles,
+  [DegreeType.Phd]: mainDegreeRoles,
+  [DegreeType.Other]: mainDegreeRoles,
+  [BookType.Anthology]: [ContributorRole.Editor],
+  [ArtisticType.ArtisticDesign]: [
+    ContributorRole.Designer,
+    ContributorRole.CuratorOrganizer,
+    ContributorRole.Consultant,
+    ContributorRole.Other,
+  ],
+};
+
+export const splitMainContributors = (contributors: Contributor[], registrationType: string) => {
+  const mainRoles = mainContributorRolesPerType[registrationType] ?? ContributorRole.Creator;
+  const mainContributors: Contributor[] = [];
+  const otherContributors: Contributor[] = [];
+
+  contributors.forEach((contributor) => {
+    if (mainRoles.includes(contributor.role)) {
+      mainContributors.push(contributor);
+    } else {
+      otherContributors.push(contributor);
+    }
+  });
+
+  return [mainContributors, otherContributors];
+};
+
+export const getArtisticOutputName = (item: Venue | ArchitectureOutput) => {
+  switch (item.type) {
+    case 'Venue':
+      return (item as Venue).place?.label ?? '';
+    case 'Competition':
+      return (item as Competition).name;
+    case 'MentionInPublication':
+      return (item as MentionInPublication).title;
+    case 'Award':
+      return (item as Award).name;
+    case 'Exhibition':
+      return (item as Exhibition).name;
+    default:
+      return '';
   }
 };

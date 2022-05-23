@@ -1,75 +1,53 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import styled from 'styled-components';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { PageHeader } from '../../components/PageHeader';
-import { StyledPageWrapperWithMaxWidth, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { SyledPageContent, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import { RootState } from '../../redux/store';
 import { getUserPath } from '../../utils/urlPaths';
 import { UserInfo } from './UserInfo';
 import { UserOrcid } from './UserOrcid';
 import { UserRoles } from './UserRoles';
 import { UserAffiliations } from './UserAffiliations';
 
-const StyledUserPage = styled.div`
-  display: grid;
-  @media (min-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    grid-template-areas: 'top top' 'secondary-info primary-info' '. primary-info';
-    grid-template-columns: 1fr 3fr;
-  }
-  grid-gap: 2rem;
-  font-size: 1rem;
-  grid-template-areas: 'top' 'primary-info' 'secondary-info';
-`;
-
-const StyledSecondaryUserInfo = styled.div`
-  display: grid;
-  grid-area: secondary-info;
-  grid-template-areas: 'language' 'roles';
-`;
-
-const StyledPrimaryUserInfo = styled.div`
-  display: grid;
-  grid-area: primary-info;
-`;
-
-const StyledButtonWrapper = styled(StyledRightAlignedWrapper)`
-  grid-area: top;
-`;
-
 const MyProfilePage = () => {
   const { t } = useTranslation('profile');
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const user = useSelector((store: RootStore) => store.user)!; // If user has been empty this route would already be blocked
+  const user = useSelector((store: RootState) => store.user)!; // If user has been empty this route would already be blocked
 
   return (
-    <StyledPageWrapperWithMaxWidth>
+    <SyledPageContent>
       <PageHeader>{t('my_profile')}</PageHeader>
-      <StyledUserPage>
-        {user.authority && (
-          <StyledButtonWrapper>
-            <Button
-              color="primary"
-              component={RouterLink}
-              to={getUserPath(user.authority.id)}
-              data-testid="public-profile-button">
+      <Box
+        sx={{
+          display: 'grid',
+          gap: '2rem',
+          fontSize: '1rem',
+          gridTemplateAreas: {
+            xs: '"top" "primary-info" "roles"',
+            md: '"top top" "roles primary-info" ". primary-info"',
+          },
+          gridTemplateColumns: { xs: '1fr', md: '1fr 3fr' },
+        }}>
+        {user.cristinId && (
+          <StyledRightAlignedWrapper sx={{ gridArea: 'top' }}>
+            <Button component={RouterLink} to={getUserPath(user.cristinId)} data-testid="public-profile-button">
               {t('workLists:go_to_public_profile')}
             </Button>
-          </StyledButtonWrapper>
+          </StyledRightAlignedWrapper>
         )}
-        <StyledSecondaryUserInfo>
+        <Box sx={{ gridArea: 'roles' }}>
           <UserRoles user={user} />
-        </StyledSecondaryUserInfo>
+        </Box>
 
-        <StyledPrimaryUserInfo>
+        <Box sx={{ display: 'grid', gridArea: 'primary-info', gap: '1rem' }}>
           <UserInfo user={user} />
           <UserOrcid user={user} />
           <UserAffiliations user={user} />
-        </StyledPrimaryUserInfo>
-      </StyledUserPage>
-    </StyledPageWrapperWithMaxWidth>
+        </Box>
+      </Box>
+    </SyledPageContent>
   );
 };
 

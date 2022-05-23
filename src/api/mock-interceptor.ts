@@ -1,79 +1,41 @@
 import Axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Authority } from '../types/authority.types';
-import { OrcidResponse } from '../types/orcid.types';
 import { emptyRegistration } from '../types/registration.types';
 import { ORCID_USER_INFO_URL } from '../utils/constants';
-import mockDoiLookupResponse from '../utils/testfiles/doi_lookup_response.json';
-import mockNtnuResponse from '../utils/testfiles/institutions/institution_ntnu.json';
-import mockInstitutionResponse from '../utils/testfiles/institutions/institution_query.json';
-import mockNtnuSubunitResponse from '../utils/testfiles/institutions/institution_subunit_ntnu.json';
-import { mockSchoolOfSportDepartment } from '../utils/testfiles/institutions/school_of_sport_department';
-import mockAuthoritiesResponse from '../utils/testfiles/mock_authorities_response.json';
-import { mockRoles } from '../utils/testfiles/mock_feide_user';
+import { mockDoiLookup } from '../utils/testfiles/mockDoiLookup';
+import { mockOrcidResponse } from '../utils/testfiles/mockAuthorities';
+import { mockRoles, mockUser } from '../utils/testfiles/mock_feide_user';
 import {
   mockCustomerInstitution,
   mockCustomerInstitutions,
   mockCustomerInstitutionVocabularies,
 } from '../utils/testfiles/mockCustomerInstitutions';
-import mockMyRegistrations from '../utils/testfiles/my_registrations.json';
+import { mockMyRegistrations } from '../utils/testfiles/mockMyRegistrations';
 import { mockProject, mockProjectSearch } from '../utils/testfiles/mockProjects';
-import mockPublishedRegistrations from '../utils/testfiles/published_registrations.json';
 import { mockPublishersSearch } from '../utils/testfiles/mockPublishers';
 import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
-import { mockSearchResults } from '../utils/testfiles/search_results';
-import { threeMockSearchResults } from '../utils/testfiles/three_search_results';
+import { mockSearchResults, mockSearchWorklist } from '../utils/testfiles/mockSearchResults';
 import { mockMessages, mockPublishedRegistration, mockRegistration } from '../utils/testfiles/mockRegistration';
 import {
-  SearchApiPath,
-  FileApiPath,
-  PublicationsApiPath,
-  ProjectsApiPath,
-  PublicationChannelApiPath,
-  AuthorityApiPath,
+  CristinApiPath,
   CustomerInstitutionApiPath,
-  InstitutionApiPath,
+  FileApiPath,
+  PublicationChannelApiPath,
+  PublicationsApiPath,
   RoleApiPath,
-  AlmaApiPath,
+  SearchApiPath,
 } from './apiPaths';
-
-const mockOrcidResponse: OrcidResponse = {
-  id: 'https://sandbox.orcid.org/0000-0001-2345-6789',
-  sub: '0000-0001-2345-6789',
-  name: 'Sofia Garcia',
-  family_name: 'Garcia',
-  given_name: 'Sofia',
-};
-
-const mockSingleAuthorityResponse: Authority = {
-  name: 'Test User',
-  id: 'https://api.dev.nva.aws.unit.no/person/901790000000',
-  feideids: ['tu@unit.no'],
-  orcids: [],
-  orgunitids: ['https://api.cristin.no/v2/units/150.4.1.0'],
-  handles: [],
-  birthDate: '1941-04-25 00:00:00.000',
-};
-
-const mockSingleAuthorityResponseWithOrcid: Authority = {
-  ...mockSingleAuthorityResponse,
-  orcids: ['https://sandbox.orcid.org/0000-0001-2345-6789'],
-  orgunitids: [...mockSingleAuthorityResponse.orgunitids, 'https://api.cristin.no/v2/units/194.65.20.10'],
-};
-
-export const mockFileUploadUrl = 'http://localhost:3000/api/file-upload/';
-const mockCreateUpload = { uploadId: 'upoadId', key: 'key' };
-const mockPrepareUpload = { url: mockFileUploadUrl };
-const mockCompleteUpload = { location: '123-123-123' };
-const mockDownload = { presignedDownloadUrl: 'http://localhost:3000/api/file-download/' };
+import { mockOrganizationSearch } from '../utils/testfiles/mockOrganizationSearch';
+import { mockCompleteUpload, mockCreateUpload, mockDownload, mockPrepareUpload } from '../utils/testfiles/mockFiles';
+import { mockCristinUserSearch } from '../utils/testfiles/mockCristinUserSearch';
+import { mockPositionResponse } from '../utils/testfiles/mockPositions';
 
 // AXIOS INTERCEPTOR
 export const interceptRequestsOnMock = () => {
   const mock = new MockAdapter(Axios);
 
   // SEARCH
-  mock.onGet(new RegExp(SearchApiPath.Registrations)).replyOnce(200, mockSearchResults);
-  mock.onGet(new RegExp(SearchApiPath.Registrations)).reply(200, threeMockSearchResults);
+  mock.onGet(new RegExp(SearchApiPath.Registrations)).reply(200, mockSearchResults);
 
   // File
   mock.onGet(new RegExp(FileApiPath.Download)).reply(200, mockDownload);
@@ -81,14 +43,12 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(FileApiPath.Prepare)).reply(200, mockPrepareUpload);
   mock.onPost(new RegExp(FileApiPath.Complete)).reply(200, mockCompleteUpload);
 
-  // PUBLICATION LIST
-  mock.onGet(PublicationsApiPath.Registration).reply(200, mockPublishedRegistrations);
-
   //MY PUBLICATIONS
   mock.onGet(new RegExp(PublicationsApiPath.RegistrationsByOwner)).reply(200, mockMyRegistrations);
 
   //MY MESSAGES
   mock.onGet(new RegExp(PublicationsApiPath.Messages)).reply(200, mockMessages);
+  mock.onGet(new RegExp(SearchApiPath.Worklist)).reply(200, mockSearchWorklist);
 
   // PUBLICATION CHANNEL
   mock.onGet(mockJournalsSearch[0].id).reply(200, mockJournalsSearch[0]);
@@ -103,74 +63,47 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(PublicationsApiPath.Registration)).reply(201, mockRegistration);
   mock
     .onGet(new RegExp(`${PublicationsApiPath.Registration}/4327439`))
-    .reply(200, { ...emptyRegistration, owner: 'tu@unit.no' });
+    .reply(200, { ...emptyRegistration, resourceOwner: { owner: mockUser['custom:nvaUsername'] } });
   mock
     .onGet(new RegExp(`${PublicationsApiPath.Registration}/${mockPublishedRegistration.identifier}`))
     .reply(200, mockPublishedRegistration);
   mock.onGet(new RegExp(PublicationsApiPath.Registration)).reply(200, mockRegistration);
 
   // lookup DOI
-  mock.onPost(new RegExp(PublicationsApiPath.DoiLookup)).reply(200, mockDoiLookupResponse);
+  mock.onPost(new RegExp(PublicationsApiPath.DoiLookup)).reply(200, mockDoiLookup);
 
   // PROJECT
-  mock.onGet(new RegExp(`${ProjectsApiPath.Project}/1`)).reply(200, mockProject);
-  mock.onGet(new RegExp(ProjectsApiPath.Project)).reply(200, mockProjectSearch);
+  mock.onGet(mockProject.id).reply(200, mockProject);
+  mock.onGet(mockProjectSearch.hits?.[1].id).reply(200, mockProjectSearch.hits?.[1]);
+  mock.onGet(new RegExp(CristinApiPath.Project)).reply(200, mockProjectSearch);
 
   // ORCID
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
 
-  // Authority Registry
-  mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?name=*`)).reply(200, mockAuthoritiesResponse);
-  mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?feideid=*`)).reply(200, mockAuthoritiesResponse);
-  mock.onGet(new RegExp(`${AuthorityApiPath.Person}\\?arpId=901790000000`)).reply(200, mockSingleAuthorityResponse);
+  // Person Registry
+  mock.onGet(new RegExp(`${CristinApiPath.Person}\\?name=*`)).reply(200, mockCristinUserSearch);
+  mock.onPost(new RegExp(CristinApiPath.PersonIdentityNumer)).reply(201, mockCristinUserSearch.hits[0]);
 
-  // update authority
-  mock
-    .onPost(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/*/update`))
-    .replyOnce(200, mockSingleAuthorityResponse);
-  mock
-    .onPost(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/orgunitid/add`))
-    .replyOnce(200, mockSingleAuthorityResponse);
-  mock
-    .onPost(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/orcid/add`))
-    .reply(200, mockSingleAuthorityResponseWithOrcid);
-  mock
-    .onPost(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/orgunitid/add`))
-    .reply(200, mockSingleAuthorityResponseWithOrcid);
-
-  // Remove orgunitid from Authority
-  mock
-    .onDelete(new RegExp(`${AuthorityApiPath.Person}/901790000000/identifiers/orgunitid/delete`))
-    .reply(200, mockSingleAuthorityResponse);
-
-  // create authority
-  mock.onPost(new RegExp(AuthorityApiPath.Person)).reply(200, mockSingleAuthorityResponse);
+  // Positions
+  mock.onGet(new RegExp(CristinApiPath.Position)).reply(200, mockPositionResponse);
 
   //memberinstitutions
   mock
     .onGet(new RegExp(`${CustomerInstitutionApiPath.Customer}/.+/vocabularies`))
     .reply(200, mockCustomerInstitutionVocabularies);
-  mock.onGet(new RegExp(CustomerInstitutionApiPath.Customer)).replyOnce(200, mockCustomerInstitutions);
-  mock.onGet(new RegExp(CustomerInstitutionApiPath.Customer)).reply(200, mockCustomerInstitution);
+  mock.onGet(new RegExp(`${CustomerInstitutionApiPath.Customer}/.+`)).reply(200, mockCustomerInstitution);
+  mock.onGet(new RegExp(CustomerInstitutionApiPath.Customer)).reply(200, mockCustomerInstitutions);
   mock.onPut(new RegExp(CustomerInstitutionApiPath.Customer)).reply(200, mockCustomerInstitution);
   mock.onPost(new RegExp(CustomerInstitutionApiPath.Customer)).reply(201, mockCustomerInstitution);
 
-  // Institution Registry
-  mock.onGet(new RegExp(InstitutionApiPath.Institutions)).reply(200, mockInstitutionResponse);
-  mock.onGet(new RegExp(`${InstitutionApiPath.Departments}\\?uri=.*194&language=.*`)).reply(200, mockNtnuResponse);
-  mock
-    .onGet(new RegExp(`${InstitutionApiPath.Departments}\\?uri=.*194.65.20.10&language=.*`))
-    .reply(200, mockNtnuSubunitResponse);
-  mock
-    .onGet(new RegExp(`${InstitutionApiPath.Departments}\\?uri=.*150.4.1.0&language=.*`))
-    .reply(200, mockSchoolOfSportDepartment);
+  // Organizations
+  mock.onGet(new RegExp(`${CristinApiPath.Organization}\\?query=*`)).reply(200, mockOrganizationSearch);
+  mock.onGet(mockOrganizationSearch.hits[0].id).reply(200, mockOrganizationSearch.hits[0]);
+  mock.onGet(mockOrganizationSearch.hits[0].hasPart?.[0].id).reply(200, mockOrganizationSearch.hits[0].hasPart?.[0]);
 
   // Roles
   mock.onGet(new RegExp(RoleApiPath.InstitutionUsers)).reply(200, []);
   mock.onGet(new RegExp(RoleApiPath.Users)).reply(200, mockRoles);
-
-  // Alma registrations
-  mock.onGet(new RegExp(AlmaApiPath.Alma)).reply(200, undefined);
 
   mock.onAny().reply((config) => {
     throw new Error('Could not find mock for ' + config.url);

@@ -1,10 +1,10 @@
 export enum JournalArticleContentType {
-  ResearchArticle = 'Research article',
-  ReviewArticle = 'Review article',
-  CaseReport = 'Case report',
-  StudyProtocol = 'Study protocol',
-  ProfessionalArticle = 'Professional article',
-  PopularScienceArticle = 'Popular science article',
+  AcademicArticle = 'AcademicArticle',
+  AcademicLiteratureReview = 'AcademicLiteratureReview',
+  CaseReport = 'CaseReport',
+  StudyProtocol = 'StudyProtocol',
+  ProfessionalArticle = 'ProfessionalArticle',
+  PopularScienceArticle = 'PopularScienceArticle',
 }
 
 export enum BookMonographContentType {
@@ -24,8 +24,8 @@ export enum ChapterContentType {
 }
 
 export const nviApplicableContentTypes: string[] = [
-  JournalArticleContentType.ResearchArticle,
-  JournalArticleContentType.ReviewArticle,
+  JournalArticleContentType.AcademicArticle,
+  JournalArticleContentType.AcademicLiteratureReview,
   BookMonographContentType.AcademicMonograph,
   ChapterContentType.AcademicChapter,
 ];

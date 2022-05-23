@@ -4,9 +4,9 @@ import i18n from '../../translations/i18n';
 
 const customerErrorMessage = {
   displayNameRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('admin:display_name') }),
-  feideIdRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('admin:feide_organization_id') }),
-  institutionRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('admin:institution') }),
-  shortNameRequired: i18n.t('feedback:validations.is_required', { field: i18n.t('admin:short_name') }),
+  feideDomainRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('admin:feide_organization_domain') }),
+  institutionRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('common:institution') }),
+  shortNameRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('admin:short_name') }),
 };
 
 export const customerInstitutionValidationSchema = Yup.object().shape({
@@ -14,7 +14,9 @@ export const customerInstitutionValidationSchema = Yup.object().shape({
   [CustomerInstitutionFieldNames.DisplayName]: Yup.string().required(customerErrorMessage.displayNameRequired),
   [CustomerInstitutionFieldNames.ShortName]: Yup.string().required(customerErrorMessage.shortNameRequired),
   [CustomerInstitutionFieldNames.ArchiveName]: Yup.string(),
-  [CustomerInstitutionFieldNames.FeideOrganizationId]: Yup.string().required(customerErrorMessage.feideIdRequired),
+  [CustomerInstitutionFieldNames.FeideOrganizationDomain]: Yup.string().required(
+    customerErrorMessage.feideDomainRequired
+  ),
 });
 
 export const myInstitutionValidationSchema = Yup.object().shape({

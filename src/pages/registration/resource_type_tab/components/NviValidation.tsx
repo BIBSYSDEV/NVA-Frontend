@@ -1,10 +1,8 @@
-import { Typography } from '@mui/material';
-import React from 'react';
+import { Paper, Typography } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { BackgroundDiv } from '../../../../components/BackgroundDiv';
-import { RootStore } from '../../../../redux/reducers/rootReducer';
-import { lightTheme } from '../../../../themes/lightTheme';
+import { RootState } from '../../../../redux/store';
 import { BookType, ChapterType, JournalType } from '../../../../types/publicationFieldNames';
 import { BookRegistration } from '../../../../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
@@ -33,8 +31,8 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
 
   const isNviApplicableJournalArticle =
     instanceType === JournalType.Article &&
-    (contentType === JournalArticleContentType.ResearchArticle ||
-      contentType === JournalArticleContentType.ReviewArticle);
+    (contentType === JournalArticleContentType.AcademicArticle ||
+      contentType === JournalArticleContentType.AcademicLiteratureReview);
 
   const isNviApplicableBookMonograph =
     instanceType === BookType.Monograph && contentType === BookMonographContentType.AcademicMonograph;
@@ -43,7 +41,7 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
     instanceType === ChapterType.AnthologyChapter && contentType === ChapterContentType.AcademicChapter;
 
   return isNviApplicableJournalArticle || isNviApplicableBookMonograph || isNviApplicableChapterArticle ? (
-    <BackgroundDiv backgroundColor={lightTheme.palette.section.black}>
+    <>
       {isNviApplicableJournalArticle ? (
         <NviValidationJournalArticle registration={registration as JournalRegistration} />
       ) : isNviApplicableBookMonograph ? (
@@ -51,14 +49,14 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
       ) : isNviApplicableChapterArticle ? (
         <NviValidationChapterArticle registration={registration as ChapterRegistration} />
       ) : null}
-    </BackgroundDiv>
+    </>
   ) : null;
 };
 
 const NviValidationJournalArticle = ({ registration }: { registration: JournalRegistration }) => {
   const { reference } = registration.entityDescription;
 
-  const resourceState = useSelector((store: RootStore) => store.resources);
+  const resourceState = useSelector((store: RootState) => store.resources);
   const journal = reference?.publicationContext.id ? (resourceState[reference.publicationContext.id] as Journal) : null;
 
   return <NviStatus level={journal?.level} isPeerReviewed={!!reference?.publicationInstance.peerReviewed} />;
@@ -67,7 +65,7 @@ const NviValidationJournalArticle = ({ registration }: { registration: JournalRe
 const NviValidationBookMonograph = ({ registration }: { registration: BookRegistration }) => {
   const { reference } = registration.entityDescription;
 
-  const resourceState = useSelector((store: RootStore) => store.resources);
+  const resourceState = useSelector((store: RootState) => store.resources);
   const publisher = reference?.publicationContext.publisher?.id
     ? (resourceState[reference.publicationContext.publisher.id] as Publisher)
     : null;
@@ -85,7 +83,7 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
 
 const NviValidationChapterArticle = ({ registration }: { registration: ChapterRegistration }) => {
   const { t } = useTranslation('feedback');
-  const resourceState = useSelector((store: RootStore) => store.resources);
+  const resourceState = useSelector((store: RootState) => store.resources);
 
   const { reference } = registration.entityDescription;
 
@@ -119,17 +117,20 @@ const NviStatus = ({ level = '', isPeerReviewed = false }: NviStatusProps) => {
   const isRated = parseInt(level) > 0;
 
   return (
-    <Typography
-      data-testid={
-        isRated && isPeerReviewed
-          ? dataTestId.registrationWizard.resourceType.nviSuccess
-          : dataTestId.registrationWizard.resourceType.nviFailed
-      }>
-      {isRated
-        ? isPeerReviewed
-          ? t('resource_type.nvi.applicable')
-          : t('resource_type.nvi.not_peer_reviewed')
-        : t('resource_type.nvi.channel_not_rated')}
-    </Typography>
+    <Paper elevation={5} sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', p: '1rem' }}>
+      <InfoIcon color="primary" fontSize="large" />
+      <Typography
+        data-testid={
+          isRated && isPeerReviewed
+            ? dataTestId.registrationWizard.resourceType.nviSuccess
+            : dataTestId.registrationWizard.resourceType.nviFailed
+        }>
+        {isRated
+          ? isPeerReviewed
+            ? t('resource_type.nvi.applicable')
+            : t('resource_type.nvi.not_peer_reviewed')
+          : t('resource_type.nvi.channel_not_rated')}
+      </Typography>
+    </Paper>
   );
 };

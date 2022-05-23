@@ -1,14 +1,7 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import { Button, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { File } from '../../../types/file.types';
-
-const StyledFileRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
 
 interface UploadedFileRowProps {
   file: File;
@@ -17,9 +10,10 @@ interface UploadedFileRowProps {
 
 export const UploadedFileRow = ({ file, removeFile }: UploadedFileRowProps) => {
   const { t } = useTranslation('common');
+
   return (
-    <StyledFileRow data-testid="uploaded-file">
-      <Typography>{file.name}</Typography>
+    <Box data-testid="uploaded-file" sx={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Typography sx={{ wordBreak: 'break-all', mr: '1rem' }}>{file.name}</Typography>
       <Button
         color="error"
         data-testid="button-remove-file"
@@ -28,6 +22,6 @@ export const UploadedFileRow = ({ file, removeFile }: UploadedFileRowProps) => {
         onClick={removeFile}>
         {t('remove')}
       </Button>
-    </StyledFileRow>
+    </Box>
   );
 };

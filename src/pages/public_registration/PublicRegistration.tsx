@@ -1,9 +1,8 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { SyledPageContent } from '../../components/styled/Wrappers';
+import { RootState } from '../../redux/store';
 import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
 import NotFound from '../errorpages/NotFound';
@@ -21,7 +20,7 @@ const PublicRegistration = () => {
     url: `${PublicationsApiPath.Registration}/${identifier}`,
     errorMessage: t('feedback:error.get_registration'),
   });
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
 
   const isAllowedToSeePublicRegistration =
     registration?.status === RegistrationStatus.Published ||
@@ -29,7 +28,7 @@ const PublicRegistration = () => {
     userIsRegistrationCurator(user, registration);
 
   return (
-    <StyledPageWrapperWithMaxWidth>
+    <SyledPageContent>
       {isLoadingRegistration ? (
         <PageSpinner />
       ) : registration ? (
@@ -43,7 +42,7 @@ const PublicRegistration = () => {
       ) : (
         <NotFound />
       )}
-    </StyledPageWrapperWithMaxWidth>
+    </SyledPageContent>
   );
 };
 

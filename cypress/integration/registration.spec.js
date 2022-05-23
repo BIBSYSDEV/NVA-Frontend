@@ -1,4 +1,3 @@
-import 'cypress-file-upload';
 import { dataTestId } from '../../src/utils/dataTestIds';
 
 describe('Registration', () => {
@@ -21,7 +20,7 @@ describe('Registration', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.new.startRegistrationButton}]`).filter(':visible').click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.description.datePublishedField}]`).should('be.visible');
     cy.get('[data-testid=error-tab]').should('have.length', 0);
-    cy.get('[data-testid=registration-title-field] input').should(
+    cy.get(`[data-testid=${dataTestId.registrationWizard.description.titleField}] input`).should(
       'have.value',
       'Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting'
     );
@@ -36,7 +35,8 @@ describe('Registration', () => {
 
     cy.mockFileUpload();
 
-    cy.get('input[type=file]').attachFile('img.jpg');
+    cy.fixture('img.jpg').as('file')
+    cy.get('input[type=file]').first().selectFile('@file', { force: true });
     cy.get('[data-testid=uploaded-file]').should('be.visible');
 
     cy.get(`[data-testid=${dataTestId.registrationWizard.new.startRegistrationButton}]`).filter(':visible').click();

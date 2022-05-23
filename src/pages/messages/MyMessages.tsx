@@ -1,19 +1,36 @@
-import React from 'react';
+import { Typography } from '@mui/material';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PageHeader } from '../../components/PageHeader';
-import { StyledPageWrapperWithMaxWidth } from '../../components/styled/Wrappers';
-import { RoleName } from '../../types/user.types';
-import { MessagesOverview } from '../worklist/MessagesOverview';
+import { PublicationConversation } from '../../types/publication_types/messages.types';
+import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
+import { SupportRequestAccordion } from './SupportRequestAccordion';
 
-const MyMessages = () => {
+interface MyMessagesProps {
+  conversations: PublicationConversation[];
+}
+
+export const MyMessages = ({ conversations }: MyMessagesProps) => {
   const { t } = useTranslation('workLists');
+  useEffect(() => {
+    if (conversations.some(({ publication }) => stringIncludesMathJax(publication.mainTitle))) {
+      typesetMathJax();
+    }
+  }, [conversations]);
 
-  return (
-    <StyledPageWrapperWithMaxWidth>
-      <PageHeader>{t('my_messages')}</PageHeader>
-      <MessagesOverview role={RoleName.CREATOR} />
-    </StyledPageWrapperWithMaxWidth>
+  return conversations.length === 0 ? (
+    <Typography>{t('no_messages')}</Typography>
+  ) : (
+    <>
+      {conversations.map((conversation) =>
+        conversation.messageCollections.map((messageCollection) => (
+          <SupportRequestAccordion
+            key={messageCollection.messages[0].identifier}
+            registration={conversation.publication}
+            messageType={messageCollection.messageType}
+            messages={messageCollection.messages}
+          />
+        ))
+      )}
+    </>
   );
 };
-
-export default MyMessages;

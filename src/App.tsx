@@ -1,51 +1,36 @@
-import Amplify from 'aws-amplify';
-import React, { useEffect, useState } from 'react';
+import { Auth } from '@aws-amplify/auth';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
-import { addQualifierIdForAuthority, AuthorityQualifiers } from './api/authorityApi';
+import { Helmet } from 'react-helmet-async';
+import { Box } from '@mui/material';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { LocalizationProvider } from '@mui/lab';
+import { getDateFnsLocale } from './utils/date-helpers';
 import { getCurrentUserAttributes } from './api/userApi';
 import { AppRoutes } from './AppRoutes';
 import { Footer } from './layout/Footer';
 import { Header } from './layout/header/Header';
 import { Notifier } from './layout/Notifier';
-import { AuthorityOrcidModal } from './pages/user/authority/AuthorityOrcidModal';
-import { setNotification } from './redux/actions/notificationActions';
-import { setAuthorityData, setPossibleAuthorities, setRoles, setUser } from './redux/actions/userActions';
-import { RootStore } from './redux/reducers/rootReducer';
-import { Authority } from './types/authority.types';
-import { NotificationVariant } from './types/notification.types';
-import { awsConfig } from './utils/aws-config';
-import { isErrorStatus, isSuccessStatus, USE_MOCK_DATA } from './utils/constants';
+import { setNotification } from './redux/notificationSlice';
+import { setPartialUser, setUser } from './redux/userSlice';
+import { RootState } from './redux/store';
+import { authOptions } from './utils/aws-config';
+import { LocalStorageKey, USE_MOCK_DATA } from './utils/constants';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { PageSpinner } from './components/PageSpinner';
-import { LanguageCodes } from './types/language.types';
 import { SkipLink } from './components/SkipLink';
 import { useFetch } from './utils/hooks/useFetch';
-import { AuthorityApiPath, RoleApiPath } from './api/apiPaths';
+import { RoleApiPath } from './api/apiPaths';
 import { InstitutionUser } from './types/user.types';
 import { UrlPathTemplate } from './utils/urlPaths';
 import { ErrorBoundary } from './components/ErrorBoundary';
-
-const StyledApp = styled.div`
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-`;
-
-const StyledMainContent = styled.main`
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-  width: 100%;
-  align-items: center;
-  flex-grow: 1;
-`;
+import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInstitutionDialog';
+import { CreateCristinPersonDialog } from './components/CreateCristinPersonDialog';
 
 const getLanguageTagValue = (language: string) => {
-  if (language === LanguageCodes.ENGLISH) {
+  if (language === 'eng') {
     return 'en';
   }
   return 'no';
@@ -60,24 +45,11 @@ if (window.location.pathname === UrlPathTemplate.MyProfile && window.location.ha
 export const App = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation('feedback');
-  const user = useSelector((store: RootStore) => store.user);
-  const [isLoading, setIsLoading] = useState({ userAttributes: true, userAuthority: true });
-
-  const [authoritiesById, isLoadingAuthoritiesById] = useFetch<Authority[]>({
-    url: user?.id ? `${AuthorityApiPath.Person}?feideid=${encodeURIComponent(user.id)}` : '',
-    errorMessage: t('feedback:error.get_authorities'),
-  });
-
-  const [authoritiesByName, isLoadingAuthoritiesByName] = useFetch<Authority[]>({
-    url:
-      authoritiesById?.length === 0 && user?.name
-        ? `${AuthorityApiPath.Person}?name=${encodeURIComponent(user.name)}`
-        : '',
-    errorMessage: t('feedback:error.get_authorities'),
-  });
+  const user = useSelector((store: RootState) => store.user);
+  const [isLoadingUserAttributes, setIsLoadingUserAttributes] = useState(true);
 
   const [institutionUser, isLoadingInstitutionUser] = useFetch<InstitutionUser>({
-    url: user?.id && !user.roles ? `${RoleApiPath.Users}/${encodeURIComponent(user.id)}` : '',
+    url: user?.username ? `${RoleApiPath.Users}/${user.username}` : '',
     errorMessage: t('feedback:error.get_roles'),
     withAuthentication: true,
   });
@@ -85,9 +57,18 @@ export const App = () => {
   useEffect(() => {
     // Setup aws-amplify
     if (!USE_MOCK_DATA) {
-      Amplify.configure(awsConfig);
+      Auth.configure(authOptions);
     }
   }, []);
+
+  const hasExpiredToken = !!localStorage.getItem(LocalStorageKey.ExpiredToken);
+  useEffect(() => {
+    // Handle expired token
+    if (hasExpiredToken) {
+      dispatch(setNotification({ message: t('authorization:expired_token_info'), variant: 'info' }));
+      localStorage.removeItem(LocalStorageKey.ExpiredToken);
+    }
+  }, [t, dispatch, hasExpiredToken]);
 
   useEffect(() => {
     // Fetch attributes of authenticated user
@@ -95,92 +76,68 @@ export const App = () => {
       const feideUser = await getCurrentUserAttributes();
       if (!feideUser) {
         // User is not authenticated
-        setIsLoading({ userAttributes: false, userAuthority: false });
+        setIsLoadingUserAttributes(false);
       } else {
         dispatch(setUser(feideUser));
       }
-      setIsLoading((state) => ({ ...state, userAttributes: false }));
+      setIsLoadingUserAttributes(false);
     };
 
     if (USE_MOCK_DATA) {
       setUser(mockUser);
-      setIsLoading({ userAttributes: false, userAuthority: false });
+      setIsLoadingUserAttributes(false);
     } else {
       getUser();
     }
   }, [dispatch]);
 
   useEffect(() => {
-    if (user && !user.roles && institutionUser) {
-      const roles = institutionUser.roles.map((role) => role.rolename);
-      dispatch(setRoles(roles));
+    if (institutionUser) {
+      const viewingScope = institutionUser.viewingScope?.includedUnits ?? [];
+      dispatch(setPartialUser({ viewingScope }));
     }
-  }, [dispatch, institutionUser, user]);
-
-  useEffect(() => {
-    if (authoritiesById && user && !user.authority && !user.possibleAuthorities) {
-      if (authoritiesById.length === 1) {
-        const authority = authoritiesById[0];
-        dispatch(setAuthorityData(authority));
-        const addQualifier = async () => {
-          if (user.cristinId && !authority.orgunitids.includes(user.cristinId)) {
-            // Add cristinId to Authority's orgunitids
-            const authorityWithOrgId = await addQualifierIdForAuthority(
-              authority.id,
-              AuthorityQualifiers.OrgUnitId,
-              user.cristinId
-            );
-            if (isErrorStatus(authorityWithOrgId.status)) {
-              dispatch(
-                setNotification(
-                  t('feedback:error.update_authority', { qualifier: t(`common:${AuthorityQualifiers.OrgUnitId}`) }),
-                  NotificationVariant.Error
-                )
-              );
-              dispatch(setAuthorityData(authority));
-            } else if (isSuccessStatus(authorityWithOrgId.status)) {
-              dispatch(setAuthorityData(authorityWithOrgId.data));
-            }
-          }
-        };
-        addQualifier();
-      } else if (authoritiesById.length > 1) {
-        dispatch(setPossibleAuthorities(authoritiesById));
-      }
-    }
-    setIsLoading((state) => ({ ...state, userAuthority: false }));
-  }, [dispatch, t, authoritiesById, user]);
-
-  useEffect(() => {
-    if (authoritiesByName && user && !user.authority && !user.possibleAuthorities) {
-      dispatch(setPossibleAuthorities(authoritiesByName));
-    }
-  }, [dispatch, t, authoritiesByName, user]);
+  }, [dispatch, institutionUser]);
 
   return (
     <>
       <Helmet defaultTitle={t('common:page_title')} titleTemplate={`%s - ${t('common:page_title')}`}>
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
-      {Object.values(isLoading).some((isLoading) => isLoading) ||
-      isLoadingAuthoritiesById ||
-      isLoadingAuthoritiesByName ||
-      isLoadingInstitutionUser ? (
+      {user &&
+        (user.cristinId ? (
+          <SelectCustomerInstitutionDialog
+            allowedCustomerIds={user.allowedCustomers}
+            openDefault={user.allowedCustomers.length > 1}
+          />
+        ) : (
+          <CreateCristinPersonDialog user={user} />
+        ))}
+      {isLoadingUserAttributes || isLoadingInstitutionUser ? (
         <PageSpinner />
       ) : (
         <BrowserRouter>
-          <StyledApp>
+          <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Notifier />
             <SkipLink href="#main-content">{t('common:skip_to_main_content')}</SkipLink>
             <Header />
-            <StyledMainContent id="main-content">
+            <Box
+              component="main"
+              id="main-content"
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                width: '100%',
+                alignItems: 'center',
+                flexGrow: 1,
+              }}>
               <ErrorBoundary>
-                <AppRoutes />
+                <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
+                  <AppRoutes />
+                </LocalizationProvider>
               </ErrorBoundary>
-            </StyledMainContent>
+            </Box>
             <Footer />
-          </StyledApp>
-          {user && (user.authority || user.possibleAuthorities) && <AuthorityOrcidModal user={user} />}
+          </Box>
         </BrowserRouter>
       )}
     </>

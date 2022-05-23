@@ -13,3 +13,14 @@ export interface Period {
   from: string;
   to: string;
 }
+
+export interface Instant {
+  type: 'Instant';
+  value: string;
+}
+
+export interface SearchResponse<T> {
+  processingTime: number;
+  size: number;
+  hits: T[];
+}

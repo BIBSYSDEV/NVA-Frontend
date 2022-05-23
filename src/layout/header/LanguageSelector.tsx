@@ -1,36 +1,36 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Menu, MenuItem } from '@mui/material';
 import LanguageIcon from '@mui/icons-material/Language';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import styled from 'styled-components';
-import { LanguageCodes } from '../../types/language.types';
+import { getLanguageByIso6393Code } from 'nva-language';
 import { dataTestId } from '../../utils/dataTestIds';
-import { Color } from '../../themes/colors';
 
-const StyledHeaderButton = styled(Button)`
-  color: ${Color.Black};
-`;
+interface LanguageSelectorProps {
+  isMobile?: boolean;
+}
 
-export const LanguageSelector = () => {
+const englishTitle = getLanguageByIso6393Code('eng').eng;
+const norwegianTitle = 'Norsk';
+
+export const LanguageSelector = ({ isMobile }: LanguageSelectorProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
-  const setLanguage = (languageCode: LanguageCodes) => {
+  const setLanguage = (languageCode: 'nob' | 'eng') => {
     setAnchorEl(null);
     i18n.changeLanguage(languageCode);
   };
 
   return (
     <>
-      <StyledHeaderButton
+      <Button
+        color="inherit"
+        fullWidth={!!isMobile}
         data-testid={dataTestId.header.languageButton}
         startIcon={<LanguageIcon />}
-        endIcon={anchorEl ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         onClick={(event) => setAnchorEl(event.currentTarget)}>
-        {i18n.language === LanguageCodes.NORWEGIAN_BOKMAL ? t('languages:nor') : t(`languages:${i18n.language}`)}
-      </StyledHeaderButton>
+        {i18n.language === 'nob' ? norwegianTitle : englishTitle}
+      </Button>
       <Menu
         data-testid={dataTestId.header.languageMenu}
         anchorEl={anchorEl}
@@ -41,13 +41,11 @@ export const LanguageSelector = () => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        <MenuItem
-          disabled={i18n.language === LanguageCodes.NORWEGIAN_BOKMAL}
-          onClick={() => setLanguage(LanguageCodes.NORWEGIAN_BOKMAL)}>
-          {t('languages:nor')}
+        <MenuItem disabled={i18n.language === 'nob'} onClick={() => setLanguage('nob')}>
+          {norwegianTitle}
         </MenuItem>
-        <MenuItem disabled={i18n.language === LanguageCodes.ENGLISH} onClick={() => setLanguage(LanguageCodes.ENGLISH)}>
-          {t('languages:eng')}
+        <MenuItem disabled={i18n.language === 'eng'} onClick={() => setLanguage('eng')}>
+          {englishTitle}
         </MenuItem>
       </Menu>
     </>

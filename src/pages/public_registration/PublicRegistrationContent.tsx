@@ -1,10 +1,8 @@
-import deepmerge from 'deepmerge';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { Box } from '@mui/material';
 import { ItalicPageHeader } from '../../components/PageHeader';
-import { emptyRegistration, Registration, SearchResult } from '../../types/registration.types';
+import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PublicFilesContent } from './PublicFilesContent';
 import { PublicGeneralContent } from './PublicGeneralContent';
@@ -18,10 +16,8 @@ import { SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { RegistrationList } from '../../components/RegistrationList';
 import { RegistrationFieldName } from '../../types/publicationFieldNames';
-
-const StyledYearSpan = styled.span`
-  padding-left: 1rem;
-`;
+import { SearchResponse } from '../../types/common.types';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -33,9 +29,6 @@ export interface PublicRegistrationProps extends PublicRegistrationContentProps 
 export const PublicRegistrationContent = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
   const { t } = useTranslation('registration');
 
-  // Registration can lack some fields if it's newly created
-  registration = deepmerge(emptyRegistration, registration);
-
   const { identifier, entityDescription, projects, fileSet, subjects } = registration;
   const contributors = entityDescription?.contributors ?? [];
   const files = fileSet?.files ?? [];
@@ -43,13 +36,13 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
   const abstract = entityDescription?.abstract;
   const description = entityDescription?.description;
 
-  const [relatedRegistrations] = useFetch<SearchResult>({
+  const [relatedRegistrations] = useFetch<SearchResponse<Registration>>({
     url: `${SearchApiPath.Registrations}?query="${identifier}" AND NOT (${RegistrationFieldName.Identifier}:"${identifier}")`,
     errorMessage: t('feedback:error.search'),
   });
 
   return (
-    <>
+    <BackgroundDiv>
       <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
       <ItalicPageHeader
         superHeader={{
@@ -59,9 +52,12 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
                 {t(`publicationTypes:${entityDescription.reference.publicationInstance.type}`)}
               </span>
               {entityDescription?.date?.year && (
-                <StyledYearSpan data-testid={dataTestId.registrationLandingPage.publicationDate}>
+                <Box
+                  data-testid={dataTestId.registrationLandingPage.publicationDate}
+                  component="span"
+                  sx={{ pl: '1rem' }}>
                   {entityDescription.date.year}
-                </StyledYearSpan>
+                </Box>
               )}
             </>
           ) : null,
@@ -117,6 +113,6 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
         )}
       </div>
       <ShareOptions title={mainTitle} description={abstract ?? description ?? ''} />
-    </>
+    </BackgroundDiv>
   );
 };

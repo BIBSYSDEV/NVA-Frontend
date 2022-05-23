@@ -1,20 +1,17 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AccordionActions, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CloudUploadIcon from '@mui/icons-material/CloudUploadOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useUppy } from '@uppy/react';
-
+import { LoadingButton } from '@mui/lab';
 import { RegistrationAccordion } from './RegistrationAccordion';
 import { File, RegistrationFileSet } from '../../../types/file.types';
 import { createRegistration } from '../../../api/registrationApi';
-import { setNotification } from '../../../redux/actions/notificationActions';
-import { NotificationVariant } from '../../../types/notification.types';
-import { ButtonWithProgress } from '../../../components/ButtonWithProgress';
+import { setNotification } from '../../../redux/notificationSlice';
 import { FileUploader } from '../files_and_license_tab/FileUploader';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { createUppy } from '../../../utils/uppy/uppy-config';
@@ -23,17 +20,13 @@ import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { StartRegistrationAccordionProps } from './LinkRegistration';
 
-const StyledRegistrationAccorion = styled(RegistrationAccordion)`
-  border-color: ${({ theme }) => theme.palette.secondary.main};
-`;
-
 export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
-  const { t } = useTranslation('registration');
+  const { t, i18n } = useTranslation('registration');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
-  const uppy = useUppy(createUppy());
+  const uppy = useUppy(createUppy(i18n.language));
 
   const createRegistrationWithFiles = async () => {
     setIsLoading(true);
@@ -45,7 +38,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
     };
     const createRegistrationResponse = await createRegistration(registrationPayload);
     if (isErrorStatus(createRegistrationResponse.status)) {
-      dispatch(setNotification(t('feedback:error.create_registration'), NotificationVariant.Error));
+      dispatch(setNotification({ message: t('feedback:error.create_registration'), variant: 'error' }));
       setIsLoading(false);
     } else if (isSuccessStatus(createRegistrationResponse.status)) {
       history.push(getRegistrationPath(createRegistrationResponse.data.identifier), { highestValidatedTab: -1 });
@@ -53,7 +46,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
   };
 
   return (
-    <StyledRegistrationAccorion expanded={expanded} onChange={onChange}>
+    <RegistrationAccordion elevation={5} expanded={expanded} onChange={onChange}>
       <AccordionSummary
         data-testid={dataTestId.registrationWizard.new.fileAccordion}
         expandIcon={<ExpandMoreIcon fontSize="large" />}>
@@ -92,17 +85,17 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
       </AccordionDetails>
 
       <AccordionActions>
-        <ButtonWithProgress
+        <LoadingButton
           data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
-          color="secondary"
+          loadingPosition="end"
           variant="contained"
-          isLoading={isLoading}
+          loading={isLoading}
           disabled={uploadedFiles.length === 0}
           onClick={createRegistrationWithFiles}>
           {t('registration.start_registration')}
-        </ButtonWithProgress>
+        </LoadingButton>
       </AccordionActions>
-    </StyledRegistrationAccorion>
+    </RegistrationAccordion>
   );
 };

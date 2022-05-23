@@ -1,13 +1,10 @@
-import { Autocomplete, TextField, ThemeProvider } from '@mui/material';
+import { Autocomplete, Box, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import countries from 'i18n-iso-countries';
 import enCountries from 'i18n-iso-countries/langs/en.json';
 import nbCountries from 'i18n-iso-countries/langs/nb.json';
-import { BackgroundDiv } from '../../../components/BackgroundDiv';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
-import { lightTheme } from '../../../themes/lightTheme';
 import { PresentationType, ResourceFieldNames } from '../../../types/publicationFieldNames';
 import { PresentationRegistration } from '../../../types/publication_types/presentationRegistration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -17,23 +14,6 @@ import { PeriodFields } from './components/PeriodFields';
 
 countries.registerLocale(enCountries);
 countries.registerLocale(nbCountries);
-
-const StyledDatePickersContainer = styled.div`
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    display: flex;
-    flex-direction: column;
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    div:first-child {
-      margin-right: 10rem;
-    }
-  }
-`;
-
-const StyledFlagImg = styled.img`
-  margin-right: 1rem;
-`;
 
 interface PresentationTypeFormProps {
   onChangeSubType: (type: string) => void;
@@ -50,18 +30,16 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
 
   return (
     <>
-      <BackgroundDiv backgroundColor={lightTheme.palette.section.light}>
-        <StyledSelectWrapper>
-          <SelectTypeField
-            fieldName={ResourceFieldNames.SubType}
-            onChangeType={onChangeSubType}
-            options={Object.values(PresentationType)}
-          />
-        </StyledSelectWrapper>
-      </BackgroundDiv>
+      <StyledSelectWrapper>
+        <SelectTypeField
+          fieldName={ResourceFieldNames.SubType}
+          onChangeType={onChangeSubType}
+          options={Object.values(PresentationType)}
+        />
+      </StyledSelectWrapper>
 
       {subType && (
-        <BackgroundDiv backgroundColor={lightTheme.palette.section.main}>
+        <>
           <Field name={ResourceFieldNames.PublicationContextLabel}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
@@ -111,53 +89,52 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
             )}
           </Field>
 
-          <ThemeProvider theme={lightTheme}>
-            <Field name={ResourceFieldNames.PublicationContextPlaceCountry}>
-              {({ field, meta: { error, touched } }: FieldProps<string>) => (
-                <Autocomplete
-                  id={field.name}
-                  aria-labelledby={`${field.name}-label`}
-                  value={countryOptions.find((option) => option.code === field.value) ?? null}
-                  options={countryOptions}
-                  autoSelect
-                  onChange={(_, value) => setFieldValue(field.name, value?.code)}
-                  isOptionEqualToValue={(option, value) => option.code === value.code}
-                  getOptionLabel={(option) => option.label}
-                  renderOption={(props, option) => (
-                    <li {...props}>
-                      <StyledFlagImg
-                        loading="lazy"
-                        src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                        alt={option.code}
-                      />
-                      {option.label} ({option.code})
-                    </li>
-                  )}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      required
-                      data-testid={dataTestId.registrationWizard.resourceType.eventCountryField}
-                      label={t('common:country')}
-                      variant="filled"
-                      fullWidth
-                      error={touched && !!error}
-                      helperText={<ErrorMessage name={field.name} />}
+          <Field name={ResourceFieldNames.PublicationContextPlaceCountry}>
+            {({ field, meta: { error, touched } }: FieldProps<string>) => (
+              <Autocomplete
+                id={field.name}
+                aria-labelledby={`${field.name}-label`}
+                value={countryOptions.find((option) => option.code === field.value) ?? null}
+                options={countryOptions}
+                autoSelect
+                onChange={(_, value) => setFieldValue(field.name, value?.code)}
+                isOptionEqualToValue={(option, value) => option.code === value.code}
+                getOptionLabel={(option) => option.label}
+                renderOption={(props, option) => (
+                  <li {...props}>
+                    <Box
+                      component="img"
+                      sx={{ mr: '1rem' }}
+                      loading="lazy"
+                      src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                      alt={option.code}
                     />
-                  )}
-                />
-              )}
-            </Field>
-
-            <StyledDatePickersContainer>
-              <PeriodFields
-                fromFieldName={ResourceFieldNames.PublicationContextTimeFrom}
-                toFieldName={ResourceFieldNames.PublicationContextTimeTo}
-                variant="filled"
+                    {option.label} ({option.code})
+                  </li>
+                )}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    required
+                    data-testid={dataTestId.registrationWizard.resourceType.eventCountryField}
+                    label={t('common:country')}
+                    variant="filled"
+                    fullWidth
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
               />
-            </StyledDatePickersContainer>
-          </ThemeProvider>
-        </BackgroundDiv>
+            )}
+          </Field>
+
+          <Box sx={{ display: 'flex', gap: '1rem' }}>
+            <PeriodFields
+              fromFieldName={ResourceFieldNames.PublicationContextTimeFrom}
+              toFieldName={ResourceFieldNames.PublicationContextTimeTo}
+            />
+          </Box>
+        </>
       )}
     </>
   );

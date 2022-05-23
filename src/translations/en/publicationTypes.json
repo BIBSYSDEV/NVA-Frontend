@@ -1,5 +1,6 @@
 {
   "Artistic": "Artistic result",
+  "Architecture": "Architecture",
   "ArtisticDesign": "Design",
   "Book": "Book",
   "BookAnthology": "Anthology",
@@ -15,7 +16,7 @@
   "DegreePhd": "Doctoral thesis",
   "Event": "Presentation",
   "FeatureArticle": "Feature article",
-  "Journal": "Contribution to journal, magazine, or newspaper",
+  "Journal": "Publication in journal",
   "JournalArticle": "Journal article",
   "JournalCorrigendum": "Corrigendum",
   "JournalEditorial": "Editorial",

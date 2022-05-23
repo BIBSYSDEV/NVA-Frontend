@@ -1,18 +1,10 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { Typography } from '@mui/material';
-import { getUnitHierarchyNames } from '../../utils/institutions-helpers';
+import { getOrganizationHierarchy } from '../../utils/institutions-helpers';
 import { AffiliationSkeleton } from './AffiliationSkeleton';
-import { useFetchDepartment } from '../../utils/hooks/useFetchDepartment';
-
-const StyledTypography = styled(Typography)`
-  font-weight: bold;
-`;
-
-const ErrorTypography = styled(Typography)`
-  font-style: italic;
-`;
+import { Organization } from '../../types/organization.types';
+import { getLanguageString } from '../../utils/translation-helpers';
+import { useFetchResource } from '../../utils/hooks/useFetchResource';
 
 interface AffiliationHierarchyProps {
   unitUri: string;
@@ -20,27 +12,25 @@ interface AffiliationHierarchyProps {
   boldTopLevel?: boolean; // Only relevant if commaSeparated=false
 }
 
-export const AffiliationHierarchy = ({
-  unitUri,
-  commaSeparated = false,
-  boldTopLevel = true,
-}: AffiliationHierarchyProps) => {
-  const [department, isLoadingDepartment] = useFetchDepartment(unitUri);
-  const unitHierarchyNames = getUnitHierarchyNames(unitUri, department);
+export const AffiliationHierarchy = ({ unitUri, commaSeparated, boldTopLevel = true }: AffiliationHierarchyProps) => {
   const { t } = useTranslation('feedback');
+  const [organization, isLoadingOrganization] = useFetchResource<Organization>(unitUri, t('error.get_institution'));
+  const unitNames = getOrganizationHierarchy(organization).map((unit) => getLanguageString(unit.name));
 
-  return isLoadingDepartment ? (
+  return isLoadingOrganization ? (
     <AffiliationSkeleton commaSeparated={commaSeparated} />
-  ) : department ? (
+  ) : organization ? (
     commaSeparated ? (
       <i>
-        <Typography>{unitHierarchyNames.join(', ')}</Typography>
+        <Typography>{unitNames.join(', ')}</Typography>
       </i>
     ) : (
       <div>
-        {unitHierarchyNames.map((unitName, index) =>
+        {unitNames.map((unitName, index) =>
           index === 0 && boldTopLevel ? (
-            <StyledTypography key={unitName + index}>{unitName}</StyledTypography>
+            <Typography sx={{ fontWeight: 'bold' }} key={unitName + index}>
+              {unitName}
+            </Typography>
           ) : (
             <Typography key={unitName + index}>{unitName}</Typography>
           )
@@ -48,8 +38,8 @@ export const AffiliationHierarchy = ({
       </div>
     )
   ) : (
-    <ErrorTypography>
+    <Typography sx={{ fontStyle: 'italic' }}>
       [{t('error.get_affiliation_name', { unitUri, interpolation: { escapeValue: false } })}]
-    </ErrorTypography>
+    </Typography>
   );
 };

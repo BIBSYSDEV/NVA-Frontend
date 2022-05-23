@@ -1,11 +1,6 @@
-export enum NotificationVariant {
-  Error = 'error',
-  Info = 'info',
-  Success = 'success',
-  Warning = 'warning',
-}
+import { AlertColor } from '@mui/material';
 
 export interface Notification {
   message: string;
-  variant: NotificationVariant;
+  variant: AlertColor;
 }

@@ -3,7 +3,7 @@ import { PublicationType } from '../../../types/publicationFieldNames';
 import { contributorsValidationSchema } from './contributorValidation';
 import { fileValidationSchema } from './fileValidation';
 import {
-  artisticReference,
+  artisticDesignReference,
   baseReference,
   bookReference,
   chapterReference,
@@ -67,7 +67,7 @@ export const registrationValidationSchema = Yup.object().shape({
         case PublicationType.Presentation:
           return presentationReference;
         case PublicationType.Artistic:
-          return artisticReference;
+          return artisticDesignReference;
         default:
           return baseReference;
       }

@@ -22,32 +22,48 @@ interface Approval {
   date: Date;
 }
 
-type OrganizationType = 'Organization';
-
 interface ProjectIdentifier {
   type: 'CristinIdentifier';
   value: string;
 }
 
-interface CoordinatingInstitution {
-  type: OrganizationType;
+interface BasicCoordinatingInstitution {
+  type: 'Organization';
   id: string;
+}
+
+interface CoordinatingInstitution extends BasicCoordinatingInstitution {
   name: LanguageString;
 }
 
-export interface ProjectContributor {
+interface BasicContributorAffiliation {
+  type: 'Organization';
+  id: string;
+}
+
+interface ContributorAffiliation extends BasicContributorAffiliation {
+  name: LanguageString;
+}
+
+interface BasicContributorIdentity {
+  type: 'Person';
+  id: string;
+}
+
+interface ContributorIdentity extends BasicContributorIdentity {
+  firstName: string;
+  lastName: string;
+}
+
+interface BasicProjectContributor {
   type: 'ProjectManager' | 'ProjectParticipant';
-  identity: {
-    type: 'Person';
-    id: string;
-    firstName: string;
-    lastName: string;
-  };
-  affiliation: {
-    id: string;
-    type: OrganizationType;
-    name: LanguageString;
-  };
+  identity: BasicContributorIdentity;
+  affiliation?: BasicContributorAffiliation;
+}
+
+export interface ProjectContributor extends BasicProjectContributor {
+  affiliation?: ContributorAffiliation;
+  identity: ContributorIdentity;
 }
 
 interface Funding {
@@ -58,18 +74,23 @@ interface Funding {
   code: string;
 }
 
-export interface CristinProject {
+export interface PostCristinProject {
   type: 'Project';
-  id: string;
-  identifier: ProjectIdentifier[];
   title: string;
-  alternativeTitles: LanguageString[];
   language: string;
   startDate: string;
-  endDate?: string;
+  endDate: string;
+  coordinatingInstitution: BasicCoordinatingInstitution;
+  contributors: BasicProjectContributor[];
+}
+
+export interface CristinProject extends PostCristinProject {
+  id: string;
+  identifier: ProjectIdentifier[];
+  status: 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
+  alternativeTitles: LanguageString[];
   coordinatingInstitution: CoordinatingInstitution;
   contributors: ProjectContributor[];
-  status: 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
   academicSummary: LanguageString;
   popularScientificSummary: LanguageString;
   funding: Funding[];

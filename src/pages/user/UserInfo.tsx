@@ -1,9 +1,8 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LabelTextLine } from '../../components/LabelTextLine';
+import { Box, Typography } from '@mui/material';
 import { User } from '../../types/user.types';
-import { Card } from '../../components/Card';
-import { Typography } from '@mui/material';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 
 interface UserInfoProps {
   user: User;
@@ -13,7 +12,7 @@ export const UserInfo = ({ user }: UserInfoProps) => {
   const { t } = useTranslation('profile');
 
   return (
-    <Card>
+    <BackgroundDiv>
       <Typography variant="h2">{t('heading.user_info')}</Typography>
       <LabelTextLine dataTestId="user-name" label={t('common:name')}>
         {user.name}
@@ -21,9 +20,19 @@ export const UserInfo = ({ user }: UserInfoProps) => {
       <LabelTextLine dataTestId="user-id" label={t('id')}>
         {user.id}
       </LabelTextLine>
-      <LabelTextLine dataTestId="user-email" label={t('common:email')}>
-        {user.email}
-      </LabelTextLine>
-    </Card>
+    </BackgroundDiv>
   );
 };
+
+interface LabelTextLineProps {
+  label: string;
+  children?: ReactNode;
+  dataTestId?: string;
+}
+
+const LabelTextLine = ({ label, children, dataTestId }: LabelTextLineProps) => (
+  <Box sx={{ paddingBottom: '0.5rem', display: 'flex', flexWrap: 'wrap' }}>
+    <Typography sx={{ width: '6rem', minWidth: '6rem' }}>{label}:</Typography>
+    {children && <Typography data-testid={dataTestId}>{children}</Typography>}
+  </Box>
+);

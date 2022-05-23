@@ -1,5 +1,6 @@
 {
   "Artistic": "Kunstnerisk resultat",
+  "Architecture": "Arkitektur",
   "ArtisticDesign": "Design",
   "Book": "Bokpublikasjon",
   "BookAnthology": "Antologi",
@@ -15,7 +16,7 @@
   "DegreePhd": "Doktoravhandling",
   "Event": "Presentasjon",
   "FeatureArticle": "Kronikk",
-  "Journal": "Publikasjon i tidsskrift, magasin, eller avis",
+  "Journal": "Tidsskriftspublikasjon",
   "JournalArticle": "Artikkel i tidsskrift",
   "JournalCorrigendum": "Korrigendum",
   "JournalEditorial": "Lederartikkel",

@@ -1,31 +1,20 @@
-import React from 'react';
-import styled from 'styled-components';
 import { ButtonProps, Button } from '@mui/material';
-
-const StyledTabButton = styled(({ isSelected, ...rest }) => <Button {...rest} />)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  width: 50%;
-  font-weight: bold;
-  font-size: 1.2rem;
-  padding-bottom: 0.6rem;
-
-  ${({ isSelected }) =>
-    isSelected &&
-    `
-    padding-bottom: 0.4rem;
-    border-bottom: 0.2rem solid;
-  `};
-`;
 
 interface TabButtonProps extends ButtonProps {
   isSelected: boolean;
 }
 
-export const TabButton = ({ isSelected, ...props }: TabButtonProps) => (
-  <StyledTabButton isSelected={isSelected} {...props} color={isSelected ? 'primary' : 'inherit'}>
-    {props.children}
-  </StyledTabButton>
+export const TabButton = ({ isSelected, children, ...props }: TabButtonProps) => (
+  <Button
+    sx={{
+      cursor: 'pointer',
+      width: '40%',
+      fontWeight: 'bold',
+      fontSize: '1.2rem',
+      color: isSelected ? 'primary' : 'text.primary',
+      borderBottom: isSelected ? '0.2rem solid' : null,
+    }}
+    {...props}>
+    {children}
+  </Button>
 );

@@ -9,9 +9,9 @@ import { BookEntityDescription } from './publication_types/bookRegistration.type
 import { ReportEntityDescription } from './publication_types/reportRegistration.types';
 import { ChapterEntityDescription } from './publication_types/chapterRegistration.types';
 import { Contributor } from './contributor.types';
-import { LanguageValues } from './language.types';
 import { PresentationEntityDescription } from './publication_types/presentationRegistration.types';
 import { ArtisticEntityDescription } from './publication_types/artisticRegistration.types';
+import { MessageCollection } from './publication_types/messages.types';
 
 export enum RegistrationStatus {
   Deleted = 'DRAFT_FOR_DELETION',
@@ -51,10 +51,6 @@ export interface Publisher {
   level: string;
 }
 
-export interface AlmaRegistration {
-  title: string;
-}
-
 export interface MyRegistrationsResponse {
   publications?: RegistrationPreview[]; // "publications" is undefined if user has no registrations
 }
@@ -65,18 +61,12 @@ export enum DoiRequestStatus {
   Requested = 'REQUESTED',
 }
 
-interface DoiRequestMessage {
-  text: string;
-  author: string;
-  timestamp: string;
-}
-
-interface DoiRequest {
-  type: string;
+export interface DoiRequest {
+  type: 'DoiRequest';
   createdDate: string;
   modifiedDate: string;
   status: DoiRequestStatus;
-  messages?: DoiRequestMessage[];
+  messages?: MessageCollection;
 }
 
 interface RegistrationPublisher {
@@ -90,7 +80,10 @@ export interface BaseRegistration extends RegistrationFileSet {
   readonly createdDate: string;
   readonly modifiedDate: string;
   readonly publishedDate?: string;
-  readonly owner: string;
+  readonly resourceOwner: {
+    readonly owner: string;
+    readonly ownerAffiliation: string;
+  };
   readonly status: RegistrationStatus;
   readonly doi?: string;
   readonly doiRequest?: DoiRequest;
@@ -105,7 +98,7 @@ export interface BaseEntityDescription {
   contributors: Contributor[];
   date?: RegistrationDate;
   description: string;
-  language: LanguageValues;
+  language: string;
   mainTitle: string;
   npiSubjectHeading: string;
   tags: string[];
@@ -130,12 +123,6 @@ export enum PublicationChannelType {
   UnconfirmedSeries = 'UnconfirmedSeries',
 }
 
-export interface SearchResult {
-  hits: Registration[];
-  took: number;
-  total: number;
-}
-
 export type EntityDescription =
   | JournalEntityDescription
   | DegreeEntityDescription
@@ -156,10 +143,15 @@ export interface RegistrationDate {
   day: string;
 }
 
-export type RegistrationPreview = Pick<
-  Registration & JournalEntityDescription,
-  'identifier' | 'mainTitle' | 'createdDate' | 'status' | 'owner'
->;
+export interface RegistrationPreview {
+  identifier: string;
+  mainTitle: string;
+  createdDate: string;
+  status: string;
+  owner: string;
+  publicationDate?: RegistrationDate;
+  contributors?: Contributor[];
+}
 
 export interface Doi {
   identifier: string; // NVA identifier
@@ -172,7 +164,10 @@ export const emptyRegistration: Registration = {
   identifier: '',
   createdDate: '',
   modifiedDate: '',
-  owner: '',
+  resourceOwner: {
+    owner: '',
+    ownerAffiliation: '',
+  },
   status: RegistrationStatus.New,
   entityDescription: emptyRegistrationEntityDescription,
   fileSet: {

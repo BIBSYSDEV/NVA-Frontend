@@ -1,22 +1,22 @@
 import { Form, Formik, FormikErrors, FormikProps, validateYupSchema, yupToFormErrors } from 'formik';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
+import { Box } from '@mui/material';
 import { useUppy } from '@uppy/react';
 import { ItalicPageHeader } from '../../components/PageHeader';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
-import { RootStore } from '../../redux/reducers/rootReducer';
-import { emptyRegistration, Registration, RegistrationTab } from '../../types/registration.types';
+import { RootState } from '../../redux/store';
+import { Registration, RegistrationTab } from '../../types/registration.types';
 import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { Forbidden } from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
-import { RegistrationFormTabs } from './RegistrationFormTabs';
+import { RegistrationFormStepper } from './RegistrationFormStepper';
 import { getTouchedTabFields } from '../../utils/formik-helpers';
 import { SkipLink } from '../../components/SkipLink';
 import { useFetch } from '../../utils/hooks/useFetch';
@@ -26,14 +26,8 @@ import { DescriptionPanel } from './DescriptionPanel';
 import { FilesAndLicensePanel } from './FilesAndLicensePanel';
 import { ResourceTypePanel } from './ResourceTypePanel';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
-
-const StyledRegistration = styled.div`
-  width: 100%;
-`;
-
-const StyledPanel = styled.div`
-  margin-bottom: 1rem;
-`;
+import { RequiredDescription } from '../../components/RequiredDescription';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 
 export type HighestTouchedTab = RegistrationTab | -1;
 
@@ -46,10 +40,10 @@ interface RegistrationFormProps {
 }
 
 export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
-  const user = useSelector((store: RootStore) => store.user);
-  const { t } = useTranslation('registration');
+  const user = useSelector((store: RootState) => store.user);
+  const { t, i18n } = useTranslation('registration');
   const history = useHistory();
-  const uppy = useUppy(createUppy());
+  const uppy = useUppy(createUppy(i18n.language));
   const highestValidatedTab =
     useLocation<RegistrationLocationState>().state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
   const [registration, isLoadingRegistration, refetchRegistration] = useFetch<Registration>({
@@ -85,24 +79,18 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     return {};
   };
 
-  const initialValues = registration
-    ? registration.entityDescription
-      ? registration
-      : { ...registration, entityDescription: emptyRegistration.entityDescription }
-    : emptyRegistration;
-
   return isLoadingRegistration ? (
     <PageSpinner />
   ) : !isValidOwner && !isValidCurator ? (
     <Forbidden />
-  ) : (
-    <StyledRegistration>
+  ) : registration ? (
+    <>
       <SkipLink href="#form">{t('common:skip_to_schema')}</SkipLink>
       <Formik
-        initialValues={initialValues}
+        initialValues={registration}
         validate={validateForm}
-        initialErrors={validateForm(initialValues)}
-        initialTouched={getTouchedTabFields(highestValidatedTab, initialValues)}
+        initialErrors={validateForm(registration)}
+        initialTouched={getTouchedTabFields(highestValidatedTab, registration)}
         onSubmit={() => {
           /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
         }}>
@@ -116,37 +104,40 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
             <ItalicPageHeader>
               {values.entityDescription?.mainTitle || `[${t('common:missing_title')}]`}
             </ItalicPageHeader>
-            <RegistrationFormTabs tabNumber={tabNumber} setTabNumber={setTabNumber} />
-            <StyledPanel id="form">
-              {tabNumber === RegistrationTab.Description && (
-                <ErrorBoundary>
-                  <DescriptionPanel />
-                </ErrorBoundary>
-              )}
-              {tabNumber === RegistrationTab.ResourceType && (
-                <ErrorBoundary>
-                  <ResourceTypePanel />
-                </ErrorBoundary>
-              )}
-              {tabNumber === RegistrationTab.Contributors && (
-                <ErrorBoundary>
-                  <ContributorsPanel />
-                </ErrorBoundary>
-              )}
-              {tabNumber === RegistrationTab.FilesAndLicenses && (
-                <ErrorBoundary>
-                  <FilesAndLicensePanel uppy={uppy} />
-                </ErrorBoundary>
-              )}
-            </StyledPanel>
-            <RegistrationFormActions
-              tabNumber={tabNumber}
-              setTabNumber={setTabNumber}
-              refetchRegistration={refetchRegistration}
-            />
+            <RegistrationFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
+            <RequiredDescription />
+            <BackgroundDiv>
+              <Box id="form" mb="2rem">
+                {tabNumber === RegistrationTab.Description && (
+                  <ErrorBoundary>
+                    <DescriptionPanel />
+                  </ErrorBoundary>
+                )}
+                {tabNumber === RegistrationTab.ResourceType && (
+                  <ErrorBoundary>
+                    <ResourceTypePanel />
+                  </ErrorBoundary>
+                )}
+                {tabNumber === RegistrationTab.Contributors && (
+                  <ErrorBoundary>
+                    <ContributorsPanel />
+                  </ErrorBoundary>
+                )}
+                {tabNumber === RegistrationTab.FilesAndLicenses && (
+                  <ErrorBoundary>
+                    <FilesAndLicensePanel uppy={uppy} />
+                  </ErrorBoundary>
+                )}
+              </Box>
+              <RegistrationFormActions
+                tabNumber={tabNumber}
+                setTabNumber={setTabNumber}
+                refetchRegistration={refetchRegistration}
+              />
+            </BackgroundDiv>
           </Form>
         )}
       </Formik>
-    </StyledRegistration>
-  );
+    </>
+  ) : null;
 };

@@ -1,6 +1,6 @@
 import { Typography, Link } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { StyledGeneralInfo } from '../../components/landing_page/SyledGeneralInfo';
+import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 import { CristinProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getLanguageString } from '../../utils/translation-helpers';
@@ -21,7 +21,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
     <StyledGeneralInfo data-testid={dataTestId.projectLandingPage.generalInfoBox}>
       <div>
         <Typography variant="overline" component="h2">
-          {t('project_owner')}
+          {t('coordinating_institution')}
         </Typography>
         <Typography>{getProjectCoordinatingInstitutionName(project) ?? '-'}</Typography>
         <Typography variant="overline" component="h2">

@@ -1,34 +1,28 @@
-import { Auth } from 'aws-amplify';
-import { CognitoUser } from '@aws-amplify/auth';
-import { CognitoUserSession } from 'amazon-cognito-identity-js';
-import { USE_MOCK_DATA, AMPLIFY_REDIRECTED_KEY } from '../utils/constants';
+import { Auth, CognitoUser } from '@aws-amplify/auth';
+import { CreateCristinUser, CristinUser, Employment } from '../types/user.types';
+import { USE_MOCK_DATA, LocalStorageKey } from '../utils/constants';
+import { UrlPathTemplate } from '../utils/urlPaths';
+import { CristinApiPath } from './apiPaths';
+import { authenticatedApiRequest } from './apiRequest';
 
 export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> => {
   try {
-    const currentSession: CognitoUserSession = await Auth.currentSession();
-    const currentSessionData = currentSession.getIdToken().payload;
+    const currentSession = await Auth.currentSession();
 
-    if (
-      !currentSession.isValid() ||
-      currentSessionData['custom:cristinId'] === undefined ||
-      currentSessionData['custom:customerId'] === undefined
-    ) {
+    if (!currentSession.isValid()) {
       const cognitoUser: CognitoUser = await Auth.currentAuthenticatedUser();
-
       // Refresh session
-      const refreshedSession: CognitoUserSession = await new Promise((resolve) => {
+      await new Promise((resolve) => {
         cognitoUser.refreshSession(currentSession.getRefreshToken(), (error, session) => {
           resolve(session);
         });
       });
-      const refreshedSessionData = refreshedSession.getIdToken().payload;
-      return refreshedSessionData;
-    } else {
-      return currentSessionData;
     }
+    const userInfo = await Auth.currentUserInfo();
+    return userInfo.attributes;
   } catch {
     // Don't do anything if user is not supposed to be logged in
-    if (localStorage.getItem(AMPLIFY_REDIRECTED_KEY)) {
+    if (localStorage.getItem(LocalStorageKey.AmplifyRedirect)) {
       if (retryNumber < 3) {
         return await getCurrentUserAttributes(retryNumber + 1);
       } else {
@@ -39,10 +33,53 @@ export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> =>
   }
 };
 
-export const getIdToken = async () => {
+export const getAccessToken = async () => {
   if (USE_MOCK_DATA) {
     return '';
   }
-  const cognitoUser = await Auth.currentAuthenticatedUser();
-  return cognitoUser?.signInUserSession?.idToken?.jwtToken || null;
+  try {
+    const cognitoUser = await Auth.currentAuthenticatedUser();
+    return cognitoUser?.signInUserSession?.accessToken?.jwtToken ?? null;
+  } catch (error) {
+    if (error === 'The user is not authenticated') {
+      // Expired session token. Set state in localStorage that App.tsx can act upon
+      localStorage.setItem(LocalStorageKey.ExpiredToken, 'true');
+      window.location.href = UrlPathTemplate.Home;
+    }
+    return null;
+  }
+};
+
+export const createCristinPerson = async (cristinPerson: CreateCristinUser) =>
+  await authenticatedApiRequest<CristinUser>({
+    url: CristinApiPath.Person,
+    method: 'POST',
+    data: cristinPerson,
+  });
+
+type EmploymentData = Omit<Employment, 'endDate' | 'fullTimeEquivalentPercentage'> &
+  Partial<Pick<Employment, 'endDate' | 'fullTimeEquivalentPercentage'>>;
+
+export const addEmployment = async (userId: string, employment: EmploymentData) =>
+  await authenticatedApiRequest<Employment>({
+    url: `${userId}/employment`,
+    method: 'POST',
+    data: employment,
+  });
+
+interface NationalNumberSearchData {
+  type: 'NationalIdentificationNumber';
+  value: string;
+}
+
+export const searchByNationalIdNumber = async (nationalIdNumber: string) => {
+  const data: NationalNumberSearchData = {
+    type: 'NationalIdentificationNumber',
+    value: nationalIdNumber,
+  };
+  return await authenticatedApiRequest<CristinUser>({
+    url: CristinApiPath.PersonIdentityNumer,
+    method: 'POST',
+    data: data,
+  });
 };

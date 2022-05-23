@@ -1,7 +1,6 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
-import { LanguageCodes, registrationLanguages } from '../../types/language.types';
+import { getLanguageByUri } from 'nva-language';
 import {
   BookPublicationContext,
   BookPublicationInstance,
@@ -25,7 +24,7 @@ import {
   ReportPublicationInstance,
   ReportRegistration,
 } from '../../types/publication_types/reportRegistration.types';
-import { DegreeType, JournalType } from '../../types/publicationFieldNames';
+import { ArtisticType, DegreeType, JournalType } from '../../types/publicationFieldNames';
 import {
   isArtistic,
   isBook,
@@ -37,12 +36,12 @@ import {
 } from '../../utils/registration-helpers';
 import { PublicDoi } from './PublicDoi';
 import {
+  PublicArtisticOutput,
   PublicJournal,
   PublicPartOfContent,
   PublicPresentation,
   PublicPublisher,
   PublicSeries,
-  PublicVenues,
 } from './PublicPublicationContext';
 import {
   PublicIsbnContent,
@@ -55,17 +54,14 @@ import {
 } from './PublicPublicationInstance';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { RegistrationSummary } from './RegistrationSummary';
-import { StyledGeneralInfo } from '../../components/landing_page/SyledGeneralInfo';
 import { dataTestId } from '../../utils/dataTestIds';
 import { displayDate } from '../../utils/date-helpers';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
-import {
-  ArtisticPublicationContext,
-  ArtisticPublicationInstance,
-} from '../../types/publication_types/artisticRegistration.types';
+import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
+import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
-  const { t } = useTranslation('registration');
+  const { t, i18n } = useTranslation('registration');
   const { entityDescription } = registration;
 
   const publicationContext = entityDescription?.reference?.publicationContext;
@@ -74,9 +70,11 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
     | JournalPublicationInstance
     | undefined;
 
+  const language = entityDescription?.language ? getLanguageByUri(entityDescription.language) : null;
+
   return (
     <StyledGeneralInfo>
-      <div>
+      <div data-testid={dataTestId.registrationLandingPage.generalInfo}>
         <Typography variant="overline">{t('public_page.about_registration')}</Typography>
 
         <Typography>{displayDate(entityDescription?.date)}</Typography>
@@ -87,16 +85,9 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
 
         {journalPublicationInstance?.peerReviewed && <Typography>{t('resource_type.peer_reviewed')}</Typography>}
 
-        {entityDescription?.language && (
+        {language && (
           <Typography data-testid={dataTestId.registrationLandingPage.primaryLanguage}>
-            {t('common:language')}:{' '}
-            {t(
-              `languages:${
-                registrationLanguages.find(
-                  (registrationLanguage) => registrationLanguage.value === entityDescription.language
-                )?.id ?? LanguageCodes.Undefined
-              }`
-            )}
+            {t('common:language')}: {i18n.language === 'nob' ? language.nob : language.eng}
           </Typography>
         )}
 
@@ -181,7 +172,18 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           ) : isPresentation(publicationInstance.type) ? (
             <PublicPresentation publicationContext={publicationContext as PresentationPublicationContext} />
           ) : isArtistic(publicationInstance.type) ? (
-            <PublicVenues venues={(publicationContext as ArtisticPublicationContext).venues} />
+            (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.ArtisticDesign ? (
+              <PublicArtisticOutput
+                outputs={(publicationInstance as ArtisticPublicationInstance).venues ?? []}
+                heading={t('resource_type.artistic.exhibition_place')}
+              />
+            ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.ArtisticArchitecture ? (
+              <PublicArtisticOutput
+                outputs={(publicationInstance as ArtisticPublicationInstance).architectureOutput ?? []}
+                heading={t('resource_type.artistic.architecture_publications')}
+                showType
+              />
+            ) : null
           ) : null)}
       </div>
     </StyledGeneralInfo>

@@ -1,7 +1,7 @@
 import { CircularProgress } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { RootStore } from '../../../../redux/reducers/rootReducer';
+import { RootState } from '../../../../redux/store';
 import { VocabularyList, VocabularyStatus } from '../../../../types/customerInstitution.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { VocabularyFields } from './VocabularyFields';
@@ -9,7 +9,7 @@ import { VocabularyFields } from './VocabularyFields';
 export const VocabularyBase = () => {
   const { t } = useTranslation('registration');
 
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
 
   const [vocabularyList, isLoadingVocabularyList] = useFetch<VocabularyList>({
     url: user?.customerId ? `${user.customerId}/vocabularies` : '',

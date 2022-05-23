@@ -1,0 +1,29 @@
+{
+  "add_employee": "Add employee",
+  "add_to_person_registry": "Add to person registry",
+  "basic_data": "Basic data",
+  "central_import": {
+    "author": "Author",
+    "central_import": "Central import",
+    "doi": "DOI",
+    "duplicate_check": "Duplicate check",
+    "duplicate_search_hits_shown": "Hits (Showing {{ShownResultsCount}} of {{TotalResultsCount}})",
+    "import_publication": "Import publication",
+    "issn": "ISSN",
+    "or_search_with": "or search with",
+    "reset_search_values": "Reset values",
+    "search_again": "Search again",
+    "search_for_duplicates": "Search for duplicates",
+    "title": "title",
+    "verified_contributor_count": "({{verifiedContributorCount}} of {{contributorsCount}})",
+    "year_published": "Year published"
+  },
+  "create_person": "Create person",
+  "employments": "Employments",
+  "national_id": "National ID",
+  "no_matching_persons_found": "No matching persons found in the Person Registry",
+  "position": "Position",
+  "position_percent": "Position percent",
+  "publications": "Publications",
+  "search_for_national_id": "Search for user with National ID number"
+}

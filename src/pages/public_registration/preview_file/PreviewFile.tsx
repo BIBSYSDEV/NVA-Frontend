@@ -1,4 +1,3 @@
-import React from 'react';
 import { File } from '../../../types/file.types';
 import { PreviewImg } from './PreviewImg';
 import { PreviewOfficeFile } from './PreviewOfficeFile';

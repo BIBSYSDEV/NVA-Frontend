@@ -6,7 +6,7 @@
   "cname": "CNAME",
   "display_name": "Visningsnavn på institusjonen",
   "edit_institution": "Endre institusjon",
-  "feide_organization_id": "Organisasjonens id i Feide",
+  "feide_organization_domain": "Organisasjonens domene i Feide",
   "institution_dns": "Institusjonens DNS",
   "institution_logo": "Institutionslogo",
   "organization_register_name": "Navn i organisasjonsregister",
@@ -16,6 +16,8 @@
   "short_name": "Forkortet visningsnavn på institusjonen",
   "users": {
     "add_role_info": "Om du ikke finner brukeren, så må du sjekke at vedkommende er tilknyttet din institusjon og har logget på tjenesten tidligere.",
+    "area_of_responsibility": "Ansvarsområde",
+    "area_of_responsibility_placeholder": "Ingen avgresninger",
     "auto_assign_creators": "Ansatte får automatisk rolle som registrator ved pålogging hvis de er registrert med dette i 'eduPersonAffiliation': Employee, Staff, Member",
     "creator_info": "Hvem skal få tilgang til å registrere?",
     "last_login_date": "Sist innlogget",

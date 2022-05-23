@@ -1,4 +1,4 @@
-import deepmerge, { Options } from 'deepmerge';
+import deepmerge from 'deepmerge';
 import { FormikErrors, FormikTouched, getIn } from 'formik';
 import { HighestTouchedTab } from '../pages/registration/RegistrationForm';
 import { Contributor } from '../types/contributor.types';
@@ -12,7 +12,7 @@ import {
   SpecificContributorFieldNames,
   SpecificFileFieldNames,
 } from '../types/publicationFieldNames';
-import { ArtisticPublicationContext } from '../types/publication_types/artisticRegistration.types';
+import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
 import { Registration, RegistrationTab } from '../types/registration.types';
 import { getMainRegistrationType } from './registration-helpers';
 
@@ -252,23 +252,25 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
         },
       };
     case PublicationType.Artistic: {
-      const artisticPublicationContext = registration.entityDescription?.reference
-        ?.publicationContext as ArtisticPublicationContext;
+      const artisticPublicationInstance = registration.entityDescription?.reference
+        ?.publicationInstance as ArtisticPublicationInstance;
+      const venues = (artisticPublicationInstance.venues ?? []).map(() => ({
+        name: true,
+        time: { from: true, to: true },
+      }));
 
       return {
         entityDescription: {
           reference: {
             publicationContext: {
               type: true,
-              venues: artisticPublicationContext.venues.map((_) => ({
-                name: true,
-                time: { from: true, to: true },
-              })),
             },
             publicationInstance: {
               type: true,
               subtype: { type: true, description: true },
               description: true,
+              venues,
+              architectureOutput: [],
             },
           },
         },
@@ -310,10 +312,10 @@ const touchedFilesTabFields = (fileSet: FileSet | null): FormikTouched<unknown> 
   },
 });
 
-const overwriteArrayMerge = (destinationArray: unknown[], sourceArray: unknown[], options?: Options) => sourceArray;
-
 export const mergeTouchedFields = (touchedArray: FormikTouched<Registration>[]) =>
-  deepmerge.all(touchedArray, { arrayMerge: overwriteArrayMerge });
+  deepmerge.all(touchedArray, {
+    arrayMerge: (destinationArray, sourceArray) => sourceArray,
+  });
 
 export const getTouchedTabFields = (
   tabToTouch: HighestTouchedTab,

@@ -1,34 +1,12 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import TextTruncate from 'react-text-truncate';
-import styled from 'styled-components';
-import { Link as MuiLink, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { Box, Link as MuiLink, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { displayDate } from '../utils/date-helpers';
 import { getRegistrationLandingPagePath, getUserPath } from '../utils/urlPaths';
 import { Registration } from '../types/registration.types';
 import { ErrorBoundary } from './ErrorBoundary';
-
-const StyledContributors = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  > p {
-    white-space: nowrap;
-    :not(:last-child) {
-      margin-right: 1rem;
-    }
-  }
-`;
-
-const StyledRegistrationTitle = styled(Typography)`
-  font-size: 1rem;
-  font-weight: 600;
-  font-style: italic;
-`;
-
-const StyledSuperHeader = styled(Typography)`
-  color: ${({ theme }) => theme.palette.section.megaDark};
-`;
+import { TruncatableTypography } from './TruncatableTypography';
+import { dataTestId } from '../utils/dataTestIds';
 
 interface RegistrationListProps {
   registrations: Registration[];
@@ -58,16 +36,22 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
 
   return (
     <ListItem divider disableGutters>
-      <ListItemText disableTypography data-testid="result-list-item">
-        <StyledSuperHeader variant="overline">
+      <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
+        <Typography variant="overline" sx={{ color: 'primary.dark' }}>
           {t(entityDescription?.reference?.publicationInstance.type ?? '')} - {displayDate(entityDescription?.date)}
-        </StyledSuperHeader>
-        <StyledRegistrationTitle gutterBottom>
+        </Typography>
+        <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
           <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
             {entityDescription?.mainTitle}
           </MuiLink>
-        </StyledRegistrationTitle>
-        <StyledContributors>
+        </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            columnGap: '1rem',
+            whiteSpace: 'nowrap',
+          }}>
           {focusedContributors.map((contributor, index) => (
             <Typography key={index} variant="body2">
               {contributor.identity.id ? (
@@ -82,11 +66,9 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
           {countRestContributors > 0 && (
             <Typography variant="body2">({t('common:x_others', { count: countRestContributors })})</Typography>
           )}
-        </StyledContributors>
+        </Box>
 
-        <Typography>
-          <TextTruncate line={3} element="span" truncateText=" [...]" text={entityDescription?.abstract} />
-        </Typography>
+        <TruncatableTypography>{entityDescription?.abstract}</TruncatableTypography>
       </ListItemText>
     </ListItem>
   );

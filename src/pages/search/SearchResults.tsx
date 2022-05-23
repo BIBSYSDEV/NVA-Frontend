@@ -1,26 +1,34 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import { Divider, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import { RegistrationList } from '../../components/RegistrationList';
-import { SearchResult } from '../../types/registration.types';
-
-const StyledSearchResults = styled.div`
-  padding-bottom: 1rem;
-`;
+import { SearchResponse } from '../../types/common.types';
+import { Registration } from '../../types/registration.types';
+import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
 
 interface SearchResultsProps {
-  searchResult: SearchResult;
+  searchResult: SearchResponse<Registration>;
 }
 
 export const SearchResults = ({ searchResult }: SearchResultsProps) => {
   const { t } = useTranslation('search');
 
+  useEffect(() => {
+    if (
+      searchResult.hits.some(
+        ({ entityDescription }) =>
+          stringIncludesMathJax(entityDescription?.mainTitle) || stringIncludesMathJax(entityDescription?.abstract)
+      )
+    ) {
+      typesetMathJax();
+    }
+  }, [searchResult]);
+
   return (
-    <StyledSearchResults data-testid="search-results">
-      <Typography variant="subtitle1">{t('hits', { count: searchResult.total })}:</Typography>
+    <Box data-testid="search-results" sx={{ pb: '1rem' }}>
+      <Typography variant="subtitle1">{t('hits', { count: searchResult.size })}:</Typography>
       <Divider />
       <RegistrationList registrations={searchResult.hits} />
-    </StyledSearchResults>
+    </Box>
   );
 };

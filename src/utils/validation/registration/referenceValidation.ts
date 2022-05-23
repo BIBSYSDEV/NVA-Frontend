@@ -17,8 +17,10 @@ import {
   nviApplicableContentTypes,
 } from '../../../types/publication_types/content.types';
 import { DesignType } from '../../../types/publication_types/artisticRegistration.types';
+import { validateDateInterval } from '../validationHelpers';
 
 const resourceErrorMessage = {
+  architectureOutputRequired: i18n.t('feedback:validation.architecture_output_required'),
   contentTypeRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.content'),
   }),
@@ -42,9 +44,6 @@ const resourceErrorMessage = {
   }),
   eventTitleRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.title_of_event'),
-  }),
-  exhibitionNameRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('registration:resource_type.exhibition_place'),
   }),
   exhibitionRequired: i18n.t('feedback:validation.exhibition_place_required'),
   fromMustBeBeforeTo: i18n.t('feedback:validation.cannot_be_after', {
@@ -160,28 +159,18 @@ const pagesRangeField = Yup.object()
       }),
   });
 
-const periodField = Yup.object().shape({
+export const periodField = Yup.object().shape({
   from: Yup.string()
     .nullable()
-    .test('from-test', resourceErrorMessage.fromMustBeBeforeTo, (fromValue, context) => {
-      const fromDate = fromValue ? new Date(fromValue) : null;
-      const toDate = context.parent.to ? new Date(context.parent.to) : null;
-      if (fromDate && toDate) {
-        return fromDate <= toDate;
-      }
-      return true;
-    })
+    .test('from-test', resourceErrorMessage.fromMustBeBeforeTo, (fromValue, context) =>
+      validateDateInterval(fromValue, context.parent.to)
+    )
     .required(resourceErrorMessage.dateFromRequired),
   to: Yup.string()
     .nullable()
-    .test('to-test', resourceErrorMessage.toMustBeAfterFrom, (toValue, context) => {
-      const fromDate = context.parent.from ? new Date(context.parent.from) : null;
-      const toDate = toValue ? new Date(toValue) : null;
-      if (fromDate && toDate) {
-        return fromDate <= toDate;
-      }
-      return true;
-    })
+    .test('to-test', resourceErrorMessage.toMustBeAfterFrom, (toValue, context) =>
+      validateDateInterval(context.parent.from, toValue)
+    )
     .required(resourceErrorMessage.dateToRequired),
 });
 
@@ -194,11 +183,11 @@ const publisherField = Yup.object().shape({
 });
 
 const seriesField = Yup.object().shape({
-  id: Yup.string().when('title', {
-    is: (value: string) => !!value,
-    then: Yup.string().required(resourceErrorMessage.seriesNotSelected),
-    otherwise: Yup.string(),
-  }),
+  id: Yup.string().test(
+    'series-test',
+    resourceErrorMessage.seriesNotSelected,
+    (idValue, context) => !context.parent.title || !!idValue
+  ),
 });
 
 export const baseReference = Yup.object()
@@ -363,7 +352,7 @@ export const presentationReference = baseReference.shape({
 });
 
 // Artistic
-const artisticPublicationInstance = Yup.object().shape({
+const artisticDesignPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(ArtisticType)).required(resourceErrorMessage.typeRequired),
   subtype: Yup.object().shape({
     type: Yup.string().nullable().required(resourceErrorMessage.typeWorkRequired),
@@ -375,20 +364,20 @@ const artisticPublicationInstance = Yup.object().shape({
       }),
   }),
   description: Yup.string().nullable(),
-});
-
-export const venueValidationSchema = Yup.object().shape({
-  place: Yup.object().shape({
-    label: Yup.string().nullable().required(resourceErrorMessage.exhibitionNameRequired),
+  venues: Yup.array().when('$publicationInstanceType', {
+    is: ArtisticType.ArtisticDesign,
+    then: Yup.array().min(1, resourceErrorMessage.exhibitionRequired).required(resourceErrorMessage.exhibitionRequired),
+    otherwise: Yup.array().nullable(),
   }),
-  time: periodField,
+  architectureOutput: Yup.array().when('$publicationInstanceType', {
+    is: ArtisticType.ArtisticArchitecture,
+    then: Yup.array()
+      .min(1, resourceErrorMessage.architectureOutputRequired)
+      .required(resourceErrorMessage.architectureOutputRequired),
+    otherwise: Yup.array().nullable(),
+  }),
 });
 
-const artisticPublicationContext = Yup.object().shape({
-  venues: Yup.array().of(venueValidationSchema).min(1, resourceErrorMessage.exhibitionRequired),
-});
-
-export const artisticReference = baseReference.shape({
-  publicationInstance: artisticPublicationInstance,
-  publicationContext: artisticPublicationContext,
+export const artisticDesignReference = baseReference.shape({
+  publicationInstance: artisticDesignPublicationInstance,
 });

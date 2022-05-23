@@ -1,20 +1,17 @@
-import { DatePicker, LocalizationProvider } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import { TextField, TextFieldProps } from '@mui/material';
-import { Field, FieldProps, getIn, useFormikContext } from 'formik';
+import { DatePicker } from '@mui/lab';
+import { TextField } from '@mui/material';
+import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { datePickerTranslationProps } from '../../../../themes/lightTheme';
-import i18n from '../../../../translations/i18n';
+import { datePickerTranslationProps } from '../../../../themes/mainTheme';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { getDateFnsLocale } from '../../../../utils/date-helpers';
 import { getNewDateValue } from '../../../../utils/registration-helpers';
 
-interface PeriodFieldsProps extends Pick<TextFieldProps, 'variant'> {
+interface PeriodFieldsProps {
   fromFieldName: string;
   toFieldName: string;
 }
 
-export const PeriodFields = ({ fromFieldName, toFieldName, variant }: PeriodFieldsProps) => {
+export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) => {
   const { t } = useTranslation('registration');
   const { values, setFieldValue, setFieldTouched } = useFormikContext();
   const maxDate = new Date(new Date().getFullYear() + 5, 11, 31);
@@ -23,7 +20,7 @@ export const PeriodFields = ({ fromFieldName, toFieldName, variant }: PeriodFiel
   const toValue = getIn(values, toFieldName);
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
+    <>
       <Field name={fromFieldName}>
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <DatePicker
@@ -45,11 +42,11 @@ export const PeriodFields = ({ fromFieldName, toFieldName, variant }: PeriodFiel
               <TextField
                 {...params}
                 data-testid={dataTestId.registrationWizard.resourceType.dateFromField}
-                variant={variant}
+                variant="filled"
                 required
                 onBlur={() => !touched && setFieldTouched(field.name)}
                 error={touched && !!error}
-                helperText={touched && error}
+                helperText={<ErrorMessage name={field.name} />}
               />
             )}
           />
@@ -77,16 +74,16 @@ export const PeriodFields = ({ fromFieldName, toFieldName, variant }: PeriodFiel
               <TextField
                 {...params}
                 data-testid={dataTestId.registrationWizard.resourceType.dateToField}
-                variant={variant}
+                variant="filled"
                 required
                 onBlur={() => !touched && setFieldTouched(field.name)}
                 error={touched && !!error}
-                helperText={touched && error}
+                helperText={<ErrorMessage name={field.name} />}
               />
             )}
           />
         )}
       </Field>
-    </LocalizationProvider>
+    </>
   );
 };

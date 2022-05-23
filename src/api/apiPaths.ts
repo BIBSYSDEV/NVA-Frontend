@@ -1,11 +1,3 @@
-export enum AlmaApiPath {
-  Alma = '/alma',
-}
-
-export enum AuthorityApiPath {
-  Person = '/person',
-}
-
 export enum CustomerInstitutionApiPath {
   Customer = '/customer',
 }
@@ -20,12 +12,11 @@ export enum FileApiPath {
   PublicDownload = '/download/public',
 }
 
-export enum InstitutionApiPath {
-  Institutions = '/institution/institutions',
-  Departments = '/institution/departments',
-}
-
-export enum ProjectsApiPath {
+export enum CristinApiPath {
+  Organization = '/cristin/organization',
+  Person = '/cristin/person',
+  PersonIdentityNumer = '/cristin/person/identityNumber',
+  Position = '/cristin/position?active=true',
   Project = '/cristin/project',
 }
 
@@ -45,9 +36,11 @@ export enum PublicationsApiPath {
 
 export enum RoleApiPath {
   InstitutionUsers = '/users-roles/institutions/users',
+  Login = '/users-roles/login',
   Users = '/users-roles/users',
 }
 
 export enum SearchApiPath {
   Registrations = '/search/resources',
+  Worklist = '/search/worklist',
 }

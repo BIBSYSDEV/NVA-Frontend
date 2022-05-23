@@ -14,7 +14,8 @@ describe('User opens Landing Page for Registration', () => {
 
   it('The User should be able to open Landing Page from My Registrations', () => {
     cy.mocklogin();
-    cy.get('[data-testid=my-registrations]').click();
+    cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click();
+    cy.get(`[data-testid=${dataTestId.header.myRegistrationsLink}]`).click();
     cy.get('[data-testid^=open-registration]').eq(0).click();
 
     cy.url().should('include', '/public');
@@ -23,7 +24,7 @@ describe('User opens Landing Page for Registration', () => {
 
   it('Anonymous user should be able to open Landing Page for Registration', () => {
     cy.visit(pathToLandingPage);
-    cy.get('[data-testid=my-registrations]').should('not.exist');
+    cy.get('[data-testid=my-registrations-link]').should('not.exist');
     cy.get(`[data-testid=${status}]`).should('not.exist');
   });
 

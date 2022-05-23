@@ -1,44 +1,12 @@
-import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
+import { ReactNode, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import TextTruncate from 'react-text-truncate';
-import styled from 'styled-components';
-import { Button, IconButton, Tooltip, Typography, TypographyProps } from '@mui/material';
+import { Box, Button, Typography, TypographyProps } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { UrlPathTemplate } from '../utils/urlPaths';
-import { ReactNode } from 'react';
-
-const StyledHeader = styled.div`
-  width: 100%;
-  margin-bottom: 2rem;
-  word-break: break-word;
-`;
-
-const StyledIconButton = styled(IconButton)`
-  background-color: ${({ theme }) => theme.palette.section.light};
-  color: ${({ theme }) => theme.palette.section.megaDark};
-`;
-
-const StyledTruncatableHeading = styled.div<{ canBeTruncated: boolean }>`
-  padding-bottom: 1rem;
-  border-bottom: 2px solid;
-  align-items: center;
-  display: grid;
-  grid-template-columns: ${({ canBeTruncated }) => (canBeTruncated ? '1fr auto' : '1fr')};
-  grid-column-gap: 1rem;
-
-  span {
-    display: block;
-    width: 100%;
-  }
-`;
-
-const StyledSuperHeader = styled.div`
-  color: ${({ theme }) => theme.palette.section.megaDark};
-`;
+import { stringIncludesMathJax, typesetMathJax } from '../utils/mathJaxHelpers';
+import { TruncatableTypography } from './TruncatableTypography';
 
 interface PageHeaderProps extends TypographyProps {
   backPath?: string;
@@ -61,10 +29,6 @@ export const PageHeader = ({
 }: PageHeaderProps) => {
   const { t } = useTranslation('common');
   const history = useHistory();
-  const [showFullText, setShowFullText] = useState(false);
-  const [canBeTruncated, setCanBeTruncated] = useState(false);
-
-  const toggleFullText = () => setShowFullText(!showFullText);
 
   const onBackClick = () => {
     if (backPath) {
@@ -77,7 +41,7 @@ export const PageHeader = ({
   };
 
   return (
-    <StyledHeader>
+    <Box sx={{ width: '100%', marginBottom: '2rem', wordBreak: 'break-word' }}>
       <Helmet>
         <title>{htmlTitle ?? children}</title>
       </Helmet>
@@ -87,40 +51,35 @@ export const PageHeader = ({
         </Button>
       )}
       {superHeader && (
-        <StyledSuperHeader>
+        <Box sx={{ display: 'flex', flexDirection: 'column', color: 'primary.dark' }}>
           {superHeader.icon}
-          <Typography variant="overline" paragraph color="inherit">
+          <Typography variant="overline" color="inherit">
             {superHeader.title}
           </Typography>
-        </StyledSuperHeader>
+        </Box>
       )}
-      <StyledTruncatableHeading canBeTruncated={canBeTruncated}>
-        <Typography variant="h1" {...props}>
-          <TextTruncate
-            line={showFullText ? false : 2}
-            truncateText="..."
-            text={children}
-            element="span"
-            onTruncated={() => setCanBeTruncated(true)}
-          />
-        </Typography>
-        {canBeTruncated && (
-          <Tooltip title={showFullText ? t<string>('title_minimize') : t<string>('title_expand')}>
-            <StyledIconButton onClick={toggleFullText}>
-              {showFullText ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </StyledIconButton>
-          </Tooltip>
-        )}
-      </StyledTruncatableHeading>
-    </StyledHeader>
+
+      <Box
+        sx={{
+          paddingBottom: '1rem',
+          borderBottom: '2px solid',
+        }}>
+        <TruncatableTypography variant="h1" {...props}>
+          {children}
+        </TruncatableTypography>
+      </Box>
+    </Box>
   );
 };
 
-const StyledItalicPageHeader = styled(PageHeader)`
-  font-weight: 700;
-  font-style: italic;
-`;
+export const ItalicPageHeader = (props: PageHeaderProps) => {
+  useEffect(() => {
+    if (stringIncludesMathJax(props.children)) {
+      typesetMathJax();
+    }
+  }, [props.children]);
 
-export const ItalicPageHeader = (props: PageHeaderProps) => (
-  <StyledItalicPageHeader variant="h2" variantMapping={{ h2: 'h1' }} {...props} />
-);
+  return (
+    <PageHeader variant="h2" variantMapping={{ h2: 'h1' }} sx={{ fontWeight: '700', fontStyle: 'italic' }} {...props} />
+  );
+};

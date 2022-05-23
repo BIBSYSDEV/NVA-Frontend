@@ -10,7 +10,6 @@ export enum PublicationType {
 
 export enum JournalType {
   Article = 'JournalArticle',
-  FeatureArticle = 'FeatureArticle',
   Letter = 'JournalLetter',
   Review = 'JournalReview',
   Leader = 'JournalLeader',
@@ -49,6 +48,7 @@ export enum PresentationType {
 
 export enum ArtisticType {
   ArtisticDesign = 'ArtisticDesign',
+  ArtisticArchitecture = 'Architecture',
 }
 
 export type RegistrationSubtype =
@@ -71,6 +71,7 @@ export const contextTypeBaseFieldName = 'entityDescription.reference.publication
 export const instanceTypeBaseFieldName = 'entityDescription.reference.publicationInstance';
 
 export enum ResourceFieldNames {
+  ArchitectureOutput = 'entityDescription.reference.publicationInstance.architectureOutput',
   ArticleNumber = 'entityDescription.reference.publicationInstance.articleNumber',
   ContentType = 'entityDescription.reference.publicationInstance.contentType',
   CorrigendumFor = 'entityDescription.reference.publicationInstance.corrigendumFor',
@@ -91,6 +92,7 @@ export enum ResourceFieldNames {
   PublicationContextLevel = 'entityDescription.reference.publicationContext.level',
   PublicationContextPlaceLabel = 'entityDescription.reference.publicationContext.place.label',
   PublicationContextPlaceCountry = 'entityDescription.reference.publicationContext.place.country',
+  PublicationContextPublisher = 'entityDescription.reference.publicationContext.publisher',
   PublicationContextPublisherId = 'entityDescription.reference.publicationContext.publisher.id',
   PublicationContextPublisherType = 'entityDescription.reference.publicationContext.publisher.type',
   PublicationContextTimeFrom = 'entityDescription.reference.publicationContext.time.from',
@@ -100,12 +102,13 @@ export enum ResourceFieldNames {
   PublicationInstanceSubtypeDescription = 'entityDescription.reference.publicationInstance.subtype.description',
   PublicationInstanceSubtypeType = 'entityDescription.reference.publicationInstance.subtype.type',
   Reference = 'entityDescription.reference',
+  Series = 'entityDescription.reference.publicationContext.series',
   SeriesId = 'entityDescription.reference.publicationContext.series.id',
   SeriesNumber = 'entityDescription.reference.publicationContext.seriesNumber',
   SeriesTitle = 'entityDescription.reference.publicationContext.series.title',
   SeriesType = 'entityDescription.reference.publicationContext.series.type',
   SubType = 'entityDescription.reference.publicationInstance.type',
-  Venues = 'entityDescription.reference.publicationContext.venues',
+  Venues = 'entityDescription.reference.publicationInstance.venues',
   Volume = 'entityDescription.reference.publicationInstance.volume',
 }
 
@@ -126,7 +129,6 @@ export enum DescriptionFieldNames {
 export enum FileFieldNames {
   Files = 'fileSet.files',
   FileSet = 'fileSet',
-  FileSetType = 'fileSet.type',
 }
 
 // The following fields should be present in "fileSet.files[index].<KEY>"
@@ -146,5 +148,6 @@ export enum SpecificContributorFieldNames {
   Affiliations = 'affiliations',
   Corresponding = 'correspondingAuthor',
   Id = 'identity.id',
+  Name = 'identity.name',
   Sequence = 'sequence',
 }

@@ -17,7 +17,7 @@ describe('Registration: Resource type: Chapter', () => {
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-context-type-Chapter]').should('be.visible');
     cy.get('[data-testid=publication-context-type-Chapter]').click();
-    cy.get('[data-testid=publication-context-type-Book]').contains('Book');
+    cy.get('[data-testid=publication-context-type] input').should('have.value', 'Chapter');
 
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-instance-type-ChapterArticle]').click();

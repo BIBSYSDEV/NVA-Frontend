@@ -1,21 +1,16 @@
 import { MenuItem, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 import { Modal } from '../../../components/Modal';
-import { RootStore } from '../../../redux/reducers/rootReducer';
-import { Authority } from '../../../types/authority.types';
-import { ContributorRole } from '../../../types/contributor.types';
-import { AddContributorModalContent } from './components/AddContributorModalContent';
-import { CreateContributorModalContent } from './components/CreateContributorModalContent';
-
-const StyledTextField = styled(TextField)`
-  max-width: 15rem;
-`;
+import { Contributor, ContributorRole } from '../../../types/contributor.types';
+import { AddContributorForm } from './components/AddContributorForm';
+import { AddUnverifiedContributorForm } from './components/AddUnverifiedContributorForm';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { CristinUser } from '../../../types/user.types';
 
 interface AddContributorModalProps {
-  onContributorSelected: (authority: Authority, role: ContributorRole) => void;
+  onContributorSelected: (newContributor: CristinUser, role: ContributorRole) => void;
+  addUnverifiedContributor?: (contributor: Contributor) => void;
   open: boolean;
   toggleModal: () => void;
   contributorRoles: ContributorRole[];
@@ -25,6 +20,7 @@ interface AddContributorModalProps {
 
 export const AddContributorModal = ({
   onContributorSelected,
+  addUnverifiedContributor,
   toggleModal,
   open,
   contributorRoles,
@@ -32,21 +28,13 @@ export const AddContributorModal = ({
   initialSearchTerm,
 }: AddContributorModalProps) => {
   const { t } = useTranslation('registration');
-  const [createNewContributor, setCreateNewContributor] = useState(false);
-  const user = useSelector((store: RootStore) => store.user);
+  const [openAddUnverifiedContributor, setOpenAddUnverifiedContributor] = useState(false);
   const [selectedContributorRole, setSelectedContributorRole] = useState<ContributorRole | ''>(
     contributorRoles.length === 1 ? contributorRoles[0] : ''
   );
 
-  const addContributor = (authority: Authority) => {
-    onContributorSelected(authority, selectedContributorRole as ContributorRole);
-    handleCloseModal();
-  };
-
-  const addSelfAsContributor = () => {
-    if (user?.authority) {
-      onContributorSelected(user.authority, selectedContributorRole as ContributorRole);
-    }
+  const addContributor = (newContributor: CristinUser) => {
+    onContributorSelected(newContributor, selectedContributorRole as ContributorRole);
     handleCloseModal();
   };
 
@@ -55,17 +43,13 @@ export const AddContributorModal = ({
     if (contributorRoles.length > 1) {
       setSelectedContributorRole('');
     }
-    setCreateNewContributor(false);
+    setOpenAddUnverifiedContributor(false);
   };
 
   return (
     <Modal
       headingText={
-        createNewContributor
-          ? contributorRole === 'OtherContributor'
-            ? t('contributors.create_new_with_role', { role: t('contributors.contributor').toLowerCase() })
-            : t('contributors.create_new_with_role', { role: t(`contributors.types.${contributorRole}`).toLowerCase() })
-          : initialSearchTerm
+        initialSearchTerm
           ? t('contributors.verify_person')
           : t('contributors.add_as_role', {
               role:
@@ -80,7 +64,9 @@ export const AddContributorModal = ({
       maxWidth="md"
       dataTestId="contributor-modal">
       {contributorRoles.length > 1 && (
-        <StyledTextField
+        <TextField
+          data-testid={dataTestId.registrationWizard.contributors.selectContributorType}
+          sx={{ maxWidth: '15rem' }}
           value={selectedContributorRole}
           onChange={(event) => {
             const role = (event.target.value as ContributorRole) ?? '';
@@ -95,17 +81,21 @@ export const AddContributorModal = ({
               {t(`contributors.types.${role}`)}
             </MenuItem>
           ))}
-        </StyledTextField>
+        </TextField>
       )}
       {selectedContributorRole &&
-        (createNewContributor ? (
-          <CreateContributorModalContent addContributor={addContributor} handleCloseModal={handleCloseModal} />
+        (openAddUnverifiedContributor && !initialSearchTerm ? (
+          <AddUnverifiedContributorForm
+            addUnverifiedContributor={(newContributor) => {
+              newContributor.role = selectedContributorRole;
+              addUnverifiedContributor?.(newContributor);
+            }}
+            handleCloseModal={handleCloseModal}
+          />
         ) : (
-          <AddContributorModalContent
+          <AddContributorForm
             addContributor={addContributor}
-            addSelfAsContributor={addSelfAsContributor}
-            contributorRole={contributorRole}
-            openNewContributorModal={() => setCreateNewContributor(true)}
+            openAddUnverifiedContributor={() => setOpenAddUnverifiedContributor(true)}
             initialSearchTerm={initialSearchTerm}
             roleToAdd={selectedContributorRole}
           />

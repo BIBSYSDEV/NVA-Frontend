@@ -1,27 +1,7 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import { ProjectContributor } from '../../types/project.types';
 import { getLanguageString } from '../../utils/translation-helpers';
-
-const StyledProjectContributors = styled.div`
-  > div:not(:first-child) {
-    margin-top: 1rem;
-  }
-`;
-
-const StyledContributorList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-gap: 0.75rem;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm + 'px'}) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-`;
 
 interface ProjectContributorsProps {
   contributors: ProjectContributor[];
@@ -34,7 +14,12 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
   const projectParticipants = contributors.filter((contributor) => contributor.type === 'ProjectParticipant');
 
   return (
-    <StyledProjectContributors>
+    <Box
+      sx={{
+        '> div:not(:first-of-type)': {
+          mt: '1rem',
+        },
+      }}>
       {contributors.length === 0 ? (
         <Typography>{t('no_participants')}</Typography>
       ) : (
@@ -57,7 +42,7 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
           )}
         </>
       )}
-    </StyledProjectContributors>
+    </Box>
   );
 };
 
@@ -66,14 +51,19 @@ interface ContributorListProps {
 }
 
 const ContributorList = ({ contributors }: ContributorListProps) => (
-  <StyledContributorList>
+  <Box
+    sx={{
+      display: 'grid',
+      gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(3, 1fr)', md: 'repeat(6, 1fr)' },
+      gap: '0.75rem',
+    }}>
     {contributors.map((contributor, index) => (
       <div key={index}>
         <Typography variant="subtitle2" component="p">
           {contributor.identity.firstName} {contributor.identity.lastName}
         </Typography>
-        <Typography variant="body2">{getLanguageString(contributor.affiliation.name)}</Typography>
+        <Typography variant="body2">{getLanguageString(contributor.affiliation?.name)}</Typography>
       </div>
     ))}
-  </StyledContributorList>
+  </Box>
 );

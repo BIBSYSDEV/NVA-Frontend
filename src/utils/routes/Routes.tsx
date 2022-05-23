@@ -1,7 +1,7 @@
-import React, { ComponentType, ReactNode } from 'react';
+import { ComponentType, ReactNode } from 'react';
 import { RouteProps } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootStore } from '../../redux/reducers/rootReducer';
+import { RootState } from '../../redux/store';
 import { PrivateRoute } from './PrivateRoute';
 
 interface LoggedInRouteProps extends RouteProps {
@@ -9,13 +9,13 @@ interface LoggedInRouteProps extends RouteProps {
 }
 
 export const LoggedInRoute = ({ component, ...rest }: LoggedInRouteProps) => {
-  const { user } = useSelector((store: RootStore) => store);
+  const { user } = useSelector((store: RootState) => store);
 
   return <PrivateRoute {...rest} component={component} isAuthorized={!!user} />;
 };
 
 export const CreatorRoute = ({ component, ...rest }: LoggedInRouteProps) => {
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
 
   return (
     <PrivateRoute
@@ -27,19 +27,19 @@ export const CreatorRoute = ({ component, ...rest }: LoggedInRouteProps) => {
 };
 
 export const CuratorRoute = ({ component, ...rest }: LoggedInRouteProps) => {
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
 
   return <PrivateRoute {...rest} component={component} isAuthorized={!!user && !!user.customerId && user.isCurator} />;
 };
 
 export const AppAdminRoute = ({ component, ...rest }: LoggedInRouteProps) => {
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
 
   return <PrivateRoute {...rest} component={component} isAuthorized={!!user && !!user.customerId && user.isAppAdmin} />;
 };
 
 export const InstitutionAdminRoute = ({ component, ...rest }: LoggedInRouteProps) => {
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
 
   return (
     <PrivateRoute
@@ -51,7 +51,19 @@ export const InstitutionAdminRoute = ({ component, ...rest }: LoggedInRouteProps
 };
 
 export const EditorRoute = ({ component, ...rest }: LoggedInRouteProps) => {
-  const user = useSelector((store: RootStore) => store.user);
+  const user = useSelector((store: RootState) => store.user);
 
   return <PrivateRoute {...rest} component={component} isAuthorized={!!user && !!user.customerId && user.isEditor} />;
+};
+
+export const BasicDataRoute = ({ component, ...rest }: LoggedInRouteProps) => {
+  const user = useSelector((store: RootState) => store.user);
+
+  return (
+    <PrivateRoute
+      {...rest}
+      component={component}
+      isAuthorized={!!user && !!user.customerId && (user.isInstitutionAdmin || user.isAppAdmin)}
+    />
+  );
 };

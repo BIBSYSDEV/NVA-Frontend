@@ -16,10 +16,10 @@
     },
     "section1": {
       "heading": "Databehandler",
-      "paragraph": "Unit utvikler og forvalter tjenesten på vegne av behandlingsansvarlig, og har rollen som databehandler."
+      "paragraph": "Sikt utvikler og forvalter tjenesten på vegne av behandlingsansvarlig, og har rollen som databehandler."
     },
     "section2": {
-      "intro": "Kontaktinformasjon til Unit brukerstøtte:",
+      "intro": "Kontaktinformasjon til Sikt brukerstøtte:",
       "email": "Epost: <0><0></0></0>",
       "telephone": "Telefon: <0><0></0></0>"
     }
@@ -30,7 +30,7 @@
     "paragraph1": "Personopplysninger knyttet til brukere overføres ikke til land utenfor EU/EØS.",
     "paragraph2": "Tjenesten er driftet på servere innenfor EU/EØS.",
     "paragraph3": {
-      "intro": "Dine personopplysninger blir utlevert til Unit som er leverandør av tjenesten, og til dennes underleverandører:",
+      "intro": "Dine personopplysninger blir utlevert til Sikt som er leverandør av tjenesten, og til dennes underleverandører:",
       "table": {
         "caption": "Oversikt over underleverandører som kan motta personopplysninger",
         "header": {
@@ -39,11 +39,11 @@
         },
         "row0": {
           "col0": "Leverandør i rammeavtale for AWS gjennom GÉANT-samarbeidet",
-          "col1": "Skydrift og backup for Units direkte tjenester"
+          "col1": "Skydrift og backup for Sikts direkte tjenester"
         },
         "row1": {
           "col0": "Blue Safespring AB ",
-          "col1": "Skydrift og backup for Units direkte tjenester"
+          "col1": "Skydrift og backup for Sikts direkte tjenester"
         },
         "row2": {
           "col0": "UNINETT AS",
@@ -75,7 +75,7 @@
         "row2": {
           "col0": "Eksport av metadata fra NVA til ekstern tjeneste",
           "col1": "Eksport av metadata for ressurser til andre tjenester for presentasjon eller kryssregistrering. Eksempelvis Oria for å tilrettelegge for gjenfinning.",
-          "col2": "Unit for Oria. Kilder definert av behandlingsansvarlig."
+          "col2": "Sikt for Oria. Kilder definert av behandlingsansvarlig."
         },
         "row3": {
           "col0": "DOI og DataCite",
@@ -85,7 +85,7 @@
         "row4": {
           "col0": "Felles autoritetsregister",
           "col1": "Etablere kobling til autoritetsregister for autorisering av forfatter, redaktør, veileder og annen opphavsperson eller bidragsyter som registreres i tjenesten. For å tilrettelegge for entydig registrering og gjenfinning.",
-          "col2": "Unit"
+          "col2": "Sikt"
         },
         "row5": {
           "col0": "ORCID",

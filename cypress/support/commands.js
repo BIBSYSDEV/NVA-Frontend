@@ -1,14 +1,11 @@
-import { setRoles } from '../../src/redux/actions/userActions';
-import { setNotification, removeNotification } from '../../src/redux/actions/notificationActions';
-import { mockFileUploadUrl } from '../../src/api/mock-interceptor';
+import { setPartialUser } from '../../src/redux/userSlice';
+import { setNotification, removeNotification } from '../../src/redux/notificationSlice';
+import { RoleName } from '../../src/types/user.types';
+import { mockFileUploadUrl } from '../../src/utils/testfiles/mockFiles';
 import { dataTestId } from '../../src/utils/dataTestIds';
 
 Cypress.Commands.add('mocklogin', () => {
   cy.get(`[data-testid=${dataTestId.header.logInButton}]`).click({ force: true });
-  cy.get('[data-testid=author-radio-button]').eq(1).click({ force: true });
-  cy.get('[data-testid=connect-author-button]').click({ force: true });
-  cy.get('[data-testid=modal_next]').click({ force: true });
-  cy.get('[data-testid=cancel-connect-to-orcid]').click({ force: true });
 
   // need to set language to english in order to check that the translated values are correct
   cy.get(`[data-testid=${dataTestId.header.languageButton}]`).click({ force: true });
@@ -36,13 +33,24 @@ Cypress.Commands.add('selectNpiDiscipline', (npiDiscipline) => {
 Cypress.Commands.add('setUserRolesInRedux', (roles) => {
   cy.window()
     .its('store') // Redux store must be exposed via window.store
-    .then((store) => store.dispatch(setRoles(roles)));
+    .then((store) =>
+      store.dispatch(
+        setPartialUser({
+          roles: roles,
+          isCreator: roles.includes(RoleName.Creator),
+          isAppAdmin: roles.includes(RoleName.AppAdmin),
+          isInstitutionAdmin: roles.includes(RoleName.InstitutionAdmin),
+          isCurator: roles.includes(RoleName.Curator),
+          isEditor: roles.includes(RoleName.Editor),
+        })
+      )
+    );
 });
 
-Cypress.Commands.add('setNotificationInRedux', (message, variant) => {
+Cypress.Commands.add('setNotificationInRedux', (notification) => {
   cy.window()
     .its('store') // Redux store must be exposed via window.store
-    .then((store) => store.dispatch(setNotification(message, variant)));
+    .then((store) => store.dispatch(setNotification(notification)));
 });
 
 Cypress.Commands.add('removeNotificationInRedux', () => {

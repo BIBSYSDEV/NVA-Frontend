@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button, DialogActions, DialogContent, Typography } from '@mui/material';
@@ -34,7 +33,7 @@ export const OrcidModalContent = ({ cancelFunction, cancelText }: OrcidModalCont
         <Button data-testid="cancel-connect-to-orcid" variant="outlined" onClick={cancelFunction}>
           {cancelText ?? t('common:close')}
         </Button>
-        <Button data-testid="connect-to-orcid" onClick={openORCID} color="secondary" variant="contained">
+        <Button data-testid="connect-to-orcid" onClick={openORCID} variant="contained">
           {t('orcid.connect_orcid')}
         </Button>
       </DialogActions>

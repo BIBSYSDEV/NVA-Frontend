@@ -1,7 +1,14 @@
-import { applyMiddleware, createStore } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
+import notificationReducer from './notificationSlice';
+import resourcesReducer from './resourcesSlice';
+import userReducer from './userSlice';
 
-import { rootReducer } from './reducers/rootReducer';
+export const store = configureStore({
+  reducer: {
+    notification: notificationReducer,
+    user: userReducer,
+    resources: resourcesReducer,
+  },
+});
 
-export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
+export type RootState = ReturnType<typeof store.getState>;

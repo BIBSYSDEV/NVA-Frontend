@@ -1,6 +1,4 @@
-import React from 'react';
-import { Chip, Typography } from '@mui/material';
-import styled from 'styled-components';
+import { Box, Chip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -33,11 +31,9 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
       {entityDescription && (
         <>
           {entityDescription.abstract && (
-            <>
-              <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
-                {entityDescription.abstract}
-              </Typography>
-            </>
+            <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
+              {entityDescription.abstract}
+            </Typography>
           )}
           {entityDescription.description && (
             <>
@@ -67,53 +63,29 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
   );
 };
 
-const StyledTagsList = styled.div`
-  display: grid;
-  grid-template-columns: auto 1fr;
-  column-gap: 1rem;
-  align-items: center;
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.md + 'px'}) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const StyledTags = styled.div`
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  > div {
-    :not(:last-child) {
-      margin-right: 0.5rem;
-    }
-  }
-`;
-
-const StyledChip = styled(Chip)`
-  background: ${({ theme }) => theme.palette.section.light};
-  margin: 0.25rem 0;
-  padding: 0.25rem;
-  height: auto;
-`;
-
-const StyledChipLabel = styled(Typography)`
-  white-space: normal;
-  color: ${({ theme }) => theme.palette.text.primary};
-`;
-
 interface TagsListProps {
   title: string;
   values: string[];
 }
 
 const TagsList = ({ title, values }: TagsListProps) => (
-  <StyledTagsList>
+  <Box
+    sx={{
+      display: 'grid',
+      gridTemplateColumns: { xs: '1fr', md: 'auto 1fr' },
+      columnGap: '1rem',
+      alignItems: 'center',
+      marginBottom: '0.5rem',
+    }}>
     <Typography variant="overline" component="h3" color="primary">
       {title}
     </Typography>
-    <StyledTags data-testid={dataTestId.registrationLandingPage.keywords}>
+    <Box
+      data-testid={dataTestId.registrationLandingPage.keywords}
+      sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
       {values.map((value) => (
-        <StyledChip key={value} label={<StyledChipLabel>{value}</StyledChipLabel>} />
+        <Chip key={value} label={<Typography>{value}</Typography>} />
       ))}
-    </StyledTags>
-  </StyledTagsList>
+    </Box>
+  </Box>
 );

@@ -1,11 +1,11 @@
 import { ContributorRole } from '../../types/contributor.types';
-import { LanguageValues } from '../../types/language.types';
 import { JournalType } from '../../types/publicationFieldNames';
 import { PublicationChannelType, RegistrationStatus } from '../../types/registration.types';
 import { mockCustomerInstitution } from './mockCustomerInstitutions';
-import { MessageType, SupportRequest } from '../../types/publication_types/messages.types';
+import { MessageType, PublicationConversation } from '../../types/publication_types/messages.types';
 import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
 import { JournalArticleContentType } from '../../types/publication_types/content.types';
+import { mockUser } from './mock_feide_user';
 
 export const mockRegistration: JournalRegistration = {
   type: 'Publication',
@@ -13,7 +13,10 @@ export const mockRegistration: JournalRegistration = {
   identifier: '12345679',
   createdDate: new Date(2020, 1).toISOString(),
   modifiedDate: new Date(2020, 2).toISOString(),
-  owner: 'tu@unit.no',
+  resourceOwner: {
+    owner: mockUser['custom:nvaUsername'] ?? '',
+    ownerAffiliation: 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0',
+  },
   status: RegistrationStatus.Draft,
   projects: [
     { type: 'ResearchProject', id: 'https://api.dev.nva.aws.unit.no/cristin/project/1', name: 'A dummy project' },
@@ -45,7 +48,7 @@ export const mockRegistration: JournalRegistration = {
     description:
       'Morbi sed neque egestas, egestas lacus ac, tincidunt metus. Donec quis ipsum vulputate, tempus nisi vulputate, commodo orci. Suspendisse blandit condimentum ex quis egestas. Ut rhoncus eros non condimentum mattis. Ut lectus nisi, molestie sit amet hendrerit ut, mollis vel odio. In a risus tellus. Morbi rutrum augue metus, ut malesuada ex posuere vitae. Nam nec rhoncus turpis.',
     tags: ['Ost', 'Loff', 'Majones'],
-    language: LanguageValues.ENGLISH,
+    language: 'http://lexvo.org/id/iso639-3/eng',
     npiSubjectHeading: 'Medisin og helsefag',
     date: {
       type: 'PublicationDate',
@@ -100,7 +103,7 @@ export const mockRegistration: JournalRegistration = {
         issue: '2',
         volume: '3',
         corrigendumFor: '',
-        contentType: JournalArticleContentType.ResearchArticle,
+        contentType: JournalArticleContentType.AcademicArticle,
       },
       publicationContext: {
         type: PublicationChannelType.Journal,
@@ -111,9 +114,26 @@ export const mockRegistration: JournalRegistration = {
   },
 };
 
-export const mockMessages: SupportRequest[] = [
+export const mockMathJaxRegistration: JournalRegistration = {
+  ...mockRegistration,
+  entityDescription: {
+    ...mockRegistration.entityDescription,
+    mainTitle: 'The title $$\\sqrt{25} = 5~\\hbox {ost}$$ and $A_{FB}^{\\mathrm{b}\\overline{\\mathrm{b}}}$',
+    abstract:
+      'This is abastract -> $$\\sqrt{25} = 5~\\hbox {ost}$$ and $X_{AB}^{\\mathrm{c}\\overline{\\mathrm{d}}}$ and so on it goes.',
+  },
+};
+
+export const mockMessages: PublicationConversation[] = [
   {
-    publication: mockRegistration,
+    type: 'PublicationConversation',
+    publication: {
+      identifier: mockRegistration.identifier,
+      mainTitle: mockRegistration.entityDescription.mainTitle,
+      createdDate: mockRegistration.createdDate,
+      status: mockRegistration.status,
+      owner: mockRegistration.resourceOwner.owner,
+    },
     messageCollections: [
       {
         messageType: MessageType.Support,

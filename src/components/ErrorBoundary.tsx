@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import commonNb from '../translations/nb/common.json';
+import { LocalStorageKey } from '../utils/constants';
 
 type ErrorBoundaryClassProps = RouteComponentProps & WithTranslation;
 
@@ -18,6 +19,28 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryClassProps> {
 
     if (hasError && (pathname !== prevProps.location.pathname || search !== prevProps.location.search)) {
       this.setState({ hasError: false });
+    }
+  }
+
+  // Force page refresh if a chunk is not found. This error is usually caused by a new
+  // version of the app being deployed, and the old chunks currently used has been invalidated.
+  componentDidCatch(error: any) {
+    const { t } = this.props;
+
+    if (/Loading chunk [\d]+ failed/.test(error)) {
+      const lastUpdateTime = parseInt(localStorage.getItem(LocalStorageKey.AppUpdateTime) ?? '');
+      const currentTime = Date.now();
+
+      if (!isNaN(lastUpdateTime)) {
+        const timeSinceUpdate = currentTime - lastUpdateTime;
+        if (timeSinceUpdate < 10000) {
+          return; // Skip refreshing if less than 10sec since previous refresh, to avoid infinite loop
+        }
+      }
+
+      alert(t('common:reload_page_info'));
+      localStorage.setItem(LocalStorageKey.AppUpdateTime, currentTime.toString());
+      window.location.reload();
     }
   }
 
