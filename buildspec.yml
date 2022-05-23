@@ -12,7 +12,6 @@ env:
     REACT_APP_APP_HOST: /NVA/ApplicationDomain
 
   secrets-manager:
-    REACT_APP_ORCID_CLIENT_SECRET: OrcidClientSecret
     REACT_APP_ORCID_CLIENT_ID: OrcidClientID
     #  Values to be assigned outside of pipeline
     # REACT_APP_AWS_REGION
