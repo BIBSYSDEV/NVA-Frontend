@@ -14,6 +14,6 @@ export const DegreeForm = ({ subType }: DegreeFormProps) => (
     <PublisherField />
     <IsbnAndPages />
 
-    {subType === DegreeType.Phd && <SeriesFields />}
+    {(subType === DegreeType.Phd || subType === DegreeType.Licentiate) && <SeriesFields />}
   </>
 );
