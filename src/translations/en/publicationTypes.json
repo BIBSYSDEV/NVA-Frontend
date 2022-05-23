@@ -35,8 +35,9 @@
   "OtherPublication": "Other publication",
   "OtherStudentWork": "Other student thesis",
   "Report": "Report",
+  "ReportBasic": "Other type of report",
+  "ReportBookOfAbstract": "Book of abstracts",
   "ReportPolicy": "Policy report",
   "ReportResearch": "Research report",
-  "ReportWorkingPaper": "Working paper",
-  "ReportBasic": "Other type of report"
+  "ReportWorkingPaper": "Working paper"
 }
