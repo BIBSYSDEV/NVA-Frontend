@@ -14,6 +14,8 @@ export enum JournalType {
   Review = 'JournalReview',
   Leader = 'JournalLeader',
   Corrigendum = 'JournalCorrigendum',
+  Issue = 'JournalIssue',
+  ConferenceAbstract = 'ConferenceAbstract',
 }
 
 export enum BookType {
