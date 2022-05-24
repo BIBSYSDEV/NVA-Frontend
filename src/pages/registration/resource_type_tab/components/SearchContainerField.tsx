@@ -177,31 +177,33 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
   const { t } = useTranslation('feedback');
 
   const publicationContext = registration.entityDescription?.reference?.publicationContext as BookPublicationContext;
+  const publisherId = publicationContext.publisher?.id ?? '';
+  const seriesId = publicationContext.series?.id ?? '';
 
-  const [publisher] = useFetchResource<Publisher>(publicationContext.publisher?.id ?? '', t('error.get_publisher'));
-  const [series] = useFetchResource<Journal>(publicationContext.series?.id ?? '', t('error.get_series'));
+  const [publisher] = useFetchResource<Publisher>(publisherId, t('error.get_publisher'));
+  const [series] = useFetchResource<Journal>(seriesId, t('error.get_series'));
 
-  return series?.id ? (
+  return seriesId ? (
     <>
-      {publisher && (
+      {publisherId && (
         <Typography variant="body2" color="textSecondary">
-          {t('common:publisher')}: {publisher.name}
+          {t('common:publisher')}: {publisher?.name}
         </Typography>
       )}
       <Typography variant="body2" color="textSecondary">
-        {t('registration:resource_type.series')}: {series.name}
+        {t('registration:resource_type.series')}: {series?.name}
       </Typography>
       <Typography variant="body2" color="textSecondary">
-        {t('registration:resource_type.level')}: {series.level}
+        {t('registration:resource_type.level')}: {series?.level}
       </Typography>
     </>
-  ) : publisher ? (
+  ) : publisherId ? (
     <>
       <Typography variant="body2" color="textSecondary">
-        {t('common:publisher')}: {publisher.name}
+        {t('common:publisher')}: {publisher?.name}
       </Typography>
       <Typography variant="body2" color="textSecondary">
-        {t('registration:resource_type.level')}: {publisher.level}
+        {t('registration:resource_type.level')}: {publisher?.level}
       </Typography>
     </>
   ) : null;
