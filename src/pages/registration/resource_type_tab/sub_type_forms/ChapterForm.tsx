@@ -55,7 +55,7 @@ export const ChapterForm = () => {
         ) : instanceType === ChapterType.ConferenceAbstract ? (
           <SearchContainerField
             fieldName={ResourceFieldNames.PartOf}
-            searchSubtypes={[ReportType.BookOfAbstract]}
+            searchSubtypes={[ReportType.BookOfAbstracts]}
             label={t('resource_type.chapter.published_in')}
             placeholder={t('resource_type.chapter.search_for_book_of_abstracts')}
             dataTestId={dataTestId.registrationWizard.resourceType.partOfField}

@@ -49,7 +49,7 @@ export const ContributorsPanel = () => {
             </>
           ) : publicationInstanceType === JournalType.Issue ||
             publicationInstanceType === BookType.Anthology ||
-            publicationInstanceType === ReportType.BookOfAbstract ? (
+            publicationInstanceType === ReportType.BookOfAbstracts ? (
             <>
               <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Editor]} />
               <Contributors
