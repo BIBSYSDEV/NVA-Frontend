@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Box, TextField, Typography } from '@mui/material';
@@ -16,13 +15,8 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 export const ChapterForm = () => {
   const { t } = useTranslation('registration');
 
-  const { values, setFieldValue } = useFormikContext<ChapterRegistration>();
+  const { values } = useFormikContext<ChapterRegistration>();
   const instanceType = values.entityDescription.reference?.publicationInstance.type;
-
-  useEffect(() => {
-    // Reset partOf when user changes subtype, since previous value might not be valid for the new type
-    setFieldValue(ResourceFieldNames.PartOf, '');
-  }, [setFieldValue, instanceType]);
 
   return (
     <>
@@ -112,7 +106,6 @@ export const ChapterForm = () => {
       {instanceType === ChapterType.AnthologyChapter && (
         <>
           <NviFields contentTypes={Object.values(ChapterContentType)} />
-
           <NviValidation registration={values} />
         </>
       )}
