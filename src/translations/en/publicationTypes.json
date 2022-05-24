@@ -8,7 +8,7 @@
   "Chapter": "Part of book or report",
   "ChapterConferenceAbstract": "Conference abstract",
   "ChapterArticle": "Chapter in anthology",
-  "ChapterReport": "Chapter in report",
+  "ChapterInReport": "Chapter in report",
   "ConferenceLecture": "Conference lecture",
   "ConferencePoster": "Conference poster",
   "Degree": "Thesis",

@@ -27,7 +27,7 @@ export enum ReportType {
   Research = 'ReportResearch',
   Policy = 'ReportPolicy',
   WorkingPaper = 'ReportWorkingPaper',
-  BookOfAbstract = 'ReportBookOfAbstract',
+  BookOfAbstracts = 'ReportBookOfAbstract',
   Report = 'ReportBasic',
 }
 
@@ -41,6 +41,7 @@ export enum DegreeType {
 
 export enum ChapterType {
   AnthologyChapter = 'ChapterArticle',
+  ReportChapter = 'ChapterInReport',
   ConferenceAbstract = 'ChapterConferenceAbstract',
 }
 

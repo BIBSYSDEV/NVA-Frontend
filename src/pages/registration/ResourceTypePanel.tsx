@@ -16,6 +16,7 @@ import {
   contextTypeBaseFieldName,
   instanceTypeBaseFieldName,
   PublicationType,
+  ResourceFieldNames,
 } from '../../types/publicationFieldNames';
 import { EntityDescription, PublicationChannelType, Registration } from '../../types/registration.types';
 import { BookTypeForm } from './resource_type_tab/BookTypeForm';
@@ -23,7 +24,7 @@ import { ChapterTypeForm } from './resource_type_tab/ChapterTypeForm';
 import { DegreeTypeForm } from './resource_type_tab/DegreeTypeForm';
 import { JournalTypeForm } from './resource_type_tab/JournalTypeForm';
 import { ReportTypeForm } from './resource_type_tab/ReportTypeForm';
-import { getMainRegistrationType } from '../../utils/registration-helpers';
+import { getMainRegistrationType, isChapter } from '../../utils/registration-helpers';
 import { PresentationTypeForm } from './resource_type_tab/PresentationTypeForm';
 import {
   emptyPresentationPublicationContext,
@@ -119,6 +120,11 @@ export const ResourceTypePanel = () => {
       : commonValues;
 
     setFieldValue(instanceTypeBaseFieldName, newValues);
+
+    if (isChapter(newInstanceType)) {
+      // Reset partOf when user changes subtype of Chapter, since previous container might not be valid for the new type
+      setFieldValue(ResourceFieldNames.PartOf, undefined);
+    }
   };
 
   const referenceErrors = (errors.entityDescription as FormikErrors<EntityDescription>)

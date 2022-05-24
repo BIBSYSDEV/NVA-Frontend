@@ -28,6 +28,8 @@ export const ChapterForm = () => {
               ? t('resource_type.chapter.info_anthology')
               : instanceType === ChapterType.ConferenceAbstract
               ? t('resource_type.chapter.info_book_of_abstracts')
+              : instanceType === ChapterType.ReportChapter
+              ? t('resource_type.chapter.info_report')
               : null}
           </Typography>
         </Box>
@@ -47,9 +49,19 @@ export const ChapterForm = () => {
         ) : instanceType === ChapterType.ConferenceAbstract ? (
           <SearchContainerField
             fieldName={ResourceFieldNames.PartOf}
-            searchSubtypes={[ReportType.BookOfAbstract]}
+            searchSubtypes={[ReportType.BookOfAbstracts]}
             label={t('resource_type.chapter.published_in')}
             placeholder={t('resource_type.chapter.search_for_book_of_abstracts')}
+            dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
+            fetchErrorMessage={t('feedback:error.search')}
+            descriptionToShow="publisher-and-level"
+          />
+        ) : instanceType === ChapterType.ReportChapter ? (
+          <SearchContainerField
+            fieldName={ResourceFieldNames.PartOf}
+            searchSubtypes={Object.values(ReportType)}
+            label={t('resource_type.chapter.published_in')}
+            placeholder={t('resource_type.chapter.search_for_report')}
             dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
             fetchErrorMessage={t('feedback:error.search')}
             descriptionToShow="publisher-and-level"
@@ -94,7 +106,6 @@ export const ChapterForm = () => {
       {instanceType === ChapterType.AnthologyChapter && (
         <>
           <NviFields contentTypes={Object.values(ChapterContentType)} />
-
           <NviValidation registration={values} />
         </>
       )}
