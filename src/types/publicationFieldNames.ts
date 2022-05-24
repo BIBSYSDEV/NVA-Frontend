@@ -41,6 +41,7 @@ export enum DegreeType {
 
 export enum ChapterType {
   AnthologyChapter = 'ChapterArticle',
+  ConferenceAbstract = 'ChapterConferenceAbstract',
 }
 
 export enum PresentationType {

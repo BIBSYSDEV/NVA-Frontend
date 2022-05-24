@@ -25,7 +25,6 @@
     "get_journals": "Kunne ikke hente tidsskrifter",
     "get_journal_article": "Kunne ikke hente artikkel i tidsskrift",
     "get_messages": "Kunne ikke hente meldinger",
-    "get_monograph": "Kunne ikke hente monografi",
     "get_orcid": "Kunne ikke hente data fra ORCID",
     "get_parent_units": "Kunne ikke hente institusjoner",
     "get_person": "Kunne ikke hente person",
