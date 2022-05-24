@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Box, TextField, Typography } from '@mui/material';
@@ -15,10 +16,13 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 export const ChapterForm = () => {
   const { t } = useTranslation('registration');
 
-  const { values } = useFormikContext<ChapterRegistration>();
+  const { values, setFieldValue } = useFormikContext<ChapterRegistration>();
   const instanceType = values.entityDescription.reference?.publicationInstance.type;
 
-  // TODO reset partOf when instanceType changes
+  useEffect(() => {
+    // Reset partOf when user changes subtype, since previous value might not be valid for the new type
+    setFieldValue(ResourceFieldNames.PartOf, '');
+  }, [setFieldValue, instanceType]);
 
   return (
     <>

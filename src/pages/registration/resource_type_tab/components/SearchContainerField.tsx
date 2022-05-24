@@ -181,7 +181,7 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
   const [publisher] = useFetchResource<Publisher>(publicationContext.publisher?.id ?? '', t('error.get_publisher'));
   const [series] = useFetchResource<Journal>(publicationContext.series?.id ?? '', t('error.get_series'));
 
-  return series ? (
+  return series?.id ? (
     <>
       {publisher && (
         <Typography variant="body2" color="textSecondary">
