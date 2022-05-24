@@ -189,9 +189,11 @@
     "chapter": {
       "info_anthology": "The anthology where this chapter is published in must be published in advance",
       "info_book_of_abstracts": "The book of abstracts where this abstract is published in must be published in advance",
+      "info_report": "The report where this chapter is published in must be published in advance",
       "published_in": "Published in",
       "search_for_anthology": "Search for the anthology where the chapter is published",
-      "search_for_book_of_abstracts": "Search for the book of abstracts where the chapter is published"
+      "search_for_book_of_abstracts": "Search for the book of abstracts where the abstract is published",
+      "search_for_report": "Search for the report where the chapter is published"
     },
     "content": "Content",
     "content_types": {
