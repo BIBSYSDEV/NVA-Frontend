@@ -115,7 +115,6 @@ export const CustomerInstitutionMetadataForm = ({
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.FeideOrganizationDomain}
                 label={t('feide_organization_domain')}
-                required
                 dataTestId={dataTestId.institutionAdmin.feideField}
               />
               <StyledRightAlignedWrapper>
