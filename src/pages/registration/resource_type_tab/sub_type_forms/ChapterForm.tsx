@@ -18,6 +18,8 @@ export const ChapterForm = () => {
   const { values } = useFormikContext<ChapterRegistration>();
   const instanceType = values.entityDescription.reference?.publicationInstance.type;
 
+  // TODO reset partOf when instanceType changes
+
   return (
     <>
       <div>
@@ -28,6 +30,8 @@ export const ChapterForm = () => {
               ? t('resource_type.chapter.info_anthology')
               : instanceType === ChapterType.ConferenceAbstract
               ? t('resource_type.chapter.info_book_of_abstracts')
+              : instanceType === ChapterType.ReportChapter
+              ? t('resource_type.chapter.info_report')
               : null}
           </Typography>
         </Box>
@@ -50,6 +54,16 @@ export const ChapterForm = () => {
             searchSubtypes={[ReportType.BookOfAbstract]}
             label={t('resource_type.chapter.published_in')}
             placeholder={t('resource_type.chapter.search_for_book_of_abstracts')}
+            dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
+            fetchErrorMessage={t('feedback:error.search')}
+            descriptionToShow="publisher-and-level"
+          />
+        ) : instanceType === ChapterType.ReportChapter ? (
+          <SearchContainerField
+            fieldName={ResourceFieldNames.PartOf}
+            searchSubtypes={Object.values(ReportType)}
+            label={t('resource_type.chapter.published_in')}
+            placeholder={t('resource_type.chapter.search_for_report')}
             dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
             fetchErrorMessage={t('feedback:error.search')}
             descriptionToShow="publisher-and-level"
