@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Box, TextField, Typography } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { BookType, ChapterType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { BookType, ChapterType, ReportType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { DoiField } from '../components/DoiField';
 import { NviValidation } from '../components/NviValidation';
 import { SearchContainerField } from '../components/SearchContainerField';
@@ -21,26 +21,40 @@ export const ChapterForm = () => {
   return (
     <>
       <div>
-        <Box data-testid="info-anthology" sx={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
           <InfoIcon color="primary" />
           <Typography variant="body1" gutterBottom>
-            {t('resource_type.chapter.info_anthology')}
+            {instanceType === ChapterType.AnthologyChapter
+              ? t('resource_type.chapter.info_anthology')
+              : instanceType === ChapterType.ConferenceAbstract
+              ? t('resource_type.chapter.info_book_of_abstracts')
+              : null}
           </Typography>
         </Box>
 
         <DoiField />
 
-        {instanceType === ChapterType.AnthologyChapter && (
+        {instanceType === ChapterType.AnthologyChapter ? (
           <SearchContainerField
             fieldName={ResourceFieldNames.PartOf}
             searchSubtypes={[BookType.Anthology]}
             label={t('resource_type.chapter.published_in')}
             placeholder={t('resource_type.chapter.search_for_anthology')}
             dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
-            fetchErrorMessage={t('feedback:error.get_monograph')}
+            fetchErrorMessage={t('feedback:error.search')}
             descriptionToShow="publisher-and-level"
           />
-        )}
+        ) : instanceType === ChapterType.ConferenceAbstract ? (
+          <SearchContainerField
+            fieldName={ResourceFieldNames.PartOf}
+            searchSubtypes={[ReportType.BookOfAbstract]}
+            label={t('resource_type.chapter.published_in')}
+            placeholder={t('resource_type.chapter.search_for_book_of_abstracts')}
+            dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
+            fetchErrorMessage={t('feedback:error.search')}
+            descriptionToShow="publisher-and-level"
+          />
+        ) : null}
       </div>
 
       <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>

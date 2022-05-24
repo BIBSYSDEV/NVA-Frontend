@@ -6,6 +6,7 @@
   "BookAnthology": "Anthology",
   "BookMonograph": "Monograph",
   "Chapter": "Part of book or report",
+  "ChapterConferenceAbstract": "Conference abstract",
   "ChapterArticle": "Chapter in anthology",
   "ChapterReport": "Chapter in report",
   "ConferenceLecture": "Conference lecture",
