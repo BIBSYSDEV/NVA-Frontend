@@ -91,6 +91,7 @@ export const Header = () => {
               <LanguageSelector />
               {(user?.isInstitutionAdmin || user?.isAppAdmin) && (
                 <Button
+                  sx={{ whiteSpace: 'nowrap' }}
                   color="inherit"
                   component={RouterLink}
                   data-testid={dataTestId.header.basicDataLink}
