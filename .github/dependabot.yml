@@ -1,11 +1,8 @@
 version: 2
 updates:
-- package-ecosystem: npm
-  directory: "/"
-  schedule:
-    interval: daily
-    timezone: Europe/Oslo
-  open-pull-requests-limit: 20
-  ignore:
-  - dependency-name: "@date-io/date-fns"
-  
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: daily
+      timezone: Europe/Oslo
+    open-pull-requests-limit: 20
