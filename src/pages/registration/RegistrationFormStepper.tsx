@@ -3,8 +3,9 @@ import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Step, StepButton, StepLabel, Stepper, Theme, useMediaQuery } from '@mui/material';
 import { useLocation } from 'react-router-dom';
+import deepmerge from 'deepmerge';
 import { Registration, RegistrationTab } from '../../types/registration.types';
-import { getTabErrors, getTouchedTabFields, mergeTouchedFields } from '../../utils/formik-helpers';
+import { getTabErrors, getTouchedTabFields } from '../../utils/formik-helpers';
 import { RegistrationLocationState } from './RegistrationForm';
 import { dataTestId } from '../../utils/dataTestIds';
 
@@ -47,7 +48,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
         locationState.highestValidatedTab = tabNumber; // Validate current tab
       }
       const touchedFieldsOnUnmount = getTouchedTabFields(tabNumber, valuesRef.current);
-      setTouched(mergeTouchedFields([touchedRef.current, touchedFieldsOnUnmount]));
+      setTouched(deepmerge.all([touchedRef.current, touchedFieldsOnUnmount]));
     };
   }, [setTouched, tabNumber, locationState]);
 
