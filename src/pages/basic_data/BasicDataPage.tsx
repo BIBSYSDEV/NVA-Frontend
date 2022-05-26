@@ -49,7 +49,7 @@ const BasicDataPage = () => {
         </Typography>
         <MenuList>
           {user?.isInstitutionAdmin && [
-            <BetaFunctionality key="central-import">
+            <BetaFunctionality key="person-register">
               <MenuItem
                 key={dataTestId.basicData.personRegisterLink}
                 data-testid={dataTestId.basicData.personRegisterLink}
