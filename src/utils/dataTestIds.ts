@@ -26,6 +26,7 @@ export const dataTestId = {
       customerList: 'customer-institutions-list',
       editInstitutionButton: (name: string) => `edit-institution-button-${name.toLowerCase().replaceAll(' ', '-')}`,
     },
+    personRegisterLink: 'person-register-link',
   },
   organization: {
     searchField: 'organization-search-field',
