@@ -6,6 +6,7 @@ export enum UrlPathTemplate {
   BasicDataCentralImportDuplicateCheck = '/basic-data/central-import-duplicate-check/:identifier',
   BasicDataInstitutions = '/basic-data/institutions',
   BasicDataMyInstitution = '/basic-data/my-institution',
+  BasicDataPersonRegister = '/basic-data/person-register',
   BasicDataUsers = '/basic-data/users',
   Editor = '/editor',
   Home = '/',

@@ -22,6 +22,9 @@
   "employments": "Ansettelser",
   "national_id": "Fødselsnummer",
   "no_matching_persons_found": "Ingen samsvarende personer funnet i Personregisteret",
+  "person_register": {
+    "person_register": "Personregister"
+  },
   "position": "Stilling",
   "position_percent": "Stillingsprosent",
   "publications": "Publikasjoner",

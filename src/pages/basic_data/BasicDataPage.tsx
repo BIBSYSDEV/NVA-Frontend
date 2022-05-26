@@ -15,6 +15,7 @@ import { CentralImportPage } from './app_admin/central_import/CentralImportPage'
 import { MyCustomerInstitutionPage } from './institution_admin/MyInstitutionPage';
 import { MyInstitutionUsersPage } from './institution_admin/MyInstitutionUsersPage';
 import { CentralImportDuplicationCheckPage } from './app_admin/central_import/CentralImportDuplicationCheckPage';
+import { PersonRegisterPage } from './institution_admin/PersonRegisterPage';
 
 const BasicDataPage = () => {
   const { t } = useTranslation('basicData');
@@ -48,6 +49,20 @@ const BasicDataPage = () => {
         </Typography>
         <MenuList>
           {user?.isInstitutionAdmin && [
+            <BetaFunctionality key="central-import">
+              <MenuItem
+                key={dataTestId.basicData.personRegisterLink}
+                data-testid={dataTestId.basicData.personRegisterLink}
+                component={Link}
+                selected={currentPath === UrlPathTemplate.BasicDataPersonRegister}
+                to={UrlPathTemplate.BasicDataPersonRegister}>
+                <ListItemText>
+                  <Typography variant="overline" color="primary" fontSize="1rem">
+                    {t('person_register.person_register')}
+                  </Typography>
+                </ListItemText>
+              </MenuItem>
+            </BetaFunctionality>,
             <MenuItem
               key={dataTestId.basicData.addEmployeeLink}
               data-testid={dataTestId.basicData.addEmployeeLink}
@@ -136,6 +151,7 @@ const BasicDataPage = () => {
             component={MyCustomerInstitutionPage}
           />
           <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataUsers} component={MyInstitutionUsersPage} />
+          <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataPersonRegister} component={PersonRegisterPage} />
         </Switch>
       </BackgroundDiv>
     </Box>
