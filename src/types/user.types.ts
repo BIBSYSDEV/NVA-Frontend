@@ -109,6 +109,7 @@ export interface FlatCristinUser {
   id: string;
   cristinIdentifier: string;
   affiliations: CristinPersonAffiliation[];
+  orcid?: string;
 }
 
 interface Position {
