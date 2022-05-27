@@ -1,12 +1,14 @@
 import {
   Box,
   CircularProgress,
+  IconButton,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
   TableRow,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
@@ -20,6 +22,8 @@ import { SearchResponse } from '../../../types/common.types';
 import { CristinUser } from '../../../types/user.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { convertToFlatCristinUser, filterActiveAffiliations } from '../../../utils/user-helpers';
+import OrcidLogo from '../../../resources/images/orcid_logo.svg';
+import { ORCID_BASE_URL } from '../../../utils/constants';
 
 const rowsPerPageOptions = [10, 25, 50];
 
@@ -64,22 +68,30 @@ export const PersonRegisterPage = () => {
         </TableHead>
         <TableBody>
           {employees.map((person) => {
-            const flatCristinPerson = convertToFlatCristinUser(person);
-            const activeEmployments = filterActiveAffiliations(flatCristinPerson.affiliations);
+            const { cristinIdentifier, firstName, lastName, affiliations, orcid } = convertToFlatCristinUser(person);
+            const activeEmployments = filterActiveAffiliations(affiliations);
+            const orcidUrl = orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
             return (
-              <TableRow key={flatCristinPerson.cristinIdentifier}>
-                <TableCell>{flatCristinPerson.cristinIdentifier}</TableCell>
+              <TableRow key={cristinIdentifier}>
+                <TableCell>{cristinIdentifier}</TableCell>
                 <TableCell>
-                  {flatCristinPerson.firstName} {flatCristinPerson.lastName}
+                  {firstName} {lastName}
+                  {orcidUrl && (
+                    <Tooltip title={t<string>('common:orcid_profile')}>
+                      <IconButton size="small" href={orcidUrl} target="_blank">
+                        <img src={OrcidLogo} height="20" alt="orcid" />
+                      </IconButton>
+                    </Tooltip>
+                  )}
                 </TableCell>
                 <TableCell>
-                  {activeEmployments.map((employment) => (
-                    <AffiliationHierarchy
-                      key={employment.organization}
-                      unitUri={employment.organization}
-                      commaSeparated
-                    />
-                  ))}
+                  <Box component="ul" sx={{ p: 0 }}>
+                    {activeEmployments.map((employment, index) => (
+                      <Box key={`${employment.organization}.${index}`} component="li" sx={{ display: 'flex' }}>
+                        <AffiliationHierarchy unitUri={employment.organization} commaSeparated />
+                      </Box>
+                    ))}
+                  </Box>
                 </TableCell>
               </TableRow>
             );

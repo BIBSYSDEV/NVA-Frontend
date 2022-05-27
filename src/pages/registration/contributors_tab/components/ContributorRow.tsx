@@ -127,7 +127,7 @@ export const ContributorRow = ({
             </Tooltip>
           )}
           {contributor.identity.orcId && (
-            <Tooltip title={t<string>('contributors.orcid_profile')}>
+            <Tooltip title={t<string>('common:orcid_profile')}>
               <IconButton size="small" href={contributor.identity.orcId} target="_blank">
                 <img src={OrcidLogo} height="20" alt="orcid" />
               </IconButton>
