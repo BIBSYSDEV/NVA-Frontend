@@ -103,7 +103,7 @@ export const PersonRegisterPage = () => {
           count={employeesSearchResponse.size}
           rowsPerPage={rowsPerPage}
           page={page - 1}
-          onPageChange={(_, newPage) => setPage(newPage + 1)}
+          onPageChange={(_, muiPage) => setPage(muiPage + 1)}
           onRowsPerPageChange={(event) => {
             setRowsPerPage(parseInt(event.target.value));
             setPage(1);
