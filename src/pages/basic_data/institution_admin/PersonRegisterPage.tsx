@@ -46,9 +46,7 @@ export const PersonRegisterPage = () => {
       <CircularProgress size={60} />
     </Box>
   ) : employees.length === 0 ? (
-    <Typography>
-      <i>{t('users.no_users_found')}</i>
-    </Typography>
+    <Typography>{t('person_register.no_employees_found')}</Typography>
   ) : (
     <>
       <Table size="small" sx={alternatingTableRowColor}>
@@ -87,7 +85,7 @@ export const PersonRegisterPage = () => {
                 <TableCell>
                   <Box component="ul" sx={{ p: 0 }}>
                     {activeEmployments.map((employment, index) => (
-                      <Box key={`${employment.organization}.${index}`} component="li" sx={{ display: 'flex' }}>
+                      <Box key={`${employment.organization}-${index}`} component="li" sx={{ display: 'flex' }}>
                         <AffiliationHierarchy unitUri={employment.organization} commaSeparated />
                       </Box>
                     ))}
