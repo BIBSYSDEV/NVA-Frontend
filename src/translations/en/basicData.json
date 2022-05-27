@@ -23,6 +23,7 @@
   "national_id": "National ID",
   "no_matching_persons_found": "No matching persons found in the Person Registry",
   "person_register": {
+    "person_id": "PersonID",
     "person_register": "Person Register"
   },
   "position": "Position",
