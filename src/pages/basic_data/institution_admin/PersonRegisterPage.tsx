@@ -9,6 +9,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -32,7 +33,7 @@ export const PersonRegisterPage = () => {
   const url = user?.topOrgCristinId ? `${user.topOrgCristinId}/persons?page=${page}&results=${rowsPerPage}` : '';
   const [employeesSearchResponse, isLoadingEmployees] = useFetch<SearchResponse<CristinUser>>({
     url,
-    errorMessage: 'TODO',
+    errorMessage: t('feedback:error.get_users_for_institution'),
   });
   const employees = employeesSearchResponse?.hits ?? [];
 
@@ -47,7 +48,7 @@ export const PersonRegisterPage = () => {
   ) : (
     <>
       <Table size="small" sx={alternatingTableRowColor}>
-        {/* <caption style={visuallyHidden}>{tableCaption}</caption> */}
+        <caption style={visuallyHidden}>{t('person_register.employee_table_caption')}</caption>
         <TableHead>
           <TableRow>
             <TableCell>

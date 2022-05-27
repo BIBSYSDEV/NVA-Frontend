@@ -23,6 +23,7 @@
   "national_id": "National ID",
   "no_matching_persons_found": "No matching persons found in the Person Registry",
   "person_register": {
+    "employee_table_caption": "List of all employees",
     "person_id": "PersonID",
     "person_register": "Person Register"
   },
