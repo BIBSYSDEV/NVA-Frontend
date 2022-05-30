@@ -62,7 +62,11 @@ export const PersonRegisterPage = () => {
         </TableHead>
         <TableBody>
           {employees.map((person) => (
-            <PersonTableRow key={person.id} cristinPerson={person} />
+            <PersonTableRow
+              key={person.id}
+              cristinPerson={person}
+              topOrgCristinIdentifier={user?.topOrgCristinId ? user.topOrgCristinId.split('/').pop() ?? '' : ''}
+            />
           ))}
         </TableBody>
       </Table>

@@ -11,19 +11,26 @@ import {
   DialogTitle,
   DialogActions,
   Button,
+  TextField,
+  Divider,
+  CircularProgress,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { ORCID_BASE_URL } from '../../../../utils/constants';
 import { convertToFlatCristinUser, filterActiveAffiliations } from '../../../../utils/user-helpers';
-import { CristinUser } from '../../../../types/user.types';
+import { CristinUser, InstitutionUser, RoleName } from '../../../../types/user.types';
+import { useFetch } from '../../../../utils/hooks/useFetch';
+import { RoleApiPath } from '../../../../api/apiPaths';
+import { UserRolesSelector } from '../UserRolesSelector';
 
 interface PersonTableRowProps {
   cristinPerson: CristinUser;
+  topOrgCristinIdentifier: string;
 }
 
-export const PersonTableRow = ({ cristinPerson }: PersonTableRowProps) => {
+export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: PersonTableRowProps) => {
   const { t } = useTranslation('basicData');
   const [openDialog, setOpenDialog] = useState(false);
   const toggleDialog = () => setOpenDialog(!openDialog);
@@ -31,6 +38,14 @@ export const PersonTableRow = ({ cristinPerson }: PersonTableRowProps) => {
   const { cristinIdentifier, firstName, lastName, affiliations, orcid } = convertToFlatCristinUser(cristinPerson);
   const activeEmployments = filterActiveAffiliations(affiliations);
   const orcidUrl = orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
+
+  const username = `${cristinIdentifier}@${topOrgCristinIdentifier}`;
+  const [user, isLoadingUser] = useFetch<InstitutionUser>({
+    url: openDialog ? `${RoleApiPath.Users}/${username}` : '',
+    withAuthentication: true,
+  });
+
+  const roles = user ? user.roles.map((role) => role.rolename) : [RoleName.Creator];
 
   return (
     <TableRow>
@@ -61,9 +76,22 @@ export const PersonTableRow = ({ cristinPerson }: PersonTableRowProps) => {
           </IconButton>
         </Tooltip>
       </TableCell>
-      <Dialog open={openDialog} onClose={toggleDialog}>
+      <Dialog open={openDialog} onClose={toggleDialog} maxWidth="md" fullWidth transitionDuration={{ exit: 0 }}>
         <DialogTitle>{t('person_register.edit_person')}</DialogTitle>
-        <DialogContent></DialogContent>
+        <DialogContent>
+          <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '1rem', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <TextField variant="filled" disabled value={firstName} label={t('common:first_name')} />
+              <TextField variant="filled" disabled value={lastName} label={t('common:last_name')} />
+            </Box>
+            <Divider flexItem orientation="vertical" />
+            {isLoadingUser ? (
+              <CircularProgress />
+            ) : (
+              <UserRolesSelector selectedRoles={roles} updateRoles={(newRoles) => console.log('newRoles', newRoles)} />
+            )}
+          </Box>
+        </DialogContent>
         <DialogActions>
           <Button onClick={toggleDialog}>{t('common:cancel')}</Button>
           <Button variant="contained">{t('common:save')}</Button>
