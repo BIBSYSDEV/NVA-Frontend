@@ -16,6 +16,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import { Form, Formik, FormikProps } from 'formik';
 import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { ORCID_BASE_URL } from '../../../../utils/constants';
@@ -24,6 +25,10 @@ import { CristinUser, InstitutionUser, RoleName } from '../../../../types/user.t
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { RoleApiPath } from '../../../../api/apiPaths';
 import { UserRolesSelector } from '../UserRolesSelector';
+
+interface FormData {
+  roles: RoleName[];
+}
 
 interface PersonTableRowProps {
   cristinPerson: CristinUser;
@@ -45,7 +50,11 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
     withAuthentication: true,
   });
 
-  const roles = user ? user.roles.map((role) => role.rolename) : [RoleName.Creator];
+  const initialValues: FormData = { roles: user ? user.roles.map((role) => role.rolename) : [RoleName.Creator] };
+
+  const onSubmit = async (values: FormData) => {
+    console.log(values);
+  };
 
   return (
     <TableRow>
@@ -79,18 +88,28 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
       <Dialog open={openDialog} onClose={toggleDialog} maxWidth="md" fullWidth transitionDuration={{ exit: 0 }}>
         <DialogTitle>{t('person_register.edit_person')}</DialogTitle>
         <DialogContent>
-          <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '1rem', alignItems: 'center' }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <TextField variant="filled" disabled value={firstName} label={t('common:first_name')} />
-              <TextField variant="filled" disabled value={lastName} label={t('common:last_name')} />
-            </Box>
-            <Divider flexItem orientation="vertical" />
-            {isLoadingUser ? (
-              <CircularProgress />
-            ) : (
-              <UserRolesSelector selectedRoles={roles} updateRoles={(newRoles) => console.log('newRoles', newRoles)} />
+          <Formik initialValues={initialValues} onSubmit={onSubmit}>
+            {({ values, isSubmitting, setFieldValue }: FormikProps<FormData>) => (
+              <Form>
+                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '1rem', alignItems: 'center' }}>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <TextField variant="filled" disabled value={firstName} label={t('common:first_name')} />
+                    <TextField variant="filled" disabled value={lastName} label={t('common:last_name')} />
+                  </Box>
+                  <Divider flexItem orientation="vertical" />
+                  {isLoadingUser ? (
+                    <CircularProgress />
+                  ) : (
+                    <UserRolesSelector
+                      selectedRoles={values.roles}
+                      updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
+                      disabled={isSubmitting}
+                    />
+                  )}
+                </Box>
+              </Form>
             )}
-          </Box>
+          </Formik>
         </DialogContent>
         <DialogActions>
           <Button onClick={toggleDialog}>{t('common:cancel')}</Button>
