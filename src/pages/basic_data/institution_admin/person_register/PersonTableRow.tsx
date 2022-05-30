@@ -1,5 +1,17 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TableRow, TableCell, Tooltip, IconButton, Box } from '@mui/material';
+import {
+  TableRow,
+  TableCell,
+  Tooltip,
+  IconButton,
+  Box,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogActions,
+  Button,
+} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
@@ -13,6 +25,9 @@ interface PersonTableRowProps {
 
 export const PersonTableRow = ({ cristinPerson }: PersonTableRowProps) => {
   const { t } = useTranslation('basicData');
+  const [openDialog, setOpenDialog] = useState(false);
+  const toggleDialog = () => setOpenDialog(!openDialog);
+
   const { cristinIdentifier, firstName, lastName, affiliations, orcid } = convertToFlatCristinUser(cristinPerson);
   const activeEmployments = filterActiveAffiliations(affiliations);
   const orcidUrl = orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
@@ -41,11 +56,19 @@ export const PersonTableRow = ({ cristinPerson }: PersonTableRowProps) => {
       </TableCell>
       <TableCell>
         <Tooltip title={t('common:edit')}>
-          <IconButton>
+          <IconButton onClick={toggleDialog}>
             <EditIcon />
           </IconButton>
         </Tooltip>
       </TableCell>
+      <Dialog open={openDialog} onClose={toggleDialog}>
+        <DialogTitle>{t('person_register.edit_person')}</DialogTitle>
+        <DialogContent></DialogContent>
+        <DialogActions>
+          <Button onClick={toggleDialog}>{t('common:cancel')}</Button>
+          <Button variant="contained">{t('common:save')}</Button>
+        </DialogActions>
+      </Dialog>
     </TableRow>
   );
 };
