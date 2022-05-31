@@ -103,7 +103,9 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
                   </Box>
                   <Divider flexItem orientation="vertical" />
                   {isLoadingUser ? (
-                    <CircularProgress />
+                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                      <CircularProgress />
+                    </Box>
                   ) : (
                     <UserRolesSelector
                       selectedRoles={values.roles}
