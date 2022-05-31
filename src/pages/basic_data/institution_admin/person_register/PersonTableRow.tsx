@@ -14,6 +14,7 @@ import {
   TextField,
   Divider,
   CircularProgress,
+  Typography,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { Form, Formik, FormikProps } from 'formik';
@@ -60,14 +61,18 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
     <TableRow>
       <TableCell>{cristinIdentifier}</TableCell>
       <TableCell>
-        {firstName} {lastName}
-        {orcidUrl && (
-          <Tooltip title={t<string>('common:orcid_profile')}>
-            <IconButton size="small" href={orcidUrl} target="_blank">
-              <img src={OrcidLogo} height="20" alt="orcid" />
-            </IconButton>
-          </Tooltip>
-        )}
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Typography>
+            {firstName} {lastName}
+          </Typography>
+          {orcidUrl && (
+            <Tooltip title={t<string>('common:orcid_profile')}>
+              <IconButton size="small" href={orcidUrl} target="_blank">
+                <img src={OrcidLogo} height="20" alt="orcid" />
+              </IconButton>
+            </Tooltip>
+          )}
+        </Box>
       </TableCell>
       <TableCell>
         <Box component="ul" sx={{ p: 0 }}>
