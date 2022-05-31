@@ -19,6 +19,7 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import { Form, Formik, FormikProps } from 'formik';
 import { useDispatch } from 'react-redux';
+import { LoadingButton } from '@mui/lab';
 import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../../../utils/constants';
@@ -73,7 +74,6 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
       if (isSuccessStatus(updateUserResponse.status)) {
         toggleDialog();
         dispatch(setNotification({ message: t('feedback:success.update_institution_user'), variant: 'success' }));
-        // Show success message
       } else if (isErrorStatus(updateUserResponse.status)) {
         dispatch(setNotification({ message: t('feedback:error.update_institution_user'), variant: 'error' }));
       }
@@ -117,8 +117,8 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
       </TableCell>
       <Dialog open={openDialog} onClose={toggleDialog} maxWidth="md" fullWidth transitionDuration={{ exit: 0 }}>
         <DialogTitle>{t('person_register.edit_person')}</DialogTitle>
-        <Formik initialValues={initialValues} onSubmit={onSubmit}>
-          {({ values, isSubmitting, setFieldValue, errors }: FormikProps<FormData>) => (
+        <Formik initialValues={initialValues} enableReinitialize onSubmit={onSubmit}>
+          {({ values, isSubmitting, setFieldValue }: FormikProps<FormData>) => (
             <Form>
               <DialogContent>
                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '1rem', alignItems: 'center' }}>
@@ -144,9 +144,9 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
               </DialogContent>
               <DialogActions>
                 <Button onClick={toggleDialog}>{t('common:cancel')}</Button>
-                <Button disabled={!user} variant="contained" type="submit">
+                <LoadingButton loading={isSubmitting} variant="contained" type="submit">
                   {t('common:save')}
-                </Button>
+                </LoadingButton>
               </DialogActions>
             </Form>
           )}
