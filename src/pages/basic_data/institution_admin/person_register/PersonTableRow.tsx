@@ -18,14 +18,17 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { Form, Formik, FormikProps } from 'formik';
+import { useDispatch } from 'react-redux';
 import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
-import { ORCID_BASE_URL } from '../../../../utils/constants';
+import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../../../utils/constants';
 import { convertToFlatCristinUser, filterActiveAffiliations } from '../../../../utils/user-helpers';
 import { CristinUser, InstitutionUser, RoleName } from '../../../../types/user.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { RoleApiPath } from '../../../../api/apiPaths';
 import { UserRolesSelector } from '../UserRolesSelector';
+import { authenticatedApiRequest } from '../../../../api/apiRequest';
+import { setNotification } from '../../../../redux/notificationSlice';
 
 interface FormData {
   roles: RoleName[];
@@ -38,6 +41,7 @@ interface PersonTableRowProps {
 
 export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: PersonTableRowProps) => {
   const { t } = useTranslation('basicData');
+  const dispatch = useDispatch();
   const [openDialog, setOpenDialog] = useState(false);
   const toggleDialog = () => setOpenDialog(!openDialog);
 
@@ -54,7 +58,28 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
   const initialValues: FormData = { roles: user ? user.roles.map((role) => role.rolename) : [RoleName.Creator] };
 
   const onSubmit = async (values: FormData) => {
-    console.log(values);
+    if (user) {
+      // Update existing user
+      const newUser: InstitutionUser = {
+        ...user,
+        roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
+      };
+
+      const updateUserResponse = await authenticatedApiRequest({
+        url: `${RoleApiPath.Users}/${username}`,
+        method: 'PUT',
+        data: newUser,
+      });
+      if (isSuccessStatus(updateUserResponse.status)) {
+        toggleDialog();
+        dispatch(setNotification({ message: t('feedback:success.update_institution_user'), variant: 'success' }));
+        // Show success message
+      } else if (isErrorStatus(updateUserResponse.status)) {
+        dispatch(setNotification({ message: t('feedback:error.update_institution_user'), variant: 'error' }));
+      }
+    } else {
+      // TODO: Create user with roles
+    }
   };
 
   return (
@@ -92,10 +117,10 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
       </TableCell>
       <Dialog open={openDialog} onClose={toggleDialog} maxWidth="md" fullWidth transitionDuration={{ exit: 0 }}>
         <DialogTitle>{t('person_register.edit_person')}</DialogTitle>
-        <DialogContent>
-          <Formik initialValues={initialValues} onSubmit={onSubmit}>
-            {({ values, isSubmitting, setFieldValue }: FormikProps<FormData>) => (
-              <Form>
+        <Formik initialValues={initialValues} onSubmit={onSubmit}>
+          {({ values, isSubmitting, setFieldValue, errors }: FormikProps<FormData>) => (
+            <Form>
+              <DialogContent>
                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '1rem', alignItems: 'center' }}>
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <TextField variant="filled" disabled value={firstName} label={t('common:first_name')} />
@@ -106,22 +131,26 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                       <CircularProgress />
                     </Box>
-                  ) : (
+                  ) : user ? (
                     <UserRolesSelector
                       selectedRoles={values.roles}
                       updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
                       disabled={isSubmitting}
                     />
+                  ) : (
+                    'TODO: User does not exist'
                   )}
                 </Box>
-              </Form>
-            )}
-          </Formik>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={toggleDialog}>{t('common:cancel')}</Button>
-          <Button variant="contained">{t('common:save')}</Button>
-        </DialogActions>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={toggleDialog}>{t('common:cancel')}</Button>
+                <Button disabled={!user} variant="contained" type="submit">
+                  {t('common:save')}
+                </Button>
+              </DialogActions>
+            </Form>
+          )}
+        </Formik>
       </Dialog>
     </TableRow>
   );
