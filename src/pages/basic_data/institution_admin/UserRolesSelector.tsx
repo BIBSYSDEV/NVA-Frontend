@@ -35,52 +35,43 @@ export const UserRolesSelector = ({
       <FormGroup sx={{ gap: '0.5rem' }}>
         <FormControlLabel
           control={<Checkbox checked={selectedRoles.includes(RoleName.Curator)} value={RoleName.Curator} />}
-          label={
-            <>
-              <Typography variant="overline" sx={{ fontSize: '0.9rem' }}>
-                {t('profile:roles.curator')}
-              </Typography>
-              <Typography>{t('profile:roles.curator_description')}</Typography>
-            </>
-          }
+          label={<RoleLabel title={t('profile:roles.curator')} description={t('profile:roles.curator_description')} />}
         />
         <FormControlLabel
           disabled={disabledRoles.includes(RoleName.Creator)}
           control={<Checkbox checked={selectedRoles.includes(RoleName.Creator)} value={RoleName.Creator} />}
-          label={
-            <>
-              <Typography variant="overline" sx={{ fontSize: '0.9rem' }}>
-                {t('profile:roles.creator')}
-              </Typography>
-              <Typography>{t('profile:roles.creator_description')}</Typography>
-            </>
-          }
+          label={<RoleLabel title={t('profile:roles.creator')} description={t('profile:roles.creator_description')} />}
         />
         <FormControlLabel
           control={<Checkbox checked={selectedRoles.includes(RoleName.Editor)} value={RoleName.Editor} />}
-          label={
-            <>
-              <Typography variant="overline" sx={{ fontSize: '0.9rem' }}>
-                {t('profile:roles.editor')}
-              </Typography>
-              <Typography>{t('profile:roles.editor_description')}</Typography>
-            </>
-          }
+          label={<RoleLabel title={t('profile:roles.editor')} description={t('profile:roles.editor_description')} />}
         />
         <FormControlLabel
           control={
             <Checkbox checked={selectedRoles.includes(RoleName.InstitutionAdmin)} value={RoleName.InstitutionAdmin} />
           }
           label={
-            <>
-              <Typography variant="overline" sx={{ fontSize: '0.9rem' }}>
-                {t('profile:roles.institution_admin')}
-              </Typography>
-              <Typography>{t('profile:roles.institution_admin_description')}</Typography>
-            </>
+            <RoleLabel
+              title={t('profile:roles.institution_admin')}
+              description={t('profile:roles.institution_admin_description')}
+            />
           }
         />
       </FormGroup>
     </FormControl>
   );
 };
+
+interface RoleLabelProps {
+  title: string;
+  description: string;
+}
+
+const RoleLabel = ({ title, description }: RoleLabelProps) => (
+  <>
+    <Typography variant="overline" sx={{ fontSize: '0.9rem', lineHeight: '1' }}>
+      {title}
+    </Typography>
+    <Typography>{description}</Typography>
+  </>
+);
