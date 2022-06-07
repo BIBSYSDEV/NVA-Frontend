@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
 import { alternatingTableRowColor } from '../../../../themes/mainTheme';
 import { SearchResponse } from '../../../../types/common.types';
-import { CristinUser } from '../../../../types/user.types';
+import { CristinPerson } from '../../../../types/user.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PersonTableRow } from './PersonTableRow';
 
@@ -30,7 +30,7 @@ export const PersonRegisterPage = () => {
   const [page, setPage] = useState(1);
 
   const url = user?.topOrgCristinId ? `${user.topOrgCristinId}/persons?page=${page}&results=${rowsPerPage}` : '';
-  const [employeesSearchResponse, isLoadingEmployees] = useFetch<SearchResponse<CristinUser>>({
+  const [employeesSearchResponse, isLoadingEmployees] = useFetch<SearchResponse<CristinPerson>>({
     url,
     errorMessage: t('feedback:error.get_users_for_institution'),
   });

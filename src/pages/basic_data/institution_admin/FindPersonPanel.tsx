@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useState, useCallback, useEffect } from 'react';
 import { Box } from '@mui/system';
-import { convertToFlatCristinUser } from '../../../utils/user-helpers';
+import { convertToFlatCristinPerson } from '../../../utils/user-helpers';
 import { isSuccessStatus } from '../../../utils/constants';
 import { StyledCenterContainer } from '../../../components/styled/Wrappers';
 import { AddEmployeeData, emptyUser } from './AddEmployeePage';
@@ -23,7 +23,7 @@ export const FindPersonPanel = () => {
     setIsLoading(true);
     const searchResponse = await searchByNationalIdNumber(nationalNumber);
     if (isSuccessStatus(searchResponse.status)) {
-      const foundUser = convertToFlatCristinUser(searchResponse.data);
+      const foundUser = convertToFlatCristinPerson(searchResponse.data);
       setFieldValue('user', foundUser);
     } else {
       setFieldValue('user', { ...emptyUser, nationalId: nationalNumber });

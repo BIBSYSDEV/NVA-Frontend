@@ -3,7 +3,7 @@ import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { SearchResponse } from '../../../../types/common.types';
-import { CristinUser } from '../../../../types/user.types';
+import { CristinPerson } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { filterActiveAffiliations, getFullCristinName } from '../../../../utils/user-helpers';
 import { LastRegistrationTableCellContent } from './LastRegistrationTableCellContent';
@@ -11,9 +11,9 @@ import { LastRegistrationTableCellContent } from './LastRegistrationTableCellCon
 const radioHeadingId = 'selected-heading';
 
 interface CristinPersonListProps {
-  personSearch: SearchResponse<CristinUser>;
+  personSearch: SearchResponse<CristinPerson>;
   searchTerm?: string;
-  onSelectContributor?: (selectedContributor: CristinUser) => void;
+  onSelectContributor?: (selectedContributor: CristinPerson) => void;
   userId?: string;
 }
 
@@ -47,22 +47,22 @@ export const CristinPersonList = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {personSearch.hits.map((cristinUser) => {
-              const activeAffiliations = filterActiveAffiliations(cristinUser.affiliations);
-              const isSelected = cristinUser.id === userId;
+            {personSearch.hits.map((cristinPerson) => {
+              const activeAffiliations = filterActiveAffiliations(cristinPerson.affiliations);
+              const isSelected = cristinPerson.id === userId;
               return (
                 <TableRow
                   sx={{ cursor: 'pointer' }}
                   data-testid={dataTestId.registrationWizard.contributors.authorRadioButton}
-                  key={cristinUser.id}
+                  key={cristinPerson.id}
                   hover
-                  onClick={() => onSelectContributor?.(cristinUser)}
+                  onClick={() => onSelectContributor?.(cristinPerson)}
                   selected={isSelected}>
                   <TableCell padding="checkbox">
                     <Radio inputProps={{ 'aria-labelledby': radioHeadingId }} checked={isSelected} />
                   </TableCell>
                   <TableCell>
-                    <Typography>{getFullCristinName(cristinUser.names)}</Typography>
+                    <Typography>{getFullCristinName(cristinPerson.names)}</Typography>
                   </TableCell>
                   <TableCell>
                     {activeAffiliations.length > 0 ? (
@@ -76,7 +76,7 @@ export const CristinPersonList = ({
                     )}
                   </TableCell>
                   <TableCell>
-                    <LastRegistrationTableCellContent personId={cristinUser.id} />
+                    <LastRegistrationTableCellContent personId={cristinPerson.id} />
                   </TableCell>
                 </TableRow>
               );

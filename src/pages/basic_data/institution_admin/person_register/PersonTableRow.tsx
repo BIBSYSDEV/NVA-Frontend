@@ -23,8 +23,8 @@ import { LoadingButton } from '@mui/lab';
 import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../../../utils/constants';
-import { convertToFlatCristinUser, filterActiveAffiliations } from '../../../../utils/user-helpers';
-import { CristinUser, InstitutionUser, RoleName } from '../../../../types/user.types';
+import { convertToFlatCristinPerson, filterActiveAffiliations } from '../../../../utils/user-helpers';
+import { CristinPerson, InstitutionUser, RoleName } from '../../../../types/user.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { RoleApiPath } from '../../../../api/apiPaths';
 import { UserRolesSelector } from '../UserRolesSelector';
@@ -36,7 +36,7 @@ interface FormData {
 }
 
 interface PersonTableRowProps {
-  cristinPerson: CristinUser;
+  cristinPerson: CristinPerson;
   topOrgCristinIdentifier: string;
 }
 
@@ -46,7 +46,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
   const [openDialog, setOpenDialog] = useState(false);
   const toggleDialog = () => setOpenDialog(!openDialog);
 
-  const { cristinIdentifier, firstName, lastName, affiliations, orcid } = convertToFlatCristinUser(cristinPerson);
+  const { cristinIdentifier, firstName, lastName, affiliations, orcid } = convertToFlatCristinPerson(cristinPerson);
   const activeEmployments = filterActiveAffiliations(affiliations);
   const orcidUrl = orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
 

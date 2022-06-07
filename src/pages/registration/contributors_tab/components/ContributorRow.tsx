@@ -13,14 +13,14 @@ import { AffiliationsCell } from './AffiliationsCell';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { AddContributorModal } from '../AddContributorModal';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { CristinUser } from '../../../../types/user.types';
+import { CristinPerson } from '../../../../types/user.types';
 import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
 
 interface ContributorRowProps {
   contributor: Contributor;
   onMoveContributor: (newSequence: number, oldSequence: number) => void;
   onRemoveContributor: (index: number) => void;
-  onVerifyContributor: (selectedContributor: CristinUser, role: ContributorRole, contributorIndex?: number) => void;
+  onVerifyContributor: (selectedContributor: CristinPerson, role: ContributorRole, contributorIndex?: number) => void;
   isLastElement: boolean;
   contributorRoles: ContributorRole[];
   contributorIndex: number;
