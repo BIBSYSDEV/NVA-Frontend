@@ -9,7 +9,7 @@ import { AddAffiliationPanel } from './AddAffiliationPanel';
 import { StyledCenterContainer } from '../../../components/styled/Wrappers';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { setNotification } from '../../../redux/notificationSlice';
-import { convertToCristinUser } from '../../../utils/user-helpers';
+import { convertToCristinPerson } from '../../../utils/user-helpers';
 import { addEmployeeValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
 import { addEmployment, createCristinPerson } from '../../../api/userApi';
 import { createUser } from '../../../api/roleApi';
@@ -53,7 +53,7 @@ export const AddEmployeePage = () => {
 
     if (!userId) {
       // Create user if it does not yet exist in Cristin
-      const cristinUser: CreateCristinPerson = convertToCristinUser(values.user);
+      const cristinUser: CreateCristinPerson = convertToCristinPerson(values.user);
       const createPersonResponse = await createCristinPerson(cristinUser);
       if (isErrorStatus(createPersonResponse.status)) {
         dispatch(setNotification({ message: t('feedback:error.create_user'), variant: 'error' }));

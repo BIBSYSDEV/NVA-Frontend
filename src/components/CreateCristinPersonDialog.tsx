@@ -21,7 +21,7 @@ import { setNotification } from '../redux/notificationSlice';
 import { CreateCristinPerson, FlatCristinPerson, User } from '../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../utils/constants';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
-import { convertToCristinUser, convertToFlatCristinUser } from '../utils/user-helpers';
+import { convertToCristinPerson, convertToFlatCristinPerson } from '../utils/user-helpers';
 import { userValidationSchema } from '../utils/validation/basic_data/addEmployeeValidation';
 import { ConfirmDialog } from './ConfirmDialog';
 
@@ -37,13 +37,13 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
   const [showConfirmCancelDialog, setShowConfirmCancelDialog] = useState(false);
 
   const createPerson = async (values: FlatCristinPerson) => {
-    const cristinUser: CreateCristinPerson = convertToCristinUser(values);
-    const createPersonResponse = await createCristinPerson(cristinUser);
+    const cristinPerson: CreateCristinPerson = convertToCristinPerson(values);
+    const createPersonResponse = await createCristinPerson(cristinPerson);
     if (isErrorStatus(createPersonResponse.status)) {
       dispatch(setNotification({ message: t('feedback:error.create_user'), variant: 'error' }));
     } else if (isSuccessStatus(createPersonResponse.status)) {
       dispatch(setNotification({ message: t('feedback:success.create_user'), variant: 'success' }));
-      const flatCristinPerson = convertToFlatCristinUser(createPersonResponse.data);
+      const flatCristinPerson = convertToFlatCristinPerson(createPersonResponse.data);
       dispatch(
         setPartialUser({
           cristinId: flatCristinPerson.id,
