@@ -13,7 +13,7 @@ describe('Registration: Description', () => {
 
     cy.startRegistrationWithDoi();
 
-    const projectToAdd = mockProjectSearch.hits[1];
+    const projectToAdd = mockProjectSearch.hits![1];
 
     cy.get(`[data-testid=${dataTestId.registrationWizard.description.projectSearchField}] input`)
       .click()

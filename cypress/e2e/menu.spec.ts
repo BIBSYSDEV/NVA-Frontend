@@ -2,7 +2,7 @@ import { RoleName } from '../../src/types/user.types';
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { UrlPathTemplate } from '../../src/utils/urlPaths';
 
-const noRoles = [];
+const noRoles: RoleName[] = [];
 const allRoles = Object.values(RoleName);
 
 describe('Menu', () => {

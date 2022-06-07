@@ -13,14 +13,14 @@ describe('Central Import', () => {
 
   it('should show a list of imported central-import publications', () => {
     const resultItemTestId = `${dataTestId.basicData.centralImport.resultItem}-${mockSearchResults.hits[1].identifier}`;
-    cy.get(`[data-testid=${resultItemTestId}]`).contains(mockSearchResults.hits[1].entityDescription.mainTitle);
+    cy.get(`[data-testid=${resultItemTestId}]`).contains(mockSearchResults.hits[1].entityDescription!.mainTitle);
     cy.get(`[data-testid=${resultItemTestId}]`).contains('Journal article');
     cy.get(`[data-testid=${resultItemTestId}]`).contains(
-      mockSearchResults.hits[1].entityDescription.contributors[1].identity.name
+      mockSearchResults.hits[1].entityDescription!.contributors[1].identity.name
     );
     cy.get(`[data-testid=${resultItemTestId}]`).contains('(1 of 2)');
     cy.get(`[data-testid=${resultItemTestId}]`).contains(
-      mockSearchResults.hits[1].entityDescription.contributors[1].affiliations[0].labels.en
+      mockSearchResults.hits[1].entityDescription!.contributors[1].affiliations![0].labels!.en
     );
   });
 
