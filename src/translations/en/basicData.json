@@ -23,10 +23,12 @@
   "national_id": "National ID",
   "no_matching_persons_found": "No matching persons found in the Person Registry",
   "person_register": {
+    "edit_person": "Edit person",
     "employee_table_caption": "List of all employees",
     "no_employees_found": "No employees found",
     "person_id": "PersonID",
-    "person_register": "Person Register"
+    "person_register": "Person Register",
+    "user_does_not_exist": "User does not exist"
   },
   "position": "Position",
   "position_percent": "Position percent",

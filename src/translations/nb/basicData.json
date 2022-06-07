@@ -23,10 +23,12 @@
   "national_id": "Fødselsnummer",
   "no_matching_persons_found": "Ingen samsvarende personer funnet i Personregisteret",
   "person_register": {
+    "edit_person": "Rediger person",
     "employee_table_caption": "Liste over alle ansatte",
     "no_employees_found": "Ingen ansatte funnet",
     "person_id": "PersonID",
-    "person_register": "Personregister"
+    "person_register": "Personregister",
+    "user_does_not_exist": "Brukeren finnes ikke"
   },
   "position": "Stilling",
   "position_percent": "Stillingsprosent",

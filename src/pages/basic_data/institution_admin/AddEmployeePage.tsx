@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CreateCristinUser, Employment, FlatCristinUser, RoleName } from '../../../types/user.types';
 import { FindPersonPanel } from './FindPersonPanel';
 import { AddAffiliationPanel } from './AddAffiliationPanel';
-import { AddRolePanel } from './AddRolePanel';
 import { StyledCenterContainer } from '../../../components/styled/Wrappers';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -15,6 +14,7 @@ import { addEmployeeValidationSchema } from '../../../utils/validation/basic_dat
 import { addEmployment, createCristinPerson } from '../../../api/userApi';
 import { createUser } from '../../../api/roleApi';
 import { RootState } from '../../../redux/store';
+import { UserRolesSelector } from './UserRolesSelector';
 
 export interface AddEmployeeData {
   searchIdNumber: string;
@@ -91,7 +91,7 @@ export const AddEmployeePage = () => {
         {t('add_to_person_registry')}
       </Typography>
       <Formik initialValues={initialValues} validationSchema={addEmployeeValidationSchema} onSubmit={onSubmit}>
-        {({ isValid, isSubmitting }: FormikProps<AddEmployeeData>) => (
+        {({ isValid, isSubmitting, values, setFieldValue, errors }: FormikProps<AddEmployeeData>) => (
           <Form noValidate>
             <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr auto 1fr', gap: '2rem', mt: '2rem' }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -103,7 +103,11 @@ export const AddEmployeePage = () => {
               </Box>
               <Divider orientation="vertical" />
               <Box>
-                <AddRolePanel />
+                <UserRolesSelector
+                  selectedRoles={values.roles}
+                  updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
+                  disabled={isSubmitting || !!errors.user || !!errors.affiliation}
+                />
               </Box>
             </Box>
             <StyledCenterContainer>
