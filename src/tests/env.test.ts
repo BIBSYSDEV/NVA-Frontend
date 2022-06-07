@@ -17,3 +17,5 @@ describe('Env-variables', () => {
     }
   });
 });
+
+export {};
