@@ -7,15 +7,9 @@ interface UserRolesSelectorProps {
   selectedRoles: RoleName[];
   updateRoles: (roles: RoleName[]) => void;
   disabled?: boolean;
-  disabledRoles?: RoleName[];
 }
 
-export const UserRolesSelector = ({
-  selectedRoles,
-  updateRoles,
-  disabled = false,
-  disabledRoles = [RoleName.Creator],
-}: UserRolesSelectorProps) => {
+export const UserRolesSelector = ({ selectedRoles, updateRoles, disabled = false }: UserRolesSelectorProps) => {
   const { t } = useTranslation('basicData');
 
   return (
@@ -38,7 +32,7 @@ export const UserRolesSelector = ({
           label={<RoleLabel title={t('profile:roles.curator')} description={t('profile:roles.curator_description')} />}
         />
         <FormControlLabel
-          disabled={disabledRoles.includes(RoleName.Creator)}
+          disabled
           control={<Checkbox checked={selectedRoles.includes(RoleName.Creator)} value={RoleName.Creator} />}
           label={<RoleLabel title={t('profile:roles.creator')} description={t('profile:roles.creator_description')} />}
         />
