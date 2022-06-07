@@ -13,7 +13,7 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { SearchResults } from '../search/SearchResults';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../types/publicationFieldNames';
 import { ExpressionStatement } from '../../utils/searchHelpers';
-import { CristinUser } from '../../types/user.types';
+import { CristinPerson } from '../../types/user.types';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../utils/user-helpers';
 
 const textContainerSx: SxProps = {
@@ -31,7 +31,7 @@ const PublicProfile = () => {
   const history = useHistory();
   const personId = new URLSearchParams(history.location.search).get('id') ?? '';
 
-  const [person, isLoadingPerson] = useFetch<CristinUser>({
+  const [person, isLoadingPerson] = useFetch<CristinPerson>({
     url: personId,
     errorMessage: t('feedback:error.get_person'),
   });

@@ -6,10 +6,10 @@ import { Contributor, ContributorRole } from '../../../types/contributor.types';
 import { AddContributorForm } from './components/AddContributorForm';
 import { AddUnverifiedContributorForm } from './components/AddUnverifiedContributorForm';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { CristinUser } from '../../../types/user.types';
+import { CristinPerson } from '../../../types/user.types';
 
 interface AddContributorModalProps {
-  onContributorSelected: (newContributor: CristinUser, role: ContributorRole) => void;
+  onContributorSelected: (newContributor: CristinPerson, role: ContributorRole) => void;
   addUnverifiedContributor?: (contributor: Contributor) => void;
   open: boolean;
   toggleModal: () => void;
@@ -33,7 +33,7 @@ export const AddContributorModal = ({
     contributorRoles.length === 1 ? contributorRoles[0] : ''
   );
 
-  const addContributor = (newContributor: CristinUser) => {
+  const addContributor = (newContributor: CristinPerson) => {
     onContributorSelected(newContributor, selectedContributorRole as ContributorRole);
     handleCloseModal();
   };

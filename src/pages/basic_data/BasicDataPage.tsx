@@ -15,7 +15,7 @@ import { CentralImportPage } from './app_admin/central_import/CentralImportPage'
 import { MyCustomerInstitutionPage } from './institution_admin/MyInstitutionPage';
 import { MyInstitutionUsersPage } from './institution_admin/MyInstitutionUsersPage';
 import { CentralImportDuplicationCheckPage } from './app_admin/central_import/CentralImportDuplicationCheckPage';
-import { PersonRegisterPage } from './institution_admin/PersonRegisterPage';
+import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';
 
 const BasicDataPage = () => {
   const { t } = useTranslation('basicData');

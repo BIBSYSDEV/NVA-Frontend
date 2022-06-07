@@ -18,9 +18,9 @@ import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
-import { FlatCristinUser, RoleName } from '../../../types/user.types';
+import { FlatCristinPerson, RoleName } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
-import { convertToFlatCristinUser } from '../../../utils/user-helpers';
+import { convertToFlatCristinPerson } from '../../../utils/user-helpers';
 import { StartDateField } from '../fields/StartDateField';
 import { PositionField } from '../fields/PositionField';
 import { addCustomerAdminValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
@@ -51,10 +51,10 @@ export const AddAdminDialog = ({
   const dispatch = useDispatch();
   const location = useLocation();
   const [nationalIdNumber, setNationalIdNumber] = useState('');
-  const [cristinUser, setCristinUser] = useState<FlatCristinUser>();
+  const [cristinPerson, setCristinPerson] = useState<FlatCristinPerson>();
   const [isLoadingSearch, setIsLoadingSearch] = useState(false);
 
-  const isEmployedInThisOrganization = cristinUser?.affiliations.some(
+  const isEmployedInThisOrganization = cristinPerson?.affiliations.some(
     (affiliation) =>
       affiliation.active && cristinInstitutionId.startsWith(affiliation.organization.split('.').slice(0, -3).join('.')) // Remove last 3 subunit values to find out if user already has an employment in this institution
   );
@@ -66,24 +66,24 @@ export const AddAdminDialog = ({
         setIsLoadingSearch(true);
         const searchResponse = await searchByNationalIdNumber(nationalIdNumber);
         if (isSuccessStatus(searchResponse.status)) {
-          setCristinUser(convertToFlatCristinUser(searchResponse.data));
+          setCristinPerson(convertToFlatCristinPerson(searchResponse.data));
         } else if (isErrorStatus(searchResponse.status)) {
           dispatch(setNotification({ message: t('feedback:error.search'), variant: 'error' }));
-          setCristinUser(undefined);
+          setCristinPerson(undefined);
         }
         setIsLoadingSearch(false);
       };
       searchByNationalId();
     } else {
-      setCristinUser(undefined);
+      setCristinPerson(undefined);
     }
   }, [t, dispatch, nationalIdNumber]);
 
   const addAdmin = async (values: AddAdminFormData, { resetForm }: FormikHelpers<AddAdminFormData>) => {
-    if (cristinUser) {
+    if (cristinPerson) {
       // Add employment/affiliation (in Cristin) if user don't have one in the current institution
       if (!isEmployedInThisOrganization) {
-        const addAffiliationResponse = await addEmployment(cristinUser.id, {
+        const addAffiliationResponse = await addEmployment(cristinPerson.id, {
           type: values.position,
           startDate: values.startDate,
           organization: cristinInstitutionId,
@@ -118,7 +118,7 @@ export const AddAdminDialog = ({
   const closeDialog = () => {
     toggleOpen();
     setNationalIdNumber('');
-    setCristinUser(undefined);
+    setCristinPerson(undefined);
   };
 
   return (
@@ -144,7 +144,7 @@ export const AddAdminDialog = ({
               <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 {isLoadingSearch ? (
                   <CircularProgress />
-                ) : cristinUser ? (
+                ) : cristinPerson ? (
                   <>
                     <TextField
                       variant="filled"
@@ -152,7 +152,7 @@ export const AddAdminDialog = ({
                       label={t('common:name')}
                       required
                       fullWidth
-                      value={`${cristinUser.firstName} ${cristinUser.lastName}`}
+                      value={`${cristinPerson.firstName} ${cristinPerson.lastName}`}
                     />
                     {!isEmployedInThisOrganization && (
                       <Box sx={{ display: 'flex', gap: '1rem', width: '100%' }}>
@@ -173,7 +173,7 @@ export const AddAdminDialog = ({
                 variant="contained"
                 loading={isSubmitting}
                 startIcon={<AddIcon />}
-                disabled={!cristinUser || nationalIdNumber.length !== 11}>
+                disabled={!cristinPerson || nationalIdNumber.length !== 11}>
                 {t('common:add')}
               </LoadingButton>
             </DialogActions>

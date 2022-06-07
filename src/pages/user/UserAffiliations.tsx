@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { CristinUser, User } from '../../types/user.types';
+import { CristinPerson, User } from '../../types/user.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { filterActiveAffiliations } from '../../utils/user-helpers';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
@@ -12,7 +12,7 @@ interface UserInstituionProps {
 
 export const UserAffiliations = ({ user }: UserInstituionProps) => {
   const { t } = useTranslation('profile');
-  const [person, isLoadingPerson] = useFetch<CristinUser>({
+  const [person, isLoadingPerson] = useFetch<CristinPerson>({
     url: user.cristinId ?? '',
     errorMessage: t('feedback:error.get_person'),
   });

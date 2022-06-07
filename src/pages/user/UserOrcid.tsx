@@ -11,7 +11,7 @@ import { OrcidModalContent } from './OrcidModalContent';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { setNotification } from '../../redux/notificationSlice';
 import { Modal } from '../../components/Modal';
-import { CristinUser, User } from '../../types/user.types';
+import { CristinPerson, User } from '../../types/user.types';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
@@ -32,11 +32,11 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   const [isAddingOrcid, setIsAddingOrcid] = useState(false);
   const [isRemovingOrcid, setIsRemovingOrcid] = useState(false);
   const userCristinId = user.cristinId ?? '';
-  const [cristinUser, isLoadingCristinUser, refetchCristinUser] = useFetch<CristinUser>({
+  const [cristinPerson, isLoadingCristinPerson, refetchCristinPerson] = useFetch<CristinPerson>({
     url: userCristinId,
     errorMessage: t('feedback:error.get_person'),
   });
-  const currentOrcid = getValueByKey('ORCID', cristinUser?.identifiers);
+  const currentOrcid = getValueByKey('ORCID', cristinPerson?.identifiers);
   const orcidUrl = `${ORCID_BASE_URL}/${currentOrcid}`;
 
   const toggleModal = () => setOpenModal(!openModal);
@@ -58,7 +58,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         });
         if (isSuccessStatus(addOrcidResponse.status)) {
           dispatch(setNotification({ message: t('feedback:success.update_orcid'), variant: 'success' }));
-          refetchCristinUser();
+          refetchCristinPerson();
         } else if (isErrorStatus(addOrcidResponse.status)) {
           dispatch(setNotification({ message: t('feedback:error.update_orcid'), variant: 'success' }));
         }
@@ -71,7 +71,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
     if (orcidAccessToken) {
       addOrcid(orcidAccessToken);
     }
-  }, [t, dispatch, history, userCristinId, refetchCristinUser]);
+  }, [t, dispatch, history, userCristinId, refetchCristinPerson]);
 
   useEffect(() => {
     const orcidError = new URLSearchParams(history.location.search).get('error');
@@ -90,7 +90,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       });
       if (isSuccessStatus(removeOrcidResponse.status)) {
         dispatch(setNotification({ message: t('feedback:success.update_orcid'), variant: 'success' }));
-        refetchCristinUser();
+        refetchCristinPerson();
       } else if (isErrorStatus(removeOrcidResponse.status)) {
         dispatch(setNotification({ message: t('feedback:error.update_orcid'), variant: 'success' }));
       }
@@ -101,7 +101,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   return (
     <BackgroundDiv>
       <Typography variant="h2">{t('orcid.orcid')}</Typography>
-      {isLoadingCristinUser ? (
+      {isLoadingCristinPerson ? (
         <CircularProgress />
       ) : isAddingOrcid ? (
         <Skeleton width="50%" />

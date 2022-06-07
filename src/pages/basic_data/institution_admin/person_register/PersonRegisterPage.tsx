@@ -1,29 +1,24 @@
 import {
   Box,
   CircularProgress,
-  IconButton,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
   TableRow,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
-import { RootState } from '../../../redux/store';
-import { alternatingTableRowColor } from '../../../themes/mainTheme';
-import { SearchResponse } from '../../../types/common.types';
-import { CristinUser } from '../../../types/user.types';
-import { useFetch } from '../../../utils/hooks/useFetch';
-import { convertToFlatCristinUser, filterActiveAffiliations } from '../../../utils/user-helpers';
-import OrcidLogo from '../../../resources/images/orcid_logo.svg';
-import { ORCID_BASE_URL } from '../../../utils/constants';
+import { RootState } from '../../../../redux/store';
+import { alternatingTableRowColor } from '../../../../themes/mainTheme';
+import { SearchResponse } from '../../../../types/common.types';
+import { CristinPerson } from '../../../../types/user.types';
+import { useFetch } from '../../../../utils/hooks/useFetch';
+import { PersonTableRow } from './PersonTableRow';
 
 const rowsPerPageOptions = [10, 25, 50];
 
@@ -35,7 +30,7 @@ export const PersonRegisterPage = () => {
   const [page, setPage] = useState(1);
 
   const url = user?.topOrgCristinId ? `${user.topOrgCristinId}/persons?page=${page}&results=${rowsPerPage}` : '';
-  const [employeesSearchResponse, isLoadingEmployees] = useFetch<SearchResponse<CristinUser>>({
+  const [employeesSearchResponse, isLoadingEmployees] = useFetch<SearchResponse<CristinPerson>>({
     url,
     errorMessage: t('feedback:error.get_users_for_institution'),
   });
@@ -62,38 +57,17 @@ export const PersonRegisterPage = () => {
             <TableCell>
               <Typography fontWeight="bold">{t('employments')}</Typography>
             </TableCell>
+            <TableCell />
           </TableRow>
         </TableHead>
         <TableBody>
-          {employees.map((person) => {
-            const { cristinIdentifier, firstName, lastName, affiliations, orcid } = convertToFlatCristinUser(person);
-            const activeEmployments = filterActiveAffiliations(affiliations);
-            const orcidUrl = orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
-            return (
-              <TableRow key={cristinIdentifier}>
-                <TableCell>{cristinIdentifier}</TableCell>
-                <TableCell>
-                  {firstName} {lastName}
-                  {orcidUrl && (
-                    <Tooltip title={t<string>('common:orcid_profile')}>
-                      <IconButton size="small" href={orcidUrl} target="_blank">
-                        <img src={OrcidLogo} height="20" alt="orcid" />
-                      </IconButton>
-                    </Tooltip>
-                  )}
-                </TableCell>
-                <TableCell>
-                  <Box component="ul" sx={{ p: 0 }}>
-                    {activeEmployments.map((employment, index) => (
-                      <Box key={`${employment.organization}-${index}`} component="li" sx={{ display: 'flex' }}>
-                        <AffiliationHierarchy unitUri={employment.organization} commaSeparated />
-                      </Box>
-                    ))}
-                  </Box>
-                </TableCell>
-              </TableRow>
-            );
-          })}
+          {employees.map((person) => (
+            <PersonTableRow
+              key={person.id}
+              cristinPerson={person}
+              topOrgCristinIdentifier={user?.topOrgCristinId ? user.topOrgCristinId.split('/').pop() ?? '' : ''}
+            />
+          ))}
         </TableBody>
       </Table>
       {employeesSearchResponse && employeesSearchResponse.size > rowsPerPageOptions[0] && (
