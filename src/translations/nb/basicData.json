@@ -27,7 +27,8 @@
     "employee_table_caption": "Liste over alle ansatte",
     "no_employees_found": "Ingen ansatte funnet",
     "person_id": "PersonID",
-    "person_register": "Personregister"
+    "person_register": "Personregister",
+    "user_does_not_exist": "Brukeren finnes ikke"
   },
   "position": "Stilling",
   "position_percent": "Stillingsprosent",

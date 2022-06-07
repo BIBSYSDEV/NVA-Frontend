@@ -78,7 +78,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
         dispatch(setNotification({ message: t('feedback:error.update_institution_user'), variant: 'error' }));
       }
     } else {
-      // TODO: Create user with roles
+      // TODO: Create user with roles (NP-9152)
     }
   };
 
@@ -127,24 +127,24 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
                     <TextField variant="filled" disabled value={lastName} label={t('common:last_name')} />
                   </Box>
                   <Divider flexItem orientation="vertical" />
-                  {isLoadingUser ? (
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    {isLoadingUser ? (
                       <CircularProgress />
-                    </Box>
-                  ) : user ? (
-                    <UserRolesSelector
-                      selectedRoles={values.roles}
-                      updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
-                      disabled={isSubmitting}
-                    />
-                  ) : (
-                    'TODO: User does not exist'
-                  )}
+                    ) : user ? (
+                      <UserRolesSelector
+                        selectedRoles={values.roles}
+                        updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
+                        disabled={isSubmitting}
+                      />
+                    ) : (
+                      <Typography>{t('person_register.user_does_not_exist')}</Typography>
+                    )}
+                  </Box>
                 </Box>
               </DialogContent>
               <DialogActions>
                 <Button onClick={toggleDialog}>{t('common:cancel')}</Button>
-                <LoadingButton loading={isSubmitting} variant="contained" type="submit">
+                <LoadingButton loading={isSubmitting} disabled={!user} variant="contained" type="submit">
                   {t('common:save')}
                 </LoadingButton>
               </DialogActions>
