@@ -18,7 +18,7 @@ import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
-import { FlatCristinUser, RoleName } from '../../../types/user.types';
+import { FlatCristinPerson, RoleName } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { convertToFlatCristinUser } from '../../../utils/user-helpers';
 import { StartDateField } from '../fields/StartDateField';
@@ -51,7 +51,7 @@ export const AddAdminDialog = ({
   const dispatch = useDispatch();
   const location = useLocation();
   const [nationalIdNumber, setNationalIdNumber] = useState('');
-  const [cristinUser, setCristinUser] = useState<FlatCristinUser>();
+  const [cristinUser, setCristinUser] = useState<FlatCristinPerson>();
   const [isLoadingSearch, setIsLoadingSearch] = useState(false);
 
   const isEmployedInThisOrganization = cristinUser?.affiliations.some(

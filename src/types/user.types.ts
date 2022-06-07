@@ -91,18 +91,18 @@ interface CristinPersonName extends CristinArrayValue {
   type: CristinPersonNameType;
 }
 
-export interface CreateCristinUser {
+export interface CreateCristinPerson {
   identifiers: CristinPersonIdentifier[];
   names: CristinPersonName[];
 }
 
-export interface CristinUser extends CreateCristinUser {
+export interface CristinPerson extends CreateCristinPerson {
   id: string;
   affiliations: CristinPersonAffiliation[];
   NationalIdentificationNumber?: string;
 }
 
-export interface FlatCristinUser {
+export interface FlatCristinPerson {
   firstName: string;
   lastName: string;
   nationalId: string;

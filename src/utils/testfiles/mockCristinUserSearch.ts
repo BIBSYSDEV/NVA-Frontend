@@ -1,8 +1,8 @@
 import { SearchResponse } from '../../types/common.types';
-import { CristinUser } from '../../types/user.types';
+import { CristinPerson } from '../../types/user.types';
 import { mockOrganizationSearch } from './mockOrganizationSearch';
 
-export const mockCristinUserSearch: SearchResponse<CristinUser> = {
+export const mockCristinUserSearch: SearchResponse<CristinPerson> = {
   processingTime: 10,
   size: 2,
   hits: [

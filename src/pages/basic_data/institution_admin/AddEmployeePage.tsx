@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
-import { CreateCristinUser, Employment, FlatCristinUser, RoleName } from '../../../types/user.types';
+import { CreateCristinPerson, Employment, FlatCristinPerson, RoleName } from '../../../types/user.types';
 import { FindPersonPanel } from './FindPersonPanel';
 import { AddAffiliationPanel } from './AddAffiliationPanel';
 import { StyledCenterContainer } from '../../../components/styled/Wrappers';
@@ -18,12 +18,12 @@ import { UserRolesSelector } from './UserRolesSelector';
 
 export interface AddEmployeeData {
   searchIdNumber: string;
-  user: FlatCristinUser;
+  user: FlatCristinPerson;
   affiliation: Employment;
   roles: RoleName[];
 }
 
-export const emptyUser: FlatCristinUser = {
+export const emptyUser: FlatCristinPerson = {
   nationalId: '',
   firstName: '',
   lastName: '',
@@ -53,7 +53,7 @@ export const AddEmployeePage = () => {
 
     if (!userId) {
       // Create user if it does not yet exist in Cristin
-      const cristinUser: CreateCristinUser = convertToCristinUser(values.user);
+      const cristinUser: CreateCristinPerson = convertToCristinUser(values.user);
       const createPersonResponse = await createCristinPerson(cristinUser);
       if (isErrorStatus(createPersonResponse.status)) {
         dispatch(setNotification({ message: t('feedback:error.create_user'), variant: 'error' }));

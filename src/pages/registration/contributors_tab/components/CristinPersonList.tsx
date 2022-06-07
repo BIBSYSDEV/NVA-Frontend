@@ -3,7 +3,7 @@ import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { SearchResponse } from '../../../../types/common.types';
-import { CristinUser } from '../../../../types/user.types';
+import { CristinPerson } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { filterActiveAffiliations, getFullCristinName } from '../../../../utils/user-helpers';
 import { LastRegistrationTableCellContent } from './LastRegistrationTableCellContent';
@@ -11,9 +11,9 @@ import { LastRegistrationTableCellContent } from './LastRegistrationTableCellCon
 const radioHeadingId = 'selected-heading';
 
 interface CristinPersonListProps {
-  personSearch: SearchResponse<CristinUser>;
+  personSearch: SearchResponse<CristinPerson>;
   searchTerm?: string;
-  onSelectContributor?: (selectedContributor: CristinUser) => void;
+  onSelectContributor?: (selectedContributor: CristinPerson) => void;
   userId?: string;
 }
 

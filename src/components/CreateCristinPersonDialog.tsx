@@ -18,7 +18,7 @@ import { createCristinPerson } from '../api/userApi';
 import { emptyUser } from '../pages/basic_data/institution_admin/AddEmployeePage';
 import { setPartialUser } from '../redux/userSlice';
 import { setNotification } from '../redux/notificationSlice';
-import { CreateCristinUser, FlatCristinUser, User } from '../types/user.types';
+import { CreateCristinPerson, FlatCristinPerson, User } from '../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../utils/constants';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
 import { convertToCristinUser, convertToFlatCristinUser } from '../utils/user-helpers';
@@ -36,8 +36,8 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
   const [acceptedTermsValue, setAcceptedTermsValue] = useState(false);
   const [showConfirmCancelDialog, setShowConfirmCancelDialog] = useState(false);
 
-  const createPerson = async (values: FlatCristinUser) => {
-    const cristinUser: CreateCristinUser = convertToCristinUser(values);
+  const createPerson = async (values: FlatCristinPerson) => {
+    const cristinUser: CreateCristinPerson = convertToCristinUser(values);
     const createPersonResponse = await createCristinPerson(cristinUser);
     if (isErrorStatus(createPersonResponse.status)) {
       dispatch(setNotification({ message: t('feedback:error.create_user'), variant: 'error' }));
@@ -67,7 +67,7 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
         }}
         validationSchema={userValidationSchema}
         onSubmit={createPerson}>
-        {({ isSubmitting }: FormikProps<FlatCristinUser>) => (
+        {({ isSubmitting }: FormikProps<FlatCristinPerson>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <Typography>{t('create_user_info')}</Typography>

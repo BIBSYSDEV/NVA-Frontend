@@ -32,7 +32,7 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { ContributorRow } from './components/ContributorRow';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { CristinUser } from '../../../types/user.types';
+import { CristinPerson } from '../../../types/user.types';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../../utils/user-helpers';
 
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
@@ -112,7 +112,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   };
 
   const onContributorSelected = (
-    selectedContributor: CristinUser,
+    selectedContributor: CristinPerson,
     role: ContributorRole,
     contributorIndex?: number
   ) => {

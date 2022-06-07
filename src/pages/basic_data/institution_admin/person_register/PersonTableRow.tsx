@@ -24,7 +24,7 @@ import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../../../utils/constants';
 import { convertToFlatCristinUser, filterActiveAffiliations } from '../../../../utils/user-helpers';
-import { CristinUser, InstitutionUser, RoleName } from '../../../../types/user.types';
+import { CristinPerson, InstitutionUser, RoleName } from '../../../../types/user.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { RoleApiPath } from '../../../../api/apiPaths';
 import { UserRolesSelector } from '../UserRolesSelector';
@@ -36,7 +36,7 @@ interface FormData {
 }
 
 interface PersonTableRowProps {
-  cristinPerson: CristinUser;
+  cristinPerson: CristinPerson;
   topOrgCristinIdentifier: string;
 }
 

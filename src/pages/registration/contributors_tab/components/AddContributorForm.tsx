@@ -14,7 +14,7 @@ import { CristinApiPath } from '../../../../api/apiPaths';
 import { ContributorRole } from '../../../../types/contributor.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { SearchResponse } from '../../../../types/common.types';
-import { CristinUser } from '../../../../types/user.types';
+import { CristinPerson } from '../../../../types/user.types';
 import { CristinPersonList } from './CristinPersonList';
 import { apiRequest } from '../../../../api/apiRequest';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
@@ -23,7 +23,7 @@ import { setNotification } from '../../../../redux/notificationSlice';
 const resultsPerPage = 10;
 
 interface AddContributorFormProps {
-  addContributor: (selectedUser: CristinUser) => void;
+  addContributor: (selectedUser: CristinPerson) => void;
   openAddUnverifiedContributor: () => void;
   initialSearchTerm?: string;
   roleToAdd: ContributorRole;
@@ -40,13 +40,13 @@ export const AddContributorForm = ({
   const user = useSelector((store: RootState) => store.user);
 
   const [isAddingSelf, setIsAddingSelf] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<CristinUser>();
+  const [selectedUser, setSelectedUser] = useState<CristinPerson>();
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const debouncedSearchTerm = useDebounce(searchTerm);
 
   const [page, setPage] = useState(0);
 
-  const [userSearch, isLoadingUserSearch] = useFetch<SearchResponse<CristinUser>>({
+  const [userSearch, isLoadingUserSearch] = useFetch<SearchResponse<CristinPerson>>({
     url: debouncedSearchTerm
       ? `${CristinApiPath.Person}?name=${debouncedSearchTerm}&results=${resultsPerPage}&page=${page + 1}`
       : '',
@@ -61,7 +61,7 @@ export const AddContributorForm = ({
   const addSelfAsContributor = async () => {
     if (user?.cristinId) {
       setIsAddingSelf(true);
-      const getCurrentPersonResponse = await apiRequest<CristinUser>({ url: user.cristinId });
+      const getCurrentPersonResponse = await apiRequest<CristinPerson>({ url: user.cristinId });
       if (isErrorStatus(getCurrentPersonResponse.status)) {
         dispatch(setNotification({ message: t('feedback:error.add_contributor'), variant: 'error' }));
       } else if (isSuccessStatus(getCurrentPersonResponse.status)) {

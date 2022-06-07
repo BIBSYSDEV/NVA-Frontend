@@ -11,7 +11,7 @@ import { OrcidModalContent } from './OrcidModalContent';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { setNotification } from '../../redux/notificationSlice';
 import { Modal } from '../../components/Modal';
-import { CristinUser, User } from '../../types/user.types';
+import { CristinPerson, User } from '../../types/user.types';
 import { getOrcidInfo } from '../../api/external/orcidApi';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
@@ -32,7 +32,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   const [isAddingOrcid, setIsAddingOrcid] = useState(false);
   const [isRemovingOrcid, setIsRemovingOrcid] = useState(false);
   const userCristinId = user.cristinId ?? '';
-  const [cristinUser, isLoadingCristinUser, refetchCristinUser] = useFetch<CristinUser>({
+  const [cristinUser, isLoadingCristinUser, refetchCristinUser] = useFetch<CristinPerson>({
     url: userCristinId,
     errorMessage: t('feedback:error.get_person'),
   });
