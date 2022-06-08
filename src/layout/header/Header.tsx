@@ -98,8 +98,10 @@ export const Header = () => {
           {!isMobile && (
             <>
               <LoadingButton
-                sx={{ whiteSpace: 'nowrap' }}
+                sx={{ whiteSpace: 'nowrap', borderRadius: '2rem' }}
                 color="inherit"
+                variant="outlined"
+                size="small"
                 component={RouterLink}
                 data-testid={dataTestId.header.editorLink}
                 loading={isLoadingCustomer}
