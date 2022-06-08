@@ -97,17 +97,19 @@ export const Header = () => {
           }}>
           {!isMobile && (
             <>
-              <LoadingButton
-                sx={{ whiteSpace: 'nowrap', borderRadius: '2rem' }}
-                color="inherit"
-                variant="outlined"
-                size="small"
-                component={RouterLink}
-                data-testid={dataTestId.header.editorLink}
-                loading={isLoadingCustomer}
-                to={UrlPathTemplate.Editor}>
-                {user?.customerShortName}
-              </LoadingButton>
+              {user?.isEditor && (
+                <LoadingButton
+                  sx={{ whiteSpace: 'nowrap', borderRadius: '2rem' }}
+                  color="inherit"
+                  variant="outlined"
+                  size="small"
+                  component={RouterLink}
+                  data-testid={dataTestId.header.editorLink}
+                  loading={isLoadingCustomer}
+                  to={UrlPathTemplate.Editor}>
+                  {user?.customerShortName}
+                </LoadingButton>
+              )}
               <Divider
                 variant="middle"
                 sx={{ gridArea: 'divider', borderColor: 'white', opacity: 0.8 }}
