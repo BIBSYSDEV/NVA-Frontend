@@ -64,7 +64,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               onClick={closeMenu}
               component={Link}
               to={UrlPathTemplate.Editor}>
-              <Typography>{t('profile:roles.editor')}</Typography>
+              <Typography>{user.customerShortName}</Typography>
             </MenuItem>
           ),
           user?.isCurator && (
