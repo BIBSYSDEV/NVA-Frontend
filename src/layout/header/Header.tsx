@@ -82,6 +82,14 @@ export const Header = () => {
           }}>
           {!isMobile && (
             <>
+              <Button
+                sx={{ whiteSpace: 'nowrap' }}
+                color="inherit"
+                component={RouterLink}
+                data-testid={dataTestId.header.editorLink}
+                to={UrlPathTemplate.Editor}>
+                {t('profile:roles.editor')}
+              </Button>
               <Divider
                 variant="middle"
                 sx={{ gridArea: 'divider', borderColor: 'white', opacity: 0.8 }}
