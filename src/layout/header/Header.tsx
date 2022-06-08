@@ -1,6 +1,6 @@
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { AppBar, Box, Button, Divider, IconButton, Theme, useMediaQuery } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -8,6 +8,7 @@ import MailIcon from '@mui/icons-material/MailOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
+import { LoadingButton } from '@mui/lab';
 import { RootState } from '../../redux/store';
 import { getRegistrationPath, UrlPathTemplate } from '../../utils/urlPaths';
 import { LoginButton } from './LoginButton';
@@ -15,10 +16,24 @@ import { Logo } from './Logo';
 import { GeneralMenu } from './GeneralMenu';
 import { LanguageSelector } from './LanguageSelector';
 import { dataTestId } from '../../utils/dataTestIds';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { CustomerInstitution } from '../../types/customerInstitution.types';
+import { setPartialUser } from '../../redux/userSlice';
 
 export const Header = () => {
   const { t } = useTranslation('registration');
+  const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
+  const [customer, isLoadingCustomer] = useFetch<CustomerInstitution>({
+    url: user?.isEditor && user?.customerId ? user.customerId : '',
+  });
+
+  useEffect(() => {
+    if (customer) {
+      dispatch(setPartialUser({ customerShortName: customer.shortName }));
+    }
+  }, [dispatch, customer]);
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
@@ -82,6 +97,19 @@ export const Header = () => {
           }}>
           {!isMobile && (
             <>
+              {user?.isEditor && (
+                <LoadingButton
+                  sx={{ whiteSpace: 'nowrap', borderRadius: '2rem' }}
+                  color="inherit"
+                  variant="outlined"
+                  size="small"
+                  component={RouterLink}
+                  data-testid={dataTestId.header.editorLink}
+                  loading={isLoadingCustomer}
+                  to={UrlPathTemplate.Editor}>
+                  {user?.customerShortName}
+                </LoadingButton>
+              )}
               <Divider
                 variant="middle"
                 sx={{ gridArea: 'divider', borderColor: 'white', opacity: 0.8 }}

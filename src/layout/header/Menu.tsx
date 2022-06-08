@@ -57,6 +57,16 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           <MenuItem divider key={dataTestId.header.languageButton}>
             <LanguageSelector isMobile={true} />
           </MenuItem>,
+          user?.isEditor && (
+            <MenuItem
+              key={dataTestId.header.editorLink}
+              data-testid={dataTestId.header.editorLink}
+              onClick={closeMenu}
+              component={Link}
+              to={UrlPathTemplate.Editor}>
+              <Typography>{user.customerShortName}</Typography>
+            </MenuItem>
+          ),
           user?.isCurator && (
             <MenuItem
               key={dataTestId.header.worklistLink}
@@ -96,17 +106,6 @@ export const Menu = ({ handleLogout }: MenuProps) => {
             <Typography>{t('workLists:my_registrations')}</Typography>
           </MenuItem>,
         ]}
-        {user?.isEditor && (
-          <MenuItem
-            divider
-            key={dataTestId.header.editorLink}
-            data-testid={dataTestId.header.editorLink}
-            onClick={closeMenu}
-            component={Link}
-            to={UrlPathTemplate.Editor}>
-            <Typography>{t('profile:roles.editor')}</Typography>
-          </MenuItem>
-        )}
         {(user?.isAppAdmin || user?.isInstitutionAdmin) && isMobile && (
           <MenuItem
             key={dataTestId.header.basicDataLink}
