@@ -8,5 +8,8 @@
   "hrcs_activity": "Health Research Classification System - Activity",
   "hrcs_categories": "Health Research Classification System - Categories",
   "select_vocabulary_description": "Activate controlled vocabularies for registration of new results",
-  "vocabulary": "Vocabulary"
+  "vocabulary": "Vocabulary",
+  "workflow": {
+    "publish_strategy": "Publish strategy"
+  }
 }

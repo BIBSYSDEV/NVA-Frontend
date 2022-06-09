@@ -8,5 +8,8 @@
   "hrcs_activity": "Health Research Classification System - Activity",
   "hrcs_categories": "Health Research Classification System - Categories",
   "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
-  "vocabulary": "Vokabular"
+  "vocabulary": "Vokabular",
+  "workflow": {
+    "publish_strategy": "Publiseringsstrategi"
+  }
 }
