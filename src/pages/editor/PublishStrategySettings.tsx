@@ -18,6 +18,7 @@ const StyledAccessRight = styled('div')({
 const StyledAccessRightsContainer = styled('div')({
   display: 'flex',
   justifyContent: 'space-evenly',
+  marginTop: '0.5rem',
   marginBottom: '0.5rem',
 });
 
@@ -66,20 +67,22 @@ export const PublishStrategySettings = () => {
         isSelected={!isLoading && customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles'}
         onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataAndFiles')}>
         <Box>
-          <Typography sx={{ fontWeight: 700, mb: '0.5rem', textAlign: 'center' }}>
-            Registrator publiserer uten godkjenning fra Kurator
+          <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
+            {t('publish_strategy.registrator_can_publish')}
           </Typography>
           <StyledAccessRightsContainer>
             <StyledAccessRight>
               <CheckCircleIcon color="primary" />
-              <Typography>Metadata</Typography>
+              <Typography>{t('publish_strategy.metadata')}</Typography>
             </StyledAccessRight>
             <StyledAccessRight>
               <CheckCircleIcon color="primary" />
-              <Typography>Filer og lisenser</Typography>
+              <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
             </StyledAccessRight>
           </StyledAccessRightsContainer>
-          <Typography sx={{ textAlign: 'center' }}>Institutsjonen bestemmer hvem som er Registrator.</Typography>
+          <Typography sx={{ textAlign: 'center' }}>
+            {t('publish_strategy.registrator_can_publish_description')}
+          </Typography>
         </Box>
       </WorkflowButton>
 
@@ -88,15 +91,15 @@ export const PublishStrategySettings = () => {
         isSelected={!isLoading && customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly'}
         onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataOnly')}>
         <Box>
-          <Typography sx={{ fontWeight: 700, mb: '0.5rem', textAlign: 'center' }}>
-            Registrator publiserer uten godkjenning fra Kurator
+          <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
+            {t('publish_strategy.registrator_can_publish')}
           </Typography>
           <StyledAccessRightsContainer>
             <StyledAccessRight>
               <CheckCircleIcon color="primary" />
-              <Typography>Metadata</Typography>
+              <Typography>{t('publish_strategy.metadata')}</Typography>
             </StyledAccessRight>
-            <Typography>Filer og lisenser</Typography>
+            <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
           </StyledAccessRightsContainer>
         </Box>
       </WorkflowButton>
@@ -106,15 +109,15 @@ export const PublishStrategySettings = () => {
         isSelected={!isLoading && customer?.publicationWorkflow === 'RegistratorCannotPublish'}
         onClick={() => setPublicationWorkflow('RegistratorCannotPublish')}>
         <Box>
-          <Typography sx={{ fontWeight: 700, mb: '0.5rem', textAlign: 'center' }}>
-            Registrator kan kun registrere
+          <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
+            {t('publish_strategy.registrator_cannot_publish')}
           </Typography>
           <StyledAccessRightsContainer>
-            <Typography>Metadata</Typography>
-            <Typography>Filer og lisenser</Typography>
+            <Typography>{t('publish_strategy.metadata')}</Typography>
+            <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
           </StyledAccessRightsContainer>
           <Typography sx={{ textAlign: 'center' }}>
-            Metadata, filer og lisenser må godkjennes av Kurator før publisering.
+            {t('publish_strategy.registrator_cannot_publish_description')}
           </Typography>
         </Box>
       </WorkflowButton>
