@@ -51,6 +51,7 @@
     "update_doi_request": "Kunne ikke oppdatere DOI-forespørsel",
     "update_institution_user": "Kunne ikke oppdatere bruker",
     "update_orcid": "Oppdatering av ORCID-kobling feilet",
+    "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
     "update_registration": "Kunne ikke oppdatere registrering",
     "update_vocabulary": "Oppdatering av {{vocabulary}} feilet",
     "orcid": {
@@ -83,6 +84,7 @@
     "update_customer": "Institusjon er oppdatert",
     "update_institution_user": "Bruker er oppdatert",
     "update_orcid": "ORCID-kobling ble oppdatert",
+    "update_publish_strategy": "Publiseringstrategi ble oppdatert",
     "update_registration": "Registreringen er oppdatert",
     "update_vocabulary": "{{vocabulary}} er nå {{status}}"
   },
