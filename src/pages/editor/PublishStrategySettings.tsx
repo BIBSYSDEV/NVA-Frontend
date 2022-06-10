@@ -39,7 +39,7 @@ export const PublishStrategySettings = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation('editor');
   const user = useSelector((store: RootState) => store.user);
-  const [customer, isLoadingCustomer] = useFetch<CustomerInstitution>({ url: user?.customerId ?? '' });
+  const [customer, isLoadingCustomer, , setCustomer] = useFetch<CustomerInstitution>({ url: user?.customerId ?? '' });
   const [isUpdating, setIsUpdating] = useState(false);
 
   const setPublicationWorkflow = async (workflow: PublicationWorkflowType) => {
@@ -52,6 +52,7 @@ export const PublishStrategySettings = () => {
       if (isErrorStatus(updateCustomerResponse.status)) {
         dispatch(setNotification({ message: t('feedback:error.update_publish_strategy'), variant: 'error' }));
       } else if (isSuccessStatus(updateCustomerResponse.status)) {
+        setCustomer(updateCustomerResponse.data);
         dispatch(setNotification({ message: t('feedback:success.update_publish_strategy'), variant: 'success' }));
       }
       setIsUpdating(false);
