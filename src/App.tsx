@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Box } from '@mui/material';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import { LocalizationProvider } from '@mui/lab';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 import { getDateFnsLocale } from './utils/date-helpers';
 import { getCurrentUserAttributes } from './api/userApi';
 import { AppRoutes } from './AppRoutes';
