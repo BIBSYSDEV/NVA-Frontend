@@ -7,6 +7,15 @@
   "disabled_description": "$t(disabled): Er ikke tilgjengelig",
   "hrcs_activity": "Health Research Classification System - Activity",
   "hrcs_categories": "Health Research Classification System - Categories",
+  "publish_strategy": {
+    "files_and_licenses": "Filer og lisenser",
+    "metadata": "Metadata",
+    "publish_strategy": "Publiseringsstrategi",
+    "registrator_can_publish": "Registrator publiserer uten godkjenning fra Kurator",
+    "registrator_can_publish_description": "Institutsjonen bestemmer hvem som er Registrator.",
+    "registrator_cannot_publish": "Registrator kan kun registrere",
+    "registrator_cannot_publish_description": "Metadata, filer og lisenser må godkjennes av Kurator før publisering."
+  },
   "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
   "vocabulary": "Vokabular"
 }

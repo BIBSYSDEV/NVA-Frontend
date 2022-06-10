@@ -51,6 +51,7 @@
     "update_doi_request": "Could not update DOI request",
     "update_institution_user": "Could not update user",
     "update_orcid": "Could not update ORCID",
+    "update_publish_strategy": "Could not update publish strategy",
     "update_registration": "Could not update registration",
     "update_vocabulary": "Failed to update {{vocabulary}}",
     "orcid": {
@@ -83,6 +84,7 @@
     "update_institution_user": "Updated user",
     "update_customer": "Updated customer institution",
     "update_orcid": "Successfully updated ORCID",
+    "update_publish_strategy": "Updated publish strategy",
     "update_registration": "Updated registration",
     "update_vocabulary": "{{vocabulary}} is now {{status}}"
   },

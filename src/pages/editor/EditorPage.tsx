@@ -1,38 +1,56 @@
 import { Box, ListItemText, MenuItem, MenuList, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link, Switch, useHistory } from 'react-router-dom';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { VocabularySettings } from './VocabularySettings';
-
-enum EditorItem {
-  Vocabulary,
-}
+import { PublishStrategySettings } from './PublishStrategySettings';
+import { EditorRoute } from '../../utils/routes/Routes';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 
 const EditorPage = () => {
   const { t } = useTranslation('editor');
-  const [selectedItem, setSelectedItem] = useState(EditorItem.Vocabulary);
+  const history = useHistory();
+  const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
+
+  useEffect(() => {
+    if (currentPath === UrlPathTemplate.Editor) {
+      history.replace(UrlPathTemplate.EditorVocabulary);
+    }
+  }, [history, currentPath]);
 
   return (
     <Box sx={{ width: '100%', p: '1rem', display: 'grid', gridTemplateColumns: '1fr 5fr', gap: '1rem' }}>
       <BackgroundDiv>
         <MenuList>
-          <MenuItem onClick={() => setSelectedItem(EditorItem.Vocabulary)}>
+          <MenuItem
+            component={Link}
+            selected={currentPath === UrlPathTemplate.EditorVocabulary}
+            to={UrlPathTemplate.EditorVocabulary}>
             <ListItemText>
-              <Typography
-                variant="overline"
-                sx={{
-                  textDecoration: selectedItem === EditorItem.Vocabulary ? 'underline 2px' : undefined,
-                  textUnderlinePosition: 'under',
-                }}
-                color="primary"
-                fontSize="1rem">
+              <Typography variant="overline" color="primary" fontSize="1rem">
                 {t('vocabulary')}
+              </Typography>
+            </ListItemText>
+          </MenuItem>
+          <MenuItem
+            component={Link}
+            selected={currentPath === UrlPathTemplate.EditorPublishStrategy}
+            to={UrlPathTemplate.EditorPublishStrategy}>
+            <ListItemText>
+              <Typography variant="overline" color="primary" fontSize="1rem">
+                {t('publish_strategy.publish_strategy')}
               </Typography>
             </ListItemText>
           </MenuItem>
         </MenuList>
       </BackgroundDiv>
-      <BackgroundDiv>{selectedItem === EditorItem.Vocabulary && <VocabularySettings />}</BackgroundDiv>
+      <BackgroundDiv>
+        <Switch>
+          <EditorRoute exact path={UrlPathTemplate.EditorVocabulary} component={VocabularySettings} />
+          <EditorRoute exact path={UrlPathTemplate.EditorPublishStrategy} component={PublishStrategySettings} />
+        </Switch>
+      </BackgroundDiv>
     </Box>
   );
 };

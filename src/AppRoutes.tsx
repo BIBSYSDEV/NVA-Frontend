@@ -49,7 +49,7 @@ export const AppRoutes = () => {
         <BasicDataRoute path={UrlPathTemplate.BasicData} component={BasicDataPage} />
 
         {/* EditorRoutes */}
-        <EditorRoute exact path={UrlPathTemplate.Editor} component={EditorPage} />
+        <EditorRoute path={UrlPathTemplate.Editor} component={EditorPage} />
 
         {/* Wildcard path must be last, otherwise it will catch all routes */}
         <Route path={UrlPathTemplate.Wildcard} component={NotFound} />

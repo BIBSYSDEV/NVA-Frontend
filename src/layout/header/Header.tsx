@@ -8,7 +8,6 @@ import MailIcon from '@mui/icons-material/MailOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
-import { LoadingButton } from '@mui/lab';
 import { RootState } from '../../redux/store';
 import { getRegistrationPath, UrlPathTemplate } from '../../utils/urlPaths';
 import { LoginButton } from './LoginButton';
@@ -24,7 +23,7 @@ export const Header = () => {
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
-  const [customer, isLoadingCustomer] = useFetch<CustomerInstitution>({
+  const [customer] = useFetch<CustomerInstitution>({
     url: user?.isEditor && user?.customerId ? user.customerId : '',
   });
 
@@ -97,18 +96,17 @@ export const Header = () => {
           }}>
           {!isMobile && (
             <>
-              {user?.isEditor && (
-                <LoadingButton
+              {user?.isEditor && customer?.shortName && (
+                <Button
                   sx={{ whiteSpace: 'nowrap', borderRadius: '2rem' }}
                   color="inherit"
                   variant="outlined"
                   size="small"
                   component={RouterLink}
                   data-testid={dataTestId.header.editorLink}
-                  loading={isLoadingCustomer}
                   to={UrlPathTemplate.Editor}>
-                  {user?.customerShortName}
-                </LoadingButton>
+                  {user.customerShortName}
+                </Button>
               )}
               <Divider
                 variant="middle"
