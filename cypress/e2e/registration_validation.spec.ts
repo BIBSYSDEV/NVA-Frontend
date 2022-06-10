@@ -309,20 +309,7 @@ describe('User opens registration form and can see validation errors', () => {
       .click({ force: true });
     cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.selectUserButton}]`).click();
     cy.get('[data-testid=contributor-modal]').should('not.exist');
-    cy.get('p.Mui-error').should('be.visible');
 
-    // Add supervisor
-    cy.get('[data-testid=add-Supervisor]').first().click();
-    cy.get('[data-testid=contributor-modal]').should('be.visible');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.searchField}] input`).type('test');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.authorRadioButton}]`)
-      .last()
-      .click({ force: true });
-    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.authorRadioButton}]`)
-      .last()
-      .click({ force: true });
-    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.selectUserButton}]`).click();
-    cy.get('[data-testid=contributor-modal]').should('not.exist');
     cy.get('p.Mui-error').should('not.exist');
 
     cy.get('[data-testid=nav-tabpanel-contributors]').within(() =>
