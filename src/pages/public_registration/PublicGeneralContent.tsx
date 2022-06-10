@@ -80,7 +80,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         <Typography>{displayDate(entityDescription?.date)}</Typography>
 
         {journalPublicationInstance?.contentType && (
-          <Typography>{t(`resource_type.content_types.${journalPublicationInstance?.contentType}`)}</Typography>
+          <Typography>{t(`resource_type.content_types.${journalPublicationInstance?.contentType}`, '')}</Typography>
         )}
 
         {journalPublicationInstance?.peerReviewed && <Typography>{t('resource_type.peer_reviewed')}</Typography>}
