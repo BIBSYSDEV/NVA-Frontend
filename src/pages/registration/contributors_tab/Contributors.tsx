@@ -37,9 +37,15 @@ import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../..
 
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
   contributorRoles: ContributorRole[];
+  primaryColorAddButton?: boolean;
 }
 
-export const Contributors = ({ contributorRoles, push, replace }: ContributorsProps) => {
+export const Contributors = ({
+  contributorRoles,
+  push,
+  replace,
+  primaryColorAddButton = contributorRoles.length === 1,
+}: ContributorsProps) => {
   const { t } = useTranslation('registration');
   const dispatch = useDispatch();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
@@ -266,7 +272,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         sx={{ marginBottom: '1rem', borderRadius: '1rem' }}
         onClick={() => setOpenAddContributor(true)}
         variant="contained"
-        color={contributorRoles.length === 1 ? 'primary' : 'inherit'}
+        color={primaryColorAddButton ? 'primary' : 'inherit'}
         startIcon={<AddIcon />}
         data-testid={dataTestId.registrationWizard.contributors.addContributorButton(contributorRole)}>
         {t('contributors.add_as_role', {

@@ -8,7 +8,6 @@ const contributorErrorMessage = {
   authorRequired: i18n.t('feedback:validation.author_required'),
   contributorRequired: i18n.t('feedback:validation.contributor_required'),
   editorRequired: i18n.t('feedback:validation.editor_required'),
-  supervisorRequired: i18n.t('feedback:validation.supervisor_required'),
 };
 
 const contributorValidationSchema = Yup.object().shape({
@@ -25,9 +24,6 @@ export const contributorsValidationSchema = Yup.array().when(
         .of(contributorValidationSchema)
         .test('author-test', contributorErrorMessage.authorRequired, (contributors) =>
           hasRole(contributors, ContributorRole.Creator)
-        )
-        .test('supervisor-test', contributorErrorMessage.supervisorRequired, (contributors) =>
-          hasRole(contributors, ContributorRole.Supervisor)
         );
     } else if (publicationInstanceType === BookType.Anthology) {
       return Yup.array()

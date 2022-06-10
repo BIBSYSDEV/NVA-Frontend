@@ -40,7 +40,12 @@ export const ContributorsPanel = () => {
           isDegree(publicationInstanceType) ? (
             <>
               <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
-              <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Supervisor]} />
+              <Contributors
+                push={push}
+                replace={replace}
+                contributorRoles={[ContributorRole.Supervisor]}
+                primaryColorAddButton={false}
+              />
               <Contributors
                 push={push}
                 replace={replace}
