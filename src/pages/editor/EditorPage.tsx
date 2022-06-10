@@ -42,7 +42,7 @@ const EditorPage = () => {
                 }}
                 color="primary"
                 fontSize="1rem">
-                {t('workflow.publish_strategy')}
+                {t('publish_strategy.publish_strategy')}
               </Typography>
             </ListItemText>
           </MenuItem>
