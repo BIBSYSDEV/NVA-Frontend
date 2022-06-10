@@ -9,6 +9,8 @@ export enum UrlPathTemplate {
   BasicDataPersonRegister = '/basic-data/person-register',
   BasicDataUsers = '/basic-data/users',
   Editor = '/editor',
+  EditorVocabulary = '/editor/vocabulary',
+  EditorPublishStrategy = '/editor/publish-strategy',
   Home = '/',
   Login = '/login',
   Logout = '/logout',
