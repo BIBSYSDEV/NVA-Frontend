@@ -4,7 +4,7 @@ export interface SimpleCustomerInstitution {
   displayName: string;
 }
 
-export type PublicationWorkflowType =
+export type PublishStrategy =
   | 'RegistratorPublishesMetadataOnly'
   | 'RegistratorPublishesMetadataAndFiles'
   | 'RegistratorCannotPublish';
@@ -21,7 +21,7 @@ export interface CustomerInstitution extends SimpleCustomerInstitution {
   modifiedDate?: string;
   shortName: string;
   vocabularies: CustomerVocabulary[];
-  publicationWorkflow: PublicationWorkflowType;
+  publicationWorkflow: PublishStrategy;
 }
 
 export enum VocabularyStatus {
