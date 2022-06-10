@@ -28,7 +28,9 @@ export const SeriesField = () => {
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
     url:
       debouncedQuery && debouncedQuery === query
-        ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${debouncedQuery}`
+        ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${encodeURIComponent(
+            debouncedQuery
+          )}`
         : '',
     errorMessage: t('feedback:error.get_series'),
   });

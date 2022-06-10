@@ -29,7 +29,9 @@ export const PublisherField = () => {
   const [publisherOptions, isLoadingPublisherOptions] = useFetch<Publisher[]>({
     url:
       debouncedQuery && debouncedQuery === query
-        ? `${PublicationChannelApiPath.PublisherSearch}?year=${getYearQuery(year)}&query=${debouncedQuery}`
+        ? `${PublicationChannelApiPath.PublisherSearch}?year=${getYearQuery(year)}&query=${encodeURIComponent(
+            debouncedQuery
+          )}`
         : '',
     errorMessage: t('feedback:error.get_publishers'),
   });
