@@ -1,4 +1,4 @@
-import { Box, ButtonBase, styled, Typography } from '@mui/material';
+import { Box, ButtonBase, CircularProgress, styled, Typography } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +9,14 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { setNotification } from '../../redux/notificationSlice';
+
+const StyledItemContainer = styled('div')({
+  display: 'grid',
+  gridTemplateColumns: '7fr 1fr',
+  gap: '1rem',
+  maxWidth: '40rem',
+  alignItems: 'center',
+});
 
 const StyledAccessRight = styled('div')({
   display: 'flex',
@@ -40,11 +48,11 @@ export const PublishStrategySettings = () => {
   const { t } = useTranslation('editor');
   const user = useSelector((store: RootState) => store.user);
   const [customer, isLoadingCustomer, , setCustomer] = useFetch<CustomerInstitution>({ url: user?.customerId ?? '' });
-  const [isUpdating, setIsUpdating] = useState(false);
+  const [isUpdating, setIsUpdating] = useState<PublicationWorkflowType>();
 
   const setPublicationWorkflow = async (workflow: PublicationWorkflowType) => {
     if (customer) {
-      setIsUpdating(true);
+      setIsUpdating(workflow);
       const updateCustomerResponse = await updateCustomerInstitution({
         ...customer,
         publicationWorkflow: workflow,
@@ -55,73 +63,83 @@ export const PublishStrategySettings = () => {
         setCustomer(updateCustomerResponse.data);
         dispatch(setNotification({ message: t('feedback:success.update_publish_strategy'), variant: 'success' }));
       }
-      setIsUpdating(false);
+      setIsUpdating(undefined);
     }
   };
 
   const isLoading = isLoadingCustomer || isUpdating;
+  const currentWorkflow = customer?.publicationWorkflow;
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '35rem' }}>
-      <WorkflowButton
-        disabled={isLoading}
-        isSelected={!isLoading && customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles'}
-        onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataAndFiles')}>
-        <Box>
-          <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
-            {t('publish_strategy.registrator_can_publish')}
-          </Typography>
-          <StyledAccessRightsContainer>
-            <StyledAccessRight>
-              <CheckCircleIcon color="primary" />
-              <Typography>{t('publish_strategy.metadata')}</Typography>
-            </StyledAccessRight>
-            <StyledAccessRight>
-              <CheckCircleIcon color="primary" />
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <StyledItemContainer>
+        <WorkflowButton
+          disabled={!!isLoading || currentWorkflow === 'RegistratorPublishesMetadataAndFiles'}
+          isSelected={!isLoading && currentWorkflow === 'RegistratorPublishesMetadataAndFiles'}
+          onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataAndFiles')}>
+          <Box>
+            <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
+              {t('publish_strategy.registrator_can_publish')}
+            </Typography>
+            <StyledAccessRightsContainer>
+              <StyledAccessRight>
+                <CheckCircleIcon color="primary" />
+                <Typography>{t('publish_strategy.metadata')}</Typography>
+              </StyledAccessRight>
+              <StyledAccessRight>
+                <CheckCircleIcon color="primary" />
+                <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
+              </StyledAccessRight>
+            </StyledAccessRightsContainer>
+            <Typography sx={{ textAlign: 'center' }}>
+              {t('publish_strategy.registrator_can_publish_description')}
+            </Typography>
+          </Box>
+        </WorkflowButton>
+        {isLoading === 'RegistratorPublishesMetadataAndFiles' && <CircularProgress />}
+      </StyledItemContainer>
+
+      <StyledItemContainer>
+        <WorkflowButton
+          disabled={!!isLoading || currentWorkflow === 'RegistratorPublishesMetadataOnly'}
+          isSelected={!isLoading && currentWorkflow === 'RegistratorPublishesMetadataOnly'}
+          onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataOnly')}>
+          <Box>
+            <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
+              {t('publish_strategy.registrator_can_publish')}
+            </Typography>
+            <StyledAccessRightsContainer>
+              <StyledAccessRight>
+                <CheckCircleIcon color="primary" />
+                <Typography>{t('publish_strategy.metadata')}</Typography>
+              </StyledAccessRight>
               <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
-            </StyledAccessRight>
-          </StyledAccessRightsContainer>
-          <Typography sx={{ textAlign: 'center' }}>
-            {t('publish_strategy.registrator_can_publish_description')}
-          </Typography>
-        </Box>
-      </WorkflowButton>
+            </StyledAccessRightsContainer>
+          </Box>
+        </WorkflowButton>
+        {isLoading === 'RegistratorPublishesMetadataOnly' && <CircularProgress />}
+      </StyledItemContainer>
 
-      <WorkflowButton
-        disabled={isLoading}
-        isSelected={!isLoading && customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly'}
-        onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataOnly')}>
-        <Box>
-          <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
-            {t('publish_strategy.registrator_can_publish')}
-          </Typography>
-          <StyledAccessRightsContainer>
-            <StyledAccessRight>
-              <CheckCircleIcon color="primary" />
+      <StyledItemContainer>
+        <WorkflowButton
+          disabled={!!isLoading || currentWorkflow === 'RegistratorCannotPublish'}
+          isSelected={!isLoading && currentWorkflow === 'RegistratorCannotPublish'}
+          onClick={() => setPublicationWorkflow('RegistratorCannotPublish')}>
+          <Box>
+            <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
+              {t('publish_strategy.registrator_cannot_publish')}
+            </Typography>
+            <StyledAccessRightsContainer>
               <Typography>{t('publish_strategy.metadata')}</Typography>
-            </StyledAccessRight>
-            <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
-          </StyledAccessRightsContainer>
-        </Box>
-      </WorkflowButton>
-
-      <WorkflowButton
-        disabled={isLoading}
-        isSelected={!isLoading && customer?.publicationWorkflow === 'RegistratorCannotPublish'}
-        onClick={() => setPublicationWorkflow('RegistratorCannotPublish')}>
-        <Box>
-          <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
-            {t('publish_strategy.registrator_cannot_publish')}
-          </Typography>
-          <StyledAccessRightsContainer>
-            <Typography>{t('publish_strategy.metadata')}</Typography>
-            <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
-          </StyledAccessRightsContainer>
-          <Typography sx={{ textAlign: 'center' }}>
-            {t('publish_strategy.registrator_cannot_publish_description')}
-          </Typography>
-        </Box>
-      </WorkflowButton>
+              <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
+            </StyledAccessRightsContainer>
+            <Typography sx={{ textAlign: 'center' }}>
+              {t('publish_strategy.registrator_cannot_publish_description')}
+            </Typography>
+          </Box>
+        </WorkflowButton>
+        {isLoading === 'RegistratorCannotPublish' && <CircularProgress />}
+      </StyledItemContainer>
     </Box>
   );
 };
