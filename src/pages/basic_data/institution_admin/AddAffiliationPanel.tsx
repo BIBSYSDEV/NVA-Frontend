@@ -2,7 +2,7 @@ import { Autocomplete, Box, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import LooksTwoIcon from '@mui/icons-material/LooksTwo';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
-import { DatePicker } from '@mui/lab';
+import { DatePicker } from '@mui/x-date-pickers';
 import { useSelector } from 'react-redux';
 import { StyledCenterContainer } from '../../../components/styled/Wrappers';
 import { getLanguageString } from '../../../utils/translation-helpers';
