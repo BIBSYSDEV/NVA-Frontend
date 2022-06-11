@@ -40,14 +40,14 @@ const BasicDataPage = () => {
         minHeight: '50vh',
         p: '1rem',
         display: 'grid',
-        gridTemplateColumns: '1fr 5fr',
+        gridTemplateColumns: { xs: '1fr', md: '1fr 5fr' },
         gap: '1rem',
       }}>
       <BackgroundDiv>
         <Typography variant="h3" component="h1">
           {t('basic_data')}
         </Typography>
-        <MenuList>
+        <MenuList dense>
           {user?.isInstitutionAdmin && [
             <BetaFunctionality key="person-register">
               <MenuItem
