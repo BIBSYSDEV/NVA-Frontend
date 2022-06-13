@@ -4,6 +4,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TablePagination,
   TableRow,
@@ -44,32 +45,34 @@ export const PersonRegisterPage = () => {
     <Typography>{t('person_register.no_employees_found')}</Typography>
   ) : (
     <>
-      <Table size="small" sx={alternatingTableRowColor}>
-        <caption style={visuallyHidden}>{t('person_register.employee_table_caption')}</caption>
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <Typography fontWeight="bold">{t('person_register.person_id')}</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography fontWeight="bold">{t('common:name')}</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography fontWeight="bold">{t('employments')}</Typography>
-            </TableCell>
-            <TableCell />
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {employees.map((person) => (
-            <PersonTableRow
-              key={person.id}
-              cristinPerson={person}
-              topOrgCristinIdentifier={user?.topOrgCristinId ? user.topOrgCristinId.split('/').pop() ?? '' : ''}
-            />
-          ))}
-        </TableBody>
-      </Table>
+      <TableContainer>
+        <Table size="small" sx={alternatingTableRowColor}>
+          <caption style={visuallyHidden}>{t('person_register.employee_table_caption')}</caption>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <Typography fontWeight="bold">{t('person_register.person_id')}</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography fontWeight="bold">{t('common:name')}</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography fontWeight="bold">{t('employments')}</Typography>
+              </TableCell>
+              <TableCell />
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {employees.map((person) => (
+              <PersonTableRow
+                key={person.id}
+                cristinPerson={person}
+                topOrgCristinIdentifier={user?.topOrgCristinId ? user.topOrgCristinId.split('/').pop() ?? '' : ''}
+              />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
       {employeesSearchResponse && employeesSearchResponse.size > rowsPerPageOptions[0] && (
         <TablePagination
           rowsPerPageOptions={rowsPerPageOptions}

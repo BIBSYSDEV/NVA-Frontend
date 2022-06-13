@@ -20,9 +20,16 @@ const EditorPage = () => {
   }, [history, currentPath]);
 
   return (
-    <Box sx={{ width: '100%', p: '1rem', display: 'grid', gridTemplateColumns: '1fr 5fr', gap: '1rem' }}>
-      <BackgroundDiv>
-        <MenuList>
+    <Box
+      sx={{
+        width: '100%',
+        p: { xs: 0, md: '1rem' },
+        display: 'grid',
+        gridTemplateColumns: { xs: '1fr', md: '1fr 5fr' },
+        gap: '1rem',
+      }}>
+      <BackgroundDiv component="nav">
+        <MenuList dense>
           <MenuItem
             component={Link}
             selected={currentPath === UrlPathTemplate.EditorVocabulary}
