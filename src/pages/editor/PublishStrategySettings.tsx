@@ -122,9 +122,9 @@ export const PublishStrategySettings = () => {
 
       <StyledItemContainer>
         <PublishStrategyButton
-          disabled={!!isLoading || currentPublishStrategy === 'RegistratorCannotPublish'}
-          isSelected={!isLoading && currentPublishStrategy === 'RegistratorCannotPublish'}
-          onClick={() => setPublicationWorkflow('RegistratorCannotPublish')}>
+          disabled={!!isLoading || currentPublishStrategy === 'RegistratorRequiresApprovalForMetadataAndFiles'}
+          isSelected={!isLoading && currentPublishStrategy === 'RegistratorRequiresApprovalForMetadataAndFiles'}
+          onClick={() => setPublicationWorkflow('RegistratorRequiresApprovalForMetadataAndFiles')}>
           <Box>
             <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
               {t('publish_strategy.registrator_cannot_publish')}
@@ -138,7 +138,7 @@ export const PublishStrategySettings = () => {
             </Typography>
           </Box>
         </PublishStrategyButton>
-        {isLoading === 'RegistratorCannotPublish' && <CircularProgress />}
+        {isLoading === 'RegistratorRequiresApprovalForMetadataAndFiles' && <CircularProgress />}
       </StyledItemContainer>
     </Box>
   );
