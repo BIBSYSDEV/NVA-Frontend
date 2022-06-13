@@ -18,6 +18,7 @@ import { UserRolesSelector } from './UserRolesSelector';
 
 export interface AddEmployeeData {
   searchIdNumber: string;
+  searchQuery: string;
   user: FlatCristinPerson;
   affiliation: Employment;
   roles: RoleName[];
@@ -34,6 +35,7 @@ export const emptyUser: FlatCristinPerson = {
 
 const initialValues: AddEmployeeData = {
   searchIdNumber: '',
+  searchQuery: '',
   user: emptyUser,
   affiliation: { type: '', organization: '', startDate: '', endDate: '', fullTimeEquivalentPercentage: '' },
   roles: [RoleName.Creator],
