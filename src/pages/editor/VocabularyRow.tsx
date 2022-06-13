@@ -22,6 +22,7 @@ export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId, disa
     <Box
       sx={{
         display: 'flex',
+        flexDirection: { xs: 'column-reverse', md: 'row' },
         alignItems: 'center',
         gap: '1rem',
       }}>
