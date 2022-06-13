@@ -7,6 +7,14 @@
   "disabled_description": "$t(disabled): Is not available",
   "hrcs_activity": "Health Research Classification System - Activity",
   "hrcs_categories": "Health Research Classification System - Categories",
+  "institution": {
+    "institution_code": "Institution's code",
+    "institution_helper_text": "Contact <0>Sikt</0> if changes are needed.",
+    "institution_name": "Institution's name",
+    "institution_name_english": "Institution's English name",
+    "institution_name_norwegian": "Institution's Norwegian name",
+    "institution_short_name": "Institution's short name"
+  },
   "publish_strategy": {
     "files_and_licenses": "Files and licenses",
     "metadata": "Metadata",
