@@ -7,7 +7,7 @@ export interface SimpleCustomerInstitution {
 export type PublishStrategy =
   | 'RegistratorPublishesMetadataOnly'
   | 'RegistratorPublishesMetadataAndFiles'
-  | 'RegistratorCannotPublish';
+  | 'RegistratorRequiresApprovalForMetadataAndFiles';
 
 export interface CustomerInstitution extends SimpleCustomerInstitution {
   type?: 'Customer';
