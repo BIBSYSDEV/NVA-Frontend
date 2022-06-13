@@ -29,7 +29,7 @@ const EditorPage = () => {
         gap: '1rem',
       }}>
       <BackgroundDiv component="nav">
-        <MenuList>
+        <MenuList dense>
           <MenuItem
             component={Link}
             selected={currentPath === UrlPathTemplate.EditorVocabulary}
