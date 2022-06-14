@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@aws-amplify/auth": "^4.5.6",
-    "@emotion/react": "^11.9.0",
+    "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@fontsource/barlow": "^4.5.7",
     "@fontsource/crimson-text": "^4.5.3",
