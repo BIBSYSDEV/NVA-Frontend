@@ -72,11 +72,8 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
             sx={{ gridArea: 'title', fontWeight: 'bold' }}>
             {registration.mainTitle}
           </Typography>
-          <Box
-            data-testid={`message-owner-${registration.identifier}`}
-            sx={{ wordBreak: 'break-word', gridArea: 'creator' }}>
-            <Typography>{registration.owner}</Typography>
-            {new Date(messagesCopy[messagesCopy.length - 1].date).toLocaleDateString()}
+          <Box data-testid={`message-owner-${registration.identifier}`} sx={{ gridArea: 'creator' }}>
+            <Typography>{new Date(messagesCopy[messagesCopy.length - 1].date).toLocaleDateString()}</Typography>
           </Box>
         </AccordionSummary>
         <AccordionDetails>

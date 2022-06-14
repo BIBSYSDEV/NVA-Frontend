@@ -3,9 +3,11 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Switch, useHistory } from 'react-router-dom';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { dataTestId } from '../../utils/dataTestIds';
 import { CreatorRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import MyMessagesPage from '../messages/MyMessagesPage';
+import { MyMessagesPage } from '../messages/MyMessagesPage';
+import { MyRegistrations } from '../my_registrations/MyRegistrations';
 
 const MyPagePage = () => {
   const { t } = useTranslation('myPage');
@@ -22,7 +24,6 @@ const MyPagePage = () => {
     <Box
       sx={{
         width: '100%',
-        minHeight: '60vh',
         p: { xs: 0, md: '1rem' },
         display: 'grid',
         gridTemplateColumns: { xs: '1fr', md: '1fr 5fr' },
@@ -31,12 +32,24 @@ const MyPagePage = () => {
       <BackgroundDiv component="nav">
         <MenuList dense>
           <MenuItem
+            data-testid={dataTestId.header.messagesLink}
             component={Link}
             selected={currentPath === UrlPathTemplate.MyPageMessages}
             to={UrlPathTemplate.MyPageMessages}>
             <ListItemText>
               <Typography variant="overline" color="primary" fontSize="1rem">
-                {t('worklist:messages')}
+                {t('messages.messages')}
+              </Typography>
+            </ListItemText>
+          </MenuItem>
+          <MenuItem
+            data-testid={dataTestId.header.myRegistrationsLink}
+            component={Link}
+            selected={currentPath === UrlPathTemplate.MyPageRegistrations}
+            to={UrlPathTemplate.MyPageRegistrations}>
+            <ListItemText>
+              <Typography variant="overline" color="primary" fontSize="1rem">
+                {t('registrations.my_registrations')}
               </Typography>
             </ListItemText>
           </MenuItem>
@@ -45,6 +58,7 @@ const MyPagePage = () => {
       <BackgroundDiv>
         <Switch>
           <CreatorRoute exact path={UrlPathTemplate.MyPageMessages} component={MyMessagesPage} />
+          <CreatorRoute exact path={UrlPathTemplate.MyPageRegistrations} component={MyRegistrations} />
         </Switch>
       </BackgroundDiv>
     </Box>

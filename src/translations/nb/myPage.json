@@ -2,5 +2,8 @@
   "messages": {
     "messages": "Meldinger"
   },
+  "registrations": {
+    "my_registrations": "Mine registreringer"
+  },
   "my_page": "Min side"
 }

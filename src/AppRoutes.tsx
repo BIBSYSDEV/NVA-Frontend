@@ -9,7 +9,6 @@ const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const BasicDataPage = lazy(() => import('./pages/basic_data/BasicDataPage'));
 const EditorPage = lazy(() => import('./pages/editor/EditorPage'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
-const MyRegistrations = lazy(() => import('./pages/my_registrations/MyRegistrations'));
 const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
 const MyProfilePage = lazy(() => import('./pages/user/MyProfilePage'));
 const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
@@ -39,7 +38,6 @@ export const AppRoutes = () => {
 
         {/* CreatorRoutes */}
         <CreatorRoute exact path={UrlPathTemplate.Registration} component={EditRegistration} />
-        <CreatorRoute exact path={UrlPathTemplate.MyRegistrations} component={MyRegistrations} />
         <CreatorRoute path={UrlPathTemplate.MyPage} component={MyPagePage} />
 
         {/* CuratorRoutes */}

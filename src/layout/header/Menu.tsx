@@ -96,16 +96,6 @@ export const Menu = ({ handleLogout }: MenuProps) => {
             </MenuItem>,
           ],
         ]}
-        {user?.isCreator && [
-          <MenuItem
-            key={dataTestId.header.myRegistrationsLink}
-            data-testid={dataTestId.header.myRegistrationsLink}
-            onClick={closeMenu}
-            component={Link}
-            to={UrlPathTemplate.MyRegistrations}>
-            <Typography>{t('workLists:my_registrations')}</Typography>
-          </MenuItem>,
-        ]}
         {(user?.isAppAdmin || user?.isInstitutionAdmin) && isMobile && (
           <MenuItem
             key={dataTestId.header.basicDataLink}

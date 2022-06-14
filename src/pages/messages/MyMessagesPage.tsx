@@ -7,7 +7,7 @@ import { RoleName } from '../../types/user.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { MyMessages } from './MyMessages';
 
-const MyMessagesPage = () => {
+export const MyMessagesPage = () => {
   const { t } = useTranslation('workLists');
 
   const [supportRequestsResponse, isLoadingSupportRequests] = useFetch<PublicationConversation[]>({
@@ -30,5 +30,3 @@ const MyMessagesPage = () => {
     </>
   );
 };
-
-export default MyMessagesPage;

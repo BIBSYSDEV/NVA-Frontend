@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 import { ListSkeleton } from '../../components/ListSkeleton';
-import { PageHeader } from '../../components/PageHeader';
-import { SyledPageContent, StyledRightAlignedWrapper, BackgroundDiv } from '../../components/styled/Wrappers';
+import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { TabButton } from '../../components/TabButton';
 import { RootState } from '../../redux/store';
 import { MyRegistrationsResponse, RegistrationStatus } from '../../types/registration.types';
@@ -19,7 +19,7 @@ enum Tab {
   Unpublished,
 }
 
-const MyRegistrations = () => {
+export const MyRegistrations = () => {
   const { t } = useTranslation('workLists');
   const user = useSelector((store: RootState) => store.user);
   const [selectedTab, setSelectedTab] = useState(Tab.Unpublished);
@@ -39,8 +39,10 @@ const MyRegistrations = () => {
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
   return (
-    <SyledPageContent>
-      <PageHeader>{t('my_registrations')}</PageHeader>
+    <>
+      <Helmet>
+        <title>{t('my_registrations')}</title>
+      </Helmet>
       <StyledRightAlignedWrapper>
         {user?.cristinId && (
           <Button component={RouterLink} to={getUserPath(user.cristinId)} data-testid="public-profile-button">
@@ -62,18 +64,14 @@ const MyRegistrations = () => {
           {t('published_registrations')} ({publishedRegistrations.length})
         </TabButton>
       </Box>
-      <BackgroundDiv>
-        {isLoading ? (
-          <ListSkeleton minWidth={100} maxWidth={100} height={100} />
-        ) : (
-          <MyRegistrationsList
-            registrations={selectedTab === Tab.Unpublished ? unpublishedRegistrations : publishedRegistrations}
-            refetchRegistrations={refetchRegistrations}
-          />
-        )}
-      </BackgroundDiv>
-    </SyledPageContent>
+      {isLoading ? (
+        <ListSkeleton minWidth={100} maxWidth={100} height={100} />
+      ) : (
+        <MyRegistrationsList
+          registrations={selectedTab === Tab.Unpublished ? unpublishedRegistrations : publishedRegistrations}
+          refetchRegistrations={refetchRegistrations}
+        />
+      )}
+    </>
   );
 };
-
-export default MyRegistrations;
