@@ -19,31 +19,27 @@ export const EditorInstitution = () => {
     t('feedback:error.get_institution')
   );
 
-  return (
+  return isLoadingCustomer || isLoadingInstitution ? (
+    <CircularProgress />
+  ) : (
     <>
-      {isLoadingCustomer || isLoadingInstitution ? (
-        <CircularProgress />
-      ) : (
-        <>
-          <Typography variant="overline">{t('institution.institution_name_norwegian')}</Typography>
-          <Typography paragraph>{institution?.name.nb ?? '-'}</Typography>
+      <Typography variant="overline">{t('institution.institution_name_norwegian')}</Typography>
+      <Typography paragraph>{institution?.name.nb ?? '-'}</Typography>
 
-          <Typography variant="overline">{t('institution.institution_name_english')}</Typography>
-          <Typography paragraph>{institution?.name.en ?? '-'}</Typography>
+      <Typography variant="overline">{t('institution.institution_name_english')}</Typography>
+      <Typography paragraph>{institution?.name.en ?? '-'}</Typography>
 
-          <Typography variant="overline">{t('institution.institution_short_name')}</Typography>
-          <Typography paragraph>{customer?.shortName ?? '-'}</Typography>
+      <Typography variant="overline">{t('institution.institution_short_name')}</Typography>
+      <Typography paragraph>{customer?.shortName ?? '-'}</Typography>
 
-          <Typography variant="overline">{t('institution.institution_code')}</Typography>
-          <Typography paragraph>{institution?.id.split('/').pop() ?? '-'}</Typography>
+      <Typography variant="overline">{t('institution.institution_code')}</Typography>
+      <Typography paragraph>{institution?.id.split('/').pop() ?? '-'}</Typography>
 
-          <Typography sx={{ pt: '1rem' }}>
-            <Trans t={t} i18nKey="institution.institution_helper_text">
-              <Link href={'mailto:support@sikt.no'} target="_blank" rel="noopener noreferrer" />
-            </Trans>
-          </Typography>
-        </>
-      )}
+      <Typography sx={{ pt: '1rem' }}>
+        <Trans t={t} i18nKey="institution.institution_helper_text">
+          <Link href={'mailto:support@sikt.no'} target="_blank" rel="noopener noreferrer" />
+        </Trans>
+      </Typography>
     </>
   );
 };
