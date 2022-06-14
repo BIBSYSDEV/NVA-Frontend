@@ -32,7 +32,7 @@ const MyPagePage = () => {
       <BackgroundDiv component="nav">
         <MenuList dense>
           <MenuItem
-            data-testid={dataTestId.header.messagesLink}
+            data-testid={dataTestId.myPage.messagesLink}
             component={Link}
             selected={currentPath === UrlPathTemplate.MyPageMessages}
             to={UrlPathTemplate.MyPageMessages}>
@@ -43,7 +43,7 @@ const MyPagePage = () => {
             </ListItemText>
           </MenuItem>
           <MenuItem
-            data-testid={dataTestId.header.myRegistrationsLink}
+            data-testid={dataTestId.myPage.myRegistrationsLink}
             component={Link}
             selected={currentPath === UrlPathTemplate.MyPageRegistrations}
             to={UrlPathTemplate.MyPageRegistrations}>
