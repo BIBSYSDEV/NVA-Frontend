@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 import { ListSkeleton } from '../../components/ListSkeleton';
-import { PageHeader } from '../../components/PageHeader';
-import { SyledPageContent, StyledRightAlignedWrapper, BackgroundDiv } from '../../components/styled/Wrappers';
+import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { TabButton } from '../../components/TabButton';
 import { RootState } from '../../redux/store';
 import { MyRegistrationsResponse, RegistrationStatus } from '../../types/registration.types';
@@ -19,8 +19,8 @@ enum Tab {
   Unpublished,
 }
 
-const MyRegistrations = () => {
-  const { t } = useTranslation('workLists');
+export const MyRegistrations = () => {
+  const { t } = useTranslation('myPage');
   const user = useSelector((store: RootState) => store.user);
   const [selectedTab, setSelectedTab] = useState(Tab.Unpublished);
   const [myRegistrationsResponse, isLoading, refetchRegistrations] = useFetch<MyRegistrationsResponse>({
@@ -39,12 +39,14 @@ const MyRegistrations = () => {
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
   return (
-    <SyledPageContent>
-      <PageHeader>{t('my_registrations')}</PageHeader>
+    <>
+      <Helmet>
+        <title>{t('registrations.my_registrations')}</title>
+      </Helmet>
       <StyledRightAlignedWrapper>
         {user?.cristinId && (
           <Button component={RouterLink} to={getUserPath(user.cristinId)} data-testid="public-profile-button">
-            {t('go_to_public_profile')}
+            {t('registrations.go_to_public_profile')}
           </Button>
         )}
       </StyledRightAlignedWrapper>
@@ -53,27 +55,23 @@ const MyRegistrations = () => {
           data-testid="unpublished-button"
           onClick={() => setSelectedTab(Tab.Unpublished)}
           isSelected={selectedTab === Tab.Unpublished}>
-          {t('unpublished_registrations')} ({unpublishedRegistrations.length})
+          {t('registrations.unpublished_registrations')} ({unpublishedRegistrations.length})
         </TabButton>
         <TabButton
           data-testid="published-button"
           onClick={() => setSelectedTab(Tab.Published)}
           isSelected={selectedTab === Tab.Published}>
-          {t('published_registrations')} ({publishedRegistrations.length})
+          {t('registrations.published_registrations')} ({publishedRegistrations.length})
         </TabButton>
       </Box>
-      <BackgroundDiv>
-        {isLoading ? (
-          <ListSkeleton minWidth={100} maxWidth={100} height={100} />
-        ) : (
-          <MyRegistrationsList
-            registrations={selectedTab === Tab.Unpublished ? unpublishedRegistrations : publishedRegistrations}
-            refetchRegistrations={refetchRegistrations}
-          />
-        )}
-      </BackgroundDiv>
-    </SyledPageContent>
+      {isLoading ? (
+        <ListSkeleton minWidth={100} maxWidth={100} height={100} />
+      ) : (
+        <MyRegistrationsList
+          registrations={selectedTab === Tab.Unpublished ? unpublishedRegistrations : publishedRegistrations}
+          refetchRegistrations={refetchRegistrations}
+        />
+      )}
+    </>
   );
 };
-
-export default MyRegistrations;

@@ -33,7 +33,7 @@ const MyProfilePage = () => {
         {user.cristinId && (
           <StyledRightAlignedWrapper sx={{ gridArea: 'top' }}>
             <Button component={RouterLink} to={getUserPath(user.cristinId)} data-testid="public-profile-button">
-              {t('workLists:go_to_public_profile')}
+              {t('myPage:registrations.go_to_public_profile')}
             </Button>
           </StyledRightAlignedWrapper>
         )}

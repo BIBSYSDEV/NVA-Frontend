@@ -1,0 +1,20 @@
+{
+  "messages": {
+    "go_to_registration": "Go to registration",
+    "messages": "Messages",
+    "no_messages": "You don't have any messages",
+    "types": {
+      "doi": "DOI Request",
+      "support": "Support"
+    }
+  },
+  "registrations": {
+    "delete_registration": "Delete unpublished registration",
+    "delete_registration_message": "Do you want to delete \"{{title}}\"?",
+    "go_to_public_profile": "My public profile",
+    "my_registrations": "My registrations",
+    "published_registrations": "Published registrations",
+    "unpublished_registrations": "Unpublished registrations"
+  },
+  "my_page": "My page"
+}

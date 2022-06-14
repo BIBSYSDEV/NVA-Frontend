@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
+import { Helmet } from 'react-helmet-async';
 import { CreateCristinPerson, Employment, FlatCristinPerson, RoleName } from '../../../types/user.types';
 import { FindPersonPanel } from './FindPersonPanel';
 import { AddAffiliationPanel } from './AddAffiliationPanel';
@@ -87,6 +88,9 @@ export const AddEmployeePage = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{t('add_employee')}</title>
+      </Helmet>
       <Typography variant="h3" component="h2" paragraph>
         {t('add_to_person_registry')}
       </Typography>

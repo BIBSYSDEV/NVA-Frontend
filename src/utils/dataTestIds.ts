@@ -46,9 +46,8 @@ export const dataTestId = {
     logInButton: 'log-in-link',
     logOutLink: 'log-out-link',
     menuButton: 'menu-button',
-    messagesLink: 'messages-link',
+    myPageLink: 'my-page-link',
     myProfileLink: 'my-profile-link',
-    myRegistrationsLink: 'my-registrations-link',
     newRegistrationLink: 'new-registration',
     privacyLink: 'privacy-link',
     worklistLink: 'worklist-link',
@@ -252,5 +251,9 @@ export const dataTestId = {
     usersCurators: 'users-curators',
     usersEditors: 'users-editors',
     usersCreators: 'users-creators',
+  },
+  myPage: {
+    messagesLink: 'messages-link',
+    myRegistrationsLink: 'my-registrations-link',
   },
 };
