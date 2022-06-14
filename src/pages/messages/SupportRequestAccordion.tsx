@@ -53,9 +53,9 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
           sx={{
             '.MuiAccordionSummary-content': {
               display: 'grid',
-              gridTemplateAreas: '"status title creator"',
-              gridTemplateColumns: '1fr 5fr 1fr',
-              columnGap: '1rem',
+              gridTemplateAreas: { xs: '"status creator" "title title"', md: '"status title creator"' },
+              gridTemplateColumns: { xs: '1fr 1fr', md: '1fr 5fr 1fr' },
+              gap: '1rem',
             },
           }}>
           <Typography
@@ -72,9 +72,11 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
             sx={{ gridArea: 'title', fontWeight: 'bold' }}>
             {registration.mainTitle}
           </Typography>
-          <Box data-testid={`message-owner-${registration.identifier}`} sx={{ gridArea: 'creator' }}>
-            <Typography>{new Date(messagesCopy[messagesCopy.length - 1].date).toLocaleDateString()}</Typography>
-          </Box>
+          <Typography
+            data-testid={`message-owner-${registration.identifier}`}
+            sx={{ gridArea: 'creator', fontWeight: 'bold' }}>
+            {new Date(messagesCopy[messagesCopy.length - 1].date).toLocaleDateString()}
+          </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Box sx={{ width: '75%', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
