@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
@@ -37,55 +38,62 @@ export const PersonRegisterPage = () => {
   });
   const employees = employeesSearchResponse?.hits ?? [];
 
-  return isLoadingEmployees ? (
-    <Box sx={{ mt: '5rem', display: 'flex', justifyContent: 'space-around' }}>
-      <CircularProgress size={60} />
-    </Box>
-  ) : employees.length === 0 ? (
-    <Typography>{t('person_register.no_employees_found')}</Typography>
-  ) : (
+  return (
     <>
-      <TableContainer>
-        <Table size="small" sx={alternatingTableRowColor}>
-          <caption style={visuallyHidden}>{t('person_register.employee_table_caption')}</caption>
-          <TableHead>
-            <TableRow>
-              <TableCell>
-                <Typography fontWeight="bold">{t('person_register.person_id')}</Typography>
-              </TableCell>
-              <TableCell>
-                <Typography fontWeight="bold">{t('common:name')}</Typography>
-              </TableCell>
-              <TableCell>
-                <Typography fontWeight="bold">{t('employments')}</Typography>
-              </TableCell>
-              <TableCell />
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {employees.map((person) => (
-              <PersonTableRow
-                key={person.id}
-                cristinPerson={person}
-                topOrgCristinIdentifier={user?.topOrgCristinId ? user.topOrgCristinId.split('/').pop() ?? '' : ''}
-              />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      {employeesSearchResponse && employeesSearchResponse.size > rowsPerPageOptions[0] && (
-        <TablePagination
-          rowsPerPageOptions={rowsPerPageOptions}
-          component="div"
-          count={employeesSearchResponse.size}
-          rowsPerPage={rowsPerPage}
-          page={page - 1}
-          onPageChange={(_, muiPage) => setPage(muiPage + 1)}
-          onRowsPerPageChange={(event) => {
-            setRowsPerPage(parseInt(event.target.value));
-            setPage(1);
-          }}
-        />
+      <Helmet>
+        <title>{t('person_register.person_register')}</title>
+      </Helmet>
+      {isLoadingEmployees ? (
+        <Box sx={{ mt: '5rem', display: 'flex', justifyContent: 'space-around' }}>
+          <CircularProgress size={60} />
+        </Box>
+      ) : employees.length === 0 ? (
+        <Typography>{t('person_register.no_employees_found')}</Typography>
+      ) : (
+        <>
+          <TableContainer>
+            <Table size="small" sx={alternatingTableRowColor}>
+              <caption style={visuallyHidden}>{t('person_register.employee_table_caption')}</caption>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    <Typography fontWeight="bold">{t('person_register.person_id')}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography fontWeight="bold">{t('common:name')}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography fontWeight="bold">{t('employments')}</Typography>
+                  </TableCell>
+                  <TableCell />
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {employees.map((person) => (
+                  <PersonTableRow
+                    key={person.id}
+                    cristinPerson={person}
+                    topOrgCristinIdentifier={user?.topOrgCristinId ? user.topOrgCristinId.split('/').pop() ?? '' : ''}
+                  />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          {employeesSearchResponse && employeesSearchResponse.size > rowsPerPageOptions[0] && (
+            <TablePagination
+              rowsPerPageOptions={rowsPerPageOptions}
+              component="div"
+              count={employeesSearchResponse.size}
+              rowsPerPage={rowsPerPage}
+              page={page - 1}
+              onPageChange={(_, muiPage) => setPage(muiPage + 1)}
+              onRowsPerPageChange={(event) => {
+                setRowsPerPage(parseInt(event.target.value));
+                setPage(1);
+              }}
+            />
+          )}
+        </>
       )}
     </>
   );

@@ -7,7 +7,6 @@ import { styled } from '@mui/system';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { Modal } from '../../../components/Modal';
 import { PageHeader } from '../../../components/PageHeader';
-import { SyledPageContent } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { RoleName, UserList as UserListType } from '../../../types/user.types';
 import { filterUsersByRole } from '../../../utils/role-helpers';
@@ -46,7 +45,7 @@ export const MyInstitutionUsersPage = () => {
   });
 
   return (
-    <SyledPageContent>
+    <>
       <PageHeader>{t('users.user_administration')}</PageHeader>
       {/* Admins */}
       <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersAdministrators}>
@@ -152,6 +151,6 @@ export const MyInstitutionUsersPage = () => {
           />
         </Modal>
       )}
-    </SyledPageContent>
+    </>
   );
 };

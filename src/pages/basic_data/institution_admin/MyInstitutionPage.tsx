@@ -6,7 +6,7 @@ import { LoadingButton } from '@mui/lab';
 import { updateCustomerInstitution } from '../../../api/customerInstitutionsApi';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { PageHeader } from '../../../components/PageHeader';
-import { InputContainerBox, SyledPageContent, StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
+import { InputContainerBox, StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import {
@@ -45,7 +45,7 @@ export const MyCustomerInstitutionPage = () => {
   };
 
   return (
-    <SyledPageContent>
+    <>
       <PageHeader>{t('common:my_institution')}</PageHeader>
       {isLoadingCustomerInstitution ? (
         <ListSkeleton arrayLength={4} minWidth={100} height={80} />
@@ -99,6 +99,6 @@ export const MyCustomerInstitutionPage = () => {
           )}
         </Formik>
       )}
-    </SyledPageContent>
+    </>
   );
 };
