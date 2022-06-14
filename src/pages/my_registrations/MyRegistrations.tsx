@@ -20,7 +20,7 @@ enum Tab {
 }
 
 export const MyRegistrations = () => {
-  const { t } = useTranslation('workLists');
+  const { t } = useTranslation('myPage');
   const user = useSelector((store: RootState) => store.user);
   const [selectedTab, setSelectedTab] = useState(Tab.Unpublished);
   const [myRegistrationsResponse, isLoading, refetchRegistrations] = useFetch<MyRegistrationsResponse>({
@@ -41,12 +41,12 @@ export const MyRegistrations = () => {
   return (
     <>
       <Helmet>
-        <title>{t('my_registrations')}</title>
+        <title>{t('registrations.my_registrations')}</title>
       </Helmet>
       <StyledRightAlignedWrapper>
         {user?.cristinId && (
           <Button component={RouterLink} to={getUserPath(user.cristinId)} data-testid="public-profile-button">
-            {t('go_to_public_profile')}
+            {t('registrations.go_to_public_profile')}
           </Button>
         )}
       </StyledRightAlignedWrapper>
@@ -55,13 +55,13 @@ export const MyRegistrations = () => {
           data-testid="unpublished-button"
           onClick={() => setSelectedTab(Tab.Unpublished)}
           isSelected={selectedTab === Tab.Unpublished}>
-          {t('unpublished_registrations')} ({unpublishedRegistrations.length})
+          {t('registrations.unpublished_registrations')} ({unpublishedRegistrations.length})
         </TabButton>
         <TabButton
           data-testid="published-button"
           onClick={() => setSelectedTab(Tab.Published)}
           isSelected={selectedTab === Tab.Published}>
-          {t('published_registrations')} ({publishedRegistrations.length})
+          {t('registrations.published_registrations')} ({publishedRegistrations.length})
         </TabButton>
       </Box>
       {isLoading ? (

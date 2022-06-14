@@ -1,9 +1,20 @@
 {
   "messages": {
-    "messages": "Meldinger"
+    "go_to_registration": "Gå til registrering",
+    "messages": "Meldinger",
+    "no_messages": "Du har ingen meldinger",
+    "types": {
+      "doi": "DOI-forespørsel",
+      "support": "Brukerstøtte"
+    }
   },
   "registrations": {
-    "my_registrations": "Mine registreringer"
+    "delete_registration": "Slett upublisert registrering",
+    "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
+    "go_to_public_profile": "Min offentlige profil",
+    "my_registrations": "Mine registreringer",
+    "published_registrations": "Publiserte registreringer",
+    "unpublished_registrations": "Upubliserte registreringer"
   },
   "my_page": "Min side"
 }

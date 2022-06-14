@@ -23,7 +23,7 @@ interface SupportRequestAccordionProps {
 }
 
 export const SupportRequestAccordion = ({ registration, messageType, messages }: SupportRequestAccordionProps) => {
-  const { t } = useTranslation('workLists');
+  const { t } = useTranslation('myPage');
   const dispatch = useDispatch();
   const userId = useSelector((store: RootState) => store.user?.id);
 
@@ -62,9 +62,9 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
             data-testid={`message-type-${registration.identifier}`}
             sx={{ gridArea: 'status', fontWeight: 'bold' }}>
             {messageType === MessageType.DoiRequest
-              ? t('types.doi')
+              ? t('messages.types.doi')
               : messageType === MessageType.Support
-              ? t('types.support')
+              ? t('messages.types.support')
               : null}
           </Typography>
           <Typography
@@ -88,7 +88,7 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
               endIcon={<ArrowForwardIcon />}
               component={RouterLink}
               to={getRegistrationLandingPagePath(registration.identifier)}>
-              {t('go_to_registration')}
+              {t('messages.go_to_registration')}
             </Button>
           </Box>
         </AccordionDetails>

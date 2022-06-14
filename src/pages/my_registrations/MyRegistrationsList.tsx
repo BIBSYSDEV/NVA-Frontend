@@ -77,7 +77,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
       <TableContainer>
         <Table sx={alternatingTableRowColor}>
           <caption>
-            <span style={visuallyHidden}>{t('workLists:my_registrations')}</span>
+            <span style={visuallyHidden}>{t('myPage:registrations.my_registrations')}</span>
           </caption>
           <TableHead>
             <TableRow>
@@ -158,7 +158,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
       />
       <ConfirmDialog
         open={!!showDeleteModal}
-        title={t('workLists:delete_registration')}
+        title={t('myPage:registrations.delete_registration')}
         onAccept={deleteDraftRegistration}
         onCancel={() => {
           setShowDeleteModal(false);
@@ -166,7 +166,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
         isLoading={isDeleting}
         dataTestId="confirm-delete-dialog">
         <Typography>
-          {t('workLists:delete_registration_message', {
+          {t('myPage:registrations.delete_registration_message', {
             title: registrationToDelete?.mainTitle ?? registrationToDelete?.identifier,
           })}
         </Typography>
