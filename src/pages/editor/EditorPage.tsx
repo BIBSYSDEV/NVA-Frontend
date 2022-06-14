@@ -16,7 +16,7 @@ const EditorPage = () => {
 
   useEffect(() => {
     if (currentPath === UrlPathTemplate.Editor) {
-      history.replace(UrlPathTemplate.EditorVocabulary);
+      history.replace(UrlPathTemplate.EditorInstitution);
     }
   }, [history, currentPath]);
 
