@@ -47,6 +47,7 @@ export const dataTestId = {
     logOutLink: 'log-out-link',
     menuButton: 'menu-button',
     messagesLink: 'messages-link',
+    myPageLink: 'my-page-link',
     myProfileLink: 'my-profile-link',
     myRegistrationsLink: 'my-registrations-link',
     newRegistrationLink: 'new-registration',
