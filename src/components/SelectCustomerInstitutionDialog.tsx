@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { RoleApiPath } from '../api/apiPaths';
 import { apiRequest, authenticatedApiRequest } from '../api/apiRequest';
 import { getCurrentUserAttributes } from '../api/userApi';
-import { setUser } from '../redux/userSlice';
+import { setPartialUser, setUser } from '../redux/userSlice';
 import { setNotification } from '../redux/notificationSlice';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import { isSuccessStatus } from '../utils/constants';
@@ -45,6 +45,7 @@ export const SelectCustomerInstitutionDialog = ({
     };
     fetchAllowedCustomers();
   }, [allowedCustomerIds]);
+
   const selectCustomer = async () => {
     setIsSelectingCustomer(true);
     const customerId = selectedCustomer?.id;
@@ -58,6 +59,7 @@ export const SelectCustomerInstitutionDialog = ({
         if (isSuccessStatus(response.status)) {
           const newUserInfo = await getCurrentUserAttributes();
           dispatch(setUser(newUserInfo));
+          dispatch(setPartialUser({ customerShortName: selectedCustomer.shortName }));
           setOpenDialog(false);
         }
       } catch {
