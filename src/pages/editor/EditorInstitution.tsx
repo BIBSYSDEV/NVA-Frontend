@@ -37,7 +37,7 @@ export const EditorInstitution = () => {
 
             <Typography sx={{ pt: '1rem' }}>
               <Trans t={t} i18nKey="institution.institution_helper_text">
-                <Link href={'mailto:support@unit.no'} target="_blank" rel="noopener noreferrer" />
+                <Link href={'mailto:support@sikt.no'} target="_blank" rel="noopener noreferrer" />
               </Trans>
             </Typography>
           </>
