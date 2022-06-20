@@ -1,6 +1,5 @@
 import {
-  Box,
-  CircularProgress,
+  Skeleton,
   Table,
   TableBody,
   TableCell,
@@ -60,11 +59,7 @@ export const PersonRegisterPage = () => {
         sx={{ mb: '1rem', maxWidth: '25rem' }}
       />
 
-      {isLoadingEmployees ? (
-        <Box sx={{ mt: '5rem', display: 'flex', justifyContent: 'space-around' }}>
-          <CircularProgress size={60} />
-        </Box>
-      ) : employees.length === 0 ? (
+      {employees.length === 0 && !isLoadingEmployees ? (
         <Typography>{t('person_register.no_employees_found')}</Typography>
       ) : (
         <>
@@ -86,13 +81,30 @@ export const PersonRegisterPage = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {employees.map((person) => (
-                  <PersonTableRow
-                    key={person.id}
-                    cristinPerson={person}
-                    topOrgCristinIdentifier={user?.topOrgCristinId ? user.topOrgCristinId.split('/').pop() ?? '' : ''}
-                  />
-                ))}
+                {isLoadingEmployees
+                  ? [...Array(5)].map((_, index) => (
+                      <TableRow key={index} sx={{ height: '4rem' }}>
+                        <TableCell>
+                          <Skeleton />
+                        </TableCell>
+                        <TableCell>
+                          <Skeleton />
+                        </TableCell>
+                        <TableCell>
+                          <Skeleton />
+                        </TableCell>
+                        <TableCell></TableCell>
+                      </TableRow>
+                    ))
+                  : employees.map((person) => (
+                      <PersonTableRow
+                        key={person.id}
+                        cristinPerson={person}
+                        topOrgCristinIdentifier={
+                          user?.topOrgCristinId ? user.topOrgCristinId.split('/').pop() ?? '' : ''
+                        }
+                      />
+                    ))}
               </TableBody>
             </Table>
           </TableContainer>
