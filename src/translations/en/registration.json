@@ -148,7 +148,7 @@
       "Building": "Building",
       "Interior": "Interior",
       "LandscapeArchitecture": "Landscape architecture",
-      "Other": "Other",
+      "Other": "Other architecture",
       "PlanningProposal": "Planning proposal"
     },
     "article_number": "Article number",
@@ -208,7 +208,7 @@
       "Encyclopedia Chapter": "Encyclopedia chapter",
       "Exhibition catalog": "Exhibition catalog",
       "Exhibition Catalog Chapter": "Chapter in Exhibition catalog",
-      "Introduction": "Introduction",
+      "Introduction": "Introduction in anthology",
       "Non-fiction Chapter": "Non-fiction chapter",
       "Non-fiction Monograph": "Non-fiction monograph",
       "Popular Science Monograph": "Popular science monograph",
@@ -238,7 +238,7 @@
       "LightDesign": "Lighting design",
       "ProductDesign": "Product design",
       "ServiceDesign": "Service design",
-      "Other": "Other",
+      "Other": "Other design",
       "WebDesign": "Web design"
     },
     "form": "Form",

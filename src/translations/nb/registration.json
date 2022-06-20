@@ -148,7 +148,7 @@
       "Building": "Bygg",
       "Interior": "Interiør",
       "LandscapeArchitecture": "Landskapsarkitektur",
-      "Other": "Annet",
+      "Other": "Annen arkitektur",
       "PlanningProposal": "Planforsalg"
     },
     "article_number": "Artikkelnummer",
@@ -208,7 +208,7 @@
       "Encyclopedia Chapter": "Kapittel i oppslagsverk",
       "Exhibition catalog": "Utstillingskatalog",
       "Exhibition Catalog Chapter": "Kapittel i utstillingskatalog",
-      "Introduction": "Innledning",
+      "Introduction": "Innledning i antologi",
       "Non-fiction Chapter": "Faglig kapittel",
       "Non-fiction Monograph": "Faglig monografi",
       "Popular Science Monograph": "Populærvitenskapelig monografi",
@@ -238,7 +238,7 @@
       "LightDesign": "Lysdesign",
       "ProductDesign": "Produktdesign",
       "ServiceDesign": "Tjenestedesign",
-      "Other": "Annet",
+      "Other": "Annet design",
       "WebDesign": "Webdesign"
     },
     "form": "Form",
