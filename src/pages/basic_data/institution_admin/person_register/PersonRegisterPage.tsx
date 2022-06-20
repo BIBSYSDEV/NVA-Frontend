@@ -8,6 +8,7 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  TextField,
   Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
@@ -19,6 +20,7 @@ import { RootState } from '../../../../redux/store';
 import { alternatingTableRowColor } from '../../../../themes/mainTheme';
 import { SearchResponse } from '../../../../types/common.types';
 import { CristinPerson } from '../../../../types/user.types';
+import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PersonTableRow } from './PersonTableRow';
 
@@ -30,8 +32,13 @@ export const PersonRegisterPage = () => {
 
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
   const [page, setPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
+  const debouncedSearchQuery = useDebounce(searchQuery);
 
-  const url = user?.topOrgCristinId ? `${user.topOrgCristinId}/persons?page=${page}&results=${rowsPerPage}` : '';
+  const url = user?.topOrgCristinId
+    ? `${user.topOrgCristinId}/persons?name=${debouncedSearchQuery}&page=${page}&results=${rowsPerPage}`
+    : '';
+
   const [employeesSearchResponse, isLoadingEmployees] = useFetch<SearchResponse<CristinPerson>>({
     url,
     errorMessage: t('feedback:error.get_users_for_institution'),
@@ -43,6 +50,16 @@ export const PersonRegisterPage = () => {
       <Helmet>
         <title>{t('person_register.person_register')}</title>
       </Helmet>
+
+      <TextField
+        variant="filled"
+        value={searchQuery}
+        onChange={(event) => setSearchQuery(event.target.value)}
+        label={t('common:search')}
+        fullWidth
+        sx={{ mb: '1rem', maxWidth: '25rem' }}
+      />
+
       {isLoadingEmployees ? (
         <Box sx={{ mt: '5rem', display: 'flex', justifyContent: 'space-around' }}>
           <CircularProgress size={60} />
