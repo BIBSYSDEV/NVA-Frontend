@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -34,8 +34,19 @@ export const PersonRegisterPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery);
 
+  const prevSearchQueryRef = useRef(debouncedSearchQuery);
+
+  useEffect(() => {
+    if (prevSearchQueryRef.current !== debouncedSearchQuery) {
+      setPage(1);
+      prevSearchQueryRef.current = debouncedSearchQuery;
+    }
+  }, [debouncedSearchQuery]);
+
   const url = user?.topOrgCristinId
-    ? `${user.topOrgCristinId}/persons?name=${debouncedSearchQuery}&page=${page}&results=${rowsPerPage}`
+    ? `${user.topOrgCristinId}/persons?name=${debouncedSearchQuery}&page=${
+        prevSearchQueryRef.current !== debouncedSearchQuery ? 1 : page
+      }&results=${rowsPerPage}`
     : '';
 
   const [employeesSearchResponse, isLoadingEmployees] = useFetch<SearchResponse<CristinPerson>>({
