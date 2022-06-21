@@ -42,6 +42,7 @@ export const PersonRegisterPage = () => {
   const prevSearchQueryRef = useRef(debouncedSearchQuery);
 
   useEffect(() => {
+    // Reset page every time the search query changes
     if (prevSearchQueryRef.current !== debouncedSearchQuery) {
       setPage(1);
       prevSearchQueryRef.current = debouncedSearchQuery;
@@ -99,13 +100,13 @@ export const PersonRegisterPage = () => {
                 {isLoadingEmployees
                   ? [...Array(5)].map((_, index) => (
                       <TableRow key={index} sx={{ height: '4rem' }}>
-                        <TableCell>
+                        <TableCell width="10%">
                           <Skeleton />
                         </TableCell>
-                        <TableCell>
+                        <TableCell width="30%">
                           <Skeleton />
                         </TableCell>
-                        <TableCell>
+                        <TableCell width="55%">
                           <Skeleton />
                         </TableCell>
                         <TableCell></TableCell>
