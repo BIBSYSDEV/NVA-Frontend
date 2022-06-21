@@ -25,6 +25,11 @@ import { PersonTableRow } from './PersonTableRow';
 
 const rowsPerPageOptions = [10, 25, 50];
 
+const getSearchUrl = (topOrgCristinId: string | undefined, nameQuery: string, page: number, rowsPerPage: number) => {
+  const nameQueryParam = nameQuery ? `&name=${nameQuery}` : '';
+  return topOrgCristinId ? `${topOrgCristinId}/persons?page=${page}&results=${rowsPerPage}${nameQueryParam}` : '';
+};
+
 export const PersonRegisterPage = () => {
   const { t } = useTranslation('basicData');
   const user = useSelector((store: RootState) => store.user);
@@ -43,14 +48,13 @@ export const PersonRegisterPage = () => {
     }
   }, [debouncedSearchQuery]);
 
-  const url = user?.topOrgCristinId
-    ? `${user.topOrgCristinId}/persons?name=${debouncedSearchQuery}&page=${
-        prevSearchQueryRef.current !== debouncedSearchQuery ? 1 : page
-      }&results=${rowsPerPage}`
-    : '';
-
   const [employeesSearchResponse, isLoadingEmployees] = useFetch<SearchResponse<CristinPerson>>({
-    url,
+    url: getSearchUrl(
+      user?.topOrgCristinId,
+      debouncedSearchQuery,
+      prevSearchQueryRef.current !== debouncedSearchQuery ? 1 : page,
+      rowsPerPage
+    ),
     errorMessage: t('feedback:error.get_users_for_institution'),
   });
   const employees = employeesSearchResponse?.hits ?? [];
@@ -119,20 +123,18 @@ export const PersonRegisterPage = () => {
               </TableBody>
             </Table>
           </TableContainer>
-          {employeesSearchResponse && employeesSearchResponse.size > rowsPerPageOptions[0] && (
-            <TablePagination
-              rowsPerPageOptions={rowsPerPageOptions}
-              component="div"
-              count={employeesSearchResponse.size}
-              rowsPerPage={rowsPerPage}
-              page={page - 1}
-              onPageChange={(_, muiPage) => setPage(muiPage + 1)}
-              onRowsPerPageChange={(event) => {
-                setRowsPerPage(parseInt(event.target.value));
-                setPage(1);
-              }}
-            />
-          )}
+          <TablePagination
+            rowsPerPageOptions={rowsPerPageOptions}
+            component="div"
+            count={employeesSearchResponse?.size ?? -1}
+            rowsPerPage={rowsPerPage}
+            page={page - 1}
+            onPageChange={(_, muiPage) => setPage(muiPage + 1)}
+            onRowsPerPageChange={(event) => {
+              setRowsPerPage(parseInt(event.target.value));
+              setPage(1);
+            }}
+          />
         </>
       )}
     </>
