@@ -1,7 +1,6 @@
 export const dataTestId = {
   basicData: {
     addEmployeeLink: 'add-employee-link',
-    adminInstitutionLink: 'admin-institution-link',
     adminInstitutionsLink: 'admin-institutions-link',
     adminUsersLink: 'admin-users-link',
     centralImportLink: 'central-import-link',

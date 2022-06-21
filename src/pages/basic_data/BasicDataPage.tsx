@@ -12,7 +12,6 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
 import { AddEmployeePage } from './institution_admin/AddEmployeePage';
 import { CentralImportPage } from './app_admin/central_import/CentralImportPage';
-import { MyCustomerInstitutionPage } from './institution_admin/MyInstitutionPage';
 import { MyInstitutionUsersPage } from './institution_admin/MyInstitutionUsersPage';
 import { CentralImportDuplicationCheckPage } from './app_admin/central_import/CentralImportDuplicationCheckPage';
 import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';
@@ -77,18 +76,6 @@ const BasicDataPage = () => {
                 </ListItemText>
               </MenuItem>,
               <MenuItem
-                key={dataTestId.basicData.adminInstitutionLink}
-                data-testid={dataTestId.basicData.adminInstitutionLink}
-                component={Link}
-                selected={currentPath === UrlPathTemplate.BasicDataMyInstitution}
-                to={UrlPathTemplate.BasicDataMyInstitution}>
-                <ListItemText>
-                  <Typography variant="overline" color="primary" fontSize="1rem">
-                    {t('common:my_institution')}
-                  </Typography>
-                </ListItemText>
-              </MenuItem>,
-              <MenuItem
                 key={dataTestId.basicData.adminUsersLink}
                 data-testid={dataTestId.basicData.adminUsersLink}
                 component={Link}
@@ -147,11 +134,6 @@ const BasicDataPage = () => {
             component={CentralImportDuplicationCheckPage}
           />
           <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataAddEmployee} component={AddEmployeePage} />
-          <InstitutionAdminRoute
-            exact
-            path={UrlPathTemplate.BasicDataMyInstitution}
-            component={MyCustomerInstitutionPage}
-          />
           <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataUsers} component={MyInstitutionUsersPage} />
           <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataPersonRegister} component={PersonRegisterPage} />
         </Switch>
