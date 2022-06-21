@@ -53,11 +53,6 @@ describe('Menu', () => {
     cy.setUserRolesInRedux(noRoles);
     cy.get('[data-testid=forbidden]').should('be.visible');
 
-    cy.visit(UrlPathTemplate.BasicDataMyInstitution);
-    cy.mocklogin();
-    cy.setUserRolesInRedux(noRoles);
-    cy.get('[data-testid=forbidden]').should('be.visible');
-
     cy.visit(UrlPathTemplate.BasicDataUsers);
     cy.mocklogin();
     cy.setUserRolesInRedux(noRoles);
