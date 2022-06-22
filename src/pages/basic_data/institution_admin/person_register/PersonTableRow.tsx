@@ -84,11 +84,11 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
 
   const activeAffiliation = filterActiveAffiliations(cristinPerson.affiliations);
   const employmentsInThisInstitution: CristinPersonAffiliation[] = [];
-  const targetIdStart = `${topOrgCristinIdentifier?.split('.')[0]}.`;
   const otherEmployments: CristinPersonAffiliation[] = [];
+  const targetOrganizationIdStart = `${topOrgCristinIdentifier?.split('.')[0]}.`;
   for (const affiliation of activeAffiliation) {
     const organizationIdentifier = affiliation.organization.split('/').pop();
-    if (organizationIdentifier?.startsWith(targetIdStart)) {
+    if (organizationIdentifier?.startsWith(targetOrganizationIdStart)) {
       employmentsInThisInstitution.push(affiliation);
     } else {
       otherEmployments.push(affiliation);
