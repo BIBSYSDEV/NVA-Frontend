@@ -135,7 +135,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
           {({ values, isSubmitting, setFieldValue }: FormikProps<FormData>) => (
             <Form>
               <DialogContent>
-                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '1rem', alignItems: 'center' }}>
+                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '1rem' }}>
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <TextField variant="filled" disabled value={firstName} label={t('common:first_name')} />
                     <TextField variant="filled" disabled value={lastName} label={t('common:last_name')} />
@@ -153,19 +153,30 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
                     )}
                   </Box>
                   <Divider flexItem orientation="vertical" />
-
-                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    {isLoadingUser ? (
-                      <CircularProgress />
-                    ) : user ? (
-                      <UserRolesSelector
-                        selectedRoles={values.roles}
-                        updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
-                        disabled={isSubmitting}
-                      />
-                    ) : (
-                      <Typography>{t('person_register.user_does_not_exist')}</Typography>
-                    )}
+                  <Box>
+                    <Typography variant="overline">{t('employments')}</Typography>
+                    {employmentsInThisInstitution.map((affiliation) => {
+                      return (
+                        <AffiliationHierarchy
+                          key={affiliation.organization}
+                          unitUri={affiliation.organization}
+                          commaSeparated
+                        />
+                      );
+                    })}
+                    <Box sx={{ mt: '2rem', display: 'flex', justifyContent: 'center' }}>
+                      {isLoadingUser ? (
+                        <CircularProgress />
+                      ) : user ? (
+                        <UserRolesSelector
+                          selectedRoles={values.roles}
+                          updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
+                          disabled={isSubmitting}
+                        />
+                      ) : (
+                        <Typography>{t('person_register.user_does_not_exist')}</Typography>
+                      )}
+                    </Box>
                   </Box>
                 </Box>
               </DialogContent>
