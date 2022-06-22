@@ -84,8 +84,8 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
 
   return (
     <TableRow>
-      <TableCell>{cristinIdentifier}</TableCell>
-      <TableCell>
+      <TableCell width="5%">{cristinIdentifier}</TableCell>
+      <TableCell width="25%">
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Typography>
             {firstName} {lastName}
@@ -99,7 +99,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
           )}
         </Box>
       </TableCell>
-      <TableCell>
+      <TableCell width="60%">
         <Box component="ul" sx={{ p: 0 }}>
           {activeEmployments.map((employment, index) => (
             <Box key={`${employment.organization}-${index}`} component="li" sx={{ display: 'flex' }}>
