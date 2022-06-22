@@ -24,7 +24,7 @@ import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../../../utils/constants';
 import { convertToFlatCristinPerson, filterActiveAffiliations } from '../../../../utils/user-helpers';
-import { CristinPerson, InstitutionUser, RoleName } from '../../../../types/user.types';
+import { CristinPerson, CristinPersonAffiliation, InstitutionUser, RoleName } from '../../../../types/user.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { RoleApiPath } from '../../../../api/apiPaths';
 import { UserRolesSelector } from '../UserRolesSelector';
@@ -82,6 +82,19 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
     }
   };
 
+  const activeAffiliation = filterActiveAffiliations(cristinPerson.affiliations);
+  const employmentsInThisInstitution: CristinPersonAffiliation[] = [];
+  const targetIdStart = `${topOrgCristinIdentifier?.split('.')[0]}.`;
+  const otherEmployments: CristinPersonAffiliation[] = [];
+  for (const affiliation of activeAffiliation) {
+    const organizationIdentifier = affiliation.organization.split('/').pop();
+    if (organizationIdentifier?.startsWith(targetIdStart)) {
+      employmentsInThisInstitution.push(affiliation);
+    } else {
+      otherEmployments.push(affiliation);
+    }
+  }
+
   return (
     <TableRow>
       <TableCell width="5%">{cristinIdentifier}</TableCell>
@@ -115,6 +128,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
           </IconButton>
         </Tooltip>
       </TableCell>
+
       <Dialog open={openDialog} onClose={toggleDialog} maxWidth="md" fullWidth transitionDuration={{ exit: 0 }}>
         <DialogTitle>{t('person_register.edit_person')}</DialogTitle>
         <Formik initialValues={initialValues} enableReinitialize onSubmit={onSubmit}>
@@ -125,8 +139,21 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <TextField variant="filled" disabled value={firstName} label={t('common:first_name')} />
                     <TextField variant="filled" disabled value={lastName} label={t('common:last_name')} />
+                    {otherEmployments.length > 0 && (
+                      <Box>
+                        <Typography variant="overline">{t('person_register.other_employees')}</Typography>
+                        {otherEmployments.map((affiliation) => (
+                          <AffiliationHierarchy
+                            key={affiliation.organization}
+                            unitUri={affiliation.organization}
+                            commaSeparated
+                          />
+                        ))}
+                      </Box>
+                    )}
                   </Box>
                   <Divider flexItem orientation="vertical" />
+
                   <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                     {isLoadingUser ? (
                       <CircularProgress />
