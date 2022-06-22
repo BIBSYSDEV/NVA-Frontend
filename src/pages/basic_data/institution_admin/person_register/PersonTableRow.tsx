@@ -142,13 +142,15 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
                     {otherEmployments.length > 0 && (
                       <Box>
                         <Typography variant="overline">{t('person_register.other_employees')}</Typography>
-                        {otherEmployments.map((affiliation) => (
-                          <AffiliationHierarchy
-                            key={affiliation.organization}
-                            unitUri={affiliation.organization}
-                            commaSeparated
-                          />
-                        ))}
+                        <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
+                          {otherEmployments.map((affiliation) => (
+                            <li key={affiliation.organization}>
+                              <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+                                <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
+                              </Box>
+                            </li>
+                          ))}
+                        </Box>
                       </Box>
                     )}
                   </Box>
@@ -156,6 +158,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
                   <Box>
                     <Typography variant="overline">{t('employments')}</Typography>
                     {employmentsInThisInstitution.map((affiliation) => {
+                      // TODO: Allow updating employment
                       return (
                         <AffiliationHierarchy
                           key={affiliation.organization}
