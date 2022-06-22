@@ -100,13 +100,13 @@ export const PersonRegisterPage = () => {
                 {isLoadingEmployees
                   ? [...Array(5)].map((_, index) => (
                       <TableRow key={index} sx={{ height: '4rem' }}>
-                        <TableCell width="10%">
+                        <TableCell width="5%">
                           <Skeleton />
                         </TableCell>
-                        <TableCell width="30%">
+                        <TableCell width="25%">
                           <Skeleton />
                         </TableCell>
-                        <TableCell width="55%">
+                        <TableCell width="60%">
                           <Skeleton />
                         </TableCell>
                         <TableCell></TableCell>

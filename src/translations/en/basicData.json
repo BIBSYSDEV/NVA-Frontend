@@ -26,6 +26,7 @@
     "edit_person": "Edit person",
     "employee_table_caption": "List of all employees",
     "no_employees_found": "No employees found",
+    "other_employees": "Other employees",
     "person_id": "PersonID",
     "person_register": "Person Register",
     "user_does_not_exist": "User does not exist"
