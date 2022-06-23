@@ -5,19 +5,18 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Button, IconButton, Typography, Link as MuiLink, Box, CircularProgress } from '@mui/material';
 import { Skeleton } from '@mui/material';
 import { useHistory } from 'react-router-dom';
-import orcidIcon from '../../resources/images/orcid_logo.svg';
-import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../utils/constants';
+import orcidIcon from '../../../resources/images/orcid_logo.svg';
+import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../../utils/constants';
 import { OrcidModalContent } from './OrcidModalContent';
-import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { setNotification } from '../../redux/notificationSlice';
-import { Modal } from '../../components/Modal';
-import { CristinPerson, User } from '../../types/user.types';
-import { getOrcidInfo } from '../../api/external/orcidApi';
-import { UrlPathTemplate } from '../../utils/urlPaths';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { authenticatedApiRequest } from '../../api/apiRequest';
-import { useFetch } from '../../utils/hooks/useFetch';
-import { getValueByKey } from '../../utils/user-helpers';
+import { ConfirmDialog } from '../../../components/ConfirmDialog';
+import { setNotification } from '../../../redux/notificationSlice';
+import { Modal } from '../../../components/Modal';
+import { CristinPerson, User } from '../../../types/user.types';
+import { getOrcidInfo } from '../../../api/external/orcidApi';
+import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { authenticatedApiRequest } from '../../../api/apiRequest';
+import { useFetch } from '../../../utils/hooks/useFetch';
+import { getValueByKey } from '../../../utils/user-helpers';
 
 interface UserOrcidProps {
   user: User;
@@ -63,7 +62,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
           dispatch(setNotification({ message: t('feedback:error.update_orcid'), variant: 'success' }));
         }
       }
-      history.push(UrlPathTemplate.MyProfile);
+      history.push(UrlPathTemplate.MyPageMyProfile);
       setIsAddingOrcid(false);
     };
 
@@ -99,7 +98,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   };
 
   return (
-    <BackgroundDiv>
+    <div>
       <Typography variant="h2">{t('orcid.orcid')}</Typography>
       {isLoadingCristinPerson ? (
         <CircularProgress />
@@ -167,6 +166,6 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
           </Modal>
         </>
       )}
-    </BackgroundDiv>
+    </div>
   );
 };

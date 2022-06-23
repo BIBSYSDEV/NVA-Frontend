@@ -2,8 +2,8 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button, DialogActions, DialogContent, Typography } from '@mui/material';
 
-import { ORCID_SIGN_IN_URL, USE_MOCK_DATA } from '../../utils/constants';
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { ORCID_SIGN_IN_URL, USE_MOCK_DATA } from '../../../utils/constants';
+import { UrlPathTemplate } from '../../../utils/urlPaths';
 
 interface OrcidModalContentProps {
   cancelFunction: () => void;
@@ -16,7 +16,7 @@ export const OrcidModalContent = ({ cancelFunction, cancelText }: OrcidModalCont
 
   const openORCID = () => {
     if (USE_MOCK_DATA) {
-      history.push(`${UrlPathTemplate.MyProfile}?access_token=123`);
+      history.push(`${UrlPathTemplate.MyPageMyProfile}?access_token=123`);
       cancelFunction();
     } else {
       window.location.assign(ORCID_SIGN_IN_URL);

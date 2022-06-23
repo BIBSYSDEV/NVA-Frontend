@@ -1,8 +1,7 @@
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Typography } from '@mui/material';
-import { User } from '../../types/user.types';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { User } from '../../../types/user.types';
 
 interface UserInfoProps {
   user: User;
@@ -12,7 +11,7 @@ export const UserInfo = ({ user }: UserInfoProps) => {
   const { t } = useTranslation('profile');
 
   return (
-    <BackgroundDiv>
+    <div>
       <Typography variant="h2">{t('heading.user_info')}</Typography>
       <LabelTextLine dataTestId="user-name" label={t('common:name')}>
         {user.name}
@@ -20,7 +19,7 @@ export const UserInfo = ({ user }: UserInfoProps) => {
       <LabelTextLine dataTestId="user-id" label={t('id')}>
         {user.id}
       </LabelTextLine>
-    </BackgroundDiv>
+    </div>
   );
 };
 

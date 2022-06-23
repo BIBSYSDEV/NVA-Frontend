@@ -110,7 +110,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           data-testid={dataTestId.header.myProfileLink}
           onClick={closeMenu}
           component={Link}
-          to={UrlPathTemplate.MyProfile}>
+          to={UrlPathTemplate.MyPageMyProfile}>
           <Typography>{t('profile:my_profile')}</Typography>
         </MenuItem>
         <MenuItem data-testid={dataTestId.header.logOutLink} onClick={handleLogout}>
