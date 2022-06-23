@@ -33,7 +33,7 @@ const MyPagePage = () => {
       <BackgroundDiv component="nav">
         <MenuList dense>
           <MenuItem
-            data-testid={dataTestId.myPage.myRegistrationsLink}
+            data-testid={dataTestId.myPage.myProfileLink}
             component={Link}
             selected={currentPath === UrlPathTemplate.MyPageMyProfile}
             to={UrlPathTemplate.MyPageMyProfile}>

@@ -7,11 +7,10 @@ const allRoles = Object.values(RoleName);
 
 describe('Menu', () => {
   it('Authorized user should see protected menu options', () => {
-    cy.visit(UrlPathTemplate.MyProfile);
+    cy.visit(UrlPathTemplate.Home);
     cy.mocklogin();
     cy.setUserRolesInRedux(allRoles);
     cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click({ force: true });
-    cy.get(`[data-testid=${dataTestId.header.myProfileLink}]`).should('be.visible');
     cy.get('[data-testid=new-registration]').should('be.visible');
     cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).should('be.visible');
@@ -20,11 +19,10 @@ describe('Menu', () => {
   });
 
   it('Unauthorized user should not see protected menu options', () => {
-    cy.visit(UrlPathTemplate.MyProfile);
+    cy.visit(UrlPathTemplate.Home);
     cy.mocklogin();
     cy.setUserRolesInRedux(noRoles);
     cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click({ force: true });
-    cy.get(`[data-testid=${dataTestId.header.myProfileLink}]`).should('be.visible');
     cy.get('[data-testid=new-registration]').should('not.exist');
     cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).should('not.exist');

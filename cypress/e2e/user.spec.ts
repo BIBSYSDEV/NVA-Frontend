@@ -4,8 +4,8 @@ describe('User', () => {
   before('Given that the user is logged in:', () => {
     cy.visit('/');
     cy.mocklogin();
-    cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click();
-    cy.get(`[data-testid=${dataTestId.header.myProfileLink}]`).click();
+    cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).click();
+    cy.get(`[data-testid=${dataTestId.myPage.myProfileLink}]`).click();
   });
 
   it('The user should be able to see their user details', () => {
