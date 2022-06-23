@@ -46,7 +46,6 @@ export const dataTestId = {
     logOutLink: 'log-out-link',
     menuButton: 'menu-button',
     myPageLink: 'my-page-link',
-    myProfileLink: 'my-profile-link',
     newRegistrationLink: 'new-registration',
     privacyLink: 'privacy-link',
     worklistLink: 'worklist-link',
@@ -253,6 +252,7 @@ export const dataTestId = {
   },
   myPage: {
     messagesLink: 'messages-link',
+    myProfileLink: 'my-profile-link',
     myRegistrationsLink: 'my-registrations-link',
   },
 };

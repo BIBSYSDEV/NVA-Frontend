@@ -1,26 +1,27 @@
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Typography } from '@mui/material';
-import { User } from '../../types/user.types';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { User } from '../../../types/user.types';
 
 interface UserInfoProps {
   user: User;
 }
 
 export const UserInfo = ({ user }: UserInfoProps) => {
-  const { t } = useTranslation('profile');
+  const { t } = useTranslation('myPage');
 
   return (
-    <BackgroundDiv>
-      <Typography variant="h2">{t('heading.user_info')}</Typography>
+    <div>
+      <Typography variant="h2" paragraph>
+        {t('my_profile.heading.user_info')}
+      </Typography>
       <LabelTextLine dataTestId="user-name" label={t('common:name')}>
         {user.name}
       </LabelTextLine>
-      <LabelTextLine dataTestId="user-id" label={t('id')}>
+      <LabelTextLine dataTestId="user-id" label={t('my_profile.id')}>
         {user.id}
       </LabelTextLine>
-    </BackgroundDiv>
+    </div>
   );
 };
 

@@ -16,6 +16,8 @@
     "editors": "Redaktører",
     "filter": "Filtrer {{role}}",
     "known_author_identity": "Har tilknyttet forfatteridentitet",
+    "no_affiliations_found": "Ingen tilhørigheter funnet",
+    "no_registrations_found": "Ingen registreringer funnet",
     "prefilled_affiliation": "Forhåndsutfylt tilhørighet",
     "prefilled_name": "Forhåndsutfylt navn",
     "remove_affiliation": "Fjern tilhørighet",
@@ -23,6 +25,8 @@
     "select_contributor_type": "Velg type bidragsyter",
     "select_institution": "Velg institusjon",
     "supervisors": "Veiledere",
+    "other_registrations_one": "+ {{count}} annen registrering",
+    "other_registrations_other": "+ {{count}} andre registreringer",
     "type": "Bidragstype",
     "types": {
       "Architect": "Arkitekt",

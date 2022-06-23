@@ -106,13 +106,6 @@ export const Menu = ({ handleLogout }: MenuProps) => {
             <Typography>{t('basicData:basic_data')}</Typography>
           </MenuItem>
         )}
-        <MenuItem
-          data-testid={dataTestId.header.myProfileLink}
-          onClick={closeMenu}
-          component={Link}
-          to={UrlPathTemplate.MyProfile}>
-          <Typography>{t('profile:my_profile')}</Typography>
-        </MenuItem>
         <MenuItem data-testid={dataTestId.header.logOutLink} onClick={handleLogout}>
           {t('authorization:logout')}
         </MenuItem>
