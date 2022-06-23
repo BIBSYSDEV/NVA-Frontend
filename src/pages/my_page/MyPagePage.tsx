@@ -17,7 +17,7 @@ const MyPagePage = () => {
 
   useEffect(() => {
     if (currentPath === UrlPathTemplate.MyPage) {
-      history.replace(UrlPathTemplate.MyPageMyProfile);
+      history.replace(UrlPathTemplate.MyPageMessages);
     }
   }, [history, currentPath]);
 
@@ -32,17 +32,6 @@ const MyPagePage = () => {
       }}>
       <BackgroundDiv component="nav">
         <MenuList dense>
-          <MenuItem
-            data-testid={dataTestId.myPage.myProfileLink}
-            component={Link}
-            selected={currentPath === UrlPathTemplate.MyPageMyProfile}
-            to={UrlPathTemplate.MyPageMyProfile}>
-            <ListItemText>
-              <Typography variant="overline" color="primary" fontSize="1rem">
-                {t('my_profile.my_profile')}
-              </Typography>
-            </ListItemText>
-          </MenuItem>
           <MenuItem
             data-testid={dataTestId.myPage.messagesLink}
             component={Link}
@@ -62,6 +51,17 @@ const MyPagePage = () => {
             <ListItemText>
               <Typography variant="overline" color="primary" fontSize="1rem">
                 {t('registrations.my_registrations')}
+              </Typography>
+            </ListItemText>
+          </MenuItem>
+          <MenuItem
+            data-testid={dataTestId.myPage.myProfileLink}
+            component={Link}
+            selected={currentPath === UrlPathTemplate.MyPageMyProfile}
+            to={UrlPathTemplate.MyPageMyProfile}>
+            <ListItemText>
+              <Typography variant="overline" color="primary" fontSize="1rem">
+                {t('my_profile.my_profile')}
               </Typography>
             </ListItemText>
           </MenuItem>
