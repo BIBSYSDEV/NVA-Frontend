@@ -12,7 +12,9 @@ export const UserInfo = ({ user }: UserInfoProps) => {
 
   return (
     <div>
-      <Typography variant="h2">{t('my_profile.heading.user_info')}</Typography>
+      <Typography variant="h2" paragraph>
+        {t('my_profile.heading.user_info')}
+      </Typography>
       <LabelTextLine dataTestId="user-name" label={t('common:name')}>
         {user.name}
       </LabelTextLine>

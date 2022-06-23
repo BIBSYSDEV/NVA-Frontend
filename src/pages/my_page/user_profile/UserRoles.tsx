@@ -18,7 +18,9 @@ export const UserRoles = ({ user }: UserRolesProps) => {
 
   return (
     <div>
-      <Typography variant="h2">{t('my_profile.heading.roles')}</Typography>
+      <Typography variant="h2" paragraph>
+        {t('my_profile.heading.roles')}
+      </Typography>
       {user.customerId ? (
         !isAppAdmin &&
         !isInstitutionAdmin &&

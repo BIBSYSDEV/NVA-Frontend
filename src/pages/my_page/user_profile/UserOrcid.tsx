@@ -99,7 +99,9 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
 
   return (
     <div>
-      <Typography variant="h2">{t('my_profile.orcid.orcid')}</Typography>
+      <Typography variant="h2" paragraph>
+        {t('my_profile.orcid.orcid')}
+      </Typography>
       {isLoadingCristinPerson ? (
         <CircularProgress />
       ) : isAddingOrcid ? (
