@@ -27,7 +27,7 @@ const lineSx: SxProps = {
 };
 
 const PublicProfile = () => {
-  const { t } = useTranslation('profile');
+  const { t } = useTranslation('common');
   const history = useHistory();
   const personId = new URLSearchParams(history.location.search).get('id') ?? '';
 
@@ -52,7 +52,7 @@ const PublicProfile = () => {
 
   return (
     <SyledPageContent>
-      <PageHeader>{t('public_profile')}</PageHeader>
+      <PageHeader>{t('myPage:public_profile')}</PageHeader>
       {isLoadingPerson || isLoadingRegistrations ? (
         <PageSpinner />
       ) : (
@@ -86,11 +86,11 @@ const PublicProfile = () => {
             )}
             {registrations && (
               <Box sx={{ mt: '1rem' }}>
-                <Typography variant="h2">{t('common:registrations')}</Typography>
+                <Typography variant="h2">{t('registrations')}</Typography>
                 {registrations.size > 0 ? (
                   <SearchResults searchResult={registrations} />
                 ) : (
-                  <Typography>{t('common:no_hits')}</Typography>
+                  <Typography>{t('no_hits')}</Typography>
                 )}
               </Box>
             )}

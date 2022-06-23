@@ -13,12 +13,12 @@ interface UserRolesProps {
 }
 
 export const UserRoles = ({ user }: UserRolesProps) => {
-  const { t } = useTranslation('profile');
+  const { t } = useTranslation('myPage');
   const { isAppAdmin, isInstitutionAdmin, isEditor, isCurator, isCreator } = user;
 
   return (
     <div>
-      <Typography variant="h2">{t('heading.roles')}</Typography>
+      <Typography variant="h2">{t('my_profile.heading.roles')}</Typography>
       {user.customerId ? (
         !isAppAdmin &&
         !isInstitutionAdmin &&

@@ -123,7 +123,7 @@ export const AddAdminDialog = ({
 
   return (
     <Dialog open={open} onClose={closeDialog} fullWidth>
-      <DialogTitle>{t('common:add_custom', { name: t('profile:roles.institution_admin') })}</DialogTitle>
+      <DialogTitle>{t('common:add_custom', { name: t('myPage:roles.institution_admin') })}</DialogTitle>
       <Formik
         initialValues={addAdminInitialValues}
         validationSchema={!isEmployedInThisOrganization ? addCustomerAdminValidationSchema : null}

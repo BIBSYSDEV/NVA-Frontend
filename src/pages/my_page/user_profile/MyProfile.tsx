@@ -1,28 +1,27 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Box, Divider } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 import { RootState } from '../../../redux/store';
 import { UserInfo } from './UserInfo';
 import { UserOrcid } from './UserOrcid';
 import { UserRoles } from './UserRoles';
 import { UserAffiliations } from './UserAffiliations';
-import { Helmet } from 'react-helmet-async';
 
 export const MyProfile = () => {
-  const { t } = useTranslation('profile');
+  const { t } = useTranslation('myPage');
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const user = useSelector((store: RootState) => store.user)!; // If user has been empty this route would already be blocked
 
   return (
     <>
       <Helmet>
-        <title>{t('my_profile')}</title>
+        <title>{t('my_profile.my_profile')}</title>
       </Helmet>
       <Box
         sx={{
           display: 'grid',
           columnGap: '3rem',
-          fontSize: '1rem',
           gridTemplateAreas: {
             xs: '"primary-info" "roles"',
             md: '"roles primary-info"',

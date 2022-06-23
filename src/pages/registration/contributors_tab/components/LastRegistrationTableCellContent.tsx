@@ -26,11 +26,11 @@ export const LastRegistrationTableCellContent = ({ personId }: LastRegistrationT
       <TruncatableTypography lines={2}>{registration.entityDescription?.mainTitle}</TruncatableTypography>
       {registrationSearch && registrationSearch.size > 1 && (
         <Typography fontStyle="italic">
-          {t('profile:authority.other_registrations', { count: registrationSearch.size - 1 })}
+          {t('registration:contributors.other_registrations', { count: registrationSearch.size - 1 })}
         </Typography>
       )}
     </>
   ) : (
-    <i>{t('profile:authority.no_registrations_found')}</i>
+    <i>{t('registration:contributors.no_registrations_found')}</i>
   );
 };

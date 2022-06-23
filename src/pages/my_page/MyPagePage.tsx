@@ -39,7 +39,7 @@ const MyPagePage = () => {
             to={UrlPathTemplate.MyPageMyProfile}>
             <ListItemText>
               <Typography variant="overline" color="primary" fontSize="1rem">
-                {t('profile:my_profile')}
+                {t('my_profile.my_profile')}
               </Typography>
             </ListItemText>
           </MenuItem>

@@ -16,6 +16,8 @@
     "editors": "Editors",
     "filter": "Filter {{role}}",
     "known_author_identity": "Connected author identity",
+    "no_affiliations_found": "No affiliations found",
+    "no_registrations_found": "No registrations found",
     "prefilled_affiliation": "Prefilled affiliation",
     "prefilled_name": "Prefilled name",
     "remove_affiliation": "Remove affiliation",
@@ -23,6 +25,8 @@
     "select_institution": "Select institution",
     "select_contributor_type": "Select contributor type",
     "supervisors": "Supervisors",
+    "other_registrations_one": "+ {{count}} other registration",
+    "other_registrations_other": "+ {{count}} other registrations",
     "type": "Contributor type",
     "types": {
       "Architect": "Architect",

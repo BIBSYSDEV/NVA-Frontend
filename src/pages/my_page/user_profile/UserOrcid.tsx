@@ -23,7 +23,7 @@ interface UserOrcidProps {
 }
 
 export const UserOrcid = ({ user }: UserOrcidProps) => {
-  const { t } = useTranslation('profile');
+  const { t } = useTranslation('myPage');
   const dispatch = useDispatch();
   const history = useHistory();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
@@ -99,7 +99,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
 
   return (
     <div>
-      <Typography variant="h2">{t('orcid.orcid')}</Typography>
+      <Typography variant="h2">{t('my_profile.orcid.orcid')}</Typography>
       {isLoadingCristinPerson ? (
         <CircularProgress />
       ) : isAddingOrcid ? (
@@ -143,7 +143,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
             isLoading={isRemovingOrcid}
             dataTestId="confirm-remove-orcid-connection-dialog">
             <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-              {t('orcid.remove_connection_info')}{' '}
+              {t('my_profile.orcid.remove_connection_info')}{' '}
               <MuiLink href={orcidUrl} target="_blank" rel="noopener noreferrer">
                 {orcidUrl}
               </MuiLink>
@@ -154,7 +154,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         <>
           <Typography paragraph>{t('orcid.orcid_description')}</Typography>
           <Button data-testid="button-create-connect-orcid" onClick={toggleModal} variant="contained" size="small">
-            {t('orcid.connect_orcid')}
+            {t('my_profile.orcid.connect_orcid')}
           </Button>
           <Modal
             headingIcon={{ src: orcidIcon, alt: 'ORCID iD icon' }}

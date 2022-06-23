@@ -10,7 +10,7 @@ interface UserInstituionProps {
 }
 
 export const UserAffiliations = ({ user }: UserInstituionProps) => {
-  const { t } = useTranslation('profile');
+  const { t } = useTranslation('myPage');
   const [person, isLoadingPerson] = useFetch<CristinPerson>({
     url: user.cristinId ?? '',
     errorMessage: t('feedback:error.get_person'),
@@ -19,7 +19,7 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
 
   return (
     <div>
-      <Typography variant="h2">{t('heading.affiliations')}</Typography>
+      <Typography variant="h2">{t('my_profile.heading.affiliations')}</Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', my: '1rem' }}>
         {isLoadingPerson ? (
           <CircularProgress />
