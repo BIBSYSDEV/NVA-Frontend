@@ -117,6 +117,11 @@ export const CustomerInstitutionMetadataForm = ({
                 label={t('feide_organization_domain')}
                 dataTestId={dataTestId.institutionAdmin.feideField}
               />
+              <CustomerInstitutionTextField
+                name={CustomerInstitutionFieldNames.RorId}
+                label={t('basicData:institutions.ror_id')}
+                dataTestId={dataTestId.institutionAdmin.rorField}
+              />
               <StyledRightAlignedWrapper>
                 <LoadingButton
                   data-testid={dataTestId.institutionAdmin.saveButton}
