@@ -8,6 +8,7 @@ import { CreatorRoute, LoggedInRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { MyMessagesPage } from '../messages/MyMessagesPage';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
+import PublicProfile from '../public_profile/PublicProfile';
 import { MyProfile } from './user_profile/MyProfile';
 
 const MyPagePage = () => {
@@ -55,6 +56,17 @@ const MyPagePage = () => {
             </ListItemText>
           </MenuItem>
           <MenuItem
+            data-testid={dataTestId.myPage.researchProfileLink}
+            component={Link}
+            selected={currentPath === UrlPathTemplate.MyPageResearchProfile}
+            to={UrlPathTemplate.MyPageResearchProfile}>
+            <ListItemText>
+              <Typography variant="overline" color="primary" fontSize="1rem">
+                {t('public_profile')}
+              </Typography>
+            </ListItemText>
+          </MenuItem>
+          <MenuItem
             data-testid={dataTestId.myPage.myProfileLink}
             component={Link}
             selected={currentPath === UrlPathTemplate.MyPageMyProfile}
@@ -72,6 +84,7 @@ const MyPagePage = () => {
           <CreatorRoute exact path={UrlPathTemplate.MyPageMessages} component={MyMessagesPage} />
           <CreatorRoute exact path={UrlPathTemplate.MyPageRegistrations} component={MyRegistrations} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProfile} component={MyProfile} />
+          <LoggedInRoute exact path={UrlPathTemplate.MyPageResearchProfile} component={PublicProfile} />
         </Switch>
       </BackgroundDiv>
     </Box>

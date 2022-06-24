@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Box, IconButton, Link as MuiLink, SxProps, Typography } from '@mui/material';
 import WorkIcon from '@mui/icons-material/Work';
 import { Helmet } from 'react-helmet-async';
+import { useSelector } from 'react-redux';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { PageHeader } from '../../components/PageHeader';
 import { BackgroundDiv, SyledPageContent } from '../../components/styled/Wrappers';
@@ -15,6 +16,8 @@ import { ContributorFieldNames, SpecificContributorFieldNames } from '../../type
 import { ExpressionStatement } from '../../utils/searchHelpers';
 import { CristinPerson } from '../../types/user.types';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../utils/user-helpers';
+import { UrlPathTemplate } from '../../utils/urlPaths';
+import { RootState } from '../../redux/store';
 
 const textContainerSx: SxProps = {
   width: '100%',
@@ -29,7 +32,12 @@ const lineSx: SxProps = {
 const PublicProfile = () => {
   const { t } = useTranslation('common');
   const history = useHistory();
-  const personId = new URLSearchParams(history.location.search).get('id') ?? '';
+
+  const currentCristinId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
+  const personId =
+    history.location.pathname === UrlPathTemplate.User
+      ? new URLSearchParams(history.location.search).get('id') ?? '' // Page for Research Profile of anyone
+      : currentCristinId; // Page for My Research Profile
 
   const [person, isLoadingPerson] = useFetch<CristinPerson>({
     url: personId,

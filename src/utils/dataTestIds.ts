@@ -254,5 +254,6 @@ export const dataTestId = {
     messagesLink: 'messages-link',
     myProfileLink: 'my-profile-link',
     myRegistrationsLink: 'my-registrations-link',
+    researchProfileLink: 'research-profile-link',
   },
 };
