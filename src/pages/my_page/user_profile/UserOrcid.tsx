@@ -139,7 +139,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
 
           <ConfirmDialog
             open={openConfirmDialog}
-            title={t('orcid.remove_connection')}
+            title={t('my_profile.orcid.remove_connection')}
             onAccept={removeOrcid}
             onCancel={toggleConfirmDialog}
             isLoading={isRemovingOrcid}
@@ -154,7 +154,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         </Box>
       ) : (
         <>
-          <Typography paragraph>{t('orcid.orcid_description')}</Typography>
+          <Typography paragraph>{t('my_profile.orcid.orcid_description')}</Typography>
           <Button data-testid="button-create-connect-orcid" onClick={toggleModal} variant="contained" size="small">
             {t('my_profile.orcid.connect_orcid')}
           </Button>
