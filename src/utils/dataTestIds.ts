@@ -55,6 +55,7 @@ export const dataTestId = {
     displayNameField: 'display-name-field',
     feideField: 'feide-field',
     nameField: 'institution-name-field',
+    rorField: 'ror-field',
     saveButton: 'save-button',
     shortNameField: 'short-name-field',
   },

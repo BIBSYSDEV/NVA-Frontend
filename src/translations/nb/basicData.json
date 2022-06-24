@@ -20,6 +20,10 @@
   },
   "create_person": "Opprett person",
   "employments": "Ansettelser",
+  "institutions": {
+    "invalid_ror_format": "Ugyldig ROR ID. Eksempel med gyldig format: https://ror.org/abcd0123ef",
+    "ror_id": "ROR ID"
+  },
   "national_id": "Fødselsnummer",
   "no_matching_persons_found": "Ingen samsvarende personer funnet i Personregisteret",
   "person_register": {

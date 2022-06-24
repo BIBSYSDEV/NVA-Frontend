@@ -20,6 +20,10 @@
   },
   "create_person": "Create person",
   "employments": "Employments",
+  "institutions": {
+    "invalid_ror_format": "Invalid ROR ID. Example with valid format: https://ror.org/abcd0123ef",
+    "ror_id": "ROR ID"
+  },
   "national_id": "National ID",
   "no_matching_persons_found": "No matching persons found in the Person Registry",
   "person_register": {
