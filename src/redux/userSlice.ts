@@ -13,7 +13,7 @@ const userSlice = createSlice({
         : action.payload['custom:customerId'];
       const roleItems =
         action.payload['custom:roles']?.split(',').map((roleItem) => roleItem.split('@') as [RoleName, string]) ?? [];
-      const roles = roleItems.filter(([_, thisCustomerId]) => thisCustomerId === customerId).map(([role]) => role);
+      const roles: any = roleItems.filter(([_, thisCustomerId]) => thisCustomerId === customerId).map(([role]) => role);
       const firstName = action.payload['custom:firstName'] ?? '';
       const lastName = action.payload['custom:lastName'] ?? '';
       const cristinId = action.payload['custom:cristinId'] ?? '';

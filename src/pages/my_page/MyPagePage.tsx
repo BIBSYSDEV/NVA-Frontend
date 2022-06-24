@@ -1,8 +1,10 @@
 import { Box, ListItemText, MenuItem, MenuList, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { Link, Switch, useHistory } from 'react-router-dom';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
 import { CreatorRoute, LoggedInRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -13,14 +15,19 @@ import { MyProfile } from './user_profile/MyProfile';
 
 const MyPagePage = () => {
   const { t } = useTranslation('myPage');
+  const user = useSelector((store: RootState) => store.user);
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
   useEffect(() => {
     if (currentPath === UrlPathTemplate.MyPage) {
-      history.replace(UrlPathTemplate.MyPageMessages);
+      if (user?.isCreator) {
+        history.replace(UrlPathTemplate.MyPageMessages);
+      } else {
+        history.replace(UrlPathTemplate.MyPageResearchProfile);
+      }
     }
-  }, [history, currentPath]);
+  }, [history, currentPath, user?.isCreator]);
 
   return (
     <Box
@@ -33,28 +40,32 @@ const MyPagePage = () => {
       }}>
       <BackgroundDiv component="nav">
         <MenuList dense>
-          <MenuItem
-            data-testid={dataTestId.myPage.messagesLink}
-            component={Link}
-            selected={currentPath === UrlPathTemplate.MyPageMessages}
-            to={UrlPathTemplate.MyPageMessages}>
-            <ListItemText>
-              <Typography variant="overline" color="primary" fontSize="1rem">
-                {t('messages.messages')}
-              </Typography>
-            </ListItemText>
-          </MenuItem>
-          <MenuItem
-            data-testid={dataTestId.myPage.myRegistrationsLink}
-            component={Link}
-            selected={currentPath === UrlPathTemplate.MyPageRegistrations}
-            to={UrlPathTemplate.MyPageRegistrations}>
-            <ListItemText>
-              <Typography variant="overline" color="primary" fontSize="1rem">
-                {t('registrations.my_registrations')}
-              </Typography>
-            </ListItemText>
-          </MenuItem>
+          {user?.isCreator && [
+            <MenuItem
+              key={dataTestId.myPage.messagesLink}
+              data-testid={dataTestId.myPage.messagesLink}
+              component={Link}
+              selected={currentPath === UrlPathTemplate.MyPageMessages}
+              to={UrlPathTemplate.MyPageMessages}>
+              <ListItemText>
+                <Typography variant="overline" color="primary" fontSize="1rem">
+                  {t('messages.messages')}
+                </Typography>
+              </ListItemText>
+            </MenuItem>,
+            <MenuItem
+              key={dataTestId.myPage.myRegistrationsLink}
+              data-testid={dataTestId.myPage.myRegistrationsLink}
+              component={Link}
+              selected={currentPath === UrlPathTemplate.MyPageRegistrations}
+              to={UrlPathTemplate.MyPageRegistrations}>
+              <ListItemText>
+                <Typography variant="overline" color="primary" fontSize="1rem">
+                  {t('registrations.my_registrations')}
+                </Typography>
+              </ListItemText>
+            </MenuItem>,
+          ]}
           <MenuItem
             data-testid={dataTestId.myPage.researchProfileLink}
             component={Link}
