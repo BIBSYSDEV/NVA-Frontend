@@ -49,7 +49,7 @@ export const MyRegistrations = () => {
             component={RouterLink}
             to={getResearchProfilePath(user.cristinId)}
             data-testid="public-profile-button">
-            {t('registrations.go_to_research_profile')}
+            {t('registrations.my_research_profile')}
           </Button>
         )}
       </StyledRightAlignedWrapper>

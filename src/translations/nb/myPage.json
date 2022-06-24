@@ -11,8 +11,8 @@
   "registrations": {
     "delete_registration": "Slett upublisert registrering",
     "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
-    "go_to_research_profile": "Min forskerprofil",
     "my_registrations": "Mine registreringer",
+    "my_research_profile": "Min forskerprofil",
     "published_registrations": "Publiserte registreringer",
     "unpublished_registrations": "Upubliserte registreringer"
   },
@@ -26,7 +26,7 @@
       "user_info": "Brukerinformasjon"
     },
     "id": "ID",
-    "my_profile": "Min brukerprofil",
+    "user_profile": "Brukerprofil",
     "orcid": {
       "connect_orcid": "Koble/opprette ORCID iD",
       "dialog": {
