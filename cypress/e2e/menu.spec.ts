@@ -42,9 +42,9 @@ describe('Menu', () => {
   it('User sees My Page menu options', () => {
     cy.visit(UrlPathTemplate.Home);
     cy.mocklogin();
-    cy.setUserRolesInRedux([]);
     cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).click();
 
+    cy.setUserRolesInRedux([]);
     cy.get(`[data-testid=${dataTestId.myPage.messagesLink}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.myPage.myRegistrationsLink}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.myPage.myProfileLink}]`).should('be.visible');
@@ -55,6 +55,27 @@ describe('Menu', () => {
     cy.get(`[data-testid=${dataTestId.myPage.myRegistrationsLink}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.myPage.myProfileLink}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.myPage.researchProfileLink}]`).should('be.visible');
+  });
+
+  it('User sees Basic Data menu options', () => {
+    cy.visit(UrlPathTemplate.Home);
+    cy.mocklogin();
+    cy.setUserRolesInRedux([RoleName.AppAdmin]);
+    cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).click();
+
+    // TODO: Remove commented tests when out of beta
+
+    // cy.get(`[data-testid=${dataTestId.basicData.personRegisterLink}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.basicData.addEmployeeLink}]`).should('not.exist');
+    // cy.get(`[data-testid=${dataTestId.basicData.centralImportLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.basicData.adminInstitutionsLink}]`).should('be.visible');
+
+    cy.setUserRolesInRedux([RoleName.InstitutionAdmin]);
+    cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).click();
+    // cy.get(`[data-testid=${dataTestId.basicData.personRegisterLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.basicData.addEmployeeLink}]`).should('be.visible');
+    // cy.get(`[data-testid=${dataTestId.basicData.centralImportLink}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.basicData.adminInstitutionsLink}]`).should('not.exist');
   });
 
   it('Unauthorized user should see Forbidden page when visiting protected URLs', () => {
