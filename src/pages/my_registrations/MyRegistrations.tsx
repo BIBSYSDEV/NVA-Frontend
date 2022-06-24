@@ -9,7 +9,7 @@ import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { TabButton } from '../../components/TabButton';
 import { RootState } from '../../redux/store';
 import { MyRegistrationsResponse, RegistrationStatus } from '../../types/registration.types';
-import { getUserPath } from '../../utils/urlPaths';
+import { getResearchProfilePath } from '../../utils/urlPaths';
 import { MyRegistrationsList } from './MyRegistrationsList';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { PublicationsApiPath } from '../../api/apiPaths';
@@ -45,8 +45,11 @@ export const MyRegistrations = () => {
       </Helmet>
       <StyledRightAlignedWrapper>
         {user?.cristinId && (
-          <Button component={RouterLink} to={getUserPath(user.cristinId)} data-testid="public-profile-button">
-            {t('registrations.go_to_public_profile')}
+          <Button
+            component={RouterLink}
+            to={getResearchProfilePath(user.cristinId)}
+            data-testid="public-profile-button">
+            {t('registrations.go_to_research_profile')}
           </Button>
         )}
       </StyledRightAlignedWrapper>

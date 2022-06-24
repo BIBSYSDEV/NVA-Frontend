@@ -28,12 +28,12 @@ const lineSx: SxProps = {
   mt: '1rem',
 };
 
-const PublicProfile = () => {
+const ResearchProfile = () => {
   const { t } = useTranslation('common');
   const history = useHistory();
 
   const currentCristinId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
-  const isPublicPage = history.location.pathname === UrlPathTemplate.User;
+  const isPublicPage = history.location.pathname === UrlPathTemplate.ResearchProfile;
   const personId = isPublicPage
     ? new URLSearchParams(history.location.search).get('id') ?? '' // Page for Research Profile of anyone
     : currentCristinId; // Page for My Research Profile
@@ -107,4 +107,4 @@ const PublicProfile = () => {
   );
 };
 
-export default PublicProfile;
+export default ResearchProfile;
