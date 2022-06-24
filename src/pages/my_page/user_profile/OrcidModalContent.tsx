@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button, DialogActions, DialogContent, Typography } from '@mui/material';
 
-import { ORCID_SIGN_IN_URL, USE_MOCK_DATA } from '../../../utils/constants';
+import { ORCID_BASE_URL, USE_MOCK_DATA } from '../../../utils/constants';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 
 interface OrcidModalContentProps {
@@ -19,7 +19,9 @@ export const OrcidModalContent = ({ cancelFunction, cancelText }: OrcidModalCont
       history.push(`${UrlPathTemplate.MyPageMyProfile}?access_token=123`);
       cancelFunction();
     } else {
-      window.location.assign(ORCID_SIGN_IN_URL);
+      window.location.assign(
+        `${ORCID_BASE_URL}/signin?oauth&client_id=${process.env.REACT_APP_ORCID_CLIENT_ID}&response_type=token&scope=openid&redirect_uri=${window.location.href}`
+      );
     }
   };
 
