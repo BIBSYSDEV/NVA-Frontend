@@ -26,7 +26,7 @@ export const CustomerInstitutionAdminsForm = ({
     setOpenAddAdminModal((state) => !state);
   };
 
-  const addAdminText = t('common:add_custom', { name: t('profile:roles.institution_admin') });
+  const addAdminText = t('common:add_custom', { name: t('myPage:roles.institution_admin') });
 
   return (
     <>
@@ -39,7 +39,7 @@ export const CustomerInstitutionAdminsForm = ({
             userList={admins}
             roleToRemove={RoleName.InstitutionAdmin}
             refetchUsers={refetchInstitutionUsers}
-            tableCaption={t('profile:roles.institution_admins')}
+            tableCaption={t('myPage:roles.institution_admins')}
           />
           <Button
             sx={{ mt: '1rem' }}

@@ -2,9 +2,15 @@ import { FormHelperText } from '@mui/material';
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useEffect, useRef } from 'react';
 import { ContributorRole } from '../../types/contributor.types';
-import { BookType, ContributorFieldNames, JournalType, ReportType } from '../../types/publicationFieldNames';
+import {
+  ArtisticType,
+  BookType,
+  ContributorFieldNames,
+  JournalType,
+  ReportType,
+} from '../../types/publicationFieldNames';
 import { EntityDescription, Registration } from '../../types/registration.types';
-import { isArtistic, isDegree } from '../../utils/registration-helpers';
+import { isDegree } from '../../utils/registration-helpers';
 import { Contributors } from './contributors_tab/Contributors';
 
 export const ContributorsPanel = () => {
@@ -40,7 +46,12 @@ export const ContributorsPanel = () => {
           isDegree(publicationInstanceType) ? (
             <>
               <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
-              <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Supervisor]} />
+              <Contributors
+                push={push}
+                replace={replace}
+                contributorRoles={[ContributorRole.Supervisor]}
+                primaryColorAddButton={false}
+              />
               <Contributors
                 push={push}
                 replace={replace}
@@ -58,7 +69,19 @@ export const ContributorsPanel = () => {
                 contributorRoles={selectableContributorRoles.filter((role) => role !== ContributorRole.Editor)}
               />
             </>
-          ) : isArtistic(publicationInstanceType) ? (
+          ) : publicationInstanceType === ArtisticType.ArtisticArchitecture ? (
+            <Contributors
+              push={push}
+              replace={replace}
+              contributorRoles={[
+                ContributorRole.Architect,
+                ContributorRole.LandscapeArchitect,
+                ContributorRole.InteriorArchitect,
+                ContributorRole.ArchitecturalPlanner,
+                ContributorRole.Other,
+              ]}
+            />
+          ) : publicationInstanceType === ArtisticType.ArtisticDesign ? (
             <Contributors
               push={push}
               replace={replace}

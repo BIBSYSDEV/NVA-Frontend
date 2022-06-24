@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Box } from '@mui/material';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import { LocalizationProvider } from '@mui/lab';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 import { getDateFnsLocale } from './utils/date-helpers';
 import { getCurrentUserAttributes } from './api/userApi';
 import { AppRoutes } from './AppRoutes';
@@ -36,7 +36,7 @@ const getLanguageTagValue = (language: string) => {
   return 'no';
 };
 
-if (window.location.pathname === UrlPathTemplate.MyProfile && window.location.hash.startsWith('#access_token=')) {
+if (window.location.pathname === UrlPathTemplate.MyPageMyProfile && window.location.hash.startsWith('#access_token=')) {
   // Workaround to allow adding orcid for aws-amplify > 4.2.2
   // Without this the user will be redirected to / for some reason
   window.location.href = window.location.href.replace('#', '?');

@@ -8,7 +8,9 @@ describe('User opens registration form and can see validation errors', () => {
   before('Given that the user is logged in as Creator:', () => {
     cy.visit('/');
     cy.mocklogin();
-    cy.get(`[data-testid=${dataTestId.header.myRegistrationsLink}]`).click({ force: true });
+
+    cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).click();
+    cy.get(`[data-testid=${dataTestId.myPage.myRegistrationsLink}]`).click();
     cy.get('[data-testid=edit-registration-4327439]').click({ force: true });
   });
 
@@ -309,20 +311,7 @@ describe('User opens registration form and can see validation errors', () => {
       .click({ force: true });
     cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.selectUserButton}]`).click();
     cy.get('[data-testid=contributor-modal]').should('not.exist');
-    cy.get('p.Mui-error').should('be.visible');
 
-    // Add supervisor
-    cy.get('[data-testid=add-Supervisor]').first().click();
-    cy.get('[data-testid=contributor-modal]').should('be.visible');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.searchField}] input`).type('test');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.authorRadioButton}]`)
-      .last()
-      .click({ force: true });
-    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.authorRadioButton}]`)
-      .last()
-      .click({ force: true });
-    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.selectUserButton}]`).click();
-    cy.get('[data-testid=contributor-modal]').should('not.exist');
     cy.get('p.Mui-error').should('not.exist');
 
     cy.get('[data-testid=nav-tabpanel-contributors]').within(() =>

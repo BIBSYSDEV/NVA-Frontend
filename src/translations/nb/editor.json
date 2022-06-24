@@ -7,6 +7,14 @@
   "disabled_description": "$t(disabled): Er ikke tilgjengelig",
   "hrcs_activity": "Health Research Classification System - Activity",
   "hrcs_categories": "Health Research Classification System - Categories",
+  "institution": {
+    "institution_code": "Institusjonens kode",
+    "institution_helper_text": "Kontakt <0>Sikt</0> om behov for endringer.",
+    "institution_name": "Institusjonsnavn",
+    "institution_name_english": "Institusjonens engelske navn",
+    "institution_name_norwegian": "Institusjonens norske navn",
+    "institution_short_name": "Institusjonens kortnavn"
+  },
   "publish_strategy": {
     "files_and_licenses": "Filer og lisenser",
     "metadata": "Metadata",

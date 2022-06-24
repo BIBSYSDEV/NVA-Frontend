@@ -10,7 +10,7 @@ interface MyMessagesProps {
 }
 
 export const MyMessages = ({ conversations }: MyMessagesProps) => {
-  const { t } = useTranslation('workLists');
+  const { t } = useTranslation('myPage');
   useEffect(() => {
     if (conversations.some(({ publication }) => stringIncludesMathJax(publication.mainTitle))) {
       typesetMathJax();
@@ -18,7 +18,7 @@ export const MyMessages = ({ conversations }: MyMessagesProps) => {
   }, [conversations]);
 
   return conversations.length === 0 ? (
-    <Typography>{t('no_messages')}</Typography>
+    <Typography>{t('messages.no_messages')}</Typography>
   ) : (
     <>
       {conversations.map((conversation) =>

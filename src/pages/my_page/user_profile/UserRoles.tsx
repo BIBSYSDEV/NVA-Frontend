@@ -6,20 +6,21 @@ import PeopleIcon from '@mui/icons-material/People';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 import AllInboxIcon from '@mui/icons-material/AllInbox';
 import CreateIcon from '@mui/icons-material/Create';
-import { User } from '../../types/user.types';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { User } from '../../../types/user.types';
 
 interface UserRolesProps {
   user: User;
 }
 
 export const UserRoles = ({ user }: UserRolesProps) => {
-  const { t } = useTranslation('profile');
+  const { t } = useTranslation('myPage');
   const { isAppAdmin, isInstitutionAdmin, isEditor, isCurator, isCreator } = user;
 
   return (
-    <BackgroundDiv>
-      <Typography variant="h2">{t('heading.roles')}</Typography>
+    <div>
+      <Typography variant="h2" paragraph>
+        {t('my_profile.heading.roles')}
+      </Typography>
       {user.customerId ? (
         !isAppAdmin &&
         !isInstitutionAdmin &&
@@ -75,7 +76,7 @@ export const UserRoles = ({ user }: UserRolesProps) => {
           text={t('roles.creator_description')}
         />
       )}
-    </BackgroundDiv>
+    </div>
   );
 };
 

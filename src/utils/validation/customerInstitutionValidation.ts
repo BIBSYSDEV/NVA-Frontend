@@ -15,10 +15,3 @@ export const customerInstitutionValidationSchema = Yup.object().shape({
   [CustomerInstitutionFieldNames.ArchiveName]: Yup.string(),
   [CustomerInstitutionFieldNames.FeideOrganizationDomain]: Yup.string(),
 });
-
-export const myInstitutionValidationSchema = Yup.object().shape({
-  [CustomerInstitutionFieldNames.Name]: Yup.string().required(customerErrorMessage.institutionRequired),
-  [CustomerInstitutionFieldNames.DisplayName]: Yup.string().required(customerErrorMessage.displayNameRequired),
-  [CustomerInstitutionFieldNames.ShortName]: Yup.string().required(customerErrorMessage.shortNameRequired),
-  [CustomerInstitutionFieldNames.ArchiveName]: Yup.string(),
-});

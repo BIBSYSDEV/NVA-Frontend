@@ -87,24 +87,14 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               <Typography>{t('registration:new_registration')}</Typography>
             </MenuItem>,
             <MenuItem
-              key={dataTestId.header.messagesLink}
-              data-testid={dataTestId.header.messagesLink}
+              key={dataTestId.header.myPageLink}
+              data-testid={dataTestId.header.myPageLink}
               onClick={closeMenu}
               component={Link}
-              to={UrlPathTemplate.MyMessages}>
-              <Typography>{t('workLists:messages')}</Typography>
+              to={UrlPathTemplate.MyPage}>
+              <Typography>{t('myPage:my_page')}</Typography>
             </MenuItem>,
           ],
-        ]}
-        {user?.isCreator && [
-          <MenuItem
-            key={dataTestId.header.myRegistrationsLink}
-            data-testid={dataTestId.header.myRegistrationsLink}
-            onClick={closeMenu}
-            component={Link}
-            to={UrlPathTemplate.MyRegistrations}>
-            <Typography>{t('workLists:my_registrations')}</Typography>
-          </MenuItem>,
         ]}
         {(user?.isAppAdmin || user?.isInstitutionAdmin) && isMobile && (
           <MenuItem
@@ -116,13 +106,6 @@ export const Menu = ({ handleLogout }: MenuProps) => {
             <Typography>{t('basicData:basic_data')}</Typography>
           </MenuItem>
         )}
-        <MenuItem
-          data-testid={dataTestId.header.myProfileLink}
-          onClick={closeMenu}
-          component={Link}
-          to={UrlPathTemplate.MyProfile}>
-          <Typography>{t('profile:my_profile')}</Typography>
-        </MenuItem>
         <MenuItem data-testid={dataTestId.header.logOutLink} onClick={handleLogout}>
           {t('authorization:logout')}
         </MenuItem>

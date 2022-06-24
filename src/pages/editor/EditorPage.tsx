@@ -7,6 +7,7 @@ import { VocabularySettings } from './VocabularySettings';
 import { PublishStrategySettings } from './PublishStrategySettings';
 import { EditorRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { EditorInstitution } from './EditorInstitution';
 
 const EditorPage = () => {
   const { t } = useTranslation('editor');
@@ -15,14 +16,31 @@ const EditorPage = () => {
 
   useEffect(() => {
     if (currentPath === UrlPathTemplate.Editor) {
-      history.replace(UrlPathTemplate.EditorVocabulary);
+      history.replace(UrlPathTemplate.EditorInstitution);
     }
   }, [history, currentPath]);
 
   return (
-    <Box sx={{ width: '100%', p: '1rem', display: 'grid', gridTemplateColumns: '1fr 5fr', gap: '1rem' }}>
-      <BackgroundDiv>
-        <MenuList>
+    <Box
+      sx={{
+        width: '100%',
+        p: { xs: 0, md: '1rem' },
+        display: 'grid',
+        gridTemplateColumns: { xs: '1fr', md: '1fr 5fr' },
+        gap: '1rem',
+      }}>
+      <BackgroundDiv component="nav">
+        <MenuList dense>
+          <MenuItem
+            component={Link}
+            selected={currentPath === UrlPathTemplate.EditorInstitution}
+            to={UrlPathTemplate.EditorInstitution}>
+            <ListItemText>
+              <Typography variant="overline" color="primary" fontSize="1rem">
+                {t('institution.institution_name')}
+              </Typography>
+            </ListItemText>
+          </MenuItem>
           <MenuItem
             component={Link}
             selected={currentPath === UrlPathTemplate.EditorVocabulary}
@@ -49,6 +67,7 @@ const EditorPage = () => {
         <Switch>
           <EditorRoute exact path={UrlPathTemplate.EditorVocabulary} component={VocabularySettings} />
           <EditorRoute exact path={UrlPathTemplate.EditorPublishStrategy} component={PublishStrategySettings} />
+          <EditorRoute exact path={UrlPathTemplate.EditorInstitution} component={EditorInstitution} />
         </Switch>
       </BackgroundDiv>
     </Box>

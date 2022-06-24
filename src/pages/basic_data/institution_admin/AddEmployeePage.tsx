@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
+import { Helmet } from 'react-helmet-async';
 import { CreateCristinPerson, Employment, FlatCristinPerson, RoleName } from '../../../types/user.types';
 import { FindPersonPanel } from './FindPersonPanel';
 import { AddAffiliationPanel } from './AddAffiliationPanel';
@@ -87,13 +88,22 @@ export const AddEmployeePage = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{t('add_employee')}</title>
+      </Helmet>
       <Typography variant="h3" component="h2" paragraph>
         {t('add_to_person_registry')}
       </Typography>
       <Formik initialValues={initialValues} validationSchema={addEmployeeValidationSchema} onSubmit={onSubmit}>
         {({ isValid, isSubmitting, values, setFieldValue, errors }: FormikProps<AddEmployeeData>) => (
           <Form noValidate>
-            <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr auto 1fr', gap: '2rem', mt: '2rem' }}>
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr', md: '1fr auto 1fr auto 1fr' },
+                gap: '2rem',
+                mt: '2rem',
+              }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <FindPersonPanel />
               </Box>
@@ -110,7 +120,7 @@ export const AddEmployeePage = () => {
                 />
               </Box>
             </Box>
-            <StyledCenterContainer>
+            <StyledCenterContainer sx={{ mt: '1rem' }}>
               <LoadingButton variant="contained" size="large" loading={isSubmitting} disabled={!isValid} type="submit">
                 {t('common:create')}
               </LoadingButton>

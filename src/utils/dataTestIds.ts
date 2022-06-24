@@ -1,7 +1,6 @@
 export const dataTestId = {
   basicData: {
     addEmployeeLink: 'add-employee-link',
-    adminInstitutionLink: 'admin-institution-link',
     adminInstitutionsLink: 'admin-institutions-link',
     adminUsersLink: 'admin-users-link',
     centralImportLink: 'central-import-link',
@@ -46,9 +45,7 @@ export const dataTestId = {
     logInButton: 'log-in-link',
     logOutLink: 'log-out-link',
     menuButton: 'menu-button',
-    messagesLink: 'messages-link',
-    myProfileLink: 'my-profile-link',
-    myRegistrationsLink: 'my-registrations-link',
+    myPageLink: 'my-page-link',
     newRegistrationLink: 'new-registration',
     privacyLink: 'privacy-link',
     worklistLink: 'worklist-link',
@@ -252,5 +249,11 @@ export const dataTestId = {
     usersCurators: 'users-curators',
     usersEditors: 'users-editors',
     usersCreators: 'users-creators',
+  },
+  myPage: {
+    messagesLink: 'messages-link',
+    myProfileLink: 'my-profile-link',
+    myRegistrationsLink: 'my-registrations-link',
+    researchProfileLink: 'research-profile-link',
   },
 };
