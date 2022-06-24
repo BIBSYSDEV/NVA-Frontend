@@ -11,8 +11,8 @@
   "registrations": {
     "delete_registration": "Delete unpublished registration",
     "delete_registration_message": "Do you want to delete \"{{title}}\"?",
-    "go_to_public_profile": "My public profile",
     "my_registrations": "My registrations",
+    "my_research_profile": "My research profile",
     "published_registrations": "Published registrations",
     "unpublished_registrations": "Unpublished registrations"
   },
@@ -26,7 +26,7 @@
       "user_info": "User information"
     },
     "id": "ID",
-    "my_profile": "My user profile",
+    "user_profile": "User profile",
     "orcid": {
       "connect_orcid": "Connect/create ORCID iD",
       "dialog": {
@@ -40,7 +40,7 @@
       "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Sikt's access to read your ORCID, you have to go to your profile."
     }
   },
-  "public_profile": "Public profile",
+  "research_profile": "Research profile",
   "roles": {
     "app_admin": "System administrator",
     "app_admin_description": "Access to create new institutions and assign roles",

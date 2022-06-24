@@ -16,7 +16,7 @@ export const MyProfile = () => {
   return (
     <>
       <Helmet>
-        <title>{t('my_profile.my_profile')}</title>
+        <title>{t('my_profile.user_profile')}</title>
       </Helmet>
       <Box
         sx={{

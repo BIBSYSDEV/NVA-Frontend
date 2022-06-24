@@ -8,6 +8,7 @@ import { CreatorRoute, LoggedInRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { MyMessagesPage } from '../messages/MyMessagesPage';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
+import ResearchProfile from '../research_profile/ResearchProfile';
 import { MyProfile } from './user_profile/MyProfile';
 
 const MyPagePage = () => {
@@ -17,7 +18,7 @@ const MyPagePage = () => {
 
   useEffect(() => {
     if (currentPath === UrlPathTemplate.MyPage) {
-      history.replace(UrlPathTemplate.MyPageMyProfile);
+      history.replace(UrlPathTemplate.MyPageMessages);
     }
   }, [history, currentPath]);
 
@@ -32,17 +33,6 @@ const MyPagePage = () => {
       }}>
       <BackgroundDiv component="nav">
         <MenuList dense>
-          <MenuItem
-            data-testid={dataTestId.myPage.myProfileLink}
-            component={Link}
-            selected={currentPath === UrlPathTemplate.MyPageMyProfile}
-            to={UrlPathTemplate.MyPageMyProfile}>
-            <ListItemText>
-              <Typography variant="overline" color="primary" fontSize="1rem">
-                {t('my_profile.my_profile')}
-              </Typography>
-            </ListItemText>
-          </MenuItem>
           <MenuItem
             data-testid={dataTestId.myPage.messagesLink}
             component={Link}
@@ -65,6 +55,28 @@ const MyPagePage = () => {
               </Typography>
             </ListItemText>
           </MenuItem>
+          <MenuItem
+            data-testid={dataTestId.myPage.researchProfileLink}
+            component={Link}
+            selected={currentPath === UrlPathTemplate.MyPageResearchProfile}
+            to={UrlPathTemplate.MyPageResearchProfile}>
+            <ListItemText>
+              <Typography variant="overline" color="primary" fontSize="1rem">
+                {t('research_profile')}
+              </Typography>
+            </ListItemText>
+          </MenuItem>
+          <MenuItem
+            data-testid={dataTestId.myPage.myProfileLink}
+            component={Link}
+            selected={currentPath === UrlPathTemplate.MyPageMyProfile}
+            to={UrlPathTemplate.MyPageMyProfile}>
+            <ListItemText>
+              <Typography variant="overline" color="primary" fontSize="1rem">
+                {t('my_profile.user_profile')}
+              </Typography>
+            </ListItemText>
+          </MenuItem>
         </MenuList>
       </BackgroundDiv>
       <BackgroundDiv>
@@ -72,6 +84,7 @@ const MyPagePage = () => {
           <CreatorRoute exact path={UrlPathTemplate.MyPageMessages} component={MyMessagesPage} />
           <CreatorRoute exact path={UrlPathTemplate.MyPageRegistrations} component={MyRegistrations} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProfile} component={MyProfile} />
+          <LoggedInRoute exact path={UrlPathTemplate.MyPageResearchProfile} component={ResearchProfile} />
         </Switch>
       </BackgroundDiv>
     </Box>
