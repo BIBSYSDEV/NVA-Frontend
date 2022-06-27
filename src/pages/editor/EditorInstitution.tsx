@@ -35,9 +35,20 @@ export const EditorInstitution = () => {
       <Typography variant="overline">{t('institution.institution_code')}</Typography>
       <Typography paragraph>{institution?.id.split('/').pop() ?? '-'}</Typography>
 
+      <Typography variant="overline">{t('basicData:institutions.ror')}</Typography>
+      <Typography paragraph>
+        {customer?.rorId ? (
+          <Link href={customer.rorId} target="_blank" rel="noopener noreferrer">
+            {customer.rorId}
+          </Link>
+        ) : (
+          '-'
+        )}
+      </Typography>
+
       <Typography sx={{ pt: '1rem' }}>
         <Trans t={t} i18nKey="institution.institution_helper_text">
-          <Link href={'mailto:support@sikt.no'} target="_blank" rel="noopener noreferrer" />
+          <Link href="mailto:support@sikt.no" target="_blank" rel="noopener noreferrer" />
         </Trans>
       </Typography>
     </>
