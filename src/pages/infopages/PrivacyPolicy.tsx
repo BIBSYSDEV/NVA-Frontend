@@ -319,8 +319,8 @@ const PrivacyPolicy = () => {
           </Typography>
           <Typography>
             <Trans t={t} i18nKey="contact.section2.email">
-              <a target="_blank" rel="noreferrer" href="mailto:support@unit.no">
-                support@unit.no
+              <a target="_blank" rel="noreferrer" href="mailto:support@sikt.no">
+                support@sikt.no
               </a>
             </Trans>
           </Typography>

@@ -10,7 +10,7 @@ import { Contributor } from '../../types/contributor.types';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
 import { mainContributorRolesPerType, splitMainContributors } from '../../utils/registration-helpers';
-import { getUserPath } from '../../utils/urlPaths';
+import { getResearchProfilePath } from '../../utils/urlPaths';
 
 interface PublicRegistrationContributorsProps {
   contributors: Contributor[];
@@ -123,7 +123,7 @@ const ContributorsRow = ({
             {id ? (
               <Link
                 component={RouterLink}
-                to={getUserPath(id)}
+                to={getResearchProfilePath(id)}
                 data-testid={dataTestId.registrationLandingPage.authorLink(id)}>
                 {name}
               </Link>

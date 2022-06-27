@@ -7,7 +7,6 @@ import { styled } from '@mui/system';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { Modal } from '../../../components/Modal';
 import { PageHeader } from '../../../components/PageHeader';
-import { SyledPageContent } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { RoleName, UserList as UserListType } from '../../../types/user.types';
 import { filterUsersByRole } from '../../../utils/role-helpers';
@@ -46,12 +45,12 @@ export const MyInstitutionUsersPage = () => {
   });
 
   return (
-    <SyledPageContent>
+    <>
       <PageHeader>{t('users.user_administration')}</PageHeader>
       {/* Admins */}
       <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersAdministrators}>
         <Typography variant="h3" component="h2">
-          {t('profile:roles.institution_admins')}
+          {t('myPage:roles.institution_admins')}
         </Typography>
         <Divider />
         {isLoading ? (
@@ -61,7 +60,7 @@ export const MyInstitutionUsersPage = () => {
             userList={filterUsersByRole(users, RoleName.InstitutionAdmin)}
             roleToRemove={RoleName.InstitutionAdmin}
             refetchUsers={fetchInstitutionUsers}
-            tableCaption={t('profile:roles.institution_admins')}
+            tableCaption={t('myPage:roles.institution_admins')}
           />
         )}
         <StyledNewButton
@@ -69,14 +68,14 @@ export const MyInstitutionUsersPage = () => {
           startIcon={<AddIcon />}
           data-testid="button-add-institution-admin"
           onClick={() => setRoleToAdd(RoleName.InstitutionAdmin)}>
-          {t('common:add_custom', { name: t('profile:roles.institution_admin') })}
+          {t('common:add_custom', { name: t('myPage:roles.institution_admin') })}
         </StyledNewButton>
       </StyledContainer>
 
       {/* Curators */}
       <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersCurators}>
         <Typography variant="h3" component="h2">
-          {t('profile:roles.curators')}
+          {t('myPage:roles.curators')}
         </Typography>
         <Divider />
         {isLoading ? (
@@ -86,7 +85,7 @@ export const MyInstitutionUsersPage = () => {
             userList={filterUsersByRole(users, RoleName.Curator)}
             roleToRemove={RoleName.Curator}
             refetchUsers={fetchInstitutionUsers}
-            tableCaption={t('profile:roles.curators')}
+            tableCaption={t('myPage:roles.curators')}
             showScope
           />
         )}
@@ -95,14 +94,14 @@ export const MyInstitutionUsersPage = () => {
           startIcon={<AddIcon />}
           data-testid="button-add-curator"
           onClick={() => setRoleToAdd(RoleName.Curator)}>
-          {t('common:add_custom', { name: t('profile:roles.curator') })}
+          {t('common:add_custom', { name: t('myPage:roles.curator') })}
         </StyledNewButton>
       </StyledContainer>
 
       {/* Editors */}
       <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersEditors}>
         <Typography variant="h3" component="h2">
-          {t('profile:roles.editors')}
+          {t('myPage:roles.editors')}
         </Typography>
         <Divider />
         {isLoading ? (
@@ -112,7 +111,7 @@ export const MyInstitutionUsersPage = () => {
             userList={filterUsersByRole(users, RoleName.Editor)}
             roleToRemove={RoleName.Editor}
             refetchUsers={fetchInstitutionUsers}
-            tableCaption={t('profile:roles.editors')}
+            tableCaption={t('myPage:roles.editors')}
           />
         )}
         <StyledNewButton
@@ -120,13 +119,13 @@ export const MyInstitutionUsersPage = () => {
           startIcon={<AddIcon />}
           data-testid="button-add-editor"
           onClick={() => setRoleToAdd(RoleName.Editor)}>
-          {t('common:add_custom', { name: t('profile:roles.editor') })}
+          {t('common:add_custom', { name: t('myPage:roles.editor') })}
         </StyledNewButton>
       </StyledContainer>
 
       <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersCreators}>
         <Typography variant="h3" component="h2">
-          {t('profile:roles.creator')}
+          {t('myPage:roles.creator')}
         </Typography>
         <Divider />
         <Typography>{t('users.creator_info')}</Typography>
@@ -152,6 +151,6 @@ export const MyInstitutionUsersPage = () => {
           />
         </Modal>
       )}
-    </SyledPageContent>
+    </>
   );
 };

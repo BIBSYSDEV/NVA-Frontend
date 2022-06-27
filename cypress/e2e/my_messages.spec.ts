@@ -1,17 +1,20 @@
 import { RoleName } from '../../src/types/user.types';
 import { mockMessages } from '../../src/utils/testfiles/mockRegistration';
 import { dataTestId } from '../../src/utils/dataTestIds';
+import { UrlPathTemplate } from '../../src/utils/urlPaths';
 
 describe('My messages', () => {
   beforeEach(() => {
     cy.visit('/my-profile');
     cy.mocklogin();
     cy.setUserRolesInRedux([RoleName.Creator]);
-    cy.get(`[data-testid=${dataTestId.header.messagesLink}]`).click({ force: true });
+
+    cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).click();
+    cy.get(`[data-testid=${dataTestId.myPage.messagesLink}]`).click();
   });
 
   it('The Creator should be able to view my messages', () => {
-    cy.url().should('include', '/my-messages');
+    cy.url().should('include', UrlPathTemplate.MyPageMessages);
   });
 
   it('The Creator should be able to open an item in the DOI request list and see the summary of the registration', () => {

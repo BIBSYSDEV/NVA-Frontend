@@ -4,12 +4,12 @@ describe('User opens an item in the My Registrations list', () => {
   beforeEach('Given that the user is logged in as Creator:', () => {
     cy.visit('/');
     cy.mocklogin();
+
+    cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).click();
+    cy.get(`[data-testid=${dataTestId.myPage.myRegistrationsLink}]`).click();
   });
 
   it('The User should be able to edit an item in the My Registrations list', () => {
-    // Open My Registrations
-    cy.get('[data-testid=my-registrations-link]').click({ force: true });
-
     // Edit registration
     // Description tab
     cy.get('[data-testid=edit-registration-12345678]').click({ force: true });

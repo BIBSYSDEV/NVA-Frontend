@@ -20,12 +20,17 @@
   },
   "create_person": "Opprett person",
   "employments": "Ansettelser",
+  "institutions": {
+    "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
+    "ror": "Research Organization Registry (ROR)"
+  },
   "national_id": "Fødselsnummer",
   "no_matching_persons_found": "Ingen samsvarende personer funnet i Personregisteret",
   "person_register": {
     "edit_person": "Rediger person",
     "employee_table_caption": "Liste over alle ansatte",
     "no_employees_found": "Ingen ansatte funnet",
+    "other_employees": "Andre ansettelser",
     "person_id": "PersonID",
     "person_register": "Personregister",
     "user_does_not_exist": "Brukeren finnes ikke"

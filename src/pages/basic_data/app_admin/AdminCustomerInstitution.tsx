@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 import { RoleApiPath } from '../../../api/apiPaths';
 import { PageHeader } from '../../../components/PageHeader';
 import { PageSpinner } from '../../../components/PageSpinner';
-import { SyledPageContent } from '../../../components/styled/Wrappers';
 import { CustomerInstitution, emptyCustomerInstitution } from '../../../types/customerInstitution.types';
 import { RoleName, UserList } from '../../../types/user.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
@@ -30,7 +29,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
   const admins = filterUsersByRole(userList?.users ?? [], RoleName.InstitutionAdmin);
 
   return (
-    <SyledPageContent>
+    <>
       <PageHeader htmlTitle={editMode ? customerInstitution?.displayName : t('add_institution')}>
         {t(editMode ? 'edit_institution' : 'add_institution')}
       </PageHeader>
@@ -53,6 +52,6 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
           )}
         </>
       )}
-    </SyledPageContent>
+    </>
   );
 };

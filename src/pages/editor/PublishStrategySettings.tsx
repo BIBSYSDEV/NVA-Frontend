@@ -3,6 +3,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution, PublishStrategy } from '../../types/customerInstitution.types';
 import { useFetch } from '../../utils/hooks/useFetch';
@@ -71,75 +72,80 @@ export const PublishStrategySettings = () => {
   const currentPublishStrategy = customer?.publicationWorkflow;
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <StyledItemContainer>
-        <PublishStrategyButton
-          disabled={!!isLoading || currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
-          isSelected={!isLoading && currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
-          onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataAndFiles')}>
-          <Box>
-            <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
-              {t('publish_strategy.registrator_can_publish')}
-            </Typography>
-            <StyledAccessRightsContainer>
-              <StyledAccessRight>
-                <CheckCircleIcon color="primary" />
-                <Typography>{t('publish_strategy.metadata')}</Typography>
-              </StyledAccessRight>
-              <StyledAccessRight>
-                <CheckCircleIcon color="primary" />
+    <>
+      <Helmet>
+        <title>{t('publish_strategy.publish_strategy')}</title>
+      </Helmet>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <StyledItemContainer>
+          <PublishStrategyButton
+            disabled={!!isLoading || currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
+            isSelected={!isLoading && currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
+            onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataAndFiles')}>
+            <Box>
+              <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
+                {t('publish_strategy.registrator_can_publish')}
+              </Typography>
+              <StyledAccessRightsContainer>
+                <StyledAccessRight>
+                  <CheckCircleIcon color="primary" />
+                  <Typography>{t('publish_strategy.metadata')}</Typography>
+                </StyledAccessRight>
+                <StyledAccessRight>
+                  <CheckCircleIcon color="primary" />
+                  <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
+                </StyledAccessRight>
+              </StyledAccessRightsContainer>
+              <Typography sx={{ textAlign: 'center' }}>
+                {t('publish_strategy.registrator_can_publish_description')}
+              </Typography>
+            </Box>
+          </PublishStrategyButton>
+          {isLoading === 'RegistratorPublishesMetadataAndFiles' && <CircularProgress />}
+        </StyledItemContainer>
+
+        <StyledItemContainer>
+          <PublishStrategyButton
+            disabled={!!isLoading || currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
+            isSelected={!isLoading && currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
+            onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataOnly')}>
+            <Box>
+              <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
+                {t('publish_strategy.registrator_can_publish')}
+              </Typography>
+              <StyledAccessRightsContainer>
+                <StyledAccessRight>
+                  <CheckCircleIcon color="primary" />
+                  <Typography>{t('publish_strategy.metadata')}</Typography>
+                </StyledAccessRight>
                 <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
-              </StyledAccessRight>
-            </StyledAccessRightsContainer>
-            <Typography sx={{ textAlign: 'center' }}>
-              {t('publish_strategy.registrator_can_publish_description')}
-            </Typography>
-          </Box>
-        </PublishStrategyButton>
-        {isLoading === 'RegistratorPublishesMetadataAndFiles' && <CircularProgress />}
-      </StyledItemContainer>
+              </StyledAccessRightsContainer>
+            </Box>
+          </PublishStrategyButton>
+          {isLoading === 'RegistratorPublishesMetadataOnly' && <CircularProgress />}
+        </StyledItemContainer>
 
-      <StyledItemContainer>
-        <PublishStrategyButton
-          disabled={!!isLoading || currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
-          isSelected={!isLoading && currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
-          onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataOnly')}>
-          <Box>
-            <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
-              {t('publish_strategy.registrator_can_publish')}
-            </Typography>
-            <StyledAccessRightsContainer>
-              <StyledAccessRight>
-                <CheckCircleIcon color="primary" />
+        <StyledItemContainer>
+          <PublishStrategyButton
+            disabled={!!isLoading || currentPublishStrategy === 'RegistratorRequiresApprovalForMetadataAndFiles'}
+            isSelected={!isLoading && currentPublishStrategy === 'RegistratorRequiresApprovalForMetadataAndFiles'}
+            onClick={() => setPublicationWorkflow('RegistratorRequiresApprovalForMetadataAndFiles')}>
+            <Box>
+              <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
+                {t('publish_strategy.registrator_cannot_publish')}
+              </Typography>
+              <StyledAccessRightsContainer>
                 <Typography>{t('publish_strategy.metadata')}</Typography>
-              </StyledAccessRight>
-              <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
-            </StyledAccessRightsContainer>
-          </Box>
-        </PublishStrategyButton>
-        {isLoading === 'RegistratorPublishesMetadataOnly' && <CircularProgress />}
-      </StyledItemContainer>
-
-      <StyledItemContainer>
-        <PublishStrategyButton
-          disabled={!!isLoading || currentPublishStrategy === 'RegistratorCannotPublish'}
-          isSelected={!isLoading && currentPublishStrategy === 'RegistratorCannotPublish'}
-          onClick={() => setPublicationWorkflow('RegistratorCannotPublish')}>
-          <Box>
-            <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
-              {t('publish_strategy.registrator_cannot_publish')}
-            </Typography>
-            <StyledAccessRightsContainer>
-              <Typography>{t('publish_strategy.metadata')}</Typography>
-              <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
-            </StyledAccessRightsContainer>
-            <Typography sx={{ textAlign: 'center' }}>
-              {t('publish_strategy.registrator_cannot_publish_description')}
-            </Typography>
-          </Box>
-        </PublishStrategyButton>
-        {isLoading === 'RegistratorCannotPublish' && <CircularProgress />}
-      </StyledItemContainer>
-    </Box>
+                <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
+              </StyledAccessRightsContainer>
+              <Typography sx={{ textAlign: 'center' }}>
+                {t('publish_strategy.registrator_cannot_publish_description')}
+              </Typography>
+            </Box>
+          </PublishStrategyButton>
+          {isLoading === 'RegistratorRequiresApprovalForMetadataAndFiles' && <CircularProgress />}
+        </StyledItemContainer>
+      </Box>
+    </>
   );
 };

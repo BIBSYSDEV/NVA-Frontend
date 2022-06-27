@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Box, Link as MuiLink, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { displayDate } from '../utils/date-helpers';
-import { getRegistrationLandingPagePath, getUserPath } from '../utils/urlPaths';
+import { getRegistrationLandingPagePath, getResearchProfilePath } from '../utils/urlPaths';
 import { Registration } from '../types/registration.types';
 import { ErrorBoundary } from './ErrorBoundary';
 import { TruncatableTypography } from './TruncatableTypography';
@@ -55,7 +55,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
           {focusedContributors.map((contributor, index) => (
             <Typography key={index} variant="body2">
               {contributor.identity.id ? (
-                <MuiLink component={Link} to={getUserPath(contributor.identity.id)}>
+                <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
                   {contributor.identity.name}
                 </MuiLink>
               ) : (

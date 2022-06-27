@@ -7,7 +7,7 @@ export interface SimpleCustomerInstitution {
 export type PublishStrategy =
   | 'RegistratorPublishesMetadataOnly'
   | 'RegistratorPublishesMetadataAndFiles'
-  | 'RegistratorCannotPublish';
+  | 'RegistratorRequiresApprovalForMetadataAndFiles';
 
 export interface CustomerInstitution extends SimpleCustomerInstitution {
   type?: 'Customer';
@@ -22,6 +22,7 @@ export interface CustomerInstitution extends SimpleCustomerInstitution {
   shortName: string;
   vocabularies: CustomerVocabulary[];
   publicationWorkflow: PublishStrategy;
+  rorId?: string;
 }
 
 export enum VocabularyStatus {
@@ -52,6 +53,7 @@ export const emptyCustomerInstitution: CustomerInstitution = {
   shortName: '',
   vocabularies: [],
   publicationWorkflow: 'RegistratorPublishesMetadataAndFiles',
+  rorId: '',
 };
 
 export enum CustomerInstitutionFieldNames {
@@ -63,6 +65,7 @@ export enum CustomerInstitutionFieldNames {
   Identifier = 'identifier',
   InstitutionDns = 'institutionDns',
   Name = 'name',
+  RorId = 'rorId',
   ShortName = 'shortName',
 }
 

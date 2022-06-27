@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { AppBar, Box, Button, Divider, IconButton, Theme, useMediaQuery } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import MailIcon from '@mui/icons-material/MailOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { RootState } from '../../redux/store';
 import { getRegistrationPath, UrlPathTemplate } from '../../utils/urlPaths';
 import { LoginButton } from './LoginButton';
@@ -136,14 +136,15 @@ export const Header = () => {
                   {t('workLists:worklist')}
                 </Button>
               )}
-              {user?.isCreator && (
+              {user && (
                 <Button
+                  sx={{ whiteSpace: 'nowrap' }}
                   color="inherit"
                   component={RouterLink}
-                  data-testid={dataTestId.header.messagesLink}
-                  to={UrlPathTemplate.MyMessages}
-                  startIcon={<MailIcon />}>
-                  {t('workLists:messages')}
+                  data-testid={dataTestId.header.myPageLink}
+                  to={UrlPathTemplate.MyPage}
+                  startIcon={<FavoriteBorderIcon />}>
+                  {t('myPage:my_page')}
                 </Button>
               )}
             </>

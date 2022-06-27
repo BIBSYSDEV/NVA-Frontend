@@ -1,19 +1,5 @@
 {
-  "delete_registration": "Slett upublisert registrering",
-  "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
-  "go_to_public_profile": "Min offentlige profil",
-  "go_to_registration": "Gå til registrering",
   "limited_to": "Avgrenset til: \"{{name}}\"",
-  "messages": "Meldinger",
-  "my_registrations": "Mine registreringer",
   "no_messages": "Du har ingen meldinger",
-  "no_pending_registrations": "Du har ingen registreringer som venter på godkjenning",
-  "published_registrations": "Publiserte registreringer",
-  "submitter": "Innsender",
-  "types": {
-    "doi": "DOI-forespørsel",
-    "support": "Brukerstøtte"
-  },
-  "unpublished_registrations": "Upubliserte registreringer",
   "worklist": "Arbeidsliste"
 }

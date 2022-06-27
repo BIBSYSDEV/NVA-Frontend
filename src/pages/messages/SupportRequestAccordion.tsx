@@ -23,7 +23,7 @@ interface SupportRequestAccordionProps {
 }
 
 export const SupportRequestAccordion = ({ registration, messageType, messages }: SupportRequestAccordionProps) => {
-  const { t } = useTranslation('workLists');
+  const { t } = useTranslation('myPage');
   const dispatch = useDispatch();
   const userId = useSelector((store: RootState) => store.user?.id);
 
@@ -53,18 +53,18 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
           sx={{
             '.MuiAccordionSummary-content': {
               display: 'grid',
-              gridTemplateAreas: '"status title creator"',
-              gridTemplateColumns: '1fr 5fr 1fr',
-              columnGap: '1rem',
+              gridTemplateAreas: { xs: '"status creator" "title title"', md: '"status title creator"' },
+              gridTemplateColumns: { xs: '1fr 1fr', md: '1fr 5fr 1fr' },
+              gap: '1rem',
             },
           }}>
           <Typography
             data-testid={`message-type-${registration.identifier}`}
             sx={{ gridArea: 'status', fontWeight: 'bold' }}>
             {messageType === MessageType.DoiRequest
-              ? t('types.doi')
+              ? t('messages.types.doi')
               : messageType === MessageType.Support
-              ? t('types.support')
+              ? t('messages.types.support')
               : null}
           </Typography>
           <Typography
@@ -72,12 +72,11 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
             sx={{ gridArea: 'title', fontWeight: 'bold' }}>
             {registration.mainTitle}
           </Typography>
-          <Box
+          <Typography
             data-testid={`message-owner-${registration.identifier}`}
-            sx={{ wordBreak: 'break-word', gridArea: 'creator' }}>
-            <Typography>{registration.owner}</Typography>
+            sx={{ gridArea: 'creator', fontWeight: 'bold' }}>
             {new Date(messagesCopy[messagesCopy.length - 1].date).toLocaleDateString()}
-          </Box>
+          </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Box sx={{ width: '75%', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -91,7 +90,7 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
               endIcon={<ArrowForwardIcon />}
               component={RouterLink}
               to={getRegistrationLandingPagePath(registration.identifier)}>
-              {t('go_to_registration')}
+              {t('messages.go_to_registration')}
             </Button>
           </Box>
         </AccordionDetails>
