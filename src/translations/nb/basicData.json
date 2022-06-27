@@ -29,6 +29,7 @@
   "person_register": {
     "edit_person": "Rediger person",
     "employee_table_caption": "Liste over alle ansatte",
+    "national_identity_number": "Fødselsnummer",
     "no_employees_found": "Ingen ansatte funnet",
     "other_employees": "Andre ansettelser",
     "person_id": "PersonID",

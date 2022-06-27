@@ -29,6 +29,7 @@
   "person_register": {
     "edit_person": "Edit person",
     "employee_table_caption": "List of all employees",
+    "national_identity_number": "National identity number",
     "no_employees_found": "No employees found",
     "other_employees": "Other employees",
     "person_id": "PersonID",
