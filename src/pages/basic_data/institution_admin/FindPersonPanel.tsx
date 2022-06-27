@@ -28,6 +28,7 @@ export const FindPersonPanel = () => {
 
   const [searchByNameResponse, isLoadingSearchByName] = useFetch<SearchResponse<CristinPerson>>({
     url: debouncedSearchQuery ? `${CristinApiPath.Person}?name=${debouncedSearchQuery}` : '',
+    withAuthentication: true,
   });
   const searchByNameOptions = searchByNameResponse?.hits
     ? searchByNameResponse.hits.map((person) => convertToFlatCristinPerson(person))
@@ -84,7 +85,6 @@ export const FindPersonPanel = () => {
             options={searchByNameOptions}
             getOptionLabel={(option) => `${option.firstName} ${option.lastName}`}
             onChange={(event, value) => {
-              console.log(value);
               if (value) {
                 setFieldValue('user', value);
               } else {
