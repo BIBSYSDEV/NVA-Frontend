@@ -56,6 +56,7 @@ export const PersonRegisterPage = () => {
       prevSearchQueryRef.current !== debouncedSearchQuery ? 1 : page,
       rowsPerPage
     ),
+    withAuthentication: true,
     errorMessage: t('feedback:error.get_users_for_institution'),
   });
   const employees = employeesSearchResponse?.hits ?? [];
@@ -88,6 +89,9 @@ export const PersonRegisterPage = () => {
                     <Typography fontWeight="bold">{t('person_register.person_id')}</Typography>
                   </TableCell>
                   <TableCell>
+                    <Typography fontWeight="bold">{t('person_register.national_identity_number')}</Typography>
+                  </TableCell>
+                  <TableCell>
                     <Typography fontWeight="bold">{t('common:name')}</Typography>
                   </TableCell>
                   <TableCell>
@@ -100,7 +104,10 @@ export const PersonRegisterPage = () => {
                 {isLoadingEmployees
                   ? [...Array(5)].map((_, index) => (
                       <TableRow key={index} sx={{ height: '4rem' }}>
-                        <TableCell width="5%">
+                        <TableCell>
+                          <Skeleton />
+                        </TableCell>
+                        <TableCell>
                           <Skeleton />
                         </TableCell>
                         <TableCell width="25%">
