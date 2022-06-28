@@ -59,6 +59,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
   const [user, isLoadingUser] = useFetch<InstitutionUser>({
     url: openDialog ? `${RoleApiPath.Users}/${username}` : '',
     withAuthentication: true,
+    errorMessage: false,
   });
 
   const initialValues: FormData = { roles: user ? user.roles.map((role) => role.rolename) : [RoleName.Creator] };
@@ -182,14 +183,12 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
                     <Box sx={{ mt: '2rem', display: 'flex', justifyContent: 'center' }}>
                       {isLoadingUser ? (
                         <CircularProgress />
-                      ) : user ? (
+                      ) : (
                         <UserRolesSelector
                           selectedRoles={values.roles}
                           updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
                           disabled={isSubmitting}
                         />
-                      ) : (
-                        <Typography>{t('person_register.user_does_not_exist')}</Typography>
                       )}
                     </Box>
                   </Box>
