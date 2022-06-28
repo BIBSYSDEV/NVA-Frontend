@@ -33,8 +33,7 @@
     "no_employees_found": "Ingen ansatte funnet",
     "other_employees": "Andre ansettelser",
     "person_id": "PersonID",
-    "person_register": "Personregister",
-    "user_does_not_exist": "Brukeren finnes ikke"
+    "person_register": "Personregister"
   },
   "position": "Stilling",
   "position_percent": "Stillingsprosent",
