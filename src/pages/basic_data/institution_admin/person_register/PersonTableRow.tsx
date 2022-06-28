@@ -20,6 +20,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Form, Formik, FormikProps } from 'formik';
 import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
+import { AxiosResponse } from 'axios';
 import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../../../utils/constants';
@@ -34,6 +35,7 @@ import { RoleApiPath } from '../../../../api/apiPaths';
 import { UserRolesSelector } from '../UserRolesSelector';
 import { authenticatedApiRequest } from '../../../../api/apiRequest';
 import { setNotification } from '../../../../redux/notificationSlice';
+import { createUser } from '../../../../api/roleApi';
 
 interface FormData {
   roles: RoleName[];
@@ -42,9 +44,10 @@ interface FormData {
 interface PersonTableRowProps {
   cristinPerson: CristinPerson;
   topOrgCristinIdentifier: string;
+  customerId: string;
 }
 
-export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: PersonTableRowProps) => {
+export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, customerId }: PersonTableRowProps) => {
   const { t } = useTranslation('basicData');
   const dispatch = useDispatch();
   const [openDialog, setOpenDialog] = useState(false);
@@ -65,26 +68,30 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
   const initialValues: FormData = { roles: user ? user.roles.map((role) => role.rolename) : [RoleName.Creator] };
 
   const onSubmit = async (values: FormData) => {
+    let updateUserResponse: AxiosResponse<InstitutionUser | null, any> | undefined = undefined;
     if (user) {
-      // Update existing user
       const newUser: InstitutionUser = {
         ...user,
         roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
       };
 
-      const updateUserResponse = await authenticatedApiRequest({
+      updateUserResponse = await authenticatedApiRequest<null>({
         url: `${RoleApiPath.Users}/${username}`,
         method: 'PUT',
         data: newUser,
       });
-      if (isSuccessStatus(updateUserResponse.status)) {
-        toggleDialog();
-        dispatch(setNotification({ message: t('feedback:success.update_institution_user'), variant: 'success' }));
-      } else if (isErrorStatus(updateUserResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:error.update_institution_user'), variant: 'error' }));
-      }
     } else {
-      // TODO: Create user with roles (NP-9152)
+      updateUserResponse = await createUser({
+        nationalIdentityNumber: nationalId,
+        customerId,
+        roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
+      });
+    }
+    if (isSuccessStatus(updateUserResponse.status)) {
+      toggleDialog();
+      dispatch(setNotification({ message: t('feedback:success.update_institution_user'), variant: 'success' }));
+    } else if (isErrorStatus(updateUserResponse.status)) {
+      dispatch(setNotification({ message: t('feedback:error.update_institution_user'), variant: 'error' }));
     }
   };
 
@@ -196,7 +203,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
               </DialogContent>
               <DialogActions>
                 <Button onClick={toggleDialog}>{t('common:cancel')}</Button>
-                <LoadingButton loading={isSubmitting} disabled={!user} variant="contained" type="submit">
+                <LoadingButton loading={isSubmitting} variant="contained" type="submit">
                   {t('common:save')}
                 </LoadingButton>
               </DialogActions>
