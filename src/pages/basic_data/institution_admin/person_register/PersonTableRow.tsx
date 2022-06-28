@@ -20,7 +20,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Form, Formik, FormikProps } from 'formik';
 import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
-import { AxiosResponse } from 'axios';
 import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../../../utils/constants';
@@ -68,7 +67,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
   const initialValues: FormData = { roles: user ? user.roles.map((role) => role.rolename) : [RoleName.Creator] };
 
   const onSubmit = async (values: FormData) => {
-    let updateUserResponse: AxiosResponse<InstitutionUser | null, any> | undefined = undefined;
+    let updateUserResponse;
     if (user) {
       const newUser: InstitutionUser = {
         ...user,

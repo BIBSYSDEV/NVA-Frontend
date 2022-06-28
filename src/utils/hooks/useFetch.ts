@@ -9,7 +9,7 @@ import { isErrorStatus, isSuccessStatus } from '../constants';
 
 interface UseFetchConfig {
   url: string;
-  errorMessage?: string | boolean;
+  errorMessage?: string | false;
   withAuthentication?: boolean;
 }
 
