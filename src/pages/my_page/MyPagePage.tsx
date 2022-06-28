@@ -1,4 +1,4 @@
-import { Box, ListItemText, MenuItem, MenuList, Typography } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -33,62 +33,57 @@ const MyPagePage = () => {
     <Box
       sx={{
         width: '100%',
+        minHeight: '40vh',
         p: { xs: 0, md: '1rem' },
         display: 'grid',
-        gridTemplateColumns: { xs: '1fr', md: '1fr 5fr' },
+        gridTemplateColumns: { xs: '1fr', md: 'auto 1fr' },
         gap: '1rem',
       }}>
-      <BackgroundDiv component="nav">
-        <MenuList dense>
+      <BackgroundDiv component="nav" sx={{ p: '1rem' }}>
+        <Box component="ul" sx={{ listStyle: 'none', p: 0, 'li:not(:last-child)': { mb: '1rem' } }}>
           {user?.isCreator && [
-            <MenuItem
-              key={dataTestId.myPage.messagesLink}
-              data-testid={dataTestId.myPage.messagesLink}
-              component={Link}
-              selected={currentPath === UrlPathTemplate.MyPageMessages}
-              to={UrlPathTemplate.MyPageMessages}>
-              <ListItemText>
-                <Typography variant="overline" color="primary" fontSize="1rem">
-                  {t('messages.messages')}
-                </Typography>
-              </ListItemText>
-            </MenuItem>,
-            <MenuItem
-              key={dataTestId.myPage.myRegistrationsLink}
-              data-testid={dataTestId.myPage.myRegistrationsLink}
-              component={Link}
-              selected={currentPath === UrlPathTemplate.MyPageRegistrations}
-              to={UrlPathTemplate.MyPageRegistrations}>
-              <ListItemText>
-                <Typography variant="overline" color="primary" fontSize="1rem">
-                  {t('registrations.my_registrations')}
-                </Typography>
-              </ListItemText>
-            </MenuItem>,
+            <li key={dataTestId.myPage.messagesLink}>
+              <Button
+                data-testid={dataTestId.myPage.messagesLink}
+                variant={currentPath === UrlPathTemplate.MyPageMessages ? 'contained' : 'outlined'}
+                size="large"
+                component={Link}
+                to={UrlPathTemplate.MyPageMessages}>
+                {t('messages.messages')}
+              </Button>
+            </li>,
+            <li key={dataTestId.myPage.myRegistrationsLink}>
+              <Button
+                data-testid={dataTestId.myPage.myRegistrationsLink}
+                variant={currentPath === UrlPathTemplate.MyPageRegistrations ? 'contained' : 'outlined'}
+                size="large"
+                component={Link}
+                to={UrlPathTemplate.MyPageRegistrations}>
+                {t('registrations.my_registrations')}
+              </Button>
+            </li>,
           ]}
-          <MenuItem
-            data-testid={dataTestId.myPage.researchProfileLink}
-            component={Link}
-            selected={currentPath === UrlPathTemplate.MyPageResearchProfile}
-            to={UrlPathTemplate.MyPageResearchProfile}>
-            <ListItemText>
-              <Typography variant="overline" color="primary" fontSize="1rem">
-                {t('research_profile')}
-              </Typography>
-            </ListItemText>
-          </MenuItem>
-          <MenuItem
-            data-testid={dataTestId.myPage.myProfileLink}
-            component={Link}
-            selected={currentPath === UrlPathTemplate.MyPageMyProfile}
-            to={UrlPathTemplate.MyPageMyProfile}>
-            <ListItemText>
-              <Typography variant="overline" color="primary" fontSize="1rem">
-                {t('my_profile.user_profile')}
-              </Typography>
-            </ListItemText>
-          </MenuItem>
-        </MenuList>
+          <li>
+            <Button
+              data-testid={dataTestId.myPage.researchProfileLink}
+              variant={currentPath === UrlPathTemplate.MyPageResearchProfile ? 'contained' : 'outlined'}
+              size="large"
+              component={Link}
+              to={UrlPathTemplate.MyPageResearchProfile}>
+              {t('research_profile')}
+            </Button>
+          </li>
+          <li>
+            <Button
+              data-testid={dataTestId.myPage.myProfileLink}
+              variant={currentPath === UrlPathTemplate.MyPageMyProfile ? 'contained' : 'outlined'}
+              size="large"
+              component={Link}
+              to={UrlPathTemplate.MyPageMyProfile}>
+              {t('my_profile.user_profile')}
+            </Button>
+          </li>
+        </Box>
       </BackgroundDiv>
       <BackgroundDiv>
         <Switch>
