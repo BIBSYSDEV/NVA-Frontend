@@ -34,6 +34,7 @@ import { RoleApiPath } from '../../../../api/apiPaths';
 import { UserRolesSelector } from '../UserRolesSelector';
 import { authenticatedApiRequest } from '../../../../api/apiRequest';
 import { setNotification } from '../../../../redux/notificationSlice';
+import { createUser } from '../../../../api/roleApi';
 
 interface FormData {
   roles: RoleName[];
@@ -42,9 +43,10 @@ interface FormData {
 interface PersonTableRowProps {
   cristinPerson: CristinPerson;
   topOrgCristinIdentifier: string;
+  customerId: string;
 }
 
-export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: PersonTableRowProps) => {
+export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, customerId }: PersonTableRowProps) => {
   const { t } = useTranslation('basicData');
   const dispatch = useDispatch();
   const [openDialog, setOpenDialog] = useState(false);
@@ -59,31 +61,36 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
   const [user, isLoadingUser] = useFetch<InstitutionUser>({
     url: openDialog ? `${RoleApiPath.Users}/${username}` : '',
     withAuthentication: true,
+    errorMessage: false,
   });
 
   const initialValues: FormData = { roles: user ? user.roles.map((role) => role.rolename) : [RoleName.Creator] };
 
   const onSubmit = async (values: FormData) => {
+    let updateUserResponse;
     if (user) {
-      // Update existing user
       const newUser: InstitutionUser = {
         ...user,
         roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
       };
 
-      const updateUserResponse = await authenticatedApiRequest({
+      updateUserResponse = await authenticatedApiRequest<null>({
         url: `${RoleApiPath.Users}/${username}`,
         method: 'PUT',
         data: newUser,
       });
-      if (isSuccessStatus(updateUserResponse.status)) {
-        toggleDialog();
-        dispatch(setNotification({ message: t('feedback:success.update_institution_user'), variant: 'success' }));
-      } else if (isErrorStatus(updateUserResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:error.update_institution_user'), variant: 'error' }));
-      }
     } else {
-      // TODO: Create user with roles (NP-9152)
+      updateUserResponse = await createUser({
+        nationalIdentityNumber: nationalId,
+        customerId,
+        roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
+      });
+    }
+    if (isSuccessStatus(updateUserResponse.status)) {
+      toggleDialog();
+      dispatch(setNotification({ message: t('feedback:success.update_institution_user'), variant: 'success' }));
+    } else if (isErrorStatus(updateUserResponse.status)) {
+      dispatch(setNotification({ message: t('feedback:error.update_institution_user'), variant: 'error' }));
     }
   };
 
@@ -182,14 +189,12 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
                     <Box sx={{ mt: '2rem', display: 'flex', justifyContent: 'center' }}>
                       {isLoadingUser ? (
                         <CircularProgress />
-                      ) : user ? (
+                      ) : (
                         <UserRolesSelector
                           selectedRoles={values.roles}
                           updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
                           disabled={isSubmitting}
                         />
-                      ) : (
-                        <Typography>{t('person_register.user_does_not_exist')}</Typography>
                       )}
                     </Box>
                   </Box>
@@ -197,7 +202,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier }: Perso
               </DialogContent>
               <DialogActions>
                 <Button onClick={toggleDialog}>{t('common:cancel')}</Button>
-                <LoadingButton loading={isSubmitting} disabled={!user} variant="contained" type="submit">
+                <LoadingButton loading={isSubmitting} variant="contained" type="submit">
                   {t('common:save')}
                 </LoadingButton>
               </DialogActions>
