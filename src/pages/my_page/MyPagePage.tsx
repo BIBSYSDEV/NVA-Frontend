@@ -1,8 +1,9 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Switch, useHistory } from 'react-router-dom';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -36,10 +37,25 @@ const MyPagePage = () => {
         minHeight: '40vh',
         p: { xs: 0, md: '1rem' },
         display: 'grid',
-        gridTemplateColumns: { xs: '1fr', md: 'auto 1fr' },
+        gridTemplateColumns: { xs: '1fr', md: '1fr 4fr' },
         gap: '1rem',
       }}>
       <BackgroundDiv component="nav" sx={{ p: '1rem' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            background: '#e3e0dd',
+            px: '1rem',
+            py: '0.5rem',
+            m: '-0.75rem -0.75rem 1rem -0.75rem',
+          }}>
+          <FavoriteBorderIcon fontSize="large" />
+          <Typography component="h1" variant="h2">
+            {t('my_page')}
+          </Typography>
+        </Box>
         <Box component="ul" sx={{ listStyle: 'none', p: 0, 'li:not(:last-child)': { mb: '1rem' } }}>
           {user?.isCreator && [
             <li key={dataTestId.myPage.messagesLink}>
