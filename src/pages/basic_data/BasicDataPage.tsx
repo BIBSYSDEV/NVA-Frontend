@@ -52,29 +52,24 @@ const BasicDataPage = () => {
 
         <NavigationList>
           {user?.isInstitutionAdmin && [
-            <BetaFunctionality key={dataTestId.basicData.personRegisterLink}>
-              <li>
-                <LinkButton
-                  key={dataTestId.basicData.personRegisterLink}
-                  data-testid={dataTestId.basicData.personRegisterLink}
-                  isSelected={currentPath === UrlPathTemplate.BasicDataPersonRegister}
-                  to={UrlPathTemplate.BasicDataPersonRegister}>
-                  {t('person_register.person_register')}
-                </LinkButton>
-              </li>
-            </BetaFunctionality>,
-            <li>
+            <li key={dataTestId.basicData.personRegisterLink}>
               <LinkButton
-                key={dataTestId.basicData.addEmployeeLink}
+                data-testid={dataTestId.basicData.personRegisterLink}
+                isSelected={currentPath === UrlPathTemplate.BasicDataPersonRegister}
+                to={UrlPathTemplate.BasicDataPersonRegister}>
+                {t('person_register.person_register')}
+              </LinkButton>
+            </li>,
+            <li key={dataTestId.basicData.addEmployeeLink}>
+              <LinkButton
                 data-testid={dataTestId.basicData.addEmployeeLink}
                 isSelected={currentPath === UrlPathTemplate.BasicDataAddEmployee}
                 to={UrlPathTemplate.BasicDataAddEmployee}>
                 {t('add_employee')}
               </LinkButton>
             </li>,
-            <li>
+            <li key={dataTestId.basicData.adminUsersLink}>
               <LinkButton
-                key={dataTestId.basicData.adminUsersLink}
                 data-testid={dataTestId.basicData.adminUsersLink}
                 isSelected={currentPath === UrlPathTemplate.BasicDataUsers}
                 to={UrlPathTemplate.BasicDataUsers}>
@@ -85,9 +80,8 @@ const BasicDataPage = () => {
           <Divider orientation="horizontal" sx={{ my: '0.5rem', borderWidth: 1 }} />
           {user?.isAppAdmin && [
             <BetaFunctionality key={dataTestId.basicData.centralImportLink}>
-              <li>
+              <li key={dataTestId.basicData.centralImportLink}>
                 <LinkButton
-                  key={dataTestId.basicData.centralImportLink}
                   data-testid={dataTestId.basicData.centralImportLink}
                   isSelected={currentPath === UrlPathTemplate.BasicDataCentralImport}
                   to={UrlPathTemplate.BasicDataCentralImport}>
@@ -95,9 +89,8 @@ const BasicDataPage = () => {
                 </LinkButton>
               </li>
             </BetaFunctionality>,
-            <li>
+            <li key={dataTestId.basicData.adminInstitutionsLink}>
               <LinkButton
-                key={dataTestId.basicData.adminInstitutionsLink}
                 data-testid={dataTestId.basicData.adminInstitutionsLink}
                 isSelected={currentPath === UrlPathTemplate.BasicDataInstitutions}
                 to={UrlPathTemplate.BasicDataInstitutions}>
