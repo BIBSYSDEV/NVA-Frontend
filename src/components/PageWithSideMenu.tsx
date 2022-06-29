@@ -37,7 +37,7 @@ export const SideMenu = ({ children }: PropsWithChildren<Record<never, never>>) 
 );
 
 export const NavigationList = ({ children }: PropsWithChildren<Record<never, never>>) => (
-  <Box component="ul" sx={{ listStyle: 'none', p: 0, 'li:not(:last-child)': { mb: '1rem' } }}>
+  <Box component="ul" sx={{ listStyle: 'none', p: 0, '*:not(:last-child)': { mb: '1rem' } }}>
     {children}
   </Box>
 );
