@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
-import { Box, Typography, ListItemText, MenuItem, MenuList, Divider } from '@mui/material';
+import { Typography, Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Switch, useHistory } from 'react-router-dom';
+import { Switch, useHistory } from 'react-router-dom';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
@@ -15,6 +16,13 @@ import { CentralImportPage } from './app_admin/central_import/CentralImportPage'
 import { MyInstitutionUsersPage } from './institution_admin/MyInstitutionUsersPage';
 import { CentralImportDuplicationCheckPage } from './app_admin/central_import/CentralImportDuplicationCheckPage';
 import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';
+import {
+  LinkButton,
+  NavigationList,
+  SideMenu,
+  StyledPageWithSideMenu,
+  StyledSideMenuHeader,
+} from '../../components/PageWithSideMenu';
 
 const BasicDataPage = () => {
   const { t } = useTranslation('basicData');
@@ -33,93 +41,65 @@ const BasicDataPage = () => {
   }, [history, currentPath, user?.isInstitutionAdmin, user?.isAppAdmin]);
 
   return (
-    <Box
-      sx={{
-        width: '100%',
-        minHeight: '50vh',
-        p: { xs: 0, md: '1rem' },
-        display: 'grid',
-        gridTemplateColumns: { xs: '1fr', md: '1fr 5fr' },
-        gap: '1rem',
-      }}>
-      <BackgroundDiv>
-        <Typography variant="h3" component="h1">
-          {t('basic_data')}
-        </Typography>
-        <nav>
-          <MenuList dense>
-            {user?.isInstitutionAdmin && [
-              <BetaFunctionality key="person-register">
-                <MenuItem
-                  key={dataTestId.basicData.personRegisterLink}
-                  data-testid={dataTestId.basicData.personRegisterLink}
-                  component={Link}
-                  selected={currentPath === UrlPathTemplate.BasicDataPersonRegister}
-                  to={UrlPathTemplate.BasicDataPersonRegister}>
-                  <ListItemText>
-                    <Typography variant="overline" color="primary" fontSize="1rem">
-                      {t('person_register.person_register')}
-                    </Typography>
-                  </ListItemText>
-                </MenuItem>
-              </BetaFunctionality>,
-              <MenuItem
-                key={dataTestId.basicData.addEmployeeLink}
+    <StyledPageWithSideMenu>
+      <SideMenu>
+        <StyledSideMenuHeader>
+          <BusinessCenterIcon fontSize="large" />
+          <Typography component="h1" variant="h2">
+            {t('basic_data')}
+          </Typography>
+        </StyledSideMenuHeader>
+
+        <NavigationList>
+          {user?.isInstitutionAdmin && [
+            <li key={dataTestId.basicData.personRegisterLink}>
+              <LinkButton
+                data-testid={dataTestId.basicData.personRegisterLink}
+                isSelected={currentPath === UrlPathTemplate.BasicDataPersonRegister}
+                to={UrlPathTemplate.BasicDataPersonRegister}>
+                {t('person_register.person_register')}
+              </LinkButton>
+            </li>,
+            <li key={dataTestId.basicData.addEmployeeLink}>
+              <LinkButton
                 data-testid={dataTestId.basicData.addEmployeeLink}
-                component={Link}
-                selected={currentPath === UrlPathTemplate.BasicDataAddEmployee}
+                isSelected={currentPath === UrlPathTemplate.BasicDataAddEmployee}
                 to={UrlPathTemplate.BasicDataAddEmployee}>
-                <ListItemText>
-                  <Typography variant="overline" color="primary" fontSize="1rem">
-                    {t('add_employee')}
-                  </Typography>
-                </ListItemText>
-              </MenuItem>,
-              <MenuItem
-                key={dataTestId.basicData.adminUsersLink}
+                {t('add_employee')}
+              </LinkButton>
+            </li>,
+            <li key={dataTestId.basicData.adminUsersLink}>
+              <LinkButton
                 data-testid={dataTestId.basicData.adminUsersLink}
-                component={Link}
-                selected={currentPath === UrlPathTemplate.BasicDataUsers}
+                isSelected={currentPath === UrlPathTemplate.BasicDataUsers}
                 to={UrlPathTemplate.BasicDataUsers}>
-                <ListItemText>
-                  <Typography variant="overline" color="primary" fontSize="1rem">
-                    {t('common:users')}
-                  </Typography>
-                </ListItemText>
-              </MenuItem>,
-            ]}
-            <Divider orientation="horizontal" sx={{ my: '0.5rem', borderWidth: 1 }} />
-            {user?.isAppAdmin && [
-              <BetaFunctionality key="central-import">
-                <MenuItem
-                  key={dataTestId.basicData.centralImportLink}
+                {t('common:users')}
+              </LinkButton>
+            </li>,
+          ]}
+          <Divider orientation="horizontal" sx={{ my: '0.5rem', borderWidth: 1 }} />
+          {user?.isAppAdmin && [
+            <BetaFunctionality key={dataTestId.basicData.centralImportLink}>
+              <li key={dataTestId.basicData.centralImportLink}>
+                <LinkButton
                   data-testid={dataTestId.basicData.centralImportLink}
-                  component={Link}
-                  selected={currentPath === UrlPathTemplate.BasicDataCentralImport}
+                  isSelected={currentPath === UrlPathTemplate.BasicDataCentralImport}
                   to={UrlPathTemplate.BasicDataCentralImport}>
-                  <ListItemText>
-                    <Typography variant="overline" color="primary" fontSize="1rem">
-                      {t('central_import.central_import')}
-                    </Typography>
-                  </ListItemText>
-                </MenuItem>
-              </BetaFunctionality>,
-              <MenuItem
-                key={dataTestId.basicData.adminInstitutionsLink}
+                  {t('central_import.central_import')}
+                </LinkButton>
+              </li>
+            </BetaFunctionality>,
+            <li key={dataTestId.basicData.adminInstitutionsLink}>
+              <LinkButton
                 data-testid={dataTestId.basicData.adminInstitutionsLink}
-                component={Link}
-                selected={currentPath === UrlPathTemplate.BasicDataInstitutions}
+                isSelected={currentPath === UrlPathTemplate.BasicDataInstitutions}
                 to={UrlPathTemplate.BasicDataInstitutions}>
-                <ListItemText>
-                  <Typography variant="overline" color="primary" fontSize="1rem">
-                    {t('common:institutions')}
-                  </Typography>
-                </ListItemText>
-              </MenuItem>,
-            ]}
-          </MenuList>
-        </nav>
-      </BackgroundDiv>
+                {t('common:institutions')}
+              </LinkButton>
+            </li>,
+          ]}
+        </NavigationList>
+      </SideMenu>
       <BackgroundDiv>
         <Switch>
           <AppAdminRoute
@@ -138,7 +118,7 @@ const BasicDataPage = () => {
           <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataPersonRegister} component={PersonRegisterPage} />
         </Switch>
       </BackgroundDiv>
-    </Box>
+    </StyledPageWithSideMenu>
   );
 };
 
