@@ -1,16 +1,26 @@
-import { Box, ListItemText, MenuItem, MenuList, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, Switch, useHistory } from 'react-router-dom';
+import { Switch, useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { VocabularySettings } from './VocabularySettings';
 import { PublishStrategySettings } from './PublishStrategySettings';
 import { EditorRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { EditorInstitution } from './EditorInstitution';
+import {
+  LinkButton,
+  NavigationList,
+  SideMenu,
+  StyledPageWithSideMenu,
+  StyledSideMenuHeader,
+} from '../../components/PageWithSideMenu';
+import { RootState } from '../../redux/store';
 
 const EditorPage = () => {
   const { t } = useTranslation('editor');
+  const customerShortName = useSelector((store: RootState) => store.user?.customerShortName);
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
@@ -21,48 +31,38 @@ const EditorPage = () => {
   }, [history, currentPath]);
 
   return (
-    <Box
-      sx={{
-        width: '100%',
-        p: { xs: 0, md: '1rem' },
-        display: 'grid',
-        gridTemplateColumns: { xs: '1fr', md: '1fr 5fr' },
-        gap: '1rem',
-      }}>
-      <BackgroundDiv component="nav">
-        <MenuList dense>
-          <MenuItem
-            component={Link}
-            selected={currentPath === UrlPathTemplate.EditorInstitution}
-            to={UrlPathTemplate.EditorInstitution}>
-            <ListItemText>
-              <Typography variant="overline" color="primary" fontSize="1rem">
-                {t('institution.institution_name')}
-              </Typography>
-            </ListItemText>
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            selected={currentPath === UrlPathTemplate.EditorVocabulary}
-            to={UrlPathTemplate.EditorVocabulary}>
-            <ListItemText>
-              <Typography variant="overline" color="primary" fontSize="1rem">
-                {t('vocabulary')}
-              </Typography>
-            </ListItemText>
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            selected={currentPath === UrlPathTemplate.EditorPublishStrategy}
-            to={UrlPathTemplate.EditorPublishStrategy}>
-            <ListItemText>
-              <Typography variant="overline" color="primary" fontSize="1rem">
-                {t('publish_strategy.publish_strategy')}
-              </Typography>
-            </ListItemText>
-          </MenuItem>
-        </MenuList>
-      </BackgroundDiv>
+    <StyledPageWithSideMenu>
+      <SideMenu>
+        <StyledSideMenuHeader>
+          <Typography component="h1" variant="h2">
+            {customerShortName}
+          </Typography>
+        </StyledSideMenuHeader>
+
+        <NavigationList>
+          <li>
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorInstitution}
+              to={UrlPathTemplate.EditorInstitution}>
+              {t('institution.institution_name')}
+            </LinkButton>
+          </li>
+          <li>
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
+              to={UrlPathTemplate.EditorVocabulary}>
+              {t('vocabulary')}
+            </LinkButton>
+          </li>
+          <li>
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorPublishStrategy}
+              to={UrlPathTemplate.EditorPublishStrategy}>
+              {t('publish_strategy.publish_strategy')}
+            </LinkButton>
+          </li>
+        </NavigationList>
+      </SideMenu>
       <BackgroundDiv>
         <Switch>
           <EditorRoute exact path={UrlPathTemplate.EditorVocabulary} component={VocabularySettings} />
@@ -70,7 +70,7 @@ const EditorPage = () => {
           <EditorRoute exact path={UrlPathTemplate.EditorInstitution} component={EditorInstitution} />
         </Switch>
       </BackgroundDiv>
-    </Box>
+    </StyledPageWithSideMenu>
   );
 };
 
