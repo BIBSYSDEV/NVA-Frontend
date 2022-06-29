@@ -39,7 +39,15 @@ export const SideMenu = ({ children }: PropsWithChildren<Record<never, never>>) 
 );
 
 export const NavigationList = ({ children }: PropsWithChildren<Record<never, never>>) => (
-  <Box component="ul" sx={{ listStyle: 'none', p: 0, '*:not(:last-child)': { mb: '1rem' } }}>
+  <Box
+    component="ul"
+    sx={{
+      listStyle: 'none',
+      p: 0,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '1rem',
+    }}>
     {children}
   </Box>
 );
@@ -50,4 +58,18 @@ interface LinkButtonProps extends ButtonProps, Pick<LinkProps, 'to'> {
 
 export const LinkButton = ({ isSelected, ...rest }: LinkButtonProps) => (
   <Button variant={isSelected ? 'contained' : 'outlined'} size="large" LinkComponent={Link} {...rest} />
+);
+
+export const LinkButtonRow = ({ children }: PropsWithChildren<Record<never, never>>) => (
+  <Box
+    component="ul"
+    sx={{
+      listStyle: 'none',
+      p: 0,
+      display: 'flex',
+      gap: '0.5rem',
+      alignItems: 'center',
+    }}>
+    {children}
+  </Box>
 );
