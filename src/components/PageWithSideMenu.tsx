@@ -1,5 +1,6 @@
-import { Box, styled } from '@mui/material';
-import { ReactNode } from 'react';
+import { Box, Button, ButtonProps, styled } from '@mui/material';
+import { PropsWithChildren } from 'react';
+import { Link, LinkProps } from 'react-router-dom';
 import { BackgroundDiv } from './styled/Wrappers';
 
 export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
@@ -29,18 +30,22 @@ export const StyledSideMenuHeader = styled(Box)(({ theme }) => ({
   },
 }));
 
-interface ChildrenProps {
-  children: ReactNode;
-}
-
-export const SideMenu = ({ children }: ChildrenProps) => (
+export const SideMenu = ({ children }: PropsWithChildren<Record<never, never>>) => (
   <BackgroundDiv component="nav" sx={{ p: '1rem' }}>
     {children}
   </BackgroundDiv>
 );
 
-export const NavigationList = ({ children }: ChildrenProps) => (
+export const NavigationList = ({ children }: PropsWithChildren<Record<never, never>>) => (
   <Box component="ul" sx={{ listStyle: 'none', p: 0, 'li:not(:last-child)': { mb: '1rem' } }}>
     {children}
   </Box>
+);
+
+interface LinkButtonProps extends ButtonProps, Pick<LinkProps, 'to'> {
+  isSelected: boolean;
+}
+
+export const LinkButton = ({ isSelected, ...rest }: LinkButtonProps) => (
+  <Button variant={isSelected ? 'contained' : 'outlined'} size="large" LinkComponent={Link} {...rest} />
 );
