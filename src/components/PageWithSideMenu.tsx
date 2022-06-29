@@ -1,0 +1,46 @@
+import { Box, styled } from '@mui/material';
+import { ReactNode } from 'react';
+import { BackgroundDiv } from './styled/Wrappers';
+
+export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
+  width: '100%',
+  minHeight: '40vh',
+  display: 'grid',
+  gap: '1rem',
+  padding: '1rem',
+  [theme.breakpoints.down('sm')]: {
+    padding: '0.5rem',
+  },
+
+  gridTemplateColumns: '1fr 4fr',
+  [theme.breakpoints.down('md')]: {
+    gridTemplateColumns: '1fr',
+  },
+}));
+
+export const StyledSideMenuHeader = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.5rem',
+  background: '#e3e0dd',
+  padding: '0.5rem 1rem 0.5rem 1rem',
+  [theme.breakpoints.up('sm')]: {
+    margin: '-0.75rem -0.75rem 1rem -0.75rem',
+  },
+}));
+
+interface ChildrenProps {
+  children: ReactNode;
+}
+
+export const SideMenu = ({ children }: ChildrenProps) => (
+  <BackgroundDiv component="nav" sx={{ p: '1rem' }}>
+    {children}
+  </BackgroundDiv>
+);
+
+export const NavigationList = ({ children }: ChildrenProps) => (
+  <Box component="ul" sx={{ listStyle: 'none', p: 0, 'li:not(:last-child)': { mb: '1rem' } }}>
+    {children}
+  </Box>
+);

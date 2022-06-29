@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -13,6 +13,12 @@ import { MyMessagesPage } from '../messages/MyMessagesPage';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
 import ResearchProfile from '../research_profile/ResearchProfile';
 import { MyProfile } from './user_profile/MyProfile';
+import {
+  NavigationList,
+  SideMenu,
+  StyledPageWithSideMenu,
+  StyledSideMenuHeader,
+} from '../../components/PageWithSideMenu';
 
 const MyPagePage = () => {
   const { t } = useTranslation('myPage');
@@ -31,32 +37,15 @@ const MyPagePage = () => {
   }, [history, currentPath, user?.isCreator]);
 
   return (
-    <Box
-      sx={{
-        width: '100%',
-        minHeight: '40vh',
-        p: { xs: 0, md: '1rem' },
-        display: 'grid',
-        gridTemplateColumns: { xs: '1fr', md: '1fr 4fr' },
-        gap: '1rem',
-      }}>
-      <BackgroundDiv component="nav" sx={{ p: '1rem' }}>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            background: '#e3e0dd',
-            px: '1rem',
-            py: '0.5rem',
-            m: '-0.75rem -0.75rem 1rem -0.75rem',
-          }}>
+    <StyledPageWithSideMenu>
+      <SideMenu>
+        <StyledSideMenuHeader>
           <FavoriteBorderIcon fontSize="large" />
           <Typography component="h1" variant="h2">
             {t('my_page')}
           </Typography>
-        </Box>
-        <Box component="ul" sx={{ listStyle: 'none', p: 0, 'li:not(:last-child)': { mb: '1rem' } }}>
+        </StyledSideMenuHeader>
+        <NavigationList>
           {user?.isCreator && [
             <li key={dataTestId.myPage.messagesLink}>
               <Button
@@ -99,8 +88,8 @@ const MyPagePage = () => {
               {t('my_profile.user_profile')}
             </Button>
           </li>
-        </Box>
-      </BackgroundDiv>
+        </NavigationList>
+      </SideMenu>
       <BackgroundDiv>
         <Switch>
           <CreatorRoute exact path={UrlPathTemplate.MyPageMessages} component={MyMessagesPage} />
@@ -109,7 +98,7 @@ const MyPagePage = () => {
           <LoggedInRoute exact path={UrlPathTemplate.MyPageResearchProfile} component={ResearchProfile} />
         </Switch>
       </BackgroundDiv>
-    </Box>
+    </StyledPageWithSideMenu>
   );
 };
 
