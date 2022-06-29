@@ -8,9 +8,10 @@ export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
   minHeight: '40vh',
   display: 'grid',
   gap: '1rem',
+
   padding: '1rem',
   [theme.breakpoints.down('sm')]: {
-    padding: '0.5rem',
+    padding: 0,
   },
 
   gridTemplateColumns: '1fr 4fr',
@@ -25,6 +26,7 @@ export const StyledSideMenuHeader = styled(Box)(({ theme }) => ({
   gap: '0.5rem',
   background: '#e3e0dd',
   padding: '0.5rem 1rem 0.5rem 1rem',
+
   [theme.breakpoints.up('sm')]: {
     margin: '-0.75rem -0.75rem 1rem -0.75rem',
   },
