@@ -20,6 +20,7 @@ import { PersonRegisterPage } from './institution_admin/person_register/PersonRe
 import {
   LinkButton,
   LinkButtonRow,
+  LinkIconButton,
   NavigationList,
   SideMenu,
   StyledPageWithSideMenu,
@@ -65,13 +66,13 @@ const BasicDataPage = () => {
                   </LinkButton>
                 </li>
                 <li>
-                  <LinkButton
+                  <LinkIconButton
                     data-testid={dataTestId.basicData.addEmployeeLink}
                     isSelected={currentPath === UrlPathTemplate.BasicDataAddEmployee}
                     to={UrlPathTemplate.BasicDataAddEmployee}
                     title={t('add_employee')}>
                     <PersonAddIcon />
-                  </LinkButton>
+                  </LinkIconButton>
                 </li>
               </LinkButtonRow>
             </li>,

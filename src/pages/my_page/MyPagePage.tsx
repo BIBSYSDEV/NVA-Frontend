@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import AddIcon from '@mui/icons-material/Add';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -15,6 +16,8 @@ import ResearchProfile from '../research_profile/ResearchProfile';
 import { MyProfile } from './user_profile/MyProfile';
 import {
   LinkButton,
+  LinkButtonRow,
+  LinkIconButton,
   NavigationList,
   SideMenu,
   StyledPageWithSideMenu,
@@ -56,13 +59,26 @@ const MyPagePage = () => {
                 {t('messages.messages')}
               </LinkButton>
             </li>,
+
             <li key={dataTestId.myPage.myRegistrationsLink}>
-              <LinkButton
-                data-testid={dataTestId.myPage.myRegistrationsLink}
-                isSelected={currentPath === UrlPathTemplate.MyPageRegistrations}
-                to={UrlPathTemplate.MyPageRegistrations}>
-                {t('registrations.my_registrations')}
-              </LinkButton>
+              <LinkButtonRow>
+                <li>
+                  <LinkButton
+                    data-testid={dataTestId.myPage.myRegistrationsLink}
+                    isSelected={currentPath === UrlPathTemplate.MyPageRegistrations}
+                    to={UrlPathTemplate.MyPageRegistrations}>
+                    {t('common:registrations')}
+                  </LinkButton>
+                </li>
+                <li>
+                  <LinkIconButton
+                    data-testid={dataTestId.myPage.newRegistrationLink}
+                    to={UrlPathTemplate.NewRegistration}
+                    title={t('registration:new_registration')}>
+                    <AddIcon />
+                  </LinkIconButton>
+                </li>
+              </LinkButtonRow>
             </li>,
           ]}
           <li>

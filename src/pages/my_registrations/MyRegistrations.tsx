@@ -41,7 +41,7 @@ export const MyRegistrations = () => {
   return (
     <>
       <Helmet>
-        <title>{t('registrations.my_registrations')}</title>
+        <title>{t('common:registrations')}</title>
       </Helmet>
       <StyledRightAlignedWrapper>
         {user?.cristinId && (

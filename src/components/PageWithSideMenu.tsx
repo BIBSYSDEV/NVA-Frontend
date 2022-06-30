@@ -45,11 +45,21 @@ export const NavigationList = ({ children }: PropsWithChildren<Record<never, nev
 );
 
 interface LinkButtonProps extends ButtonProps, Pick<LinkProps, 'to'> {
-  isSelected: boolean;
+  isSelected?: boolean;
 }
 
 export const LinkButton = ({ isSelected, ...rest }: LinkButtonProps) => (
   <Button variant={isSelected ? 'contained' : 'outlined'} size="large" LinkComponent={Link} {...rest} />
+);
+
+export const LinkIconButton = ({ isSelected, sx = {}, ...rest }: LinkButtonProps) => (
+  <Button
+    variant={isSelected ? 'contained' : 'outlined'}
+    size="large"
+    LinkComponent={Link}
+    sx={{ minWidth: 0, width: 0, ...sx }} // Ensure button with just an icon gets minimal width
+    {...rest}
+  />
 );
 
 export const LinkButtonRow = ({ children }: PropsWithChildren<Record<never, never>>) => (
