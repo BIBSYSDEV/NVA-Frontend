@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -20,8 +19,8 @@ import {
   LinkIconButton,
   NavigationList,
   SideMenu,
+  SideMenuHeader,
   StyledPageWithSideMenu,
-  StyledSideMenuHeader,
 } from '../../components/PageWithSideMenu';
 
 const MyPagePage = () => {
@@ -43,60 +42,44 @@ const MyPagePage = () => {
   return (
     <StyledPageWithSideMenu>
       <SideMenu>
-        <StyledSideMenuHeader>
-          <FavoriteBorderIcon fontSize="large" />
-          <Typography component="h1" variant="h2">
-            {t('my_page')}
-          </Typography>
-        </StyledSideMenuHeader>
+        <SideMenuHeader icon={FavoriteBorderIcon} text={t('my_page')} />
+
         <NavigationList>
           {user?.isCreator && [
-            <li key={dataTestId.myPage.messagesLink}>
+            <LinkButton
+              key={dataTestId.myPage.messagesLink}
+              data-testid={dataTestId.myPage.messagesLink}
+              isSelected={currentPath === UrlPathTemplate.MyPageMessages}
+              to={UrlPathTemplate.MyPageMessages}>
+              {t('messages.messages')}
+            </LinkButton>,
+            <LinkButtonRow key={dataTestId.myPage.myRegistrationsLink}>
               <LinkButton
-                data-testid={dataTestId.myPage.messagesLink}
-                isSelected={currentPath === UrlPathTemplate.MyPageMessages}
-                to={UrlPathTemplate.MyPageMessages}>
-                {t('messages.messages')}
+                data-testid={dataTestId.myPage.myRegistrationsLink}
+                isSelected={currentPath === UrlPathTemplate.MyPageRegistrations}
+                to={UrlPathTemplate.MyPageRegistrations}>
+                {t('common:registrations')}
               </LinkButton>
-            </li>,
-
-            <li key={dataTestId.myPage.myRegistrationsLink}>
-              <LinkButtonRow>
-                <li>
-                  <LinkButton
-                    data-testid={dataTestId.myPage.myRegistrationsLink}
-                    isSelected={currentPath === UrlPathTemplate.MyPageRegistrations}
-                    to={UrlPathTemplate.MyPageRegistrations}>
-                    {t('common:registrations')}
-                  </LinkButton>
-                </li>
-                <li>
-                  <LinkIconButton
-                    data-testid={dataTestId.myPage.newRegistrationLink}
-                    to={UrlPathTemplate.NewRegistration}
-                    title={t('registration:new_registration')}>
-                    <AddIcon />
-                  </LinkIconButton>
-                </li>
-              </LinkButtonRow>
-            </li>,
+              <LinkIconButton
+                data-testid={dataTestId.myPage.newRegistrationLink}
+                to={UrlPathTemplate.NewRegistration}
+                title={t('registration:new_registration')}>
+                <AddIcon />
+              </LinkIconButton>
+            </LinkButtonRow>,
           ]}
-          <li>
-            <LinkButton
-              data-testid={dataTestId.myPage.researchProfileLink}
-              isSelected={currentPath === UrlPathTemplate.MyPageResearchProfile}
-              to={UrlPathTemplate.MyPageResearchProfile}>
-              {t('research_profile')}
-            </LinkButton>
-          </li>
-          <li>
-            <LinkButton
-              data-testid={dataTestId.myPage.myProfileLink}
-              isSelected={currentPath === UrlPathTemplate.MyPageMyProfile}
-              to={UrlPathTemplate.MyPageMyProfile}>
-              {t('my_profile.user_profile')}
-            </LinkButton>
-          </li>
+          <LinkButton
+            data-testid={dataTestId.myPage.researchProfileLink}
+            isSelected={currentPath === UrlPathTemplate.MyPageResearchProfile}
+            to={UrlPathTemplate.MyPageResearchProfile}>
+            {t('research_profile')}
+          </LinkButton>
+          <LinkButton
+            data-testid={dataTestId.myPage.myProfileLink}
+            isSelected={currentPath === UrlPathTemplate.MyPageMyProfile}
+            to={UrlPathTemplate.MyPageMyProfile}>
+            {t('my_profile.user_profile')}
+          </LinkButton>
         </NavigationList>
       </SideMenu>
       <BackgroundDiv>

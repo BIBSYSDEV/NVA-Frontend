@@ -1,4 +1,5 @@
-import { Box, Button, ButtonProps, styled } from '@mui/material';
+import { SvgIconComponent } from '@mui/icons-material';
+import { Box, Button, ButtonProps, styled, Typography } from '@mui/material';
 import { PropsWithChildren } from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 
@@ -16,7 +17,7 @@ export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const StyledSideMenuHeader = styled(Box)({
+const StyledSideMenuHeader = styled(Box)({
   display: 'flex',
   alignItems: 'center',
   gap: '0.5rem',
@@ -29,6 +30,23 @@ export const SideMenu = ({ children }: PropsWithChildren<Record<never, never>>) 
     {children}
   </Box>
 );
+
+interface SideMenuHeaderProps {
+  icon?: SvgIconComponent;
+  text?: string;
+}
+
+export const SideMenuHeader = ({ icon, text }: SideMenuHeaderProps) => {
+  const IconComponent = icon;
+  return (
+    <StyledSideMenuHeader>
+      {IconComponent && <IconComponent fontSize="large" />}
+      <Typography component="h1" variant="h2">
+        {text}
+      </Typography>
+    </StyledSideMenuHeader>
+  );
+};
 
 export const NavigationList = ({ children }: PropsWithChildren<Record<never, never>>) => (
   <Box
@@ -49,29 +67,30 @@ interface LinkButtonProps extends ButtonProps, Pick<LinkProps, 'to'> {
 }
 
 export const LinkButton = ({ isSelected, ...rest }: LinkButtonProps) => (
-  <Button variant={isSelected ? 'contained' : 'outlined'} size="large" LinkComponent={Link} {...rest} />
+  <li>
+    <Button variant={isSelected ? 'contained' : 'outlined'} size="large" LinkComponent={Link} {...rest} />
+  </li>
 );
 
-export const LinkIconButton = ({ isSelected, sx = {}, ...rest }: LinkButtonProps) => (
-  <Button
-    variant={isSelected ? 'contained' : 'outlined'}
-    size="large"
-    LinkComponent={Link}
+export const LinkIconButton = ({ sx = {}, ...rest }: LinkButtonProps) => (
+  <LinkButton
     sx={{ minWidth: 0, width: 0, ...sx }} // Ensure button with just an icon gets minimal width
     {...rest}
   />
 );
 
 export const LinkButtonRow = ({ children }: PropsWithChildren<Record<never, never>>) => (
-  <Box
-    component="ul"
-    sx={{
-      listStyle: 'none',
-      p: 0,
-      display: 'flex',
-      gap: '0.5rem',
-      alignItems: 'center',
-    }}>
-    {children}
-  </Box>
+  <li>
+    <Box
+      component="ul"
+      sx={{
+        listStyle: 'none',
+        p: 0,
+        display: 'flex',
+        gap: '0.5rem',
+        alignItems: 'center',
+      }}>
+      {children}
+    </Box>
+  </li>
 );

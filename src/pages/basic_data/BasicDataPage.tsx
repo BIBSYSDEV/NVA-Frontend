@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Typography, Divider } from '@mui/material';
+import { Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
@@ -23,8 +23,8 @@ import {
   LinkIconButton,
   NavigationList,
   SideMenu,
+  SideMenuHeader,
   StyledPageWithSideMenu,
-  StyledSideMenuHeader,
 } from '../../components/PageWithSideMenu';
 
 const BasicDataPage = () => {
@@ -46,63 +46,51 @@ const BasicDataPage = () => {
   return (
     <StyledPageWithSideMenu>
       <SideMenu>
-        <StyledSideMenuHeader>
-          <BusinessCenterIcon fontSize="large" />
-          <Typography component="h1" variant="h2">
-            {t('basic_data')}
-          </Typography>
-        </StyledSideMenuHeader>
+        <SideMenuHeader icon={BusinessCenterIcon} text={t('basic_data')} />
 
         <NavigationList>
           {user?.isInstitutionAdmin && [
-            <li key={dataTestId.basicData.personRegisterLink}>
-              <LinkButtonRow>
-                <li>
-                  <LinkButton
-                    data-testid={dataTestId.basicData.personRegisterLink}
-                    isSelected={currentPath === UrlPathTemplate.BasicDataPersonRegister}
-                    to={UrlPathTemplate.BasicDataPersonRegister}>
-                    {t('person_register.person_register')}
-                  </LinkButton>
-                </li>
-                <li>
-                  <LinkIconButton
-                    data-testid={dataTestId.basicData.addEmployeeLink}
-                    isSelected={currentPath === UrlPathTemplate.BasicDataAddEmployee}
-                    to={UrlPathTemplate.BasicDataAddEmployee}
-                    title={t('add_employee')}>
-                    <PersonAddIcon />
-                  </LinkIconButton>
-                </li>
-              </LinkButtonRow>
-            </li>,
-            <li key={dataTestId.basicData.adminUsersLink}>
+            <LinkButtonRow key={dataTestId.basicData.personRegisterLink}>
               <LinkButton
-                data-testid={dataTestId.basicData.adminUsersLink}
-                isSelected={currentPath === UrlPathTemplate.BasicDataUsers}
-                to={UrlPathTemplate.BasicDataUsers}>
-                {t('common:users')}
+                data-testid={dataTestId.basicData.personRegisterLink}
+                isSelected={currentPath === UrlPathTemplate.BasicDataPersonRegister}
+                to={UrlPathTemplate.BasicDataPersonRegister}>
+                {t('person_register.person_register')}
               </LinkButton>
-            </li>,
+              <LinkIconButton
+                data-testid={dataTestId.basicData.addEmployeeLink}
+                isSelected={currentPath === UrlPathTemplate.BasicDataAddEmployee}
+                to={UrlPathTemplate.BasicDataAddEmployee}
+                title={t('add_employee')}>
+                <PersonAddIcon />
+              </LinkIconButton>
+            </LinkButtonRow>,
+            <LinkButton
+              key={dataTestId.basicData.adminUsersLink}
+              data-testid={dataTestId.basicData.adminUsersLink}
+              isSelected={currentPath === UrlPathTemplate.BasicDataUsers}
+              to={UrlPathTemplate.BasicDataUsers}>
+              {t('common:users')}
+            </LinkButton>,
           ]}
           <Divider orientation="horizontal" />
           {user?.isAppAdmin && [
-            <BetaFunctionality key={dataTestId.basicData.centralImportLink} component="li">
+            <BetaFunctionality key={dataTestId.basicData.centralImportLink}>
               <LinkButton
+                key={dataTestId.basicData.centralImportLink}
                 data-testid={dataTestId.basicData.centralImportLink}
                 isSelected={currentPath === UrlPathTemplate.BasicDataCentralImport}
                 to={UrlPathTemplate.BasicDataCentralImport}>
                 {t('central_import.central_import')}
               </LinkButton>
             </BetaFunctionality>,
-            <li key={dataTestId.basicData.adminInstitutionsLink}>
-              <LinkButton
-                data-testid={dataTestId.basicData.adminInstitutionsLink}
-                isSelected={currentPath === UrlPathTemplate.BasicDataInstitutions}
-                to={UrlPathTemplate.BasicDataInstitutions}>
-                {t('common:institutions')}
-              </LinkButton>
-            </li>,
+            <LinkButton
+              key={dataTestId.basicData.adminInstitutionsLink}
+              data-testid={dataTestId.basicData.adminInstitutionsLink}
+              isSelected={currentPath === UrlPathTemplate.BasicDataInstitutions}
+              to={UrlPathTemplate.BasicDataInstitutions}>
+              {t('common:institutions')}
+            </LinkButton>,
           ]}
         </NavigationList>
       </SideMenu>
