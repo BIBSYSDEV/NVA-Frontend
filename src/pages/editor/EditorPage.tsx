@@ -40,27 +40,21 @@ const EditorPage = () => {
         </StyledSideMenuHeader>
 
         <NavigationList>
-          <li>
-            <LinkButton
-              isSelected={currentPath === UrlPathTemplate.EditorInstitution}
-              to={UrlPathTemplate.EditorInstitution}>
-              {t('institution.institution_name')}
-            </LinkButton>
-          </li>
-          <li>
-            <LinkButton
-              isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
-              to={UrlPathTemplate.EditorVocabulary}>
-              {t('vocabulary')}
-            </LinkButton>
-          </li>
-          <li>
-            <LinkButton
-              isSelected={currentPath === UrlPathTemplate.EditorPublishStrategy}
-              to={UrlPathTemplate.EditorPublishStrategy}>
-              {t('publish_strategy.publish_strategy')}
-            </LinkButton>
-          </li>
+          <LinkButton
+            isSelected={currentPath === UrlPathTemplate.EditorInstitution}
+            to={UrlPathTemplate.EditorInstitution}>
+            {t('institution.institution_name')}
+          </LinkButton>
+          <LinkButton
+            isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
+            to={UrlPathTemplate.EditorVocabulary}>
+            {t('vocabulary')}
+          </LinkButton>
+          <LinkButton
+            isSelected={currentPath === UrlPathTemplate.EditorPublishStrategy}
+            to={UrlPathTemplate.EditorPublishStrategy}>
+            {t('publish_strategy.publish_strategy')}
+          </LinkButton>
         </NavigationList>
       </SideMenu>
       <BackgroundDiv>

@@ -49,29 +49,35 @@ interface LinkButtonProps extends ButtonProps, Pick<LinkProps, 'to'> {
 }
 
 export const LinkButton = ({ isSelected, ...rest }: LinkButtonProps) => (
-  <Button variant={isSelected ? 'contained' : 'outlined'} size="large" LinkComponent={Link} {...rest} />
+  <li>
+    <Button variant={isSelected ? 'contained' : 'outlined'} size="large" LinkComponent={Link} {...rest} />
+  </li>
 );
 
 export const LinkIconButton = ({ isSelected, sx = {}, ...rest }: LinkButtonProps) => (
-  <Button
-    variant={isSelected ? 'contained' : 'outlined'}
-    size="large"
-    LinkComponent={Link}
-    sx={{ minWidth: 0, width: 0, ...sx }} // Ensure button with just an icon gets minimal width
-    {...rest}
-  />
+  <li>
+    <Button
+      variant={isSelected ? 'contained' : 'outlined'}
+      size="large"
+      LinkComponent={Link}
+      sx={{ minWidth: 0, width: 0, ...sx }} // Ensure button with just an icon gets minimal width
+      {...rest}
+    />
+  </li>
 );
 
 export const LinkButtonRow = ({ children }: PropsWithChildren<Record<never, never>>) => (
-  <Box
-    component="ul"
-    sx={{
-      listStyle: 'none',
-      p: 0,
-      display: 'flex',
-      gap: '0.5rem',
-      alignItems: 'center',
-    }}>
-    {children}
-  </Box>
+  <li>
+    <Box
+      component="ul"
+      sx={{
+        listStyle: 'none',
+        p: 0,
+        display: 'flex',
+        gap: '0.5rem',
+        alignItems: 'center',
+      }}>
+      {children}
+    </Box>
+  </li>
 );
