@@ -17,6 +17,7 @@ import { MyProfile } from './user_profile/MyProfile';
 import {
   LinkButton,
   LinkButtonRow,
+  LinkIconButton,
   NavigationList,
   SideMenu,
   StyledPageWithSideMenu,
@@ -70,12 +71,12 @@ const MyPagePage = () => {
                   </LinkButton>
                 </li>
                 <li>
-                  <LinkButton
+                  <LinkIconButton
                     data-testid={dataTestId.myPage.newRegistrationLink}
                     to={UrlPathTemplate.NewRegistration}
                     title={t('registration:new_registration')}>
                     <AddIcon />
-                  </LinkButton>
+                  </LinkIconButton>
                 </li>
               </LinkButtonRow>
             </li>,
