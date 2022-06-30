@@ -72,16 +72,11 @@ export const LinkButton = ({ isSelected, ...rest }: LinkButtonProps) => (
   </li>
 );
 
-export const LinkIconButton = ({ isSelected, sx = {}, ...rest }: LinkButtonProps) => (
-  <li>
-    <Button
-      variant={isSelected ? 'contained' : 'outlined'}
-      size="large"
-      LinkComponent={Link}
-      sx={{ minWidth: 0, width: 0, ...sx }} // Ensure button with just an icon gets minimal width
-      {...rest}
-    />
-  </li>
+export const LinkIconButton = ({ sx = {}, ...rest }: LinkButtonProps) => (
+  <LinkButton
+    sx={{ minWidth: 0, width: 0, ...sx }} // Ensure button with just an icon gets minimal width
+    {...rest}
+  />
 );
 
 export const LinkButtonRow = ({ children }: PropsWithChildren<Record<never, never>>) => (
