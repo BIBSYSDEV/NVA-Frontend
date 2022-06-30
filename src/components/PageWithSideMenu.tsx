@@ -1,4 +1,5 @@
-import { Box, Button, ButtonProps, styled } from '@mui/material';
+import { SvgIconComponent } from '@mui/icons-material';
+import { Box, Button, ButtonProps, styled, Typography } from '@mui/material';
 import { PropsWithChildren } from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 
@@ -16,7 +17,7 @@ export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const StyledSideMenuHeader = styled(Box)({
+const StyledSideMenuHeader = styled(Box)({
   display: 'flex',
   alignItems: 'center',
   gap: '0.5rem',
@@ -29,6 +30,23 @@ export const SideMenu = ({ children }: PropsWithChildren<Record<never, never>>) 
     {children}
   </Box>
 );
+
+interface SideMenuHeaderProps {
+  icon?: SvgIconComponent;
+  text?: string;
+}
+
+export const SideMenuHeader = ({ icon, text }: SideMenuHeaderProps) => {
+  const IconComponent = icon;
+  return (
+    <StyledSideMenuHeader>
+      {IconComponent && <IconComponent fontSize="large" />}
+      <Typography component="h1" variant="h2">
+        {text}
+      </Typography>
+    </StyledSideMenuHeader>
+  );
+};
 
 export const NavigationList = ({ children }: PropsWithChildren<Record<never, never>>) => (
   <Box

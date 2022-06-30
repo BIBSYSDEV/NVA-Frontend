@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Switch, useHistory } from 'react-router-dom';
@@ -13,8 +12,8 @@ import {
   LinkButton,
   NavigationList,
   SideMenu,
+  SideMenuHeader,
   StyledPageWithSideMenu,
-  StyledSideMenuHeader,
 } from '../../components/PageWithSideMenu';
 import { RootState } from '../../redux/store';
 
@@ -33,11 +32,7 @@ const EditorPage = () => {
   return (
     <StyledPageWithSideMenu>
       <SideMenu>
-        <StyledSideMenuHeader>
-          <Typography component="h1" variant="h2">
-            {customerShortName}
-          </Typography>
-        </StyledSideMenuHeader>
+        <SideMenuHeader text={customerShortName} />
 
         <NavigationList>
           <LinkButton

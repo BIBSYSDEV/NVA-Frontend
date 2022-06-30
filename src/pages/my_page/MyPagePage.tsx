@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -20,8 +19,8 @@ import {
   LinkIconButton,
   NavigationList,
   SideMenu,
+  SideMenuHeader,
   StyledPageWithSideMenu,
-  StyledSideMenuHeader,
 } from '../../components/PageWithSideMenu';
 
 const MyPagePage = () => {
@@ -43,12 +42,8 @@ const MyPagePage = () => {
   return (
     <StyledPageWithSideMenu>
       <SideMenu>
-        <StyledSideMenuHeader>
-          <FavoriteBorderIcon fontSize="large" />
-          <Typography component="h1" variant="h2">
-            {t('my_page')}
-          </Typography>
-        </StyledSideMenuHeader>
+        <SideMenuHeader icon={FavoriteBorderIcon} text={t('my_page')} />
+
         <NavigationList>
           {user?.isCreator && [
             <LinkButton
