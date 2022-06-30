@@ -45,7 +45,7 @@ export const NavigationList = ({ children }: PropsWithChildren<Record<never, nev
 );
 
 interface LinkButtonProps extends ButtonProps, Pick<LinkProps, 'to'> {
-  isSelected: boolean;
+  isSelected?: boolean;
 }
 
 export const LinkButton = ({ isSelected, ...rest }: LinkButtonProps) => (
