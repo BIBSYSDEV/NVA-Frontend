@@ -77,7 +77,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
       <TableContainer>
         <Table sx={alternatingTableRowColor}>
           <caption>
-            <span style={visuallyHidden}>{t('myPage:registrations.my_registrations')}</span>
+            <span style={visuallyHidden}>{t('common:registrations')}</span>
           </caption>
           <TableHead>
             <TableRow>

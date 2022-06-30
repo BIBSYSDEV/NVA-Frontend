@@ -1,8 +1,9 @@
-import { Box, ListItemText, MenuItem, MenuList, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Switch, useHistory } from 'react-router-dom';
+import { Switch, useHistory } from 'react-router-dom';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import AddIcon from '@mui/icons-material/Add';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -12,6 +13,15 @@ import { MyMessagesPage } from '../messages/MyMessagesPage';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
 import ResearchProfile from '../research_profile/ResearchProfile';
 import { MyProfile } from './user_profile/MyProfile';
+import {
+  LinkButton,
+  LinkButtonRow,
+  LinkIconButton,
+  NavigationList,
+  SideMenu,
+  SideMenuHeader,
+  StyledPageWithSideMenu,
+} from '../../components/PageWithSideMenu';
 
 const MyPagePage = () => {
   const { t } = useTranslation('myPage');
@@ -30,66 +40,48 @@ const MyPagePage = () => {
   }, [history, currentPath, user?.isCreator]);
 
   return (
-    <Box
-      sx={{
-        width: '100%',
-        p: { xs: 0, md: '1rem' },
-        display: 'grid',
-        gridTemplateColumns: { xs: '1fr', md: '1fr 5fr' },
-        gap: '1rem',
-      }}>
-      <BackgroundDiv component="nav">
-        <MenuList dense>
+    <StyledPageWithSideMenu>
+      <SideMenu>
+        <SideMenuHeader icon={FavoriteBorderIcon} text={t('my_page')} />
+
+        <NavigationList>
           {user?.isCreator && [
-            <MenuItem
+            <LinkButton
               key={dataTestId.myPage.messagesLink}
               data-testid={dataTestId.myPage.messagesLink}
-              component={Link}
-              selected={currentPath === UrlPathTemplate.MyPageMessages}
+              isSelected={currentPath === UrlPathTemplate.MyPageMessages}
               to={UrlPathTemplate.MyPageMessages}>
-              <ListItemText>
-                <Typography variant="overline" color="primary" fontSize="1rem">
-                  {t('messages.messages')}
-                </Typography>
-              </ListItemText>
-            </MenuItem>,
-            <MenuItem
-              key={dataTestId.myPage.myRegistrationsLink}
-              data-testid={dataTestId.myPage.myRegistrationsLink}
-              component={Link}
-              selected={currentPath === UrlPathTemplate.MyPageRegistrations}
-              to={UrlPathTemplate.MyPageRegistrations}>
-              <ListItemText>
-                <Typography variant="overline" color="primary" fontSize="1rem">
-                  {t('registrations.my_registrations')}
-                </Typography>
-              </ListItemText>
-            </MenuItem>,
+              {t('messages.messages')}
+            </LinkButton>,
+            <LinkButtonRow key={dataTestId.myPage.myRegistrationsLink}>
+              <LinkButton
+                data-testid={dataTestId.myPage.myRegistrationsLink}
+                isSelected={currentPath === UrlPathTemplate.MyPageRegistrations}
+                to={UrlPathTemplate.MyPageRegistrations}>
+                {t('common:registrations')}
+              </LinkButton>
+              <LinkIconButton
+                data-testid={dataTestId.myPage.newRegistrationLink}
+                to={UrlPathTemplate.NewRegistration}
+                title={t('registration:new_registration')}>
+                <AddIcon />
+              </LinkIconButton>
+            </LinkButtonRow>,
           ]}
-          <MenuItem
+          <LinkButton
             data-testid={dataTestId.myPage.researchProfileLink}
-            component={Link}
-            selected={currentPath === UrlPathTemplate.MyPageResearchProfile}
+            isSelected={currentPath === UrlPathTemplate.MyPageResearchProfile}
             to={UrlPathTemplate.MyPageResearchProfile}>
-            <ListItemText>
-              <Typography variant="overline" color="primary" fontSize="1rem">
-                {t('research_profile')}
-              </Typography>
-            </ListItemText>
-          </MenuItem>
-          <MenuItem
+            {t('research_profile')}
+          </LinkButton>
+          <LinkButton
             data-testid={dataTestId.myPage.myProfileLink}
-            component={Link}
-            selected={currentPath === UrlPathTemplate.MyPageMyProfile}
+            isSelected={currentPath === UrlPathTemplate.MyPageMyProfile}
             to={UrlPathTemplate.MyPageMyProfile}>
-            <ListItemText>
-              <Typography variant="overline" color="primary" fontSize="1rem">
-                {t('my_profile.user_profile')}
-              </Typography>
-            </ListItemText>
-          </MenuItem>
-        </MenuList>
-      </BackgroundDiv>
+            {t('my_profile.user_profile')}
+          </LinkButton>
+        </NavigationList>
+      </SideMenu>
       <BackgroundDiv>
         <Switch>
           <CreatorRoute exact path={UrlPathTemplate.MyPageMessages} component={MyMessagesPage} />
@@ -98,7 +90,7 @@ const MyPagePage = () => {
           <LoggedInRoute exact path={UrlPathTemplate.MyPageResearchProfile} component={ResearchProfile} />
         </Switch>
       </BackgroundDiv>
-    </Box>
+    </StyledPageWithSideMenu>
   );
 };
 

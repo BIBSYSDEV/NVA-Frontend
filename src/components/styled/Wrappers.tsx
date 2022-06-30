@@ -7,10 +7,12 @@ export const StyledRightAlignedWrapper = styled(Box)({
 });
 
 export const StyledSelectWrapper = styled(Box)(({ theme }) => ({
-  width: '50%',
   maxWidth: theme.breakpoints.values.lg,
   [theme.breakpoints.down('sm')]: {
     width: '100%',
+  },
+  [theme.breakpoints.up('sm')]: {
+    width: '50%',
   },
 }));
 
@@ -20,7 +22,9 @@ export const SyledPageContent = styled(Box)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     padding: '1rem 2rem',
   },
-  padding: '0.5rem',
+  [theme.breakpoints.down('sm')]: {
+    padding: '0.5rem',
+  },
 }));
 
 export const InputContainerBox = styled(Box)({
@@ -31,10 +35,15 @@ export const InputContainerBox = styled(Box)({
 
 export const BackgroundDiv = styled(Box)(({ theme }) => ({
   background: theme.palette.background.paper,
+  [theme.breakpoints.up('md')]: {
+    padding: '1rem 2rem',
+  },
+  [theme.breakpoints.down('md')]: {
+    padding: '1rem',
+  },
   [theme.breakpoints.down('sm')]: {
     padding: '0.5rem',
   },
-  padding: '1rem 2rem',
 }));
 
 export const StyledGeneralInfo = styled('div')(({ theme }) => ({

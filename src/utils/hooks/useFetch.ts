@@ -9,7 +9,7 @@ import { isErrorStatus, isSuccessStatus } from '../constants';
 
 interface UseFetchConfig {
   url: string;
-  errorMessage?: string;
+  errorMessage?: string | false;
   withAuthentication?: boolean;
 }
 
@@ -43,18 +43,20 @@ export const useFetch = <T>({
     errorMessageRef.current = errorMessage;
   }, [errorMessage]);
 
-  const showErrorNotification = useCallback(
-    () =>
+  const shouldShowErrorMessage = errorMessage !== false;
+
+  const showErrorNotification = useCallback(() => {
+    if (shouldShowErrorMessage) {
       dispatch(
         setNotification({
           message:
-            errorMessageRef.current ??
+            (errorMessageRef.current as string | undefined) ??
             tRef.current('error.fetch', { resource: url, interpolation: { escapeValue: false } }),
           variant: 'error',
         })
-      ),
-    [dispatch, url]
-  );
+      );
+    }
+  }, [dispatch, shouldShowErrorMessage, url]);
 
   const fetchData = useCallback(async () => {
     try {
