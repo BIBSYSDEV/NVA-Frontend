@@ -1,6 +1,5 @@
-import { Autocomplete, Box, Button, CircularProgress, IconButton, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, CircularProgress, TextField, Typography } from '@mui/material';
 import LooksOneIcon from '@mui/icons-material/LooksOne';
-import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useState, useCallback, useEffect } from 'react';
@@ -44,8 +43,9 @@ export const FindPersonPanel = () => {
     if (isSuccessStatus(searchResponse.status)) {
       const foundUser = convertToFlatCristinPerson(searchResponse.data);
       setFieldValue('user', foundUser);
+      setFieldValue('searchQuery', '');
     } else {
-      setFieldValue('user', { ...emptyUser, nationalId: searchQuery });
+      // setFieldValue('user', { ...emptyUser, nationalId: searchQuery });
     }
     setIsLoading(false);
   }, [setFieldValue, searchQuery]);
@@ -54,10 +54,8 @@ export const FindPersonPanel = () => {
     // Search when user has entered 11 chars as a Norwegian National ID is 11 chars long
     if (searchQueryIsNin) {
       searchByNationalId();
-    } else {
-      setFieldValue('user', emptyUser);
     }
-  }, [setFieldValue, searchByNationalId, searchQueryIsNin]);
+  }, [searchByNationalId, searchQueryIsNin]);
 
   return (
     <>
@@ -72,12 +70,12 @@ export const FindPersonPanel = () => {
               disabled={isSubmitting}
               options={searchByNameOptions}
               getOptionLabel={() => searchQuery}
+              inputValue={searchQuery}
               onChange={(_, value) => {
                 if (value) {
                   setFieldValue('user', value);
-                } else {
-                  setFieldValue('user', emptyUser);
                 }
+                setFieldValue('searchQuery', '');
               }}
               renderOption={(props, option) => (
                 <li {...props} key={option.id}>
