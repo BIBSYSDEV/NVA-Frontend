@@ -39,5 +39,6 @@
   "position_percent": "Stillingsprosent",
   "publications": "Publikasjoner",
   "search_for_national_id": "Søk med fødselsnummer",
-  "search_with_name": "Søk med navn"
+  "search_for_person": "Søk etter person",
+  "name_or_nin": "Navn eller fødselsnummer"
 }

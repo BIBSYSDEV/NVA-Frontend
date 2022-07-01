@@ -18,7 +18,6 @@ import { RootState } from '../../../redux/store';
 import { UserRolesSelector } from './UserRolesSelector';
 
 export interface AddEmployeeData {
-  searchIdNumber: string;
   searchQuery: string;
   user: FlatCristinPerson;
   affiliation: Employment;
@@ -35,7 +34,6 @@ export const emptyUser: FlatCristinPerson = {
 };
 
 const initialValues: AddEmployeeData = {
-  searchIdNumber: '',
   searchQuery: '',
   user: emptyUser,
   affiliation: { type: '', organization: '', startDate: '', endDate: '', fullTimeEquivalentPercentage: '' },
@@ -72,7 +70,7 @@ export const AddEmployeePage = () => {
         // Create NVA User with roles
         await new Promise((resolve) => setTimeout(resolve, 10_000)); // Wait 10sec before creating NVA User. TODO: NP-9121
         const createUserResponse = await createUser({
-          nationalIdentityNumber: values.searchIdNumber,
+          nationalIdentityNumber: values.user.nationalId,
           customerId,
           roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
         });
@@ -103,7 +101,7 @@ export const AddEmployeePage = () => {
               sx={{
                 display: 'grid',
                 gridTemplateColumns: { xs: '1fr', md: '1fr auto 1fr auto 1fr' },
-                gap: '2rem',
+                gap: '1rem',
                 mt: '2rem',
               }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

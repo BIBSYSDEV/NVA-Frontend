@@ -25,6 +25,7 @@ export const AddAffiliationPanel = () => {
   );
   const organizationOptions = currentOrganization ? getSortedSubUnits([currentOrganization]) : [];
 
+  console.log(values);
   const isDisabled = !values.user.firstName || !values.user.lastName || !values.user.nationalId || isSubmitting;
 
   return (

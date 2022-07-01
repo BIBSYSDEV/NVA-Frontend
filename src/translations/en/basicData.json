@@ -39,5 +39,6 @@
   "position_percent": "Position percent",
   "publications": "Publications",
   "search_for_national_id": "Search with with National ID number",
-  "search_with_name": "Search with name"
+  "search_for_person": "Search for person",
+  "name_or_nin": "Name or national identity number"
 }
