@@ -1,6 +1,6 @@
 import { Autocomplete, Box, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import LooksTwoIcon from '@mui/icons-material/LooksTwo';
+import LooksTwoIcon from '@mui/icons-material/LooksTwoOutlined';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useSelector } from 'react-redux';

@@ -1,5 +1,5 @@
 import { Autocomplete, Box, Button, CircularProgress, TextField, Typography } from '@mui/material';
-import LooksOneIcon from '@mui/icons-material/LooksOne';
+import LooksOneIcon from '@mui/icons-material/LooksOneOutlined';
 import { useTranslation } from 'react-i18next';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useState, useCallback, useEffect } from 'react';
@@ -82,6 +82,7 @@ export const FindPersonPanel = () => {
                 }
               }}
               loading={isLoadingSearchByNin || isLoadingSearchByName}
+              loadingText=""
               renderOption={(props, option) => (
                 <li {...props} key={option.id}>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }} data-testid={`project-option-${option.id}`}>

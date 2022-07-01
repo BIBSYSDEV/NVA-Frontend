@@ -4,6 +4,8 @@ import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
+import LooksThreeIcon from '@mui/icons-material/LooksTwoOutlined';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CreateCristinPerson, Employment, FlatCristinPerson, RoleName } from '../../../types/user.types';
 import { FindPersonPanel } from './FindPersonPanel';
 import { AddAffiliationPanel } from './AddAffiliationPanel';
@@ -117,6 +119,9 @@ export const AddEmployeePage = () => {
               </Box>
               <Divider orientation="vertical" />
               <Box>
+                <StyledCenterContainer>
+                  <LooksThreeIcon color="primary" fontSize="large" />
+                </StyledCenterContainer>
                 <UserRolesSelector
                   selectedRoles={values.roles}
                   updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
@@ -125,7 +130,13 @@ export const AddEmployeePage = () => {
               </Box>
             </Box>
             <StyledCenterContainer sx={{ mt: '1rem' }}>
-              <LoadingButton variant="contained" size="large" loading={isSubmitting} disabled={!isValid} type="submit">
+              <LoadingButton
+                variant="contained"
+                size="large"
+                loading={isSubmitting}
+                disabled={!isValid}
+                type="submit"
+                startIcon={<AddCircleOutlineIcon />}>
                 {t('common:create')}
               </LoadingButton>
             </StyledCenterContainer>
