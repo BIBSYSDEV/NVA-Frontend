@@ -4,6 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useState, useCallback, useEffect } from 'react';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { convertToFlatCristinPerson } from '../../../utils/user-helpers';
 import { isSuccessStatus } from '../../../utils/constants';
 import { StyledCenterContainer } from '../../../components/styled/Wrappers';
@@ -151,6 +152,14 @@ export const FindPersonPanel = () => {
               })}
             </Box>
           </div>
+          <Button
+            variant="outlined"
+            color="error"
+            onClick={() => setFieldValue('user', emptyUser)}
+            sx={{ width: 'fit-content' }}
+            startIcon={<HighlightOffIcon />}>
+            {t('add_employee.remove_selected_person')}
+          </Button>
         </>
       ) : (
         <>

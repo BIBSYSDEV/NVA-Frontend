@@ -7,6 +7,7 @@
     "no_matching_persons_found": "Ingen samsvarende personer funnet i Personregisteret",
     "position": "Stilling",
     "position_percent": "Stillingsprosent",
+    "remove_selected_person": "Fjern valgt person",
     "search_for_person": "Søk etter person"
   },
   "basic_data": "Grunndata",
