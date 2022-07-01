@@ -4,7 +4,7 @@
     "add_to_person_registry": "Legg til i personregister",
     "create_person": "Opprett person",
     "name_or_nin": "Navn eller fødselsnummer",
-    "no_matching_persons_found": "Ingen samsvarende personer funnet i Personregisteret",
+    "no_matching_persons_found": "Hvis du ikke finner riktig person i Personregisteret kan du opprette ny person.",
     "position": "Stilling",
     "position_percent": "Stillingsprosent",
     "remove_selected_person": "Fjern valgt person",

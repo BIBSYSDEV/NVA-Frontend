@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useState, useCallback, useEffect } from 'react';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { convertToFlatCristinPerson } from '../../../utils/user-helpers';
 import { isSuccessStatus } from '../../../utils/constants';
 import { StyledCenterContainer } from '../../../components/styled/Wrappers';
@@ -22,15 +23,19 @@ import { EmphasizeSubstring } from '../../../components/EmphasizeSubstring';
 export const FindPersonPanel = () => {
   const { t } = useTranslation('basicData');
   const { values, setFieldValue, isSubmitting } = useFormikContext<AddEmployeeData>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingSearchByNin, setIsLoadingSearchByNin] = useState(false);
+  const [showCreatePerson, setShowCreatePerson] = useState(false);
   const { searchQuery } = values;
   const debouncedSearchQuery = useDebounce(searchQuery);
 
-  const searchQueryIsNumber = searchQuery && !isNaN(Number(searchQuery));
+  const searchQueryIsNumber = !!searchQuery && !isNaN(Number(searchQuery));
   const searchQueryIsNin = searchQueryIsNumber && searchQuery.length === 11;
 
   const [searchByNameResponse, isLoadingSearchByName] = useFetch<SearchResponse<CristinPerson>>({
-    url: debouncedSearchQuery && !searchQueryIsNumber ? `${CristinApiPath.Person}?name=${debouncedSearchQuery}` : '',
+    url:
+      searchQuery && searchQuery === debouncedSearchQuery && !searchQueryIsNumber
+        ? `${CristinApiPath.Person}?name=${debouncedSearchQuery}`
+        : '',
     withAuthentication: true,
   });
   const searchByNameOptions = searchByNameResponse?.hits
@@ -38,16 +43,16 @@ export const FindPersonPanel = () => {
     : [];
 
   const searchByNationalId = useCallback(async () => {
-    setIsLoading(true);
+    setIsLoadingSearchByNin(true);
     const searchResponse = await searchByNationalIdNumber(searchQuery);
     if (isSuccessStatus(searchResponse.status)) {
       const foundUser = convertToFlatCristinPerson(searchResponse.data);
       setFieldValue('user', foundUser);
       setFieldValue('searchQuery', '');
     } else {
-      // setFieldValue('user', { ...emptyUser, nationalId: searchQuery });
+      setFieldValue('user', { ...emptyUser, nationalId: searchQuery });
     }
-    setIsLoading(false);
+    setIsLoadingSearchByNin(false);
   }, [setFieldValue, searchQuery]);
 
   useEffect(() => {
@@ -75,8 +80,8 @@ export const FindPersonPanel = () => {
                 if (value) {
                   setFieldValue('user', value);
                 }
-                setFieldValue('searchQuery', '');
               }}
+              loading={isLoadingSearchByNin || isLoadingSearchByName}
               renderOption={(props, option) => (
                 <li {...props} key={option.id}>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }} data-testid={`project-option-${option.id}`}>
@@ -114,7 +119,7 @@ export const FindPersonPanel = () => {
         </Field>
       )}
 
-      {isLoading ? (
+      {isLoadingSearchByNin ? (
         <CircularProgress />
       ) : values.user.id ? (
         <>
@@ -153,46 +158,78 @@ export const FindPersonPanel = () => {
           <Button
             variant="outlined"
             color="error"
-            onClick={() => setFieldValue('user', emptyUser)}
+            onClick={() => {
+              setFieldValue('user', emptyUser);
+              setFieldValue('searchQuery', '');
+            }}
             sx={{ width: 'fit-content' }}
             startIcon={<HighlightOffIcon />}>
             {t('add_employee.remove_selected_person')}
           </Button>
         </>
       ) : (
-        <>
-          {/* <Typography>{t('add_employee.no_matching_persons_found')}</Typography>
-          <Typography variant="h3">{t('add_employee.create_person')}</Typography>
-          <Field name="user.firstName">
-            {({ field, meta: { touched, error } }: FieldProps<string>) => (
-              <TextField
-                {...field}
-                disabled={isSubmitting}
-                required
-                fullWidth
-                variant="filled"
-                label={t('common:first_name')}
-                error={touched && !!error}
-                helperText={<ErrorMessage name={field.name} />}
-              />
+        ((searchQueryIsNin && !isLoadingSearchByNin) ||
+          (searchQuery && searchQuery === debouncedSearchQuery && !isLoadingSearchByName && searchByNameResponse)) && (
+          <>
+            <Typography>{t('add_employee.no_matching_persons_found')}</Typography>
+            {!showCreatePerson ? (
+              <Button
+                variant="outlined"
+                startIcon={<PersonAddIcon />}
+                sx={{ width: 'fit-content' }}
+                onClick={() => setShowCreatePerson(true)}>
+                {t('add_employee.create_person')}
+              </Button>
+            ) : (
+              <>
+                <Typography variant="h3">{t('add_employee.create_person')}</Typography>
+                <Field name="user.firstName">
+                  {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                    <TextField
+                      {...field}
+                      disabled={isSubmitting}
+                      required
+                      fullWidth
+                      variant="filled"
+                      label={t('common:first_name')}
+                      error={touched && !!error}
+                      helperText={<ErrorMessage name={field.name} />}
+                    />
+                  )}
+                </Field>
+                <Field name="user.lastName">
+                  {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                    <TextField
+                      {...field}
+                      disabled={isSubmitting}
+                      required
+                      fullWidth
+                      variant="filled"
+                      label={t('common:last_name')}
+                      error={touched && !!error}
+                      helperText={<ErrorMessage name={field.name} />}
+                    />
+                  )}
+                </Field>
+                <Field name="user.nationalId">
+                  {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                    <TextField
+                      {...field}
+                      disabled={searchQueryIsNin}
+                      required
+                      fullWidth
+                      variant="filled"
+                      label={t('national_id')}
+                      value={values.user.nationalId}
+                      error={touched && !!error}
+                      helperText={<ErrorMessage name={field.name} />}
+                    />
+                  )}
+                </Field>
+              </>
             )}
-          </Field>
-          <Field name="user.lastName">
-            {({ field, meta: { touched, error } }: FieldProps<string>) => (
-              <TextField
-                {...field}
-                disabled={isSubmitting}
-                required
-                fullWidth
-                variant="filled"
-                label={t('common:last_name')}
-                error={touched && !!error}
-                helperText={<ErrorMessage name={field.name} />}
-              />
-            )}
-          </Field>
-          <TextField disabled required fullWidth variant="filled" label={t('national_id')} value={searchIdNumber} /> */}
-        </>
+          </>
+        )
       )}
     </>
   );
