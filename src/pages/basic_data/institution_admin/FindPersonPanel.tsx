@@ -1,4 +1,4 @@
-import { Autocomplete, Box, CircularProgress, IconButton, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, CircularProgress, IconButton, TextField, Typography } from '@mui/material';
 import LooksOneIcon from '@mui/icons-material/LooksOne';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
@@ -104,10 +104,10 @@ export const FindPersonPanel = () => {
                 <AutocompleteTextField
                   {...params}
                   {...field}
-                  label={t('search_for_person')}
+                  label={t('add_employee.search_for_person')}
                   showSearchIcon
                   isLoading={isLoadingSearchByName}
-                  placeholder={t('name_or_nin')}
+                  placeholder={t('add_employee.name_or_nin')}
                 />
               )}
             />
@@ -136,7 +136,7 @@ export const FindPersonPanel = () => {
             value={values.user.lastName}
           />
           <div>
-            <Typography variant="overline">{t('employments')}</Typography>
+            <Typography variant="overline">{t('common:employments')}</Typography>
             <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
               {values.user.affiliations.map((affiliation) => {
                 const roleString = getLanguageString(affiliation.role.labels);
@@ -154,8 +154,8 @@ export const FindPersonPanel = () => {
         </>
       ) : (
         <>
-          {/* <Typography>{t('no_matching_persons_found')}</Typography>
-          <Typography variant="h3">{t('create_person')}</Typography>
+          {/* <Typography>{t('add_employee.no_matching_persons_found')}</Typography>
+          <Typography variant="h3">{t('add_employee.create_person')}</Typography>
           <Field name="user.firstName">
             {({ field, meta: { touched, error } }: FieldProps<string>) => (
               <TextField

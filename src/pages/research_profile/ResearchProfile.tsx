@@ -65,7 +65,7 @@ const ResearchProfile = () => {
       ) : (
         person && (
           <BackgroundDiv sx={isPublicPage ? undefined : { padding: 0 }}>
-            <Typography variant="h2">{t('basicData:employments')}</Typography>
+            <Typography variant="h2">{t('common:employments')}</Typography>
             {activeAffiliations.length > 0 && (
               <Box sx={lineSx}>
                 <WorkIcon />

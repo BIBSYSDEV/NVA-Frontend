@@ -95,7 +95,7 @@ export const PersonRegisterPage = () => {
                     <Typography fontWeight="bold">{t('common:name')}</Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography fontWeight="bold">{t('employments')}</Typography>
+                    <Typography fontWeight="bold">{t('common:employments')}</Typography>
                   </TableCell>
                   <TableCell />
                 </TableRow>

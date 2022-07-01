@@ -8,20 +8,20 @@ const employeeErrorMessage = {
     field: i18n.t('common:last_name'),
   }),
   affiliationTypeRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('basicData:position'),
+    field: i18n.t('basicData:add_employee.position'),
   }),
   affiliationOrganizationRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:institution'),
   }),
   affiliationPercentageRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('basicData:position_percent'),
+    field: i18n.t('basicData:add_employee.position_percent'),
   }),
   affiliationPercentageMax: i18n.t('feedback:validation.must_be_smaller_than', {
-    field: i18n.t('basicData:position_percent'),
+    field: i18n.t('basicData:add_employee.position_percent'),
     limit: 100,
   }),
   affiliationPercentageMin: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('basicData:position_percent'),
+    field: i18n.t('basicData:add_employee.position_percent'),
     limit: 0,
   }),
   affiliationStartDateRequired: i18n.t('feedback:validation.is_required', {

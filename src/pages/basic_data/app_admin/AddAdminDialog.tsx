@@ -133,7 +133,7 @@ export const AddAdminDialog = ({
             <DialogContent>
               <TextField
                 variant="filled"
-                label={t('basicData:search_for_national_id')}
+                label={t('basicData:institutions.search_for_national_id')}
                 disabled={isSubmitting}
                 fullWidth
                 onChange={({ target: { value } }) => value.length <= 11 && setNationalIdNumber(value)}
@@ -162,7 +162,9 @@ export const AddAdminDialog = ({
                     )}
                   </>
                 ) : (
-                  nationalIdNumber.length === 11 && <Typography>{t('no_matching_persons_found')}</Typography>
+                  nationalIdNumber.length === 11 && (
+                    <Typography>{t('add_employee.no_matching_persons_found')}</Typography>
+                  )
                 )}
               </Box>
             </DialogContent>

@@ -89,10 +89,10 @@ export const AddEmployeePage = () => {
   return (
     <>
       <Helmet>
-        <title>{t('add_employee')}</title>
+        <title>{t('add_employee.add_employee')}</title>
       </Helmet>
       <Typography variant="h3" component="h2" paragraph>
-        {t('add_to_person_registry')}
+        {t('add_employee.add_to_person_registry')}
       </Typography>
       <Formik initialValues={initialValues} validationSchema={addEmployeeValidationSchema} onSubmit={onSubmit}>
         {({ isValid, isSubmitting, values, setFieldValue, errors }: FormikProps<AddEmployeeData>) => (

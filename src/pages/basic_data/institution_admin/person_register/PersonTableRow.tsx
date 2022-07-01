@@ -175,7 +175,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                   </Box>
                   <Divider flexItem orientation="vertical" />
                   <Box>
-                    <Typography variant="overline">{t('employments')}</Typography>
+                    <Typography variant="overline">{t('common:employments')}</Typography>
                     {employmentsInThisInstitution.map((affiliation) => {
                       // TODO: Allow updating employment
                       return (

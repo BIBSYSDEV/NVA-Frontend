@@ -1,6 +1,14 @@
 {
-  "add_employee": "Add employee",
-  "add_to_person_registry": "Add to person registry",
+  "add_employee": {
+    "add_employee": "Add employee",
+    "add_to_person_registry": "Add to person registry",
+    "create_person": "Create person",
+    "name_or_nin": "Name or national identity number",
+    "no_matching_persons_found": "No matching persons found in the Person Registry",
+    "position": "Position",
+    "position_percent": "Position percent",
+    "search_for_person": "Search for person"
+  },
   "basic_data": "Basic data",
   "central_import": {
     "author": "Author",
@@ -11,6 +19,7 @@
     "import_publication": "Import publication",
     "issn": "ISSN",
     "or_search_with": "or search with",
+    "publications": "Publications",
     "reset_search_values": "Reset values",
     "search_again": "Search again",
     "search_for_duplicates": "Search for duplicates",
@@ -18,14 +27,12 @@
     "verified_contributor_count": "({{verifiedContributorCount}} of {{contributorsCount}})",
     "year_published": "Year published"
   },
-  "create_person": "Create person",
-  "employments": "Employments",
   "institutions": {
     "invalid_ror_format": "Invalid ROR. Example with valid format: https://ror.org/abcd0123ef",
-    "ror": "Research Organization Registry (ROR)"
+    "ror": "Research Organization Registry (ROR)",
+    "search_for_national_id": "Search with with National ID number"
   },
   "national_id": "National ID",
-  "no_matching_persons_found": "No matching persons found in the Person Registry",
   "person_register": {
     "edit_person": "Edit person",
     "employee_table_caption": "List of all employees",
@@ -34,11 +41,5 @@
     "other_employees": "Other employees",
     "person_id": "PersonID",
     "person_register": "Person Register"
-  },
-  "position": "Position",
-  "position_percent": "Position percent",
-  "publications": "Publications",
-  "search_for_national_id": "Search with with National ID number",
-  "search_for_person": "Search for person",
-  "name_or_nin": "Name or national identity number"
+  }
 }

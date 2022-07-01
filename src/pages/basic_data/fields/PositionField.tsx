@@ -44,7 +44,7 @@ export const PositionField = ({ fieldName, disabled }: PositionFieldProps) => {
               {...field}
               {...params}
               required
-              label={t('position')}
+              label={t('add_employee.position')}
               variant="filled"
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}

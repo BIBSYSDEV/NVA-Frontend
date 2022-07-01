@@ -75,7 +75,7 @@ export const AddAffiliationPanel = () => {
               type="number"
               inputProps={{ min: '0', max: '100' }}
               variant="filled"
-              label={t('position_percent')}
+              label={t('add_employee.position_percent')}
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}
             />

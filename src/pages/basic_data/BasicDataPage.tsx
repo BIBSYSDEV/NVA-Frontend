@@ -61,7 +61,7 @@ const BasicDataPage = () => {
                 data-testid={dataTestId.basicData.addEmployeeLink}
                 isSelected={currentPath === UrlPathTemplate.BasicDataAddEmployee}
                 to={UrlPathTemplate.BasicDataAddEmployee}
-                title={t('add_employee')}>
+                title={t('add_employee.add_employee')}>
                 <PersonAddIcon />
               </LinkIconButton>
             </LinkButtonRow>,
