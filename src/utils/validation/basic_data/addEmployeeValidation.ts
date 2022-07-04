@@ -8,20 +8,20 @@ const employeeErrorMessage = {
     field: i18n.t('common:last_name'),
   }),
   affiliationTypeRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('basicData:position'),
+    field: i18n.t('basicData:add_employee.position'),
   }),
   affiliationOrganizationRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:institution'),
   }),
   affiliationPercentageRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('basicData:position_percent'),
+    field: i18n.t('basicData:add_employee.position_percent'),
   }),
   affiliationPercentageMax: i18n.t('feedback:validation.must_be_smaller_than', {
-    field: i18n.t('basicData:position_percent'),
+    field: i18n.t('basicData:add_employee.position_percent'),
     limit: 100,
   }),
   affiliationPercentageMin: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('basicData:position_percent'),
+    field: i18n.t('basicData:add_employee.position_percent'),
     limit: 0,
   }),
   affiliationStartDateRequired: i18n.t('feedback:validation.is_required', {
@@ -38,12 +38,21 @@ const employeeErrorMessage = {
   affiliationEndDateRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('common:end_date'),
   }),
+  nationalIdInvalid: i18n.t('feedback:validation.is_required', {
+    field: i18n.t('basicData:national_id'),
+  }),
+  nationalIdInvalidFormat: i18n.t('feedback:validation.invalid_number_of_digits', {
+    field: i18n.t('basicData:national_id'),
+    digits: 11,
+  }),
 };
 
 export const userValidationSchema = Yup.object().shape({
   firstName: Yup.string().required(employeeErrorMessage.firstNameRequired),
   lastName: Yup.string().required(employeeErrorMessage.lastNameRequired),
-  nationalId: Yup.string().required(),
+  nationalId: Yup.string()
+    .matches(/^\d{11}$/, employeeErrorMessage.nationalIdInvalidFormat)
+    .required(employeeErrorMessage.nationalIdInvalid),
 });
 
 export const addEmployeeValidationSchema = Yup.object().shape({

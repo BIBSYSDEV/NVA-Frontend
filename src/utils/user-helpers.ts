@@ -30,7 +30,7 @@ export const getOrcidUri = (identifiers: CristinPersonIdentifier[] = []) => {
 };
 
 export const getMaskedNationalIdentityNumber = (nationalIdentityNumber: string) =>
-  nationalIdentityNumber.substring(0, 6).padEnd(11, '*');
+  nationalIdentityNumber ? nationalIdentityNumber.substring(0, 6).padEnd(11, '*') : '';
 
 export const convertToCristinPerson = (user: FlatCristinPerson): CreateCristinPerson => ({
   identifiers: [{ type: 'NationalIdentificationNumber', value: user.nationalId }],

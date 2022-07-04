@@ -1,6 +1,6 @@
 import { Autocomplete, Box, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import LooksTwoIcon from '@mui/icons-material/LooksTwo';
+import LooksTwoIcon from '@mui/icons-material/LooksTwoOutlined';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useSelector } from 'react-redux';
@@ -18,14 +18,14 @@ import { PositionField } from '../fields/PositionField';
 
 export const AddAffiliationPanel = () => {
   const { t } = useTranslation('basicData');
-  const { values, setFieldValue, isSubmitting } = useFormikContext<AddEmployeeData>();
+  const { values, errors, setFieldValue, isSubmitting } = useFormikContext<AddEmployeeData>();
   const user = useSelector((store: RootState) => store.user);
   const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
     user?.topOrgCristinId ?? ''
   );
   const organizationOptions = currentOrganization ? getSortedSubUnits([currentOrganization]) : [];
 
-  const isDisabled = !values.user.firstName || !values.user.lastName || !values.user.nationalId || isSubmitting;
+  const isDisabled = !!errors.user?.firstName || !!errors.user?.lastName || !!errors.user?.nationalId || isSubmitting;
 
   return (
     <>
@@ -74,7 +74,7 @@ export const AddAffiliationPanel = () => {
               type="number"
               inputProps={{ min: '0', max: '100' }}
               variant="filled"
-              label={t('position_percent')}
+              label={t('add_employee.position_percent')}
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}
             />

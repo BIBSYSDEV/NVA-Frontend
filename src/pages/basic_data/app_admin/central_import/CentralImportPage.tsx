@@ -44,7 +44,7 @@ export const CentralImportPage = () => {
   return (
     <>
       <Typography variant="h3" component="h2" paragraph>
-        {t('publications')}
+        {t('central_import.publications')}
       </Typography>
       {isLoadingSearchResults ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
