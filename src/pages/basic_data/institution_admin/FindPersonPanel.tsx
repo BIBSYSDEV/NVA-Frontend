@@ -5,7 +5,7 @@ import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useState, useCallback, useEffect } from 'react';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { convertToFlatCristinPerson } from '../../../utils/user-helpers';
+import { convertToFlatCristinPerson, getMaskedNationalIdentityNumber } from '../../../utils/user-helpers';
 import { isSuccessStatus } from '../../../utils/constants';
 import { StyledCenterContainer } from '../../../components/styled/Wrappers';
 import { AddEmployeeData, emptyUser } from './AddEmployeePage';
@@ -34,7 +34,7 @@ export const FindPersonPanel = () => {
   const [searchByNameResponse, isLoadingSearchByName] = useFetch<SearchResponse<CristinPerson>>({
     url:
       searchQuery && searchQuery === debouncedSearchQuery && !searchQueryIsNumber
-        ? `${CristinApiPath.Person}?name=${debouncedSearchQuery}`
+        ? `${CristinApiPath.Person}?results=20&name=${debouncedSearchQuery}`
         : '',
     withAuthentication: true,
   });
@@ -98,15 +98,7 @@ export const FindPersonPanel = () => {
                     <Typography variant="subtitle1">
                       <EmphasizeSubstring text={`${option.firstName} ${option.lastName}`} emphasized={searchQuery} />
                     </Typography>
-                    {option.affiliations.map((affiliation, index) => {
-                      const roleName = getLanguageString(affiliation.role.labels);
-                      return (
-                        <Box key={`${affiliation.organization}-${index}`} sx={{ display: 'flex', gap: '0.25rem' }}>
-                          {roleName && <Typography>{roleName}:</Typography>}
-                          <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
-                        </Box>
-                      );
-                    })}
+                    <Typography>{getMaskedNationalIdentityNumber(values.user.nationalId)}</Typography>
                   </Box>
                 </li>
               )}
