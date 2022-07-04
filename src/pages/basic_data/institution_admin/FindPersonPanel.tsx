@@ -81,8 +81,17 @@ export const FindPersonPanel = () => {
                   setFieldValue('user', value);
                 }
               }}
+              onInputChange={(event, value, reason) => {
+                if (reason === 'input' || reason === 'clear') {
+                  if (showCreatePerson) {
+                    setShowCreatePerson(false);
+                  }
+                  if (values.user.nationalId) {
+                    setFieldValue('user', emptyUser);
+                  }
+                }
+              }}
               loading={isLoadingSearchByNin || isLoadingSearchByName}
-              loadingText=""
               renderOption={(props, option) => (
                 <li {...props} key={option.id}>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }} data-testid={`project-option-${option.id}`}>
