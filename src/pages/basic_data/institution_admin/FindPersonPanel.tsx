@@ -103,11 +103,7 @@ export const FindPersonPanel = () => {
                       return (
                         <Box key={`${affiliation.organization}-${index}`} sx={{ display: 'flex', gap: '0.25rem' }}>
                           {roleName && <Typography>{roleName}:</Typography>}
-                          <AffiliationHierarchy
-                            key={affiliation.organization}
-                            unitUri={affiliation.organization}
-                            commaSeparated
-                          />
+                          <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
                         </Box>
                       );
                     })}
