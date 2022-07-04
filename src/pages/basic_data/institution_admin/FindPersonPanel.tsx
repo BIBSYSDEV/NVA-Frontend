@@ -137,6 +137,14 @@ export const FindPersonPanel = () => {
             label={t('common:last_name')}
             value={values.user.lastName}
           />
+          <TextField
+            disabled
+            required
+            fullWidth
+            variant="filled"
+            label={t('national_id')}
+            value={getMaskedNationalIdentityNumber(values.user.nationalId)}
+          />
           <div>
             <Typography variant="overline">{t('common:employments')}</Typography>
             <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
