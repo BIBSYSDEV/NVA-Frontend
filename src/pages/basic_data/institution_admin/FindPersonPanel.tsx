@@ -98,7 +98,7 @@ export const FindPersonPanel = () => {
                     <Typography variant="subtitle1">
                       <EmphasizeSubstring text={`${option.firstName} ${option.lastName}`} emphasized={searchQuery} />
                     </Typography>
-                    <Typography>{getMaskedNationalIdentityNumber(values.user.nationalId)}</Typography>
+                    <Typography>{getMaskedNationalIdentityNumber(option.nationalId)}</Typography>
                   </Box>
                 </li>
               )}
