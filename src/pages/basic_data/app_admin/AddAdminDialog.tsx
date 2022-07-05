@@ -1,18 +1,6 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogProps,
-  DialogTitle,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { useState, useEffect } from 'react';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@mui/material';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { useDispatch } from 'react-redux';
@@ -20,13 +8,13 @@ import { useLocation } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
 import { FlatCristinPerson, RoleName } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
-import { convertToFlatCristinPerson } from '../../../utils/user-helpers';
 import { StartDateField } from '../fields/StartDateField';
 import { PositionField } from '../fields/PositionField';
 import { addCustomerAdminValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
 import { setNotification } from '../../../redux/notificationSlice';
-import { addEmployment, searchByNationalIdNumber } from '../../../api/userApi';
+import { addEmployment } from '../../../api/userApi';
 import { createUser } from '../../../api/roleApi';
+import { SearchForCristinPerson } from '../SearchForCristinPerson';
 
 interface AddAdminDialogProps extends Pick<DialogProps, 'open'> {
   toggleOpen: () => void;
@@ -50,34 +38,12 @@ export const AddAdminDialog = ({
   const { t } = useTranslation('basicData');
   const dispatch = useDispatch();
   const location = useLocation();
-  const [nationalIdNumber, setNationalIdNumber] = useState('');
   const [cristinPerson, setCristinPerson] = useState<FlatCristinPerson>();
-  const [isLoadingSearch, setIsLoadingSearch] = useState(false);
 
   const isEmployedInThisOrganization = cristinPerson?.affiliations.some(
     (affiliation) =>
       affiliation.active && cristinInstitutionId.startsWith(affiliation.organization.split('.').slice(0, -3).join('.')) // Remove last 3 subunit values to find out if user already has an employment in this institution
   );
-
-  useEffect(() => {
-    // Search when user has entered 11 chars as a Norwegian National ID is 11 chars long
-    if (nationalIdNumber.length === 11) {
-      const searchByNationalId = async () => {
-        setIsLoadingSearch(true);
-        const searchResponse = await searchByNationalIdNumber(nationalIdNumber);
-        if (isSuccessStatus(searchResponse.status)) {
-          setCristinPerson(convertToFlatCristinPerson(searchResponse.data));
-        } else if (isErrorStatus(searchResponse.status)) {
-          dispatch(setNotification({ message: t('feedback:error.search'), variant: 'error' }));
-          setCristinPerson(undefined);
-        }
-        setIsLoadingSearch(false);
-      };
-      searchByNationalId();
-    } else {
-      setCristinPerson(undefined);
-    }
-  }, [t, dispatch, nationalIdNumber]);
 
   const addAdmin = async (values: AddAdminFormData, { resetForm }: FormikHelpers<AddAdminFormData>) => {
     if (cristinPerson) {
@@ -97,7 +63,7 @@ export const AddAdminDialog = ({
       // Create NVA User with admin role
       const customerId = new URLSearchParams(location.search).get('id') as string;
       const createNvaUserResponse = await createUser({
-        nationalIdentityNumber: nationalIdNumber,
+        nationalIdentityNumber: cristinPerson.nationalId,
         customerId,
         roles: [
           { type: 'Role', rolename: RoleName.InstitutionAdmin },
@@ -117,7 +83,6 @@ export const AddAdminDialog = ({
 
   const closeDialog = () => {
     toggleOpen();
-    setNationalIdNumber('');
     setCristinPerson(undefined);
   };
 
@@ -131,42 +96,18 @@ export const AddAdminDialog = ({
         {({ isSubmitting }: FormikProps<AddAdminFormData>) => (
           <Form noValidate>
             <DialogContent>
-              <TextField
-                variant="filled"
-                label={t('basicData:institutions.search_for_national_id')}
+              <SearchForCristinPerson
+                selectedPerson={cristinPerson}
+                setSelectedPerson={setCristinPerson}
                 disabled={isSubmitting}
-                fullWidth
-                onChange={({ target: { value } }) => value.length <= 11 && setNationalIdNumber(value)}
-                InputProps={{
-                  endAdornment: <SearchIcon color="disabled" />,
-                }}
               />
-              <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {isLoadingSearch ? (
-                  <CircularProgress />
-                ) : cristinPerson ? (
-                  <>
-                    <TextField
-                      variant="filled"
-                      disabled
-                      label={t('common:name')}
-                      required
-                      fullWidth
-                      value={`${cristinPerson.firstName} ${cristinPerson.lastName}`}
-                    />
-                    {!isEmployedInThisOrganization && (
-                      <Box sx={{ display: 'flex', gap: '1rem', width: '100%' }}>
-                        <StartDateField fieldName="startDate" disabled={isSubmitting} />
-                        <PositionField fieldName="position" disabled={isSubmitting} />
-                      </Box>
-                    )}
-                  </>
-                ) : (
-                  nationalIdNumber.length === 11 && (
-                    <Typography>{t('add_employee.no_matching_persons_found')}</Typography>
-                  )
-                )}
-              </Box>
+
+              {cristinPerson && !isEmployedInThisOrganization && (
+                <Box sx={{ display: 'flex', gap: '1rem', mt: '1rem' }}>
+                  <StartDateField fieldName="startDate" disabled={isSubmitting} />
+                  <PositionField fieldName="position" disabled={isSubmitting} />
+                </Box>
+              )}
             </DialogContent>
             <DialogActions>
               <Button onClick={closeDialog}>{t('common:cancel')}</Button>
@@ -175,7 +116,7 @@ export const AddAdminDialog = ({
                 variant="contained"
                 loading={isSubmitting}
                 startIcon={<AddIcon />}
-                disabled={!cristinPerson || nationalIdNumber.length !== 11}>
+                disabled={!cristinPerson}>
                 {t('common:add')}
               </LoadingButton>
             </DialogActions>

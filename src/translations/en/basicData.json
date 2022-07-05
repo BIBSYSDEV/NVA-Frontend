@@ -30,8 +30,7 @@
   },
   "institutions": {
     "invalid_ror_format": "Invalid ROR. Example with valid format: https://ror.org/abcd0123ef",
-    "ror": "Research Organization Registry (ROR)",
-    "search_for_national_id": "Search with with National ID number"
+    "ror": "Research Organization Registry (ROR)"
   },
   "national_id": "National ID",
   "person_register": {
