@@ -6,6 +6,7 @@ export enum PublicationType {
   Chapter = 'Chapter',
   Presentation = 'Event',
   Artistic = 'Artistic',
+  MediaContribution = 'MediaContribution',
 }
 
 export enum JournalType {
@@ -57,6 +58,15 @@ export enum ArtisticType {
   ArtisticArchitecture = 'Architecture',
 }
 
+export enum MediaType {
+  MediaFeatureArticle = 'MediaFeatureArticle',
+  MediaReaderOpinion = 'MediaReaderOpinion',
+  MediaInterview = 'MediaInterview',
+  MediaBlogPost = 'MediaBlogPost',
+  MediaPodcast = 'MediaPodcast',
+  MediaParticipateInRadioOrTv = 'MediaParticipateInRadioOrTv',
+}
+
 export type RegistrationSubtype =
   | JournalType
   | ReportType
@@ -64,7 +74,8 @@ export type RegistrationSubtype =
   | DegreeType
   | ChapterType
   | PresentationType
-  | ArtisticType;
+  | ArtisticType
+  | MediaType;
 
 export enum RegistrationFieldName {
   Identifier = 'identifier',

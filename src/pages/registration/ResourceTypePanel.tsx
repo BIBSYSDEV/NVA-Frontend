@@ -32,6 +32,8 @@ import {
 } from '../../types/publication_types/presentationRegistration.types';
 import { ArtisticTypeForm } from './resource_type_tab/ArtisticTypeForm';
 import { emptyArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
+import { MediaTypeForm } from './resource_type_tab/MediaTypeForm';
+import { emptyMediaContributionPublicationInstance } from '../../types/publication_types/mediaContributionRegistration';
 
 export const ResourceTypePanel = () => {
   const { t } = useTranslation('registration');
@@ -95,6 +97,10 @@ export const ResourceTypePanel = () => {
       case PublicationType.Artistic:
         setFieldValue(instanceTypeBaseFieldName, emptyArtisticPublicationInstance, false);
         setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Artistic, venues: [] }, false);
+        break;
+      case PublicationType.MediaContribution:
+        setFieldValue(instanceTypeBaseFieldName, emptyMediaContributionPublicationInstance, false);
+        setFieldValue(contextTypeBaseFieldName, { type: PublicationType.MediaContribution }, false);
         break;
     }
 
@@ -168,6 +174,7 @@ export const ResourceTypePanel = () => {
       {mainType === PublicationType.Chapter && <ChapterTypeForm onChangeSubType={onChangeSubType} />}
       {mainType === PublicationType.Presentation && <PresentationTypeForm onChangeSubType={onChangeSubType} />}
       {mainType === PublicationType.Artistic && <ArtisticTypeForm onChangeSubType={onChangeSubType} />}
+      {mainType === PublicationType.MediaContribution && <MediaTypeForm onChangeSubType={onChangeSubType} />}
     </InputContainerBox>
   );
 };

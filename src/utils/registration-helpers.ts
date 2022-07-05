@@ -5,6 +5,7 @@ import {
   ChapterType,
   DegreeType,
   JournalType,
+  MediaType,
   PresentationType,
   PublicationType,
   ReportType,
@@ -39,6 +40,8 @@ export const getMainRegistrationType = (instanceType: string) =>
     ? PublicationType.Presentation
     : isArtistic(instanceType)
     ? PublicationType.Artistic
+    : isMediaContribution(instanceType)
+    ? PublicationType.MediaContribution
     : '';
 
 export const isJournal = (instanceType: string) => Object.values(JournalType).some((type) => type === instanceType);
@@ -55,6 +58,8 @@ export const isPresentation = (instanceType: string) =>
   Object.values(PresentationType).some((type) => type === instanceType);
 
 export const isArtistic = (instanceType: string) => Object.values(ArtisticType).some((type) => type === instanceType);
+
+const isMediaContribution = (instanceType: string) => Object.values(MediaType).some((type) => type === instanceType);
 
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCreator && user.username === registration.resourceOwner.owner;
