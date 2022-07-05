@@ -36,7 +36,7 @@ const BasicDataPage = () => {
   useEffect(() => {
     if (currentPath === UrlPathTemplate.BasicData) {
       if (user?.isInstitutionAdmin) {
-        history.replace(UrlPathTemplate.BasicDataUsers);
+        history.replace(UrlPathTemplate.BasicDataPersonRegister);
       } else if (user?.isAppAdmin) {
         history.replace(UrlPathTemplate.BasicDataInstitutions);
       }
