@@ -136,7 +136,7 @@ export const Header = () => {
                   {t('workLists:worklist')}
                 </Button>
               )}
-              {user?.isCreator && (
+              {user && (
                 <Button
                   sx={{ whiteSpace: 'nowrap' }}
                   color="inherit"

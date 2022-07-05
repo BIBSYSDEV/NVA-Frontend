@@ -4,6 +4,8 @@ import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
+import LooksThreeIcon from '@mui/icons-material/LooksTwoOutlined';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CreateCristinPerson, Employment, FlatCristinPerson, RoleName } from '../../../types/user.types';
 import { FindPersonPanel } from './FindPersonPanel';
 import { AddAffiliationPanel } from './AddAffiliationPanel';
@@ -18,7 +20,7 @@ import { RootState } from '../../../redux/store';
 import { UserRolesSelector } from './UserRolesSelector';
 
 export interface AddEmployeeData {
-  searchIdNumber: string;
+  searchQuery: string;
   user: FlatCristinPerson;
   affiliation: Employment;
   roles: RoleName[];
@@ -34,7 +36,7 @@ export const emptyUser: FlatCristinPerson = {
 };
 
 const initialValues: AddEmployeeData = {
-  searchIdNumber: '',
+  searchQuery: '',
   user: emptyUser,
   affiliation: { type: '', organization: '', startDate: '', endDate: '', fullTimeEquivalentPercentage: '' },
   roles: [RoleName.Creator],
@@ -70,7 +72,7 @@ export const AddEmployeePage = () => {
         // Create NVA User with roles
         await new Promise((resolve) => setTimeout(resolve, 10_000)); // Wait 10sec before creating NVA User. TODO: NP-9121
         const createUserResponse = await createUser({
-          nationalIdentityNumber: values.searchIdNumber,
+          nationalIdentityNumber: values.user.nationalId,
           customerId,
           roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
         });
@@ -89,19 +91,23 @@ export const AddEmployeePage = () => {
   return (
     <>
       <Helmet>
-        <title>{t('add_employee')}</title>
+        <title>{t('add_employee.add_employee')}</title>
       </Helmet>
       <Typography variant="h3" component="h2" paragraph>
-        {t('add_to_person_registry')}
+        {t('add_employee.add_to_person_registry')}
       </Typography>
-      <Formik initialValues={initialValues} validationSchema={addEmployeeValidationSchema} onSubmit={onSubmit}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={addEmployeeValidationSchema}
+        onSubmit={onSubmit}
+        validateOnMount>
         {({ isValid, isSubmitting, values, setFieldValue, errors }: FormikProps<AddEmployeeData>) => (
           <Form noValidate>
             <Box
               sx={{
                 display: 'grid',
                 gridTemplateColumns: { xs: '1fr', md: '1fr auto 1fr auto 1fr' },
-                gap: '2rem',
+                gap: '1rem',
                 mt: '2rem',
               }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -113,6 +119,9 @@ export const AddEmployeePage = () => {
               </Box>
               <Divider orientation="vertical" />
               <Box>
+                <StyledCenterContainer>
+                  <LooksThreeIcon color="primary" fontSize="large" />
+                </StyledCenterContainer>
                 <UserRolesSelector
                   selectedRoles={values.roles}
                   updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
@@ -121,7 +130,13 @@ export const AddEmployeePage = () => {
               </Box>
             </Box>
             <StyledCenterContainer sx={{ mt: '1rem' }}>
-              <LoadingButton variant="contained" size="large" loading={isSubmitting} disabled={!isValid} type="submit">
+              <LoadingButton
+                variant="contained"
+                size="large"
+                loading={isSubmitting}
+                disabled={!isValid}
+                type="submit"
+                startIcon={<AddCircleOutlineIcon />}>
                 {t('common:create')}
               </LoadingButton>
             </StyledCenterContainer>

@@ -1,5 +1,6 @@
 import { Typography, CircularProgress, Box } from '@mui/material';
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { TFunction, useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { authenticatedApiRequest } from '../../api/apiRequest';
@@ -91,6 +92,9 @@ export const VocabularySettings = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{t('vocabulary')}</title>
+      </Helmet>
       <Typography paragraph color="primary" fontWeight="600">
         {t('select_vocabulary_description')}
       </Typography>

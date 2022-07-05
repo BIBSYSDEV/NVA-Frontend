@@ -55,6 +55,7 @@ export const dataTestId = {
     displayNameField: 'display-name-field',
     feideField: 'feide-field',
     nameField: 'institution-name-field',
+    rorField: 'ror-field',
     saveButton: 'save-button',
     shortNameField: 'short-name-field',
   },
@@ -254,6 +255,7 @@ export const dataTestId = {
     messagesLink: 'messages-link',
     myProfileLink: 'my-profile-link',
     myRegistrationsLink: 'my-registrations-link',
+    newRegistrationLink: 'new-registration-link',
     researchProfileLink: 'research-profile-link',
   },
 };
