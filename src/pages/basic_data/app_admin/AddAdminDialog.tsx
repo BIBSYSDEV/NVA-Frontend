@@ -98,7 +98,11 @@ export const AddAdminDialog = ({
         {({ isSubmitting }: FormikProps<AddAdminFormData>) => (
           <Form noValidate>
             <DialogContent>
-              <SearchForCristinPerson selectedPerson={cristinPerson} setSelectedPerson={setCristinPerson} />
+              <SearchForCristinPerson
+                selectedPerson={cristinPerson}
+                setSelectedPerson={setCristinPerson}
+                disabled={isSubmitting}
+              />
 
               {cristinPerson && !isEmployedInThisOrganization && (
                 <Box sx={{ display: 'flex', gap: '1rem', mt: '1rem' }}>

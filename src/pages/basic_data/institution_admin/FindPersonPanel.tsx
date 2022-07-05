@@ -24,7 +24,11 @@ export const FindPersonPanel = () => {
         <LooksOneIcon color="primary" fontSize="large" sx={{ float: 'center' }} />
       </StyledCenterContainer>
 
-      <SearchForCristinPerson selectedPerson={values.user} setSelectedPerson={setSelectedPerson} />
+      <SearchForCristinPerson
+        selectedPerson={values.user}
+        setSelectedPerson={setSelectedPerson}
+        disabled={isSubmitting}
+      />
       {!values.user.id && (
         <>
           <Typography>{t('add_employee.no_matching_persons_found')}</Typography>

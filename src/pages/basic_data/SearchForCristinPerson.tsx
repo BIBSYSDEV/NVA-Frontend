@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, CircularProgress, TextField, Typography } from '@mui/material';
+import { Autocomplete, AutocompleteProps, Box, Button, CircularProgress, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -15,14 +15,18 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { convertToFlatCristinPerson, getMaskedNationalIdentityNumber } from '../../utils/user-helpers';
 
-interface SearchForCristinPersonProps {
+interface SearchForCristinPersonProps
+  extends Pick<AutocompleteProps<FlatCristinPerson, false, false, false>, 'disabled'> {
   selectedPerson: FlatCristinPerson | undefined;
   setSelectedPerson: (person: FlatCristinPerson | undefined) => void;
 }
 
-export const SearchForCristinPerson = ({ selectedPerson, setSelectedPerson }: SearchForCristinPersonProps) => {
+export const SearchForCristinPerson = ({
+  selectedPerson,
+  setSelectedPerson,
+  disabled,
+}: SearchForCristinPersonProps) => {
   const { t } = useTranslation('basicData');
-  const [showCreatePerson, setShowCreatePerson] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery);
@@ -64,6 +68,7 @@ export const SearchForCristinPerson = ({ selectedPerson, setSelectedPerson }: Se
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       {!selectedPerson?.id ? (
         <Autocomplete
+          disabled={disabled}
           options={searchByNameOptions}
           getOptionLabel={() => searchQuery}
           inputValue={searchQuery}
@@ -72,14 +77,7 @@ export const SearchForCristinPerson = ({ selectedPerson, setSelectedPerson }: Se
               setSelectedPerson(value);
             }
           }}
-          onInputChange={(event, value, reason) => {
-            setSearchQuery(value);
-            if (reason === 'input' || reason === 'clear') {
-              if (showCreatePerson) {
-                setShowCreatePerson(false);
-              }
-            }
-          }}
+          onInputChange={(_, value) => setSearchQuery(value)}
           loading={isLoadingSearchByNin || isLoadingSearchByName}
           renderOption={(props, option) => (
             <li {...props} key={option.id}>
