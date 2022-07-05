@@ -38,7 +38,6 @@ export const AddAdminDialog = ({
   const { t } = useTranslation('basicData');
   const dispatch = useDispatch();
   const location = useLocation();
-  const [nationalIdNumber, setNationalIdNumber] = useState('');
   const [cristinPerson, setCristinPerson] = useState<FlatCristinPerson>();
 
   const isEmployedInThisOrganization = cristinPerson?.affiliations.some(
@@ -64,7 +63,7 @@ export const AddAdminDialog = ({
       // Create NVA User with admin role
       const customerId = new URLSearchParams(location.search).get('id') as string;
       const createNvaUserResponse = await createUser({
-        nationalIdentityNumber: nationalIdNumber,
+        nationalIdentityNumber: cristinPerson.nationalId,
         customerId,
         roles: [
           { type: 'Role', rolename: RoleName.InstitutionAdmin },
@@ -84,7 +83,6 @@ export const AddAdminDialog = ({
 
   const closeDialog = () => {
     toggleOpen();
-    setNationalIdNumber('');
     setCristinPerson(undefined);
   };
 
