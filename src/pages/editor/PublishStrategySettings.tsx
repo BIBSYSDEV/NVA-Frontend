@@ -84,7 +84,7 @@ export const PublishStrategySettings = () => {
             onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataAndFiles')}>
             <Box>
               <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
-                {t('publish_strategy.registrator_can_publish')}
+                {t('publish_strategy.registrator_publishes_without_curator')}
               </Typography>
               <StyledAccessRightsContainer>
                 <StyledAccessRight>
@@ -97,7 +97,7 @@ export const PublishStrategySettings = () => {
                 </StyledAccessRight>
               </StyledAccessRightsContainer>
               <Typography sx={{ textAlign: 'center' }}>
-                {t('publish_strategy.registrator_can_publish_description')}
+                {t('publish_strategy.registrator_publishes_without_curator_description')}
               </Typography>
             </Box>
           </PublishStrategyButton>
@@ -111,7 +111,7 @@ export const PublishStrategySettings = () => {
             onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataOnly')}>
             <Box>
               <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
-                {t('publish_strategy.registrator_can_publish')}
+                {t('publish_strategy.registrator_publishes_metadata')}
               </Typography>
               <StyledAccessRightsContainer>
                 <StyledAccessRight>
@@ -120,6 +120,9 @@ export const PublishStrategySettings = () => {
                 </StyledAccessRight>
                 <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
               </StyledAccessRightsContainer>
+              <Typography sx={{ textAlign: 'center' }}>
+                {t('publish_strategy.registrator_publishes_metadata_description')}
+              </Typography>
             </Box>
           </PublishStrategyButton>
           {isLoading === 'RegistratorPublishesMetadataOnly' && <CircularProgress />}

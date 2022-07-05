@@ -19,8 +19,10 @@
     "files_and_licenses": "Files and licenses",
     "metadata": "Metadata",
     "publish_strategy": "Publish strategy",
-    "registrator_can_publish": "Registrator can publish without approval from Curator",
-    "registrator_can_publish_description": "The institution decides who is Registrator.",
+    "registrator_publishes_without_curator": "Registrator publishes without approval from Curator",
+    "registrator_publishes_without_curator_description": "The institution decides who is Registrator.",
+    "registrator_publishes_metadata": "Registrator publishes metadata",
+    "registrator_publishes_metadata_description": "Files and licenses must be approved by Curator before they become publically available.",
     "registrator_cannot_publish": "Registrator can only register",
     "registrator_cannot_publish_description": "Metadata, files and licenses must be approved by Curator befor publishing."
   },
