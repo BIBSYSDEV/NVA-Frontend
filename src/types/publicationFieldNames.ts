@@ -64,7 +64,7 @@ export enum MediaType {
   MediaInterview = 'MediaInterview',
   MediaBlogPost = 'MediaBlogPost',
   MediaPodcast = 'MediaPodcast',
-  MediaParticipateInRadioOrTv = 'MediaParticipateInRadioOrTv',
+  MediaParticipationInRadioOrTv = 'MediaParticipationInRadioOrTv',
 }
 
 export type RegistrationSubtype =
