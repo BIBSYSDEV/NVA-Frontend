@@ -20,7 +20,6 @@ import { RootState } from '../../../redux/store';
 import { UserRolesSelector } from './UserRolesSelector';
 
 export interface AddEmployeeData {
-  searchQuery: string;
   user: FlatCristinPerson;
   affiliation: Employment;
   roles: RoleName[];
@@ -36,7 +35,6 @@ export const emptyUser: FlatCristinPerson = {
 };
 
 const initialValues: AddEmployeeData = {
-  searchQuery: '',
   user: emptyUser,
   affiliation: { type: '', organization: '', startDate: '', endDate: '', fullTimeEquivalentPercentage: '' },
   roles: [RoleName.Creator],

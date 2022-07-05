@@ -1,5 +1,5 @@
 import { Autocomplete, Box, Button, CircularProgress, TextField, Typography } from '@mui/material';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { CristinApiPath } from '../../api/apiPaths';
@@ -14,7 +14,6 @@ import { useDebounce } from '../../utils/hooks/useDebounce';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { convertToFlatCristinPerson, getMaskedNationalIdentityNumber } from '../../utils/user-helpers';
-import { emptyUser } from './institution_admin/AddEmployeePage';
 
 interface SearchForCristinPersonProps {
   selectedPerson: FlatCristinPerson | undefined;
@@ -28,7 +27,6 @@ export const SearchForCristinPerson = ({ selectedPerson, setSelectedPerson }: Se
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery);
   const searchQueryIsNumber = !!searchQuery && !isNaN(Number(searchQuery));
-  const searchQueryIsNin = searchQueryIsNumber && searchQuery.length === 11;
 
   const [isLoadingSearchByNin, setIsLoadingSearchByNin] = useState(false);
 
@@ -43,31 +41,29 @@ export const SearchForCristinPerson = ({ selectedPerson, setSelectedPerson }: Se
     ? searchByNameResponse.hits.map((person) => convertToFlatCristinPerson(person))
     : [];
 
-  const searchByNationalId = useCallback(async () => {
-    setIsLoadingSearchByNin(true);
-    const searchResponse = await searchByNationalIdNumber(searchQuery);
-    if (isSuccessStatus(searchResponse.status)) {
-      const foundPerson = convertToFlatCristinPerson(searchResponse.data);
-      setSelectedPerson(foundPerson);
-      // setSearchQuery('');
-    } else {
-      // setFieldValue('user', { ...emptyUser, nationalId: searchQuery });
-    }
-    setIsLoadingSearchByNin(false);
-  }, [setSelectedPerson, searchQuery]);
-
   useEffect(() => {
+    const searchQueryIsNin = searchQueryIsNumber && searchQuery.length === 11;
+
     // Search when user has entered 11 chars as a Norwegian National ID is 11 chars long
     if (searchQueryIsNin) {
+      const searchByNationalId = async () => {
+        setIsLoadingSearchByNin(true);
+        const searchResponse = await searchByNationalIdNumber(searchQuery);
+        if (isSuccessStatus(searchResponse.status)) {
+          const foundPerson = convertToFlatCristinPerson(searchResponse.data);
+          setSelectedPerson(foundPerson);
+        }
+        setIsLoadingSearchByNin(false);
+      };
+
       searchByNationalId();
     }
-  }, [searchByNationalId, searchQueryIsNin]);
+  }, [setSelectedPerson, searchQueryIsNumber, searchQuery]);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      {!selectedPerson ? (
+      {!selectedPerson?.id ? (
         <Autocomplete
-          // disabled={isSubmitting}
           options={searchByNameOptions}
           getOptionLabel={() => searchQuery}
           inputValue={searchQuery}
@@ -82,10 +78,6 @@ export const SearchForCristinPerson = ({ selectedPerson, setSelectedPerson }: Se
               if (showCreatePerson) {
                 setShowCreatePerson(false);
               }
-              //TODO: Reset selected person..?
-              // if (values.user.nationalId) {
-              //   setFieldValue('user', emptyUser);
-              // }
             }
           }}
           loading={isLoadingSearchByNin || isLoadingSearchByName}
@@ -157,11 +149,7 @@ export const SearchForCristinPerson = ({ selectedPerson, setSelectedPerson }: Se
           <Button
             variant="outlined"
             color="error"
-            onClick={() => {
-              setSelectedPerson(undefined);
-              // setFieldValue('user', emptyUser);
-              // setFieldValue('searchQuery', '');
-            }}
+            onClick={() => setSelectedPerson(undefined)}
             sx={{ width: 'fit-content' }}
             startIcon={<HighlightOffIcon />}>
             {t('add_employee.remove_selected_person')}
