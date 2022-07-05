@@ -1,5 +1,6 @@
 import { Box, ButtonBase, CircularProgress, styled, Typography } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -118,7 +119,10 @@ export const PublishStrategySettings = () => {
                   <CheckCircleIcon color="primary" />
                   <Typography>{t('publish_strategy.metadata')}</Typography>
                 </StyledAccessRight>
-                <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
+                <StyledAccessRight>
+                  <RemoveCircleIcon color="error" />
+                  <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
+                </StyledAccessRight>
               </StyledAccessRightsContainer>
               <Typography sx={{ textAlign: 'center' }}>
                 {t('publish_strategy.registrator_publishes_metadata_description')}
@@ -138,8 +142,14 @@ export const PublishStrategySettings = () => {
                 {t('publish_strategy.registrator_cannot_publish')}
               </Typography>
               <StyledAccessRightsContainer>
-                <Typography>{t('publish_strategy.metadata')}</Typography>
-                <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
+                <StyledAccessRight>
+                  <RemoveCircleIcon color="error" />
+                  <Typography>{t('publish_strategy.metadata')}</Typography>
+                </StyledAccessRight>
+                <StyledAccessRight>
+                  <RemoveCircleIcon color="error" />
+                  <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
+                </StyledAccessRight>
               </StyledAccessRightsContainer>
               <Typography sx={{ textAlign: 'center' }}>
                 {t('publish_strategy.registrator_cannot_publish_description')}
