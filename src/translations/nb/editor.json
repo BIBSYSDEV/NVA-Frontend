@@ -19,12 +19,12 @@
     "files_and_licenses": "Filer og lisenser",
     "metadata": "Metadata",
     "publish_strategy": "Publiseringsstrategi",
-    "registrator_publishes_without_curator": "Registrator publiserer uten godkjenning fra Kurator",
-    "registrator_publishes_without_curator_description": "Institutsjonen bestemmer hvem som er Registrator.",
+    "registrator_cannot_publish": "Registrator kan kun registrere",
+    "registrator_cannot_publish_description": "Metadata, filer og lisenser må godkjennes av Kurator før publisering.",
     "registrator_publishes_metadata": "Registrator publiserer metadata",
     "registrator_publishes_metadata_description": "Filer og lisenser må godkjennes av Kurator før de blir offentlig tilgjengelig.",
-    "registrator_cannot_publish": "Registrator kan kun registrere",
-    "registrator_cannot_publish_description": "Metadata, filer og lisenser må godkjennes av Kurator før publisering."
+    "registrator_publishes_without_curator": "Registrator publiserer uten godkjenning av Kurator",
+    "registrator_publishes_without_curator_description": "Institutsjonen bestemmer hvem som er Registrator."
   },
   "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
   "vocabulary": "Vokabular"
