@@ -1,5 +1,6 @@
 import { Box, ButtonBase, CircularProgress, styled, Typography } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -84,7 +85,7 @@ export const PublishStrategySettings = () => {
             onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataAndFiles')}>
             <Box>
               <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
-                {t('publish_strategy.registrator_can_publish')}
+                {t('publish_strategy.registrator_publishes_without_curator')}
               </Typography>
               <StyledAccessRightsContainer>
                 <StyledAccessRight>
@@ -97,7 +98,7 @@ export const PublishStrategySettings = () => {
                 </StyledAccessRight>
               </StyledAccessRightsContainer>
               <Typography sx={{ textAlign: 'center' }}>
-                {t('publish_strategy.registrator_can_publish_description')}
+                {t('publish_strategy.registrator_publishes_without_curator_description')}
               </Typography>
             </Box>
           </PublishStrategyButton>
@@ -111,15 +112,21 @@ export const PublishStrategySettings = () => {
             onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataOnly')}>
             <Box>
               <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
-                {t('publish_strategy.registrator_can_publish')}
+                {t('publish_strategy.registrator_publishes_metadata')}
               </Typography>
               <StyledAccessRightsContainer>
                 <StyledAccessRight>
                   <CheckCircleIcon color="primary" />
                   <Typography>{t('publish_strategy.metadata')}</Typography>
                 </StyledAccessRight>
-                <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
+                <StyledAccessRight>
+                  <RemoveCircleIcon color="error" />
+                  <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
+                </StyledAccessRight>
               </StyledAccessRightsContainer>
+              <Typography sx={{ textAlign: 'center' }}>
+                {t('publish_strategy.registrator_publishes_metadata_description')}
+              </Typography>
             </Box>
           </PublishStrategyButton>
           {isLoading === 'RegistratorPublishesMetadataOnly' && <CircularProgress />}
@@ -135,8 +142,14 @@ export const PublishStrategySettings = () => {
                 {t('publish_strategy.registrator_cannot_publish')}
               </Typography>
               <StyledAccessRightsContainer>
-                <Typography>{t('publish_strategy.metadata')}</Typography>
-                <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
+                <StyledAccessRight>
+                  <RemoveCircleIcon color="error" />
+                  <Typography>{t('publish_strategy.metadata')}</Typography>
+                </StyledAccessRight>
+                <StyledAccessRight>
+                  <RemoveCircleIcon color="error" />
+                  <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
+                </StyledAccessRight>
               </StyledAccessRightsContainer>
               <Typography sx={{ textAlign: 'center' }}>
                 {t('publish_strategy.registrator_cannot_publish_description')}
