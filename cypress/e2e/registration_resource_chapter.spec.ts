@@ -1,3 +1,4 @@
+import { ChapterContentType } from '../../src/types/publication_types/content.types';
 import { dataTestId } from '../../src/utils/dataTestIds';
 
 describe('Registration: Resource type: Chapter', () => {
@@ -27,7 +28,9 @@ describe('Registration: Resource type: Chapter', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.pagesToField}]`).type('42');
 
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}]`).click();
-    cy.get('[data-testid=content-value-academic-chapter]').click();
+    cy.get(
+      `[data-testid=${dataTestId.registrationWizard.resourceType.contentValue(ChapterContentType.AcademicChapter)}]`
+    ).click();
 
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).eq(0).click();
   });
