@@ -40,7 +40,7 @@ export const emptyMediaContributionPublicationContext: MediaContributionPublicat
   containerSubname: '',
 };
 
-interface MediaContributionPublicationContext {
+export interface MediaContributionPublicationContext {
   type: PublicationType | '';
   format: MediaFormat | '';
   medium: MediaMedium | '';

@@ -59,7 +59,8 @@ export const isPresentation = (instanceType: string) =>
 
 export const isArtistic = (instanceType: string) => Object.values(ArtisticType).some((type) => type === instanceType);
 
-const isMediaContribution = (instanceType: string) => Object.values(MediaType).some((type) => type === instanceType);
+export const isMediaContribution = (instanceType: string) =>
+  Object.values(MediaType).some((type) => type === instanceType);
 
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCreator && user.username === registration.resourceOwner.owner;

@@ -31,6 +31,7 @@ import {
   isChapter,
   isDegree,
   isJournal,
+  isMediaContribution,
   isPresentation,
   isReport,
 } from '../../utils/registration-helpers';
@@ -40,6 +41,7 @@ import {
   PublicJournal,
   PublicPartOfContent,
   PublicPresentation,
+  PublicPublicationContextMediaContribution,
   PublicPublisher,
   PublicSeries,
 } from './PublicPublicationContext';
@@ -59,6 +61,7 @@ import { displayDate } from '../../utils/date-helpers';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
+import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t, i18n } = useTranslation('registration');
@@ -184,6 +187,10 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
                 showType
               />
             ) : null
+          ) : isMediaContribution(publicationInstance.type) ? (
+            <PublicPublicationContextMediaContribution
+              publicationContext={publicationContext as MediaContributionPublicationContext}
+            />
           ) : null)}
       </div>
     </StyledGeneralInfo>
