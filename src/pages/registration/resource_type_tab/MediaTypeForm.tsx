@@ -1,7 +1,9 @@
-import { useFormikContext } from 'formik';
+import { Box, MenuItem, TextField } from '@mui/material';
+import { ErrorMessage, Field, FieldProps } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import { MediaType, ResourceFieldNames } from '../../../types/publicationFieldNames';
-import { MediaContributionRegistration } from '../../../types/publication_types/mediaContributionRegistration';
+import { MediaFormat, MediaMedium } from '../../../types/publication_types/mediaContributionRegistration';
 import { SelectTypeField } from './components/SelectTypeField';
 
 interface MediaTypeFormProps {
@@ -9,20 +11,59 @@ interface MediaTypeFormProps {
 }
 
 export const MediaTypeForm = ({ onChangeSubType }: MediaTypeFormProps) => {
-  const { values } = useFormikContext<MediaContributionRegistration>();
-  const subType = values.entityDescription.reference.publicationInstance.type;
+  const { t } = useTranslation('registration');
 
   return (
     <>
       <StyledSelectWrapper>
-        <SelectTypeField
-          fieldName={ResourceFieldNames.SubType}
-          onChangeType={onChangeSubType}
-          options={Object.values(MediaType)}
-        />
-      </StyledSelectWrapper>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <SelectTypeField
+            fieldName={ResourceFieldNames.SubType}
+            onChangeType={onChangeSubType}
+            options={Object.values(MediaType)}
+          />
 
-      {subType && <></>}
+          <Field name={ResourceFieldNames.PublicationContextMediaMedium}>
+            {({ field, meta: { error, touched } }: FieldProps<string>) => (
+              <TextField
+                variant="filled"
+                select
+                required
+                label={t('resource_type.media_contribution.medium')}
+                fullWidth
+                {...field}
+                error={touched && !!error}
+                helperText={<ErrorMessage name={field.name} />}>
+                {Object.values(MediaMedium).map((medium) => (
+                  <MenuItem key={medium} value={medium}>
+                    {t(`resource_type.media_contribution.medium_types.${medium}`)}
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
+          </Field>
+
+          <Field name={ResourceFieldNames.PublicationContextMediaFormat}>
+            {({ field, meta: { error, touched } }: FieldProps<string>) => (
+              <TextField
+                variant="filled"
+                select
+                required
+                label={t('resource_type.media_contribution.format')}
+                fullWidth
+                {...field}
+                error={touched && !!error}
+                helperText={<ErrorMessage name={field.name} />}>
+                {Object.values(MediaFormat).map((format) => (
+                  <MenuItem key={format} value={format}>
+                    {t(`resource_type.media_contribution.format_types.${format}`)}
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
+          </Field>
+        </Box>
+      </StyledSelectWrapper>
     </>
   );
 };

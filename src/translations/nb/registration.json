@@ -246,6 +246,22 @@
     "journal": "Tidsskrift",
     "journal_not_found": "Finner du ikke tidsskriftet?",
     "level": "Nivå i Norsk publiseringsindikator",
+    "media_contribution": {
+      "medium": "Medium",
+      "medium_types": {
+        "Journal": "Avis eller tidsskrift",
+        "Radio": "Radio",
+        "TV": "TV",
+        "Internet": "Internett",
+        "Other": "Annet"
+      },
+      "format": "Format",
+      "format_types": {
+        "Sound": "Lyd",
+        "Text": "Tekst",
+        "Video": "Video"
+      }
+    },
     "more_info_about_work": "Mer informasjon om verket",
     "number_of_pages": "Totalt antall sider",
     "nvi": {

@@ -246,6 +246,22 @@
     "journal": "Journal",
     "journal_not_found": "Journal not found?",
     "level": "Level in Norwegian publication indicator",
+    "media_contribution": {
+      "medium": "Medium",
+      "medium_types": {
+        "Journal": "Newspaper or journal",
+        "Radio": "Radio",
+        "TV": "TV",
+        "Internet": "Internet",
+        "Other": "Other"
+      },
+      "format": "Format",
+      "format_types": {
+        "Sound": "Sound",
+        "Text": "Text",
+        "Video": "Video"
+      }
+    },
     "more_info_about_work": "More information about work",
     "number_of_pages": "Total number of pages",
     "nvi": {
