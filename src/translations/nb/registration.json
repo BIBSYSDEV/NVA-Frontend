@@ -247,6 +247,9 @@
     "journal_not_found": "Finner du ikke tidsskriftet?",
     "level": "Nivå i Norsk publiseringsindikator",
     "media_contribution": {
+      "channel": "Formidlingskanal",
+      "containerName": "Navn på serie, program, etc.",
+      "containerSubname": "Navn på hefte, episode, etc.",
       "medium": "Medium",
       "medium_types": {
         "Journal": "Avis eller tidsskrift",

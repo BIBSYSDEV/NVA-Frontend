@@ -284,7 +284,10 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
               type: true,
               format: true,
               medium: true,
-            }, // TODO: Add new fields
+              channel: true,
+              containerName: true,
+              containerSubname: true,
+            },
             publicationInstance: {
               type: true,
             },

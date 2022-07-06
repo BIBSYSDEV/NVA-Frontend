@@ -399,6 +399,13 @@ const mediaContributionPublicationContext = Yup.object().shape({
         field: i18n.t('registration:resource_type.media_contribution.medium'),
       })
     ),
+  channel: Yup.string()
+    .nullable()
+    .required(
+      i18n.t('feedback:validation.is_required', {
+        field: i18n.t('registration:resource_type.media_contribution.channel'),
+      })
+    ),
 });
 
 const mediaContributionPublicationInstance = Yup.object().shape({

@@ -21,7 +21,7 @@ export interface MediaContributionRegistration extends BaseRegistration {
 
 interface MediaContributionPublicationInstance {
   type: MediaType | '';
-  pages: any;
+  pages: any; // TODO: Remove
 }
 
 export const emptyMediaContributionPublicationInstance: MediaContributionPublicationInstance = {
@@ -35,13 +35,18 @@ export const emptyMediaContributionPublicationContext: MediaContributionPublicat
   type: PublicationType.MediaContribution,
   format: '',
   medium: '',
+  channel: '',
+  containerName: '',
+  containerSubname: '',
 };
 
-// TODO: Add new media fields
 interface MediaContributionPublicationContext {
   type: PublicationType | '';
   format: MediaFormat | '';
   medium: MediaMedium | '';
+  channel: string;
+  containerName: string;
+  containerSubname: string;
 }
 
 interface MediaContributionReference extends BaseReference {

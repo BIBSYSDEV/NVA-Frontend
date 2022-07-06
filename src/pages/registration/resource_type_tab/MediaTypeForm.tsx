@@ -62,6 +62,44 @@ export const MediaTypeForm = ({ onChangeSubType }: MediaTypeFormProps) => {
               </TextField>
             )}
           </Field>
+
+          <Field name={ResourceFieldNames.PublicationContextMediaChannel}>
+            {({ field, meta: { error, touched } }: FieldProps<string>) => (
+              <TextField
+                variant="filled"
+                required
+                label={t('resource_type.media_contribution.channel')}
+                fullWidth
+                {...field}
+                error={touched && !!error}
+                helperText={<ErrorMessage name={field.name} />}
+              />
+            )}
+          </Field>
+          <Field name={ResourceFieldNames.PublicationContextMediaContainerName}>
+            {({ field, meta: { error, touched } }: FieldProps<string>) => (
+              <TextField
+                variant="filled"
+                label={t('resource_type.media_contribution.containerName')}
+                fullWidth
+                {...field}
+                error={touched && !!error}
+                helperText={<ErrorMessage name={field.name} />}
+              />
+            )}
+          </Field>
+          <Field name={ResourceFieldNames.PublicationContextMediaContainerSubname}>
+            {({ field, meta: { error, touched } }: FieldProps<string>) => (
+              <TextField
+                variant="filled"
+                label={t('resource_type.media_contribution.containerSubname')}
+                fullWidth
+                {...field}
+                error={touched && !!error}
+                helperText={<ErrorMessage name={field.name} />}
+              />
+            )}
+          </Field>
         </Box>
       </StyledSelectWrapper>
     </>

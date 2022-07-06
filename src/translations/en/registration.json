@@ -247,6 +247,9 @@
     "journal_not_found": "Journal not found?",
     "level": "Level in Norwegian publication indicator",
     "media_contribution": {
+      "channel": "Channel",
+      "containerName": "Name of series, program, etc.",
+      "containerSubname": "Name of issue, episode, etc.",
       "medium": "Medium",
       "medium_types": {
         "Journal": "Newspaper or journal",
