@@ -10,7 +10,7 @@ export enum MediaFormat {
 export enum MediaMedium {
   Journal = 'Journal',
   Radio = 'Radio',
-  Tv = 'TV',
+  TV = 'TV',
   Internet = 'Internet',
   Other = 'Other',
 }
@@ -21,7 +21,7 @@ export interface MediaContributionRegistration extends BaseRegistration {
 
 interface MediaContributionPublicationInstance {
   type: MediaType | '';
-  pages: any; // TODO: Remove
+  pages: unknown; // TODO: Remove (NP-9289)
 }
 
 export const emptyMediaContributionPublicationInstance: MediaContributionPublicationInstance = {
@@ -44,6 +44,7 @@ export interface MediaContributionPublicationContext {
   type: PublicationType | '';
   format: MediaFormat | '';
   medium: MediaMedium | '';
+  // TODO: name of fields below to be determined (NP-9289)
   channel: string;
   containerName: string;
   containerSubname: string;
@@ -54,6 +55,6 @@ interface MediaContributionReference extends BaseReference {
   publicationInstance: MediaContributionPublicationInstance;
 }
 
-interface MediaContributionEntityDescription extends BaseEntityDescription {
+export interface MediaContributionEntityDescription extends BaseEntityDescription {
   reference: MediaContributionReference;
 }

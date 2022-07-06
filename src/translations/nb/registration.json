@@ -252,11 +252,11 @@
       "containerSubname": "Navn på hefte, episode, etc.",
       "medium": "Medium",
       "medium_types": {
-        "Journal": "Avis eller tidsskrift",
-        "Radio": "Radio",
-        "TV": "TV",
         "Internet": "Internett",
-        "Other": "Annet"
+        "Journal": "Avis eller tidsskrift",
+        "Other": "Annet",
+        "Radio": "Radio",
+        "TV": "TV"
       },
       "format": "Format",
       "format_types": {

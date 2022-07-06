@@ -12,6 +12,7 @@ import { Contributor } from './contributor.types';
 import { PresentationEntityDescription } from './publication_types/presentationRegistration.types';
 import { ArtisticEntityDescription } from './publication_types/artisticRegistration.types';
 import { MessageCollection } from './publication_types/messages.types';
+import { MediaContributionEntityDescription } from './publication_types/mediaContributionRegistration';
 
 export enum RegistrationStatus {
   Deleted = 'DRAFT_FOR_DELETION',
@@ -130,7 +131,8 @@ export type EntityDescription =
   | ReportEntityDescription
   | ChapterEntityDescription
   | PresentationEntityDescription
-  | ArtisticEntityDescription;
+  | ArtisticEntityDescription
+  | MediaContributionEntityDescription;
 
 export interface Registration extends BaseRegistration {
   entityDescription?: EntityDescription;

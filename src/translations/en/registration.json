@@ -252,11 +252,11 @@
       "containerSubname": "Name of issue, episode, etc.",
       "medium": "Medium",
       "medium_types": {
-        "Journal": "Newspaper or journal",
-        "Radio": "Radio",
-        "TV": "TV",
         "Internet": "Internet",
-        "Other": "Other"
+        "Journal": "Newspaper or journal",
+        "Other": "Other",
+        "Radio": "Radio",
+        "TV": "TV"
       },
       "format": "Format",
       "format_types": {

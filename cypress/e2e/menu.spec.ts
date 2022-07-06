@@ -63,18 +63,16 @@ describe('Menu', () => {
     cy.setUserRolesInRedux([RoleName.AppAdmin]);
     cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).click();
 
-    // TODO: Remove commented tests when out of beta
-
-    // cy.get(`[data-testid=${dataTestId.basicData.personRegisterLink}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.basicData.personRegisterLink}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.basicData.addEmployeeLink}]`).should('not.exist');
-    // cy.get(`[data-testid=${dataTestId.basicData.centralImportLink}]`).should('be.visible');
+    // cy.get(`[data-testid=${dataTestId.basicData.centralImportLink}]`).should('be.visible'); // TODO: Remove comment when out of beta
     cy.get(`[data-testid=${dataTestId.basicData.adminInstitutionsLink}]`).should('be.visible');
 
     cy.setUserRolesInRedux([RoleName.InstitutionAdmin]);
     cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).click();
-    // cy.get(`[data-testid=${dataTestId.basicData.personRegisterLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.basicData.personRegisterLink}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.basicData.addEmployeeLink}]`).should('be.visible');
-    // cy.get(`[data-testid=${dataTestId.basicData.centralImportLink}]`).should('not.exist');
+    // cy.get(`[data-testid=${dataTestId.basicData.centralImportLink}]`).should('not.exist'); // TODO: Remove comment when out of beta
     cy.get(`[data-testid=${dataTestId.basicData.adminInstitutionsLink}]`).should('not.exist');
   });
 
