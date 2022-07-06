@@ -276,6 +276,21 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
         },
       };
     }
+    case PublicationType.MediaContribution:
+      return {
+        entityDescription: {
+          reference: {
+            publicationContext: {
+              type: true,
+              format: true,
+              medium: true,
+            }, // TODO: Add new fields
+            publicationInstance: {
+              type: true,
+            },
+          },
+        },
+      };
     default:
       return {
         entityDescription: {

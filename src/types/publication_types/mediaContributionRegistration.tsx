@@ -31,6 +31,13 @@ export const emptyMediaContributionPublicationInstance: MediaContributionPublica
   },
 };
 
+export const emptyMediaContributionPublicationContext: MediaContributionPublicationContext = {
+  type: PublicationType.MediaContribution,
+  format: '',
+  medium: '',
+};
+
+// TODO: Add new media fields
 interface MediaContributionPublicationContext {
   type: PublicationType | '';
   format: MediaFormat | '';

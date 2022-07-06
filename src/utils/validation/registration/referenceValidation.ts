@@ -6,6 +6,7 @@ import {
   ChapterType,
   DegreeType,
   JournalType,
+  MediaType,
   PresentationType,
   ReportType,
 } from '../../../types/publicationFieldNames';
@@ -380,4 +381,31 @@ const artisticDesignPublicationInstance = Yup.object().shape({
 
 export const artisticDesignReference = baseReference.shape({
   publicationInstance: artisticDesignPublicationInstance,
+});
+
+// Media Contribution
+const mediaContributionPublicationContext = Yup.object().shape({
+  format: Yup.string()
+    .nullable()
+    .required(
+      i18n.t('feedback:validation.is_required', {
+        field: i18n.t('registration:resource_type.media_contribution.format'),
+      })
+    ),
+  medium: Yup.string()
+    .nullable()
+    .required(
+      i18n.t('feedback:validation.is_required', {
+        field: i18n.t('registration:resource_type.media_contribution.medium'),
+      })
+    ),
+});
+
+const mediaContributionPublicationInstance = Yup.object().shape({
+  type: Yup.string().oneOf(Object.values(MediaType)).required(resourceErrorMessage.typeRequired),
+});
+
+export const mediaContributionReference = baseReference.shape({
+  publicationContext: mediaContributionPublicationContext,
+  publicationInstance: mediaContributionPublicationInstance,
 });

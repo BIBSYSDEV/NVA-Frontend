@@ -33,7 +33,10 @@ import {
 import { ArtisticTypeForm } from './resource_type_tab/ArtisticTypeForm';
 import { emptyArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
 import { MediaTypeForm } from './resource_type_tab/MediaTypeForm';
-import { emptyMediaContributionPublicationInstance } from '../../types/publication_types/mediaContributionRegistration';
+import {
+  emptyMediaContributionPublicationContext,
+  emptyMediaContributionPublicationInstance,
+} from '../../types/publication_types/mediaContributionRegistration';
 
 export const ResourceTypePanel = () => {
   const { t } = useTranslation('registration');
@@ -100,7 +103,7 @@ export const ResourceTypePanel = () => {
         break;
       case PublicationType.MediaContribution:
         setFieldValue(instanceTypeBaseFieldName, emptyMediaContributionPublicationInstance, false);
-        setFieldValue(contextTypeBaseFieldName, { type: PublicationType.MediaContribution }, false);
+        setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPublicationContext, false);
         break;
     }
 
