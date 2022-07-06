@@ -285,7 +285,7 @@ const PublicVenueDialogContent = ({ venue }: { venue: Venue }) => {
 };
 
 const PublicCompetitionDialogContent = ({ competition }: { competition: Competition }) => {
-  const { t } = useTranslation('registrations');
+  const { t } = useTranslation('registration');
   return (
     <DialogContent>
       <Typography variant="overline">{t('resource_type.artistic.competition_name')}</Typography>
@@ -299,7 +299,7 @@ const PublicCompetitionDialogContent = ({ competition }: { competition: Competit
 };
 
 const PublicAwardDialogContent = ({ award }: { award: Award }) => {
-  const { t } = useTranslation('registrations');
+  const { t } = useTranslation('registration');
   return (
     <DialogContent>
       <Typography variant="overline">{t('resource_type.artistic.competition_name')}</Typography>
@@ -317,7 +317,7 @@ const PublicAwardDialogContent = ({ award }: { award: Award }) => {
 };
 
 const PublicMentionDialogContent = ({ mention }: { mention: MentionInPublication }) => {
-  const { t } = useTranslation('registrations');
+  const { t } = useTranslation('registration');
   return (
     <DialogContent>
       <Typography variant="overline">{t('resource_type.artistic.mention_title')}</Typography>
@@ -333,7 +333,7 @@ const PublicMentionDialogContent = ({ mention }: { mention: MentionInPublication
 };
 
 const PublicExhibitionDialogContent = ({ exhibition }: { exhibition: Exhibition }) => {
-  const { t } = useTranslation('registrations'); // TODO typo
+  const { t } = useTranslation('registration');
   return (
     <DialogContent>
       <Typography variant="overline">{t('resource_type.artistic.exhibition_title')}</Typography>
