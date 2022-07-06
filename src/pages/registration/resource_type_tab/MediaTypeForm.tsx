@@ -1,6 +1,7 @@
 import { Box, MenuItem, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import { MediaType, ResourceFieldNames } from '../../../types/publicationFieldNames';
 import { MediaFormat, MediaMedium } from '../../../types/publication_types/mediaContributionRegistration';
@@ -14,7 +15,7 @@ export const MediaTypeForm = ({ onChangeSubType }: MediaTypeFormProps) => {
   const { t } = useTranslation('registration');
 
   return (
-    <>
+    <BetaFunctionality>
       <StyledSelectWrapper>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <SelectTypeField
@@ -102,6 +103,6 @@ export const MediaTypeForm = ({ onChangeSubType }: MediaTypeFormProps) => {
           </Field>
         </Box>
       </StyledSelectWrapper>
-    </>
+    </BetaFunctionality>
   );
 };
