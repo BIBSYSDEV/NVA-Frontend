@@ -9,6 +9,7 @@ import { ChapterPublicationInstance } from '../../types/publication_types/chapte
 import { PagesMonograph, PagesRange } from '../../types/publication_types/pages.types';
 import i18n from '../../translations/i18n';
 import { ArtisticPublicationInstance, DesignType } from '../../types/publication_types/artisticRegistration.types';
+import { ArtisticType } from '../../types/publicationFieldNames';
 
 const getPageInterval = (pages: PagesRange | null) => {
   return pages?.begin || pages?.end
@@ -90,10 +91,18 @@ export const PublicPublicationInstanceArtistic = ({
 }) => {
   const { t } = useTranslation('registration');
   const { subtype, description } = publicationInstance;
+
+  const i18nTypeBase =
+    publicationInstance.type === ArtisticType.ArtisticDesign
+      ? 'resource_type.design_type.'
+      : publicationInstance.type === ArtisticType.ArtisticArchitecture
+      ? 'resource_type.architecture_type.'
+      : '';
+
   const typeString = subtype?.type
     ? subtype.type === DesignType.Other && subtype.description
-      ? `${subtype.description} (${t(`resource_type.design_type.${subtype.type}`)})`
-      : t(`resource_type.design_type.${subtype.type}`)
+      ? `${subtype.description} (${t(`${i18nTypeBase}${subtype.type}`)})`
+      : t(`${i18nTypeBase}${subtype.type}`)
     : '';
 
   return (
