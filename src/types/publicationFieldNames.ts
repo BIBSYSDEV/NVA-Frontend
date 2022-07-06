@@ -6,6 +6,7 @@ export enum PublicationType {
   Chapter = 'Chapter',
   Presentation = 'Event',
   Artistic = 'Artistic',
+  MediaContribution = 'MediaContribution',
 }
 
 export enum JournalType {
@@ -57,6 +58,15 @@ export enum ArtisticType {
   ArtisticArchitecture = 'Architecture',
 }
 
+export enum MediaType {
+  MediaFeatureArticle = 'MediaFeatureArticle',
+  MediaReaderOpinion = 'MediaReaderOpinion',
+  MediaInterview = 'MediaInterview',
+  MediaBlogPost = 'MediaBlogPost',
+  MediaPodcast = 'MediaPodcast',
+  MediaParticipationInRadioOrTv = 'MediaParticipationInRadioOrTv',
+}
+
 export type RegistrationSubtype =
   | JournalType
   | ReportType
@@ -64,7 +74,8 @@ export type RegistrationSubtype =
   | DegreeType
   | ChapterType
   | PresentationType
-  | ArtisticType;
+  | ArtisticType
+  | MediaType;
 
 export enum RegistrationFieldName {
   Identifier = 'identifier',
@@ -96,6 +107,11 @@ export enum ResourceFieldNames {
   PublicationContextId = 'entityDescription.reference.publicationContext.id',
   PublicationContextLabel = 'entityDescription.reference.publicationContext.label',
   PublicationContextLevel = 'entityDescription.reference.publicationContext.level',
+  PublicationContextMediaChannel = 'entityDescription.reference.publicationContext.channel',
+  PublicationContextMediaContainerName = 'entityDescription.reference.publicationContext.containerName',
+  PublicationContextMediaContainerSubname = 'entityDescription.reference.publicationContext.containerSubname',
+  PublicationContextMediaFormat = 'entityDescription.reference.publicationContext.format',
+  PublicationContextMediaMedium = 'entityDescription.reference.publicationContext.medium',
   PublicationContextPlaceLabel = 'entityDescription.reference.publicationContext.place.label',
   PublicationContextPlaceCountry = 'entityDescription.reference.publicationContext.place.country',
   PublicationContextPublisher = 'entityDescription.reference.publicationContext.publisher',

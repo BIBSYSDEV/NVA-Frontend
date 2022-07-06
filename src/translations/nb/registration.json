@@ -246,6 +246,25 @@
     "journal": "Tidsskrift",
     "journal_not_found": "Finner du ikke tidsskriftet?",
     "level": "Nivå i Norsk publiseringsindikator",
+    "media_contribution": {
+      "channel": "Formidlingskanal",
+      "containerName": "Navn på serie, program, etc.",
+      "containerSubname": "Navn på hefte, episode, etc.",
+      "medium": "Medium",
+      "medium_types": {
+        "Internet": "Internett",
+        "Journal": "Avis eller tidsskrift",
+        "Other": "Annet",
+        "Radio": "Radio",
+        "TV": "TV"
+      },
+      "format": "Format",
+      "format_types": {
+        "Sound": "Lyd",
+        "Text": "Tekst",
+        "Video": "Video"
+      }
+    },
     "more_info_about_work": "Mer informasjon om verket",
     "number_of_pages": "Totalt antall sider",
     "nvi": {

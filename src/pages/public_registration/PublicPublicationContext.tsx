@@ -32,6 +32,7 @@ import {
   Venue,
 } from '../../types/publication_types/artisticRegistration.types';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
+import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
@@ -284,7 +285,7 @@ const PublicVenueDialogContent = ({ venue }: { venue: Venue }) => {
 };
 
 const PublicCompetitionDialogContent = ({ competition }: { competition: Competition }) => {
-  const { t } = useTranslation('registrations');
+  const { t } = useTranslation('registration');
   return (
     <DialogContent>
       <Typography variant="overline">{t('resource_type.artistic.competition_name')}</Typography>
@@ -298,7 +299,7 @@ const PublicCompetitionDialogContent = ({ competition }: { competition: Competit
 };
 
 const PublicAwardDialogContent = ({ award }: { award: Award }) => {
-  const { t } = useTranslation('registrations');
+  const { t } = useTranslation('registration');
   return (
     <DialogContent>
       <Typography variant="overline">{t('resource_type.artistic.competition_name')}</Typography>
@@ -316,7 +317,7 @@ const PublicAwardDialogContent = ({ award }: { award: Award }) => {
 };
 
 const PublicMentionDialogContent = ({ mention }: { mention: MentionInPublication }) => {
-  const { t } = useTranslation('registrations');
+  const { t } = useTranslation('registration');
   return (
     <DialogContent>
       <Typography variant="overline">{t('resource_type.artistic.mention_title')}</Typography>
@@ -332,7 +333,7 @@ const PublicMentionDialogContent = ({ mention }: { mention: MentionInPublication
 };
 
 const PublicExhibitionDialogContent = ({ exhibition }: { exhibition: Exhibition }) => {
-  const { t } = useTranslation('registrations');
+  const { t } = useTranslation('registration');
   return (
     <DialogContent>
       <Typography variant="overline">{t('resource_type.artistic.exhibition_title')}</Typography>
@@ -344,5 +345,44 @@ const PublicExhibitionDialogContent = ({ exhibition }: { exhibition: Exhibition 
       <Typography variant="overline">{t('common:other')}</Typography>
       <Typography paragraph>{exhibition.otherInformation}</Typography>
     </DialogContent>
+  );
+};
+
+interface PublicMediaContributionProps {
+  publicationContext: MediaContributionPublicationContext;
+}
+
+export const PublicPublicationContextMediaContribution = ({ publicationContext }: PublicMediaContributionProps) => {
+  const { t } = useTranslation('registration');
+  const { medium, format, channel, containerName, containerSubname } = publicationContext;
+
+  return (
+    <>
+      {medium && (
+        <Typography>
+          {t('resource_type.media_contribution.medium')}: {t(`resource_type.media_contribution.medium_types.${medium}`)}
+        </Typography>
+      )}
+      {format && (
+        <Typography>
+          {t('resource_type.media_contribution.format')}: {t(`resource_type.media_contribution.format_types.${format}`)}
+        </Typography>
+      )}
+      {channel && (
+        <Typography>
+          {t('resource_type.media_contribution.channel')}: {channel}
+        </Typography>
+      )}
+      {containerName && (
+        <Typography>
+          {t('resource_type.media_contribution.containerName')}: {containerName}
+        </Typography>
+      )}
+      {containerSubname && (
+        <Typography>
+          {t('resource_type.media_contribution.containerSubname')}: {containerSubname}
+        </Typography>
+      )}
+    </>
   );
 };
