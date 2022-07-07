@@ -17,7 +17,7 @@ import { RegistrationList } from '../../components/RegistrationList';
 import { RegistrationFieldName } from '../../types/publicationFieldNames';
 import { SearchResponse } from '../../types/common.types';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { FilesLandingPageAccordion } from './PublicFilesContent';
+import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;

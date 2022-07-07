@@ -1,4 +1,4 @@
-import { File } from '../../../types/file.types';
+import { File } from '../../../../types/file.types';
 import { PreviewImg } from './PreviewImg';
 import { PreviewOfficeFile } from './PreviewOfficeFile';
 import { PreviewPdf } from './PreviewPdf';

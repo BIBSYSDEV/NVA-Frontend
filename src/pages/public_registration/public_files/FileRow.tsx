@@ -1,81 +1,25 @@
-import { useCallback, useEffect, useState } from 'react';
+import {
+  Box,
+  Typography,
+  Button,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  CircularProgress,
+} from '@mui/material';
+import prettyBytes from 'pretty-bytes';
+import { useState, useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import LockIcon from '@mui/icons-material/Lock';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Button,
-  CircularProgress,
-  Typography,
-} from '@mui/material';
-import prettyBytes from 'pretty-bytes';
-import { File, licenses } from '../../types/file.types';
-import { downloadPrivateFile, downloadPublicFile } from '../../api/fileApi';
-import { setNotification } from '../../redux/notificationSlice';
-import { PublicRegistrationContentProps } from './PublicRegistrationContent';
+import { downloadPrivateFile, downloadPublicFile } from '../../../api/fileApi';
+import { setNotification } from '../../../redux/notificationSlice';
+import { RootState } from '../../../redux/store';
+import { File, licenses } from '../../../types/file.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { PreviewFile } from './preview_file/PreviewFile';
-import { dataTestId } from '../../utils/dataTestIds';
-import { RootState } from '../../redux/store';
-import { userIsCuratorForRegistration, userIsOwnerOfRegistration } from '../../utils/registration-helpers';
-import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
-
-const maxFileSizeForPreview = 10_000_000; //10 MB
-
-export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationContentProps) => {
-  const { t } = useTranslation('registration');
-  const user = useSelector((store: RootState) => store.user);
-  const files = registration.fileSet?.files ?? [];
-
-  const userIsOwner = userIsOwnerOfRegistration(user, registration);
-  const userIsCurator = userIsCuratorForRegistration(user, registration);
-  const userIsRegistrationAdmin = userIsOwner || userIsCurator;
-
-  const showFilesAreAwaitingApprovalHeading =
-    files.some((file) => file.type === 'UnpublishedFile') && userIsRegistrationAdmin;
-
-  return (
-    <LandingPageAccordion
-      data-testid={dataTestId.registrationLandingPage.filesAccordion}
-      defaultExpanded
-      heading={
-        showFilesAreAwaitingApprovalHeading
-          ? t('files_and_license.files_awaits_approval')
-          : t('files_and_license.files')
-      }>
-      <PublicFilesContent registration={registration} userIsRegistrationAdmin={userIsRegistrationAdmin} />
-    </LandingPageAccordion>
-  );
-};
-
-interface PublicFilesContentProps extends PublicRegistrationContentProps {
-  userIsRegistrationAdmin: boolean;
-}
-
-const PublicFilesContent = ({ registration, userIsRegistrationAdmin }: PublicFilesContentProps) => {
-  const files = registration.fileSet?.files ?? [];
-
-  const filesToShow = files.filter(
-    (file) => !file.administrativeAgreement && (file.type === 'PublishedFile' || userIsRegistrationAdmin)
-  );
-
-  return (
-    <>
-      {filesToShow.map((file, index) => (
-        <FileRow
-          key={file.identifier}
-          file={file}
-          registrationIdentifier={registration.identifier}
-          openPreviewByDefault={index === 0 && filesToShow[0].size < maxFileSizeForPreview}
-        />
-      ))}
-    </>
-  );
-};
 
 interface FileRowProps {
   file: File;
@@ -83,7 +27,7 @@ interface FileRowProps {
   openPreviewByDefault: boolean;
 }
 
-const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRowProps) => {
+export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('common');
   const user = useSelector((store: RootState) => store.user);

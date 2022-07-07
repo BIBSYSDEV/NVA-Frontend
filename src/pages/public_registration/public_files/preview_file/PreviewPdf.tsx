@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { useState } from 'react';
-import { dataTestId } from '../../../utils/dataTestIds';
+import { dataTestId } from '../../../../utils/dataTestIds';
 import { CommonPreviewProps } from './PreviewFile';
 import { PreviewUnavailable } from './PreviewUnavailable';
 
