@@ -29,9 +29,8 @@ export interface PublicRegistrationProps extends PublicRegistrationContentProps 
 export const PublicRegistrationContent = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
   const { t } = useTranslation('registration');
 
-  const { identifier, entityDescription, projects, fileSet, subjects } = registration;
+  const { identifier, entityDescription, projects, subjects } = registration;
   const contributors = entityDescription?.contributors ?? [];
-  const files = fileSet?.files ?? [];
   const mainTitle = entityDescription?.mainTitle || `[${t('common:missing_title')}]`;
   const abstract = entityDescription?.abstract;
   const description = entityDescription?.description;
@@ -76,7 +75,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
 
         <PublicGeneralContent registration={registration} />
 
-        {files.length > 0 && <FilesLandingPageAccordion registration={registration} />}
+        <FilesLandingPageAccordion registration={registration} />
 
         {entityDescription && (abstract || description || entityDescription.tags.length > 0 || subjects.length > 0) && (
           <LandingPageAccordion

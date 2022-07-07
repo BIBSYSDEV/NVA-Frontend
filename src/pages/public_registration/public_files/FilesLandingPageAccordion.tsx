@@ -24,10 +24,10 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
     (file) => !file.administrativeAgreement && (file.type === 'PublishedFile' || userIsRegistrationAdmin)
   );
 
-  return (
+  return filesToShow.length === 0 ? null : (
     <LandingPageAccordion
       data-testid={dataTestId.registrationLandingPage.filesAccordion}
-      defaultExpanded={filesToShow.length > 0}
+      defaultExpanded
       heading={
         hasFilesAwaitingApproval ? (
           <Box component="span" sx={{ bgcolor: 'secondary.light', p: '0.25rem' }}>
@@ -43,7 +43,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
             key={file.identifier}
             file={file}
             registrationIdentifier={registration.identifier}
-            openPreviewByDefault={index === 0 && filesToShow[0].size < maxFileSizeForPreview}
+            openPreviewByDefault={index === 0 && file.size < maxFileSizeForPreview}
           />
         ))}
       </>
