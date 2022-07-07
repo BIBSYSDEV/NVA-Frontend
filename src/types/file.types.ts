@@ -90,7 +90,7 @@ export interface RegistrationFileSet {
 }
 
 export interface File {
-  type: 'File';
+  type: 'File' | 'PublishedFile' | 'UnpublishedFile' | 'UnpublishableFile';
   identifier: string;
   name: string;
   size: number;

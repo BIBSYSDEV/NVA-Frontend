@@ -21,21 +21,32 @@ import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { PreviewFile } from './preview_file/PreviewFile';
 import { dataTestId } from '../../utils/dataTestIds';
 import { RootState } from '../../redux/store';
+import { RegistrationStatus } from '../../types/registration.types';
 
-const maxFileSize = 10000000; //10 MB
+const maxFileSizeForPreview = 10_000_000; //10 MB
 
 export const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) => {
+  const user = useSelector((store: RootState) => store.user);
+
+  const registrationIsPublished = registration.status === RegistrationStatus.Published;
   const files = registration.fileSet?.files ?? [];
-  const publiclyAvailableFiles = files.filter((file) => !file.administrativeAgreement);
+
+  const filesToShow = files.filter((file) => {
+    const userIsRegistrator =
+      !!user?.isCreator && !!user.username && user.username === registration.resourceOwner.owner;
+    const userIsCurator = !!user?.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
+
+    return !file.administrativeAgreement && (registrationIsPublished || userIsRegistrator || userIsCurator);
+  });
 
   return (
     <>
-      {publiclyAvailableFiles.map((file, index) => (
+      {filesToShow.map((file, index) => (
         <FileRow
           key={file.identifier}
           file={file}
           registrationIdentifier={registration.identifier}
-          openPreviewByDefault={index === 0 && publiclyAvailableFiles[0].size < maxFileSize}
+          openPreviewByDefault={index === 0 && filesToShow[0].size < maxFileSizeForPreview}
         />
       ))}
     </>
