@@ -4,7 +4,6 @@ import { Box } from '@mui/material';
 import { ItalicPageHeader } from '../../components/PageHeader';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { PublicFilesContent } from './PublicFilesContent';
 import { PublicGeneralContent } from './PublicGeneralContent';
 import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
@@ -18,6 +17,7 @@ import { RegistrationList } from '../../components/RegistrationList';
 import { RegistrationFieldName } from '../../types/publicationFieldNames';
 import { SearchResponse } from '../../types/common.types';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { FilesLandingPageAccordion } from './PublicFilesContent';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -76,14 +76,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
 
         <PublicGeneralContent registration={registration} />
 
-        {files.length > 0 && (
-          <LandingPageAccordion
-            data-testid={dataTestId.registrationLandingPage.filesAccordion}
-            defaultExpanded
-            heading={t('files_and_license.files')}>
-            <PublicFilesContent registration={registration} />
-          </LandingPageAccordion>
-        )}
+        {files.length > 0 && <FilesLandingPageAccordion registration={registration} />}
 
         {entityDescription && (abstract || description || entityDescription.tags.length > 0 || subjects.length > 0) && (
           <LandingPageAccordion

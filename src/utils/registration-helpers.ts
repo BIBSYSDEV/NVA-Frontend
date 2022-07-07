@@ -220,3 +220,9 @@ export const getArtisticOutputName = (item: Venue | ArchitectureOutput) => {
       return '';
   }
 };
+
+export const userIsOwnerOfRegistration = (user: User | null, registration: Registration) =>
+  !!user?.isCreator && !!user.username && user.username === registration.resourceOwner.owner;
+
+export const userIsCuratorForRegistration = (user: User | null, registration: Registration) =>
+  !!user?.isCurator && !!user.customerId && user.customerId === registration.publisher.id;

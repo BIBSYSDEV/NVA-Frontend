@@ -21,23 +21,47 @@ import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { PreviewFile } from './preview_file/PreviewFile';
 import { dataTestId } from '../../utils/dataTestIds';
 import { RootState } from '../../redux/store';
-import { RegistrationStatus } from '../../types/registration.types';
+import { userIsCuratorForRegistration, userIsOwnerOfRegistration } from '../../utils/registration-helpers';
+import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 
 const maxFileSizeForPreview = 10_000_000; //10 MB
 
-export const PublicFilesContent = ({ registration }: PublicRegistrationContentProps) => {
+export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationContentProps) => {
+  const { t } = useTranslation('registration');
   const user = useSelector((store: RootState) => store.user);
-
-  const registrationIsPublished = registration.status === RegistrationStatus.Published;
   const files = registration.fileSet?.files ?? [];
 
-  const filesToShow = files.filter((file) => {
-    const userIsRegistrator =
-      !!user?.isCreator && !!user.username && user.username === registration.resourceOwner.owner;
-    const userIsCurator = !!user?.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
+  const userIsOwner = userIsOwnerOfRegistration(user, registration);
+  const userIsCurator = userIsCuratorForRegistration(user, registration);
+  const userIsRegistrationAdmin = userIsOwner || userIsCurator;
 
-    return !file.administrativeAgreement && (registrationIsPublished || userIsRegistrator || userIsCurator);
-  });
+  const showFilesAreAwaitingApprovalHeading =
+    files.some((file) => file.type === 'UnpublishedFile') && userIsRegistrationAdmin;
+
+  return (
+    <LandingPageAccordion
+      data-testid={dataTestId.registrationLandingPage.filesAccordion}
+      defaultExpanded
+      heading={
+        showFilesAreAwaitingApprovalHeading
+          ? t('files_and_license.files_awaits_approval')
+          : t('files_and_license.files')
+      }>
+      <PublicFilesContent registration={registration} userIsRegistrationAdmin={userIsRegistrationAdmin} />
+    </LandingPageAccordion>
+  );
+};
+
+interface PublicFilesContentProps extends PublicRegistrationContentProps {
+  userIsRegistrationAdmin: boolean;
+}
+
+const PublicFilesContent = ({ registration, userIsRegistrationAdmin }: PublicFilesContentProps) => {
+  const files = registration.fileSet?.files ?? [];
+
+  const filesToShow = files.filter(
+    (file) => !file.administrativeAgreement && (file.type === 'PublishedFile' || userIsRegistrationAdmin)
+  );
 
   return (
     <>
@@ -112,6 +136,7 @@ const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRow
         columnGap: '1rem',
         alignItems: 'center',
         marginBottom: '2rem',
+        opacity: file.type === 'UnpublishedFile' ? 0.6 : 1,
       }}>
       <Typography
         data-testid={dataTestId.registrationLandingPage.fileName}

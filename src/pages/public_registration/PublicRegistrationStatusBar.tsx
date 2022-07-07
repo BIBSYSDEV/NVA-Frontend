@@ -22,6 +22,7 @@ import { getFirstErrorTab, getTabErrors, TabErrors } from '../../utils/formik-he
 import { ErrorList } from '../registration/ErrorList';
 import { dataTestId } from '../../utils/dataTestIds';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
 
 enum LoadingName {
   None = '',
@@ -35,7 +36,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   const dispatch = useDispatch();
   const { t } = useTranslation('registration');
   const user = useSelector((store: RootState) => store.user);
-  const { identifier, resourceOwner, doi, doiRequest, publisher } = registration;
+  const { identifier, doi, doiRequest } = registration;
 
   const [messageToCurator, setMessageToCurator] = useState('');
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
@@ -110,8 +111,8 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   const firstErrorTab = getFirstErrorTab(tabErrors);
   const registrationIsValid = !tabErrors || firstErrorTab === -1;
 
-  const isOwner = user && user.isCreator && resourceOwner.owner === user.username;
-  const isCurator = user && user.isCurator && user.customerId === publisher.id;
+  const isOwner = userIsRegistrationOwner(user, registration);
+  const isCurator = userIsRegistrationCurator(user, registration);
   const hasNvaDoi = !!doi || doiRequest;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
   const editRegistrationUrl = getRegistrationPath(identifier);
