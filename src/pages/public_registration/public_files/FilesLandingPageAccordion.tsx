@@ -19,7 +19,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const userIsCurator = userIsCuratorForRegistration(user, registration);
   const userIsRegistrationAdmin = userIsOwner || userIsCurator;
 
-  const hasFilesAwaitingApproval = files.some((file) => file.type !== 'PublishedFile') && userIsRegistrationAdmin;
+  const hasFilesAwaitingApproval = files.some((file) => file.type === 'UnpublishedFile') && userIsRegistrationAdmin;
   const filesToShow = files.filter(
     (file) => !file.administrativeAgreement && (file.type === 'PublishedFile' || userIsRegistrationAdmin)
   );
