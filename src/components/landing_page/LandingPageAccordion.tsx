@@ -4,7 +4,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ErrorBoundary } from '../ErrorBoundary';
 
 interface LandingPageAccordionProps extends Pick<AccordionProps, 'defaultExpanded'> {
-  heading: string;
+  heading: ReactNode;
   children?: ReactNode;
 }
 

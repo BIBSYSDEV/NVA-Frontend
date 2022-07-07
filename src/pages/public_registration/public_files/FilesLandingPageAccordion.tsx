@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
@@ -18,19 +19,23 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const userIsCurator = userIsCuratorForRegistration(user, registration);
   const userIsRegistrationAdmin = userIsOwner || userIsCurator;
 
-  const showFilesAreAwaitingApprovalHeading =
-    files.some((file) => file.type === 'UnpublishedFile') && userIsRegistrationAdmin;
+  const hasFilesAwaitingApproval = files.some((file) => file.type !== 'PublishedFile') && userIsRegistrationAdmin;
   const filesToShow = files.filter(
     (file) => !file.administrativeAgreement && (file.type === 'PublishedFile' || userIsRegistrationAdmin)
   );
+
   return (
     <LandingPageAccordion
       data-testid={dataTestId.registrationLandingPage.filesAccordion}
-      defaultExpanded
+      defaultExpanded={filesToShow.length > 0}
       heading={
-        showFilesAreAwaitingApprovalHeading
-          ? t('files_and_license.files_awaits_approval')
-          : t('files_and_license.files')
+        hasFilesAwaitingApproval ? (
+          <Box component="span" sx={{ bgcolor: 'secondary.light', p: '0.25rem' }}>
+            {t('files_and_license.files_awaits_approval')}
+          </Box>
+        ) : (
+          t('files_and_license.files')
+        )
       }>
       <>
         {filesToShow.map((file, index) => (
