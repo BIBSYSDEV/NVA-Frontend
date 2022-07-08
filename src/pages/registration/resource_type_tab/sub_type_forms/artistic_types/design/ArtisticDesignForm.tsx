@@ -50,7 +50,7 @@ export const ArtisticDesignForm = () => {
               helperText={<ErrorMessage name={field.name} />}>
               {designTypes.map((designType) => (
                 <MenuItem value={designType} key={designType}>
-                  {t(`resource_type.design_type.${designType}`)}
+                  {t(`resource_type.artistic.design_type.${designType}`)}
                 </MenuItem>
               ))}
             </TextField>

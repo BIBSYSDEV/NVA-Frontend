@@ -148,13 +148,6 @@
     "start_with_uploading_file_title": "Start with uploading file"
   },
   "resource_type": {
-    "architecture_type": {
-      "Building": "Building",
-      "Interior": "Interior",
-      "LandscapeArchitecture": "Landscape architecture",
-      "Other": "Other architecture",
-      "PlanningProposal": "Planning proposal"
-    },
     "article_number": "Article number",
     "artistic": {
       "add_award": "Add prize/award",
@@ -163,6 +156,13 @@
       "add_exhibition_place": "Add exhibition place",
       "add_publication_mention": "Add publication/mention",
       "architecture_publications": "Announcement",
+      "architecture_type": {
+        "Building": "Building",
+        "Interior": "Interior",
+        "LandscapeArchitecture": "Landscape architecture",
+        "Other": "Other architecture",
+        "PlanningProposal": "Planning proposal"
+      },
       "award_name": "Award name",
       "award_organizer": "Award giver/organizer",
       "award_other": "Other",
@@ -170,6 +170,19 @@
       "competition_date": "Date for announcement",
       "competition_name": "Name on competition/organizer",
       "competition_rank": "Rank/purchase/mention/invited",
+      "design_type": {
+        "ClothingDesign": "Clothing design",
+        "Exhibition": "Exhibition",
+        "GraphicDesign": "Graphical design",
+        "Illustration": "Illustration",
+        "InteractionDesign": "Interaction design",
+        "InteriorDesign": "Interior design",
+        "LightDesign": "Lighting design",
+        "ProductDesign": "Product design",
+        "ServiceDesign": "Service design",
+        "Other": "Other design",
+        "WebDesign": "Web design"
+      },
       "edit_award": "Edit prize/award",
       "edit_competition": "Edit competition",
       "edit_exhibition": "Edit exhibition",
@@ -231,19 +244,6 @@
     },
     "date_from": "Date from",
     "date_to": "Date to",
-    "design_type": {
-      "ClothingDesign": "Clothing design",
-      "Exhibition": "Exhibition",
-      "GraphicDesign": "Graphical design",
-      "Illustration": "Illustration",
-      "InteractionDesign": "Interaction design",
-      "InteriorDesign": "Interior design",
-      "LightDesign": "Lighting design",
-      "ProductDesign": "Product design",
-      "ServiceDesign": "Service design",
-      "Other": "Other design",
-      "WebDesign": "Web design"
-    },
     "form": "Form",
     "isbn": "ISBN",
     "issn": "ISSN",
