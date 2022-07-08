@@ -80,7 +80,7 @@ export interface ArtisticEntityDescription extends BaseEntityDescription {
 }
 
 interface ArtisticSubtype {
-  type: DesignType | ArchitectureType | '';
+  type: DesignType | ArchitectureType | PerformingArtType | '';
   description?: string;
 }
 
@@ -103,5 +103,11 @@ export enum ArchitectureType {
   PlanningProposal = 'PlanningProposal',
   LandscapeArchitecture = 'LandscapeArchitecture',
   Interior = 'Interior',
+  Other = 'Other',
+}
+
+export enum PerformingArtType {
+  TheatricalProduction = 'TheatricalProduction',
+  Broadcast = 'Broadcast',
   Other = 'Other',
 }

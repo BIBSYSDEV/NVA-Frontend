@@ -7,6 +7,7 @@ import { ArtisticRegistration } from '../../../types/publication_types/artisticR
 import { SelectTypeField } from './components/SelectTypeField';
 import { ArtisticArchitectureForm } from './sub_type_forms/artistic_types/architecture/ArtisticArchitectureForm';
 import { ArtisticDesignForm } from './sub_type_forms/artistic_types/design/ArtisticDesignForm';
+import { ArtisticPerformingArtsForm } from './sub_type_forms/artistic_types/performing_arts/ArtisticPerformingArtsForm';
 
 interface ArtisticTypeFormProps {
   onChangeSubType: (type: string) => void;
@@ -35,6 +36,7 @@ export const ArtisticTypeForm = ({ onChangeSubType }: ArtisticTypeFormProps) => 
           </Box>
         </BetaFunctionality>
       )}
+      {subType === ArtisticType.PerformingArts && <ArtisticPerformingArtsForm />}
     </>
   );
 };

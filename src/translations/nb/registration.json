@@ -188,6 +188,11 @@
         "MentionInPublication": "Publisering/omtale",
         "Venue": "Visningssted"
       },
+      "performing_arts_type": {
+        "TheatricalProduction": "Forestilling/visning",
+        "Broadcast": "TV/film/radio",
+        "Other": "Annet"
+      },
       "remove_announcement": "Fjern offentliggjøring",
       "remove_announcement_description": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over offentliggjøringer?",
       "remove_venue_title": "Fjern visningssted?",

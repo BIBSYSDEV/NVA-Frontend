@@ -188,6 +188,11 @@
         "MentionInPublication": "Publication/mention",
         "Venue": "Venue"
       },
+      "performing_arts_type": {
+        "TheatricalProduction": "Theater/show",
+        "Broadcast": "TV/film/radio",
+        "Other": "Other"
+      },
       "remove_announcement": "Remove announcement",
       "remove_announcement_description": "Are you sure you want to remove \"{{name}}\" from list over announcements?",
       "remove_venue_title": "Remove exhibition place?",

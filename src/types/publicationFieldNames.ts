@@ -56,6 +56,7 @@ export enum PresentationType {
 export enum ArtisticType {
   ArtisticDesign = 'ArtisticDesign',
   ArtisticArchitecture = 'Architecture',
+  PerformingArts = 'PerformingArts',
 }
 
 export enum MediaType {
