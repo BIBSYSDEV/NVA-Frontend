@@ -24,7 +24,7 @@ import { ChapterTypeForm } from './resource_type_tab/ChapterTypeForm';
 import { DegreeTypeForm } from './resource_type_tab/DegreeTypeForm';
 import { JournalTypeForm } from './resource_type_tab/JournalTypeForm';
 import { ReportTypeForm } from './resource_type_tab/ReportTypeForm';
-import { getMainRegistrationType, isChapter } from '../../utils/registration-helpers';
+import { getMainRegistrationType, isArtistic, isChapter } from '../../utils/registration-helpers';
 import { PresentationTypeForm } from './resource_type_tab/PresentationTypeForm';
 import {
   emptyPresentationPublicationContext,
@@ -133,6 +133,9 @@ export const ResourceTypePanel = () => {
     if (isChapter(newInstanceType)) {
       // Reset partOf when user changes subtype of Chapter, since previous container might not be valid for the new type
       setFieldValue(ResourceFieldNames.PartOf, undefined);
+    } else if (isArtistic(newInstanceType)) {
+      setFieldValue(ResourceFieldNames.PublicationInstanceSubtypeType, '');
+      setFieldValue(ResourceFieldNames.PublicationInstanceSubtypeDescription, undefined);
     }
   };
 

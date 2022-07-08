@@ -52,6 +52,7 @@ export const ArtisticArchitectureForm = () => {
               variant="filled"
               fullWidth
               {...field}
+              value={field.value ?? ''}
               label={t('resource_type.type_work')}
               required
               error={!!error && touched}
