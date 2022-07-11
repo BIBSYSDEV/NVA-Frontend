@@ -377,6 +377,11 @@ const artisticDesignPublicationInstance = Yup.object().shape({
       .required(resourceErrorMessage.architectureOutputRequired),
     otherwise: Yup.array().nullable(),
   }),
+  outputs: Yup.array().when('$publicationInstanceType', {
+    is: ArtisticType.PerformingArts,
+    then: Yup.array().min(1, resourceErrorMessage.exhibitionRequired).required(resourceErrorMessage.exhibitionRequired),
+    otherwise: Yup.array().nullable(),
+  }),
 });
 
 export const artisticDesignReference = baseReference.shape({
