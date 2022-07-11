@@ -25,9 +25,13 @@ export const ArtisticTypeForm = ({ onChangeSubType }: ArtisticTypeFormProps) => 
         />
       </StyledSelectWrapper>
 
-      {subType === ArtisticType.ArtisticDesign && <ArtisticDesignForm />}
-      {subType === ArtisticType.ArtisticArchitecture && <ArtisticArchitectureForm />}
-      {subType === ArtisticType.PerformingArts && <ArtisticPerformingArtsForm />}
+      {subType === ArtisticType.ArtisticDesign ? (
+        <ArtisticDesignForm />
+      ) : subType === ArtisticType.ArtisticArchitecture ? (
+        <ArtisticArchitectureForm />
+      ) : subType === ArtisticType.PerformingArts ? (
+        <ArtisticPerformingArtsForm />
+      ) : null}
     </>
   );
 };

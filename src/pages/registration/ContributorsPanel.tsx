@@ -96,7 +96,7 @@ export const ContributorsPanel = () => {
             <Contributors
               push={push}
               replace={replace}
-              contributorRoles={[ContributorRole.Producer, ContributorRole.Other]}
+              contributorRoles={[ContributorRole.Producer, ContributorRole.Other]} // TODO: Add more roles (NP-9300)
             />
           ) : (
             <>

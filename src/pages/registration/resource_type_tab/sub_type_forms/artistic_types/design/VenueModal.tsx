@@ -77,7 +77,7 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
               data-testid={dataTestId.registrationWizard.resourceType.saveVenueButton}
               variant="contained"
               type="submit">
-              {venue ? t('common:save') : t('common:add')}
+              {venue ? t('common:update') : t('common:add')}
             </Button>
           </DialogActions>
         </Form>
