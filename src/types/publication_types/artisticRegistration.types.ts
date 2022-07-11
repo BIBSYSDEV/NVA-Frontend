@@ -7,9 +7,9 @@ export interface ArtisticRegistration extends BaseRegistration {
 }
 
 export interface Venue {
-  type: 'Venue';
+  type: 'Venue' | 'PerformingArtsVenue';
   place: Place | null;
-  time: Period | null;
+  date: Period | null;
 }
 
 export interface Competition {
@@ -57,6 +57,7 @@ export interface ArtisticPublicationInstance {
   description: string;
   venues?: Venue[];
   architectureOutput?: ArchitectureOutput[];
+  outputs?: Venue[];
 }
 
 export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {
@@ -80,7 +81,7 @@ export interface ArtisticEntityDescription extends BaseEntityDescription {
 }
 
 interface ArtisticSubtype {
-  type: DesignType | ArchitectureType | '';
+  type: DesignType | ArchitectureType | PerformingArtType | '';
   description?: string;
 }
 
@@ -103,5 +104,11 @@ export enum ArchitectureType {
   PlanningProposal = 'PlanningProposal',
   LandscapeArchitecture = 'LandscapeArchitecture',
   Interior = 'Interior',
+  Other = 'Other',
+}
+
+export enum PerformingArtType {
+  TheatricalProduction = 'TheatricalProduction',
+  Broadcast = 'Broadcast',
   Other = 'Other',
 }

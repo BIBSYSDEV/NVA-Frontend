@@ -94,9 +94,11 @@ export const PublicPublicationInstanceArtistic = ({
 
   const i18nTypeBase =
     publicationInstance.type === ArtisticType.ArtisticDesign
-      ? 'resource_type.design_type.'
+      ? 'resource_type.artistic.design_type.'
       : publicationInstance.type === ArtisticType.ArtisticArchitecture
-      ? 'resource_type.architecture_type.'
+      ? 'resource_type.artistic.architecture_type.'
+      : publicationInstance.type === ArtisticType.PerformingArts
+      ? 'resource_type.artistic.performing_arts_type.'
       : '';
 
   const typeString = subtype?.type

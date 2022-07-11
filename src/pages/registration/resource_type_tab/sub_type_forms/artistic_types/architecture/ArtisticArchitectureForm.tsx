@@ -57,9 +57,9 @@ export const ArtisticArchitectureForm = () => {
               required
               error={!!error && touched}
               helperText={<ErrorMessage name={field.name} />}>
-              {architectureTypes.map((designType) => (
-                <MenuItem value={designType} key={designType}>
-                  {t(`resource_type.architecture_type.${designType}`)}
+              {architectureTypes.map((architectureType) => (
+                <MenuItem value={architectureType} key={architectureType}>
+                  {t(`resource_type.artistic.architecture_type.${architectureType}`)}
                 </MenuItem>
               ))}
             </TextField>

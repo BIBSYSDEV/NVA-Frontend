@@ -207,6 +207,7 @@ export const splitMainContributors = (contributors: Contributor[], registrationT
 export const getArtisticOutputName = (item: Venue | ArchitectureOutput) => {
   switch (item.type) {
     case 'Venue':
+    case 'PerformingArtsVenue':
       return (item as Venue).place?.label ?? '';
     case 'Competition':
       return (item as Competition).name;

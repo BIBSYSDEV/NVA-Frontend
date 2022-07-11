@@ -40,6 +40,7 @@
       "InteriorArchitect": "Interiørarkitekt",
       "LandscapeArchitect": "Landskapsarkitekt",
       "Other": "Annen",
+      "Producer": "Produsent",
       "RelatedPerson": "Relatert person",
       "Researcher": "Forsker",
       "RightsHolder": "Rettighetsholder",
@@ -148,13 +149,6 @@
     "start_with_uploading_file_title": "Start med å laste opp fil"
   },
   "resource_type": {
-    "architecture_type": {
-      "Building": "Bygg",
-      "Interior": "Interiør",
-      "LandscapeArchitecture": "Landskapsarkitektur",
-      "Other": "Annen arkitektur",
-      "PlanningProposal": "Planforsalg"
-    },
     "article_number": "Artikkelnummer",
     "artistic": {
       "add_award": "Legg til pris/utmerkelse",
@@ -163,6 +157,13 @@
       "add_exhibition_place": "Legg til visningssted",
       "add_publication_mention": "Legg til publisering/omtale",
       "architecture_publications": "Offentliggjøringer",
+      "architecture_type": {
+        "Building": "Bygg",
+        "Interior": "Interiør",
+        "LandscapeArchitecture": "Landskapsarkitektur",
+        "Other": "Annen arkitektur",
+        "PlanningProposal": "Planforsalg"
+      },
       "award_name": "Prisnavn",
       "award_organizer": "Prisutdeler/arrangør",
       "award_other": "Annet",
@@ -170,6 +171,19 @@
       "competition_date": "Dato for offentliggjøring",
       "competition_name": "Navn på konkurranse/arrangør/innbyder",
       "competition_rank": "Rangering/innkjøp/omtale/invitert",
+      "design_type": {
+        "ClothingDesign": "Klesdesign",
+        "Exhibition": "Utstilling/messe",
+        "GraphicDesign": "Grafisk design",
+        "Illustration": "Illustrasjon",
+        "InteractionDesign": "Interaksjonsdesign",
+        "InteriorDesign": "Interiørdesign",
+        "LightDesign": "Lysdesign",
+        "ProductDesign": "Produktdesign",
+        "ServiceDesign": "Tjenestedesign",
+        "Other": "Annet design",
+        "WebDesign": "Webdesign"
+      },
       "edit_award": "Endre pris/utmerkelse",
       "edit_competition": "Endre konkurranse",
       "edit_exhibition": "Endre utstilling",
@@ -187,6 +201,11 @@
         "Exhibition": "Utstilling",
         "MentionInPublication": "Publisering/omtale",
         "Venue": "Visningssted"
+      },
+      "performing_arts_type": {
+        "TheatricalProduction": "Forestilling/visning",
+        "Broadcast": "TV/film/radio",
+        "Other": "Annet"
       },
       "remove_announcement": "Fjern offentliggjøring",
       "remove_announcement_description": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over offentliggjøringer?",
@@ -226,19 +245,6 @@
     },
     "date_from": "Dato fra",
     "date_to": "Dato til",
-    "design_type": {
-      "ClothingDesign": "Klesdesign",
-      "Exhibition": "Utstilling/messe",
-      "GraphicDesign": "Grafisk design",
-      "Illustration": "Illustrasjon",
-      "InteractionDesign": "Interaksjonsdesign",
-      "InteriorDesign": "Interiørdesign",
-      "LightDesign": "Lysdesign",
-      "ProductDesign": "Produktdesign",
-      "ServiceDesign": "Tjenestedesign",
-      "Other": "Annet design",
-      "WebDesign": "Webdesign"
-    },
     "form": "Form",
     "isbn": "ISBN",
     "issn": "ISSN",

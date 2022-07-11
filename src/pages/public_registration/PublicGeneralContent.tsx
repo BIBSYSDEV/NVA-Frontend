@@ -186,6 +186,11 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
                 heading={t('resource_type.artistic.architecture_publications')}
                 showType
               />
+            ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.PerformingArts ? (
+              <PublicArtisticOutput
+                outputs={(publicationInstance as ArtisticPublicationInstance).outputs ?? []}
+                heading={t('resource_type.artistic.exhibition_place')}
+              />
             ) : null
           ) : isMediaContribution(publicationInstance.type) ? (
             <PublicPublicationContextMediaContribution
