@@ -92,6 +92,12 @@ export const ContributorsPanel = () => {
                 ContributorRole.Other,
               ]}
             />
+          ) : publicationInstanceType === ArtisticType.PerformingArts ? (
+            <Contributors
+              push={push}
+              replace={replace}
+              contributorRoles={[ContributorRole.Producer, ContributorRole.Other]}
+            />
           ) : (
             <>
               <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />

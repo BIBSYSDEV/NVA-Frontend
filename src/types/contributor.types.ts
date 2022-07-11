@@ -13,6 +13,7 @@ export enum ContributorRole {
   InteriorArchitect = 'InteriorArchitect',
   LandscapeArchitect = 'LandscapeArchitect',
   Other = 'Other',
+  Producer = 'Producer',
   RelatedPerson = 'RelatedPerson',
   Researcher = 'Researcher',
   RightsHolder = 'RightsHolder',
