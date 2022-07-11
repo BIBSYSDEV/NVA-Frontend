@@ -280,7 +280,7 @@ const PublicVenueDialogContent = ({ venue }: { venue: Venue }) => {
       <Typography variant="overline">{t('place')}</Typography>
       <Typography paragraph>{venue.place?.label ?? ''}</Typography>
       <Typography variant="overline">{t('date')}</Typography>
-      <Typography>{getPeriodString(venue.time)}</Typography>
+      <Typography>{getPeriodString(venue.date)}</Typography>
     </DialogContent>
   );
 };

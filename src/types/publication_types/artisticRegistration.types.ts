@@ -9,7 +9,7 @@ export interface ArtisticRegistration extends BaseRegistration {
 export interface Venue {
   type: 'Venue' | 'PerformingArtsVenue';
   place: Place | null;
-  time: Period | null;
+  date: Period | null;
 }
 
 export interface Competition {
