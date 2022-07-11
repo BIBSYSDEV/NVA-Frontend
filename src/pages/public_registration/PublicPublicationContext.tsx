@@ -253,7 +253,8 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
       <Dialog open={openModal} onClose={toggleModal} fullWidth>
         <DialogTitle>{heading}</DialogTitle>
         <ErrorBoundary>
-          {output.type === 'Venue' && <PublicVenueDialogContent venue={output as Venue} />}
+          {output.type === 'Venue' ||
+            (output.type === 'PerformingArtsVenue' && <PublicVenueDialogContent venue={output as Venue} />)}
           {output.type === 'Competition' && <PublicCompetitionDialogContent competition={output as Competition} />}
           {output.type === 'Award' && <PublicAwardDialogContent award={output as Award} />}
           {output.type === 'MentionInPublication' && (

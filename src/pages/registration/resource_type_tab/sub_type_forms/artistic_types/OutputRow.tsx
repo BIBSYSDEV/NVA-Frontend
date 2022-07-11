@@ -57,7 +57,7 @@ export const OutputRow = ({
   ) {
     removeItemTitle = t('resource_type.artistic.remove_announcement');
     removeItemDescription = t('resource_type.artistic.remove_announcement_description', { name: title });
-  } else if (item.type === 'Venue') {
+  } else if (item.type === 'Venue' || item.type === 'PerformingArtsVenue') {
     removeItemTitle = t('resource_type.artistic.remove_venue_title');
     removeItemDescription = t('resource_type.artistic.remove_venue_text', { name: title });
   }
@@ -109,7 +109,7 @@ export const OutputRow = ({
           closeModal={() => setOpenEditItem(false)}
         />
       )}
-      {item.type === 'Venue' && (
+      {(item.type === 'Venue' || item.type === 'PerformingArtsVenue') && (
         <VenueModal
           venue={item as Venue}
           onSubmit={updateItem}

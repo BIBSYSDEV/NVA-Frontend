@@ -7,7 +7,7 @@ export interface ArtisticRegistration extends BaseRegistration {
 }
 
 export interface Venue {
-  type: 'Venue';
+  type: 'Venue' | 'PerformingArtsVenue';
   place: Place | null;
   time: Period | null;
 }
@@ -57,6 +57,7 @@ export interface ArtisticPublicationInstance {
   description: string;
   venues?: Venue[];
   architectureOutput?: ArchitectureOutput[];
+  outputs?: Venue[];
 }
 
 export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {

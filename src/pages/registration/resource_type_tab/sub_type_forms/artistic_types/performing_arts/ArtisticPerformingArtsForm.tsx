@@ -1,5 +1,19 @@
-import { MenuItem, TextField } from '@mui/material';
-import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
+import {
+  Box,
+  Button,
+  FormHelperText,
+  MenuItem,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from '@mui/material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Field, FieldProps, ErrorMessage, useFormikContext, FieldArray, FieldArrayRenderProps } from 'formik';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
@@ -8,12 +22,17 @@ import {
   PerformingArtType,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { VenueModal } from '../design/VenueModal';
+import { OutputRow } from '../OutputRow';
 
 const performingArtTypes = Object.values(PerformingArtType);
 
 export const ArtisticPerformingArtsForm = () => {
   const { t } = useTranslation('registration');
-  const { values } = useFormikContext<ArtisticRegistration>();
+  const { values, touched, errors } = useFormikContext<ArtisticRegistration>();
+  const outputs = values.entityDescription.reference.publicationInstance.outputs ?? [];
+
+  const [openNewVenueModal, setOpenNewVenueModal] = useState(false);
 
   return (
     <>
@@ -74,6 +93,64 @@ export const ArtisticPerformingArtsForm = () => {
           />
         )}
       </Field>
+
+      <div>
+        <Typography variant="h3" component="h2" gutterBottom>
+          {t('resource_type.artistic.exhibition_places')}
+        </Typography>
+        <FieldArray name={ResourceFieldNames.PublicationInstanceOutputs}>
+          {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
+            <>
+              {outputs.length > 0 && (
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>{t('resource_type.artistic.exhibition_place')}</TableCell>
+                      <TableCell>{t('common:order')}</TableCell>
+                      <TableCell></TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {outputs.map((venue, index) => (
+                      <OutputRow
+                        key={index}
+                        item={venue}
+                        updateItem={(newVenue) => replace(index, newVenue)}
+                        removeItem={() => remove(index)}
+                        moveItem={(newIndex) => move(index, newIndex)}
+                        index={index}
+                        maxIndex={outputs.length - 1}
+                      />
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
+              {!!touched.entityDescription?.reference?.publicationInstance?.outputs &&
+                typeof errors.entityDescription?.reference?.publicationInstance?.outputs === 'string' && (
+                  <Box mt="1rem">
+                    <FormHelperText error>
+                      <ErrorMessage name={name} />
+                    </FormHelperText>
+                  </Box>
+                )}
+
+              <Button
+                data-testid={dataTestId.registrationWizard.resourceType.addVenueButton}
+                onClick={() => setOpenNewVenueModal(true)}
+                variant="outlined"
+                sx={{ mt: '1rem' }}
+                startIcon={<AddCircleOutlineIcon />}>
+                {t('resource_type.artistic.add_exhibition_place')}
+              </Button>
+              <VenueModal
+                onSubmit={(newVenue) => push({ ...newVenue, type: 'PerformingArtsVenue' })}
+                open={openNewVenueModal}
+                closeModal={() => setOpenNewVenueModal(false)}
+              />
+            </>
+          )}
+        </FieldArray>
+      </div>
     </>
   );
 };
