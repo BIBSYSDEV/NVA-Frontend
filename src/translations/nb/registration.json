@@ -194,6 +194,14 @@
       "exhibition_title": "Utstillingstittel",
       "mention_other": "Annet (utgiver, ISBN, m.m.)",
       "mention_title": "Tidsskrift/Boktittel/medium",
+      "moving_picture_type": {
+        "Film": "Langfilm",
+        "ShortFilm": "Kortfilm",
+        "SerialFilmProduction": "Seriell produksjon",
+        "InteractiveFilm": "Interaktiv produksjon",
+        "AugmentedVirtualRealityFilm": "AR/VR",
+        "Other": "Annet"
+      },
       "name_or_title": "Navn/tittel",
       "output_type": {
         "Award": "Pris/utmerkelse",

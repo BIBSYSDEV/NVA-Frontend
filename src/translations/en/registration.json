@@ -194,6 +194,14 @@
       "exhibition_title": "Exhibition title",
       "mention_other": "Other (publisher, ISBN, etc.)",
       "mention_title": "Journal/Book/medium",
+      "moving_picture_type": {
+        "Film": "Long film",
+        "ShortFilm": "Short film",
+        "SerialFilmProduction": "Serial production",
+        "InteractiveFilm": "Interactive production",
+        "AugmentedVirtualRealityFilm": "AR/VR",
+        "Other": "Other"
+      },
       "name_or_title": "Name/title",
       "output_type": {
         "Award": "Prize/award",
