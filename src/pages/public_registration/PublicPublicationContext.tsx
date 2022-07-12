@@ -26,6 +26,7 @@ import { getArtisticOutputName, getPeriodString } from '../../utils/registration
 import {
   ArchitectureOutput,
   Award,
+  Broadcast,
   Competition,
   Exhibition,
   FilmOutput,
@@ -262,6 +263,7 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
             <PublicMentionDialogContent mention={output as MentionInPublication} />
           )}
           {output.type === 'Exhibition' && <PublicExhibitionDialogContent exhibition={output as Exhibition} />}
+          {output.type === 'Broadcast' && <PublicBroadcastDialogContent broadcast={output as Broadcast} />}
         </ErrorBoundary>
 
         <DialogActions>
@@ -346,6 +348,18 @@ const PublicExhibitionDialogContent = ({ exhibition }: { exhibition: Exhibition 
       <Typography>{exhibition.organizer}</Typography>
       <Typography variant="overline">{t('common:other')}</Typography>
       <Typography paragraph>{exhibition.otherInformation}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicBroadcastDialogContent = ({ broadcast }: { broadcast: Broadcast }) => {
+  const { t } = useTranslation('common');
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('publisher')}</Typography>
+      <Typography paragraph>{broadcast.publisher.name}</Typography>
+      <Typography variant="overline">{t('date')}</Typography>
+      <Typography>{new Date(broadcast.date.value).toLocaleDateString()}</Typography>
     </DialogContent>
   );
 };
