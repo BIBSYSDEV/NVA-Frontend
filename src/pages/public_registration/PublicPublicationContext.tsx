@@ -28,6 +28,7 @@ import {
   Award,
   Competition,
   Exhibition,
+  FilmOutput,
   MentionInPublication,
   Venue,
 } from '../../types/publication_types/artisticRegistration.types';
@@ -213,7 +214,7 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
 };
 
 interface PublicArtisticOutputProps {
-  outputs: (Venue | ArchitectureOutput)[];
+  outputs: (Venue | ArchitectureOutput | FilmOutput)[];
   heading: string;
   showType?: boolean;
 }
@@ -228,7 +229,7 @@ export const PublicArtisticOutput = ({ outputs, heading, showType = false }: Pub
 );
 
 interface PublicOutputRowProps {
-  output: ArchitectureOutput | Venue;
+  output: ArchitectureOutput | Venue | FilmOutput;
   heading: string;
   showType: boolean;
 }

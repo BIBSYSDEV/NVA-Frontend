@@ -1,6 +1,20 @@
-import { TextField, MenuItem } from '@mui/material';
-import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
+import { useState } from 'react';
+import {
+  TextField,
+  MenuItem,
+  Box,
+  FormHelperText,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+  Button,
+} from '@mui/material';
+import { Field, FieldProps, ErrorMessage, useFormikContext, FieldArray, FieldArrayRenderProps } from 'formik';
 import { useTranslation } from 'react-i18next';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import {
@@ -8,12 +22,18 @@ import {
   MovingPictureType,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { OutputRow } from '../OutputRow';
+import { BroadcastModal } from './BroadcastModal';
 
 const movingPictureTypes = Object.values(MovingPictureType);
+type ArtisticMovingPictureModalType = '' | 'Broadcast' | 'CinematicRelease' | 'OtherRelease';
 
 export const ArtisticMovingPictureForm = () => {
   const { t } = useTranslation('registration');
   const { values, touched, errors } = useFormikContext<ArtisticRegistration>();
+  const outputs = values.entityDescription.reference.publicationInstance.outputs ?? [];
+
+  const [openModal, setOpenModal] = useState<ArtisticMovingPictureModalType>('');
 
   return (
     <>
@@ -27,6 +47,7 @@ export const ArtisticMovingPictureForm = () => {
               variant="filled"
               fullWidth
               {...field}
+              value={field.value ?? ''}
               label={t('resource_type.type_work')}
               required
               error={!!error && touched}
@@ -75,6 +96,70 @@ export const ArtisticMovingPictureForm = () => {
           />
         )}
       </Field>
+
+      <div>
+        <Typography variant="h3" component="h2" gutterBottom>
+          {t('resource_type.artistic.announcements')}
+        </Typography>
+        <FieldArray name={ResourceFieldNames.PublicationInstanceOutputs}>
+          {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
+            <>
+              {outputs.length > 0 && (
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>{t('common:type')}</TableCell>
+                      <TableCell>
+                        {t('common:publisher')}/{t('common:place')}
+                      </TableCell>
+                      <TableCell>{t('common:order')}</TableCell>
+                      <TableCell></TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {outputs.map((output, index) => (
+                      <OutputRow
+                        key={index}
+                        item={output}
+                        updateItem={(newVenue) => replace(index, newVenue)}
+                        removeItem={() => remove(index)}
+                        moveItem={(newIndex) => move(index, newIndex)}
+                        index={index}
+                        maxIndex={outputs.length - 1}
+                        showTypeColumn
+                      />
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
+              {!!touched.entityDescription?.reference?.publicationInstance?.outputs &&
+                typeof errors.entityDescription?.reference?.publicationInstance?.outputs === 'string' && (
+                  <Box mt="1rem">
+                    <FormHelperText error>
+                      <ErrorMessage name={name} />
+                    </FormHelperText>
+                  </Box>
+                )}
+
+              <BroadcastModal
+                onSubmit={(newBroadcast) => {
+                  newBroadcast.sequence = outputs.length + 1;
+                  push(newBroadcast);
+                }}
+                open={openModal === 'Broadcast'}
+                closeModal={() => setOpenModal('')}
+              />
+              <Button
+                onClick={() => setOpenModal('Broadcast')}
+                variant="outlined"
+                sx={{ mt: '1rem' }}
+                startIcon={<AddCircleOutlineIcon />}>
+                {t('resource_type.artistic.add_broadcast')}
+              </Button>
+            </>
+          )}
+        </FieldArray>
+      </div>
     </>
   );
 };

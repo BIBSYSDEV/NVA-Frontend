@@ -31,6 +31,12 @@ export interface Series {
   title?: string;
 }
 
+// TODO: Reuse for ContextPublisher
+export interface UnconfirmedPublisher {
+  type: PublicationChannelType.UnconfirmedPublisher;
+  name: string;
+}
+
 export interface ContextPublisher {
   type: PublicationChannelType.UnconfirmedPublisher | PublicationChannelType.Publisher;
   name?: string;

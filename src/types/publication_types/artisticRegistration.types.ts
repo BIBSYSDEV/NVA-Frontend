@@ -1,55 +1,74 @@
 import { Instant, Period, Place } from '../common.types';
 import { ArtisticType, PublicationType } from '../publicationFieldNames';
 import { BaseRegistration, BaseReference, BaseEntityDescription } from '../registration.types';
+import { UnconfirmedPublisher } from './bookRegistration.types';
 
 export interface ArtisticRegistration extends BaseRegistration {
   entityDescription: ArtisticEntityDescription;
 }
 
-export interface Venue {
+interface OutputBase {
+  sequence?: number;
+}
+
+export interface Venue extends OutputBase {
   type: 'Venue' | 'PerformingArtsVenue';
   place: Place | null;
   date: Period | null;
 }
 
-export interface Competition {
+export interface Competition extends OutputBase {
   type: 'Competition';
   name: string;
   description: string;
   date: Instant;
-  sequence: number;
 }
 
-export interface MentionInPublication {
+export interface MentionInPublication extends OutputBase {
   type: 'MentionInPublication';
   title: string;
   issue: string;
   date: Instant;
   otherInformation: string;
-  sequence: number;
 }
 
-export interface Award {
+export interface Award extends OutputBase {
   type: 'Award';
   name: string;
   organizer: string;
   date: Instant;
   otherInformation: string;
   ranking: number;
-  sequence: number;
 }
 
-export interface Exhibition {
+export interface Exhibition extends OutputBase {
   type: 'Exhibition';
   name: string;
   organizer: string;
   place: Place | null;
   date: Period | null;
   otherInformation: string;
-  sequence: number;
 }
 
+export interface Broadcast extends OutputBase {
+  type: 'Broadcast';
+  publisher: UnconfirmedPublisher;
+  date: Instant;
+}
+
+interface CinematicRelease extends OutputBase {
+  type: 'CinematicRelease';
+}
+
+interface OtherRelease extends OutputBase {
+  type: 'OtherRelease';
+}
+
+export type FilmOutput = Broadcast | CinematicRelease | OtherRelease;
+
 export type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
+
+type OutputsType = Venue[] | FilmOutput[];
 
 export interface ArtisticPublicationInstance {
   type: ArtisticType | '';
@@ -57,7 +76,7 @@ export interface ArtisticPublicationInstance {
   description: string;
   venues?: Venue[];
   architectureOutput?: ArchitectureOutput[];
-  outputs?: Venue[];
+  outputs?: OutputsType;
 }
 
 export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {

@@ -378,7 +378,7 @@ const artisticDesignPublicationInstance = Yup.object().shape({
     otherwise: Yup.array().nullable(),
   }),
   outputs: Yup.array().when('$publicationInstanceType', {
-    is: ArtisticType.PerformingArts,
+    is: (type: string) => type === ArtisticType.PerformingArts || type === ArtisticType.MovingPicture,
     then: Yup.array().min(1, resourceErrorMessage.exhibitionRequired).required(resourceErrorMessage.exhibitionRequired),
     otherwise: Yup.array().nullable(),
   }),

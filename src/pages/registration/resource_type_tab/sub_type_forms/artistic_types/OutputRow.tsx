@@ -8,8 +8,10 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import {
   ArchitectureOutput,
   Award,
+  Broadcast,
   Competition,
   Exhibition,
+  FilmOutput,
   MentionInPublication,
   Venue,
 } from '../../../../../types/publication_types/artisticRegistration.types';
@@ -20,8 +22,9 @@ import { PublicationMentionModal } from './architecture/PublicationMentionModal'
 import { AwardModal } from './architecture/AwardModal';
 import { ExhibitionModal } from './architecture/ExhibitionModal';
 import { getArtisticOutputName } from '../../../../../utils/registration-helpers';
+import { BroadcastModal } from './moving_picture/BroadcastModal';
 
-type ItemType = ArchitectureOutput | Venue;
+type ItemType = ArchitectureOutput | Venue | FilmOutput;
 
 interface OutputRowProps {
   item: ItemType;
@@ -53,7 +56,8 @@ export const OutputRow = ({
     item.type === 'Competition' ||
     item.type === 'MentionInPublication' ||
     item.type === 'Award' ||
-    item.type === 'Exhibition'
+    item.type === 'Exhibition' ||
+    item.type === 'Broadcast'
   ) {
     removeItemTitle = t('resource_type.artistic.remove_announcement');
     removeItemDescription = t('resource_type.artistic.remove_announcement_description', { name: title });
@@ -101,6 +105,14 @@ export const OutputRow = ({
           {t('common:remove')}
         </Button>
       </TableCell>
+      {item.type === 'Broadcast' && (
+        <BroadcastModal
+          broadcast={item as Broadcast}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      )}
       {item.type === 'Competition' && (
         <CompetitionModal
           competition={item as Competition}
