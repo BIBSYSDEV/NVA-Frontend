@@ -89,7 +89,7 @@
     "update_vocabulary": "{{vocabulary}} is now {{status}}"
   },
   "validation": {
-    "architecture_output_required": "Must have at least one announcement",
+    "announcement_required": "Must have at least one announcement",
     "author_required": "You need to register at least one author for this registration",
     "cannot_be_after": "{{field}} cannot be after {{limitField}}",
     "cannot_be_before": "{{field}} cannot be before {{limitField}}",

@@ -7,6 +7,7 @@ import { datePickerTranslationProps } from '../../../../../../themes/mainTheme';
 import { Broadcast } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { PublicationChannelType } from '../../../../../../types/registration.types';
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
+import i18n from '../../../../../../translations/i18n';
 
 interface BroadcastModalProps {
   broadcast?: Broadcast;
@@ -25,8 +26,20 @@ const emptyBroadcast: Broadcast = {
 };
 
 const validationSchema = Yup.object().shape({
-  publisher: Yup.object().shape({ name: Yup.string().required() }),
-  date: Yup.object().shape({ value: Yup.string().required() }),
+  publisher: Yup.object().shape({
+    name: Yup.string().required(
+      i18n.t('feedback:validation.is_required', {
+        field: i18n.t('common:publisher'),
+      })
+    ),
+  }),
+  date: Yup.object().shape({
+    value: Yup.string().required(
+      i18n.t('feedback:validation.is_required', {
+        field: i18n.t('common:date'),
+      })
+    ),
+  }),
 });
 
 export const BroadcastModal = ({ broadcast, onSubmit, open, closeModal }: BroadcastModalProps) => {
