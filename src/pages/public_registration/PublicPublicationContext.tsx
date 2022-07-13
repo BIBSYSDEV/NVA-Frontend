@@ -24,13 +24,12 @@ import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 import { getArtisticOutputName, getPeriodString } from '../../utils/registration-helpers';
 import {
-  ArchitectureOutput,
   Award,
   Broadcast,
   Competition,
   Exhibition,
-  FilmOutput,
   MentionInPublication,
+  ArtisticOutputItem,
   Venue,
 } from '../../types/publication_types/artisticRegistration.types';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
@@ -215,7 +214,7 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
 };
 
 interface PublicArtisticOutputProps {
-  outputs: (Venue | ArchitectureOutput | FilmOutput)[];
+  outputs: ArtisticOutputItem[];
   heading: string;
   showType?: boolean;
 }
@@ -230,7 +229,7 @@ export const PublicArtisticOutput = ({ outputs, heading, showType = false }: Pub
 );
 
 interface PublicOutputRowProps {
-  output: ArchitectureOutput | Venue | FilmOutput;
+  output: ArtisticOutputItem;
   heading: string;
   showType: boolean;
 }

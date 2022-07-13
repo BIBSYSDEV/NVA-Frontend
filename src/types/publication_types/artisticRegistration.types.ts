@@ -68,7 +68,7 @@ export type FilmOutput = Broadcast | CinematicRelease | OtherRelease;
 
 export type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
 
-type OutputsType = Venue[] | FilmOutput[];
+export type ArtisticOutputItem = Venue | ArchitectureOutput | FilmOutput;
 
 export interface ArtisticPublicationInstance {
   type: ArtisticType | '';
@@ -76,7 +76,7 @@ export interface ArtisticPublicationInstance {
   description: string;
   venues?: Venue[];
   architectureOutput?: ArchitectureOutput[];
-  outputs?: OutputsType;
+  outputs?: Venue[] | FilmOutput[];
 }
 
 export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {
