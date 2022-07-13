@@ -23,6 +23,7 @@ import {
   MentionInPublication,
   ArtisticOutputItem,
   Venue,
+  CinematicRelease,
 } from '../types/publication_types/artisticRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 
@@ -221,7 +222,7 @@ export const getArtisticOutputName = (item: ArtisticOutputItem) => {
     case 'Broadcast':
       return (item as Broadcast).publisher.name;
     case 'CinematicRelease':
-      return ''; // TODO
+      return (item as CinematicRelease).place.label;
     case 'OtherRelease':
       return ''; //TODO
     default:

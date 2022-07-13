@@ -58,12 +58,13 @@ export interface Broadcast extends ArtisticOutputBase {
   date: Instant;
 }
 
-interface CinematicRelease extends ArtisticOutputBase {
+export interface CinematicRelease extends ArtisticOutputBase {
   type: 'CinematicRelease';
-  // TODO
+  place: Place;
+  date: Instant;
 }
 
-interface OtherRelease extends ArtisticOutputBase {
+export interface OtherRelease extends ArtisticOutputBase {
   type: 'OtherRelease';
   // TODO
 }

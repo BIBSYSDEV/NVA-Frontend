@@ -13,6 +13,7 @@ import {
   MentionInPublication,
   ArtisticOutputItem,
   Venue,
+  CinematicRelease,
 } from '../../../../../types/publication_types/artisticRegistration.types';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import { CompetitionModal } from './architecture/CompetitionModal';
@@ -22,6 +23,7 @@ import { AwardModal } from './architecture/AwardModal';
 import { ExhibitionModal } from './architecture/ExhibitionModal';
 import { getArtisticOutputName } from '../../../../../utils/registration-helpers';
 import { BroadcastModal } from './moving_picture/BroadcastModal';
+import { CinematicReleaseModal } from './moving_picture/CinematicReleaseModal';
 
 interface OutputRowProps {
   item: ArtisticOutputItem;
@@ -54,7 +56,9 @@ export const OutputRow = ({
     item.type === 'MentionInPublication' ||
     item.type === 'Award' ||
     item.type === 'Exhibition' ||
-    item.type === 'Broadcast'
+    item.type === 'Broadcast' ||
+    item.type === 'CinematicRelease' ||
+    item.type === 'OtherRelease'
   ) {
     removeItemTitle = t('resource_type.artistic.remove_announcement');
     removeItemDescription = t('resource_type.artistic.remove_announcement_description', { name: title });
@@ -145,6 +149,14 @@ export const OutputRow = ({
       {item.type === 'Exhibition' && (
         <ExhibitionModal
           exhibition={item as Exhibition}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      )}
+      {item.type === 'CinematicRelease' && (
+        <CinematicReleaseModal
+          cinematicRelease={item as CinematicRelease}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}

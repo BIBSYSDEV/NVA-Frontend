@@ -170,6 +170,7 @@
     "artistic": {
       "add_award": "Legg til pris/utmerkelse",
       "add_broadcast": "Legg til TV/web/streaming",
+      "add_cinematic_release": "Legg til festival/kino",
       "add_competition": "Legg til konkurranse",
       "add_exhibition": "Legg til utstilling",
       "add_exhibition_place": "Legg til visningssted",
@@ -205,6 +206,7 @@
       },
       "edit_award": "Endre pris/utmerkelse",
       "edit_broadcast": "Endre TV/web/streaming",
+      "edit_cinematic_release": "Endre festival/kino",
       "edit_competition": "Endre konkurranse",
       "edit_exhibition": "Endre utstilling",
       "edit_exhibition_place": "Endre visningsted",
@@ -226,6 +228,7 @@
       "output_type": {
         "Award": "Pris/utmerkelse",
         "Broadcast": "TV/web/streaming",
+        "CinematicRelease": "Festival/kino",
         "Competition": "Konkurranse",
         "Exhibition": "Utstilling",
         "MentionInPublication": "Publisering/omtale",
@@ -236,6 +239,7 @@
         "Broadcast": "TV/film/radio",
         "Other": "Annet"
       },
+      "premiere_date": "Premiæredato",
       "remove_announcement": "Fjern offentliggjøring",
       "remove_announcement_description": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over offentliggjøringer?",
       "remove_venue_title": "Fjern visningssted?",

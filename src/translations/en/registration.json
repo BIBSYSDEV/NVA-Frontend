@@ -170,6 +170,7 @@
     "artistic": {
       "add_award": "Add prize/award",
       "add_broadcast": "Add TV/web/streaming",
+      "add_cinematic_release": "Add festival/cinema",
       "add_competition": "Add competititon",
       "add_exhibition": "Add exhibition",
       "add_exhibition_place": "Add exhibition place",
@@ -205,6 +206,7 @@
       },
       "edit_award": "Edit prize/award",
       "edit_broadcast": "Edit TV/web/streaming",
+      "edit_cinematic_release": "Edit festival/cinema",
       "edit_competition": "Edit competition",
       "edit_exhibition": "Edit exhibition",
       "edit_exhibition_place": "Edit exhibition place",
@@ -226,6 +228,7 @@
       "output_type": {
         "Award": "Prize/award",
         "Broadcast": "TV/web/streaming",
+        "CinematicRelease": "Festival/cinema",
         "Competition": "Competition",
         "Exhibition": "Exhibition",
         "MentionInPublication": "Publication/mention",
@@ -236,6 +239,7 @@
         "Broadcast": "TV/film/radio",
         "Other": "Other"
       },
+      "premiere_date": "Premiere date",
       "remove_announcement": "Remove announcement",
       "remove_announcement_description": "Are you sure you want to remove \"{{name}}\" from list over announcements?",
       "remove_venue_title": "Remove exhibition place?",

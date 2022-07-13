@@ -25,6 +25,7 @@ import {
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
 import { BroadcastModal } from './BroadcastModal';
+import { CinematicReleaseModal } from './CinematicReleaseModal';
 
 const movingPictureTypes = Object.values(MovingPictureType);
 type ArtisticMovingPictureModalType = '' | 'Broadcast' | 'CinematicRelease' | 'OtherRelease';
@@ -150,13 +151,29 @@ export const ArtisticMovingPictureForm = () => {
                 open={openModal === 'Broadcast'}
                 closeModal={() => setOpenModal('')}
               />
-              <Button
-                onClick={() => setOpenModal('Broadcast')}
-                variant="outlined"
-                sx={{ mt: '1rem' }}
-                startIcon={<AddCircleOutlineIcon />}>
-                {t('resource_type.artistic.add_broadcast')}
-              </Button>
+              <CinematicReleaseModal
+                onSubmit={(newCinematicRelease) => {
+                  newCinematicRelease.sequence = outputs.length + 1;
+                  push(newCinematicRelease);
+                }}
+                open={openModal === 'CinematicRelease'}
+                closeModal={() => setOpenModal('')}
+              />
+
+              <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
+                <Button
+                  onClick={() => setOpenModal('Broadcast')}
+                  variant="outlined"
+                  startIcon={<AddCircleOutlineIcon />}>
+                  {t('resource_type.artistic.add_broadcast')}
+                </Button>
+                <Button
+                  onClick={() => setOpenModal('CinematicRelease')}
+                  variant="outlined"
+                  startIcon={<AddCircleOutlineIcon />}>
+                  {t('resource_type.artistic.add_cinematic_release')}
+                </Button>
+              </Box>
             </>
           )}
         </FieldArray>
