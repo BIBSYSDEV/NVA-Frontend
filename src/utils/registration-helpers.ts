@@ -16,11 +16,12 @@ import { PresentationRegistration } from '../types/publication_types/presentatio
 import { Period } from '../types/common.types';
 import { Contributor, ContributorRole } from '../types/contributor.types';
 import {
-  ArchitectureOutput,
   Award,
+  Broadcast,
   Competition,
   Exhibition,
   MentionInPublication,
+  ArtisticOutputItem,
   Venue,
 } from '../types/publication_types/artisticRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
@@ -204,7 +205,7 @@ export const splitMainContributors = (contributors: Contributor[], registrationT
   return [mainContributors, otherContributors];
 };
 
-export const getArtisticOutputName = (item: Venue | ArchitectureOutput) => {
+export const getArtisticOutputName = (item: ArtisticOutputItem) => {
   switch (item.type) {
     case 'Venue':
     case 'PerformingArtsVenue':
@@ -217,6 +218,12 @@ export const getArtisticOutputName = (item: Venue | ArchitectureOutput) => {
       return (item as Award).name;
     case 'Exhibition':
       return (item as Exhibition).name;
+    case 'Broadcast':
+      return (item as Broadcast).publisher.name;
+    case 'CinematicRelease':
+      return ''; // TODO
+    case 'OtherRelease':
+      return ''; //TODO
     default:
       return '';
   }

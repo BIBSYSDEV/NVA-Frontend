@@ -21,7 +21,7 @@ import { DesignType } from '../../../types/publication_types/artisticRegistratio
 import { validateDateInterval } from '../validationHelpers';
 
 const resourceErrorMessage = {
-  architectureOutputRequired: i18n.t('feedback:validation.architecture_output_required'),
+  announcementsRequired: i18n.t('feedback:validation.announcement_required'),
   contentTypeRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('registration:resource_type.content'),
   }),
@@ -373,14 +373,20 @@ const artisticDesignPublicationInstance = Yup.object().shape({
   architectureOutput: Yup.array().when('$publicationInstanceType', {
     is: ArtisticType.ArtisticArchitecture,
     then: Yup.array()
-      .min(1, resourceErrorMessage.architectureOutputRequired)
-      .required(resourceErrorMessage.architectureOutputRequired),
+      .min(1, resourceErrorMessage.announcementsRequired)
+      .required(resourceErrorMessage.announcementsRequired),
     otherwise: Yup.array().nullable(),
   }),
-  outputs: Yup.array().when('$publicationInstanceType', {
-    is: ArtisticType.PerformingArts,
-    then: Yup.array().min(1, resourceErrorMessage.exhibitionRequired).required(resourceErrorMessage.exhibitionRequired),
-    otherwise: Yup.array().nullable(),
+  outputs: Yup.array().when('$publicationInstanceType', (type: string, schema) => {
+    if (type === ArtisticType.PerformingArts) {
+      return schema.min(1, resourceErrorMessage.exhibitionRequired).required(resourceErrorMessage.exhibitionRequired);
+    } else if (type === ArtisticType.MovingPicture) {
+      return schema
+        .min(1, resourceErrorMessage.announcementsRequired)
+        .required(resourceErrorMessage.announcementsRequired);
+    } else {
+      return schema.nullable();
+    }
   }),
 });
 

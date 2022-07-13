@@ -89,7 +89,7 @@
     "update_vocabulary": "{{vocabulary}} er nå {{status}}"
   },
   "validation": {
-    "architecture_output_required": "Du må ha minst en offentliggjøring",
+    "announcement_required": "Du må ha minst en offentliggjøring",
     "author_required": "Du må ha minst en forfatter på denne registreringen",
     "cannot_be_after": "{{field}} kan ikke være etter {{limitField}}",
     "cannot_be_before": "{{field}} kan ikke være før {{limitField}}",

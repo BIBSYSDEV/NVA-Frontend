@@ -152,11 +152,12 @@
     "article_number": "Article number",
     "artistic": {
       "add_award": "Add prize/award",
+      "add_broadcast": "Add TV/web/streaming",
       "add_competition": "Add competititon",
       "add_exhibition": "Add exhibition",
       "add_exhibition_place": "Add exhibition place",
       "add_publication_mention": "Add publication/mention",
-      "architecture_publications": "Announcement",
+      "announcements": "Announcements",
       "architecture_type": {
         "Building": "Building",
         "Interior": "Interior",
@@ -168,6 +169,7 @@
       "award_organizer": "Award giver/organizer",
       "award_other": "Other",
       "award_ranking": "Ranking",
+      "broadcast": "TV/web/streaming",
       "competition_date": "Date for announcement",
       "competition_name": "Name on competition/organizer",
       "competition_rank": "Rank/purchase/mention/invited",
@@ -185,6 +187,7 @@
         "WebDesign": "Web design"
       },
       "edit_award": "Edit prize/award",
+      "edit_broadcast": "Edit TV/web/streaming",
       "edit_competition": "Edit competition",
       "edit_exhibition": "Edit exhibition",
       "edit_exhibition_place": "Edit exhibition place",
@@ -194,9 +197,18 @@
       "exhibition_title": "Exhibition title",
       "mention_other": "Other (publisher, ISBN, etc.)",
       "mention_title": "Journal/Book/medium",
+      "moving_picture_type": {
+        "Film": "Long film",
+        "ShortFilm": "Short film",
+        "SerialFilmProduction": "Serial production",
+        "InteractiveFilm": "Interactive production",
+        "AugmentedVirtualRealityFilm": "AR/VR",
+        "Other": "Other"
+      },
       "name_or_title": "Name/title",
       "output_type": {
         "Award": "Prize/award",
+        "Broadcast": "TV/web/streaming",
         "Competition": "Competition",
         "Exhibition": "Exhibition",
         "MentionInPublication": "Publication/mention",

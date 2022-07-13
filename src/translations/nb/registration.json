@@ -152,11 +152,12 @@
     "article_number": "Artikkelnummer",
     "artistic": {
       "add_award": "Legg til pris/utmerkelse",
+      "add_broadcast": "Legg til TV/web/streaming",
       "add_competition": "Legg til konkurranse",
       "add_exhibition": "Legg til utstilling",
       "add_exhibition_place": "Legg til visningssted",
       "add_publication_mention": "Legg til publisering/omtale",
-      "architecture_publications": "Offentliggjøringer",
+      "announcements": "Offentliggjøringer",
       "architecture_type": {
         "Building": "Bygg",
         "Interior": "Interiør",
@@ -168,6 +169,7 @@
       "award_organizer": "Prisutdeler/arrangør",
       "award_other": "Annet",
       "award_ranking": "Rangering",
+      "broadcast": "TV/web/streaming",
       "competition_date": "Dato for offentliggjøring",
       "competition_name": "Navn på konkurranse/arrangør/innbyder",
       "competition_rank": "Rangering/innkjøp/omtale/invitert",
@@ -185,6 +187,7 @@
         "WebDesign": "Webdesign"
       },
       "edit_award": "Endre pris/utmerkelse",
+      "edit_broadcast": "Endre TV/web/streaming",
       "edit_competition": "Endre konkurranse",
       "edit_exhibition": "Endre utstilling",
       "edit_exhibition_place": "Endre visningsted",
@@ -194,9 +197,18 @@
       "exhibition_title": "Utstillingstittel",
       "mention_other": "Annet (utgiver, ISBN, m.m.)",
       "mention_title": "Tidsskrift/Boktittel/medium",
+      "moving_picture_type": {
+        "Film": "Langfilm",
+        "ShortFilm": "Kortfilm",
+        "SerialFilmProduction": "Seriell produksjon",
+        "InteractiveFilm": "Interaktiv produksjon",
+        "AugmentedVirtualRealityFilm": "AR/VR",
+        "Other": "Annet"
+      },
       "name_or_title": "Navn/tittel",
       "output_type": {
         "Award": "Pris/utmerkelse",
+        "Broadcast": "TV/web/streaming",
         "Competition": "Konkurranse",
         "Exhibition": "Utstilling",
         "MentionInPublication": "Publisering/omtale",

@@ -24,11 +24,12 @@ import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 import { getArtisticOutputName, getPeriodString } from '../../utils/registration-helpers';
 import {
-  ArchitectureOutput,
   Award,
+  Broadcast,
   Competition,
   Exhibition,
   MentionInPublication,
+  ArtisticOutputItem,
   Venue,
 } from '../../types/publication_types/artisticRegistration.types';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
@@ -213,7 +214,7 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
 };
 
 interface PublicArtisticOutputProps {
-  outputs: (Venue | ArchitectureOutput)[];
+  outputs: ArtisticOutputItem[];
   heading: string;
   showType?: boolean;
 }
@@ -228,7 +229,7 @@ export const PublicArtisticOutput = ({ outputs, heading, showType = false }: Pub
 );
 
 interface PublicOutputRowProps {
-  output: ArchitectureOutput | Venue;
+  output: ArtisticOutputItem;
   heading: string;
   showType: boolean;
 }
@@ -261,6 +262,7 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
             <PublicMentionDialogContent mention={output as MentionInPublication} />
           )}
           {output.type === 'Exhibition' && <PublicExhibitionDialogContent exhibition={output as Exhibition} />}
+          {output.type === 'Broadcast' && <PublicBroadcastDialogContent broadcast={output as Broadcast} />}
         </ErrorBoundary>
 
         <DialogActions>
@@ -345,6 +347,18 @@ const PublicExhibitionDialogContent = ({ exhibition }: { exhibition: Exhibition 
       <Typography>{exhibition.organizer}</Typography>
       <Typography variant="overline">{t('common:other')}</Typography>
       <Typography paragraph>{exhibition.otherInformation}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicBroadcastDialogContent = ({ broadcast }: { broadcast: Broadcast }) => {
+  const { t } = useTranslation('common');
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('publisher')}</Typography>
+      <Typography paragraph>{broadcast.publisher.name}</Typography>
+      <Typography variant="overline">{t('date')}</Typography>
+      <Typography>{new Date(broadcast.date.value).toLocaleDateString()}</Typography>
     </DialogContent>
   );
 };
