@@ -64,9 +64,9 @@ interface OtherRelease extends OutputBase {
   type: 'OtherRelease';
 }
 
-export type FilmOutput = Broadcast | CinematicRelease | OtherRelease;
+type FilmOutput = Broadcast | CinematicRelease | OtherRelease;
 
-export type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
+type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
 
 export type ArtisticOutputItem = Venue | ArchitectureOutput | FilmOutput;
 
