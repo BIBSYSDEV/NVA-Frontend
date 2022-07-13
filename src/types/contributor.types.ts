@@ -9,15 +9,22 @@ export enum ContributorRole {
   Creator = 'Creator',
   CuratorOrganizer = 'CuratorOrganizer',
   Designer = 'Designer',
+  Director = 'Director',
   Editor = 'Editor',
   InteriorArchitect = 'InteriorArchitect',
   LandscapeArchitect = 'LandscapeArchitect',
   Other = 'Other',
+  Photographer = 'Photographer',
+  ProductionDesigner = 'ProductionDesigner',
   Producer = 'Producer',
   RelatedPerson = 'RelatedPerson',
   Researcher = 'Researcher',
   RightsHolder = 'RightsHolder',
+  Screenwriter = 'Screenwriter',
+  SoundDesigner = 'SoundDesigner',
   Supervisor = 'Supervisor',
+  VfxSupervisor = 'VfxSupervisor',
+  VideoEditor = 'VideoEditor',
 }
 
 export interface Identity {
