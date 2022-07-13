@@ -19,6 +19,7 @@ import { StyledSelectWrapper } from '../../../../../../components/styled/Wrapper
 import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import {
   ArtisticRegistration,
+  FilmOutput,
   MovingPictureType,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
@@ -31,7 +32,7 @@ type ArtisticMovingPictureModalType = '' | 'Broadcast' | 'CinematicRelease' | 'O
 export const ArtisticMovingPictureForm = () => {
   const { t } = useTranslation('registration');
   const { values, touched, errors } = useFormikContext<ArtisticRegistration>();
-  const outputs = values.entityDescription.reference.publicationInstance.outputs ?? [];
+  const outputs = (values.entityDescription.reference.publicationInstance.outputs ?? []) as FilmOutput[];
 
   const [openModal, setOpenModal] = useState<ArtisticMovingPictureModalType>('');
 

@@ -68,9 +68,9 @@ interface OtherRelease extends ArtisticOutputBase {
   // TODO
 }
 
-type FilmOutput = Broadcast | CinematicRelease | OtherRelease;
+export type FilmOutput = Broadcast | CinematicRelease | OtherRelease;
 
-type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
+export type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
 
 export type ArtisticOutputItem = Venue | ArchitectureOutput | FilmOutput;
 

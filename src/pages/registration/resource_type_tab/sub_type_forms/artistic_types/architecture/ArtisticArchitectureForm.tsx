@@ -20,6 +20,7 @@ import { ResourceFieldNames } from '../../../../../../types/publicationFieldName
 import {
   ArtisticRegistration,
   ArchitectureType,
+  ArchitectureOutput,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { CompetitionModal } from './CompetitionModal';
@@ -38,7 +39,7 @@ export const ArtisticArchitectureForm = () => {
   const [openModal, setOpenModal] = useState<ArtisticArchitectureModalType>('');
 
   const { publicationInstance } = values.entityDescription.reference;
-  const architectureOutput = publicationInstance.architectureOutput ?? [];
+  const architectureOutput = (publicationInstance.architectureOutput ?? []) as ArchitectureOutput[];
 
   return (
     <>
