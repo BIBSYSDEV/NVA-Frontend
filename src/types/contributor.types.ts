@@ -8,7 +8,7 @@ export enum ContributorRole {
   ArtisticDirector = 'ArtisticDirector',
   Choreographer = 'Choreographer',
   Consultant = 'Consultant',
-  ContactPerson = 'ContactPerson',
+  ContactPerson = 'ContactPerson', // TODO: not needed?
   CostumeDesigner = 'CostumeDesigner',
   Creator = 'Creator',
   CuratorOrganizer = 'CuratorOrganizer',
@@ -26,9 +26,9 @@ export enum ContributorRole {
   Photographer = 'Photographer',
   ProductionDesigner = 'ProductionDesigner',
   Producer = 'Producer',
-  RelatedPerson = 'RelatedPerson',
-  Researcher = 'Researcher',
-  RightsHolder = 'RightsHolder',
+  RelatedPerson = 'RelatedPerson', // TODO: not needed?
+  Researcher = 'Researcher', // TODO: not needed?
+  RightsHolder = 'RightsHolder', // TODO: not needed?
   Scenographer = 'Scenographer',
   Screenwriter = 'Screenwriter',
   SoundDesigner = 'SoundDesigner',
