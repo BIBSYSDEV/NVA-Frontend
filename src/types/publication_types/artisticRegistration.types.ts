@@ -1,30 +1,29 @@
 import { Instant, Period, Place } from '../common.types';
 import { ArtisticType, PublicationType } from '../publicationFieldNames';
 import { BaseRegistration, BaseReference, BaseEntityDescription } from '../registration.types';
-import { UnconfirmedPublisher } from './bookRegistration.types';
 
 export interface ArtisticRegistration extends BaseRegistration {
   entityDescription: ArtisticEntityDescription;
 }
 
-interface OutputBase {
+interface ArtisticOutputBase {
   sequence?: number;
 }
 
-export interface Venue extends OutputBase {
+export interface Venue extends ArtisticOutputBase {
   type: 'Venue' | 'PerformingArtsVenue';
   place: Place | null;
   date: Period | null;
 }
 
-export interface Competition extends OutputBase {
+export interface Competition extends ArtisticOutputBase {
   type: 'Competition';
   name: string;
   description: string;
   date: Instant;
 }
 
-export interface MentionInPublication extends OutputBase {
+export interface MentionInPublication extends ArtisticOutputBase {
   type: 'MentionInPublication';
   title: string;
   issue: string;
@@ -32,7 +31,7 @@ export interface MentionInPublication extends OutputBase {
   otherInformation: string;
 }
 
-export interface Award extends OutputBase {
+export interface Award extends ArtisticOutputBase {
   type: 'Award';
   name: string;
   organizer: string;
@@ -41,7 +40,7 @@ export interface Award extends OutputBase {
   ranking: number;
 }
 
-export interface Exhibition extends OutputBase {
+export interface Exhibition extends ArtisticOutputBase {
   type: 'Exhibition';
   name: string;
   organizer: string;
@@ -50,18 +49,23 @@ export interface Exhibition extends OutputBase {
   otherInformation: string;
 }
 
-export interface Broadcast extends OutputBase {
+export interface Broadcast extends ArtisticOutputBase {
   type: 'Broadcast';
-  publisher: UnconfirmedPublisher;
+  publisher: {
+    type: 'UnconfirmedPublisher';
+    name: string;
+  };
   date: Instant;
 }
 
-interface CinematicRelease extends OutputBase {
+interface CinematicRelease extends ArtisticOutputBase {
   type: 'CinematicRelease';
+  // TODO
 }
 
-interface OtherRelease extends OutputBase {
+interface OtherRelease extends ArtisticOutputBase {
   type: 'OtherRelease';
+  // TODO
 }
 
 type FilmOutput = Broadcast | CinematicRelease | OtherRelease;

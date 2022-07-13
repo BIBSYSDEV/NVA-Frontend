@@ -90,6 +90,7 @@ export const BroadcastModal = ({ broadcast, onSubmit, open, closeModal }: Broadc
                   renderInput={(params) => (
                     <TextField
                       {...params}
+                      sx={{ maxWidth: '10rem' }}
                       variant="filled"
                       required
                       onBlur={() => !touched && setFieldTouched(field.name)}
