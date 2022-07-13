@@ -96,7 +96,23 @@ export const ContributorsPanel = () => {
             <Contributors
               push={push}
               replace={replace}
-              contributorRoles={[ContributorRole.Producer, ContributorRole.Other]} // TODO: Add more roles (NP-9300)
+              primaryColorAddButton
+              contributorRoles={[
+                ContributorRole.Dancer,
+                ContributorRole.Actor,
+                ContributorRole.Choreographer,
+                ContributorRole.Director,
+                ContributorRole.Scenographer,
+                ContributorRole.CostumeDesigner,
+                ContributorRole.Producer,
+                ContributorRole.ArtisticDirector,
+                ContributorRole.Dramatist,
+                ContributorRole.Librettist,
+                ContributorRole.Dramaturge,
+                ContributorRole.SoundDesigner,
+                ContributorRole.LightDesigner,
+                ContributorRole.Other,
+              ]}
             />
           ) : publicationInstanceType === ArtisticType.MovingPicture ? (
             <Contributors
