@@ -21,14 +21,10 @@ export interface MediaContributionRegistration extends BaseRegistration {
 
 interface MediaContributionPublicationInstance {
   type: MediaType | '';
-  pages: unknown; // TODO: Remove (NP-9289)
 }
 
 export const emptyMediaContributionPublicationInstance: MediaContributionPublicationInstance = {
   type: '',
-  pages: {
-    type: 'NullPages',
-  },
 };
 
 export const emptyMediaContributionPublicationContext: MediaContributionPublicationContext = {
