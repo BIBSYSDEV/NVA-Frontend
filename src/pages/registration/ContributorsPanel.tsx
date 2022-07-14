@@ -13,14 +13,6 @@ import { EntityDescription, Registration } from '../../types/registration.types'
 import { isDegree, isMediaContribution } from '../../utils/registration-helpers';
 import { Contributors } from './contributors_tab/Contributors';
 
-const mediaContributorRoles = [
-  ContributorRole.AcademicCoordinator,
-  ContributorRole.InterviewSubject,
-  ContributorRole.Journalist,
-  ContributorRole.ProgrammeLeader,
-  ContributorRole.ProgrammeParticipant,
-];
-
 export const ContributorsPanel = () => {
   const {
     values: { entityDescription },
@@ -70,7 +62,13 @@ export const ContributorsPanel = () => {
             <Contributors
               push={push}
               replace={replace}
-              contributorRoles={mediaContributorRoles}
+              contributorRoles={[
+                ContributorRole.AcademicCoordinator,
+                ContributorRole.InterviewSubject,
+                ContributorRole.Journalist,
+                ContributorRole.ProgrammeLeader,
+                ContributorRole.ProgrammeParticipant,
+              ]}
               primaryColorAddButton
             />
           ) : publicationInstanceType === JournalType.Issue ||
