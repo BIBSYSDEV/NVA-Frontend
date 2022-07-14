@@ -31,6 +31,8 @@ import {
   MentionInPublication,
   ArtisticOutputItem,
   Venue,
+  CinematicRelease,
+  OtherRelease,
 } from '../../types/publication_types/artisticRegistration.types';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
@@ -263,6 +265,10 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
           )}
           {output.type === 'Exhibition' && <PublicExhibitionDialogContent exhibition={output as Exhibition} />}
           {output.type === 'Broadcast' && <PublicBroadcastDialogContent broadcast={output as Broadcast} />}
+          {output.type === 'CinematicRelease' && (
+            <PublicCinematicReleaseDialogContent cinematicRelease={output as CinematicRelease} />
+          )}
+          {output.type === 'OtherRelease' && <PublicOtherReleaseDialogContent otherRelease={output as OtherRelease} />}
         </ErrorBoundary>
 
         <DialogActions>
@@ -355,10 +361,48 @@ const PublicBroadcastDialogContent = ({ broadcast }: { broadcast: Broadcast }) =
   const { t } = useTranslation('common');
   return (
     <DialogContent>
+      <Typography variant="overline">{t('common:type')}</Typography>
+      <Typography paragraph>{t(`registration:resource_type.artistic.output_type.${broadcast.type}`)}</Typography>
       <Typography variant="overline">{t('publisher')}</Typography>
       <Typography paragraph>{broadcast.publisher.name}</Typography>
       <Typography variant="overline">{t('date')}</Typography>
       <Typography>{new Date(broadcast.date.value).toLocaleDateString()}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicCinematicReleaseDialogContent = ({ cinematicRelease }: { cinematicRelease: CinematicRelease }) => {
+  const { t } = useTranslation('registration');
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('common:type')}</Typography>
+      <Typography paragraph>{t(`resource_type.artistic.output_type.${cinematicRelease.type}`)}</Typography>
+      <Typography variant="overline">{t('common:place')}</Typography>
+      <Typography paragraph>{cinematicRelease.place.label}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.premiere_date')}</Typography>
+      <Typography>{new Date(cinematicRelease.date.value).toLocaleDateString()}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicOtherReleaseDialogContent = ({ otherRelease }: { otherRelease: OtherRelease }) => {
+  const { t } = useTranslation('registration');
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('resource_type.artistic.other_release_description')}</Typography>
+      <Typography paragraph>
+        {t(`resource_type.artistic.output_type.${otherRelease.type}`)}: {otherRelease.description}
+      </Typography>
+      <Typography variant="overline">{t('common:place')}</Typography>
+      <Typography paragraph>{otherRelease.place.label}</Typography>
+      {otherRelease.publisher.name && (
+        <>
+          <Typography variant="overline">{t('resource_type.artistic.other_announcement_organizer')}</Typography>
+          <Typography paragraph>{otherRelease.publisher.name}</Typography>
+        </>
+      )}
+      <Typography variant="overline">{t('resource_type.artistic.premiere_date')}</Typography>
+      <Typography>{new Date(otherRelease.date.value).toLocaleDateString()}</Typography>
     </DialogContent>
   );
 };
