@@ -96,10 +96,10 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
                   renderInput={(params) => (
                     <TextField
                       {...params}
+                      {...field}
                       sx={{ maxWidth: '13rem' }}
                       variant="filled"
                       required
-                      onBlur={() => !touched && setFieldTouched(field.name)}
                       error={touched && !!error}
                       helperText={<ErrorMessage name={field.name} />}
                     />
