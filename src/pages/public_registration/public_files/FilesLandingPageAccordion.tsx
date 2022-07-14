@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { RootState } from '../../../redux/store';
+import { RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { userIsOwnerOfRegistration, userIsCuratorForRegistration } from '../../../utils/registration-helpers';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
@@ -19,9 +20,13 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const userIsCurator = userIsCuratorForRegistration(user, registration);
   const userIsRegistrationAdmin = userIsOwner || userIsCurator;
 
-  const hasFilesAwaitingApproval = files.some((file) => file.type === 'UnpublishedFile') && userIsRegistrationAdmin;
+  const showRegistrationHasFilesAwaitingApproval =
+    registration.status === RegistrationStatus.Published &&
+    userIsRegistrationAdmin &&
+    files.some((file) => file.type === 'UnpublishedFile');
+
   const filesToShow = files.filter(
-    (file) => !file.administrativeAgreement && (file.type === 'PublishedFile' || userIsRegistrationAdmin)
+    (file) => file.type === 'PublishedFile' || (file.type === 'UnpublishedFile' && userIsRegistrationAdmin)
   );
 
   return filesToShow.length === 0 ? null : (
@@ -29,7 +34,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
       data-testid={dataTestId.registrationLandingPage.filesAccordion}
       defaultExpanded
       heading={
-        hasFilesAwaitingApproval ? (
+        showRegistrationHasFilesAwaitingApproval ? (
           <Box component="span" sx={{ bgcolor: 'secondary.light', p: '0.25rem' }}>
             {t('files_and_license.files_awaits_approval')}
           </Box>
