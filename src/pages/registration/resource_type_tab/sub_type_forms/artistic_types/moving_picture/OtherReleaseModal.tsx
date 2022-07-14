@@ -63,7 +63,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
   const { t } = useTranslation('registration');
 
   return (
-    <Dialog open={open} onClose={closeModal} maxWidth={'sm'} fullWidth>
+    <Dialog open={open} onClose={closeModal} maxWidth="sm" fullWidth>
       <DialogTitle>
         {otherRelease ? t('resource_type.artistic.edit_other_release') : t('resource_type.artistic.add_other_release')}
       </DialogTitle>
