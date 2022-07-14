@@ -37,6 +37,7 @@ export const ArtisticMovingPictureForm = () => {
   const outputs = (values.entityDescription.reference.publicationInstance.outputs ?? []) as FilmOutput[];
 
   const [openModal, setOpenModal] = useState<ArtisticMovingPictureModalType>('');
+  const closeModal = () => setOpenModal('');
 
   return (
     <>
@@ -105,92 +106,82 @@ export const ArtisticMovingPictureForm = () => {
           {t('resource_type.artistic.announcements')}
         </Typography>
         <FieldArray name={ResourceFieldNames.PublicationInstanceOutputs}>
-          {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
-            <>
-              {outputs.length > 0 && (
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>{t('common:type')}</TableCell>
-                      <TableCell>
-                        {t('common:publisher')}/{t('common:place')}
-                      </TableCell>
-                      <TableCell>{t('common:order')}</TableCell>
-                      <TableCell></TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {outputs.map((output, index) => (
-                      <OutputRow
-                        key={index}
-                        item={output}
-                        updateItem={(newVenue) => replace(index, newVenue)}
-                        removeItem={() => remove(index)}
-                        moveItem={(newIndex) => move(index, newIndex)}
-                        index={index}
-                        maxIndex={outputs.length - 1}
-                        showTypeColumn
-                      />
-                    ))}
-                  </TableBody>
-                </Table>
-              )}
-              {!!touched.entityDescription?.reference?.publicationInstance?.outputs &&
-                typeof errors.entityDescription?.reference?.publicationInstance?.outputs === 'string' && (
-                  <Box mt="1rem">
-                    <FormHelperText error>
-                      <ErrorMessage name={name} />
-                    </FormHelperText>
-                  </Box>
+          {({ push, replace, remove, move, name }: FieldArrayRenderProps) => {
+            const onAddOutput = (output: FilmOutput) => {
+              output.sequence = outputs.length + 1;
+              push(output);
+            };
+
+            return (
+              <>
+                {outputs.length > 0 && (
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>{t('common:type')}</TableCell>
+                        <TableCell>
+                          {t('common:publisher')}/{t('common:place')}
+                        </TableCell>
+                        <TableCell>{t('common:order')}</TableCell>
+                        <TableCell></TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {outputs.map((output, index) => (
+                        <OutputRow
+                          key={index}
+                          item={output}
+                          updateItem={(newVenue) => replace(index, newVenue)}
+                          removeItem={() => remove(index)}
+                          moveItem={(newIndex) => move(index, newIndex)}
+                          index={index}
+                          maxIndex={outputs.length - 1}
+                          showTypeColumn
+                        />
+                      ))}
+                    </TableBody>
+                  </Table>
                 )}
+                {!!touched.entityDescription?.reference?.publicationInstance?.outputs &&
+                  typeof errors.entityDescription?.reference?.publicationInstance?.outputs === 'string' && (
+                    <Box mt="1rem">
+                      <FormHelperText error>
+                        <ErrorMessage name={name} />
+                      </FormHelperText>
+                    </Box>
+                  )}
 
-              <BroadcastModal
-                onSubmit={(newBroadcast) => {
-                  newBroadcast.sequence = outputs.length + 1;
-                  push(newBroadcast);
-                }}
-                open={openModal === 'Broadcast'}
-                closeModal={() => setOpenModal('')}
-              />
-              <CinematicReleaseModal
-                onSubmit={(newCinematicRelease) => {
-                  newCinematicRelease.sequence = outputs.length + 1;
-                  push(newCinematicRelease);
-                }}
-                open={openModal === 'CinematicRelease'}
-                closeModal={() => setOpenModal('')}
-              />
-              <OtherReleaseModal
-                onSubmit={(newOtherRelease) => {
-                  newOtherRelease.sequence = outputs.length + 1;
-                  push(newOtherRelease);
-                }}
-                open={openModal === 'OtherRelease'}
-                closeModal={() => setOpenModal('')}
-              />
+                <BroadcastModal onSubmit={onAddOutput} open={openModal === 'Broadcast'} closeModal={closeModal} />
+                <CinematicReleaseModal
+                  onSubmit={onAddOutput}
+                  open={openModal === 'CinematicRelease'}
+                  closeModal={closeModal}
+                />
+                <OtherReleaseModal onSubmit={onAddOutput} open={openModal === 'OtherRelease'} closeModal={closeModal} />
 
-              <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
-                <Button
-                  onClick={() => setOpenModal('Broadcast')}
-                  variant="outlined"
-                  startIcon={<AddCircleOutlineIcon />}>
-                  {t('resource_type.artistic.add_broadcast')}
-                </Button>
-                <Button
-                  onClick={() => setOpenModal('CinematicRelease')}
-                  variant="outlined"
-                  startIcon={<AddCircleOutlineIcon />}>
-                  {t('resource_type.artistic.add_cinematic_release')}
-                </Button>
-                <Button
-                  onClick={() => setOpenModal('OtherRelease')}
-                  variant="outlined"
-                  startIcon={<AddCircleOutlineIcon />}>
-                  {t('resource_type.artistic.add_other_release')}
-                </Button>
-              </Box>
-            </>
-          )}
+                <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
+                  <Button
+                    onClick={() => setOpenModal('Broadcast')}
+                    variant="outlined"
+                    startIcon={<AddCircleOutlineIcon />}>
+                    {t('resource_type.artistic.add_broadcast')}
+                  </Button>
+                  <Button
+                    onClick={() => setOpenModal('CinematicRelease')}
+                    variant="outlined"
+                    startIcon={<AddCircleOutlineIcon />}>
+                    {t('resource_type.artistic.add_cinematic_release')}
+                  </Button>
+                  <Button
+                    onClick={() => setOpenModal('OtherRelease')}
+                    variant="outlined"
+                    startIcon={<AddCircleOutlineIcon />}>
+                    {t('resource_type.artistic.add_other_release')}
+                  </Button>
+                </Box>
+              </>
+            );
+          }}
         </FieldArray>
       </div>
     </>
