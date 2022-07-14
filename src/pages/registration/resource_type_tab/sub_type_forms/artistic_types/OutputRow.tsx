@@ -14,6 +14,7 @@ import {
   ArtisticOutputItem,
   Venue,
   CinematicRelease,
+  OtherRelease,
 } from '../../../../../types/publication_types/artisticRegistration.types';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import { CompetitionModal } from './architecture/CompetitionModal';
@@ -24,6 +25,7 @@ import { ExhibitionModal } from './architecture/ExhibitionModal';
 import { getArtisticOutputName } from '../../../../../utils/registration-helpers';
 import { BroadcastModal } from './moving_picture/BroadcastModal';
 import { CinematicReleaseModal } from './moving_picture/CinematicReleaseModal';
+import { OtherReleaseModal } from './moving_picture/OtherReleaseModal';
 
 interface OutputRowProps {
   item: ArtisticOutputItem;
@@ -157,6 +159,14 @@ export const OutputRow = ({
       {item.type === 'CinematicRelease' && (
         <CinematicReleaseModal
           cinematicRelease={item as CinematicRelease}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      )}
+      {item.type === 'OtherRelease' && (
+        <OtherReleaseModal
+          otherRelease={item as OtherRelease}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}

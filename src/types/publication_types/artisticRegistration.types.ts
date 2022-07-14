@@ -66,7 +66,13 @@ export interface CinematicRelease extends ArtisticOutputBase {
 
 export interface OtherRelease extends ArtisticOutputBase {
   type: 'OtherRelease';
-  // TODO
+  description: string;
+  place: Place;
+  publisher: {
+    type: 'UnconfirmedPublisher';
+    name: string;
+  };
+  date: Instant;
 }
 
 export type FilmOutput = Broadcast | CinematicRelease | OtherRelease;

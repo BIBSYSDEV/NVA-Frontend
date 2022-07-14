@@ -174,6 +174,7 @@
       "add_competition": "Add competititon",
       "add_exhibition": "Add exhibition",
       "add_exhibition_place": "Add exhibition place",
+      "add_other_release": "Add other announcement",
       "add_publication_mention": "Add publication/mention",
       "announcements": "Announcements",
       "architecture_type": {
@@ -210,6 +211,7 @@
       "edit_competition": "Edit competition",
       "edit_exhibition": "Edit exhibition",
       "edit_exhibition_place": "Edit exhibition place",
+      "edit_other_release": "Edit other announcement",
       "edit_publication_mention": "Edit publication/mention",
       "exhibition_place": "Exhibition place",
       "exhibition_places": "Exhibition places",
@@ -225,6 +227,8 @@
         "Other": "Other"
       },
       "name_or_title": "Name/title",
+      "other_announcement_organizer": "Publisher/organizer etc.",
+      "other_release_description": "Type of announcement",
       "output_type": {
         "Award": "Prize/award",
         "Broadcast": "TV/web/streaming",
@@ -232,6 +236,7 @@
         "Competition": "Competition",
         "Exhibition": "Exhibition",
         "MentionInPublication": "Publication/mention",
+        "OtherRelease": "Other announcement",
         "Venue": "Venue"
       },
       "performing_arts_type": {
