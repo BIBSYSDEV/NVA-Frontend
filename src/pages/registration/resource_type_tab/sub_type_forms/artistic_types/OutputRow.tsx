@@ -13,6 +13,8 @@ import {
   MentionInPublication,
   ArtisticOutputItem,
   Venue,
+  CinematicRelease,
+  OtherRelease,
 } from '../../../../../types/publication_types/artisticRegistration.types';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import { CompetitionModal } from './architecture/CompetitionModal';
@@ -22,6 +24,8 @@ import { AwardModal } from './architecture/AwardModal';
 import { ExhibitionModal } from './architecture/ExhibitionModal';
 import { getArtisticOutputName } from '../../../../../utils/registration-helpers';
 import { BroadcastModal } from './moving_picture/BroadcastModal';
+import { CinematicReleaseModal } from './moving_picture/CinematicReleaseModal';
+import { OtherReleaseModal } from './moving_picture/OtherReleaseModal';
 
 interface OutputRowProps {
   item: ArtisticOutputItem;
@@ -49,18 +53,23 @@ export const OutputRow = ({
   const title = getArtisticOutputName(item);
   let removeItemTitle = '';
   let removeItemDescription = '';
-  if (
-    item.type === 'Competition' ||
-    item.type === 'MentionInPublication' ||
-    item.type === 'Award' ||
-    item.type === 'Exhibition' ||
-    item.type === 'Broadcast'
-  ) {
-    removeItemTitle = t('resource_type.artistic.remove_announcement');
-    removeItemDescription = t('resource_type.artistic.remove_announcement_description', { name: title });
-  } else if (item.type === 'Venue' || item.type === 'PerformingArtsVenue') {
-    removeItemTitle = t('resource_type.artistic.remove_venue_title');
-    removeItemDescription = t('resource_type.artistic.remove_venue_text', { name: title });
+
+  switch (item.type) {
+    case 'Competition':
+    case 'MentionInPublication':
+    case 'Award':
+    case 'Exhibition':
+    case 'Broadcast':
+    case 'CinematicRelease':
+    case 'OtherRelease':
+      removeItemTitle = t('resource_type.artistic.remove_announcement');
+      removeItemDescription = t('resource_type.artistic.remove_announcement_description', { name: title });
+      break;
+    case 'Venue':
+    case 'PerformingArtsVenue':
+      removeItemTitle = t('resource_type.artistic.remove_venue_title');
+      removeItemDescription = t('resource_type.artistic.remove_venue_text', { name: title });
+      break;
   }
 
   return (
@@ -102,54 +111,63 @@ export const OutputRow = ({
           {t('common:remove')}
         </Button>
       </TableCell>
-      {item.type === 'Broadcast' && (
+      {item.type === 'Broadcast' ? (
         <BroadcastModal
           broadcast={item as Broadcast}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}
         />
-      )}
-      {item.type === 'Competition' && (
+      ) : item.type === 'Competition' ? (
         <CompetitionModal
           competition={item as Competition}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}
         />
-      )}
-      {(item.type === 'Venue' || item.type === 'PerformingArtsVenue') && (
+      ) : item.type === 'Venue' || item.type === 'PerformingArtsVenue' ? (
         <VenueModal
           venue={item as Venue}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}
         />
-      )}
-      {item.type === 'MentionInPublication' && (
+      ) : item.type === 'MentionInPublication' ? (
         <PublicationMentionModal
           mentionInPublication={item as MentionInPublication}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}
         />
-      )}
-      {item.type === 'Award' && (
+      ) : item.type === 'Award' ? (
         <AwardModal
           award={item as Award}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}
         />
-      )}
-      {item.type === 'Exhibition' && (
+      ) : item.type === 'Exhibition' ? (
         <ExhibitionModal
           exhibition={item as Exhibition}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}
         />
-      )}
+      ) : item.type === 'CinematicRelease' ? (
+        <CinematicReleaseModal
+          cinematicRelease={item as CinematicRelease}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      ) : item.type === 'OtherRelease' ? (
+        <OtherReleaseModal
+          otherRelease={item as OtherRelease}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      ) : null}
       <ConfirmDialog
         open={openRemoveItem}
         title={removeItemTitle}

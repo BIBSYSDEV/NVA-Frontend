@@ -175,9 +175,11 @@
     "artistic": {
       "add_award": "Legg til pris/utmerkelse",
       "add_broadcast": "Legg til TV/web/streaming",
+      "add_cinematic_release": "Legg til festival/kino",
       "add_competition": "Legg til konkurranse",
       "add_exhibition": "Legg til utstilling",
       "add_exhibition_place": "Legg til visningssted",
+      "add_other_release": "Legg til annen offentliggjøring",
       "add_publication_mention": "Legg til publisering/omtale",
       "announcements": "Offentliggjøringer",
       "architecture_type": {
@@ -210,9 +212,11 @@
       },
       "edit_award": "Endre pris/utmerkelse",
       "edit_broadcast": "Endre TV/web/streaming",
+      "edit_cinematic_release": "Endre festival/kino",
       "edit_competition": "Endre konkurranse",
       "edit_exhibition": "Endre utstilling",
       "edit_exhibition_place": "Endre visningsted",
+      "edit_other_release": "Endre annen offentliggjøring",
       "edit_publication_mention": "Endre publisering/omtale",
       "exhibition_place": "Visningssted",
       "exhibition_places": "Visningssteder",
@@ -228,12 +232,16 @@
         "Other": "Annet"
       },
       "name_or_title": "Navn/tittel",
+      "other_announcement_organizer": "Utgiver/arrangør eller lignende",
+      "other_release_description": "Type formidlingsform",
       "output_type": {
         "Award": "Pris/utmerkelse",
         "Broadcast": "TV/web/streaming",
+        "CinematicRelease": "Festival/kino",
         "Competition": "Konkurranse",
         "Exhibition": "Utstilling",
         "MentionInPublication": "Publisering/omtale",
+        "OtherRelease": "Annen offentliggjøring",
         "Venue": "Visningssted"
       },
       "performing_arts_type": {
@@ -241,6 +249,7 @@
         "Broadcast": "TV/film/radio",
         "Other": "Annet"
       },
+      "premiere_date": "Premiæredato",
       "remove_announcement": "Fjern offentliggjøring",
       "remove_announcement_description": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over offentliggjøringer?",
       "remove_venue_title": "Fjern visningssted?",
