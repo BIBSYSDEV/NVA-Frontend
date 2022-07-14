@@ -2,13 +2,14 @@ import { LanguageString } from './common.types';
 
 // For available roles, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/Role.java
 export enum ContributorRole {
+  AcademicCoordinator = 'AcademicCoordinator',
   Actor = 'Actor',
   Architect = 'Architect',
   ArchitecturalPlanner = 'ArchitecturalPlanner',
   ArtisticDirector = 'ArtisticDirector',
   Choreographer = 'Choreographer',
   Consultant = 'Consultant',
-  ContactPerson = 'ContactPerson', // TODO: not needed?
+  ContactPerson = 'ContactPerson',
   CostumeDesigner = 'CostumeDesigner',
   Creator = 'Creator',
   CuratorOrganizer = 'CuratorOrganizer',
@@ -19,6 +20,8 @@ export enum ContributorRole {
   Dramaturge = 'Dramaturge',
   Editor = 'Editor',
   InteriorArchitect = 'InteriorArchitect',
+  InterviewSubject = 'InterviewSubject',
+  Journalist = 'Journalist',
   LandscapeArchitect = 'LandscapeArchitect',
   Librettist = 'Librettist',
   LightDesigner = 'LightDesigner',
@@ -26,9 +29,11 @@ export enum ContributorRole {
   Photographer = 'Photographer',
   ProductionDesigner = 'ProductionDesigner',
   Producer = 'Producer',
-  RelatedPerson = 'RelatedPerson', // TODO: not needed?
-  Researcher = 'Researcher', // TODO: not needed?
-  RightsHolder = 'RightsHolder', // TODO: not needed?
+  ProgrammeLeader = 'ProgrammeLeader',
+  ProgrammeParticipant = 'ProgrammeParticipant',
+  RelatedPerson = 'RelatedPerson',
+  Researcher = 'Researcher',
+  RightsHolder = 'RightsHolder',
   Scenographer = 'Scenographer',
   Screenwriter = 'Screenwriter',
   SoundDesigner = 'SoundDesigner',

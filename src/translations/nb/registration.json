@@ -29,6 +29,7 @@
     "other_registrations_other": "+ {{count}} andre registreringer",
     "type": "Bidragstype",
     "types": {
+      "AcademicCoordinator": "Faglig ansvarlig",
       "Actor": "Skuespiller",
       "Architect": "Arkitekt",
       "ArchitecturalPlanner": "Planlegger",
@@ -46,6 +47,8 @@
       "Dramaturge": "Dramaturg",
       "Editor": "Redaktør",
       "InteriorArchitect": "Interiørarkitekt",
+      "InterviewSubject": "Intervjuobjekt",
+      "Journalist": "Journalist",
       "LandscapeArchitect": "Landskapsarkitekt",
       "Librettist": "Liberettist",
       "LightDesigner": "Lysdesigner",
@@ -53,6 +56,8 @@
       "Photographer": "Fotograf",
       "ProductionDesigner": "Produksjonsdesigner",
       "Producer": "Produsent",
+      "ProgrammeLeader": "Programleder",
+      "ProgrammeParticipant": "Programdeltager",
       "RelatedPerson": "Relatert person",
       "Researcher": "Forsker",
       "RightsHolder": "Rettighetsholder",
@@ -292,8 +297,12 @@
     "level": "Nivå i Norsk publiseringsindikator",
     "media_contribution": {
       "channel": "Formidlingskanal",
-      "containerName": "Navn på serie, program, etc.",
-      "containerSubname": "Navn på hefte, episode, etc.",
+      "format": "Format",
+      "format_types": {
+        "Sound": "Lyd",
+        "Text": "Tekst",
+        "Video": "Video"
+      },
       "medium": "Medium",
       "medium_types": {
         "Internet": "Internett",
@@ -302,12 +311,8 @@
         "Radio": "Radio",
         "TV": "TV"
       },
-      "format": "Format",
-      "format_types": {
-        "Sound": "Lyd",
-        "Text": "Tekst",
-        "Video": "Video"
-      }
+      "name_of_issue_episode": "Navn på hefte, episode, etc. (hvis relevant)",
+      "name_of_series_program": "Navn på serie, program, etc. (hvis relevant)"
     },
     "more_info_about_work": "Mer informasjon om verket",
     "number_of_pages": "Totalt antall sider",

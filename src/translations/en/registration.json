@@ -29,6 +29,7 @@
     "other_registrations_other": "+ {{count}} other registrations",
     "type": "Contributor type",
     "types": {
+      "AcademicCoordinator": "Academic coordinator",
       "Actor": "Actor",
       "Architect": "Architect",
       "ArchitecturalPlanner": "Planner",
@@ -46,6 +47,8 @@
       "Dramaturge": "Dramaturge",
       "Editor": "Editor",
       "InteriorArchitect": "Interior architect",
+      "InterviewSubject": "Interview subject",
+      "Journalist": "Journalist",
       "LandscapeArchitect": "Landscape architect",
       "Librettist": "Librettist",
       "LightDesigner": "Light designer",
@@ -53,6 +56,8 @@
       "Photographer": "Photographer",
       "ProductionDesigner": "Production designer",
       "Producer": "Producer",
+      "ProgrammeLeader": "Programme leader",
+      "ProgrammeParticipant": "Programme participant",
       "RelatedPerson": "Related person",
       "Researcher": "Researcher",
       "RightsHolder": "Rights holder",
@@ -292,8 +297,12 @@
     "level": "Level in Norwegian publication indicator",
     "media_contribution": {
       "channel": "Channel",
-      "containerName": "Name of series, program, etc.",
-      "containerSubname": "Name of issue, episode, etc.",
+      "format": "Format",
+      "format_types": {
+        "Sound": "Sound",
+        "Text": "Text",
+        "Video": "Video"
+      },
       "medium": "Medium",
       "medium_types": {
         "Internet": "Internet",
@@ -302,12 +311,8 @@
         "Radio": "Radio",
         "TV": "TV"
       },
-      "format": "Format",
-      "format_types": {
-        "Sound": "Sound",
-        "Text": "Text",
-        "Video": "Video"
-      }
+      "name_of_issue_episode": "Name of issue, episode, etc. (if relevant)",
+      "name_of_series_program": "Name of series, program, etc. (if relevant)"
     },
     "more_info_about_work": "More information about work",
     "number_of_pages": "Total number of pages",

@@ -286,9 +286,11 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
               type: true,
               format: true,
               medium: true,
-              channel: true,
-              containerName: true,
-              containerSubname: true,
+              disseminationChannel: true,
+              partOf: {
+                series: true,
+                seriesPart: true,
+              },
             },
             publicationInstance: {
               type: true,

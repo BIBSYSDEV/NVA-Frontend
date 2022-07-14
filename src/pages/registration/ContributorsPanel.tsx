@@ -10,7 +10,7 @@ import {
   ReportType,
 } from '../../types/publicationFieldNames';
 import { EntityDescription, Registration } from '../../types/registration.types';
-import { isDegree } from '../../utils/registration-helpers';
+import { isDegree, isMediaContribution } from '../../utils/registration-helpers';
 import { Contributors } from './contributors_tab/Contributors';
 
 export const ContributorsPanel = () => {
@@ -58,6 +58,19 @@ export const ContributorsPanel = () => {
                 contributorRoles={selectableContributorRoles.filter((role) => role !== ContributorRole.Supervisor)}
               />
             </>
+          ) : isMediaContribution(publicationInstanceType) ? (
+            <Contributors
+              push={push}
+              replace={replace}
+              contributorRoles={[
+                ContributorRole.AcademicCoordinator,
+                ContributorRole.InterviewSubject,
+                ContributorRole.Journalist,
+                ContributorRole.ProgrammeLeader,
+                ContributorRole.ProgrammeParticipant,
+              ]}
+              primaryColorAddButton
+            />
           ) : publicationInstanceType === JournalType.Issue ||
             publicationInstanceType === BookType.Anthology ||
             publicationInstanceType === ReportType.BookOfAbstracts ? (
