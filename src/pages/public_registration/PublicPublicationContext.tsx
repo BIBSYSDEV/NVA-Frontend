@@ -369,7 +369,12 @@ interface PublicMediaContributionProps {
 
 export const PublicPublicationContextMediaContribution = ({ publicationContext }: PublicMediaContributionProps) => {
   const { t } = useTranslation('registration');
-  const { medium, format, channel, containerName, containerSubname } = publicationContext;
+  const {
+    medium,
+    format,
+    disseminationChannel,
+    partOf: { series, seriesPart },
+  } = publicationContext;
 
   return (
     <>
@@ -383,19 +388,19 @@ export const PublicPublicationContextMediaContribution = ({ publicationContext }
           {t('resource_type.media_contribution.format')}: {t(`resource_type.media_contribution.format_types.${format}`)}
         </Typography>
       )}
-      {channel && (
+      {disseminationChannel && (
         <Typography>
-          {t('resource_type.media_contribution.channel')}: {channel}
+          {t('resource_type.media_contribution.channel')}: {disseminationChannel}
         </Typography>
       )}
-      {containerName && (
+      {series && (
         <Typography>
-          {t('resource_type.media_contribution.containerName')}: {containerName}
+          {t('resource_type.media_contribution.containerName')}: {series}
         </Typography>
       )}
-      {containerSubname && (
+      {seriesPart && (
         <Typography>
-          {t('resource_type.media_contribution.containerSubname')}: {containerSubname}
+          {t('resource_type.media_contribution.containerSubname')}: {seriesPart}
         </Typography>
       )}
     </>
