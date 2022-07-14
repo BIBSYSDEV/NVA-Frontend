@@ -24,12 +24,15 @@ import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 import { getArtisticOutputName, getPeriodString } from '../../utils/registration-helpers';
 import {
-  ArchitectureOutput,
   Award,
+  Broadcast,
   Competition,
   Exhibition,
   MentionInPublication,
+  ArtisticOutputItem,
   Venue,
+  CinematicRelease,
+  OtherRelease,
 } from '../../types/publication_types/artisticRegistration.types';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
@@ -213,7 +216,7 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
 };
 
 interface PublicArtisticOutputProps {
-  outputs: (Venue | ArchitectureOutput)[];
+  outputs: ArtisticOutputItem[];
   heading: string;
   showType?: boolean;
 }
@@ -228,7 +231,7 @@ export const PublicArtisticOutput = ({ outputs, heading, showType = false }: Pub
 );
 
 interface PublicOutputRowProps {
-  output: ArchitectureOutput | Venue;
+  output: ArtisticOutputItem;
   heading: string;
   showType: boolean;
 }
@@ -253,13 +256,23 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
       <Dialog open={openModal} onClose={toggleModal} fullWidth>
         <DialogTitle>{heading}</DialogTitle>
         <ErrorBoundary>
-          {output.type === 'Venue' && <PublicVenueDialogContent venue={output as Venue} />}
-          {output.type === 'Competition' && <PublicCompetitionDialogContent competition={output as Competition} />}
-          {output.type === 'Award' && <PublicAwardDialogContent award={output as Award} />}
-          {output.type === 'MentionInPublication' && (
+          {output.type === 'Venue' || output.type === 'PerformingArtsVenue' ? (
+            <PublicVenueDialogContent venue={output as Venue} />
+          ) : output.type === 'Competition' ? (
+            <PublicCompetitionDialogContent competition={output as Competition} />
+          ) : output.type === 'Award' ? (
+            <PublicAwardDialogContent award={output as Award} />
+          ) : output.type === 'MentionInPublication' ? (
             <PublicMentionDialogContent mention={output as MentionInPublication} />
-          )}
-          {output.type === 'Exhibition' && <PublicExhibitionDialogContent exhibition={output as Exhibition} />}
+          ) : output.type === 'Exhibition' ? (
+            <PublicExhibitionDialogContent exhibition={output as Exhibition} />
+          ) : output.type === 'Broadcast' ? (
+            <PublicBroadcastDialogContent broadcast={output as Broadcast} />
+          ) : output.type === 'CinematicRelease' ? (
+            <PublicCinematicReleaseDialogContent cinematicRelease={output as CinematicRelease} />
+          ) : output.type === 'OtherRelease' ? (
+            <PublicOtherReleaseDialogContent otherRelease={output as OtherRelease} />
+          ) : null}
         </ErrorBoundary>
 
         <DialogActions>
@@ -279,7 +292,7 @@ const PublicVenueDialogContent = ({ venue }: { venue: Venue }) => {
       <Typography variant="overline">{t('place')}</Typography>
       <Typography paragraph>{venue.place?.label ?? ''}</Typography>
       <Typography variant="overline">{t('date')}</Typography>
-      <Typography>{getPeriodString(venue.time)}</Typography>
+      <Typography>{getPeriodString(venue.date)}</Typography>
     </DialogContent>
   );
 };
@@ -348,13 +361,68 @@ const PublicExhibitionDialogContent = ({ exhibition }: { exhibition: Exhibition 
   );
 };
 
+const PublicBroadcastDialogContent = ({ broadcast }: { broadcast: Broadcast }) => {
+  const { t } = useTranslation('common');
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('common:type')}</Typography>
+      <Typography paragraph>{t(`registration:resource_type.artistic.output_type.${broadcast.type}`)}</Typography>
+      <Typography variant="overline">{t('publisher')}</Typography>
+      <Typography paragraph>{broadcast.publisher.name}</Typography>
+      <Typography variant="overline">{t('date')}</Typography>
+      <Typography>{new Date(broadcast.date.value).toLocaleDateString()}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicCinematicReleaseDialogContent = ({ cinematicRelease }: { cinematicRelease: CinematicRelease }) => {
+  const { t } = useTranslation('registration');
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('common:type')}</Typography>
+      <Typography paragraph>{t(`resource_type.artistic.output_type.${cinematicRelease.type}`)}</Typography>
+      <Typography variant="overline">{t('common:place')}</Typography>
+      <Typography paragraph>{cinematicRelease.place.label}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.premiere_date')}</Typography>
+      <Typography>{new Date(cinematicRelease.date.value).toLocaleDateString()}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicOtherReleaseDialogContent = ({ otherRelease }: { otherRelease: OtherRelease }) => {
+  const { t } = useTranslation('registration');
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('resource_type.artistic.other_release_description')}</Typography>
+      <Typography paragraph>
+        {t(`resource_type.artistic.output_type.${otherRelease.type}`)}: {otherRelease.description}
+      </Typography>
+      <Typography variant="overline">{t('common:place')}</Typography>
+      <Typography paragraph>{otherRelease.place.label}</Typography>
+      {otherRelease.publisher.name && (
+        <>
+          <Typography variant="overline">{t('resource_type.artistic.other_announcement_organizer')}</Typography>
+          <Typography paragraph>{otherRelease.publisher.name}</Typography>
+        </>
+      )}
+      <Typography variant="overline">{t('resource_type.artistic.premiere_date')}</Typography>
+      <Typography>{new Date(otherRelease.date.value).toLocaleDateString()}</Typography>
+    </DialogContent>
+  );
+};
+
 interface PublicMediaContributionProps {
   publicationContext: MediaContributionPublicationContext;
 }
 
 export const PublicPublicationContextMediaContribution = ({ publicationContext }: PublicMediaContributionProps) => {
   const { t } = useTranslation('registration');
-  const { medium, format, channel, containerName, containerSubname } = publicationContext;
+  const {
+    medium,
+    format,
+    disseminationChannel,
+    partOf: { series, seriesPart },
+  } = publicationContext;
 
   return (
     <>
@@ -368,19 +436,19 @@ export const PublicPublicationContextMediaContribution = ({ publicationContext }
           {t('resource_type.media_contribution.format')}: {t(`resource_type.media_contribution.format_types.${format}`)}
         </Typography>
       )}
-      {channel && (
+      {disseminationChannel && (
         <Typography>
-          {t('resource_type.media_contribution.channel')}: {channel}
+          {t('resource_type.media_contribution.channel')}: {disseminationChannel}
         </Typography>
       )}
-      {containerName && (
+      {series && (
         <Typography>
-          {t('resource_type.media_contribution.containerName')}: {containerName}
+          {t('resource_type.media_contribution.containerName')}: {series}
         </Typography>
       )}
-      {containerSubname && (
+      {seriesPart && (
         <Typography>
-          {t('resource_type.media_contribution.containerSubname')}: {containerSubname}
+          {t('resource_type.media_contribution.containerSubname')}: {seriesPart}
         </Typography>
       )}
     </>

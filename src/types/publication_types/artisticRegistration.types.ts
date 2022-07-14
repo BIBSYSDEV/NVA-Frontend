@@ -6,50 +6,80 @@ export interface ArtisticRegistration extends BaseRegistration {
   entityDescription: ArtisticEntityDescription;
 }
 
-export interface Venue {
-  type: 'Venue';
-  place: Place | null;
-  time: Period | null;
+interface ArtisticOutputBase {
+  sequence?: number;
 }
 
-export interface Competition {
+export interface Venue extends ArtisticOutputBase {
+  type: 'Venue' | 'PerformingArtsVenue';
+  place: Place | null;
+  date: Period | null;
+}
+
+export interface Competition extends ArtisticOutputBase {
   type: 'Competition';
   name: string;
   description: string;
   date: Instant;
-  sequence: number;
 }
 
-export interface MentionInPublication {
+export interface MentionInPublication extends ArtisticOutputBase {
   type: 'MentionInPublication';
   title: string;
   issue: string;
   date: Instant;
   otherInformation: string;
-  sequence: number;
 }
 
-export interface Award {
+export interface Award extends ArtisticOutputBase {
   type: 'Award';
   name: string;
   organizer: string;
   date: Instant;
   otherInformation: string;
   ranking: number;
-  sequence: number;
 }
 
-export interface Exhibition {
+export interface Exhibition extends ArtisticOutputBase {
   type: 'Exhibition';
   name: string;
   organizer: string;
   place: Place | null;
   date: Period | null;
   otherInformation: string;
-  sequence: number;
 }
 
+export interface Broadcast extends ArtisticOutputBase {
+  type: 'Broadcast';
+  publisher: {
+    type: 'UnconfirmedPublisher';
+    name: string;
+  };
+  date: Instant;
+}
+
+export interface CinematicRelease extends ArtisticOutputBase {
+  type: 'CinematicRelease';
+  place: Place;
+  date: Instant;
+}
+
+export interface OtherRelease extends ArtisticOutputBase {
+  type: 'OtherRelease';
+  description: string;
+  place: Place;
+  publisher: {
+    type: 'UnconfirmedPublisher';
+    name: string;
+  };
+  date: Instant;
+}
+
+export type FilmOutput = Broadcast | CinematicRelease | OtherRelease;
+
 export type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
+
+export type ArtisticOutputItem = Venue | ArchitectureOutput | FilmOutput;
 
 export interface ArtisticPublicationInstance {
   type: ArtisticType | '';
@@ -57,6 +87,7 @@ export interface ArtisticPublicationInstance {
   description: string;
   venues?: Venue[];
   architectureOutput?: ArchitectureOutput[];
+  outputs?: Venue[] | FilmOutput[];
 }
 
 export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {
@@ -80,7 +111,7 @@ export interface ArtisticEntityDescription extends BaseEntityDescription {
 }
 
 interface ArtisticSubtype {
-  type: DesignType | ArchitectureType | '';
+  type: DesignType | ArchitectureType | PerformingArtType | MovingPictureType | '';
   description?: string;
 }
 
@@ -103,5 +134,20 @@ export enum ArchitectureType {
   PlanningProposal = 'PlanningProposal',
   LandscapeArchitecture = 'LandscapeArchitecture',
   Interior = 'Interior',
+  Other = 'Other',
+}
+
+export enum PerformingArtType {
+  TheatricalProduction = 'TheatricalProduction',
+  Broadcast = 'Broadcast',
+  Other = 'Other',
+}
+
+export enum MovingPictureType {
+  LongFilm = 'Film',
+  ShortFilm = 'ShortFilm',
+  Seruial = 'SerialFilmProduction',
+  InteractiveFilm = 'InteractiveFilm',
+  AugmentedVirtualRealityFilm = 'AugmentedVirtualRealityFilm',
   Other = 'Other',
 }

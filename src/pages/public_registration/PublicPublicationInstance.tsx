@@ -81,7 +81,7 @@ export const PublicPublicationInstanceChapter = ({
   const { pages } = publicationInstance;
   const pagesInterval = getPageInterval(pages);
 
-  return <>{pagesInterval && <Typography>{pagesInterval}</Typography>}</>;
+  return pagesInterval ? <Typography>{pagesInterval}</Typography> : null;
 };
 
 export const PublicPublicationInstanceArtistic = ({
@@ -90,13 +90,17 @@ export const PublicPublicationInstanceArtistic = ({
   publicationInstance: ArtisticPublicationInstance;
 }) => {
   const { t } = useTranslation('registration');
-  const { subtype, description } = publicationInstance;
+  const { type, subtype, description } = publicationInstance;
 
   const i18nTypeBase =
-    publicationInstance.type === ArtisticType.ArtisticDesign
-      ? 'resource_type.design_type.'
-      : publicationInstance.type === ArtisticType.ArtisticArchitecture
-      ? 'resource_type.architecture_type.'
+    type === ArtisticType.ArtisticDesign
+      ? 'resource_type.artistic.design_type.'
+      : type === ArtisticType.ArtisticArchitecture
+      ? 'resource_type.artistic.architecture_type.'
+      : type === ArtisticType.PerformingArts
+      ? 'resource_type.artistic.performing_arts_type.'
+      : type === ArtisticType.MovingPicture
+      ? 'resource_type.artistic.moving_picture_type.'
       : '';
 
   const typeString = subtype?.type
@@ -129,6 +133,7 @@ const PublicTotalPagesContent = ({ pages }: { pages: PagesMonograph | null }) =>
 
 export const PublicIsbnContent = ({ isbnList }: { isbnList?: string[] }) => {
   const { t } = useTranslation('registration');
+
   return isbnList && isbnList.length > 0 ? (
     <Typography>
       {t('resource_type.isbn')}:{' '}

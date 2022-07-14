@@ -1,36 +1,38 @@
 import {
-  TextField,
-  MenuItem,
-  Typography,
+  Box,
   Button,
+  FormHelperText,
+  MenuItem,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  FormHelperText,
-  Box,
+  TextField,
+  Typography,
 } from '@mui/material';
-import { Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Field, FieldProps, ErrorMessage, useFormikContext, FieldArray, FieldArrayRenderProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
-import { ArtisticRegistration, DesignType } from '../../../../../../types/publication_types/artisticRegistration.types';
+import {
+  ArtisticRegistration,
+  PerformingArtType,
+} from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { VenueModal } from './VenueModal';
+import { VenueModal } from '../design/VenueModal';
 import { OutputRow } from '../OutputRow';
 
-const designTypes = Object.values(DesignType);
+const performingArtTypes = Object.values(PerformingArtType);
 
-export const ArtisticDesignForm = () => {
+export const ArtisticPerformingArtsForm = () => {
   const { t } = useTranslation('registration');
-  const { values, errors, touched } = useFormikContext<ArtisticRegistration>();
+  const { values, touched, errors } = useFormikContext<ArtisticRegistration>();
+  const outputs = values.entityDescription.reference.publicationInstance.outputs ?? [];
+
   const [openNewVenueModal, setOpenNewVenueModal] = useState(false);
-  const { publicationInstance } = values.entityDescription.reference;
-  const { subtype } = publicationInstance;
-  const venues = publicationInstance.venues ?? [];
 
   return (
     <>
@@ -44,14 +46,13 @@ export const ArtisticDesignForm = () => {
               variant="filled"
               fullWidth
               {...field}
-              value={field.value ?? ''}
               label={t('resource_type.type_work')}
               required
               error={!!error && touched}
               helperText={<ErrorMessage name={field.name} />}>
-              {designTypes.map((designType) => (
-                <MenuItem value={designType} key={designType}>
-                  {t(`resource_type.artistic.design_type.${designType}`)}
+              {performingArtTypes.map((performingArtType) => (
+                <MenuItem value={performingArtType} key={performingArtType}>
+                  {t(`resource_type.artistic.performing_arts_type.${performingArtType}`)}
                 </MenuItem>
               ))}
             </TextField>
@@ -59,7 +60,7 @@ export const ArtisticDesignForm = () => {
         )}
       </Field>
 
-      {subtype?.type === DesignType.Other && (
+      {values.entityDescription.reference.publicationInstance.subtype?.type === PerformingArtType.Other && (
         <Field name={ResourceFieldNames.PublicationInstanceSubtypeDescription}>
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <TextField
@@ -77,7 +78,6 @@ export const ArtisticDesignForm = () => {
           )}
         </Field>
       )}
-
       <Field name={ResourceFieldNames.PublicationInstanceDescription}>
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <TextField
@@ -98,10 +98,10 @@ export const ArtisticDesignForm = () => {
         <Typography variant="h3" component="h2" gutterBottom>
           {t('resource_type.artistic.exhibition_places')}
         </Typography>
-        <FieldArray name={ResourceFieldNames.Venues}>
+        <FieldArray name={ResourceFieldNames.PublicationInstanceOutputs}>
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
-              {venues.length > 0 && (
+              {outputs.length > 0 && (
                 <Table>
                   <TableHead>
                     <TableRow>
@@ -111,7 +111,7 @@ export const ArtisticDesignForm = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {venues.map((venue, index) => (
+                    {outputs.map((venue, index) => (
                       <OutputRow
                         key={index}
                         item={venue}
@@ -119,14 +119,14 @@ export const ArtisticDesignForm = () => {
                         removeItem={() => remove(index)}
                         moveItem={(newIndex) => move(index, newIndex)}
                         index={index}
-                        maxIndex={venues.length - 1}
+                        maxIndex={outputs.length - 1}
                       />
                     ))}
                   </TableBody>
                 </Table>
               )}
-              {!!touched.entityDescription?.reference?.publicationInstance?.venues &&
-                typeof errors.entityDescription?.reference?.publicationInstance?.venues === 'string' && (
+              {!!touched.entityDescription?.reference?.publicationInstance?.outputs &&
+                typeof errors.entityDescription?.reference?.publicationInstance?.outputs === 'string' && (
                   <Box mt="1rem">
                     <FormHelperText error>
                       <ErrorMessage name={name} />
@@ -143,7 +143,7 @@ export const ArtisticDesignForm = () => {
                 {t('resource_type.artistic.add_exhibition_place')}
               </Button>
               <VenueModal
-                onSubmit={(newVenue) => push(newVenue)}
+                onSubmit={(newVenue) => push({ ...newVenue, type: 'PerformingArtsVenue' })}
                 open={openNewVenueModal}
                 closeModal={() => setOpenNewVenueModal(false)}
               />

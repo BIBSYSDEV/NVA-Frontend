@@ -18,7 +18,7 @@ interface VenueModalProps {
 const emptyVenue: Venue = {
   type: 'Venue',
   place: { type: 'UnconfirmedPlace', label: '', country: '' },
-  time: { type: 'Period', from: '', to: '' },
+  date: { type: 'Period', from: '', to: '' },
 };
 
 const validationSchema = Yup.object().shape({
@@ -31,7 +31,7 @@ const validationSchema = Yup.object().shape({
         })
       ),
   }),
-  time: periodField,
+  date: periodField,
 });
 
 export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProps) => {
@@ -66,7 +66,7 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
               )}
             </Field>
             <Box sx={{ display: 'flex', gap: '3rem', mt: '1rem' }}>
-              <PeriodFields fromFieldName="time.from" toFieldName="time.to" />
+              <PeriodFields fromFieldName="date.from" toFieldName="date.to" />
             </Box>
           </DialogContent>
           <DialogActions>
@@ -77,7 +77,7 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
               data-testid={dataTestId.registrationWizard.resourceType.saveVenueButton}
               variant="contained"
               type="submit">
-              {venue ? t('common:save') : t('common:add')}
+              {venue ? t('common:update') : t('common:add')}
             </Button>
           </DialogActions>
         </Form>

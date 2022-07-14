@@ -10,7 +10,7 @@ import {
   ReportType,
 } from '../../types/publicationFieldNames';
 import { EntityDescription, Registration } from '../../types/registration.types';
-import { isDegree } from '../../utils/registration-helpers';
+import { isDegree, isMediaContribution } from '../../utils/registration-helpers';
 import { Contributors } from './contributors_tab/Contributors';
 
 export const ContributorsPanel = () => {
@@ -58,6 +58,19 @@ export const ContributorsPanel = () => {
                 contributorRoles={selectableContributorRoles.filter((role) => role !== ContributorRole.Supervisor)}
               />
             </>
+          ) : isMediaContribution(publicationInstanceType) ? (
+            <Contributors
+              push={push}
+              replace={replace}
+              contributorRoles={[
+                ContributorRole.AcademicCoordinator,
+                ContributorRole.InterviewSubject,
+                ContributorRole.Journalist,
+                ContributorRole.ProgrammeLeader,
+                ContributorRole.ProgrammeParticipant,
+              ]}
+              primaryColorAddButton
+            />
           ) : publicationInstanceType === JournalType.Issue ||
             publicationInstanceType === BookType.Anthology ||
             publicationInstanceType === ReportType.BookOfAbstracts ? (
@@ -89,6 +102,44 @@ export const ContributorsPanel = () => {
                 ContributorRole.Designer,
                 ContributorRole.CuratorOrganizer,
                 ContributorRole.Consultant,
+                ContributorRole.Other,
+              ]}
+            />
+          ) : publicationInstanceType === ArtisticType.PerformingArts ? (
+            <Contributors
+              push={push}
+              replace={replace}
+              primaryColorAddButton
+              contributorRoles={[
+                ContributorRole.Dancer,
+                ContributorRole.Actor,
+                ContributorRole.Choreographer,
+                ContributorRole.Director,
+                ContributorRole.Scenographer,
+                ContributorRole.CostumeDesigner,
+                ContributorRole.Producer,
+                ContributorRole.ArtisticDirector,
+                ContributorRole.Dramatist,
+                ContributorRole.Librettist,
+                ContributorRole.Dramaturge,
+                ContributorRole.SoundDesigner,
+                ContributorRole.LightDesigner,
+                ContributorRole.Other,
+              ]}
+            />
+          ) : publicationInstanceType === ArtisticType.MovingPicture ? (
+            <Contributors
+              push={push}
+              replace={replace}
+              primaryColorAddButton
+              contributorRoles={[
+                ContributorRole.Director,
+                ContributorRole.Photographer,
+                ContributorRole.ProductionDesigner,
+                ContributorRole.Screenwriter,
+                ContributorRole.SoundDesigner,
+                ContributorRole.VfxSupervisor,
+                ContributorRole.VideoEditor,
                 ContributorRole.Other,
               ]}
             />

@@ -20,6 +20,7 @@ import { ResourceFieldNames } from '../../../../../../types/publicationFieldName
 import {
   ArtisticRegistration,
   ArchitectureType,
+  ArchitectureOutput,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { CompetitionModal } from './CompetitionModal';
@@ -38,7 +39,7 @@ export const ArtisticArchitectureForm = () => {
   const [openModal, setOpenModal] = useState<ArtisticArchitectureModalType>('');
 
   const { publicationInstance } = values.entityDescription.reference;
-  const architectureOutput = publicationInstance.architectureOutput ?? [];
+  const architectureOutput = (publicationInstance.architectureOutput ?? []) as ArchitectureOutput[];
 
   return (
     <>
@@ -57,9 +58,9 @@ export const ArtisticArchitectureForm = () => {
               required
               error={!!error && touched}
               helperText={<ErrorMessage name={field.name} />}>
-              {architectureTypes.map((designType) => (
-                <MenuItem value={designType} key={designType}>
-                  {t(`resource_type.architecture_type.${designType}`)}
+              {architectureTypes.map((architectureType) => (
+                <MenuItem value={architectureType} key={architectureType}>
+                  {t(`resource_type.artistic.architecture_type.${architectureType}`)}
                 </MenuItem>
               ))}
             </TextField>
@@ -104,7 +105,7 @@ export const ArtisticArchitectureForm = () => {
 
       <div>
         <Typography variant="h3" component="h2" gutterBottom>
-          {t('resource_type.artistic.architecture_publications')}
+          {t('resource_type.artistic.announcements')}
         </Typography>
         <FieldArray name={ResourceFieldNames.ArchitectureOutput}>
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (

@@ -35,19 +35,22 @@ export const emptyMediaContributionPublicationContext: MediaContributionPublicat
   type: PublicationType.MediaContribution,
   format: '',
   medium: '',
-  channel: '',
-  containerName: '',
-  containerSubname: '',
+  disseminationChannel: '',
+  partOf: {
+    series: '',
+    seriesPart: '',
+  },
 };
 
 export interface MediaContributionPublicationContext {
   type: PublicationType | '';
   format: MediaFormat | '';
   medium: MediaMedium | '';
-  // TODO: name of fields below to be determined (NP-9289)
-  channel: string;
-  containerName: string;
-  containerSubname: string;
+  disseminationChannel: string;
+  partOf: {
+    series: string;
+    seriesPart: string;
+  };
 }
 
 interface MediaContributionReference extends BaseReference {

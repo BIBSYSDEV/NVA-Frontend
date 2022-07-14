@@ -56,6 +56,8 @@ export enum PresentationType {
 export enum ArtisticType {
   ArtisticDesign = 'ArtisticDesign',
   ArtisticArchitecture = 'Architecture',
+  PerformingArts = 'PerformingArts',
+  MovingPicture = 'MovingPicture',
 }
 
 export enum MediaType {
@@ -107,11 +109,11 @@ export enum ResourceFieldNames {
   PublicationContextId = 'entityDescription.reference.publicationContext.id',
   PublicationContextLabel = 'entityDescription.reference.publicationContext.label',
   PublicationContextLevel = 'entityDescription.reference.publicationContext.level',
-  PublicationContextMediaChannel = 'entityDescription.reference.publicationContext.channel',
-  PublicationContextMediaContainerName = 'entityDescription.reference.publicationContext.containerName',
-  PublicationContextMediaContainerSubname = 'entityDescription.reference.publicationContext.containerSubname',
+  PublicationContextMediaChannel = 'entityDescription.reference.publicationContext.disseminationChannel',
   PublicationContextMediaFormat = 'entityDescription.reference.publicationContext.format',
   PublicationContextMediaMedium = 'entityDescription.reference.publicationContext.medium',
+  PublicationContextMediaPartOfSeries = 'entityDescription.reference.publicationContext.partOf.series',
+  PublicationContextMediaPartOfSeriesPart = 'entityDescription.reference.publicationContext.partOf.seriesPart',
   PublicationContextPlaceLabel = 'entityDescription.reference.publicationContext.place.label',
   PublicationContextPlaceCountry = 'entityDescription.reference.publicationContext.place.country',
   PublicationContextPublisher = 'entityDescription.reference.publicationContext.publisher',
@@ -123,6 +125,7 @@ export enum ResourceFieldNames {
   PublicationInstanceDescription = 'entityDescription.reference.publicationInstance.description',
   PublicationInstanceSubtypeDescription = 'entityDescription.reference.publicationInstance.subtype.description',
   PublicationInstanceSubtypeType = 'entityDescription.reference.publicationInstance.subtype.type',
+  PublicationInstanceOutputs = 'entityDescription.reference.publicationInstance.outputs',
   Reference = 'entityDescription.reference',
   Series = 'entityDescription.reference.publicationContext.series',
   SeriesId = 'entityDescription.reference.publicationContext.series.id',
