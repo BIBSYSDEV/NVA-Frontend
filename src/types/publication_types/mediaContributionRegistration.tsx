@@ -1,5 +1,5 @@
 import { MediaType, PublicationType } from '../publicationFieldNames';
-import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
+import { BaseEntityDescription, BaseReference } from '../registration.types';
 
 export enum MediaFormat {
   Text = 'Text',
@@ -13,10 +13,6 @@ export enum MediaMedium {
   TV = 'TV',
   Internet = 'Internet',
   Other = 'Other',
-}
-
-export interface MediaContributionRegistration extends BaseRegistration {
-  entityDescription: MediaContributionEntityDescription;
 }
 
 interface MediaContributionPublicationInstance {
@@ -43,7 +39,7 @@ export interface MediaContributionPublicationContext {
   format: MediaFormat | '';
   medium: MediaMedium | '';
   disseminationChannel: string;
-  partOf: {
+  partOf?: {
     series: string;
     seriesPart: string;
   };

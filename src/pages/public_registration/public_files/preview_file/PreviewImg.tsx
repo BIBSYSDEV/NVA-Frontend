@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { dataTestId } from '../../../utils/dataTestIds';
+import { dataTestId } from '../../../../utils/dataTestIds';
 import { CommonPreviewProps } from './PreviewFile';
 
 interface PreviewImgProps extends CommonPreviewProps {

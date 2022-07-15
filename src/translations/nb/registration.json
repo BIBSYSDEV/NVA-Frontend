@@ -114,6 +114,7 @@
     "file_publish_date": "Publiseringsdato",
     "file_publish_date_helper_text": "Filen er låst fram til datoen",
     "files": "Filer",
+    "files_awaits_approval": "Filer (avventer godkjenning)",
     "find_journal_in_channel_register": "Finn tidsskrift i Kanalregisteret",
     "find_publisher_in_channel_register": "Finn utgiver i Kanalregisteret",
     "find_series_in_channel_register": "Finn serie i Kanalregisteret",
