@@ -65,13 +65,15 @@ const BasicDataPage = () => {
                 <PersonAddIcon />
               </LinkIconButton>
             </LinkButtonRow>,
-            <LinkButton
-              key={dataTestId.basicData.adminUsersLink}
-              data-testid={dataTestId.basicData.adminUsersLink}
-              isSelected={currentPath === UrlPathTemplate.BasicDataUsers}
-              to={UrlPathTemplate.BasicDataUsers}>
-              {t('common:users')}
-            </LinkButton>,
+            <BetaFunctionality key={dataTestId.basicData.adminUsersLink}>
+              <LinkButton
+                key={dataTestId.basicData.adminUsersLink}
+                data-testid={dataTestId.basicData.adminUsersLink}
+                isSelected={currentPath === UrlPathTemplate.BasicDataUsers}
+                to={UrlPathTemplate.BasicDataUsers}>
+                {t('common:users')}
+              </LinkButton>
+            </BetaFunctionality>,
           ]}
           <Divider orientation="horizontal" />
           {user?.isAppAdmin && [
