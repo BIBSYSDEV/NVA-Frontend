@@ -180,6 +180,7 @@
       "add_competition": "Add competititon",
       "add_exhibition": "Add exhibition",
       "add_exhibition_place": "Add exhibition place",
+      "add_music_score": "Add score/manuscript",
       "add_other_release": "Add other announcement",
       "add_publication_mention": "Add publication/mention",
       "announcements": "Announcements",
@@ -242,6 +243,7 @@
         "Competition": "Competition",
         "Exhibition": "Exhibition",
         "MentionInPublication": "Publication/mention",
+        "MusicScore": "Score/manuscript",
         "OtherRelease": "Other announcement",
         "Venue": "Venue"
       },

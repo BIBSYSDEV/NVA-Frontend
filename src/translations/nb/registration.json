@@ -180,6 +180,7 @@
       "add_competition": "Legg til konkurranse",
       "add_exhibition": "Legg til utstilling",
       "add_exhibition_place": "Legg til visningssted",
+      "add_music_score": "Legg til partitur/manuscript",
       "add_other_release": "Legg til annen offentliggjøring",
       "add_publication_mention": "Legg til publisering/omtale",
       "announcements": "Offentliggjøringer",
@@ -242,6 +243,7 @@
         "Competition": "Konkurranse",
         "Exhibition": "Utstilling",
         "MentionInPublication": "Publisering/omtale",
+        "MusicScore": "Partitur/manuscript",
         "OtherRelease": "Annen offentliggjøring",
         "Venue": "Visningssted"
       },

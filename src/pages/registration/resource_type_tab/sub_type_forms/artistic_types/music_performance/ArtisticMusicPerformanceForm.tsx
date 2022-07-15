@@ -1,14 +1,31 @@
-import { Typography, Table, TableHead, TableRow, TableCell, TableBody, Box, FormHelperText } from '@mui/material';
+import { useState } from 'react';
+import {
+  Typography,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Box,
+  FormHelperText,
+  Button,
+} from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, ErrorMessage, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import { ArtisticRegistration } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { OutputRow } from '../OutputRow';
+
+type ArtisticMusicPerformanceModalType = '' | 'MusicScore';
 
 export const ArtisticMusicPerformanceForm = () => {
   const { t } = useTranslation('registration');
   const { values, errors, touched } = useFormikContext<ArtisticRegistration>();
   const manifestations = values.entityDescription.reference.publicationInstance.manifestations ?? [];
+
+  const [openModal, setOpenModal] = useState<ArtisticMusicPerformanceModalType>('');
+  const closeModal = () => setOpenModal('');
 
   return (
     <div>
@@ -55,6 +72,17 @@ export const ArtisticMusicPerformanceForm = () => {
                     </FormHelperText>
                   </Box>
                 )}
+
+              {/* <MusicScoreModal onSubmit={onAddOutput} open={openModal === 'MusicScore'} closeModal={closeModal} /> */}
+
+              <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
+                <Button
+                  onClick={() => setOpenModal('MusicScore')}
+                  variant="outlined"
+                  startIcon={<AddCircleOutlineIcon />}>
+                  {t('resource_type.artistic.add_music_score')}
+                </Button>
+              </Box>
             </>
           );
         }}
