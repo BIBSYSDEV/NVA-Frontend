@@ -13,7 +13,6 @@ import {
   SpecificFileFieldNames,
 } from '../types/publicationFieldNames';
 import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
-import { MediaContributionRegistration } from '../types/publication_types/mediaContributionRegistration';
 import { Registration, RegistrationTab } from '../types/registration.types';
 import { getMainRegistrationType } from './registration-helpers';
 
@@ -279,7 +278,7 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
       };
     }
     case PublicationType.MediaContribution: {
-      const touchedMediaContribution: FormikTouched<MediaContributionRegistration> = {
+      const touchedMediaContribution = {
         entityDescription: {
           reference: {
             publicationContext: {

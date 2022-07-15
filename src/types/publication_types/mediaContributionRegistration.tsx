@@ -47,7 +47,7 @@ export interface MediaContributionPublicationContext {
   format: MediaFormat | '';
   medium: MediaMedium | '';
   disseminationChannel: string;
-  partOf: {
+  partOf?: {
     series: string;
     seriesPart: string;
   };
