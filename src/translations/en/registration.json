@@ -233,6 +233,11 @@
         "AugmentedVirtualRealityFilm": "AR/VR",
         "Other": "Other"
       },
+      "music_score_ensemble": "Ensemble",
+      "music_score_extent": "Duration",
+      "music_score_ismn": "ISMN",
+      "music_score_isrc": "ISRC",
+      "music_score_movements": "Movements",
       "name_or_title": "Name/title",
       "other_announcement_organizer": "Publisher/organizer etc.",
       "other_release_description": "Type of announcement",

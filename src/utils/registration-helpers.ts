@@ -25,6 +25,7 @@ import {
   Venue,
   CinematicRelease,
   OtherRelease,
+  MusicScore,
 } from '../types/publication_types/artisticRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 
@@ -226,6 +227,8 @@ export const getArtisticOutputName = (item: ArtisticOutputItem) => {
       return (item as CinematicRelease).place.label;
     case 'OtherRelease':
       return (item as OtherRelease).description;
+    case 'MusicScore':
+      return (item as MusicScore).publisher.name;
     default:
       return '';
   }

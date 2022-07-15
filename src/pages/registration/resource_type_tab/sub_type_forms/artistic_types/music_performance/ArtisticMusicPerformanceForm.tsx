@@ -14,8 +14,12 @@ import { FieldArray, FieldArrayRenderProps, ErrorMessage, useFormikContext } fro
 import { useTranslation } from 'react-i18next';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
-import { ArtisticRegistration } from '../../../../../../types/publication_types/artisticRegistration.types';
+import {
+  ArtisticRegistration,
+  MusicOutput,
+} from '../../../../../../types/publication_types/artisticRegistration.types';
 import { OutputRow } from '../OutputRow';
+import { MusicScoreModal } from './MusicScoreModal';
 
 type ArtisticMusicPerformanceModalType = '' | 'MusicScore';
 
@@ -34,6 +38,10 @@ export const ArtisticMusicPerformanceForm = () => {
       </Typography>
       <FieldArray name={ResourceFieldNames.PublicationInstanceManifestations}>
         {({ push, replace, remove, move, name }: FieldArrayRenderProps) => {
+          const onAddOutput = (output: MusicOutput) => {
+            output.sequence = manifestations.length + 1;
+            push(output);
+          };
           return (
             <>
               {manifestations.length > 0 && (
@@ -73,7 +81,7 @@ export const ArtisticMusicPerformanceForm = () => {
                   </Box>
                 )}
 
-              {/* <MusicScoreModal onSubmit={onAddOutput} open={openModal === 'MusicScore'} closeModal={closeModal} /> */}
+              <MusicScoreModal onSubmit={onAddOutput} open={openModal === 'MusicScore'} closeModal={closeModal} />
 
               <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
                 <Button

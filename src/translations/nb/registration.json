@@ -233,6 +233,11 @@
         "AugmentedVirtualRealityFilm": "AR/VR",
         "Other": "Annet"
       },
+      "music_score_ensemble": "Ensemble",
+      "music_score_extent": "Varighet",
+      "music_score_ismn": "ISMN",
+      "music_score_isrc": "ISRC",
+      "music_score_movements": "Satser",
       "name_or_title": "Navn/tittel",
       "other_announcement_organizer": "Utgiver/arrangør eller lignende",
       "other_release_description": "Type formidlingsform",

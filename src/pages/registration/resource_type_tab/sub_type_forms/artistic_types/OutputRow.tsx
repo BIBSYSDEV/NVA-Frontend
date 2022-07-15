@@ -62,6 +62,7 @@ export const OutputRow = ({
     case 'Broadcast':
     case 'CinematicRelease':
     case 'OtherRelease':
+    case 'MusicScore':
       removeItemTitle = t('resource_type.artistic.remove_announcement');
       removeItemDescription = t('resource_type.artistic.remove_announcement_description', { name: title });
       break;

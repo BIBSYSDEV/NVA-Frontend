@@ -74,7 +74,7 @@ export interface OtherRelease extends ArtisticOutputBase {
   date: Instant;
 }
 
-interface MusicScore {
+export interface MusicScore extends ArtisticOutputBase {
   type: 'MusicScore';
   ensemble: string;
   movements: string;
