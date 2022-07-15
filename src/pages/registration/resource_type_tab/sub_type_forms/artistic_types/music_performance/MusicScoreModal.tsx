@@ -59,6 +59,12 @@ const validationSchema = Yup.object().shape({
   ismn: Yup.object().shape({
     value: Yup.string()
       .nullable()
+      .matches(
+        /^9790\d{9}$/,
+        i18n.t('feedback:validation.has_invalid_format', {
+          field: i18n.t('registration:resource_type.artistic.music_score_ismn'),
+        })
+      )
       .required(
         i18n.t('feedback:validation.is_required', {
           field: i18n.t('registration:resource_type.artistic.music_score_ismn'),
@@ -68,6 +74,12 @@ const validationSchema = Yup.object().shape({
   isrc: Yup.object().shape({
     value: Yup.string()
       .nullable()
+      .matches(
+        /^[A-Z]{2}[A-Z\d]{3}\d{7}$/,
+        i18n.t('feedback:validation.has_invalid_format', {
+          field: i18n.t('registration:resource_type.artistic.music_score_isrc'),
+        })
+      )
       .required(
         i18n.t('feedback:validation.is_required', {
           field: i18n.t('registration:resource_type.artistic.music_score_isrc'),
