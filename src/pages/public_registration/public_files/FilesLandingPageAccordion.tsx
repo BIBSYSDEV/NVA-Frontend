@@ -42,16 +42,14 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           t('files_and_license.files')
         )
       }>
-      <>
-        {filesToShow.map((file, index) => (
-          <FileRow
-            key={file.identifier}
-            file={file}
-            registrationIdentifier={registration.identifier}
-            openPreviewByDefault={index === 0 && file.size < maxFileSizeForPreview}
-          />
-        ))}
-      </>
+      {filesToShow.map((file, index) => (
+        <FileRow
+          key={file.identifier}
+          file={file}
+          registrationIdentifier={registration.identifier}
+          openPreviewByDefault={index === 0 && file.size < maxFileSizeForPreview}
+        />
+      ))}
     </LandingPageAccordion>
   );
 };
