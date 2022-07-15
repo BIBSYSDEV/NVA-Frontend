@@ -272,6 +272,7 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
               venues,
               architectureOutput: [],
               outputs: [],
+              manifestations: [],
             },
           },
         },

@@ -356,7 +356,13 @@ export const presentationReference = baseReference.shape({
 const artisticDesignPublicationInstance = Yup.object().shape({
   type: Yup.string().oneOf(Object.values(ArtisticType)).required(resourceErrorMessage.typeRequired),
   subtype: Yup.object().shape({
-    type: Yup.string().nullable().required(resourceErrorMessage.typeWorkRequired),
+    type: Yup.string()
+      .nullable()
+      .when('$publicationInstanceType', {
+        is: ArtisticType.MusicPerformance,
+        then: Yup.string().nullable().optional(),
+        otherwise: Yup.string().nullable().required(resourceErrorMessage.typeWorkRequired),
+      }),
     description: Yup.string()
       .nullable()
       .when('type', {
@@ -387,6 +393,13 @@ const artisticDesignPublicationInstance = Yup.object().shape({
     } else {
       return schema.nullable();
     }
+  }),
+  manifestations: Yup.array().when('$publicationInstanceType', {
+    is: ArtisticType.MusicPerformance,
+    then: Yup.array()
+      .min(1, resourceErrorMessage.announcementsRequired)
+      .required(resourceErrorMessage.announcementsRequired),
+    otherwise: Yup.array().nullable(),
   }),
 });
 
