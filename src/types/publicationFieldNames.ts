@@ -58,6 +58,7 @@ export enum ArtisticType {
   ArtisticArchitecture = 'Architecture',
   PerformingArts = 'PerformingArts',
   MovingPicture = 'MovingPicture',
+  MusicPerformance = 'MusicPerformance',
 }
 
 export enum MediaType {
@@ -123,9 +124,10 @@ export enum ResourceFieldNames {
   PublicationContextTimeTo = 'entityDescription.reference.publicationContext.time.to',
   PublicationContextType = 'entityDescription.reference.publicationContext.type',
   PublicationInstanceDescription = 'entityDescription.reference.publicationInstance.description',
+  PublicationInstanceManifestations = 'entityDescription.reference.publicationInstance.manifestations',
+  PublicationInstanceOutputs = 'entityDescription.reference.publicationInstance.outputs',
   PublicationInstanceSubtypeDescription = 'entityDescription.reference.publicationInstance.subtype.description',
   PublicationInstanceSubtypeType = 'entityDescription.reference.publicationInstance.subtype.type',
-  PublicationInstanceOutputs = 'entityDescription.reference.publicationInstance.outputs',
   Reference = 'entityDescription.reference',
   Series = 'entityDescription.reference.publicationContext.series',
   SeriesId = 'entityDescription.reference.publicationContext.series.id',

@@ -6,6 +6,7 @@ import { SelectTypeField } from './components/SelectTypeField';
 import { ArtisticArchitectureForm } from './sub_type_forms/artistic_types/architecture/ArtisticArchitectureForm';
 import { ArtisticDesignForm } from './sub_type_forms/artistic_types/design/ArtisticDesignForm';
 import { ArtisticMovingPictureForm } from './sub_type_forms/artistic_types/moving_picture/ArtisticMovingPictureForm';
+import { ArtisticMusicPerformanceForm } from './sub_type_forms/artistic_types/moving_picture/ArtisticMusicPerformanceForm';
 import { ArtisticPerformingArtsForm } from './sub_type_forms/artistic_types/performing_arts/ArtisticPerformingArtsForm';
 
 interface ArtisticTypeFormProps {
@@ -34,6 +35,8 @@ export const ArtisticTypeForm = ({ onChangeSubType }: ArtisticTypeFormProps) => 
         <ArtisticPerformingArtsForm />
       ) : subType === ArtisticType.MovingPicture ? (
         <ArtisticMovingPictureForm />
+      ) : subType === ArtisticType.MusicPerformance ? (
+        <ArtisticMusicPerformanceForm />
       ) : null}
     </>
   );

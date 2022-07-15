@@ -88,6 +88,7 @@ export interface ArtisticPublicationInstance {
   venues?: Venue[];
   architectureOutput?: ArchitectureOutput[];
   outputs?: Venue[] | FilmOutput[];
+  manifestations?: any[];
 }
 
 export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {
