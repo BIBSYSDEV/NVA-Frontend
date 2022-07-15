@@ -94,9 +94,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
   return (
     <Dialog open={open} onClose={closeModal} maxWidth="sm" fullWidth>
       <DialogTitle>
-        {musicScore
-          ? t('resource_type.artistic.edit_exhibition_place')
-          : t('resource_type.artistic.add_exhibition_place')}
+        {musicScore ? t('resource_type.artistic.edit_music_score') : t('resource_type.artistic.add_music_score')}
       </DialogTitle>
       <Formik
         initialValues={musicScore ?? emptyMusicScore}
@@ -163,6 +161,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                 />
               )}
             </Field>
+            {/* TODO: Handle hyphens for ismn and isrc (and ISBN) */}
             <Field name="ismn.value">
               {({ field, meta: { touched, error } }: FieldProps<string>) => (
                 <TextField
