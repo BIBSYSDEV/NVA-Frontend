@@ -14,6 +14,9 @@ import { Formik, Form, Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRe
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+import SaveIcon from '@mui/icons-material/Save';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
 import i18n from '../../../../../../translations/i18n';
 import {
@@ -219,9 +222,10 @@ export const AudioVisualPublicationModal = ({
                           <Button
                             variant="outlined"
                             color="error"
-                            sx={{ height: 'fit-content' }}
                             title={t('resource_type.artistic.remove_content_track')}
-                            onClick={() => setRemoveTrackIndex(index)}>
+                            onClick={() => setRemoveTrackIndex(index)}
+                            sx={{ px: '2rem' }}
+                            startIcon={<DeleteIcon />}>
                             {t('common:remove')}
                           </Button>
                         </Box>
@@ -238,7 +242,11 @@ export const AudioVisualPublicationModal = ({
                       <Typography>{t('resource_type.artistic.remove_content_track_description')}</Typography>
                     </ConfirmDialog>
 
-                    <Button variant="outlined" sx={{ width: 'fit-content' }} onClick={() => push(emptyMusicTrack)}>
+                    <Button
+                      variant="outlined"
+                      sx={{ width: 'fit-content' }}
+                      onClick={() => push(emptyMusicTrack)}
+                      startIcon={<AddIcon />}>
                       {t('common:add')} {t('resource_type.artistic.content_track').toLocaleLowerCase()}
                     </Button>
                     {!!touched.trackList && typeof errors.trackList === 'string' && (
@@ -254,7 +262,7 @@ export const AudioVisualPublicationModal = ({
               <Button variant="outlined" onClick={closeModal}>
                 {t('common:cancel')}
               </Button>
-              <Button variant="contained" type="submit">
+              <Button variant="contained" type="submit" startIcon={<SaveIcon />}>
                 {audioVisualPublication ? t('common:update') : t('common:add')}
               </Button>
             </DialogActions>
