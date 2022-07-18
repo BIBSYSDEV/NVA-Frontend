@@ -174,6 +174,7 @@
   "resource_type": {
     "article_number": "Artikkelnummer",
     "artistic": {
+      "add_audio_visual_publication": "Legg til audio-/videoutgivelse",
       "add_award": "Legg til pris/utmerkelse",
       "add_broadcast": "Legg til TV/web/streaming",
       "add_cinematic_release": "Legg til festival/kino",
@@ -196,9 +197,11 @@
       "award_other": "Annet",
       "award_ranking": "Rangering",
       "broadcast": "TV/web/streaming",
+      "catalogue_number": "Katalognummer",
       "competition_date": "Dato for offentliggjøring",
       "competition_name": "Navn på konkurranse/arrangør/innbyder",
       "competition_rank": "Rangering/innkjøp/omtale/invitert",
+      "content_track": "Innhold/spor",
       "design_type": {
         "ClothingDesign": "Klesdesign",
         "Exhibition": "Utstilling/messe",
@@ -212,6 +215,7 @@
         "Other": "Annet design",
         "WebDesign": "Webdesign"
       },
+      "edit_audio_visual_publication": "Endre audio-/videoutgivelse",
       "edit_award": "Endre pris/utmerkelse",
       "edit_broadcast": "Endre TV/web/streaming",
       "edit_cinematic_release": "Endre festival/kino",
@@ -224,6 +228,7 @@
       "exhibition_place": "Visningssted",
       "exhibition_places": "Visningssteder",
       "exhibition_title": "Utstillingstittel",
+      "media_type": "Medietype",
       "mention_other": "Annet (utgiver, ISBN, m.m.)",
       "mention_title": "Tidsskrift/Boktittel/medium",
       "moving_picture_type": {
@@ -232,6 +237,14 @@
         "SerialFilmProduction": "Seriell produksjon",
         "InteractiveFilm": "Interaktiv produksjon",
         "AugmentedVirtualRealityFilm": "AR/VR",
+        "Other": "Annet"
+      },
+      "music_media_type": {
+        "CompactDisc": "CD",
+        "DVD": "DVD",
+        "Streaming": "Strømming",
+        "DigitalFile": "Nedlasting",
+        "Vinyl": "LP/EP",
         "Other": "Annet"
       },
       "music_score_ensemble": "Ensemble",
@@ -243,6 +256,7 @@
       "other_announcement_organizer": "Utgiver/arrangør eller lignende",
       "other_release_description": "Type formidlingsform",
       "output_type": {
+        "AudioVisualPublication": "Legg til audio-/videoutgivelse",
         "Award": "Pris/utmerkelse",
         "Broadcast": "TV/web/streaming",
         "CinematicRelease": "Festival/kino",

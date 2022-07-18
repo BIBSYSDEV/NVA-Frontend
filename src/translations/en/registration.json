@@ -174,6 +174,7 @@
   "resource_type": {
     "article_number": "Article number",
     "artistic": {
+      "add_audio_visual_publication": "Add audio/video publication",
       "add_award": "Add prize/award",
       "add_broadcast": "Add TV/web/streaming",
       "add_cinematic_release": "Add festival/cinema",
@@ -196,9 +197,11 @@
       "award_other": "Other",
       "award_ranking": "Ranking",
       "broadcast": "TV/web/streaming",
+      "catalogue_number": "Catalogue number",
       "competition_date": "Date for announcement",
       "competition_name": "Name on competition/organizer",
       "competition_rank": "Rank/purchase/mention/invited",
+      "content_track": "Content/tracks",
       "design_type": {
         "ClothingDesign": "Clothing design",
         "Exhibition": "Exhibition",
@@ -212,6 +215,7 @@
         "Other": "Other design",
         "WebDesign": "Web design"
       },
+      "edit_audio_visual_publication": "Edit audio/video publication",
       "edit_award": "Edit prize/award",
       "edit_broadcast": "Edit TV/web/streaming",
       "edit_cinematic_release": "Edit festival/cinema",
@@ -224,6 +228,7 @@
       "exhibition_place": "Exhibition place",
       "exhibition_places": "Exhibition places",
       "exhibition_title": "Exhibition title",
+      "media_type": "Media type",
       "mention_other": "Other (publisher, ISBN, etc.)",
       "mention_title": "Journal/Book/medium",
       "moving_picture_type": {
@@ -232,6 +237,14 @@
         "SerialFilmProduction": "Serial production",
         "InteractiveFilm": "Interactive production",
         "AugmentedVirtualRealityFilm": "AR/VR",
+        "Other": "Other"
+      },
+      "music_media_type": {
+        "CompactDisc": "CD",
+        "DVD": "DVD",
+        "Streaming": "Streaming",
+        "DigitalFile": "Downloading",
+        "Vinyl": "LP/EP",
         "Other": "Other"
       },
       "music_score_ensemble": "Ensemble",
@@ -243,6 +256,7 @@
       "other_announcement_organizer": "Publisher/organizer etc.",
       "other_release_description": "Type of announcement",
       "output_type": {
+        "AudioVisualPublication": "Audio/video publication",
         "Award": "Prize/award",
         "Broadcast": "TV/web/streaming",
         "CinematicRelease": "Festival/cinema",

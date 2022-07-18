@@ -20,8 +20,9 @@ import {
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { OutputRow } from '../OutputRow';
 import { MusicScoreModal } from './MusicScoreModal';
+import { AudioVisualPublicationModal } from './AudioVisualPublicationModal';
 
-type ArtisticMusicPerformanceModalType = '' | 'MusicScore';
+type ArtisticMusicPerformanceModalType = '' | 'MusicScore' | 'AudioVisualPublication';
 
 export const ArtisticMusicPerformanceForm = () => {
   const { t } = useTranslation('registration');
@@ -82,6 +83,11 @@ export const ArtisticMusicPerformanceForm = () => {
                 )}
 
               <MusicScoreModal onSubmit={onAddOutput} open={openModal === 'MusicScore'} closeModal={closeModal} />
+              <AudioVisualPublicationModal
+                onSubmit={onAddOutput}
+                open={openModal === 'AudioVisualPublication'}
+                closeModal={closeModal}
+              />
 
               <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
                 <Button
@@ -89,6 +95,12 @@ export const ArtisticMusicPerformanceForm = () => {
                   variant="outlined"
                   startIcon={<AddCircleOutlineIcon />}>
                   {t('resource_type.artistic.add_music_score')}
+                </Button>
+                <Button
+                  onClick={() => setOpenModal('AudioVisualPublication')}
+                  variant="outlined"
+                  startIcon={<AddCircleOutlineIcon />}>
+                  {t('resource_type.artistic.add_audio_visual_publication')}
                 </Button>
               </Box>
             </>
