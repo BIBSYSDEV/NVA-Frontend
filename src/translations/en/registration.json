@@ -201,6 +201,7 @@
       "competition_date": "Date for announcement",
       "competition_name": "Name on competition/organizer",
       "competition_rank": "Rank/purchase/mention/invited",
+      "composer": "Composer",
       "content_track": "Content/tracks",
       "design_type": {
         "ClothingDesign": "Clothing design",
@@ -228,6 +229,7 @@
       "exhibition_place": "Exhibition place",
       "exhibition_places": "Exhibition places",
       "exhibition_title": "Exhibition title",
+      "extent_in_minutes": "Duration in minutes",
       "media_type": "Media type",
       "mention_other": "Other (publisher, ISBN, etc.)",
       "mention_title": "Journal/Book/medium",

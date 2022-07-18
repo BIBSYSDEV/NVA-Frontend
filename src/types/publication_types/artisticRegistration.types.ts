@@ -100,7 +100,7 @@ export enum MusicMediaType {
   Other = 'Other',
 }
 
-interface MusicTrack {
+export interface MusicTrack {
   type: 'MusicTrack';
   title: string;
   composer: string;
