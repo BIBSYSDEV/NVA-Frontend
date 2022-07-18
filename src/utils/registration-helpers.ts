@@ -25,6 +25,7 @@ import {
   Venue,
   CinematicRelease,
   OtherRelease,
+  MusicScore,
 } from '../types/publication_types/artisticRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 
@@ -226,6 +227,8 @@ export const getArtisticOutputName = (item: ArtisticOutputItem) => {
       return (item as CinematicRelease).place.label;
     case 'OtherRelease':
       return (item as OtherRelease).description;
+    case 'MusicScore':
+      return (item as MusicScore).publisher.name;
     default:
       return '';
   }
@@ -236,3 +239,6 @@ export const userIsOwnerOfRegistration = (user: User | null, registration: Regis
 
 export const userIsCuratorForRegistration = (user: User | null, registration: Registration) =>
   !!user?.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
+
+export const hyphenateIsrc = (isrc: string) =>
+  isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';

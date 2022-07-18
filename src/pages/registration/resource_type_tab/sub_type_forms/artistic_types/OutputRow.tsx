@@ -15,6 +15,7 @@ import {
   Venue,
   CinematicRelease,
   OtherRelease,
+  MusicScore,
 } from '../../../../../types/publication_types/artisticRegistration.types';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import { CompetitionModal } from './architecture/CompetitionModal';
@@ -26,6 +27,7 @@ import { getArtisticOutputName } from '../../../../../utils/registration-helpers
 import { BroadcastModal } from './moving_picture/BroadcastModal';
 import { CinematicReleaseModal } from './moving_picture/CinematicReleaseModal';
 import { OtherReleaseModal } from './moving_picture/OtherReleaseModal';
+import { MusicScoreModal } from './music_performance/MusicScoreModal';
 
 interface OutputRowProps {
   item: ArtisticOutputItem;
@@ -62,6 +64,7 @@ export const OutputRow = ({
     case 'Broadcast':
     case 'CinematicRelease':
     case 'OtherRelease':
+    case 'MusicScore':
       removeItemTitle = t('resource_type.artistic.remove_announcement');
       removeItemDescription = t('resource_type.artistic.remove_announcement_description', { name: title });
       break;
@@ -163,6 +166,13 @@ export const OutputRow = ({
       ) : item.type === 'OtherRelease' ? (
         <OtherReleaseModal
           otherRelease={item as OtherRelease}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      ) : item.type === 'MusicScore' ? (
+        <MusicScoreModal
+          musicScore={item as MusicScore}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}

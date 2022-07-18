@@ -49,12 +49,14 @@ export interface Exhibition extends ArtisticOutputBase {
   otherInformation: string;
 }
 
+interface UnconfirmedPublisher {
+  type: 'UnconfirmedPublisher';
+  name: string;
+}
+
 export interface Broadcast extends ArtisticOutputBase {
   type: 'Broadcast';
-  publisher: {
-    type: 'UnconfirmedPublisher';
-    name: string;
-  };
+  publisher: UnconfirmedPublisher;
   date: Instant;
 }
 
@@ -68,18 +70,32 @@ export interface OtherRelease extends ArtisticOutputBase {
   type: 'OtherRelease';
   description: string;
   place: Place;
-  publisher: {
-    type: 'UnconfirmedPublisher';
-    name: string;
-  };
+  publisher: UnconfirmedPublisher;
   date: Instant;
 }
 
+export interface MusicScore extends ArtisticOutputBase {
+  type: 'MusicScore';
+  ensemble: string;
+  movements: string;
+  extent: string;
+  publisher: UnconfirmedPublisher;
+  ismn: {
+    type: 'Ismn';
+    value: string;
+    formatted?: string;
+  };
+  isrc: {
+    type: 'Isrc';
+    value: string;
+  };
+}
+
 export type FilmOutput = Broadcast | CinematicRelease | OtherRelease;
-
 export type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
+export type MusicOutput = MusicScore;
 
-export type ArtisticOutputItem = Venue | ArchitectureOutput | FilmOutput;
+export type ArtisticOutputItem = Venue | ArchitectureOutput | FilmOutput | MusicOutput;
 
 export interface ArtisticPublicationInstance {
   type: ArtisticType | '';
