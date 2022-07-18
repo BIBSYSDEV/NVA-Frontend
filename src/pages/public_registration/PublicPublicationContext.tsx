@@ -22,7 +22,7 @@ import { RegistrationSummary } from './RegistrationSummary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
-import { getArtisticOutputName, getPeriodString } from '../../utils/registration-helpers';
+import { getArtisticOutputName, getPeriodString, hyphenateIsrc } from '../../utils/registration-helpers';
 import {
   Award,
   Broadcast,
@@ -33,6 +33,7 @@ import {
   Venue,
   CinematicRelease,
   OtherRelease,
+  MusicScore,
 } from '../../types/publication_types/artisticRegistration.types';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
@@ -272,6 +273,8 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
             <PublicCinematicReleaseDialogContent cinematicRelease={output as CinematicRelease} />
           ) : output.type === 'OtherRelease' ? (
             <PublicOtherReleaseDialogContent otherRelease={output as OtherRelease} />
+          ) : output.type === 'MusicScore' ? (
+            <PublicMusicScoreDialogContent musicScore={output as MusicScore} />
           ) : null}
         </ErrorBoundary>
 
@@ -407,6 +410,30 @@ const PublicOtherReleaseDialogContent = ({ otherRelease }: { otherRelease: Other
       )}
       <Typography variant="overline">{t('resource_type.artistic.premiere_date')}</Typography>
       <Typography>{new Date(otherRelease.date.value).toLocaleDateString()}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicMusicScoreDialogContent = ({ musicScore }: { musicScore: MusicScore }) => {
+  const { t } = useTranslation('registration');
+  const { type, ensemble, movements, extent, publisher, ismn, isrc } = musicScore;
+
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('common:type')}</Typography>
+      <Typography paragraph>{t(`resource_type.artistic.output_type.${type}`)}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.music_score_ensemble')}</Typography>
+      <Typography paragraph>{ensemble}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.music_score_movements')}</Typography>
+      <Typography paragraph>{movements}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.music_score_extent')}</Typography>
+      <Typography paragraph>{extent}</Typography>
+      <Typography variant="overline">{t('common:publisher')}</Typography>
+      <Typography paragraph>{publisher.name}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.music_score_ismn')}</Typography>
+      <Typography paragraph>{ismn.formatted ?? ismn.value}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.music_score_isrc')}</Typography>
+      <Typography paragraph>{hyphenateIsrc(isrc.value)}</Typography>
     </DialogContent>
   );
 };

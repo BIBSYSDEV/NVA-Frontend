@@ -164,7 +164,6 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                 />
               )}
             </Field>
-            {/* TODO: Handle hyphens for ismn and isrc (and ISBN) */}
             <Field name="ismn.value">
               {({ field, meta: { touched, error } }: FieldProps<string>) => (
                 <TextField
