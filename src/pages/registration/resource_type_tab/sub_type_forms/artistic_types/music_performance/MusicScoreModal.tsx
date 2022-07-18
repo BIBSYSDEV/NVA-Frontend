@@ -1,9 +1,12 @@
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
+import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { IMaskInput } from 'react-imask';
 import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
 import { MusicScore } from '../../../../../../types/publication_types/artisticRegistration.types';
+import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
 
 interface MusicScoreModalProps {
   musicScore?: MusicScore;
@@ -183,6 +186,9 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                   fullWidth
                   label={t('resource_type.artistic.music_score_isrc')}
                   required
+                  InputProps={{
+                    inputComponent: MaskIsrcInput as any,
+                  }}
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
                 />
@@ -202,3 +208,12 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
     </Dialog>
   );
 };
+
+const MaskIsrcInput = forwardRef<HTMLElement, MaskInputProps>(({ onChange, ...props }, ref) => (
+  <IMaskInput
+    {...props}
+    mask="aa-***-00-00000"
+    inputRef={ref}
+    onAccept={(value) => onChange({ target: { name: props.name, value: value.replaceAll('-', '') } })}
+  />
+));
