@@ -11,8 +11,10 @@ import {
   Box,
 } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
 import i18n from '../../../../../../translations/i18n';
 import {
   AudioVisualPublication,
@@ -101,6 +103,9 @@ export const AudioVisualPublicationModal = ({
 }: AudioVisualPublicationModalProps) => {
   const { t } = useTranslation('registration');
 
+  const [removeTrackIndex, setRemoveTrackIndex] = useState(-1); // Index of track to remove (-1 means none)
+  const closeConfirmDialog = () => setRemoveTrackIndex(-1);
+
   return (
     <Dialog open={open} onClose={closeModal} maxWidth="md" fullWidth>
       <DialogTitle>
@@ -164,14 +169,14 @@ export const AudioVisualPublicationModal = ({
                 )}
               </Field>
               <FieldArray name="trackList">
-                {({ name, push }: FieldArrayRenderProps) => (
+                {({ name, push, remove }: FieldArrayRenderProps) => (
                   <>
                     <Typography variant="h3">{t('resource_type.artistic.content_track')}</Typography>
 
                     {values.trackList.map((_, index) => {
                       const baseFieldName = `${name}[${index}]`;
                       return (
-                        <Box sx={{ display: 'flex', gap: '1rem' }}>
+                        <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                           <Field name={`${baseFieldName}.title`}>
                             {({ field, meta: { touched, error } }: FieldProps<string>) => (
                               <TextField
@@ -211,9 +216,27 @@ export const AudioVisualPublicationModal = ({
                               />
                             )}
                           </Field>
+                          <Button
+                            variant="outlined"
+                            color="error"
+                            sx={{ height: 'fit-content' }}
+                            title={t('resource_type.artistic.remove_content_track')}
+                            onClick={() => setRemoveTrackIndex(index)}>
+                            {t('common:remove')}
+                          </Button>
                         </Box>
                       );
                     })}
+                    <ConfirmDialog
+                      title={t('resource_type.artistic.remove_content_track')}
+                      open={removeTrackIndex > -1}
+                      onCancel={closeConfirmDialog}
+                      onAccept={() => {
+                        remove(removeTrackIndex);
+                        closeConfirmDialog();
+                      }}>
+                      <Typography>{t('resource_type.artistic.remove_content_track_description')}</Typography>
+                    </ConfirmDialog>
 
                     <Button variant="outlined" sx={{ width: 'fit-content' }} onClick={() => push(emptyMusicTrack)}>
                       {t('common:add')} {t('resource_type.artistic.content_track').toLocaleLowerCase()}
