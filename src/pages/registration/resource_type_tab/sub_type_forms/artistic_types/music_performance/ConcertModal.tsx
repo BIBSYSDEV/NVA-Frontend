@@ -1,0 +1,240 @@
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  TextField,
+  DialogActions,
+  Button,
+  Typography,
+  FormHelperText,
+  Box,
+  Checkbox,
+  FormControlLabel,
+} from '@mui/material';
+import { Formik, Form, Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import * as Yup from 'yup';
+import SaveIcon from '@mui/icons-material/Save';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
+import i18n from '../../../../../../translations/i18n';
+import { Concert, MusicalWorkPerformance } from '../../../../../../types/publication_types/artisticRegistration.types';
+
+interface ConcertModalProps {
+  concert?: Concert;
+  onSubmit: (concert: Concert) => void;
+  open: boolean;
+  closeModal: () => void;
+}
+
+const emptyConcert: Concert = {
+  type: 'Concert',
+  place: {
+    type: 'UnconfirmedPlace',
+    label: '',
+    country: '',
+  },
+  time: {
+    type: 'Period',
+    from: '',
+    to: '',
+  },
+  extent: '',
+  description: '',
+  concertProgramme: [],
+};
+
+const emptyMusicalWorkPerformance: MusicalWorkPerformance = {
+  type: 'MusicalWorkPerformance',
+  title: '',
+  composer: '',
+  premiere: false,
+};
+
+const validationSchema = Yup.object().shape({
+  place: Yup.object().shape({
+    label: Yup.string().required(
+      i18n.t('feedback:validation.is_required', {
+        field: i18n.t('common:place'),
+      })
+    ),
+  }),
+  extent: Yup.string().required(
+    i18n.t('feedback:validation.is_required', {
+      field: i18n.t('registration:resource_type.artistic.extent'),
+    })
+  ),
+  time: Yup.object(),
+  concertProgramme: Yup.array()
+    .of(
+      Yup.object().shape({
+        title: Yup.string().required(
+          i18n.t('feedback:validation.is_required', {
+            field: i18n.t('common:title'),
+          })
+        ),
+        composer: Yup.string().required(
+          i18n.t('feedback:validation.is_required', {
+            field: i18n.t('registration:resource_type.artistic.composer'),
+          })
+        ),
+        premiere: Yup.boolean(),
+      })
+    )
+    .min(
+      1,
+      i18n.t('feedback:validation.must_have_minimum', {
+        min: 1,
+        field: i18n.t('registration:resource_type.artistic.musical_work_item').toLocaleLowerCase(),
+      })
+    ),
+});
+
+export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertModalProps) => {
+  const { t } = useTranslation('registration');
+
+  const [removeTrackIndex, setRemoveTrackIndex] = useState(-1);
+  const closeConfirmDialog = () => setRemoveTrackIndex(-1);
+
+  return (
+    <Dialog open={open} onClose={closeModal} maxWidth="md" fullWidth>
+      <DialogTitle>
+        {concert ? t('resource_type.artistic.edit_concert') : t('resource_type.artistic.add_concert')}
+      </DialogTitle>
+      <Formik
+        initialValues={concert ?? emptyConcert}
+        validationSchema={validationSchema}
+        onSubmit={(values) => {
+          onSubmit(values);
+          closeModal();
+        }}>
+        {({ values, errors, touched }: FormikProps<Concert>) => (
+          <Form noValidate>
+            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Field name="place.label">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    label={t('common:place')}
+                    required
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
+              </Field>
+
+              <Field name="extent">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    label={t('resource_type.artistic.extent')}
+                    required
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
+              </Field>
+
+              <FieldArray name="concertProgramme">
+                {({ name, push, remove }: FieldArrayRenderProps) => (
+                  <>
+                    <Typography variant="h3">{t('resource_type.artistic.concert_program')}</Typography>
+
+                    {values.concertProgramme.map((_, index) => {
+                      const baseFieldName = `${name}[${index}]`;
+                      return (
+                        <Box key={index} sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                          <Field name={`${baseFieldName}.title`}>
+                            {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                              <TextField
+                                {...field}
+                                variant="filled"
+                                fullWidth
+                                label={t('common:title')}
+                                required
+                                error={touched && !!error}
+                                helperText={<ErrorMessage name={field.name} />}
+                              />
+                            )}
+                          </Field>
+                          <Field name={`${baseFieldName}.composer`}>
+                            {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                              <TextField
+                                {...field}
+                                variant="filled"
+                                fullWidth
+                                label={t('resource_type.artistic.composer')}
+                                required
+                                error={touched && !!error}
+                                helperText={<ErrorMessage name={field.name} />}
+                              />
+                            )}
+                          </Field>
+                          <Field name={`${baseFieldName}.premiere`}>
+                            {({ field }: FieldProps<boolean>) => (
+                              <FormControlLabel
+                                {...field}
+                                control={<Checkbox checked={field.value} />}
+                                label={t('resource_type.artistic.premiere')}
+                              />
+                            )}
+                          </Field>
+                          <Button
+                            variant="outlined"
+                            color="error"
+                            title={t('resource_type.artistic.remove_concert')}
+                            onClick={() => setRemoveTrackIndex(index)}
+                            sx={{ px: '2rem' }}
+                            startIcon={<DeleteIcon />}>
+                            {t('common:remove')}
+                          </Button>
+                        </Box>
+                      );
+                    })}
+                    <ConfirmDialog
+                      title={t('resource_type.artistic.remove_concert')}
+                      open={removeTrackIndex > -1}
+                      onCancel={closeConfirmDialog}
+                      onAccept={() => {
+                        remove(removeTrackIndex);
+                        closeConfirmDialog();
+                      }}>
+                      <Typography>{t('resource_type.artistic.remove_concert_description')}</Typography>
+                    </ConfirmDialog>
+
+                    <Button
+                      variant="outlined"
+                      sx={{ width: 'fit-content' }}
+                      onClick={() => push(emptyMusicalWorkPerformance)}
+                      startIcon={<AddIcon />}>
+                      {t('common:add')} {t('resource_type.artistic.musical_work_item').toLocaleLowerCase()}
+                    </Button>
+                    {!!touched.concertProgramme && typeof errors.concertProgramme === 'string' && (
+                      <FormHelperText error>
+                        <ErrorMessage name={name} />
+                      </FormHelperText>
+                    )}
+                  </>
+                )}
+              </FieldArray>
+            </DialogContent>
+            <DialogActions>
+              <Button variant="outlined" onClick={closeModal}>
+                {t('common:cancel')}
+              </Button>
+              <Button variant="contained" type="submit" startIcon={<SaveIcon />}>
+                {concert ? t('common:update') : t('common:add')}
+              </Button>
+            </DialogActions>
+          </Form>
+        )}
+      </Formik>
+    </Dialog>
+  );
+};

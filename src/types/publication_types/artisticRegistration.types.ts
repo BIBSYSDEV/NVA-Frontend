@@ -91,6 +91,22 @@ export interface MusicScore extends ArtisticOutputBase {
   };
 }
 
+export interface MusicalWorkPerformance {
+  type: 'MusicalWorkPerformance';
+  title: string;
+  composer: string;
+  premiere: boolean;
+}
+
+export interface Concert extends ArtisticOutputBase {
+  type: 'Concert';
+  place: Place;
+  time: Period | Instant;
+  extent: string;
+  description: string;
+  concertProgramme: MusicalWorkPerformance[];
+}
+
 export enum MusicMediaType {
   CompactDisc = 'CompactDisc',
   DVD = 'DVD',
@@ -117,7 +133,7 @@ export interface AudioVisualPublication extends ArtisticOutputBase {
 
 export type FilmOutput = Broadcast | CinematicRelease | OtherRelease;
 export type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
-export type MusicOutput = MusicScore | AudioVisualPublication;
+export type MusicOutput = MusicScore | AudioVisualPublication | Concert;
 
 export type ArtisticOutputItem = Venue | ArchitectureOutput | FilmOutput | MusicOutput;
 
