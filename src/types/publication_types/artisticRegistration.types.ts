@@ -101,7 +101,7 @@ export interface MusicalWorkPerformance {
 export interface Concert extends ArtisticOutputBase {
   type: 'Concert';
   place: Place;
-  time: Period | Instant;
+  time: Instant;
   extent: string;
   description: string;
   concertProgramme: MusicalWorkPerformance[];

@@ -204,6 +204,7 @@
       "competition_rank": "Rank/purchase/mention/invited",
       "composer": "Composer",
       "concert_program": "Concert program",
+      "concert_program_table_caption": "Overview over concert program",
       "content_track": "Content/tracks",
       "content_track_table_caption": "Overview over content/tracks",
       "design_type": {

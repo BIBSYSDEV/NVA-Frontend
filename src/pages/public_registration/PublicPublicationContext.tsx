@@ -42,6 +42,7 @@ import {
   OtherRelease,
   MusicScore,
   AudioVisualPublication,
+  Concert,
 } from '../../types/publication_types/artisticRegistration.types';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
@@ -285,6 +286,8 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
             <PublicMusicScoreDialogContent musicScore={output as MusicScore} />
           ) : output.type === 'AudioVisualPublication' ? (
             <PublicAudioVisualPublicationDialogContent audioVisualPublication={output as AudioVisualPublication} />
+          ) : output.type === 'Concert' ? (
+            <PublicConcertDialogContent concert={output as Concert} />
           ) : null}
         </ErrorBoundary>
 
@@ -486,6 +489,52 @@ const PublicAudioVisualPublicationDialogContent = ({
                 <TableCell>{track.title}</TableCell>
                 <TableCell>{track.composer}</TableCell>
                 <TableCell>{track.extent}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </DialogContent>
+  );
+};
+
+const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
+  const { t } = useTranslation('registration');
+  const { type, place, time, extent, concertProgramme } = concert;
+
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('common:type')}</Typography>
+      <Typography paragraph>{t(`resource_type.artistic.output_type.${type}`)}</Typography>
+
+      <Typography variant="overline">{t('common:place')}</Typography>
+      <Typography paragraph>{place.label}</Typography>
+
+      <Typography variant="overline">{t('common:date')}</Typography>
+      <Typography paragraph>{new Date(time.value).toLocaleDateString()}</Typography>
+
+      <Typography variant="overline">{t('resource_type.artistic.extent_in_minutes')}</Typography>
+      <Typography paragraph>{extent}</Typography>
+
+      <Typography variant="overline" id="program-heading">
+        {t('resource_type.artistic.concert_program')}
+      </Typography>
+      <TableContainer>
+        <Table aria-labelledby="program-heading">
+          <caption style={visuallyHidden}>{t('resource_type.artistic.concert_program_table_caption')}</caption>
+          <TableHead>
+            <TableRow>
+              <TableCell>{t('common:title')}</TableCell>
+              <TableCell>{t('resource_type.artistic.composer')}</TableCell>
+              <TableCell>{t('resource_type.artistic.premiere')}</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {concertProgramme.map((item, index) => (
+              <TableRow key={index}>
+                <TableCell>{item.title}</TableCell>
+                <TableCell>{item.composer}</TableCell>
+                <TableCell>{item.premiere ? t('common:yes') : null}</TableCell>
               </TableRow>
             ))}
           </TableBody>
