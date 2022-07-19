@@ -12,6 +12,7 @@ import {
   FormControlLabel,
 } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
+import { DatePicker } from '@mui/x-date-pickers';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
@@ -21,6 +22,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
 import i18n from '../../../../../../translations/i18n';
 import { Concert, MusicalWorkPerformance } from '../../../../../../types/publication_types/artisticRegistration.types';
+import { datePickerTranslationProps } from '../../../../../../themes/mainTheme';
+import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 
 interface ConcertModalProps {
   concert?: Concert;
@@ -37,9 +40,8 @@ const emptyConcert: Concert = {
     country: '',
   },
   time: {
-    type: 'Period',
-    from: '',
-    to: '',
+    type: 'Instant',
+    value: '',
   },
   extent: '',
   description: '',
@@ -61,12 +63,18 @@ const validationSchema = Yup.object().shape({
       })
     ),
   }),
+  time: Yup.object().shape({
+    value: Yup.string().required(
+      i18n.t('feedback:validation.is_required', {
+        field: i18n.t('common:date'),
+      })
+    ),
+  }),
   extent: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
-      field: i18n.t('registration:resource_type.artistic.extent'),
+      field: i18n.t('registration:resource_type.artistic.extent_in_minutes'),
     })
   ),
-  time: Yup.object(),
   concertProgramme: Yup.array()
     .of(
       Yup.object().shape({
@@ -127,13 +135,48 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                 )}
               </Field>
 
+              <Field name="time.value">
+                {({
+                  field,
+                  form: { setFieldTouched, setFieldValue },
+                  meta: { error, touched },
+                }: FieldProps<string>) => (
+                  <DatePicker
+                    {...datePickerTranslationProps}
+                    label={t('common:date')}
+                    value={field.value ?? null}
+                    onChange={(date: Date | null, keyboardInput) => {
+                      !touched && setFieldTouched(field.name, true, false);
+                      const newValue = getNewDateValue(date, keyboardInput);
+                      if (newValue !== null) {
+                        setFieldValue(field.name, newValue);
+                      }
+                    }}
+                    inputFormat="dd.MM.yyyy"
+                    mask="__.__.____"
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        {...field}
+                        sx={{ maxWidth: '15rem' }}
+                        variant="filled"
+                        required
+                        error={touched && !!error}
+                        helperText={<ErrorMessage name={field.name} />}
+                      />
+                    )}
+                  />
+                )}
+              </Field>
+
               <Field name="extent">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
+                    sx={{ maxWidth: '15rem' }}
                     variant="filled"
                     fullWidth
-                    label={t('resource_type.artistic.extent')}
+                    label={t('resource_type.artistic.extent_in_minutes')}
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
