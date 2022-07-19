@@ -37,7 +37,7 @@
     "@fontsource/barlow": "^4.5.7",
     "@fontsource/crimson-text": "^4.5.3",
     "@mui/icons-material": "^5.8.4",
-    "@mui/lab": "5.0.0-alpha.89",
+    "@mui/lab": "5.0.0-alpha.91",
     "@mui/material": "^5.9.1",
     "@reduxjs/toolkit": "^1.8.3",
     "@uppy/aws-s3-multipart": "^1.8.18",
