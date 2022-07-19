@@ -103,8 +103,8 @@ const validationSchema = Yup.object().shape({
 export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertModalProps) => {
   const { t } = useTranslation('registration');
 
-  const [removeTrackIndex, setRemoveTrackIndex] = useState(-1);
-  const closeConfirmDialog = () => setRemoveTrackIndex(-1);
+  const [removeWorkItemIndex, setRemoveWorkItemIndex] = useState(-1);
+  const closeConfirmDialog = () => setRemoveWorkItemIndex(-1);
 
   return (
     <Dialog open={open} onClose={closeModal} maxWidth="md" fullWidth>
@@ -232,7 +232,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                             variant="outlined"
                             color="error"
                             title={t('resource_type.artistic.remove_concert')}
-                            onClick={() => setRemoveTrackIndex(index)}
+                            onClick={() => setRemoveWorkItemIndex(index)}
                             sx={{ px: '2rem' }}
                             startIcon={<DeleteIcon />}>
                             {t('common:remove')}
@@ -242,10 +242,10 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                     })}
                     <ConfirmDialog
                       title={t('resource_type.artistic.remove_concert')}
-                      open={removeTrackIndex > -1}
+                      open={removeWorkItemIndex > -1}
                       onCancel={closeConfirmDialog}
                       onAccept={() => {
-                        remove(removeTrackIndex);
+                        remove(removeWorkItemIndex);
                         closeConfirmDialog();
                       }}>
                       <Typography>{t('resource_type.artistic.remove_concert_description')}</Typography>
