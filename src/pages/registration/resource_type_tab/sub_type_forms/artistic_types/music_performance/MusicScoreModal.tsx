@@ -48,7 +48,7 @@ const validationSchema = Yup.object().shape({
   ),
   extent: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
-      field: i18n.t('registration:resource_type.artistic.music_score_extent'),
+      field: i18n.t('registration:resource_type.artistic.extent'),
     })
   ),
   publisher: Yup.object().shape({
@@ -145,7 +145,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('resource_type.artistic.music_score_extent')}
+                  label={t('resource_type.artistic.extent')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
