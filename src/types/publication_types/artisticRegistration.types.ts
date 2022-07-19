@@ -91,9 +91,33 @@ export interface MusicScore extends ArtisticOutputBase {
   };
 }
 
+export enum MusicMediaType {
+  CompactDisc = 'CompactDisc',
+  DVD = 'DVD',
+  Streaming = 'Streaming',
+  DigitalFile = 'DigitalFile',
+  Vinyl = 'Vinyl',
+  Other = 'Other',
+}
+
+export interface MusicTrack {
+  type: 'MusicTrack';
+  title: string;
+  composer: string;
+  extent: string;
+}
+
+export interface AudioVisualPublication extends ArtisticOutputBase {
+  type: 'AudioVisualPublication';
+  mediaType: MusicMediaType | '';
+  publisher: string;
+  catalogueNumber: string;
+  trackList: MusicTrack[];
+}
+
 export type FilmOutput = Broadcast | CinematicRelease | OtherRelease;
 export type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
-export type MusicOutput = MusicScore;
+export type MusicOutput = MusicScore | AudioVisualPublication;
 
 export type ArtisticOutputItem = Venue | ArchitectureOutput | FilmOutput | MusicOutput;
 
@@ -104,7 +128,7 @@ export interface ArtisticPublicationInstance {
   venues?: Venue[];
   architectureOutput?: ArchitectureOutput[];
   outputs?: Venue[] | FilmOutput[];
-  manifestations?: any[];
+  manifestations?: MusicOutput[];
 }
 
 export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {

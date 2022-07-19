@@ -4,6 +4,7 @@ import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IMaskInput } from 'react-imask';
 import * as Yup from 'yup';
+import SaveIcon from '@mui/icons-material/Save';
 import i18n from '../../../../../../translations/i18n';
 import { MusicScore } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
@@ -198,7 +199,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
             <Button variant="outlined" onClick={closeModal}>
               {t('common:cancel')}
             </Button>
-            <Button variant="contained" type="submit">
+            <Button variant="contained" type="submit" startIcon={<SaveIcon />}>
               {musicScore ? t('common:update') : t('common:add')}
             </Button>
           </DialogActions>
