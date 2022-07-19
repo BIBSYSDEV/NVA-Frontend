@@ -10,9 +10,16 @@ import {
   Link,
   Tooltip,
   Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
 } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useState } from 'react';
+import { visuallyHidden } from '@mui/utils';
 import { BookPublicationContext, ContextPublisher } from '../../types/publication_types/bookRegistration.types';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
@@ -34,6 +41,7 @@ import {
   CinematicRelease,
   OtherRelease,
   MusicScore,
+  AudioVisualPublication,
 } from '../../types/publication_types/artisticRegistration.types';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
@@ -275,6 +283,8 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
             <PublicOtherReleaseDialogContent otherRelease={output as OtherRelease} />
           ) : output.type === 'MusicScore' ? (
             <PublicMusicScoreDialogContent musicScore={output as MusicScore} />
+          ) : output.type === 'AudioVisualPublication' ? (
+            <PublicAudioVisualPublicationDialogContent audioVisualPublication={output as AudioVisualPublication} />
           ) : null}
         </ErrorBoundary>
 
@@ -434,6 +444,53 @@ const PublicMusicScoreDialogContent = ({ musicScore }: { musicScore: MusicScore 
       <Typography paragraph>{ismn.formatted ?? ismn.value}</Typography>
       <Typography variant="overline">{t('resource_type.artistic.music_score_isrc')}</Typography>
       <Typography paragraph>{hyphenateIsrc(isrc.value)}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicAudioVisualPublicationDialogContent = ({
+  audioVisualPublication,
+}: {
+  audioVisualPublication: AudioVisualPublication;
+}) => {
+  const { t } = useTranslation('registration');
+  const { type, mediaType, publisher, catalogueNumber, trackList } = audioVisualPublication;
+
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('common:type')}</Typography>
+      <Typography paragraph>{t(`resource_type.artistic.output_type.${type}`)}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.media_type')}</Typography>
+      <Typography paragraph>{t(`resource_type.artistic.music_media_type.${mediaType}`)}</Typography>
+      <Typography variant="overline">{t('common:publisher')}</Typography>
+      <Typography paragraph>{publisher}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.catalogue_number')}</Typography>
+      <Typography paragraph>{catalogueNumber}</Typography>
+      <Typography variant="overline" id="tracks-heading">
+        {t('resource_type.artistic.content_track')}
+      </Typography>
+
+      <TableContainer>
+        <Table aria-labelledby="tracks-heading">
+          <caption style={visuallyHidden}>{t('resource_type.artistic.content_track_table_caption')}</caption>
+          <TableHead>
+            <TableRow>
+              <TableCell>{t('common:title')}</TableCell>
+              <TableCell>{t('resource_type.artistic.composer')}</TableCell>
+              <TableCell>{t('resource_type.artistic.extent_in_minutes')}</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {trackList.map((track, index) => (
+              <TableRow key={index}>
+                <TableCell>{track.title}</TableCell>
+                <TableCell>{track.composer}</TableCell>
+                <TableCell>{track.extent}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </DialogContent>
   );
 };

@@ -203,6 +203,7 @@
       "competition_rank": "Rangering/innkjøp/omtale/invitert",
       "composer": "Komponist",
       "content_track": "Innhold/spor",
+      "content_track_table_caption": "Oversikt over innhold/spor",
       "design_type": {
         "ClothingDesign": "Klesdesign",
         "Exhibition": "Utstilling/messe",
@@ -258,7 +259,7 @@
       "other_announcement_organizer": "Utgiver/arrangør eller lignende",
       "other_release_description": "Type formidlingsform",
       "output_type": {
-        "AudioVisualPublication": "Legg til audio-/videoutgivelse",
+        "AudioVisualPublication": "Audio-/videoutgivelse",
         "Award": "Pris/utmerkelse",
         "Broadcast": "TV/web/streaming",
         "CinematicRelease": "Festival/kino",

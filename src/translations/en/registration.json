@@ -203,6 +203,7 @@
       "competition_rank": "Rank/purchase/mention/invited",
       "composer": "Composer",
       "content_track": "Content/tracks",
+      "content_track_table_caption": "Overview over content/tracks",
       "design_type": {
         "ClothingDesign": "Clothing design",
         "Exhibition": "Exhibition",
