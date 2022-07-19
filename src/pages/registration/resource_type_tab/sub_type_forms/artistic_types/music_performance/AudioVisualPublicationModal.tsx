@@ -106,7 +106,7 @@ export const AudioVisualPublicationModal = ({
 }: AudioVisualPublicationModalProps) => {
   const { t } = useTranslation('registration');
 
-  const [removeTrackIndex, setRemoveTrackIndex] = useState(-1); // Index of track to remove (-1 means none)
+  const [removeTrackIndex, setRemoveTrackIndex] = useState(-1);
   const closeConfirmDialog = () => setRemoveTrackIndex(-1);
 
   return (
@@ -179,7 +179,7 @@ export const AudioVisualPublicationModal = ({
                     {values.trackList.map((_, index) => {
                       const baseFieldName = `${name}[${index}]`;
                       return (
-                        <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                        <Box key={index} sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                           <Field name={`${baseFieldName}.title`}>
                             {({ field, meta: { touched, error } }: FieldProps<string>) => (
                               <TextField

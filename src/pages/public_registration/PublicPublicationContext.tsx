@@ -436,7 +436,7 @@ const PublicMusicScoreDialogContent = ({ musicScore }: { musicScore: MusicScore 
       <Typography paragraph>{ensemble}</Typography>
       <Typography variant="overline">{t('resource_type.artistic.music_score_movements')}</Typography>
       <Typography paragraph>{movements}</Typography>
-      <Typography variant="overline">{t('resource_type.artistic.extent')}</Typography>
+      <Typography variant="overline">{t('resource_type.artistic.music_score_extent')}</Typography>
       <Typography paragraph>{extent}</Typography>
       <Typography variant="overline">{t('common:publisher')}</Typography>
       <Typography paragraph>{publisher.name}</Typography>
