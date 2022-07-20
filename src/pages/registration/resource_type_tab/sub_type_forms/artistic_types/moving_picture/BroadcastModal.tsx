@@ -3,7 +3,6 @@ import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } 
 import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import { datePickerTranslationProps } from '../../../../../../themes/mainTheme';
 import { Broadcast } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { PublicationChannelType } from '../../../../../../types/registration.types';
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
@@ -75,7 +74,6 @@ export const BroadcastModal = ({ broadcast, onSubmit, open, closeModal }: Broadc
             <Field name="date.value">
               {({ field, form: { setFieldTouched, setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
                 <DatePicker
-                  {...datePickerTranslationProps}
                   label={t('common:date')}
                   value={field.value ?? null}
                   onChange={(date: Date | null, keyboardInput) => {

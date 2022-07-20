@@ -26,7 +26,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import LockIcon from '@mui/icons-material/LockOutlined';
 import { DatePicker } from '@mui/x-date-pickers';
-import { datePickerTranslationProps } from '../../../themes/mainTheme';
 import { File, LicenseNames, licenses } from '../../../types/file.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
@@ -131,7 +130,6 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
               {({ field, meta: { error, touched } }: FieldProps) => (
                 <Box sx={{ gridArea: 'date' }}>
                   <DatePicker
-                    {...datePickerTranslationProps}
                     {...field}
                     label={t('files_and_license.file_publish_date')}
                     value={field.value ?? null}

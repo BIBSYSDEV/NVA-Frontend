@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Box } from '@mui/material';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { getDateFnsLocale } from './utils/date-helpers';
 import { getCurrentUserAttributes } from './api/userApi';
@@ -28,6 +28,7 @@ import { UrlPathTemplate } from './utils/urlPaths';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInstitutionDialog';
 import { CreateCristinPersonDialog } from './components/CreateCristinPersonDialog';
+import { nbNOPickersLocale } from './themes/datePickerNorwegianLocale';
 
 const getLanguageTagValue = (language: string) => {
   if (language === 'eng') {
@@ -131,7 +132,11 @@ export const App = () => {
                 flexGrow: 1,
               }}>
               <ErrorBoundary>
-                <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
+                <LocalizationProvider
+                  dateAdapter={AdapterDateFns}
+                  adapterLocale={getDateFnsLocale(i18n.language)}
+                  // TODO: Use translations from MUI when they are part of the package -> https://github.com/mui/mui-x/pull/5475
+                  localeText={i18n.language === 'nob' ? nbNOPickersLocale : undefined}>
                   <AppRoutes />
                 </LocalizationProvider>
               </ErrorBoundary>

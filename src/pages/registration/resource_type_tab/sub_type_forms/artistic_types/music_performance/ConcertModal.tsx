@@ -22,7 +22,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
 import i18n from '../../../../../../translations/i18n';
 import { Concert, MusicalWorkPerformance } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { datePickerTranslationProps } from '../../../../../../themes/mainTheme';
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 
 interface ConcertModalProps {
@@ -142,7 +141,6 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                   meta: { error, touched },
                 }: FieldProps<string>) => (
                   <DatePicker
-                    {...datePickerTranslationProps}
                     label={t('common:date')}
                     value={field.value ?? null}
                     onChange={(date: Date | null, keyboardInput) => {

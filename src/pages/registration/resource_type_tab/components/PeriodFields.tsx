@@ -2,7 +2,6 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { datePickerTranslationProps } from '../../../../themes/mainTheme';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getNewDateValue } from '../../../../utils/registration-helpers';
 
@@ -24,7 +23,6 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
       <Field name={fromFieldName}>
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <DatePicker
-            {...datePickerTranslationProps}
             label={t('resource_type.date_from')}
             value={field.value ?? null}
             onChange={(date, keyboardInput) => {
@@ -55,7 +53,6 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
       <Field name={toFieldName}>
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <DatePicker
-            {...datePickerTranslationProps}
             label={t('resource_type.date_to')}
             value={field.value ?? null}
             onChange={(date, keyboardInput) => {

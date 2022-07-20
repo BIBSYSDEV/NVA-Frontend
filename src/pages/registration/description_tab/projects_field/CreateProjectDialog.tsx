@@ -17,7 +17,6 @@ import { useDispatch } from 'react-redux';
 import { CristinApiPath } from '../../../../api/apiPaths';
 import { authenticatedApiRequest } from '../../../../api/apiRequest';
 import { setNotification } from '../../../../redux/notificationSlice';
-import { datePickerTranslationProps } from '../../../../themes/mainTheme';
 import { PostCristinProject } from '../../../../types/project.types';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
@@ -102,7 +101,6 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                   <Field name="startDate">
                     {({ field, meta: { touched, error } }: FieldProps<string>) => (
                       <DatePicker
-                        {...datePickerTranslationProps}
                         label={t('common:start_date')}
                         onChange={(date: Date | null, keyboardValue) => {
                           const newDateString = getNewDateValue(date, keyboardValue);
@@ -129,7 +127,6 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                   <Field name="endDate">
                     {({ field, meta: { touched, error } }: FieldProps<string>) => (
                       <DatePicker
-                        {...datePickerTranslationProps}
                         label={t('common:end_date')}
                         onChange={(date: Date | null, keyboardValue) => {
                           const newDateString = getNewDateValue(date, keyboardValue);
