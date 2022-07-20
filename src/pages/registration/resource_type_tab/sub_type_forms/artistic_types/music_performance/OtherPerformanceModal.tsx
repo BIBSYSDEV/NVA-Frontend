@@ -5,7 +5,6 @@ import {
   TextField,
   DialogActions,
   Button,
-  MenuItem,
   Typography,
   FormHelperText,
   Box,
@@ -20,50 +19,54 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
 import i18n from '../../../../../../translations/i18n';
 import {
-  AudioVisualPublication,
-  MusicMediaType,
-  MusicTrack,
+  MusicalWork,
+  OtherMusicPerformance,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 
-interface AudioVisualPublicationModalProps {
-  audioVisualPublication?: AudioVisualPublication;
-  onSubmit: (audioVisualPublication: AudioVisualPublication) => void;
+interface OtherPerformanceModalProps {
+  otherPerformance?: OtherMusicPerformance;
+  onSubmit: (otherPerformance: OtherMusicPerformance) => void;
   open: boolean;
   closeModal: () => void;
 }
 
-const emptyAudioVisualPublication: AudioVisualPublication = {
-  type: 'AudioVisualPublication',
-  mediaType: '',
-  publisher: '',
-  catalogueNumber: '',
-  trackList: [],
+const emptyOtherPerformance: OtherMusicPerformance = {
+  type: 'OtherPerformance',
+  place: {
+    type: 'UnconfirmedPlace',
+    label: '',
+    country: '',
+  },
+  performanceType: '',
+  extent: '',
+  musicalWorks: [],
 };
 
-const emptyMusicTrack: MusicTrack = {
-  type: 'MusicTrack',
+const emptyMusicalWork: MusicalWork = {
+  type: 'MusicalWork',
   title: '',
   composer: '',
-  extent: '',
 };
 
 const validationSchema = Yup.object().shape({
-  mediaType: Yup.string().required(
+  place: Yup.object().shape({
+    label: Yup.string().required(
+      i18n.t('feedback:validation.is_required', {
+        field: i18n.t('common:place'),
+      })
+    ),
+  }),
+  performanceType: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
-      field: i18n.t('registration:resource_type.artistic.media_type'),
+      field: i18n.t('registration:resource_type.artistic.performance_type'),
     })
   ),
-  publisher: Yup.string().required(
+  extent: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
-      field: i18n.t('common:publisher'),
+      field: i18n.t('registration:resource_type.artistic.extent_in_minutes'),
     })
   ),
-  catalogueNumber: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
-      field: i18n.t('registration:resource_type.artistic.catalogue_number'),
-    })
-  ),
-  trackList: Yup.array()
+  musicalWorks: Yup.array()
     .of(
       Yup.object().shape({
         title: Yup.string().required(
@@ -76,107 +79,88 @@ const validationSchema = Yup.object().shape({
             field: i18n.t('registration:resource_type.artistic.composer'),
           })
         ),
-        extent: Yup.number()
-          .typeError(
-            i18n.t('feedback:validation.has_invalid_format', {
-              field: i18n.t('registration:resource_type.artistic.extent_in_minutes'),
-            })
-          )
-          .required(
-            i18n.t('feedback:validation.is_required', {
-              field: i18n.t('registration:resource_type.artistic.extent_in_minutes'),
-            })
-          ),
       })
     )
     .min(
       1,
       i18n.t('feedback:validation.must_have_minimum', {
         min: 1,
-        field: i18n.t('registration:resource_type.artistic.content_track').toLocaleLowerCase(),
+        field: i18n.t('registration:resource_type.artistic.musical_work_item').toLocaleLowerCase(),
       })
     ),
 });
 
-export const AudioVisualPublicationModal = ({
-  audioVisualPublication,
-  onSubmit,
-  open,
-  closeModal,
-}: AudioVisualPublicationModalProps) => {
+export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeModal }: OtherPerformanceModalProps) => {
   const { t } = useTranslation('registration');
 
-  const [removeTrackIndex, setRemoveTrackIndex] = useState(-1);
-  const closeConfirmDialog = () => setRemoveTrackIndex(-1);
+  const [removeWorkItemIndex, setRemoveWorkItemIndex] = useState(-1);
+  const closeConfirmDialog = () => setRemoveWorkItemIndex(-1);
 
   return (
     <Dialog open={open} onClose={closeModal} maxWidth="md" fullWidth>
       <DialogTitle>
-        {audioVisualPublication
-          ? t('resource_type.artistic.edit_audio_visual_publication')
-          : t('resource_type.artistic.add_audio_visual_publication')}
+        {otherPerformance
+          ? t('resource_type.artistic.edit_other_performance')
+          : t('resource_type.artistic.add_other_performance')}
       </DialogTitle>
       <Formik
-        initialValues={audioVisualPublication ?? emptyAudioVisualPublication}
+        initialValues={otherPerformance ?? emptyOtherPerformance}
         validationSchema={validationSchema}
         onSubmit={(values) => {
           onSubmit(values);
           closeModal();
         }}>
-        {({ values, errors, touched }: FormikProps<AudioVisualPublication>) => (
+        {({ values, errors, touched }: FormikProps<OtherMusicPerformance>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <Field name="mediaType">
-                {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                  <TextField
-                    variant="filled"
-                    select
-                    required
-                    label={t('resource_type.artistic.media_type')}
-                    fullWidth
-                    {...field}
-                    error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}>
-                    {Object.values(MusicMediaType).map((mediaType) => (
-                      <MenuItem key={mediaType} value={mediaType}>
-                        {t(`resource_type.artistic.music_media_type.${mediaType}`)}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                )}
-              </Field>
-              <Field name="publisher">
+              <Field name="performanceType">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
                     variant="filled"
                     fullWidth
-                    label={t('common:publisher')}
+                    label={t('resource_type.artistic.performance_type')}
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                   />
                 )}
               </Field>
-              <Field name="catalogueNumber">
+              <Field name="place.label">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
                     variant="filled"
                     fullWidth
-                    label={t('resource_type.artistic.catalogue_number')}
+                    label={t('common:place')}
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                   />
                 )}
               </Field>
-              <FieldArray name="trackList">
+
+              <Field name="extent">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    sx={{ maxWidth: '15rem' }}
+                    variant="filled"
+                    fullWidth
+                    label={t('resource_type.artistic.extent_in_minutes')}
+                    required
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
+              </Field>
+
+              <FieldArray name="musicalWorks">
                 {({ name, push, remove }: FieldArrayRenderProps) => (
                   <>
-                    <Typography variant="h3">{t('resource_type.artistic.content_track')}</Typography>
+                    <Typography variant="h3">{t('resource_type.artistic.musical_works')}</Typography>
 
-                    {values.trackList.map((_, index) => {
+                    {values.musicalWorks.map((_, index) => {
                       const baseFieldName = `${name}[${index}]`;
                       return (
                         <Box key={index} sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
@@ -206,24 +190,11 @@ export const AudioVisualPublicationModal = ({
                               />
                             )}
                           </Field>
-                          <Field name={`${baseFieldName}.extent`}>
-                            {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                              <TextField
-                                {...field}
-                                variant="filled"
-                                fullWidth
-                                label={t('resource_type.artistic.extent_in_minutes')}
-                                required
-                                error={touched && !!error}
-                                helperText={<ErrorMessage name={field.name} />}
-                              />
-                            )}
-                          </Field>
                           <Button
                             variant="outlined"
                             color="error"
                             title={t('resource_type.artistic.remove_music_work')}
-                            onClick={() => setRemoveTrackIndex(index)}
+                            onClick={() => setRemoveWorkItemIndex(index)}
                             sx={{ px: '2rem' }}
                             startIcon={<DeleteIcon />}>
                             {t('common:remove')}
@@ -233,10 +204,10 @@ export const AudioVisualPublicationModal = ({
                     })}
                     <ConfirmDialog
                       title={t('resource_type.artistic.remove_music_work')}
-                      open={removeTrackIndex > -1}
+                      open={removeWorkItemIndex > -1}
                       onCancel={closeConfirmDialog}
                       onAccept={() => {
-                        remove(removeTrackIndex);
+                        remove(removeWorkItemIndex);
                         closeConfirmDialog();
                       }}>
                       <Typography>{t('resource_type.artistic.remove_music_work_description')}</Typography>
@@ -245,11 +216,11 @@ export const AudioVisualPublicationModal = ({
                     <Button
                       variant="outlined"
                       sx={{ width: 'fit-content' }}
-                      onClick={() => push(emptyMusicTrack)}
+                      onClick={() => push(emptyMusicalWork)}
                       startIcon={<AddIcon />}>
-                      {t('common:add')} {t('resource_type.artistic.content_track').toLocaleLowerCase()}
+                      {t('common:add')} {t('resource_type.artistic.musical_work_item').toLocaleLowerCase()}
                     </Button>
-                    {!!touched.trackList && typeof errors.trackList === 'string' && (
+                    {!!touched.musicalWorks && typeof errors.musicalWorks === 'string' && (
                       <FormHelperText error>
                         <ErrorMessage name={name} />
                       </FormHelperText>
@@ -263,7 +234,7 @@ export const AudioVisualPublicationModal = ({
                 {t('common:cancel')}
               </Button>
               <Button variant="contained" type="submit" startIcon={<SaveIcon />}>
-                {audioVisualPublication ? t('common:update') : t('common:add')}
+                {otherPerformance ? t('common:update') : t('common:add')}
               </Button>
             </DialogActions>
           </Form>

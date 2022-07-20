@@ -22,8 +22,9 @@ import { OutputRow } from '../OutputRow';
 import { MusicScoreModal } from './MusicScoreModal';
 import { AudioVisualPublicationModal } from './AudioVisualPublicationModal';
 import { ConcertModal } from './ConcertModal';
+import { OtherPerformanceModal } from './OtherPerformanceModal';
 
-type ArtisticMusicPerformanceModalType = '' | 'MusicScore' | 'AudioVisualPublication' | 'Concert';
+type ArtisticMusicPerformanceModalType = '' | 'MusicScore' | 'AudioVisualPublication' | 'Concert' | 'OtherPerformance';
 
 export const ArtisticMusicPerformanceForm = () => {
   const { t } = useTranslation('registration');
@@ -90,6 +91,11 @@ export const ArtisticMusicPerformanceForm = () => {
                 closeModal={closeModal}
               />
               <ConcertModal onSubmit={onAddOutput} open={openModal === 'Concert'} closeModal={closeModal} />
+              <OtherPerformanceModal
+                onSubmit={onAddOutput}
+                open={openModal === 'OtherPerformance'}
+                closeModal={closeModal}
+              />
 
               <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
                 <Button onClick={() => setOpenModal('Concert')} variant="outlined" startIcon={<AddCircleOutlineIcon />}>
@@ -106,6 +112,12 @@ export const ArtisticMusicPerformanceForm = () => {
                   variant="outlined"
                   startIcon={<AddCircleOutlineIcon />}>
                   {t('resource_type.artistic.add_music_score')}
+                </Button>
+                <Button
+                  onClick={() => setOpenModal('OtherPerformance')}
+                  variant="outlined"
+                  startIcon={<AddCircleOutlineIcon />}>
+                  {t('resource_type.artistic.add_other_performance')}
                 </Button>
               </Box>
             </>

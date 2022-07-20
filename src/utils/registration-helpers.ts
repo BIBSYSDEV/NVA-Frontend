@@ -28,6 +28,7 @@ import {
   MusicScore,
   AudioVisualPublication,
   Concert,
+  OtherMusicPerformance,
 } from '../types/publication_types/artisticRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 
@@ -235,6 +236,8 @@ export const getArtisticOutputName = (item: ArtisticOutputItem) => {
       return (item as AudioVisualPublication).publisher;
     case 'Concert':
       return (item as Concert).place.label;
+    case 'OtherPerformance':
+      return (item as OtherMusicPerformance).place.label;
     default:
       return '';
   }
