@@ -222,7 +222,7 @@ export const AudioVisualPublicationModal = ({
                           <Button
                             variant="outlined"
                             color="error"
-                            title={t('resource_type.artistic.remove_content_track')}
+                            title={t('resource_type.artistic.remove_music_work')}
                             onClick={() => setRemoveTrackIndex(index)}
                             sx={{ px: '2rem' }}
                             startIcon={<DeleteIcon />}>
@@ -232,14 +232,14 @@ export const AudioVisualPublicationModal = ({
                       );
                     })}
                     <ConfirmDialog
-                      title={t('resource_type.artistic.remove_content_track')}
+                      title={t('resource_type.artistic.remove_music_work')}
                       open={removeTrackIndex > -1}
                       onCancel={closeConfirmDialog}
                       onAccept={() => {
                         remove(removeTrackIndex);
                         closeConfirmDialog();
                       }}>
-                      <Typography>{t('resource_type.artistic.remove_content_track_description')}</Typography>
+                      <Typography>{t('resource_type.artistic.remove_music_work_description')}</Typography>
                     </ConfirmDialog>
 
                     <Button

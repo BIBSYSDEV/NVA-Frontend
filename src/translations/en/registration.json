@@ -291,8 +291,8 @@
       "premiere_date": "Premiere date",
       "remove_announcement": "Remove announcement",
       "remove_announcement_description": "Are you sure you want to remove \"{{name}}\" from list over announcements?",
-      "remove_content_track": "Remove content/track",
-      "remove_content_track_description": "Are you sure you want to remove this content/track?",
+      "remove_music_work": "Remove work",
+      "remove_music_work_description": "Are you sure you want to remove this work?",
       "remove_venue_title": "Remove exhibition place?",
       "remove_venue_text": "Are you sure you want to remove \"{{name}}\" from list over exhibition places?"
     },
