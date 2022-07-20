@@ -22,6 +22,7 @@ import {
   MusicalWork,
   OtherMusicPerformance,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
+import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 
 interface OtherPerformanceModalProps {
   otherPerformance?: OtherMusicPerformance;
@@ -48,7 +49,7 @@ const emptyMusicalWork: MusicalWork = {
   composer: '',
 };
 
-const validationSchema = Yup.object().shape({
+const validationSchema = Yup.object<YupShape<OtherMusicPerformance>>({
   place: Yup.object().shape({
     label: Yup.string().required(
       i18n.t('feedback:validation.is_required', {
@@ -68,7 +69,7 @@ const validationSchema = Yup.object().shape({
   ),
   musicalWorks: Yup.array()
     .of(
-      Yup.object().shape({
+      Yup.object<YupShape<MusicalWork>>({
         title: Yup.string().required(
           i18n.t('feedback:validation.is_required', {
             field: i18n.t('common:title'),

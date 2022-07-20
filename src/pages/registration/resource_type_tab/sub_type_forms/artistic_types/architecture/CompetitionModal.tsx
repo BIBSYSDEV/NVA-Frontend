@@ -7,6 +7,7 @@ import { Competition } from '../../../../../../types/publication_types/artisticR
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import i18n from '../../../../../../translations/i18n';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 
 interface CompetitionModalProps {
   competition?: Competition;
@@ -29,7 +30,7 @@ const emptyCompetition: Competition = {
   sequence: 0,
 };
 
-const validationSchema = Yup.object().shape({
+const validationSchema = Yup.object<YupShape<Competition>>({
   name: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
       field: i18n.t('registration:resource_type.artistic.competition_name'),

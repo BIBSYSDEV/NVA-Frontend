@@ -16,6 +16,9 @@ import {
 } from './referenceValidation';
 import i18n from '../../../translations/i18n';
 import { getMainRegistrationType, isBook } from '../../registration-helpers';
+import { Registration, EntityDescription, RegistrationDate } from '../../../types/registration.types';
+import { YupShape } from '../validationHelpers';
+import { FileSet } from '../../../types/file.types';
 
 const registrationErrorMessage = {
   titleRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('common:title') }),
@@ -31,8 +34,8 @@ const registrationErrorMessage = {
   fileRequired: i18n.t('feedback:validation.minimum_one_file'),
 };
 
-export const registrationValidationSchema = Yup.object().shape({
-  entityDescription: Yup.object().shape({
+export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
+  entityDescription: Yup.object<YupShape<EntityDescription>>({
     mainTitle: Yup.string().nullable().required(registrationErrorMessage.titleRequired),
     abstract: Yup.string().nullable(),
     description: Yup.string().nullable(),
@@ -42,7 +45,7 @@ export const registrationValidationSchema = Yup.object().shape({
         ? Yup.string().nullable().required(registrationErrorMessage.npiSubjectRequired)
         : Yup.string().nullable()
     ),
-    date: Yup.object().shape({
+    date: Yup.object<YupShape<RegistrationDate>>({
       year: Yup.number()
         .typeError(registrationErrorMessage.publishedDateInvalid)
         .required(registrationErrorMessage.publishedDateRequired),
@@ -50,7 +53,6 @@ export const registrationValidationSchema = Yup.object().shape({
       day: Yup.number().transform(emptyStringToNull).nullable(),
     }),
     language: Yup.string().nullable(),
-    projects: Yup.array().of(Yup.object()),
     contributors: contributorsValidationSchema,
     reference: Yup.object().when('$publicationInstanceType', (publicationInstanceType) => {
       const mainType = getMainRegistrationType(publicationInstanceType);
@@ -76,10 +78,11 @@ export const registrationValidationSchema = Yup.object().shape({
       }
     }),
   }),
-  fileSet: Yup.object().shape({
+  fileSet: Yup.object<YupShape<FileSet>>({
     files: Yup.array()
       .of(fileValidationSchema)
       .min(1, registrationErrorMessage.fileRequired)
       .required(registrationErrorMessage.fileRequired),
   }),
+  projects: Yup.array().of(Yup.object()),
 });

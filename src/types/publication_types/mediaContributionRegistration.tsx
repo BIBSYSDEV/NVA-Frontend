@@ -15,7 +15,7 @@ export enum MediaMedium {
   Other = 'Other',
 }
 
-interface MediaContributionPublicationInstance {
+export interface MediaContributionPublicationInstance {
   type: MediaType | '';
 }
 

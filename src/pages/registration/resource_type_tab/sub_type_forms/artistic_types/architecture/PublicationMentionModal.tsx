@@ -7,6 +7,7 @@ import { MentionInPublication } from '../../../../../../types/publication_types/
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import i18n from '../../../../../../translations/i18n';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 
 interface PublicationMentionModalProps {
   mentionInPublication?: MentionInPublication;
@@ -24,7 +25,7 @@ const emptyMentionInPublication: MentionInPublication = {
   sequence: 0,
 };
 
-const validationSchema = Yup.object().shape({
+const validationSchema = Yup.object<YupShape<MentionInPublication>>({
   title: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
       field: i18n.t('registration:resource_type.artistic.mention_title'),

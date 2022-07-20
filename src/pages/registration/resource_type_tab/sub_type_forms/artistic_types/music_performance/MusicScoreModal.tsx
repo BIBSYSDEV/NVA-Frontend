@@ -8,6 +8,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import i18n from '../../../../../../translations/i18n';
 import { MusicScore } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
+import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 
 interface MusicScoreModalProps {
   musicScore?: MusicScore;
@@ -35,7 +36,7 @@ const emptyMusicScore: MusicScore = {
   },
 };
 
-const validationSchema = Yup.object().shape({
+const validationSchema = Yup.object<YupShape<MusicScore>>({
   ensemble: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
       field: i18n.t('registration:resource_type.artistic.music_score_ensemble'),

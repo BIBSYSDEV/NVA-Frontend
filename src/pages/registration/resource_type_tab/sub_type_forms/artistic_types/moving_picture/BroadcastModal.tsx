@@ -7,6 +7,7 @@ import { Broadcast } from '../../../../../../types/publication_types/artisticReg
 import { PublicationChannelType } from '../../../../../../types/registration.types';
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import i18n from '../../../../../../translations/i18n';
+import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 
 interface BroadcastModalProps {
   broadcast?: Broadcast;
@@ -24,7 +25,7 @@ const emptyBroadcast: Broadcast = {
   date: { type: 'Instant', value: '' },
 };
 
-const validationSchema = Yup.object().shape({
+const validationSchema = Yup.object<YupShape<Broadcast>>({
   publisher: Yup.object().shape({
     name: Yup.string().required(
       i18n.t('feedback:validation.is_required', {

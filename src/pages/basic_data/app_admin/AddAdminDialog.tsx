@@ -22,7 +22,7 @@ interface AddAdminDialogProps extends Pick<DialogProps, 'open'> {
   cristinInstitutionId: string;
 }
 
-interface AddAdminFormData {
+export interface AddAdminFormData {
   startDate: string;
   position: string;
 }

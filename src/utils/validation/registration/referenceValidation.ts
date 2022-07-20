@@ -17,8 +17,36 @@ import {
   JournalArticleContentType,
   nviApplicableContentTypes,
 } from '../../../types/publication_types/content.types';
-import { DesignType } from '../../../types/publication_types/artisticRegistration.types';
-import { validateDateInterval } from '../validationHelpers';
+import { ArtisticPublicationInstance, DesignType } from '../../../types/publication_types/artisticRegistration.types';
+import { validateDateInterval, YupShape } from '../validationHelpers';
+import {
+  JournalPublicationInstance,
+  JournalPublicationContext,
+} from '../../../types/publication_types/journalRegistration.types';
+import {
+  BookPublicationInstance,
+  BookPublicationContext,
+} from '../../../types/publication_types/bookRegistration.types';
+import {
+  ReportPublicationContext,
+  ReportPublicationInstance,
+} from '../../../types/publication_types/reportRegistration.types';
+import {
+  DegreePublicationInstance,
+  DegreePublicationContext,
+} from '../../../types/publication_types/degreeRegistration.types';
+import {
+  ChapterPublicationInstance,
+  ChapterPublicationContext,
+} from '../../../types/publication_types/chapterRegistration.types';
+import {
+  PresentationPublicationContext,
+  PresentationPublicationInstance,
+} from '../../../types/publication_types/presentationRegistration.types';
+import {
+  MediaContributionPublicationContext,
+  MediaContributionPublicationInstance,
+} from '../../../types/publication_types/mediaContributionRegistration';
 
 const resourceErrorMessage = {
   announcementsRequired: i18n.t('feedback:validation.announcement_required'),
@@ -202,7 +230,7 @@ export const baseReference = Yup.object()
   .required(resourceErrorMessage.typeRequired);
 
 // Journal
-const journalPublicationInstance = Yup.object().shape({
+const journalPublicationInstance = Yup.object<YupShape<JournalPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(JournalType)).required(resourceErrorMessage.typeRequired),
   articleNumber: Yup.string().nullable(),
   volume: Yup.string().nullable(),
@@ -229,7 +257,7 @@ const journalPublicationInstance = Yup.object().shape({
   peerReviewed: peerReviewedField,
 });
 
-const journalPublicationContext = Yup.object().shape({
+const journalPublicationContext = Yup.object<YupShape<JournalPublicationContext>>({
   id: Yup.string().when('$publicationInstanceType', {
     is: JournalType.Corrigendum,
     then: Yup.string(),
@@ -247,7 +275,7 @@ export const journalReference = baseReference.shape({
 });
 
 // Book
-const bookPublicationInstance = Yup.object().shape({
+const bookPublicationInstance = Yup.object<YupShape<BookPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(BookType)).required(resourceErrorMessage.typeRequired),
   pages: pagesMonographField,
   contentType: Yup.string()
@@ -262,7 +290,7 @@ const bookPublicationInstance = Yup.object().shape({
   peerReviewed: peerReviewedField,
 });
 
-const bookPublicationContext = Yup.object().shape({
+const bookPublicationContext = Yup.object<YupShape<BookPublicationContext>>({
   publisher: publisherField,
   series: seriesField,
   isbnList: isbnListField,
@@ -274,12 +302,12 @@ export const bookReference = baseReference.shape({
 });
 
 // Report
-const reportPublicationInstance = Yup.object().shape({
+const reportPublicationInstance = Yup.object<YupShape<ReportPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(ReportType)).required(resourceErrorMessage.typeRequired),
   pages: pagesMonographField,
 });
 
-const reportPublicationContext = Yup.object().shape({
+const reportPublicationContext = Yup.object<YupShape<ReportPublicationContext>>({
   publisher: publisherField,
   series: seriesField,
   isbnList: isbnListField,
@@ -291,11 +319,11 @@ export const reportReference = baseReference.shape({
 });
 
 // Degree
-const degreePublicationInstance = Yup.object().shape({
+const degreePublicationInstance = Yup.object<YupShape<DegreePublicationInstance>>({
   type: Yup.string().oneOf(Object.values(DegreeType)).required(resourceErrorMessage.typeRequired),
 });
 
-const degreePublicationContext = Yup.object().shape({
+const degreePublicationContext = Yup.object<YupShape<DegreePublicationContext>>({
   publisher: publisherField,
   series: seriesField,
 });
@@ -306,7 +334,7 @@ export const degreeReference = baseReference.shape({
 });
 
 // Chapter
-const chapterPublicationInstance = Yup.object().shape({
+const chapterPublicationInstance = Yup.object<YupShape<ChapterPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(ChapterType)).required(resourceErrorMessage.typeRequired),
   pages: pagesRangeField,
   contentType: Yup.string()
@@ -321,7 +349,7 @@ const chapterPublicationInstance = Yup.object().shape({
   peerReviewed: peerReviewedField,
 });
 
-const chapterPublicationContext = Yup.object().shape({
+const chapterPublicationContext = Yup.object<YupShape<ChapterPublicationContext>>({
   partOf: Yup.string().nullable().required(resourceErrorMessage.partOfRequired),
 });
 
@@ -331,11 +359,11 @@ export const chapterReference = baseReference.shape({
 });
 
 // Event/Presentation
-const presentationPublicationInstance = Yup.object().shape({
+const presentationPublicationInstance = Yup.object<YupShape<PresentationPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(PresentationType)).required(resourceErrorMessage.typeRequired),
 });
 
-const presentationPublicationContext = Yup.object().shape({
+const presentationPublicationContext = Yup.object<YupShape<PresentationPublicationContext>>({
   label: Yup.string().nullable().required(resourceErrorMessage.eventTitleRequired),
   place: Yup.object().shape({
     label: Yup.string().nullable().required(resourceErrorMessage.placeRequired),
@@ -353,7 +381,7 @@ export const presentationReference = baseReference.shape({
 });
 
 // Artistic
-const artisticDesignPublicationInstance = Yup.object().shape({
+const artisticDesignPublicationInstance = Yup.object<YupShape<ArtisticPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(ArtisticType)).required(resourceErrorMessage.typeRequired),
   subtype: Yup.object().shape({
     type: Yup.string()
@@ -408,7 +436,7 @@ export const artisticDesignReference = baseReference.shape({
 });
 
 // Media Contribution
-const mediaContributionPublicationContext = Yup.object().shape({
+const mediaContributionPublicationContext = Yup.object<YupShape<MediaContributionPublicationContext>>({
   format: Yup.string()
     .nullable()
     .required(
@@ -432,7 +460,7 @@ const mediaContributionPublicationContext = Yup.object().shape({
     ),
 });
 
-const mediaContributionPublicationInstance = Yup.object().shape({
+const mediaContributionPublicationInstance = Yup.object<YupShape<MediaContributionPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(MediaType)).required(resourceErrorMessage.typeRequired),
 });
 

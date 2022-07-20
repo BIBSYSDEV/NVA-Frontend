@@ -5,6 +5,7 @@ import { Button, DialogActions, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import i18n from '../translations/i18n';
+import { YupShape } from '../utils/validation/validationHelpers';
 
 interface MessageFormProps {
   confirmAction: (message: string) => Promise<unknown> | void;
@@ -19,7 +20,7 @@ const initValues: MessageFormData = {
   message: '',
 };
 
-const validationSchema = Yup.object().shape({
+const validationSchema = Yup.object<YupShape<MessageFormData>>({
   message: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
       field: i18n.t('common:message'),
