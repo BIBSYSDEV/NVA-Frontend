@@ -43,6 +43,7 @@ import {
   MusicScore,
   AudioVisualPublication,
   Concert,
+  OtherMusicPerformance,
 } from '../../types/publication_types/artisticRegistration.types';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
@@ -288,6 +289,8 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
             <PublicAudioVisualPublicationDialogContent audioVisualPublication={output as AudioVisualPublication} />
           ) : output.type === 'Concert' ? (
             <PublicConcertDialogContent concert={output as Concert} />
+          ) : output.type === 'OtherPerformance' ? (
+            <PublicOtherPerformanceDialogContent otherPerformance={output as OtherMusicPerformance} />
           ) : null}
         </ErrorBoundary>
 
@@ -535,6 +538,50 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
                 <TableCell>{item.title}</TableCell>
                 <TableCell>{item.composer}</TableCell>
                 <TableCell>{item.premiere ? t('common:yes') : null}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </DialogContent>
+  );
+};
+
+const PublicOtherPerformanceDialogContent = ({ otherPerformance }: { otherPerformance: OtherMusicPerformance }) => {
+  const { t } = useTranslation('registration');
+  const { type, place, performanceType, extent, musicalWorks } = otherPerformance;
+
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('common:type')}</Typography>
+      <Typography paragraph>{t(`resource_type.artistic.output_type.${type}`)}</Typography>
+
+      <Typography variant="overline">{t('resource_type.artistic.performance_type')}</Typography>
+      <Typography paragraph>{performanceType}</Typography>
+
+      <Typography variant="overline">{t('common:place')}</Typography>
+      <Typography paragraph>{place.label}</Typography>
+
+      <Typography variant="overline">{t('resource_type.artistic.extent_in_minutes')}</Typography>
+      <Typography paragraph>{extent}</Typography>
+
+      <Typography variant="overline" id="works-heading">
+        {t('resource_type.artistic.musical_works')}
+      </Typography>
+      <TableContainer>
+        <Table aria-labelledby="works-heading">
+          <caption style={visuallyHidden}>{t('resource_type.artistic.musical_works_table_caption')}</caption>
+          <TableHead>
+            <TableRow>
+              <TableCell>{t('common:title')}</TableCell>
+              <TableCell>{t('resource_type.artistic.composer')}</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {musicalWorks.map((item, index) => (
+              <TableRow key={index}>
+                <TableCell>{item.title}</TableCell>
+                <TableCell>{item.composer}</TableCell>
               </TableRow>
             ))}
           </TableBody>
