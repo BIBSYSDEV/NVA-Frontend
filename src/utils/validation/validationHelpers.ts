@@ -1,6 +1,6 @@
 import { AnySchema } from 'yup';
 
-export type YupShape<Type> = Partial<Record<keyof Type, AnySchema>>;
+export type YupShape<T> = Partial<Record<keyof T, AnySchema>>;
 
 export const validateDateInterval = (startDate?: string | null, endDate?: string | null) => {
   const startDateValue = startDate ? new Date(startDate) : null;
