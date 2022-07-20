@@ -143,6 +143,21 @@ export const ContributorsPanel = () => {
                 ContributorRole.Other,
               ]}
             />
+          ) : publicationInstanceType === ArtisticType.MusicPerformance ? (
+            <Contributors
+              push={push}
+              replace={replace}
+              primaryColorAddButton
+              contributorRoles={[
+                ContributorRole.Soloist,
+                ContributorRole.Conductor,
+                ContributorRole.Musician,
+                ContributorRole.Composer,
+                ContributorRole.Organizer,
+                ContributorRole.Writer,
+                ContributorRole.Other,
+              ]}
+            />
           ) : (
             <>
               <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />

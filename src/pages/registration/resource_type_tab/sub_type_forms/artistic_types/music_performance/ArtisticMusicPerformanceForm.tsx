@@ -20,8 +20,11 @@ import {
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { OutputRow } from '../OutputRow';
 import { MusicScoreModal } from './MusicScoreModal';
+import { AudioVisualPublicationModal } from './AudioVisualPublicationModal';
+import { ConcertModal } from './ConcertModal';
+import { OtherPerformanceModal } from './OtherPerformanceModal';
 
-type ArtisticMusicPerformanceModalType = '' | 'MusicScore';
+type ArtisticMusicPerformanceModalType = '' | 'MusicScore' | 'AudioVisualPublication' | 'Concert' | 'OtherPerformance';
 
 export const ArtisticMusicPerformanceForm = () => {
   const { t } = useTranslation('registration');
@@ -82,13 +85,39 @@ export const ArtisticMusicPerformanceForm = () => {
                 )}
 
               <MusicScoreModal onSubmit={onAddOutput} open={openModal === 'MusicScore'} closeModal={closeModal} />
+              <AudioVisualPublicationModal
+                onSubmit={onAddOutput}
+                open={openModal === 'AudioVisualPublication'}
+                closeModal={closeModal}
+              />
+              <ConcertModal onSubmit={onAddOutput} open={openModal === 'Concert'} closeModal={closeModal} />
+              <OtherPerformanceModal
+                onSubmit={onAddOutput}
+                open={openModal === 'OtherPerformance'}
+                closeModal={closeModal}
+              />
 
               <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
+                <Button onClick={() => setOpenModal('Concert')} variant="outlined" startIcon={<AddCircleOutlineIcon />}>
+                  {t('resource_type.artistic.add_concert')}
+                </Button>
+                <Button
+                  onClick={() => setOpenModal('AudioVisualPublication')}
+                  variant="outlined"
+                  startIcon={<AddCircleOutlineIcon />}>
+                  {t('resource_type.artistic.add_audio_visual_publication')}
+                </Button>
                 <Button
                   onClick={() => setOpenModal('MusicScore')}
                   variant="outlined"
                   startIcon={<AddCircleOutlineIcon />}>
                   {t('resource_type.artistic.add_music_score')}
+                </Button>
+                <Button
+                  onClick={() => setOpenModal('OtherPerformance')}
+                  variant="outlined"
+                  startIcon={<AddCircleOutlineIcon />}>
+                  {t('resource_type.artistic.add_other_performance')}
                 </Button>
               </Box>
             </>

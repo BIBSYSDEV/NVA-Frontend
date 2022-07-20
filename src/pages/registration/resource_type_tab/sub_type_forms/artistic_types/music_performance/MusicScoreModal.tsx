@@ -4,6 +4,7 @@ import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IMaskInput } from 'react-imask';
 import * as Yup from 'yup';
+import SaveIcon from '@mui/icons-material/Save';
 import i18n from '../../../../../../translations/i18n';
 import { MusicScore } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
@@ -47,7 +48,7 @@ const validationSchema = Yup.object().shape({
   ),
   extent: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
-      field: i18n.t('registration:resource_type.artistic.music_score_extent'),
+      field: i18n.t('registration:resource_type.artistic.extent'),
     })
   ),
   publisher: Yup.object().shape({
@@ -144,7 +145,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('resource_type.artistic.music_score_extent')}
+                  label={t('resource_type.artistic.extent')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -198,7 +199,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
             <Button variant="outlined" onClick={closeModal}>
               {t('common:cancel')}
             </Button>
-            <Button variant="contained" type="submit">
+            <Button variant="contained" type="submit" startIcon={<SaveIcon />}>
               {musicScore ? t('common:update') : t('common:add')}
             </Button>
           </DialogActions>

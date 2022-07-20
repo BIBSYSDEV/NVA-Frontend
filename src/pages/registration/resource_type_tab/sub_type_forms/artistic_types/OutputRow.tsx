@@ -16,6 +16,9 @@ import {
   CinematicRelease,
   OtherRelease,
   MusicScore,
+  AudioVisualPublication,
+  Concert,
+  OtherMusicPerformance,
 } from '../../../../../types/publication_types/artisticRegistration.types';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import { CompetitionModal } from './architecture/CompetitionModal';
@@ -28,6 +31,9 @@ import { BroadcastModal } from './moving_picture/BroadcastModal';
 import { CinematicReleaseModal } from './moving_picture/CinematicReleaseModal';
 import { OtherReleaseModal } from './moving_picture/OtherReleaseModal';
 import { MusicScoreModal } from './music_performance/MusicScoreModal';
+import { AudioVisualPublicationModal } from './music_performance/AudioVisualPublicationModal';
+import { ConcertModal } from './music_performance/ConcertModal';
+import { OtherPerformanceModal } from './music_performance/OtherPerformanceModal';
 
 interface OutputRowProps {
   item: ArtisticOutputItem;
@@ -65,6 +71,9 @@ export const OutputRow = ({
     case 'CinematicRelease':
     case 'OtherRelease':
     case 'MusicScore':
+    case 'AudioVisualPublication':
+    case 'Concert':
+    case 'OtherPerformance':
       removeItemTitle = t('resource_type.artistic.remove_announcement');
       removeItemDescription = t('resource_type.artistic.remove_announcement_description', { name: title });
       break;
@@ -173,6 +182,27 @@ export const OutputRow = ({
       ) : item.type === 'MusicScore' ? (
         <MusicScoreModal
           musicScore={item as MusicScore}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      ) : item.type === 'AudioVisualPublication' ? (
+        <AudioVisualPublicationModal
+          audioVisualPublication={item as AudioVisualPublication}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      ) : item.type === 'Concert' ? (
+        <ConcertModal
+          concert={item as Concert}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      ) : item.type === 'OtherPerformance' ? (
+        <OtherPerformanceModal
+          otherPerformance={item as OtherMusicPerformance}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}

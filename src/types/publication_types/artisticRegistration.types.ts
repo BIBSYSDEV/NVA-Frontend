@@ -91,9 +91,63 @@ export interface MusicScore extends ArtisticOutputBase {
   };
 }
 
+export interface MusicalWorkPerformance {
+  type: 'MusicalWorkPerformance';
+  title: string;
+  composer: string;
+  premiere: boolean;
+}
+
+export interface Concert extends ArtisticOutputBase {
+  type: 'Concert';
+  place: Place;
+  time: Instant;
+  extent: string;
+  description: string;
+  concertProgramme: MusicalWorkPerformance[];
+}
+
+export enum MusicMediaType {
+  CompactDisc = 'CompactDisc',
+  DVD = 'DVD',
+  Streaming = 'Streaming',
+  DigitalFile = 'DigitalFile',
+  Vinyl = 'Vinyl',
+  Other = 'Other',
+}
+
+export interface MusicTrack {
+  type: 'MusicTrack';
+  title: string;
+  composer: string;
+  extent: string;
+}
+
+export interface AudioVisualPublication extends ArtisticOutputBase {
+  type: 'AudioVisualPublication';
+  mediaType: MusicMediaType | '';
+  publisher: string;
+  catalogueNumber: string;
+  trackList: MusicTrack[];
+}
+
+export interface MusicalWork {
+  type: 'MusicalWork';
+  title: string;
+  composer: string;
+}
+
+export interface OtherMusicPerformance extends ArtisticOutputBase {
+  type: 'OtherPerformance';
+  performanceType: string;
+  place: Place;
+  extent: string;
+  musicalWorks: MusicalWork[];
+}
+
 export type FilmOutput = Broadcast | CinematicRelease | OtherRelease;
 export type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
-export type MusicOutput = MusicScore;
+export type MusicOutput = MusicScore | AudioVisualPublication | Concert | OtherMusicPerformance;
 
 export type ArtisticOutputItem = Venue | ArchitectureOutput | FilmOutput | MusicOutput;
 
@@ -104,7 +158,7 @@ export interface ArtisticPublicationInstance {
   venues?: Venue[];
   architectureOutput?: ArchitectureOutput[];
   outputs?: Venue[] | FilmOutput[];
-  manifestations?: any[];
+  manifestations?: MusicOutput[];
 }
 
 export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {
