@@ -1,5 +1,7 @@
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
+import { YupShape } from '../validationHelpers';
+import { File } from '../../../types/file.types';
 
 const fileErrorMessage = {
   fileVersionRequired: i18n.t('feedback:validation.is_required', {
@@ -13,7 +15,7 @@ const fileErrorMessage = {
   }),
 };
 
-export const fileValidationSchema = Yup.object().shape({
+export const fileValidationSchema = Yup.object<YupShape<File>>({
   administrativeAgreement: Yup.boolean(),
   embargoDate: Yup.date()
     .nullable()

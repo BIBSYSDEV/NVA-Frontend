@@ -1,6 +1,9 @@
 import * as Yup from 'yup';
+import { AddAdminFormData } from '../../../pages/basic_data/app_admin/AddAdminDialog';
+import { AddEmployeeData } from '../../../pages/basic_data/institution_admin/AddEmployeePage';
 import i18n from '../../../translations/i18n';
-import { validateDateInterval } from '../validationHelpers';
+import { Employment, FlatCristinPerson } from '../../../types/user.types';
+import { validateDateInterval, YupShape } from '../validationHelpers';
 
 const employeeErrorMessage = {
   firstNameRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('common:first_name') }),
@@ -47,7 +50,7 @@ const employeeErrorMessage = {
   }),
 };
 
-export const userValidationSchema = Yup.object().shape({
+export const userValidationSchema = Yup.object<YupShape<FlatCristinPerson>>({
   firstName: Yup.string().required(employeeErrorMessage.firstNameRequired),
   lastName: Yup.string().required(employeeErrorMessage.lastNameRequired),
   nationalId: Yup.string()
@@ -55,9 +58,9 @@ export const userValidationSchema = Yup.object().shape({
     .required(employeeErrorMessage.nationalIdInvalid),
 });
 
-export const addEmployeeValidationSchema = Yup.object().shape({
+export const addEmployeeValidationSchema = Yup.object<YupShape<AddEmployeeData>>({
   user: userValidationSchema,
-  affiliation: Yup.object().shape({
+  affiliation: Yup.object<YupShape<Employment>>({
     type: Yup.string().required(employeeErrorMessage.affiliationTypeRequired),
     organization: Yup.string().required(employeeErrorMessage.affiliationOrganizationRequired),
     fullTimeEquivalentPercentage: Yup.number()
@@ -75,7 +78,7 @@ export const addEmployeeValidationSchema = Yup.object().shape({
   }),
 });
 
-export const addCustomerAdminValidationSchema = Yup.object().shape({
+export const addCustomerAdminValidationSchema = Yup.object<YupShape<AddAdminFormData>>({
   startDate: Yup.date().required(employeeErrorMessage.affiliationStartDateRequired),
   position: Yup.string().required(employeeErrorMessage.affiliationTypeRequired),
 });
