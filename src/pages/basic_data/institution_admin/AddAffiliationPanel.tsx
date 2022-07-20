@@ -6,7 +6,6 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { useSelector } from 'react-redux';
 import { StyledCenterContainer } from '../../../components/styled/Wrappers';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { datePickerTranslationProps } from '../../../themes/mainTheme';
 import { getNewDateValue } from '../../../utils/registration-helpers';
 import { RootState } from '../../../redux/store';
 import { Organization } from '../../../types/organization.types';
@@ -91,7 +90,6 @@ export const AddAffiliationPanel = () => {
         <Field name="affiliation.endDate">
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <DatePicker
-              {...datePickerTranslationProps}
               disabled={isDisabled}
               label={t('common:end_date')}
               value={field.value ? field.value : null}

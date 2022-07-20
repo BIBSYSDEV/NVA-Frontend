@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Checkbox, FormControlLabel, Typography, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import { datePickerTranslationProps } from '../../../themes/mainTheme';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { EntityDescription, Registration, RegistrationDate } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -67,7 +66,6 @@ export const DatePickerField = () => {
   return (
     <>
       <DatePicker
-        {...datePickerTranslationProps}
         label={t('description.date_published')}
         value={date}
         onChange={onChangeDate}

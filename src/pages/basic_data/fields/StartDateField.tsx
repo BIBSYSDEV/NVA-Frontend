@@ -2,7 +2,6 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { TextField } from '@mui/material';
 import { Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { datePickerTranslationProps } from '../../../themes/mainTheme';
 import { getNewDateValue } from '../../../utils/registration-helpers';
 
 interface StartDateFieldProps {
@@ -18,7 +17,6 @@ export const StartDateField = ({ fieldName, maxDate, disabled = false }: StartDa
     <Field name={fieldName}>
       {({ field, form: { setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
         <DatePicker
-          {...datePickerTranslationProps}
           disabled={disabled}
           label={t('start_date')}
           value={field.value ? field.value : null}

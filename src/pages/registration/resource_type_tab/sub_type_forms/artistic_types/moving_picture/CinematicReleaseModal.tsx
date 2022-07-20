@@ -4,7 +4,6 @@ import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } 
 import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import { datePickerTranslationProps } from '../../../../../../themes/mainTheme';
 import { CinematicRelease } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import i18n from '../../../../../../translations/i18n';
@@ -81,7 +80,6 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
             <Field name="date.value">
               {({ field, form: { setFieldTouched, setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
                 <DatePicker
-                  {...datePickerTranslationProps}
                   label={t('resource_type.artistic.premiere_date')}
                   value={field.value ?? null}
                   onChange={(date: Date | null, keyboardInput) => {

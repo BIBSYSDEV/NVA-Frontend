@@ -1,4 +1,3 @@
-import { CalendarPickerView, DatePickerProps } from '@mui/lab';
 import { createTheme, SxProps } from '@mui/material';
 import { nbNO, enUS } from '@mui/material/locale';
 import i18n from '../translations/i18n';
@@ -197,34 +196,4 @@ export const alternatingTableRowColor: SxProps = {
       background: Color.White,
     },
   },
-};
-
-// Default props in theme are not supported for components still in /lab
-export const datePickerTranslationProps: Pick<
-  DatePickerProps,
-  | 'cancelText'
-  | 'clearText'
-  | 'getOpenDialogAriaText'
-  | 'getViewSwitchingButtonText'
-  | 'leftArrowButtonText'
-  | 'rightArrowButtonText'
-  | 'todayText'
-  | 'toolbarTitle'
-> = {
-  cancelText: i18n.t('common:cancel'),
-  clearText: i18n.t('common:clear'),
-  getOpenDialogAriaText: (value) =>
-    value
-      ? i18n.t('registration:description.date_picker.open_dialog', {
-          date: new Date(value as string).toLocaleDateString(),
-        })
-      : i18n.t('registration:description.date_picker.choose_date'),
-  getViewSwitchingButtonText: (currentView: CalendarPickerView) =>
-    currentView === 'year'
-      ? i18n.t('registration:description.date_picker.go_to_calendar_view')
-      : i18n.t('registration:description.date_picker.go_to_year_view'),
-  leftArrowButtonText: i18n.t('registration:description.date_picker.previous_month'),
-  rightArrowButtonText: i18n.t('registration:description.date_picker.next_month'),
-  todayText: i18n.t('registration:description.date_picker.today'),
-  toolbarTitle: i18n.t('registration:description.date_picker.select_date'),
 };
