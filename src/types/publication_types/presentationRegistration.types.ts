@@ -6,7 +6,7 @@ export interface PresentationRegistration extends BaseRegistration {
   entityDescription: PresentationEntityDescription;
 }
 
-interface PresentationPublicationInstance {
+export interface PresentationPublicationInstance {
   type: PresentationType | '';
 }
 
