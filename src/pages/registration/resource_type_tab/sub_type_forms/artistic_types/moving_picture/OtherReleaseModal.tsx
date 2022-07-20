@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { OtherRelease } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import i18n from '../../../../../../translations/i18n';
+import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 
 interface OtherReleaseModalProps {
   otherRelease?: OtherRelease;
@@ -33,7 +34,7 @@ const emptyOtherRelease: OtherRelease = {
   },
 };
 
-const validationSchema = Yup.object().shape({
+const validationSchema = Yup.object<YupShape<OtherRelease>>({
   description: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
       field: i18n.t('registration:resource_type.artistic.other_release_description'),

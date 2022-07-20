@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
 import { Exhibition } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { PeriodFields } from '../../../components/PeriodFields';
 
 interface ExhibitionModalProps {
@@ -24,7 +25,7 @@ const emptyExhibition: Exhibition = {
   sequence: 0,
 };
 
-const validationSchema = Yup.object().shape({
+const validationSchema = Yup.object<YupShape<Exhibition>>({
   name: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
       field: i18n.t('registration:resource_type.artistic.exhibition_title'),

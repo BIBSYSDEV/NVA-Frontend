@@ -24,6 +24,7 @@ import {
   MusicMediaType,
   MusicTrack,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
+import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 
 interface AudioVisualPublicationModalProps {
   audioVisualPublication?: AudioVisualPublication;
@@ -47,7 +48,7 @@ const emptyMusicTrack: MusicTrack = {
   extent: '',
 };
 
-const validationSchema = Yup.object().shape({
+const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
   mediaType: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
       field: i18n.t('registration:resource_type.artistic.media_type'),
@@ -65,7 +66,7 @@ const validationSchema = Yup.object().shape({
   ),
   trackList: Yup.array()
     .of(
-      Yup.object().shape({
+      Yup.object<YupShape<MusicTrack>>({
         title: Yup.string().required(
           i18n.t('feedback:validation.is_required', {
             field: i18n.t('common:title'),

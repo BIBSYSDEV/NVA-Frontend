@@ -23,6 +23,7 @@ import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
 import i18n from '../../../../../../translations/i18n';
 import { Concert, MusicalWorkPerformance } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
+import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 
 interface ConcertModalProps {
   concert?: Concert;
@@ -54,7 +55,7 @@ const emptyMusicalWorkPerformance: MusicalWorkPerformance = {
   premiere: false,
 };
 
-const validationSchema = Yup.object().shape({
+const validationSchema = Yup.object<YupShape<Concert>>({
   place: Yup.object().shape({
     label: Yup.string().required(
       i18n.t('feedback:validation.is_required', {
@@ -76,7 +77,7 @@ const validationSchema = Yup.object().shape({
   ),
   concertProgramme: Yup.array()
     .of(
-      Yup.object().shape({
+      Yup.object<YupShape<MusicalWorkPerformance>>({
         title: Yup.string().required(
           i18n.t('feedback:validation.is_required', {
             field: i18n.t('common:title'),

@@ -1,4 +1,3 @@
-import React from 'react';
 import { DatePicker } from '@mui/x-date-pickers';
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
@@ -7,6 +6,7 @@ import * as Yup from 'yup';
 import { CinematicRelease } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import i18n from '../../../../../../translations/i18n';
+import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 
 interface CinematicReleaseModalProps {
   cinematicRelease?: CinematicRelease;
@@ -28,7 +28,7 @@ const emptyCinematicRelease: CinematicRelease = {
   },
 };
 
-const validationSchema = Yup.object().shape({
+const validationSchema = Yup.object<YupShape<CinematicRelease>>({
   place: Yup.object().shape({
     label: Yup.string().required(
       i18n.t('feedback:validation.is_required', {
@@ -49,7 +49,7 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
   const { t } = useTranslation('registration');
 
   return (
-    <Dialog open={open} onClose={closeModal} maxWidth={'sm'} fullWidth>
+    <Dialog open={open} onClose={closeModal} maxWidth="sm" fullWidth>
       <DialogTitle>
         {cinematicRelease
           ? t('resource_type.artistic.edit_cinematic_release')

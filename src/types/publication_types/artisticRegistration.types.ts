@@ -6,9 +6,9 @@ export interface ArtisticRegistration extends BaseRegistration {
   entityDescription: ArtisticEntityDescription;
 }
 
-interface ArtisticOutputBase {
+type ArtisticOutputBase = {
   sequence?: number;
-}
+};
 
 export interface Venue extends ArtisticOutputBase {
   type: 'Venue' | 'PerformingArtsVenue';
@@ -98,14 +98,14 @@ export interface MusicalWorkPerformance {
   premiere: boolean;
 }
 
-export interface Concert extends ArtisticOutputBase {
+export type Concert = ArtisticOutputBase & {
   type: 'Concert';
   place: Place;
   time: Instant;
   extent: string;
   description: string;
   concertProgramme: MusicalWorkPerformance[];
-}
+};
 
 export enum MusicMediaType {
   CompactDisc = 'CompactDisc',

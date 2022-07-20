@@ -6,6 +6,7 @@ import i18n from '../../../../../../translations/i18n';
 import { Venue } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { periodField } from '../../../../../../utils/validation/registration/referenceValidation';
+import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { PeriodFields } from '../../../components/PeriodFields';
 
 interface VenueModalProps {
@@ -21,7 +22,7 @@ const emptyVenue: Venue = {
   date: { type: 'Period', from: '', to: '' },
 };
 
-const validationSchema = Yup.object().shape({
+const validationSchema = Yup.object<YupShape<Venue>>({
   place: Yup.object().shape({
     label: Yup.string()
       .nullable()
