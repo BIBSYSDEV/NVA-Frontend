@@ -8,6 +8,8 @@ export enum ContributorRole {
   ArchitecturalPlanner = 'ArchitecturalPlanner',
   ArtisticDirector = 'ArtisticDirector',
   Choreographer = 'Choreographer',
+  Composer = 'Composer',
+  Conductor = 'Conductor',
   Consultant = 'Consultant',
   ContactPerson = 'ContactPerson',
   CostumeDesigner = 'CostumeDesigner',
@@ -25,6 +27,8 @@ export enum ContributorRole {
   LandscapeArchitect = 'LandscapeArchitect',
   Librettist = 'Librettist',
   LightDesigner = 'LightDesigner',
+  Musician = 'Musician',
+  Organizer = 'Organizer',
   Other = 'Other',
   Photographer = 'Photographer',
   ProductionDesigner = 'ProductionDesigner',
@@ -36,10 +40,12 @@ export enum ContributorRole {
   RightsHolder = 'RightsHolder',
   Scenographer = 'Scenographer',
   Screenwriter = 'Screenwriter',
+  Soloist = 'Soloist',
   SoundDesigner = 'SoundDesigner',
   Supervisor = 'Supervisor',
   VfxSupervisor = 'VfxSupervisor',
   VideoEditor = 'VideoEditor',
+  Writer = 'Writer',
 }
 
 export interface Identity {
