@@ -131,9 +131,23 @@ export interface AudioVisualPublication extends ArtisticOutputBase {
   trackList: MusicTrack[];
 }
 
+export interface MusicalWork {
+  type: 'MusicalWork';
+  title: string;
+  composer: string;
+}
+
+export interface OtherMusicPerformance extends ArtisticOutputBase {
+  type: 'OtherPerformance';
+  performanceType: string;
+  place: Place;
+  extent: string;
+  musicalWorks: MusicalWork[];
+}
+
 export type FilmOutput = Broadcast | CinematicRelease | OtherRelease;
 export type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
-export type MusicOutput = MusicScore | AudioVisualPublication | Concert;
+export type MusicOutput = MusicScore | AudioVisualPublication | Concert | OtherMusicPerformance;
 
 export type ArtisticOutputItem = Venue | ArchitectureOutput | FilmOutput | MusicOutput;
 
