@@ -19,7 +19,7 @@ const SearchPage = () => {
 
   return (
     <SyledPageContent>
-      <PageHeader backPath="/">{t('registrations')}</PageHeader>
+      <PageHeader>{t('registrations')}</PageHeader>
       <Formik
         initialValues={initialSearchParams}
         onSubmit={(values) => {
