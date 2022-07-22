@@ -43,11 +43,11 @@ export const RegistrationFormActions = ({
     const updateRegistrationResponse = await updateRegistration(formattedValues);
     const isSuccess = isSuccessStatus(updateRegistrationResponse.status);
     if (isErrorStatus(updateRegistrationResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:error.update_registration'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' }));
       setIsSaving(false);
     } else if (isSuccess) {
       refetchRegistration();
-      dispatch(setNotification({ message: t('feedback:success.update_registration'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
     }
 
     return isSuccess;

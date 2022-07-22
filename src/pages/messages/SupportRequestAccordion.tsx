@@ -32,9 +32,9 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
   const onClickSendMessage = async (message: string) => {
     const updateDoiRequestResponse = await addMessage(registration.identifier, message, messageType);
     if (isErrorStatus(updateDoiRequestResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:error.send_message'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
     } else if (isSuccessStatus(updateDoiRequestResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:success.send_message'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
       const newMessage: Message = {
         ...messagesCopy[0],
         date: new Date().toString(),

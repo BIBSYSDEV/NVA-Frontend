@@ -56,10 +56,10 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
     });
 
     if (isSuccessStatus(createProjectResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:success.create_project'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.create_project'), variant: 'success' }));
       props.onClose();
     } else if (isErrorStatus(createProjectResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:error.create_project'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.create_project'), variant: 'error' }));
     }
   };
 

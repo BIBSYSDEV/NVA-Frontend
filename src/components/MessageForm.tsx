@@ -22,7 +22,7 @@ const initValues: MessageFormData = {
 
 const validationSchema = Yup.object<YupShape<MessageFormData>>({
   message: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
+    i18n.t('feedback.validation.is_required', {
       field: i18n.t('translations:common.message'),
     })
   ),

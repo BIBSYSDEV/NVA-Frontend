@@ -41,7 +41,7 @@ export const VocabularySettings = () => {
 
   const [vocabularyList, isLoadingVocabularyList, , setVocabularyList] = useFetch<VocabularyList>({
     url: user?.customerId ? `${user.customerId}/vocabularies` : '',
-    errorMessage: t('feedback:error.get_vocabularies'),
+    errorMessage: t('feedback.error.get_vocabularies'),
     withAuthentication: true,
   });
 
@@ -70,7 +70,7 @@ export const VocabularySettings = () => {
       if (isSuccessStatus(updatedVocabularyResponse.status)) {
         dispatch(
           setNotification({
-            message: t('feedback:success.update_vocabulary', {
+            message: t('feedback.success.update_vocabulary', {
               vocabulary: vocabularyName,
               status: t(newVocabulary.status.toLowerCase()).toLowerCase(),
             }),
@@ -81,7 +81,7 @@ export const VocabularySettings = () => {
       } else if (isErrorStatus(updatedVocabularyResponse.status)) {
         dispatch(
           setNotification({
-            message: t('feedback:error.update_vocabulary', { vocabulary: vocabularyName }),
+            message: t('feedback.error.update_vocabulary', { vocabulary: vocabularyName }),
             variant: 'error',
           })
         );

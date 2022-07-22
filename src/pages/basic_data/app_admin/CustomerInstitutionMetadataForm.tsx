@@ -38,17 +38,17 @@ export const CustomerInstitutionMetadataForm = ({
     if (!editMode) {
       const createCustomerResponse = await createCustomerInstitution(values);
       if (isErrorStatus(createCustomerResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:error.create_customer'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.create_customer'), variant: 'error' }));
       } else if (isSuccessStatus(createCustomerResponse.status)) {
         history.push(getAdminInstitutionPath(createCustomerResponse.data.id));
-        dispatch(setNotification({ message: t('feedback:success.created_customer'), variant: 'success' }));
+        dispatch(setNotification({ message: t('feedback.success.created_customer'), variant: 'success' }));
       }
     } else {
       const updateCustomerResponse = await updateCustomerInstitution(values);
       if (isErrorStatus(updateCustomerResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:error.update_customer'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.update_customer'), variant: 'error' }));
       } else if (isSuccessStatus(updateCustomerResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:success.update_customer'), variant: 'success' }));
+        dispatch(setNotification({ message: t('feedback.success.update_customer'), variant: 'success' }));
       }
     }
   };

@@ -21,17 +21,17 @@ import { YupShape } from '../validationHelpers';
 import { FileSet } from '../../../types/file.types';
 
 const registrationErrorMessage = {
-  titleRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('translations:common.title') }),
-  npiSubjectRequired: i18n.t('feedback:validation.is_required', {
+  titleRequired: i18n.t('feedback.validation.is_required', { field: i18n.t('translations:common.title') }),
+  npiSubjectRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.description.npi_disciplines'),
   }),
-  publishedDateRequired: i18n.t('feedback:validation.is_required', {
+  publishedDateRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.description.date_published'),
   }),
-  publishedDateInvalid: i18n.t('feedback:validation.has_invalid_format', {
+  publishedDateInvalid: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('registration.description.date_published'),
   }),
-  fileRequired: i18n.t('feedback:validation.minimum_one_file'),
+  fileRequired: i18n.t('feedback.validation.minimum_one_file'),
 };
 
 export const registrationValidationSchema = Yup.object<YupShape<Registration>>({

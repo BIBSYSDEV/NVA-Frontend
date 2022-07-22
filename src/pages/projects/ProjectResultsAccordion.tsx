@@ -17,7 +17,7 @@ export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
   const { t } = useTranslation('project');
   const [results, isLoadingResults] = useFetch<SearchResponse<Registration>>({
     url: `${SearchApiPath.Registrations}?query=${DescriptionFieldNames.Projects}.id="${projectId}"`,
-    errorMessage: t('feedback:error.search'),
+    errorMessage: t('feedback.error.search'),
   });
 
   return (

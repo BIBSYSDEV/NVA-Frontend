@@ -45,12 +45,12 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
 
     if (isSuccessStatus(updateUserResponse.status)) {
       setUserCopy(newUser);
-      dispatch(setNotification({ message: t('feedback:success.update_institution_user'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' }));
       if (user.username === authenticatedUser?.id) {
         dispatch(setPartialUser({ viewingScope: [newScopeId] }));
       }
     } else if (isErrorStatus(updateUserResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:error.update_institution_user'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' }));
     }
     setIsUpdating(false);
   };

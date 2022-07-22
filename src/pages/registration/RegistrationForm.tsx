@@ -48,7 +48,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     useLocation<RegistrationLocationState>().state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
   const [registration, isLoadingRegistration, refetchRegistration] = useFetch<Registration>({
     url: `${PublicationsApiPath.Registration}/${identifier}`,
-    errorMessage: t('feedback:error.get_registration'),
+    errorMessage: t('feedback.error.get_registration'),
   });
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);

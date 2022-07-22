@@ -19,7 +19,7 @@ export const useFetch = <T>({
   withAuthentication = false,
 }: UseFetchConfig): [T | undefined, boolean, () => void, (value: T) => void] => {
   const dispatch = useDispatch();
-  const { t } = useTranslation('feedback');
+  const { t } = useTranslation();
   const [data, setData] = useState<T>();
   const [isLoading, setIsLoading] = useState(!!url);
   const cancelToken = useCancelToken();
@@ -51,7 +51,7 @@ export const useFetch = <T>({
         setNotification({
           message:
             (errorMessageRef.current as string | undefined) ??
-            tRef.current('error.fetch', { resource: url, interpolation: { escapeValue: false } }),
+            tRef.current('feedback.error.fetch', { resource: url, interpolation: { escapeValue: false } }),
           variant: 'error',
         })
       );

@@ -67,7 +67,7 @@ export const PublicJournal = ({ publicationContext }: PublicJournalProps) => {
         {t('registration.resource_type.journal')}
       </Typography>
       {publicationContext.id ? (
-        <PublicJournalContent id={publicationContext.id} errorMessage={t('feedback:error.get_journal')} />
+        <PublicJournalContent id={publicationContext.id} errorMessage={t('feedback.error.get_journal')} />
       ) : (
         <Typography>{publicationContext.title}</Typography>
       )}
@@ -80,7 +80,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
 
   const [fetchedPublisher, isLoadingPublisher] = useFetchResource<Publisher>(
     publisher?.id ?? '',
-    t('feedback:error.get_publisher')
+    t('feedback.error.get_publisher')
   );
 
   return publisher?.id || publisher?.name ? (
@@ -140,7 +140,7 @@ export const PublicSeries = ({
         {t('registration.resource_type.series')}
       </Typography>
       {series.id ? (
-        <PublicJournalContent id={series.id} errorMessage={t('feedback:error.get_series')} />
+        <PublicJournalContent id={series.id} errorMessage={t('feedback.error.get_series')} />
       ) : (
         <Typography>{series.title}</Typography>
       )}
@@ -160,7 +160,7 @@ interface PublicJournalContentProps {
 
 const PublicJournalContent = ({ id }: PublicJournalContentProps) => {
   const { t } = useTranslation();
-  const [journal, isLoadingJournal] = useFetchResource<Journal>(id ?? '', t('feedback:error.get_journal'));
+  const [journal, isLoadingJournal] = useFetchResource<Journal>(id ?? '', t('feedback.error.get_journal'));
 
   return id ? (
     <>

@@ -42,7 +42,7 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: 
         ? await downloadPrivateFile(registrationIdentifier, file.identifier)
         : await downloadPublicFile(registrationIdentifier, file.identifier);
       if (!downloadFileResponse) {
-        dispatch(setNotification({ message: t('feedback:error.download_file'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.download_file'), variant: 'error' }));
       } else {
         if (previewFile) {
           setPreviewFileUrl(downloadFileResponse.id);

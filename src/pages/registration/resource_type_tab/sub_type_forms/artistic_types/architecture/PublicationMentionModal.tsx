@@ -27,18 +27,18 @@ const emptyMentionInPublication: MentionInPublication = {
 
 const validationSchema = Yup.object<YupShape<MentionInPublication>>({
   title: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
+    i18n.t('feedback.validation.is_required', {
       field: i18n.t('registration.resource_type.artistic.mention_title'),
     })
   ),
   issue: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
+    i18n.t('feedback.validation.is_required', {
       field: i18n.t('registration.resource_type.issue'),
     })
   ),
   date: Yup.object().shape({
     value: Yup.date().required(
-      i18n.t('feedback:validation.is_required', {
+      i18n.t('feedback.validation.is_required', {
         field: i18n.t('common.date'),
       })
     ),

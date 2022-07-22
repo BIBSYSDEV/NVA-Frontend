@@ -13,7 +13,7 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
   const { t } = useTranslation('myPage');
   const [person, isLoadingPerson] = useFetch<CristinPerson>({
     url: user.cristinId ?? '',
-    errorMessage: t('feedback:error.get_person'),
+    errorMessage: t('feedback.error.get_person'),
   });
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
 

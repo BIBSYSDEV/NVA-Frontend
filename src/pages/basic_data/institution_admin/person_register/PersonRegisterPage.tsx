@@ -57,7 +57,7 @@ export const PersonRegisterPage = () => {
       rowsPerPage
     ),
     withAuthentication: true,
-    errorMessage: t('feedback:error.get_users_for_institution'),
+    errorMessage: t('feedback.error.get_users_for_institution'),
   });
   const employees = employeesSearchResponse?.hits ?? [];
 

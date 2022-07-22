@@ -50,7 +50,7 @@ export const AddContributorForm = ({
     url: debouncedSearchTerm
       ? `${CristinApiPath.Person}?name=${debouncedSearchTerm}&results=${resultsPerPage}&page=${page + 1}`
       : '',
-    errorMessage: t('feedback:error.search'),
+    errorMessage: t('feedback.error.search'),
   });
 
   const { values } = useFormikContext<Registration>();
@@ -63,7 +63,7 @@ export const AddContributorForm = ({
       setIsAddingSelf(true);
       const getCurrentPersonResponse = await apiRequest<CristinPerson>({ url: user.cristinId });
       if (isErrorStatus(getCurrentPersonResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:error.add_contributor'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.add_contributor'), variant: 'error' }));
       } else if (isSuccessStatus(getCurrentPersonResponse.status)) {
         addContributor(getCurrentPersonResponse.data);
       }

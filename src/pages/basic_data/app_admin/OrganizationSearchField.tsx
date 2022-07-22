@@ -29,12 +29,12 @@ export const OrganizationSearchField = ({
   isLoadingDefaultOptions = false,
   defaultOptions = [],
 }: OrganizationSearchFieldProps) => {
-  const { t } = useTranslation('feedback');
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
   const [institutionOptions, isLoadingInstitutionOptions] = useFetch<SearchResponse<Organization>>({
     url: debouncedQuery ? `${CristinApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
-    errorMessage: t('error.get_institutions'),
+    errorMessage: t('feedback.error.get_institutions'),
   });
 
   const isLoading = isLoadingDefaultOptions || isLoadingInstitutionOptions;
@@ -66,7 +66,7 @@ export const OrganizationSearchField = ({
           name={fieldInputProps?.name}
           {...params}
           data-testid={dataTestId.organization.searchField}
-          label={label ?? t('translations:common.institution')}
+          label={label ?? t('common.institution')}
           required
           placeholder={t('project:search_for_institution')}
           errorMessage={errorMessage}

@@ -49,7 +49,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     const message = isPublishedRegistration ? messageToCurator : t('registration.public_page.reserve_doi_message');
     const createDoiRequestResponse = await createDoiRequest(identifier, message);
     if (isErrorStatus(createDoiRequestResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:error.create_doi_request'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.create_doi_request'), variant: 'error' }));
       setIsLoading(LoadingName.None);
     } else if (isSuccessStatus(createDoiRequestResponse.status)) {
       // Adding DOI can take some extra time, so wait 2.5 sec before refetching
@@ -57,7 +57,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
         if (openRequestDoiModal) {
           toggleRequestDoiModal();
         }
-        dispatch(setNotification({ message: t('feedback:success.doi_request_sent'), variant: 'success' }));
+        dispatch(setNotification({ message: t('feedback.success.doi_request_sent'), variant: 'success' }));
         refetchRegistration();
       }, 2500);
     }
@@ -71,10 +71,10 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     }
     const updateDoiResponse = await updateDoiRequest(identifier, status);
     if (isErrorStatus(updateDoiResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:error.update_doi_request'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.update_doi_request'), variant: 'error' }));
       setIsLoading(LoadingName.None);
     } else if (isSuccessStatus(updateDoiResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:success.doi_request_updated'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.doi_request_updated'), variant: 'success' }));
       refetchRegistration();
     }
   };
@@ -83,10 +83,10 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     setIsLoading(LoadingName.Publish);
     const publishRegistrationResponse = await publishRegistration(identifier);
     if (isErrorStatus(publishRegistrationResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:error.publish_registration'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.publish_registration'), variant: 'error' }));
       setIsLoading(LoadingName.None);
     } else if (isSuccessStatus(publishRegistrationResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:success.published_registration'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.published_registration'), variant: 'success' }));
       refetchRegistration();
     }
   };

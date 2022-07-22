@@ -17,7 +17,7 @@ export const AdminCustomerInstitutions = () => {
   const [customerInstitutions, isLoadingCustomerInstitutions] = useFetch<CustomerList>({
     url: CustomerInstitutionApiPath.Customer,
     withAuthentication: true,
-    errorMessage: t('feedback:error.get_customers'),
+    errorMessage: t('feedback.error.get_customers'),
   });
 
   return (

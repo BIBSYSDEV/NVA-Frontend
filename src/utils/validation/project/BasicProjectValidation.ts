@@ -4,25 +4,25 @@ import { PostCristinProject } from '../../../types/project.types';
 import { YupShape } from '../validationHelpers';
 
 const basicProjectErrorMessage = {
-  coordinatingInstitution: i18n.t('feedback:validation.is_required', {
+  coordinatingInstitution: i18n.t('feedback.validation.is_required', {
     field: i18n.t('project:coordinating_institution'),
   }),
-  endDateRequired: i18n.t('feedback:validation.is_required', {
+  endDateRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('translations:common.end_date'),
   }),
-  institutionRequired: i18n.t('feedback:validation.is_required', {
+  institutionRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('translations:common.institution'),
   }),
-  personRequired: i18n.t('feedback:validation.is_required', {
+  personRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('project:person'),
   }),
-  roleRequired: i18n.t('feedback:validation.is_required', {
+  roleRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('translations:common.role'),
   }),
-  titleRequired: i18n.t('feedback:validation.is_required', {
+  titleRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('translations:common.title'),
   }),
-  startDateRequired: i18n.t('feedback:validation.is_required', {
+  startDateRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('translations:common.start_date'),
   }),
 };

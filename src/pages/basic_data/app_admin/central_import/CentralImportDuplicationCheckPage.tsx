@@ -20,7 +20,7 @@ export const CentralImportDuplicationCheckPage = () => {
 
   const [registration, isLoadingRegistration] = useFetch<Registration>({
     url: `${PublicationsApiPath.Registration}/${identifier}`,
-    errorMessage: t('feedback:error.get_registration'),
+    errorMessage: t('feedback.error.get_registration'),
   });
 
   useEffect(() => {

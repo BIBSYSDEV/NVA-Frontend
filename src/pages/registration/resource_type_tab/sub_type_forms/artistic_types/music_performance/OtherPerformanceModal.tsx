@@ -52,18 +52,18 @@ const emptyMusicalWork: MusicalWork = {
 const validationSchema = Yup.object<YupShape<OtherMusicPerformance>>({
   place: Yup.object().shape({
     label: Yup.string().required(
-      i18n.t('feedback:validation.is_required', {
+      i18n.t('feedback.validation.is_required', {
         field: i18n.t('common.place'),
       })
     ),
   }),
   performanceType: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
+    i18n.t('feedback.validation.is_required', {
       field: i18n.t('registration.resource_type.artistic.performance_type'),
     })
   ),
   extent: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
+    i18n.t('feedback.validation.is_required', {
       field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
     })
   ),
@@ -71,12 +71,12 @@ const validationSchema = Yup.object<YupShape<OtherMusicPerformance>>({
     .of(
       Yup.object<YupShape<MusicalWork>>({
         title: Yup.string().required(
-          i18n.t('feedback:validation.is_required', {
+          i18n.t('feedback.validation.is_required', {
             field: i18n.t('common.title'),
           })
         ),
         composer: Yup.string().required(
-          i18n.t('feedback:validation.is_required', {
+          i18n.t('feedback.validation.is_required', {
             field: i18n.t('registration.resource_type.artistic.composer'),
           })
         ),
@@ -84,7 +84,7 @@ const validationSchema = Yup.object<YupShape<OtherMusicPerformance>>({
     )
     .min(
       1,
-      i18n.t('feedback:validation.must_have_minimum', {
+      i18n.t('feedback.validation.must_have_minimum', {
         min: 1,
         field: i18n.t('registration.resource_type.artistic.musical_work_item').toLocaleLowerCase(),
       })

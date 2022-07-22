@@ -25,7 +25,7 @@ export const MyRegistrations = () => {
   const [selectedTab, setSelectedTab] = useState(Tab.Unpublished);
   const [myRegistrationsResponse, isLoading, refetchRegistrations] = useFetch<MyRegistrationsResponse>({
     url: PublicationsApiPath.RegistrationsByOwner,
-    errorMessage: t('feedback:error.get_registrations'),
+    errorMessage: t('feedback.error.get_registrations'),
     withAuthentication: true,
   });
   const registrations = myRegistrationsResponse?.publications ?? [];

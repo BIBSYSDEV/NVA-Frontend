@@ -15,7 +15,7 @@ export const PositionField = ({ fieldName, disabled }: PositionFieldProps) => {
   const { t } = useTranslation('basicData');
   const [positionResponse, isLoadingPositions] = useFetchResource<PositionResponse>(
     CristinApiPath.Position,
-    t('feedback:error.get_positions')
+    t('feedback.error.get_positions')
   );
   const sortedPositions = positionResponse
     ? [...positionResponse.positions].sort((a, b) =>

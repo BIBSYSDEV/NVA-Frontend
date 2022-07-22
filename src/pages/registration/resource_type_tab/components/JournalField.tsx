@@ -37,7 +37,7 @@ export const JournalField = () => {
             debouncedQuery
           )}`
         : '',
-    errorMessage: t('feedback:error.get_journals'),
+    errorMessage: t('feedback.error.get_journals'),
   });
 
   // Fetch Journals with matching ISSN
@@ -49,7 +49,7 @@ export const JournalField = () => {
             reference.publicationContext.printIssn ?? reference.publicationContext.onlineIssn
           }`
         : '',
-    errorMessage: t('feedback:error.get_journals'),
+    errorMessage: t('feedback.error.get_journals'),
   });
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export const JournalField = () => {
   // Fetch selected journal
   const [journal, isLoadingJournal] = useFetchResource<Journal>(
     reference?.publicationContext.id ?? '',
-    t('feedback:error.get_journal')
+    t('feedback.error.get_journal')
   );
 
   return (

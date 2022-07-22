@@ -9,7 +9,7 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 
 const unverifiedContributorValidationSchema = Yup.object().shape({
   identity: Yup.object().shape({
-    name: Yup.string().required(i18n.t('feedback:validation.is_required', { field: i18n.t('common.name') })),
+    name: Yup.string().required(i18n.t('feedback.validation.is_required', { field: i18n.t('common.name') })),
   }),
 });
 

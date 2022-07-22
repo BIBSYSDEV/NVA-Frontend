@@ -63,7 +63,7 @@ export const SelectCustomerInstitutionDialog = ({
           setOpenDialog(false);
         }
       } catch {
-        dispatch(setNotification({ message: t('feedback:error.an_error_occurred'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.an_error_occurred'), variant: 'error' }));
       }
     }
     setIsSelectingCustomer(false);

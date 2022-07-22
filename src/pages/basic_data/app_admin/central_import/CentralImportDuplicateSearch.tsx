@@ -33,7 +33,7 @@ export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: Central
 
   const [searchResults, isLoadingSearchResults] = useFetch<SearchResponse<Registration>>({
     url: `${SearchApiPath.Registrations}?${searchQuery}&results=${maxHits}`,
-    errorMessage: t('feedback:error.search'),
+    errorMessage: t('feedback.error.search'),
   });
 
   return (

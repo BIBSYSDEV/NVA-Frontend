@@ -60,10 +60,10 @@ export const PublishStrategySettings = () => {
         publicationWorkflow: publishStrategy,
       });
       if (isErrorStatus(updateCustomerResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:error.update_publish_strategy'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.update_publish_strategy'), variant: 'error' }));
       } else if (isSuccessStatus(updateCustomerResponse.status)) {
         setCustomer(updateCustomerResponse.data);
-        dispatch(setNotification({ message: t('feedback:success.update_publish_strategy'), variant: 'success' }));
+        dispatch(setNotification({ message: t('feedback.success.update_publish_strategy'), variant: 'success' }));
       }
       setIsUpdating(undefined);
     }

@@ -12,7 +12,7 @@ export const MyMessagesPage = () => {
 
   const [supportRequestsResponse, isLoadingSupportRequests] = useFetch<PublicationConversation[]>({
     url: `${PublicationsApiPath.Messages}?role=${RoleName.Creator}`,
-    errorMessage: t('feedback:error.get_messages'),
+    errorMessage: t('feedback.error.get_messages'),
     withAuthentication: true,
   });
   const supportRequests = supportRequestsResponse ?? [];

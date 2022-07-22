@@ -49,90 +49,90 @@ import {
 } from '../../../types/publication_types/mediaContributionRegistration';
 
 const resourceErrorMessage = {
-  announcementsRequired: i18n.t('feedback:validation.announcement_required'),
-  contentTypeRequired: i18n.t('feedback:validation.is_required', {
+  announcementsRequired: i18n.t('feedback.validation.announcement_required'),
+  contentTypeRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.content'),
   }),
-  corrigendumForRequired: i18n.t('feedback:validation.is_required', {
+  corrigendumForRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.original_article'),
   }),
-  corrigendumForInvalid: i18n.t('feedback:validation.has_invalid_format', {
+  corrigendumForInvalid: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('registration.resource_type.original_article'),
   }),
-  countryRequired: i18n.t('feedback:validation.is_required', {
+  countryRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('translations:common.country'),
   }),
-  dateFromRequired: i18n.t('feedback:validation.is_required', {
+  dateFromRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.date_from'),
   }),
-  dateToRequired: i18n.t('feedback:validation.is_required', {
+  dateToRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.date_to'),
   }),
-  doiInvalid: i18n.t('feedback:validation.has_invalid_format', {
+  doiInvalid: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('registration.registration.link_to_resource'),
   }),
-  eventTitleRequired: i18n.t('feedback:validation.is_required', {
+  eventTitleRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.title_of_event'),
   }),
-  exhibitionRequired: i18n.t('feedback:validation.exhibition_place_required'),
-  fromMustBeBeforeTo: i18n.t('feedback:validation.cannot_be_after', {
+  exhibitionRequired: i18n.t('feedback.validation.exhibition_place_required'),
+  fromMustBeBeforeTo: i18n.t('feedback.validation.cannot_be_after', {
     field: i18n.t('registration.resource_type.date_from'),
     limitField: i18n.t('registration.resource_type.date_to').toLowerCase(),
   }),
-  isbnInvalid: i18n.t('feedback:validation.has_invalid_format', {
+  isbnInvalid: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('registration.resource_type.isbn'),
   }),
-  isbnTooShort: i18n.t('feedback:validation.isbn_too_short'),
-  journalNotSelected: i18n.t('feedback:validation.not_selected', {
+  isbnTooShort: i18n.t('feedback.validation.isbn_too_short'),
+  journalNotSelected: i18n.t('feedback.validation.not_selected', {
     field: i18n.t('registration.resource_type.journal'),
   }),
-  journalRequired: i18n.t('feedback:validation.is_required', {
+  journalRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.journal'),
   }),
-  organizerRequired: i18n.t('feedback:validation.is_required', {
+  organizerRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.organizer'),
   }),
-  pageBeginMustBeSmallerThanEnd: i18n.t('feedback:validation.must_be_smaller_than', {
+  pageBeginMustBeSmallerThanEnd: i18n.t('feedback.validation.must_be_smaller_than', {
     field: i18n.t('registration.resource_type.pages_from'),
     limit: i18n.t('registration.resource_type.pages_to'),
   }),
-  pageEndMustBeBiggerThanBegin: i18n.t('feedback:validation.must_be_bigger_than', {
+  pageEndMustBeBiggerThanBegin: i18n.t('feedback.validation.must_be_bigger_than', {
     field: i18n.t('registration.resource_type.pages_to'),
     limit: i18n.t('registration.resource_type.pages_from'),
   }),
-  pagesInvalid: i18n.t('feedback:validation.has_invalid_format', {
+  pagesInvalid: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('registration.resource_type.number_of_pages'),
   }),
-  pagesMustBeBigger: i18n.t('feedback:validation.must_be_bigger_than', {
+  pagesMustBeBigger: i18n.t('feedback.validation.must_be_bigger_than', {
     field: i18n.t('registration.resource_type.number_of_pages'),
     limit: 1,
   }),
-  partOfRequired: i18n.t('feedback:validation.is_required', {
+  partOfRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.chapter.published_in'),
   }),
-  peerReviewedRequired: i18n.t('feedback:validation.is_required', {
+  peerReviewedRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.peer_reviewed'),
   }),
-  placeRequired: i18n.t('feedback:validation.is_required', {
+  placeRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.place_for_event'),
   }),
-  publisherNotSelected: i18n.t('feedback:validation.not_selected', {
+  publisherNotSelected: i18n.t('feedback.validation.not_selected', {
     field: i18n.t('translations:common.publisher'),
   }),
-  publisherRequired: i18n.t('feedback:validation.is_required', {
+  publisherRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('translations:common.publisher'),
   }),
-  seriesNotSelected: i18n.t('feedback:validation.not_selected', {
+  seriesNotSelected: i18n.t('feedback.validation.not_selected', {
     field: i18n.t('registration.resource_type.series'),
   }),
-  toMustBeAfterFrom: i18n.t('feedback:validation.cannot_be_before', {
+  toMustBeAfterFrom: i18n.t('feedback.validation.cannot_be_before', {
     field: i18n.t('registration.resource_type.date_to'),
     limitField: i18n.t('registration.resource_type.date_from').toLowerCase(),
   }),
-  typeRequired: i18n.t('feedback:validation.is_required', {
+  typeRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('translations:common.type'),
   }),
-  typeWorkRequired: i18n.t('feedback:validation.is_required', {
+  typeWorkRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.type_work'),
   }),
 };
@@ -440,21 +440,21 @@ const mediaContributionPublicationContext = Yup.object<YupShape<MediaContributio
   format: Yup.string()
     .nullable()
     .required(
-      i18n.t('feedback:validation.is_required', {
+      i18n.t('feedback.validation.is_required', {
         field: i18n.t('registration.resource_type.media_contribution.format'),
       })
     ),
   medium: Yup.string()
     .nullable()
     .required(
-      i18n.t('feedback:validation.is_required', {
+      i18n.t('feedback.validation.is_required', {
         field: i18n.t('registration.resource_type.media_contribution.medium'),
       })
     ),
   disseminationChannel: Yup.string()
     .nullable()
     .required(
-      i18n.t('feedback:validation.is_required', {
+      i18n.t('feedback.validation.is_required', {
         field: i18n.t('registration.resource_type.media_contribution.channel'),
       })
     ),

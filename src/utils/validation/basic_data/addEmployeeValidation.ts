@@ -6,45 +6,45 @@ import { Employment, FlatCristinPerson } from '../../../types/user.types';
 import { validateDateInterval, YupShape } from '../validationHelpers';
 
 const employeeErrorMessage = {
-  firstNameRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('translations:common.first_name') }),
-  lastNameRequired: i18n.t('feedback:validation.is_required', {
+  firstNameRequired: i18n.t('feedback.validation.is_required', { field: i18n.t('translations:common.first_name') }),
+  lastNameRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('translations:common.last_name'),
   }),
-  affiliationTypeRequired: i18n.t('feedback:validation.is_required', {
+  affiliationTypeRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('basicData:add_employee.position'),
   }),
-  affiliationOrganizationRequired: i18n.t('feedback:validation.is_required', {
+  affiliationOrganizationRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('translations:common.institution'),
   }),
-  affiliationPercentageRequired: i18n.t('feedback:validation.is_required', {
+  affiliationPercentageRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('basicData:add_employee.position_percent'),
   }),
-  affiliationPercentageMax: i18n.t('feedback:validation.must_be_smaller_than', {
+  affiliationPercentageMax: i18n.t('feedback.validation.must_be_smaller_than', {
     field: i18n.t('basicData:add_employee.position_percent'),
     limit: 100,
   }),
-  affiliationPercentageMin: i18n.t('feedback:validation.must_be_bigger_than', {
+  affiliationPercentageMin: i18n.t('feedback.validation.must_be_bigger_than', {
     field: i18n.t('basicData:add_employee.position_percent'),
     limit: 0,
   }),
-  affiliationStartDateRequired: i18n.t('feedback:validation.is_required', {
+  affiliationStartDateRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('translations:common.start_date'),
   }),
-  affiliationStartDateBeforeEnd: i18n.t('feedback:validation.cannot_be_after', {
+  affiliationStartDateBeforeEnd: i18n.t('feedback.validation.cannot_be_after', {
     field: i18n.t('translations:common.start_date'),
     limitField: i18n.t('translations:common.end_date').toLowerCase(),
   }),
-  affiliationEndDateAfterStart: i18n.t('feedback:validation.cannot_be_before', {
+  affiliationEndDateAfterStart: i18n.t('feedback.validation.cannot_be_before', {
     field: i18n.t('translations:common.end_date'),
     limitField: i18n.t('translations:common.start_date').toLowerCase(),
   }),
-  affiliationEndDateRequired: i18n.t('feedback:validation.is_required', {
+  affiliationEndDateRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('translations:common.end_date'),
   }),
-  nationalIdInvalid: i18n.t('feedback:validation.is_required', {
+  nationalIdInvalid: i18n.t('feedback.validation.is_required', {
     field: i18n.t('basicData:national_id'),
   }),
-  nationalIdInvalidFormat: i18n.t('feedback:validation.invalid_number_of_digits', {
+  nationalIdInvalidFormat: i18n.t('feedback.validation.invalid_number_of_digits', {
     field: i18n.t('basicData:national_id'),
     digits: 11,
   }),

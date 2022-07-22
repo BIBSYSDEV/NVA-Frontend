@@ -32,18 +32,18 @@ const emptyCompetition: Competition = {
 
 const validationSchema = Yup.object<YupShape<Competition>>({
   name: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
+    i18n.t('feedback.validation.is_required', {
       field: i18n.t('registration.resource_type.artistic.competition_name'),
     })
   ),
   description: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
+    i18n.t('feedback.validation.is_required', {
       field: i18n.t('registration.resource_type.artistic.competition_rank'),
     })
   ),
   date: Yup.object().shape({
     value: Yup.date().required(
-      i18n.t('feedback:validation.is_required', {
+      i18n.t('feedback.validation.is_required', {
         field: i18n.t('registration.resource_type.artistic.competition_date'),
       })
     ),

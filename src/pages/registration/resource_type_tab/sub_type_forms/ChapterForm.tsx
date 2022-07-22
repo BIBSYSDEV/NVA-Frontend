@@ -43,7 +43,7 @@ export const ChapterForm = () => {
             label={t('registration.resource_type.chapter.published_in')}
             placeholder={t('registration.resource_type.chapter.search_for_anthology')}
             dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
-            fetchErrorMessage={t('feedback:error.search')}
+            fetchErrorMessage={t('feedback.error.search')}
             descriptionToShow="publisher-and-level"
           />
         ) : instanceType === ChapterType.ConferenceAbstract ? (
@@ -53,7 +53,7 @@ export const ChapterForm = () => {
             label={t('registration.resource_type.chapter.published_in')}
             placeholder={t('registration.resource_type.chapter.search_for_book_of_abstracts')}
             dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
-            fetchErrorMessage={t('feedback:error.search')}
+            fetchErrorMessage={t('feedback.error.search')}
             descriptionToShow="publisher-and-level"
           />
         ) : instanceType === ChapterType.ReportChapter ? (
@@ -63,7 +63,7 @@ export const ChapterForm = () => {
             label={t('registration.resource_type.chapter.published_in')}
             placeholder={t('registration.resource_type.chapter.search_for_report')}
             dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
-            fetchErrorMessage={t('feedback:error.search')}
+            fetchErrorMessage={t('feedback.error.search')}
             descriptionToShow="publisher-and-level"
           />
         ) : null}

@@ -57,7 +57,7 @@ export const AddEmployeePage = () => {
       const cristinUser: CreateCristinPerson = convertToCristinPerson(values.user);
       const createPersonResponse = await createCristinPerson(cristinUser);
       if (isErrorStatus(createPersonResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:error.create_user'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.create_user'), variant: 'error' }));
       } else if (isSuccessStatus(createPersonResponse.status)) {
         userId = createPersonResponse.data.id;
       }
@@ -75,13 +75,13 @@ export const AddEmployeePage = () => {
           roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
         });
         if (isSuccessStatus(createUserResponse.status)) {
-          dispatch(setNotification({ message: t('feedback:success.add_employment'), variant: 'success' }));
+          dispatch(setNotification({ message: t('feedback.success.add_employment'), variant: 'success' }));
           resetForm();
         } else if (isErrorStatus(createUserResponse.status)) {
-          dispatch(setNotification({ message: t('feedback:error.add_role'), variant: 'error' }));
+          dispatch(setNotification({ message: t('feedback.error.add_role'), variant: 'error' }));
         }
       } else if (isErrorStatus(addAffiliationResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:error.add_employment'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.add_employment'), variant: 'error' }));
       }
     }
   };

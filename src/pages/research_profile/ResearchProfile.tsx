@@ -40,7 +40,7 @@ const ResearchProfile = () => {
 
   const [person, isLoadingPerson] = useFetch<CristinPerson>({
     url: personId,
-    errorMessage: t('feedback:error.get_person'),
+    errorMessage: t('feedback.error.get_person'),
   });
 
   const [registrations, isLoadingRegistrations] = useSearchRegistrations({

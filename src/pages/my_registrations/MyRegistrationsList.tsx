@@ -56,10 +56,10 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
     setIsDeleting(true);
     const deleteRegistrationResponse = await deleteRegistration(registrationToDelete.identifier);
     if (isErrorStatus(deleteRegistrationResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:error.delete_registration'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.delete_registration'), variant: 'error' }));
       setIsDeleting(false);
     } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:success.delete_registration'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
       refetchRegistrations();
     }
   };

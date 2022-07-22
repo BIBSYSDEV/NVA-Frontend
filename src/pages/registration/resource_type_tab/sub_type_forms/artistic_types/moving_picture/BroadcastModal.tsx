@@ -28,14 +28,14 @@ const emptyBroadcast: Broadcast = {
 const validationSchema = Yup.object<YupShape<Broadcast>>({
   publisher: Yup.object().shape({
     name: Yup.string().required(
-      i18n.t('feedback:validation.is_required', {
+      i18n.t('feedback.validation.is_required', {
         field: i18n.t('common.publisher'),
       })
     ),
   }),
   date: Yup.object().shape({
     value: Yup.string().required(
-      i18n.t('feedback:validation.is_required', {
+      i18n.t('feedback.validation.is_required', {
         field: i18n.t('common.date'),
       })
     ),

@@ -29,7 +29,7 @@ export const MyInstitutionUsersPage = () => {
   const user = useSelector((store: RootState) => store.user);
   const [institutionUsers, isLoading, fetchInstitutionUsers] = useFetch<UserListType>({
     url: user?.customerId ? `${RoleApiPath.InstitutionUsers}?institution=${encodeURIComponent(user.customerId)}` : '',
-    errorMessage: t('feedback:error.get_users_for_institution'),
+    errorMessage: t('feedback.error.get_users_for_institution'),
     withAuthentication: true,
   });
   const users = institutionUsers?.users ?? [];

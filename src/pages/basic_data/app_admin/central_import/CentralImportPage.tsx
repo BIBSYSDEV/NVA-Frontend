@@ -24,7 +24,7 @@ export const CentralImportPage = () => {
 
   const [searchResults, isLoadingSearchResults] = useFetch<SearchResponse<Registration>>({
     url: `${SearchApiPath.Registrations}?${params.toString()}`,
-    errorMessage: t('feedback:error.search'),
+    errorMessage: t('feedback.error.search'),
   });
 
   const updatePath = (from: string, results: string) => {

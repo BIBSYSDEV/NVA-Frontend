@@ -82,7 +82,7 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
 };
 
 const NviValidationChapterArticle = ({ registration }: { registration: ChapterRegistration }) => {
-  const { t } = useTranslation('feedback');
+  const { t } = useTranslation();
   const resourceState = useSelector((store: RootState) => store.resources);
 
   const { reference } = registration.entityDescription;
@@ -94,9 +94,12 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
 
   const [publisher] = useFetchResource<Publisher>(
     containerPublicationContext?.publisher?.id ?? '',
-    t('error.get_publisher')
+    t('feedback.error.get_publisher')
   );
-  const [series] = useFetchResource<Journal>(containerPublicationContext?.series?.id ?? '', t('error.get_series'));
+  const [series] = useFetchResource<Journal>(
+    containerPublicationContext?.series?.id ?? '',
+    t('feedback.error.get_series')
+  );
 
   return (
     <NviStatus

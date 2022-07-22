@@ -24,7 +24,7 @@ const WorklistPage = () => {
     SearchResponse<PublicationConversation | DoiRequestConversation>
   >({
     url: SearchApiPath.Worklist,
-    errorMessage: t('feedback:error.get_messages'),
+    errorMessage: t('feedback.error.get_messages'),
     withAuthentication: true,
   });
 

@@ -33,7 +33,7 @@ export const PublisherField = () => {
             debouncedQuery
           )}`
         : '',
-    errorMessage: t('feedback:error.get_publishers'),
+    errorMessage: t('feedback.error.get_publishers'),
   });
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export const PublisherField = () => {
 
   const [fetchedPublisher, isLoadingPublisher] = useFetchResource<Publisher>(
     publisher?.id ?? '',
-    t('feedback:error.get_publisher')
+    t('feedback.error.get_publisher')
   );
 
   return (

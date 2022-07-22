@@ -50,17 +50,17 @@ const emptyMusicTrack: MusicTrack = {
 
 const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
   mediaType: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
+    i18n.t('feedback.validation.is_required', {
       field: i18n.t('registration.resource_type.artistic.media_type'),
     })
   ),
   publisher: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
+    i18n.t('feedback.validation.is_required', {
       field: i18n.t('common.publisher'),
     })
   ),
   catalogueNumber: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
+    i18n.t('feedback.validation.is_required', {
       field: i18n.t('registration.resource_type.artistic.catalogue_number'),
     })
   ),
@@ -68,23 +68,23 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
     .of(
       Yup.object<YupShape<MusicTrack>>({
         title: Yup.string().required(
-          i18n.t('feedback:validation.is_required', {
+          i18n.t('feedback.validation.is_required', {
             field: i18n.t('common.title'),
           })
         ),
         composer: Yup.string().required(
-          i18n.t('feedback:validation.is_required', {
+          i18n.t('feedback.validation.is_required', {
             field: i18n.t('registration.resource_type.artistic.composer'),
           })
         ),
         extent: Yup.number()
           .typeError(
-            i18n.t('feedback:validation.has_invalid_format', {
+            i18n.t('feedback.validation.has_invalid_format', {
               field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
             })
           )
           .required(
-            i18n.t('feedback:validation.is_required', {
+            i18n.t('feedback.validation.is_required', {
               field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
             })
           ),
@@ -92,7 +92,7 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
     )
     .min(
       1,
-      i18n.t('feedback:validation.must_have_minimum', {
+      i18n.t('feedback.validation.must_have_minimum', {
         min: 1,
         field: i18n.t('registration.resource_type.artistic.content_track').toLocaleLowerCase(),
       })

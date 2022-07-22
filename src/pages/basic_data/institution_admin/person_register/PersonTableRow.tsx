@@ -88,9 +88,9 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
     }
     if (isSuccessStatus(updateUserResponse.status)) {
       toggleDialog();
-      dispatch(setNotification({ message: t('feedback:success.update_institution_user'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' }));
     } else if (isErrorStatus(updateUserResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:error.update_institution_user'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' }));
     }
   };
 

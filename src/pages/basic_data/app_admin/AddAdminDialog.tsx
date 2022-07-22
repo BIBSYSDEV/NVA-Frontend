@@ -55,7 +55,7 @@ export const AddAdminDialog = ({
           organization: cristinInstitutionId,
         });
         if (isErrorStatus(addAffiliationResponse.status)) {
-          dispatch(setNotification({ message: t('feedback:error.add_employment'), variant: 'error' }));
+          dispatch(setNotification({ message: t('feedback.error.add_employment'), variant: 'error' }));
           return;
         }
       }
@@ -71,9 +71,9 @@ export const AddAdminDialog = ({
         ],
       });
       if (isErrorStatus(createNvaUserResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:error.create_user'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.create_user'), variant: 'error' }));
       } else if (isSuccessStatus(createNvaUserResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:success.admin_added'), variant: 'success' }));
+        dispatch(setNotification({ message: t('feedback.success.admin_added'), variant: 'success' }));
         closeDialog();
         resetForm();
         refetchInstitutionUsers();

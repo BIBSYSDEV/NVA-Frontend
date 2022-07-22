@@ -36,13 +36,13 @@ const emptyOtherRelease: OtherRelease = {
 
 const validationSchema = Yup.object<YupShape<OtherRelease>>({
   description: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
+    i18n.t('feedback.validation.is_required', {
       field: i18n.t('registration.resource_type.artistic.other_release_description'),
     })
   ),
   place: Yup.object().shape({
     label: Yup.string().required(
-      i18n.t('feedback:validation.is_required', {
+      i18n.t('feedback.validation.is_required', {
         field: i18n.t('common.place'),
       })
     ),
@@ -52,7 +52,7 @@ const validationSchema = Yup.object<YupShape<OtherRelease>>({
   }),
   date: Yup.object().shape({
     value: Yup.string().required(
-      i18n.t('feedback:validation.is_required', {
+      i18n.t('feedback.validation.is_required', {
         field: i18n.t('common.date'),
       })
     ),

@@ -11,14 +11,14 @@ export const useSearchRegistrations = (
   numberOfResults = ROWS_PER_PAGE_OPTIONS[1],
   searchAfter = 0
 ) => {
-  const { t } = useTranslation('feedback');
+  const { t } = useTranslation();
   const searchQuery = createSearchQuery(searchConfig ?? {});
 
   const url = searchQuery
     ? `${SearchApiPath.Registrations}?query=${searchQuery}&results=${numberOfResults}&from=${searchAfter}`
     : `${SearchApiPath.Registrations}?results=${numberOfResults}&from=${searchAfter}`;
 
-  const fetchRegistrations = useFetch<SearchResponse<Registration>>({ url, errorMessage: t('error.search') });
+  const fetchRegistrations = useFetch<SearchResponse<Registration>>({ url, errorMessage: t('feedback.error.search') });
 
   return fetchRegistrations;
 };

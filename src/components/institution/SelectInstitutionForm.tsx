@@ -38,7 +38,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
   const debouncedQuery = useDebounce(searchTerm);
   const [institutions, isLoadingInstitutions] = useFetch<SearchResponse<Organization>>({
     url: debouncedQuery ? `${CristinApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
-    errorMessage: t('feedback:error.get_institutions'),
+    errorMessage: t('feedback.error.get_institutions'),
   });
 
   const options = isLoadingInstitutions || !institutions ? [] : institutions.hits;

@@ -18,12 +18,12 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
   const editMode = customerId !== 'new';
   const [customerInstitution, isLoadingCustomerInstitution] = useFetch<CustomerInstitution>({
     url: editMode ? customerId : '',
-    errorMessage: t('feedback:error.get_customer'),
+    errorMessage: t('feedback.error.get_customer'),
     withAuthentication: true,
   });
   const [userList, isLoadingUsers, refetchInstitutionUsers] = useFetch<UserList>({
     url: customerId ? `${RoleApiPath.InstitutionUsers}?institution=${encodeURIComponent(customerId)}` : '',
-    errorMessage: t('feedback:error.get_users_for_institution'),
+    errorMessage: t('feedback.error.get_users_for_institution'),
     withAuthentication: true,
   });
   const admins = filterUsersByRole(userList?.users ?? [], RoleName.InstitutionAdmin);

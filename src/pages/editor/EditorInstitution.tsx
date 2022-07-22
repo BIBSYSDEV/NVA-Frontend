@@ -13,11 +13,11 @@ export const EditorInstitution = () => {
   const user = useSelector((store: RootState) => store.user);
   const [customer, isLoadingCustomer] = useFetch<CustomerInstitution>({
     url: user?.customerId ? user.customerId : '',
-    errorMessage: t('feedback:error.get_customer'),
+    errorMessage: t('feedback.error.get_customer'),
   });
   const [institution, isLoadingInstitution] = useFetchResource<Organization>(
     user?.topOrgCristinId ? user.topOrgCristinId : '',
-    t('feedback:error.get_institution')
+    t('feedback.error.get_institution')
   );
 
   return (

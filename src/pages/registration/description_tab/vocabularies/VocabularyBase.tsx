@@ -13,7 +13,7 @@ export const VocabularyBase = () => {
 
   const [vocabularyList, isLoadingVocabularyList] = useFetch<VocabularyList>({
     url: user?.customerId ? `${user.customerId}/vocabularies` : '',
-    errorMessage: t('feedback:error.get_vocabularies'),
+    errorMessage: t('feedback.error.get_vocabularies'),
     withAuthentication: true,
   });
   const vocabularies = vocabularyList?.vocabularies ?? [];

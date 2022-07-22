@@ -33,7 +33,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   const userCristinId = user.cristinId ?? '';
   const [cristinPerson, isLoadingCristinPerson, refetchCristinPerson] = useFetch<CristinPerson>({
     url: userCristinId,
-    errorMessage: t('feedback:error.get_person'),
+    errorMessage: t('feedback.error.get_person'),
   });
   const currentOrcid = getValueByKey('ORCID', cristinPerson?.identifiers);
   const orcidUrl = `${ORCID_BASE_URL}/${currentOrcid}`;
@@ -48,7 +48,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       const orcid = orcidInfoResponse.data.sub;
 
       if (!orcid) {
-        dispatch(setNotification({ message: t('feedback:error.get_orcid'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.get_orcid'), variant: 'error' }));
       } else if (userCristinId) {
         const addOrcidResponse = await authenticatedApiRequest({
           url: userCristinId,
@@ -56,10 +56,10 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
           data: { orcid },
         });
         if (isSuccessStatus(addOrcidResponse.status)) {
-          dispatch(setNotification({ message: t('feedback:success.update_orcid'), variant: 'success' }));
+          dispatch(setNotification({ message: t('feedback.success.update_orcid'), variant: 'success' }));
           refetchCristinPerson();
         } else if (isErrorStatus(addOrcidResponse.status)) {
-          dispatch(setNotification({ message: t('feedback:error.update_orcid'), variant: 'success' }));
+          dispatch(setNotification({ message: t('feedback.error.update_orcid'), variant: 'success' }));
         }
       }
       history.push(UrlPathTemplate.MyPageMyProfile);
@@ -88,10 +88,10 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         data: { orcid: null },
       });
       if (isSuccessStatus(removeOrcidResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:success.update_orcid'), variant: 'success' }));
+        dispatch(setNotification({ message: t('feedback.success.update_orcid'), variant: 'success' }));
         refetchCristinPerson();
       } else if (isErrorStatus(removeOrcidResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:error.update_orcid'), variant: 'success' }));
+        dispatch(setNotification({ message: t('feedback.error.update_orcid'), variant: 'success' }));
       }
     }
     toggleConfirmDialog();

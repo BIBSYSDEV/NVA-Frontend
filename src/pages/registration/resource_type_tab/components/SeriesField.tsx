@@ -32,7 +32,7 @@ export const SeriesField = () => {
             debouncedQuery
           )}`
         : '',
-    errorMessage: t('feedback:error.get_series'),
+    errorMessage: t('feedback.error.get_series'),
   });
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export const SeriesField = () => {
     }
   }, [setFieldValue, series?.title, journalOptions]);
 
-  const [journal, isLoadingJournal] = useFetchResource<Journal>(series?.id ?? '', t('feedback:error.get_series'));
+  const [journal, isLoadingJournal] = useFetchResource<Journal>(series?.id ?? '', t('feedback.error.get_series'));
 
   return (
     <Field name={ResourceFieldNames.SeriesId}>

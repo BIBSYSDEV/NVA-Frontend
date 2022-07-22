@@ -42,7 +42,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
     const doiRegistrationResponse = await getRegistrationByDoi(doiUrl);
     if (isErrorStatus(doiRegistrationResponse.status)) {
       setNoHit(true);
-      dispatch(setNotification({ message: t('feedback:error.get_doi'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.get_doi'), variant: 'error' }));
     } else if (isSuccessStatus(doiRegistrationResponse.status)) {
       if (doiRegistrationResponse.data) {
         setDoi(doiRegistrationResponse.data);

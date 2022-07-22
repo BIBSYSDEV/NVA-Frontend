@@ -40,9 +40,9 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
     const cristinPerson: CreateCristinPerson = convertToCristinPerson(values);
     const createPersonResponse = await createCristinPerson(cristinPerson);
     if (isErrorStatus(createPersonResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:error.create_user'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.create_user'), variant: 'error' }));
     } else if (isSuccessStatus(createPersonResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:success.create_user'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.create_user'), variant: 'success' }));
       const flatCristinPerson = convertToFlatCristinPerson(createPersonResponse.data);
       dispatch(
         setPartialUser({

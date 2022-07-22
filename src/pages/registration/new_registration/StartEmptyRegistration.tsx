@@ -25,7 +25,7 @@ export const StartEmptyRegistration = ({ expanded, onChange }: StartRegistration
     setIsLoading(true);
     const createRegistrationResponse = await createRegistration();
     if (isErrorStatus(createRegistrationResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:error.create_registration'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.create_registration'), variant: 'error' }));
       setIsLoading(false);
     } else if (isSuccessStatus(createRegistrationResponse.status)) {
       history.push(getRegistrationPath(createRegistrationResponse.data.identifier), { highestValidatedTab: -1 });

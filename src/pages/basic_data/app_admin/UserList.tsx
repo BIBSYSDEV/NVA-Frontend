@@ -66,9 +66,9 @@ export const UserList = ({
       const updateUserResponse = await updateUser(user.username, newUser);
       if (isErrorStatus(updateUserResponse.status)) {
         setUpdatedRoleForUsers((state) => state.filter((username) => username !== user.username));
-        dispatch(setNotification({ message: t('feedback:error.add_role'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.add_role'), variant: 'error' }));
       } else if (isSuccessStatus(updateUserResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:success.added_role'), variant: 'success' }));
+        dispatch(setNotification({ message: t('feedback.success.added_role'), variant: 'success' }));
         refetchUsers?.();
       }
     }
@@ -89,9 +89,9 @@ export const UserList = ({
       const updateUserResponse = await updateUser(removeRoleForUser, newUser);
       if (isErrorStatus(updateUserResponse.status)) {
         setUpdatedRoleForUsers((state) => state.filter((user) => user !== removeRoleForUser));
-        dispatch(setNotification({ message: t('feedback:error.remove_role'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.remove_role'), variant: 'error' }));
       } else if (isSuccessStatus(updateUserResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:success.removed_role'), variant: 'success' }));
+        dispatch(setNotification({ message: t('feedback.success.removed_role'), variant: 'success' }));
         refetchUsers?.();
       }
     }
