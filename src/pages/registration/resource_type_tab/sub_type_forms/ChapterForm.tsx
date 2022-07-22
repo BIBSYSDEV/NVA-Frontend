@@ -13,7 +13,7 @@ import { ChapterContentType } from '../../../../types/publication_types/content.
 import { dataTestId } from '../../../../utils/dataTestIds';
 
 export const ChapterForm = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   const { values } = useFormikContext<ChapterRegistration>();
   const instanceType = values.entityDescription.reference?.publicationInstance.type;
@@ -25,11 +25,11 @@ export const ChapterForm = () => {
           <InfoIcon color="primary" />
           <Typography variant="body1" gutterBottom>
             {instanceType === ChapterType.AnthologyChapter
-              ? t('resource_type.chapter.info_anthology')
+              ? t('registration.resource_type.chapter.info_anthology')
               : instanceType === ChapterType.ConferenceAbstract
-              ? t('resource_type.chapter.info_book_of_abstracts')
+              ? t('registration.resource_type.chapter.info_book_of_abstracts')
               : instanceType === ChapterType.ReportChapter
-              ? t('resource_type.chapter.info_report')
+              ? t('registration.resource_type.chapter.info_report')
               : null}
           </Typography>
         </Box>
@@ -40,8 +40,8 @@ export const ChapterForm = () => {
           <SearchContainerField
             fieldName={ResourceFieldNames.PartOf}
             searchSubtypes={[BookType.Anthology]}
-            label={t('resource_type.chapter.published_in')}
-            placeholder={t('resource_type.chapter.search_for_anthology')}
+            label={t('registration.resource_type.chapter.published_in')}
+            placeholder={t('registration.resource_type.chapter.search_for_anthology')}
             dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
             fetchErrorMessage={t('feedback:error.search')}
             descriptionToShow="publisher-and-level"
@@ -50,8 +50,8 @@ export const ChapterForm = () => {
           <SearchContainerField
             fieldName={ResourceFieldNames.PartOf}
             searchSubtypes={[ReportType.BookOfAbstracts]}
-            label={t('resource_type.chapter.published_in')}
-            placeholder={t('resource_type.chapter.search_for_book_of_abstracts')}
+            label={t('registration.resource_type.chapter.published_in')}
+            placeholder={t('registration.resource_type.chapter.search_for_book_of_abstracts')}
             dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
             fetchErrorMessage={t('feedback:error.search')}
             descriptionToShow="publisher-and-level"
@@ -60,8 +60,8 @@ export const ChapterForm = () => {
           <SearchContainerField
             fieldName={ResourceFieldNames.PartOf}
             searchSubtypes={Object.values(ReportType)}
-            label={t('resource_type.chapter.published_in')}
-            placeholder={t('resource_type.chapter.search_for_report')}
+            label={t('registration.resource_type.chapter.published_in')}
+            placeholder={t('registration.resource_type.chapter.search_for_report')}
             dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
             fetchErrorMessage={t('feedback:error.search')}
             descriptionToShow="publisher-and-level"
@@ -76,7 +76,7 @@ export const ChapterForm = () => {
               id={field.name}
               variant="filled"
               data-testid={dataTestId.registrationWizard.resourceType.pagesFromField}
-              label={t('resource_type.pages_from')}
+              label={t('registration.resource_type.pages_from')}
               {...field}
               value={field.value ?? ''}
               error={touched && !!error}
@@ -93,7 +93,7 @@ export const ChapterForm = () => {
               id={field.name}
               data-testid={dataTestId.registrationWizard.resourceType.pagesToField}
               variant="filled"
-              label={t('resource_type.pages_to')}
+              label={t('registration.resource_type.pages_to')}
               {...field}
               value={field.value ?? ''}
               error={touched && !!error}

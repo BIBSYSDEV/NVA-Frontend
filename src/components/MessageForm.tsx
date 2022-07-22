@@ -29,7 +29,7 @@ const validationSchema = Yup.object<YupShape<MessageFormData>>({
 });
 
 export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   return (
     <Formik
@@ -51,7 +51,7 @@ export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) =
                 multiline
                 rows="4"
                 fullWidth
-                label={t('translations:common.message')}
+                label={t('common.message')}
                 required
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
@@ -62,7 +62,7 @@ export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) =
           <DialogActions>
             {cancelAction && (
               <Button data-testid="cancel-button" variant="outlined" onClick={cancelAction}>
-                {t('translations:common.cancel')}
+                {t('common.cancel')}
               </Button>
             )}
             <LoadingButton
@@ -72,7 +72,7 @@ export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) =
               endIcon={<MailOutlineIcon />}
               loadingPosition="end"
               loading={isSubmitting}>
-              {t('translations:common.send')}
+              {t('common.send')}
             </LoadingButton>
           </DialogActions>
         </Form>

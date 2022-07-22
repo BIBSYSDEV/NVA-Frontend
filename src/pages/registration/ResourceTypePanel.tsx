@@ -39,7 +39,7 @@ import {
 } from '../../types/publication_types/mediaContributionRegistration';
 
 export const ResourceTypePanel = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const { values, setTouched, setFieldValue, touched, errors } = useFormikContext<Registration>();
   const [mainType, setMainType] = useState(
     getMainRegistrationType(values.entityDescription?.reference?.publicationInstance.type ?? '')
@@ -159,7 +159,7 @@ export const ResourceTypePanel = () => {
           select
           variant="filled"
           fullWidth
-          label={t('resource_type.form')}
+          label={t('registration.resource_type.form')}
           required
           value={mainType}
           error={!!typeError && typeTouched}

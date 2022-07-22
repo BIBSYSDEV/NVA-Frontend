@@ -5,7 +5,7 @@ import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 
 export const TotalPagesField = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   return (
     <Field name={ResourceFieldNames.PagesPages}>
@@ -14,7 +14,7 @@ export const TotalPagesField = () => {
           id={field.name}
           data-testid={dataTestId.registrationWizard.resourceType.pagesField}
           variant="filled"
-          label={t('resource_type.number_of_pages')}
+          label={t('registration.resource_type.number_of_pages')}
           {...field}
           value={field.value ?? ''}
           error={touched && !!error}

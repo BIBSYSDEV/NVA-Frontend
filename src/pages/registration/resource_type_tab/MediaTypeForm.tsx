@@ -11,7 +11,7 @@ interface MediaTypeFormProps {
 }
 
 export const MediaTypeForm = ({ onChangeSubType }: MediaTypeFormProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   return (
     <StyledSelectWrapper>
@@ -28,14 +28,14 @@ export const MediaTypeForm = ({ onChangeSubType }: MediaTypeFormProps) => {
               variant="filled"
               select
               required
-              label={t('resource_type.media_contribution.medium')}
+              label={t('registration.resource_type.media_contribution.medium')}
               fullWidth
               {...field}
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}>
               {Object.values(MediaMedium).map((medium) => (
                 <MenuItem key={medium} value={medium}>
-                  {t(`resource_type.media_contribution.medium_types.${medium}`)}
+                  {t(`registration.resource_type.media_contribution.medium_types.${medium}`)}
                 </MenuItem>
               ))}
             </TextField>
@@ -48,14 +48,14 @@ export const MediaTypeForm = ({ onChangeSubType }: MediaTypeFormProps) => {
               variant="filled"
               select
               required
-              label={t('resource_type.media_contribution.format')}
+              label={t('registration.resource_type.media_contribution.format')}
               fullWidth
               {...field}
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}>
               {Object.values(MediaFormat).map((format) => (
                 <MenuItem key={format} value={format}>
-                  {t(`resource_type.media_contribution.format_types.${format}`)}
+                  {t(`registration.resource_type.media_contribution.format_types.${format}`)}
                 </MenuItem>
               ))}
             </TextField>
@@ -67,7 +67,7 @@ export const MediaTypeForm = ({ onChangeSubType }: MediaTypeFormProps) => {
             <TextField
               variant="filled"
               required
-              label={t('resource_type.media_contribution.channel')}
+              label={t('registration.resource_type.media_contribution.channel')}
               fullWidth
               {...field}
               error={touched && !!error}
@@ -79,7 +79,7 @@ export const MediaTypeForm = ({ onChangeSubType }: MediaTypeFormProps) => {
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <TextField
               variant="filled"
-              label={t('resource_type.media_contribution.name_of_series_program')}
+              label={t('registration.resource_type.media_contribution.name_of_series_program')}
               fullWidth
               {...field}
               error={touched && !!error}
@@ -91,7 +91,7 @@ export const MediaTypeForm = ({ onChangeSubType }: MediaTypeFormProps) => {
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <TextField
               variant="filled"
-              label={t('resource_type.media_contribution.name_of_issue_episode')}
+              label={t('registration.resource_type.media_contribution.name_of_issue_episode')}
               fullWidth
               {...field}
               error={touched && !!error}

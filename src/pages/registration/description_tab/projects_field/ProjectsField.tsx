@@ -17,7 +17,7 @@ import { CreateProjectDialog } from './CreateProjectDialog';
 import { BetaFunctionality } from '../../../../components/BetaFunctionality';
 
 export const ProjectsField = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const [openNewProjectDialog, setOpenNewProjectDialog] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -78,9 +78,9 @@ export const ProjectsField = () => {
             renderInput={(params) => (
               <AutocompleteTextField
                 {...params}
-                label={t('description.project_association')}
+                label={t('registration.description.project_association')}
                 isLoading={isLoadingProjects}
-                placeholder={t('description.search_for_project')}
+                placeholder={t('registration.description.search_for_project')}
                 showSearchIcon={field.value.length === 0}
               />
             )}

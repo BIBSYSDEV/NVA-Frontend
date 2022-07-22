@@ -13,7 +13,7 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { InputContainerBox } from '../../../../components/styled/Wrappers';
 
 export const JournalForm = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const { values } = useFormikContext<JournalRegistration>();
   const instanceType = values.entityDescription.reference?.publicationInstance.type;
 
@@ -26,8 +26,8 @@ export const JournalForm = () => {
           <SearchContainerField
             fieldName={ResourceFieldNames.CorrigendumFor}
             searchSubtypes={[JournalType.Article]}
-            label={t('resource_type.original_article_title')}
-            placeholder={t('resource_type.search_for_original_article')}
+            label={t('registration.resource_type.original_article_title')}
+            placeholder={t('registration.resource_type.search_for_original_article')}
             dataTestId={dataTestId.registrationWizard.resourceType.corrigendumForField}
             fetchErrorMessage={t('feedback:error.get_journal_article')}
           />
@@ -50,7 +50,7 @@ export const JournalForm = () => {
                 value={field.value ?? ''}
                 data-testid={dataTestId.registrationWizard.resourceType.volumeField}
                 variant="filled"
-                label={t('resource_type.volume')}
+                label={t('registration.resource_type.volume')}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
@@ -65,7 +65,7 @@ export const JournalForm = () => {
                 value={field.value ?? ''}
                 data-testid={dataTestId.registrationWizard.resourceType.issueField}
                 variant="filled"
-                label={t('resource_type.issue')}
+                label={t('registration.resource_type.issue')}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
@@ -80,7 +80,7 @@ export const JournalForm = () => {
                 data-testid={dataTestId.registrationWizard.resourceType.pagesFromField}
                 value={field.value ?? ''}
                 variant="filled"
-                label={t('resource_type.pages_from')}
+                label={t('registration.resource_type.pages_from')}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
@@ -94,7 +94,7 @@ export const JournalForm = () => {
                 id={field.name}
                 data-testid={dataTestId.registrationWizard.resourceType.pagesToField}
                 variant="filled"
-                label={t('resource_type.pages_to')}
+                label={t('registration.resource_type.pages_to')}
                 value={field.value ?? ''}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
@@ -102,7 +102,7 @@ export const JournalForm = () => {
             )}
           </Field>
 
-          <Typography>{t('resource_type.or')}</Typography>
+          <Typography>{t('registration.resource_type.or')}</Typography>
 
           <Field name={ResourceFieldNames.ArticleNumber}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
@@ -112,7 +112,7 @@ export const JournalForm = () => {
                 data-testid={dataTestId.registrationWizard.resourceType.articleNumberField}
                 value={field.value ?? ''}
                 variant="filled"
-                label={t('resource_type.article_number')}
+                label={t('registration.resource_type.article_number')}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />

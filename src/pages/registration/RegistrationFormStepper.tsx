@@ -15,7 +15,7 @@ interface RegistrationFormStepperProps {
 }
 
 export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: RegistrationFormStepperProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const { errors, touched, values, setTouched } = useFormikContext<Registration>();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const locationState = useLocation<RegistrationLocationState>().state;
@@ -68,7 +68,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
           <StepLabel
             error={descriptionTabHasError}
             data-testid={descriptionTabHasError ? dataTestId.registrationWizard.stepper.errorStep : undefined}>
-            {t('heading.description')}
+            {t('registration.heading.description')}
           </StepLabel>
         </StepButton>
       </Step>
@@ -79,7 +79,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
           <StepLabel
             error={resourceTabHasError}
             data-testid={resourceTabHasError ? dataTestId.registrationWizard.stepper.errorStep : undefined}>
-            {t('heading.resource_type')}
+            {t('registration.heading.resource_type')}
           </StepLabel>
         </StepButton>
       </Step>
@@ -90,7 +90,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
           <StepLabel
             error={contributorTabHasError}
             data-testid={contributorTabHasError ? dataTestId.registrationWizard.stepper.errorStep : undefined}>
-            {t('heading.contributors')}
+            {t('registration.heading.contributors')}
           </StepLabel>
         </StepButton>
       </Step>
@@ -101,7 +101,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
           <StepLabel
             error={fileTabHasError}
             data-testid={fileTabHasError ? dataTestId.registrationWizard.stepper.errorStep : undefined}>
-            {t('heading.files_and_license')}
+            {t('registration.heading.files_and_license')}
           </StepLabel>
         </StepButton>
       </Step>

@@ -17,7 +17,7 @@ interface ContentTypeFieldProps {
 }
 
 export const ContentTypeField = ({ contentTypes }: ContentTypeFieldProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const { setFieldValue } = useFormikContext<Registration>();
 
   return (
@@ -37,7 +37,7 @@ export const ContentTypeField = ({ contentTypes }: ContentTypeFieldProps) => {
                 setFieldValue(ResourceFieldNames.PeerReviewed, null, false);
               }
             }}
-            label={t('resource_type.content')}
+            label={t('registration.resource_type.content')}
             fullWidth
             required
             error={!!error && touched}
@@ -47,7 +47,7 @@ export const ContentTypeField = ({ contentTypes }: ContentTypeFieldProps) => {
                 value={contentType}
                 key={contentType}
                 data-testid={dataTestId.registrationWizard.resourceType.contentValue(contentType)}>
-                {t(`resource_type.content_types.${contentType}`)}
+                {t(`registration.resource_type.content_types.${contentType}`)}
               </MenuItem>
             ))}
           </TextField>

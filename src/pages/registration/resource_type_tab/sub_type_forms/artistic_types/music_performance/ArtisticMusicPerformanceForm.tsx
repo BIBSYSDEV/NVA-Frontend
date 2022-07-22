@@ -27,7 +27,7 @@ import { OtherPerformanceModal } from './OtherPerformanceModal';
 type ArtisticMusicPerformanceModalType = '' | 'MusicScore' | 'AudioVisualPublication' | 'Concert' | 'OtherPerformance';
 
 export const ArtisticMusicPerformanceForm = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const { values, errors, touched } = useFormikContext<ArtisticRegistration>();
   const manifestations = values.entityDescription.reference.publicationInstance.manifestations ?? [];
 
@@ -37,7 +37,7 @@ export const ArtisticMusicPerformanceForm = () => {
   return (
     <div>
       <Typography variant="h3" component="h2" gutterBottom>
-        {t('resource_type.artistic.announcements')}
+        {t('registration.resource_type.artistic.announcements')}
       </Typography>
       <FieldArray name={ResourceFieldNames.PublicationInstanceManifestations}>
         {({ push, replace, remove, move, name }: FieldArrayRenderProps) => {
@@ -51,11 +51,11 @@ export const ArtisticMusicPerformanceForm = () => {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>{t('translations:common.type')}</TableCell>
+                      <TableCell>{t('common.type')}</TableCell>
                       <TableCell>
-                        {t('translations:common.publisher')}/{t('translations:common.place')}
+                        {t('common.publisher')}/{t('common.place')}
                       </TableCell>
-                      <TableCell>{t('translations:common.order')}</TableCell>
+                      <TableCell>{t('common.order')}</TableCell>
                       <TableCell></TableCell>
                     </TableRow>
                   </TableHead>
@@ -99,25 +99,25 @@ export const ArtisticMusicPerformanceForm = () => {
 
               <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
                 <Button onClick={() => setOpenModal('Concert')} variant="outlined" startIcon={<AddCircleOutlineIcon />}>
-                  {t('resource_type.artistic.add_concert')}
+                  {t('registration.resource_type.artistic.add_concert')}
                 </Button>
                 <Button
                   onClick={() => setOpenModal('AudioVisualPublication')}
                   variant="outlined"
                   startIcon={<AddCircleOutlineIcon />}>
-                  {t('resource_type.artistic.add_audio_visual_publication')}
+                  {t('registration.resource_type.artistic.add_audio_visual_publication')}
                 </Button>
                 <Button
                   onClick={() => setOpenModal('MusicScore')}
                   variant="outlined"
                   startIcon={<AddCircleOutlineIcon />}>
-                  {t('resource_type.artistic.add_music_score')}
+                  {t('registration.resource_type.artistic.add_music_score')}
                 </Button>
                 <Button
                   onClick={() => setOpenModal('OtherPerformance')}
                   variant="outlined"
                   startIcon={<AddCircleOutlineIcon />}>
-                  {t('resource_type.artistic.add_other_performance')}
+                  {t('registration.resource_type.artistic.add_other_performance')}
                 </Button>
               </Box>
             </>

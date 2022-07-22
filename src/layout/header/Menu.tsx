@@ -84,7 +84,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               onClick={closeMenu}
               component={Link}
               to={UrlPathTemplate.NewRegistration}>
-              <Typography>{t('registration:new_registration')}</Typography>
+              <Typography>{t('registration.new_registration')}</Typography>
             </MenuItem>,
             <MenuItem
               key={dataTestId.header.myPageLink}

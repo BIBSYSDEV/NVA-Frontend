@@ -3,14 +3,14 @@ import { VocabularyAutocomplete, VocabularyComponentProps } from './VocabularyAu
 import { hrcsCategories } from '../../../../resources/vocabularies/hrcsCategories';
 
 export const HrcsCategoryInput = (props: VocabularyComponentProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   return (
     <VocabularyAutocomplete
       {...props}
       options={hrcsCategories.categories}
       id="hrcs-categories"
-      label={t('description.hrcs_categories')}
+      label={t('registration.description.hrcs_categories')}
     />
   );
 };

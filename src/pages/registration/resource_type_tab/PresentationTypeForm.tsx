@@ -20,7 +20,7 @@ interface PresentationTypeFormProps {
 }
 
 export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormProps) => {
-  const { t, i18n } = useTranslation('registration');
+  const { t, i18n } = useTranslation();
   const { values, setFieldValue } = useFormikContext<PresentationRegistration>();
   const subType = values.entityDescription.reference.publicationInstance.type;
 
@@ -50,7 +50,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                 data-testid={dataTestId.registrationWizard.resourceType.eventTitleField}
                 variant="filled"
                 fullWidth
-                label={t('resource_type.title_of_event')}
+                label={t('registration.resource_type.title_of_event')}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
@@ -66,7 +66,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                 data-testid={dataTestId.registrationWizard.resourceType.eventOrganizerField}
                 variant="filled"
                 fullWidth
-                label={t('resource_type.organizer')}
+                label={t('registration.resource_type.organizer')}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
@@ -82,7 +82,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                 data-testid={dataTestId.registrationWizard.resourceType.eventPlaceField}
                 variant="filled"
                 fullWidth
-                label={t('resource_type.place_for_event')}
+                label={t('registration.resource_type.place_for_event')}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
@@ -117,7 +117,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                     {...params}
                     required
                     data-testid={dataTestId.registrationWizard.resourceType.eventCountryField}
-                    label={t('translations:common.country')}
+                    label={t('common.country')}
                     variant="filled"
                     fullWidth
                     error={touched && !!error}

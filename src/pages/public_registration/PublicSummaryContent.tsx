@@ -8,7 +8,7 @@ import { hrcsActivityOptions } from '../registration/description_tab/vocabularie
 import { hrcsActivityBaseId, hrcsCategoryBaseId } from '../../utils/constants';
 
 export const PublicSummaryContent = ({ registration }: PublicRegistrationContentProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   const { entityDescription, subjects } = registration;
 
@@ -38,7 +38,7 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
           {entityDescription.description && (
             <>
               <Typography variant="overline" component="h3" color="primary">
-                {t('description.description')}
+                {t('registration.description.description')}
               </Typography>
               <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
                 {entityDescription.description}
@@ -47,17 +47,17 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
           )}
 
           {entityDescription.tags.length > 0 && (
-            <TagsList title={t('description.keywords')} values={entityDescription.tags} />
+            <TagsList title={t('registration.description.keywords')} values={entityDescription.tags} />
           )}
         </>
       )}
 
       {selectedHrcsActivities.length > 0 && (
-        <TagsList title={t('description.hrcs_activities')} values={selectedHrcsActivities} />
+        <TagsList title={t('registration.description.hrcs_activities')} values={selectedHrcsActivities} />
       )}
 
       {selectedHrcsCategories.length > 0 && (
-        <TagsList title={t('description.hrcs_categories')} values={selectedHrcsCategories} />
+        <TagsList title={t('registration.description.hrcs_categories')} values={selectedHrcsCategories} />
       )}
     </>
   );

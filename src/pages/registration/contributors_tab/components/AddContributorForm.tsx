@@ -35,7 +35,7 @@ export const AddContributorForm = ({
   initialSearchTerm = '',
   roleToAdd,
 }: AddContributorFormProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
 
@@ -75,7 +75,7 @@ export const AddContributorForm = ({
     <>
       {initialSearchTerm && (
         <Typography variant="subtitle1">
-          {t('registration:contributors.prefilled_name')}: <b>{initialSearchTerm}</b>
+          {t('registration.contributors.prefilled_name')}: <b>{initialSearchTerm}</b>
         </Typography>
       )}
       <TextField
@@ -91,8 +91,8 @@ export const AddContributorForm = ({
           }
         }}
         autoFocus
-        placeholder={t('translations:common.search_placeholder')}
-        label={t('translations:common.search')}
+        placeholder={t('common.search_placeholder')}
+        label={t('common.search')}
         InputProps={{
           startAdornment: <SearchIcon />,
         }}
@@ -119,7 +119,7 @@ export const AddContributorForm = ({
           />
         </>
       ) : (
-        debouncedSearchTerm && <Typography>{t('translations:common.no_hits')}</Typography>
+        debouncedSearchTerm && <Typography>{t('common.no_hits')}</Typography>
       )}
 
       <Box
@@ -135,14 +135,16 @@ export const AddContributorForm = ({
             data-testid={dataTestId.registrationWizard.contributors.addSelfButton}
             onClick={addSelfAsContributor}
             loading={isAddingSelf}>
-            {t('contributors.add_self_as_role', { role: t(`contributors.types.${roleToAdd}`) })}
+            {t('registration.contributors.add_self_as_role', {
+              role: t(`registration.contributors.types.${roleToAdd}`),
+            })}
           </LoadingButton>
         )}
         {!initialSearchTerm && (
           <Button
             data-testid={dataTestId.registrationWizard.contributors.addUnverifiedContributorButton}
             onClick={openAddUnverifiedContributor}>
-            {t('contributors.user_not_found')}
+            {t('registration.contributors.user_not_found')}
           </Button>
         )}
         <Button
@@ -152,8 +154,10 @@ export const AddContributorForm = ({
           size="large"
           variant="contained">
           {initialSearchTerm
-            ? t('contributors.verify_person')
-            : t('translations:common.add_custom', { name: t(`contributors.types.${roleToAdd}`) })}
+            ? t('registration.contributors.verify_person')
+            : t('common.add_custom', {
+                name: t(`registration.contributors.types.${roleToAdd}`),
+              })}
         </Button>
       </Box>
     </>

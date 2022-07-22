@@ -27,11 +27,11 @@ export interface PublicRegistrationProps extends PublicRegistrationContentProps 
 }
 
 export const PublicRegistrationContent = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   const { identifier, entityDescription, projects, subjects } = registration;
   const contributors = entityDescription?.contributors ?? [];
-  const mainTitle = entityDescription?.mainTitle || `[${t('translations:common.missing_title')}]`;
+  const mainTitle = entityDescription?.mainTitle || `[${t('common.missing_title')}]`;
   const abstract = entityDescription?.abstract;
   const description = entityDescription?.description;
 
@@ -81,7 +81,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           <LandingPageAccordion
             data-testid={dataTestId.registrationLandingPage.abstractAccordion}
             defaultExpanded
-            heading={t('description.abstract')}>
+            heading={t('registration.description.abstract')}>
             <PublicSummaryContent registration={registration} />
           </LandingPageAccordion>
         )}
@@ -90,7 +90,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           <LandingPageAccordion
             data-testid={dataTestId.registrationLandingPage.projectsAccordion}
             defaultExpanded
-            heading={t('description.project_association')}>
+            heading={t('registration.description.project_association')}>
             <PublicProjectsContent projects={projects} />
           </LandingPageAccordion>
         )}
@@ -99,7 +99,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           <LandingPageAccordion
             data-testid={dataTestId.registrationLandingPage.relatedRegistrationsAccordion}
             defaultExpanded
-            heading={t('public_page.related_registrations')}>
+            heading={t('registration.public_page.related_registrations')}>
             <RegistrationList registrations={relatedRegistrations.hits} />
           </LandingPageAccordion>
         )}

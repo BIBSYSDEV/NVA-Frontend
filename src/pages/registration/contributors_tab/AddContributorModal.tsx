@@ -27,7 +27,7 @@ export const AddContributorModal = ({
   contributorRole,
   initialSearchTerm,
 }: AddContributorModalProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const [openAddUnverifiedContributor, setOpenAddUnverifiedContributor] = useState(false);
   const [selectedContributorRole, setSelectedContributorRole] = useState<ContributorRole | ''>(
     contributorRoles.length === 1 ? contributorRoles[0] : ''
@@ -50,12 +50,12 @@ export const AddContributorModal = ({
     <Modal
       headingText={
         initialSearchTerm
-          ? t('contributors.verify_person')
-          : t('contributors.add_as_role', {
+          ? t('registration.contributors.verify_person')
+          : t('registration.contributors.add_as_role', {
               role:
                 contributorRole === 'OtherContributor'
-                  ? t('contributors.contributor').toLowerCase()
-                  : t(`contributors.types.${contributorRole}`).toLowerCase(),
+                  ? t('registration.contributors.contributor').toLowerCase()
+                  : t(`registration.contributors.types.${contributorRole}`).toLowerCase(),
             })
       }
       onClose={handleCloseModal}
@@ -74,11 +74,11 @@ export const AddContributorModal = ({
           }}
           fullWidth
           select
-          label={t('contributors.select_contributor_type')}
+          label={t('registration.contributors.select_contributor_type')}
           variant="outlined">
           {contributorRoles.map((role) => (
             <MenuItem key={role} value={role}>
-              {t(`contributors.types.${role}`)}
+              {t(`registration.contributors.types.${role}`)}
             </MenuItem>
           ))}
         </TextField>

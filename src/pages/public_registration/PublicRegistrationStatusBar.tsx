@@ -34,7 +34,7 @@ enum LoadingName {
 
 export const PublicRegistrationStatusBar = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
   const dispatch = useDispatch();
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const { identifier, doi, doiRequest } = registration;
 
@@ -46,7 +46,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
 
   const sendDoiRequest = async () => {
     setIsLoading(LoadingName.RequestDoi);
-    const message = isPublishedRegistration ? messageToCurator : t('public_page.reserve_doi_message');
+    const message = isPublishedRegistration ? messageToCurator : t('registration.public_page.reserve_doi_message');
     const createDoiRequestResponse = await createDoiRequest(identifier, message);
     if (isErrorStatus(createDoiRequestResponse.status)) {
       dispatch(setNotification({ message: t('feedback:error.create_doi_request'), variant: 'error' }));
@@ -126,10 +126,10 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             <>
               <Typography variant="h4" component="h1">
                 {registration.status === RegistrationStatus.Published
-                  ? t('public_page.published')
-                  : t('public_page.not_published')}
+                  ? t('registration.public_page.published')
+                  : t('registration.public_page.not_published')}
               </Typography>
-              <Typography>{t('public_page.error_description')}</Typography>
+              <Typography>{t('registration.public_page.error_description')}</Typography>
             </>
           }
           actions={
@@ -140,7 +140,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
               to={`${editRegistrationUrl}?tab=${firstErrorTab}`}
               endIcon={<EditIcon />}
               data-testid={dataTestId.registrationLandingPage.backToWizard}>
-              {t('public_page.go_back_to_wizard')}
+              {t('registration.public_page.go_back_to_wizard')}
             </Button>
           }
         />
@@ -151,14 +151,14 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
         {!isPublishedRegistration && registrationIsValid && (
           <>
             <Typography variant="h4" component="h1">
-              {t('public_page.ready_to_be_published')}
+              {t('registration.public_page.ready_to_be_published')}
             </Typography>
-            <Typography gutterBottom>{t('public_page.ready_to_be_published_description')}</Typography>
+            <Typography gutterBottom>{t('registration.public_page.ready_to_be_published_description')}</Typography>
           </>
         )}
         {isPublishedRegistration && (
           <Typography variant="h4" component="h1" gutterBottom>
-            {t('public_page.published_date', {
+            {t('registration.public_page.published_date', {
               date: registration.publishedDate ? new Date(registration.publishedDate).toLocaleDateString() : '',
               interpolation: { escapeValue: false },
             })}
@@ -175,7 +175,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
               loadingPosition="end"
               onClick={onClickPublish}
               loading={isLoading === LoadingName.Publish}>
-              {t('translations:common.publish')}
+              {t('common.publish')}
             </LoadingButton>
           )}
 
@@ -185,7 +185,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             variant="outlined"
             endIcon={<EditIcon />}
             data-testid={dataTestId.registrationLandingPage.editButton}>
-            {t('edit_registration')}
+            {t('registration.edit_registration')}
           </Button>
 
           {!hasNvaDoi && (
@@ -200,7 +200,9 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
                   : dataTestId.registrationLandingPage.reserveDoiButton
               }
               onClick={() => (isPublishedRegistration ? toggleRequestDoiModal() : sendDoiRequest())}>
-              {isPublishedRegistration ? t('public_page.request_doi') : t('public_page.reserve_doi')}
+              {isPublishedRegistration
+                ? t('registration.public_page.request_doi')
+                : t('registration.public_page.reserve_doi')}
             </LoadingButton>
           )}
 
@@ -214,7 +216,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
                 onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Rejected)}
                 loading={isLoading === LoadingName.RejectDoi}
                 disabled={!!isLoading}>
-                {t('translations:common.reject_doi')}
+                {t('common.reject_doi')}
               </LoadingButton>
               <LoadingButton
                 variant="contained"
@@ -224,7 +226,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
                 onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Approved)}
                 loading={isLoading === LoadingName.ApproveDoi}
                 disabled={!!isLoading || !registrationIsValid}>
-                {t('translations:common.create_doi')}
+                {t('common.create_doi')}
               </LoadingButton>
             </>
           )}
@@ -234,26 +236,26 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           <Modal
             open={openRequestDoiModal}
             onClose={toggleRequestDoiModal}
-            headingText={t('public_page.request_doi')}
+            headingText={t('registration.public_page.request_doi')}
             dataTestId={dataTestId.registrationLandingPage.requestDoiModal}>
-            <Typography paragraph>{t('public_page.request_doi_description')}</Typography>
+            <Typography paragraph>{t('registration.public_page.request_doi_description')}</Typography>
             <TextField
               variant="outlined"
               multiline
               rows="4"
               fullWidth
               data-testid={dataTestId.registrationLandingPage.doiMessageField}
-              label={t('public_page.message_to_curator')}
+              label={t('registration.public_page.message_to_curator')}
               onChange={(event) => setMessageToCurator(event.target.value)}
             />
             <DialogActions>
-              <Button onClick={toggleRequestDoiModal}>{t('translations:common.cancel')}</Button>
+              <Button onClick={toggleRequestDoiModal}>{t('common.cancel')}</Button>
               <LoadingButton
                 variant="contained"
                 data-testid={dataTestId.registrationLandingPage.sendDoiButton}
                 onClick={sendDoiRequest}
                 loading={isLoading === LoadingName.RequestDoi}>
-                {t('translations:common.send')}
+                {t('common.send')}
               </LoadingButton>
             </DialogActions>
           </Modal>

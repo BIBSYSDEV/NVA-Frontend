@@ -20,7 +20,7 @@ import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { setPartialUser } from '../../redux/userSlice';
 
 export const Header = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
   const [customer] = useFetch<CustomerInstitution>({
@@ -57,7 +57,7 @@ export const Header = () => {
         }}>
         <IconButton
           onClick={handleClick}
-          title={t('translations:common.menu')}
+          title={t('common.menu')}
           size="large"
           color="inherit"
           sx={{ gridArea: 'other-menu' }}>
@@ -78,7 +78,7 @@ export const Header = () => {
             data-testid={dataTestId.header.newRegistrationLink}
             to={getRegistrationPath()}
             startIcon={<AddCircleIcon />}>
-            {t('new_registration')}
+            {t('registration.new_registration')}
           </Button>
         )}
         <Box

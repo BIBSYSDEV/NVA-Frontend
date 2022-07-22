@@ -11,7 +11,7 @@ interface PeriodFieldsProps {
 }
 
 export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const { values, setFieldValue, setFieldTouched } = useFormikContext();
   const maxDate = new Date(new Date().getFullYear() + 5, 11, 31);
 
@@ -23,7 +23,7 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
       <Field name={fromFieldName}>
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <DatePicker
-            label={t('resource_type.date_from')}
+            label={t('registration.resource_type.date_from')}
             value={field.value ?? null}
             onChange={(date, keyboardInput) => {
               !touched && setFieldTouched(field.name, true, false);
@@ -53,7 +53,7 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
       <Field name={toFieldName}>
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <DatePicker
-            label={t('resource_type.date_to')}
+            label={t('registration.resource_type.date_to')}
             value={field.value ?? null}
             onChange={(date, keyboardInput) => {
               !touched && setFieldTouched(field.name, true, false);

@@ -20,7 +20,7 @@ interface UrlParams {
 }
 
 const EditRegistration = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const { identifier } = useParams<UrlParams>();
   const [expanded, setExpanded] = useState<PanelName | false>(false);
   const [showForm, setShowForm] = useState(!!identifier);
@@ -33,7 +33,7 @@ const EditRegistration = () => {
 
   return !showForm ? (
     <SyledPageContent>
-      <PageHeader>{t('new_registration')}</PageHeader>
+      <PageHeader>{t('registration.new_registration')}</PageHeader>
       <Box
         sx={{
           maxWidth: '55rem',

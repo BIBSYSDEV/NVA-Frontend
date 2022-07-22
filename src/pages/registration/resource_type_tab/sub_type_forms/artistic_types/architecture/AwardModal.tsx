@@ -29,30 +29,32 @@ const emptyAward: Award = {
 const validationSchema = Yup.object<YupShape<Award>>({
   name: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
-      field: i18n.t('registration:resource_type.artistic.award_name'),
+      field: i18n.t('registration.resource_type.artistic.award_name'),
     })
   ),
   organizer: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
-      field: i18n.t('registration:resource_type.artistic.award_organizer'),
+      field: i18n.t('registration.resource_type.artistic.award_organizer'),
     })
   ),
   date: Yup.object().shape({
     value: Yup.date().required(
       i18n.t('feedback:validation.is_required', {
-        field: i18n.t('translations:common.year'),
+        field: i18n.t('common.year'),
       })
     ),
   }),
 });
 
 export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   return (
     <Dialog open={open} onClose={closeModal} fullWidth>
       <DialogTitle>
-        {award ? t('resource_type.artistic.edit_award') : t('resource_type.artistic.add_award')}
+        {award
+          ? t('registration.resource_type.artistic.edit_award')
+          : t('registration.resource_type.artistic.add_award')}
       </DialogTitle>
       <Formik
         initialValues={award ?? emptyAward}
@@ -69,7 +71,7 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('resource_type.artistic.award_name')}
+                  label={t('registration.resource_type.artistic.award_name')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -84,7 +86,7 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('resource_type.artistic.award_organizer')}
+                  label={t('registration.resource_type.artistic.award_organizer')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -96,7 +98,7 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
             <Field name="date.value">
               {({ field, form: { setFieldTouched, setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
                 <DatePicker
-                  label={t('translations:common.year')}
+                  label={t('common.year')}
                   value={field.value ?? null}
                   onChange={(date: Date | null, keyboardInput) => {
                     !touched && setFieldTouched(field.name, true, false);
@@ -130,7 +132,7 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                   variant="filled"
                   fullWidth
                   type="number"
-                  label={t('resource_type.artistic.award_ranking')}
+                  label={t('registration.resource_type.artistic.award_ranking')}
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
                   data-testid={dataTestId.registrationWizard.resourceType.awardRanking}
@@ -144,7 +146,7 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('resource_type.artistic.award_other')}
+                  label={t('registration.resource_type.artistic.award_other')}
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
                   data-testid={dataTestId.registrationWizard.resourceType.awardOther}
@@ -157,13 +159,13 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
               variant="outlined"
               onClick={closeModal}
               data-testid={dataTestId.registrationWizard.resourceType.awardCancelButton}>
-              {t('translations:common.cancel')}
+              {t('common.cancel')}
             </Button>
             <Button
               variant="contained"
               type="submit"
               data-testid={dataTestId.registrationWizard.resourceType.awardSaveButton}>
-              {award ? t('translations:common.save') : t('translations:common.add')}
+              {award ? t('common.save') : t('common.add')}
             </Button>
           </DialogActions>
         </Form>

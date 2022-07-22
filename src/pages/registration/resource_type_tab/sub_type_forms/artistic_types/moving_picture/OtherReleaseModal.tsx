@@ -37,13 +37,13 @@ const emptyOtherRelease: OtherRelease = {
 const validationSchema = Yup.object<YupShape<OtherRelease>>({
   description: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
-      field: i18n.t('registration:resource_type.artistic.other_release_description'),
+      field: i18n.t('registration.resource_type.artistic.other_release_description'),
     })
   ),
   place: Yup.object().shape({
     label: Yup.string().required(
       i18n.t('feedback:validation.is_required', {
-        field: i18n.t('translations:common.place'),
+        field: i18n.t('common.place'),
       })
     ),
   }),
@@ -53,19 +53,21 @@ const validationSchema = Yup.object<YupShape<OtherRelease>>({
   date: Yup.object().shape({
     value: Yup.string().required(
       i18n.t('feedback:validation.is_required', {
-        field: i18n.t('translations:common.date'),
+        field: i18n.t('common.date'),
       })
     ),
   }),
 });
 
 export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: OtherReleaseModalProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   return (
     <Dialog open={open} onClose={closeModal} maxWidth="sm" fullWidth>
       <DialogTitle>
-        {otherRelease ? t('resource_type.artistic.edit_other_release') : t('resource_type.artistic.add_other_release')}
+        {otherRelease
+          ? t('registration.resource_type.artistic.edit_other_release')
+          : t('registration.resource_type.artistic.add_other_release')}
       </DialogTitle>
       <Formik
         initialValues={otherRelease ?? emptyOtherRelease}
@@ -82,7 +84,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('resource_type.artistic.other_release_description')}
+                  label={t('registration.resource_type.artistic.other_release_description')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -96,7 +98,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                   variant="filled"
                   fullWidth
                   required
-                  label={t('translations:common.place')}
+                  label={t('common.place')}
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
                 />
@@ -108,7 +110,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('resource_type.artistic.other_announcement_organizer')}
+                  label={t('registration.resource_type.artistic.other_announcement_organizer')}
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
                 />
@@ -117,7 +119,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
             <Field name="date.value">
               {({ field, form: { setFieldTouched, setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
                 <DatePicker
-                  label={t('translations:common.date')}
+                  label={t('common.date')}
                   value={field.value ?? null}
                   onChange={(date: Date | null, keyboardInput) => {
                     !touched && setFieldTouched(field.name, true, false);
@@ -145,10 +147,10 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
           </DialogContent>
           <DialogActions>
             <Button variant="outlined" onClick={closeModal}>
-              {t('translations:common.cancel')}
+              {t('common.cancel')}
             </Button>
             <Button variant="contained" type="submit">
-              {otherRelease ? t('translations:common.update') : t('translations:common.add')}
+              {otherRelease ? t('common.update') : t('common.add')}
             </Button>
           </DialogActions>
         </Form>

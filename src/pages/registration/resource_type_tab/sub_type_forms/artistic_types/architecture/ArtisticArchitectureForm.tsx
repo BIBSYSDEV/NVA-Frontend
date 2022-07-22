@@ -33,7 +33,7 @@ const architectureTypes = Object.values(ArchitectureType);
 type ArtisticArchitectureModalType = '' | 'Competition' | 'MentionInPublication' | 'Award' | 'Exhibition';
 
 export const ArtisticArchitectureForm = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const { values, errors, touched } = useFormikContext<ArtisticRegistration>();
 
   const [openModal, setOpenModal] = useState<ArtisticArchitectureModalType>('');
@@ -54,13 +54,13 @@ export const ArtisticArchitectureForm = () => {
               fullWidth
               {...field}
               value={field.value ?? ''}
-              label={t('resource_type.type_work')}
+              label={t('registration.resource_type.type_work')}
               required
               error={!!error && touched}
               helperText={<ErrorMessage name={field.name} />}>
               {architectureTypes.map((architectureType) => (
                 <MenuItem value={architectureType} key={architectureType}>
-                  {t(`resource_type.artistic.architecture_type.${architectureType}`)}
+                  {t(`registration.resource_type.artistic.architecture_type.${architectureType}`)}
                 </MenuItem>
               ))}
             </TextField>
@@ -79,7 +79,7 @@ export const ArtisticArchitectureForm = () => {
               {...field}
               required
               multiline
-              label={t('resource_type.type_work_specified')}
+              label={t('registration.resource_type.type_work_specified')}
               error={!!error && touched}
               helperText={<ErrorMessage name={field.name} />}
             />
@@ -96,7 +96,7 @@ export const ArtisticArchitectureForm = () => {
             fullWidth
             {...field}
             multiline
-            label={t('resource_type.more_info_about_work')}
+            label={t('registration.resource_type.more_info_about_work')}
             error={!!error && touched}
             helperText={<ErrorMessage name={field.name} />}
           />
@@ -105,7 +105,7 @@ export const ArtisticArchitectureForm = () => {
 
       <div>
         <Typography variant="h3" component="h2" gutterBottom>
-          {t('resource_type.artistic.announcements')}
+          {t('registration.resource_type.artistic.announcements')}
         </Typography>
         <FieldArray name={ResourceFieldNames.ArchitectureOutput}>
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
@@ -114,9 +114,9 @@ export const ArtisticArchitectureForm = () => {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>{t('translations:common.type')}</TableCell>
-                      <TableCell>{t('resource_type.artistic.name_or_title')}</TableCell>
-                      <TableCell>{t('translations:common.order')}</TableCell>
+                      <TableCell>{t('common.type')}</TableCell>
+                      <TableCell>{t('registration.resource_type.artistic.name_or_title')}</TableCell>
+                      <TableCell>{t('common.order')}</TableCell>
                       <TableCell></TableCell>
                     </TableRow>
                   </TableHead>
@@ -186,28 +186,28 @@ export const ArtisticArchitectureForm = () => {
             onClick={() => setOpenModal('Competition')}
             variant="outlined"
             startIcon={<AddCircleOutlineIcon />}>
-            {t('resource_type.artistic.add_competition')}
+            {t('registration.resource_type.artistic.add_competition')}
           </Button>
           <Button
             data-testid={dataTestId.registrationWizard.resourceType.addMentionInPublicationButton}
             onClick={() => setOpenModal('MentionInPublication')}
             variant="outlined"
             startIcon={<AddCircleOutlineIcon />}>
-            {t('resource_type.artistic.add_publication_mention')}
+            {t('registration.resource_type.artistic.add_publication_mention')}
           </Button>
           <Button
             data-testid={dataTestId.registrationWizard.resourceType.addAwardButton}
             onClick={() => setOpenModal('Award')}
             variant="outlined"
             startIcon={<AddCircleOutlineIcon />}>
-            {t('resource_type.artistic.add_award')}
+            {t('registration.resource_type.artistic.add_award')}
           </Button>
           <Button
             data-testid={dataTestId.registrationWizard.resourceType.addExhibitionButton}
             onClick={() => setOpenModal('Exhibition')}
             variant="outlined"
             startIcon={<AddCircleOutlineIcon />}>
-            {t('resource_type.artistic.add_exhibition')}
+            {t('registration.resource_type.artistic.add_exhibition')}
           </Button>
         </Box>
       </div>

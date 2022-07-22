@@ -32,28 +32,28 @@ const validationSchema = Yup.object<YupShape<CinematicRelease>>({
   place: Yup.object().shape({
     label: Yup.string().required(
       i18n.t('feedback:validation.is_required', {
-        field: i18n.t('translations:common.place'),
+        field: i18n.t('common.place'),
       })
     ),
   }),
   date: Yup.object().shape({
     value: Yup.string().required(
       i18n.t('feedback:validation.is_required', {
-        field: i18n.t('registration:resource_type.artistic.premiere_date'),
+        field: i18n.t('registration.resource_type.artistic.premiere_date'),
       })
     ),
   }),
 });
 
 export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeModal }: CinematicReleaseModalProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   return (
     <Dialog open={open} onClose={closeModal} maxWidth="sm" fullWidth>
       <DialogTitle>
         {cinematicRelease
-          ? t('resource_type.artistic.edit_cinematic_release')
-          : t('resource_type.artistic.add_cinematic_release')}
+          ? t('registration.resource_type.artistic.edit_cinematic_release')
+          : t('registration.resource_type.artistic.add_cinematic_release')}
       </DialogTitle>
       <Formik
         initialValues={cinematicRelease ?? emptyCinematicRelease}
@@ -70,7 +70,7 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('translations:common.place')}
+                  label={t('common.place')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -80,7 +80,7 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
             <Field name="date.value">
               {({ field, form: { setFieldTouched, setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
                 <DatePicker
-                  label={t('resource_type.artistic.premiere_date')}
+                  label={t('registration.resource_type.artistic.premiere_date')}
                   value={field.value ?? null}
                   onChange={(date: Date | null, keyboardInput) => {
                     !touched && setFieldTouched(field.name, true, false);
@@ -108,10 +108,10 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
           </DialogContent>
           <DialogActions>
             <Button variant="outlined" onClick={closeModal}>
-              {t('translations:common.cancel')}
+              {t('common.cancel')}
             </Button>
             <Button variant="contained" type="submit">
-              {cinematicRelease ? t('translations:common.update') : t('translations:common.add')}
+              {cinematicRelease ? t('common.update') : t('common.add')}
             </Button>
           </DialogActions>
         </Form>

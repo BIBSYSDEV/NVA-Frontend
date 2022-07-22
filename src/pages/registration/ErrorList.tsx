@@ -11,17 +11,26 @@ interface ErrorSummaryProps {
 }
 
 export const ErrorList = ({ tabErrors, description, actions }: ErrorSummaryProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   return (
     <Box sx={{ bgcolor: 'error.light', padding: { xs: '0.5rem', sm: '0.5rem 2rem' } }} data-testid="error-list-div">
       {description}
       <dl>
-        <ErrorListGroup heading={t('heading.description')} errorMessages={tabErrors[RegistrationTab.Description]} />
-        <ErrorListGroup heading={t('heading.resource_type')} errorMessages={tabErrors[RegistrationTab.ResourceType]} />
-        <ErrorListGroup heading={t('heading.contributors')} errorMessages={tabErrors[RegistrationTab.Contributors]} />
         <ErrorListGroup
-          heading={t('heading.files_and_license')}
+          heading={t('registration.heading.description')}
+          errorMessages={tabErrors[RegistrationTab.Description]}
+        />
+        <ErrorListGroup
+          heading={t('registration.heading.resource_type')}
+          errorMessages={tabErrors[RegistrationTab.ResourceType]}
+        />
+        <ErrorListGroup
+          heading={t('registration.heading.contributors')}
+          errorMessages={tabErrors[RegistrationTab.Contributors]}
+        />
+        <ErrorListGroup
+          heading={t('registration.heading.files_and_license')}
           errorMessages={tabErrors[RegistrationTab.FilesAndLicenses]}
         />
       </dl>

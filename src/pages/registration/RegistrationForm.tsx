@@ -41,7 +41,7 @@ interface RegistrationFormProps {
 
 export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const user = useSelector((store: RootState) => store.user);
-  const { t, i18n } = useTranslation('registration');
+  const { t, i18n } = useTranslation();
   const history = useHistory();
   const uppy = useUppy(createUppy(i18n.language));
   const highestValidatedTab =
@@ -85,7 +85,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     <Forbidden />
   ) : registration ? (
     <>
-      <SkipLink href="#form">{t('translations:common.skip_to_schema')}</SkipLink>
+      <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik
         initialValues={registration}
         validate={validateForm}
@@ -97,12 +97,12 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
         {({ dirty, values }: FormikProps<Registration>) => (
           <Form noValidate>
             <RouteLeavingGuard
-              modalDescription={t('modal_unsaved_changes_description')}
-              modalHeading={t('modal_unsaved_changes_heading')}
+              modalDescription={t('registration.modal_unsaved_changes_description')}
+              modalHeading={t('registration.modal_unsaved_changes_heading')}
               shouldBlockNavigation={dirty}
             />
             <ItalicPageHeader>
-              {values.entityDescription?.mainTitle || `[${t('translations:common.missing_title')}]`}
+              {values.entityDescription?.mainTitle || `[${t('common.missing_title')}]`}
             </ItalicPageHeader>
             <RegistrationFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
             <RequiredDescription />

@@ -63,7 +63,7 @@ const MyPagePage = () => {
               <LinkIconButton
                 data-testid={dataTestId.myPage.newRegistrationLink}
                 to={UrlPathTemplate.NewRegistration}
-                title={t('registration:new_registration')}>
+                title={t('registration.new_registration')}>
                 <AddIcon />
               </LinkIconButton>
             </LinkButtonRow>,

@@ -32,7 +32,7 @@ const movingPictureTypes = Object.values(MovingPictureType);
 type ArtisticMovingPictureModalType = '' | 'Broadcast' | 'CinematicRelease' | 'OtherRelease';
 
 export const ArtisticMovingPictureForm = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const { values, touched, errors } = useFormikContext<ArtisticRegistration>();
   const outputs = (values.entityDescription.reference.publicationInstance.outputs ?? []) as FilmOutput[];
 
@@ -52,13 +52,13 @@ export const ArtisticMovingPictureForm = () => {
               fullWidth
               {...field}
               value={field.value ?? ''}
-              label={t('resource_type.type_work')}
+              label={t('registration.resource_type.type_work')}
               required
               error={!!error && touched}
               helperText={<ErrorMessage name={field.name} />}>
               {movingPictureTypes.map((movingPictureType) => (
                 <MenuItem value={movingPictureType} key={movingPictureType}>
-                  {t(`resource_type.artistic.moving_picture_type.${movingPictureType}`)}
+                  {t(`registration.resource_type.artistic.moving_picture_type.${movingPictureType}`)}
                 </MenuItem>
               ))}
             </TextField>
@@ -77,7 +77,7 @@ export const ArtisticMovingPictureForm = () => {
               {...field}
               required
               multiline
-              label={t('resource_type.type_work_specified')}
+              label={t('registration.resource_type.type_work_specified')}
               error={!!error && touched}
               helperText={<ErrorMessage name={field.name} />}
             />
@@ -94,7 +94,7 @@ export const ArtisticMovingPictureForm = () => {
             fullWidth
             {...field}
             multiline
-            label={t('resource_type.more_info_about_work')}
+            label={t('registration.resource_type.more_info_about_work')}
             error={!!error && touched}
             helperText={<ErrorMessage name={field.name} />}
           />
@@ -103,7 +103,7 @@ export const ArtisticMovingPictureForm = () => {
 
       <div>
         <Typography variant="h3" component="h2" gutterBottom>
-          {t('resource_type.artistic.announcements')}
+          {t('registration.resource_type.artistic.announcements')}
         </Typography>
         <FieldArray name={ResourceFieldNames.PublicationInstanceOutputs}>
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => {
@@ -118,11 +118,11 @@ export const ArtisticMovingPictureForm = () => {
                   <Table>
                     <TableHead>
                       <TableRow>
-                        <TableCell>{t('translations:common.type')}</TableCell>
+                        <TableCell>{t('common.type')}</TableCell>
                         <TableCell>
-                          {t('translations:common.publisher')}/{t('translations:common.place')}
+                          {t('common.publisher')}/{t('common.place')}
                         </TableCell>
-                        <TableCell>{t('translations:common.order')}</TableCell>
+                        <TableCell>{t('common.order')}</TableCell>
                         <TableCell></TableCell>
                       </TableRow>
                     </TableHead>
@@ -164,19 +164,19 @@ export const ArtisticMovingPictureForm = () => {
                     onClick={() => setOpenModal('Broadcast')}
                     variant="outlined"
                     startIcon={<AddCircleOutlineIcon />}>
-                    {t('resource_type.artistic.add_broadcast')}
+                    {t('registration.resource_type.artistic.add_broadcast')}
                   </Button>
                   <Button
                     onClick={() => setOpenModal('CinematicRelease')}
                     variant="outlined"
                     startIcon={<AddCircleOutlineIcon />}>
-                    {t('resource_type.artistic.add_cinematic_release')}
+                    {t('registration.resource_type.artistic.add_cinematic_release')}
                   </Button>
                   <Button
                     onClick={() => setOpenModal('OtherRelease')}
                     variant="outlined"
                     startIcon={<AddCircleOutlineIcon />}>
-                    {t('resource_type.artistic.add_other_release')}
+                    {t('registration.resource_type.artistic.add_other_release')}
                   </Button>
                 </Box>
               </>

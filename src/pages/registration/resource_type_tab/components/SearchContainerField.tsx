@@ -191,10 +191,10 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
         </Typography>
       )}
       <Typography variant="body2" color="textSecondary">
-        {t('registration:resource_type.series')}: {series?.name}
+        {t('registration.resource_type.series')}: {series?.name}
       </Typography>
       <Typography variant="body2" color="textSecondary">
-        {t('registration:resource_type.level')}: {series?.level}
+        {t('registration.resource_type.level')}: {series?.level}
       </Typography>
     </>
   ) : publisherId ? (
@@ -203,7 +203,7 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
         {t('translations:common.publisher')}: {publisher?.name}
       </Typography>
       <Typography variant="body2" color="textSecondary">
-        {t('registration:resource_type.level')}: {publisher?.level}
+        {t('registration.resource_type.level')}: {publisher?.level}
       </Typography>
     </>
   ) : null;

@@ -46,7 +46,7 @@ export const Contributors = ({
   replace,
   primaryColorAddButton = contributorRoles.length === 1,
 }: ContributorsProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [openAddContributor, setOpenAddContributor] = useState(false);
@@ -123,7 +123,7 @@ export const Contributors = ({
     contributorIndex?: number
   ) => {
     if (relevantContributors.some((contributor) => contributor.identity.id === selectedContributor.id)) {
-      dispatch(setNotification({ message: t('contributors.contributor_already_added'), variant: 'info' }));
+      dispatch(setNotification({ message: t('registration.contributors.contributor_already_added'), variant: 'info' }));
       return;
     }
 
@@ -169,12 +169,12 @@ export const Contributors = ({
   const contributorRole = contributorRoles.length === 1 ? contributorRoles[0] : 'OtherContributor';
   const roleText =
     contributorRole === ContributorRole.Creator
-      ? t('registration:contributors.authors')
+      ? t('registration.contributors.authors')
       : contributorRole === ContributorRole.Editor
-      ? t('registration:contributors.editors')
+      ? t('registration.contributors.editors')
       : contributorRole === ContributorRole.Supervisor
-      ? t('registration:contributors.supervisors')
-      : t('registration:heading.contributors');
+      ? t('registration.contributors.supervisors')
+      : t('registration.heading.contributors');
 
   return (
     <div data-testid={contributorRole}>
@@ -185,7 +185,7 @@ export const Contributors = ({
       {relevantContributors.length > 5 && (
         <TextField
           sx={{ mb: '1rem' }}
-          label={t('contributors.filter', { role: roleText.toLocaleLowerCase() })}
+          label={t('registration.contributors.filter', { role: roleText.toLocaleLowerCase() })}
           variant="filled"
           InputProps={{
             startAdornment: (
@@ -206,14 +206,14 @@ export const Contributors = ({
           <Table size="small" sx={alternatingTableRowColor}>
             <TableHead>
               <TableRow>
-                <TableCell>{t('translations:common.order')}</TableCell>
+                <TableCell>{t('common.order')}</TableCell>
                 <TableCell>
-                  {contributorRoles.length > 1 ? t('translations:common.role') : t('contributors.corresponding')}
+                  {contributorRoles.length > 1 ? t('common.role') : t('registration.contributors.corresponding')}
                 </TableCell>
-                <TableCell>{t('contributors.confirmed')}</TableCell>
-                <TableCell>{t('translations:common.name')}</TableCell>
-                <TableCell>{t('translations:common.institution')}</TableCell>
-                <TableCell>{t('translations:common.remove')}</TableCell>
+                <TableCell>{t('registration.contributors.confirmed')}</TableCell>
+                <TableCell>{t('common.name')}</TableCell>
+                <TableCell>{t('common.institution')}</TableCell>
+                <TableCell>{t('common.remove')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -275,11 +275,11 @@ export const Contributors = ({
         color={primaryColorAddButton ? 'primary' : 'inherit'}
         startIcon={<AddIcon />}
         data-testid={dataTestId.registrationWizard.contributors.addContributorButton(contributorRole)}>
-        {t('contributors.add_as_role', {
+        {t('registration.contributors.add_as_role', {
           role:
             contributorRole === 'OtherContributor'
-              ? t('contributors.contributor')
-              : t(`contributors.types.${contributorRole}`),
+              ? t('registration.contributors.contributor')
+              : t(`registration.contributors.types.${contributorRole}`),
         })}
       </Button>
     </div>

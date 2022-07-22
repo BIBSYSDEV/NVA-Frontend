@@ -112,7 +112,7 @@ interface NviStatusProps {
 }
 
 const NviStatus = ({ level = '', isPeerReviewed = false }: NviStatusProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   const isRated = parseInt(level) > 0;
 
@@ -127,9 +127,9 @@ const NviStatus = ({ level = '', isPeerReviewed = false }: NviStatusProps) => {
         }>
         {isRated
           ? isPeerReviewed
-            ? t('resource_type.nvi.applicable')
-            : t('resource_type.nvi.not_peer_reviewed')
-          : t('resource_type.nvi.channel_not_rated')}
+            ? t('registration.resource_type.nvi.applicable')
+            : t('registration.resource_type.nvi.not_peer_reviewed')
+          : t('registration.resource_type.nvi.channel_not_rated')}
       </Typography>
     </Paper>
   );

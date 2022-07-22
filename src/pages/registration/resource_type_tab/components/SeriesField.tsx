@@ -17,7 +17,7 @@ import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
 
 export const SeriesField = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const { setFieldValue, values } = useFormikContext<Registration>();
   const { reference, date } = values.entityDescription as BookEntityDescription;
   const series = reference?.publicationContext.series;
@@ -98,7 +98,7 @@ export const SeriesField = () => {
                 </Typography>
                 {option.level && (
                   <Typography variant="body2" color="textSecondary">
-                    {t('resource_type.level')}: {option.level}
+                    {t('registration.resource_type.level')}: {option.level}
                   </Typography>
                 )}
               </Box>
@@ -115,7 +115,7 @@ export const SeriesField = () => {
                       {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {t('resource_type.level')}: {option.level}
+                      {t('registration.resource_type.level')}: {option.level}
                     </Typography>
                   </>
                 }
@@ -125,9 +125,9 @@ export const SeriesField = () => {
           renderInput={(params) => (
             <AutocompleteTextField
               {...params}
-              label={t('translations:common.title')}
+              label={t('common.title')}
               isLoading={isLoadingJournalOptions || isLoadingJournal}
-              placeholder={!field.value ? t('resource_type.search_for_series') : ''}
+              placeholder={!field.value ? t('registration.resource_type.search_for_series') : ''}
               showSearchIcon={!field.value}
               errorMessage={meta.touched && !!meta.error ? meta.error : ''}
             />

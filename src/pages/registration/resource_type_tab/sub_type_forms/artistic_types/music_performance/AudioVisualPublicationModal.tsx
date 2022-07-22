@@ -51,17 +51,17 @@ const emptyMusicTrack: MusicTrack = {
 const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
   mediaType: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
-      field: i18n.t('registration:resource_type.artistic.media_type'),
+      field: i18n.t('registration.resource_type.artistic.media_type'),
     })
   ),
   publisher: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
-      field: i18n.t('translations:common.publisher'),
+      field: i18n.t('common.publisher'),
     })
   ),
   catalogueNumber: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
-      field: i18n.t('registration:resource_type.artistic.catalogue_number'),
+      field: i18n.t('registration.resource_type.artistic.catalogue_number'),
     })
   ),
   trackList: Yup.array()
@@ -69,23 +69,23 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
       Yup.object<YupShape<MusicTrack>>({
         title: Yup.string().required(
           i18n.t('feedback:validation.is_required', {
-            field: i18n.t('translations:common.title'),
+            field: i18n.t('common.title'),
           })
         ),
         composer: Yup.string().required(
           i18n.t('feedback:validation.is_required', {
-            field: i18n.t('registration:resource_type.artistic.composer'),
+            field: i18n.t('registration.resource_type.artistic.composer'),
           })
         ),
         extent: Yup.number()
           .typeError(
             i18n.t('feedback:validation.has_invalid_format', {
-              field: i18n.t('registration:resource_type.artistic.extent_in_minutes'),
+              field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
             })
           )
           .required(
             i18n.t('feedback:validation.is_required', {
-              field: i18n.t('registration:resource_type.artistic.extent_in_minutes'),
+              field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
             })
           ),
       })
@@ -94,7 +94,7 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
       1,
       i18n.t('feedback:validation.must_have_minimum', {
         min: 1,
-        field: i18n.t('registration:resource_type.artistic.content_track').toLocaleLowerCase(),
+        field: i18n.t('registration.resource_type.artistic.content_track').toLocaleLowerCase(),
       })
     ),
 });
@@ -105,7 +105,7 @@ export const AudioVisualPublicationModal = ({
   open,
   closeModal,
 }: AudioVisualPublicationModalProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   const [removeTrackIndex, setRemoveTrackIndex] = useState(-1);
   const closeConfirmDialog = () => setRemoveTrackIndex(-1);
@@ -114,8 +114,8 @@ export const AudioVisualPublicationModal = ({
     <Dialog open={open} onClose={closeModal} maxWidth="md" fullWidth>
       <DialogTitle>
         {audioVisualPublication
-          ? t('resource_type.artistic.edit_audio_visual_publication')
-          : t('resource_type.artistic.add_audio_visual_publication')}
+          ? t('registration.resource_type.artistic.edit_audio_visual_publication')
+          : t('registration.resource_type.artistic.add_audio_visual_publication')}
       </DialogTitle>
       <Formik
         initialValues={audioVisualPublication ?? emptyAudioVisualPublication}
@@ -133,14 +133,14 @@ export const AudioVisualPublicationModal = ({
                     variant="filled"
                     select
                     required
-                    label={t('resource_type.artistic.media_type')}
+                    label={t('registration.resource_type.artistic.media_type')}
                     fullWidth
                     {...field}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}>
                     {Object.values(MusicMediaType).map((mediaType) => (
                       <MenuItem key={mediaType} value={mediaType}>
-                        {t(`resource_type.artistic.music_media_type.${mediaType}`)}
+                        {t(`registration.resource_type.artistic.music_media_type.${mediaType}`)}
                       </MenuItem>
                     ))}
                   </TextField>
@@ -152,7 +152,7 @@ export const AudioVisualPublicationModal = ({
                     {...field}
                     variant="filled"
                     fullWidth
-                    label={t('translations:common.publisher')}
+                    label={t('common.publisher')}
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
@@ -165,7 +165,7 @@ export const AudioVisualPublicationModal = ({
                     {...field}
                     variant="filled"
                     fullWidth
-                    label={t('resource_type.artistic.catalogue_number')}
+                    label={t('registration.resource_type.artistic.catalogue_number')}
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
@@ -175,7 +175,7 @@ export const AudioVisualPublicationModal = ({
               <FieldArray name="trackList">
                 {({ name, push, remove }: FieldArrayRenderProps) => (
                   <>
-                    <Typography variant="h3">{t('resource_type.artistic.content_track')}</Typography>
+                    <Typography variant="h3">{t('registration.resource_type.artistic.content_track')}</Typography>
 
                     {values.trackList.map((_, index) => {
                       const baseFieldName = `${name}[${index}]`;
@@ -187,7 +187,7 @@ export const AudioVisualPublicationModal = ({
                                 {...field}
                                 variant="filled"
                                 fullWidth
-                                label={t('translations:common.title')}
+                                label={t('common.title')}
                                 required
                                 error={touched && !!error}
                                 helperText={<ErrorMessage name={field.name} />}
@@ -200,7 +200,7 @@ export const AudioVisualPublicationModal = ({
                                 {...field}
                                 variant="filled"
                                 fullWidth
-                                label={t('resource_type.artistic.composer')}
+                                label={t('registration.resource_type.artistic.composer')}
                                 required
                                 error={touched && !!error}
                                 helperText={<ErrorMessage name={field.name} />}
@@ -213,7 +213,7 @@ export const AudioVisualPublicationModal = ({
                                 {...field}
                                 variant="filled"
                                 fullWidth
-                                label={t('resource_type.artistic.extent_in_minutes')}
+                                label={t('registration.resource_type.artistic.extent_in_minutes')}
                                 required
                                 error={touched && !!error}
                                 helperText={<ErrorMessage name={field.name} />}
@@ -223,24 +223,24 @@ export const AudioVisualPublicationModal = ({
                           <Button
                             variant="outlined"
                             color="error"
-                            title={t('resource_type.artistic.remove_music_work')}
+                            title={t('registration.resource_type.artistic.remove_music_work')}
                             onClick={() => setRemoveTrackIndex(index)}
                             sx={{ px: '2rem' }}
                             startIcon={<DeleteIcon />}>
-                            {t('translations:common.remove')}
+                            {t('common.remove')}
                           </Button>
                         </Box>
                       );
                     })}
                     <ConfirmDialog
-                      title={t('resource_type.artistic.remove_music_work')}
+                      title={t('registration.resource_type.artistic.remove_music_work')}
                       open={removeTrackIndex > -1}
                       onCancel={closeConfirmDialog}
                       onAccept={() => {
                         remove(removeTrackIndex);
                         closeConfirmDialog();
                       }}>
-                      <Typography>{t('resource_type.artistic.remove_music_work_description')}</Typography>
+                      <Typography>{t('registration.resource_type.artistic.remove_music_work_description')}</Typography>
                     </ConfirmDialog>
 
                     <Button
@@ -248,7 +248,7 @@ export const AudioVisualPublicationModal = ({
                       sx={{ width: 'fit-content' }}
                       onClick={() => push(emptyMusicTrack)}
                       startIcon={<AddIcon />}>
-                      {t('translations:common.add')} {t('resource_type.artistic.content_track').toLocaleLowerCase()}
+                      {t('common.add')} {t('registration.resource_type.artistic.content_track').toLocaleLowerCase()}
                     </Button>
                     {!!touched.trackList && typeof errors.trackList === 'string' && (
                       <FormHelperText error>
@@ -261,10 +261,10 @@ export const AudioVisualPublicationModal = ({
             </DialogContent>
             <DialogActions>
               <Button variant="outlined" onClick={closeModal}>
-                {t('translations:common.cancel')}
+                {t('common.cancel')}
               </Button>
               <Button variant="contained" type="submit" startIcon={<SaveIcon />}>
-                {audioVisualPublication ? t('translations:common.update') : t('translations:common.add')}
+                {audioVisualPublication ? t('common.update') : t('common.add')}
               </Button>
             </DialogActions>
           </Form>

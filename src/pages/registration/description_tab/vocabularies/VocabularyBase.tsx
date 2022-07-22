@@ -7,7 +7,7 @@ import { useFetch } from '../../../../utils/hooks/useFetch';
 import { VocabularyFields } from './VocabularyFields';
 
 export const VocabularyBase = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   const user = useSelector((store: RootState) => store.user);
 

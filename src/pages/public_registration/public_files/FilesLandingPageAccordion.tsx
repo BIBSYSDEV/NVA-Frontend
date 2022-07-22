@@ -12,7 +12,7 @@ import { FileRow } from './FileRow';
 const maxFileSizeForPreview = 10_000_000; //10 MB
 
 export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationContentProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const files = registration.fileSet?.files ?? [];
 
@@ -36,10 +36,10 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
       heading={
         showRegistrationHasFilesAwaitingApproval ? (
           <Box component="span" sx={{ bgcolor: 'secondary.light', p: '0.25rem' }}>
-            {t('files_and_license.files_awaits_approval')}
+            {t('registration.files_and_license.files_awaits_approval')}
           </Box>
         ) : (
-          t('files_and_license.files')
+          t('registration.files_and_license.files')
         )
       }>
       {filesToShow.map((file, index) => (

@@ -28,7 +28,7 @@ export const RegistrationFormActions = ({
   setTabNumber,
   refetchRegistration,
 }: RegistrationFormActionsProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
   const { values, errors, setTouched } = useFormikContext<Registration>();
@@ -81,14 +81,14 @@ export const RegistrationFormActions = ({
               data-testid="button-previous-tab"
               startIcon={<ArrowBackIcon />}
               onClick={() => setTabNumber(tabNumber - 1)}>
-              {tabNumber === RegistrationTab.ResourceType && t('heading.description')}
-              {tabNumber === RegistrationTab.Contributors && t('heading.resource_type')}
-              {tabNumber === RegistrationTab.FilesAndLicenses && t('heading.contributors')}
+              {tabNumber === RegistrationTab.ResourceType && t('registration.heading.description')}
+              {tabNumber === RegistrationTab.Contributors && t('registration.heading.resource_type')}
+              {tabNumber === RegistrationTab.FilesAndLicenses && t('registration.heading.contributors')}
             </Button>
           </Box>
         )}
         <Button data-testid="open-support-button" onClick={toggleSupportModal} sx={{ gridArea: 'support-button' }}>
-          {t('translations:common.support')}
+          {t('common.support')}
         </Button>
         {tabNumber < RegistrationTab.FilesAndLicenses ? (
           <Box
@@ -109,16 +109,16 @@ export const RegistrationFormActions = ({
                 // Set all fields with error to touched to ensure error messages are shown
                 setTouched(setNestedObjectValues(errors, true));
               }}>
-              {values.status === RegistrationStatus.Draft ? t('save_draft') : t('translations:common.save')}
+              {values.status === RegistrationStatus.Draft ? t('registration.save_draft') : t('common.save')}
             </LoadingButton>
             <Button
               variant="contained"
               data-testid="button-next-tab"
               endIcon={<ArrowForwardIcon />}
               onClick={() => setTabNumber(tabNumber + 1)}>
-              {tabNumber === RegistrationTab.Description && t('heading.resource_type')}
-              {tabNumber === RegistrationTab.ResourceType && t('heading.contributors')}
-              {tabNumber === RegistrationTab.Contributors && t('heading.files_and_license')}
+              {tabNumber === RegistrationTab.Description && t('registration.heading.resource_type')}
+              {tabNumber === RegistrationTab.ResourceType && t('registration.heading.contributors')}
+              {tabNumber === RegistrationTab.Contributors && t('registration.heading.files_and_license')}
             </Button>
           </Box>
         ) : (
@@ -130,7 +130,7 @@ export const RegistrationFormActions = ({
             loadingPosition="end"
             onClick={onClickSaveAndPresent}
             sx={{ gridArea: 'save-next-button' }}>
-            {t('translations:common.save_and_present')}
+            {t('common.save_and_present')}
           </LoadingButton>
         )}
       </Box>
@@ -138,7 +138,7 @@ export const RegistrationFormActions = ({
       <Modal
         open={openSupportModal}
         onClose={toggleSupportModal}
-        headingText={t('translations:common.support')}
+        headingText={t('common.support')}
         dataTestId="support-modal">
         <SupportModalContent closeModal={toggleSupportModal} />
       </Modal>
