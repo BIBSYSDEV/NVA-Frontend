@@ -10,7 +10,6 @@ import licensesEn from './en/licenses.json';
 import myPageEn from './en/myPage.json';
 import projectEn from './en/project.json';
 import publicationTypesEn from './en/publicationTypes.json';
-import registrationEn from './en/registration.json';
 import searchEn from './en/search.json';
 import workListsEn from './en/workLists.json';
 
@@ -23,7 +22,6 @@ import licensesNb from './nb/licenses.json';
 import myPageNb from './nb/myPage.json';
 import projectNb from './nb/project.json';
 import publicationTypesNb from './nb/publicationTypes.json';
-import registrationNb from './nb/registration.json';
 import searchNb from './nb/search.json';
 import workListsNb from './nb/workLists.json';
 
@@ -39,7 +37,6 @@ i18n.use(LanguageDetector).init({
       myPage: myPageEn,
       project: projectEn,
       publicationTypes: publicationTypesEn,
-      registration: registrationEn,
       search: searchEn,
       workLists: workListsEn,
     },
@@ -53,7 +50,6 @@ i18n.use(LanguageDetector).init({
       myPage: myPageNb,
       project: projectNb,
       publicationTypes: publicationTypesNb,
-      registration: registrationNb,
       search: searchNb,
       workLists: workListsNb,
     },
