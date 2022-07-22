@@ -10,7 +10,7 @@ interface GeneralMenuProps {
 }
 
 export const GeneralMenu = ({ anchorEl, onClose }: GeneralMenuProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const history = useHistory();
 
   const handleClickMenuItem = (newPath: string) => {
@@ -32,12 +32,12 @@ export const GeneralMenu = ({ anchorEl, onClose }: GeneralMenuProps) => {
         horizontal: 'left',
       }}>
       <MenuItem data-testid={dataTestId.header.aboutLink} onClick={() => handleClickMenuItem(UrlPathTemplate.About)}>
-        {t('translations:common.about_nva')}
+        {t('common.about_nva')}
       </MenuItem>
       <MenuItem
         data-testid={dataTestId.header.privacyLink}
         onClick={() => handleClickMenuItem(UrlPathTemplate.PrivacyPolicy)}>
-        {t('privacy:privacy_statement')}
+        {t('privacy.privacy_statement')}
       </MenuItem>
     </Menu>
   );
