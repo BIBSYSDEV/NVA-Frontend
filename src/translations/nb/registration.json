@@ -1,412 +1,2914 @@
-{
-  "contributors": {
-    "add_affiliation": "Legg til tilhørighet",
-    "add_as_role": "Legg til {{role}}",
-    "add_duplicate_affiliation": "Tilhørigheten er allerede lagt til",
-    "add_self_as_role": "Legg meg til som {{- role}}",
-    "add_unverified_contributor": "Legg til en ikke-verifisert bidragsyter.",
-    "authors": "Forfattere",
-    "confirmed": "Bekreftet",
-    "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilhørigheten?",
-    "confirm_remove_affiliation_title": "Fjerne tilhørighet?",
-    "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",
-    "contributor": "Bidragsyter",
-    "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
-    "corresponding": "Korresponderende",
-    "editors": "Redaktører",
-    "filter": "Filtrer {{role}}",
-    "known_author_identity": "Har tilknyttet forfatteridentitet",
-    "no_affiliations_found": "Ingen tilhørigheter funnet",
-    "no_registrations_found": "Ingen registreringer funnet",
-    "prefilled_affiliation": "Forhåndsutfylt tilhørighet",
-    "prefilled_name": "Forhåndsutfylt navn",
-    "remove_affiliation": "Fjern tilhørighet",
-    "remove_role": "Fjern {{- role}}",
-    "select_contributor_type": "Velg type bidragsyter",
-    "select_institution": "Velg institusjon",
-    "supervisors": "Veiledere",
-    "other_registrations_one": "+ {{count}} annen registrering",
-    "other_registrations_other": "+ {{count}} andre registreringer",
-    "type": "Bidragstype",
-    "types": {
-      "AcademicCoordinator": "Faglig ansvarlig",
-      "Actor": "Skuespiller",
-      "Architect": "Arkitekt",
-      "ArchitecturalPlanner": "Planlegger",
-      "ArtisticDirector": "Kunstnerisk leder",
-      "Choreographer": "Koreograf",
-      "Composer": "Komponist",
-      "Conductor": "Dirigent",
-      "Consultant": "Konsulent",
-      "CostumeDesigner": "Kostymedesigner",
-      "ContactPerson": "Kontaktperson",
-      "Creator": "Forfatter",
-      "CuratorOrganizer": "Kurator/arrangør",
-      "Dancer": "Danser",
-      "Designer": "Designer",
-      "Director": "Regissør",
-      "Dramatist": "Dramatiker",
-      "Dramaturge": "Dramaturg",
-      "Editor": "Redaktør",
-      "InteriorArchitect": "Interiørarkitekt",
-      "InterviewSubject": "Intervjuobjekt",
-      "Journalist": "Journalist",
-      "LandscapeArchitect": "Landskapsarkitekt",
-      "Librettist": "Liberettist",
-      "LightDesigner": "Lysdesigner",
-      "Musician": "Musiker",
-      "Organizer": "Arrangør",
-      "Other": "Annen",
-      "Photographer": "Fotograf",
-      "ProductionDesigner": "Produksjonsdesigner",
-      "Producer": "Produsent",
-      "ProgrammeLeader": "Programleder",
-      "ProgrammeParticipant": "Programdeltager",
-      "RelatedPerson": "Relatert person",
-      "Researcher": "Forsker",
-      "RightsHolder": "Rettighetsholder",
-      "Scenographer": "Scenograf",
-      "Screenwriter": "Manusforfatter",
-      "Soloist": "Solist",
-      "SoundDesigner": "Lyddesigner",
-      "Supervisor": "Veileder",
-      "VfxSupervisor": "VFX supervisor",
-      "VideoEditor": "Klipper",
-      "Writer": "Tekstforfatter"
+[
+    {
+        "term": "add_affiliation",
+        "definition": "Legg til tilh\u00f8righet",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
     },
-    "unknown_author_identity": "Mangler forfatteridentitet",
-    "user_not_found": "Finner ikke bruker",
-    "verify_affiliation": "Verifiser tilhørighet",
-    "verify_person": "Verifiser person"
-  },
-  "description": {
-    "add_vocabulary": "Legg til vokabular",
-    "abstract": "Sammendrag",
-    "confirm_remove_vocabulary_text": "Er du sikker på at du ønsker å fjerne vokabular for {{vocabulary}}?",
-    "confirm_remove_vocabulary_title": "Fjern vokabular?",
-    "date_picker": {
-      "choose_date": "Velg dato",
-      "open_dialog": "Velg dato, valgt dato er {{date}}",
-      "go_to_calendar_view": "Visning av år er åpen, bytt til kalendervisning",
-      "go_to_year_view": "Kalendervisning er åpen, bytt til visning av år",
-      "next_month": "Neste måned",
-      "previous_month": "Forrige måned",
-      "select_date": "Velg dato",
-      "today": "I dag"
+    {
+        "term": "add_as_role",
+        "definition": "Legg til {{role}}",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
     },
-    "date_published": "Publiseringsdato",
-    "description": "Beskrivelse",
-    "description_of_content": "Beskrivelse av innhold, hvis relevant",
-    "financed_by": "Finansiert av",
-    "hrcs_activities": "HRCS-aktiviteter",
-    "hrcs_categories": "HRCS-kategorier",
-    "npi_disciplines": "Fagfelt i Norsk publiseringsindikator",
-    "primary_language": "Hovedspråk for innhold",
-    "project_association": "Prosjekttilknytning",
-    "project_id": "Prosjekt-ID",
-    "remove_vocabulary": "Fjern vokabular",
-    "search_for_npi_discipline": "Søk etter fagfelt",
-    "search_for_project": "Søk i norske prosjektkataloger",
-    "keywords": "Nøkkelord",
-    "keywords_helper": "Skill nøkkelord med komma eller enter",
-    "year_only": "Kun årstall"
-  },
-  "edit_registration": "Endre registrering",
-  "files_and_license": {
-    "accepted_version": "Akseptert versjon",
-    "administrative_contract": "Denne fila er en forfatteravtale eller annen dokumentasjon som ikke skal være åpent tilgjengelig",
-    "conditions_for_using_file": "Betingelser for bruk",
-    "file_locked": "Filen er låst",
-    "file_publish_date": "Publiseringsdato",
-    "file_publish_date_helper_text": "Filen er låst fram til datoen",
-    "files": "Filer",
-    "files_awaits_approval": "Filer (avventer godkjenning)",
-    "find_journal_in_channel_register": "Finn tidsskrift i Kanalregisteret",
-    "find_publisher_in_channel_register": "Finn utgiver i Kanalregisteret",
-    "find_series_in_channel_register": "Finn serie i Kanalregisteret",
-    "info_from_channel_register": "Informasjon fra Kanalregisteret",
-    "licenses": "Lisenser",
-    "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
-    "publicly_available": "Offentlig tilgjengelig",
-    "published_version": "Publisert versjon",
-    "remove_file": "Fjern fil",
-    "remove_file_description": "Ønsker du å fjerne {{fileName}}?",
-    "version": "Versjon",
-    "title": "Filnavn"
-  },
-  "heading": {
-    "contributors": "Bidragsytere",
-    "description": "Beskrivelse",
-    "files_and_license": "Filer og lisens",
-    "publish_settings": "Publiseringsvalg",
-    "resource_type": "Ressurstype"
-  },
-  "new_registration": "Ny registrering",
-  "public_page": {
-    "about_registration": "Om registreringen",
-    "error_description": "For å publisere må du rette følgende feil:",
-    "find_in_channel_registry": "Finn i kanalregisteret",
-    "go_back_to_wizard": "Gå tilbake til skjema",
-    "in_progess": "Under behandling",
-    "message_to_curator": "Melding til kurator",
-    "not_published": "Ikke publisert",
-    "other_contributors_one": "(+{{count}} annen)",
-    "other_contributors_other": "(+{{count}} andre)",
-    "participants_one": "{{count}} deltaker",
-    "participants_other": "{{count}} deltakere",
-    "preview": "Forhåndsvisning",
-    "preview_unavailable": "Forhåndsvisning ikke tilgjengelig. Åpne filen i egnet program.",
-    "published": "Publisert",
-    "published_date": "Publisert: {{date}}",
-    "ready_to_be_published": "Klar for publisering",
-    "ready_to_be_published_description": "Se over utkast før du publiserer.",
-    "related_registrations": "Relaterte registreringer",
-    "reserve_doi": "Reserver en DOI",
-    "reserve_doi_message": "Autogenerert melding: Bruker ønsker å reservere en DOI.",
-    "request_doi": "Be om en DOI",
-    "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet."
-  },
-  "validation_errors": "Valideringsfeil",
-  "registration": {
-    "link_to_resource": "Lenke til original versjon",
-    "start_registration": "Start registrering",
-    "start_with_empty_registration_description": "Legg inn informasjon etterpå",
-    "start_with_empty_registration_title": "Start i tomt registreringsskjema",
-    "start_with_link_to_resource_description": "Lenke til original versjon hvis ressursen allerede er publisert på Internett",
-    "start_with_link_to_resource_title": "Start med lenke til original versjon",
-    "start_with_uploading_file_description": "Last opp fil hvis ressursen ikke er publisert på Internett",
-    "start_with_uploading_file_title": "Start med å laste opp fil"
-  },
-  "resource_type": {
-    "article_number": "Artikkelnummer",
-    "artistic": {
-      "add_audio_visual_publication": "Legg til audio-/videoutgivelse",
-      "add_award": "Legg til pris/utmerkelse",
-      "add_broadcast": "Legg til TV/web/streaming",
-      "add_cinematic_release": "Legg til festival/kino",
-      "add_competition": "Legg til konkurranse",
-      "add_concert": "Legg til konsert/forestilling",
-      "add_exhibition": "Legg til utstilling",
-      "add_exhibition_place": "Legg til visningssted",
-      "add_music_score": "Legg til partitur/manuscript",
-      "add_other_performance": "Legg til annen fremføring",
-      "add_other_release": "Legg til annen offentliggjøring",
-      "add_publication_mention": "Legg til publisering/omtale",
-      "announcements": "Offentliggjøringer",
-      "architecture_type": {
-        "Building": "Bygg",
-        "Interior": "Interiør",
-        "LandscapeArchitecture": "Landskapsarkitektur",
-        "Other": "Annen arkitektur",
-        "PlanningProposal": "Planforsalg"
-      },
-      "award_name": "Prisnavn",
-      "award_organizer": "Prisutdeler/arrangør",
-      "award_other": "Annet",
-      "award_ranking": "Rangering",
-      "broadcast": "TV/web/streaming",
-      "catalogue_number": "Katalognummer",
-      "competition_date": "Dato for offentliggjøring",
-      "competition_name": "Navn på konkurranse/arrangør/innbyder",
-      "competition_rank": "Rangering/innkjøp/omtale/invitert",
-      "composer": "Komponist",
-      "concert_program": "Konsertprogram",
-      "concert_program_table_caption": "Oversikt over konsertprogram",
-      "content_track": "Innhold/spor",
-      "content_track_table_caption": "Oversikt over innhold/spor",
-      "design_type": {
-        "ClothingDesign": "Klesdesign",
-        "Exhibition": "Utstilling/messe",
-        "GraphicDesign": "Grafisk design",
-        "Illustration": "Illustrasjon",
-        "InteractionDesign": "Interaksjonsdesign",
-        "InteriorDesign": "Interiørdesign",
-        "LightDesign": "Lysdesign",
-        "ProductDesign": "Produktdesign",
-        "ServiceDesign": "Tjenestedesign",
-        "Other": "Annet design",
-        "WebDesign": "Webdesign"
-      },
-      "edit_audio_visual_publication": "Endre audio-/videoutgivelse",
-      "edit_award": "Endre pris/utmerkelse",
-      "edit_broadcast": "Endre TV/web/streaming",
-      "edit_cinematic_release": "Endre festival/kino",
-      "edit_competition": "Endre konkurranse",
-      "edit_concert": "Endre konsert",
-      "edit_exhibition": "Endre utstilling",
-      "edit_exhibition_place": "Endre visningsted",
-      "edit_music_score": "Endre partitur/manuscript",
-      "edit_other_performance": "Endre annen fremføringsform",
-      "edit_other_release": "Endre annen offentliggjøring",
-      "edit_publication_mention": "Endre publisering/omtale",
-      "exhibition_place": "Visningssted",
-      "exhibition_places": "Visningssteder",
-      "exhibition_title": "Utstillingstittel",
-      "extent": "Varighet",
-      "extent_in_minutes": "Varighet i minutter",
-      "media_type": "Medietype",
-      "mention_other": "Annet (utgiver, ISBN, m.m.)",
-      "mention_title": "Tidsskrift/Boktittel/medium",
-      "moving_picture_type": {
-        "Film": "Langfilm",
-        "ShortFilm": "Kortfilm",
-        "SerialFilmProduction": "Seriell produksjon",
-        "InteractiveFilm": "Interaktiv produksjon",
-        "AugmentedVirtualRealityFilm": "AR/VR",
-        "Other": "Annet"
-      },
-      "music_media_type": {
-        "CompactDisc": "CD",
-        "DVD": "DVD",
-        "Streaming": "Strømming",
-        "DigitalFile": "Nedlasting",
-        "Vinyl": "LP/EP",
-        "Other": "Annet"
-      },
-      "music_score_ensemble": "Ensemble",
-      "music_score_ismn": "ISMN",
-      "music_score_isrc": "ISRC",
-      "music_score_movements": "Satser",
-      "musical_work_item": "Verk",
-      "musical_works": "Andre fremføringsformer",
-      "musical_works_table_caption": "Oversikt over andre fremføringsverk",
-      "name_or_title": "Navn/tittel",
-      "other_announcement_organizer": "Utgiver/arrangør eller lignende",
-      "other_release_description": "Type formidlingsform",
-      "output_type": {
-        "AudioVisualPublication": "Audio-/videoutgivelse",
-        "Award": "Pris/utmerkelse",
-        "Broadcast": "TV/web/streaming",
-        "CinematicRelease": "Festival/kino",
-        "Competition": "Konkurranse",
-        "Concert": "Konsert/forestilling",
-        "Exhibition": "Utstilling",
-        "MentionInPublication": "Publisering/omtale",
-        "MusicScore": "Partitur/manuscript",
-        "OtherPerformance": "Annen fremføring",
-        "OtherRelease": "Annen offentliggjøring",
-        "Venue": "Visningssted"
-      },
-      "performance_type": "Type/formidlingsform",
-      "performing_arts_type": {
-        "TheatricalProduction": "Forestilling/visning",
-        "Broadcast": "TV/film/radio",
-        "Other": "Annet"
-      },
-      "premiere": "Premiære",
-      "premiere_date": "Premiæredato",
-      "remove_announcement": "Fjern offentliggjøring",
-      "remove_announcement_description": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over offentliggjøringer?",
-      "remove_music_work": "Fjern verk",
-      "remove_music_work_description": "Er du sikker på at du vil fjerne dette verket?",
-      "remove_venue_title": "Fjern visningssted?",
-      "remove_venue_text": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over visningssteder?"
+    {
+        "term": "add_duplicate_affiliation",
+        "definition": "Tilh\u00f8righeten er allerede lagt til",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
     },
-    "chapter": {
-      "info_anthology": "Antologien hvor kapittelet er publisert i må være publisert først",
-      "info_book_of_abstracts": "Abstraktsamlingen hvor abstraktet er publisert i må være publisert først",
-      "info_report": "Rapporten hvor kapittelet er publisert i må være publisert først",
-      "published_in": "Publisert i",
-      "search_for_anthology": "Søk etter antologien hvor kapittelet er publisert",
-      "search_for_book_of_abstracts": "Søk etter abstraktsamlingen hor abstraktet er publisert",
-      "search_for_report": "Søk etter rapporten hvor kapittelet er publisert"
+    {
+        "term": "add_self_as_role",
+        "definition": "Legg meg til som {{- role}}",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
     },
-    "content": "Innhold",
-    "content_types": {
-      "AcademicChapter": "Vitenskapelig kapittel",
-      "AcademicMonograph": "Vitenskapelig monografi",
-      "CaseReport": "Kasuistikk",
-      "Encyclopedia": "Oppslagsverk",
-      "EncyclopediaChapter": "Kapittel i oppslagsverk",
-      "ExhibitionCatalog": "Utstillingskatalog",
-      "ExhibitionCatalogChapter": "Kapittel i utstillingskatalog",
-      "Introduction": "Innledning i antologi",
-      "NonFictionChapter": "Faglig kapittel",
-      "NonFictionMonograph": "Faglig monografi",
-      "PopularScienceMonograph": "Populærvitenskapelig monografi",
-      "PopularScienceChapter": "Populærvitenskapelig kapittel",
-      "PopularScienceArticle": "Populærvitenskapelig artikkel",
-      "ProfessionalArticle": "Fagartikkel",
-      "AcademicArticle": "Vitenskapelig artikkel",
-      "AcademicLiteratureReview": "Vitenskapelig oversiktsartikkel",
-      "StudyProtocol": "Studieprotokoll",
-      "Textbook": "Lærebok",
-      "TextbookChapter": "Kapittel i lærebok"
+    {
+        "term": "add_unverified_contributor",
+        "definition": "Legg til en ikke-verifisert bidragsyter.",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
     },
-    "date_from": "Dato fra",
-    "date_to": "Dato til",
-    "form": "Form",
-    "isbn": "ISBN",
-    "issn": "ISSN",
-    "issue": "Hefte",
-    "journal": "Tidsskrift",
-    "journal_not_found": "Finner du ikke tidsskriftet?",
-    "level": "Nivå i Norsk publiseringsindikator",
-    "media_contribution": {
-      "channel": "Formidlingskanal",
-      "format": "Format",
-      "format_types": {
-        "Sound": "Lyd",
-        "Text": "Tekst",
-        "Video": "Video"
-      },
-      "medium": "Medium",
-      "medium_types": {
-        "Internet": "Internett",
-        "Journal": "Avis eller tidsskrift",
-        "Other": "Annet",
-        "Radio": "Radio",
-        "TV": "TV"
-      },
-      "name_of_issue_episode": "Navn på hefte, episode, etc. (hvis relevant)",
-      "name_of_series_program": "Navn på serie, program, etc. (hvis relevant)"
+    {
+        "term": "authors",
+        "definition": "Forfattere",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
     },
-    "more_info_about_work": "Mer informasjon om verket",
-    "number_of_pages": "Totalt antall sider",
-    "nvi": {
-      "applicable": "Publikasjonen kan inngå i Norsk vitenskapsindeks hvis den både er fagfellevurdert og presenterer ny original forskning",
-      "channel_not_rated": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden publiseringskanalen ikke er på nivå 1 eller 2. (Nivå kan bli endret før årets rapporteringsfrist slik at publikasjonen kan inngå i Norsk vitenskapsindeks, forutsatt at den både er fagfellevurdert og presenterer ny original forskning)",
-      "not_peer_reviewed": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden den ikke er både fagfellevurdert og presenterer ny original forskning"
+    {
+        "term": "confirmed",
+        "definition": "Bekreftet",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
     },
-    "online_issn": "Online ISSN",
-    "or": "Eller",
-    "organizer": "Arrangør",
-    "original_article": "Original artikkel",
-    "original_article_title": "Tittel på artikkel",
-    "pages": "Sidetall",
-    "pages_from": "Sidetall fra",
-    "pages_to": "til",
-    "peer_review": "Er fagfellevurdert og presenterer ny original forskning?",
-    "peer_reviewed": "Er fagfellevurdert og presenterer ny original forskning",
-    "place_for_event": "Sted for arrangement",
-    "print_issn": "Print ISSN",
-    "remove": "Fjern",
-    "remove_doi": "Fjern DOI",
-    "remove_doi_text": "Du kan fjerne DOI som ble brukt ved registreringsstart.\nØnsker du å fjerne kobling til original DOI?",
-    "remove_journal": "Fjern tidsskrift",
-    "remove_publisher": "Fjern utgiver",
-    "search_for_journal": "Søk etter tidsskrift",
-    "search_for_original_article": "Søk etter original artikkel",
-    "search_for_publisher": "Søk etter utgiver",
-    "search_for_series": "Søk etter serie",
-    "series": "Serie",
-    "series_info": "Hvis publikasjonen inngår i en serie",
-    "series_number": "Serienummer",
-    "subtype": "Undertype",
-    "title_of_event": "Tittel på arrangement",
-    "type_work": "Type verk",
-    "type_work_specified": "Egendefinert type verk",
-    "volume": "Volum"
-  },
-  "save_draft": "Lagre kladd",
-  "status": {
-    "DRAFT": "Kladd",
-    "DRAFT_FOR_DELETION": "Slettet",
-    "NEW": "Ny",
-    "PUBLISHED": "Publisert",
-    "REJECTED": "Avvist"
-  },
-  "support_description": "Når du ber om brukerstøtte vil meldingen gå til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger</0>.",
-  "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
-  "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?"
-}
+    {
+        "term": "confirm_remove_affiliation_text",
+        "definition": "Er du sikker p\u00e5 at du \u00f8nsker \u00e5 fjerne denne tilh\u00f8righeten?",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "confirm_remove_affiliation_title",
+        "definition": "Fjerne tilh\u00f8righet?",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "confirm_remove_author_text",
+        "definition": "Er du sikker p\u00e5 at du \u00f8nsker \u00e5 fjerne {{contributorName}}?",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "contributor",
+        "definition": "Bidragsyter",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "contributor_already_added",
+        "definition": "Valgt bidragsyter er allerede lagt til",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "corresponding",
+        "definition": "Korresponderende",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "editors",
+        "definition": "Redakt\u00f8rer",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "filter",
+        "definition": "Filtrer {{role}}",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "known_author_identity",
+        "definition": "Har tilknyttet forfatteridentitet",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "no_affiliations_found",
+        "definition": "Ingen tilh\u00f8righeter funnet",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "no_registrations_found",
+        "definition": "Ingen registreringer funnet",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "prefilled_affiliation",
+        "definition": "Forh\u00e5ndsutfylt tilh\u00f8righet",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "prefilled_name",
+        "definition": "Forh\u00e5ndsutfylt navn",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "remove_affiliation",
+        "definition": "Fjern tilh\u00f8righet",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "remove_role",
+        "definition": "Fjern {{- role}}",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "select_contributor_type",
+        "definition": "Velg type bidragsyter",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "select_institution",
+        "definition": "Velg institusjon",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "supervisors",
+        "definition": "Veiledere",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "other_registrations_one",
+        "definition": "+ {{count}} annen registrering",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "other_registrations_other",
+        "definition": "+ {{count}} andre registreringer",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "type",
+        "definition": "Bidragstype",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "AcademicCoordinator",
+        "definition": "Faglig ansvarlig",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Actor",
+        "definition": "Skuespiller",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Architect",
+        "definition": "Arkitekt",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "ArchitecturalPlanner",
+        "definition": "Planlegger",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "ArtisticDirector",
+        "definition": "Kunstnerisk leder",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Choreographer",
+        "definition": "Koreograf",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Composer",
+        "definition": "Komponist",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Conductor",
+        "definition": "Dirigent",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Consultant",
+        "definition": "Konsulent",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "CostumeDesigner",
+        "definition": "Kostymedesigner",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "ContactPerson",
+        "definition": "Kontaktperson",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Creator",
+        "definition": "Forfatter",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "CuratorOrganizer",
+        "definition": "Kurator\/arrang\u00f8r",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Dancer",
+        "definition": "Danser",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Designer",
+        "definition": "Designer",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Director",
+        "definition": "Regiss\u00f8r",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Dramatist",
+        "definition": "Dramatiker",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Dramaturge",
+        "definition": "Dramaturg",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Editor",
+        "definition": "Redakt\u00f8r",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "InteriorArchitect",
+        "definition": "Interi\u00f8rarkitekt",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "InterviewSubject",
+        "definition": "Intervjuobjekt",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Journalist",
+        "definition": "Journalist",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "LandscapeArchitect",
+        "definition": "Landskapsarkitekt",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Librettist",
+        "definition": "Liberettist",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "LightDesigner",
+        "definition": "Lysdesigner",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Musician",
+        "definition": "Musiker",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Organizer",
+        "definition": "Arrang\u00f8r",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Other",
+        "definition": "Annen",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Photographer",
+        "definition": "Fotograf",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "ProductionDesigner",
+        "definition": "Produksjonsdesigner",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Producer",
+        "definition": "Produsent",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "ProgrammeLeader",
+        "definition": "Programleder",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "ProgrammeParticipant",
+        "definition": "Programdeltager",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "RelatedPerson",
+        "definition": "Relatert person",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Researcher",
+        "definition": "Forsker",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "RightsHolder",
+        "definition": "Rettighetsholder",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Scenographer",
+        "definition": "Scenograf",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Screenwriter",
+        "definition": "Manusforfatter",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Soloist",
+        "definition": "Solist",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "SoundDesigner",
+        "definition": "Lyddesigner",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Supervisor",
+        "definition": "Veileder",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "VfxSupervisor",
+        "definition": "VFX supervisor",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "VideoEditor",
+        "definition": "Klipper",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Writer",
+        "definition": "Tekstforfatter",
+        "context": "\"contributors\".\"types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "unknown_author_identity",
+        "definition": "Mangler forfatteridentitet",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "user_not_found",
+        "definition": "Finner ikke bruker",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "verify_affiliation",
+        "definition": "Verifiser tilh\u00f8righet",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "verify_person",
+        "definition": "Verifiser person",
+        "context": "\"contributors\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "add_vocabulary",
+        "definition": "Legg til vokabular",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "abstract",
+        "definition": "Sammendrag",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "confirm_remove_vocabulary_text",
+        "definition": "Er du sikker p\u00e5 at du \u00f8nsker \u00e5 fjerne vokabular for {{vocabulary}}?",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "confirm_remove_vocabulary_title",
+        "definition": "Fjern vokabular?",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "choose_date",
+        "definition": "Velg dato",
+        "context": "\"description\".\"date_picker\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "open_dialog",
+        "definition": "Velg dato, valgt dato er {{date}}",
+        "context": "\"description\".\"date_picker\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "go_to_calendar_view",
+        "definition": "Visning av \u00e5r er \u00e5pen, bytt til kalendervisning",
+        "context": "\"description\".\"date_picker\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "go_to_year_view",
+        "definition": "Kalendervisning er \u00e5pen, bytt til visning av \u00e5r",
+        "context": "\"description\".\"date_picker\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "next_month",
+        "definition": "Neste m\u00e5ned",
+        "context": "\"description\".\"date_picker\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "previous_month",
+        "definition": "Forrige m\u00e5ned",
+        "context": "\"description\".\"date_picker\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "select_date",
+        "definition": "Velg dato",
+        "context": "\"description\".\"date_picker\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "today",
+        "definition": "I dag",
+        "context": "\"description\".\"date_picker\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "date_published",
+        "definition": "Publiseringsdato",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "description",
+        "definition": "Beskrivelse",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "description_of_content",
+        "definition": "Beskrivelse av innhold, hvis relevant",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "financed_by",
+        "definition": "Finansiert av",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "hrcs_activities",
+        "definition": "HRCS-aktiviteter",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "hrcs_categories",
+        "definition": "HRCS-kategorier",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "npi_disciplines",
+        "definition": "Fagfelt i Norsk publiseringsindikator",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "primary_language",
+        "definition": "Hovedspr\u00e5k for innhold",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "project_association",
+        "definition": "Prosjekttilknytning",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "project_id",
+        "definition": "Prosjekt-ID",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "remove_vocabulary",
+        "definition": "Fjern vokabular",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "search_for_npi_discipline",
+        "definition": "S\u00f8k etter fagfelt",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "search_for_project",
+        "definition": "S\u00f8k i norske prosjektkataloger",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "keywords",
+        "definition": "N\u00f8kkelord",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "keywords_helper",
+        "definition": "Skill n\u00f8kkelord med komma eller enter",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "year_only",
+        "definition": "Kun \u00e5rstall",
+        "context": "\"description\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "edit_registration",
+        "definition": "Endre registrering",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "accepted_version",
+        "definition": "Akseptert versjon",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "administrative_contract",
+        "definition": "Denne fila er en forfatteravtale eller annen dokumentasjon som ikke skal v\u00e6re \u00e5pent tilgjengelig",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "conditions_for_using_file",
+        "definition": "Betingelser for bruk",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "file_locked",
+        "definition": "Filen er l\u00e5st",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "file_publish_date",
+        "definition": "Publiseringsdato",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "file_publish_date_helper_text",
+        "definition": "Filen er l\u00e5st fram til datoen",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "files",
+        "definition": "Filer",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "files_awaits_approval",
+        "definition": "Filer (avventer godkjenning)",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "find_journal_in_channel_register",
+        "definition": "Finn tidsskrift i Kanalregisteret",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "find_publisher_in_channel_register",
+        "definition": "Finn utgiver i Kanalregisteret",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "find_series_in_channel_register",
+        "definition": "Finn serie i Kanalregisteret",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "info_from_channel_register",
+        "definition": "Informasjon fra Kanalregisteret",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "licenses",
+        "definition": "Lisenser",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "no_duplicates",
+        "definition": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "publicly_available",
+        "definition": "Offentlig tilgjengelig",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "published_version",
+        "definition": "Publisert versjon",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "remove_file",
+        "definition": "Fjern fil",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "remove_file_description",
+        "definition": "\u00d8nsker du \u00e5 fjerne {{fileName}}?",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "version",
+        "definition": "Versjon",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "title",
+        "definition": "Filnavn",
+        "context": "\"files_and_license\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "contributors",
+        "definition": "Bidragsytere",
+        "context": "\"heading\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "description",
+        "definition": "Beskrivelse",
+        "context": "\"heading\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "files_and_license",
+        "definition": "Filer og lisens",
+        "context": "\"heading\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "publish_settings",
+        "definition": "Publiseringsvalg",
+        "context": "\"heading\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "resource_type",
+        "definition": "Ressurstype",
+        "context": "\"heading\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "new_registration",
+        "definition": "Ny registrering",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "about_registration",
+        "definition": "Om registreringen",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "error_description",
+        "definition": "For \u00e5 publisere m\u00e5 du rette f\u00f8lgende feil:",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "find_in_channel_registry",
+        "definition": "Finn i kanalregisteret",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "go_back_to_wizard",
+        "definition": "G\u00e5 tilbake til skjema",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "in_progess",
+        "definition": "Under behandling",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "message_to_curator",
+        "definition": "Melding til kurator",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "not_published",
+        "definition": "Ikke publisert",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "other_contributors_one",
+        "definition": "(+{{count}} annen)",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "other_contributors_other",
+        "definition": "(+{{count}} andre)",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "participants_one",
+        "definition": "{{count}} deltaker",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "participants_other",
+        "definition": "{{count}} deltakere",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "preview",
+        "definition": "Forh\u00e5ndsvisning",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "preview_unavailable",
+        "definition": "Forh\u00e5ndsvisning ikke tilgjengelig. \u00c5pne filen i egnet program.",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "published",
+        "definition": "Publisert",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "published_date",
+        "definition": "Publisert: {{date}}",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "ready_to_be_published",
+        "definition": "Klar for publisering",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "ready_to_be_published_description",
+        "definition": "Se over utkast f\u00f8r du publiserer.",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "related_registrations",
+        "definition": "Relaterte registreringer",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "reserve_doi",
+        "definition": "Reserver en DOI",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "reserve_doi_message",
+        "definition": "Autogenerert melding: Bruker \u00f8nsker \u00e5 reservere en DOI.",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "request_doi",
+        "definition": "Be om en DOI",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "request_doi_description",
+        "definition": "N\u00e5r du ber om en DOI (Digital Object Identifier) vil bestillingen g\u00e5 via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle sp\u00f8rsm\u00e5l eller oppklaringer. Du vil f\u00e5 en epost n\u00e5r foresp\u00f8rselen er behandlet.",
+        "context": "\"public_page\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "validation_errors",
+        "definition": "Valideringsfeil",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "link_to_resource",
+        "definition": "Lenke til original versjon",
+        "context": "\"registration\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "start_registration",
+        "definition": "Start registrering",
+        "context": "\"registration\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "start_with_empty_registration_description",
+        "definition": "Legg inn informasjon etterp\u00e5",
+        "context": "\"registration\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "start_with_empty_registration_title",
+        "definition": "Start i tomt registreringsskjema",
+        "context": "\"registration\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "start_with_link_to_resource_description",
+        "definition": "Lenke til original versjon hvis ressursen allerede er publisert p\u00e5 Internett",
+        "context": "\"registration\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "start_with_link_to_resource_title",
+        "definition": "Start med lenke til original versjon",
+        "context": "\"registration\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "start_with_uploading_file_description",
+        "definition": "Last opp fil hvis ressursen ikke er publisert p\u00e5 Internett",
+        "context": "\"registration\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "start_with_uploading_file_title",
+        "definition": "Start med \u00e5 laste opp fil",
+        "context": "\"registration\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "article_number",
+        "definition": "Artikkelnummer",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "add_audio_visual_publication",
+        "definition": "Legg til audio-\/videoutgivelse",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "add_award",
+        "definition": "Legg til pris\/utmerkelse",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "add_broadcast",
+        "definition": "Legg til TV\/web\/streaming",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "add_cinematic_release",
+        "definition": "Legg til festival\/kino",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "add_competition",
+        "definition": "Legg til konkurranse",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "add_concert",
+        "definition": "Legg til konsert\/forestilling",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "add_exhibition",
+        "definition": "Legg til utstilling",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "add_exhibition_place",
+        "definition": "Legg til visningssted",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "add_music_score",
+        "definition": "Legg til partitur\/manuscript",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "add_other_performance",
+        "definition": "Legg til annen fremf\u00f8ring",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "add_other_release",
+        "definition": "Legg til annen offentliggj\u00f8ring",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "add_publication_mention",
+        "definition": "Legg til publisering\/omtale",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "announcements",
+        "definition": "Offentliggj\u00f8ringer",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Building",
+        "definition": "Bygg",
+        "context": "\"resource_type\".\"artistic\".\"architecture_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Interior",
+        "definition": "Interi\u00f8r",
+        "context": "\"resource_type\".\"artistic\".\"architecture_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "LandscapeArchitecture",
+        "definition": "Landskapsarkitektur",
+        "context": "\"resource_type\".\"artistic\".\"architecture_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Other",
+        "definition": "Annen arkitektur",
+        "context": "\"resource_type\".\"artistic\".\"architecture_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "PlanningProposal",
+        "definition": "Planforsalg",
+        "context": "\"resource_type\".\"artistic\".\"architecture_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "award_name",
+        "definition": "Prisnavn",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "award_organizer",
+        "definition": "Prisutdeler\/arrang\u00f8r",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "award_other",
+        "definition": "Annet",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "award_ranking",
+        "definition": "Rangering",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "broadcast",
+        "definition": "TV\/web\/streaming",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "catalogue_number",
+        "definition": "Katalognummer",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "competition_date",
+        "definition": "Dato for offentliggj\u00f8ring",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "competition_name",
+        "definition": "Navn p\u00e5 konkurranse\/arrang\u00f8r\/innbyder",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "competition_rank",
+        "definition": "Rangering\/innkj\u00f8p\/omtale\/invitert",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "composer",
+        "definition": "Komponist",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "concert_program",
+        "definition": "Konsertprogram",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "concert_program_table_caption",
+        "definition": "Oversikt over konsertprogram",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "content_track",
+        "definition": "Innhold\/spor",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "content_track_table_caption",
+        "definition": "Oversikt over innhold\/spor",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "ClothingDesign",
+        "definition": "Klesdesign",
+        "context": "\"resource_type\".\"artistic\".\"design_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Exhibition",
+        "definition": "Utstilling\/messe",
+        "context": "\"resource_type\".\"artistic\".\"design_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "GraphicDesign",
+        "definition": "Grafisk design",
+        "context": "\"resource_type\".\"artistic\".\"design_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Illustration",
+        "definition": "Illustrasjon",
+        "context": "\"resource_type\".\"artistic\".\"design_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "InteractionDesign",
+        "definition": "Interaksjonsdesign",
+        "context": "\"resource_type\".\"artistic\".\"design_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "InteriorDesign",
+        "definition": "Interi\u00f8rdesign",
+        "context": "\"resource_type\".\"artistic\".\"design_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "LightDesign",
+        "definition": "Lysdesign",
+        "context": "\"resource_type\".\"artistic\".\"design_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "ProductDesign",
+        "definition": "Produktdesign",
+        "context": "\"resource_type\".\"artistic\".\"design_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "ServiceDesign",
+        "definition": "Tjenestedesign",
+        "context": "\"resource_type\".\"artistic\".\"design_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Other",
+        "definition": "Annet design",
+        "context": "\"resource_type\".\"artistic\".\"design_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "WebDesign",
+        "definition": "Webdesign",
+        "context": "\"resource_type\".\"artistic\".\"design_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "edit_audio_visual_publication",
+        "definition": "Endre audio-\/videoutgivelse",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "edit_award",
+        "definition": "Endre pris\/utmerkelse",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "edit_broadcast",
+        "definition": "Endre TV\/web\/streaming",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "edit_cinematic_release",
+        "definition": "Endre festival\/kino",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "edit_competition",
+        "definition": "Endre konkurranse",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "edit_concert",
+        "definition": "Endre konsert",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "edit_exhibition",
+        "definition": "Endre utstilling",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "edit_exhibition_place",
+        "definition": "Endre visningsted",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "edit_music_score",
+        "definition": "Endre partitur\/manuscript",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "edit_other_performance",
+        "definition": "Endre annen fremf\u00f8ringsform",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "edit_other_release",
+        "definition": "Endre annen offentliggj\u00f8ring",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "edit_publication_mention",
+        "definition": "Endre publisering\/omtale",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "exhibition_place",
+        "definition": "Visningssted",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "exhibition_places",
+        "definition": "Visningssteder",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "exhibition_title",
+        "definition": "Utstillingstittel",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "extent",
+        "definition": "Varighet",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "extent_in_minutes",
+        "definition": "Varighet i minutter",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "media_type",
+        "definition": "Medietype",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "mention_other",
+        "definition": "Annet (utgiver, ISBN, m.m.)",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "mention_title",
+        "definition": "Tidsskrift\/Boktittel\/medium",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Film",
+        "definition": "Langfilm",
+        "context": "\"resource_type\".\"artistic\".\"moving_picture_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "ShortFilm",
+        "definition": "Kortfilm",
+        "context": "\"resource_type\".\"artistic\".\"moving_picture_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "SerialFilmProduction",
+        "definition": "Seriell produksjon",
+        "context": "\"resource_type\".\"artistic\".\"moving_picture_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "InteractiveFilm",
+        "definition": "Interaktiv produksjon",
+        "context": "\"resource_type\".\"artistic\".\"moving_picture_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "AugmentedVirtualRealityFilm",
+        "definition": "AR\/VR",
+        "context": "\"resource_type\".\"artistic\".\"moving_picture_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Other",
+        "definition": "Annet",
+        "context": "\"resource_type\".\"artistic\".\"moving_picture_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "CompactDisc",
+        "definition": "CD",
+        "context": "\"resource_type\".\"artistic\".\"music_media_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "DVD",
+        "definition": "DVD",
+        "context": "\"resource_type\".\"artistic\".\"music_media_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Streaming",
+        "definition": "Str\u00f8mming",
+        "context": "\"resource_type\".\"artistic\".\"music_media_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "DigitalFile",
+        "definition": "Nedlasting",
+        "context": "\"resource_type\".\"artistic\".\"music_media_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Vinyl",
+        "definition": "LP\/EP",
+        "context": "\"resource_type\".\"artistic\".\"music_media_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Other",
+        "definition": "Annet",
+        "context": "\"resource_type\".\"artistic\".\"music_media_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "music_score_ensemble",
+        "definition": "Ensemble",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "music_score_ismn",
+        "definition": "ISMN",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "music_score_isrc",
+        "definition": "ISRC",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "music_score_movements",
+        "definition": "Satser",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "musical_work_item",
+        "definition": "Verk",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "musical_works",
+        "definition": "Andre fremf\u00f8ringsformer",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "musical_works_table_caption",
+        "definition": "Oversikt over andre fremf\u00f8ringsverk",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "name_or_title",
+        "definition": "Navn\/tittel",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "other_announcement_organizer",
+        "definition": "Utgiver\/arrang\u00f8r eller lignende",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "other_release_description",
+        "definition": "Type formidlingsform",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "AudioVisualPublication",
+        "definition": "Audio-\/videoutgivelse",
+        "context": "\"resource_type\".\"artistic\".\"output_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Award",
+        "definition": "Pris\/utmerkelse",
+        "context": "\"resource_type\".\"artistic\".\"output_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Broadcast",
+        "definition": "TV\/web\/streaming",
+        "context": "\"resource_type\".\"artistic\".\"output_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "CinematicRelease",
+        "definition": "Festival\/kino",
+        "context": "\"resource_type\".\"artistic\".\"output_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Competition",
+        "definition": "Konkurranse",
+        "context": "\"resource_type\".\"artistic\".\"output_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Concert",
+        "definition": "Konsert\/forestilling",
+        "context": "\"resource_type\".\"artistic\".\"output_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Exhibition",
+        "definition": "Utstilling",
+        "context": "\"resource_type\".\"artistic\".\"output_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "MentionInPublication",
+        "definition": "Publisering\/omtale",
+        "context": "\"resource_type\".\"artistic\".\"output_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "MusicScore",
+        "definition": "Partitur\/manuscript",
+        "context": "\"resource_type\".\"artistic\".\"output_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "OtherPerformance",
+        "definition": "Annen fremf\u00f8ring",
+        "context": "\"resource_type\".\"artistic\".\"output_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "OtherRelease",
+        "definition": "Annen offentliggj\u00f8ring",
+        "context": "\"resource_type\".\"artistic\".\"output_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Venue",
+        "definition": "Visningssted",
+        "context": "\"resource_type\".\"artistic\".\"output_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "performance_type",
+        "definition": "Type\/formidlingsform",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "TheatricalProduction",
+        "definition": "Forestilling\/visning",
+        "context": "\"resource_type\".\"artistic\".\"performing_arts_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Broadcast",
+        "definition": "TV\/film\/radio",
+        "context": "\"resource_type\".\"artistic\".\"performing_arts_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Other",
+        "definition": "Annet",
+        "context": "\"resource_type\".\"artistic\".\"performing_arts_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "premiere",
+        "definition": "Premi\u00e6re",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "premiere_date",
+        "definition": "Premi\u00e6redato",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "remove_announcement",
+        "definition": "Fjern offentliggj\u00f8ring",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "remove_announcement_description",
+        "definition": "Er du sikker p\u00e5 at du vil fjerne \"{{name}}\" fra listen over offentliggj\u00f8ringer?",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "remove_music_work",
+        "definition": "Fjern verk",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "remove_music_work_description",
+        "definition": "Er du sikker p\u00e5 at du vil fjerne dette verket?",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "remove_venue_title",
+        "definition": "Fjern visningssted?",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "remove_venue_text",
+        "definition": "Er du sikker p\u00e5 at du vil fjerne \"{{name}}\" fra listen over visningssteder?",
+        "context": "\"resource_type\".\"artistic\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "info_anthology",
+        "definition": "Antologien hvor kapittelet er publisert i m\u00e5 v\u00e6re publisert f\u00f8rst",
+        "context": "\"resource_type\".\"chapter\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "info_book_of_abstracts",
+        "definition": "Abstraktsamlingen hvor abstraktet er publisert i m\u00e5 v\u00e6re publisert f\u00f8rst",
+        "context": "\"resource_type\".\"chapter\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "info_report",
+        "definition": "Rapporten hvor kapittelet er publisert i m\u00e5 v\u00e6re publisert f\u00f8rst",
+        "context": "\"resource_type\".\"chapter\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "published_in",
+        "definition": "Publisert i",
+        "context": "\"resource_type\".\"chapter\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "search_for_anthology",
+        "definition": "S\u00f8k etter antologien hvor kapittelet er publisert",
+        "context": "\"resource_type\".\"chapter\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "search_for_book_of_abstracts",
+        "definition": "S\u00f8k etter abstraktsamlingen hor abstraktet er publisert",
+        "context": "\"resource_type\".\"chapter\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "search_for_report",
+        "definition": "S\u00f8k etter rapporten hvor kapittelet er publisert",
+        "context": "\"resource_type\".\"chapter\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "content",
+        "definition": "Innhold",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "AcademicChapter",
+        "definition": "Vitenskapelig kapittel",
+        "context": "\"resource_type\".\"content_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "AcademicMonograph",
+        "definition": "Vitenskapelig monografi",
+        "context": "\"resource_type\".\"content_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "CaseReport",
+        "definition": "Kasuistikk",
+        "context": "\"resource_type\".\"content_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Encyclopedia",
+        "definition": "Oppslagsverk",
+        "context": "\"resource_type\".\"content_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "EncyclopediaChapter",
+        "definition": "Kapittel i oppslagsverk",
+        "context": "\"resource_type\".\"content_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "ExhibitionCatalog",
+        "definition": "Utstillingskatalog",
+        "context": "\"resource_type\".\"content_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "ExhibitionCatalogChapter",
+        "definition": "Kapittel i utstillingskatalog",
+        "context": "\"resource_type\".\"content_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Introduction",
+        "definition": "Innledning i antologi",
+        "context": "\"resource_type\".\"content_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "NonFictionChapter",
+        "definition": "Faglig kapittel",
+        "context": "\"resource_type\".\"content_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "NonFictionMonograph",
+        "definition": "Faglig monografi",
+        "context": "\"resource_type\".\"content_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "PopularScienceMonograph",
+        "definition": "Popul\u00e6rvitenskapelig monografi",
+        "context": "\"resource_type\".\"content_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "PopularScienceChapter",
+        "definition": "Popul\u00e6rvitenskapelig kapittel",
+        "context": "\"resource_type\".\"content_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "PopularScienceArticle",
+        "definition": "Popul\u00e6rvitenskapelig artikkel",
+        "context": "\"resource_type\".\"content_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "ProfessionalArticle",
+        "definition": "Fagartikkel",
+        "context": "\"resource_type\".\"content_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "AcademicArticle",
+        "definition": "Vitenskapelig artikkel",
+        "context": "\"resource_type\".\"content_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "AcademicLiteratureReview",
+        "definition": "Vitenskapelig oversiktsartikkel",
+        "context": "\"resource_type\".\"content_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "StudyProtocol",
+        "definition": "Studieprotokoll",
+        "context": "\"resource_type\".\"content_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Textbook",
+        "definition": "L\u00e6rebok",
+        "context": "\"resource_type\".\"content_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "TextbookChapter",
+        "definition": "Kapittel i l\u00e6rebok",
+        "context": "\"resource_type\".\"content_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "date_from",
+        "definition": "Dato fra",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "date_to",
+        "definition": "Dato til",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "form",
+        "definition": "Form",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "isbn",
+        "definition": "ISBN",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "issn",
+        "definition": "ISSN",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "issue",
+        "definition": "Hefte",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "journal",
+        "definition": "Tidsskrift",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "journal_not_found",
+        "definition": "Finner du ikke tidsskriftet?",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "level",
+        "definition": "Niv\u00e5 i Norsk publiseringsindikator",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "channel",
+        "definition": "Formidlingskanal",
+        "context": "\"resource_type\".\"media_contribution\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "format",
+        "definition": "Format",
+        "context": "\"resource_type\".\"media_contribution\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Sound",
+        "definition": "Lyd",
+        "context": "\"resource_type\".\"media_contribution\".\"format_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Text",
+        "definition": "Tekst",
+        "context": "\"resource_type\".\"media_contribution\".\"format_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Video",
+        "definition": "Video",
+        "context": "\"resource_type\".\"media_contribution\".\"format_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "medium",
+        "definition": "Medium",
+        "context": "\"resource_type\".\"media_contribution\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Internet",
+        "definition": "Internett",
+        "context": "\"resource_type\".\"media_contribution\".\"medium_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Journal",
+        "definition": "Avis eller tidsskrift",
+        "context": "\"resource_type\".\"media_contribution\".\"medium_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Other",
+        "definition": "Annet",
+        "context": "\"resource_type\".\"media_contribution\".\"medium_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Radio",
+        "definition": "Radio",
+        "context": "\"resource_type\".\"media_contribution\".\"medium_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "TV",
+        "definition": "TV",
+        "context": "\"resource_type\".\"media_contribution\".\"medium_types\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "name_of_issue_episode",
+        "definition": "Navn p\u00e5 hefte, episode, etc. (hvis relevant)",
+        "context": "\"resource_type\".\"media_contribution\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "name_of_series_program",
+        "definition": "Navn p\u00e5 serie, program, etc. (hvis relevant)",
+        "context": "\"resource_type\".\"media_contribution\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "more_info_about_work",
+        "definition": "Mer informasjon om verket",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "number_of_pages",
+        "definition": "Totalt antall sider",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "applicable",
+        "definition": "Publikasjonen kan inng\u00e5 i Norsk vitenskapsindeks hvis den b\u00e5de er fagfellevurdert og presenterer ny original forskning",
+        "context": "\"resource_type\".\"nvi\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "channel_not_rated",
+        "definition": "Publikasjonen kan ikke inng\u00e5 i Norsk vitenskapsindeks siden publiseringskanalen ikke er p\u00e5 niv\u00e5 1 eller 2. (Niv\u00e5 kan bli endret f\u00f8r \u00e5rets rapporteringsfrist slik at publikasjonen kan inng\u00e5 i Norsk vitenskapsindeks, forutsatt at den b\u00e5de er fagfellevurdert og presenterer ny original forskning)",
+        "context": "\"resource_type\".\"nvi\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "not_peer_reviewed",
+        "definition": "Publikasjonen kan ikke inng\u00e5 i Norsk vitenskapsindeks siden den ikke er b\u00e5de fagfellevurdert og presenterer ny original forskning",
+        "context": "\"resource_type\".\"nvi\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "online_issn",
+        "definition": "Online ISSN",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "or",
+        "definition": "Eller",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "organizer",
+        "definition": "Arrang\u00f8r",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "original_article",
+        "definition": "Original artikkel",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "original_article_title",
+        "definition": "Tittel p\u00e5 artikkel",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "pages",
+        "definition": "Sidetall",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "pages_from",
+        "definition": "Sidetall fra",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "pages_to",
+        "definition": "til",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "peer_review",
+        "definition": "Er fagfellevurdert og presenterer ny original forskning?",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "peer_reviewed",
+        "definition": "Er fagfellevurdert og presenterer ny original forskning",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "place_for_event",
+        "definition": "Sted for arrangement",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "print_issn",
+        "definition": "Print ISSN",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "remove",
+        "definition": "Fjern",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "remove_doi",
+        "definition": "Fjern DOI",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "remove_doi_text",
+        "definition": "Du kan fjerne DOI som ble brukt ved registreringsstart.\n\u00d8nsker du \u00e5 fjerne kobling til original DOI?",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "remove_journal",
+        "definition": "Fjern tidsskrift",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "remove_publisher",
+        "definition": "Fjern utgiver",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "search_for_journal",
+        "definition": "S\u00f8k etter tidsskrift",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "search_for_original_article",
+        "definition": "S\u00f8k etter original artikkel",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "search_for_publisher",
+        "definition": "S\u00f8k etter utgiver",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "search_for_series",
+        "definition": "S\u00f8k etter serie",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "series",
+        "definition": "Serie",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "series_info",
+        "definition": "Hvis publikasjonen inng\u00e5r i en serie",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "series_number",
+        "definition": "Serienummer",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "subtype",
+        "definition": "Undertype",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "title_of_event",
+        "definition": "Tittel p\u00e5 arrangement",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "type_work",
+        "definition": "Type verk",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "type_work_specified",
+        "definition": "Egendefinert type verk",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "volume",
+        "definition": "Volum",
+        "context": "\"resource_type\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "save_draft",
+        "definition": "Lagre kladd",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "DRAFT",
+        "definition": "Kladd",
+        "context": "\"status\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "DRAFT_FOR_DELETION",
+        "definition": "Slettet",
+        "context": "\"status\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "NEW",
+        "definition": "Ny",
+        "context": "\"status\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "PUBLISHED",
+        "definition": "Publisert",
+        "context": "\"status\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "REJECTED",
+        "definition": "Avvist",
+        "context": "\"status\"",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "support_description",
+        "definition": "N\u00e5r du ber om brukerst\u00f8tte vil meldingen g\u00e5 til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger<\/0>.",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "modal_unsaved_changes_description",
+        "definition": "Du har gjort endringer som ikke er lagret. Er du sikker p\u00e5 at du vil forlate denne siden?",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "modal_unsaved_changes_heading",
+        "definition": "Forlate siden uten \u00e5 ha lagret?",
+        "context": "",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    }
+]
