@@ -209,6 +209,37 @@
     "1087": "Veterinary Medicine",
     "1144": "Nutrition"
   },
+  "editor": {
+    "allowed": "Allowed",
+    "allowed_description": "$t(editor.allowed): Can be added by the user",
+    "default": "Default",
+    "default_description": "$t(editor.default): Shown by default for all registrations",
+    "disabled": "Disabled",
+    "disabled_description": "$t(editor.disabled): Is not available",
+    "hrcs_activity": "Health Research Classification System - Activity",
+    "hrcs_categories": "Health Research Classification System - Categories",
+    "institution": {
+      "institution_code": "Institution's code",
+      "institution_helper_text": "Contact <0>Sikt</0> if changes are needed.",
+      "institution_name": "Institution's name",
+      "institution_name_english": "Institution's English name",
+      "institution_name_norwegian": "Institution's Norwegian name",
+      "institution_short_name": "Institution's short name"
+    },
+    "publish_strategy": {
+      "files_and_licenses": "Files and licenses",
+      "metadata": "Metadata",
+      "publish_strategy": "Publish strategy",
+      "registrator_cannot_publish": "Registrator can only register",
+      "registrator_cannot_publish_description": "Metadata, files and licenses must be approved by Curator befor publishing.",
+      "registrator_publishes_metadata": "Registrator publishes metadata",
+      "registrator_publishes_metadata_description": "Files and licenses must be approved by Curator before they become publically available.",
+      "registrator_publishes_without_curator": "Registrator publishes without approval from Curator",
+      "registrator_publishes_without_curator_description": "The institution decides who is Registrator."
+    },
+    "select_vocabulary_description": "Activate controlled vocabularies for registration of new results",
+    "vocabulary": "Vocabulary"
+  },
   "feedback": {
     "error": {
       "404_page": "The page you requested could not be found",

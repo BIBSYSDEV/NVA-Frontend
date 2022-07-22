@@ -209,6 +209,37 @@
     "1087": "Veterinærmedisin",
     "1144": "Ernæring"
   },
+  "editor": {
+    "allowed": "Tillatt",
+    "allowed_description": "$t(editor.allowed): Kan legges til av brukeren selv",
+    "default": "Standard",
+    "default_description": "$t(editor.default): Vises som standard for alle registreringer",
+    "disabled": "Ikke tillatt",
+    "disabled_description": "$t(editor.disabled): Er ikke tilgjengelig",
+    "hrcs_activity": "Health Research Classification System - Activity",
+    "hrcs_categories": "Health Research Classification System - Categories",
+    "institution": {
+      "institution_code": "Institusjonens kode",
+      "institution_helper_text": "Kontakt <0>Sikt</0> om behov for endringer.",
+      "institution_name": "Institusjonsnavn",
+      "institution_name_english": "Institusjonens engelske navn",
+      "institution_name_norwegian": "Institusjonens norske navn",
+      "institution_short_name": "Institusjonens kortnavn"
+    },
+    "publish_strategy": {
+      "files_and_licenses": "Filer og lisenser",
+      "metadata": "Metadata",
+      "publish_strategy": "Publiseringsstrategi",
+      "registrator_cannot_publish": "Registrator kan kun registrere",
+      "registrator_cannot_publish_description": "Metadata, filer og lisenser må godkjennes av Kurator før publisering.",
+      "registrator_publishes_metadata": "Registrator publiserer metadata",
+      "registrator_publishes_metadata_description": "Filer og lisenser må godkjennes av Kurator før de blir offentlig tilgjengelig.",
+      "registrator_publishes_without_curator": "Registrator publiserer uten godkjenning av Kurator",
+      "registrator_publishes_without_curator_description": "Institutsjonen bestemmer hvem som er Registrator."
+    },
+    "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
+    "vocabulary": "Vokabular"
+  },
   "feedback": {
     "error": {
       "404_page": "Beklager, men vi kan ikke finne siden du ser etter",
