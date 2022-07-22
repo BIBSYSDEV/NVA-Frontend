@@ -134,7 +134,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
             onClick={toggleConfirmDialog}
             startIcon={<DeleteIcon />}
             variant="outlined">
-            {t('common:remove')}
+            {t('translations:common.remove')}
           </Button>
 
           <ConfirmDialog

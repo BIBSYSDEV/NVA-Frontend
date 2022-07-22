@@ -95,7 +95,7 @@ export const SelectCustomerInstitutionDialog = ({
           loading={isSelectingCustomer}
           disabled={!selectedCustomer}
           onClick={selectCustomer}>
-          {t('common:select')}
+          {t('translations:common.select')}
         </LoadingButton>
       </DialogActions>
     </Dialog>

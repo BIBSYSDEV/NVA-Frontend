@@ -66,7 +66,7 @@ export const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps
               type="submit"
               endIcon={<SearchIcon />}
               loadingPosition="end">
-              {t('common:search')}
+              {t('translations:common.search')}
             </LoadingButton>
           </Box>
         </Form>

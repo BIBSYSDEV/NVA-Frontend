@@ -61,7 +61,7 @@ export const ContributorRow = ({
             value={sequenceValue}
             onChange={(event) => setSequenceValue(event.target.value)}
             variant="filled"
-            label={t('common:number_short')}
+            label={t('translations:common.number_short')}
             onKeyDown={(event) => {
               if (event.key === 'Enter') {
                 event.preventDefault();
@@ -71,7 +71,7 @@ export const ContributorRow = ({
             onBlur={handleOnMoveContributor}
           />
           {!isLastElement && (
-            <Tooltip title={t<string>('common:move_down')}>
+            <Tooltip title={t<string>('translations:common.move_down')}>
               <IconButton
                 sx={{ minWidth: 'auto' }}
                 onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}>
@@ -80,7 +80,7 @@ export const ContributorRow = ({
             </Tooltip>
           )}
           {contributor.sequence !== 1 && (
-            <Tooltip title={t<string>('common:move_up')}>
+            <Tooltip title={t<string>('translations:common.move_up')}>
               <IconButton
                 sx={{ minWidth: 'auto' }}
                 onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}>
@@ -127,7 +127,7 @@ export const ContributorRow = ({
             </Tooltip>
           )}
           {contributor.identity.orcId && (
-            <Tooltip title={t<string>('common:orcid_profile')}>
+            <Tooltip title={t<string>('translations:common.orcid_profile')}>
               <IconButton size="small" href={contributor.identity.orcId} target="_blank">
                 <img src={OrcidLogo} height="20" alt="orcid" />
               </IconButton>

@@ -85,7 +85,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     <Forbidden />
   ) : registration ? (
     <>
-      <SkipLink href="#form">{t('common:skip_to_schema')}</SkipLink>
+      <SkipLink href="#form">{t('translations:common.skip_to_schema')}</SkipLink>
       <Formik
         initialValues={registration}
         validate={validateForm}
@@ -102,7 +102,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
               shouldBlockNavigation={dirty}
             />
             <ItalicPageHeader>
-              {values.entityDescription?.mainTitle || `[${t('common:missing_title')}]`}
+              {values.entityDescription?.mainTitle || `[${t('translations:common.missing_title')}]`}
             </ItalicPageHeader>
             <RegistrationFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
             <RequiredDescription />

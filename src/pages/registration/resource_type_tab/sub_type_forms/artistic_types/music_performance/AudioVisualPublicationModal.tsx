@@ -56,7 +56,7 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
   ),
   publisher: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
-      field: i18n.t('common:publisher'),
+      field: i18n.t('translations:common.publisher'),
     })
   ),
   catalogueNumber: Yup.string().required(
@@ -69,7 +69,7 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
       Yup.object<YupShape<MusicTrack>>({
         title: Yup.string().required(
           i18n.t('feedback:validation.is_required', {
-            field: i18n.t('common:title'),
+            field: i18n.t('translations:common.title'),
           })
         ),
         composer: Yup.string().required(
@@ -152,7 +152,7 @@ export const AudioVisualPublicationModal = ({
                     {...field}
                     variant="filled"
                     fullWidth
-                    label={t('common:publisher')}
+                    label={t('translations:common.publisher')}
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
@@ -187,7 +187,7 @@ export const AudioVisualPublicationModal = ({
                                 {...field}
                                 variant="filled"
                                 fullWidth
-                                label={t('common:title')}
+                                label={t('translations:common.title')}
                                 required
                                 error={touched && !!error}
                                 helperText={<ErrorMessage name={field.name} />}
@@ -227,7 +227,7 @@ export const AudioVisualPublicationModal = ({
                             onClick={() => setRemoveTrackIndex(index)}
                             sx={{ px: '2rem' }}
                             startIcon={<DeleteIcon />}>
-                            {t('common:remove')}
+                            {t('translations:common.remove')}
                           </Button>
                         </Box>
                       );
@@ -248,7 +248,7 @@ export const AudioVisualPublicationModal = ({
                       sx={{ width: 'fit-content' }}
                       onClick={() => push(emptyMusicTrack)}
                       startIcon={<AddIcon />}>
-                      {t('common:add')} {t('resource_type.artistic.content_track').toLocaleLowerCase()}
+                      {t('translations:common.add')} {t('resource_type.artistic.content_track').toLocaleLowerCase()}
                     </Button>
                     {!!touched.trackList && typeof errors.trackList === 'string' && (
                       <FormHelperText error>
@@ -261,10 +261,10 @@ export const AudioVisualPublicationModal = ({
             </DialogContent>
             <DialogActions>
               <Button variant="outlined" onClick={closeModal}>
-                {t('common:cancel')}
+                {t('translations:common.cancel')}
               </Button>
               <Button variant="contained" type="submit" startIcon={<SaveIcon />}>
-                {audioVisualPublication ? t('common:update') : t('common:add')}
+                {audioVisualPublication ? t('translations:common.update') : t('translations:common.add')}
               </Button>
             </DialogActions>
           </Form>

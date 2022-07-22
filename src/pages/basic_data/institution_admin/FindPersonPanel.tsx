@@ -51,7 +51,7 @@ export const FindPersonPanel = () => {
                     required
                     fullWidth
                     variant="filled"
-                    label={t('common:first_name')}
+                    label={t('translations:common.first_name')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                   />
@@ -65,7 +65,7 @@ export const FindPersonPanel = () => {
                     required
                     fullWidth
                     variant="filled"
-                    label={t('common:last_name')}
+                    label={t('translations:common.last_name')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                   />

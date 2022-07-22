@@ -118,11 +118,11 @@ export const ArtisticMovingPictureForm = () => {
                   <Table>
                     <TableHead>
                       <TableRow>
-                        <TableCell>{t('common:type')}</TableCell>
+                        <TableCell>{t('translations:common.type')}</TableCell>
                         <TableCell>
-                          {t('common:publisher')}/{t('common:place')}
+                          {t('translations:common.publisher')}/{t('translations:common.place')}
                         </TableCell>
-                        <TableCell>{t('common:order')}</TableCell>
+                        <TableCell>{t('translations:common.order')}</TableCell>
                         <TableCell></TableCell>
                       </TableRow>
                     </TableHead>

@@ -99,14 +99,14 @@ export const OutputRow = ({
           <Box
             sx={{ display: 'grid', gridTemplateAreas: '"down up"', gridTemplateColumns: '1fr 1fr', maxWidth: '8rem' }}>
             {index !== maxIndex && (
-              <Tooltip title={t<string>('common:move_down')} sx={{ gridArea: 'down' }}>
+              <Tooltip title={t<string>('translations:common.move_down')} sx={{ gridArea: 'down' }}>
                 <Button onClick={() => moveItem(index + 1)}>
                   <ArrowDownwardIcon />
                 </Button>
               </Tooltip>
             )}
             {index !== 0 && (
-              <Tooltip title={t<string>('common:move_up')} sx={{ gridArea: 'up' }}>
+              <Tooltip title={t<string>('translations:common.move_up')} sx={{ gridArea: 'up' }}>
                 <Button onClick={() => moveItem(index - 1)}>
                   <ArrowUpwardIcon />
                 </Button>
@@ -117,10 +117,10 @@ export const OutputRow = ({
       </TableCell>
       <TableCell>
         <Button onClick={() => setOpenEditItem(true)} variant="outlined" sx={{ mr: '1rem' }} startIcon={<EditIcon />}>
-          {t('common:show')}/{t('common:edit')}
+          {t('translations:common.show')}/{t('translations:common.edit')}
         </Button>
         <Button onClick={() => setOpenRemoveItem(true)} variant="outlined" color="error" startIcon={<DeleteIcon />}>
-          {t('common:remove')}
+          {t('translations:common.remove')}
         </Button>
       </TableCell>
       {item.type === 'Broadcast' ? (

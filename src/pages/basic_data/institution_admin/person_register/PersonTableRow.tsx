@@ -117,7 +117,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
             {firstName} {lastName}
           </Typography>
           {orcidUrl && (
-            <Tooltip title={t<string>('common:orcid_profile')}>
+            <Tooltip title={t<string>('translations:common.orcid_profile')}>
               <IconButton size="small" href={orcidUrl} target="_blank">
                 <img src={OrcidLogo} height="20" alt="orcid" />
               </IconButton>
@@ -135,7 +135,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
         </Box>
       </TableCell>
       <TableCell>
-        <Tooltip title={t('common:edit')}>
+        <Tooltip title={t('translations:common.edit')}>
           <IconButton onClick={toggleDialog}>
             <EditIcon />
           </IconButton>
@@ -150,8 +150,13 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
               <DialogContent>
                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '1rem' }}>
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <TextField variant="filled" disabled value={firstName} label={t('common:first_name')} />
-                    <TextField variant="filled" disabled value={lastName} label={t('common:last_name')} />
+                    <TextField
+                      variant="filled"
+                      disabled
+                      value={firstName}
+                      label={t('translations:common.first_name')}
+                    />
+                    <TextField variant="filled" disabled value={lastName} label={t('translations:common.last_name')} />
                     <TextField
                       variant="filled"
                       disabled
@@ -175,7 +180,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                   </Box>
                   <Divider flexItem orientation="vertical" />
                   <Box>
-                    <Typography variant="overline">{t('common:employments')}</Typography>
+                    <Typography variant="overline">{t('translations:common.employments')}</Typography>
                     {employmentsInThisInstitution.map((affiliation) => {
                       // TODO: Allow updating employment
                       return (
@@ -201,9 +206,9 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                 </Box>
               </DialogContent>
               <DialogActions>
-                <Button onClick={toggleDialog}>{t('common:cancel')}</Button>
+                <Button onClick={toggleDialog}>{t('translations:common.cancel')}</Button>
                 <LoadingButton loading={isSubmitting} variant="contained" type="submit">
-                  {t('common:save')}
+                  {t('translations:common.save')}
                 </LoadingButton>
               </DialogActions>
             </Form>

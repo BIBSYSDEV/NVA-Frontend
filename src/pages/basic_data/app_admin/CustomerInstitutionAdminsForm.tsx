@@ -26,7 +26,7 @@ export const CustomerInstitutionAdminsForm = ({
     setOpenAddAdminModal((state) => !state);
   };
 
-  const addAdminText = t('common:add_custom', { name: t('myPage:roles.institution_admin') });
+  const addAdminText = t('translations:common.add_custom', { name: t('myPage:roles.institution_admin') });
 
   return (
     <>

@@ -50,7 +50,7 @@ export const AddAffiliationPanel = () => {
                 {...field}
                 {...params}
                 required
-                label={t('common:institution')}
+                label={t('translations:common.institution')}
                 variant="filled"
                 fullWidth
                 error={touched && !!error}
@@ -91,7 +91,7 @@ export const AddAffiliationPanel = () => {
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <DatePicker
               disabled={isDisabled}
-              label={t('common:end_date')}
+              label={t('translations:common.end_date')}
               value={field.value ? field.value : null}
               onChange={(date: Date | null, keyboardInput) => {
                 const newValue = getNewDateValue(date, keyboardInput);

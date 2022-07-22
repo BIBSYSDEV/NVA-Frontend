@@ -35,7 +35,7 @@ export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) 
         sx={{
           display: { xs: 'none', md: 'grid' },
         }}>
-        <Typography variant="caption">{t('common:title')}</Typography>
+        <Typography variant="caption">{t('translations:common.title')}</Typography>
         <span />
         <Typography variant="caption">{t('coordinating_institution')}</Typography>
         <span />

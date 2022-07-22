@@ -187,7 +187,7 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
     <>
       {publisherId && (
         <Typography variant="body2" color="textSecondary">
-          {t('common:publisher')}: {publisher?.name}
+          {t('translations:common.publisher')}: {publisher?.name}
         </Typography>
       )}
       <Typography variant="body2" color="textSecondary">
@@ -200,7 +200,7 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
   ) : publisherId ? (
     <>
       <Typography variant="body2" color="textSecondary">
-        {t('common:publisher')}: {publisher?.name}
+        {t('translations:common.publisher')}: {publisher?.name}
       </Typography>
       <Typography variant="body2" color="textSecondary">
         {t('registration:resource_type.level')}: {publisher?.level}

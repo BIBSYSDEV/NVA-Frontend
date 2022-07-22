@@ -64,7 +64,9 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
             </Typography>
           ))}
           {countRestContributors > 0 && (
-            <Typography variant="body2">({t('common:x_others', { count: countRestContributors })})</Typography>
+            <Typography variant="body2">
+              ({t('translations:common.x_others', { count: countRestContributors })})
+            </Typography>
           )}
         </Box>
 

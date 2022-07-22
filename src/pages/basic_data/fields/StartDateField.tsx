@@ -11,14 +11,14 @@ interface StartDateFieldProps {
 }
 
 export const StartDateField = ({ fieldName, maxDate, disabled = false }: StartDateFieldProps) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
 
   return (
     <Field name={fieldName}>
       {({ field, form: { setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
         <DatePicker
           disabled={disabled}
-          label={t('start_date')}
+          label={t('common.start_date')}
           value={field.value ? field.value : null}
           onChange={(date: Date | null, keyboardInput) => {
             const newValue = getNewDateValue(date, keyboardInput);

@@ -5,7 +5,6 @@ import en from './en.json';
 import adminEn from './en/admin.json';
 import authorizationEn from './en/authorization.json';
 import basicDataEn from './en/basicData.json';
-import commonEn from './en/common.json';
 import disciplinesEn from './en/disciplines.json';
 import editorEn from './en/editor.json';
 import feedbackEn from './en/feedback.json';
@@ -23,7 +22,6 @@ import nb from './nb.json';
 import adminNb from './nb/admin.json';
 import authorizationNb from './nb/authorization.json';
 import basicDataNb from './nb/basicData.json';
-import commonNb from './nb/common.json';
 import disciplinesNb from './nb/disciplines.json';
 import editorNb from './nb/editor.json';
 import feedbackNb from './nb/feedback.json';
@@ -44,7 +42,6 @@ i18n.use(LanguageDetector).init({
       admin: adminEn,
       authorization: authorizationEn,
       basicData: basicDataEn,
-      common: commonEn,
       disciplines: disciplinesEn,
       editor: editorEn,
       feedback: feedbackEn,
@@ -63,7 +60,6 @@ i18n.use(LanguageDetector).init({
       admin: adminNb,
       authorization: authorizationNb,
       basicData: basicDataNb,
-      common: commonNb,
       disciplines: disciplinesNb,
       editor: editorNb,
       feedback: feedbackNb,
@@ -83,7 +79,6 @@ i18n.use(LanguageDetector).init({
   ns: [
     'admin',
     'authorization',
-    'common',
     'disciplines',
     'feedback',
     'infopages',

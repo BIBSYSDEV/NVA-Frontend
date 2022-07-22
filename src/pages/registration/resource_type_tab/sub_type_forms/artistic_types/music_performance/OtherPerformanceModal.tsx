@@ -53,7 +53,7 @@ const validationSchema = Yup.object<YupShape<OtherMusicPerformance>>({
   place: Yup.object().shape({
     label: Yup.string().required(
       i18n.t('feedback:validation.is_required', {
-        field: i18n.t('common:place'),
+        field: i18n.t('translations:common.place'),
       })
     ),
   }),
@@ -72,7 +72,7 @@ const validationSchema = Yup.object<YupShape<OtherMusicPerformance>>({
       Yup.object<YupShape<MusicalWork>>({
         title: Yup.string().required(
           i18n.t('feedback:validation.is_required', {
-            field: i18n.t('common:title'),
+            field: i18n.t('translations:common.title'),
           })
         ),
         composer: Yup.string().required(
@@ -133,7 +133,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                     {...field}
                     variant="filled"
                     fullWidth
-                    label={t('common:place')}
+                    label={t('translations:common.place')}
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
@@ -171,7 +171,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                                 {...field}
                                 variant="filled"
                                 fullWidth
-                                label={t('common:title')}
+                                label={t('translations:common.title')}
                                 required
                                 error={touched && !!error}
                                 helperText={<ErrorMessage name={field.name} />}
@@ -198,7 +198,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                             onClick={() => setRemoveWorkItemIndex(index)}
                             sx={{ px: '2rem' }}
                             startIcon={<DeleteIcon />}>
-                            {t('common:remove')}
+                            {t('translations:common.remove')}
                           </Button>
                         </Box>
                       );
@@ -219,7 +219,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                       sx={{ width: 'fit-content' }}
                       onClick={() => push(emptyMusicalWork)}
                       startIcon={<AddIcon />}>
-                      {t('common:add')} {t('resource_type.artistic.musical_work_item').toLocaleLowerCase()}
+                      {t('translations:common.add')} {t('resource_type.artistic.musical_work_item').toLocaleLowerCase()}
                     </Button>
                     {!!touched.musicalWorks && typeof errors.musicalWorks === 'string' && (
                       <FormHelperText error>
@@ -232,10 +232,10 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
             </DialogContent>
             <DialogActions>
               <Button variant="outlined" onClick={closeModal}>
-                {t('common:cancel')}
+                {t('translations:common.cancel')}
               </Button>
               <Button variant="contained" type="submit" startIcon={<SaveIcon />}>
-                {otherPerformance ? t('common:update') : t('common:add')}
+                {otherPerformance ? t('translations:common.update') : t('translations:common.add')}
               </Button>
             </DialogActions>
           </Form>

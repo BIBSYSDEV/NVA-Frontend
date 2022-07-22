@@ -117,7 +117,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormPr
                     {...params}
                     required
                     data-testid={dataTestId.registrationWizard.resourceType.eventCountryField}
-                    label={t('common:country')}
+                    label={t('translations:common.country')}
                     variant="filled"
                     fullWidth
                     error={touched && !!error}

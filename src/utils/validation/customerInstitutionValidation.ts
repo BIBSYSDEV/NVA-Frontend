@@ -5,7 +5,7 @@ import { YupShape } from './validationHelpers';
 
 const customerErrorMessage = {
   displayNameRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('admin:display_name') }),
-  institutionRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('common:institution') }),
+  institutionRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('translations:common.institution') }),
   shortNameRequired: i18n.t('feedback:validation.is_required', { field: i18n.t('admin:short_name') }),
   rorInvalid: i18n.t('basicData:institutions.invalid_ror_format'),
 };

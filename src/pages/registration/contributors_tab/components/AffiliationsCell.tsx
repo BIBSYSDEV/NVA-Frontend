@@ -144,7 +144,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
         dataTestId="affiliation-modal">
         <>
           <Typography paragraph>
-            {t('common:name')}: <b>{authorName}</b>
+            {t('translations:common.name')}: <b>{authorName}</b>
           </Typography>
           {affiliationToVerify && (
             <Typography>

@@ -23,27 +23,27 @@ export const CristinPersonList = ({
   onSelectContributor,
   userId,
 }: CristinPersonListProps) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
 
   return (
     <>
       {searchTerm && (
         <Typography variant="subtitle1" component="p">
-          {t('search_summary', { count: personSearch.size, searchTerm })}:
+          {t('common.search_summary', { count: personSearch.size, searchTerm })}:
         </Typography>
       )}
 
       <TableContainer>
         <Table size="medium">
-          <caption style={visuallyHidden}>{t('registration:contributors.authors')}</caption>
+          <caption style={visuallyHidden}>{t('registration.contributors.authors')}</caption>
           <TableHead>
             <TableRow>
               <TableCell id={radioHeadingId} padding="checkbox">
-                {t('common:selected')}
+                {t('common.selected')}
               </TableCell>
-              <TableCell>{t('name')}</TableCell>
+              <TableCell>{t('common.name')}</TableCell>
               <TableCell>{t('myPage:my_profile.heading.affiliations')}</TableCell>
-              <TableCell>{t('common:registrations')}</TableCell>
+              <TableCell>{t('common.registrations')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -72,7 +72,7 @@ export const CristinPersonList = ({
                         ))}
                       </>
                     ) : (
-                      <i>{t('registration:contributors.no_affiliations_found')}</i>
+                      <i>{t('registration.contributors.no_affiliations_found')}</i>
                     )}
                   </TableCell>
                   <TableCell>

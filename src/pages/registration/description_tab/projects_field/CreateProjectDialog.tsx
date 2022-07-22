@@ -77,7 +77,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                     <TextField
                       {...field}
                       data-testid={dataTestId.registrationWizard.description.projectForm.titleField}
-                      label={t('common:title')}
+                      label={t('translations:common.title')}
                       required
                       variant="filled"
                       fullWidth
@@ -101,7 +101,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                   <Field name="startDate">
                     {({ field, meta: { touched, error } }: FieldProps<string>) => (
                       <DatePicker
-                        label={t('common:start_date')}
+                        label={t('translations:common.start_date')}
                         onChange={(date: Date | null, keyboardValue) => {
                           const newDateString = getNewDateValue(date, keyboardValue);
                           setFieldValue(field.name, newDateString);
@@ -127,7 +127,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                   <Field name="endDate">
                     {({ field, meta: { touched, error } }: FieldProps<string>) => (
                       <DatePicker
-                        label={t('common:end_date')}
+                        label={t('translations:common.end_date')}
                         onChange={(date: Date | null, keyboardValue) => {
                           const newDateString = getNewDateValue(date, keyboardValue);
                           setFieldValue(field.name, newDateString);
@@ -159,9 +159,9 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
             </DialogContent>
 
             <DialogActions>
-              <Button onClick={props.onClose}>{t('common:cancel')}</Button>
+              <Button onClick={props.onClose}>{t('translations:common.cancel')}</Button>
               <LoadingButton variant="contained" type="submit" loading={isSubmitting}>
-                {t('common:save')}
+                {t('translations:common.save')}
               </LoadingButton>
             </DialogActions>
           </Form>

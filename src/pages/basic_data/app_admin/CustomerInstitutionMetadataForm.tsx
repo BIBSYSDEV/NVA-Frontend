@@ -56,7 +56,7 @@ export const CustomerInstitutionMetadataForm = ({
   return (
     <>
       <Typography variant="h2" paragraph>
-        {t('common:institution')}
+        {t('translations:common.institution')}
       </Typography>
       <Formik
         enableReinitialize
@@ -86,7 +86,7 @@ export const CustomerInstitutionMetadataForm = ({
                   ) : (
                     <TextField
                       variant="filled"
-                      label={t('common:institution')}
+                      label={t('translations:common.institution')}
                       data-testid={dataTestId.organization.searchField}
                       required
                       disabled
@@ -130,7 +130,7 @@ export const CustomerInstitutionMetadataForm = ({
                   loadingPosition="start"
                   loading={isSubmitting}
                   type="submit">
-                  {editMode ? t('common:save') : t('common:create')}
+                  {editMode ? t('translations:common.save') : t('translations:common.create')}
                 </LoadingButton>
               </StyledRightAlignedWrapper>
             </InputContainerBox>

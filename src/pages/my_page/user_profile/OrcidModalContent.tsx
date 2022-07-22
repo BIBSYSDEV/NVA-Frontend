@@ -33,7 +33,7 @@ export const OrcidModalContent = ({ cancelFunction, cancelText }: OrcidModalCont
       </DialogContent>
       <DialogActions>
         <Button data-testid="cancel-connect-to-orcid" variant="outlined" onClick={cancelFunction}>
-          {cancelText ?? t('common:close')}
+          {cancelText ?? t('translations:common.close')}
         </Button>
         <Button data-testid="connect-to-orcid" onClick={openORCID} variant="contained">
           {t('my_profile.orcid.connect_orcid')}

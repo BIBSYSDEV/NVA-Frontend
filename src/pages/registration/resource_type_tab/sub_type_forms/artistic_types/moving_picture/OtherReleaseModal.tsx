@@ -43,7 +43,7 @@ const validationSchema = Yup.object<YupShape<OtherRelease>>({
   place: Yup.object().shape({
     label: Yup.string().required(
       i18n.t('feedback:validation.is_required', {
-        field: i18n.t('common:place'),
+        field: i18n.t('translations:common.place'),
       })
     ),
   }),
@@ -53,7 +53,7 @@ const validationSchema = Yup.object<YupShape<OtherRelease>>({
   date: Yup.object().shape({
     value: Yup.string().required(
       i18n.t('feedback:validation.is_required', {
-        field: i18n.t('common:date'),
+        field: i18n.t('translations:common.date'),
       })
     ),
   }),
@@ -96,7 +96,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                   variant="filled"
                   fullWidth
                   required
-                  label={t('common:place')}
+                  label={t('translations:common.place')}
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
                 />
@@ -117,7 +117,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
             <Field name="date.value">
               {({ field, form: { setFieldTouched, setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
                 <DatePicker
-                  label={t('common:date')}
+                  label={t('translations:common.date')}
                   value={field.value ?? null}
                   onChange={(date: Date | null, keyboardInput) => {
                     !touched && setFieldTouched(field.name, true, false);
@@ -145,10 +145,10 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
           </DialogContent>
           <DialogActions>
             <Button variant="outlined" onClick={closeModal}>
-              {t('common:cancel')}
+              {t('translations:common.cancel')}
             </Button>
             <Button variant="contained" type="submit">
-              {otherRelease ? t('common:update') : t('common:add')}
+              {otherRelease ? t('translations:common.update') : t('translations:common.add')}
             </Button>
           </DialogActions>
         </Form>

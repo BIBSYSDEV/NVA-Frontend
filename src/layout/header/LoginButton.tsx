@@ -37,7 +37,7 @@ export const LoginButton = () => {
     <Menu handleLogout={handleLogoutWrapper} />
   ) : isLoading ? (
     <LoadingButton variant="contained" color="secondary" loading>
-      {t('common:loading')}
+      {t('translations:common.loading')}
     </LoadingButton>
   ) : (
     <Button

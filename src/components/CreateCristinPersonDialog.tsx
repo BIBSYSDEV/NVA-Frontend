@@ -76,7 +76,7 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
                   <TextField
                     {...field}
                     variant="filled"
-                    label={t('common:first_name')}
+                    label={t('translations:common.first_name')}
                     required
                     error={!!error && touched}
                     helperText={<ErrorMessage name={field.name} />}
@@ -88,7 +88,7 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
                   <TextField
                     {...field}
                     variant="filled"
-                    label={t('common:last_name')}
+                    label={t('translations:common.last_name')}
                     required
                     error={!!error && touched}
                     helperText={<ErrorMessage name={field.name} />}
@@ -114,9 +114,9 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={() => setShowConfirmCancelDialog(true)}>{t('common:cancel')}</Button>
+              <Button onClick={() => setShowConfirmCancelDialog(true)}>{t('translations:common.cancel')}</Button>
               <LoadingButton type="submit" variant="contained" disabled={!acceptedTermsValue} loading={isSubmitting}>
-                {t('common:create')}
+                {t('translations:common.create')}
               </LoadingButton>
             </DialogActions>
           </Form>

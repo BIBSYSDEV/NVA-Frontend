@@ -58,7 +58,7 @@ const MyPagePage = () => {
                 data-testid={dataTestId.myPage.myRegistrationsLink}
                 isSelected={currentPath === UrlPathTemplate.MyPageRegistrations}
                 to={UrlPathTemplate.MyPageRegistrations}>
-                {t('common:registrations')}
+                {t('translations:common.registrations')}
               </LinkButton>
               <LinkIconButton
                 data-testid={dataTestId.myPage.newRegistrationLink}

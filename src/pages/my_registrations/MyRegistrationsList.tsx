@@ -32,7 +32,7 @@ interface MyRegistrationsListProps {
 }
 
 export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyRegistrationsListProps) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [registrationToDelete, setRegistrationToDelete] = useState<RegistrationPreview>();
@@ -77,18 +77,18 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
       <TableContainer>
         <Table sx={alternatingTableRowColor}>
           <caption>
-            <span style={visuallyHidden}>{t('common:registrations')}</span>
+            <span style={visuallyHidden}>{t('common.registrations')}</span>
           </caption>
           <TableHead>
             <TableRow>
               <TableCell data-testid="header-registration-title">
-                <Typography sx={{ fontWeight: 'bold', minWidth: '12rem' }}>{t('title')}</Typography>
+                <Typography sx={{ fontWeight: 'bold', minWidth: '12rem' }}>{t('common.title')}</Typography>
               </TableCell>
               <TableCell data-testid="header-registration-status">
-                <Typography fontWeight="bold">{t('status')}</Typography>
+                <Typography fontWeight="bold">{t('common.status')}</Typography>
               </TableCell>
               <TableCell data-testid="header-registration-created">
-                <Typography fontWeight="bold">{t('created_date')}</Typography>
+                <Typography fontWeight="bold">{t('common.created_date')}</Typography>
               </TableCell>
               <TableCell />
               <TableCell />
@@ -99,10 +99,10 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
             {registrationsOnPage.map((registration) => (
               <TableRow key={registration.identifier}>
                 <TableCell component="th" scope="row" data-testid={`registration-title-${registration.identifier}`}>
-                  <Typography>{registration.mainTitle || <i>[{t('common:missing_title')}]</i>}</Typography>
+                  <Typography>{registration.mainTitle || <i>[{t('common.missing_title')}]</i>}</Typography>
                 </TableCell>
                 <TableCell data-testid={`registration-status-${registration.identifier}`}>
-                  <Typography>{t<string>(`registration:status.${registration.status}`)}</Typography>
+                  <Typography>{t(`registration.status.${registration.status}`)}</Typography>
                 </TableCell>
                 <TableCell data-testid={`registration-created-${registration.identifier}`}>
                   <Typography>{new Date(registration.createdDate).toLocaleString()}</Typography>
@@ -114,7 +114,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                     to={getRegistrationLandingPagePath(registration.identifier)}
                     startIcon={<MenuBookIcon />}
                     data-testid={`open-registration-${registration.identifier}`}>
-                    {t('show')}
+                    {t('common.show')}
                   </Button>
                 </TableCell>
                 <TableCell>
@@ -124,7 +124,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                     to={getRegistrationPath(registration.identifier)}
                     startIcon={<EditIcon />}
                     data-testid={`edit-registration-${registration.identifier}`}>
-                    {t('edit')}
+                    {t('common.edit')}
                   </Button>
                 </TableCell>
                 <TableCell>
@@ -138,7 +138,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                         setRegistrationToDelete(registration);
                         setShowDeleteModal(true);
                       }}>
-                      {t('delete')}
+                      {t('common.delete')}
                     </Button>
                   )}
                 </TableCell>

@@ -57,7 +57,7 @@ export const Header = () => {
         }}>
         <IconButton
           onClick={handleClick}
-          title={t('common:menu')}
+          title={t('translations:common.menu')}
           size="large"
           color="inherit"
           sx={{ gridArea: 'other-menu' }}>

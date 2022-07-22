@@ -39,7 +39,7 @@ const validationSchema = Yup.object<YupShape<MentionInPublication>>({
   date: Yup.object().shape({
     value: Yup.date().required(
       i18n.t('feedback:validation.is_required', {
-        field: i18n.t('common:date'),
+        field: i18n.t('translations:common.date'),
       })
     ),
   }),
@@ -107,7 +107,7 @@ export const PublicationMentionModal = ({
                   meta: { error, touched },
                 }: FieldProps<string>) => (
                   <DatePicker
-                    label={t('common:date')}
+                    label={t('translations:common.date')}
                     value={field.value ?? null}
                     onChange={(date: Date | null, keyboardInput) => {
                       !touched && setFieldTouched(field.name, true, false);
@@ -154,13 +154,13 @@ export const PublicationMentionModal = ({
               variant="outlined"
               onClick={closeModal}
               data-testid={dataTestId.registrationWizard.resourceType.publicationMentionCancelButton}>
-              {t('common:cancel')}
+              {t('translations:common.cancel')}
             </Button>
             <Button
               variant="contained"
               type="submit"
               data-testid={dataTestId.registrationWizard.resourceType.publicationMentionSaveButton}>
-              {mentionInPublication ? t('common:save') : t('common:add')}
+              {mentionInPublication ? t('translations:common.save') : t('translations:common.add')}
             </Button>
           </DialogActions>
         </Form>

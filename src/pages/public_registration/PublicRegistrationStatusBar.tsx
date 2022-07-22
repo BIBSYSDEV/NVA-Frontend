@@ -175,7 +175,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
               loadingPosition="end"
               onClick={onClickPublish}
               loading={isLoading === LoadingName.Publish}>
-              {t('common:publish')}
+              {t('translations:common.publish')}
             </LoadingButton>
           )}
 
@@ -214,7 +214,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
                 onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Rejected)}
                 loading={isLoading === LoadingName.RejectDoi}
                 disabled={!!isLoading}>
-                {t('common:reject_doi')}
+                {t('translations:common.reject_doi')}
               </LoadingButton>
               <LoadingButton
                 variant="contained"
@@ -224,7 +224,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
                 onClick={() => onClickUpdateDoiRequest(DoiRequestStatus.Approved)}
                 loading={isLoading === LoadingName.ApproveDoi}
                 disabled={!!isLoading || !registrationIsValid}>
-                {t('common:create_doi')}
+                {t('translations:common.create_doi')}
               </LoadingButton>
             </>
           )}
@@ -247,13 +247,13 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
               onChange={(event) => setMessageToCurator(event.target.value)}
             />
             <DialogActions>
-              <Button onClick={toggleRequestDoiModal}>{t('common:cancel')}</Button>
+              <Button onClick={toggleRequestDoiModal}>{t('translations:common.cancel')}</Button>
               <LoadingButton
                 variant="contained"
                 data-testid={dataTestId.registrationLandingPage.sendDoiButton}
                 onClick={sendDoiRequest}
                 loading={isLoading === LoadingName.RequestDoi}>
-                {t('common:send')}
+                {t('translations:common.send')}
               </LoadingButton>
             </DialogActions>
           </Modal>

@@ -46,7 +46,7 @@ export const DescriptionPanel = () => {
             data-testid={dataTestId.registrationWizard.description.titleField}
             variant="filled"
             fullWidth
-            label={t('common:title')}
+            label={t('translations:common.title')}
             error={touched && !!error}
             helperText={<ErrorMessage name={field.name} />}
           />

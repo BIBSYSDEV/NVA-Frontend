@@ -72,13 +72,13 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
           </DialogContent>
           <DialogActions>
             <Button variant="outlined" onClick={closeModal}>
-              {t('common:cancel')}
+              {t('translations:common.cancel')}
             </Button>
             <Button
               data-testid={dataTestId.registrationWizard.resourceType.saveVenueButton}
               variant="contained"
               type="submit">
-              {venue ? t('common:update') : t('common:add')}
+              {venue ? t('translations:common.update') : t('translations:common.add')}
             </Button>
           </DialogActions>
         </Form>

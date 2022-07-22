@@ -29,14 +29,14 @@ const validationSchema = Yup.object<YupShape<Broadcast>>({
   publisher: Yup.object().shape({
     name: Yup.string().required(
       i18n.t('feedback:validation.is_required', {
-        field: i18n.t('common:publisher'),
+        field: i18n.t('translations:common.publisher'),
       })
     ),
   }),
   date: Yup.object().shape({
     value: Yup.string().required(
       i18n.t('feedback:validation.is_required', {
-        field: i18n.t('common:date'),
+        field: i18n.t('translations:common.date'),
       })
     ),
   }),
@@ -65,7 +65,7 @@ export const BroadcastModal = ({ broadcast, onSubmit, open, closeModal }: Broadc
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('common:publisher')}
+                  label={t('translations:common.publisher')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -75,7 +75,7 @@ export const BroadcastModal = ({ broadcast, onSubmit, open, closeModal }: Broadc
             <Field name="date.value">
               {({ field, form: { setFieldTouched, setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
                 <DatePicker
-                  label={t('common:date')}
+                  label={t('translations:common.date')}
                   value={field.value ?? null}
                   onChange={(date: Date | null, keyboardInput) => {
                     !touched && setFieldTouched(field.name, true, false);
@@ -103,10 +103,10 @@ export const BroadcastModal = ({ broadcast, onSubmit, open, closeModal }: Broadc
           </DialogContent>
           <DialogActions>
             <Button variant="outlined" onClick={closeModal}>
-              {t('common:cancel')}
+              {t('translations:common.cancel')}
             </Button>
             <Button variant="contained" type="submit">
-              {broadcast ? t('common:update') : t('common:add')}
+              {broadcast ? t('translations:common.update') : t('translations:common.add')}
             </Button>
           </DialogActions>
         </Form>

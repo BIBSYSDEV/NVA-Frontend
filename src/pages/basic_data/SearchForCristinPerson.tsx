@@ -109,7 +109,7 @@ export const SearchForCristinPerson = ({
             required
             fullWidth
             variant="filled"
-            label={t('common:first_name')}
+            label={t('translations:common.first_name')}
             value={selectedPerson.firstName}
           />
           <TextField
@@ -117,7 +117,7 @@ export const SearchForCristinPerson = ({
             required
             fullWidth
             variant="filled"
-            label={t('common:last_name')}
+            label={t('translations:common.last_name')}
             value={selectedPerson.lastName}
           />
           <TextField
@@ -129,7 +129,7 @@ export const SearchForCristinPerson = ({
             value={getMaskedNationalIdentityNumber(selectedPerson.nationalId)}
           />
           <div>
-            <Typography variant="overline">{t('common:employments')}</Typography>
+            <Typography variant="overline">{t('translations:common.employments')}</Typography>
             <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
               {selectedPerson.affiliations.map((affiliation) => {
                 const roleString = getLanguageString(affiliation.role.labels);

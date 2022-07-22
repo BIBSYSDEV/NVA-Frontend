@@ -40,7 +40,7 @@ const validationSchema = Yup.object<YupShape<Award>>({
   date: Yup.object().shape({
     value: Yup.date().required(
       i18n.t('feedback:validation.is_required', {
-        field: i18n.t('common:year'),
+        field: i18n.t('translations:common.year'),
       })
     ),
   }),
@@ -96,7 +96,7 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
             <Field name="date.value">
               {({ field, form: { setFieldTouched, setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
                 <DatePicker
-                  label={t('common:year')}
+                  label={t('translations:common.year')}
                   value={field.value ?? null}
                   onChange={(date: Date | null, keyboardInput) => {
                     !touched && setFieldTouched(field.name, true, false);
@@ -157,13 +157,13 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
               variant="outlined"
               onClick={closeModal}
               data-testid={dataTestId.registrationWizard.resourceType.awardCancelButton}>
-              {t('common:cancel')}
+              {t('translations:common.cancel')}
             </Button>
             <Button
               variant="contained"
               type="submit"
               data-testid={dataTestId.registrationWizard.resourceType.awardSaveButton}>
-              {award ? t('common:save') : t('common:add')}
+              {award ? t('translations:common.save') : t('translations:common.add')}
             </Button>
           </DialogActions>
         </Form>

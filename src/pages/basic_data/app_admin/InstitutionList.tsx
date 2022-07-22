@@ -12,7 +12,7 @@ interface InstitutionListProps {
 }
 
 export const InstitutionList = ({ institutions }: InstitutionListProps) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
 
   return (
     <TableContainer>
@@ -23,10 +23,10 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
         <TableHead>
           <TableRow>
             <TableCell>
-              <Typography fontWeight="bold">{t('name')}</Typography>
+              <Typography fontWeight="bold">{t('common.name')}</Typography>
             </TableCell>
             <TableCell>
-              <Typography fontWeight="bold">{t('date')}</Typography>
+              <Typography fontWeight="bold">{t('common.date')}</Typography>
             </TableCell>
             <TableCell />
           </TableRow>
@@ -47,7 +47,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
                   component={RouterLink}
                   data-testid={dataTestId.basicData.customers.editInstitutionButton(institution.displayName)}
                   to={getAdminInstitutionPath(institution.id)}>
-                  <Typography>{t('edit')}</Typography>
+                  <Typography>{t('common.edit')}</Typography>
                 </Button>
               </TableCell>
             </TableRow>

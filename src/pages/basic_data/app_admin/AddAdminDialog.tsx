@@ -88,7 +88,7 @@ export const AddAdminDialog = ({
 
   return (
     <Dialog open={open} onClose={closeDialog} fullWidth>
-      <DialogTitle>{t('common:add_custom', { name: t('myPage:roles.institution_admin') })}</DialogTitle>
+      <DialogTitle>{t('translations:common.add_custom', { name: t('myPage:roles.institution_admin') })}</DialogTitle>
       <Formik
         initialValues={addAdminInitialValues}
         validationSchema={!isEmployedInThisOrganization ? addCustomerAdminValidationSchema : null}
@@ -110,14 +110,14 @@ export const AddAdminDialog = ({
               )}
             </DialogContent>
             <DialogActions>
-              <Button onClick={closeDialog}>{t('common:cancel')}</Button>
+              <Button onClick={closeDialog}>{t('translations:common.cancel')}</Button>
               <LoadingButton
                 type="submit"
                 variant="contained"
                 loading={isSubmitting}
                 startIcon={<AddIcon />}
                 disabled={!cristinPerson}>
-                {t('common:add')}
+                {t('translations:common.add')}
               </LoadingButton>
             </DialogActions>
           </Form>

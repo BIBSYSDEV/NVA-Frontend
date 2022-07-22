@@ -31,7 +31,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
 
   const { identifier, entityDescription, projects, subjects } = registration;
   const contributors = entityDescription?.contributors ?? [];
-  const mainTitle = entityDescription?.mainTitle || `[${t('common:missing_title')}]`;
+  const mainTitle = entityDescription?.mainTitle || `[${t('translations:common.missing_title')}]`;
   const abstract = entityDescription?.abstract;
   const description = entityDescription?.description;
 

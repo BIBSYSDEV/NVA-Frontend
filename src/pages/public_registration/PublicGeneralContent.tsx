@@ -90,7 +90,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
 
         {language && (
           <Typography data-testid={dataTestId.registrationLandingPage.primaryLanguage}>
-            {t('common:language')}: {i18n.language === 'nob' ? language.nob : language.eng}
+            {t('translations:common.language')}: {i18n.language === 'nob' ? language.nob : language.eng}
           </Typography>
         )}
 

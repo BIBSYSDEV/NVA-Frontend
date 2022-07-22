@@ -206,14 +206,14 @@ export const Contributors = ({
           <Table size="small" sx={alternatingTableRowColor}>
             <TableHead>
               <TableRow>
-                <TableCell>{t('common:order')}</TableCell>
+                <TableCell>{t('translations:common.order')}</TableCell>
                 <TableCell>
-                  {contributorRoles.length > 1 ? t('common:role') : t('contributors.corresponding')}
+                  {contributorRoles.length > 1 ? t('translations:common.role') : t('contributors.corresponding')}
                 </TableCell>
                 <TableCell>{t('contributors.confirmed')}</TableCell>
-                <TableCell>{t('common:name')}</TableCell>
-                <TableCell>{t('common:institution')}</TableCell>
-                <TableCell>{t('common:remove')}</TableCell>
+                <TableCell>{t('translations:common.name')}</TableCell>
+                <TableCell>{t('translations:common.institution')}</TableCell>
+                <TableCell>{t('translations:common.remove')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

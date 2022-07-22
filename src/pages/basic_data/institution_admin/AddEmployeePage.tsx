@@ -135,7 +135,7 @@ export const AddEmployeePage = () => {
                 disabled={!isValid}
                 type="submit"
                 startIcon={<AddCircleOutlineIcon />}>
-                {t('common:create')}
+                {t('translations:common.create')}
               </LoadingButton>
             </StyledCenterContainer>
           </Form>

@@ -9,7 +9,7 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 
 const unverifiedContributorValidationSchema = Yup.object().shape({
   identity: Yup.object().shape({
-    name: Yup.string().required(i18n.t('feedback:validation.is_required', { field: i18n.t('common:name') })),
+    name: Yup.string().required(i18n.t('feedback:validation.is_required', { field: i18n.t('common.name') })),
   }),
 });
 
@@ -22,7 +22,7 @@ export const AddUnverifiedContributorForm = ({
   addUnverifiedContributor,
   handleCloseModal,
 }: AddUnverifiedContributorFormProps) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
 
   const handleSubmit = (values: Contributor) => {
     addUnverifiedContributor(values);
@@ -37,14 +37,14 @@ export const AddUnverifiedContributorForm = ({
       {({ isSubmitting }) => (
         <Form noValidate>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
-            <Typography>{t('registration:contributors.add_unverified_contributor')}</Typography>
+            <Typography>{t('registration.contributors.add_unverified_contributor')}</Typography>
             <Field name="identity.name">
               {({ field, meta: { error, touched } }: FieldProps<string>) => (
                 <TextField
                   {...field}
                   required
                   disabled={isSubmitting}
-                  label={t('name')}
+                  label={t('common.name')}
                   value={field.value ?? ''}
                   variant="filled"
                   error={touched && !!error}
@@ -56,14 +56,14 @@ export const AddUnverifiedContributorForm = ({
           </Box>
 
           <DialogActions>
-            <Button onClick={handleCloseModal}>{t('common:close')}</Button>
+            <Button onClick={handleCloseModal}>{t('common.close')}</Button>
             <LoadingButton
               data-testid={dataTestId.registrationWizard.contributors.selectUserButton}
               type="submit"
               variant="contained"
               loading={isSubmitting}
               disabled={isSubmitting}>
-              {t('common:add')}
+              {t('common.add')}
             </LoadingButton>
           </DialogActions>
         </Form>

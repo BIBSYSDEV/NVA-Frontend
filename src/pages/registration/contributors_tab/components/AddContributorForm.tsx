@@ -91,8 +91,8 @@ export const AddContributorForm = ({
           }
         }}
         autoFocus
-        placeholder={t('common:search_placeholder')}
-        label={t('common:search')}
+        placeholder={t('translations:common.search_placeholder')}
+        label={t('translations:common.search')}
         InputProps={{
           startAdornment: <SearchIcon />,
         }}
@@ -119,7 +119,7 @@ export const AddContributorForm = ({
           />
         </>
       ) : (
-        debouncedSearchTerm && <Typography>{t('common:no_hits')}</Typography>
+        debouncedSearchTerm && <Typography>{t('translations:common.no_hits')}</Typography>
       )}
 
       <Box
@@ -153,7 +153,7 @@ export const AddContributorForm = ({
           variant="contained">
           {initialSearchTerm
             ? t('contributors.verify_person')
-            : t('common:add_custom', { name: t(`contributors.types.${roleToAdd}`) })}
+            : t('translations:common.add_custom', { name: t(`contributors.types.${roleToAdd}`) })}
         </Button>
       </Box>
     </>

@@ -71,7 +71,7 @@ export const PersonRegisterPage = () => {
         variant="filled"
         value={searchQuery}
         onChange={(event) => setSearchQuery(event.target.value)}
-        label={t('common:search')}
+        label={t('translations:common.search')}
         fullWidth
         sx={{ mb: '1rem', maxWidth: '25rem' }}
       />
@@ -92,10 +92,10 @@ export const PersonRegisterPage = () => {
                     <Typography fontWeight="bold">{t('person_register.national_identity_number')}</Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography fontWeight="bold">{t('common:name')}</Typography>
+                    <Typography fontWeight="bold">{t('translations:common.name')}</Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography fontWeight="bold">{t('common:employments')}</Typography>
+                    <Typography fontWeight="bold">{t('translations:common.employments')}</Typography>
                   </TableCell>
                   <TableCell />
                 </TableRow>

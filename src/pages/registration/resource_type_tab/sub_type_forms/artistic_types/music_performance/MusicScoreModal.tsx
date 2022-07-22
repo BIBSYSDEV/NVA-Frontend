@@ -57,7 +57,7 @@ const validationSchema = Yup.object<YupShape<MusicScore>>({
       .nullable()
       .required(
         i18n.t('feedback:validation.is_required', {
-          field: i18n.t('common:publisher'),
+          field: i18n.t('translations:common.publisher'),
         })
       ),
   }),
@@ -159,7 +159,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('common:publisher')}
+                  label={t('translations:common.publisher')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -198,10 +198,10 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
           </DialogContent>
           <DialogActions>
             <Button variant="outlined" onClick={closeModal}>
-              {t('common:cancel')}
+              {t('translations:common.cancel')}
             </Button>
             <Button variant="contained" type="submit" startIcon={<SaveIcon />}>
-              {musicScore ? t('common:update') : t('common:add')}
+              {musicScore ? t('translations:common.update') : t('translations:common.add')}
             </Button>
           </DialogActions>
         </Form>

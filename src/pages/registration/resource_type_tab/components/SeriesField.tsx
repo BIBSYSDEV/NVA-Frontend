@@ -125,7 +125,7 @@ export const SeriesField = () => {
           renderInput={(params) => (
             <AutocompleteTextField
               {...params}
-              label={t('common:title')}
+              label={t('translations:common.title')}
               isLoading={isLoadingJournalOptions || isLoadingJournal}
               placeholder={!field.value ? t('resource_type.search_for_series') : ''}
               showSearchIcon={!field.value}

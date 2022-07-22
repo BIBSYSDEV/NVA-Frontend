@@ -8,22 +8,22 @@ const basicProjectErrorMessage = {
     field: i18n.t('project:coordinating_institution'),
   }),
   endDateRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('common:end_date'),
+    field: i18n.t('translations:common.end_date'),
   }),
   institutionRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('common:institution'),
+    field: i18n.t('translations:common.institution'),
   }),
   personRequired: i18n.t('feedback:validation.is_required', {
     field: i18n.t('project:person'),
   }),
   roleRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('common:role'),
+    field: i18n.t('translations:common.role'),
   }),
   titleRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('common:title'),
+    field: i18n.t('translations:common.title'),
   }),
   startDateRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('common:start_date'),
+    field: i18n.t('translations:common.start_date'),
   }),
 };
 

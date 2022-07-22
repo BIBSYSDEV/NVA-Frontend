@@ -61,7 +61,7 @@ export const PublicRegistrationContributors = ({
             startIcon={showAll ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             onClick={toggleShowAll}
             variant="outlined">
-            {showAll ? t('common:show_fewer') : t('common:show_all')}
+            {showAll ? t('translations:common.show_fewer') : t('translations:common.show_all')}
           </Button>
         )}
       </Box>
@@ -135,7 +135,7 @@ const ContributorsRow = ({
               <sup>
                 {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
                 {orcId && (
-                  <Tooltip title={t<string>('common:orcid_profile')}>
+                  <Tooltip title={t<string>('translations:common.orcid_profile')}>
                     <IconButton size="small" href={orcId} target="_blank">
                       <img src={OrcidLogo} height="20" alt="orcid" />
                     </IconButton>

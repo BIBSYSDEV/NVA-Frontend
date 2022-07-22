@@ -122,7 +122,7 @@ export const UserList = ({
                   <Typography fontWeight="bold">{t('users.username')}</Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography fontWeight="bold">{t('common:name')}</Typography>
+                  <Typography fontWeight="bold">{t('translations:common.name')}</Typography>
                 </TableCell>
                 {showScope && (
                   <TableCell sx={{ minWidth: { xs: '15rem', md: '40%' } }}>
@@ -163,7 +163,7 @@ export const UserList = ({
                           disabled={isLastInstitutionAdmin}
                           data-testid={`button-remove-role-${roleToRemove}-${user.username}`}
                           onClick={() => setRemoveRoleForUser(user.username)}>
-                          {t('common:remove')}
+                          {t('translations:common.remove')}
                         </Button>
                       )}
                       {roleToAdd && (
@@ -176,7 +176,7 @@ export const UserList = ({
                           loading={!disableAddButton && isLoading}
                           data-testid={`button-add-role-${roleToAdd}-${user.username}`}
                           onClick={() => handleAddRoleToUser(user)}>
-                          {t('common:add')}
+                          {t('translations:common.add')}
                         </LoadingButton>
                       )}
                     </TableCell>

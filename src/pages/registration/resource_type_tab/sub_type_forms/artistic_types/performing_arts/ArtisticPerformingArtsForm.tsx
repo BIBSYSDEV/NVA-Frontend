@@ -106,7 +106,7 @@ export const ArtisticPerformingArtsForm = () => {
                   <TableHead>
                     <TableRow>
                       <TableCell>{t('resource_type.artistic.exhibition_place')}</TableCell>
-                      <TableCell>{t('common:order')}</TableCell>
+                      <TableCell>{t('translations:common.order')}</TableCell>
                       <TableCell></TableCell>
                     </TableRow>
                   </TableHead>

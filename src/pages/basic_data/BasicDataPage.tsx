@@ -71,7 +71,7 @@ const BasicDataPage = () => {
                 data-testid={dataTestId.basicData.adminUsersLink}
                 isSelected={currentPath === UrlPathTemplate.BasicDataUsers}
                 to={UrlPathTemplate.BasicDataUsers}>
-                {t('common:users')}
+                {t('translations:common.users')}
               </LinkButton>
             </BetaFunctionality>,
           ]}
@@ -91,7 +91,7 @@ const BasicDataPage = () => {
               data-testid={dataTestId.basicData.adminInstitutionsLink}
               isSelected={currentPath === UrlPathTemplate.BasicDataInstitutions}
               to={UrlPathTemplate.BasicDataInstitutions}>
-              {t('common:institutions')}
+              {t('translations:common.institutions')}
             </LinkButton>,
           ]}
         </NavigationList>

@@ -59,14 +59,14 @@ const validationSchema = Yup.object<YupShape<Concert>>({
   place: Yup.object().shape({
     label: Yup.string().required(
       i18n.t('feedback:validation.is_required', {
-        field: i18n.t('common:place'),
+        field: i18n.t('translations:common.place'),
       })
     ),
   }),
   time: Yup.object().shape({
     value: Yup.string().required(
       i18n.t('feedback:validation.is_required', {
-        field: i18n.t('common:date'),
+        field: i18n.t('translations:common.date'),
       })
     ),
   }),
@@ -80,7 +80,7 @@ const validationSchema = Yup.object<YupShape<Concert>>({
       Yup.object<YupShape<MusicalWorkPerformance>>({
         title: Yup.string().required(
           i18n.t('feedback:validation.is_required', {
-            field: i18n.t('common:title'),
+            field: i18n.t('translations:common.title'),
           })
         ),
         composer: Yup.string().required(
@@ -127,7 +127,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                     {...field}
                     variant="filled"
                     fullWidth
-                    label={t('common:place')}
+                    label={t('translations:common.place')}
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
@@ -142,7 +142,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                   meta: { error, touched },
                 }: FieldProps<string>) => (
                   <DatePicker
-                    label={t('common:date')}
+                    label={t('translations:common.date')}
                     value={field.value ?? null}
                     onChange={(date: Date | null, keyboardInput) => {
                       !touched && setFieldTouched(field.name, true, false);
@@ -198,7 +198,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                                 {...field}
                                 variant="filled"
                                 fullWidth
-                                label={t('common:title')}
+                                label={t('translations:common.title')}
                                 required
                                 error={touched && !!error}
                                 helperText={<ErrorMessage name={field.name} />}
@@ -234,7 +234,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                             onClick={() => setRemoveWorkItemIndex(index)}
                             sx={{ px: '2rem' }}
                             startIcon={<DeleteIcon />}>
-                            {t('common:remove')}
+                            {t('translations:common.remove')}
                           </Button>
                         </Box>
                       );
@@ -255,7 +255,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                       sx={{ width: 'fit-content' }}
                       onClick={() => push(emptyMusicalWorkPerformance)}
                       startIcon={<AddIcon />}>
-                      {t('common:add')} {t('resource_type.artistic.musical_work_item').toLocaleLowerCase()}
+                      {t('translations:common.add')} {t('resource_type.artistic.musical_work_item').toLocaleLowerCase()}
                     </Button>
                     {!!touched.concertProgramme && typeof errors.concertProgramme === 'string' && (
                       <FormHelperText error>
@@ -268,10 +268,10 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
             </DialogContent>
             <DialogActions>
               <Button variant="outlined" onClick={closeModal}>
-                {t('common:cancel')}
+                {t('translations:common.cancel')}
               </Button>
               <Button variant="contained" type="submit" startIcon={<SaveIcon />}>
-                {concert ? t('common:update') : t('common:add')}
+                {concert ? t('translations:common.update') : t('translations:common.add')}
               </Button>
             </DialogActions>
           </Form>

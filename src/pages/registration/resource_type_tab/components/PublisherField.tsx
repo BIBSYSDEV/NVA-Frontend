@@ -130,7 +130,7 @@ export const PublisherField = () => {
             <AutocompleteTextField
               {...params}
               required
-              label={t('common:publisher')}
+              label={t('translations:common.publisher')}
               isLoading={isLoadingPublisherOptions || isLoadingPublisher}
               placeholder={!publisher?.id ? t('resource_type.search_for_publisher') : ''}
               showSearchIcon={!publisher?.id}

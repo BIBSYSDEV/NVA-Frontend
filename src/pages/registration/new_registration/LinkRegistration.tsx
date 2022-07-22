@@ -22,7 +22,7 @@ export interface StartRegistrationAccordionProps {
 }
 
 export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
   const [doi, setDoi] = useState<Doi | null>(null);
   const [noHit, setNoHit] = useState(false);
   const history = useHistory();
@@ -65,17 +65,17 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
         expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <LinkIcon />
         <div>
-          <Typography variant="h2">{t('registration:registration.start_with_link_to_resource_title')}</Typography>
-          <Typography>{t('registration:registration.start_with_link_to_resource_description')}</Typography>
+          <Typography variant="h2">{t('registration.registration.start_with_link_to_resource_title')}</Typography>
+          <Typography>{t('registration.registration.start_with_link_to_resource_description')}</Typography>
         </div>
       </AccordionSummary>
 
       <AccordionDetails>
         <LinkRegistrationForm handleSearch={handleSearch} />
-        {noHit && <Typography>{t('no_hits')}</Typography>}
+        {noHit && <Typography>{t('common.no_hits')}</Typography>}
         {doi && (
           <div data-testid={dataTestId.registrationWizard.new.linkMetadata}>
-            <Typography variant="subtitle1">{t('registration')}:</Typography>
+            <Typography variant="subtitle1">{t('common.registration')}:</Typography>
             <Typography>{doi.title}</Typography>
           </div>
         )}
@@ -88,7 +88,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
           variant="contained"
           disabled={!doi}
           onClick={openRegistration}>
-          {t('registration:registration.start_registration')}
+          {t('registration.registration.start_registration')}
         </Button>
       </AccordionActions>
     </RegistrationAccordion>

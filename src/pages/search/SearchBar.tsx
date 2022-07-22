@@ -35,7 +35,7 @@ export const SearchBar = () => {
                         field.onChange({ target: { value: '', id: field.name } });
                         submitForm();
                       }}
-                      title={t('common:clear')}
+                      title={t('translations:common.clear')}
                       size="large">
                       <ClearIcon />
                     </IconButton>

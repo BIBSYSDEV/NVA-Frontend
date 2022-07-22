@@ -39,7 +39,7 @@ const validationSchema = Yup.object<YupShape<Exhibition>>({
   place: Yup.object().shape({
     label: Yup.string().required(
       i18n.t('feedback:validation.is_required', {
-        field: i18n.t('common:place'),
+        field: i18n.t('translations:common.place'),
       })
     ),
   }),
@@ -94,7 +94,7 @@ export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: Exhi
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('common:place')}
+                  label={t('translations:common.place')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -125,7 +125,7 @@ export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: Exhi
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('common:other')}
+                  label={t('translations:common.other')}
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
                   data-testid={dataTestId.registrationWizard.resourceType.exhibitionOther}
@@ -138,13 +138,13 @@ export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: Exhi
               variant="outlined"
               onClick={closeModal}
               data-testid={dataTestId.registrationWizard.resourceType.exhibitionCancelButton}>
-              {t('common:cancel')}
+              {t('translations:common.cancel')}
             </Button>
             <Button
               variant="contained"
               type="submit"
               data-testid={dataTestId.registrationWizard.resourceType.exhibitionSaveButton}>
-              {exhibition ? t('common:save') : t('common:add')}
+              {exhibition ? t('translations:common.save') : t('translations:common.add')}
             </Button>
           </DialogActions>
         </Form>

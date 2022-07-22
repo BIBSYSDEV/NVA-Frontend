@@ -101,7 +101,9 @@ export const App = () => {
 
   return (
     <>
-      <Helmet defaultTitle={t('common:page_title')} titleTemplate={`%s - ${t('common:page_title')}`}>
+      <Helmet
+        defaultTitle={t('translations:common.page_title')}
+        titleTemplate={`%s - ${t('translations:common.page_title')}`}>
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
       {user &&
@@ -119,7 +121,7 @@ export const App = () => {
         <BrowserRouter>
           <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Notifier />
-            <SkipLink href="#main-content">{t('common:skip_to_main_content')}</SkipLink>
+            <SkipLink href="#main-content">{t('translations:common.skip_to_main_content')}</SkipLink>
             <Header />
             <Box
               component="main"

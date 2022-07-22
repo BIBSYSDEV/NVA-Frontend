@@ -40,7 +40,7 @@ export const MyInstitutionUsersPage = () => {
     setAutoAssignCreators(!autoAssignCreators);
   };
 
-  const roleToAddTitle = t('common:add_custom', {
+  const roleToAddTitle = t('translations:common.add_custom', {
     name: t(`myPage:roles.${roleToAdd?.toLowerCase().replace('-', '_')}`),
   });
 
@@ -68,7 +68,7 @@ export const MyInstitutionUsersPage = () => {
           startIcon={<AddIcon />}
           data-testid="button-add-institution-admin"
           onClick={() => setRoleToAdd(RoleName.InstitutionAdmin)}>
-          {t('common:add_custom', { name: t('myPage:roles.institution_admin') })}
+          {t('translations:common.add_custom', { name: t('myPage:roles.institution_admin') })}
         </StyledNewButton>
       </StyledContainer>
 
@@ -94,7 +94,7 @@ export const MyInstitutionUsersPage = () => {
           startIcon={<AddIcon />}
           data-testid="button-add-curator"
           onClick={() => setRoleToAdd(RoleName.Curator)}>
-          {t('common:add_custom', { name: t('myPage:roles.curator') })}
+          {t('translations:common.add_custom', { name: t('myPage:roles.curator') })}
         </StyledNewButton>
       </StyledContainer>
 
@@ -119,7 +119,7 @@ export const MyInstitutionUsersPage = () => {
           startIcon={<AddIcon />}
           data-testid="button-add-editor"
           onClick={() => setRoleToAdd(RoleName.Editor)}>
-          {t('common:add_custom', { name: t('myPage:roles.editor') })}
+          {t('translations:common.add_custom', { name: t('myPage:roles.editor') })}
         </StyledNewButton>
       </StyledContainer>
 

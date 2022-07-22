@@ -32,7 +32,7 @@ const validationSchema = Yup.object<YupShape<CinematicRelease>>({
   place: Yup.object().shape({
     label: Yup.string().required(
       i18n.t('feedback:validation.is_required', {
-        field: i18n.t('common:place'),
+        field: i18n.t('translations:common.place'),
       })
     ),
   }),
@@ -70,7 +70,7 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('common:place')}
+                  label={t('translations:common.place')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -108,10 +108,10 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
           </DialogContent>
           <DialogActions>
             <Button variant="outlined" onClick={closeModal}>
-              {t('common:cancel')}
+              {t('translations:common.cancel')}
             </Button>
             <Button variant="contained" type="submit">
-              {cinematicRelease ? t('common:update') : t('common:add')}
+              {cinematicRelease ? t('translations:common.update') : t('translations:common.add')}
             </Button>
           </DialogActions>
         </Form>

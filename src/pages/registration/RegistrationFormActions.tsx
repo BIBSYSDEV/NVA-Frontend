@@ -88,7 +88,7 @@ export const RegistrationFormActions = ({
           </Box>
         )}
         <Button data-testid="open-support-button" onClick={toggleSupportModal} sx={{ gridArea: 'support-button' }}>
-          {t('common:support')}
+          {t('translations:common.support')}
         </Button>
         {tabNumber < RegistrationTab.FilesAndLicenses ? (
           <Box
@@ -109,7 +109,7 @@ export const RegistrationFormActions = ({
                 // Set all fields with error to touched to ensure error messages are shown
                 setTouched(setNestedObjectValues(errors, true));
               }}>
-              {values.status === RegistrationStatus.Draft ? t('save_draft') : t('common:save')}
+              {values.status === RegistrationStatus.Draft ? t('save_draft') : t('translations:common.save')}
             </LoadingButton>
             <Button
               variant="contained"
@@ -130,7 +130,7 @@ export const RegistrationFormActions = ({
             loadingPosition="end"
             onClick={onClickSaveAndPresent}
             sx={{ gridArea: 'save-next-button' }}>
-            {t('common:save_and_present')}
+            {t('translations:common.save_and_present')}
           </LoadingButton>
         )}
       </Box>
@@ -138,7 +138,7 @@ export const RegistrationFormActions = ({
       <Modal
         open={openSupportModal}
         onClose={toggleSupportModal}
-        headingText={t('common:support')}
+        headingText={t('translations:common.support')}
         dataTestId="support-modal">
         <SupportModalContent closeModal={toggleSupportModal} />
       </Modal>

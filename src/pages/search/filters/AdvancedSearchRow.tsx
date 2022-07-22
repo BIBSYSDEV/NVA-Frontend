@@ -15,7 +15,7 @@ interface AdvancedSearchRowProps {
 }
 
 export const registrationFilters = [
-  { field: DescriptionFieldNames.Title, i18nKey: 'common:title' },
+  { field: DescriptionFieldNames.Title, i18nKey: 'translations:common.title' },
   { field: DescriptionFieldNames.Abstract, i18nKey: 'registration:description.abstract' },
   { field: ResourceFieldNames.SubType, i18nKey: 'registration_type' },
   { field: DescriptionFieldNames.Tags, i18nKey: 'registration:description.keywords' },

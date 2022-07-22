@@ -9,7 +9,7 @@ interface UploadedFileRowProps {
 }
 
 export const UploadedFileRow = ({ file, removeFile }: UploadedFileRowProps) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
 
   return (
     <Box data-testid="uploaded-file" sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -20,7 +20,7 @@ export const UploadedFileRow = ({ file, removeFile }: UploadedFileRowProps) => {
         variant="outlined"
         startIcon={<RemoveCircleIcon />}
         onClick={removeFile}>
-        {t('remove')}
+        {t('common.remove')}
       </Button>
     </Box>
   );

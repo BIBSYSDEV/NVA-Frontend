@@ -218,7 +218,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                   </TextField>
                 )}
               </Field>
-              <Tooltip title={t<string>('common:help')}>
+              <Tooltip title={t<string>('translations:common.help')}>
                 <IconButton
                   data-testid={dataTestId.registrationWizard.files.licenseHelpButton}
                   onClick={toggleLicenseModal}>

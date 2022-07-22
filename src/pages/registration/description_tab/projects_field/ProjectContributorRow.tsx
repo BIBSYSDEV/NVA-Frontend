@@ -55,7 +55,7 @@ export const ProjectContributorRow = () => {
               {...field}
               disabled
               select
-              label={t('common:role')}
+              label={t('translations:common.role')}
               variant="filled"
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}>

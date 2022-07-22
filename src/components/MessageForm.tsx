@@ -23,7 +23,7 @@ const initValues: MessageFormData = {
 const validationSchema = Yup.object<YupShape<MessageFormData>>({
   message: Yup.string().required(
     i18n.t('feedback:validation.is_required', {
-      field: i18n.t('common:message'),
+      field: i18n.t('translations:common.message'),
     })
   ),
 });
@@ -51,7 +51,7 @@ export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) =
                 multiline
                 rows="4"
                 fullWidth
-                label={t('common:message')}
+                label={t('translations:common.message')}
                 required
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
@@ -62,7 +62,7 @@ export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) =
           <DialogActions>
             {cancelAction && (
               <Button data-testid="cancel-button" variant="outlined" onClick={cancelAction}>
-                {t('common:cancel')}
+                {t('translations:common.cancel')}
               </Button>
             )}
             <LoadingButton
@@ -72,7 +72,7 @@ export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) =
               endIcon={<MailOutlineIcon />}
               loadingPosition="end"
               loading={isSubmitting}>
-              {t('common:send')}
+              {t('translations:common.send')}
             </LoadingButton>
           </DialogActions>
         </Form>

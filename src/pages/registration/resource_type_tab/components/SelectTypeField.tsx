@@ -27,7 +27,7 @@ export const SelectTypeField = ({
           variant="filled"
           fullWidth
           {...field}
-          label={t('common:type')}
+          label={t('translations:common.type')}
           required
           error={!!error && touched}
           helperText={<ErrorMessage name={field.name} />}

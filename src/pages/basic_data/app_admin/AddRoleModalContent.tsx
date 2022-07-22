@@ -56,7 +56,7 @@ export const AddRoleModalContent = ({
 
       <DialogActions>
         <Button variant="outlined" onClick={closeModal} data-testid="add-role-close-button">
-          {t('common:close')}
+          {t('translations:common.close')}
         </Button>
       </DialogActions>
     </>

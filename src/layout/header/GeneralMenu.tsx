@@ -32,7 +32,7 @@ export const GeneralMenu = ({ anchorEl, onClose }: GeneralMenuProps) => {
         horizontal: 'left',
       }}>
       <MenuItem data-testid={dataTestId.header.aboutLink} onClick={() => handleClickMenuItem(UrlPathTemplate.About)}>
-        {t('common:about_nva')}
+        {t('translations:common.about_nva')}
       </MenuItem>
       <MenuItem
         data-testid={dataTestId.header.privacyLink}
