@@ -5,12 +5,12 @@ import { SyledPageContent } from '../../components/styled/Wrappers';
 import { AboutContent } from './AboutContent';
 
 const AboutPage = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
 
   return (
     <SyledPageContent>
-      <PageHeader>{t('about_nva')}</PageHeader>
-      <Typography paragraph>{t('about:short_description')}</Typography>
+      <PageHeader>{t('common.about_nva')}</PageHeader>
+      <Typography paragraph>{t('about.short_description')}</Typography>
       <AboutContent />
     </SyledPageContent>
   );

@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Box, Typography } from '@mui/material';
 
 export const Footer = () => {
-  const { t } = useTranslation('about');
+  const { t } = useTranslation();
 
   return (
     <Box
@@ -13,7 +13,7 @@ export const Footer = () => {
         justifyContent: 'space-around',
         alignItems: 'center',
       }}>
-      <Typography>{t('footer_text')}</Typography>
+      <Typography>{t('about.footer_text')}</Typography>
     </Box>
   );
 };

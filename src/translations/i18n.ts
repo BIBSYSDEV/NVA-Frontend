@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-import aboutEn from './en/about.json';
+import en from './en.json';
 import adminEn from './en/admin.json';
 import authorizationEn from './en/authorization.json';
 import basicDataEn from './en/basicData.json';
@@ -19,7 +19,7 @@ import registrationEn from './en/registration.json';
 import searchEn from './en/search.json';
 import workListsEn from './en/workLists.json';
 
-import aboutNb from './nb/about.json';
+import nb from './nb.json';
 import adminNb from './nb/admin.json';
 import authorizationNb from './nb/authorization.json';
 import basicDataNb from './nb/basicData.json';
@@ -40,7 +40,7 @@ import workListsNb from './nb/workLists.json';
 i18n.use(LanguageDetector).init({
   resources: {
     eng: {
-      about: aboutEn,
+      translations: en,
       admin: adminEn,
       authorization: authorizationEn,
       basicData: basicDataEn,
@@ -59,7 +59,7 @@ i18n.use(LanguageDetector).init({
       workLists: workListsEn,
     },
     nob: {
-      about: aboutNb,
+      translations: nb,
       admin: adminNb,
       authorization: authorizationNb,
       basicData: basicDataNb,
@@ -93,7 +93,7 @@ i18n.use(LanguageDetector).init({
     'registration',
     'workLists',
   ],
-  defaultNS: 'common',
+  defaultNS: 'translations',
   supportedLngs: ['nob', 'eng'],
   interpolation: {
     formatSeparator: ',',
