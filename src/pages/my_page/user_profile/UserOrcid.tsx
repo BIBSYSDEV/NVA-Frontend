@@ -23,7 +23,7 @@ interface UserOrcidProps {
 }
 
 export const UserOrcid = ({ user }: UserOrcidProps) => {
-  const { t } = useTranslation('myPage');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
@@ -75,7 +75,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   useEffect(() => {
     const orcidError = new URLSearchParams(history.location.search).get('error');
     if (orcidError) {
-      dispatch(setNotification({ message: t(`feedback:error.orcid.${orcidError}`), variant: 'error' }));
+      dispatch(setNotification({ message: t(`feedback.error.orcid.${orcidError}`), variant: 'error' }));
     }
   }, [history.location.search, dispatch, t]);
 
@@ -100,7 +100,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   return (
     <div>
       <Typography variant="h2" paragraph>
-        {t('my_profile.orcid.orcid')}
+        {t('my_page.my_profile.orcid.orcid')}
       </Typography>
       {isLoadingCristinPerson ? (
         <CircularProgress />
@@ -134,18 +134,18 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
             onClick={toggleConfirmDialog}
             startIcon={<DeleteIcon />}
             variant="outlined">
-            {t('translations:common.remove')}
+            {t('common.remove')}
           </Button>
 
           <ConfirmDialog
             open={openConfirmDialog}
-            title={t('my_profile.orcid.remove_connection')}
+            title={t('my_page.my_profile.orcid.remove_connection')}
             onAccept={removeOrcid}
             onCancel={toggleConfirmDialog}
             isLoading={isRemovingOrcid}
             dataTestId="confirm-remove-orcid-connection-dialog">
             <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-              {t('my_profile.orcid.remove_connection_info')}{' '}
+              {t('my_page.my_profile.orcid.remove_connection_info')}{' '}
               <MuiLink href={orcidUrl} target="_blank" rel="noopener noreferrer">
                 {orcidUrl}
               </MuiLink>
@@ -156,11 +156,11 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         <>
           <Typography paragraph>{t('my_profile.orcid.orcid_description')}</Typography>
           <Button data-testid="button-create-connect-orcid" onClick={toggleModal} variant="contained" size="small">
-            {t('my_profile.orcid.connect_orcid')}
+            {t('my_page.my_profile.orcid.connect_orcid')}
           </Button>
           <Modal
             headingIcon={{ src: orcidIcon, alt: 'ORCID iD icon' }}
-            headingText={t('orcid.dialog.heading')}
+            headingText={t('my_page.orcid.dialog.heading')}
             onClose={toggleModal}
             open={openModal}
             dataTestId="orcid-modal">

@@ -8,7 +8,7 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { MyMessages } from './MyMessages';
 
 export const MyMessagesPage = () => {
-  const { t } = useTranslation('myPage');
+  const { t } = useTranslation();
 
   const [supportRequestsResponse, isLoadingSupportRequests] = useFetch<PublicationConversation[]>({
     url: `${PublicationsApiPath.Messages}?role=${RoleName.Creator}`,
@@ -20,7 +20,7 @@ export const MyMessagesPage = () => {
   return (
     <>
       <Helmet>
-        <title>{t('messages.messages')}</title>
+        <title>{t('my_page.messages.messages')}</title>
       </Helmet>
       {isLoadingSupportRequests ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />

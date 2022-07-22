@@ -92,7 +92,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               onClick={closeMenu}
               component={Link}
               to={UrlPathTemplate.MyPage}>
-              <Typography>{t('myPage:my_page')}</Typography>
+              <Typography>{t('my_page.my_page')}</Typography>
             </MenuItem>,
           ],
         ]}

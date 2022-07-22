@@ -7,7 +7,6 @@ import authorizationEn from './en/authorization.json';
 import basicDataEn from './en/basicData.json';
 import institutionEn from './en/institution.json';
 import licensesEn from './en/licenses.json';
-import myPageEn from './en/myPage.json';
 import projectEn from './en/project.json';
 import publicationTypesEn from './en/publicationTypes.json';
 import searchEn from './en/search.json';
@@ -19,7 +18,6 @@ import authorizationNb from './nb/authorization.json';
 import basicDataNb from './nb/basicData.json';
 import institutionNb from './nb/institution.json';
 import licensesNb from './nb/licenses.json';
-import myPageNb from './nb/myPage.json';
 import projectNb from './nb/project.json';
 import publicationTypesNb from './nb/publicationTypes.json';
 import searchNb from './nb/search.json';
@@ -34,7 +32,6 @@ i18n.use(LanguageDetector).init({
       basicData: basicDataEn,
       institution: institutionEn,
       licenses: licensesEn,
-      myPage: myPageEn,
       project: projectEn,
       publicationTypes: publicationTypesEn,
       search: searchEn,
@@ -47,7 +44,6 @@ i18n.use(LanguageDetector).init({
       basicData: basicDataNb,
       institution: institutionNb,
       licenses: licensesNb,
-      myPage: myPageNb,
       project: projectNb,
       publicationTypes: publicationTypesNb,
       search: searchNb,

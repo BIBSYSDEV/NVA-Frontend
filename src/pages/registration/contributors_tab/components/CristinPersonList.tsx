@@ -42,7 +42,7 @@ export const CristinPersonList = ({
                 {t('common.selected')}
               </TableCell>
               <TableCell>{t('common.name')}</TableCell>
-              <TableCell>{t('myPage:my_profile.heading.affiliations')}</TableCell>
+              <TableCell>{t('my_page.my_profile.heading.affiliations')}</TableCell>
               <TableCell>{t('common.registrations')}</TableCell>
             </TableRow>
           </TableHead>

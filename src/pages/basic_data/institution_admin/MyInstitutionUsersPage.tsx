@@ -50,7 +50,7 @@ export const MyInstitutionUsersPage = () => {
       {/* Admins */}
       <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersAdministrators}>
         <Typography variant="h3" component="h2">
-          {t('myPage:roles.institution_admins')}
+          {t('my_page.roles.institution_admins')}
         </Typography>
         <Divider />
         {isLoading ? (
@@ -60,7 +60,7 @@ export const MyInstitutionUsersPage = () => {
             userList={filterUsersByRole(users, RoleName.InstitutionAdmin)}
             roleToRemove={RoleName.InstitutionAdmin}
             refetchUsers={fetchInstitutionUsers}
-            tableCaption={t('myPage:roles.institution_admins')}
+            tableCaption={t('my_page.roles.institution_admins')}
           />
         )}
         <StyledNewButton
@@ -68,14 +68,14 @@ export const MyInstitutionUsersPage = () => {
           startIcon={<AddIcon />}
           data-testid="button-add-institution-admin"
           onClick={() => setRoleToAdd(RoleName.InstitutionAdmin)}>
-          {t('translations:common.add_custom', { name: t('myPage:roles.institution_admin') })}
+          {t('translations:common.add_custom', { name: t('my_page.roles.institution_admin') })}
         </StyledNewButton>
       </StyledContainer>
 
       {/* Curators */}
       <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersCurators}>
         <Typography variant="h3" component="h2">
-          {t('myPage:roles.curators')}
+          {t('my_page.roles.curators')}
         </Typography>
         <Divider />
         {isLoading ? (
@@ -85,7 +85,7 @@ export const MyInstitutionUsersPage = () => {
             userList={filterUsersByRole(users, RoleName.Curator)}
             roleToRemove={RoleName.Curator}
             refetchUsers={fetchInstitutionUsers}
-            tableCaption={t('myPage:roles.curators')}
+            tableCaption={t('my_page.roles.curators')}
             showScope
           />
         )}
@@ -94,14 +94,14 @@ export const MyInstitutionUsersPage = () => {
           startIcon={<AddIcon />}
           data-testid="button-add-curator"
           onClick={() => setRoleToAdd(RoleName.Curator)}>
-          {t('translations:common.add_custom', { name: t('myPage:roles.curator') })}
+          {t('translations:common.add_custom', { name: t('my_page.roles.curator') })}
         </StyledNewButton>
       </StyledContainer>
 
       {/* Editors */}
       <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersEditors}>
         <Typography variant="h3" component="h2">
-          {t('myPage:roles.editors')}
+          {t('my_page.roles.editors')}
         </Typography>
         <Divider />
         {isLoading ? (
@@ -111,7 +111,7 @@ export const MyInstitutionUsersPage = () => {
             userList={filterUsersByRole(users, RoleName.Editor)}
             roleToRemove={RoleName.Editor}
             refetchUsers={fetchInstitutionUsers}
-            tableCaption={t('myPage:roles.editors')}
+            tableCaption={t('my_page.roles.editors')}
           />
         )}
         <StyledNewButton
@@ -119,13 +119,13 @@ export const MyInstitutionUsersPage = () => {
           startIcon={<AddIcon />}
           data-testid="button-add-editor"
           onClick={() => setRoleToAdd(RoleName.Editor)}>
-          {t('translations:common.add_custom', { name: t('myPage:roles.editor') })}
+          {t('translations:common.add_custom', { name: t('my_page.roles.editor') })}
         </StyledNewButton>
       </StyledContainer>
 
       <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersCreators}>
         <Typography variant="h3" component="h2">
-          {t('myPage:roles.creator')}
+          {t('my_page.roles.creator')}
         </Typography>
         <Divider />
         <Typography>{t('users.creator_info')}</Typography>

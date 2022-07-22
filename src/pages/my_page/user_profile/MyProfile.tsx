@@ -9,14 +9,14 @@ import { UserRoles } from './UserRoles';
 import { UserAffiliations } from './UserAffiliations';
 
 export const MyProfile = () => {
-  const { t } = useTranslation('myPage');
+  const { t } = useTranslation();
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const user = useSelector((store: RootState) => store.user)!; // If user has been empty this route would already be blocked
 
   return (
     <>
       <Helmet>
-        <title>{t('my_profile.user_profile')}</title>
+        <title>{t('my_page.my_profile.user_profile')}</title>
       </Helmet>
       <Box
         sx={{

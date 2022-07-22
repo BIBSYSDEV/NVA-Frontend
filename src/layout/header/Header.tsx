@@ -144,7 +144,7 @@ export const Header = () => {
                   data-testid={dataTestId.header.myPageLink}
                   to={UrlPathTemplate.MyPage}
                   startIcon={<FavoriteBorderIcon />}>
-                  {t('myPage:my_page')}
+                  {t('my_page.my_page')}
                 </Button>
               )}
             </>
