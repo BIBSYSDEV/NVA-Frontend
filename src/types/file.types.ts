@@ -17,7 +17,7 @@ interface LicenseInfo {
   identifier: LicenseNames;
   description: string;
   logo: string;
-  link: string;
+  link?: string;
 }
 
 export const licenses: LicenseInfo[] = [
@@ -25,7 +25,6 @@ export const licenses: LicenseInfo[] = [
     identifier: LicenseNames.RightsReserved,
     description: i18n.t('licenses.description.rights_reserved'),
     logo: LicenseImages.rightsReservedLogo,
-    link: i18n.t('licenses.links.rights_reserved'),
   },
   {
     identifier: LicenseNames.CC_BY,
