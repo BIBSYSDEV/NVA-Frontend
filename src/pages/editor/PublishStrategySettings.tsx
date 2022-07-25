@@ -47,7 +47,7 @@ const PublishStrategyButton = styled(ButtonBase, { shouldForwardProp: (prop) => 
 
 export const PublishStrategySettings = () => {
   const dispatch = useDispatch();
-  const { t } = useTranslation('editor');
+  const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const [customer, isLoadingCustomer, , setCustomer] = useFetch<CustomerInstitution>({ url: user?.customerId ?? '' });
   const [isUpdating, setIsUpdating] = useState<PublishStrategy>();
@@ -60,10 +60,10 @@ export const PublishStrategySettings = () => {
         publicationWorkflow: publishStrategy,
       });
       if (isErrorStatus(updateCustomerResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:error.update_publish_strategy'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.update_publish_strategy'), variant: 'error' }));
       } else if (isSuccessStatus(updateCustomerResponse.status)) {
         setCustomer(updateCustomerResponse.data);
-        dispatch(setNotification({ message: t('feedback:success.update_publish_strategy'), variant: 'success' }));
+        dispatch(setNotification({ message: t('feedback.success.update_publish_strategy'), variant: 'success' }));
       }
       setIsUpdating(undefined);
     }
@@ -75,7 +75,7 @@ export const PublishStrategySettings = () => {
   return (
     <>
       <Helmet>
-        <title>{t('publish_strategy.publish_strategy')}</title>
+        <title>{t('editor.publish_strategy.publish_strategy')}</title>
       </Helmet>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <StyledItemContainer>
@@ -85,20 +85,20 @@ export const PublishStrategySettings = () => {
             onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataAndFiles')}>
             <Box>
               <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
-                {t('publish_strategy.registrator_publishes_without_curator')}
+                {t('editor.publish_strategy.registrator_publishes_without_curator')}
               </Typography>
               <StyledAccessRightsContainer>
                 <StyledAccessRight>
                   <CheckCircleIcon color="primary" />
-                  <Typography>{t('publish_strategy.metadata')}</Typography>
+                  <Typography>{t('editor.publish_strategy.metadata')}</Typography>
                 </StyledAccessRight>
                 <StyledAccessRight>
                   <CheckCircleIcon color="primary" />
-                  <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
+                  <Typography>{t('editor.publish_strategy.files_and_licenses')}</Typography>
                 </StyledAccessRight>
               </StyledAccessRightsContainer>
               <Typography sx={{ textAlign: 'center' }}>
-                {t('publish_strategy.registrator_publishes_without_curator_description')}
+                {t('editor.publish_strategy.registrator_publishes_without_curator_description')}
               </Typography>
             </Box>
           </PublishStrategyButton>
@@ -112,20 +112,20 @@ export const PublishStrategySettings = () => {
             onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataOnly')}>
             <Box>
               <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
-                {t('publish_strategy.registrator_publishes_metadata')}
+                {t('editor.publish_strategy.registrator_publishes_metadata')}
               </Typography>
               <StyledAccessRightsContainer>
                 <StyledAccessRight>
                   <CheckCircleIcon color="primary" />
-                  <Typography>{t('publish_strategy.metadata')}</Typography>
+                  <Typography>{t('editor.publish_strategy.metadata')}</Typography>
                 </StyledAccessRight>
                 <StyledAccessRight>
                   <RemoveCircleIcon color="error" />
-                  <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
+                  <Typography>{t('editor.publish_strategy.files_and_licenses')}</Typography>
                 </StyledAccessRight>
               </StyledAccessRightsContainer>
               <Typography sx={{ textAlign: 'center' }}>
-                {t('publish_strategy.registrator_publishes_metadata_description')}
+                {t('editor.publish_strategy.registrator_publishes_metadata_description')}
               </Typography>
             </Box>
           </PublishStrategyButton>
@@ -139,20 +139,20 @@ export const PublishStrategySettings = () => {
             onClick={() => setPublicationWorkflow('RegistratorRequiresApprovalForMetadataAndFiles')}>
             <Box>
               <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
-                {t('publish_strategy.registrator_cannot_publish')}
+                {t('editor.publish_strategy.registrator_cannot_publish')}
               </Typography>
               <StyledAccessRightsContainer>
                 <StyledAccessRight>
                   <RemoveCircleIcon color="error" />
-                  <Typography>{t('publish_strategy.metadata')}</Typography>
+                  <Typography>{t('editor.publish_strategy.metadata')}</Typography>
                 </StyledAccessRight>
                 <StyledAccessRight>
                   <RemoveCircleIcon color="error" />
-                  <Typography>{t('publish_strategy.files_and_licenses')}</Typography>
+                  <Typography>{t('editor.publish_strategy.files_and_licenses')}</Typography>
                 </StyledAccessRight>
               </StyledAccessRightsContainer>
               <Typography sx={{ textAlign: 'center' }}>
-                {t('publish_strategy.registrator_cannot_publish_description')}
+                {t('editor.publish_strategy.registrator_cannot_publish_description')}
               </Typography>
             </Box>
           </PublishStrategyButton>

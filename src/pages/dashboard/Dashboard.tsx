@@ -10,7 +10,7 @@ import SearchPage from '../search/SearchPage';
 import { LocalStorageKey } from '../../utils/constants';
 
 const Dashboard = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
   const history = useHistory();
   const [showBanner, setShowBanner] = useState(localStorage.getItem(LocalStorageKey.ShowTagline) !== 'false');
   const [readMore, setReadMore] = useState(false);
@@ -34,7 +34,7 @@ const Dashboard = () => {
         width: '100%',
       }}>
       <Helmet>
-        <title>{t('start_page')}</title>
+        <title>{t('common.start_page')}</title>
       </Helmet>
       {showBanner && (
         <Box sx={{ bgcolor: 'primary.dark', p: '1rem 0.5rem', 'h1,p,li,a,svg': { color: 'white' } }}>
@@ -57,11 +57,11 @@ const Dashboard = () => {
                 gridArea: 'text-tagline',
                 fontSize: { xs: '2rem', sm: '3rem' },
               }}>
-              {t('nva_tagline')}
+              {t('common.nva_tagline')}
             </Typography>
             <Box sx={{ gridArea: 'close-button' }}>
               <IconButton
-                title={t('close_forever')}
+                title={t('common.close_forever')}
                 onClick={() => {
                   localStorage.setItem(LocalStorageKey.ShowTagline, 'false');
                   setShowBanner(false);
@@ -74,7 +74,7 @@ const Dashboard = () => {
               variant="h3"
               variantMapping={{ h3: 'p' }}
               sx={{ mt: '1.5rem', maxWidth: '40rem', gridArea: 'short-description', whiteSpace: 'pre-wrap' }}>
-              {t('about:short_description')}
+              {t('about.short_description')}
             </Typography>
           </Box>
           <Box
@@ -96,7 +96,7 @@ const Dashboard = () => {
                 variant="contained"
                 data-testid={dataTestId.startPage.readMoreButton}
                 onClick={toggleReadMore}>
-                {t(readMore ? 'read_less_about_nva' : 'read_more_about_nva')}
+                {t(readMore ? 'common.read_less_about_nva' : 'common.read_more_about_nva')}
               </Button>
             </Box>
           </Box>

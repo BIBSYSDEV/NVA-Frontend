@@ -20,12 +20,12 @@ enum Tab {
 }
 
 export const MyRegistrations = () => {
-  const { t } = useTranslation('myPage');
+  const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const [selectedTab, setSelectedTab] = useState(Tab.Unpublished);
   const [myRegistrationsResponse, isLoading, refetchRegistrations] = useFetch<MyRegistrationsResponse>({
     url: PublicationsApiPath.RegistrationsByOwner,
-    errorMessage: t('feedback:error.get_registrations'),
+    errorMessage: t('feedback.error.get_registrations'),
     withAuthentication: true,
   });
   const registrations = myRegistrationsResponse?.publications ?? [];
@@ -41,7 +41,7 @@ export const MyRegistrations = () => {
   return (
     <>
       <Helmet>
-        <title>{t('common:registrations')}</title>
+        <title>{t('common.registrations')}</title>
       </Helmet>
       <StyledRightAlignedWrapper>
         {user?.cristinId && (
@@ -49,7 +49,7 @@ export const MyRegistrations = () => {
             component={RouterLink}
             to={getResearchProfilePath(user.cristinId)}
             data-testid="public-profile-button">
-            {t('registrations.my_research_profile')}
+            {t('my_page.registrations.my_research_profile')}
           </Button>
         )}
       </StyledRightAlignedWrapper>
@@ -58,13 +58,13 @@ export const MyRegistrations = () => {
           data-testid="unpublished-button"
           onClick={() => setSelectedTab(Tab.Unpublished)}
           isSelected={selectedTab === Tab.Unpublished}>
-          {t('registrations.unpublished_registrations')} ({unpublishedRegistrations.length})
+          {t('my_page.registrations.unpublished_registrations')} ({unpublishedRegistrations.length})
         </TabButton>
         <TabButton
           data-testid="published-button"
           onClick={() => setSelectedTab(Tab.Published)}
           isSelected={selectedTab === Tab.Published}>
-          {t('registrations.published_registrations')} ({publishedRegistrations.length})
+          {t('my_page.registrations.published_registrations')} ({publishedRegistrations.length})
         </TabButton>
       </Box>
       {isLoading ? (

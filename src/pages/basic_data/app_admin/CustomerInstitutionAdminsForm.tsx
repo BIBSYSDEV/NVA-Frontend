@@ -20,17 +20,17 @@ export const CustomerInstitutionAdminsForm = ({
   isLoadingUsers,
   cristinInstitutionId,
 }: CustomerInstitutionAdminsFormProps) => {
-  const { t } = useTranslation('admin');
+  const { t } = useTranslation();
   const [openAddAdminModal, setOpenAddAdminModal] = useState(false);
   const toggleOpenAddAdminModal = () => {
     setOpenAddAdminModal((state) => !state);
   };
 
-  const addAdminText = t('common:add_custom', { name: t('myPage:roles.institution_admin') });
+  const addAdminText = t('common.add_custom', { name: t('my_page.roles.institution_admin') });
 
   return (
     <>
-      <Typography variant="h2">{t('administrators')}</Typography>
+      <Typography variant="h2">{t('basic_data.institutions.administrators')}</Typography>
       {isLoadingUsers ? (
         <ListSkeleton maxWidth={25} />
       ) : (
@@ -39,7 +39,7 @@ export const CustomerInstitutionAdminsForm = ({
             userList={admins}
             roleToRemove={RoleName.InstitutionAdmin}
             refetchUsers={refetchInstitutionUsers}
-            tableCaption={t('myPage:roles.institution_admins')}
+            tableCaption={t('my_page.roles.institution_admins')}
           />
           <Button
             sx={{ mt: '1rem' }}

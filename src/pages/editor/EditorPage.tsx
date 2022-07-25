@@ -18,7 +18,7 @@ import {
 import { RootState } from '../../redux/store';
 
 const EditorPage = () => {
-  const { t } = useTranslation('editor');
+  const { t } = useTranslation();
   const customerShortName = useSelector((store: RootState) => store.user?.customerShortName);
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
@@ -38,17 +38,17 @@ const EditorPage = () => {
           <LinkButton
             isSelected={currentPath === UrlPathTemplate.EditorInstitution}
             to={UrlPathTemplate.EditorInstitution}>
-            {t('institution.institution_name')}
+            {t('editor.institution.institution_name')}
           </LinkButton>
           <LinkButton
             isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
             to={UrlPathTemplate.EditorVocabulary}>
-            {t('vocabulary')}
+            {t('editor.vocabulary')}
           </LinkButton>
           <LinkButton
             isSelected={currentPath === UrlPathTemplate.EditorPublishStrategy}
             to={UrlPathTemplate.EditorPublishStrategy}>
-            {t('publish_strategy.publish_strategy')}
+            {t('editor.publish_strategy.publish_strategy')}
           </LinkButton>
         </NavigationList>
       </SideMenu>

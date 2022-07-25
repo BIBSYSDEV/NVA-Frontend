@@ -18,7 +18,7 @@ import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
 
 export const PublisherField = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const { setFieldValue, setFieldTouched, values } = useFormikContext<Registration>();
   const { reference, date } = values.entityDescription as BookEntityDescription;
   const publisher = reference?.publicationContext.publisher;
@@ -33,7 +33,7 @@ export const PublisherField = () => {
             debouncedQuery
           )}`
         : '',
-    errorMessage: t('feedback:error.get_publishers'),
+    errorMessage: t('feedback.error.get_publishers'),
   });
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export const PublisherField = () => {
 
   const [fetchedPublisher, isLoadingPublisher] = useFetchResource<Publisher>(
     publisher?.id ?? '',
-    t('feedback:error.get_publisher')
+    t('feedback.error.get_publisher')
   );
 
   return (
@@ -104,7 +104,7 @@ export const PublisherField = () => {
                 </Typography>
                 {option.level && (
                   <Typography variant="body2" color="textSecondary">
-                    {t('resource_type.level')}: {option.level}
+                    {t('registration.resource_type.level')}: {option.level}
                   </Typography>
                 )}
               </Box>
@@ -119,7 +119,7 @@ export const PublisherField = () => {
                   <>
                     <Typography variant="subtitle1">{option.name}</Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {t('resource_type.level')}: {option.level}
+                      {t('registration.resource_type.level')}: {option.level}
                     </Typography>
                   </>
                 }
@@ -130,9 +130,9 @@ export const PublisherField = () => {
             <AutocompleteTextField
               {...params}
               required
-              label={t('common:publisher')}
+              label={t('common.publisher')}
               isLoading={isLoadingPublisherOptions || isLoadingPublisher}
-              placeholder={!publisher?.id ? t('resource_type.search_for_publisher') : ''}
+              placeholder={!publisher?.id ? t('registration.resource_type.search_for_publisher') : ''}
               showSearchIcon={!publisher?.id}
               errorMessage={meta.touched && !!meta.error ? meta.error : ''}
             />

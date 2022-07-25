@@ -27,7 +27,7 @@ const MaskIsbnInput = forwardRef<HTMLElement, MaskInputProps>((props, ref) => {
 });
 
 export const IsbnField = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   return (
     <FieldArray name={ResourceFieldNames.IsbnList}>
@@ -45,7 +45,7 @@ export const IsbnField = () => {
                   remove(0);
                 }
               }}
-              label={t('resource_type.isbn')}
+              label={t('registration.resource_type.isbn')}
               placeholder={isbnFormat}
               variant="filled"
               InputProps={{

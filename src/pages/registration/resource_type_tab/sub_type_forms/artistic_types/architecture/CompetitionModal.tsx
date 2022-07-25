@@ -32,31 +32,33 @@ const emptyCompetition: Competition = {
 
 const validationSchema = Yup.object<YupShape<Competition>>({
   name: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
-      field: i18n.t('registration:resource_type.artistic.competition_name'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.competition_name'),
     })
   ),
   description: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
-      field: i18n.t('registration:resource_type.artistic.competition_rank'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.competition_rank'),
     })
   ),
   date: Yup.object().shape({
     value: Yup.date().required(
-      i18n.t('feedback:validation.is_required', {
-        field: i18n.t('registration:resource_type.artistic.competition_date'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('registration.resource_type.artistic.competition_date'),
       })
     ),
   }),
 });
 
 export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: CompetitionModalProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   return (
     <Dialog open={open} onClose={closeModal} fullWidth>
       <DialogTitle>
-        {competition ? t('resource_type.artistic.edit_competition') : t('resource_type.artistic.add_competition')}
+        {competition
+          ? t('registration.resource_type.artistic.edit_competition')
+          : t('registration.resource_type.artistic.add_competition')}
       </DialogTitle>
       <Formik
         initialValues={competition ?? emptyCompetition}
@@ -73,7 +75,7 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('resource_type.artistic.competition_name')}
+                  label={t('registration.resource_type.artistic.competition_name')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -88,7 +90,7 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('resource_type.artistic.competition_rank')}
+                  label={t('registration.resource_type.artistic.competition_rank')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -100,7 +102,7 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
             <Field name={CompetitionFieldName.Date}>
               {({ field, form: { setFieldTouched, setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
                 <DatePicker
-                  label={t('resource_type.artistic.competition_date')}
+                  label={t('registration.resource_type.artistic.competition_date')}
                   value={field.value ?? null}
                   onChange={(date: Date | null, keyboardInput) => {
                     !touched && setFieldTouched(field.name, true, false);
@@ -133,13 +135,13 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
               variant="outlined"
               onClick={closeModal}
               data-testid={dataTestId.registrationWizard.resourceType.competitionCancelButton}>
-              {t('common:cancel')}
+              {t('common.cancel')}
             </Button>
             <Button
               variant="contained"
               type="submit"
               data-testid={dataTestId.registrationWizard.resourceType.competitionSaveButton}>
-              {competition ? t('common:save') : t('common:add')}
+              {competition ? t('common.save') : t('common.add')}
             </Button>
           </DialogActions>
         </Form>

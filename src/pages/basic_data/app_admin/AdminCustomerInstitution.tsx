@@ -14,24 +14,25 @@ interface AdminCustomerInstitutionProps {
 }
 
 export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutionProps) => {
-  const { t } = useTranslation('admin');
+  const { t } = useTranslation();
   const editMode = customerId !== 'new';
   const [customerInstitution, isLoadingCustomerInstitution] = useFetch<CustomerInstitution>({
     url: editMode ? customerId : '',
-    errorMessage: t('feedback:error.get_customer'),
+    errorMessage: t('feedback.error.get_customer'),
     withAuthentication: true,
   });
   const [userList, isLoadingUsers, refetchInstitutionUsers] = useFetch<UserList>({
     url: customerId ? `${RoleApiPath.InstitutionUsers}?institution=${encodeURIComponent(customerId)}` : '',
-    errorMessage: t('feedback:error.get_users_for_institution'),
+    errorMessage: t('feedback.error.get_users_for_institution'),
     withAuthentication: true,
   });
   const admins = filterUsersByRole(userList?.users ?? [], RoleName.InstitutionAdmin);
 
   return (
     <>
-      <PageHeader htmlTitle={editMode ? customerInstitution?.displayName : t('add_institution')}>
-        {t(editMode ? 'edit_institution' : 'add_institution')}
+      <PageHeader
+        htmlTitle={editMode ? customerInstitution?.displayName : t('basic_data.institutions.add_institution')}>
+        {t(editMode ? 'basic_data.institutions.edit_institution' : 'basic_data.institutions.add_institution')}
       </PageHeader>
 
       {isLoadingCustomerInstitution ? (

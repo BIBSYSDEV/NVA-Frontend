@@ -26,7 +26,7 @@ export const Modal = ({
   open,
   ...props
 }: ModalProps) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
   const handleClose = () => {
     onClose && onClose();
   };
@@ -77,7 +77,7 @@ export const Modal = ({
         <CloseIcon
           onClick={handleClose}
           data-testid="close-modal"
-          titleAccess={t('close')}
+          titleAccess={t('common.close')}
           sx={{ gridArea: 'cross', cursor: 'pointer', mr: '1rem', justifySelf: 'end' }}
         />
       </Box>

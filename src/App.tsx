@@ -45,13 +45,13 @@ if (window.location.pathname === UrlPathTemplate.MyPageMyProfile && window.locat
 
 export const App = () => {
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation('feedback');
+  const { t, i18n } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const [isLoadingUserAttributes, setIsLoadingUserAttributes] = useState(true);
 
   const [institutionUser, isLoadingInstitutionUser] = useFetch<InstitutionUser>({
     url: user?.username ? `${RoleApiPath.Users}/${user.username}` : '',
-    errorMessage: t('feedback:error.get_roles'),
+    errorMessage: t('feedback.error.get_roles'),
     withAuthentication: true,
   });
 
@@ -66,7 +66,7 @@ export const App = () => {
   useEffect(() => {
     // Handle expired token
     if (hasExpiredToken) {
-      dispatch(setNotification({ message: t('authorization:expired_token_info'), variant: 'info' }));
+      dispatch(setNotification({ message: t('authorization.expired_token_info'), variant: 'info' }));
       localStorage.removeItem(LocalStorageKey.ExpiredToken);
     }
   }, [t, dispatch, hasExpiredToken]);
@@ -101,7 +101,7 @@ export const App = () => {
 
   return (
     <>
-      <Helmet defaultTitle={t('common:page_title')} titleTemplate={`%s - ${t('common:page_title')}`}>
+      <Helmet defaultTitle={t('common.page_title')} titleTemplate={`%s - ${t('common.page_title')}`}>
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
       {user &&
@@ -119,7 +119,7 @@ export const App = () => {
         <BrowserRouter>
           <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Notifier />
-            <SkipLink href="#main-content">{t('common:skip_to_main_content')}</SkipLink>
+            <SkipLink href="#main-content">{t('common.skip_to_main_content')}</SkipLink>
             <Header />
             <Box
               component="main"

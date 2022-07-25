@@ -41,7 +41,7 @@ const initialValues: AddEmployeeData = {
 };
 
 export const AddEmployeePage = () => {
-  const { t } = useTranslation('basicData');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const customerId = useSelector((store: RootState) => store.user?.customerId);
 
@@ -57,7 +57,7 @@ export const AddEmployeePage = () => {
       const cristinUser: CreateCristinPerson = convertToCristinPerson(values.user);
       const createPersonResponse = await createCristinPerson(cristinUser);
       if (isErrorStatus(createPersonResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:error.create_user'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.create_user'), variant: 'error' }));
       } else if (isSuccessStatus(createPersonResponse.status)) {
         userId = createPersonResponse.data.id;
       }
@@ -75,13 +75,13 @@ export const AddEmployeePage = () => {
           roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
         });
         if (isSuccessStatus(createUserResponse.status)) {
-          dispatch(setNotification({ message: t('feedback:success.add_employment'), variant: 'success' }));
+          dispatch(setNotification({ message: t('feedback.success.add_employment'), variant: 'success' }));
           resetForm();
         } else if (isErrorStatus(createUserResponse.status)) {
-          dispatch(setNotification({ message: t('feedback:error.add_role'), variant: 'error' }));
+          dispatch(setNotification({ message: t('feedback.error.add_role'), variant: 'error' }));
         }
       } else if (isErrorStatus(addAffiliationResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:error.add_employment'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.add_employment'), variant: 'error' }));
       }
     }
   };
@@ -89,10 +89,10 @@ export const AddEmployeePage = () => {
   return (
     <>
       <Helmet>
-        <title>{t('add_employee.add_employee')}</title>
+        <title>{t('basic_data.add_employee.add_employee')}</title>
       </Helmet>
       <Typography variant="h3" component="h2" paragraph>
-        {t('add_employee.add_to_person_registry')}
+        {t('basic_data.add_employee.add_to_person_registry')}
       </Typography>
       <Formik
         initialValues={initialValues}
@@ -135,7 +135,7 @@ export const AddEmployeePage = () => {
                 disabled={!isValid}
                 type="submit"
                 startIcon={<AddCircleOutlineIcon />}>
-                {t('common:create')}
+                {t('common.create')}
               </LoadingButton>
             </StyledCenterContainer>
           </Form>

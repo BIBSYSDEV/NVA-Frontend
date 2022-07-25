@@ -22,7 +22,7 @@ export const ConfirmDialog = ({
   isLoading = false,
   dataTestId,
 }: ConfirmDialogProps) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
 
   return (
     <Dialog open={open} onClose={onCancel} data-testid={dataTestId} PaperProps={{ 'aria-labelledby': 'titleId' }}>
@@ -30,10 +30,10 @@ export const ConfirmDialog = ({
       <DialogContent>{children}</DialogContent>
       <DialogActions>
         <Button data-testid="cancel-button" variant="outlined" onClick={onCancel}>
-          {t('common:no')}
+          {t('common.no')}
         </Button>
         <LoadingButton data-testid="accept-button" variant="contained" loading={isLoading} onClick={onAccept}>
-          {t('common:yes')}
+          {t('common.yes')}
         </LoadingButton>
       </DialogActions>
     </Dialog>

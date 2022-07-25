@@ -8,7 +8,7 @@ import { EntityDescription, Registration, RegistrationDate } from '../../../type
 import { dataTestId } from '../../../utils/dataTestIds';
 
 export const DatePickerField = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const {
     values: { entityDescription },
     errors,
@@ -66,7 +66,7 @@ export const DatePickerField = () => {
   return (
     <>
       <DatePicker
-        label={t('description.date_published')}
+        label={t('registration.description.date_published')}
         value={date}
         onChange={onChangeDate}
         inputFormat={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
@@ -88,7 +88,7 @@ export const DatePickerField = () => {
       <FormControlLabel
         sx={{ alignSelf: 'start', mt: '0.4rem' }} // Center field regardless of error state of published date field
         control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} />}
-        label={<Typography>{t('description.year_only')}</Typography>}
+        label={<Typography>{t('registration.description.year_only')}</Typography>}
       />
     </>
   );

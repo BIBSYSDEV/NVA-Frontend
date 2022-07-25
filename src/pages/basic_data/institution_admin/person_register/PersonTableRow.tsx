@@ -47,7 +47,7 @@ interface PersonTableRowProps {
 }
 
 export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, customerId }: PersonTableRowProps) => {
-  const { t } = useTranslation('basicData');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [openDialog, setOpenDialog] = useState(false);
   const toggleDialog = () => setOpenDialog(!openDialog);
@@ -88,9 +88,9 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
     }
     if (isSuccessStatus(updateUserResponse.status)) {
       toggleDialog();
-      dispatch(setNotification({ message: t('feedback:success.update_institution_user'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' }));
     } else if (isErrorStatus(updateUserResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:error.update_institution_user'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' }));
     }
   };
 
@@ -117,7 +117,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
             {firstName} {lastName}
           </Typography>
           {orcidUrl && (
-            <Tooltip title={t<string>('common:orcid_profile')}>
+            <Tooltip title={t('common.orcid_profile')}>
               <IconButton size="small" href={orcidUrl} target="_blank">
                 <img src={OrcidLogo} height="20" alt="orcid" />
               </IconButton>
@@ -135,7 +135,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
         </Box>
       </TableCell>
       <TableCell>
-        <Tooltip title={t('common:edit')}>
+        <Tooltip title={t('common.edit')}>
           <IconButton onClick={toggleDialog}>
             <EditIcon />
           </IconButton>
@@ -143,24 +143,24 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
       </TableCell>
 
       <Dialog open={openDialog} onClose={toggleDialog} maxWidth="md" fullWidth transitionDuration={{ exit: 0 }}>
-        <DialogTitle>{t('person_register.edit_person')}</DialogTitle>
+        <DialogTitle>{t('basic_data.person_register.edit_person')}</DialogTitle>
         <Formik initialValues={initialValues} enableReinitialize onSubmit={onSubmit}>
           {({ values, isSubmitting, setFieldValue }: FormikProps<FormData>) => (
             <Form>
               <DialogContent>
                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '1rem' }}>
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <TextField variant="filled" disabled value={firstName} label={t('common:first_name')} />
-                    <TextField variant="filled" disabled value={lastName} label={t('common:last_name')} />
+                    <TextField variant="filled" disabled value={firstName} label={t('common.first_name')} />
+                    <TextField variant="filled" disabled value={lastName} label={t('common.last_name')} />
                     <TextField
                       variant="filled"
                       disabled
                       value={getMaskedNationalIdentityNumber(nationalId)}
-                      label={t('person_register.national_identity_number')}
+                      label={t('basic_data.person_register.national_identity_number')}
                     />
                     {otherEmployments.length > 0 && (
                       <Box>
-                        <Typography variant="overline">{t('person_register.other_employees')}</Typography>
+                        <Typography variant="overline">{t('basic_data.person_register.other_employees')}</Typography>
                         <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
                           {otherEmployments.map((affiliation) => (
                             <li key={affiliation.organization}>
@@ -175,7 +175,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                   </Box>
                   <Divider flexItem orientation="vertical" />
                   <Box>
-                    <Typography variant="overline">{t('common:employments')}</Typography>
+                    <Typography variant="overline">{t('common.employments')}</Typography>
                     {employmentsInThisInstitution.map((affiliation) => {
                       // TODO: Allow updating employment
                       return (
@@ -201,9 +201,9 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                 </Box>
               </DialogContent>
               <DialogActions>
-                <Button onClick={toggleDialog}>{t('common:cancel')}</Button>
+                <Button onClick={toggleDialog}>{t('common.cancel')}</Button>
                 <LoadingButton loading={isSubmitting} variant="contained" type="submit">
-                  {t('common:save')}
+                  {t('common.save')}
                 </LoadingButton>
               </DialogActions>
             </Form>

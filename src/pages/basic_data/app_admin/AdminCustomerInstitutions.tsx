@@ -13,22 +13,22 @@ import { sortCustomerInstitutions } from '../../../utils/institutions-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
 
 export const AdminCustomerInstitutions = () => {
-  const { t } = useTranslation('admin');
+  const { t } = useTranslation();
   const [customerInstitutions, isLoadingCustomerInstitutions] = useFetch<CustomerList>({
     url: CustomerInstitutionApiPath.Customer,
     withAuthentication: true,
-    errorMessage: t('feedback:error.get_customers'),
+    errorMessage: t('feedback.error.get_customers'),
   });
 
   return (
     <>
-      <PageHeader>{t('admin_institutions')}</PageHeader>
+      <PageHeader>{t('basic_data.institutions.admin_institutions')}</PageHeader>
       <StyledRightAlignedWrapper>
         <Button
           component={RouterLink}
           to={getAdminInstitutionPath('new')}
           data-testid={dataTestId.basicData.customers.addCustomerButton}>
-          {t('add_institution')}
+          {t('basic_data.institutions.add_institution')}
         </Button>
       </StyledRightAlignedWrapper>
       {isLoadingCustomerInstitutions ? (

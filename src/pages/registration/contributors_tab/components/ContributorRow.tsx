@@ -35,7 +35,7 @@ export const ContributorRow = ({
   contributorRoles,
   contributorIndex,
 }: ContributorRowProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const [openRemoveContributor, setOpenRemoveContributor] = useState(false);
   const [openVerifyContributor, setOpenVerifyContributor] = useState(false);
 
@@ -61,7 +61,7 @@ export const ContributorRow = ({
             value={sequenceValue}
             onChange={(event) => setSequenceValue(event.target.value)}
             variant="filled"
-            label={t('common:number_short')}
+            label={t('common.number_short')}
             onKeyDown={(event) => {
               if (event.key === 'Enter') {
                 event.preventDefault();
@@ -71,7 +71,7 @@ export const ContributorRow = ({
             onBlur={handleOnMoveContributor}
           />
           {!isLastElement && (
-            <Tooltip title={t<string>('common:move_down')}>
+            <Tooltip title={t('common.move_down')}>
               <IconButton
                 sx={{ minWidth: 'auto' }}
                 onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}>
@@ -80,7 +80,7 @@ export const ContributorRow = ({
             </Tooltip>
           )}
           {contributor.sequence !== 1 && (
-            <Tooltip title={t<string>('common:move_up')}>
+            <Tooltip title={t('common.move_up')}>
               <IconButton
                 sx={{ minWidth: 'auto' }}
                 onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}>
@@ -92,16 +92,16 @@ export const ContributorRow = ({
       </TableCell>
       <TableCell align={showContributorRole ? 'left' : 'center'} width="1">
         {showContributorRole ? (
-          <Typography>{t(`contributors.types.${contributor.role}`)}</Typography>
+          <Typography>{t(`registration.contributors.types.${contributor.role}`)}</Typography>
         ) : (
           <Field name={`${baseFieldName}.${SpecificContributorFieldNames.Corresponding}`}>
             {({ field }: FieldProps) => (
-              <Tooltip title={t<string>('contributors.corresponding')}>
+              <Tooltip title={t('registration.contributors.corresponding')}>
                 <Checkbox
                   data-testid={dataTestId.registrationWizard.contributors.correspondingCheckbox}
                   checked={!!field.value}
                   {...field}
-                  inputProps={{ 'aria-label': t('contributors.corresponding') }}
+                  inputProps={{ 'aria-label': t('registration.contributors.corresponding') }}
                 />
               </Tooltip>
             )}
@@ -111,11 +111,11 @@ export const ContributorRow = ({
       <TableCell align="center" width="1">
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           {contributor.identity.id ? (
-            <Tooltip title={t<string>('contributors.known_author_identity')}>
+            <Tooltip title={t('registration.contributors.known_author_identity')}>
               <CheckIcon color="primary" />
             </Tooltip>
           ) : (
-            <Tooltip title={t<string>('contributors.verify_person')}>
+            <Tooltip title={t('registration.contributors.verify_person')}>
               <IconButton
                 size="small"
                 data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
@@ -127,7 +127,7 @@ export const ContributorRow = ({
             </Tooltip>
           )}
           {contributor.identity.orcId && (
-            <Tooltip title={t<string>('common:orcid_profile')}>
+            <Tooltip title={t('common.orcid_profile')}>
               <IconButton size="small" href={contributor.identity.orcId} target="_blank">
                 <img src={OrcidLogo} height="20" alt="orcid" />
               </IconButton>
@@ -148,7 +148,10 @@ export const ContributorRow = ({
         )}
       </TableCell>
       <TableCell width="1">
-        <Tooltip title={t<string>('contributors.remove_role', { role: t(`contributors.types.${contributor.role}`) })}>
+        <Tooltip
+          title={t('registration.contributors.remove_role', {
+            role: t(`registration.contributors.types.${contributor.role}`),
+          })}>
           <IconButton
             data-testid={dataTestId.registrationWizard.contributors.removeContributorButton(contributor.identity.name)}
             onClick={() => setOpenRemoveContributor(true)}>
@@ -172,8 +175,8 @@ export const ContributorRow = ({
       {/* Remove contributor */}
       <ConfirmDialog
         open={!!openRemoveContributor}
-        title={t('contributors.remove_role', {
-          role: t(`contributors.types.${contributor.role}`).toLowerCase(),
+        title={t('registration.contributors.remove_role', {
+          role: t(`registration.contributors.types.${contributor.role}`).toLowerCase(),
         })}
         onAccept={() => {
           onRemoveContributor(contributor.sequence - 1);
@@ -182,7 +185,7 @@ export const ContributorRow = ({
         onCancel={() => setOpenRemoveContributor(false)}
         dataTestId="confirm-remove-author-dialog">
         <Typography>
-          {t('contributors.confirm_remove_author_text', {
+          {t('registration.contributors.confirm_remove_author_text', {
             contributorName: contributor.identity.name,
           })}
         </Typography>

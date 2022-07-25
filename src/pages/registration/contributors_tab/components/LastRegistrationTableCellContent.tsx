@@ -12,10 +12,10 @@ interface LastRegistrationTableCellContentPorps {
 }
 
 export const LastRegistrationTableCellContent = ({ personId }: LastRegistrationTableCellContentPorps) => {
-  const { t } = useTranslation('feedback');
+  const { t } = useTranslation();
   const [registrationSearch, isLoadingRegistrationSearch] = useFetch<SearchResponse<Registration>>({
     url: `${SearchApiPath.Registrations}?query=(${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Id}:"${personId}")&results=1`,
-    errorMessage: t('error.search'),
+    errorMessage: t('feedback.error.search'),
   });
   const registration = registrationSearch && registrationSearch.size > 0 ? registrationSearch.hits[0] : null;
 
@@ -26,11 +26,11 @@ export const LastRegistrationTableCellContent = ({ personId }: LastRegistrationT
       <TruncatableTypography lines={2}>{registration.entityDescription?.mainTitle}</TruncatableTypography>
       {registrationSearch && registrationSearch.size > 1 && (
         <Typography fontStyle="italic">
-          {t('registration:contributors.other_registrations', { count: registrationSearch.size - 1 })}
+          {t('registration.contributors.other_registrations', { count: registrationSearch.size - 1 })}
         </Typography>
       )}
     </>
   ) : (
-    <i>{t('registration:contributors.no_registrations_found')}</i>
+    <i>{t('registration.contributors.no_registrations_found')}</i>
   );
 };

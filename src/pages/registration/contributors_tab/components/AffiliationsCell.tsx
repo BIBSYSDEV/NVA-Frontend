@@ -24,7 +24,7 @@ interface AffiliationsCellProps {
 }
 
 export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: AffiliationsCellProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const disptach = useDispatch();
   const { setFieldValue } = useFormikContext<Registration>();
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
@@ -44,7 +44,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
 
     // Avoid adding same unit twice
     if (affiliations?.some((affiliation) => affiliation.id === id)) {
-      disptach(setNotification({ message: t('contributors.add_duplicate_affiliation'), variant: 'info' }));
+      disptach(setNotification({ message: t('registration.contributors.add_duplicate_affiliation'), variant: 'info' }));
       return;
     }
 
@@ -96,7 +96,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
             affiliation.labels && (
               <>
                 <Typography>"{getLanguageString(affiliation.labels)}"</Typography>
-                <Tooltip title={t<string>('contributors.verify_affiliation')}>
+                <Tooltip title={t('registration.contributors.verify_affiliation')}>
                   <IconButton
                     data-testid={dataTestId.registrationWizard.contributors.verifyAffiliationButton}
                     onClick={() =>
@@ -108,7 +108,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
               </>
             )
           )}
-          <Tooltip title={t<string>('contributors.remove_affiliation')}>
+          <Tooltip title={t('registration.contributors.remove_affiliation')}>
             <IconButton
               color="error"
               size="small"
@@ -128,7 +128,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
           gridArea: 'add-affiliation',
           justifyContent: 'flex-start',
         }}>
-        {t('contributors.add_affiliation')}
+        {t('registration.contributors.add_affiliation')}
       </Button>
 
       {/* Modal for adding affiliation */}
@@ -140,15 +140,15 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
         }}
         maxWidth="sm"
         fullWidth={true}
-        headingText={t('contributors.select_institution')}
+        headingText={t('registration.contributors.select_institution')}
         dataTestId="affiliation-modal">
         <>
           <Typography paragraph>
-            {t('common:name')}: <b>{authorName}</b>
+            {t('common.name')}: <b>{authorName}</b>
           </Typography>
           {affiliationToVerify && (
             <Typography>
-              {t('contributors.prefilled_affiliation')}: <b>{affiliationToVerify}</b>
+              {t('registration.contributors.prefilled_affiliation')}: <b>{affiliationToVerify}</b>
             </Typography>
           )}
           <SelectInstitutionForm onSubmit={addAffiliation} onClose={toggleAffiliationModal} />
@@ -158,7 +158,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
       {/* Confirm dialog for removing affiliation */}
       <ConfirmDialog
         open={!!affiliationToRemove}
-        title={t('contributors.confirm_remove_affiliation_title')}
+        title={t('registration.contributors.confirm_remove_affiliation_title')}
         onAccept={() => {
           if (affiliations) {
             setFieldValue(
@@ -170,7 +170,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
         }}
         onCancel={() => setAffiliationToRemove(null)}
         dataTestId="confirm-remove-affiliation-dialog">
-        <Typography>{t('contributors.confirm_remove_affiliation_text')}</Typography>
+        <Typography>{t('registration.contributors.confirm_remove_affiliation_text')}</Typography>
       </ConfirmDialog>
     </Box>
   );

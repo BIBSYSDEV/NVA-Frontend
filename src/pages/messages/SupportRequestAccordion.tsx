@@ -23,7 +23,7 @@ interface SupportRequestAccordionProps {
 }
 
 export const SupportRequestAccordion = ({ registration, messageType, messages }: SupportRequestAccordionProps) => {
-  const { t } = useTranslation('myPage');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const userId = useSelector((store: RootState) => store.user?.id);
 
@@ -32,9 +32,9 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
   const onClickSendMessage = async (message: string) => {
     const updateDoiRequestResponse = await addMessage(registration.identifier, message, messageType);
     if (isErrorStatus(updateDoiRequestResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:error.send_message'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
     } else if (isSuccessStatus(updateDoiRequestResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:success.send_message'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
       const newMessage: Message = {
         ...messagesCopy[0],
         date: new Date().toString(),
@@ -62,9 +62,9 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
             data-testid={`message-type-${registration.identifier}`}
             sx={{ gridArea: 'status', fontWeight: 'bold' }}>
             {messageType === MessageType.DoiRequest
-              ? t('messages.types.doi')
+              ? t('my_page.messages.types.doi')
               : messageType === MessageType.Support
-              ? t('messages.types.support')
+              ? t('my_page.messages.types.support')
               : null}
           </Typography>
           <Typography
@@ -90,7 +90,7 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
               endIcon={<ArrowForwardIcon />}
               component={RouterLink}
               to={getRegistrationLandingPagePath(registration.identifier)}>
-              {t('messages.go_to_registration')}
+              {t('my_page.messages.go_to_registration')}
             </Button>
           </Box>
         </AccordionDetails>

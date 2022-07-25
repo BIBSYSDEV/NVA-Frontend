@@ -11,7 +11,7 @@ import { RegistrationSearch } from './RegistrationSearch';
 import { SortSelector } from './SortSelector';
 
 const SearchPage = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
 
@@ -19,7 +19,7 @@ const SearchPage = () => {
 
   return (
     <SyledPageContent>
-      <PageHeader>{t('registrations')}</PageHeader>
+      <PageHeader>{t('common.registrations')}</PageHeader>
       <Formik
         initialValues={initialSearchParams}
         onSubmit={(values) => {
@@ -46,7 +46,7 @@ const SearchPage = () => {
               rowGap: '1rem',
             }}>
             <List sx={{ gridArea: 'filters' }}>
-              <Typography fontWeight={500}>{t('search:select_filters')}</Typography>
+              <Typography fontWeight={500}>{t('search.select_filters')}</Typography>
               <RegistrationTypeFilter />
             </List>
             <SearchBar />

@@ -11,7 +11,7 @@ interface SearchResultsProps {
 }
 
 export const SearchResults = ({ searchResult }: SearchResultsProps) => {
-  const { t } = useTranslation('search');
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (
@@ -26,7 +26,7 @@ export const SearchResults = ({ searchResult }: SearchResultsProps) => {
 
   return (
     <Box data-testid="search-results" sx={{ pb: '1rem' }}>
-      <Typography variant="subtitle1">{t('hits', { count: searchResult.size })}:</Typography>
+      <Typography variant="subtitle1">{t('search.hits', { count: searchResult.size })}:</Typography>
       <Divider />
       <RegistrationList registrations={searchResult.hits} />
     </Box>

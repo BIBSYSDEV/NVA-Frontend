@@ -10,16 +10,16 @@ interface UserInstituionProps {
 }
 
 export const UserAffiliations = ({ user }: UserInstituionProps) => {
-  const { t } = useTranslation('myPage');
+  const { t } = useTranslation();
   const [person, isLoadingPerson] = useFetch<CristinPerson>({
     url: user.cristinId ?? '',
-    errorMessage: t('feedback:error.get_person'),
+    errorMessage: t('feedback.error.get_person'),
   });
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
 
   return (
     <div>
-      <Typography variant="h2">{t('my_profile.heading.affiliations')}</Typography>
+      <Typography variant="h2">{t('my_page.my_profile.heading.affiliations')}</Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', my: '1rem' }}>
         {isLoadingPerson ? (
           <CircularProgress />

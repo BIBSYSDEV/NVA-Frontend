@@ -54,7 +54,7 @@ export const OutputRow = ({
   maxIndex,
   showTypeColumn = false,
 }: OutputRowProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const [openEditItem, setOpenEditItem] = useState(false);
   const [openRemoveItem, setOpenRemoveItem] = useState(false);
 
@@ -74,13 +74,13 @@ export const OutputRow = ({
     case 'AudioVisualPublication':
     case 'Concert':
     case 'OtherPerformance':
-      removeItemTitle = t('resource_type.artistic.remove_announcement');
-      removeItemDescription = t('resource_type.artistic.remove_announcement_description', { name: title });
+      removeItemTitle = t('registration.resource_type.artistic.remove_announcement');
+      removeItemDescription = t('registration.resource_type.artistic.remove_announcement_description', { name: title });
       break;
     case 'Venue':
     case 'PerformingArtsVenue':
-      removeItemTitle = t('resource_type.artistic.remove_venue_title');
-      removeItemDescription = t('resource_type.artistic.remove_venue_text', { name: title });
+      removeItemTitle = t('registration.resource_type.artistic.remove_venue_title');
+      removeItemDescription = t('registration.resource_type.artistic.remove_venue_text', { name: title });
       break;
   }
 
@@ -88,7 +88,7 @@ export const OutputRow = ({
     <TableRow>
       {showTypeColumn && (
         <TableCell>
-          <Typography>{t(`resource_type.artistic.output_type.${item.type}`)}</Typography>
+          <Typography>{t(`registration.resource_type.artistic.output_type.${item.type}`)}</Typography>
         </TableCell>
       )}
       <TableCell>
@@ -99,14 +99,14 @@ export const OutputRow = ({
           <Box
             sx={{ display: 'grid', gridTemplateAreas: '"down up"', gridTemplateColumns: '1fr 1fr', maxWidth: '8rem' }}>
             {index !== maxIndex && (
-              <Tooltip title={t<string>('common:move_down')} sx={{ gridArea: 'down' }}>
+              <Tooltip title={t<string>('common.move_down')} sx={{ gridArea: 'down' }}>
                 <Button onClick={() => moveItem(index + 1)}>
                   <ArrowDownwardIcon />
                 </Button>
               </Tooltip>
             )}
             {index !== 0 && (
-              <Tooltip title={t<string>('common:move_up')} sx={{ gridArea: 'up' }}>
+              <Tooltip title={t<string>('common.move_up')} sx={{ gridArea: 'up' }}>
                 <Button onClick={() => moveItem(index - 1)}>
                   <ArrowUpwardIcon />
                 </Button>
@@ -117,10 +117,10 @@ export const OutputRow = ({
       </TableCell>
       <TableCell>
         <Button onClick={() => setOpenEditItem(true)} variant="outlined" sx={{ mr: '1rem' }} startIcon={<EditIcon />}>
-          {t('common:show')}/{t('common:edit')}
+          {t('common.show')}/{t('common.edit')}
         </Button>
         <Button onClick={() => setOpenRemoveItem(true)} variant="outlined" color="error" startIcon={<DeleteIcon />}>
-          {t('common:remove')}
+          {t('common.remove')}
         </Button>
       </TableCell>
       {item.type === 'Broadcast' ? (

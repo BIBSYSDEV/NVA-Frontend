@@ -16,7 +16,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { StartRegistrationAccordionProps } from './LinkRegistration';
 
 export const StartEmptyRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ export const StartEmptyRegistration = ({ expanded, onChange }: StartRegistration
     setIsLoading(true);
     const createRegistrationResponse = await createRegistration();
     if (isErrorStatus(createRegistrationResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:error.create_registration'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.create_registration'), variant: 'error' }));
       setIsLoading(false);
     } else if (isSuccessStatus(createRegistrationResponse.status)) {
       history.push(getRegistrationPath(createRegistrationResponse.data.identifier), { highestValidatedTab: -1 });
@@ -39,8 +39,8 @@ export const StartEmptyRegistration = ({ expanded, onChange }: StartRegistration
         expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <InsertDriveFileIcon />
         <div>
-          <Typography variant="h2">{t('registration.start_with_empty_registration_title')}</Typography>
-          <Typography>{t('registration.start_with_empty_registration_description')}</Typography>
+          <Typography variant="h2">{t('registration.registration.start_with_empty_registration_title')}</Typography>
+          <Typography>{t('registration.registration.start_with_empty_registration_description')}</Typography>
         </div>
       </AccordionSummary>
 
@@ -52,7 +52,7 @@ export const StartEmptyRegistration = ({ expanded, onChange }: StartRegistration
           variant="contained"
           loading={isLoading}
           onClick={createEmptyRegistration}>
-          {t('registration.start_registration')}
+          {t('registration.registration.start_registration')}
         </LoadingButton>
       </AccordionActions>
     </RegistrationAccordion>

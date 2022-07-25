@@ -27,19 +27,19 @@ const emptyMentionInPublication: MentionInPublication = {
 
 const validationSchema = Yup.object<YupShape<MentionInPublication>>({
   title: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
-      field: i18n.t('registration:resource_type.artistic.mention_title'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.mention_title'),
     })
   ),
   issue: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
-      field: i18n.t('registration:resource_type.issue'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.issue'),
     })
   ),
   date: Yup.object().shape({
     value: Yup.date().required(
-      i18n.t('feedback:validation.is_required', {
-        field: i18n.t('common:date'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('common.date'),
       })
     ),
   }),
@@ -51,14 +51,14 @@ export const PublicationMentionModal = ({
   open,
   closeModal,
 }: PublicationMentionModalProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   return (
     <Dialog open={open} onClose={closeModal} fullWidth>
       <DialogTitle>
         {mentionInPublication
-          ? t('resource_type.artistic.edit_publication_mention')
-          : t('resource_type.artistic.add_publication_mention')}
+          ? t('registration.resource_type.artistic.edit_publication_mention')
+          : t('registration.resource_type.artistic.add_publication_mention')}
       </DialogTitle>
       <Formik
         initialValues={mentionInPublication ?? emptyMentionInPublication}
@@ -75,7 +75,7 @@ export const PublicationMentionModal = ({
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('resource_type.artistic.mention_title')}
+                  label={t('registration.resource_type.artistic.mention_title')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -91,7 +91,7 @@ export const PublicationMentionModal = ({
                     {...field}
                     variant="filled"
                     fullWidth
-                    label={t('resource_type.issue')}
+                    label={t('registration.resource_type.issue')}
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
@@ -107,7 +107,7 @@ export const PublicationMentionModal = ({
                   meta: { error, touched },
                 }: FieldProps<string>) => (
                   <DatePicker
-                    label={t('common:date')}
+                    label={t('common.date')}
                     value={field.value ?? null}
                     onChange={(date: Date | null, keyboardInput) => {
                       !touched && setFieldTouched(field.name, true, false);
@@ -141,7 +141,7 @@ export const PublicationMentionModal = ({
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('resource_type.artistic.mention_other')}
+                  label={t('registration.resource_type.artistic.mention_other')}
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
                   data-testid={dataTestId.registrationWizard.resourceType.publicationMentionOther}
@@ -154,13 +154,13 @@ export const PublicationMentionModal = ({
               variant="outlined"
               onClick={closeModal}
               data-testid={dataTestId.registrationWizard.resourceType.publicationMentionCancelButton}>
-              {t('common:cancel')}
+              {t('common.cancel')}
             </Button>
             <Button
               variant="contained"
               type="submit"
               data-testid={dataTestId.registrationWizard.resourceType.publicationMentionSaveButton}>
-              {mentionInPublication ? t('common:save') : t('common:add')}
+              {mentionInPublication ? t('common.save') : t('common.add')}
             </Button>
           </DialogActions>
         </Form>

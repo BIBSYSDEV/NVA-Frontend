@@ -21,7 +21,7 @@ import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 const journalFieldTestId = dataTestId.registrationWizard.resourceType.journalField;
 
 export const JournalField = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const { setFieldValue, setFieldTouched, values } = useFormikContext<JournalRegistration>();
   const { reference, date } = values.entityDescription as JournalEntityDescription;
   const year = date?.year ?? '';
@@ -37,7 +37,7 @@ export const JournalField = () => {
             debouncedQuery
           )}`
         : '',
-    errorMessage: t('feedback:error.get_journals'),
+    errorMessage: t('feedback.error.get_journals'),
   });
 
   // Fetch Journals with matching ISSN
@@ -49,7 +49,7 @@ export const JournalField = () => {
             reference.publicationContext.printIssn ?? reference.publicationContext.onlineIssn
           }`
         : '',
-    errorMessage: t('feedback:error.get_journals'),
+    errorMessage: t('feedback.error.get_journals'),
   });
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export const JournalField = () => {
   // Fetch selected journal
   const [journal, isLoadingJournal] = useFetchResource<Journal>(
     reference?.publicationContext.id ?? '',
-    t('feedback:error.get_journal')
+    t('feedback.error.get_journal')
   );
 
   return (
@@ -115,7 +115,7 @@ export const JournalField = () => {
                 </Typography>
                 {option.level && (
                   <Typography variant="body2" color="textSecondary">
-                    {t('resource_type.level')}: {option.level}
+                    {t('registration.resource_type.level')}: {option.level}
                   </Typography>
                 )}
               </Box>
@@ -132,7 +132,7 @@ export const JournalField = () => {
                       {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {t('resource_type.level')}: {option.level}
+                      {t('registration.resource_type.level')}: {option.level}
                     </Typography>
                   </>
                 }
@@ -143,9 +143,9 @@ export const JournalField = () => {
             <AutocompleteTextField
               {...params}
               required
-              label={t('resource_type.journal')}
+              label={t('registration.resource_type.journal')}
               isLoading={isLoadingJournalOptions || isLoadingJournal}
-              placeholder={!reference?.publicationContext.id ? t('resource_type.search_for_journal') : ''}
+              placeholder={!reference?.publicationContext.id ? t('registration.resource_type.search_for_journal') : ''}
               showSearchIcon={!reference?.publicationContext.id}
               errorMessage={meta.touched && !!meta.error ? meta.error : ''}
             />

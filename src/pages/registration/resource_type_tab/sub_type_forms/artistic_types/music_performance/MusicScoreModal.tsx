@@ -38,26 +38,26 @@ const emptyMusicScore: MusicScore = {
 
 const validationSchema = Yup.object<YupShape<MusicScore>>({
   ensemble: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
-      field: i18n.t('registration:resource_type.artistic.music_score_ensemble'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.music_score_ensemble'),
     })
   ),
   movements: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
-      field: i18n.t('registration:resource_type.artistic.music_score_movements'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.music_score_movements'),
     })
   ),
   extent: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
-      field: i18n.t('registration:resource_type.artistic.extent'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.extent'),
     })
   ),
   publisher: Yup.object().shape({
     name: Yup.string()
       .nullable()
       .required(
-        i18n.t('feedback:validation.is_required', {
-          field: i18n.t('common:publisher'),
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.publisher'),
         })
       ),
   }),
@@ -66,13 +66,13 @@ const validationSchema = Yup.object<YupShape<MusicScore>>({
       .nullable()
       .matches(
         /^9790\d{9}$/,
-        i18n.t('feedback:validation.has_invalid_format', {
-          field: i18n.t('registration:resource_type.artistic.music_score_ismn'),
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('registration.resource_type.artistic.music_score_ismn'),
         })
       )
       .required(
-        i18n.t('feedback:validation.is_required', {
-          field: i18n.t('registration:resource_type.artistic.music_score_ismn'),
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('registration.resource_type.artistic.music_score_ismn'),
         })
       ),
   }),
@@ -81,25 +81,27 @@ const validationSchema = Yup.object<YupShape<MusicScore>>({
       .nullable()
       .matches(
         /^[A-Z]{2}[A-Z\d]{3}\d{7}$/,
-        i18n.t('feedback:validation.has_invalid_format', {
-          field: i18n.t('registration:resource_type.artistic.music_score_isrc'),
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('registration.resource_type.artistic.music_score_isrc'),
         })
       )
       .required(
-        i18n.t('feedback:validation.is_required', {
-          field: i18n.t('registration:resource_type.artistic.music_score_isrc'),
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('registration.resource_type.artistic.music_score_isrc'),
         })
       ),
   }),
 });
 
 export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: MusicScoreModalProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   return (
     <Dialog open={open} onClose={closeModal} maxWidth="sm" fullWidth>
       <DialogTitle>
-        {musicScore ? t('resource_type.artistic.edit_music_score') : t('resource_type.artistic.add_music_score')}
+        {musicScore
+          ? t('registration.resource_type.artistic.edit_music_score')
+          : t('registration.resource_type.artistic.add_music_score')}
       </DialogTitle>
       <Formik
         initialValues={musicScore ?? emptyMusicScore}
@@ -118,7 +120,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                   fullWidth
                   multiline
                   rows={3}
-                  label={t('resource_type.artistic.music_score_ensemble')}
+                  label={t('registration.resource_type.artistic.music_score_ensemble')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -133,7 +135,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                   fullWidth
                   multiline
                   rows={3}
-                  label={t('resource_type.artistic.music_score_movements')}
+                  label={t('registration.resource_type.artistic.music_score_movements')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -146,7 +148,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('resource_type.artistic.extent')}
+                  label={t('registration.resource_type.artistic.extent')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -159,7 +161,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('common:publisher')}
+                  label={t('common.publisher')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -172,7 +174,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('resource_type.artistic.music_score_ismn')}
+                  label={t('registration.resource_type.artistic.music_score_ismn')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -185,7 +187,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('resource_type.artistic.music_score_isrc')}
+                  label={t('registration.resource_type.artistic.music_score_isrc')}
                   required
                   InputProps={{
                     inputComponent: MaskIsrcInput as any,
@@ -198,10 +200,10 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
           </DialogContent>
           <DialogActions>
             <Button variant="outlined" onClick={closeModal}>
-              {t('common:cancel')}
+              {t('common.cancel')}
             </Button>
             <Button variant="contained" type="submit" startIcon={<SaveIcon />}>
-              {musicScore ? t('common:update') : t('common:add')}
+              {musicScore ? t('common.update') : t('common.add')}
             </Button>
           </DialogActions>
         </Form>

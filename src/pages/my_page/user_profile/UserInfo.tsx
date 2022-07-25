@@ -8,17 +8,17 @@ interface UserInfoProps {
 }
 
 export const UserInfo = ({ user }: UserInfoProps) => {
-  const { t } = useTranslation('myPage');
+  const { t } = useTranslation();
 
   return (
     <div>
       <Typography variant="h2" paragraph>
-        {t('my_profile.heading.user_info')}
+        {t('my_page.my_profile.heading.user_info')}
       </Typography>
-      <LabelTextLine dataTestId="user-name" label={t('common:name')}>
+      <LabelTextLine dataTestId="user-name" label={t('common.name')}>
         {user.name}
       </LabelTextLine>
-      <LabelTextLine dataTestId="user-id" label={t('my_profile.id')}>
+      <LabelTextLine dataTestId="user-id" label={t('my_page.my_profile.id')}>
         {user.id}
       </LabelTextLine>
     </div>

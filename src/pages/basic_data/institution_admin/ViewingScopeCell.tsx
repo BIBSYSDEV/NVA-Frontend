@@ -20,7 +20,7 @@ interface ViewingScopeCellProps {
 
 export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
   const dispatch = useDispatch();
-  const { t } = useTranslation('admin');
+  const { t } = useTranslation();
   const authenticatedUser = useSelector((store: RootState) => store.user);
   const [isUpdating, setIsUpdating] = useState(false);
   const [userCopy, setUserCopy] = useState(user); // Needed if empty scope before adding a new
@@ -45,19 +45,19 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
 
     if (isSuccessStatus(updateUserResponse.status)) {
       setUserCopy(newUser);
-      dispatch(setNotification({ message: t('feedback:success.update_institution_user'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' }));
       if (user.username === authenticatedUser?.id) {
         dispatch(setPartialUser({ viewingScope: [newScopeId] }));
       }
     } else if (isErrorStatus(updateUserResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:error.update_institution_user'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' }));
     }
     setIsUpdating(false);
   };
 
   return (
     <Autocomplete
-      aria-label={t('users.area_of_responsibility')}
+      aria-label={t('basic_data.users.area_of_responsibility')}
       data-testid={dataTestId.myInstitutionUsersPage.areaOfResponsibilityField}
       options={options}
       value={selectedOption}
@@ -74,7 +74,7 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
           {...params}
           disabled={isUpdating}
           fullWidth
-          placeholder={t('users.area_of_responsibility_placeholder')}
+          placeholder={t('basic_data.users.area_of_responsibility_placeholder')}
         />
       )}
     />

@@ -23,7 +23,7 @@ interface UserOrcidProps {
 }
 
 export const UserOrcid = ({ user }: UserOrcidProps) => {
-  const { t } = useTranslation('myPage');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
@@ -33,7 +33,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   const userCristinId = user.cristinId ?? '';
   const [cristinPerson, isLoadingCristinPerson, refetchCristinPerson] = useFetch<CristinPerson>({
     url: userCristinId,
-    errorMessage: t('feedback:error.get_person'),
+    errorMessage: t('feedback.error.get_person'),
   });
   const currentOrcid = getValueByKey('ORCID', cristinPerson?.identifiers);
   const orcidUrl = `${ORCID_BASE_URL}/${currentOrcid}`;
@@ -48,7 +48,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       const orcid = orcidInfoResponse.data.sub;
 
       if (!orcid) {
-        dispatch(setNotification({ message: t('feedback:error.get_orcid'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.get_orcid'), variant: 'error' }));
       } else if (userCristinId) {
         const addOrcidResponse = await authenticatedApiRequest({
           url: userCristinId,
@@ -56,10 +56,10 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
           data: { orcid },
         });
         if (isSuccessStatus(addOrcidResponse.status)) {
-          dispatch(setNotification({ message: t('feedback:success.update_orcid'), variant: 'success' }));
+          dispatch(setNotification({ message: t('feedback.success.update_orcid'), variant: 'success' }));
           refetchCristinPerson();
         } else if (isErrorStatus(addOrcidResponse.status)) {
-          dispatch(setNotification({ message: t('feedback:error.update_orcid'), variant: 'success' }));
+          dispatch(setNotification({ message: t('feedback.error.update_orcid'), variant: 'success' }));
         }
       }
       history.push(UrlPathTemplate.MyPageMyProfile);
@@ -75,7 +75,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   useEffect(() => {
     const orcidError = new URLSearchParams(history.location.search).get('error');
     if (orcidError) {
-      dispatch(setNotification({ message: t(`feedback:error.orcid.${orcidError}`), variant: 'error' }));
+      dispatch(setNotification({ message: t(`feedback.error.orcid.${orcidError}`), variant: 'error' }));
     }
   }, [history.location.search, dispatch, t]);
 
@@ -88,10 +88,10 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         data: { orcid: null },
       });
       if (isSuccessStatus(removeOrcidResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:success.update_orcid'), variant: 'success' }));
+        dispatch(setNotification({ message: t('feedback.success.update_orcid'), variant: 'success' }));
         refetchCristinPerson();
       } else if (isErrorStatus(removeOrcidResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:error.update_orcid'), variant: 'success' }));
+        dispatch(setNotification({ message: t('feedback.error.update_orcid'), variant: 'success' }));
       }
     }
     toggleConfirmDialog();
@@ -100,7 +100,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   return (
     <div>
       <Typography variant="h2" paragraph>
-        {t('my_profile.orcid.orcid')}
+        {t('my_page.my_profile.orcid.orcid')}
       </Typography>
       {isLoadingCristinPerson ? (
         <CircularProgress />
@@ -134,18 +134,18 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
             onClick={toggleConfirmDialog}
             startIcon={<DeleteIcon />}
             variant="outlined">
-            {t('common:remove')}
+            {t('common.remove')}
           </Button>
 
           <ConfirmDialog
             open={openConfirmDialog}
-            title={t('my_profile.orcid.remove_connection')}
+            title={t('my_page.my_profile.orcid.remove_connection')}
             onAccept={removeOrcid}
             onCancel={toggleConfirmDialog}
             isLoading={isRemovingOrcid}
             dataTestId="confirm-remove-orcid-connection-dialog">
             <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-              {t('my_profile.orcid.remove_connection_info')}{' '}
+              {t('my_page.my_profile.orcid.remove_connection_info')}{' '}
               <MuiLink href={orcidUrl} target="_blank" rel="noopener noreferrer">
                 {orcidUrl}
               </MuiLink>
@@ -156,11 +156,11 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         <>
           <Typography paragraph>{t('my_profile.orcid.orcid_description')}</Typography>
           <Button data-testid="button-create-connect-orcid" onClick={toggleModal} variant="contained" size="small">
-            {t('my_profile.orcid.connect_orcid')}
+            {t('my_page.my_profile.orcid.connect_orcid')}
           </Button>
           <Modal
             headingIcon={{ src: orcidIcon, alt: 'ORCID iD icon' }}
-            headingText={t('orcid.dialog.heading')}
+            headingText={t('my_page.orcid.dialog.heading')}
             onClose={toggleModal}
             open={openModal}
             dataTestId="orcid-modal">

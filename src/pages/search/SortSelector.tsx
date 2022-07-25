@@ -13,14 +13,14 @@ enum SortOption {
 }
 
 const sortOptions = [
-  { value: SortOption.PublishedDateDesc, i18nKey: 'sort_by_published_date_desc' },
-  { value: SortOption.PublishedDateAsc, i18nKey: 'sort_by_published_date_asc' },
-  { value: SortOption.ModifiedDateDesc, i18nKey: 'sort_by_modified_date' },
+  { value: SortOption.PublishedDateDesc, i18nKey: 'search.sort_by_published_date_desc' },
+  { value: SortOption.PublishedDateAsc, i18nKey: 'search.sort_by_published_date_asc' },
+  { value: SortOption.ModifiedDateDesc, i18nKey: 'search.sort_by_modified_date' },
 ];
 
 export const SortSelector = () => {
   const history = useHistory();
-  const { t } = useTranslation('search');
+  const { t } = useTranslation();
   const params = new URLSearchParams(history.location.search);
 
   const selectedSortingValue =
@@ -56,7 +56,7 @@ export const SortSelector = () => {
       data-testid={dataTestId.startPage.orderBySelect}
       select
       value={selectedSortingValue}
-      label={t('sort_by')}
+      label={t('search.sort_by')}
       variant="outlined"
       fullWidth
       onChange={updateSortQuery}>

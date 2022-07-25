@@ -29,7 +29,7 @@ const lineSx: SxProps = {
 };
 
 const ResearchProfile = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
   const history = useHistory();
 
   const currentCristinId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
@@ -40,7 +40,7 @@ const ResearchProfile = () => {
 
   const [person, isLoadingPerson] = useFetch<CristinPerson>({
     url: personId,
-    errorMessage: t('feedback:error.get_person'),
+    errorMessage: t('feedback.error.get_person'),
   });
 
   const [registrations, isLoadingRegistrations] = useSearchRegistrations({
@@ -65,7 +65,7 @@ const ResearchProfile = () => {
       ) : (
         person && (
           <BackgroundDiv sx={isPublicPage ? undefined : { padding: 0 }}>
-            <Typography variant="h2">{t('common:employments')}</Typography>
+            <Typography variant="h2">{t('common.employments')}</Typography>
             {activeAffiliations.length > 0 && (
               <Box sx={lineSx}>
                 <WorkIcon />
@@ -91,12 +91,12 @@ const ResearchProfile = () => {
             {registrations && (
               <Box sx={{ mt: '2rem' }}>
                 <Typography variant="h2" gutterBottom>
-                  {t('registrations')}
+                  {t('common.registrations')}
                 </Typography>
                 {registrations.size > 0 ? (
                   <SearchResults searchResult={registrations} />
                 ) : (
-                  <Typography>{t('no_hits')}</Typography>
+                  <Typography>{t('common.no_hits')}</Typography>
                 )}
               </Box>
             )}

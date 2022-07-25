@@ -74,7 +74,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               onClick={closeMenu}
               component={Link}
               to={UrlPathTemplate.Worklist}>
-              <Typography>{t('workLists:worklist')}</Typography>
+              <Typography>{t('worklist.worklist')}</Typography>
             </MenuItem>
           ),
           user?.isCreator && [
@@ -84,7 +84,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               onClick={closeMenu}
               component={Link}
               to={UrlPathTemplate.NewRegistration}>
-              <Typography>{t('registration:new_registration')}</Typography>
+              <Typography>{t('registration.new_registration')}</Typography>
             </MenuItem>,
             <MenuItem
               key={dataTestId.header.myPageLink}
@@ -92,7 +92,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               onClick={closeMenu}
               component={Link}
               to={UrlPathTemplate.MyPage}>
-              <Typography>{t('myPage:my_page')}</Typography>
+              <Typography>{t('my_page.my_page')}</Typography>
             </MenuItem>,
           ],
         ]}
@@ -103,11 +103,11 @@ export const Menu = ({ handleLogout }: MenuProps) => {
             onClick={closeMenu}
             component={Link}
             to={UrlPathTemplate.BasicData}>
-            <Typography>{t('basicData:basic_data')}</Typography>
+            <Typography>{t('basic_data.basic_data')}</Typography>
           </MenuItem>
         )}
         <MenuItem data-testid={dataTestId.header.logOutLink} onClick={handleLogout}>
-          {t('authorization:logout')}
+          {t('authorization.logout')}
         </MenuItem>
       </MuiMenu>
     </Box>

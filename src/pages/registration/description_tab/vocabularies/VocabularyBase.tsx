@@ -7,13 +7,13 @@ import { useFetch } from '../../../../utils/hooks/useFetch';
 import { VocabularyFields } from './VocabularyFields';
 
 export const VocabularyBase = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   const user = useSelector((store: RootState) => store.user);
 
   const [vocabularyList, isLoadingVocabularyList] = useFetch<VocabularyList>({
     url: user?.customerId ? `${user.customerId}/vocabularies` : '',
-    errorMessage: t('feedback:error.get_vocabularies'),
+    errorMessage: t('feedback.error.get_vocabularies'),
     withAuthentication: true,
   });
   const vocabularies = vocabularyList?.vocabularies ?? [];

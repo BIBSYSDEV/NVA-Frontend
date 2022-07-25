@@ -24,7 +24,7 @@ import {
 } from '../../components/PageWithSideMenu';
 
 const MyPagePage = () => {
-  const { t } = useTranslation('myPage');
+  const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
@@ -42,7 +42,7 @@ const MyPagePage = () => {
   return (
     <StyledPageWithSideMenu>
       <SideMenu>
-        <SideMenuHeader icon={FavoriteBorderIcon} text={t('my_page')} />
+        <SideMenuHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} />
 
         <NavigationList>
           {user?.isCreator && [
@@ -51,19 +51,19 @@ const MyPagePage = () => {
               data-testid={dataTestId.myPage.messagesLink}
               isSelected={currentPath === UrlPathTemplate.MyPageMessages}
               to={UrlPathTemplate.MyPageMessages}>
-              {t('messages.messages')}
+              {t('my_page.messages.messages')}
             </LinkButton>,
             <LinkButtonRow key={dataTestId.myPage.myRegistrationsLink}>
               <LinkButton
                 data-testid={dataTestId.myPage.myRegistrationsLink}
                 isSelected={currentPath === UrlPathTemplate.MyPageRegistrations}
                 to={UrlPathTemplate.MyPageRegistrations}>
-                {t('common:registrations')}
+                {t('common.registrations')}
               </LinkButton>
               <LinkIconButton
                 data-testid={dataTestId.myPage.newRegistrationLink}
                 to={UrlPathTemplate.NewRegistration}
-                title={t('registration:new_registration')}>
+                title={t('registration.new_registration')}>
                 <AddIcon />
               </LinkIconButton>
             </LinkButtonRow>,
@@ -72,13 +72,13 @@ const MyPagePage = () => {
             data-testid={dataTestId.myPage.researchProfileLink}
             isSelected={currentPath === UrlPathTemplate.MyPageResearchProfile}
             to={UrlPathTemplate.MyPageResearchProfile}>
-            {t('research_profile')}
+            {t('my_page.research_profile')}
           </LinkButton>
           <LinkButton
             data-testid={dataTestId.myPage.myProfileLink}
             isSelected={currentPath === UrlPathTemplate.MyPageMyProfile}
             to={UrlPathTemplate.MyPageMyProfile}>
-            {t('my_profile.user_profile')}
+            {t('my_page.my_profile.user_profile')}
           </LinkButton>
         </NavigationList>
       </SideMenu>

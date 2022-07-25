@@ -9,7 +9,7 @@ import { AddEmployeeData, emptyUser } from './AddEmployeePage';
 import { SearchForCristinPerson } from '../SearchForCristinPerson';
 
 export const FindPersonPanel = () => {
-  const { t } = useTranslation('basicData');
+  const { t } = useTranslation();
   const { values, setFieldValue, isSubmitting } = useFormikContext<AddEmployeeData>();
   const [showCreatePerson, setShowCreatePerson] = useState(false);
 
@@ -31,18 +31,18 @@ export const FindPersonPanel = () => {
       />
       {!values.user.id && (
         <>
-          <Typography>{t('add_employee.no_matching_persons_found')}</Typography>
+          <Typography>{t('basic_data.add_employee.no_matching_persons_found')}</Typography>
           {!showCreatePerson ? (
             <Button
               variant="outlined"
               startIcon={<PersonAddIcon />}
               sx={{ width: 'fit-content' }}
               onClick={() => setShowCreatePerson(true)}>
-              {t('add_employee.create_person')}
+              {t('basic_data.add_employee.create_person')}
             </Button>
           ) : (
             <>
-              <Typography variant="h3">{t('add_employee.create_person')}</Typography>
+              <Typography variant="h3">{t('basic_data.add_employee.create_person')}</Typography>
               <Field name="user.firstName">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
@@ -51,7 +51,7 @@ export const FindPersonPanel = () => {
                     required
                     fullWidth
                     variant="filled"
-                    label={t('common:first_name')}
+                    label={t('common.first_name')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                   />
@@ -65,7 +65,7 @@ export const FindPersonPanel = () => {
                     required
                     fullWidth
                     variant="filled"
-                    label={t('common:last_name')}
+                    label={t('common.last_name')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                   />
@@ -78,7 +78,7 @@ export const FindPersonPanel = () => {
                     required
                     fullWidth
                     variant="filled"
-                    label={t('national_id')}
+                    label={t('basic_data.national_id')}
                     value={values.user.nationalId}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}

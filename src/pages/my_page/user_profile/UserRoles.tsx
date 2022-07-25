@@ -13,13 +13,13 @@ interface UserRolesProps {
 }
 
 export const UserRoles = ({ user }: UserRolesProps) => {
-  const { t } = useTranslation('myPage');
+  const { t } = useTranslation();
   const { isAppAdmin, isInstitutionAdmin, isEditor, isCurator, isCreator } = user;
 
   return (
     <div>
       <Typography variant="h2" paragraph>
-        {t('my_profile.heading.roles')}
+        {t('my_page.my_profile.heading.roles')}
       </Typography>
       {user.customerId ? (
         !isAppAdmin &&
@@ -28,52 +28,52 @@ export const UserRoles = ({ user }: UserRolesProps) => {
         !isCurator &&
         !isCreator && (
           <Typography data-testid="no-roles-text" sx={{ color: 'error.main' }}>
-            {t('roles.no_roles')}
+            {t('my_page.roles.no_roles')}
           </Typography>
         )
       ) : (
         <Typography data-testid="not-customer-text" sx={{ color: 'error.main' }}>
-          {t('roles.not_customer')}
+          {t('my_page.roles.not_customer')}
         </Typography>
       )}
       {isAppAdmin && (
         <RoleItem
           dataTestId="user-role-app-admin"
           icon={<SettingsApplicationsIcon />}
-          label={t('roles.app_admin')}
-          text={t('roles.app_admin_description')}
+          label={t('my_page.roles.app_admin')}
+          text={t('my_page.roles.app_admin_description')}
         />
       )}
       {isInstitutionAdmin && (
         <RoleItem
           dataTestId="user-role-institution-admin"
           icon={<PeopleIcon />}
-          label={t('roles.institution_admin')}
-          text={t('roles.institution_admin_description')}
+          label={t('my_page.roles.institution_admin')}
+          text={t('my_page.roles.institution_admin_description')}
         />
       )}
       {isEditor && (
         <RoleItem
           dataTestId="user-role-editor"
           icon={<FindInPageIcon />}
-          label={t('roles.editor')}
-          text={t('roles.editor_description')}
+          label={t('my_page.roles.editor')}
+          text={t('my_page.roles.editor_description')}
         />
       )}
       {isCurator && (
         <RoleItem
           dataTestId="user-role-curator"
           icon={<AllInboxIcon />}
-          label={t('roles.curator')}
-          text={t('roles.curator_description')}
+          label={t('my_page.roles.curator')}
+          text={t('my_page.roles.curator_description')}
         />
       )}
       {isCreator && (
         <RoleItem
           dataTestId="user-role-creator"
           icon={<CreateIcon />}
-          label={t('roles.creator')}
-          text={t('roles.creator_description')}
+          label={t('my_page.roles.creator')}
+          text={t('my_page.roles.creator_description')}
         />
       )}
     </div>

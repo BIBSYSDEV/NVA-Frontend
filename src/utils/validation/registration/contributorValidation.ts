@@ -5,9 +5,9 @@ import i18n from '../../../translations/i18n';
 import { isArtistic, isDegree, isMediaContribution, isPresentation } from '../../registration-helpers';
 
 const contributorErrorMessage = {
-  authorRequired: i18n.t('feedback:validation.author_required'),
-  contributorRequired: i18n.t('feedback:validation.contributor_required'),
-  editorRequired: i18n.t('feedback:validation.editor_required'),
+  authorRequired: i18n.t('feedback.validation.author_required'),
+  contributorRequired: i18n.t('feedback.validation.contributor_required'),
+  editorRequired: i18n.t('feedback.validation.editor_required'),
 };
 
 const contributorValidationSchema = Yup.object().shape({

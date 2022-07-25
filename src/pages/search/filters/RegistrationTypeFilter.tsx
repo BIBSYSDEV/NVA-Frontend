@@ -28,7 +28,7 @@ const StyledIndentedListItem = muiStyled(ListItemButton, { shouldForwardProp: (p
 );
 
 export const RegistrationTypeFilter = () => {
-  const { t } = useTranslation('publicationTypes');
+  const { t } = useTranslation();
   const { setFieldValue, submitForm, values } = useFormikContext<SearchConfig>();
 
   const properties = values.properties ?? [];
@@ -53,47 +53,49 @@ export const RegistrationTypeFilter = () => {
   };
 
   return (
-    <BaseFilterItem title={t('search:registration_type')}>
-      <ListSubheader disableSticky>{t(PublicationType.PublicationInJournal)}</ListSubheader>
+    <BaseFilterItem title={t('search.registration_type')}>
+      <ListSubheader disableSticky>
+        {t(`registration.publication_types.${PublicationType.PublicationInJournal}`)}
+      </ListSubheader>
       {Object.values(JournalType).map((type) => (
         <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-          {t(type)}
+          {t(`registration.publication_types.${type}`)}
         </StyledIndentedListItem>
       ))}
-      <ListSubheader disableSticky>{t(PublicationType.Book)}</ListSubheader>
+      <ListSubheader disableSticky>{t(`registration.publication_types.${PublicationType.Book}`)}</ListSubheader>
       {Object.values(BookType).map((type) => (
         <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-          {t(type)}
+          {t(`registration.publication_types.${type}`)}
         </StyledIndentedListItem>
       ))}
-      <ListSubheader disableSticky>{t(PublicationType.Report)}</ListSubheader>
+      <ListSubheader disableSticky>{t(`registration.publication_types.${PublicationType.Report}`)}</ListSubheader>
       {Object.values(ReportType).map((type) => (
         <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-          {t(type)}
+          {t(`registration.publication_types.${type}`)}
         </StyledIndentedListItem>
       ))}
-      <ListSubheader disableSticky>{t(PublicationType.Degree)}</ListSubheader>
+      <ListSubheader disableSticky>{t(`registration.publication_types.${PublicationType.Degree}`)}</ListSubheader>
       {Object.values(DegreeType).map((type) => (
         <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-          {t(type)}
+          {t(`registration.publication_types.${type}`)}
         </StyledIndentedListItem>
       ))}
-      <ListSubheader disableSticky>{t(PublicationType.Chapter)}</ListSubheader>
+      <ListSubheader disableSticky>{t(`registration.publication_types.${PublicationType.Chapter}`)}</ListSubheader>
       {Object.values(ChapterType).map((type) => (
         <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-          {t(type)}
+          {t(`registration.publication_types.${type}`)}
         </StyledIndentedListItem>
       ))}
-      <ListSubheader disableSticky>{t(PublicationType.Presentation)}</ListSubheader>
+      <ListSubheader disableSticky>{t(`registration.publication_types.${PublicationType.Presentation}`)}</ListSubheader>
       {Object.values(PresentationType).map((type) => (
         <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-          {t(type)}
+          {t(`registration.publication_types.${type}`)}
         </StyledIndentedListItem>
       ))}
-      <ListSubheader disableSticky>{t(PublicationType.Artistic)}</ListSubheader>
+      <ListSubheader disableSticky>{t(`registration.publication_types.${PublicationType.Artistic}`)}</ListSubheader>
       {Object.values(ArtisticType).map((type) => (
         <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-          {t(type)}
+          {t(`registration.publication_types.${type}`)}
         </StyledIndentedListItem>
       ))}
     </BaseFilterItem>

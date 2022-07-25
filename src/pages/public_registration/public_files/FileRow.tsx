@@ -29,7 +29,7 @@ interface FileRowProps {
 
 export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRowProps) => {
   const dispatch = useDispatch();
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const [openPreviewAccordion, setOpenPreviewAccordion] = useState(openPreviewByDefault);
   const [isLoadingPreviewFile, setIsLoadingPreviewFile] = useState(false);
@@ -42,7 +42,7 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: 
         ? await downloadPrivateFile(registrationIdentifier, file.identifier)
         : await downloadPublicFile(registrationIdentifier, file.identifier);
       if (!downloadFileResponse) {
-        dispatch(setNotification({ message: t('feedback:error.download_file'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.download_file'), variant: 'error' }));
       } else {
         if (previewFile) {
           setPreviewFileUrl(downloadFileResponse.id);
@@ -64,7 +64,7 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: 
   const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
   const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
   const fileIsEmbargoed = fileEmbargoDate ? fileEmbargoDate > new Date() : false;
-  const licenseTitle = file.license?.identifier ? t(`licenses:labels.${file.license.identifier}`) : '';
+  const licenseTitle = file.license?.identifier ? t(`licenses.labels.${file.license.identifier}`) : '';
 
   return (
     <Box
@@ -92,8 +92,8 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: 
       </Typography>
       <Typography data-testid={dataTestId.registrationLandingPage.fileVersion} sx={{ gridArea: 'version' }}>
         {file.publisherAuthority
-          ? t('registration:files_and_license.published_version')
-          : t('registration:files_and_license.accepted_version')}
+          ? t('registration.files_and_license.published_version')
+          : t('registration.files_and_license.accepted_version')}
       </Typography>
       <Box
         component="img"
@@ -112,7 +112,7 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: 
         {fileIsEmbargoed ? (
           <Typography data-testid={dataTestId.registrationLandingPage.fileEmbargoDate}>
             <LockIcon />
-            {t('will_be_available')} {fileEmbargoDate?.toLocaleDateString()}
+            {t('common.will_be_available')} {fileEmbargoDate?.toLocaleDateString()}
           </Typography>
         ) : (
           <Button
@@ -121,7 +121,7 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: 
             fullWidth
             endIcon={<OpenInNewIcon />}
             onClick={() => handleDownload(false)}>
-            {t('open')}
+            {t('common.open')}
           </Button>
         )}
       </Box>
@@ -139,7 +139,7 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: 
           onChange={() => setOpenPreviewAccordion(!openPreviewAccordion)}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography data-testid={dataTestId.registrationLandingPage.filePreviewHeader} variant="button">
-              {t('registration:public_page.preview')}
+              {t('registration.public_page.preview')}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>

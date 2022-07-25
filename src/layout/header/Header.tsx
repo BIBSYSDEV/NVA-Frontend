@@ -20,7 +20,7 @@ import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { setPartialUser } from '../../redux/userSlice';
 
 export const Header = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
   const [customer] = useFetch<CustomerInstitution>({
@@ -57,7 +57,7 @@ export const Header = () => {
         }}>
         <IconButton
           onClick={handleClick}
-          title={t('common:menu')}
+          title={t('common.menu')}
           size="large"
           color="inherit"
           sx={{ gridArea: 'other-menu' }}>
@@ -78,7 +78,7 @@ export const Header = () => {
             data-testid={dataTestId.header.newRegistrationLink}
             to={getRegistrationPath()}
             startIcon={<AddCircleIcon />}>
-            {t('new_registration')}
+            {t('registration.new_registration')}
           </Button>
         )}
         <Box
@@ -123,7 +123,7 @@ export const Header = () => {
                   data-testid={dataTestId.header.basicDataLink}
                   to={UrlPathTemplate.BasicData}
                   startIcon={<BusinessCenterIcon />}>
-                  {t('basicData:basic_data')}
+                  {t('basic_data.basic_data')}
                 </Button>
               )}
               {user?.isCurator && (
@@ -133,7 +133,7 @@ export const Header = () => {
                   data-testid={dataTestId.header.worklistLink}
                   to={UrlPathTemplate.Worklist}
                   startIcon={<AssignmentIcon />}>
-                  {t('workLists:worklist')}
+                  {t('worklist.worklist')}
                 </Button>
               )}
               {user && (
@@ -144,7 +144,7 @@ export const Header = () => {
                   data-testid={dataTestId.header.myPageLink}
                   to={UrlPathTemplate.MyPage}
                   startIcon={<FavoriteBorderIcon />}>
-                  {t('myPage:my_page')}
+                  {t('my_page.my_page')}
                 </Button>
               )}
             </>

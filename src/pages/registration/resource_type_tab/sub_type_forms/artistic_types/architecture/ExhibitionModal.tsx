@@ -27,43 +27,45 @@ const emptyExhibition: Exhibition = {
 
 const validationSchema = Yup.object<YupShape<Exhibition>>({
   name: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
-      field: i18n.t('registration:resource_type.artistic.exhibition_title'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.exhibition_title'),
     })
   ),
   organizer: Yup.string().required(
-    i18n.t('feedback:validation.is_required', {
-      field: i18n.t('registration:resource_type.organizer'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.organizer'),
     })
   ),
   place: Yup.object().shape({
     label: Yup.string().required(
-      i18n.t('feedback:validation.is_required', {
-        field: i18n.t('common:place'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('common.place'),
       })
     ),
   }),
   date: Yup.object().shape({
     from: Yup.date().required(
-      i18n.t('feedback:validation.is_required', {
-        field: i18n.t('registration:resource_type.date_from'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('registration.resource_type.date_from'),
       })
     ),
     to: Yup.date().required(
-      i18n.t('feedback:validation.is_required', {
-        field: i18n.t('registration:resource_type.date_to'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('registration.resource_type.date_to'),
       })
     ),
   }),
 });
 
 export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: ExhibitionModalProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   return (
     <Dialog open={open} onClose={closeModal}>
       <DialogTitle>
-        {exhibition ? t('resource_type.artistic.edit_exhibition') : t('resource_type.artistic.add_exhibition')}
+        {exhibition
+          ? t('registration.resource_type.artistic.edit_exhibition')
+          : t('registration.resource_type.artistic.add_exhibition')}
       </DialogTitle>
       <Formik
         initialValues={exhibition ?? emptyExhibition}
@@ -80,7 +82,7 @@ export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: Exhi
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('resource_type.artistic.exhibition_title')}
+                  label={t('registration.resource_type.artistic.exhibition_title')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -94,7 +96,7 @@ export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: Exhi
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('common:place')}
+                  label={t('common.place')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -108,7 +110,7 @@ export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: Exhi
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('resource_type.organizer')}
+                  label={t('registration.resource_type.organizer')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -125,7 +127,7 @@ export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: Exhi
                   {...field}
                   variant="filled"
                   fullWidth
-                  label={t('common:other')}
+                  label={t('common.other')}
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
                   data-testid={dataTestId.registrationWizard.resourceType.exhibitionOther}
@@ -138,13 +140,13 @@ export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: Exhi
               variant="outlined"
               onClick={closeModal}
               data-testid={dataTestId.registrationWizard.resourceType.exhibitionCancelButton}>
-              {t('common:cancel')}
+              {t('common.cancel')}
             </Button>
             <Button
               variant="contained"
               type="submit"
               data-testid={dataTestId.registrationWizard.resourceType.exhibitionSaveButton}>
-              {exhibition ? t('common:save') : t('common:add')}
+              {exhibition ? t('common.save') : t('common.add')}
             </Button>
           </DialogActions>
         </Form>

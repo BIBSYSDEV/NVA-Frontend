@@ -10,7 +10,7 @@ interface PublicDoiProps {
 }
 
 export const PublicDoi = ({ registration }: PublicDoiProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
   const originalDoi = registration.entityDescription?.reference?.doi ?? '';
@@ -25,7 +25,7 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
 
   return doiToPresent ? (
     <>
-      <Typography variant="overline">{t('registration.link_to_resource')}</Typography>
+      <Typography variant="overline">{t('registration.registration.link_to_resource')}</Typography>
       <Typography>
         <Link
           data-testid={dataTestId.registrationLandingPage.doiLink}
@@ -36,7 +36,7 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
         </Link>
         {isDraftDoi && (
           <Box component="span" sx={{ ml: '0.5rem' }}>
-            ({t('public_page.in_progess')})
+            ({t('registration.public_page.in_progess')})
           </Box>
         )}
       </Typography>

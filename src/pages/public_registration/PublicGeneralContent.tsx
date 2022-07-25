@@ -64,7 +64,7 @@ import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
-  const { t, i18n } = useTranslation('registration');
+  const { t, i18n } = useTranslation();
   const { entityDescription } = registration;
 
   const publicationContext = entityDescription?.reference?.publicationContext;
@@ -78,25 +78,29 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   return (
     <StyledGeneralInfo>
       <div data-testid={dataTestId.registrationLandingPage.generalInfo}>
-        <Typography variant="overline">{t('public_page.about_registration')}</Typography>
+        <Typography variant="overline">{t('registration.public_page.about_registration')}</Typography>
 
         <Typography>{displayDate(entityDescription?.date)}</Typography>
 
         {journalPublicationInstance?.contentType && (
-          <Typography>{t(`resource_type.content_types.${journalPublicationInstance?.contentType}`)}</Typography>
+          <Typography>
+            {t(`registration.resource_type.content_types.${journalPublicationInstance?.contentType}`)}
+          </Typography>
         )}
 
-        {journalPublicationInstance?.peerReviewed && <Typography>{t('resource_type.peer_reviewed')}</Typography>}
+        {journalPublicationInstance?.peerReviewed && (
+          <Typography>{t('registration.resource_type.peer_reviewed')}</Typography>
+        )}
 
         {language && (
           <Typography data-testid={dataTestId.registrationLandingPage.primaryLanguage}>
-            {t('common:language')}: {i18n.language === 'nob' ? language.nob : language.eng}
+            {t('common.language')}: {i18n.language === 'nob' ? language.nob : language.eng}
           </Typography>
         )}
 
         {entityDescription?.npiSubjectHeading && (
           <Typography data-testid={dataTestId.registrationLandingPage.npi}>
-            {t('description.npi_disciplines')}: {t(`disciplines:${entityDescription.npiSubjectHeading}`)}
+            {t('registration.description.npi_disciplines')}: {t(`disciplines.${entityDescription.npiSubjectHeading}`)}
           </Typography>
         )}
 
@@ -147,7 +151,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               {publicationInstance.type === JournalType.Corrigendum && (
                 <>
                   <Typography variant="overline" component="p">
-                    {t('resource_type.original_article')}
+                    {t('registration.resource_type.original_article')}
                   </Typography>
                   <RegistrationSummary id={journalPublicationInstance.corrigendumFor ?? ''} />
                 </>
@@ -178,28 +182,28 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.ArtisticDesign ? (
               <PublicArtisticOutput
                 outputs={(publicationInstance as ArtisticPublicationInstance).venues ?? []}
-                heading={t('resource_type.artistic.exhibition_place')}
+                heading={t('registration.resource_type.artistic.exhibition_place')}
               />
             ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.ArtisticArchitecture ? (
               <PublicArtisticOutput
                 outputs={(publicationInstance as ArtisticPublicationInstance).architectureOutput ?? []}
-                heading={t('resource_type.artistic.announcements')}
+                heading={t('registration.resource_type.artistic.announcements')}
                 showType
               />
             ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.PerformingArts ? (
               <PublicArtisticOutput
                 outputs={(publicationInstance as ArtisticPublicationInstance).outputs ?? []}
-                heading={t('resource_type.artistic.exhibition_place')}
+                heading={t('registration.resource_type.artistic.exhibition_place')}
               />
             ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.MovingPicture ? (
               <PublicArtisticOutput
                 outputs={(publicationInstance as ArtisticPublicationInstance).outputs ?? []}
-                heading={t('resource_type.artistic.announcements')}
+                heading={t('registration.resource_type.artistic.announcements')}
               />
             ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.MusicPerformance ? (
               <PublicArtisticOutput
                 outputs={(publicationInstance as ArtisticPublicationInstance).manifestations ?? []}
-                heading={t('resource_type.artistic.announcements')}
+                heading={t('registration.resource_type.artistic.announcements')}
               />
             ) : null
           ) : isMediaContribution(publicationInstance.type) ? (

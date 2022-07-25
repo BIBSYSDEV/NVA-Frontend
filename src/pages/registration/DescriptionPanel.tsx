@@ -31,7 +31,7 @@ const languageOptions = [
 ];
 
 export const DescriptionPanel = () => {
-  const { t, i18n } = useTranslation('registration');
+  const { t, i18n } = useTranslation();
   const { setFieldValue } = useFormikContext<Registration>();
 
   return (
@@ -46,7 +46,7 @@ export const DescriptionPanel = () => {
             data-testid={dataTestId.registrationWizard.description.titleField}
             variant="filled"
             fullWidth
-            label={t('common:title')}
+            label={t('common.title')}
             error={touched && !!error}
             helperText={<ErrorMessage name={field.name} />}
           />
@@ -63,7 +63,7 @@ export const DescriptionPanel = () => {
             fullWidth
             multiline
             rows="4"
-            label={t('description.abstract')}
+            label={t('registration.description.abstract')}
           />
         )}
       </Field>
@@ -74,7 +74,7 @@ export const DescriptionPanel = () => {
             id={field.name}
             value={field.value ?? ''}
             data-testid={dataTestId.registrationWizard.description.descriptionField}
-            label={t('description.description_of_content')}
+            label={t('registration.description.description_of_content')}
             multiline
             rows="4"
             fullWidth
@@ -107,8 +107,8 @@ export const DescriptionPanel = () => {
               <TextField
                 {...params}
                 data-testid={dataTestId.registrationWizard.description.tagField}
-                label={t('description.keywords')}
-                helperText={t('description.keywords_helper')}
+                label={t('registration.description.keywords')}
+                helperText={t('registration.description.keywords_helper')}
                 variant="filled"
                 fullWidth
               />
@@ -135,8 +135,8 @@ export const DescriptionPanel = () => {
               value={field.value ?? ''}
               data-testid={dataTestId.registrationWizard.description.languageField}
               fullWidth
-              label={t('description.primary_language')}
-              placeholder={t('description.primary_language')}
+              label={t('registration.description.primary_language')}
+              placeholder={t('registration.description.primary_language')}
               select
               variant="filled">
               {!languageOptions.some((language) => language.uri === field.value) && (

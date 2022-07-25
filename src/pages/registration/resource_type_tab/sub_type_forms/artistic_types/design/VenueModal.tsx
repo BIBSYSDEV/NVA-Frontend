@@ -27,8 +27,8 @@ const validationSchema = Yup.object<YupShape<Venue>>({
     label: Yup.string()
       .nullable()
       .required(
-        i18n.t('feedback:validation.is_required', {
-          field: i18n.t('registration:resource_type.artistic.exhibition_place'),
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('registration.resource_type.artistic.exhibition_place'),
         })
       ),
   }),
@@ -36,12 +36,14 @@ const validationSchema = Yup.object<YupShape<Venue>>({
 });
 
 export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   return (
     <Dialog open={open} onClose={closeModal}>
       <DialogTitle>
-        {venue ? t('resource_type.artistic.edit_exhibition_place') : t('resource_type.artistic.add_exhibition_place')}
+        {venue
+          ? t('registration.resource_type.artistic.edit_exhibition_place')
+          : t('registration.resource_type.artistic.add_exhibition_place')}
       </DialogTitle>
       <Formik
         initialValues={venue ?? emptyVenue}
@@ -59,7 +61,7 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
                   data-testid={dataTestId.registrationWizard.resourceType.venueNameField}
                   variant="filled"
                   fullWidth
-                  label={t('resource_type.artistic.exhibition_place')}
+                  label={t('registration.resource_type.artistic.exhibition_place')}
                   required
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
@@ -72,13 +74,13 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
           </DialogContent>
           <DialogActions>
             <Button variant="outlined" onClick={closeModal}>
-              {t('common:cancel')}
+              {t('common.cancel')}
             </Button>
             <Button
               data-testid={dataTestId.registrationWizard.resourceType.saveVenueButton}
               variant="contained"
               type="submit">
-              {venue ? t('common:update') : t('common:add')}
+              {venue ? t('common.update') : t('common.add')}
             </Button>
           </DialogActions>
         </Form>

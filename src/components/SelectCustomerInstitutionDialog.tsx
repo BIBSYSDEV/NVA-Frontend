@@ -21,7 +21,7 @@ export const SelectCustomerInstitutionDialog = ({
   allowedCustomerIds,
   openDefault,
 }: SelectCustomerInstitutionDialogProps) => {
-  const { t } = useTranslation('authorization');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [openDialog, setOpenDialog] = useState(openDefault);
   const [allowedCustomers, setAllowedCustomers] = useState<CustomerInstitution[]>([]);
@@ -63,7 +63,7 @@ export const SelectCustomerInstitutionDialog = ({
           setOpenDialog(false);
         }
       } catch {
-        dispatch(setNotification({ message: t('feedback:error.an_error_occurred'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.an_error_occurred'), variant: 'error' }));
       }
     }
     setIsSelectingCustomer(false);
@@ -71,7 +71,7 @@ export const SelectCustomerInstitutionDialog = ({
 
   return (
     <Dialog open={openDialog} fullWidth maxWidth="sm">
-      <DialogTitle>{t('select_institution')}</DialogTitle>
+      <DialogTitle>{t('authorization.select_institution')}</DialogTitle>
       <DialogContent>
         <Autocomplete
           options={allowedCustomers}
@@ -82,9 +82,9 @@ export const SelectCustomerInstitutionDialog = ({
             <TextField
               {...params}
               InputLabelProps={{
-                'aria-label': t('select_institution'),
+                'aria-label': t('authorization.select_institution'),
               }}
-              placeholder={t('project:search_for_institution')}
+              placeholder={t('project.search_for_institution')}
             />
           )}
         />
@@ -95,7 +95,7 @@ export const SelectCustomerInstitutionDialog = ({
           loading={isSelectingCustomer}
           disabled={!selectedCustomer}
           onClick={selectCustomer}>
-          {t('common:select')}
+          {t('common.select')}
         </LoadingButton>
       </DialogActions>
     </Dialog>
