@@ -74,7 +74,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               onClick={closeMenu}
               component={Link}
               to={UrlPathTemplate.Worklist}>
-              <Typography>{t('workLists:worklist')}</Typography>
+              <Typography>{t('worklist.worklist')}</Typography>
             </MenuItem>
           ),
           user?.isCreator && [

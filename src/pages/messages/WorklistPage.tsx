@@ -15,7 +15,7 @@ import { getLanguageString } from '../../utils/translation-helpers';
 import { WorklistItems } from './WorklistItems';
 
 const WorklistPage = () => {
-  const { t } = useTranslation('workLists');
+  const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const viewingScopeId = user && user.viewingScope.length > 0 ? user.viewingScope[0] : '';
   const [viewingScopeOrganization, isLoadingViewingScopeOrganization] = useFetchResource<Organization>(viewingScopeId);
@@ -32,7 +32,7 @@ const WorklistPage = () => {
 
   return (
     <SyledPageContent>
-      <PageHeader>{t('worklist')}</PageHeader>
+      <PageHeader>{t('worklist.worklist')}</PageHeader>
       {isLoadingWorklistResponse ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
@@ -43,7 +43,7 @@ const WorklistPage = () => {
             ) : (
               viewingScopeOrganization && (
                 <Typography paragraph sx={{ fontWeight: 'bold' }}>
-                  {t('limited_to', {
+                  {t('worklist.limited_to', {
                     name: getLanguageString(viewingScopeOrganization.name),
                   })}
                 </Typography>

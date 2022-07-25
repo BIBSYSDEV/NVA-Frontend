@@ -14,7 +14,7 @@ interface WorklistItemsProps {
 }
 
 export const WorklistItems = ({ conversations }: WorklistItemsProps) => {
-  const { t } = useTranslation('workLists');
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (conversations.some(({ publication }) => stringIncludesMathJax(publication.mainTitle))) {
@@ -23,7 +23,7 @@ export const WorklistItems = ({ conversations }: WorklistItemsProps) => {
   }, [conversations]);
 
   return conversations.length === 0 ? (
-    <Typography>{t('no_messages')}</Typography>
+    <Typography>{t('worklist.no_messages')}</Typography>
   ) : (
     <>
       {conversations.map((conversation) => {

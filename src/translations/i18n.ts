@@ -4,12 +4,10 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import en from './en.json';
 import authorizationEn from './en/authorization.json';
 import institutionEn from './en/institution.json';
-import workListsEn from './en/workLists.json';
 
 import nb from './nb.json';
 import authorizationNb from './nb/authorization.json';
 import institutionNb from './nb/institution.json';
-import workListsNb from './nb/workLists.json';
 
 i18n.use(LanguageDetector).init({
   resources: {
@@ -17,18 +15,16 @@ i18n.use(LanguageDetector).init({
       translations: en,
       authorization: authorizationEn,
       institution: institutionEn,
-      workLists: workListsEn,
     },
     nob: {
       translations: nb,
       authorization: authorizationNb,
       institution: institutionNb,
-      workLists: workListsNb,
     },
   },
   fallbackLng: 'nob',
   debug: false,
-  ns: ['authorization', 'institution', 'workLists'],
+  ns: ['authorization', 'institution'],
   defaultNS: 'translations',
   supportedLngs: ['nob', 'eng'],
   interpolation: {

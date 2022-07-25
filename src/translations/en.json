@@ -1302,5 +1302,10 @@
     "sort_by_published_date_asc": "Publish date (oldest first)",
     "sort_by_published_date_desc": "Publish date (newest first)",
     "year_published": "Year published"
+  },
+  "worklist": {
+    "limited_to": "Limited to: \"{{name}}\"",
+    "no_messages": "You don't have any messages",
+    "worklist": "Worklist"
   }
 }

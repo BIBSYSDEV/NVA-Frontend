@@ -1302,5 +1302,10 @@
     "sort_by_published_date_asc": "Publiseringsdato (eldste først)",
     "sort_by_published_date_desc": "Publiseringsdato (nyeste først)",
     "year_published": "Publiseringsår"
+  },
+  "worklist": {
+    "limited_to": "Avgrenset til: \"{{name}}\"",
+    "no_messages": "Du har ingen meldinger",
+    "worklist": "Arbeidsliste"
   }
 }
