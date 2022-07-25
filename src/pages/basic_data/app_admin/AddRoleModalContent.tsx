@@ -20,7 +20,7 @@ export const AddRoleModalContent = ({
   closeModal,
   refetchUsers,
 }: AddRoleModalContentProps) => {
-  const { t } = useTranslation('admin');
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const filteredUsers = users.filter((user) => {
     const name = `${user.givenName} ${user.familyName}`;
@@ -33,7 +33,7 @@ export const AddRoleModalContent = ({
   return (
     <>
       <Typography data-testid="add-role-info" paragraph>
-        {t('users.add_role_info')}
+        {t('basic_data.users.add_role_info')}
       </Typography>
       <TextField
         autoFocus
@@ -48,7 +48,7 @@ export const AddRoleModalContent = ({
         onChange={(event) => setSearchTerm(event.target.value)}
         label={t('users.username')}
         variant="outlined"
-        helperText={t('search_for_user')}
+        helperText={t('basic_data.users.search_for_user')}
         data-testid="add-role-search-box"
       />
 
@@ -56,7 +56,7 @@ export const AddRoleModalContent = ({
 
       <DialogActions>
         <Button variant="outlined" onClick={closeModal} data-testid="add-role-close-button">
-          {t('translations:common.close')}
+          {t('common.close')}
         </Button>
       </DialogActions>
     </>

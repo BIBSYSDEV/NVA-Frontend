@@ -30,7 +30,7 @@ export const CustomerInstitutionMetadataForm = ({
   customerInstitution,
   editMode,
 }: CustomerInstitutionMetadataFormProps) => {
-  const { t } = useTranslation('admin');
+  const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -56,7 +56,7 @@ export const CustomerInstitutionMetadataForm = ({
   return (
     <>
       <Typography variant="h2" paragraph>
-        {t('translations:common.institution')}
+        {t('common.institution')}
       </Typography>
       <Formik
         enableReinitialize
@@ -86,7 +86,7 @@ export const CustomerInstitutionMetadataForm = ({
                   ) : (
                     <TextField
                       variant="filled"
-                      label={t('translations:common.institution')}
+                      label={t('common.institution')}
                       data-testid={dataTestId.organization.searchField}
                       required
                       disabled
@@ -97,24 +97,24 @@ export const CustomerInstitutionMetadataForm = ({
               </Field>
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.DisplayName}
-                label={t('display_name')}
+                label={t('basic_data.institutions.display_name')}
                 required
                 dataTestId={dataTestId.institutionAdmin.displayNameField}
               />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.ShortName}
-                label={t('short_name')}
+                label={t('basic_data.institutions.short_name')}
                 required
                 dataTestId={dataTestId.institutionAdmin.shortNameField}
               />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.ArchiveName}
-                label={t('archive_name')}
+                label={t('basic_data.institutions.archive_name')}
                 dataTestId={dataTestId.institutionAdmin.archiveNameField}
               />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.FeideOrganizationDomain}
-                label={t('feide_organization_domain')}
+                label={t('basic_data.institutions.feide_organization_domain')}
                 dataTestId={dataTestId.institutionAdmin.feideField}
               />
               <CustomerInstitutionTextField
@@ -130,7 +130,7 @@ export const CustomerInstitutionMetadataForm = ({
                   loadingPosition="start"
                   loading={isSubmitting}
                   type="submit">
-                  {editMode ? t('translations:common.save') : t('translations:common.create')}
+                  {editMode ? t('common.save') : t('common.create')}
                 </LoadingButton>
               </StyledRightAlignedWrapper>
             </InputContainerBox>

@@ -45,7 +45,7 @@ export const UserList = ({
   refetchUsers,
   showScope = false,
 }: UserListProps) => {
-  const { t } = useTranslation('admin');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [page, setPage] = useState(0);
@@ -110,7 +110,7 @@ export const UserList = ({
     <>
       {sortedList.length === 0 ? (
         <Typography>
-          <i>{t('users.no_users_found')}</i>
+          <i>{t('basic_data.users.no_users_found')}</i>
         </Typography>
       ) : (
         <>
@@ -119,14 +119,14 @@ export const UserList = ({
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <Typography fontWeight="bold">{t('users.username')}</Typography>
+                  <Typography fontWeight="bold">{t('basic_data.users.username')}</Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography fontWeight="bold">{t('translations:common.name')}</Typography>
+                  <Typography fontWeight="bold">{t('common.name')}</Typography>
                 </TableCell>
                 {showScope && (
                   <TableCell sx={{ minWidth: { xs: '15rem', md: '40%' } }}>
-                    <Typography fontWeight="bold">{t('users.area_of_responsibility')}</Typography>
+                    <Typography fontWeight="bold">{t('basic_data.users.area_of_responsibility')}</Typography>
                   </TableCell>
                 )}
                 <TableCell width="150" />
@@ -163,7 +163,7 @@ export const UserList = ({
                           disabled={isLastInstitutionAdmin}
                           data-testid={`button-remove-role-${roleToRemove}-${user.username}`}
                           onClick={() => setRemoveRoleForUser(user.username)}>
-                          {t('translations:common.remove')}
+                          {t('common.remove')}
                         </Button>
                       )}
                       {roleToAdd && (
@@ -176,7 +176,7 @@ export const UserList = ({
                           loading={!disableAddButton && isLoading}
                           data-testid={`button-add-role-${roleToAdd}-${user.username}`}
                           onClick={() => handleAddRoleToUser(user)}>
-                          {t('translations:common.add')}
+                          {t('common.add')}
                         </LoadingButton>
                       )}
                     </TableCell>
@@ -208,7 +208,7 @@ export const UserList = ({
               onCancel={() => setRemoveRoleForUser('')}
               onAccept={handleRemoveRoleFromUser}
               dataTestId="confirm-remove-role-dialog">
-              {t('users.remove_role_text')}
+              {t('basic_data.users.remove_role_text')}
             </ConfirmDialog>
           )}
         </>

@@ -14,7 +14,7 @@ interface AdminCustomerInstitutionProps {
 }
 
 export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutionProps) => {
-  const { t } = useTranslation('admin');
+  const { t } = useTranslation();
   const editMode = customerId !== 'new';
   const [customerInstitution, isLoadingCustomerInstitution] = useFetch<CustomerInstitution>({
     url: editMode ? customerId : '',
@@ -30,8 +30,9 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
 
   return (
     <>
-      <PageHeader htmlTitle={editMode ? customerInstitution?.displayName : t('add_institution')}>
-        {t(editMode ? 'edit_institution' : 'add_institution')}
+      <PageHeader
+        htmlTitle={editMode ? customerInstitution?.displayName : t('basic_data.institutions.add_institution')}>
+        {t(editMode ? 'basic_data.institutions.edit_institution' : 'basic_data.institutions.add_institution')}
       </PageHeader>
 
       {isLoadingCustomerInstitution ? (

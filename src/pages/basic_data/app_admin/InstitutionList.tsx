@@ -18,7 +18,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
     <TableContainer>
       <Table data-testid={dataTestId.basicData.customers.customerList}>
         <caption>
-          <span style={visuallyHidden}>{t('admin:admin_institutions')}</span>
+          <span style={visuallyHidden}>{t('basic_data.institutions.admin_institutions')}</span>
         </caption>
         <TableHead>
           <TableRow>

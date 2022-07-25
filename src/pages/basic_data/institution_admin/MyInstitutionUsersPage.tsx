@@ -25,7 +25,7 @@ const StyledNewButton = styled(Button)({
 });
 
 export const MyInstitutionUsersPage = () => {
-  const { t } = useTranslation('admin');
+  const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const [institutionUsers, isLoading, fetchInstitutionUsers] = useFetch<UserListType>({
     url: user?.customerId ? `${RoleApiPath.InstitutionUsers}?institution=${encodeURIComponent(user.customerId)}` : '',
@@ -40,13 +40,13 @@ export const MyInstitutionUsersPage = () => {
     setAutoAssignCreators(!autoAssignCreators);
   };
 
-  const roleToAddTitle = t('translations:common.add_custom', {
-    name: t(`myPage:roles.${roleToAdd?.toLowerCase().replace('-', '_')}`),
+  const roleToAddTitle = t('common.add_custom', {
+    name: t(`my_page.roles.${roleToAdd?.toLowerCase().replace('-', '_')}`),
   });
 
   return (
     <>
-      <PageHeader>{t('users.user_administration')}</PageHeader>
+      <PageHeader>{t('basic_data.users.user_administration')}</PageHeader>
       {/* Admins */}
       <StyledContainer data-testid={dataTestId.myInstitutionUsersPage.usersAdministrators}>
         <Typography variant="h3" component="h2">
@@ -68,7 +68,7 @@ export const MyInstitutionUsersPage = () => {
           startIcon={<AddIcon />}
           data-testid="button-add-institution-admin"
           onClick={() => setRoleToAdd(RoleName.InstitutionAdmin)}>
-          {t('translations:common.add_custom', { name: t('my_page.roles.institution_admin') })}
+          {t('common.add_custom', { name: t('my_page.roles.institution_admin') })}
         </StyledNewButton>
       </StyledContainer>
 
@@ -94,7 +94,7 @@ export const MyInstitutionUsersPage = () => {
           startIcon={<AddIcon />}
           data-testid="button-add-curator"
           onClick={() => setRoleToAdd(RoleName.Curator)}>
-          {t('translations:common.add_custom', { name: t('my_page.roles.curator') })}
+          {t('common.add_custom', { name: t('my_page.roles.curator') })}
         </StyledNewButton>
       </StyledContainer>
 
@@ -119,7 +119,7 @@ export const MyInstitutionUsersPage = () => {
           startIcon={<AddIcon />}
           data-testid="button-add-editor"
           onClick={() => setRoleToAdd(RoleName.Editor)}>
-          {t('translations:common.add_custom', { name: t('my_page.roles.editor') })}
+          {t('common.add_custom', { name: t('my_page.roles.editor') })}
         </StyledNewButton>
       </StyledContainer>
 
@@ -128,11 +128,11 @@ export const MyInstitutionUsersPage = () => {
           {t('my_page.roles.creator')}
         </Typography>
         <Divider />
-        <Typography>{t('users.creator_info')}</Typography>
+        <Typography>{t('basic_data.users.creator_info')}</Typography>
         <FormControlLabel
           control={<Checkbox disabled checked={autoAssignCreators} data-testid="checkbox-assign-creators" />}
           onChange={handleCheckAutoAssignCreators}
-          label={t<string>('users.auto_assign_creators')}
+          label={t('basic_data.users.auto_assign_creators')}
         />
       </StyledContainer>
 
