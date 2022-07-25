@@ -53,7 +53,7 @@ export const RegistrationTypeFilter = () => {
   };
 
   return (
-    <BaseFilterItem title={t('search:registration_type')}>
+    <BaseFilterItem title={t('search.registration_type')}>
       <ListSubheader disableSticky>
         {t(`registration.publication_types.${PublicationType.PublicationInJournal}`)}
       </ListSubheader>

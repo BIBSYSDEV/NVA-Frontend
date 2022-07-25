@@ -51,7 +51,7 @@ export const CentralImportPage = () => {
       ) : (
         searchResults && (
           <>
-            <Typography variant="subtitle1">{t('search:hits', { count: searchResults.size })}:</Typography>
+            <Typography variant="subtitle1">{t('search.hits', { count: searchResults.size })}:</Typography>
             <Divider />
             <List>
               {publications.map((publication) => (

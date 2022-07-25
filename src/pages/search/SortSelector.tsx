@@ -20,7 +20,7 @@ const sortOptions = [
 
 export const SortSelector = () => {
   const history = useHistory();
-  const { t } = useTranslation('search');
+  const { t } = useTranslation();
   const params = new URLSearchParams(history.location.search);
 
   const selectedSortingValue =
@@ -56,7 +56,7 @@ export const SortSelector = () => {
       data-testid={dataTestId.startPage.orderBySelect}
       select
       value={selectedSortingValue}
-      label={t('sort_by')}
+      label={t('search.sort_by')}
       variant="outlined"
       fullWidth
       onChange={updateSortQuery}>

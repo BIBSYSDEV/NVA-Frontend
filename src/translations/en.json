@@ -1256,5 +1256,24 @@
     "support_description": "When you request support your message will be sent to a curator at your institution. You can see responses at <0>My Messages</0>.",
     "modal_unsaved_changes_description": "You have unsaved changes. Are you sure you want to leave this page?",
     "modal_unsaved_changes_heading": "Leave without saving?"
+  },
+  "search": {
+    "add_filter": "Add filter",
+    "contains": "Contains",
+    "field_label": "Field",
+    "hits_one": "{{count}} hit",
+    "hits_other": "{{count}} hits",
+    "not_containing": "Doesn't include",
+    "operator": "Operator",
+    "registration_type": "Registration type",
+    "remove_filter": "Remove filter",
+    "search_placeholder": "Search for title, contributor, abstract, etc.",
+    "select_filters": "Select filters to narrow down search:",
+    "search_term_label": "Value",
+    "sort_by": "Order by",
+    "sort_by_modified_date": "Last modified",
+    "sort_by_published_date_asc": "Publish date (oldest first)",
+    "sort_by_published_date_desc": "Publish date (newest first)",
+    "year_published": "Year published"
   }
 }

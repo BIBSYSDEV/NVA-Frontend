@@ -27,13 +27,13 @@ export const registrationFilters = [
 ];
 
 export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearchRowProps) => {
-  const { t } = useTranslation('search');
+  const { t } = useTranslation();
 
   return (
     <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '3fr 3fr 5fr 2fr' }, gap: '1rem' }}>
       <Field name={`${baseFieldName}.fieldName`}>
         {({ field }: FieldProps<string>) => (
-          <TextField {...field} select variant="outlined" label={t('field_label')}>
+          <TextField {...field} select variant="outlined" label={t('search.field_label')}>
             {registrationFilters.map((filter) => (
               <MenuItem key={filter.i18nKey} value={filter.field}>
                 {t(filter.i18nKey)}
@@ -44,17 +44,19 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
       </Field>
       <Field name={`${baseFieldName}.operator`}>
         {({ field }: FieldProps<string>) => (
-          <TextField {...field} select variant="outlined" label={t('operator')}>
-            <MenuItem value={ExpressionStatement.Contains}>{t('contains')}</MenuItem>
-            <MenuItem value={ExpressionStatement.NotContaining}>{t('not_containing')}</MenuItem>
+          <TextField {...field} select variant="outlined" label={t('search.operator')}>
+            <MenuItem value={ExpressionStatement.Contains}>{t('search.contains')}</MenuItem>
+            <MenuItem value={ExpressionStatement.NotContaining}>{t('search.not_containing')}</MenuItem>
           </TextField>
         )}
       </Field>
       <Field name={`${baseFieldName}.value`}>
-        {({ field }: FieldProps<string>) => <TextField {...field} variant="outlined" label={t('search_term_label')} />}
+        {({ field }: FieldProps<string>) => (
+          <TextField {...field} variant="outlined" label={t('search.search_term_label')} />
+        )}
       </Field>
       <Button onClick={removeFilter} color="error">
-        {t('remove_filter')}
+        {t('search.remove_filter')}
       </Button>
     </Box>
   );

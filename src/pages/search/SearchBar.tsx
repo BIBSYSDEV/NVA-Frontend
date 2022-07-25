@@ -9,7 +9,7 @@ import { ExpressionStatement, PropertySearch, SearchConfig } from '../../utils/s
 import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
 
 export const SearchBar = () => {
-  const { t } = useTranslation('search');
+  const { t } = useTranslation();
   const { values, submitForm } = useFormikContext<SearchConfig>();
   const properties = values.properties ?? [];
 
@@ -24,8 +24,8 @@ export const SearchBar = () => {
             data-testid={dataTestId.startPage.searchField}
             fullWidth
             variant="outlined"
-            label={t('search')}
-            placeholder={t('search_placeholder')}
+            label={t('common.search')}
+            placeholder={t('search.search_placeholder')}
             InputProps={{
               endAdornment: (
                 <>
@@ -35,7 +35,7 @@ export const SearchBar = () => {
                         field.onChange({ target: { value: '', id: field.name } });
                         submitForm();
                       }}
-                      title={t('translations:common.clear')}
+                      title={t('common.clear')}
                       size="large">
                       <ClearIcon />
                     </IconButton>
@@ -43,7 +43,7 @@ export const SearchBar = () => {
                   <IconButton
                     type="submit"
                     data-testid={dataTestId.startPage.searchButton}
-                    title={t('search')}
+                    title={t('common.search')}
                     size="large">
                     <SearchIcon />
                   </IconButton>
@@ -75,11 +75,11 @@ export const SearchBar = () => {
                   push(newPropertyFilter);
                 }}
                 startIcon={<FilterAltIcon />}>
-                {t('add_filter')}
+                {t('search.add_filter')}
               </Button>
               {properties.length > 0 && (
                 <Button variant="contained" type="submit" startIcon={<SearchIcon />}>
-                  {t('search')}
+                  {t('common.search')}
                 </Button>
               )}
             </Box>

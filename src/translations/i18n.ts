@@ -5,14 +5,12 @@ import en from './en.json';
 import adminEn from './en/admin.json';
 import authorizationEn from './en/authorization.json';
 import institutionEn from './en/institution.json';
-import searchEn from './en/search.json';
 import workListsEn from './en/workLists.json';
 
 import nb from './nb.json';
 import adminNb from './nb/admin.json';
 import authorizationNb from './nb/authorization.json';
 import institutionNb from './nb/institution.json';
-import searchNb from './nb/search.json';
 import workListsNb from './nb/workLists.json';
 
 i18n.use(LanguageDetector).init({
@@ -22,7 +20,6 @@ i18n.use(LanguageDetector).init({
       admin: adminEn,
       authorization: authorizationEn,
       institution: institutionEn,
-      search: searchEn,
       workLists: workListsEn,
     },
     nob: {
@@ -30,7 +27,6 @@ i18n.use(LanguageDetector).init({
       admin: adminNb,
       authorization: authorizationNb,
       institution: institutionNb,
-      search: searchNb,
       workLists: workListsNb,
     },
   },
