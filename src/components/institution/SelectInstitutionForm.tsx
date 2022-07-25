@@ -106,7 +106,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
                       <TextField
                         {...params}
                         data-testid={dataTestId.organization.subSearchField}
-                        label={t('institution:department')}
+                        label={t('registration.contributors.department')}
                         variant="filled"
                         fullWidth
                       />

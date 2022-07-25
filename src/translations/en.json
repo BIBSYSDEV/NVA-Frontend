@@ -833,6 +833,7 @@
       "contributor": "Contributor",
       "contributor_already_added": "Chosen contributor is already added",
       "corresponding": "Corresponding",
+      "department": "Department",
       "editors": "Editors",
       "filter": "Filter {{role}}",
       "known_author_identity": "Connected author identity",
