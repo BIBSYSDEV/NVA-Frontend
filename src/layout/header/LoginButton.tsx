@@ -14,7 +14,7 @@ import { PreviousPathState } from '../LoginPage';
 
 export const LoginButton = () => {
   const user = useSelector((state: RootState) => state.user);
-  const { t } = useTranslation('authorization');
+  const { t } = useTranslation();
   const { handleLogout } = useAuthentication();
 
   // If amplify has set redirected value in localStorage we know that the user has either just logged in or out,
@@ -37,7 +37,7 @@ export const LoginButton = () => {
     <Menu handleLogout={handleLogoutWrapper} />
   ) : isLoading ? (
     <LoadingButton variant="contained" color="secondary" loading>
-      {t('translations:common.loading')}
+      {t('common.loading')}
     </LoadingButton>
   ) : (
     <Button
@@ -46,7 +46,7 @@ export const LoginButton = () => {
       data-testid={dataTestId.header.logInButton}
       component={RouterLink}
       to={{ pathname: UrlPathTemplate.Login, state: previousPathState }}>
-      {t('login')}
+      {t('authorization.login')}
     </Button>
   );
 };

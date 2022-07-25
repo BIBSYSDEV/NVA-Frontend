@@ -66,7 +66,7 @@ export const App = () => {
   useEffect(() => {
     // Handle expired token
     if (hasExpiredToken) {
-      dispatch(setNotification({ message: t('authorization:expired_token_info'), variant: 'info' }));
+      dispatch(setNotification({ message: t('authorization.expired_token_info'), variant: 'info' }));
       localStorage.removeItem(LocalStorageKey.ExpiredToken);
     }
   }, [t, dispatch, hasExpiredToken]);

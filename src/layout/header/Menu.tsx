@@ -107,7 +107,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           </MenuItem>
         )}
         <MenuItem data-testid={dataTestId.header.logOutLink} onClick={handleLogout}>
-          {t('authorization:logout')}
+          {t('authorization.logout')}
         </MenuItem>
       </MuiMenu>
     </Box>

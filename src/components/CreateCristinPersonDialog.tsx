@@ -30,7 +30,7 @@ interface CreateCristinPersonDialogProps {
 }
 
 export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogProps) => {
-  const { t } = useTranslation('authorization');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { handleLogout } = useAuthentication();
   const [acceptedTermsValue, setAcceptedTermsValue] = useState(false);
@@ -57,7 +57,7 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
 
   return (
     <Dialog open={!user.cristinId} fullWidth maxWidth="xs">
-      <DialogTitle>{t('your_user_profile')}</DialogTitle>
+      <DialogTitle>{t('authorization.your_user_profile')}</DialogTitle>
       <Formik
         initialValues={{
           ...emptyUser,
@@ -70,13 +70,13 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
         {({ isSubmitting }: FormikProps<FlatCristinPerson>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <Typography>{t('create_user_info')}</Typography>
+              <Typography>{t('authorization.create_user_info')}</Typography>
               <Field name="firstName">
                 {({ field, meta: { error, touched } }: FieldProps<string>) => (
                   <TextField
                     {...field}
                     variant="filled"
-                    label={t('translations:common.first_name')}
+                    label={t('common.first_name')}
                     required
                     error={!!error && touched}
                     helperText={<ErrorMessage name={field.name} />}
@@ -88,7 +88,7 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
                   <TextField
                     {...field}
                     variant="filled"
-                    label={t('translations:common.last_name')}
+                    label={t('common.last_name')}
                     required
                     error={!!error && touched}
                     helperText={<ErrorMessage name={field.name} />}
@@ -103,7 +103,7 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
                 value={user.nationalIdNumber}
               />
               <FormControlLabel
-                label={t('accept_terms_to_create_user')}
+                label={t('authorization.accept_terms_to_create_user')}
                 control={
                   <Checkbox
                     required
@@ -114,9 +114,9 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={() => setShowConfirmCancelDialog(true)}>{t('translations:common.cancel')}</Button>
+              <Button onClick={() => setShowConfirmCancelDialog(true)}>{t('common.cancel')}</Button>
               <LoadingButton type="submit" variant="contained" disabled={!acceptedTermsValue} loading={isSubmitting}>
-                {t('translations:common.create')}
+                {t('common.create')}
               </LoadingButton>
             </DialogActions>
           </Form>
@@ -124,10 +124,10 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
       </Formik>
       <ConfirmDialog
         open={showConfirmCancelDialog}
-        title={t('cancel_create_user_title')}
+        title={t('authorization.cancel_create_user_title')}
         onAccept={() => handleLogout()}
         onCancel={() => setShowConfirmCancelDialog(false)}>
-        <Typography>{t('cancel_create_user_text')}</Typography>
+        <Typography>{t('authorization.cancel_create_user_text')}</Typography>
       </ConfirmDialog>
     </Dialog>
   );
