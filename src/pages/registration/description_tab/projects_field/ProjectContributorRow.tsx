@@ -18,7 +18,7 @@ import { getFullCristinName } from '../../../../utils/user-helpers';
 import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
 
 export const ProjectContributorRow = () => {
-  const { t } = useTranslation('project');
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
@@ -55,11 +55,11 @@ export const ProjectContributorRow = () => {
               {...field}
               disabled
               select
-              label={t('translations:common.role')}
+              label={t('common.role')}
               variant="filled"
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}>
-              <MenuItem value="ProjectManager">{t('project_manager')}</MenuItem>
+              <MenuItem value="ProjectManager">{t('project.project_manager')}</MenuItem>
             </TextField>
           )}
         </Field>
@@ -108,8 +108,8 @@ export const ProjectContributorRow = () => {
                   data-testid={dataTestId.registrationWizard.description.projectForm.contributorsSearchField}
                   {...params}
                   required
-                  label={t('person')}
-                  placeholder={t('search_for_person')}
+                  label={t('project.person')}
+                  placeholder={t('project.search_for_person')}
                   errorMessage={touched && !!error ? error : ''}
                   isLoading={isLoadingPersonSearchResult}
                   showSearchIcon={!field.value}

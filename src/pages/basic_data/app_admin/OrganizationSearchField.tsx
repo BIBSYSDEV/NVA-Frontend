@@ -68,7 +68,7 @@ export const OrganizationSearchField = ({
           data-testid={dataTestId.organization.searchField}
           label={label ?? t('common.institution')}
           required
-          placeholder={t('project:search_for_institution')}
+          placeholder={t('project.search_for_institution')}
           errorMessage={errorMessage}
           isLoading={isLoading}
           showSearchIcon={!fieldInputProps?.value}

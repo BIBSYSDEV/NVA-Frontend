@@ -27,7 +27,7 @@ interface PublicProjectsContentProps {
 }
 
 export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) => {
-  const { t } = useTranslation('project');
+  const { t } = useTranslation();
 
   return (
     <>
@@ -35,13 +35,13 @@ export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) 
         sx={{
           display: { xs: 'none', md: 'grid' },
         }}>
-        <Typography variant="caption">{t('translations:common.title')}</Typography>
+        <Typography variant="caption">{t('common.title')}</Typography>
         <span />
-        <Typography variant="caption">{t('coordinating_institution')}</Typography>
+        <Typography variant="caption">{t('project.coordinating_institution')}</Typography>
         <span />
-        <Typography variant="caption">{t('project_manager')}</Typography>
+        <Typography variant="caption">{t('project.project_manager')}</Typography>
         <span />
-        <Typography variant="caption">{t('project_info')}</Typography>
+        <Typography variant="caption">{t('project.project_info')}</Typography>
       </StyledProjectGridRow>
 
       {projects.map((project) => (

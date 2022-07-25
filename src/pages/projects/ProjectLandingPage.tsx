@@ -15,12 +15,15 @@ interface ProjectLandingPageProps {
 }
 
 export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
-  const { t } = useTranslation('project');
+  const { t } = useTranslation();
 
   return (
     <BackgroundDiv>
       <ItalicPageHeader
-        superHeader={{ title: `${t('project')} - ${t(`status.${project.status}`)}`, icon: <AccountTreeIcon /> }}>
+        superHeader={{
+          title: `${t('project.project')} - ${t(`project.status.${project.status}`)}`,
+          icon: <AccountTreeIcon />,
+        }}>
         {project.title}
       </ItalicPageHeader>
 
@@ -37,7 +40,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
 
       <LandingPageAccordion
         data-testid={dataTestId.projectLandingPage.participantsAccordion}
-        heading={`${t('project_participants')} (${project.contributors.length})`}>
+        heading={`${t('project.project_participants')} (${project.contributors.length})`}>
         <ProjectContributors contributors={project.contributors} />
       </LandingPageAccordion>
 

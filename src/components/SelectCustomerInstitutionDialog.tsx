@@ -84,7 +84,7 @@ export const SelectCustomerInstitutionDialog = ({
               InputLabelProps={{
                 'aria-label': t('select_institution'),
               }}
-              placeholder={t('project:search_for_institution')}
+              placeholder={t('project.search_for_institution')}
             />
           )}
         />
@@ -95,7 +95,7 @@ export const SelectCustomerInstitutionDialog = ({
           loading={isSelectingCustomer}
           disabled={!selectedCustomer}
           onClick={selectCustomer}>
-          {t('translations:common.select')}
+          {t('common.select')}
         </LoadingButton>
       </DialogActions>
     </Dialog>

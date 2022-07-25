@@ -9,24 +9,24 @@ interface ProjectSummaryProps {
 }
 
 export const ProjectSummary = ({ academicSummary, popularScienceSummary }: ProjectSummaryProps) => {
-  const { t } = useTranslation('project');
+  const { t } = useTranslation();
 
   const academicSummaryString = getLanguageString(academicSummary);
   const popularScienceSummaryString = getLanguageString(popularScienceSummary);
 
   return !academicSummaryString && !popularScienceSummaryString ? (
-    <Typography>{t('no_summary')}</Typography>
+    <Typography>{t('project.no_summary')}</Typography>
   ) : (
     <>
       {academicSummaryString && (
         <>
-          <Typography variant="h3">{t('scientific_summary')}</Typography>
+          <Typography variant="h3">{t('project.scientific_summary')}</Typography>
           <Typography paragraph>{academicSummaryString}</Typography>
         </>
       )}
       {popularScienceSummaryString && (
         <>
-          <Typography variant="h3">{t('popular_science_summary')}</Typography>
+          <Typography variant="h3">{t('project.popular_science_summary')}</Typography>
           <Typography>{popularScienceSummaryString}</Typography>
         </>
       )}

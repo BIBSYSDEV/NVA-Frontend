@@ -89,7 +89,7 @@ export const ProjectsField = () => {
       </Field>
       <BetaFunctionality>
         <Button onClick={() => setOpenNewProjectDialog(true)} startIcon={<AddIcon />}>
-          {t('project:create_project')}
+          {t('project.create_project')}
         </Button>
         <CreateProjectDialog
           open={openNewProjectDialog}

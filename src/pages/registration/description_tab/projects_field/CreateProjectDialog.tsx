@@ -45,7 +45,7 @@ interface CreateProjectDialogProps extends DialogProps {
 }
 
 export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
-  const { t } = useTranslation('project');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const createProject = async (values: PostCristinProject) => {
@@ -65,7 +65,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
 
   return (
     <Dialog {...props}>
-      <DialogTitle>{t('create_project')}</DialogTitle>
+      <DialogTitle>{t('project.create_project')}</DialogTitle>
 
       <Formik initialValues={initialValues} validationSchema={basicProjectValidationSchema} onSubmit={createProject}>
         {({ isSubmitting, setFieldValue }) => (
@@ -77,7 +77,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                     <TextField
                       {...field}
                       data-testid={dataTestId.registrationWizard.description.projectForm.titleField}
-                      label={t('translations:common.title')}
+                      label={t('common.title')}
                       required
                       variant="filled"
                       fullWidth
@@ -89,7 +89,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                 <Field name="coordinatingInstitution.id">
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <OrganizationSearchField
-                      label={t('project:coordinating_institution')}
+                      label={t('project.coordinating_institution')}
                       onChange={(selectedInstitution) => setFieldValue(field.name, selectedInstitution?.id ?? '')}
                       errorMessage={touched && !!error ? error : undefined}
                       fieldInputProps={field}
@@ -101,7 +101,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                   <Field name="startDate">
                     {({ field, meta: { touched, error } }: FieldProps<string>) => (
                       <DatePicker
-                        label={t('translations:common.start_date')}
+                        label={t('common.start_date')}
                         onChange={(date: Date | null, keyboardValue) => {
                           const newDateString = getNewDateValue(date, keyboardValue);
                           setFieldValue(field.name, newDateString);
@@ -127,7 +127,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                   <Field name="endDate">
                     {({ field, meta: { touched, error } }: FieldProps<string>) => (
                       <DatePicker
-                        label={t('translations:common.end_date')}
+                        label={t('common.end_date')}
                         onChange={(date: Date | null, keyboardValue) => {
                           const newDateString = getNewDateValue(date, keyboardValue);
                           setFieldValue(field.name, newDateString);
@@ -153,15 +153,15 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
               </Box>
 
               <Typography variant="h6" component="h3" gutterBottom sx={{ mt: '1rem' }}>
-                {t('project_participants')}
+                {t('project.project_participants')}
               </Typography>
               <ProjectContributorRow />
             </DialogContent>
 
             <DialogActions>
-              <Button onClick={props.onClose}>{t('translations:common.cancel')}</Button>
+              <Button onClick={props.onClose}>{t('common.cancel')}</Button>
               <LoadingButton variant="contained" type="submit" loading={isSubmitting}>
-                {t('translations:common.save')}
+                {t('common.save')}
               </LoadingButton>
             </DialogActions>
           </Form>

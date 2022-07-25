@@ -14,7 +14,7 @@ interface ProjectResultsProps {
 }
 
 export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
-  const { t } = useTranslation('project');
+  const { t } = useTranslation();
   const [results, isLoadingResults] = useFetch<SearchResponse<Registration>>({
     url: `${SearchApiPath.Registrations}?query=${DescriptionFieldNames.Projects}.id="${projectId}"`,
     errorMessage: t('feedback.error.search'),
@@ -23,13 +23,13 @@ export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
   return (
     <LandingPageAccordion
       data-testid={dataTestId.projectLandingPage.resultsAccordion}
-      heading={results ? `${t('results')} (${results.size})` : t('results')}>
+      heading={results ? `${t('project.results')} (${results.size})` : t('project.results')}>
       {isLoadingResults ? (
         <CircularProgress />
       ) : results && results.size > 0 ? (
         <RegistrationList registrations={results.hits} />
       ) : (
-        <Typography>{t('no_results')}</Typography>
+        <Typography>{t('project.no_results')}</Typography>
       )}
     </LandingPageAccordion>
   );

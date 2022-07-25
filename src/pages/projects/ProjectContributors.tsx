@@ -8,7 +8,7 @@ interface ProjectContributorsProps {
 }
 
 export const ProjectContributors = ({ contributors }: ProjectContributorsProps) => {
-  const { t } = useTranslation('project');
+  const { t } = useTranslation();
 
   const projectManagers = contributors.filter((contributor) => contributor.type === 'ProjectManager');
   const projectParticipants = contributors.filter((contributor) => contributor.type === 'ProjectParticipant');
@@ -21,13 +21,13 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
         },
       }}>
       {contributors.length === 0 ? (
-        <Typography>{t('no_participants')}</Typography>
+        <Typography>{t('project.no_participants')}</Typography>
       ) : (
         <>
           {projectManagers.length > 0 && (
             <div>
               <Typography variant="overline" component="h3">
-                {t('project_manager')}
+                {t('project.project_manager')}
               </Typography>
               <ContributorList contributors={projectManagers} />
             </div>
@@ -35,7 +35,7 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
           {projectParticipants.length > 0 && (
             <div>
               <Typography variant="overline" component="h3">
-                {t('project_participants')}
+                {t('project.project_participants')}
               </Typography>
               <ContributorList contributors={projectParticipants} />
             </div>

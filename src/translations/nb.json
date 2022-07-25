@@ -765,6 +765,32 @@
       "paragraph": "Personopplysninger er alle former for data, informasjon, opplysninger og vurderinger som kan knyttes til deg som enkeltperson, jf. <0>personopplysningsloven § 2</0> og <1>GDPR artikkel 5</1> nr. 1. Det avgjørende for om en opplysning er en personopplysning er om opplysningene kan knyttes til en konkret person. Opplysninger, som alene ikke kan knyttes til en enkeltperson, kan i tilfeller hvor opplysningen forekommer sammen med andre data utgjøre en personopplysning."
     }
   },
+  "project": {
+    "coordinating_institution": "Koordinerende institusjon",
+    "create_project": "Opprett prosjekt",
+    "financing": "Finansiering",
+    "grant_id": "GrantID",
+    "no_participants": "Ingen registrerte deltakere.",
+    "no_results": "Ingen publiserte resultater.",
+    "no_summary": "Ingen registrerte sammendrag.",
+    "period": "Prosjektperiode",
+    "person": "Person",
+    "popular_science_summary": "Populærvitenskapelig sammendrag",
+    "project": "Prosjekt",
+    "project_info": "Prosjektinfo",
+    "project_manager": "Prosjektleder",
+    "project_participants": "Prosjektdeltakere",
+    "results": "Resultater",
+    "scientific_summary": "Vitenskapelig sammendrag",
+    "search_for_institution": "Søk etter institusjon",
+    "search_for_person": "Søk etter person",
+    "status": {
+      "ACTIVE": "Aktivt",
+      "CONCLUDED": "Avsluttet",
+      "NOTSTARTED": "Ikke startet"
+    },
+    "summary": "Sammendrag"
+  },
   "registration": {
     "contributors": {
       "add_affiliation": "Legg til tilhørighet",
