@@ -27,7 +27,7 @@ interface RegistrationListItemProps {
 }
 
 const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
-  const { t } = useTranslation('publicationTypes');
+  const { t } = useTranslation();
   const { identifier, entityDescription } = registration;
 
   const contributors = entityDescription?.contributors ?? [];
@@ -38,7 +38,8 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
     <ListItem divider disableGutters>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Typography variant="overline" sx={{ color: 'primary.dark' }}>
-          {t(entityDescription?.reference?.publicationInstance.type ?? '')} - {displayDate(entityDescription?.date)}
+          {t(`registration.publication_types.${entityDescription?.reference?.publicationInstance.type ?? ''}`)} -{' '}
+          {displayDate(entityDescription?.date)}
         </Typography>
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
           <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
@@ -64,9 +65,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
             </Typography>
           ))}
           {countRestContributors > 0 && (
-            <Typography variant="body2">
-              ({t('translations:common.x_others', { count: countRestContributors })})
-            </Typography>
+            <Typography variant="body2">({t('common.x_others', { count: countRestContributors })})</Typography>
           )}
         </Box>
 

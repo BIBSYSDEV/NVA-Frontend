@@ -11,7 +11,7 @@ interface CentralImportResultItemProps {
 }
 
 export const CentralImportResultItem = ({ publication }: CentralImportResultItemProps) => {
-  const { t } = useTranslation('publicationTypes');
+  const { t } = useTranslation();
 
   const contributors = publication.entityDescription?.contributors ?? [];
   const verifiedContributorCount = contributors.filter((contributor) => !!contributor.identity.id).length;
@@ -29,7 +29,9 @@ export const CentralImportResultItem = ({ publication }: CentralImportResultItem
       <ListItemText disableTypography>
         <Grid container spacing={2} justifyContent="space-between" alignItems="baseline">
           <Grid item md={2} xs={12}>
-            {publicationInstanceType && <Typography>{t(publicationInstanceType)}</Typography>}
+            {publicationInstanceType && (
+              <Typography>{t(`registration.publication_types.${publicationInstanceType}`)}</Typography>
+            )}
           </Grid>
           <Grid item md={5} xs={12}>
             {publication.entityDescription?.reference?.doi && (

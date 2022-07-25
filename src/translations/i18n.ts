@@ -6,7 +6,6 @@ import adminEn from './en/admin.json';
 import authorizationEn from './en/authorization.json';
 import institutionEn from './en/institution.json';
 import projectEn from './en/project.json';
-import publicationTypesEn from './en/publicationTypes.json';
 import searchEn from './en/search.json';
 import workListsEn from './en/workLists.json';
 
@@ -15,7 +14,6 @@ import adminNb from './nb/admin.json';
 import authorizationNb from './nb/authorization.json';
 import institutionNb from './nb/institution.json';
 import projectNb from './nb/project.json';
-import publicationTypesNb from './nb/publicationTypes.json';
 import searchNb from './nb/search.json';
 import workListsNb from './nb/workLists.json';
 
@@ -27,7 +25,6 @@ i18n.use(LanguageDetector).init({
       authorization: authorizationEn,
       institution: institutionEn,
       project: projectEn,
-      publicationTypes: publicationTypesEn,
       search: searchEn,
       workLists: workListsEn,
     },
@@ -37,14 +34,13 @@ i18n.use(LanguageDetector).init({
       authorization: authorizationNb,
       institution: institutionNb,
       project: projectNb,
-      publicationTypes: publicationTypesNb,
       search: searchNb,
       workLists: workListsNb,
     },
   },
   fallbackLng: 'nob',
   debug: false,
-  ns: ['admin', 'authorization', 'institution', 'publicationTypes', 'workLists'],
+  ns: ['admin', 'authorization', 'institution', 'workLists'],
   defaultNS: 'translations',
   supportedLngs: ['nob', 'eng'],
   interpolation: {

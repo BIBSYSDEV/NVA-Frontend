@@ -204,7 +204,7 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
 
   return (
     <>
-      <Typography variant="overline">{t(`publicationTypes:${type}`)}</Typography>
+      <Typography variant="overline">{t(`registration.publication_types.${type}`)}</Typography>
       {label && <Typography>{label}</Typography>}
       {agent?.name && (
         <Typography>

@@ -48,7 +48,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           title: entityDescription?.reference?.publicationInstance.type ? (
             <>
               <span data-testid={dataTestId.registrationLandingPage.registrationSubtype}>
-                {t(`publicationTypes:${entityDescription.reference.publicationInstance.type}`)}
+                {t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)}
               </span>
               {entityDescription?.date?.year && (
                 <Box

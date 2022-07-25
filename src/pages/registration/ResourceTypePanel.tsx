@@ -167,7 +167,7 @@ export const ResourceTypePanel = () => {
           onChange={(event) => onChangeType(event.target.value)}>
           {Object.values(PublicationType).map((typeValue) => (
             <MenuItem value={typeValue} key={typeValue} data-testid={`publication-context-type-${typeValue}`}>
-              {t(`publicationTypes:${typeValue}`)}
+              {t(`registration.publication_types.${typeValue}`)}
             </MenuItem>
           ))}
         </TextField>
