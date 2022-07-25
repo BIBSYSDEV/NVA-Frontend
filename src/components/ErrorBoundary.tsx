@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import translationsNb from '../translations/nb.json';
+import translationsNb from '../translations/nobTranslations.json';
 import { LocalStorageKey } from '../utils/constants';
 
 type ErrorBoundaryClassProps = RouteComponentProps & WithTranslation;
