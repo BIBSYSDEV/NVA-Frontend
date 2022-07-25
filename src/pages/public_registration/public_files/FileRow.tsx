@@ -64,7 +64,7 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: 
   const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
   const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
   const fileIsEmbargoed = fileEmbargoDate ? fileEmbargoDate > new Date() : false;
-  const licenseTitle = file.license?.identifier ? t(`licenses:labels.${file.license.identifier}`) : '';
+  const licenseTitle = file.license?.identifier ? t(`licenses.labels.${file.license.identifier}`) : '';
 
   return (
     <Box

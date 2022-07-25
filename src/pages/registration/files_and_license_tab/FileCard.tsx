@@ -180,7 +180,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                               src={selectedLicense.logo}
                               alt={selectedLicense.identifier}
                             />
-                            <span>{t(`licenses:labels.${option}`)}</span>
+                            <span>{t(`licenses.labels.${option}`)}</span>
                           </Box>
                         ) : null;
                       },
@@ -211,7 +211,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                           <img style={{ width: '5rem' }} src={license.logo} alt={license.identifier} />
                         </ListItemIcon>
                         <ListItemText>
-                          <Typography>{t(`licenses:labels.${license.identifier}`)}</Typography>
+                          <Typography>{t(`licenses.labels.${license.identifier}`)}</Typography>
                         </ListItemText>
                       </MenuItem>
                     ))}
