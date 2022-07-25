@@ -1,5 +1,6 @@
 import { createTheme, SxProps } from '@mui/material';
-import { nbNO, enUS } from '@mui/material/locale';
+import { nbNO as coreNbNo, enUS as coreEnUs } from '@mui/material/locale';
+import { nbNO as pickersNbNo, enUS as pickersEnUs } from '@mui/x-date-pickers';
 import i18n from '../translations/i18n';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
@@ -21,7 +22,8 @@ enum Font {
   Crimson = 'Crimson Text, serif',
 }
 
-const locale = i18n.language === 'eng' ? enUS : nbNO;
+const coreLocale = i18n.language === 'eng' ? coreEnUs : coreNbNo;
+const pickersLocale = i18n.language === 'eng' ? pickersEnUs : pickersNbNo;
 
 export const mainTheme = createTheme(
   {
@@ -186,7 +188,8 @@ export const mainTheme = createTheme(
       },
     },
   },
-  locale
+  pickersLocale,
+  coreLocale
 );
 
 export const alternatingTableRowColor: SxProps = {
