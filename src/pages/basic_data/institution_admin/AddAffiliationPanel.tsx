@@ -16,7 +16,7 @@ import { StartDateField } from '../fields/StartDateField';
 import { PositionField } from '../fields/PositionField';
 
 export const AddAffiliationPanel = () => {
-  const { t } = useTranslation('basicData');
+  const { t } = useTranslation();
   const { values, errors, setFieldValue, isSubmitting } = useFormikContext<AddEmployeeData>();
   const user = useSelector((store: RootState) => store.user);
   const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
@@ -50,7 +50,7 @@ export const AddAffiliationPanel = () => {
                 {...field}
                 {...params}
                 required
-                label={t('translations:common.institution')}
+                label={t('common.institution')}
                 variant="filled"
                 fullWidth
                 error={touched && !!error}
@@ -73,7 +73,7 @@ export const AddAffiliationPanel = () => {
               type="number"
               inputProps={{ min: '0', max: '100' }}
               variant="filled"
-              label={t('add_employee.position_percent')}
+              label={t('basic_data.add_employee.position_percent')}
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}
             />
@@ -91,7 +91,7 @@ export const AddAffiliationPanel = () => {
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <DatePicker
               disabled={isDisabled}
-              label={t('translations:common.end_date')}
+              label={t('common.end_date')}
               value={field.value ? field.value : null}
               onChange={(date: Date | null, keyboardInput) => {
                 const newValue = getNewDateValue(date, keyboardInput);

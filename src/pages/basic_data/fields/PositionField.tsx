@@ -12,7 +12,7 @@ interface PositionFieldProps {
 }
 
 export const PositionField = ({ fieldName, disabled }: PositionFieldProps) => {
-  const { t } = useTranslation('basicData');
+  const { t } = useTranslation();
   const [positionResponse, isLoadingPositions] = useFetchResource<PositionResponse>(
     CristinApiPath.Position,
     t('feedback.error.get_positions')
@@ -44,7 +44,7 @@ export const PositionField = ({ fieldName, disabled }: PositionFieldProps) => {
               {...field}
               {...params}
               required
-              label={t('add_employee.position')}
+              label={t('basic_data.add_employee.position')}
               variant="filled"
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}

@@ -15,7 +15,7 @@ interface CentralImportDuplicateSearchProps {
 }
 
 export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: CentralImportDuplicateSearchProps) => {
-  const { t } = useTranslation('basicData');
+  const { t } = useTranslation();
 
   const maxHits = ROWS_PER_PAGE_OPTIONS[0];
   const queryArray = [];
@@ -44,7 +44,7 @@ export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: Central
         searchResults && (
           <>
             <Typography variant="subtitle1">
-              {t('central_import.duplicate_search_hits_shown', {
+              {t('basic_data.central_import.duplicate_search_hits_shown', {
                 ShownResultsCount: searchResults.hits.length,
                 TotalResultsCount: searchResults.size,
               })}

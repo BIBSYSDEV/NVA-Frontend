@@ -35,7 +35,7 @@ export const AddAdminDialog = ({
   refetchInstitutionUsers,
   cristinInstitutionId,
 }: AddAdminDialogProps) => {
-  const { t } = useTranslation('basicData');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const location = useLocation();
   const [cristinPerson, setCristinPerson] = useState<FlatCristinPerson>();
@@ -88,7 +88,7 @@ export const AddAdminDialog = ({
 
   return (
     <Dialog open={open} onClose={closeDialog} fullWidth>
-      <DialogTitle>{t('translations:common.add_custom', { name: t('my_page.roles.institution_admin') })}</DialogTitle>
+      <DialogTitle>{t('common.add_custom', { name: t('my_page.roles.institution_admin') })}</DialogTitle>
       <Formik
         initialValues={addAdminInitialValues}
         validationSchema={!isEmployedInThisOrganization ? addCustomerAdminValidationSchema : null}
@@ -110,14 +110,14 @@ export const AddAdminDialog = ({
               )}
             </DialogContent>
             <DialogActions>
-              <Button onClick={closeDialog}>{t('translations:common.cancel')}</Button>
+              <Button onClick={closeDialog}>{t('common.cancel')}</Button>
               <LoadingButton
                 type="submit"
                 variant="contained"
                 loading={isSubmitting}
                 startIcon={<AddIcon />}
                 disabled={!cristinPerson}>
-                {t('translations:common.add')}
+                {t('common.add')}
               </LoadingButton>
             </DialogActions>
           </Form>

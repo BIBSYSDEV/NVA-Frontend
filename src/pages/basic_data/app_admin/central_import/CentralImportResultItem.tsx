@@ -60,7 +60,7 @@ export const CentralImportResultItem = ({ publication }: CentralImportResultItem
           </Grid>
           <Grid item md={2} xs={12}>
             <Typography>
-              {t('basicData:central_import.verified_contributor_count', {
+              {t('basic_data.central_import.verified_contributor_count', {
                 verifiedContributorCount,
                 contributorsCount,
               })}

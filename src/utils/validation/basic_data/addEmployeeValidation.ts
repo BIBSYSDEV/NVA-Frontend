@@ -11,20 +11,20 @@ const employeeErrorMessage = {
     field: i18n.t('translations:common.last_name'),
   }),
   affiliationTypeRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('basicData:add_employee.position'),
+    field: i18n.t('basic_data.add_employee.position'),
   }),
   affiliationOrganizationRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('translations:common.institution'),
   }),
   affiliationPercentageRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('basicData:add_employee.position_percent'),
+    field: i18n.t('basic_data.add_employee.position_percent'),
   }),
   affiliationPercentageMax: i18n.t('feedback.validation.must_be_smaller_than', {
-    field: i18n.t('basicData:add_employee.position_percent'),
+    field: i18n.t('basic_data.add_employee.position_percent'),
     limit: 100,
   }),
   affiliationPercentageMin: i18n.t('feedback.validation.must_be_bigger_than', {
-    field: i18n.t('basicData:add_employee.position_percent'),
+    field: i18n.t('basic_data.add_employee.position_percent'),
     limit: 0,
   }),
   affiliationStartDateRequired: i18n.t('feedback.validation.is_required', {
@@ -42,10 +42,10 @@ const employeeErrorMessage = {
     field: i18n.t('translations:common.end_date'),
   }),
   nationalIdInvalid: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('basicData:national_id'),
+    field: i18n.t('basic_data.national_id'),
   }),
   nationalIdInvalidFormat: i18n.t('feedback.validation.invalid_number_of_digits', {
-    field: i18n.t('basicData:national_id'),
+    field: i18n.t('basic_data.national_id'),
     digits: 11,
   }),
 };

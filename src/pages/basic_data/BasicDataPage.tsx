@@ -28,7 +28,7 @@ import {
 } from '../../components/PageWithSideMenu';
 
 const BasicDataPage = () => {
-  const { t } = useTranslation('basicData');
+  const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
@@ -46,7 +46,7 @@ const BasicDataPage = () => {
   return (
     <StyledPageWithSideMenu>
       <SideMenu>
-        <SideMenuHeader icon={BusinessCenterIcon} text={t('basic_data')} />
+        <SideMenuHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} />
 
         <NavigationList>
           {user?.isInstitutionAdmin && [
@@ -55,13 +55,13 @@ const BasicDataPage = () => {
                 data-testid={dataTestId.basicData.personRegisterLink}
                 isSelected={currentPath === UrlPathTemplate.BasicDataPersonRegister}
                 to={UrlPathTemplate.BasicDataPersonRegister}>
-                {t('person_register.person_register')}
+                {t('basic_data.person_register.person_register')}
               </LinkButton>
               <LinkIconButton
                 data-testid={dataTestId.basicData.addEmployeeLink}
                 isSelected={currentPath === UrlPathTemplate.BasicDataAddEmployee}
                 to={UrlPathTemplate.BasicDataAddEmployee}
-                title={t('add_employee.add_employee')}>
+                title={t('basic_data.add_employee.add_employee')}>
                 <PersonAddIcon />
               </LinkIconButton>
             </LinkButtonRow>,
@@ -71,7 +71,7 @@ const BasicDataPage = () => {
                 data-testid={dataTestId.basicData.adminUsersLink}
                 isSelected={currentPath === UrlPathTemplate.BasicDataUsers}
                 to={UrlPathTemplate.BasicDataUsers}>
-                {t('translations:common.users')}
+                {t('common.users')}
               </LinkButton>
             </BetaFunctionality>,
           ]}
@@ -83,7 +83,7 @@ const BasicDataPage = () => {
                 data-testid={dataTestId.basicData.centralImportLink}
                 isSelected={currentPath === UrlPathTemplate.BasicDataCentralImport}
                 to={UrlPathTemplate.BasicDataCentralImport}>
-                {t('central_import.central_import')}
+                {t('basic_data.central_import.central_import')}
               </LinkButton>
             </BetaFunctionality>,
             <LinkButton
@@ -91,7 +91,7 @@ const BasicDataPage = () => {
               data-testid={dataTestId.basicData.adminInstitutionsLink}
               isSelected={currentPath === UrlPathTemplate.BasicDataInstitutions}
               to={UrlPathTemplate.BasicDataInstitutions}>
-              {t('translations:common.institutions')}
+              {t('common.institutions')}
             </LinkButton>,
           ]}
         </NavigationList>

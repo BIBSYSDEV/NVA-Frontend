@@ -14,7 +14,7 @@ import { DuplicateSearchFilterForm } from './DuplicateSearchFilterForm';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
 
 export const CentralImportDuplicationCheckPage = () => {
-  const { t } = useTranslation('basicData');
+  const { t } = useTranslation();
   const { identifier } = useParams<{ identifier: string }>();
   const [duplicateSearchFilters, setDuplicateSearchFilters] = useState(emptyDuplicateSearchFilter);
 
@@ -41,7 +41,7 @@ export const CentralImportDuplicationCheckPage = () => {
   return (
     <>
       <Typography variant="h3" component="h2" paragraph>
-        {t('central_import.duplicate_check')}
+        {t('basic_data.central_import.duplicate_check')}
       </Typography>
       <SyledPageContent>
         {isLoadingRegistration ? (
@@ -49,7 +49,7 @@ export const CentralImportDuplicationCheckPage = () => {
         ) : registration ? (
           <>
             <Typography variant="h3" component="h2" paragraph>
-              {t('central_import.import_publication')}:
+              {t('basic_data.central_import.import_publication')}:
             </Typography>
             <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
               {registration.entityDescription?.mainTitle}
@@ -70,7 +70,7 @@ export const CentralImportDuplicationCheckPage = () => {
             )}
             <Divider sx={{ marginBottom: '2rem' }} />
             <Typography variant="h3" component="h2" paragraph>
-              {t('central_import.search_for_duplicates')}:
+              {t('basic_data.central_import.search_for_duplicates')}:
             </Typography>
             <DuplicateSearchFilterForm
               publication={registration}

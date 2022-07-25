@@ -41,7 +41,7 @@ export const EditorInstitution = () => {
           <Typography variant="overline">{t('editor.institution.institution_code')}</Typography>
           <Typography paragraph>{institution?.id.split('/').pop() ?? '-'}</Typography>
 
-          <Typography variant="overline">{t('basicData:institutions.ror')}</Typography>
+          <Typography variant="overline">{t('basic_data.institutions.ror')}</Typography>
           <Typography paragraph>
             {customer?.rorId ? (
               <Link href={customer.rorId} target="_blank" rel="noopener noreferrer">

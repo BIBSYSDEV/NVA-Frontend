@@ -119,7 +119,7 @@ export const CustomerInstitutionMetadataForm = ({
               />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.RorId}
-                label={t('basicData:institutions.ror')}
+                label={t('basic_data.institutions.ror')}
                 dataTestId={dataTestId.institutionAdmin.rorField}
               />
               <StyledRightAlignedWrapper>

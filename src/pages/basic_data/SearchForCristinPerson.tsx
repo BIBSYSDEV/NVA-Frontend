@@ -26,7 +26,7 @@ export const SearchForCristinPerson = ({
   setSelectedPerson,
   disabled,
 }: SearchForCristinPersonProps) => {
-  const { t } = useTranslation('basicData');
+  const { t } = useTranslation();
 
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery);
@@ -93,10 +93,10 @@ export const SearchForCristinPerson = ({
             <AutocompleteTextField
               {...params}
               value={searchQuery}
-              label={t('add_employee.search_for_person')}
+              label={t('basic_data.add_employee.search_for_person')}
               showSearchIcon
               isLoading={isLoadingSearchByName}
-              placeholder={t('add_employee.name_or_nin')}
+              placeholder={t('basic_data.add_employee.name_or_nin')}
             />
           )}
         />
@@ -109,7 +109,7 @@ export const SearchForCristinPerson = ({
             required
             fullWidth
             variant="filled"
-            label={t('translations:common.first_name')}
+            label={t('common.first_name')}
             value={selectedPerson.firstName}
           />
           <TextField
@@ -117,7 +117,7 @@ export const SearchForCristinPerson = ({
             required
             fullWidth
             variant="filled"
-            label={t('translations:common.last_name')}
+            label={t('common.last_name')}
             value={selectedPerson.lastName}
           />
           <TextField
@@ -125,11 +125,11 @@ export const SearchForCristinPerson = ({
             required
             fullWidth
             variant="filled"
-            label={t('national_id')}
+            label={t('basic_data.national_id')}
             value={getMaskedNationalIdentityNumber(selectedPerson.nationalId)}
           />
           <div>
-            <Typography variant="overline">{t('translations:common.employments')}</Typography>
+            <Typography variant="overline">{t('common.employments')}</Typography>
             <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
               {selectedPerson.affiliations.map((affiliation) => {
                 const roleString = getLanguageString(affiliation.role.labels);
@@ -150,7 +150,7 @@ export const SearchForCristinPerson = ({
             onClick={() => setSelectedPerson(undefined)}
             sx={{ width: 'fit-content' }}
             startIcon={<HighlightOffIcon />}>
-            {t('add_employee.remove_selected_person')}
+            {t('basic_data.add_employee.remove_selected_person')}
           </Button>
         </>
       ) : null}

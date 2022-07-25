@@ -123,7 +123,7 @@ export const Header = () => {
                   data-testid={dataTestId.header.basicDataLink}
                   to={UrlPathTemplate.BasicData}
                   startIcon={<BusinessCenterIcon />}>
-                  {t('basicData:basic_data')}
+                  {t('basic_data.basic_data')}
                 </Button>
               )}
               {user?.isCurator && (

@@ -31,7 +31,7 @@ const getSearchUrl = (topOrgCristinId: string | undefined, nameQuery: string, pa
 };
 
 export const PersonRegisterPage = () => {
-  const { t } = useTranslation('basicData');
+  const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
@@ -64,38 +64,40 @@ export const PersonRegisterPage = () => {
   return (
     <>
       <Helmet>
-        <title>{t('person_register.person_register')}</title>
+        <title>{t('basic_data.person_register.person_register')}</title>
       </Helmet>
 
       <TextField
         variant="filled"
         value={searchQuery}
         onChange={(event) => setSearchQuery(event.target.value)}
-        label={t('translations:common.search')}
+        label={t('common.search')}
         fullWidth
         sx={{ mb: '1rem', maxWidth: '25rem' }}
       />
 
       {employees.length === 0 && !isLoadingEmployees ? (
-        <Typography>{t('person_register.no_employees_found')}</Typography>
+        <Typography>{t('basic_data.person_register.no_employees_found')}</Typography>
       ) : (
         <>
           <TableContainer>
             <Table size="small" sx={alternatingTableRowColor}>
-              <caption style={visuallyHidden}>{t('person_register.employee_table_caption')}</caption>
+              <caption style={visuallyHidden}>{t('basic_data.person_register.employee_table_caption')}</caption>
               <TableHead>
                 <TableRow>
                   <TableCell>
-                    <Typography fontWeight="bold">{t('person_register.person_id')}</Typography>
+                    <Typography fontWeight="bold">{t('basic_data.person_register.person_id')}</Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography fontWeight="bold">{t('person_register.national_identity_number')}</Typography>
+                    <Typography fontWeight="bold">
+                      {t('basic_data.person_register.national_identity_number')}
+                    </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography fontWeight="bold">{t('translations:common.name')}</Typography>
+                    <Typography fontWeight="bold">{t('common.name')}</Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography fontWeight="bold">{t('translations:common.employments')}</Typography>
+                    <Typography fontWeight="bold">{t('common.employments')}</Typography>
                   </TableCell>
                   <TableCell />
                 </TableRow>

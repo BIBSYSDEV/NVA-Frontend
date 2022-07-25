@@ -41,7 +41,7 @@ const initialValues: AddEmployeeData = {
 };
 
 export const AddEmployeePage = () => {
-  const { t } = useTranslation('basicData');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const customerId = useSelector((store: RootState) => store.user?.customerId);
 
@@ -89,10 +89,10 @@ export const AddEmployeePage = () => {
   return (
     <>
       <Helmet>
-        <title>{t('add_employee.add_employee')}</title>
+        <title>{t('basic_data.add_employee.add_employee')}</title>
       </Helmet>
       <Typography variant="h3" component="h2" paragraph>
-        {t('add_employee.add_to_person_registry')}
+        {t('basic_data.add_employee.add_to_person_registry')}
       </Typography>
       <Formik
         initialValues={initialValues}
@@ -135,7 +135,7 @@ export const AddEmployeePage = () => {
                 disabled={!isValid}
                 type="submit"
                 startIcon={<AddCircleOutlineIcon />}>
-                {t('translations:common.create')}
+                {t('common.create')}
               </LoadingButton>
             </StyledCenterContainer>
           </Form>

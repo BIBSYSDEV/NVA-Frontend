@@ -14,7 +14,7 @@ import { SearchParam } from '../../../../utils/searchHelpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 
 export const CentralImportPage = () => {
-  const { t } = useTranslation('basicData');
+  const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const resultsParam = params.get(SearchParam.Results);
@@ -44,7 +44,7 @@ export const CentralImportPage = () => {
   return (
     <>
       <Typography variant="h3" component="h2" paragraph>
-        {t('central_import.publications')}
+        {t('basic_data.central_import.publications')}
       </Typography>
       {isLoadingSearchResults ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
