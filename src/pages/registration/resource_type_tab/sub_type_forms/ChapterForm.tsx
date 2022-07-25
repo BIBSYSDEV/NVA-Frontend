@@ -20,6 +20,8 @@ export const ChapterForm = () => {
 
   return (
     <>
+      <DoiField />
+
       <div>
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
           <InfoIcon color="primary" />
@@ -33,8 +35,6 @@ export const ChapterForm = () => {
               : null}
           </Typography>
         </Box>
-
-        <DoiField />
 
         {instanceType === ChapterType.AnthologyChapter ? (
           <SearchContainerField

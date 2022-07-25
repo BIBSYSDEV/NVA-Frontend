@@ -145,7 +145,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
         {licenses.map((license) => (
           <Box key={license.identifier} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
             <Typography variant="h6">{t(`licenses.labels.${license.identifier}`)}</Typography>
-            <img src={license.logo} alt={license.identifier} />
+            <Box component="img" src={license.logo} alt={license.identifier} sx={{ width: '8rem' }} />
             <Typography paragraph>{license.description}</Typography>
             {license.link && (
               <Link href={license.link} target="blank">
