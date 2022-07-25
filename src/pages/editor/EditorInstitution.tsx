@@ -23,7 +23,7 @@ export const EditorInstitution = () => {
   return (
     <>
       <Helmet>
-        <title>{t('institution.institution_name')}</title>
+        <title>{t('editor.institution.institution_name')}</title>
       </Helmet>
       {isLoadingCustomer || isLoadingInstitution ? (
         <CircularProgress />

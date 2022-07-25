@@ -6,19 +6,15 @@ import nobTranslations from './nobTranslations.json';
 i18n.use(LanguageDetector).init({
   resources: {
     eng: {
-      translations: engTranslations,
+      translation: engTranslations,
     },
     nob: {
-      translations: nobTranslations,
+      translation: nobTranslations,
     },
   },
   fallbackLng: 'nob',
-  debug: true,
-  defaultNS: 'translations',
   supportedLngs: ['nob', 'eng'],
-  interpolation: {
-    formatSeparator: ',',
-  },
+  debug: false,
 });
 
 export default i18n;

@@ -6,15 +6,15 @@ import { Employment, FlatCristinPerson } from '../../../types/user.types';
 import { validateDateInterval, YupShape } from '../validationHelpers';
 
 const employeeErrorMessage = {
-  firstNameRequired: i18n.t('feedback.validation.is_required', { field: i18n.t('translations:common.first_name') }),
+  firstNameRequired: i18n.t('feedback.validation.is_required', { field: i18n.t('common.first_name') }),
   lastNameRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('translations:common.last_name'),
+    field: i18n.t('common.last_name'),
   }),
   affiliationTypeRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('basic_data.add_employee.position'),
   }),
   affiliationOrganizationRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('translations:common.institution'),
+    field: i18n.t('common.institution'),
   }),
   affiliationPercentageRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('basic_data.add_employee.position_percent'),
@@ -28,18 +28,18 @@ const employeeErrorMessage = {
     limit: 0,
   }),
   affiliationStartDateRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('translations:common.start_date'),
+    field: i18n.t('common.start_date'),
   }),
   affiliationStartDateBeforeEnd: i18n.t('feedback.validation.cannot_be_after', {
-    field: i18n.t('translations:common.start_date'),
-    limitField: i18n.t('translations:common.end_date').toLowerCase(),
+    field: i18n.t('common.start_date'),
+    limitField: i18n.t('common.end_date').toLowerCase(),
   }),
   affiliationEndDateAfterStart: i18n.t('feedback.validation.cannot_be_before', {
-    field: i18n.t('translations:common.end_date'),
-    limitField: i18n.t('translations:common.start_date').toLowerCase(),
+    field: i18n.t('common.end_date'),
+    limitField: i18n.t('common.start_date').toLowerCase(),
   }),
   affiliationEndDateRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('translations:common.end_date'),
+    field: i18n.t('common.end_date'),
   }),
   nationalIdInvalid: i18n.t('feedback.validation.is_required', {
     field: i18n.t('basic_data.national_id'),

@@ -60,7 +60,7 @@ const resourceErrorMessage = {
     field: i18n.t('registration.resource_type.original_article'),
   }),
   countryRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('translations:common.country'),
+    field: i18n.t('common.country'),
   }),
   dateFromRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.date_from'),
@@ -117,10 +117,10 @@ const resourceErrorMessage = {
     field: i18n.t('registration.resource_type.place_for_event'),
   }),
   publisherNotSelected: i18n.t('feedback.validation.not_selected', {
-    field: i18n.t('translations:common.publisher'),
+    field: i18n.t('common.publisher'),
   }),
   publisherRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('translations:common.publisher'),
+    field: i18n.t('common.publisher'),
   }),
   seriesNotSelected: i18n.t('feedback.validation.not_selected', {
     field: i18n.t('registration.resource_type.series'),
@@ -130,7 +130,7 @@ const resourceErrorMessage = {
     limitField: i18n.t('registration.resource_type.date_from').toLowerCase(),
   }),
   typeRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('translations:common.type'),
+    field: i18n.t('common.type'),
   }),
   typeWorkRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.type_work'),

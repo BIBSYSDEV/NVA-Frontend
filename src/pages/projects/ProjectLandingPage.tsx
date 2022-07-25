@@ -30,7 +30,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
       <ProjectGeneralInfo project={project} />
 
       <LandingPageAccordion
-        heading={t('summary')}
+        heading={t('project.summary')}
         data-testid={dataTestId.projectLandingPage.scientificSummaryAccordion}>
         <ProjectSummary
           academicSummary={project.academicSummary}

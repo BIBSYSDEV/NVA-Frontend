@@ -194,7 +194,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                           <Button
                             variant="outlined"
                             color="error"
-                            title={t('resource_type.artistic.remove_music_work')}
+                            title={t('registration.resource_type.artistic.remove_music_work')}
                             onClick={() => setRemoveWorkItemIndex(index)}
                             sx={{ px: '2rem' }}
                             startIcon={<DeleteIcon />}>
@@ -204,7 +204,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                       );
                     })}
                     <ConfirmDialog
-                      title={t('resource_type.artistic.remove_music_work')}
+                      title={t('registration.resource_type.artistic.remove_music_work')}
                       open={removeWorkItemIndex > -1}
                       onCancel={closeConfirmDialog}
                       onAccept={() => {

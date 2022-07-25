@@ -191,7 +191,7 @@ const PrivacyPolicy = () => {
           ))}
         </ul>
         <Typography paragraph>{t('privacy.registered_personal_data.paragraph7')}</Typography>
-        <Typography paragraph>{t('registered_personal_data.paragraph8')}</Typography>
+        <Typography paragraph>{t('privacy.registered_personal_data.paragraph8')}</Typography>
 
         <Typography variant="h2">{t('privacy.automatic_case_processing.heading')}</Typography>
         <Typography paragraph>{t('privacy.automatic_case_processing.paragraph0')}</Typography>

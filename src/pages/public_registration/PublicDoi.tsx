@@ -25,7 +25,7 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
 
   return doiToPresent ? (
     <>
-      <Typography variant="overline">{t('registration.link_to_resource')}</Typography>
+      <Typography variant="overline">{t('registration.registration.link_to_resource')}</Typography>
       <Typography>
         <Link
           data-testid={dataTestId.registrationLandingPage.doiLink}

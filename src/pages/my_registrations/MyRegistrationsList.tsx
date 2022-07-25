@@ -148,7 +148,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, { value: registrations.length, label: t('all') }]}
+        rowsPerPageOptions={[10, 25, { value: registrations.length, label: t('common.all') }]}
         component="div"
         count={registrations.length}
         rowsPerPage={rowsPerPage}

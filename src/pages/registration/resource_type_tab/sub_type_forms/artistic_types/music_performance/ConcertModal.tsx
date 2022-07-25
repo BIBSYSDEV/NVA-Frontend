@@ -59,7 +59,7 @@ const validationSchema = Yup.object<YupShape<Concert>>({
   place: Yup.object().shape({
     label: Yup.string().required(
       i18n.t('feedback.validation.is_required', {
-        field: i18n.t('translations.common.place'),
+        field: i18n.t('common.place'),
       })
     ),
   }),

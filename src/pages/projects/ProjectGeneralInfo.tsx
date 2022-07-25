@@ -38,11 +38,11 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
           {t('project.financing')}
         </Typography>
         {project.funding.length > 0 ? (
-          project.funding.map((funding) => {
+          project.funding.map((funding, index) => {
             const sourceName = getLanguageString(funding.source.names);
             const fundingText = funding.code ? `${sourceName} - ${t('project.grant_id')} ${funding.code}` : sourceName;
             return (
-              <Typography key={funding.code}>
+              <Typography key={index}>
                 {funding.source.code === 'NFR' ? (
                   <Link
                     href={`https://prosjektbanken.forskningsradet.no/project/FORISS/${funding.code}`}

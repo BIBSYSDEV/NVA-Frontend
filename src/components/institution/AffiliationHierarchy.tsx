@@ -14,7 +14,10 @@ interface AffiliationHierarchyProps {
 
 export const AffiliationHierarchy = ({ unitUri, commaSeparated, boldTopLevel = true }: AffiliationHierarchyProps) => {
   const { t } = useTranslation();
-  const [organization, isLoadingOrganization] = useFetchResource<Organization>(unitUri, t('error.get_institution'));
+  const [organization, isLoadingOrganization] = useFetchResource<Organization>(
+    unitUri,
+    t('feedback.error.get_institution')
+  );
   const unitNames = getOrganizationHierarchy(organization).map((unit) => getLanguageString(unit.name));
 
   return isLoadingOrganization ? (

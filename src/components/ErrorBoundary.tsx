@@ -38,7 +38,7 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryClassProps> {
         }
       }
 
-      alert(t('translations:common.reload_page_info'));
+      alert(t('common.reload_page_info'));
       localStorage.setItem(LocalStorageKey.AppUpdateTime, currentTime.toString());
       window.location.reload();
     }
@@ -48,7 +48,7 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryClassProps> {
     const { t, children } = this.props;
     const { hasError } = this.state;
 
-    return hasError ? <ErrorMessage errorMessage={t('translations:common.error_occurred')} /> : children;
+    return hasError ? <ErrorMessage errorMessage={t('common.error_occurred')} /> : children;
   }
 }
 

@@ -15,15 +15,15 @@ interface AdvancedSearchRowProps {
 }
 
 export const registrationFilters = [
-  { field: DescriptionFieldNames.Title, i18nKey: 'translations:common.title' },
+  { field: DescriptionFieldNames.Title, i18nKey: 'common.title' },
   { field: DescriptionFieldNames.Abstract, i18nKey: 'registration.description.abstract' },
-  { field: ResourceFieldNames.SubType, i18nKey: 'registration_type' },
+  { field: ResourceFieldNames.SubType, i18nKey: 'search.registration_type' },
   { field: DescriptionFieldNames.Tags, i18nKey: 'registration.description.keywords' },
   {
     field: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Name}`,
     i18nKey: 'registration.contributors.contributor',
   },
-  { field: `${DescriptionFieldNames.Date}.year`, i18nKey: 'year_published' },
+  { field: `${DescriptionFieldNames.Date}.year`, i18nKey: 'search.year_published' },
 ];
 
 export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearchRowProps) => {

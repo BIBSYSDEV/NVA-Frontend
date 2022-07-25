@@ -13,9 +13,9 @@ enum SortOption {
 }
 
 const sortOptions = [
-  { value: SortOption.PublishedDateDesc, i18nKey: 'sort_by_published_date_desc' },
-  { value: SortOption.PublishedDateAsc, i18nKey: 'sort_by_published_date_asc' },
-  { value: SortOption.ModifiedDateDesc, i18nKey: 'sort_by_modified_date' },
+  { value: SortOption.PublishedDateDesc, i18nKey: 'search.sort_by_published_date_desc' },
+  { value: SortOption.PublishedDateAsc, i18nKey: 'search.sort_by_published_date_asc' },
+  { value: SortOption.ModifiedDateDesc, i18nKey: 'search.sort_by_modified_date' },
 ];
 
 export const SortSelector = () => {

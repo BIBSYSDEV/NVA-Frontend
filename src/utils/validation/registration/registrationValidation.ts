@@ -21,7 +21,7 @@ import { YupShape } from '../validationHelpers';
 import { FileSet } from '../../../types/file.types';
 
 const registrationErrorMessage = {
-  titleRequired: i18n.t('feedback.validation.is_required', { field: i18n.t('translations:common.title') }),
+  titleRequired: i18n.t('feedback.validation.is_required', { field: i18n.t('common.title') }),
   npiSubjectRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.description.npi_disciplines'),
   }),

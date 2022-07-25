@@ -203,7 +203,7 @@ export const UserList = ({
           {roleToRemove && (
             <ConfirmDialog
               open={!!removeRoleForUser}
-              title={t('users.remove_role_title')}
+              title={t('basic_data.users.remove_role_title')}
               isLoading={updatedRoleForUsers.length > 0}
               onCancel={() => setRemoveRoleForUser('')}
               onAccept={handleRemoveRoleFromUser}
