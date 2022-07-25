@@ -28,7 +28,6 @@ import { UrlPathTemplate } from './utils/urlPaths';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInstitutionDialog';
 import { CreateCristinPersonDialog } from './components/CreateCristinPersonDialog';
-import { nbNOPickersLocale } from './themes/datePickerNorwegianLocale';
 
 const getLanguageTagValue = (language: string) => {
   if (language === 'eng') {
@@ -132,11 +131,7 @@ export const App = () => {
                 flexGrow: 1,
               }}>
               <ErrorBoundary>
-                <LocalizationProvider
-                  dateAdapter={AdapterDateFns}
-                  adapterLocale={getDateFnsLocale(i18n.language)}
-                  // TODO: Use translations from MUI when they are part of the package -> https://github.com/mui/mui-x/pull/5475
-                  localeText={i18n.language === 'nob' ? nbNOPickersLocale : undefined}>
+                <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={getDateFnsLocale(i18n.language)}>
                   <AppRoutes />
                 </LocalizationProvider>
               </ErrorBoundary>
