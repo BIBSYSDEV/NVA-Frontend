@@ -2,9 +2,9 @@
   "about": {
     "description": {
       "paragraph0": {
-        "intro": "By using NVA, Norwegian research institutions are able to:",
         "bullet_point0": "Meet requirements for open access to articles and other research results through deposit in an open research archive",
-        "bullet_point1": "Publish reports, student theses and other material produced at the institution"
+        "bullet_point1": "Publish reports, student theses and other material produced at the institution",
+        "intro": "By using NVA, Norwegian research institutions are able to:"
       },
       "paragraph1": "NVA will also be developed for use in reporting scientific publication to the Ministry of Education and Research and the Ministry of Health and Care Services (NVI reporting), and for other administrative tasks.",
       "paragraph2": "The institution is responsible for the processing and registers and maintains its own content in the service and configures distribution rules for published resources (articles, reports, data sets, etc.). The service also receives content from other data sources.",
@@ -72,8 +72,8 @@
       "institution_dns": "DNS for the institution",
       "invalid_ror_format": "Invalid ROR. Example with valid format: https://ror.org/abcd0123ef",
       "organization_register_name": "Name in organization registry",
-      "remove_admin_title": "Remove administrator?",
       "remove_admin_text": "Are you sure you want to remove {{username}} from list of administrators?",
+      "remove_admin_title": "Remove administrator?",
       "ror": "Research Organization Registry (ROR)",
       "search_for_user": "Search among existing users",
       "short_name": "Shortened display name"
@@ -138,8 +138,8 @@
     "last_name": "Last name",
     "loading": "Loading",
     "mandatory": "Mandatory",
-    "message": "Message",
     "menu": "Menu",
+    "message": "Message",
     "missing_title": "Missing title",
     "move_down": "Move down",
     "move_up": "Move up",
@@ -183,8 +183,8 @@
     "send": "Send",
     "show": "Show",
     "show_all": "Show all",
-    "show_fewer": "Show fewer",
     "show_details": "Show details",
+    "show_fewer": "Show fewer",
     "size": "Size",
     "skip_to_main_content": "Skip to main content",
     "skip_to_schema": "Skip to schema",
@@ -327,98 +327,6 @@
     "select_vocabulary_description": "Activate controlled vocabularies for registration of new results",
     "vocabulary": "Vocabulary"
   },
-  "licenses": {
-    "description": {
-      "cc0": "The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.",
-      "cc_by": "Share — copy and redistribute the material in any medium or format. \nAdapt — remix, transform, and build upon the material for any purpose, even commercially. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made.",
-      "cc_by_nc": "Share — copy and redistribute the material in any medium or format. \nAdapt — remix, transform, and build upon the material. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made. \nYou may not use the material for commercial purposes.",
-      "cc_by_nc_nd": "Share — copy and redistribute the material in any medium or format. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made. \nYou may not use the material for commercial purposes. \nIf you remix, transform, or build upon the material, you may not distribute the modified material.",
-      "cc_by_nc_sa": "Share — copy and redistribute the material in any medium or format. \nAdapt — remix, transform, and build upon the material. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made. \nYou may not use the material for commercial purposes. \nIf you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.",
-      "cc_by_nd": "Share — copy and redistribute the material in any medium or format for any purpose, even commercially. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made. \nIf you remix, transform, or build upon the material, you may not distribute the modified material.",
-      "cc_by_sa": "Share — copy and redistribute the material in any medium or format. \nAdapt — remix, transform, and build upon the material for any purpose, even commercially. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made. \nIf you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.",
-      "rights_reserved": "This work is posted here for your personal use and only in accordance with the publishers terms and conditions for use of self-archived versions."
-    },
-    "labels": {
-      "CC0": "CC0",
-      "CC BY": "CC BY",
-      "CC BY-NC": "CC BY-NC",
-      "CC BY-NC-ND": "CC BY-NC-ND",
-      "CC BY-NC-SA": "CC BY-NC-SA",
-      "CC BY-ND": "CC BY-ND",
-      "CC BY-SA": "CC BY-SA",
-      "RightsReserved": "Publisher's conditions"
-    },
-    "links": {
-      "cc0": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "cc_by": "https://creativecommons.org/licenses/by/4.0/",
-      "cc_by_nc": "https://creativecommons.org/licenses/by-nc/4.0/",
-      "cc_by_nc_nd": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
-      "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
-      "cc_by_nd": "https://creativecommons.org/licenses/by-nd/4.0/",
-      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/4.0/",
-      "rights_reserved": ""
-    }
-  },
-  "my_page": {
-    "messages": {
-      "go_to_registration": "Go to registration",
-      "messages": "Messages",
-      "no_messages": "You don't have any messages",
-      "types": {
-        "doi": "DOI Request",
-        "support": "Support"
-      }
-    },
-    "registrations": {
-      "delete_registration": "Delete unpublished registration",
-      "delete_registration_message": "Do you want to delete \"{{title}}\"?",
-      "my_research_profile": "My research profile",
-      "published_registrations": "Published registrations",
-      "unpublished_registrations": "Unpublished registrations"
-    },
-    "my_page": "My page",
-    "my_profile": {
-      "heading": {
-        "affiliations": "Affiliations",
-        "contact_info": "Contact",
-        "roles": "Roles",
-        "settings": "Settings",
-        "user_info": "User information"
-      },
-      "id": "ID",
-      "user_profile": "User profile",
-      "orcid": {
-        "connect_orcid": "Connect/create ORCID iD",
-        "dialog": {
-          "heading": "Connect or create ORCID iD",
-          "paragraph0": "Sign in to ORCID or register to create an account.",
-          "paragraph1": "ORCID provides a persistent digital identifier that you own and control, and that distinguishes you from every other researcher. Your ORCID iD can be used in many contexts. By connecting your ORCID iD it is easier to identify you as an author, and to retrieve and share your publications."
-        },
-        "orcid": "ORCID",
-        "orcid_description": "To connect your ORCID iD, sign into ORCID. Or register to create your ORCID iD and connect. It makes it easier to identify you.",
-        "remove_connection": "Remove connection to ORCID",
-        "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Sikt's access to read your ORCID, you have to go to your profile."
-      }
-    },
-    "research_profile": "Research profile",
-    "roles": {
-      "app_admin": "System administrator",
-      "app_admin_description": "Access to create new institutions and assign roles",
-      "creator": "Registrator",
-      "creator_description": "Access to register publications and other resources",
-      "curator": "Curator",
-      "curator_description": "Access to edit publications and other resources, assign DOIs and respond to support inquiries",
-      "curators": "Curators",
-      "editor": "Editor",
-      "editor_description": "Responsible for the institution's publications and other resources in the service",
-      "editors": "Editors",
-      "institution_admin": "Administrator",
-      "institution_admin_description": "Access to assign the roles of Curator and Editor to others",
-      "institution_admins": "Administrators",
-      "no_roles": "You don't have any roles because your administrator has not assigned any roles to you",
-      "not_customer": "You don't have any roles because your institution is unknown to this application"
-    }
-  },
   "feedback": {
     "error": {
       "404_page": "The page you requested could not be found",
@@ -443,8 +351,8 @@
       "get_institution": "Could not retrieve institution",
       "get_institutions": "Could not retrieve institutions",
       "get_journal": "Could not retrieve journal",
-      "get_journals": "Could not retrieve journals",
       "get_journal_article": "Could not fetch journal article",
+      "get_journals": "Could not retrieve journals",
       "get_messages": "Could not retrieve messages",
       "get_orcid": "Could not get data from ORCID",
       "get_parent_units": "Could not retrieve institutions",
@@ -453,8 +361,8 @@
       "get_project": "Search for projects failed",
       "get_publisher": "Could not retrieve publisher",
       "get_publishers": "Search for publishers failed",
-      "get_registrations": "Could not retrieve registrations",
       "get_registration": "Could not get registration",
+      "get_registrations": "Could not retrieve registrations",
       "get_roles": "Could not get roles",
       "get_series": "Could not get series",
       "get_session": "Invalid session. Please log in again.",
@@ -463,6 +371,9 @@
       "institution_mismatch": "This user belongs to another institution",
       "login": "Login failed",
       "missing_user": "Missing user",
+      "orcid": {
+        "access_denied": "Could not connect to ORCID because access to the ORCID account was denied"
+      },
       "orcid_login": "ORCID login failed",
       "publish_registration": "Could not publish registration",
       "remove_role": "Could not remove role",
@@ -474,10 +385,7 @@
       "update_orcid": "Could not update ORCID",
       "update_publish_strategy": "Could not update publish strategy",
       "update_registration": "Could not update registration",
-      "update_vocabulary": "Failed to update {{vocabulary}}",
-      "orcid": {
-        "access_denied": "Could not connect to ORCID because access to the ORCID account was denied"
-      }
+      "update_vocabulary": "Failed to update {{vocabulary}}"
     },
     "info": {
       "affiliation_already_exists": "Affiliation already exists",
@@ -489,10 +397,10 @@
       "added_role": "Role was added",
       "admin_added": "User added as administrator",
       "admin_removed": "User removed as administrator",
-      "created_customer": "Created customer institution",
       "create_project": "Project is created",
       "create_registration": "New registration created",
       "create_user": "Your user was created",
+      "created_customer": "Created customer institution",
       "delete_affiliation": "Deleted affiliation",
       "delete_identifier": "Deleted identifier",
       "delete_registration": "Deleted registration",
@@ -502,8 +410,8 @@
       "published_registration": "Registration was published",
       "removed_role": "Role removed",
       "send_message": "Message sent",
-      "update_institution_user": "Updated user",
       "update_customer": "Updated customer institution",
+      "update_institution_user": "Updated user",
       "update_orcid": "Successfully updated ORCID",
       "update_publish_strategy": "Updated publish strategy",
       "update_registration": "Updated registration",
@@ -518,16 +426,108 @@
       "editor_required": "You need to register at least one editor for this registration",
       "exhibition_place_required": "Must have at least one exhibition place",
       "has_invalid_format": "{{field}} has invalid format",
+      "invalid_number_of_digits": "{{field}} must have {{digits}} digits",
       "is_required": "{{-field}} is required",
       "isbn_too_short": "ISBN must have 13 digits",
-      "invalid_number_of_digits": "{{field}} must have {{digits}} digits",
-      "not_selected": "{{field}} is not selected",
       "minimum_one_file": "You need to upload at least one file for this registration",
       "must_be_bigger_than": "{{field}} cannot be smaller than {{limit}}",
       "must_be_in_future": "{{field}} must be in future",
       "must_be_smaller_than": "{{field}} cannot be bigger than {{limit}}",
       "must_have_minimum": "Must have at least {{min}} {{-field}}",
+      "not_selected": "{{field}} is not selected",
       "supervisor_required": "You need to register at least one supervisor for this registration"
+    }
+  },
+  "licenses": {
+    "description": {
+      "cc0": "The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.",
+      "cc_by": "Share — copy and redistribute the material in any medium or format. \nAdapt — remix, transform, and build upon the material for any purpose, even commercially. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made.",
+      "cc_by_nc": "Share — copy and redistribute the material in any medium or format. \nAdapt — remix, transform, and build upon the material. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made. \nYou may not use the material for commercial purposes.",
+      "cc_by_nc_nd": "Share — copy and redistribute the material in any medium or format. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made. \nYou may not use the material for commercial purposes. \nIf you remix, transform, or build upon the material, you may not distribute the modified material.",
+      "cc_by_nc_sa": "Share — copy and redistribute the material in any medium or format. \nAdapt — remix, transform, and build upon the material. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made. \nYou may not use the material for commercial purposes. \nIf you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.",
+      "cc_by_nd": "Share — copy and redistribute the material in any medium or format for any purpose, even commercially. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made. \nIf you remix, transform, or build upon the material, you may not distribute the modified material.",
+      "cc_by_sa": "Share — copy and redistribute the material in any medium or format. \nAdapt — remix, transform, and build upon the material for any purpose, even commercially. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made. \nIf you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.",
+      "rights_reserved": "This work is posted here for your personal use and only in accordance with the publishers terms and conditions for use of self-archived versions."
+    },
+    "labels": {
+      "CC BY": "CC BY",
+      "CC BY-NC": "CC BY-NC",
+      "CC BY-NC-ND": "CC BY-NC-ND",
+      "CC BY-NC-SA": "CC BY-NC-SA",
+      "CC BY-ND": "CC BY-ND",
+      "CC BY-SA": "CC BY-SA",
+      "CC0": "CC0",
+      "RightsReserved": "Publisher's conditions"
+    },
+    "links": {
+      "cc0": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "cc_by": "https://creativecommons.org/licenses/by/4.0/",
+      "cc_by_nc": "https://creativecommons.org/licenses/by-nc/4.0/",
+      "cc_by_nc_nd": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+      "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "cc_by_nd": "https://creativecommons.org/licenses/by-nd/4.0/",
+      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "rights_reserved": ""
+    }
+  },
+  "my_page": {
+    "messages": {
+      "go_to_registration": "Go to registration",
+      "messages": "Messages",
+      "no_messages": "You don't have any messages",
+      "types": {
+        "doi": "DOI Request",
+        "support": "Support"
+      }
+    },
+    "my_page": "My page",
+    "my_profile": {
+      "heading": {
+        "affiliations": "Affiliations",
+        "contact_info": "Contact",
+        "roles": "Roles",
+        "settings": "Settings",
+        "user_info": "User information"
+      },
+      "id": "ID",
+      "orcid": {
+        "connect_orcid": "Connect/create ORCID iD",
+        "dialog": {
+          "heading": "Connect or create ORCID iD",
+          "paragraph0": "Sign in to ORCID or register to create an account.",
+          "paragraph1": "ORCID provides a persistent digital identifier that you own and control, and that distinguishes you from every other researcher. Your ORCID iD can be used in many contexts. By connecting your ORCID iD it is easier to identify you as an author, and to retrieve and share your publications."
+        },
+        "orcid": "ORCID",
+        "orcid_description": "To connect your ORCID iD, sign into ORCID. Or register to create your ORCID iD and connect. It makes it easier to identify you.",
+        "remove_connection": "Remove connection to ORCID",
+        "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Sikt's access to read your ORCID, you have to go to your profile."
+      },
+      "user_profile": "User profile"
+    },
+    "registrations": {
+      "delete_registration": "Delete unpublished registration",
+      "delete_registration_message": "Do you want to delete \"{{title}}\"?",
+      "my_research_profile": "My research profile",
+      "published_registrations": "Published registrations",
+      "unpublished_registrations": "Unpublished registrations"
+    },
+    "research_profile": "Research profile",
+    "roles": {
+      "app_admin": "System administrator",
+      "app_admin_description": "Access to create new institutions and assign roles",
+      "creator": "Registrator",
+      "creator_description": "Access to register publications and other resources",
+      "curator": "Curator",
+      "curator_description": "Access to edit publications and other resources, assign DOIs and respond to support inquiries",
+      "curators": "Curators",
+      "editor": "Editor",
+      "editor_description": "Responsible for the institution's publications and other resources in the service",
+      "editors": "Editors",
+      "institution_admin": "Administrator",
+      "institution_admin_description": "Access to assign the roles of Curator and Editor to others",
+      "institution_admins": "Administrators",
+      "no_roles": "You don't have any roles because your administrator has not assigned any roles to you",
+      "not_customer": "You don't have any roles because your institution is unknown to this application"
     }
   },
   "privacy": {
@@ -551,8 +551,8 @@
         "paragraph": "Sikt develops and manages the service on behalf of the data controller and has the role of data processor."
       },
       "section2": {
-        "intro": "Sikt user support's contact details",
         "email": "Email: <0><0></0></0>",
+        "intro": "Sikt user support's contact details",
         "telephone": "Telephone: <0><0></0></0>"
       }
     },
@@ -673,10 +673,10 @@
       "paragraph4": "The following personal data are processed in the service:",
       "paragraph5": "Information about your activity is stored in order to provide user support and to gain an impression of general use of the service.",
       "paragraph6": {
-        "intro": "Personal data is stored until one of the following occurs:",
         "bullet_point0": "User consent is withdrawn",
         "bullet_point1": "The purpose of the personal data processing has been fulfilled",
-        "bullet_point2": "The data controller decides to discontinue the service"
+        "bullet_point2": "The data controller decides to discontinue the service",
+        "intro": "Personal data is stored until one of the following occurs:"
       },
       "paragraph7": "Logs and backups of the system data are stored for up to one year.",
       "paragraph8": "User information (except logs) is stored for the lifetime of the resource for users who register content in the service.",
@@ -753,6 +753,10 @@
       "paragraph1": "NVA supports postponed publication of resources. This means that the registration can be completed so that metadata about the resource is published, while the resource will not be openly available until the specified date.",
       "paragraph2": "The service does not allow processing of sensitive personal data."
     },
+    "what_are_personal_data": {
+      "heading": "What are personal data?",
+      "paragraph": "Personal data are all forms of data, information and assessments that can be linked to you as a person, cf. the <0>Personal Data Act Section 2</0> and the <1>GDPR Article 5</1>(1). The decisive factor as to whether data constitutes personal data is whether it can be linked to a specific person. Data that, on its own, cannot be linked to an individual person may constitute personal data in cases where the data are found together with other data."
+    },
     "your_rights": {
       "heading": "Your rights",
       "section0": {
@@ -768,10 +772,10 @@
       "section2": {
         "heading": "Right to restriction of processing",
         "paragraph0": {
-          "intro": "In certain cases, you may have a right to request restrictions on the processing of your personal data. Restricted processing means that the personal data will still be stored, but that other processing in the service is restricted. To request restricted processing of personal data, the conditions in the Personal Data Act and the <0>GDPR Article 18</0> must be met. You can request restricted processing",
           "bullet_point0": "Pending the data controller rectifying inaccurate or incomplete personal data",
           "bullet_point1": "If you have submitted an objection to the processing (see below for more details)",
-          "bullet_point2": "If the personal data are necessary to establish or defend a legal claim"
+          "bullet_point2": "If the personal data are necessary to establish or defend a legal claim",
+          "intro": "In certain cases, you may have a right to request restrictions on the processing of your personal data. Restricted processing means that the personal data will still be stored, but that other processing in the service is restricted. To request restricted processing of personal data, the conditions in the Personal Data Act and the <0>GDPR Article 18</0> must be met. You can request restricted processing"
         },
         "paragraph1": "If restricted processing is granted, the data controller will notify you before the restriction is lifted."
       },
@@ -784,16 +788,16 @@
       "section4": {
         "heading": "Right to object",
         "paragraph0": {
-          "intro": "You have a right to object to processing of your personal data on certain conditions defined in the <0>GDPR Article 21</0>. This applies if:",
           "bullet_point0": "Legal grounds for the processing of personal data are based on legitimate interests, reasons of public interest or when exercising public authority",
           "bullet_point1": "Processing of personal data entails direct marketing or profiling",
-          "bullet_point2": "Personal data are processed for scientific or historical research purposes or statistical purposes"
+          "bullet_point2": "Personal data are processed for scientific or historical research purposes or statistical purposes",
+          "intro": "You have a right to object to processing of your personal data on certain conditions defined in the <0>GDPR Article 21</0>. This applies if:"
         },
         "paragraph1": "The service does not generally satisfy these conditions, with the exception of the processing of author information and in cases where personal data are used for statistical purposes. When personal data are used for statistical purposes, the data are anonymised.",
         "paragraph2": {
-          "intro": "However, please note the following:",
           "bullet_point0": "If there is a special need to stop the processing, for example if you have a need for protection, or a confidential address or similar, please contact the data controller",
-          "bullet_point1": "When you have consented to the processing of personal data, you have a right to withdraw your consent"
+          "bullet_point1": "When you have consented to the processing of personal data, you have a right to withdraw your consent",
+          "intro": "However, please note the following:"
         }
       },
       "section5": {
@@ -801,10 +805,6 @@
         "paragraph0": "If you feel that we have not processed personal data in a correct or lawful manner, or if you feel that you have been unable to exercise your rights with us, you have a right to complain about the processing. See our contact details below.",
         "paragraph1": "If we do not uphold your complaint, you have the possibility of filing a complaint with the Norwegian Data Protection Authority. The Data Protection Authority is responsible for ensuring that Norwegian enterprises comply with the provisions of the Personal Data Act and the GDPR in their processing of personal data."
       }
-    },
-    "what_are_personal_data": {
-      "heading": "What are personal data?",
-      "paragraph": "Personal data are all forms of data, information and assessments that can be linked to you as a person, cf. the <0>Personal Data Act Section 2</0> and the <1>GDPR Article 5</1>(1). The decisive factor as to whether data constitutes personal data is whether it can be linked to a specific person. Data that, on its own, cannot be linked to an individual person may constitute personal data in cases where the data are found together with other data."
     }
   },
   "project": {
@@ -841,10 +841,10 @@
       "add_self_as_role": "Add me as {{- role}}",
       "add_unverified_contributor": "Add a non-verified contributor.",
       "authors": "Authors",
-      "confirmed": "Confirmed",
       "confirm_remove_affiliation_text": "Are you sure you want to remove this affiliation?",
       "confirm_remove_affiliation_title": "Remove affiliation?",
       "confirm_remove_author_text": "Are you sure you want to remove {{contributorName}}?",
+      "confirmed": "Confirmed",
       "contributor": "Contributor",
       "contributor_already_added": "Chosen contributor is already added",
       "corresponding": "Corresponding",
@@ -854,15 +854,15 @@
       "known_author_identity": "Connected author identity",
       "no_affiliations_found": "No affiliations found",
       "no_registrations_found": "No registrations found",
+      "other_registrations_one": "+ {{count}} other registration",
+      "other_registrations_other": "+ {{count}} other registrations",
       "prefilled_affiliation": "Prefilled affiliation",
       "prefilled_name": "Prefilled name",
       "remove_affiliation": "Remove affiliation",
       "remove_role": "Remove {{- role}}",
-      "select_institution": "Select institution",
       "select_contributor_type": "Select contributor type",
+      "select_institution": "Select institution",
       "supervisors": "Supervisors",
-      "other_registrations_one": "+ {{count}} other registration",
-      "other_registrations_other": "+ {{count}} other registrations",
       "type": "Contributor type",
       "types": {
         "AcademicCoordinator": "Academic coordinator",
@@ -874,8 +874,8 @@
         "Composer": "Composer",
         "Conductor": "Conductor",
         "Consultant": "Consultant",
-        "CostumeDesigner": "Costume designer",
         "ContactPerson": "Contact person",
+        "CostumeDesigner": "Costume designer",
         "Creator": "Author",
         "CuratorOrganizer": "Curator/organizer",
         "Dancer": "Dancer",
@@ -894,8 +894,8 @@
         "Organizer": "Organizer",
         "Other": "Other",
         "Photographer": "Photographer",
-        "ProductionDesigner": "Production designer",
         "Producer": "Producer",
+        "ProductionDesigner": "Production designer",
         "ProgrammeLeader": "Programme leader",
         "ProgrammeParticipant": "Programme participant",
         "RelatedPerson": "Related person",
@@ -916,16 +916,16 @@
       "verify_person": "Verify person"
     },
     "description": {
-      "add_vocabulary": "Add vocabulary",
       "abstract": "Abstract",
+      "add_vocabulary": "Add vocabulary",
       "confirm_remove_vocabulary_text": "Are you sure you want to remove vocabulary for {{vocabulary}}?",
       "confirm_remove_vocabulary_title": "Remove vocabulary?",
       "date_picker": {
         "choose_date": "Choose date",
-        "open_dialog": "Choose date, selected date is {{date}}",
         "go_to_calendar_view": "Year view is open, switch to calendar view",
         "go_to_year_view": "Calendar view is open, switch to year view",
         "next_month": "Next month",
+        "open_dialog": "Choose date, selected date is {{date}}",
         "previous_month": "Previous month",
         "select_date": "Select date",
         "today": "Today"
@@ -936,6 +936,8 @@
       "financed_by": "Financed by",
       "hrcs_activities": "HRCS activities",
       "hrcs_categories": "HRCS categories",
+      "keywords": "Keywords",
+      "keywords_helper": "Separate keywords with commas or enter",
       "npi_disciplines": "Scientific field in Norwegian publication indicator",
       "primary_language": "Primary language for content",
       "project_association": "Project association",
@@ -943,8 +945,6 @@
       "remove_vocabulary": "Remove vocabulary",
       "search_for_npi_discipline": "Search for scientific field",
       "search_for_project": "Search in Norwegian project catalogs",
-      "keywords": "Keywords",
-      "keywords_helper": "Separate keywords with commas or enter",
       "year_only": "Year only"
     },
     "edit_registration": "Edit registration",
@@ -967,8 +967,8 @@
       "published_version": "Published version",
       "remove_file": "Remove file",
       "remove_file_description": "Do you want to remove {{fileName}}?",
-      "version": "Version",
-      "title": "File name"
+      "title": "File name",
+      "version": "Version"
     },
     "heading": {
       "contributors": "Contributors",
@@ -977,6 +977,8 @@
       "publish_settings": "Publish settings",
       "resource_type": "Resource type"
     },
+    "modal_unsaved_changes_description": "You have unsaved changes. Are you sure you want to leave this page?",
+    "modal_unsaved_changes_heading": "Leave without saving?",
     "new_registration": "New registration",
     "public_page": {
       "about_registration": "About this registration",
@@ -997,26 +999,23 @@
       "ready_to_be_published": "Ready to be published",
       "ready_to_be_published_description": "Review content before publishing.",
       "related_registrations": "Related registrations",
-      "reserve_doi": "Reserve a DOI",
-      "reserve_doi_message": "Auto-generated message: User wants to reserve a DOI.",
       "request_doi": "Request a DOI",
-      "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications. You will receive an email when the request has been evaluated."
+      "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications. You will receive an email when the request has been evaluated.",
+      "reserve_doi": "Reserve a DOI",
+      "reserve_doi_message": "Auto-generated message: User wants to reserve a DOI."
     },
-    "validation_errors": "Validation errors",
     "publication_types": {
-      "Artistic": "Artistic result",
       "Architecture": "Architecture",
+      "Artistic": "Artistic result",
       "ArtisticDesign": "Design",
-      "MovingPicture": "Film",
-      "MusicPerformance": "Music",
-      "PerformingArts": "Performing arts",
       "Book": "Book",
       "BookAnthology": "Anthology",
       "BookMonograph": "Monograph",
       "Chapter": "Part of book or report",
-      "ChapterConferenceAbstract": "Conference abstract",
       "ChapterArticle": "Chapter in anthology",
+      "ChapterConferenceAbstract": "Conference abstract",
       "ChapterInReport": "Chapter in report",
+      "ConferenceAbstract": "Conference abstract",
       "ConferenceLecture": "Conference lecture",
       "ConferencePoster": "Conference poster",
       "Degree": "Thesis",
@@ -1030,19 +1029,20 @@
       "JournalArticle": "Journal article",
       "JournalCorrigendum": "Corrigendum",
       "JournalEditorial": "Editorial",
-      "ConferenceAbstract": "Conference abstract",
       "JournalIssue": "Journal issue",
       "JournalLeader": "Editorial",
       "JournalLetter": "Commentary",
       "JournalReview": "Book review",
       "Lecture": "Lecture",
-      "MediaContribution": "Media contribution",
       "MediaBlogPost": "Blog post",
+      "MediaContribution": "Media contribution",
       "MediaFeatureArticle": "Feature article",
       "MediaInterview": "Interview",
       "MediaParticipationInRadioOrTv": "Participation in radio or TV",
       "MediaPodcast": "Podcast",
       "MediaReaderOpinion": "Reader opinion",
+      "MovingPicture": "Film",
+      "MusicPerformance": "Music",
       "Other": "Other publication",
       "OtherFeatureArticle": "Feature article",
       "OtherMap": "Map",
@@ -1050,6 +1050,7 @@
       "OtherPresentation": "Other presentation",
       "OtherPublication": "Other publication",
       "OtherStudentWork": "Other student thesis",
+      "PerformingArts": "Performing arts",
       "Report": "Report",
       "ReportBasic": "Other type of report",
       "ReportBookOfAbstract": "Book of abstracts",
@@ -1112,9 +1113,9 @@
           "InteractionDesign": "Interaction design",
           "InteriorDesign": "Interior design",
           "LightDesign": "Lighting design",
+          "Other": "Other design",
           "ProductDesign": "Product design",
           "ServiceDesign": "Service design",
-          "Other": "Other design",
           "WebDesign": "Web design"
         },
         "edit_audio_visual_publication": "Edit audio/video publication",
@@ -1138,20 +1139,20 @@
         "mention_other": "Other (publisher, ISBN, etc.)",
         "mention_title": "Journal/Book/medium",
         "moving_picture_type": {
-          "Film": "Long film",
-          "ShortFilm": "Short film",
-          "SerialFilmProduction": "Serial production",
-          "InteractiveFilm": "Interactive production",
           "AugmentedVirtualRealityFilm": "AR/VR",
-          "Other": "Other"
+          "Film": "Long film",
+          "InteractiveFilm": "Interactive production",
+          "Other": "Other",
+          "SerialFilmProduction": "Serial production",
+          "ShortFilm": "Short film"
         },
         "music_media_type": {
           "CompactDisc": "CD",
           "DVD": "DVD",
-          "Streaming": "Streaming",
           "DigitalFile": "Downloading",
-          "Vinyl": "LP/EP",
-          "Other": "Other"
+          "Other": "Other",
+          "Streaming": "Streaming",
+          "Vinyl": "LP/EP"
         },
         "music_score_ensemble": "Ensemble",
         "music_score_ismn": "ISMN",
@@ -1179,9 +1180,9 @@
         },
         "performance_type": "Type/performance form",
         "performing_arts_type": {
-          "TheatricalProduction": "Theater/show",
           "Broadcast": "TV/film/radio",
-          "Other": "Other"
+          "Other": "Other",
+          "TheatricalProduction": "Theater/show"
         },
         "premiere": "Premiere",
         "premiere_date": "Premiere date",
@@ -1189,8 +1190,8 @@
         "remove_announcement_description": "Are you sure you want to remove \"{{name}}\" from list over announcements?",
         "remove_music_work": "Remove work",
         "remove_music_work_description": "Are you sure you want to remove this work?",
-        "remove_venue_title": "Remove exhibition place?",
-        "remove_venue_text": "Are you sure you want to remove \"{{name}}\" from list over exhibition places?"
+        "remove_venue_text": "Are you sure you want to remove \"{{name}}\" from list over exhibition places?",
+        "remove_venue_title": "Remove exhibition place?"
       },
       "chapter": {
         "info_anthology": "The anthology where this chapter is published in must be published in advance",
@@ -1203,7 +1204,9 @@
       },
       "content": "Content",
       "content_types": {
+        "AcademicArticle": "Academic article",
         "AcademicChapter": "Academic chapter",
+        "AcademicLiteratureReview": "Academic literature review",
         "AcademicMonograph": "Academic monograph",
         "CaseReport": "Case report",
         "Encyclopedia": "Encyclopedia",
@@ -1213,12 +1216,10 @@
         "Introduction": "Introduction in anthology",
         "NonFictionChapter": "Non-fiction chapter",
         "NonFictionMonograph": "Non-fiction monograph",
-        "PopularScienceMonograph": "Popular science monograph",
-        "PopularScienceChapter": "Popular science chapter",
         "PopularScienceArticle": "Popular science article",
+        "PopularScienceChapter": "Popular science chapter",
+        "PopularScienceMonograph": "Popular science monograph",
         "ProfessionalArticle": "Professional article",
-        "AcademicArticle": "Academic article",
-        "AcademicLiteratureReview": "Academic literature review",
         "StudyProtocol": "Study protocol",
         "Textbook": "Textbook",
         "TextbookChapter": "Textbook chapter"
@@ -1297,8 +1298,7 @@
       "REJECTED": "Rejected"
     },
     "support_description": "When you request support your message will be sent to a curator at your institution. You can see responses at <0>My Messages</0>.",
-    "modal_unsaved_changes_description": "You have unsaved changes. Are you sure you want to leave this page?",
-    "modal_unsaved_changes_heading": "Leave without saving?"
+    "validation_errors": "Validation errors"
   },
   "search": {
     "add_filter": "Add filter",
@@ -1311,8 +1311,8 @@
     "registration_type": "Registration type",
     "remove_filter": "Remove filter",
     "search_placeholder": "Search for title, contributor, abstract, etc.",
-    "select_filters": "Select filters to narrow down search:",
     "search_term_label": "Value",
+    "select_filters": "Select filters to narrow down search:",
     "sort_by": "Order by",
     "sort_by_modified_date": "Last modified",
     "sort_by_published_date_asc": "Publish date (oldest first)",

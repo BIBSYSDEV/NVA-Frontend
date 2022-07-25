@@ -2,9 +2,9 @@
   "about": {
     "description": {
       "paragraph0": {
-        "intro": "Med NVA får norske forskningsinstitusjoner en tjeneste for å:",
         "bullet_point0": "Innfri krav om åpen tilgang til artikler og andre forskningsresultater gjennom deponering i et åpent forskningsarkiv",
-        "bullet_point1": "Selv publisere rapporter, studentoppgaver og annet materiale produsert ved institusjonen"
+        "bullet_point1": "Selv publisere rapporter, studentoppgaver og annet materiale produsert ved institusjonen",
+        "intro": "Med NVA får norske forskningsinstitusjoner en tjeneste for å:"
       },
       "paragraph1": "NVA skal også utvikles til bruk ved rapportering av vitenskapelig publisering til Kunnskapsdepartementet og Helse- og omsorgsdepartementet (NVI-rapportering), og for andre forskningsadministrative oppgaver.",
       "paragraph2": "Institusjonen er behandlingsansvarlig og registrer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett etc.). Tjenesten får også overført innhold fra andre datakilder.",
@@ -72,8 +72,8 @@
       "institution_dns": "Institusjonens DNS",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
       "organization_register_name": "Navn i organisasjonsregister",
-      "remove_admin_title": "Fjern administrator?",
       "remove_admin_text": "Er du sikker på at du vil fjerne {{username}} fra listen over administratorer?",
+      "remove_admin_title": "Fjern administrator?",
       "ror": "Research Organization Registry (ROR)",
       "search_for_user": "Søk blant eksisterende brukere",
       "short_name": "Forkortet visningsnavn på institusjonen"
@@ -138,8 +138,8 @@
     "last_name": "Etternavn",
     "loading": "Laster",
     "mandatory": "Obligatorisk",
-    "message": "Melding",
     "menu": "Meny",
+    "message": "Melding",
     "missing_title": "Mangler tittel",
     "move_down": "Flytt ned",
     "move_up": "Flytt opp",
@@ -183,8 +183,8 @@
     "send": "Send",
     "show": "Vis",
     "show_all": "Vis alle",
-    "show_fewer": "Vis færre",
     "show_details": "Vis detaljer",
+    "show_fewer": "Vis færre",
     "size": "Størrelse",
     "skip_to_main_content": "Hopp til hovedinnhold",
     "skip_to_schema": "Hopp til skjema",
@@ -327,98 +327,6 @@
     "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
     "vocabulary": "Vokabular"
   },
-  "licenses": {
-    "description": {
-      "cc0": "Den person som har knyttet et verk til dette aktstykke (deed) har, i den utstrekning loven tillater, erklært dette verket er i det fri ved å si fra seg alle de opphavsrettigheter og nærstående rettigheter som vedkommende hadde til verket.",
-      "cc_by": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort.",
-      "cc_by_nc": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDu kan ikke benytte materialet til kommersielle formål.",
-      "cc_by_nc_nd": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDu kan ikke benytte materialet til kommersielle formål. \nDersom du remixer, bearbeider eller bygger på materialet, kan du ikke distribuere det endrede materialet.",
-      "cc_by_nc_sa": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDu kan ikke benytte materialet til kommersielle formål. \nDersom du remixer, bearbeider eller bygger på materialet, må du distribuere dine bidrag under samme lisens som originalen.",
-      "cc_by_nd": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDersom du remixer, bearbeider eller bygger på materialet, kan du ikke distribuere det endrede materialet.",
-      "cc_by_sa": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDersom du remixer, bearbeider eller bygger på materialet, må du distribuere dine bidrag under samme lisens som originalen.",
-      "rights_reserved": "Dette arbeidet er publisert her for personlig bruk og kun i overensstemmelse med utgivers regler og betingelser for bruk av egenarkiverte versjoner."
-    },
-    "labels": {
-      "CC0": "CC0",
-      "CC BY": "CC BY",
-      "CC BY-NC": "CC BY-NC",
-      "CC BY-NC-ND": "CC BY-NC-ND",
-      "CC BY-NC-SA": "CC BY-NC-SA",
-      "CC BY-ND": "CC BY-ND",
-      "CC BY-SA": "CC BY-SA",
-      "RightsReserved": "Utgivers betingelser"
-    },
-    "links": {
-      "cc0": "https://creativecommons.org/publicdomain/zero/1.0/deed.no",
-      "cc_by": "https://creativecommons.org/licenses/by/4.0/deed.no",
-      "cc_by_nc": "https://creativecommons.org/licenses/by-nc/4.0/deed.no",
-      "cc_by_nc_nd": "https://creativecommons.org/licenses/by-nc-nd/4.0/deed.no",
-      "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/4.0/deed.no",
-      "cc_by_nd": "https://creativecommons.org/licenses/by-nd/4.0/deed.no",
-      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/4.0/deed.no",
-      "rights_reserved": ""
-    }
-  },
-  "my_page": {
-    "messages": {
-      "go_to_registration": "Gå til registrering",
-      "messages": "Meldinger",
-      "no_messages": "Du har ingen meldinger",
-      "types": {
-        "doi": "DOI-forespørsel",
-        "support": "Brukerstøtte"
-      }
-    },
-    "registrations": {
-      "delete_registration": "Slett upublisert registrering",
-      "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
-      "my_research_profile": "Min forskerprofil",
-      "published_registrations": "Publiserte registreringer",
-      "unpublished_registrations": "Upubliserte registreringer"
-    },
-    "my_page": "Min side",
-    "my_profile": {
-      "heading": {
-        "affiliations": "Tilhørigheter",
-        "contact_info": "Kontaktinformasjon",
-        "roles": "Roller",
-        "settings": "Innstillinger",
-        "user_info": "Brukerinformasjon"
-      },
-      "id": "ID",
-      "user_profile": "Brukerprofil",
-      "orcid": {
-        "connect_orcid": "Koble/opprette ORCID iD",
-        "dialog": {
-          "heading": "Koble eller opprette ORCID iD",
-          "paragraph0": "Logg inn på din ORCID-konto eller registrer deg hvis du ikke har en konto.",
-          "paragraph1": "ORCID gir deg en varig digital identifikator som du selv eier og kontrollerer, og som skiller deg fra andre forskere. Den kan brukes den i mange sammenhenger. Ved å koble din ORCID iD er det enklere å identifisere deg som forfatter, og å hente og dele dine publikasjoner."
-        },
-        "orcid": "ORCID",
-        "orcid_description": "Koble din ORCID iD ved å logge på ORCID. Eller registrer deg for å få en ORCID iD og koble denne. Da blir det enklere å identifisere deg",
-        "remove_connection": "Fjern kobling til ORCID",
-        "remove_connection_info": "Er du sikker på at du vil fjerne koblingen til ORCID? \n\nDersom du ønsker å trekke tilbake Sikts godkjenning til å lese din ORCID, må du gå inn på din ORCID-profil."
-      }
-    },
-    "research_profile": "Forskerprofil",
-    "roles": {
-      "app_admin": "Systemadministrator",
-      "app_admin_description": "Tilgang til å opprette nye institusjoner og tildele roller",
-      "creator": "Registrator",
-      "creator_description": "Tilgang til å registrere publikasjoner og andre ressurser",
-      "curator": "Kurator",
-      "curator_description": "Tilgang til å redigere publikasjoner og andre ressurser, tildele DOI og besvare brukerstøttehenvendelser",
-      "curators": "Kuratorer",
-      "editor": "Redaktør",
-      "editor_description": "Ansvarlig for institusjonens publikasjoner og andre ressurser i tjenesten",
-      "editors": "Redaktører",
-      "institution_admin": "Administrator",
-      "institution_admin_description": "Tilgang til å gi rollene Kurator og Redaktør til andre",
-      "institution_admins": "Administratorer",
-      "no_roles": "Du har ingen roller fordi du ikke har fått tildelt roller av din administrator",
-      "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen"
-    }
-  },
   "feedback": {
     "error": {
       "404_page": "Beklager, men vi kan ikke finne siden du ser etter",
@@ -443,8 +351,8 @@
       "get_institution": "Kunne ikke laste inn institusjon",
       "get_institutions": "Kunne ikke laste inn institusjoner",
       "get_journal": "Kunne ikke hente tidsskrift",
-      "get_journals": "Kunne ikke hente tidsskrifter",
       "get_journal_article": "Kunne ikke hente artikkel i tidsskrift",
+      "get_journals": "Kunne ikke hente tidsskrifter",
       "get_messages": "Kunne ikke hente meldinger",
       "get_orcid": "Kunne ikke hente data fra ORCID",
       "get_parent_units": "Kunne ikke hente institusjoner",
@@ -453,8 +361,8 @@
       "get_project": "Søk på prosjekt feilet",
       "get_publisher": "Kunne ikke hente utgiver",
       "get_publishers": "Søk på utgivere feilet",
-      "get_registrations": "Kunne ikke laste inn registreringer",
       "get_registration": "Kunne ikke laste inn registrering",
+      "get_registrations": "Kunne ikke laste inn registreringer",
       "get_roles": "Kunne ikke hente roller",
       "get_series": "Kunne ikke hente serie",
       "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
@@ -463,6 +371,9 @@
       "institution_mismatch": "Denne brukeren tilhører en annen institusjon",
       "login": "Kunne ikke logge inn",
       "missing_user": "Mangler bruker",
+      "orcid": {
+        "access_denied": "Kunne ikke koble til ORCID fordi tilgang til ORCID-kontoen ble avslått"
+      },
       "orcid_login": "Kunne ikke logge inn på ORCID",
       "publish_registration": "Kunne ikke publisere registrering",
       "remove_role": "Kunne ikke fjerne rolle",
@@ -474,10 +385,7 @@
       "update_orcid": "Oppdatering av ORCID-kobling feilet",
       "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
       "update_registration": "Kunne ikke oppdatere registrering",
-      "update_vocabulary": "Oppdatering av {{vocabulary}} feilet",
-      "orcid": {
-        "access_denied": "Kunne ikke koble til ORCID fordi tilgang til ORCID-kontoen ble avslått"
-      }
+      "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
     },
     "info": {
       "affiliation_already_exists": "Tilhørigheten finnes allerede",
@@ -489,10 +397,10 @@
       "added_role": "Rolle ble lagt til",
       "admin_added": "Bruker lagt til som administrator",
       "admin_removed": "Bruker fjernet som administrator",
-      "created_customer": "Institusjon er opprettet",
       "create_project": "Prosjekt er opprettet",
       "create_registration": "Registreringen er opprettet",
       "create_user": "Din bruker ble opprettet",
+      "created_customer": "Institusjon er opprettet",
       "delete_affiliation": "Tilhørigheten ble slettet",
       "delete_identifier": "Identifikatoren ble slettet",
       "delete_registration": "Registrering ble slettet",
@@ -518,16 +426,108 @@
       "editor_required": "Du må ha minst en redaktør på denne registreringen",
       "exhibition_place_required": "Må ha minst ett visningssted",
       "has_invalid_format": "{{field}} har ugyldig format",
+      "invalid_number_of_digits": "{{field}} må ha {{digits}} siffer",
       "is_required": "{{-field}} er obligatorisk",
       "isbn_too_short": "ISBN må ha 13 siffer",
-      "invalid_number_of_digits": "{{field}} må ha {{digits}} siffer",
-      "not_selected": "{{field}} er ikke valgt",
       "minimum_one_file": "Du må laste opp minst en fil for denne registreringen",
       "must_be_bigger_than": "{{field}} kan ikke være mindre enn {{limit}}",
       "must_be_in_future": "{{field}} må være i fremtiden",
       "must_be_smaller_than": "{{field}} kan ikke være større enn {{limit}}",
       "must_have_minimum": "Må ha minst {{min}} {{-field}}",
+      "not_selected": "{{field}} er ikke valgt",
       "supervisor_required": "Du må ha minst en veileder på denne registreringen"
+    }
+  },
+  "licenses": {
+    "description": {
+      "cc0": "Den person som har knyttet et verk til dette aktstykke (deed) har, i den utstrekning loven tillater, erklært dette verket er i det fri ved å si fra seg alle de opphavsrettigheter og nærstående rettigheter som vedkommende hadde til verket.",
+      "cc_by": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort.",
+      "cc_by_nc": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDu kan ikke benytte materialet til kommersielle formål.",
+      "cc_by_nc_nd": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDu kan ikke benytte materialet til kommersielle formål. \nDersom du remixer, bearbeider eller bygger på materialet, kan du ikke distribuere det endrede materialet.",
+      "cc_by_nc_sa": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDu kan ikke benytte materialet til kommersielle formål. \nDersom du remixer, bearbeider eller bygger på materialet, må du distribuere dine bidrag under samme lisens som originalen.",
+      "cc_by_nd": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDersom du remixer, bearbeider eller bygger på materialet, kan du ikke distribuere det endrede materialet.",
+      "cc_by_sa": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDersom du remixer, bearbeider eller bygger på materialet, må du distribuere dine bidrag under samme lisens som originalen.",
+      "rights_reserved": "Dette arbeidet er publisert her for personlig bruk og kun i overensstemmelse med utgivers regler og betingelser for bruk av egenarkiverte versjoner."
+    },
+    "labels": {
+      "CC BY": "CC BY",
+      "CC BY-NC": "CC BY-NC",
+      "CC BY-NC-ND": "CC BY-NC-ND",
+      "CC BY-NC-SA": "CC BY-NC-SA",
+      "CC BY-ND": "CC BY-ND",
+      "CC BY-SA": "CC BY-SA",
+      "CC0": "CC0",
+      "RightsReserved": "Utgivers betingelser"
+    },
+    "links": {
+      "cc0": "https://creativecommons.org/publicdomain/zero/1.0/deed.no",
+      "cc_by": "https://creativecommons.org/licenses/by/4.0/deed.no",
+      "cc_by_nc": "https://creativecommons.org/licenses/by-nc/4.0/deed.no",
+      "cc_by_nc_nd": "https://creativecommons.org/licenses/by-nc-nd/4.0/deed.no",
+      "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/4.0/deed.no",
+      "cc_by_nd": "https://creativecommons.org/licenses/by-nd/4.0/deed.no",
+      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/4.0/deed.no",
+      "rights_reserved": ""
+    }
+  },
+  "my_page": {
+    "messages": {
+      "go_to_registration": "Gå til registrering",
+      "messages": "Meldinger",
+      "no_messages": "Du har ingen meldinger",
+      "types": {
+        "doi": "DOI-forespørsel",
+        "support": "Brukerstøtte"
+      }
+    },
+    "my_page": "Min side",
+    "my_profile": {
+      "heading": {
+        "affiliations": "Tilhørigheter",
+        "contact_info": "Kontaktinformasjon",
+        "roles": "Roller",
+        "settings": "Innstillinger",
+        "user_info": "Brukerinformasjon"
+      },
+      "id": "ID",
+      "orcid": {
+        "connect_orcid": "Koble/opprette ORCID iD",
+        "dialog": {
+          "heading": "Koble eller opprette ORCID iD",
+          "paragraph0": "Logg inn på din ORCID-konto eller registrer deg hvis du ikke har en konto.",
+          "paragraph1": "ORCID gir deg en varig digital identifikator som du selv eier og kontrollerer, og som skiller deg fra andre forskere. Den kan brukes den i mange sammenhenger. Ved å koble din ORCID iD er det enklere å identifisere deg som forfatter, og å hente og dele dine publikasjoner."
+        },
+        "orcid": "ORCID",
+        "orcid_description": "Koble din ORCID iD ved å logge på ORCID. Eller registrer deg for å få en ORCID iD og koble denne. Da blir det enklere å identifisere deg",
+        "remove_connection": "Fjern kobling til ORCID",
+        "remove_connection_info": "Er du sikker på at du vil fjerne koblingen til ORCID? \n\nDersom du ønsker å trekke tilbake Sikts godkjenning til å lese din ORCID, må du gå inn på din ORCID-profil."
+      },
+      "user_profile": "Brukerprofil"
+    },
+    "registrations": {
+      "delete_registration": "Slett upublisert registrering",
+      "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
+      "my_research_profile": "Min forskerprofil",
+      "published_registrations": "Publiserte registreringer",
+      "unpublished_registrations": "Upubliserte registreringer"
+    },
+    "research_profile": "Forskerprofil",
+    "roles": {
+      "app_admin": "Systemadministrator",
+      "app_admin_description": "Tilgang til å opprette nye institusjoner og tildele roller",
+      "creator": "Registrator",
+      "creator_description": "Tilgang til å registrere publikasjoner og andre ressurser",
+      "curator": "Kurator",
+      "curator_description": "Tilgang til å redigere publikasjoner og andre ressurser, tildele DOI og besvare brukerstøttehenvendelser",
+      "curators": "Kuratorer",
+      "editor": "Redaktør",
+      "editor_description": "Ansvarlig for institusjonens publikasjoner og andre ressurser i tjenesten",
+      "editors": "Redaktører",
+      "institution_admin": "Administrator",
+      "institution_admin_description": "Tilgang til å gi rollene Kurator og Redaktør til andre",
+      "institution_admins": "Administratorer",
+      "no_roles": "Du har ingen roller fordi du ikke har fått tildelt roller av din administrator",
+      "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen"
     }
   },
   "privacy": {
@@ -551,8 +551,8 @@
         "paragraph": "Sikt utvikler og forvalter tjenesten på vegne av behandlingsansvarlig, og har rollen som databehandler."
       },
       "section2": {
-        "intro": "Kontaktinformasjon til Sikt brukerstøtte:",
         "email": "Epost: <0><0></0></0>",
+        "intro": "Kontaktinformasjon til Sikt brukerstøtte:",
         "telephone": "Telefon: <0><0></0></0>"
       }
     },
@@ -673,10 +673,10 @@
       "paragraph4": "Følgende persondata behandles i tjenesten:",
       "paragraph5": "Informasjonen om din aktivitet lagres for å kunne gi deg brukerstøtte og for å kunne si noe om den generelle bruken av tjenesten.",
       "paragraph6": {
-        "intro": "Persondata blir lagret inntil en av følgende hendelser inntreffer:",
         "bullet_point0": "Brukersamtykket trekkes tilbake",
         "bullet_point1": "Formålet med behandling av personopplysninger er oppfylt",
-        "bullet_point2": "Behandlingsansvarlig beslutter å legge ned tjenesten"
+        "bullet_point2": "Behandlingsansvarlig beslutter å legge ned tjenesten",
+        "intro": "Persondata blir lagret inntil en av følgende hendelser inntreffer:"
       },
       "paragraph7": "Logg og backup av systemdata lagres inntil 1 år.",
       "paragraph8": "Brukerinformasjon (unntatt logg) blir lagret i levetiden til en ressurs for brukere som registrerer innhold i NVA.",
@@ -753,6 +753,10 @@
       "paragraph1": "NVA har støtte for utsatt publisering av ressurser. Det betyr at registreringen kan ferdigstilles slik at metadata om ressursen blir publisert, mens ressursen ikke blir åpent tilgjengelig før angitt dato.",
       "paragraph2": "Tjenesten tillater ikke behandling av sensitive personopplysninger."
     },
+    "what_are_personal_data": {
+      "heading": "Hva er personopplysninger?",
+      "paragraph": "Personopplysninger er alle former for data, informasjon, opplysninger og vurderinger som kan knyttes til deg som enkeltperson, jf. <0>personopplysningsloven § 2</0> og <1>GDPR artikkel 5</1> nr. 1. Det avgjørende for om en opplysning er en personopplysning er om opplysningene kan knyttes til en konkret person. Opplysninger, som alene ikke kan knyttes til en enkeltperson, kan i tilfeller hvor opplysningen forekommer sammen med andre data utgjøre en personopplysning."
+    },
     "your_rights": {
       "heading": "Dine rettigheter",
       "section0": {
@@ -768,10 +772,10 @@
       "section2": {
         "heading": "Rett til å begrense behandlingen",
         "paragraph0": {
-          "intro": "I enkelte tilfeller kan du ha rett til å kreve at behandlingen av dine personopplysninger blir begrenset. Begrenset behandling vil si at personopplysningene fortsatt blir lagret, men at annen behandling i tjenesten begrenses. For å kunne kreve begrenset behandling av personopplysninger, må vilkårene i personopplysningsloven og <0>GDPR artikkel 18</0> være oppfylt. Du kan kreve begrenset behandling:",
           "bullet_point0": "I påvente av at behandlingsansvarlig korrigerer feil eller mangelfulle personopplysninger",
           "bullet_point1": "Dersom du har fremmet en innsigelse mot behandlingen (se mer om dette under)",
-          "bullet_point2": "Dersom personopplysningene er nødvendig for å opprette eller forsvare et rettslig krav"
+          "bullet_point2": "Dersom personopplysningene er nødvendig for å opprette eller forsvare et rettslig krav",
+          "intro": "I enkelte tilfeller kan du ha rett til å kreve at behandlingen av dine personopplysninger blir begrenset. Begrenset behandling vil si at personopplysningene fortsatt blir lagret, men at annen behandling i tjenesten begrenses. For å kunne kreve begrenset behandling av personopplysninger, må vilkårene i personopplysningsloven og <0>GDPR artikkel 18</0> være oppfylt. Du kan kreve begrenset behandling:"
         },
         "paragraph1": "Blir begrenset behandling iverksatt, vil du varsles av behandlingsansvarlig før begrensningen oppheves."
       },
@@ -784,16 +788,16 @@
       "section4": {
         "heading": "Rett til å fremme innsigelse",
         "paragraph0": {
-          "intro": "Du har rett til å fremme innsigelse mot behandling av dine personopplysninger under visse vilkår, definert i <0>GDPR artikkel 21</0>. Dette gjelder dersom;",
           "bullet_point0": "Rettslig grunnlag for behandling av personopplysninger er basert på legitime interesser, i allmenn interesse, eller ved utøvelse av offentlig myndighet.",
           "bullet_point1": "Behandling av personopplysninger innebærer direkte markedsføring eller profilering",
-          "bullet_point2": "Behandling av personopplysninger skjer med tanke på vitenskapelig/historisk forskning eller statistikk."
+          "bullet_point2": "Behandling av personopplysninger skjer med tanke på vitenskapelig/historisk forskning eller statistikk.",
+          "intro": "Du har rett til å fremme innsigelse mot behandling av dine personopplysninger under visse vilkår, definert i <0>GDPR artikkel 21</0>. Dette gjelder dersom;"
         },
         "paragraph1": "Tjenesten tilfredsstiller generelt ikke disse vilkårene, med unntak for behandling av forfatteropplysninger og i de tilfeller hvor personopplysninger anvendes for statistikk. Ved bruk til statistikk vil persondata være anonymisert.",
         "paragraph2": {
-          "intro": "Vær imidlertid oppmerksom på følgende;",
           "bullet_point0": "Dersom du har et særskilt behov for å få stanset behandlingen ber vi deg om å ta kontakt med behandlingsansvarlig - eksempelvis hvis du har et beskyttelsesbehov, fortrolig adresse, eller lignende.",
-          "bullet_point1": "Når det er gitt samtykke for behandling av personopplysninger, har du rett til å trekke samtykket."
+          "bullet_point1": "Når det er gitt samtykke for behandling av personopplysninger, har du rett til å trekke samtykket.",
+          "intro": "Vær imidlertid oppmerksom på følgende;"
         }
       },
       "section5": {
@@ -801,10 +805,6 @@
         "paragraph0": "Dersom du mener vi ikke har behandlet personopplysningene på en korrekt og lovlig måte, eller hvis du mener at vi ikke har klart å oppfylle dine rettigheter, har du mulighet til å klage over behandlingen. Se nederst for informasjon om hvordan du kan kontakte oss.",
         "paragraph1": "Dersom vi ikke tar klagen din til følge, har du mulighet til å fremme klagen for Datatilsynet. Datatilsynet er ansvarlig for å kontrollere at norske virksomheter overholder bestemmelsene i personopplysningsloven og GDPR, ved behandling av personopplysninger."
       }
-    },
-    "what_are_personal_data": {
-      "heading": "Hva er personopplysninger?",
-      "paragraph": "Personopplysninger er alle former for data, informasjon, opplysninger og vurderinger som kan knyttes til deg som enkeltperson, jf. <0>personopplysningsloven § 2</0> og <1>GDPR artikkel 5</1> nr. 1. Det avgjørende for om en opplysning er en personopplysning er om opplysningene kan knyttes til en konkret person. Opplysninger, som alene ikke kan knyttes til en enkeltperson, kan i tilfeller hvor opplysningen forekommer sammen med andre data utgjøre en personopplysning."
     }
   },
   "project": {
@@ -841,10 +841,10 @@
       "add_self_as_role": "Legg meg til som {{- role}}",
       "add_unverified_contributor": "Legg til en ikke-verifisert bidragsyter.",
       "authors": "Forfattere",
-      "confirmed": "Bekreftet",
       "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilhørigheten?",
       "confirm_remove_affiliation_title": "Fjerne tilhørighet?",
       "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",
+      "confirmed": "Bekreftet",
       "contributor": "Bidragsyter",
       "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
       "corresponding": "Korresponderende",
@@ -854,15 +854,15 @@
       "known_author_identity": "Har tilknyttet forfatteridentitet",
       "no_affiliations_found": "Ingen tilhørigheter funnet",
       "no_registrations_found": "Ingen registreringer funnet",
+      "other_registrations_one": "+ {{count}} annen registrering",
+      "other_registrations_other": "+ {{count}} andre registreringer",
       "prefilled_affiliation": "Forhåndsutfylt tilhørighet",
       "prefilled_name": "Forhåndsutfylt navn",
       "remove_affiliation": "Fjern tilhørighet",
       "remove_role": "Fjern {{- role}}",
-      "select_institution": "Velg institusjon",
       "select_contributor_type": "Velg type bidragsyter",
+      "select_institution": "Velg institusjon",
       "supervisors": "Veiledere",
-      "other_registrations_one": "+ {{count}} annen registrering",
-      "other_registrations_other": "+ {{count}} andre registreringer",
       "type": "Bidragstype",
       "types": {
         "AcademicCoordinator": "Faglig ansvarlig",
@@ -874,8 +874,8 @@
         "Composer": "Komponist",
         "Conductor": "Dirigent",
         "Consultant": "Konsulent",
-        "CostumeDesigner": "Kostymedesigner",
         "ContactPerson": "Kontaktperson",
+        "CostumeDesigner": "Kostymedesigner",
         "Creator": "Forfatter",
         "CuratorOrganizer": "Kurator/arrangør",
         "Dancer": "Danser",
@@ -894,8 +894,8 @@
         "Organizer": "Arrangør",
         "Other": "Annen",
         "Photographer": "Fotograf",
-        "ProductionDesigner": "Produksjonsdesigner",
         "Producer": "Produsent",
+        "ProductionDesigner": "Produksjonsdesigner",
         "ProgrammeLeader": "Programleder",
         "ProgrammeParticipant": "Programdeltager",
         "RelatedPerson": "Relatert person",
@@ -916,16 +916,16 @@
       "verify_person": "Verifiser person"
     },
     "description": {
-      "add_vocabulary": "Legg til vokabular",
       "abstract": "Sammendrag",
+      "add_vocabulary": "Legg til vokabular",
       "confirm_remove_vocabulary_text": "Er du sikker på at du ønsker å fjerne vokabular for {{vocabulary}}?",
       "confirm_remove_vocabulary_title": "Fjern vokabular?",
       "date_picker": {
         "choose_date": "Velg dato",
-        "open_dialog": "Velg dato, valgt dato er {{date}}",
         "go_to_calendar_view": "Visning av år er åpen, bytt til kalendervisning",
         "go_to_year_view": "Kalendervisning er åpen, bytt til visning av år",
         "next_month": "Neste måned",
+        "open_dialog": "Velg dato, valgt dato er {{date}}",
         "previous_month": "Forrige måned",
         "select_date": "Velg dato",
         "today": "I dag"
@@ -936,6 +936,8 @@
       "financed_by": "Finansiert av",
       "hrcs_activities": "HRCS-aktiviteter",
       "hrcs_categories": "HRCS-kategorier",
+      "keywords": "Nøkkelord",
+      "keywords_helper": "Skill nøkkelord med komma eller enter",
       "npi_disciplines": "Fagfelt i Norsk publiseringsindikator",
       "primary_language": "Hovedspråk for innhold",
       "project_association": "Prosjekttilknytning",
@@ -943,8 +945,6 @@
       "remove_vocabulary": "Fjern vokabular",
       "search_for_npi_discipline": "Søk etter fagfelt",
       "search_for_project": "Søk i norske prosjektkataloger",
-      "keywords": "Nøkkelord",
-      "keywords_helper": "Skill nøkkelord med komma eller enter",
       "year_only": "Kun årstall"
     },
     "edit_registration": "Endre registrering",
@@ -967,8 +967,8 @@
       "published_version": "Publisert versjon",
       "remove_file": "Fjern fil",
       "remove_file_description": "Ønsker du å fjerne {{fileName}}?",
-      "version": "Versjon",
-      "title": "Filnavn"
+      "title": "Filnavn",
+      "version": "Versjon"
     },
     "heading": {
       "contributors": "Bidragsytere",
@@ -977,6 +977,8 @@
       "publish_settings": "Publiseringsvalg",
       "resource_type": "Ressurstype"
     },
+    "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
+    "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?",
     "new_registration": "Ny registrering",
     "public_page": {
       "about_registration": "Om registreringen",
@@ -997,26 +999,23 @@
       "ready_to_be_published": "Klar for publisering",
       "ready_to_be_published_description": "Se over utkast før du publiserer.",
       "related_registrations": "Relaterte registreringer",
-      "reserve_doi": "Reserver en DOI",
-      "reserve_doi_message": "Autogenerert melding: Bruker ønsker å reservere en DOI.",
       "request_doi": "Be om en DOI",
-      "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet."
+      "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet.",
+      "reserve_doi": "Reserver en DOI",
+      "reserve_doi_message": "Autogenerert melding: Bruker ønsker å reservere en DOI."
     },
-    "validation_errors": "Valideringsfeil",
     "publication_types": {
-      "Artistic": "Kunstnerisk resultat",
       "Architecture": "Arkitektur",
+      "Artistic": "Kunstnerisk resultat",
       "ArtisticDesign": "Design",
-      "MovingPicture": "Film",
-      "MusicPerformance": "Musikk",
-      "PerformingArts": "Scenekunst",
       "Book": "Bokpublikasjon",
       "BookAnthology": "Antologi",
       "BookMonograph": "Monografi",
       "Chapter": "Del av bok eller rapport",
-      "ChapterConferenceAbstract": "Konferanseabstrakt",
       "ChapterArticle": "Kapittel i antologi",
+      "ChapterConferenceAbstract": "Konferanseabstrakt",
       "ChapterInReport": "Kapittel i rapport",
+      "ConferenceAbstract": "Konferanseabstrakt",
       "ConferenceLecture": "Konferanseforedrag",
       "ConferencePoster": "Konferanseposter",
       "Degree": "Studentoppgave eller avhandling",
@@ -1030,7 +1029,6 @@
       "JournalArticle": "Artikkel i tidsskrift",
       "JournalCorrigendum": "Korrigendum",
       "JournalEditorial": "Lederartikkel",
-      "ConferenceAbstract": "Konferanseabstrakt",
       "JournalIssue": "Hefte i tidsskrift",
       "JournalLeader": "Leder",
       "JournalLetter": "Kommentar",
@@ -1043,6 +1041,8 @@
       "MediaParticipationInRadioOrTv": "Deltagelse i radio eller TV",
       "MediaPodcast": "Podkast",
       "MediaReaderOpinion": "Leserinnlegg",
+      "MovingPicture": "Film",
+      "MusicPerformance": "Musikk",
       "Other": "Annen publikasjon",
       "OtherFeatureArticle": "Kronikk",
       "OtherMap": "Kart",
@@ -1050,6 +1050,7 @@
       "OtherPresentation": "Annen presentasjon",
       "OtherPublication": "Annen publikasjon",
       "OtherStudentWork": "Annen studentoppgave",
+      "PerformingArts": "Scenekunst",
       "Report": "Rapport",
       "ReportBasic": "Annen rapport",
       "ReportBookOfAbstract": "Abstraktsamling",
@@ -1112,9 +1113,9 @@
           "InteractionDesign": "Interaksjonsdesign",
           "InteriorDesign": "Interiørdesign",
           "LightDesign": "Lysdesign",
+          "Other": "Annet design",
           "ProductDesign": "Produktdesign",
           "ServiceDesign": "Tjenestedesign",
-          "Other": "Annet design",
           "WebDesign": "Webdesign"
         },
         "edit_audio_visual_publication": "Endre audio-/videoutgivelse",
@@ -1138,20 +1139,20 @@
         "mention_other": "Annet (utgiver, ISBN, m.m.)",
         "mention_title": "Tidsskrift/Boktittel/medium",
         "moving_picture_type": {
-          "Film": "Langfilm",
-          "ShortFilm": "Kortfilm",
-          "SerialFilmProduction": "Seriell produksjon",
-          "InteractiveFilm": "Interaktiv produksjon",
           "AugmentedVirtualRealityFilm": "AR/VR",
-          "Other": "Annet"
+          "Film": "Langfilm",
+          "InteractiveFilm": "Interaktiv produksjon",
+          "Other": "Annet",
+          "SerialFilmProduction": "Seriell produksjon",
+          "ShortFilm": "Kortfilm"
         },
         "music_media_type": {
           "CompactDisc": "CD",
           "DVD": "DVD",
-          "Streaming": "Strømming",
           "DigitalFile": "Nedlasting",
-          "Vinyl": "LP/EP",
-          "Other": "Annet"
+          "Other": "Annet",
+          "Streaming": "Strømming",
+          "Vinyl": "LP/EP"
         },
         "music_score_ensemble": "Ensemble",
         "music_score_ismn": "ISMN",
@@ -1179,9 +1180,9 @@
         },
         "performance_type": "Type/formidlingsform",
         "performing_arts_type": {
-          "TheatricalProduction": "Forestilling/visning",
           "Broadcast": "TV/film/radio",
-          "Other": "Annet"
+          "Other": "Annet",
+          "TheatricalProduction": "Forestilling/visning"
         },
         "premiere": "Premiære",
         "premiere_date": "Premiæredato",
@@ -1189,8 +1190,8 @@
         "remove_announcement_description": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over offentliggjøringer?",
         "remove_music_work": "Fjern verk",
         "remove_music_work_description": "Er du sikker på at du vil fjerne dette verket?",
-        "remove_venue_title": "Fjern visningssted?",
-        "remove_venue_text": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over visningssteder?"
+        "remove_venue_text": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over visningssteder?",
+        "remove_venue_title": "Fjern visningssted?"
       },
       "chapter": {
         "info_anthology": "Antologien hvor kapittelet er publisert i må være publisert først",
@@ -1203,7 +1204,9 @@
       },
       "content": "Innhold",
       "content_types": {
+        "AcademicArticle": "Vitenskapelig artikkel",
         "AcademicChapter": "Vitenskapelig kapittel",
+        "AcademicLiteratureReview": "Vitenskapelig oversiktsartikkel",
         "AcademicMonograph": "Vitenskapelig monografi",
         "CaseReport": "Kasuistikk",
         "Encyclopedia": "Oppslagsverk",
@@ -1213,12 +1216,10 @@
         "Introduction": "Innledning i antologi",
         "NonFictionChapter": "Faglig kapittel",
         "NonFictionMonograph": "Faglig monografi",
-        "PopularScienceMonograph": "Populærvitenskapelig monografi",
-        "PopularScienceChapter": "Populærvitenskapelig kapittel",
         "PopularScienceArticle": "Populærvitenskapelig artikkel",
+        "PopularScienceChapter": "Populærvitenskapelig kapittel",
+        "PopularScienceMonograph": "Populærvitenskapelig monografi",
         "ProfessionalArticle": "Fagartikkel",
-        "AcademicArticle": "Vitenskapelig artikkel",
-        "AcademicLiteratureReview": "Vitenskapelig oversiktsartikkel",
         "StudyProtocol": "Studieprotokoll",
         "Textbook": "Lærebok",
         "TextbookChapter": "Kapittel i lærebok"
@@ -1297,8 +1298,7 @@
       "REJECTED": "Avvist"
     },
     "support_description": "Når du ber om brukerstøtte vil meldingen gå til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger</0>.",
-    "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
-    "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?"
+    "validation_errors": "Valideringsfeil"
   },
   "search": {
     "add_filter": "Legg til filter",
@@ -1311,8 +1311,8 @@
     "registration_type": "Registreringstype",
     "remove_filter": "Fjern filter",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",
-    "select_filters": "Velg filtre for å snevre inn søket:",
     "search_term_label": "Verdi",
+    "select_filters": "Velg filtre for å snevre inn søket:",
     "sort_by": "Sorter etter",
     "sort_by_modified_date": "Sist endret",
     "sort_by_published_date_asc": "Publiseringsdato (eldste først)",
