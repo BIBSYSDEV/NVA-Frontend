@@ -919,16 +919,6 @@
       "add_vocabulary": "Add vocabulary",
       "confirm_remove_vocabulary_text": "Are you sure you want to remove vocabulary for {{vocabulary}}?",
       "confirm_remove_vocabulary_title": "Remove vocabulary?",
-      "date_picker": {
-        "choose_date": "Choose date",
-        "go_to_calendar_view": "Year view is open, switch to calendar view",
-        "go_to_year_view": "Calendar view is open, switch to year view",
-        "next_month": "Next month",
-        "open_dialog": "Choose date, selected date is {{date}}",
-        "previous_month": "Previous month",
-        "select_date": "Select date",
-        "today": "Today"
-      },
       "date_published": "Date published",
       "description": "Description",
       "description_of_content": "Description of content, if relevant",

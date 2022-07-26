@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/notificationSlice';
 import { MessageType } from '../../types/publication_types/messages.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 
 interface SupportModalContentProps {
   closeModal: () => void;
@@ -31,8 +32,8 @@ export const SupportModalContent = ({ closeModal }: SupportModalContentProps) =>
   return (
     <>
       <Typography paragraph>
-        <Trans i18nKey="registration.registration.support_description">
-          <Link component={RouterLink} to="/my-messages" />
+        <Trans i18nKey="registration.support_description">
+          <Link component={RouterLink} to={UrlPathTemplate.MyPageMessages} />
         </Trans>
       </Typography>
 
