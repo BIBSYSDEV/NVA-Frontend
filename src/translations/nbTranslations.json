@@ -573,7 +573,7 @@
             "col1": "Skydrift og backup for Sikts direkte tjenester"
           },
           "row1": {
-            "col0": "Blue Safespring AB ",
+            "col0": "Blue Safespring AB",
             "col1": "Skydrift og backup for Sikts direkte tjenester"
           },
           "row2": {
@@ -677,7 +677,7 @@
         "bullet_point2": "Behandlingsansvarlig beslutter å legge ned tjenesten",
         "intro": "Persondata blir lagret inntil en av følgende hendelser inntreffer:"
       },
-      "paragraph7": "Logg og backup av systemdata lagres inntil 1 år.",
+      "paragraph7": "Logg og backup av systemdata lagres inntil ett år.",
       "paragraph8": "Brukerinformasjon (unntatt logg) blir lagret i levetiden til en ressurs for brukere som registrerer innhold i NVA.",
       "table": {
         "header": {
