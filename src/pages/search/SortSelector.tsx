@@ -62,7 +62,7 @@ export const SortSelector = () => {
       onChange={updateSortQuery}>
       {sortOptions.map((option) => (
         <MenuItem key={option.value} value={option.value}>
-          {t(option.i18nKey)}
+          {t(option.i18nKey as any)}
         </MenuItem>
       ))}
     </TextField>

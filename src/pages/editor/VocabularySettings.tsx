@@ -72,7 +72,7 @@ export const VocabularySettings = () => {
           setNotification({
             message: t('feedback.success.update_vocabulary', {
               vocabulary: vocabularyName,
-              status: t(newVocabulary.status.toLowerCase()).toLowerCase(),
+              status: t(newVocabulary.status.toLowerCase() as any).toLowerCase(),
             }),
             variant: 'success',
           })

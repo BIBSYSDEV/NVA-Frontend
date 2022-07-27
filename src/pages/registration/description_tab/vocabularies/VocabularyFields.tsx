@@ -117,7 +117,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                         onCancel={() => setVocabularyToRemove('')}>
                         <Typography>
                           {t('registration.description.confirm_remove_vocabulary_text', {
-                            vocabulary: t(i18nKey),
+                            vocabulary: t(i18nKey as any),
                           })}
                         </Typography>
                       </ConfirmDialog>
@@ -144,7 +144,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                 setVisibleVocabularies([...visibleVocabularies, vocabulary]);
                 setNewVocabularyAnchor(null);
               }}>
-              {t(vocabularyConfig[vocabulary].i18nKey)}
+              {t(vocabularyConfig[vocabulary].i18nKey as any)}
             </MenuItem>
           ))}
         </Menu>

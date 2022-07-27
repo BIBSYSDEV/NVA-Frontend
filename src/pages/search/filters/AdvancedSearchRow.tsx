@@ -36,7 +36,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
           <TextField {...field} select variant="outlined" label={t('search.field_label')}>
             {registrationFilters.map((filter) => (
               <MenuItem key={filter.i18nKey} value={filter.field}>
-                {t(filter.i18nKey)}
+                {t(filter.i18nKey as any)}
               </MenuItem>
             ))}
           </TextField>

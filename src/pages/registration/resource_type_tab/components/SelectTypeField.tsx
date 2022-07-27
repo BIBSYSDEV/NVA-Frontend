@@ -34,7 +34,7 @@ export const SelectTypeField = ({
           onChange={(event) => (onChangeType ? onChangeType(event.target.value) : field.onChange(event))}>
           {options.map((typeValue) => (
             <MenuItem value={typeValue} key={typeValue} data-testid={`${dataTestId}-${typeValue}`}>
-              {t(`registration.publication_types.${typeValue}`)}
+              {t(`registration.publication_types.${typeValue}` as any)}
             </MenuItem>
           ))}
         </TextField>
