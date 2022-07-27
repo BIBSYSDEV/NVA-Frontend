@@ -92,7 +92,7 @@
       "add_role_info": "If you don't find the user, you must check that they are affiliated with your institution and have previously logged in.",
       "area_of_responsibility": "Area of responsibility",
       "area_of_responsibility_placeholder": "No limitations",
-      "auto_assign_creators": "Employees are automaticaly assigned role as creator at login if the are registred as this in 'eduPersonAffiliation': Employee, Staff, Member",
+      "auto_assign_creators": "Employees are automatically assigned role as creator at login if they are registered as this in 'eduPersonAffiliation': Employee, Staff, Member",
       "creator_info": "Who is able to publish?",
       "no_users_found": "No users found",
       "remove_role_text": "Are you sure you want to remove this role?",
@@ -227,7 +227,7 @@
     "1018": "Scandinavian Studies",
     "1019": "Romance Studies",
     "1020": "Slavonic Studies",
-    "1021": "Theatre and Drama",
+    "1021": "Theater and Drama",
     "1022": "Theology and religion",
     "1023": "Interdisciplinary Humanities",
     "1024": "Germanic Studies",
@@ -318,7 +318,7 @@
       "metadata": "Metadata",
       "publish_strategy": "Publish strategy",
       "registrator_cannot_publish": "Registrator can only register",
-      "registrator_cannot_publish_description": "Metadata, files and licenses must be approved by Curator befor publishing.",
+      "registrator_cannot_publish_description": "Metadata, files and licenses must be approved by Curator before publishing.",
       "registrator_publishes_metadata": "Registrator publishes metadata",
       "registrator_publishes_metadata_description": "Files and licenses must be approved by Curator before they become publically available.",
       "registrator_publishes_without_curator": "Registrator publishes without approval from Curator",
@@ -573,7 +573,7 @@
             "col1": "Cloud management and backup for Sikt's direct services"
           },
           "row1": {
-            "col0": "Blue Safespring AB ",
+            "col0": "Blue Safespring AB",
             "col1": "Cloud management and backup for Sikt's direct services"
           },
           "row2": {
@@ -599,7 +599,7 @@
             "col2": "UNINETT AS"
           },
           "row1": {
-            "col0": "Import of material to NAV from external services",
+            "col0": "Import of material to NVA from external services",
             "col1": "Export of metadata for resources to other services for presentation or cross-registration. For example, Oria to facilitate retrieval.",
             "col2": "Sources defined by the data controller"
           },
@@ -1064,7 +1064,7 @@
         "add_award": "Add prize/award",
         "add_broadcast": "Add TV/web/streaming",
         "add_cinematic_release": "Add festival/cinema",
-        "add_competition": "Add competititon",
+        "add_competition": "Add competition",
         "add_concert": "Add concert/show",
         "add_exhibition": "Add exhibition",
         "add_exhibition_place": "Add exhibition place",
