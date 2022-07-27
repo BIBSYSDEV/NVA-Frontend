@@ -10,7 +10,7 @@
       "paragraph2": "The institution is responsible for the processing and registers and maintains its own content in the service and configures distribution rules for published resources (articles, reports, data sets, etc.). The service also receives content from other data sources.",
       "paragraph3": "NVA supports postponed publication of resources. This means that a registration can be completed so that metadata about the resource is published, while the resource itself is not open until the specified date. The service does not allow the processing of sensitive personal data.",
       "paragraph4": "NVA will make the institution's open content available via open interfaces, with the intention of making this known and searchable to the outside world and promoting indexing in search engines and search portals.",
-      "paragraph5": "Although NVA is established, the service is still under development. Institutions that do not have an open research archive can contact <0>Sikt</0> to use NVA as a pilot institution."
+      "paragraph5": "Although NVA is established, the service is still under development. Institutions that do not have an open research archive can contact <0>Sikt<\/0> to use NVA as a pilot institution."
     },
     "footer_text": "$t(about.short_description) The service is delivered by Sikt.",
     "short_description": "Nasjonalt Vitenarkiv collects information about Norwegian research and makes research results openly available."
@@ -70,7 +70,7 @@
       "edit_institution": "Edit institution",
       "feide_organization_domain": "Organization domain in Feide",
       "institution_dns": "DNS for the institution",
-      "invalid_ror_format": "Invalid ROR. Example with valid format: https://ror.org/abcd0123ef",
+      "invalid_ror_format": "Invalid ROR. Example with valid format: https:\/\/ror.org\/abcd0123ef",
       "organization_register_name": "Name in organization registry",
       "remove_admin_text": "Are you sure you want to remove {{username}} from list of administrators?",
       "remove_admin_title": "Remove administrator?",
@@ -307,7 +307,7 @@
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
       "institution_code": "Institution's code",
-      "institution_helper_text": "Contact <0>Sikt</0> if changes are needed.",
+      "institution_helper_text": "Contact <0>Sikt<\/0> if changes are needed.",
       "institution_name": "Institution's name",
       "institution_name_english": "Institution's English name",
       "institution_name_norwegian": "Institution's Norwegian name",
@@ -460,13 +460,13 @@
       "RightsReserved": "Publisher's conditions"
     },
     "links": {
-      "cc0": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "cc_by": "https://creativecommons.org/licenses/by/4.0/",
-      "cc_by_nc": "https://creativecommons.org/licenses/by-nc/4.0/",
-      "cc_by_nc_nd": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
-      "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
-      "cc_by_nd": "https://creativecommons.org/licenses/by-nd/4.0/",
-      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/4.0/"
+      "cc0": "https:\/\/creativecommons.org\/publicdomain\/zero\/1.0\/",
+      "cc_by": "https:\/\/creativecommons.org\/licenses\/by\/4.0\/",
+      "cc_by_nc": "https:\/\/creativecommons.org\/licenses\/by-nc\/4.0\/",
+      "cc_by_nc_nd": "https:\/\/creativecommons.org\/licenses\/by-nc-nd\/4.0\/",
+      "cc_by_nc_sa": "https:\/\/creativecommons.org\/licenses\/by-nc-sa\/4.0\/",
+      "cc_by_nd": "https:\/\/creativecommons.org\/licenses\/by-nd\/4.0\/",
+      "cc_by_sa": "https:\/\/creativecommons.org\/licenses\/by-sa\/4.0\/"
     }
   },
   "my_page": {
@@ -490,7 +490,7 @@
       },
       "id": "ID",
       "orcid": {
-        "connect_orcid": "Connect/create ORCID iD",
+        "connect_orcid": "Connect\/create ORCID iD",
         "dialog": {
           "heading": "Connect or create ORCID iD",
           "paragraph0": "Sign in to ORCID or register to create an account.",
@@ -550,16 +550,16 @@
         "paragraph": "Sikt develops and manages the service on behalf of the data controller and has the role of data processor."
       },
       "section2": {
-        "email": "Email: <0><0></0></0>",
+        "email": "Email: <0><0><\/0><\/0>",
         "intro": "Sikt user support's contact details",
-        "telephone": "Telephone: <0><0></0></0>"
+        "telephone": "Telephone: <0><0><\/0><\/0>"
       }
     },
     "disclosure_of_data": {
       "heading": "Disclosure of your personal data to third parties",
-      "paragraph0": "Disclosure or export of data is defined as all disclosure of data aside from to the service’s own system/processing or to the data subjects themselves, or to someone who receives data on their behalf.",
-      "paragraph1": "Personal data linked to users are not transferred to countries outside the EU/EEA.",
-      "paragraph2": "The service is run on servers in the EU/EEA.",
+      "paragraph0": "Disclosure or export of data is defined as all disclosure of data aside from to the service’s own system\/processing or to the data subjects themselves, or to someone who receives data on their behalf.",
+      "paragraph1": "Personal data linked to users are not transferred to countries outside the EU\/EEA.",
+      "paragraph2": "The service is run on servers in the EU\/EEA.",
       "paragraph3": {
         "intro": "Your personal data will be disclosed to Sikt, which is the service provider, and to its subcontractors:",
         "table": {
@@ -665,10 +665,10 @@
     },
     "registered_personal_data": {
       "heading": "Registered personal data, legal grounds and storage time",
-      "paragraph0": "Personal data related to user accounts in the service requires consent as legal grounds, cf. the <0>Personal Data Act, and the GDPR Article 6</0>(1)(a)",
-      "paragraph1": "Registered personal data about authors and contact persons are covered by the <0>Personal Data Act, and the GDPR Article 6(1)</0>(f) – to perform a task on grounds of legitimate interests.",
+      "paragraph0": "Personal data related to user accounts in the service requires consent as legal grounds, cf. the <0>Personal Data Act, and the GDPR Article 6<\/0>(1)(a)",
+      "paragraph1": "Registered personal data about authors and contact persons are covered by the <0>Personal Data Act, and the GDPR Article 6(1)<\/0>(f) – to perform a task on grounds of legitimate interests.",
       "paragraph2": "The service does not allow processing of sensitive personal data. In the cases where the users themselves can write information in the comments field and similar, the user is obliged to meet the requirements and guidelines for the service. Users are not permitted to register sensitive personal data about themselves or others or to use the service for defamatory conduct.",
-      "paragraph3": "The data controller is entitled to store information for statistical purposes, if this is in the interests of society at large, cf. the <0>Personal Data Act Section 8</0> and the <1>GDPR Article 6</1>(1)(e)",
+      "paragraph3": "The data controller is entitled to store information for statistical purposes, if this is in the interests of society at large, cf. the <0>Personal Data Act Section 8<\/0> and the <1>GDPR Article 6<\/1>(1)(e)",
       "paragraph4": "The following personal data are processed in the service:",
       "paragraph5": "Information about your activity is stored in order to provide user support and to gain an impression of general use of the service.",
       "paragraph6": {
@@ -717,7 +717,7 @@
           },
           "row3": {
             "col0": "Log",
-            "col1": "Log of system use related to the logged-in user and/or their IP address. IP addresses will be registered for anonymous users, which in certain cases can be traced back to a person. The purpose of logs is to ensure security and integrity in the system, provide user support and analyse use of the service. The data collected include time, user ID, IP address, information about browsers and hardware, session information and other information that browsers normally provide.",
+            "col1": "Log of system use related to the logged-in user and\/or their IP address. IP addresses will be registered for anonymous users, which in certain cases can be traced back to a person. The purpose of logs is to ensure security and integrity in the system, provide user support and analyse use of the service. The data collected include time, user ID, IP address, information about browsers and hardware, session information and other information that browsers normally provide.",
             "col2": "Set up in NVA"
           }
         },
@@ -754,13 +754,13 @@
     },
     "what_are_personal_data": {
       "heading": "What are personal data?",
-      "paragraph": "Personal data are all forms of data, information and assessments that can be linked to you as a person, cf. the <0>Personal Data Act Section 2</0> and the <1>GDPR Article 5</1>(1). The decisive factor as to whether data constitutes personal data is whether it can be linked to a specific person. Data that, on its own, cannot be linked to an individual person may constitute personal data in cases where the data are found together with other data."
+      "paragraph": "Personal data are all forms of data, information and assessments that can be linked to you as a person, cf. the <0>Personal Data Act Section 2<\/0> and the <1>GDPR Article 5<\/1>(1). The decisive factor as to whether data constitutes personal data is whether it can be linked to a specific person. Data that, on its own, cannot be linked to an individual person may constitute personal data in cases where the data are found together with other data."
     },
     "your_rights": {
       "heading": "Your rights",
       "section0": {
         "heading": "Right to information and access",
-        "paragraph0": "You have a right to receive information about how your personal data are processed in the service. This privacy statement has been produced to provide the information you have a right to receive. You also have a right to see/access your personal data that are registered in the service, and other personal data that are collected after you have actively logged in. You also have the right to request to receive a copy of your personal data.",
+        "paragraph0": "You have a right to receive information about how your personal data are processed in the service. This privacy statement has been produced to provide the information you have a right to receive. You also have a right to see\/access your personal data that are registered in the service, and other personal data that are collected after you have actively logged in. You also have the right to request to receive a copy of your personal data.",
         "paragraph1": "A self-service solution in the service where users can see their personal data after logging in allows users to exercise their right of access. If the service does not provide complete information via the self-service solution, users can send a written enquiry to the data controller’s user support to acquire access to more detailed information."
       },
       "section1": {
@@ -774,7 +774,7 @@
           "bullet_point0": "Pending the data controller rectifying inaccurate or incomplete personal data",
           "bullet_point1": "If you have submitted an objection to the processing (see below for more details)",
           "bullet_point2": "If the personal data are necessary to establish or defend a legal claim",
-          "intro": "In certain cases, you may have a right to request restrictions on the processing of your personal data. Restricted processing means that the personal data will still be stored, but that other processing in the service is restricted. To request restricted processing of personal data, the conditions in the Personal Data Act and the <0>GDPR Article 18</0> must be met. You can request restricted processing"
+          "intro": "In certain cases, you may have a right to request restrictions on the processing of your personal data. Restricted processing means that the personal data will still be stored, but that other processing in the service is restricted. To request restricted processing of personal data, the conditions in the Personal Data Act and the <0>GDPR Article 18<\/0> must be met. You can request restricted processing"
         },
         "paragraph1": "If restricted processing is granted, the data controller will notify you before the restriction is lifted."
       },
@@ -790,7 +790,7 @@
           "bullet_point0": "Legal grounds for the processing of personal data are based on legitimate interests, reasons of public interest or when exercising public authority",
           "bullet_point1": "Processing of personal data entails direct marketing or profiling",
           "bullet_point2": "Personal data are processed for scientific or historical research purposes or statistical purposes",
-          "intro": "You have a right to object to processing of your personal data on certain conditions defined in the <0>GDPR Article 21</0>. This applies if:"
+          "intro": "You have a right to object to processing of your personal data on certain conditions defined in the <0>GDPR Article 21<\/0>. This applies if:"
         },
         "paragraph1": "The service does not generally satisfy these conditions, with the exception of the processing of author information and in cases where personal data are used for statistical purposes. When personal data are used for statistical purposes, the data are anonymised.",
         "paragraph2": {
@@ -876,7 +876,7 @@
         "ContactPerson": "Contact person",
         "CostumeDesigner": "Costume designer",
         "Creator": "Author",
-        "CuratorOrganizer": "Curator/organizer",
+        "CuratorOrganizer": "Curator\/organizer",
         "Dancer": "Dancer",
         "Designer": "Designer",
         "Director": "Director",
@@ -1060,18 +1060,18 @@
     "resource_type": {
       "article_number": "Article number",
       "artistic": {
-        "add_audio_visual_publication": "Add audio/video publication",
-        "add_award": "Add prize/award",
-        "add_broadcast": "Add TV/web/streaming",
-        "add_cinematic_release": "Add festival/cinema",
+        "add_audio_visual_publication": "Add audio\/video publication",
+        "add_award": "Add prize\/award",
+        "add_broadcast": "Add TV\/web\/streaming",
+        "add_cinematic_release": "Add festival\/cinema",
         "add_competition": "Add competititon",
-        "add_concert": "Add concert/show",
+        "add_concert": "Add concert\/show",
         "add_exhibition": "Add exhibition",
         "add_exhibition_place": "Add exhibition place",
-        "add_music_score": "Add score/manuscript",
+        "add_music_score": "Add score\/manuscript",
         "add_other_performance": "Add other performance",
         "add_other_release": "Add other announcement",
-        "add_publication_mention": "Add publication/mention",
+        "add_publication_mention": "Add publication\/mention",
         "announcements": "Announcements",
         "architecture_type": {
           "Building": "Building",
@@ -1081,19 +1081,19 @@
           "PlanningProposal": "Planning proposal"
         },
         "award_name": "Award name",
-        "award_organizer": "Award giver/organizer",
+        "award_organizer": "Award giver\/organizer",
         "award_other": "Other",
         "award_ranking": "Ranking",
-        "broadcast": "TV/web/streaming",
+        "broadcast": "TV\/web\/streaming",
         "catalogue_number": "Catalogue number",
         "competition_date": "Date for announcement",
-        "competition_name": "Name on competition/organizer",
-        "competition_rank": "Rank/purchase/mention/invited",
+        "competition_name": "Name on competition\/organizer",
+        "competition_rank": "Rank\/purchase\/mention\/invited",
         "composer": "Composer",
         "concert_program": "Concert program",
         "concert_program_table_caption": "Overview over concert program",
-        "content_track": "Content/tracks",
-        "content_track_table_caption": "Overview over content/tracks",
+        "content_track": "Content\/tracks",
+        "content_track_table_caption": "Overview over content\/tracks",
         "design_type": {
           "ClothingDesign": "Clothing design",
           "Exhibition": "Exhibition",
@@ -1107,18 +1107,18 @@
           "ServiceDesign": "Service design",
           "WebDesign": "Web design"
         },
-        "edit_audio_visual_publication": "Edit audio/video publication",
-        "edit_award": "Edit prize/award",
-        "edit_broadcast": "Edit TV/web/streaming",
-        "edit_cinematic_release": "Edit festival/cinema",
+        "edit_audio_visual_publication": "Edit audio\/video publication",
+        "edit_award": "Edit prize\/award",
+        "edit_broadcast": "Edit TV\/web\/streaming",
+        "edit_cinematic_release": "Edit festival\/cinema",
         "edit_competition": "Edit competition",
         "edit_concert": "Edit concert",
         "edit_exhibition": "Edit exhibition",
         "edit_exhibition_place": "Edit exhibition place",
-        "edit_music_score": "Edit score/manuscript",
+        "edit_music_score": "Edit score\/manuscript",
         "edit_other_performance": "Edit other performance",
         "edit_other_release": "Edit other announcement",
-        "edit_publication_mention": "Edit publication/mention",
+        "edit_publication_mention": "Edit publication\/mention",
         "exhibition_place": "Exhibition place",
         "exhibition_places": "Exhibition places",
         "exhibition_title": "Exhibition title",
@@ -1126,9 +1126,9 @@
         "extent_in_minutes": "Duration in minutes",
         "media_type": "Media type",
         "mention_other": "Other (publisher, ISBN, etc.)",
-        "mention_title": "Journal/Book/medium",
+        "mention_title": "Journal\/Book\/medium",
         "moving_picture_type": {
-          "AugmentedVirtualRealityFilm": "AR/VR",
+          "AugmentedVirtualRealityFilm": "AR\/VR",
           "Film": "Long film",
           "InteractiveFilm": "Interactive production",
           "Other": "Other",
@@ -1141,7 +1141,7 @@
           "DigitalFile": "Downloading",
           "Other": "Other",
           "Streaming": "Streaming",
-          "Vinyl": "LP/EP"
+          "Vinyl": "LP\/EP"
         },
         "music_score_ensemble": "Ensemble",
         "music_score_ismn": "ISMN",
@@ -1150,28 +1150,28 @@
         "musical_work_item": "Work",
         "musical_works": "Other performances",
         "musical_works_table_caption": "Overview over other performances",
-        "name_or_title": "Name/title",
-        "other_announcement_organizer": "Publisher/organizer etc.",
+        "name_or_title": "Name\/title",
+        "other_announcement_organizer": "Publisher\/organizer etc.",
         "other_release_description": "Type of announcement",
         "output_type": {
-          "AudioVisualPublication": "Audio/video publication",
-          "Award": "Prize/award",
-          "Broadcast": "TV/web/streaming",
-          "CinematicRelease": "Festival/cinema",
+          "AudioVisualPublication": "Audio\/video publication",
+          "Award": "Prize\/award",
+          "Broadcast": "TV\/web\/streaming",
+          "CinematicRelease": "Festival\/cinema",
           "Competition": "Competition",
-          "Concert": "Concert/show",
+          "Concert": "Concert\/show",
           "Exhibition": "Exhibition",
-          "MentionInPublication": "Publication/mention",
-          "MusicScore": "Score/manuscript",
+          "MentionInPublication": "Publication\/mention",
+          "MusicScore": "Score\/manuscript",
           "OtherPerformance": "Other performance",
           "OtherRelease": "Other announcement",
           "Venue": "Venue"
         },
-        "performance_type": "Type/performance form",
+        "performance_type": "Type\/performance form",
         "performing_arts_type": {
-          "Broadcast": "TV/film/radio",
+          "Broadcast": "TV\/film\/radio",
           "Other": "Other",
-          "TheatricalProduction": "Theater/show"
+          "TheatricalProduction": "Theater\/show"
         },
         "premiere": "Premiere",
         "premiere_date": "Premiere date",
@@ -1286,7 +1286,7 @@
       "PUBLISHED": "Published",
       "REJECTED": "Rejected"
     },
-    "support_description": "When you request support your message will be sent to a curator at your institution. You can see responses at <0>My Messages</0>.",
+    "support_description": "When you request support your message will be sent to a curator at your institution. You can see responses at <0>My Messages<\/0>.",
     "validation_errors": "Validation errors"
   },
   "search": {
