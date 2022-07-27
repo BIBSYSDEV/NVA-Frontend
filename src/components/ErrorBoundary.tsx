@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import translationsNb from '../translations/nbTranslations.json';
+import nbTranslations from '../translations/nbTranslations.json';
 import { LocalStorageKey } from '../utils/constants';
 
 type ErrorBoundaryClassProps = RouteComponentProps & WithTranslation;
@@ -65,7 +65,7 @@ export class BasicErrorBoundary extends Component {
     const { children } = this.props;
     const { hasError } = this.state;
 
-    return hasError ? <ErrorMessage errorMessage={translationsNb.common.error_occurred} /> : children;
+    return hasError ? <ErrorMessage errorMessage={nbTranslations.common.error_occurred} /> : children;
   }
 }
 
