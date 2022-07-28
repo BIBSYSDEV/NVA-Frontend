@@ -100,7 +100,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   return (
     <div>
       <Typography variant="h2" paragraph>
-        {t('my_page.my_profile.orcid.orcid')}
+        {t('common.orcid')}
       </Typography>
       {isLoadingCristinPerson ? (
         <CircularProgress />
@@ -116,7 +116,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
           }}>
           <Box sx={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
             <IconButton size="small" href={orcidUrl}>
-              <img src={orcidIcon} height="20" alt="orcid" />
+              <img src={orcidIcon} height="20" alt={t('common.orcid')} />
             </IconButton>
             <Typography
               data-testid="orcid-info"

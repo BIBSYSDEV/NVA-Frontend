@@ -27,7 +27,6 @@
     "login": "Log in",
     "logout": "Log out",
     "registration_not_published": "This registration is not published yet.",
-    "select_institution": "Select institution",
     "your_user_profile": "Your user profile"
   },
   "basic_data": {
@@ -44,21 +43,18 @@
     },
     "basic_data": "Basic data",
     "central_import": {
-      "author": "Author",
+      "author": "$t(registration.contributors.types.Creator)",
       "central_import": "Central import",
       "doi": "DOI",
       "duplicate_check": "Duplicate check",
       "duplicate_search_hits_shown": "Hits (Showing {{ShownResultsCount}} of {{TotalResultsCount}})",
       "import_publication": "Import publication",
-      "issn": "ISSN",
       "or_search_with": "or search with",
       "publications": "Publications",
       "reset_search_values": "Reset values",
       "search_again": "Search again",
       "search_for_duplicates": "Search for duplicates",
-      "title": "title",
-      "verified_contributor_count": "({{verifiedContributorCount}} of {{contributorsCount}})",
-      "year_published": "Year published"
+      "verified_contributor_count": "({{verifiedContributorCount}} of {{contributorsCount}})"
     },
     "institutions": {
       "add_institution": "Add institution",
@@ -77,7 +73,6 @@
       "ror": "Research Organization Registry (ROR)",
       "short_name": "Shortened display name"
     },
-    "national_id": "National ID",
     "person_register": {
       "edit_person": "Edit person",
       "employee_table_caption": "List of all employees",
@@ -120,6 +115,7 @@
     "date": "Date",
     "date_format": "dd.mm.yyyy",
     "delete": "Delete",
+    "description": "Beskrivelse",
     "details": "Details",
     "do_not_show_again": "Do not show this again",
     "download": "Download",
@@ -127,7 +123,6 @@
     "employments": "Employments",
     "end_date": "End date",
     "error_occurred": "An unexpected error has occurred",
-    "feideid": "Feide ID",
     "first_name": "First name",
     "help": "Help",
     "information": "Information",
@@ -178,6 +173,7 @@
     "search_summary_one": "{{count}} result for \"{{searchTerm}}\"",
     "search_summary_other": "{{count}} results for \"{{searchTerm}}\"",
     "select": "Select",
+    "select_institution": "Select institution",
     "selected": "Selected",
     "send": "Send",
     "show": "Show",
@@ -354,7 +350,6 @@
       "get_journals": "Could not retrieve journals",
       "get_messages": "Could not retrieve messages",
       "get_orcid": "Could not get data from ORCID",
-      "get_parent_units": "Could not retrieve institutions",
       "get_person": "Could not retrieve person",
       "get_positions": "Could not retrieve positions",
       "get_project": "Search for projects failed",
@@ -495,7 +490,6 @@
           "paragraph0": "Sign in to ORCID or register to create an account.",
           "paragraph1": "ORCID provides a persistent digital identifier that you own and control, and that distinguishes you from every other researcher. Your ORCID iD can be used in many contexts. By connecting your ORCID iD it is easier to identify you as an author, and to retrieve and share your publications."
         },
-        "orcid": "ORCID",
         "orcid_description": "To connect your ORCID iD, sign into ORCID. Or register to create your ORCID iD and connect. It makes it easier to identify you.",
         "remove_connection": "Remove connection to ORCID",
         "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Sikt's access to read your ORCID, you have to go to your profile."
@@ -618,13 +612,14 @@
             "col2": "Sikt"
           },
           "row5": {
-            "col0": "ORCID",
+            "col0": "$t(common.orcid)",
             "col1": "Establish a link to ORCID for authorization of author, editor, supervisor and other creator or contributor registered in the service. To facilitate unambiguous registration and retrieval.",
-            "col2": "ORCID"
+            "col2": "$t(common.orcid)"
           }
         }
       }
     },
+    "feide": "Feide",
     "privacy_statement": "Privacy statement",
     "purpose": {
       "heading": "The purpose of personal data processing in the service",
@@ -632,7 +627,7 @@
       "table": {
         "header": {
           "col0": "Types",
-          "col1": "Description",
+          "col1": "$t(common.description)",
           "col2": "Purpose of registration and processing"
         },
         "row0": {
@@ -681,7 +676,7 @@
       "table": {
         "header": {
           "col0": "Type of data",
-          "col1": "Description",
+          "col1": "$t(common.description)",
           "col2": "Source"
         },
         "other_user_data": {
@@ -725,12 +720,12 @@
           "row0": {
             "col0": "Basic user data",
             "col1": "Full name.",
-            "col2": "Feide"
+            "col2": "$t(privacy.feide)"
           },
           "row1": {
             "col0": "Contact information",
             "col1": "Email address assigned by the organisation.",
-            "col2": "Feide"
+            "col2": "$t(privacy.feide)"
           },
           "row2": {
             "col0": "Profile",
@@ -859,7 +854,6 @@
       "remove_affiliation": "Remove affiliation",
       "remove_role": "Remove {{- role}}",
       "select_contributor_type": "Select contributor type",
-      "select_institution": "Select institution",
       "supervisors": "Supervisors",
       "type": "Contributor type",
       "types": {
@@ -919,7 +913,6 @@
       "confirm_remove_vocabulary_text": "Are you sure you want to remove vocabulary for {{vocabulary}}?",
       "confirm_remove_vocabulary_title": "Remove vocabulary?",
       "date_published": "Date published",
-      "description": "Description",
       "description_of_content": "Description of content, if relevant",
       "financed_by": "Financed by",
       "hrcs_activities": "HRCS activities",
@@ -955,14 +948,12 @@
       "published_version": "Published version",
       "remove_file": "Remove file",
       "remove_file_description": "Do you want to remove {{fileName}}?",
-      "title": "File name",
-      "version": "Version"
+      "title": "File name"
     },
     "heading": {
       "contributors": "Contributors",
-      "description": "Description",
+      "description": "$t(common.description)",
       "files_and_license": "Files and License",
-      "publish_settings": "Publish settings",
       "resource_type": "Resource type"
     },
     "modal_unsaved_changes_description": "You have unsaved changes. Are you sure you want to leave this page?",
@@ -1046,6 +1037,7 @@
       "ReportResearch": "Research report",
       "ReportWorkingPaper": "Working paper"
     },
+    "year_published": "Year published",
     "registration": {
       "link_to_resource": "Link to original version",
       "start_registration": "Start registration",
@@ -1259,7 +1251,6 @@
       "peer_reviewed": "Peer reviewed and presents new original research",
       "place_for_event": "Place for event",
       "print_issn": "Print ISSN",
-      "remove": "Remove",
       "remove_doi": "Remove DOI",
       "remove_doi_text": "You can remove the DOI that was used when starting registration.\nDo you wish to remove connection to the original DOI?",
       "remove_journal": "Remove journal",
@@ -1304,12 +1295,11 @@
     "sort_by": "Order by",
     "sort_by_modified_date": "Last modified",
     "sort_by_published_date_asc": "Publish date (oldest first)",
-    "sort_by_published_date_desc": "Publish date (newest first)",
-    "year_published": "Year published"
+    "sort_by_published_date_desc": "Publish date (newest first)"
   },
   "worklist": {
     "limited_to": "Limited to: \"{{name}}\"",
-    "no_messages": "You don't have any messages",
+    "no_messages": "$t(my_page.messages.no_messages)",
     "worklist": "Worklist"
   }
 }
