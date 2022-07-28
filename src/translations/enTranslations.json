@@ -587,7 +587,7 @@
             "col2": "Service provided by"
           },
           "row0": {
-            "col0": "Feide",
+            "col0": "$t(privacy.feide)",
             "col1": "Information for secure login of users.",
             "col2": "UNINETT AS"
           },
