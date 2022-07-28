@@ -54,7 +54,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
               data-testid={dataTestId.registrationWizard.files.version}
               required
               disabled={file.administrativeAgreement}>
-              <FormLabel component="legend">{t('registration.files_and_license.version')}</FormLabel>
+              <FormLabel component="legend">{t('common.version')}</FormLabel>
               <RadioGroup
                 {...field}
                 row

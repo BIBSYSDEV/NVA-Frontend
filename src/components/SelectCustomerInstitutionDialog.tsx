@@ -71,7 +71,7 @@ export const SelectCustomerInstitutionDialog = ({
 
   return (
     <Dialog open={openDialog} fullWidth maxWidth="sm">
-      <DialogTitle>{t('authorization.select_institution')}</DialogTitle>
+      <DialogTitle>{t('common.select_institution')}</DialogTitle>
       <DialogContent>
         <Autocomplete
           options={allowedCustomers}
@@ -82,7 +82,7 @@ export const SelectCustomerInstitutionDialog = ({
             <TextField
               {...params}
               InputLabelProps={{
-                'aria-label': t('authorization.select_institution'),
+                'aria-label': t('common.select_institution'),
               }}
               placeholder={t('project.search_for_institution')}
             />

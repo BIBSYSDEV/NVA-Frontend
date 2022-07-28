@@ -140,7 +140,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
         }}
         maxWidth="sm"
         fullWidth={true}
-        headingText={t('registration.contributors.select_institution')}
+        headingText={t('common.select_institution')}
         dataTestId="affiliation-modal">
         <>
           <Typography paragraph>

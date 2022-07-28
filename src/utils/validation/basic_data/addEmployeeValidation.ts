@@ -42,10 +42,10 @@ const employeeErrorMessage = {
     field: i18n.t('common.end_date'),
   }),
   nationalIdInvalid: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('basic_data.national_id'),
+    field: i18n.t('basic_data.national_identity_number'),
   }),
   nationalIdInvalidFormat: i18n.t('feedback.validation.invalid_number_of_digits', {
-    field: i18n.t('basic_data.national_id'),
+    field: i18n.t('basic_data.national_identity_number'),
     digits: 11,
   }),
 };

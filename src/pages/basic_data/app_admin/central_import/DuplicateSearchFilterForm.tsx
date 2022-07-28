@@ -113,7 +113,7 @@ export const DuplicateSearchFilterForm = ({
                   type="checkbox"
                   name="isTitleChecked"
                   control={<Checkbox />}
-                  label={t('basic_data.central_import.title')}
+                  label={t('common.title')}
                   data-testid={dataTestId.basicData.centralImport.checkboxTitle}
                   onClick={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.value) {
@@ -169,7 +169,7 @@ export const DuplicateSearchFilterForm = ({
                   type="checkbox"
                   name="isIssnChecked"
                   control={<Checkbox />}
-                  label={t('basic_data.central_import.issn')}
+                  label={t('registration.resource_type.issn')}
                   data-testid={dataTestId.basicData.centralImport.checkboxIssn}
                   onClick={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.value) {
@@ -196,7 +196,7 @@ export const DuplicateSearchFilterForm = ({
                   type="checkbox"
                   name="isYearPublishedChecked"
                   control={<Checkbox />}
-                  label={t('basic_data.central_import.year_published')}
+                  label={t('registration.year_published')}
                   data-testid={dataTestId.basicData.centralImport.checkboxYear}
                   onClick={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.value) {

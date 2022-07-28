@@ -78,7 +78,7 @@ export const FindPersonPanel = () => {
                     required
                     fullWidth
                     variant="filled"
-                    label={t('basic_data.national_id')}
+                    label={t('basic_data.national_identity_number')}
                     value={values.user.nationalId}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
