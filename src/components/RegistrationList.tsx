@@ -38,7 +38,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
     <ListItem divider disableGutters>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Typography variant="overline" sx={{ color: 'primary.dark' }}>
-          {t(`registration.publication_types.${entityDescription?.reference?.publicationInstance.type ?? ''}`)} -{' '}
+          {t(`registration.publication_types.${entityDescription?.reference?.publicationInstance.type ?? ''}` as any)} -{' '}
           {displayDate(entityDescription?.date)}
         </Typography>
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>

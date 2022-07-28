@@ -41,7 +41,7 @@ export const MyInstitutionUsersPage = () => {
   };
 
   const roleToAddTitle = t('common.add_custom', {
-    name: t(`my_page.roles.${roleToAdd?.toLowerCase().replace('-', '_')}`),
+    name: t(`my_page.roles.${roleToAdd?.toLowerCase().replace('-', '_')}` as any),
   });
 
   return (

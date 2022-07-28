@@ -75,7 +75,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   useEffect(() => {
     const orcidError = new URLSearchParams(history.location.search).get('error');
     if (orcidError) {
-      dispatch(setNotification({ message: t(`feedback.error.orcid.${orcidError}`), variant: 'error' }));
+      dispatch(setNotification({ message: t(`feedback.error.orcid.${orcidError}` as any), variant: 'error' }));
     }
   }, [history.location.search, dispatch, t]);
 
@@ -154,13 +154,13 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         </Box>
       ) : (
         <>
-          <Typography paragraph>{t('my_profile.orcid.orcid_description')}</Typography>
+          <Typography paragraph>{t('my_page.my_profile.orcid.orcid_description')}</Typography>
           <Button data-testid="button-create-connect-orcid" onClick={toggleModal} variant="contained" size="small">
             {t('my_page.my_profile.orcid.connect_orcid')}
           </Button>
           <Modal
             headingIcon={{ src: orcidIcon, alt: 'ORCID iD icon' }}
-            headingText={t('my_page.orcid.dialog.heading')}
+            headingText={t('my_page.my_profile.orcid.dialog.heading')}
             onClose={toggleModal}
             open={openModal}
             dataTestId="orcid-modal">

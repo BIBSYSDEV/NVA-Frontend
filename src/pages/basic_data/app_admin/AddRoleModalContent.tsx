@@ -46,7 +46,7 @@ export const AddRoleModalContent = ({
           ),
         }}
         onChange={(event) => setSearchTerm(event.target.value)}
-        label={t('users.username')}
+        label={t('basic_data.users.username')}
         variant="outlined"
         helperText={t('basic_data.users.search_for_user')}
         data-testid="add-role-search-box"

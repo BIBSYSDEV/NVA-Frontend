@@ -1,6 +1,6 @@
 import { Box, MenuItem, Button, TextField } from '@mui/material';
 import { Field, FieldProps } from 'formik';
-import { useTranslation } from 'react-i18next';
+import { TFuncKey, useTranslation } from 'react-i18next';
 import {
   DescriptionFieldNames,
   ResourceFieldNames,
@@ -14,7 +14,12 @@ interface AdvancedSearchRowProps {
   removeFilter: () => void;
 }
 
-export const registrationFilters = [
+interface FilterItem {
+  field: string;
+  i18nKey: TFuncKey;
+}
+
+export const registrationFilters: FilterItem[] = [
   { field: DescriptionFieldNames.Title, i18nKey: 'common.title' },
   { field: DescriptionFieldNames.Abstract, i18nKey: 'registration.description.abstract' },
   { field: ResourceFieldNames.SubType, i18nKey: 'search.registration_type' },

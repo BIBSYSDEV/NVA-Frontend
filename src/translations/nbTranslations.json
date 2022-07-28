@@ -75,7 +75,6 @@
       "remove_admin_text": "Er du sikker på at du vil fjerne {{username}} fra listen over administratorer?",
       "remove_admin_title": "Fjern administrator?",
       "ror": "Research Organization Registry (ROR)",
-      "search_for_user": "Søk blant eksisterende brukere",
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
     "national_id": "Fødselsnummer",
@@ -97,7 +96,7 @@
       "no_users_found": "Ingen brukere funnet",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
       "remove_role_title": "Fjern rolle?",
-      "search_for_user": "Search among existing users",
+      "search_for_user": "Søk blant eksisterende brukere",
       "user_administration": "Brukeradministrasjon",
       "username": "Brukernavn"
     }

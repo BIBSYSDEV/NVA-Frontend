@@ -55,7 +55,7 @@ export const AddContributorModal = ({
               role:
                 contributorRole === 'OtherContributor'
                   ? t('registration.contributors.contributor').toLowerCase()
-                  : t(`registration.contributors.types.${contributorRole}`).toLowerCase(),
+                  : t(`registration.contributors.types.${contributorRole}` as any).toLowerCase(),
             })
       }
       onClose={handleCloseModal}

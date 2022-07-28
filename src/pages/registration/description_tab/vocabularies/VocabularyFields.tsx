@@ -2,7 +2,7 @@ import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { TFuncKey, useTranslation } from 'react-i18next';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { HrcsActivityInput } from './HrcsActivityInput';
@@ -15,7 +15,7 @@ import { hrcsActivityBaseId, hrcsCategoryBaseId } from '../../../../utils/consta
 import { InputContainerBox } from '../../../../components/styled/Wrappers';
 
 interface VocabularyConfig {
-  [key: string]: { baseId: string; i18nKey: string; component: (props: VocabularyComponentProps) => JSX.Element };
+  [key: string]: { baseId: string; i18nKey: TFuncKey; component: (props: VocabularyComponentProps) => JSX.Element };
 }
 
 // Specify which vocabularies to show, and their i18n key and component
