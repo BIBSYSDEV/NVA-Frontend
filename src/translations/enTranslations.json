@@ -1037,7 +1037,6 @@
       "ReportResearch": "Research report",
       "ReportWorkingPaper": "Working paper"
     },
-    "year_published": "Year published",
     "registration": {
       "link_to_resource": "Link to original version",
       "start_registration": "Start registration",
@@ -1277,7 +1276,8 @@
       "REJECTED": "Rejected"
     },
     "support_description": "When you request support your message will be sent to a curator at your institution. You can see responses at <0>My Messages</0>.",
-    "validation_errors": "Validation errors"
+    "validation_errors": "Validation errors",
+    "year_published": "Year published"
   },
   "search": {
     "add_filter": "Add filter",

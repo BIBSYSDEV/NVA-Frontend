@@ -1037,7 +1037,6 @@
       "ReportResearch": "Forskningsrapport",
       "ReportWorkingPaper": "Arbeidsnotat"
     },
-    "year_published": "Publiseringsår",
     "registration": {
       "link_to_resource": "Lenke til original versjon",
       "start_registration": "Start registrering",
@@ -1277,7 +1276,8 @@
       "REJECTED": "Avvist"
     },
     "support_description": "Når du ber om brukerstøtte vil meldingen gå til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger</0>.",
-    "validation_errors": "Valideringsfeil"
+    "validation_errors": "Valideringsfeil",
+    "year_published": "Publiseringsår"
   },
   "search": {
     "add_filter": "Legg til filter",
