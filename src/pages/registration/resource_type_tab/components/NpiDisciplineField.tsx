@@ -36,10 +36,10 @@ export const NpiDisciplineField = () => {
             aria-labelledby={`${name}-label`}
             options={disciplineOptions}
             blurOnSelect
-            groupBy={(discipline) => t(`disciplines.${discipline.mainDisciplineId}`)}
+            groupBy={(discipline) => t(`disciplines.${discipline.mainDisciplineId}` as any)}
             onChange={(_, value) => setFieldValue(name, value.pop()?.id ?? '')}
             value={selectedOption ? [selectedOption] : []}
-            getOptionLabel={(option) => t(`disciplines.${option.id}`)}
+            getOptionLabel={(option) => t(`disciplines.${option.id}` as any)}
             renderInput={(params) => (
               <TextField
                 {...params}

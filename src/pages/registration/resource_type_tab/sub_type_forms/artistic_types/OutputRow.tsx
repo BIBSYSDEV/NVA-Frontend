@@ -88,7 +88,7 @@ export const OutputRow = ({
     <TableRow>
       {showTypeColumn && (
         <TableCell>
-          <Typography>{t(`registration.resource_type.artistic.output_type.${item.type}`)}</Typography>
+          <Typography>{t(`registration.resource_type.artistic.output_type.${item.type}` as any)}</Typography>
         </TableCell>
       )}
       <TableCell>
@@ -99,14 +99,14 @@ export const OutputRow = ({
           <Box
             sx={{ display: 'grid', gridTemplateAreas: '"down up"', gridTemplateColumns: '1fr 1fr', maxWidth: '8rem' }}>
             {index !== maxIndex && (
-              <Tooltip title={t<string>('common.move_down')} sx={{ gridArea: 'down' }}>
+              <Tooltip title={t('common.move_down')} sx={{ gridArea: 'down' }}>
                 <Button onClick={() => moveItem(index + 1)}>
                   <ArrowDownwardIcon />
                 </Button>
               </Tooltip>
             )}
             {index !== 0 && (
-              <Tooltip title={t<string>('common.move_up')} sx={{ gridArea: 'up' }}>
+              <Tooltip title={t('common.move_up')} sx={{ gridArea: 'up' }}>
                 <Button onClick={() => moveItem(index - 1)}>
                   <ArrowUpwardIcon />
                 </Button>

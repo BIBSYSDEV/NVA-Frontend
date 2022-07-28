@@ -105,8 +105,8 @@ export const PublicPublicationInstanceArtistic = ({
 
   const typeString = subtype?.type
     ? subtype.type === DesignType.Other && subtype.description
-      ? `${subtype.description} (${t(`${i18nTypeBase}${subtype.type}`)})`
-      : t(`${i18nTypeBase}${subtype.type}`)
+      ? `${subtype.description} (${t(`${i18nTypeBase}${subtype.type}` as any)})`
+      : t(`${i18nTypeBase}${subtype.type}` as any)
     : '';
 
   return (

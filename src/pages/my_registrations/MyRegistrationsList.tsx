@@ -102,7 +102,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                   <Typography>{registration.mainTitle || <i>[{t('common.missing_title')}]</i>}</Typography>
                 </TableCell>
                 <TableCell data-testid={`registration-status-${registration.identifier}`}>
-                  <Typography>{t(`registration.status.${registration.status}`)}</Typography>
+                  <Typography>{t(`registration.status.${registration.status}` as any)}</Typography>
                 </TableCell>
                 <TableCell data-testid={`registration-created-${registration.identifier}`}>
                   <Typography>{new Date(registration.createdDate).toLocaleString()}</Typography>

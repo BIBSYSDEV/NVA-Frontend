@@ -254,13 +254,13 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
 
   const nameString = getArtisticOutputName(output);
   const rowString = showType
-    ? `${nameString} (${t(`registration.resource_type.artistic.output_type.${output.type}`)})`
+    ? `${nameString} (${t(`registration.resource_type.artistic.output_type.${output.type}` as any)})`
     : nameString;
 
   return (
     <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
       <Typography>{rowString}</Typography>
-      <Tooltip title={t<string>('common.show_details')}>
+      <Tooltip title={t('common.show_details')}>
         <IconButton size="small" color="primary" onClick={toggleModal}>
           <OpenInNewIcon fontSize="small" />
         </IconButton>
@@ -471,7 +471,7 @@ const PublicAudioVisualPublicationDialogContent = ({
       <Typography variant="overline">{t('common.type')}</Typography>
       <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
       <Typography variant="overline">{t('registration.resource_type.artistic.media_type')}</Typography>
-      <Typography paragraph>{t(`registration.resource_type.artistic.music_media_type.${mediaType}`)}</Typography>
+      <Typography paragraph>{t(`registration.resource_type.artistic.music_media_type.${mediaType}` as any)}</Typography>
       <Typography variant="overline">{t('common.publisher')}</Typography>
       <Typography paragraph>{publisher}</Typography>
       <Typography variant="overline">{t('registration.resource_type.artistic.catalogue_number')}</Typography>
@@ -630,12 +630,12 @@ export const PublicPublicationContextMediaContribution = ({ publicationContext }
       )}
       {partOf?.series && (
         <Typography>
-          {t('registration.resource_type.media_contribution.containerName')}: {partOf.series}
+          {t('registration.resource_type.media_contribution.name_of_series_program')}: {partOf.series}
         </Typography>
       )}
       {partOf?.seriesPart && (
         <Typography>
-          {t('registration.resource_type.media_contribution.containerSubname')}: {partOf.seriesPart}
+          {t('registration.resource_type.media_contribution.name_of_issue_episode')}: {partOf.seriesPart}
         </Typography>
       )}
     </>

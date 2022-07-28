@@ -180,7 +180,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                               src={selectedLicense.logo}
                               alt={selectedLicense.identifier}
                             />
-                            <span>{t(`licenses.labels.${option}`)}</span>
+                            <span>{t(`licenses.labels.${option}` as any)}</span>
                           </Box>
                         ) : null;
                       },

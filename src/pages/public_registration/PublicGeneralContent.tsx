@@ -84,7 +84,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
 
         {journalPublicationInstance?.contentType && (
           <Typography>
-            {t(`registration.resource_type.content_types.${journalPublicationInstance?.contentType}`)}
+            {t(`registration.resource_type.content_types.${journalPublicationInstance?.contentType}` as any)}
           </Typography>
         )}
 
@@ -100,7 +100,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
 
         {entityDescription?.npiSubjectHeading && (
           <Typography data-testid={dataTestId.registrationLandingPage.npi}>
-            {t('registration.description.npi_disciplines')}: {t(`disciplines.${entityDescription.npiSubjectHeading}`)}
+            {t('registration.description.npi_disciplines')}:{' '}
+            {t(`disciplines.${entityDescription.npiSubjectHeading}` as any)}
           </Typography>
         )}
 
