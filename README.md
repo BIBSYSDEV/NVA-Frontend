@@ -64,3 +64,9 @@ Runs React testing library tests
 `npx nyc report`
 
 coverage report: `coverage/lcov-report/index.html`
+
+## External tools
+
+[Lokalise](https://lokalise.com/) is used to enable translators to translate content in a user-friendly web portal. For more information about our preferred workflow when working with translations, see description on [Confluence](https://unit.atlassian.net/wiki/spaces/NVAP/pages/2439774211/Frontend+translations) (requires access).
+
+[Socket Security](https://socket.dev/) is used to ensure legitimacy of every installed NPM package.
