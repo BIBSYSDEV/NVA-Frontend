@@ -156,7 +156,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                       variant="filled"
                       disabled
                       value={getMaskedNationalIdentityNumber(nationalId)}
-                      label={t('basic_data.national_identity_number')}
+                      label={t('basic_data.person_register.national_identity_number')}
                     />
                     {otherEmployments.length > 0 && (
                       <Box>

@@ -89,7 +89,9 @@ export const PersonRegisterPage = () => {
                     <Typography fontWeight="bold">{t('basic_data.person_register.person_id')}</Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography fontWeight="bold">{t('basic_data.national_identity_number')}</Typography>
+                    <Typography fontWeight="bold">
+                      {t('basic_data.person_register.national_identity_number')}
+                    </Typography>
                   </TableCell>
                   <TableCell>
                     <Typography fontWeight="bold">{t('common.name')}</Typography>
