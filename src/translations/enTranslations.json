@@ -114,7 +114,6 @@
     "date_format": "dd.mm.yyyy",
     "delete": "Delete",
     "description": "Beskrivelse",
-    "do_not_show_again": "Do not show this again",
     "edit": "Edit",
     "employments": "Employments",
     "end_date": "End date",
@@ -565,7 +564,7 @@
             "col2": "Service provided by"
           },
           "row0": {
-            "col0": "$t(privacy.feide)",
+            "col0": "Feide",
             "col1": "Information for secure login of users.",
             "col2": "UNINETT AS"
           },
@@ -597,7 +596,6 @@
         }
       }
     },
-    "feide": "Feide",
     "privacy_statement": "Privacy statement",
     "purpose": {
       "heading": "The purpose of personal data processing in the service",
@@ -698,12 +696,12 @@
           "row0": {
             "col0": "Basic user data",
             "col1": "Full name.",
-            "col2": "$t(privacy.feide)"
+            "col2": "Feide"
           },
           "row1": {
             "col0": "Contact information",
             "col1": "Email address assigned by the organisation.",
-            "col2": "$t(privacy.feide)"
+            "col2": "Feide"
           },
           "row2": {
             "col0": "Profile",
