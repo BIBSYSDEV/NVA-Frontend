@@ -100,9 +100,7 @@
     "about_nva": "About NVA",
     "add": "Add",
     "add_custom": "Add {{- name}}",
-    "admin": "Administrator",
     "all": "All",
-    "back": "Back",
     "cancel": "Cancel",
     "clear": "Clear",
     "click_to_show_all": "Click to show all",
@@ -116,29 +114,24 @@
     "date_format": "dd.mm.yyyy",
     "delete": "Delete",
     "description": "Beskrivelse",
-    "details": "Details",
     "do_not_show_again": "Do not show this again",
-    "download": "Download",
     "edit": "Edit",
     "employments": "Employments",
     "end_date": "End date",
     "error_occurred": "An unexpected error has occurred",
     "first_name": "First name",
     "help": "Help",
-    "information": "Information",
     "institution": "Institution",
     "institutions": "Institutions",
     "language": "Language",
     "last_name": "Last name",
     "loading": "Loading",
-    "mandatory": "Mandatory",
     "menu": "Menu",
     "message": "Message",
     "missing_title": "Missing title",
     "move_down": "Move down",
     "move_up": "Move up",
     "name": "Name",
-    "next": "Next",
     "no": "No",
     "no_hits": "No hits",
     "number_short": "No.",
@@ -147,7 +140,6 @@
     "orcid": "ORCID",
     "orcid_profile": "ORCID profile",
     "order": "Order",
-    "orgunitid": "Organization ID",
     "other": "Other",
     "page_title": "Nasjonalt Vitenarkiv",
     "place": "Place",
@@ -164,7 +156,6 @@
     "reload_page_info": "A new version of NVA is available and the page must be reloaded.",
     "remove": "Remove",
     "required_description": "Fields with asterisk are required",
-    "requires_login": "Requires login",
     "role": "Role",
     "save": "Save",
     "save_and_present": "Save and present",
@@ -180,7 +171,6 @@
     "show_all": "Show all",
     "show_details": "Show details",
     "show_fewer": "Show fewer",
-    "size": "Size",
     "skip_to_main_content": "Skip to main content",
     "skip_to_schema": "Skip to schema",
     "start": "Start",
@@ -362,12 +352,6 @@
       "get_session": "Invalid session. Please log in again.",
       "get_users_for_institution": "Could not get users",
       "get_vocabularies": "Could not fetch vocabularies",
-      "institution_mismatch": "This user belongs to another institution",
-      "login": "Login failed",
-      "missing_user": "Missing user",
-      "orcid": {
-        "access_denied": "Could not connect to ORCID because access to the ORCID account was denied"
-      },
       "orcid_login": "ORCID login failed",
       "publish_registration": "Could not publish registration",
       "remove_role": "Could not remove role",
@@ -380,10 +364,6 @@
       "update_publish_strategy": "Could not update publish strategy",
       "update_registration": "Could not update registration",
       "update_vocabulary": "Failed to update {{vocabulary}}"
-    },
-    "info": {
-      "affiliation_already_exists": "Affiliation already exists",
-      "user_already_exists": "User already exists"
     },
     "success": {
       "add_employment": "Employment added",
@@ -400,7 +380,6 @@
       "delete_registration": "Deleted registration",
       "doi_request_sent": "DOI request sent",
       "doi_request_updated": "DOI request is updated",
-      "login": "Logged in",
       "published_registration": "Registration was published",
       "removed_role": "Role removed",
       "send_message": "Message sent",
@@ -428,8 +407,7 @@
       "must_be_in_future": "{{field}} must be in future",
       "must_be_smaller_than": "{{field}} cannot be bigger than {{limit}}",
       "must_have_minimum": "Must have at least {{min}} {{-field}}",
-      "not_selected": "{{field}} is not selected",
-      "supervisor_required": "You need to register at least one supervisor for this registration"
+      "not_selected": "{{field}} is not selected"
     }
   },
   "licenses": {
@@ -902,7 +880,6 @@
         "VideoEditor": "Video editor",
         "Writer": "Writer"
       },
-      "unknown_author_identity": "Unknown author identity",
       "user_not_found": "Cannot find user",
       "verify_affiliation": "Verify affiliation",
       "verify_person": "Verify person"
@@ -914,7 +891,6 @@
       "confirm_remove_vocabulary_title": "Remove vocabulary?",
       "date_published": "Date published",
       "description_of_content": "Description of content, if relevant",
-      "financed_by": "Financed by",
       "hrcs_activities": "HRCS activities",
       "hrcs_categories": "HRCS categories",
       "keywords": "Keywords",
@@ -1271,11 +1247,9 @@
       "DRAFT": "Draft",
       "DRAFT_FOR_DELETION": "Deleted",
       "NEW": "New",
-      "PUBLISHED": "Published",
-      "REJECTED": "Rejected"
+      "PUBLISHED": "Published"
     },
     "support_description": "When you request support your message will be sent to a curator at your institution. You can see responses at <0>My Messages</0>.",
-    "validation_errors": "Validation errors",
     "year_published": "Year published"
   },
   "search": {

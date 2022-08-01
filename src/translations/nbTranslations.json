@@ -100,9 +100,7 @@
     "about_nva": "Om NVA",
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",
-    "admin": "Administrator",
     "all": "Alle",
-    "back": "Tilbake",
     "cancel": "Avbryt",
     "clear": "Fjern",
     "click_to_show_all": "Trykk for å vise alt",
@@ -116,29 +114,24 @@
     "date_format": "dd.mm.åååå",
     "delete": "Slett",
     "description": "Beskrivelse",
-    "details": "Detaljer",
     "do_not_show_again": "Ikke vis dette igjen",
-    "download": "Last ned",
     "edit": "Endre",
     "employments": "Ansettelser",
     "end_date": "Sluttdato",
     "error_occurred": "En uventet feil har oppstått",
     "first_name": "Fornavn",
     "help": "Hjelp",
-    "information": "Informasjon",
     "institution": "Institusjon",
     "institutions": "Institusjoner",
     "language": "Språk",
     "last_name": "Etternavn",
     "loading": "Laster",
-    "mandatory": "Obligatorisk",
     "menu": "Meny",
     "message": "Melding",
     "missing_title": "Mangler tittel",
     "move_down": "Flytt ned",
     "move_up": "Flytt opp",
     "name": "Navn",
-    "next": "Neste",
     "no": "Nei",
     "no_hits": "Ingen treff",
     "number_short": "Nr.",
@@ -147,7 +140,6 @@
     "orcid": "ORCID",
     "orcid_profile": "ORCID-profil",
     "order": "Rekkefølge",
-    "orgunitid": "Organisasjons-ID",
     "other": "Annet",
     "page_title": "Nasjonalt Vitenarkiv",
     "place": "Sted",
@@ -164,7 +156,6 @@
     "reload_page_info": "En ny versjon av NVA er tilgjengelig og siden må lastes på nytt.",
     "remove": "Fjern",
     "required_description": "Felt med stjerne er obligatorisk",
-    "requires_login": "Krever innlogging",
     "role": "Rolle",
     "save": "Lagre",
     "save_and_present": "Lagre og presenter",
@@ -180,7 +171,6 @@
     "show_all": "Vis alle",
     "show_details": "Vis detaljer",
     "show_fewer": "Vis færre",
-    "size": "Størrelse",
     "skip_to_main_content": "Hopp til hovedinnhold",
     "skip_to_schema": "Hopp til skjema",
     "start": "Start",
@@ -362,12 +352,6 @@
       "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
       "get_users_for_institution": "Kunne ikke hente brukere",
       "get_vocabularies": "Kunne ikke hente kontrollerte vokabular",
-      "institution_mismatch": "Denne brukeren tilhører en annen institusjon",
-      "login": "Kunne ikke logge inn",
-      "missing_user": "Mangler bruker",
-      "orcid": {
-        "access_denied": "Kunne ikke koble til ORCID fordi tilgang til ORCID-kontoen ble avslått"
-      },
       "orcid_login": "Kunne ikke logge inn på ORCID",
       "publish_registration": "Kunne ikke publisere registrering",
       "remove_role": "Kunne ikke fjerne rolle",
@@ -380,10 +364,6 @@
       "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
       "update_registration": "Kunne ikke oppdatere registrering",
       "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
-    },
-    "info": {
-      "affiliation_already_exists": "Tilhørigheten finnes allerede",
-      "user_already_exists": "Brukeren finnes allerede"
     },
     "success": {
       "add_employment": "Ansettelse lagt til",
@@ -400,7 +380,6 @@
       "delete_registration": "Registrering ble slettet",
       "doi_request_sent": "DOI-forespørsel sendt",
       "doi_request_updated": "DOI-forespørselen ble oppdatert",
-      "login": "Logget inn",
       "published_registration": "Registreringen ble publisert",
       "removed_role": "Rollen ble fjernet",
       "send_message": "Melding sendt",
@@ -428,8 +407,7 @@
       "must_be_in_future": "{{field}} må være i fremtiden",
       "must_be_smaller_than": "{{field}} kan ikke være større enn {{limit}}",
       "must_have_minimum": "Må ha minst {{min}} {{-field}}",
-      "not_selected": "{{field}} er ikke valgt",
-      "supervisor_required": "Du må ha minst en veileder på denne registreringen"
+      "not_selected": "{{field}} er ikke valgt"
     }
   },
   "licenses": {
@@ -902,7 +880,6 @@
         "VideoEditor": "Klipper",
         "Writer": "Tekstforfatter"
       },
-      "unknown_author_identity": "Mangler forfatteridentitet",
       "user_not_found": "Finner ikke bruker",
       "verify_affiliation": "Verifiser tilhørighet",
       "verify_person": "Verifiser person"
@@ -914,7 +891,6 @@
       "confirm_remove_vocabulary_title": "Fjern vokabular?",
       "date_published": "Publiseringsdato",
       "description_of_content": "Beskrivelse av innhold, hvis relevant",
-      "financed_by": "Finansiert av",
       "hrcs_activities": "HRCS-aktiviteter",
       "hrcs_categories": "HRCS-kategorier",
       "keywords": "Nøkkelord",
@@ -1271,11 +1247,9 @@
       "DRAFT": "Kladd",
       "DRAFT_FOR_DELETION": "Slettet",
       "NEW": "Ny",
-      "PUBLISHED": "Publisert",
-      "REJECTED": "Avvist"
+      "PUBLISHED": "Publisert"
     },
     "support_description": "Når du ber om brukerstøtte vil meldingen gå til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger</0>.",
-    "validation_errors": "Valideringsfeil",
     "year_published": "Publiseringsår"
   },
   "search": {
