@@ -8,5 +8,6 @@ module.exports = {
     'project.status.',
     'registration.contributors.types.',
     'registration.status.',
+    'privacy.purpose.table.row',
   ],
 };
