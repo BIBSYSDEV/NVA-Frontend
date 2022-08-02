@@ -129,7 +129,9 @@ export const UserList = ({
                     <Typography fontWeight="bold">{t('basic_data.users.area_of_responsibility')}</Typography>
                   </TableCell>
                 )}
-                <TableCell width="150" />
+                <TableCell width="150">
+                  <Typography fontWeight="bold">{t('common.actions')}</Typography>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -154,7 +156,7 @@ export const UserList = ({
                         )}
                       </TableCell>
                     )}
-                    <TableCell align="right">
+                    <TableCell>
                       {roleToRemove && (
                         <Button
                           color="error"

@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
@@ -75,7 +74,6 @@ const BasicDataPage = () => {
               </LinkButton>
             </BetaFunctionality>,
           ]}
-          <Divider orientation="horizontal" />
           {user?.isAppAdmin && [
             <BetaFunctionality key={dataTestId.basicData.centralImportLink}>
               <LinkButton

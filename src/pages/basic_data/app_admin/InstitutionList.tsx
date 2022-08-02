@@ -28,13 +28,15 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
             <TableCell>
               <Typography fontWeight="bold">{t('common.date')}</Typography>
             </TableCell>
-            <TableCell />
+            <TableCell>
+              <Typography fontWeight="bold">{t('common.actions')}</Typography>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {institutions.map((institution) => (
             <TableRow key={institution.id}>
-              <TableCell component="th" scope="row">
+              <TableCell>
                 <Typography>{institution.displayName}</Typography>
               </TableCell>
               <TableCell>
