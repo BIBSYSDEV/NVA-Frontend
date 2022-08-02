@@ -98,6 +98,7 @@
   },
   "common": {
     "about_nva": "About NVA",
+    "actions": "Actions",
     "add": "Add",
     "add_custom": "Add {{- name}}",
     "all": "All",

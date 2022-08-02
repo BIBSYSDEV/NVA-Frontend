@@ -36,7 +36,6 @@ export const AddRoleModalContent = ({
         {t('basic_data.users.add_role_info')}
       </Typography>
       <TextField
-        autoFocus
         fullWidth
         InputProps={{
           startAdornment: (
