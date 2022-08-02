@@ -1262,7 +1262,6 @@
     "remove_filter": "Remove filter",
     "search_placeholder": "Search for title, contributor, abstract, etc.",
     "search_term_label": "Value",
-    "select_filters": "Select filters to narrow down search:",
     "sort_by": "Order by",
     "sort_by_modified_date": "Last modified",
     "sort_by_published_date_asc": "Publish date (oldest first)",

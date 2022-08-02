@@ -46,7 +46,6 @@ const SearchPage = () => {
               rowGap: '1rem',
             }}>
             <List sx={{ gridArea: 'filters' }}>
-              <Typography fontWeight={500}>{t('search.select_filters')}</Typography>
               <RegistrationTypeFilter />
             </List>
             <SearchBar />
