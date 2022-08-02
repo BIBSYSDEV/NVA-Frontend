@@ -18,8 +18,8 @@ import {
   LinkButtonRow,
   LinkIconButton,
   NavigationList,
-  SideMenu,
-  SideMenuHeader,
+  SideNav,
+  SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
 
@@ -41,8 +41,8 @@ const MyPagePage = () => {
 
   return (
     <StyledPageWithSideMenu>
-      <SideMenu aria-labelledby="my-page-title">
-        <SideMenuHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} id="my-page-title" />
+      <SideNav aria-labelledby="my-page-title">
+        <SideNavHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} id="my-page-title" />
 
         <NavigationList>
           {user?.isCreator && [
@@ -81,7 +81,7 @@ const MyPagePage = () => {
             {t('my_page.my_profile.user_profile')}
           </LinkButton>
         </NavigationList>
-      </SideMenu>
+      </SideNav>
       <BackgroundDiv>
         <Switch>
           <CreatorRoute exact path={UrlPathTemplate.MyPageMessages} component={MyMessagesPage} />

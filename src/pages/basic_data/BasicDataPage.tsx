@@ -22,8 +22,8 @@ import {
   LinkButtonRow,
   LinkIconButton,
   NavigationList,
-  SideMenu,
-  SideMenuHeader,
+  SideNav,
+  SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
 
@@ -45,8 +45,8 @@ const BasicDataPage = () => {
 
   return (
     <StyledPageWithSideMenu>
-      <SideMenu aria-labelledby="basic-data-title">
-        <SideMenuHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} id="basic-data-title" />
+      <SideNav aria-labelledby="basic-data-title">
+        <SideNavHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} id="basic-data-title" />
 
         <NavigationList>
           {user?.isInstitutionAdmin && [
@@ -95,7 +95,7 @@ const BasicDataPage = () => {
             </LinkButton>,
           ]}
         </NavigationList>
-      </SideMenu>
+      </SideNav>
       <BackgroundDiv>
         <Switch>
           <AppAdminRoute

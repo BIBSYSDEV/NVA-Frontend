@@ -11,8 +11,8 @@ import { EditorInstitution } from './EditorInstitution';
 import {
   LinkButton,
   NavigationList,
-  SideMenu,
-  SideMenuHeader,
+  SideNav,
+  SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
 import { RootState } from '../../redux/store';
@@ -31,8 +31,8 @@ const EditorPage = () => {
 
   return (
     <StyledPageWithSideMenu>
-      <SideMenu aria-labelledby="editor-title">
-        <SideMenuHeader text={customerShortName} id="editor-title" />
+      <SideNav aria-labelledby="editor-title">
+        <SideNavHeader text={customerShortName} id="editor-title" />
 
         <NavigationList>
           <LinkButton
@@ -51,7 +51,7 @@ const EditorPage = () => {
             {t('editor.publish_strategy.publish_strategy')}
           </LinkButton>
         </NavigationList>
-      </SideMenu>
+      </SideNav>
       <BackgroundDiv>
         <Switch>
           <EditorRoute exact path={UrlPathTemplate.EditorVocabulary} component={VocabularySettings} />

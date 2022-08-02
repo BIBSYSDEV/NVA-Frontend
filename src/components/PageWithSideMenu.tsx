@@ -25,19 +25,19 @@ const StyledSideMenuHeader = styled(Box)({
   padding: '0.5rem 1rem 0.5rem 1rem',
 });
 
-export const SideMenu = ({ children, ...props }: PropsWithChildren<Record<never, never>>) => (
+export const SideNav = ({ children, ...props }: PropsWithChildren<Record<never, never>>) => (
   <Box component="nav" sx={{ bgcolor: 'background.paper' }} {...props}>
     {children}
   </Box>
 );
 
-interface SideMenuHeaderProps {
+interface SideNavHeaderProps {
   icon?: SvgIconComponent;
   text?: string;
   id?: string;
 }
 
-export const SideMenuHeader = ({ icon, text, id }: SideMenuHeaderProps) => {
+export const SideNavHeader = ({ icon, text, id }: SideNavHeaderProps) => {
   const IconComponent = icon;
   return (
     <StyledSideMenuHeader>
