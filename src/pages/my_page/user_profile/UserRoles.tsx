@@ -18,9 +18,7 @@ export const UserRoles = ({ user }: UserRolesProps) => {
 
   return (
     <div>
-      <Typography variant="h2" paragraph>
-        {t('my_page.my_profile.heading.roles')}
-      </Typography>
+      <Typography variant="h2">{t('my_page.my_profile.heading.roles')}</Typography>
       {user.customerId ? (
         !isAppAdmin &&
         !isInstitutionAdmin &&
@@ -102,7 +100,7 @@ const RoleItem = ({ dataTestId, icon, label, text }: IconLabelTextLineProps) => 
       },
     }}>
     <Box sx={{ gridArea: 'icon' }}>{icon}</Box>
-    <Typography variantMapping={{ body1: 'h3' }} sx={{ gridArea: 'label', fontWeight: 'bold' }}>
+    <Typography component="h3" variant="body1" sx={{ gridArea: 'label', fontWeight: 'bold' }}>
       {label}
     </Typography>
     <Typography gutterBottom sx={{ gridArea: 'text' }}>
