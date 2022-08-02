@@ -66,7 +66,7 @@ export const PublicRegistrationContributors = ({
         )}
       </Box>
 
-      <Box sx={{ mt: '0.5rem', ml: '1rem' }}>
+      <Box sx={{ m: '0.5rem 0 0 0', pl: 0 }} component="ul">
         {distinctUnits.map((unitUri, index) => (
           <Box key={unitUri} component="li" sx={{ display: 'flex', gap: '0.25rem' }}>
             <sup>{index + 1}</sup>
@@ -96,61 +96,66 @@ const ContributorsRow = ({
   const { t } = useTranslation();
 
   return (
-    <Box
-      sx={{
-        listStyleType: 'none',
-        margin: 0,
-        padding: 0,
-        display: 'flex',
-        flexWrap: 'wrap',
-        alignItems: 'flex-end',
-        '> :not(:first-of-type)': {
-          ml: '1rem', // Use margin instead of gap to indent wrapped elements
-        },
-      }}>
-      {isOtherContributors && <Typography component="li">{t('registration.heading.contributors')}:</Typography>}
-      {contributors.map((contributor, index) => {
-        const {
-          identity: { id, name, orcId },
-        } = contributor;
-        const affiliationIndexes = contributor.affiliations
-          ?.map((affiliation) => affiliation.id && distinctUnits.indexOf(affiliation.id) + 1)
-          .filter((affiliationIndex) => affiliationIndex)
-          .sort();
+    <>
+      {isOtherContributors && (
+        <Typography sx={{ display: 'inline', mr: '0.5rem' }}>{t('registration.heading.contributors')}:</Typography>
+      )}
+      <Box
+        component="ul"
+        sx={{
+          listStyleType: 'none',
+          margin: 0,
+          padding: 0,
+          display: 'inline-flex',
+          flexWrap: 'wrap',
+          alignItems: 'flex-end',
+          '> :not(:first-of-type)': {
+            ml: '1rem', // Use margin instead of gap to indent wrapped elements
+          },
+        }}>
+        {contributors.map((contributor, index) => {
+          const {
+            identity: { id, name, orcId },
+          } = contributor;
+          const affiliationIndexes = contributor.affiliations
+            ?.map((affiliation) => affiliation.id && distinctUnits.indexOf(affiliation.id) + 1)
+            .filter((affiliationIndex) => affiliationIndex)
+            .sort();
 
-        return (
-          <Typography key={index} component="li">
-            {id ? (
-              <Link
-                component={RouterLink}
-                to={getResearchProfilePath(id)}
-                data-testid={dataTestId.registrationLandingPage.authorLink(id)}>
-                {name}
-              </Link>
-            ) : (
-              name
-            )}
-            {showRole && ` (${t(`registration.contributors.types.${contributor.role}`)})`}
-            {(orcId || (affiliationIndexes && affiliationIndexes.length > 0)) && (
-              <sup>
-                {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
-                {orcId && (
-                  <Tooltip title={t('common.orcid_profile')}>
-                    <IconButton size="small" href={orcId} target="_blank">
-                      <img src={OrcidLogo} height="20" alt="orcid" />
-                    </IconButton>
-                  </Tooltip>
-                )}
-              </sup>
-            )}
+          return (
+            <Typography key={index} component="li">
+              {id ? (
+                <Link
+                  component={RouterLink}
+                  to={getResearchProfilePath(id)}
+                  data-testid={dataTestId.registrationLandingPage.authorLink(id)}>
+                  {name}
+                </Link>
+              ) : (
+                name
+              )}
+              {showRole && ` (${t(`registration.contributors.types.${contributor.role}`)})`}
+              {(orcId || (affiliationIndexes && affiliationIndexes.length > 0)) && (
+                <sup>
+                  {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
+                  {orcId && (
+                    <Tooltip title={t('common.orcid_profile')}>
+                      <IconButton size="small" href={orcId} target="_blank">
+                        <img src={OrcidLogo} height="20" alt="orcid" />
+                      </IconButton>
+                    </Tooltip>
+                  )}
+                </sup>
+              )}
+            </Typography>
+          );
+        })}
+        {otherCount && otherCount > 0 ? (
+          <Typography component="li">
+            {t('registration.public_page.other_contributors', { count: otherCount })}
           </Typography>
-        );
-      })}
-      {otherCount && otherCount > 0 ? (
-        <Typography component="li">
-          {t('registration.public_page.other_contributors', { count: otherCount })}
-        </Typography>
-      ) : null}
-    </Box>
+        ) : null}
+      </Box>
+    </>
   );
 };

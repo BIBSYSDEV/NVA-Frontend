@@ -31,7 +31,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
 
       <LandingPageAccordion
         heading={t('project.summary')}
-        data-testid={dataTestId.projectLandingPage.scientificSummaryAccordion}>
+        dataTestId={dataTestId.projectLandingPage.scientificSummaryAccordion}>
         <ProjectSummary
           academicSummary={project.academicSummary}
           popularScienceSummary={project.popularScientificSummary}
@@ -39,7 +39,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
       </LandingPageAccordion>
 
       <LandingPageAccordion
-        data-testid={dataTestId.projectLandingPage.participantsAccordion}
+        dataTestId={dataTestId.projectLandingPage.participantsAccordion}
         heading={`${t('project.project_participants')} (${project.contributors.length})`}>
         <ProjectContributors contributors={project.contributors} />
       </LandingPageAccordion>
