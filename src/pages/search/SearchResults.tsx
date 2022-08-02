@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Box, Divider, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { RegistrationList } from '../../components/RegistrationList';
 import { SearchResponse } from '../../types/common.types';
 import { Registration } from '../../types/registration.types';
@@ -11,8 +10,6 @@ interface SearchResultsProps {
 }
 
 export const SearchResults = ({ searchResult }: SearchResultsProps) => {
-  const { t } = useTranslation();
-
   useEffect(() => {
     if (
       searchResult.hits.some(
@@ -26,8 +23,6 @@ export const SearchResults = ({ searchResult }: SearchResultsProps) => {
 
   return (
     <Box data-testid="search-results" sx={{ pb: '1rem' }}>
-      <Typography variant="subtitle1">{t('search.hits', { count: searchResult.size })}:</Typography>
-      <Divider />
       <RegistrationList registrations={searchResult.hits} />
     </Box>
   );
