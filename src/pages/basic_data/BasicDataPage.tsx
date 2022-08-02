@@ -45,8 +45,8 @@ const BasicDataPage = () => {
 
   return (
     <StyledPageWithSideMenu>
-      <SideMenu>
-        <SideMenuHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} />
+      <SideMenu aria-labelledby="basic-data-title">
+        <SideMenuHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} id="basic-data-title" />
 
         <NavigationList>
           {user?.isInstitutionAdmin && [

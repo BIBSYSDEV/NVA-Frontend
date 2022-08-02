@@ -31,8 +31,8 @@ const EditorPage = () => {
 
   return (
     <StyledPageWithSideMenu>
-      <SideMenu>
-        <SideMenuHeader text={customerShortName} />
+      <SideMenu aria-labelledby="editor-title">
+        <SideMenuHeader text={customerShortName} id="editor-title" />
 
         <NavigationList>
           <LinkButton

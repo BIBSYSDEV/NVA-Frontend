@@ -41,8 +41,8 @@ const MyPagePage = () => {
 
   return (
     <StyledPageWithSideMenu>
-      <SideMenu>
-        <SideMenuHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} />
+      <SideMenu aria-labelledby="my-page-title">
+        <SideMenuHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} id="my-page-title" />
 
         <NavigationList>
           {user?.isCreator && [
