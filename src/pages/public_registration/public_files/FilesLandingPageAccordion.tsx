@@ -31,7 +31,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
 
   return filesToShow.length === 0 ? null : (
     <LandingPageAccordion
-      data-testid={dataTestId.registrationLandingPage.filesAccordion}
+      dataTestId={dataTestId.registrationLandingPage.filesAccordion}
       defaultExpanded
       heading={
         showRegistrationHasFilesAwaitingApproval ? (

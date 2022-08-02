@@ -79,7 +79,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
 
         {entityDescription && (abstract || description || entityDescription.tags.length > 0 || subjects.length > 0) && (
           <LandingPageAccordion
-            data-testid={dataTestId.registrationLandingPage.abstractAccordion}
+            dataTestId={dataTestId.registrationLandingPage.abstractAccordion}
             defaultExpanded
             heading={t('registration.description.abstract')}>
             <PublicSummaryContent registration={registration} />
@@ -88,7 +88,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
 
         {projects.length > 0 && (
           <LandingPageAccordion
-            data-testid={dataTestId.registrationLandingPage.projectsAccordion}
+            dataTestId={dataTestId.registrationLandingPage.projectsAccordion}
             defaultExpanded
             heading={t('registration.description.project_association')}>
             <PublicProjectsContent projects={projects} />
@@ -97,7 +97,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
 
         {relatedRegistrations && relatedRegistrations.hits.length > 0 && (
           <LandingPageAccordion
-            data-testid={dataTestId.registrationLandingPage.relatedRegistrationsAccordion}
+            dataTestId={dataTestId.registrationLandingPage.relatedRegistrationsAccordion}
             defaultExpanded
             heading={t('registration.public_page.related_registrations')}>
             <RegistrationList registrations={relatedRegistrations.hits} />
