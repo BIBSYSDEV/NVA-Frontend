@@ -6,6 +6,7 @@ import {
   AccordionSummary,
   AccordionDetails,
   CircularProgress,
+  Link,
 } from '@mui/material';
 import prettyBytes from 'pretty-bytes';
 import { useState, useCallback, useEffect } from 'react';
@@ -95,19 +96,21 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: 
           ? t('registration.files_and_license.published_version')
           : t('registration.files_and_license.accepted_version')}
       </Typography>
-      <Box
-        component="img"
-        sx={{ gridArea: 'license', maxHeight: '3rem', cursor: 'pointer' }}
-        onClick={() => {
-          if (licenseData?.link) {
-            window.open(licenseData.link);
-          }
-        }}
-        alt={licenseTitle}
-        title={licenseTitle}
-        src={licenseData?.logo}
-        data-testid={dataTestId.registrationLandingPage.license}
-      />
+
+      <Link
+        href={licenseData?.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        sx={{ gridArea: 'license', maxHeight: '3rem', maxWidth: '8rem' }}>
+        <Box
+          component="img"
+          alt={licenseTitle}
+          title={licenseTitle}
+          src={licenseData?.logo}
+          data-testid={dataTestId.registrationLandingPage.license}
+        />
+      </Link>
+
       <Box sx={{ gridArea: 'download' }}>
         {fileIsEmbargoed ? (
           <Typography data-testid={dataTestId.registrationLandingPage.fileEmbargoDate}>
