@@ -90,7 +90,6 @@ export const AddContributorForm = ({
             setPage(0);
           }
         }}
-        autoFocus
         placeholder={t('common.search_placeholder')}
         label={t('common.search')}
         InputProps={{

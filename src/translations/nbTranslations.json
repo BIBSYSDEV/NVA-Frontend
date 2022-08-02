@@ -98,6 +98,7 @@
   },
   "common": {
     "about_nva": "Om NVA",
+    "actions": "Handlinger",
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",
     "all": "Alle",

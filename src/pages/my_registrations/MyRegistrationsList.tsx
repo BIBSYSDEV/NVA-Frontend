@@ -90,9 +90,9 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
               <TableCell data-testid="header-registration-created">
                 <Typography fontWeight="bold">{t('common.created_date')}</Typography>
               </TableCell>
-              <TableCell />
-              <TableCell />
-              <TableCell />
+              <TableCell>
+                <Typography fontWeight="bold">{t('common.actions')}</Typography>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -107,7 +107,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                 <TableCell data-testid={`registration-created-${registration.identifier}`}>
                   <Typography>{new Date(registration.createdDate).toLocaleString()}</Typography>
                 </TableCell>
-                <TableCell>
+                <TableCell sx={{ display: 'flex', gap: '1rem' }}>
                   <Button
                     variant="outlined"
                     component={RouterLink}
@@ -116,8 +116,6 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                     data-testid={`open-registration-${registration.identifier}`}>
                     {t('common.show')}
                   </Button>
-                </TableCell>
-                <TableCell>
                   <Button
                     variant="outlined"
                     component={RouterLink}
@@ -126,8 +124,6 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                     data-testid={`edit-registration-${registration.identifier}`}>
                     {t('common.edit')}
                   </Button>
-                </TableCell>
-                <TableCell>
                   {registration.status === RegistrationStatus.Draft && (
                     <Button
                       color="error"
