@@ -1,4 +1,4 @@
-import { Box, List, Typography } from '@mui/material';
+import { Box, List } from '@mui/material';
 import { Formik, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
