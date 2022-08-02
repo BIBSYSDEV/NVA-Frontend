@@ -66,7 +66,7 @@ export const PublicRegistrationContributors = ({
         )}
       </Box>
 
-      <Box sx={{ mt: '0.5rem', ml: '1rem' }}>
+      <Box sx={{ m: '0.5rem 0 0 0', pl: 0 }} component="ul">
         {distinctUnits.map((unitUri, index) => (
           <Box key={unitUri} component="li" sx={{ display: 'flex', gap: '0.25rem' }}>
             <sup>{index + 1}</sup>
