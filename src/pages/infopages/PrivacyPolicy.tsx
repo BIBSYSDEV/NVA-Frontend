@@ -57,7 +57,7 @@ const PrivacyPolicy = () => {
             <TableBody>
               {[...Array(5)].map((_, index) => (
                 <TableRow key={index}>
-                  <TableCell scope="row">{t(`privacy.purpose.table.row${index}.col0` as any)}</TableCell>
+                  <TableCell>{t(`privacy.purpose.table.row${index}.col0` as any)}</TableCell>
                   <TableCell>{t(`privacy.purpose.table.row${index}.col1` as any)}</TableCell>
                   <TableCell>{t(`privacy.purpose.table.row${index}.col2` as any)}</TableCell>
                 </TableRow>
@@ -110,9 +110,7 @@ const PrivacyPolicy = () => {
             <TableBody>
               {[...Array(3)].map((_, index) => (
                 <TableRow key={index}>
-                  <TableCell scope="row">
-                    {t(`privacy.registered_personal_data.table.user_data.row${index}.col0` as any)}
-                  </TableCell>
+                  <TableCell>{t(`privacy.registered_personal_data.table.user_data.row${index}.col0` as any)}</TableCell>
                   <TableCell>{t(`privacy.registered_personal_data.table.user_data.row${index}.col1` as any)}</TableCell>
                   <TableCell>{t(`privacy.registered_personal_data.table.user_data.row${index}.col2` as any)}</TableCell>
                 </TableRow>
@@ -139,7 +137,7 @@ const PrivacyPolicy = () => {
             <TableBody>
               {[...Array(4)].map((_, index) => (
                 <TableRow key={index}>
-                  <TableCell scope="row">
+                  <TableCell>
                     {t(`privacy.registered_personal_data.table.techincal_user_data.row${index}.col0` as any)}
                   </TableCell>
                   <TableCell>
@@ -170,7 +168,7 @@ const PrivacyPolicy = () => {
             <TableBody>
               {[...Array(2)].map((_, index) => (
                 <TableRow key={index}>
-                  <TableCell scope="row">
+                  <TableCell>
                     {t(`privacy.registered_personal_data.table.other_user_data.row${index}.col0` as any)}
                   </TableCell>
                   <TableCell>
