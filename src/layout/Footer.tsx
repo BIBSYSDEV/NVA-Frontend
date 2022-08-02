@@ -6,6 +6,7 @@ export const Footer = () => {
 
   return (
     <Box
+      component="footer"
       sx={{
         padding: '1rem',
         bgcolor: 'background.paper',
