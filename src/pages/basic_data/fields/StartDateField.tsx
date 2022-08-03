@@ -19,6 +19,9 @@ export const StartDateField = ({ fieldName, maxDate, disabled = false }: StartDa
         <DatePicker
           disabled={disabled}
           label={t('common.start_date')}
+          PopperProps={{
+            'aria-label': t('common.start_date'),
+          }}
           value={field.value ? field.value : null}
           onChange={(date: Date | null, keyboardInput) => {
             const newValue = getNewDateValue(date, keyboardInput);

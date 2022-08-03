@@ -136,6 +136,7 @@ export const ResourceTypePanel = () => {
     } else if (isArtistic(newInstanceType)) {
       setFieldValue(ResourceFieldNames.PublicationInstanceSubtypeType, '');
       setFieldValue(ResourceFieldNames.PublicationInstanceSubtypeDescription, undefined);
+      // TODO: reset outputs
     }
   };
 

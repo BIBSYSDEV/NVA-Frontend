@@ -103,6 +103,9 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
               {({ field, form: { setFieldTouched, setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
                 <DatePicker
                   label={t('registration.resource_type.artistic.competition_date')}
+                  PopperProps={{
+                    'aria-label': t('registration.resource_type.artistic.competition_date'),
+                  }}
                   value={field.value ?? null}
                   onChange={(date: Date | null, keyboardInput) => {
                     !touched && setFieldTouched(field.name, true, false);

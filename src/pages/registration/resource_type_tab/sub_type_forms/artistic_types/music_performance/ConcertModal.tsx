@@ -145,6 +145,9 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                 }: FieldProps<string>) => (
                   <DatePicker
                     label={t('common.date')}
+                    PopperProps={{
+                      'aria-label': t('common.date'),
+                    }}
                     value={field.value ?? null}
                     onChange={(date: Date | null, keyboardInput) => {
                       !touched && setFieldTouched(field.name, true, false);

@@ -92,6 +92,9 @@ export const AddAffiliationPanel = () => {
             <DatePicker
               disabled={isDisabled}
               label={t('common.end_date')}
+              PopperProps={{
+                'aria-label': t('common.end_date'),
+              }}
               value={field.value ? field.value : null}
               onChange={(date: Date | null, keyboardInput) => {
                 const newValue = getNewDateValue(date, keyboardInput);

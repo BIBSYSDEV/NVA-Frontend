@@ -132,6 +132,9 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                   <DatePicker
                     {...field}
                     label={t('registration.files_and_license.file_publish_date')}
+                    PopperProps={{
+                      'aria-label': t('registration.files_and_license.file_publish_date'),
+                    }}
                     value={field.value ?? null}
                     onChange={(date, keyboardInput) => {
                       const newDate = getNewDateValue(date, keyboardInput);
@@ -175,11 +178,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                         const selectedLicense = licenses.find((license) => license.identifier === option);
                         return selectedLicense ? (
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <img
-                              style={{ width: '5rem' }}
-                              src={selectedLicense.logo}
-                              alt={selectedLicense.identifier}
-                            />
+                            <img style={{ width: '5rem' }} src={selectedLicense.logo} alt="" />
                             <span>{t(`licenses.labels.${option}` as any)}</span>
                           </Box>
                         ) : null;

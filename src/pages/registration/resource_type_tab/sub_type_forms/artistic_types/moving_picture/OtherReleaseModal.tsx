@@ -120,6 +120,9 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
               {({ field, form: { setFieldTouched, setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
                 <DatePicker
                   label={t('common.date')}
+                  PopperProps={{
+                    'aria-label': t('common.date'),
+                  }}
                   value={field.value ?? null}
                   onChange={(date: Date | null, keyboardInput) => {
                     !touched && setFieldTouched(field.name, true, false);

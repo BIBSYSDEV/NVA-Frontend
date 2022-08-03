@@ -102,6 +102,9 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                     {({ field, meta: { touched, error } }: FieldProps<string>) => (
                       <DatePicker
                         label={t('common.start_date')}
+                        PopperProps={{
+                          'aria-label': t('common.start_date'),
+                        }}
                         onChange={(date: Date | null, keyboardValue) => {
                           const newDateString = getNewDateValue(date, keyboardValue);
                           setFieldValue(field.name, newDateString);
@@ -128,6 +131,9 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                     {({ field, meta: { touched, error } }: FieldProps<string>) => (
                       <DatePicker
                         label={t('common.end_date')}
+                        PopperProps={{
+                          'aria-label': t('common.end_date'),
+                        }}
                         onChange={(date: Date | null, keyboardValue) => {
                           const newDateString = getNewDateValue(date, keyboardValue);
                           setFieldValue(field.name, newDateString);

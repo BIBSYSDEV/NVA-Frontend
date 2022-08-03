@@ -144,8 +144,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
         dataTestId={dataTestId.registrationWizard.files.licenseModal}>
         {licenses.map((license) => (
           <Box key={license.identifier} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
-            <Typography variant="h6">{t(`licenses.labels.${license.identifier}`)}</Typography>
-            <Box component="img" src={license.logo} alt={license.identifier} sx={{ width: '8rem' }} />
+            <Typography variant="h3">{t(`licenses.labels.${license.identifier}`)}</Typography>
+            <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
             <Typography paragraph>{license.description}</Typography>
             {license.link && (
               <Link href={license.link} target="blank">

@@ -25,8 +25,8 @@ export const ConfirmDialog = ({
   const { t } = useTranslation();
 
   return (
-    <Dialog open={open} onClose={onCancel} data-testid={dataTestId} PaperProps={{ 'aria-labelledby': 'titleId' }}>
-      <DialogTitle id="titleId">{title}</DialogTitle>
+    <Dialog open={open} onClose={onCancel} data-testid={dataTestId}>
+      <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
         <Button data-testid="cancel-button" variant="outlined" onClick={onCancel}>
