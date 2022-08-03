@@ -81,6 +81,9 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
               {({ field, form: { setFieldTouched, setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
                 <DatePicker
                   label={t('registration.resource_type.artistic.premiere_date')}
+                  PopperProps={{
+                    'aria-label': t('registration.resource_type.artistic.premiere_date'),
+                  }}
                   value={field.value ?? null}
                   onChange={(date: Date | null, keyboardInput) => {
                     !touched && setFieldTouched(field.name, true, false);

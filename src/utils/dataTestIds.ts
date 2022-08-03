@@ -192,7 +192,7 @@ export const dataTestId = {
       competitionSaveButton: 'artistic-competition-save-button',
       competitionCancelButton: 'artistic-competition-cancel-button',
       contentField: 'content-field',
-      contentValue: (value: string) => `content-value-${value.toLowerCase().replaceAll(' ', '-')}`,
+      contentValue: (value: string) => `content-value-${value.toLowerCase()}`,
       corrigendumForField: 'corrigendum-for-field',
       eventCountryField: 'event-country-field',
       exhibitionName: 'artistic-exhibition-name',

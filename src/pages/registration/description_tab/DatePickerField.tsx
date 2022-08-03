@@ -68,6 +68,9 @@ export const DatePickerField = () => {
       <DatePicker
         label={t('registration.description.date_published')}
         value={date}
+        PopperProps={{
+          'aria-label': t('registration.description.date_published'),
+        }}
         onChange={onChangeDate}
         inputFormat={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
         views={yearOnly ? ['year'] : ['year', 'month', 'day']}

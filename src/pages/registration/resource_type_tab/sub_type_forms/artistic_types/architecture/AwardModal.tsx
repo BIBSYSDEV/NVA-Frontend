@@ -99,6 +99,9 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
               {({ field, form: { setFieldTouched, setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
                 <DatePicker
                   label={t('common.year')}
+                  PopperProps={{
+                    'aria-label': t('common.year'),
+                  }}
                   value={field.value ?? null}
                   onChange={(date: Date | null, keyboardInput) => {
                     !touched && setFieldTouched(field.name, true, false);

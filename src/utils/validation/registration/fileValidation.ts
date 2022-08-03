@@ -5,7 +5,7 @@ import { File } from '../../../types/file.types';
 
 const fileErrorMessage = {
   fileVersionRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.files_and_license.version'),
+    field: i18n.t('common.version'),
   }),
   licenseRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.files_and_license.conditions_for_using_file'),

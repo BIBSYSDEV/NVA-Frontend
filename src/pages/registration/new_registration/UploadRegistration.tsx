@@ -63,7 +63,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
             <FileUploader uppy={uppy} addFile={(newFile: File) => setUploadedFiles((files) => [newFile, ...files])} />
             {uploadedFiles.length > 0 && (
               <>
-                <Typography variant="subtitle1">{t('registration.files_and_license.files')}:</Typography>
+                <Typography variant="h3">{t('registration.files_and_license.files')}:</Typography>
                 {uploadedFiles.map((file) => (
                   <UploadedFileRow
                     key={file.identifier}

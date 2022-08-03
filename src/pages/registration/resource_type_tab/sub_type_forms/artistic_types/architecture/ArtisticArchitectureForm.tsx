@@ -117,7 +117,7 @@ export const ArtisticArchitectureForm = () => {
                       <TableCell>{t('common.type')}</TableCell>
                       <TableCell>{t('registration.resource_type.artistic.name_or_title')}</TableCell>
                       <TableCell>{t('common.order')}</TableCell>
-                      <TableCell></TableCell>
+                      <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>

@@ -24,6 +24,9 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <DatePicker
             label={t('registration.resource_type.date_from')}
+            PopperProps={{
+              'aria-label': t('registration.resource_type.date_from'),
+            }}
             value={field.value ?? null}
             onChange={(date, keyboardInput) => {
               !touched && setFieldTouched(field.name, true, false);
@@ -54,6 +57,9 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <DatePicker
             label={t('registration.resource_type.date_to')}
+            PopperProps={{
+              'aria-label': t('registration.resource_type.date_to'),
+            }}
             value={field.value ?? null}
             onChange={(date, keyboardInput) => {
               !touched && setFieldTouched(field.name, true, false);

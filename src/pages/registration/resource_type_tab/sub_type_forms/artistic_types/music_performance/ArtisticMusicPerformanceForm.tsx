@@ -56,7 +56,7 @@ export const ArtisticMusicPerformanceForm = () => {
                         {t('common.publisher')}/{t('common.place')}
                       </TableCell>
                       <TableCell>{t('common.order')}</TableCell>
-                      <TableCell></TableCell>
+                      <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
