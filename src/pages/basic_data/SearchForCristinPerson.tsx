@@ -101,7 +101,7 @@ export const SearchForCristinPerson = ({
           )}
         />
       ) : isLoadingSearchByNin ? (
-        <CircularProgress />
+        <CircularProgress aria-label={t('basic_data.add_employee.search_for_person')} />
       ) : selectedPerson?.id ? (
         <>
           <TextField

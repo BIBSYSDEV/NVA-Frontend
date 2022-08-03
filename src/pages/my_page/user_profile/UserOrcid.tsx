@@ -99,11 +99,11 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
 
   return (
     <div>
-      <Typography variant="h2" paragraph>
+      <Typography id="orcid-label" variant="h2" paragraph>
         {t('common.orcid')}
       </Typography>
       {isLoadingCristinPerson ? (
-        <CircularProgress />
+        <CircularProgress aria-labelledby="orcid-label" />
       ) : isAddingOrcid ? (
         <Skeleton width="50%" />
       ) : currentOrcid ? (
