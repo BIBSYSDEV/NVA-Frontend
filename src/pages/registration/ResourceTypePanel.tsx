@@ -134,9 +134,7 @@ export const ResourceTypePanel = () => {
       // Reset partOf when user changes subtype of Chapter, since previous container might not be valid for the new type
       setFieldValue(ResourceFieldNames.PartOf, undefined);
     } else if (isArtistic(newInstanceType)) {
-      setFieldValue(ResourceFieldNames.PublicationInstanceSubtypeType, '');
-      setFieldValue(ResourceFieldNames.PublicationInstanceSubtypeDescription, undefined);
-      // TODO: reset outputs
+      setFieldValue(instanceTypeBaseFieldName, { ...emptyArtisticPublicationInstance, type: newInstanceType });
     }
   };
 
@@ -174,14 +172,23 @@ export const ResourceTypePanel = () => {
         </TextField>
       </StyledSelectWrapper>
 
-      {mainType === PublicationType.PublicationInJournal && <JournalTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.Book && <BookTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.Report && <ReportTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.Degree && <DegreeTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.Chapter && <ChapterTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.Presentation && <PresentationTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.Artistic && <ArtisticTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.MediaContribution && <MediaTypeForm onChangeSubType={onChangeSubType} />}
+      {mainType === PublicationType.PublicationInJournal ? (
+        <JournalTypeForm onChangeSubType={onChangeSubType} />
+      ) : mainType === PublicationType.Book ? (
+        <BookTypeForm onChangeSubType={onChangeSubType} />
+      ) : mainType === PublicationType.Report ? (
+        <ReportTypeForm onChangeSubType={onChangeSubType} />
+      ) : mainType === PublicationType.Degree ? (
+        <DegreeTypeForm onChangeSubType={onChangeSubType} />
+      ) : mainType === PublicationType.Chapter ? (
+        <ChapterTypeForm onChangeSubType={onChangeSubType} />
+      ) : mainType === PublicationType.Presentation ? (
+        <PresentationTypeForm onChangeSubType={onChangeSubType} />
+      ) : mainType === PublicationType.Artistic ? (
+        <ArtisticTypeForm onChangeSubType={onChangeSubType} />
+      ) : mainType === PublicationType.MediaContribution ? (
+        <MediaTypeForm onChangeSubType={onChangeSubType} />
+      ) : null}
     </InputContainerBox>
   );
 };

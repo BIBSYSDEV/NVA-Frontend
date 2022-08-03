@@ -46,6 +46,7 @@ export const ArtisticPerformingArtsForm = () => {
               variant="filled"
               fullWidth
               {...field}
+              value={field.value ?? ''}
               label={t('registration.resource_type.type_work')}
               required
               error={!!error && touched}
