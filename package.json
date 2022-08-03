@@ -29,7 +29,7 @@
     "extends": "@istanbuljs/nyc-config-typescript"
   },
   "dependencies": {
-    "@aws-amplify/auth": "^4.6.0",
+    "@aws-amplify/auth": "^4.6.1",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@fontsource/barlow": "^4.5.7",
@@ -77,7 +77,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/yup": "^0.29.14",
     "axios-mock-adapter": "^1.21.1",
-    "cypress": "^10.3.1",
+    "cypress": "^10.4.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-prettier": "^4.2.1",
