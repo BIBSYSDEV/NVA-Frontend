@@ -91,7 +91,6 @@ export const contextTypeBaseFieldName = 'entityDescription.reference.publication
 export const instanceTypeBaseFieldName = 'entityDescription.reference.publicationInstance';
 
 export enum ResourceFieldNames {
-  ArchitectureOutput = 'entityDescription.reference.publicationInstance.architectureOutput',
   ArticleNumber = 'entityDescription.reference.publicationInstance.articleNumber',
   ContentType = 'entityDescription.reference.publicationInstance.contentType',
   CorrigendumFor = 'entityDescription.reference.publicationInstance.corrigendumFor',
@@ -123,11 +122,13 @@ export enum ResourceFieldNames {
   PublicationContextTimeFrom = 'entityDescription.reference.publicationContext.time.from',
   PublicationContextTimeTo = 'entityDescription.reference.publicationContext.time.to',
   PublicationContextType = 'entityDescription.reference.publicationContext.type',
+  PublicationInstanceArchitectureOutput = 'entityDescription.reference.publicationInstance.architectureOutput',
   PublicationInstanceDescription = 'entityDescription.reference.publicationInstance.description',
   PublicationInstanceManifestations = 'entityDescription.reference.publicationInstance.manifestations',
   PublicationInstanceOutputs = 'entityDescription.reference.publicationInstance.outputs',
   PublicationInstanceSubtypeDescription = 'entityDescription.reference.publicationInstance.subtype.description',
   PublicationInstanceSubtypeType = 'entityDescription.reference.publicationInstance.subtype.type',
+  PublicationInstanceVenues = 'entityDescription.reference.publicationInstance.venues',
   Reference = 'entityDescription.reference',
   Series = 'entityDescription.reference.publicationContext.series',
   SeriesId = 'entityDescription.reference.publicationContext.series.id',
@@ -135,7 +136,6 @@ export enum ResourceFieldNames {
   SeriesTitle = 'entityDescription.reference.publicationContext.series.title',
   SeriesType = 'entityDescription.reference.publicationContext.series.type',
   SubType = 'entityDescription.reference.publicationInstance.type',
-  Venues = 'entityDescription.reference.publicationInstance.venues',
   Volume = 'entityDescription.reference.publicationInstance.volume',
 }
 

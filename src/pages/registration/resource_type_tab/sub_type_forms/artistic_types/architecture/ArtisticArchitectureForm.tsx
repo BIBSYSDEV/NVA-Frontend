@@ -107,7 +107,7 @@ export const ArtisticArchitectureForm = () => {
         <Typography variant="h3" component="h2" gutterBottom>
           {t('registration.resource_type.artistic.announcements')}
         </Typography>
-        <FieldArray name={ResourceFieldNames.ArchitectureOutput}>
+        <FieldArray name={ResourceFieldNames.PublicationInstanceArchitectureOutput}>
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
               {architectureOutput.length > 0 && (

@@ -47,7 +47,7 @@ export const DoiField = () => {
         title={t('registration.resource_type.remove_doi')}
         onAccept={removeDoi}
         onCancel={toggleConfirmDialog}
-        dataTestId="confirm-delete-doi-dialog">
+        dialogDataTestId="confirm-delete-doi-dialog">
         <Typography>{t('registration.resource_type.remove_doi_text')}</Typography>
       </ConfirmDialog>
     </Box>

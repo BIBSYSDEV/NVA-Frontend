@@ -44,7 +44,6 @@ export const ArtisticDesignForm = () => {
               variant="filled"
               fullWidth
               {...field}
-              value={field.value ?? ''}
               label={t('registration.resource_type.type_work')}
               required
               error={!!error && touched}
@@ -98,7 +97,7 @@ export const ArtisticDesignForm = () => {
         <Typography variant="h3" component="h2" gutterBottom>
           {t('registration.resource_type.artistic.exhibition_places')}
         </Typography>
-        <FieldArray name={ResourceFieldNames.Venues}>
+        <FieldArray name={ResourceFieldNames.PublicationInstanceVenues}>
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
               {venues.length > 0 && (

@@ -37,18 +37,22 @@ import {
   emptyMediaContributionPublicationContext,
   emptyMediaContributionPublicationInstance,
 } from '../../types/publication_types/mediaContributionRegistration';
+import { ConfirmDialog } from '../../components/ConfirmDialog';
 
 export const ResourceTypePanel = () => {
   const { t } = useTranslation();
   const { values, setTouched, setFieldValue, touched, errors } = useFormikContext<Registration>();
-  const [mainType, setMainType] = useState(
-    getMainRegistrationType(values.entityDescription?.reference?.publicationInstance.type ?? '')
-  );
-  const onChangeType = (newRegistrationMainType: string) => {
-    // Ensure some values are reset when publication type changes
-    setMainType(newRegistrationMainType);
+  const instanceType = values.entityDescription?.reference?.publicationInstance.type ?? '';
+  const [mainType, setMainType] = useState(getMainRegistrationType(instanceType));
 
-    switch (newRegistrationMainType) {
+  const [confirmContextType, setConfirmContextType] = useState('');
+  const [confirmInstanceType, setConfirmInstanceType] = useState('');
+
+  const setPublicationContextType = (newContextType: string) => {
+    // Ensure some values are reset when publication type changes
+    setMainType(newContextType);
+
+    switch (newContextType) {
       case PublicationType.PublicationInJournal:
         setFieldValue(instanceTypeBaseFieldName, emptyJournalPublicationInstance, false);
         setFieldValue(contextTypeBaseFieldName, { type: PublicationChannelType.UnconfirmedJournal }, false);
@@ -115,7 +119,7 @@ export const ResourceTypePanel = () => {
     setTouched(newTouched);
   };
 
-  const onChangeSubType = (newInstanceType: string) => {
+  const setPublicationInstanceType = (newInstanceType: string) => {
     const commonValues = {
       type: newInstanceType,
       contentType: null,
@@ -134,9 +138,7 @@ export const ResourceTypePanel = () => {
       // Reset partOf when user changes subtype of Chapter, since previous container might not be valid for the new type
       setFieldValue(ResourceFieldNames.PartOf, undefined);
     } else if (isArtistic(newInstanceType)) {
-      setFieldValue(ResourceFieldNames.PublicationInstanceSubtypeType, '');
-      setFieldValue(ResourceFieldNames.PublicationInstanceSubtypeDescription, undefined);
-      // TODO: reset outputs
+      setFieldValue(instanceTypeBaseFieldName, { ...emptyArtisticPublicationInstance, type: newInstanceType });
     }
   };
 
@@ -165,7 +167,9 @@ export const ResourceTypePanel = () => {
           value={mainType}
           error={!!typeError && typeTouched}
           helperText={!!typeError && typeTouched ? typeError : ''}
-          onChange={(event) => onChangeType(event.target.value)}>
+          onChange={(event) =>
+            mainType ? setConfirmContextType(event.target.value) : setPublicationContextType(event.target.value)
+          }>
           {Object.values(PublicationType).map((typeValue) => (
             <MenuItem value={typeValue} key={typeValue} data-testid={`publication-context-type-${typeValue}`}>
               {t(`registration.publication_types.${typeValue}`)}
@@ -174,14 +178,42 @@ export const ResourceTypePanel = () => {
         </TextField>
       </StyledSelectWrapper>
 
-      {mainType === PublicationType.PublicationInJournal && <JournalTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.Book && <BookTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.Report && <ReportTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.Degree && <DegreeTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.Chapter && <ChapterTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.Presentation && <PresentationTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.Artistic && <ArtisticTypeForm onChangeSubType={onChangeSubType} />}
-      {mainType === PublicationType.MediaContribution && <MediaTypeForm onChangeSubType={onChangeSubType} />}
+      {mainType === PublicationType.PublicationInJournal ? (
+        <JournalTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
+      ) : mainType === PublicationType.Book ? (
+        <BookTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
+      ) : mainType === PublicationType.Report ? (
+        <ReportTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
+      ) : mainType === PublicationType.Degree ? (
+        <DegreeTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
+      ) : mainType === PublicationType.Chapter ? (
+        <ChapterTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
+      ) : mainType === PublicationType.Presentation ? (
+        <PresentationTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
+      ) : mainType === PublicationType.Artistic ? (
+        <ArtisticTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
+      ) : mainType === PublicationType.MediaContribution ? (
+        <MediaTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
+      ) : null}
+
+      <ConfirmDialog
+        open={!!confirmContextType || !!confirmInstanceType}
+        title={t('registration.resource_type.change_registration_type')}
+        onAccept={() => {
+          if (confirmContextType) {
+            setPublicationContextType(confirmContextType);
+            setConfirmContextType('');
+          } else if (confirmInstanceType) {
+            setPublicationInstanceType(confirmInstanceType);
+            setConfirmInstanceType('');
+          }
+        }}
+        onCancel={() => {
+          setConfirmContextType('');
+          setConfirmInstanceType('');
+        }}>
+        {t('registration.resource_type.change_registration_type_description')}
+      </ConfirmDialog>
     </InputContainerBox>
   );
 };

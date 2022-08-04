@@ -9,20 +9,21 @@ describe('Registration: Resource type: Report', () => {
 
   it('The user should be able to fill out the form for report type', () => {
     cy.mocklogin();
-    cy.get('[data-testid=new-registration]').click({ force: true });
+    cy.get('[data-testid=new-registration]').click();
 
     cy.startRegistrationWithDoi();
 
-    cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-resource-type]').click();
 
     // choose Report type
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' '); //makes the select options open
     cy.get('[data-testid=publication-context-type-Report]').should('be.visible');
-    cy.get('[data-testid=publication-context-type-Report]').click({ force: true });
+    cy.get('[data-testid=publication-context-type-Report]').click();
+    cy.get(`[data-testid=${dataTestId.confirmDialog.acceptButton}]`).click();
     cy.get('[data-testid=publication-context-type] input').should('have.value', 'Report');
 
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
-    cy.get('[data-testid=publication-instance-type-ReportResearch]').click({ force: true });
+    cy.get('[data-testid=publication-instance-type-ReportResearch]').click();
 
     // search for and select a publisher
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
