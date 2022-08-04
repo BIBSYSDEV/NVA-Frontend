@@ -22,7 +22,7 @@ export const AdminCustomerInstitutions = () => {
 
   return (
     <>
-      <PageHeader>{t('basic_data.institutions.admin_institutions')}</PageHeader>
+      <PageHeader id="admin-institutions-label">{t('basic_data.institutions.admin_institutions')}</PageHeader>
       <StyledRightAlignedWrapper>
         <Button
           component={RouterLink}
@@ -32,7 +32,7 @@ export const AdminCustomerInstitutions = () => {
         </Button>
       </StyledRightAlignedWrapper>
       {isLoadingCustomerInstitutions ? (
-        <PageSpinner />
+        <PageSpinner aria-labelledby="admin-institutions-label" />
       ) : (
         customerInstitutions && (
           <InstitutionList institutions={sortCustomerInstitutions(customerInstitutions.customers)} />

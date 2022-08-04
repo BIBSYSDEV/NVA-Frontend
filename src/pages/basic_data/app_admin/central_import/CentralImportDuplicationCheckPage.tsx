@@ -40,12 +40,12 @@ export const CentralImportDuplicationCheckPage = () => {
 
   return (
     <>
-      <Typography variant="h3" component="h2" paragraph>
+      <Typography id="duplicate-check-label" variant="h3" component="h2" paragraph>
         {t('basic_data.central_import.duplicate_check')}
       </Typography>
       <SyledPageContent>
         {isLoadingRegistration ? (
-          <PageSpinner />
+          <PageSpinner aria-labelledby="duplicate-check-label" />
         ) : registration ? (
           <>
             <Typography variant="h3" component="h2" paragraph>

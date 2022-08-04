@@ -80,7 +80,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   };
 
   return isLoadingRegistration ? (
-    <PageSpinner />
+    <PageSpinner aria-label={t('common.registration')} />
   ) : !isValidOwner && !isValidCurator ? (
     <Forbidden />
   ) : registration ? (

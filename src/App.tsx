@@ -113,7 +113,7 @@ export const App = () => {
           <CreateCristinPersonDialog user={user} />
         ))}
       {isLoadingUserAttributes || isLoadingInstitutionUser ? (
-        <PageSpinner />
+        <PageSpinner aria-label={t('common.page_title')} />
       ) : (
         <BrowserRouter>
           <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
