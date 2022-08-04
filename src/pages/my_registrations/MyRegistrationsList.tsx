@@ -160,7 +160,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
           setShowDeleteModal(false);
         }}
         isLoading={isDeleting}
-        dataTestId="confirm-delete-dialog">
+        dialogDataTestId="confirm-delete-dialog">
         <Typography>
           {t('my_page.registrations.delete_registration_message', {
             title: registrationToDelete?.mainTitle ?? registrationToDelete?.identifier,

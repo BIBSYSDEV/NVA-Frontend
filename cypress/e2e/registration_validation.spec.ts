@@ -123,6 +123,7 @@ describe('User opens registration form and can see validation errors', () => {
   it('The User should be able to see validation errors on resource tab (Book)', () => {
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get(`[data-testid=publication-context-type-Book]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.confirmDialog.acceptButton}]`).click();
 
     // publicationInstance type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
@@ -172,6 +173,7 @@ describe('User opens registration form and can see validation errors', () => {
   it('The User should be able to see validation errors on resource tab (Report)', () => {
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get(`[data-testid=publication-context-type-Report]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.confirmDialog.acceptButton}]`).click();
 
     // publicationInstance type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
@@ -198,6 +200,7 @@ describe('User opens registration form and can see validation errors', () => {
   it('The User should be able to see validation errors on resource tab (Presentation)', () => {
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-context-type-Event]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.confirmDialog.acceptButton}]`).click();
 
     // publicationInstance type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
@@ -236,6 +239,7 @@ describe('User opens registration form and can see validation errors', () => {
   it('The User should be able to see validation errors on resource tab (Artistic)', () => {
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get('[data-testid=publication-context-type-Artistic]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.confirmDialog.acceptButton}]`).click();
 
     // publicationInstance type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
@@ -271,6 +275,7 @@ describe('User opens registration form and can see validation errors', () => {
   it('The User should be able to see validation errors on resource tab (Degree)', () => {
     cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
     cy.get(`[data-testid=publication-context-type-Degree]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.confirmDialog.acceptButton}]`).click();
 
     // publicationInstance type
     cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');

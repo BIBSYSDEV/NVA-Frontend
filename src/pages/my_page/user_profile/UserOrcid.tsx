@@ -143,7 +143,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
             onAccept={removeOrcid}
             onCancel={toggleConfirmDialog}
             isLoading={isRemovingOrcid}
-            dataTestId="confirm-remove-orcid-connection-dialog">
+            dialogDataTestId="confirm-remove-orcid-connection-dialog">
             <Typography sx={{ whiteSpace: 'pre-wrap' }}>
               {t('my_page.my_profile.orcid.remove_connection_info')}{' '}
               <MuiLink href={orcidUrl} target="_blank" rel="noopener noreferrer">

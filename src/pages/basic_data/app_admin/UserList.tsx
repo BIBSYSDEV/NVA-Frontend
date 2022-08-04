@@ -209,7 +209,7 @@ export const UserList = ({
               isLoading={updatedRoleForUsers.length > 0}
               onCancel={() => setRemoveRoleForUser('')}
               onAccept={handleRemoveRoleFromUser}
-              dataTestId="confirm-remove-role-dialog">
+              dialogDataTestId="confirm-remove-role-dialog">
               {t('basic_data.users.remove_role_text')}
             </ConfirmDialog>
           )}
