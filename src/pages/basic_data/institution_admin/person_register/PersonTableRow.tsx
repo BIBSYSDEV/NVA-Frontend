@@ -185,7 +185,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                         />
                       );
                     })}
-                    <Box sx={{ mt: '2rem', display: 'flex', justifyContent: 'center' }}>
+                    <Box sx={{ mt: '2rem' }}>
                       <UserRolesSelector
                         selectedRoles={values.roles}
                         updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
