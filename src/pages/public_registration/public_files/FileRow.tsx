@@ -141,12 +141,19 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: 
           expanded={openPreviewAccordion}
           onChange={() => setOpenPreviewAccordion(!openPreviewAccordion)}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography data-testid={dataTestId.registrationLandingPage.filePreviewHeader} variant="button">
+            <Typography
+              id={`preview-label-${file.identifier}`}
+              data-testid={dataTestId.registrationLandingPage.filePreviewHeader}
+              variant="button">
               {t('registration.public_page.preview')}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            {isLoadingPreviewFile ? <CircularProgress /> : <PreviewFile url={previewFileUrl} file={file} />}
+            {isLoadingPreviewFile ? (
+              <CircularProgress aria-labelledby={`preview-label-${file.identifier}`} />
+            ) : (
+              <PreviewFile url={previewFileUrl} file={file} />
+            )}
           </AccordionDetails>
         </Accordion>
       )}

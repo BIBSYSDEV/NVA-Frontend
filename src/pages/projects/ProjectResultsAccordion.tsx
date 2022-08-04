@@ -25,7 +25,7 @@ export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
       dataTestId={dataTestId.projectLandingPage.resultsAccordion}
       heading={results ? `${t('project.results')} (${results.size})` : t('project.results')}>
       {isLoadingResults ? (
-        <CircularProgress />
+        <CircularProgress aria-label={t('project.results')} />
       ) : results && results.size > 0 ? (
         <RegistrationList registrations={results.hits} />
       ) : (

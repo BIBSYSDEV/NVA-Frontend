@@ -29,7 +29,7 @@ export const AutocompleteTextField = ({
       ),
       endAdornment: (
         <>
-          {isLoading && <CircularProgress size={20} />}
+          {isLoading && <CircularProgress size={20} aria-labelledby={params.InputLabelProps.id} />}
           {params.InputProps.endAdornment}
         </>
       ),

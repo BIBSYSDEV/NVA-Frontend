@@ -30,7 +30,7 @@ const PublicRegistration = () => {
   return (
     <SyledPageContent>
       {isLoadingRegistration ? (
-        <PageSpinner />
+        <PageSpinner aria-label={t('common.registration')} />
       ) : registration ? (
         isAllowedToSeePublicRegistration ? (
           <ErrorBoundary>

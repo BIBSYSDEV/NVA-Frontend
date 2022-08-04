@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import {
+  Box,
   Button,
   Table,
   TableBody,
@@ -107,36 +108,38 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                 <TableCell data-testid={`registration-created-${registration.identifier}`}>
                   <Typography>{new Date(registration.createdDate).toLocaleString()}</Typography>
                 </TableCell>
-                <TableCell sx={{ display: 'flex', gap: '1rem' }}>
-                  <Button
-                    variant="outlined"
-                    component={RouterLink}
-                    to={getRegistrationLandingPagePath(registration.identifier)}
-                    startIcon={<MenuBookIcon />}
-                    data-testid={`open-registration-${registration.identifier}`}>
-                    {t('common.show')}
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    component={RouterLink}
-                    to={getRegistrationPath(registration.identifier)}
-                    startIcon={<EditIcon />}
-                    data-testid={`edit-registration-${registration.identifier}`}>
-                    {t('common.edit')}
-                  </Button>
-                  {registration.status === RegistrationStatus.Draft && (
+                <TableCell>
+                  <Box sx={{ display: 'flex', gap: '1rem' }}>
                     <Button
-                      color="error"
                       variant="outlined"
-                      data-testid={`delete-registration-${registration.identifier}`}
-                      startIcon={<DeleteIcon />}
-                      onClick={() => {
-                        setRegistrationToDelete(registration);
-                        setShowDeleteModal(true);
-                      }}>
-                      {t('common.delete')}
+                      component={RouterLink}
+                      to={getRegistrationLandingPagePath(registration.identifier)}
+                      startIcon={<MenuBookIcon />}
+                      data-testid={`open-registration-${registration.identifier}`}>
+                      {t('common.show')}
                     </Button>
-                  )}
+                    <Button
+                      variant="outlined"
+                      component={RouterLink}
+                      to={getRegistrationPath(registration.identifier)}
+                      startIcon={<EditIcon />}
+                      data-testid={`edit-registration-${registration.identifier}`}>
+                      {t('common.edit')}
+                    </Button>
+                    {registration.status === RegistrationStatus.Draft && (
+                      <Button
+                        color="error"
+                        variant="outlined"
+                        data-testid={`delete-registration-${registration.identifier}`}
+                        startIcon={<DeleteIcon />}
+                        onClick={() => {
+                          setRegistrationToDelete(registration);
+                          setShowDeleteModal(true);
+                        }}>
+                        {t('common.delete')}
+                      </Button>
+                    )}
+                  </Box>
                 </TableCell>
               </TableRow>
             ))}

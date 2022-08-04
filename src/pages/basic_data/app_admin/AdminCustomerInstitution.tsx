@@ -31,12 +31,13 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
   return (
     <>
       <PageHeader
+        id="admin-institution-label"
         htmlTitle={editMode ? customerInstitution?.displayName : t('basic_data.institutions.add_institution')}>
         {t(editMode ? 'basic_data.institutions.edit_institution' : 'basic_data.institutions.add_institution')}
       </PageHeader>
 
       {isLoadingCustomerInstitution ? (
-        <PageSpinner />
+        <PageSpinner aria-labelledby="admin-institution-label" />
       ) : (
         <>
           <CustomerInstitutionMetadataForm

@@ -75,7 +75,7 @@ export const PublishStrategySettings = () => {
   return (
     <>
       <Helmet>
-        <title>{t('editor.publish_strategy.publish_strategy')}</title>
+        <title id="publish-strategy-label">{t('editor.publish_strategy.publish_strategy')}</title>
       </Helmet>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <StyledItemContainer>
@@ -102,7 +102,9 @@ export const PublishStrategySettings = () => {
               </Typography>
             </Box>
           </PublishStrategyButton>
-          {isLoading === 'RegistratorPublishesMetadataAndFiles' && <CircularProgress />}
+          {isLoading === 'RegistratorPublishesMetadataAndFiles' && (
+            <CircularProgress aria-labelledby="publish-strategy-label" />
+          )}
         </StyledItemContainer>
 
         <StyledItemContainer>
@@ -129,7 +131,9 @@ export const PublishStrategySettings = () => {
               </Typography>
             </Box>
           </PublishStrategyButton>
-          {isLoading === 'RegistratorPublishesMetadataOnly' && <CircularProgress />}
+          {isLoading === 'RegistratorPublishesMetadataOnly' && (
+            <CircularProgress aria-labelledby="publish-strategy-label" />
+          )}
         </StyledItemContainer>
 
         <StyledItemContainer>
@@ -156,7 +160,9 @@ export const PublishStrategySettings = () => {
               </Typography>
             </Box>
           </PublishStrategyButton>
-          {isLoading === 'RegistratorRequiresApprovalForMetadataAndFiles' && <CircularProgress />}
+          {isLoading === 'RegistratorRequiresApprovalForMetadataAndFiles' && (
+            <CircularProgress aria-labelledby="publish-strategy-label" />
+          )}
         </StyledItemContainer>
       </Box>
     </>

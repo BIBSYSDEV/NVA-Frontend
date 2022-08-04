@@ -93,14 +93,14 @@ export const VocabularySettings = () => {
   return (
     <>
       <Helmet>
-        <title>{t('editor.vocabulary')}</title>
+        <title id="vocabulary-label">{t('editor.vocabulary')}</title>
       </Helmet>
       <Typography paragraph color="primary" fontWeight="600">
         {t('editor.select_vocabulary_description')}
       </Typography>
 
       {isLoadingVocabularyList ? (
-        <CircularProgress />
+        <CircularProgress aria-labelledby="vocabulary-label" />
       ) : (
         vocabularyList && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
