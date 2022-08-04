@@ -1146,6 +1146,8 @@
         "remove_venue_text": "Are you sure you want to remove \"{{name}}\" from list over exhibition places?",
         "remove_venue_title": "Remove exhibition place?"
       },
+      "change_registration_type": "Change registration type?",
+      "change_registration_type_description": "Note that this can lead to some data getting lost in the case where existing data are not valid for the new type. Are you sure you want to change the registration type?",
       "chapter": {
         "info_anthology": "The anthology where this chapter is published in must be published in advance",
         "info_book_of_abstracts": "The book of abstracts where this abstract is published in must be published in advance",

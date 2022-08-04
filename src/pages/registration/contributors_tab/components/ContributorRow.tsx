@@ -183,7 +183,7 @@ export const ContributorRow = ({
           setOpenRemoveContributor(false);
         }}
         onCancel={() => setOpenRemoveContributor(false)}
-        dataTestId="confirm-remove-author-dialog">
+        dialogDataTestId="confirm-remove-author-dialog">
         <Typography>
           {t('registration.contributors.confirm_remove_author_text', {
             contributorName: contributor.identity.name,

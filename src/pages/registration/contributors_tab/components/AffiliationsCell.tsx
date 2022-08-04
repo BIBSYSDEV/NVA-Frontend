@@ -169,7 +169,7 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
           setAffiliationToRemove(null);
         }}
         onCancel={() => setAffiliationToRemove(null)}
-        dataTestId="confirm-remove-affiliation-dialog">
+        dialogDataTestId="confirm-remove-affiliation-dialog">
         <Typography>{t('registration.contributors.confirm_remove_affiliation_text')}</Typography>
       </ConfirmDialog>
     </Box>

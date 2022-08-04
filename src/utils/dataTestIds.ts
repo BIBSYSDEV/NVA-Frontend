@@ -27,6 +27,10 @@ export const dataTestId = {
     },
     personRegisterLink: 'person-register-link',
   },
+  confirmDialog: {
+    acceptButton: 'accept-button',
+    cancelButton: 'cancel-button',
+  },
   organization: {
     searchField: 'organization-search-field',
     subSearchField: 'sub-organization-search-field',
