@@ -65,6 +65,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@axe-core/react": "^4.4.3",
     "@cypress/code-coverage": "^3.10.0",
     "@cypress/instrument-cra": "^1.4.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
