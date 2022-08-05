@@ -15,7 +15,6 @@ export const PreviewPdf = ({ url, altText, ...props }: CommonPreviewProps) => {
       data={url}
       {...props}
       title={altText}
-      aria-label={altText}
       onLoad={() => setSuccessfullyLoadedPdf(true)}
       sx={{ width: '100%', height: successfullyLoadedPdf ? '25rem' : 0 }}>
       <PreviewUnavailable />
