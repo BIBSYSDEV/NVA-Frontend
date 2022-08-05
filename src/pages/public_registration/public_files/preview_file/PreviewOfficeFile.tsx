@@ -2,18 +2,14 @@ import { Box } from '@mui/material';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { CommonPreviewProps } from './PreviewFile';
 
-interface PreviewOfficeFileProps extends CommonPreviewProps {
-  iframeTitle: string;
-}
-
-export const PreviewOfficeFile = ({ url, iframeTitle, ...props }: PreviewOfficeFileProps) => {
+export const PreviewOfficeFile = ({ url, altText, ...props }: CommonPreviewProps) => {
   const officeViewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}`;
 
   return (
     <Box
       data-testid={dataTestId.registrationLandingPage.filePreview}
       component="iframe"
-      title={iframeTitle}
+      title={altText}
       src={officeViewerUrl}
       sx={{ width: '100%', height: '25rem' }}
       {...props}
