@@ -19,10 +19,12 @@ export const UserAffiliations = ({ user }: UserInstituionProps) => {
 
   return (
     <div>
-      <Typography variant="h2">{t('my_page.my_profile.heading.affiliations')}</Typography>
+      <Typography variant="h2" id="affiliations-heading">
+        {t('my_page.my_profile.heading.affiliations')}
+      </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', my: '1rem' }}>
         {isLoadingPerson ? (
-          <CircularProgress />
+          <CircularProgress aria-labelledby="affiliations-heading" />
         ) : (
           activeAffiliations.map((affiliation) => (
             <AffiliationHierarchy key={affiliation.organization} unitUri={affiliation.organization} />

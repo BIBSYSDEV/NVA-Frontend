@@ -13,7 +13,6 @@ import {
   Button,
   TextField,
   Divider,
-  CircularProgress,
   Typography,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
@@ -186,16 +185,13 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                         />
                       );
                     })}
-                    <Box sx={{ mt: '2rem', display: 'flex', justifyContent: 'center' }}>
-                      {isLoadingUser ? (
-                        <CircularProgress />
-                      ) : (
-                        <UserRolesSelector
-                          selectedRoles={values.roles}
-                          updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
-                          disabled={isSubmitting}
-                        />
-                      )}
+                    <Box sx={{ mt: '2rem' }}>
+                      <UserRolesSelector
+                        selectedRoles={values.roles}
+                        updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
+                        isLoading={isLoadingUser}
+                        disabled={isSubmitting}
+                      />
                     </Box>
                   </Box>
                 </Box>

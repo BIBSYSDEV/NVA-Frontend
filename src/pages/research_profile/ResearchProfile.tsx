@@ -61,7 +61,7 @@ const ResearchProfile = () => {
     <SyledPageContent>
       <PageHeader>{fullName}</PageHeader>
       {isLoadingPerson || isLoadingRegistrations ? (
-        <PageSpinner />
+        <PageSpinner aria-label={t('my_page.research_profile')} />
       ) : (
         person && (
           <BackgroundDiv sx={isPublicPage ? undefined : { padding: 0 }}>
