@@ -946,7 +946,7 @@
       "other_contributors_other": "(+{{count}} andre)",
       "participants_one": "{{count}} deltaker",
       "participants_other": "{{count}} deltakere",
-      "preview": "Forhåndsvisning",
+      "preview_of": "Forhåndsvisning av {{fileName}}",
       "preview_unavailable": "Forhåndsvisning ikke tilgjengelig. Åpne filen i egnet program.",
       "published": "Publisert",
       "published_date": "Publisert: {{date}}",
