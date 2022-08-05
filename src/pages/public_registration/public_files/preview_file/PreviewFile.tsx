@@ -6,28 +6,26 @@ import { PreviewUnavailable } from './PreviewUnavailable';
 
 export interface CommonPreviewProps {
   url: string;
+  altText?: string;
 }
 
 interface PreviewFileProps extends CommonPreviewProps {
   file: File;
 }
 
-// FileType values should be a unique (sub)string for MIME types
-enum FileType {
-  Image = 'image/',
-  Office = 'officedocument',
-  PDF = 'application/pdf',
-}
+const isImage = (mimeType: string) => mimeType.startsWith('image/');
+const isOfficeFile = (mimeType: string) => mimeType.startsWith('application/vnd.openxmlformats-officedocument.');
+const isPdf = (mimeType: string) => mimeType === 'application/pdf';
 
 export const PreviewFile = ({ url, file, ...props }: PreviewFileProps) => {
-  const fileType = file.mimeType.toLowerCase();
+  const mimeType = file.mimeType.toLowerCase();
 
-  return fileType.includes(FileType.PDF) ? (
-    <PreviewPdf url={url} {...props} />
-  ) : fileType.includes(FileType.Image) ? (
-    <PreviewImg url={url} imgAlt={file.name} {...props} />
-  ) : fileType.includes(FileType.Office) ? (
-    <PreviewOfficeFile url={url} iframeTitle={file.name} {...props} />
+  return isPdf(mimeType) ? (
+    <PreviewPdf url={url} altText={file.name} {...props} />
+  ) : isImage(mimeType) ? (
+    <PreviewImg url={url} altText={file.name} {...props} />
+  ) : isOfficeFile(mimeType) ? (
+    <PreviewOfficeFile url={url} altText={file.name} {...props} />
   ) : (
     <PreviewUnavailable {...props} />
   );

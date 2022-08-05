@@ -946,7 +946,7 @@
       "other_contributors_other": "(+{{count}} others)",
       "participants_one": "{{count}} participant",
       "participants_other": "{{count}} participants",
-      "preview": "Preview",
+      "preview_of": "Preview of {{fileName}}",
       "preview_unavailable": "Preview not available. Open file in suited program.",
       "published": "Published",
       "published_date": "Published: {{date}}",
