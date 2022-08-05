@@ -22,7 +22,6 @@ export const GeneralMenu = ({ anchorEl, onClose }: GeneralMenuProps) => {
 
   return (
     <Menu
-      data-testid={dataTestId.header.generalMenuButton}
       anchorEl={anchorEl}
       keepMounted
       open={!!anchorEl}

@@ -56,6 +56,7 @@ export const Header = () => {
           px: '1rem',
         }}>
         <IconButton
+          data-testid={dataTestId.header.generalMenuButton}
           onClick={handleClick}
           title={t('common.menu')}
           size="large"

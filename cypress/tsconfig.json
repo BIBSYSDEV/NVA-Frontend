@@ -4,7 +4,7 @@
     "baseUrl": "../node_modules",
     "target": "es6",
     "lib": ["esnext", "dom"],
-    "types": ["cypress"],
+    "types": ["cypress", "cypress-axe"],
     "esModuleInterop": true
   },
   "include": ["**/*.ts"]

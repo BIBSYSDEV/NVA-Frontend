@@ -4,7 +4,12 @@ import { UrlPathTemplate } from '../../src/utils/urlPaths';
 describe('User opens their Research Profile from My Registrations Page', () => {
   before('Given that the user is logged in as Creator:', () => {
     cy.visit('/');
+    cy.injectAxe();
     cy.mocklogin();
+  });
+
+  afterEach(() => {
+    cy.checkA11y();
   });
 
   it('The User should be able to open their Research Profile from the page My Registrations', () => {
