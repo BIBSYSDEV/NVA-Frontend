@@ -13,6 +13,7 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
+import 'cypress-axe';
 import './commands';
 import '@cypress/code-coverage/support';
 import { RoleName } from '../../src/types/user.types';

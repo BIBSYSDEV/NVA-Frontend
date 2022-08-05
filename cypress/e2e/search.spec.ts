@@ -3,6 +3,11 @@ import { dataTestId } from '../../src/utils/dataTestIds';
 describe('Search', () => {
   beforeEach(() => {
     cy.visit('/');
+    cy.injectAxe();
+  });
+
+  afterEach(() => {
+    cy.checkA11y();
   });
 
   it('The user should see a working pagination', () => {

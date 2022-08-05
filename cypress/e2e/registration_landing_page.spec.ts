@@ -13,6 +13,7 @@ describe('User opens Landing Page for Registration', () => {
   });
 
   it('The User should be able to open Landing Page from My Registrations', () => {
+    cy.injectAxe();
     cy.mocklogin();
     cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).click();
     cy.get(`[data-testid=${dataTestId.myPage.myRegistrationsLink}]`).click();
@@ -20,16 +21,20 @@ describe('User opens Landing Page for Registration', () => {
 
     cy.url().should('include', '/public');
     cy.get(`[data-testid=${status}]`).should('exist');
+    cy.checkA11y();
   });
 
   it('Anonymous user should be able to open Landing Page for Registration', () => {
     cy.visit(pathToLandingPage);
+    cy.injectAxe();
     cy.get('[data-testid=my-registrations-link]').should('not.exist');
     cy.get(`[data-testid=${status}]`).should('not.exist');
+    cy.checkA11y();
   });
 
   it('Project should have a link to Landing Page for Project', () => {
     cy.visit(pathToLandingPage);
+    cy.injectAxe();
     cy.get(`[data-testid=${projectTitle}]`).should('exist');
     cy.get(`[data-testid=${projectTitle}] > a`).click();
 
@@ -38,5 +43,6 @@ describe('User opens Landing Page for Registration', () => {
     cy.get(`[data-testid=${participantsAccordion}]`).should('exist');
     cy.get(`[data-testid=${resultsAccordion}]`).should('exist');
     cy.get(`[data-testid=${scientificSummaryAccordion}]`).should('exist');
+    cy.checkA11y();
   });
 });
