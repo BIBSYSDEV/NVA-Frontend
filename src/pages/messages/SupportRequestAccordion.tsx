@@ -37,7 +37,7 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
       dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
       const newMessage: Message = {
         ...messagesCopy[0],
-        date: new Date().toString(),
+        createdDate: new Date().toString(),
         sender: userId ?? '',
         text: message,
       };
@@ -75,7 +75,7 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
           <Typography
             data-testid={`message-owner-${registration.identifier}`}
             sx={{ gridArea: 'creator', fontWeight: 'bold' }}>
-            {new Date(messagesCopy[messagesCopy.length - 1].date).toLocaleDateString()}
+            {new Date(messagesCopy[messagesCopy.length - 1].createdDate).toLocaleDateString()}
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
