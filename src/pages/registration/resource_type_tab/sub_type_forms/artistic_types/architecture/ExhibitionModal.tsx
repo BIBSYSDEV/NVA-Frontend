@@ -1,5 +1,5 @@
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, Box } from '@mui/material';
-import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
+import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
@@ -74,82 +74,85 @@ export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: Exhi
           onSubmit(values);
           closeModal();
         }}>
-        <Form noValidate>
-          <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <Field name="name">
-              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                <TextField
-                  {...field}
-                  variant="filled"
-                  fullWidth
-                  label={t('registration.resource_type.artistic.exhibition_title')}
-                  required
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                  data-testid={dataTestId.registrationWizard.resourceType.exhibitionName}
-                />
-              )}
-            </Field>
-            <Field name="place.label">
-              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                <TextField
-                  {...field}
-                  variant="filled"
-                  fullWidth
-                  label={t('common.place')}
-                  required
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                  data-testid={dataTestId.registrationWizard.resourceType.exhibitionPlace}
-                />
-              )}
-            </Field>
-            <Field name="organizer">
-              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                <TextField
-                  {...field}
-                  variant="filled"
-                  fullWidth
-                  label={t('registration.resource_type.organizer')}
-                  required
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                  data-testid={dataTestId.registrationWizard.resourceType.exhibitionOrganizer}
-                />
-              )}
-            </Field>
-            <Box sx={{ display: 'flex', gap: '3rem' }}>
-              <PeriodFields fromFieldName="date.from" toFieldName="date.to" />
-            </Box>
-            <Field name="otherInformation">
-              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                <TextField
-                  {...field}
-                  variant="filled"
-                  fullWidth
-                  label={t('common.other')}
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                  data-testid={dataTestId.registrationWizard.resourceType.exhibitionOther}
-                />
-              )}
-            </Field>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              variant="outlined"
-              onClick={closeModal}
-              data-testid={dataTestId.registrationWizard.resourceType.exhibitionCancelButton}>
-              {t('common.cancel')}
-            </Button>
-            <Button
-              variant="contained"
-              type="submit"
-              data-testid={dataTestId.registrationWizard.resourceType.exhibitionSaveButton}>
-              {exhibition ? t('common.save') : t('common.add')}
-            </Button>
-          </DialogActions>
-        </Form>
+        {({ isSubmitting }: FormikProps<Exhibition>) => (
+          <Form noValidate>
+            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Field name="name">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    label={t('registration.resource_type.artistic.exhibition_title')}
+                    required
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.exhibitionName}
+                  />
+                )}
+              </Field>
+              <Field name="place.label">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    label={t('common.place')}
+                    required
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.exhibitionPlace}
+                  />
+                )}
+              </Field>
+              <Field name="organizer">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    label={t('registration.resource_type.organizer')}
+                    required
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.exhibitionOrganizer}
+                  />
+                )}
+              </Field>
+              <Box sx={{ display: 'flex', gap: '3rem' }}>
+                <PeriodFields fromFieldName="date.from" toFieldName="date.to" />
+              </Box>
+              <Field name="otherInformation">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    label={t('common.other')}
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.exhibitionOther}
+                  />
+                )}
+              </Field>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                variant="outlined"
+                onClick={closeModal}
+                data-testid={dataTestId.registrationWizard.resourceType.exhibitionCancelButton}>
+                {t('common.cancel')}
+              </Button>
+              <Button
+                variant="contained"
+                type="submit"
+                disabled={isSubmitting}
+                data-testid={dataTestId.registrationWizard.resourceType.exhibitionSaveButton}>
+                {exhibition ? t('common.save') : t('common.add')}
+              </Button>
+            </DialogActions>
+          </Form>
+        )}
       </Formik>
     </Dialog>
   );

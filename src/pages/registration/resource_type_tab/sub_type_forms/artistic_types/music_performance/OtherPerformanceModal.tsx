@@ -111,7 +111,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
           onSubmit(values);
           closeModal();
         }}>
-        {({ values, errors, touched }: FormikProps<OtherMusicPerformance>) => (
+        {({ values, errors, touched, isSubmitting }: FormikProps<OtherMusicPerformance>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <Field name="performanceType">
@@ -234,7 +234,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
               <Button variant="outlined" onClick={closeModal}>
                 {t('common.cancel')}
               </Button>
-              <Button variant="contained" type="submit" startIcon={<SaveIcon />}>
+              <Button variant="contained" type="submit" startIcon={<SaveIcon />} disabled={isSubmitting}>
                 {otherPerformance ? t('common.update') : t('common.add')}
               </Button>
             </DialogActions>

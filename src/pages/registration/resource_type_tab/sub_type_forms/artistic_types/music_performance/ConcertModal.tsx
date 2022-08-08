@@ -120,7 +120,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
           onSubmit(values);
           closeModal();
         }}>
-        {({ values, errors, touched }: FormikProps<Concert>) => (
+        {({ values, errors, touched, isSubmitting }: FormikProps<Concert>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <Field name="place.label">
@@ -275,7 +275,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
               <Button variant="outlined" onClick={closeModal}>
                 {t('common.cancel')}
               </Button>
-              <Button variant="contained" type="submit" startIcon={<SaveIcon />}>
+              <Button variant="contained" type="submit" startIcon={<SaveIcon />} disabled={isSubmitting}>
                 {concert ? t('common.update') : t('common.add')}
               </Button>
             </DialogActions>

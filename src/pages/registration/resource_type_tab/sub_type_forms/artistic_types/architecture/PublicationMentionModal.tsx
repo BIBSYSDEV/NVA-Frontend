@@ -1,6 +1,6 @@
 import { DatePicker } from '@mui/x-date-pickers';
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, Box } from '@mui/material';
-import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
+import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { MentionInPublication } from '../../../../../../types/publication_types/artisticRegistration.types';
@@ -67,106 +67,109 @@ export const PublicationMentionModal = ({
           onSubmit(values);
           closeModal();
         }}>
-        <Form noValidate>
-          <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <Field name="title">
-              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                <TextField
-                  {...field}
-                  variant="filled"
-                  fullWidth
-                  label={t('registration.resource_type.artistic.mention_title')}
-                  required
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                  data-testid={dataTestId.registrationWizard.resourceType.publicationMentionTitle}
-                />
-              )}
-            </Field>
-
-            <Box sx={{ display: 'flex', gap: '1rem' }}>
-              <Field name="issue">
+        {({ isSubmitting }: FormikProps<MentionInPublication>) => (
+          <Form noValidate>
+            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Field name="title">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
                     variant="filled"
                     fullWidth
-                    label={t('registration.resource_type.issue')}
+                    label={t('registration.resource_type.artistic.mention_title')}
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.publicationMentionIssue}
+                    data-testid={dataTestId.registrationWizard.resourceType.publicationMentionTitle}
                   />
                 )}
               </Field>
 
-              <Field name="date.value">
-                {({
-                  field,
-                  form: { setFieldTouched, setFieldValue },
-                  meta: { error, touched },
-                }: FieldProps<string>) => (
-                  <DatePicker
-                    label={t('common.date')}
-                    PopperProps={{
-                      'aria-label': t('common.date'),
-                    }}
-                    value={field.value ?? null}
-                    onChange={(date: Date | null, keyboardInput) => {
-                      !touched && setFieldTouched(field.name, true, false);
-                      const newValue = getNewDateValue(date, keyboardInput);
-                      if (newValue !== null) {
-                        setFieldValue(field.name, newValue);
-                      }
-                    }}
-                    inputFormat="dd.MM.yyyy"
-                    views={['year', 'month', 'day']}
-                    mask="__.__.____"
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="filled"
-                        required
-                        onBlur={() => !touched && setFieldTouched(field.name)}
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
-                        data-testid={dataTestId.registrationWizard.resourceType.publicationMentionDate}
-                      />
-                    )}
+              <Box sx={{ display: 'flex', gap: '1rem' }}>
+                <Field name="issue">
+                  {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                    <TextField
+                      {...field}
+                      variant="filled"
+                      fullWidth
+                      label={t('registration.resource_type.issue')}
+                      required
+                      error={touched && !!error}
+                      helperText={<ErrorMessage name={field.name} />}
+                      data-testid={dataTestId.registrationWizard.resourceType.publicationMentionIssue}
+                    />
+                  )}
+                </Field>
+
+                <Field name="date.value">
+                  {({
+                    field,
+                    form: { setFieldTouched, setFieldValue },
+                    meta: { error, touched },
+                  }: FieldProps<string>) => (
+                    <DatePicker
+                      label={t('common.date')}
+                      PopperProps={{
+                        'aria-label': t('common.date'),
+                      }}
+                      value={field.value ?? null}
+                      onChange={(date: Date | null, keyboardInput) => {
+                        !touched && setFieldTouched(field.name, true, false);
+                        const newValue = getNewDateValue(date, keyboardInput);
+                        if (newValue !== null) {
+                          setFieldValue(field.name, newValue);
+                        }
+                      }}
+                      inputFormat="dd.MM.yyyy"
+                      views={['year', 'month', 'day']}
+                      mask="__.__.____"
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="filled"
+                          required
+                          onBlur={() => !touched && setFieldTouched(field.name)}
+                          error={touched && !!error}
+                          helperText={<ErrorMessage name={field.name} />}
+                          data-testid={dataTestId.registrationWizard.resourceType.publicationMentionDate}
+                        />
+                      )}
+                    />
+                  )}
+                </Field>
+              </Box>
+
+              <Field name="otherInformation">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    label={t('registration.resource_type.artistic.mention_other')}
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.publicationMentionOther}
                   />
                 )}
               </Field>
-            </Box>
-
-            <Field name="otherInformation">
-              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                <TextField
-                  {...field}
-                  variant="filled"
-                  fullWidth
-                  label={t('registration.resource_type.artistic.mention_other')}
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                  data-testid={dataTestId.registrationWizard.resourceType.publicationMentionOther}
-                />
-              )}
-            </Field>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              variant="outlined"
-              onClick={closeModal}
-              data-testid={dataTestId.registrationWizard.resourceType.publicationMentionCancelButton}>
-              {t('common.cancel')}
-            </Button>
-            <Button
-              variant="contained"
-              type="submit"
-              data-testid={dataTestId.registrationWizard.resourceType.publicationMentionSaveButton}>
-              {mentionInPublication ? t('common.save') : t('common.add')}
-            </Button>
-          </DialogActions>
-        </Form>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                variant="outlined"
+                onClick={closeModal}
+                data-testid={dataTestId.registrationWizard.resourceType.publicationMentionCancelButton}>
+                {t('common.cancel')}
+              </Button>
+              <Button
+                variant="contained"
+                type="submit"
+                disabled={isSubmitting}
+                data-testid={dataTestId.registrationWizard.resourceType.publicationMentionSaveButton}>
+                {mentionInPublication ? t('common.save') : t('common.add')}
+              </Button>
+            </DialogActions>
+          </Form>
+        )}
       </Formik>
     </Dialog>
   );

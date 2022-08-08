@@ -124,7 +124,7 @@ export const AudioVisualPublicationModal = ({
           onSubmit(values);
           closeModal();
         }}>
-        {({ values, errors, touched }: FormikProps<AudioVisualPublication>) => (
+        {({ values, errors, touched, isSubmitting }: FormikProps<AudioVisualPublication>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <Field name="mediaType">
@@ -263,7 +263,7 @@ export const AudioVisualPublicationModal = ({
               <Button variant="outlined" onClick={closeModal}>
                 {t('common.cancel')}
               </Button>
-              <Button variant="contained" type="submit" startIcon={<SaveIcon />}>
+              <Button variant="contained" type="submit" startIcon={<SaveIcon />} disabled={isSubmitting}>
                 {audioVisualPublication ? t('common.update') : t('common.add')}
               </Button>
             </DialogActions>

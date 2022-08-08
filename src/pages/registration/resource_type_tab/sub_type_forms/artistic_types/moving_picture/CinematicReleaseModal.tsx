@@ -1,6 +1,6 @@
 import { DatePicker } from '@mui/x-date-pickers';
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material';
-import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
+import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { CinematicRelease } from '../../../../../../types/publication_types/artisticRegistration.types';
@@ -62,62 +62,68 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
           onSubmit(values);
           closeModal();
         }}>
-        <Form noValidate>
-          <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <Field name="place.label">
-              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                <TextField
-                  {...field}
-                  variant="filled"
-                  fullWidth
-                  label={t('common.place')}
-                  required
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            </Field>
-            <Field name="date.value">
-              {({ field, form: { setFieldTouched, setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
-                <DatePicker
-                  label={t('registration.resource_type.artistic.premiere_date')}
-                  PopperProps={{
-                    'aria-label': t('registration.resource_type.artistic.premiere_date'),
-                  }}
-                  value={field.value ?? null}
-                  onChange={(date: Date | null, keyboardInput) => {
-                    !touched && setFieldTouched(field.name, true, false);
-                    const newValue = getNewDateValue(date, keyboardInput);
-                    if (newValue !== null) {
-                      setFieldValue(field.name, newValue);
-                    }
-                  }}
-                  inputFormat="dd.MM.yyyy"
-                  mask="__.__.____"
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      {...field}
-                      sx={{ maxWidth: '13rem' }}
-                      variant="filled"
-                      required
-                      error={touched && !!error}
-                      helperText={<ErrorMessage name={field.name} />}
-                    />
-                  )}
-                />
-              )}
-            </Field>
-          </DialogContent>
-          <DialogActions>
-            <Button variant="outlined" onClick={closeModal}>
-              {t('common.cancel')}
-            </Button>
-            <Button variant="contained" type="submit">
-              {cinematicRelease ? t('common.update') : t('common.add')}
-            </Button>
-          </DialogActions>
-        </Form>
+        {({ isSubmitting }: FormikProps<CinematicRelease>) => (
+          <Form noValidate>
+            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Field name="place.label">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    label={t('common.place')}
+                    required
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
+              </Field>
+              <Field name="date.value">
+                {({
+                  field,
+                  form: { setFieldTouched, setFieldValue },
+                  meta: { error, touched },
+                }: FieldProps<string>) => (
+                  <DatePicker
+                    label={t('registration.resource_type.artistic.premiere_date')}
+                    PopperProps={{
+                      'aria-label': t('registration.resource_type.artistic.premiere_date'),
+                    }}
+                    value={field.value ?? null}
+                    onChange={(date: Date | null, keyboardInput) => {
+                      !touched && setFieldTouched(field.name, true, false);
+                      const newValue = getNewDateValue(date, keyboardInput);
+                      if (newValue !== null) {
+                        setFieldValue(field.name, newValue);
+                      }
+                    }}
+                    inputFormat="dd.MM.yyyy"
+                    mask="__.__.____"
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        {...field}
+                        sx={{ maxWidth: '13rem' }}
+                        variant="filled"
+                        required
+                        error={touched && !!error}
+                        helperText={<ErrorMessage name={field.name} />}
+                      />
+                    )}
+                  />
+                )}
+              </Field>
+            </DialogContent>
+            <DialogActions>
+              <Button variant="outlined" onClick={closeModal}>
+                {t('common.cancel')}
+              </Button>
+              <Button variant="contained" type="submit" disabled={isSubmitting}>
+                {cinematicRelease ? t('common.update') : t('common.add')}
+              </Button>
+            </DialogActions>
+          </Form>
+        )}
       </Formik>
     </Dialog>
   );

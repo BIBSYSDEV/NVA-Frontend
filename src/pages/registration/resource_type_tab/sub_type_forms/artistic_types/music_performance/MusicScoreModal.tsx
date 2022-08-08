@@ -1,5 +1,5 @@
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material';
-import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
+import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IMaskInput } from 'react-imask';
@@ -110,103 +110,105 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
           onSubmit(values);
           closeModal();
         }}>
-        <Form noValidate>
-          <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <Field name="ensemble">
-              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                <TextField
-                  {...field}
-                  variant="filled"
-                  fullWidth
-                  multiline
-                  rows={3}
-                  label={t('registration.resource_type.artistic.music_score_ensemble')}
-                  required
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            </Field>
-            <Field name="movements">
-              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                <TextField
-                  {...field}
-                  variant="filled"
-                  fullWidth
-                  multiline
-                  rows={3}
-                  label={t('registration.resource_type.artistic.music_score_movements')}
-                  required
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            </Field>
-            <Field name="extent">
-              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                <TextField
-                  {...field}
-                  variant="filled"
-                  fullWidth
-                  label={t('registration.resource_type.artistic.extent')}
-                  required
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            </Field>
-            <Field name="publisher.name">
-              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                <TextField
-                  {...field}
-                  variant="filled"
-                  fullWidth
-                  label={t('common.publisher')}
-                  required
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            </Field>
-            <Field name="ismn.value">
-              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                <TextField
-                  {...field}
-                  variant="filled"
-                  fullWidth
-                  label={t('registration.resource_type.artistic.music_score_ismn')}
-                  required
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            </Field>
-            <Field name="isrc.value">
-              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                <TextField
-                  {...field}
-                  variant="filled"
-                  fullWidth
-                  label={t('registration.resource_type.artistic.music_score_isrc')}
-                  required
-                  InputProps={{
-                    inputComponent: MaskIsrcInput as any,
-                  }}
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            </Field>
-          </DialogContent>
-          <DialogActions>
-            <Button variant="outlined" onClick={closeModal}>
-              {t('common.cancel')}
-            </Button>
-            <Button variant="contained" type="submit" startIcon={<SaveIcon />}>
-              {musicScore ? t('common.update') : t('common.add')}
-            </Button>
-          </DialogActions>
-        </Form>
+        {({ isSubmitting }: FormikProps<MusicScore>) => (
+          <Form noValidate>
+            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Field name="ensemble">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    multiline
+                    rows={3}
+                    label={t('registration.resource_type.artistic.music_score_ensemble')}
+                    required
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
+              </Field>
+              <Field name="movements">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    multiline
+                    rows={3}
+                    label={t('registration.resource_type.artistic.music_score_movements')}
+                    required
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
+              </Field>
+              <Field name="extent">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    label={t('registration.resource_type.artistic.extent')}
+                    required
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
+              </Field>
+              <Field name="publisher.name">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    label={t('common.publisher')}
+                    required
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
+              </Field>
+              <Field name="ismn.value">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    label={t('registration.resource_type.artistic.music_score_ismn')}
+                    required
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
+              </Field>
+              <Field name="isrc.value">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    label={t('registration.resource_type.artistic.music_score_isrc')}
+                    required
+                    InputProps={{
+                      inputComponent: MaskIsrcInput as any,
+                    }}
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
+              </Field>
+            </DialogContent>
+            <DialogActions>
+              <Button variant="outlined" onClick={closeModal}>
+                {t('common.cancel')}
+              </Button>
+              <Button variant="contained" type="submit" startIcon={<SaveIcon />} disabled={isSubmitting}>
+                {musicScore ? t('common.update') : t('common.add')}
+              </Button>
+            </DialogActions>
+          </Form>
+        )}
       </Formik>
     </Dialog>
   );
