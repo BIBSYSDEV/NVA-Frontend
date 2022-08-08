@@ -1,5 +1,5 @@
 import { Form, Formik, FormikErrors, FormikProps, validateYupSchema, yupToFormErrors } from 'formik';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -12,7 +12,6 @@ import { RootState } from '../../redux/store';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
-import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { Forbidden } from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
@@ -54,13 +53,6 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
   const isValidOwner = userIsRegistrationOwner(user, registration);
   const isValidCurator = userIsRegistrationCurator(user, registration);
-
-  useEffect(() => {
-    // Redirect to Landing Page if user should not be able to edit this registration
-    if (registration && !isValidOwner && !isValidCurator) {
-      history.replace(getRegistrationLandingPagePath(registration.identifier));
-    }
-  }, [history, registration, isValidOwner, isValidCurator]);
 
   const validateForm = (values: Registration): FormikErrors<Registration> => {
     const publicationInstance = values.entityDescription?.reference?.publicationInstance;
