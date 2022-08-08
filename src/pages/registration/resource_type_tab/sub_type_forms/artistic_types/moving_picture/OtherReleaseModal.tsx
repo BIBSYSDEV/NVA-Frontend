@@ -1,13 +1,13 @@
-import React from 'react';
 import { DatePicker } from '@mui/x-date-pickers';
-import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material';
-import { Formik, Form, Field, FieldProps, ErrorMessage } from 'formik';
+import { Dialog, DialogTitle, DialogContent, TextField } from '@mui/material';
+import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { OtherRelease } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import i18n from '../../../../../../translations/i18n';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
+import { OutputModalActions } from '../OutputModalActions';
 
 interface OtherReleaseModalProps {
   otherRelease?: OtherRelease;
@@ -76,87 +76,87 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
           onSubmit(values);
           closeModal();
         }}>
-        <Form noValidate>
-          <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <Field name="description">
-              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                <TextField
-                  {...field}
-                  variant="filled"
-                  fullWidth
-                  label={t('registration.resource_type.artistic.other_release_description')}
-                  required
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            </Field>
-            <Field name="place.label">
-              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                <TextField
-                  {...field}
-                  variant="filled"
-                  fullWidth
-                  required
-                  label={t('common.place')}
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            </Field>
-            <Field name="publisher.name">
-              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                <TextField
-                  {...field}
-                  variant="filled"
-                  fullWidth
-                  label={t('registration.resource_type.artistic.other_announcement_organizer')}
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-              )}
-            </Field>
-            <Field name="date.value">
-              {({ field, form: { setFieldTouched, setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
-                <DatePicker
-                  label={t('common.date')}
-                  PopperProps={{
-                    'aria-label': t('common.date'),
-                  }}
-                  value={field.value ?? null}
-                  onChange={(date: Date | null, keyboardInput) => {
-                    !touched && setFieldTouched(field.name, true, false);
-                    const newValue = getNewDateValue(date, keyboardInput);
-                    if (newValue !== null) {
-                      setFieldValue(field.name, newValue);
-                    }
-                  }}
-                  inputFormat="dd.MM.yyyy"
-                  mask="__.__.____"
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      {...field}
-                      sx={{ maxWidth: '13rem' }}
-                      variant="filled"
-                      required
-                      error={touched && !!error}
-                      helperText={<ErrorMessage name={field.name} />}
-                    />
-                  )}
-                />
-              )}
-            </Field>
-          </DialogContent>
-          <DialogActions>
-            <Button variant="outlined" onClick={closeModal}>
-              {t('common.cancel')}
-            </Button>
-            <Button variant="contained" type="submit">
-              {otherRelease ? t('common.update') : t('common.add')}
-            </Button>
-          </DialogActions>
-        </Form>
+        {({ isSubmitting }: FormikProps<OtherRelease>) => (
+          <Form noValidate>
+            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Field name="description">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    label={t('registration.resource_type.artistic.other_release_description')}
+                    required
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
+              </Field>
+              <Field name="place.label">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    required
+                    label={t('common.place')}
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
+              </Field>
+              <Field name="publisher.name">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    label={t('registration.resource_type.artistic.other_announcement_organizer')}
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                  />
+                )}
+              </Field>
+              <Field name="date.value">
+                {({
+                  field,
+                  form: { setFieldTouched, setFieldValue },
+                  meta: { error, touched },
+                }: FieldProps<string>) => (
+                  <DatePicker
+                    label={t('common.date')}
+                    PopperProps={{
+                      'aria-label': t('common.date'),
+                    }}
+                    value={field.value ?? null}
+                    onChange={(date: Date | null, keyboardInput) => {
+                      !touched && setFieldTouched(field.name, true, false);
+                      const newValue = getNewDateValue(date, keyboardInput);
+                      if (newValue !== null) {
+                        setFieldValue(field.name, newValue);
+                      }
+                    }}
+                    inputFormat="dd.MM.yyyy"
+                    mask="__.__.____"
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        {...field}
+                        sx={{ maxWidth: '13rem' }}
+                        variant="filled"
+                        required
+                        error={touched && !!error}
+                        helperText={<ErrorMessage name={field.name} />}
+                      />
+                    )}
+                  />
+                )}
+              </Field>
+            </DialogContent>
+
+            <OutputModalActions isSubmitting={isSubmitting} closeModal={closeModal} isAddAction={!otherRelease} />
+          </Form>
+        )}
       </Formik>
     </Dialog>
   );

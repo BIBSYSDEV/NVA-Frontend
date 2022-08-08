@@ -1,19 +1,8 @@
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  TextField,
-  DialogActions,
-  Button,
-  Typography,
-  FormHelperText,
-  Box,
-} from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, TextField, Button, Typography, FormHelperText, Box } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import SaveIcon from '@mui/icons-material/Save';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
@@ -23,6 +12,7 @@ import {
   OtherMusicPerformance,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
+import { OutputModalActions } from '../OutputModalActions';
 
 interface OtherPerformanceModalProps {
   otherPerformance?: OtherMusicPerformance;
@@ -111,7 +101,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
           onSubmit(values);
           closeModal();
         }}>
-        {({ values, errors, touched }: FormikProps<OtherMusicPerformance>) => (
+        {({ values, errors, touched, isSubmitting }: FormikProps<OtherMusicPerformance>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <Field name="performanceType">
@@ -230,14 +220,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                 )}
               </FieldArray>
             </DialogContent>
-            <DialogActions>
-              <Button variant="outlined" onClick={closeModal}>
-                {t('common.cancel')}
-              </Button>
-              <Button variant="contained" type="submit" startIcon={<SaveIcon />}>
-                {otherPerformance ? t('common.update') : t('common.add')}
-              </Button>
-            </DialogActions>
+            <OutputModalActions isSubmitting={isSubmitting} closeModal={closeModal} isAddAction={!otherPerformance} />
           </Form>
         )}
       </Formik>

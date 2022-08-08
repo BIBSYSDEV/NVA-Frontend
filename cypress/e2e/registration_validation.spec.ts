@@ -264,7 +264,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateFromField}] input`).type('01.01.2020');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateToField}] input`).type('02.01.2020');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateToField}] input`).type('02.01.2020');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.saveVenueButton}]`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.artisticOutputSaveButton}]`).click();
 
     cy.get('p.Mui-error').should('have.length', 0);
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>

@@ -3,7 +3,6 @@ import {
   DialogTitle,
   DialogContent,
   TextField,
-  DialogActions,
   Button,
   MenuItem,
   Typography,
@@ -14,7 +13,6 @@ import { Formik, Form, Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRe
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import SaveIcon from '@mui/icons-material/Save';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
@@ -25,6 +23,7 @@ import {
   MusicTrack,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
+import { OutputModalActions } from '../OutputModalActions';
 
 interface AudioVisualPublicationModalProps {
   audioVisualPublication?: AudioVisualPublication;
@@ -124,7 +123,7 @@ export const AudioVisualPublicationModal = ({
           onSubmit(values);
           closeModal();
         }}>
-        {({ values, errors, touched }: FormikProps<AudioVisualPublication>) => (
+        {({ values, errors, touched, isSubmitting }: FormikProps<AudioVisualPublication>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <Field name="mediaType">
@@ -259,14 +258,11 @@ export const AudioVisualPublicationModal = ({
                 )}
               </FieldArray>
             </DialogContent>
-            <DialogActions>
-              <Button variant="outlined" onClick={closeModal}>
-                {t('common.cancel')}
-              </Button>
-              <Button variant="contained" type="submit" startIcon={<SaveIcon />}>
-                {audioVisualPublication ? t('common.update') : t('common.add')}
-              </Button>
-            </DialogActions>
+            <OutputModalActions
+              isSubmitting={isSubmitting}
+              closeModal={closeModal}
+              isAddAction={!audioVisualPublication}
+            />
           </Form>
         )}
       </Formik>
