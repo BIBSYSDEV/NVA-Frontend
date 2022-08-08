@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, Box } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, TextField, Box } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
@@ -7,6 +7,7 @@ import { Exhibition } from '../../../../../../types/publication_types/artisticRe
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { PeriodFields } from '../../../components/PeriodFields';
+import { OutputModalActions } from '../OutputModalActions';
 
 interface ExhibitionModalProps {
   exhibition?: Exhibition;
@@ -136,21 +137,7 @@ export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: Exhi
                 )}
               </Field>
             </DialogContent>
-            <DialogActions>
-              <Button
-                variant="outlined"
-                onClick={closeModal}
-                data-testid={dataTestId.registrationWizard.resourceType.exhibitionCancelButton}>
-                {t('common.cancel')}
-              </Button>
-              <Button
-                variant="contained"
-                type="submit"
-                disabled={isSubmitting}
-                data-testid={dataTestId.registrationWizard.resourceType.exhibitionSaveButton}>
-                {exhibition ? t('common.save') : t('common.add')}
-              </Button>
-            </DialogActions>
+            <OutputModalActions isSubmitting={isSubmitting} closeModal={closeModal} isAddAction={!exhibition} />
           </Form>
         )}
       </Formik>

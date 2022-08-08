@@ -1,5 +1,5 @@
 import { DatePicker } from '@mui/x-date-pickers';
-import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, Box } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, TextField, Box } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
@@ -8,6 +8,7 @@ import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import i18n from '../../../../../../translations/i18n';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
+import { OutputModalActions } from '../OutputModalActions';
 
 interface PublicationMentionModalProps {
   mentionInPublication?: MentionInPublication;
@@ -153,21 +154,11 @@ export const PublicationMentionModal = ({
                 )}
               </Field>
             </DialogContent>
-            <DialogActions>
-              <Button
-                variant="outlined"
-                onClick={closeModal}
-                data-testid={dataTestId.registrationWizard.resourceType.publicationMentionCancelButton}>
-                {t('common.cancel')}
-              </Button>
-              <Button
-                variant="contained"
-                type="submit"
-                disabled={isSubmitting}
-                data-testid={dataTestId.registrationWizard.resourceType.publicationMentionSaveButton}>
-                {mentionInPublication ? t('common.save') : t('common.add')}
-              </Button>
-            </DialogActions>
+            <OutputModalActions
+              isSubmitting={isSubmitting}
+              closeModal={closeModal}
+              isAddAction={!mentionInPublication}
+            />
           </Form>
         )}
       </Formik>

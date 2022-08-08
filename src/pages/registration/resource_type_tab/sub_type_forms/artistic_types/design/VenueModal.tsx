@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, Box } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, TextField, Box } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
@@ -8,6 +8,7 @@ import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { periodField } from '../../../../../../utils/validation/registration/referenceValidation';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { PeriodFields } from '../../../components/PeriodFields';
+import { OutputModalActions } from '../OutputModalActions';
 
 interface VenueModalProps {
   venue?: Venue;
@@ -73,18 +74,7 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
                 <PeriodFields fromFieldName="date.from" toFieldName="date.to" />
               </Box>
             </DialogContent>
-            <DialogActions>
-              <Button variant="outlined" onClick={closeModal}>
-                {t('common.cancel')}
-              </Button>
-              <Button
-                data-testid={dataTestId.registrationWizard.resourceType.saveVenueButton}
-                disabled={isSubmitting}
-                variant="contained"
-                type="submit">
-                {venue ? t('common.update') : t('common.add')}
-              </Button>
-            </DialogActions>
+            <OutputModalActions isSubmitting={isSubmitting} closeModal={closeModal} isAddAction={!venue} />
           </Form>
         )}
       </Formik>

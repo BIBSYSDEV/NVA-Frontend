@@ -1,5 +1,5 @@
 import { DatePicker } from '@mui/x-date-pickers';
-import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, TextField } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
@@ -7,6 +7,7 @@ import { CinematicRelease } from '../../../../../../types/publication_types/arti
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import i18n from '../../../../../../translations/i18n';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
+import { OutputModalActions } from '../OutputModalActions';
 
 interface CinematicReleaseModalProps {
   cinematicRelease?: CinematicRelease;
@@ -114,14 +115,8 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
                 )}
               </Field>
             </DialogContent>
-            <DialogActions>
-              <Button variant="outlined" onClick={closeModal}>
-                {t('common.cancel')}
-              </Button>
-              <Button variant="contained" type="submit" disabled={isSubmitting}>
-                {cinematicRelease ? t('common.update') : t('common.add')}
-              </Button>
-            </DialogActions>
+
+            <OutputModalActions isSubmitting={isSubmitting} closeModal={closeModal} isAddAction={!cinematicRelease} />
           </Form>
         )}
       </Formik>

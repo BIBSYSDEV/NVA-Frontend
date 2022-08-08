@@ -3,7 +3,6 @@ import {
   DialogTitle,
   DialogContent,
   TextField,
-  DialogActions,
   Button,
   Typography,
   FormHelperText,
@@ -16,7 +15,6 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import SaveIcon from '@mui/icons-material/Save';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
@@ -24,6 +22,7 @@ import i18n from '../../../../../../translations/i18n';
 import { Concert, MusicalWorkPerformance } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
+import { OutputModalActions } from '../OutputModalActions';
 
 interface ConcertModalProps {
   concert?: Concert;
@@ -271,14 +270,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                 )}
               </FieldArray>
             </DialogContent>
-            <DialogActions>
-              <Button variant="outlined" onClick={closeModal}>
-                {t('common.cancel')}
-              </Button>
-              <Button variant="contained" type="submit" startIcon={<SaveIcon />} disabled={isSubmitting}>
-                {concert ? t('common.update') : t('common.add')}
-              </Button>
-            </DialogActions>
+            <OutputModalActions isSubmitting={isSubmitting} closeModal={closeModal} isAddAction={!concert} />
           </Form>
         )}
       </Formik>

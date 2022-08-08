@@ -1,14 +1,14 @@
-import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, TextField } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IMaskInput } from 'react-imask';
 import * as Yup from 'yup';
-import SaveIcon from '@mui/icons-material/Save';
 import i18n from '../../../../../../translations/i18n';
 import { MusicScore } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
+import { OutputModalActions } from '../OutputModalActions';
 
 interface MusicScoreModalProps {
   musicScore?: MusicScore;
@@ -199,14 +199,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                 )}
               </Field>
             </DialogContent>
-            <DialogActions>
-              <Button variant="outlined" onClick={closeModal}>
-                {t('common.cancel')}
-              </Button>
-              <Button variant="contained" type="submit" startIcon={<SaveIcon />} disabled={isSubmitting}>
-                {musicScore ? t('common.update') : t('common.add')}
-              </Button>
-            </DialogActions>
+            <OutputModalActions isSubmitting={isSubmitting} closeModal={closeModal} isAddAction={!musicScore} />
           </Form>
         )}
       </Formik>
