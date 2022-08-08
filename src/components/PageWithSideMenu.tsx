@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { SvgIconComponent } from '@mui/icons-material';
 import { Box, Button, ButtonProps, styled, Typography } from '@mui/material';
 import { PropsWithChildren } from 'react';
@@ -73,11 +74,14 @@ export const LinkButton = ({ isSelected, ...rest }: LinkButtonProps) => (
   </li>
 );
 
-export const LinkIconButton = ({ sx = {}, ...rest }: LinkButtonProps) => (
-  <LinkButton
-    sx={{ minWidth: 0, width: 0, ...sx }} // Ensure button with just an icon gets minimal width
-    {...rest}
-  />
+interface LinkIconButtonProps extends LinkButtonProps {
+  icon: ReactNode;
+}
+
+export const LinkIconButton = ({ sx = {}, icon, ...rest }: LinkIconButtonProps) => (
+  <LinkButton sx={{ minWidth: 0, width: 0, ...sx }} {...rest}>
+    &nbsp;{icon}&nbsp; {/* Add spaces to ensure same button height as buttons with text */}
+  </LinkButton>
 );
 
 export const LinkButtonRow = ({ children }: PropsWithChildren<Record<never, never>>) => (
@@ -88,7 +92,7 @@ export const LinkButtonRow = ({ children }: PropsWithChildren<Record<never, neve
         listStyle: 'none',
         p: 0,
         display: 'flex',
-        gap: '0.5rem',
+        gap: '0.75rem',
         alignItems: 'center',
       }}>
       {children}
