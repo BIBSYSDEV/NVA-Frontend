@@ -128,7 +128,6 @@
     "loading": "Laster",
     "menu": "Meny",
     "message": "Melding",
-    "missing_title": "Mangler tittel",
     "move_down": "Flytt ned",
     "move_up": "Flytt opp",
     "name": "Navn",
@@ -931,6 +930,7 @@
       "files_and_license": "Filer og lisens",
       "resource_type": "Ressurstype"
     },
+    "missing_title": "Mangler tittel",
     "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
     "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?",
     "new_registration": "Ny registrering",

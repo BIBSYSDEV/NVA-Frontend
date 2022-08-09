@@ -18,6 +18,7 @@ import { RegistrationFieldName } from '../../types/publicationFieldNames';
 import { SearchResponse } from '../../types/common.types';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
+import { getTitleString } from '../../utils/registration-helpers';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -31,7 +32,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
 
   const { identifier, entityDescription, projects, subjects } = registration;
   const contributors = entityDescription?.contributors ?? [];
-  const mainTitle = entityDescription?.mainTitle || `[${t('common.missing_title')}]`;
+  const mainTitle = getTitleString(entityDescription?.mainTitle);
   const abstract = entityDescription?.abstract;
   const description = entityDescription?.description;
 

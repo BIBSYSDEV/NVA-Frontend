@@ -10,7 +10,7 @@ import { PageSpinner } from '../../components/PageSpinner';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { RootState } from '../../redux/store';
 import { Registration, RegistrationTab } from '../../types/registration.types';
-import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
+import { getTitleString, userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { Forbidden } from '../errorpages/Forbidden';
@@ -93,9 +93,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
               modalHeading={t('registration.modal_unsaved_changes_heading')}
               shouldBlockNavigation={dirty}
             />
-            <ItalicPageHeader>
-              {values.entityDescription?.mainTitle || `[${t('common.missing_title')}]`}
-            </ItalicPageHeader>
+            <ItalicPageHeader>{getTitleString(values.entityDescription?.mainTitle)}</ItalicPageHeader>
             <RegistrationFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
             <RequiredDescription />
             <BackgroundDiv>

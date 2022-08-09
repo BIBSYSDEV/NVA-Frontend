@@ -7,6 +7,7 @@ import { Registration } from '../types/registration.types';
 import { ErrorBoundary } from './ErrorBoundary';
 import { TruncatableTypography } from './TruncatableTypography';
 import { dataTestId } from '../utils/dataTestIds';
+import { getTitleString } from '../utils/registration-helpers';
 
 interface RegistrationListProps {
   registrations: Registration[];
@@ -43,7 +44,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
         </Typography>
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
           <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
-            {entityDescription?.mainTitle}
+            {getTitleString(entityDescription?.mainTitle)}
           </MuiLink>
         </Typography>
         <Box
