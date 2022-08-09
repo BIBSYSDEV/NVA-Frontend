@@ -128,7 +128,6 @@
     "loading": "Loading",
     "menu": "Menu",
     "message": "Message",
-    "missing_title": "Missing title",
     "move_down": "Move down",
     "move_up": "Move up",
     "name": "Name",
@@ -931,6 +930,7 @@
       "files_and_license": "Files and License",
       "resource_type": "Resource type"
     },
+    "missing_title": "Missing title",
     "modal_unsaved_changes_description": "You have unsaved changes. Are you sure you want to leave this page?",
     "modal_unsaved_changes_heading": "Leave without saving?",
     "new_registration": "New registration",

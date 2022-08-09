@@ -252,4 +252,4 @@ export const userIsCuratorForRegistration = (user: User | null, registration: Re
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
 
-export const getTitleString = (title: string | undefined) => title ?? `[${i18n.t('common.missing_title')}]`;
+export const getTitleString = (title: string | undefined) => title ?? `[${i18n.t('registration.missing_title')}]`;
