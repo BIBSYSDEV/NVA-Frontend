@@ -31,7 +31,7 @@ export const WorklistItems = ({ conversations }: WorklistItemsProps) => {
           const support = conversation as PublicationConversation;
           return (
             <SupportRequestAccordion
-              key={support.messageCollections[0].messages[0].date}
+              key={support.messageCollections[0].messages[0].createdDate}
               registration={conversation.publication}
               messageType={MessageType.Support}
               messages={support.messageCollections[0].messages}

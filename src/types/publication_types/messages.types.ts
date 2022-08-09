@@ -6,7 +6,7 @@ export enum MessageType {
 }
 
 export interface Message {
-  date: string;
+  createdDate: string;
   id: string;
   identifier: string;
   owner: string;
