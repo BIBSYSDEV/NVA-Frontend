@@ -27,7 +27,7 @@ describe('User opens Landing Page for Registration', () => {
   it('Anonymous user should be able to open Landing Page for Registration', () => {
     cy.visit(pathToLandingPage);
     cy.injectAxe();
-    cy.get('[data-testid=my-registrations-link]').should('not.exist');
+    cy.get(`[data-testid=${dataTestId.header.logInButton}]`).should('be.visible');
     cy.get(`[data-testid=${status}]`).should('not.exist');
     cy.checkA11y();
   });
