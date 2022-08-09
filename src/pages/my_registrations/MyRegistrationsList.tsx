@@ -167,7 +167,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
         dialogDataTestId="confirm-delete-dialog">
         <Typography>
           {t('my_page.registrations.delete_registration_message', {
-            title: registrationToDelete?.mainTitle ?? registrationToDelete?.identifier,
+            title: getTitleString(registrationToDelete?.mainTitle),
           })}
         </Typography>
       </ConfirmDialog>

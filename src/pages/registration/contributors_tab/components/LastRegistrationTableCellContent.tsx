@@ -6,6 +6,7 @@ import { SearchResponse } from '../../../../types/common.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
+import { getTitleString } from '../../../../utils/registration-helpers';
 
 interface LastRegistrationTableCellContentPorps {
   personId: string;
@@ -23,7 +24,9 @@ export const LastRegistrationTableCellContent = ({ personId }: LastRegistrationT
     <Skeleton />
   ) : registration ? (
     <>
-      <TruncatableTypography lines={2}>{registration.entityDescription?.mainTitle}</TruncatableTypography>
+      <TruncatableTypography lines={2}>
+        {getTitleString(registration.entityDescription?.mainTitle)}
+      </TruncatableTypography>
       {registrationSearch && registrationSearch.size > 1 && (
         <Typography fontStyle="italic">
           {t('registration.contributors.other_registrations', { count: registrationSearch.size - 1 })}

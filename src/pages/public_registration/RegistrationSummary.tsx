@@ -6,6 +6,7 @@ import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { getRegistrationIdentifier } from '../../utils/registration-helpers';
 import { RegistrationFieldName } from '../../types/publicationFieldNames';
 import { ExpressionStatement } from '../../utils/searchHelpers';
+import { getTitleString } from '../../utils/registration-helpers';
 
 interface RegistrationSummaryProps {
   id: string;
@@ -26,7 +27,7 @@ export const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
   ) : (
     container && (
       <Link component={RouterLink} to={getRegistrationLandingPagePath(identifier)}>
-        {container.entityDescription?.mainTitle}
+        {getTitleString(container.entityDescription?.mainTitle)}
       </Link>
     )
   );
