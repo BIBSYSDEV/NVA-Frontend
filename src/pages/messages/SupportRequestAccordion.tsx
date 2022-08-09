@@ -15,6 +15,7 @@ import { MessageList } from './MessageList';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { RootState } from '../../redux/store';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
+import { getTitleString } from '../../utils/registration-helpers';
 
 interface SupportRequestAccordionProps {
   messageType: MessageType;
@@ -70,7 +71,7 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
           <Typography
             data-testid={`message-title-${registration.identifier}`}
             sx={{ gridArea: 'title', fontWeight: 'bold' }}>
-            {registration.mainTitle}
+            {getTitleString(registration.mainTitle)}
           </Typography>
           <Typography
             data-testid={`message-owner-${registration.identifier}`}

@@ -12,6 +12,7 @@ import { CentralImportDuplicateSearch } from './CentralImportDuplicateSearch';
 import NotFound from '../../../errorpages/NotFound';
 import { DuplicateSearchFilterForm } from './DuplicateSearchFilterForm';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
+import { getTitleString } from '../../../../utils/registration-helpers';
 
 export const CentralImportDuplicationCheckPage = () => {
   const { t } = useTranslation();
@@ -52,7 +53,7 @@ export const CentralImportDuplicationCheckPage = () => {
               {t('basic_data.central_import.import_publication')}:
             </Typography>
             <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
-              {registration.entityDescription?.mainTitle}
+              {getTitleString(registration.entityDescription?.mainTitle)}
             </Typography>
             <Typography display="inline" variant="body2">
               {contributors.map((contributor) => contributor.identity.name).join('; ')}

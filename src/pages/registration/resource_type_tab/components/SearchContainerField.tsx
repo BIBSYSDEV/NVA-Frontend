@@ -15,6 +15,7 @@ import { Contributor } from '../../../../types/contributor.types';
 import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
 import { ExpressionStatement } from '../../../../utils/searchHelpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
+import { getTitleString } from '../../../../utils/registration-helpers';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -90,13 +91,13 @@ export const SearchContainerField = ({
               setQuery('');
             }}
             loading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
-            getOptionLabel={(option) => option.entityDescription?.mainTitle ?? ''}
+            getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
             renderOption={(props, option, state) => (
               <li {...props}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                   <Typography variant="subtitle1">
                     <EmphasizeSubstring
-                      text={option.entityDescription?.mainTitle ?? ''}
+                      text={getTitleString(option.entityDescription?.mainTitle)}
                       emphasized={state.inputValue}
                     />
                   </Typography>
@@ -118,7 +119,7 @@ export const SearchContainerField = ({
                   data-testid={dataTestIds.registrationWizard.resourceType.journalChip}
                   label={
                     <>
-                      <Typography variant="subtitle1">{option.entityDescription?.mainTitle ?? ''}</Typography>
+                      <Typography variant="subtitle1">{getTitleString(option.entityDescription?.mainTitle)}</Typography>
                       {descriptionToShow === 'year-and-contributors' ? (
                         <YearAndContributorsText
                           date={option.entityDescription?.date}
