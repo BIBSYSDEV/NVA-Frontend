@@ -49,7 +49,7 @@ export const mockRegistration: JournalRegistration = {
       'Morbi sed neque egestas, egestas lacus ac, tincidunt metus. Donec quis ipsum vulputate, tempus nisi vulputate, commodo orci. Suspendisse blandit condimentum ex quis egestas. Ut rhoncus eros non condimentum mattis. Ut lectus nisi, molestie sit amet hendrerit ut, mollis vel odio. In a risus tellus. Morbi rutrum augue metus, ut malesuada ex posuere vitae. Nam nec rhoncus turpis.',
     tags: ['Ost', 'Loff', 'Majones'],
     language: 'http://lexvo.org/id/iso639-3/eng',
-    npiSubjectHeading: 'Medisin og helsefag',
+    npiSubjectHeading: '0003',
     date: {
       type: 'PublicationDate',
       year: '1980',
