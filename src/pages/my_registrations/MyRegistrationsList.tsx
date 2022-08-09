@@ -26,6 +26,7 @@ import { getRegistrationLandingPagePath, getRegistrationPath } from '../../utils
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
+import { getTitleString } from '../../utils/registration-helpers';
 
 interface MyRegistrationsListProps {
   registrations: RegistrationPreview[];
@@ -100,7 +101,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
             {registrationsOnPage.map((registration) => (
               <TableRow key={registration.identifier}>
                 <TableCell component="th" scope="row" data-testid={`registration-title-${registration.identifier}`}>
-                  <Typography>{registration.mainTitle || <i>[{t('common.missing_title')}]</i>}</Typography>
+                  <Typography>{getTitleString(registration.mainTitle)}</Typography>
                 </TableCell>
                 <TableCell data-testid={`registration-status-${registration.identifier}`}>
                   <Typography>{t(`registration.status.${registration.status}` as any)}</Typography>
