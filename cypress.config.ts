@@ -2,7 +2,7 @@ import { defineConfig } from 'cypress';
 import codeCoverageTask from '@cypress/code-coverage/task';
 
 export default defineConfig({
-  projectId: '1rrqbw',
+  projectId: 'kigtb6',
   video: false,
   e2e: {
     setupNodeEvents(on, config) {

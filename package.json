@@ -8,7 +8,7 @@
     "prepare": "husky install",
     "start": "react-scripts -r @cypress/instrument-cra start",
     "start:mock": "set REACT_APP_USE_MOCK=true&& npm start",
-    "test": "cypress run",
+    "test": "cypress run --record --key 19c408a6-7f29-4d77-be78-f1235b39c5c4",
     "test:cypress": "start-server-and-test start:mock http://localhost:3000 test",
     "test:react": "react-scripts test --coverage --watchAll=false",
     "unused-i18n-keys": "i18n-unused display-unused"
