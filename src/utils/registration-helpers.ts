@@ -1,4 +1,4 @@
-import { Registration } from '../types/registration.types';
+import { PublicationInstanceType, Registration } from '../types/registration.types';
 import {
   ArtisticType,
   BookType,
@@ -179,36 +179,198 @@ export const getPeriodString = (period: Period | null) => {
   }
 };
 
-const mainDegreeRoles = [ContributorRole.Creator, ContributorRole.Supervisor];
-
-export const mainContributorRolesPerType: { [type: string]: ContributorRole[] | undefined } = {
-  [DegreeType.Bachelor]: mainDegreeRoles,
-  [DegreeType.Master]: mainDegreeRoles,
-  [DegreeType.Phd]: mainDegreeRoles,
-  [DegreeType.Other]: mainDegreeRoles,
-  [BookType.Anthology]: [ContributorRole.Editor],
-  [ArtisticType.ArtisticDesign]: [
-    ContributorRole.Designer,
-    ContributorRole.CuratorOrganizer,
-    ContributorRole.Consultant,
-    ContributorRole.Other,
-  ],
+type ContributorConfig = {
+  [type in PublicationInstanceType]: { primaryRoles: ContributorRole[]; secondaryRoles: ContributorRole[] };
 };
 
-export const splitMainContributors = (contributors: Contributor[], registrationType: string) => {
-  const mainRoles = mainContributorRolesPerType[registrationType] ?? ContributorRole.Creator;
-  const mainContributors: Contributor[] = [];
-  const otherContributors: Contributor[] = [];
+export const contributorConfig: ContributorConfig = {
+  // Journal
+  [JournalType.Article]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
+  [JournalType.Letter]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
+  [JournalType.Review]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
+  [JournalType.Leader]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
+  [JournalType.Corrigendum]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
+  [JournalType.Issue]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
+  [JournalType.ConferenceAbstract]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  // Book
+  [BookType.Monograph]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
+  [BookType.Anthology]: { primaryRoles: [ContributorRole.Editor], secondaryRoles: [ContributorRole.Other] },
+  //Report
+  [ReportType.Research]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
+  [ReportType.Policy]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
+  [ReportType.WorkingPaper]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
+  [ReportType.BookOfAbstracts]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
+  [ReportType.Report]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
+  // Degree
+  [DegreeType.Bachelor]: {
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  [DegreeType.Master]: {
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  [DegreeType.Phd]: {
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  [DegreeType.Licentiate]: {
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  [DegreeType.Other]: {
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  // Chapter
+  [ChapterType.AnthologyChapter]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
+  [ChapterType.ReportChapter]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
+  [ChapterType.ConferenceAbstract]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  //Presentation
+  [PresentationType.ConferenceLecture]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  [PresentationType.ConferencePoster]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  [PresentationType.Lecture]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
+  [PresentationType.OtherPresentation]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  // Artistic
+  [ArtisticType.ArtisticDesign]: {
+    primaryRoles: [ContributorRole.Designer, ContributorRole.CuratorOrganizer, ContributorRole.Consultant],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  [ArtisticType.ArtisticArchitecture]: {
+    primaryRoles: [
+      ContributorRole.Architect,
+      ContributorRole.LandscapeArchitect,
+      ContributorRole.InteriorArchitect,
+      ContributorRole.ArchitecturalPlanner,
+      ContributorRole.Other,
+    ],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  [ArtisticType.PerformingArts]: {
+    primaryRoles: [
+      ContributorRole.Dancer,
+      ContributorRole.Actor,
+      ContributorRole.Choreographer,
+      ContributorRole.Director,
+      ContributorRole.Scenographer,
+      ContributorRole.CostumeDesigner,
+      ContributorRole.Producer,
+      ContributorRole.ArtisticDirector,
+      ContributorRole.Dramatist,
+      ContributorRole.Librettist,
+      ContributorRole.Dramaturge,
+      ContributorRole.SoundDesigner,
+      ContributorRole.LightDesigner,
+    ],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  [ArtisticType.MovingPicture]: {
+    primaryRoles: [
+      ContributorRole.Director,
+      ContributorRole.Photographer,
+      ContributorRole.ProductionDesigner,
+      ContributorRole.Screenwriter,
+      ContributorRole.SoundDesigner,
+      ContributorRole.VfxSupervisor,
+      ContributorRole.VideoEditor,
+    ],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  [ArtisticType.MusicPerformance]: {
+    primaryRoles: [
+      ContributorRole.Soloist,
+      ContributorRole.Conductor,
+      ContributorRole.Musician,
+      ContributorRole.Composer,
+      ContributorRole.Organizer,
+      ContributorRole.Writer,
+    ],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  // Media
+  [MediaType.MediaFeatureArticle]: {
+    primaryRoles: [
+      ContributorRole.AcademicCoordinator,
+      ContributorRole.InterviewSubject,
+      ContributorRole.Journalist,
+      ContributorRole.ProgrammeLeader,
+      ContributorRole.ProgrammeParticipant,
+    ],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  [MediaType.MediaReaderOpinion]: {
+    primaryRoles: [
+      ContributorRole.AcademicCoordinator,
+      ContributorRole.InterviewSubject,
+      ContributorRole.Journalist,
+      ContributorRole.ProgrammeLeader,
+      ContributorRole.ProgrammeParticipant,
+    ],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  [MediaType.MediaInterview]: {
+    primaryRoles: [
+      ContributorRole.AcademicCoordinator,
+      ContributorRole.InterviewSubject,
+      ContributorRole.Journalist,
+      ContributorRole.ProgrammeLeader,
+      ContributorRole.ProgrammeParticipant,
+    ],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  [MediaType.MediaBlogPost]: {
+    primaryRoles: [
+      ContributorRole.AcademicCoordinator,
+      ContributorRole.InterviewSubject,
+      ContributorRole.Journalist,
+      ContributorRole.ProgrammeLeader,
+      ContributorRole.ProgrammeParticipant,
+    ],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  [MediaType.MediaPodcast]: {
+    primaryRoles: [
+      ContributorRole.AcademicCoordinator,
+      ContributorRole.InterviewSubject,
+      ContributorRole.Journalist,
+      ContributorRole.ProgrammeLeader,
+      ContributorRole.ProgrammeParticipant,
+    ],
+    secondaryRoles: [ContributorRole.Other],
+  },
+  [MediaType.MediaParticipationInRadioOrTv]: {
+    primaryRoles: [
+      ContributorRole.AcademicCoordinator,
+      ContributorRole.InterviewSubject,
+      ContributorRole.Journalist,
+      ContributorRole.ProgrammeLeader,
+      ContributorRole.ProgrammeParticipant,
+    ],
+    secondaryRoles: [ContributorRole.Other],
+  },
+};
 
-  contributors.forEach((contributor) => {
-    if (mainRoles.includes(contributor.role)) {
-      mainContributors.push(contributor);
-    } else {
-      otherContributors.push(contributor);
-    }
-  });
+export const groupContributors = (contributors: Contributor[], registrationType: PublicationInstanceType) => {
+  const { primaryRoles, secondaryRoles } = contributorConfig[registrationType];
+  const primaryContributors = contributors.filter((contributor) => primaryRoles.includes(contributor.role));
+  const secondaryContributors = contributors.filter((contributor) => secondaryRoles.includes(contributor.role));
 
-  return [mainContributors, otherContributors];
+  return { primaryContributors, secondaryContributors };
 };
 
 export const getArtisticOutputName = (item: ArtisticOutputItem) => {
