@@ -40,12 +40,7 @@ interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replac
   primaryColorAddButton?: boolean;
 }
 
-export const Contributors = ({
-  contributorRoles,
-  push,
-  replace,
-  primaryColorAddButton = contributorRoles.length === 1,
-}: ContributorsProps) => {
+export const Contributors = ({ contributorRoles, push, replace, primaryColorAddButton }: ContributorsProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
