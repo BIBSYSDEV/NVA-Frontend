@@ -2,15 +2,9 @@ import { FormHelperText } from '@mui/material';
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useEffect, useRef } from 'react';
 import { ContributorRole } from '../../types/contributor.types';
-import {
-  ArtisticType,
-  BookType,
-  ContributorFieldNames,
-  JournalType,
-  ReportType,
-} from '../../types/publicationFieldNames';
-import { EntityDescription, Registration } from '../../types/registration.types';
-import { isDegree, isMediaContribution } from '../../utils/registration-helpers';
+import { ContributorFieldNames } from '../../types/publicationFieldNames';
+import { EntityDescription, PublicationInstanceType, Registration } from '../../types/registration.types';
+import { contributorConfig, isDegree } from '../../utils/registration-helpers';
 import { Contributors } from './contributors_tab/Contributors';
 
 export const ContributorsPanel = () => {
@@ -23,7 +17,7 @@ export const ContributorsPanel = () => {
   const contributorsError = (errors.entityDescription as FormikErrors<EntityDescription>)?.contributors;
   const contributorsTouched = (touched.entityDescription as FormikTouched<EntityDescription>)?.contributors;
 
-  const publicationInstanceType = entityDescription?.reference?.publicationInstance.type ?? '';
+  const publicationInstanceType = entityDescription?.reference?.publicationInstance.type;
   const contributors = entityDescription?.contributors ?? [];
   const contributorsRef = useRef(contributors);
 
@@ -36,134 +30,19 @@ export const ContributorsPanel = () => {
     setFieldValue(ContributorFieldNames.Contributors, contributorsWithRole);
   }, [setFieldValue]);
 
-  // Creator should not be selectable for other contributors
-  const selectableContributorRoles = Object.values(ContributorRole).filter((role) => role !== ContributorRole.Creator);
-
   return (
     <>
       <FieldArray name={ContributorFieldNames.Contributors}>
-        {({ push, replace }: FieldArrayRenderProps) =>
-          isDegree(publicationInstanceType) ? (
-            <>
-              <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
-              <Contributors
+        {
+          ({ push, replace }: FieldArrayRenderProps) =>
+            publicationInstanceType ? (
+              <ContributorsContent
                 push={push}
                 replace={replace}
-                contributorRoles={[ContributorRole.Supervisor]}
-                primaryColorAddButton={false}
+                instanceType={publicationInstanceType}
+                separatePrimaryRoles={isDegree(publicationInstanceType)}
               />
-              <Contributors
-                push={push}
-                replace={replace}
-                contributorRoles={selectableContributorRoles.filter((role) => role !== ContributorRole.Supervisor)}
-              />
-            </>
-          ) : isMediaContribution(publicationInstanceType) ? (
-            <Contributors
-              push={push}
-              replace={replace}
-              contributorRoles={[
-                ContributorRole.AcademicCoordinator,
-                ContributorRole.InterviewSubject,
-                ContributorRole.Journalist,
-                ContributorRole.ProgrammeLeader,
-                ContributorRole.ProgrammeParticipant,
-              ]}
-              primaryColorAddButton
-            />
-          ) : publicationInstanceType === JournalType.Issue ||
-            publicationInstanceType === BookType.Anthology ||
-            publicationInstanceType === ReportType.BookOfAbstracts ? (
-            <>
-              <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Editor]} />
-              <Contributors
-                push={push}
-                replace={replace}
-                contributorRoles={selectableContributorRoles.filter((role) => role !== ContributorRole.Editor)}
-              />
-            </>
-          ) : publicationInstanceType === ArtisticType.ArtisticArchitecture ? (
-            <Contributors
-              push={push}
-              replace={replace}
-              contributorRoles={[
-                ContributorRole.Architect,
-                ContributorRole.LandscapeArchitect,
-                ContributorRole.InteriorArchitect,
-                ContributorRole.ArchitecturalPlanner,
-                ContributorRole.Other,
-              ]}
-            />
-          ) : publicationInstanceType === ArtisticType.ArtisticDesign ? (
-            <Contributors
-              push={push}
-              replace={replace}
-              contributorRoles={[
-                ContributorRole.Designer,
-                ContributorRole.CuratorOrganizer,
-                ContributorRole.Consultant,
-                ContributorRole.Other,
-              ]}
-            />
-          ) : publicationInstanceType === ArtisticType.PerformingArts ? (
-            <Contributors
-              push={push}
-              replace={replace}
-              primaryColorAddButton
-              contributorRoles={[
-                ContributorRole.Dancer,
-                ContributorRole.Actor,
-                ContributorRole.Choreographer,
-                ContributorRole.Director,
-                ContributorRole.Scenographer,
-                ContributorRole.CostumeDesigner,
-                ContributorRole.Producer,
-                ContributorRole.ArtisticDirector,
-                ContributorRole.Dramatist,
-                ContributorRole.Librettist,
-                ContributorRole.Dramaturge,
-                ContributorRole.SoundDesigner,
-                ContributorRole.LightDesigner,
-                ContributorRole.Other,
-              ]}
-            />
-          ) : publicationInstanceType === ArtisticType.MovingPicture ? (
-            <Contributors
-              push={push}
-              replace={replace}
-              primaryColorAddButton
-              contributorRoles={[
-                ContributorRole.Director,
-                ContributorRole.Photographer,
-                ContributorRole.ProductionDesigner,
-                ContributorRole.Screenwriter,
-                ContributorRole.SoundDesigner,
-                ContributorRole.VfxSupervisor,
-                ContributorRole.VideoEditor,
-                ContributorRole.Other,
-              ]}
-            />
-          ) : publicationInstanceType === ArtisticType.MusicPerformance ? (
-            <Contributors
-              push={push}
-              replace={replace}
-              primaryColorAddButton
-              contributorRoles={[
-                ContributorRole.Soloist,
-                ContributorRole.Conductor,
-                ContributorRole.Musician,
-                ContributorRole.Composer,
-                ContributorRole.Organizer,
-                ContributorRole.Writer,
-                ContributorRole.Other,
-              ]}
-            />
-          ) : (
-            <>
-              <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
-              <Contributors push={push} replace={replace} contributorRoles={selectableContributorRoles} />
-            </>
-          )
+            ) : null // TODO: must select type first
         }
       </FieldArray>
       {!!contributorsTouched && typeof contributorsError === 'string' && (
@@ -171,6 +50,30 @@ export const ContributorsPanel = () => {
           <ErrorMessage name={ContributorFieldNames.Contributors} />
         </FormHelperText>
       )}
+    </>
+  );
+};
+
+interface ContributorsContentProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
+  instanceType: PublicationInstanceType;
+  separatePrimaryRoles: boolean;
+}
+
+const ContributorsContent = ({ instanceType, separatePrimaryRoles, ...fieldArrayProps }: ContributorsContentProps) => {
+  const { primaryRoles, secondaryRoles } = contributorConfig[instanceType];
+
+  return (
+    <>
+      {separatePrimaryRoles && primaryRoles.length > 1 ? (
+        primaryRoles.map((primaryRole) => (
+          <Contributors {...fieldArrayProps} primaryColorAddButton contributorRoles={[primaryRole]} />
+        ))
+      ) : (
+        <Contributors {...fieldArrayProps} primaryColorAddButton contributorRoles={primaryRoles} />
+      )}
+      <Contributors {...fieldArrayProps} contributorRoles={secondaryRoles} />
+
+      {/* TODO: Show contributors with roles that are not valid for this instanceType? */}
     </>
   );
 };

@@ -29,11 +29,12 @@ export const PublicRegistrationContributors = ({
   const toggleShowAll = () => setShowAll(!showAll);
 
   const primaryContributorsToShow = showAll ? primaryContributors : primaryContributors.slice(0, 10);
-  const { primaryRoles } = contributorConfig[registrationType];
-  const showRolesForPrimaryContributors = primaryRoles && primaryRoles.length > 1;
+  const { primaryRoles, secondaryRoles } = contributorConfig[registrationType];
   const secondaryContributorsToShow = showAll ? secondaryContributors : [];
 
-  const hiddenContributorsCount = useRef(contributors.length - primaryContributorsToShow.length);
+  const hiddenContributorsCount = useRef(
+    primaryContributors.length + secondaryContributors.length - primaryContributorsToShow.length
+  );
   const distinctUnits = getDistinctContributorUnits([...primaryContributorsToShow, ...secondaryContributorsToShow]);
 
   return (
@@ -46,21 +47,22 @@ export const PublicRegistrationContributors = ({
           alignItems: 'start',
           gridTemplateColumns: { xs: '1fr', sm: '1fr auto' },
         }}>
-        <div>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           <ContributorsRow
             contributors={primaryContributorsToShow}
             distinctUnits={distinctUnits}
             hiddenCount={showAll ? undefined : hiddenContributorsCount.current}
-            showRole={showRolesForPrimaryContributors}
+            showRole={primaryRoles.length > 1}
           />
           {showAll && secondaryContributorsToShow.length > 0 && (
             <ContributorsRow
               contributors={secondaryContributorsToShow}
               distinctUnits={distinctUnits}
-              isSecondaryContributors
+              showRole={secondaryRoles.length > 1}
+              label={t('registration.heading.contributors')}
             />
           )}
-        </div>
+        </Box>
         {hiddenContributorsCount.current > 0 && (
           <Button
             startIcon={showAll ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -86,7 +88,7 @@ export const PublicRegistrationContributors = ({
 interface ContributorsRowProps {
   contributors: Contributor[];
   distinctUnits: string[];
-  isSecondaryContributors?: boolean;
+  label?: string;
   showRole?: boolean;
   hiddenCount?: number;
 }
@@ -94,17 +96,15 @@ interface ContributorsRowProps {
 const ContributorsRow = ({
   contributors,
   distinctUnits,
-  isSecondaryContributors = false,
-  showRole = isSecondaryContributors,
+  label,
+  showRole = false,
   hiddenCount,
 }: ContributorsRowProps) => {
   const { t } = useTranslation();
 
   return (
-    <>
-      {isSecondaryContributors && (
-        <Typography sx={{ display: 'inline', mr: '0.5rem' }}>{t('registration.heading.contributors')}:</Typography>
-      )}
+    <div>
+      {label && <Typography sx={{ display: 'inline', mr: '0.5rem' }}>{label}:</Typography>}
       <Box
         component="ul"
         sx={{
@@ -161,6 +161,6 @@ const ContributorsRow = ({
           </Typography>
         ) : null}
       </Box>
-    </>
+    </div>
   );
 };

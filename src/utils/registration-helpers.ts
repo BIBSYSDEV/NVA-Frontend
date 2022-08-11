@@ -185,71 +185,119 @@ type ContributorConfig = {
 
 export const contributorConfig: ContributorConfig = {
   // Journal
-  [JournalType.Article]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
-  [JournalType.Letter]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
-  [JournalType.Review]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
-  [JournalType.Leader]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
-  [JournalType.Corrigendum]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
-  [JournalType.Issue]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
+  [JournalType.Article]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.Letter]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.Review]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.Leader]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.Corrigendum]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.Issue]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
   [JournalType.ConferenceAbstract]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   // Book
-  [BookType.Monograph]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
-  [BookType.Anthology]: { primaryRoles: [ContributorRole.Editor], secondaryRoles: [ContributorRole.Other] },
-  //Report
-  [ReportType.Research]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
-  [ReportType.Policy]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
-  [ReportType.WorkingPaper]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
-  [ReportType.BookOfAbstracts]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
-  [ReportType.Report]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
+  [BookType.Monograph]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [BookType.Anthology]: {
+    primaryRoles: [ContributorRole.Editor],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  // Report
+  [ReportType.Research]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ReportType.Policy]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ReportType.WorkingPaper]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ReportType.BookOfAbstracts]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ReportType.Report]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
   // Degree
   [DegreeType.Bachelor]: {
     primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [DegreeType.Master]: {
     primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [DegreeType.Phd]: {
     primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [DegreeType.Licentiate]: {
     primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [DegreeType.Other]: {
     primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   // Chapter
-  [ChapterType.AnthologyChapter]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
-  [ChapterType.ReportChapter]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
+  [ChapterType.AnthologyChapter]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ChapterType.ReportChapter]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
   [ChapterType.ConferenceAbstract]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
-  //Presentation
+  // Presentation
   [PresentationType.ConferenceLecture]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [PresentationType.ConferencePoster]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
-  [PresentationType.Lecture]: { primaryRoles: [ContributorRole.Creator], secondaryRoles: [ContributorRole.Other] },
+  [PresentationType.Lecture]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
   [PresentationType.OtherPresentation]: {
     primaryRoles: [ContributorRole.Creator],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   // Artistic
   [ArtisticType.ArtisticDesign]: {
     primaryRoles: [ContributorRole.Designer, ContributorRole.CuratorOrganizer, ContributorRole.Consultant],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [ArtisticType.ArtisticArchitecture]: {
     primaryRoles: [
@@ -257,9 +305,8 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.LandscapeArchitect,
       ContributorRole.InteriorArchitect,
       ContributorRole.ArchitecturalPlanner,
-      ContributorRole.Other,
     ],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [ArtisticType.PerformingArts]: {
     primaryRoles: [
@@ -277,7 +324,7 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.SoundDesigner,
       ContributorRole.LightDesigner,
     ],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [ArtisticType.MovingPicture]: {
     primaryRoles: [
@@ -289,7 +336,7 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.VfxSupervisor,
       ContributorRole.VideoEditor,
     ],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [ArtisticType.MusicPerformance]: {
     primaryRoles: [
@@ -300,7 +347,7 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.Organizer,
       ContributorRole.Writer,
     ],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   // Media
   [MediaType.MediaFeatureArticle]: {
@@ -311,7 +358,7 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.ProgrammeLeader,
       ContributorRole.ProgrammeParticipant,
     ],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [MediaType.MediaReaderOpinion]: {
     primaryRoles: [
@@ -321,7 +368,7 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.ProgrammeLeader,
       ContributorRole.ProgrammeParticipant,
     ],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [MediaType.MediaInterview]: {
     primaryRoles: [
@@ -331,7 +378,7 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.ProgrammeLeader,
       ContributorRole.ProgrammeParticipant,
     ],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [MediaType.MediaBlogPost]: {
     primaryRoles: [
@@ -341,7 +388,7 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.ProgrammeLeader,
       ContributorRole.ProgrammeParticipant,
     ],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [MediaType.MediaPodcast]: {
     primaryRoles: [
@@ -351,7 +398,7 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.ProgrammeLeader,
       ContributorRole.ProgrammeParticipant,
     ],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [MediaType.MediaParticipationInRadioOrTv]: {
     primaryRoles: [
@@ -361,7 +408,7 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.ProgrammeLeader,
       ContributorRole.ProgrammeParticipant,
     ],
-    secondaryRoles: [ContributorRole.Other],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
 };
 
