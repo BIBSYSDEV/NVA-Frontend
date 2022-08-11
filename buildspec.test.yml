@@ -37,7 +37,7 @@ phases:
       - cd test_data
       - python create_test_data.py
       - cd ..
-      - npx cypress run --browser chrome --record --key e32a110d-15d4-4202-a5a0-2ee10238a66c
+      - npx cypress run --browser chrome  --record --key e32a110d-15d4-4202-a5a0-2ee10238a66c
   post_build:
     commands:
       - export SECRET_STRING=$(aws secretsmanager get-secret-value --secret-id XrayApiKey | jq -r .SecretString)
