@@ -296,8 +296,13 @@ export const contributorConfig: ContributorConfig = {
   },
   // Artistic
   [ArtisticType.ArtisticDesign]: {
-    primaryRoles: [ContributorRole.Designer, ContributorRole.CuratorOrganizer, ContributorRole.Consultant],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [
+      ContributorRole.Designer,
+      ContributorRole.CuratorOrganizer,
+      ContributorRole.Consultant,
+      ContributorRole.Other,
+    ],
+    secondaryRoles: [],
   },
   [ArtisticType.ArtisticArchitecture]: {
     primaryRoles: [
@@ -305,8 +310,9 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.LandscapeArchitect,
       ContributorRole.InteriorArchitect,
       ContributorRole.ArchitecturalPlanner,
+      ContributorRole.Other,
     ],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [],
   },
   [ArtisticType.PerformingArts]: {
     primaryRoles: [
@@ -323,18 +329,21 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.Dramaturge,
       ContributorRole.SoundDesigner,
       ContributorRole.LightDesigner,
+      ContributorRole.Other,
     ],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [],
   },
   [ArtisticType.MovingPicture]: {
     primaryRoles: [
       ContributorRole.Director,
       ContributorRole.Photographer,
+      ContributorRole.Producer,
       ContributorRole.ProductionDesigner,
       ContributorRole.Screenwriter,
       ContributorRole.SoundDesigner,
       ContributorRole.VfxSupervisor,
       ContributorRole.VideoEditor,
+      ContributorRole.Other,
     ],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
@@ -346,69 +355,34 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.Composer,
       ContributorRole.Organizer,
       ContributorRole.Writer,
+      ContributorRole.Other,
     ],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [],
   },
   // Media
   [MediaType.MediaFeatureArticle]: {
-    primaryRoles: [
-      ContributorRole.AcademicCoordinator,
-      ContributorRole.InterviewSubject,
-      ContributorRole.Journalist,
-      ContributorRole.ProgrammeLeader,
-      ContributorRole.ProgrammeParticipant,
-    ],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Other],
+    secondaryRoles: [],
   },
   [MediaType.MediaReaderOpinion]: {
-    primaryRoles: [
-      ContributorRole.AcademicCoordinator,
-      ContributorRole.InterviewSubject,
-      ContributorRole.Journalist,
-      ContributorRole.ProgrammeLeader,
-      ContributorRole.ProgrammeParticipant,
-    ],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Other],
+    secondaryRoles: [],
   },
   [MediaType.MediaInterview]: {
-    primaryRoles: [
-      ContributorRole.AcademicCoordinator,
-      ContributorRole.InterviewSubject,
-      ContributorRole.Journalist,
-      ContributorRole.ProgrammeLeader,
-      ContributorRole.ProgrammeParticipant,
-    ],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.Journalist, ContributorRole.InterviewSubject, ContributorRole.Other],
+    secondaryRoles: [],
   },
   [MediaType.MediaBlogPost]: {
-    primaryRoles: [
-      ContributorRole.AcademicCoordinator,
-      ContributorRole.InterviewSubject,
-      ContributorRole.Journalist,
-      ContributorRole.ProgrammeLeader,
-      ContributorRole.ProgrammeParticipant,
-    ],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Other],
+    secondaryRoles: [],
   },
   [MediaType.MediaPodcast]: {
-    primaryRoles: [
-      ContributorRole.AcademicCoordinator,
-      ContributorRole.InterviewSubject,
-      ContributorRole.Journalist,
-      ContributorRole.ProgrammeLeader,
-      ContributorRole.ProgrammeParticipant,
-    ],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.ProgrammeLeader, ContributorRole.ProgrammeParticipant, ContributorRole.Other],
+    secondaryRoles: [],
   },
   [MediaType.MediaParticipationInRadioOrTv]: {
-    primaryRoles: [
-      ContributorRole.AcademicCoordinator,
-      ContributorRole.InterviewSubject,
-      ContributorRole.Journalist,
-      ContributorRole.ProgrammeLeader,
-      ContributorRole.ProgrammeParticipant,
-    ],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.ProgrammeLeader, ContributorRole.ProgrammeParticipant, ContributorRole.Other],
+    secondaryRoles: [],
   },
 };
 

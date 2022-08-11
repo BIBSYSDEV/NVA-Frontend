@@ -31,13 +31,20 @@ export const ContributorsPanel = () => {
             <>
               {shouldSeparateAddPrimaryRolesButtons && primaryRoles.length > 1 ? (
                 primaryRoles.map((primaryRole) => (
-                  <Contributors push={push} replace={replace} primaryColorAddButton contributorRoles={[primaryRole]} />
+                  <Contributors
+                    key={primaryRole}
+                    push={push}
+                    replace={replace}
+                    primaryColorAddButton
+                    contributorRoles={[primaryRole]}
+                  />
                 ))
               ) : (
                 <Contributors push={push} replace={replace} primaryColorAddButton contributorRoles={primaryRoles} />
               )}
-              <Contributors push={push} replace={replace} contributorRoles={secondaryRoles} />
-
+              {secondaryRoles.length > 0 && (
+                <Contributors push={push} replace={replace} contributorRoles={secondaryRoles} />
+              )}
               {/* TODO: Show contributors with roles that are not valid for this instanceType? */}
             </>
           ) : (
