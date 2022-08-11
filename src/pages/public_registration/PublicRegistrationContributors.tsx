@@ -9,12 +9,13 @@ import OrcidLogo from '../../resources/images/orcid_logo.svg';
 import { Contributor } from '../../types/contributor.types';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
-import { mainContributorRolesPerType, splitMainContributors } from '../../utils/registration-helpers';
+import { contributorConfig, groupContributors } from '../../utils/registration-helpers';
 import { getResearchProfilePath } from '../../utils/urlPaths';
+import { PublicationInstanceType } from '../../types/registration.types';
 
 interface PublicRegistrationContributorsProps {
   contributors: Contributor[];
-  registrationType: string;
+  registrationType: PublicationInstanceType;
 }
 
 export const PublicRegistrationContributors = ({
@@ -22,18 +23,19 @@ export const PublicRegistrationContributors = ({
   registrationType,
 }: PublicRegistrationContributorsProps) => {
   const { t } = useTranslation();
-  const [mainContributors, otherContributors] = splitMainContributors(contributors, registrationType);
+  const { primaryContributors, secondaryContributors } = groupContributors(contributors, registrationType);
 
-  const [showAll, setShowAll] = useState(mainContributors.length === 0);
+  const [showAll, setShowAll] = useState(primaryContributors.length === 0);
   const toggleShowAll = () => setShowAll(!showAll);
 
-  const mainContributorsToShow = showAll ? mainContributors : mainContributors.slice(0, 10);
-  const mainRoles = mainContributorRolesPerType[registrationType];
-  const showRolesForMainContributors = mainRoles && mainRoles.length > 1;
-  const otherContributorsToShow = showAll ? otherContributors : [];
+  const primaryContributorsToShow = showAll ? primaryContributors : primaryContributors.slice(0, 10);
+  const { primaryRoles, secondaryRoles } = contributorConfig[registrationType];
+  const secondaryContributorsToShow = showAll ? secondaryContributors : [];
 
-  const hiddenContributorsCount = useRef(contributors.length - mainContributorsToShow.length);
-  const distinctUnits = getDistinctContributorUnits([...mainContributorsToShow, ...otherContributorsToShow]);
+  const hiddenContributorsCount = useRef(
+    primaryContributors.length + secondaryContributors.length - primaryContributorsToShow.length
+  );
+  const distinctUnits = getDistinctContributorUnits([...primaryContributorsToShow, ...secondaryContributorsToShow]);
 
   return (
     <Box
@@ -45,17 +47,22 @@ export const PublicRegistrationContributors = ({
           alignItems: 'start',
           gridTemplateColumns: { xs: '1fr', sm: '1fr auto' },
         }}>
-        <div>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           <ContributorsRow
-            contributors={mainContributorsToShow}
+            contributors={primaryContributorsToShow}
             distinctUnits={distinctUnits}
-            otherCount={showAll ? undefined : hiddenContributorsCount.current}
-            showRole={showRolesForMainContributors}
+            hiddenCount={showAll ? undefined : hiddenContributorsCount.current}
+            showRole={primaryRoles.length > 1}
           />
-          {showAll && otherContributorsToShow.length > 0 && (
-            <ContributorsRow contributors={otherContributorsToShow} distinctUnits={distinctUnits} isOtherContributors />
+          {showAll && secondaryContributorsToShow.length > 0 && (
+            <ContributorsRow
+              contributors={secondaryContributorsToShow}
+              distinctUnits={distinctUnits}
+              showRole={secondaryRoles.length > 1}
+              label={t('registration.heading.contributors')}
+            />
           )}
-        </div>
+        </Box>
         {hiddenContributorsCount.current > 0 && (
           <Button
             startIcon={showAll ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -81,25 +88,23 @@ export const PublicRegistrationContributors = ({
 interface ContributorsRowProps {
   contributors: Contributor[];
   distinctUnits: string[];
-  isOtherContributors?: boolean;
+  label?: string;
   showRole?: boolean;
-  otherCount?: number;
+  hiddenCount?: number;
 }
 
 const ContributorsRow = ({
   contributors,
   distinctUnits,
-  isOtherContributors = false,
-  showRole = isOtherContributors,
-  otherCount,
+  label,
+  showRole = false,
+  hiddenCount,
 }: ContributorsRowProps) => {
   const { t } = useTranslation();
 
   return (
-    <>
-      {isOtherContributors && (
-        <Typography sx={{ display: 'inline', mr: '0.5rem' }}>{t('registration.heading.contributors')}:</Typography>
-      )}
+    <div>
+      {label && <Typography sx={{ display: 'inline', mr: '0.5rem' }}>{label}:</Typography>}
       <Box
         component="ul"
         sx={{
@@ -150,12 +155,12 @@ const ContributorsRow = ({
             </Typography>
           );
         })}
-        {otherCount && otherCount > 0 ? (
+        {hiddenCount && hiddenCount > 0 ? (
           <Typography component="li">
-            {t('registration.public_page.other_contributors', { count: otherCount })}
+            {t('registration.public_page.other_contributors', { count: hiddenCount })}
           </Typography>
         ) : null}
       </Box>
-    </>
+    </div>
   );
 };

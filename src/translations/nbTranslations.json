@@ -821,6 +821,7 @@
       "editors": "Redaktører",
       "filter": "Filtrer {{role}}",
       "known_author_identity": "Har tilknyttet forfatteridentitet",
+      "must_select_type_first": "Du må velge ressurstype før du kan legge til bidragsytere.",
       "no_affiliations_found": "Ingen tilhørigheter funnet",
       "no_registrations_found": "Ingen registreringer funnet",
       "other_registrations_one": "+ {{count}} annen registrering",

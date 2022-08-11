@@ -67,10 +67,10 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
         {mainTitle}
       </ItalicPageHeader>
       <div>
-        {contributors.length > 0 && (
+        {contributors.length > 0 && entityDescription?.reference?.publicationInstance.type && (
           <PublicRegistrationContributors
             contributors={contributors}
-            registrationType={entityDescription?.reference?.publicationInstance.type ?? ''}
+            registrationType={entityDescription.reference.publicationInstance.type}
           />
         )}
 
