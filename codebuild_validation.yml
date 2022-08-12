@@ -5,6 +5,7 @@ version: 0.2
 env:
   variables:
     REACT_APP_API_HOST: 'api.dev.nva.aws.unit.no'
+    CYPRESS_RECORD_KEY: /NVA/CypressRecordKey
     REACT_APP_USE_MOCK: 'true' # Since we use mock data the env variables below is not relevant
     REACT_APP_AWS_USER_POOLS_ID: 'XXX'
     REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID: 'XXX'

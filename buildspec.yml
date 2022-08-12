@@ -10,6 +10,7 @@ env:
     REACT_APP_ORCID_BASE_URL: OrcidBaseUrl
     REACT_APP_API_HOST: /NVA/ApiDomain
     REACT_APP_APP_HOST: /NVA/ApplicationDomain
+    CYPRESS_RECORD_KEY: /NVA/CypressRecordKey
 
   secrets-manager:
     REACT_APP_ORCID_CLIENT_ID: OrcidClientID

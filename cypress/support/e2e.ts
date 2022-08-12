@@ -25,7 +25,7 @@ declare global {
       setUserRolesInRedux(roles: RoleName[]): void;
       startRegistrationWithDoi(): void;
       selectNpiDiscipline(discipline: string): void;
-      setNotificationInRedux(notification: Notification): void;
+      setNotificationInRedux(notification: Notification): void; // TODO: import correct type
       removeNotificationInRedux(): void;
       mockFileUpload(): void;
     }
