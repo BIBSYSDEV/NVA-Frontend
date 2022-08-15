@@ -66,24 +66,18 @@ Example:
 
 Note: this means one can send a link with a predefined language selection by setting `lng` to either `nob` (Norwegian, bokmål) or `eng` (English) as well. (This works due to the `i18next-browser-languagedetector` package used in the frontend app.)
 
-<figure>
-  <img src="./images/cimode.png?raw=true" >
-  <figcaption align="center">App showing keys instead of translations (https://frontend.dev.nva.aws.unit.no/?lng=cimode)</figcaption>
-</figure>
+![](./images/cimode.png?raw=true)
+_App showing keys instead of translations (https://frontend.dev.nva.aws.unit.no/?lng=cimode)_
 
-<figure>
-  <img src="./images/key_search.png?raw=true" >
-  <figcaption align="center">One can find the translations for "common.search" by searching for "common::search" in Lokalise. Simply replace every "." (dot) with "::" (double colon).</figcaption>
-</figure>
+![](./images/key_search.png?raw=true)
+_One can find the translations for `common.search` by searching for `common::search` in Lokalise. Simply replace every `.` (dot) with `::` (double colon)._
 
 ## Translation of persisted values
 
 Some translations are based on values persisted in NVA. In these cases the persisted value are usually used as the key for the translation, and can be identified as the keys that starts with an uppercase letter, usually using `PascalCase` format.
 
-<figure>
-  <img src="./images/persisted_values.png?raw=true" >
-  <figcaption align="center">Translation of persisted values in Lokalise. Note use of PascalCase instead of snake_case</figcaption>
-</figure>
+![](./images/persisted_values.png?raw=true)
+_Translation of persisted values in Lokalise. Note use of `PascalCase` instead of `snake_case`._
 
 This means that the system will persist a value identical to the key (`DegreePhd`, `DegreeBachelor` and `DegreeMaster` in the image above), and the stored value will be looked up in the translation file when needed. If the persisted value changes at any point, e.g. if `DegreeBachelor` is renamed to `StudentDegreeBachelor`, the original translation is lost, and the same translation must be added for the new `StudentDegreeBachelor` value.
 
@@ -95,26 +89,20 @@ If we want to include some dynamic text inside a translation this can be achieve
 
 Details: https://www.i18next.com/translation-function/interpolation
 
-<figure>
-  <img src="./images/interpolation.png?raw=true" >
-  <figcaption align="center">"contributorName" being interpolated into translation in Lokalise</figcaption>
-</figure>
+![](./images/interpolation.png?raw=true)
+_`contributorName` being interpolated into translation in Lokalise._
 
 It is also possible to reference another key, to reuse it’s translation, as shown in the image below.
 
-<figure>
-  <img src="./images/reuse_keys.png?raw=true" >
-  <figcaption>The "editor.allowed" key (top) is reused is reused for the "editor.allowed_description" key (bottom).</figcaption>
-</figure>
+![](./images/reuse_keys.png?raw=true)
+<br>_The `editor.allowed` key (top) is reused is reused for the `editor.allowed_description` key (bottom)._
 
 Some interpolation cases might be more complex, e.g. when a link or other formatting should appear within a translation. To achieve this some “mystical” `<0> </0>` or similar will appear in the translation, which can be a bit difficult to understand. These special cases should mainly be the developers responsibility. In short, it means that the content between `<0>` and `</0>` should have som extra formatting.
 
 Details: https://react.i18next.com/latest/trans-component
 
-<figure>
-  <img src="./images/trans_component.png?raw=true" >
-  <figcaption align="center">Advanced interpolation where a link is inserted around “Mine Meldinger”. Screenshot from Lokalise on top, and screenshot from the result in NVA below.</figcaption>
-</figure>
+![](./images/trans_component.png?raw=true)
+_Advanced interpolation where a link is inserted around “Mine Meldinger”. Screenshot from Lokalise on top, and screenshot from the result in NVA below._
 
 ## Pluralization
 
@@ -122,7 +110,5 @@ Some strings might depend on some variable whether it should display the text in
 
 Details: https://www.i18next.com/translation-function/plurals
 
-<figure>
-  <img src="./images/pluralization.png?raw=true" >
-  <figcaption>Pluralization in Lokaliser.</figcaption>
-</figure>
+![](./images/pluralization.png?raw=true)
+<br>_Pluralization in Lokaliser._

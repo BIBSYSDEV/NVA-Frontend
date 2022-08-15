@@ -72,9 +72,9 @@ coverage report: `coverage/lcov-report/index.html`
 
 [Cypress dashboard](https://dashboard.cypress.io/projects/kigtb6) (requires access) displays details from test runs.
 
-<a title="Lokalise: accelerate localization from code to delivery" href="https://lokalise.com/"><img src="./src/resources/images/lokalise_logo.svg?raw=true" alt="Lokalise logo" width="200px"></a><br>
+<a title="Lokalise: accelerate localization from code to delivery" href="https://lokalise.com/"><img src="src/resources/images/lokalise_logo.svg?raw=true" alt="Lokalise logo" width="200px"></a><br>
 
-Lokalise allows translating content in a user-friendly web portal. For more information about our preferred workflow when working with translations, see description on [Confluence](https://unit.atlassian.net/wiki/spaces/NVAP/pages/2439774211/Frontend+translations) (requires access).
+Lokalise allows translating content in a user-friendly web portal. For more information about our preferred workflow when working with translations, see description on [translations.md](documentation/translations/translations.md).
 
 [Socket Security](https://socket.dev/) is used to ensure legitimacy of installed NPM packages for each PR.
 
