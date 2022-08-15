@@ -26,6 +26,7 @@ Info about all environment variables are listed in the table below. Note that yo
 | REACT_APP_DOMAIN                       | `XXXXXXXXX.auth.eu-west-1.amazoncognito.com` | Value can be found by logging in to the Parameter Store in AWS. (CognitoAuthenticationDomain)                   |
 | REACT_APP_ORCID_BASE_URL               | `https://sandbox.orcid.org`                  | Base URL to ORCID integration.                                                                                  |
 | REACT_APP_ORCID_CLIENT_ID              | `APP-XXXXXXXXX`                              | Value can be found by logging in to the Secrets Manager in AWS (OrcidClientID) or ORCID Admin dashboard.        |
+| CYPRESS_RECORD_KEY                     | `XXXXXXXXXX`                                 | Value can be found by logging in to the Secrets Manager in AWS (CypressRecordKey) or Cypress Dashboard          |
 
 ## Available Scripts
 
@@ -67,12 +68,16 @@ coverage report: `coverage/lcov-report/index.html`
 
 ## External tools
 
+[![Cypress.io](https://img.shields.io/badge/tested%20with-Cypress-04C38E.svg)](https://www.cypress.io/)
+
 [Cypress dashboard](https://dashboard.cypress.io/projects/kigtb6) (requires access) displays details from test runs.
 
-[Lokalise](https://lokalise.com/) allows translating content in a user-friendly web portal. For more information about our preferred workflow when working with translations, see description on [Confluence](https://unit.atlassian.net/wiki/spaces/NVAP/pages/2439774211/Frontend+translations) (requires access).
+<a title="Lokalise: accelerate localization from code to delivery" href="https://lokalise.com/"><img src="src/resources/images/lokalise_logo.svg?raw=true" alt="Lokalise logo" width="200px"></a><br>
+
+Lokalise allows translating content in a user-friendly web portal. For more information about our preferred workflow when working with translations, see description on [translations.md](documentation/translations/translations.md).
 
 [Socket Security](https://socket.dev/) is used to ensure legitimacy of installed NPM packages for each PR.
 
 ## License
 
-Distributed under the MIT license. See [LICENSE](https://github.com/BIBSYSDEV/NVA-Frontend/blob/main/LICENSE) for details.
+Distributed under the MIT license. See [LICENSE](LICENSE) for details.
