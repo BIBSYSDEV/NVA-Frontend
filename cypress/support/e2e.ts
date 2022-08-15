@@ -17,6 +17,7 @@ import 'cypress-axe';
 import './commands';
 import '@cypress/code-coverage/support';
 import { RoleName } from '../../src/types/user.types';
+import { Notification } from '../../src/types/notification.types';
 
 declare global {
   namespace Cypress {
