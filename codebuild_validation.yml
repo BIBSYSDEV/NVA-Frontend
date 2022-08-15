@@ -13,8 +13,8 @@ env:
     REACT_APP_REDIRECT_SIGN_OUT: 'XXX'
     REACT_APP_ORCID_CLIENT_ID: 'XXX'
     REACT_APP_ORCID_BASE_URL: 'XXX'
-  secrets-manager:
-    CYPRESS_RECORD_KEY: CypressRecordKey
+  # secrets-manager:
+  #   CYPRESS_RECORD_KEY: CypressRecordKey
 
 phases:
   install:
