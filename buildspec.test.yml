@@ -4,12 +4,12 @@ batch:
   fast-fail: false
   build-list:
     - identifier: test1
-      buildspec: buildspe.testrun.yml
+      buildspec: buildspec.testrun.yml
       env:
         variables:
           BUILD_ID: test1
     - identifier: test2
-      buildspec: buildspe.testrun.yml
+      buildspec: buildspec.testrun.yml
       env:
         variables:
           BUILD_ID: test2
