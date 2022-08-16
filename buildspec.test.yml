@@ -54,3 +54,6 @@ phases:
 artifacts:
   files:
     - '**/*'
+cache:
+  paths:
+    - NVA-end-to-end-testing-test-deploy/node_modules/**/*
