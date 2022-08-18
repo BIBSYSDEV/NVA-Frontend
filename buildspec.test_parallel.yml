@@ -11,14 +11,14 @@ version: 0.2
 batch:
   fast-fail: false
   build-list:
-    - identifier: TestParallizationRunner1
+    - identifier: TestParallelizationRunner1
       buildspec: buildspec.testrun.yml
       env:
         variables:
-          BUILD_ID: TestParallizationRunner1
-    - identifier: TestParallizationRunner2
+          BUILD_ID: TestParallelizationRunner1
+    - identifier: TestParallelizationRunner2
       buildspec: buildspec.testrun.yml
       env:
         variables:
-          BUILD_ID: TestParallizationRunner2
+          BUILD_ID: TestParallelizationRunner2
 
