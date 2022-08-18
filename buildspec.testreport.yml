@@ -1,5 +1,7 @@
 version: 0.2
 
+# Buildspec to generate a test report after all E2E tests are finished running.
+
 batch:
   fast-fail: false
   build-list:

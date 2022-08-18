@@ -1,16 +1,24 @@
 version: 0.2
 
+# Buildspec to run E2E tests in parallel. To add more builds to the parallel run, add the following at the end of the buildspec:
+# - identifier: <identifier>
+#   buildspec: buildspec.testrun.yml
+#   env:
+#     variables:
+#       BUILD_ID: <build_id>
+
+
 batch:
   fast-fail: false
   build-list:
-    - identifier: test1
+    - identifier: TestParallizationRunner1
       buildspec: buildspec.testrun.yml
       env:
         variables:
-          BUILD_ID: test1
-    - identifier: test2
+          BUILD_ID: TestParallizationRunner1
+    - identifier: TestParallizationRunner2
       buildspec: buildspec.testrun.yml
       env:
         variables:
-          BUILD_ID: test2
+          BUILD_ID: TestParallizationRunner2
 
