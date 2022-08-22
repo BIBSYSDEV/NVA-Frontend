@@ -96,7 +96,7 @@ const Dashboard = () => {
                 variant="contained"
                 data-testid={dataTestId.startPage.readMoreButton}
                 onClick={toggleReadMore}>
-                {t(readMore ? 'common.read_less_about_nva' : 'common.read_more_about_nva')}
+                {readMore ? t('common.read_less_about_nva') : t('common.read_more_about_nva')}
               </Button>
             </Box>
           </Box>
