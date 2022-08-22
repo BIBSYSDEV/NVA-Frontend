@@ -12,14 +12,9 @@ env:
     CYPRESS_REACT_APP_API_HOST: /NVA/ApiDomain
   secrets-manager:
     CYPRESS_DASHBOARD_KEY: "E2ECypressDashboardKey:CypressDashboardKey"
+  variables:
+    image: public.ecr.aws/cypress-io/cypress/browsers:node14.17.0-chrome88-ff89
 
-batch:
-  fast-fail: false
-  build-list:
-    - identifier: cypress-e2e-tests
-      env:
-        variables:
-          image: public.ecr.aws/cypress-io/cypress/browsers:node14.17.0-chrome88-ff89
 
 phases:
   install:
