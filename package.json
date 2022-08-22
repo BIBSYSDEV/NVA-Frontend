@@ -78,7 +78,7 @@
     "@types/yup": "^0.32.0",
     "axe-core": "^4.4.3",
     "axios-mock-adapter": "^1.21.2",
-    "cypress": "^10.4.0",
+    "cypress": "^10.6.0",
     "cypress-axe": "^1.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-cypress": "^2.12.1",
