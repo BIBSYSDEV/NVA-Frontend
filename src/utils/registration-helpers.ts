@@ -158,13 +158,12 @@ export const getFormattedRegistration = (registration: Registration) => {
 
 export const getNewDateValue = (date: Date | null, keyboardInput?: string) => {
   const isValidDate = date && date && !isNaN(date.getTime());
-  const isValidInput = keyboardInput?.length === 10;
-  if (isValidDate) {
+  const dateIsSelected = !keyboardInput && isValidDate;
+  const dateIsInputted = keyboardInput && keyboardInput.length === 10 && isValidDate;
+  if (dateIsSelected || dateIsInputted) {
     return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0)).toISOString();
-  } else if (!isValidDate || !isValidInput) {
-    return '';
   } else {
-    return null;
+    return '';
   }
 };
 
