@@ -9,9 +9,10 @@ version: 0.2
 
 
 batch:
-  fast-fail: false
   build-matrix:
-    - identifier: TestParallelizationRunner1
+    static:
+      fast-fail: false
+    dynamic:
       buildspec: |
         version: 0.2
         env:
