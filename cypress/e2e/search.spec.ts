@@ -3,11 +3,6 @@ import { dataTestId } from '../../src/utils/dataTestIds';
 describe('Search', () => {
   beforeEach(() => {
     cy.visit('/');
-    cy.injectAxe();
-  });
-
-  afterEach(() => {
-    cy.checkA11y();
   });
 
   it('The user should see a working pagination', () => {
@@ -20,6 +15,8 @@ describe('Search', () => {
     cy.get(`[data-testid=${dataTestId.startPage.searchPagination}] button`).eq(2).click();
     cy.url().should('include', 'results=10');
     cy.url().should('include', 'from=10');
+    cy.injectAxe();
+    cy.checkA11y();
   });
 
   it('The user should see formulas correctly formatted with MathJax', () => {
@@ -35,5 +32,7 @@ describe('Search', () => {
     cy.get(`[data-testid=${dataTestId.startPage.searchField}] input`).type(searchTerm);
     cy.get(`[data-testid=${dataTestId.startPage.searchButton}]`).click();
     cy.url().should('include', `query=%22${searchTerm}%22`);
+    cy.injectAxe();
+    cy.checkA11y();
   });
 });
