@@ -25,7 +25,6 @@ export interface User {
   isCreator: boolean;
   isEditor: boolean;
   roles: RoleName[];
-  viewingScope: string[];
   username: string;
   orcid?: string;
   allowedCustomers: string[];

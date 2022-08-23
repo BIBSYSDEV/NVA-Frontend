@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { CircularProgress, Typography } from '@mui/material';
 import { PageHeader } from '../../components/PageHeader';
 import { SyledPageContent } from '../../components/styled/Wrappers';
@@ -15,11 +14,9 @@ import { Organization } from '../../types/organization.types';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { WorklistItems } from './WorklistItems';
 import { InstitutionUser } from '../../types/user.types';
-import { setPartialUser } from '../../redux/userSlice';
 
 const WorklistPage = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
 
   const [institutionUser, isLoadingInstitutionUser] = useFetch<InstitutionUser>({
@@ -28,14 +25,8 @@ const WorklistPage = () => {
     withAuthentication: true,
   });
 
-  useEffect(() => {
-    if (institutionUser) {
-      const viewingScope = institutionUser.viewingScope?.includedUnits ?? [];
-      dispatch(setPartialUser({ viewingScope }));
-    }
-  }, [dispatch, institutionUser]);
-
-  const viewingScopeId = user && user.viewingScope.length > 0 ? user.viewingScope[0] : '';
+  const viewingScopes = institutionUser?.viewingScope?.includedUnits ?? [];
+  const viewingScopeId = viewingScopes.length > 0 ? viewingScopes[0] : '';
   const [viewingScopeOrganization, isLoadingViewingScopeOrganization] = useFetchResource<Organization>(viewingScopeId);
 
   const [worklistResponse, isLoadingWorklistResponse] = useFetch<
