@@ -44,7 +44,7 @@ export interface Journal {
   name: string;
   active: boolean;
   website: string;
-  level: string;
+  level?: string;
   onlineIssn: string | null;
   printIssn: string | null;
   npiDomain: string;
@@ -59,7 +59,7 @@ export interface Publisher {
   name: string;
   website: string;
   active: boolean;
-  level: string;
+  level?: string;
 }
 
 export interface MyRegistrationsResponse {

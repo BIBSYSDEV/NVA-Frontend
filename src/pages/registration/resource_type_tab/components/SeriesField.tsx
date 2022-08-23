@@ -13,6 +13,7 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
+import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
 
@@ -96,11 +97,7 @@ export const SeriesField = () => {
                     emphasized={state.inputValue}
                   />
                 </Typography>
-                {option.level && (
-                  <Typography variant="body2" color="textSecondary">
-                    {t('registration.resource_type.level')}: {option.level}
-                  </Typography>
-                )}
+                <NpiLevelTypography variant="body2" color="textSecondary" level={option.level} />
               </Box>
             </li>
           )}
@@ -114,9 +111,7 @@ export const SeriesField = () => {
                     <Typography variant="subtitle1">
                       {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {t('registration.resource_type.level')}: {option.level}
-                    </Typography>
+                    <NpiLevelTypography variant="body2" color="textSecondary" level={option.level} />
                   </>
                 }
               />

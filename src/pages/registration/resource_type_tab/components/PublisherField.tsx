@@ -14,6 +14,7 @@ import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { getYearQuery } from '../../../../utils/registration-helpers';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
+import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
 
@@ -102,11 +103,7 @@ export const PublisherField = () => {
                 <Typography variant="subtitle1">
                   <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
                 </Typography>
-                {option.level && (
-                  <Typography variant="body2" color="textSecondary">
-                    {t('registration.resource_type.level')}: {option.level}
-                  </Typography>
-                )}
+                <NpiLevelTypography variant="body2" color="textSecondary" level={option.level} />
               </Box>
             </li>
           )}
@@ -118,9 +115,7 @@ export const PublisherField = () => {
                 label={
                   <>
                     <Typography variant="subtitle1">{option.name}</Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {t('registration.resource_type.level')}: {option.level}
-                    </Typography>
+                    <NpiLevelTypography variant="body2" color="textSecondary" level={option.level} />
                   </>
                 }
               />

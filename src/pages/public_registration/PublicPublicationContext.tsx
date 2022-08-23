@@ -47,6 +47,7 @@ import {
 } from '../../types/publication_types/artisticRegistration.types';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
+import { NpiLevelTypography } from '../../components/NpiLevelTypography';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
@@ -94,11 +95,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
       ) : fetchedPublisher ? (
         <>
           <Typography>{fetchedPublisher.name}</Typography>
-          {fetchedPublisher.level && (
-            <Typography>
-              {t('registration.resource_type.level')}: {fetchedPublisher.level}
-            </Typography>
-          )}
+          <NpiLevelTypography level={fetchedPublisher.level} />
           <Typography
             component={Link}
             href={getChannelRegisterPublisherUrl(fetchedPublisher.identifier)}
@@ -178,11 +175,7 @@ const PublicJournalContent = ({ id }: PublicJournalContentProps) => {
                 .filter((issn) => issn)
                 .join(', ')}
             </Typography>
-            {journal.level && (
-              <Typography>
-                {t('registration.resource_type.level')}: {journal.level}
-              </Typography>
-            )}
+            <NpiLevelTypography level={journal.level} />
             <Typography component={Link} href={getChannelRegisterJournalUrl(journal.identifier)} target="_blank">
               {t('registration.public_page.find_in_channel_registry')}
             </Typography>
