@@ -33,7 +33,8 @@ phases:
       - export CYPRESS_AWS_REGION=${AWS_REGION}
   build:
     commands:
-      - npx cypress run --browser chrome  --record --key $CYPRESS_DASHBOARD_KEY --parallel
+      - echo $CYPRESS_DASHBOARD_KEY
+      - npx cypress run --browser chrome  --record --key 897a0fca-0eb5-4db4-a142-90f363ee30be --parallel
   post_build:
     commands:
       - export SECRET_STRING=$(aws secretsmanager get-secret-value --secret-id XrayApiKey | jq -r .SecretString)
