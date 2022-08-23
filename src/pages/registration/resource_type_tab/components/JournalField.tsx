@@ -17,6 +17,7 @@ import {
 } from '../../../../types/publication_types/journalRegistration.types';
 import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
+import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 
 const journalFieldTestId = dataTestId.registrationWizard.resourceType.journalField;
 
@@ -113,11 +114,7 @@ export const JournalField = () => {
                     emphasized={state.inputValue}
                   />
                 </Typography>
-                {option.level && (
-                  <Typography variant="body2" color="textSecondary">
-                    {t('registration.resource_type.level')}: {option.level}
-                  </Typography>
-                )}
+                <NpiLevelTypography variant="body2" color="textSecondary" level={option.level} />
               </Box>
             </li>
           )}
@@ -131,9 +128,7 @@ export const JournalField = () => {
                     <Typography variant="subtitle1">
                       {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {t('registration.resource_type.level')}: {option.level}
-                    </Typography>
+                    <NpiLevelTypography variant="body2" color="textSecondary" level={option.level} />
                   </>
                 }
               />

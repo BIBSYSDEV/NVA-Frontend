@@ -16,6 +16,7 @@ import { BookPublicationContext } from '../../../../types/publication_types/book
 import { ExpressionStatement } from '../../../../utils/searchHelpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
+import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -194,18 +195,14 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
       <Typography variant="body2" color="textSecondary">
         {t('registration.resource_type.series')}: {series?.name}
       </Typography>
-      <Typography variant="body2" color="textSecondary">
-        {t('registration.resource_type.level')}: {series?.level}
-      </Typography>
+      <NpiLevelTypography variant="body2" color="textSecondary" level={series?.level} />
     </>
   ) : publisherId ? (
     <>
       <Typography variant="body2" color="textSecondary">
         {t('common.publisher')}: {publisher?.name}
       </Typography>
-      <Typography variant="body2" color="textSecondary">
-        {t('registration.resource_type.level')}: {publisher?.level}
-      </Typography>
+      <NpiLevelTypography variant="body2" color="textSecondary" level={publisher?.level} />
     </>
   ) : null;
 };
