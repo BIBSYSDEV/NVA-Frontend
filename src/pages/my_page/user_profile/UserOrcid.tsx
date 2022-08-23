@@ -75,7 +75,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   useEffect(() => {
     const orcidError = new URLSearchParams(history.location.search).get('error');
     if (orcidError) {
-      dispatch(setNotification({ message: t(`feedback.error.orcid.${orcidError}` as any), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.orcid_login'), variant: 'error' }));
     }
   }, [history.location.search, dispatch, t]);
 
