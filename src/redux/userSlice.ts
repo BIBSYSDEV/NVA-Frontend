@@ -36,7 +36,6 @@ const userSlice = createSlice({
         isInstitutionAdmin: !!customerId && roles.includes(RoleName.InstitutionAdmin),
         isCurator: !!customerId && roles.includes(RoleName.Curator),
         isEditor: !!customerId && roles.includes(RoleName.Editor),
-        viewingScope: [],
         allowedCustomers,
       };
       state = user;

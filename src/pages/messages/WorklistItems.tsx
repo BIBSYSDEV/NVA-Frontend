@@ -26,12 +26,12 @@ export const WorklistItems = ({ conversations }: WorklistItemsProps) => {
     <Typography>{t('worklist.no_messages')}</Typography>
   ) : (
     <>
-      {conversations.map((conversation) => {
+      {conversations.map((conversation, index) => {
         if (conversation.type === 'PublicationConversation') {
           const support = conversation as PublicationConversation;
           return (
             <SupportRequestAccordion
-              key={support.messageCollections[0].messages[0].createdDate}
+              key={index}
               registration={conversation.publication}
               messageType={MessageType.Support}
               messages={support.messageCollections[0].messages}
@@ -41,7 +41,7 @@ export const WorklistItems = ({ conversations }: WorklistItemsProps) => {
           const doiRequest = conversation as DoiRequestConversation;
           return (
             <SupportRequestAccordion
-              key={doiRequest.createdDate}
+              key={doiRequest.identifier}
               registration={conversation.publication}
               messageType={MessageType.DoiRequest}
               messages={doiRequest.messages?.messages ?? []}

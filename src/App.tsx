@@ -14,16 +14,13 @@ import { Footer } from './layout/Footer';
 import { Header } from './layout/header/Header';
 import { Notifier } from './layout/Notifier';
 import { setNotification } from './redux/notificationSlice';
-import { setPartialUser, setUser } from './redux/userSlice';
+import { setUser } from './redux/userSlice';
 import { RootState } from './redux/store';
 import { authOptions } from './utils/aws-config';
 import { LocalStorageKey, USE_MOCK_DATA } from './utils/constants';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { PageSpinner } from './components/PageSpinner';
 import { SkipLink } from './components/SkipLink';
-import { useFetch } from './utils/hooks/useFetch';
-import { RoleApiPath } from './api/apiPaths';
-import { InstitutionUser } from './types/user.types';
 import { UrlPathTemplate } from './utils/urlPaths';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInstitutionDialog';
@@ -47,12 +44,6 @@ export const App = () => {
   const { t, i18n } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const [isLoadingUserAttributes, setIsLoadingUserAttributes] = useState(true);
-
-  const [institutionUser, isLoadingInstitutionUser] = useFetch<InstitutionUser>({
-    url: user?.username ? `${RoleApiPath.Users}/${user.username}` : '',
-    errorMessage: t('feedback.error.get_roles'),
-    withAuthentication: true,
-  });
 
   useEffect(() => {
     // Setup aws-amplify
@@ -91,13 +82,6 @@ export const App = () => {
     }
   }, [dispatch]);
 
-  useEffect(() => {
-    if (institutionUser) {
-      const viewingScope = institutionUser.viewingScope?.includedUnits ?? [];
-      dispatch(setPartialUser({ viewingScope }));
-    }
-  }, [dispatch, institutionUser]);
-
   return (
     <>
       <Helmet defaultTitle={t('common.page_title')} titleTemplate={`%s - ${t('common.page_title')}`}>
@@ -112,7 +96,7 @@ export const App = () => {
         ) : (
           <CreateCristinPersonDialog user={user} />
         ))}
-      {isLoadingUserAttributes || isLoadingInstitutionUser ? (
+      {isLoadingUserAttributes ? (
         <PageSpinner aria-label={t('common.page_title')} />
       ) : (
         <BrowserRouter>
