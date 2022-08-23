@@ -74,6 +74,7 @@ export enum DoiRequestStatus {
 
 export interface DoiRequest {
   type: 'DoiRequest';
+  identifier: string;
   createdDate: string;
   modifiedDate: string;
   status: DoiRequestStatus;

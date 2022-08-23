@@ -19,7 +19,7 @@ const WorklistPage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
-  const [institutionUser, isLoadingInstitutionUser] = useFetch<InstitutionUser>({
+  const [institutionUser] = useFetch<InstitutionUser>({
     url: user?.username ? `${RoleApiPath.Users}/${user.username}` : '',
     errorMessage: t('feedback.error.get_roles'),
     withAuthentication: true,
@@ -47,7 +47,7 @@ const WorklistPage = () => {
       ) : (
         <>
           {viewingScopeId ? (
-            isLoadingInstitutionUser || isLoadingViewingScopeOrganization ? (
+            isLoadingViewingScopeOrganization ? (
               <CircularProgress />
             ) : (
               viewingScopeOrganization && (

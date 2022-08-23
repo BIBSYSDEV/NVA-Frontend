@@ -41,7 +41,7 @@ export const WorklistItems = ({ conversations }: WorklistItemsProps) => {
           const doiRequest = conversation as DoiRequestConversation;
           return (
             <SupportRequestAccordion
-              key={index}
+              key={doiRequest.identifier}
               registration={conversation.publication}
               messageType={MessageType.DoiRequest}
               messages={doiRequest.messages?.messages ?? []}
