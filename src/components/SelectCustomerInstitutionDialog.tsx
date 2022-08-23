@@ -78,6 +78,7 @@ export const SelectCustomerInstitutionDialog = ({
           getOptionLabel={(option) => option.displayName}
           loading={isLoadingCustomers}
           onChange={(_, value) => setSelectedCustomer(value)}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
           renderInput={(params) => (
             <TextField
               {...params}
