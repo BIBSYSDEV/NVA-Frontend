@@ -11,10 +11,9 @@ env:
     CYPRESS_REACT_APP_URL: /NVA/ApplicationDomain
     CYPRESS_REACT_APP_API_HOST: /NVA/ApiDomain
   secrets-manager:
-    CYPRESS_DASHBOARD_KEY: "E2ECypressDashboardKey:CypressDashboardKey"
+    CYPRESS_DASHBOARD_KEY: 'E2ECypressDashboardKey:CypressDashboardKey'
   variables:
     image: public.ecr.aws/cypress-io/cypress/browsers:node14.17.0-chrome88-ff89
-
 
 phases:
   install:
@@ -33,8 +32,7 @@ phases:
       - export CYPRESS_AWS_REGION=${AWS_REGION}
   build:
     commands:
-      - echo $CYPRESS_DASHBOARD_KEY
-      - npx cypress run --browser chrome  --record --key 897a0fca-0eb5-4db4-a142-90f363ee30be --parallel
+      - npx cypress run --browser chrome  --record --key $CYPRESS_DASHBOARD_KEY --parallel --ci-build-id $CODEBUILD_INITIATOR
   post_build:
     commands:
       - export SECRET_STRING=$(aws secretsmanager get-secret-value --secret-id XrayApiKey | jq -r .SecretString)
