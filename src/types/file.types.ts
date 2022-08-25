@@ -1,3 +1,4 @@
+import { AwsS3Part } from '@uppy/aws-s3-multipart';
 import { Uppy as UppyType } from '@uppy/core';
 import * as LicenseImages from '../resources/images/licenses';
 import i18n from '../translations/i18n';
@@ -115,3 +116,18 @@ export const emptyFile: File = {
 export interface Uppy extends UppyType {
   hasUploadSuccessEventListener?: boolean;
 }
+
+export type CreateMultipartUploadResponse = {
+  uploadId: string;
+  key: string;
+};
+
+export type AbortMultipartUpload = void;
+
+export type ListPartsResponse = AwsS3Part[];
+
+export type PrepareUploadPartsResponse = { presignedUrls: { [k: number]: string }; headers?: { [k: string]: string } };
+
+export type CompleteMultipartUploadResponse = {
+  location?: string;
+};

@@ -4,6 +4,13 @@ import norwegianLocale from '@uppy/locales/lib/nb_NO';
 import englishLocale from '@uppy/locales/lib/en_US';
 import { FileApiPath } from '../../api/apiPaths';
 import { authenticatedApiRequest } from '../../api/apiRequest';
+import {
+  AbortMultipartUpload,
+  CompleteMultipartUploadResponse,
+  CreateMultipartUploadResponse,
+  ListPartsResponse,
+  PrepareUploadPartsResponse,
+} from '../../types/file.types';
 
 export const createUppy = (language: string) => () =>
   new Uppy({
@@ -11,7 +18,7 @@ export const createUppy = (language: string) => () =>
     autoProceed: true,
   }).use(AwsS3Multipart, {
     abortMultipartUpload: async (file, opts) => {
-      const abortResponse = await authenticatedApiRequest<any>({
+      const abortResponse = await authenticatedApiRequest<AbortMultipartUpload>({
         url: FileApiPath.Abort,
         method: 'POST',
         data: opts,
@@ -19,7 +26,7 @@ export const createUppy = (language: string) => () =>
       return abortResponse.data;
     },
     completeMultipartUpload: async (file, opts) => {
-      const completeResponse = await authenticatedApiRequest<any>({
+      const completeResponse = await authenticatedApiRequest<CompleteMultipartUploadResponse>({
         url: FileApiPath.Complete,
         method: 'POST',
         data: opts,
@@ -27,7 +34,7 @@ export const createUppy = (language: string) => () =>
       return completeResponse.data;
     },
     createMultipartUpload: async (file) => {
-      const createResponse = await authenticatedApiRequest<any>({
+      const createResponse = await authenticatedApiRequest<CreateMultipartUploadResponse>({
         url: FileApiPath.Create,
         method: 'POST',
         data: {
@@ -41,7 +48,7 @@ export const createUppy = (language: string) => () =>
       return createResponse.data;
     },
     listParts: async (file, opts) => {
-      const listPartsResponse = await authenticatedApiRequest<any>({
+      const listPartsResponse = await authenticatedApiRequest<ListPartsResponse>({
         url: FileApiPath.ListParts,
         method: 'POST',
         data: opts,
@@ -49,7 +56,7 @@ export const createUppy = (language: string) => () =>
       return listPartsResponse.data;
     },
     prepareUploadParts: async (file, partData) => {
-      const prepareResponse = await authenticatedApiRequest<any>({
+      const prepareResponse = await authenticatedApiRequest<PrepareUploadPartsResponse>({
         url: FileApiPath.Prepare,
         method: 'POST',
         data: partData,
