@@ -1,13 +1,11 @@
 import { Autocomplete, TextField } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { RoleApiPath } from '../../../api/apiPaths';
 import { authenticatedApiRequest } from '../../../api/apiRequest';
 import { setNotification } from '../../../redux/notificationSlice';
 import { Organization } from '../../../types/organization.types';
-import { setPartialUser } from '../../../redux/userSlice';
-import { RootState } from '../../../redux/store';
 import { InstitutionUser } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -20,8 +18,7 @@ interface ViewingScopeCellProps {
 
 export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
   const dispatch = useDispatch();
-  const { t } = useTranslation('admin');
-  const authenticatedUser = useSelector((store: RootState) => store.user);
+  const { t } = useTranslation();
   const [isUpdating, setIsUpdating] = useState(false);
   const [userCopy, setUserCopy] = useState(user); // Needed if empty scope before adding a new
   const selectedId = userCopy.viewingScope?.includedUnits[0] ?? '';
@@ -45,19 +42,16 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
 
     if (isSuccessStatus(updateUserResponse.status)) {
       setUserCopy(newUser);
-      dispatch(setNotification({ message: t('feedback:success.update_institution_user'), variant: 'success' }));
-      if (user.username === authenticatedUser?.id) {
-        dispatch(setPartialUser({ viewingScope: [newScopeId] }));
-      }
+      dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' }));
     } else if (isErrorStatus(updateUserResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:error.update_institution_user'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' }));
     }
     setIsUpdating(false);
   };
 
   return (
     <Autocomplete
-      aria-label={t('users.area_of_responsibility')}
+      aria-label={t('basic_data.users.area_of_responsibility')}
       data-testid={dataTestId.myInstitutionUsersPage.areaOfResponsibilityField}
       options={options}
       value={selectedOption}
@@ -74,7 +68,7 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
           {...params}
           disabled={isUpdating}
           fullWidth
-          placeholder={t('users.area_of_responsibility_placeholder')}
+          placeholder={t('basic_data.users.area_of_responsibility_placeholder')}
         />
       )}
     />

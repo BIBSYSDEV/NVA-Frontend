@@ -12,6 +12,17 @@ import { Contributor } from './contributor.types';
 import { PresentationEntityDescription } from './publication_types/presentationRegistration.types';
 import { ArtisticEntityDescription } from './publication_types/artisticRegistration.types';
 import { MessageCollection } from './publication_types/messages.types';
+import { MediaContributionEntityDescription } from './publication_types/mediaContributionRegistration';
+import {
+  JournalType,
+  BookType,
+  ReportType,
+  DegreeType,
+  ChapterType,
+  PresentationType,
+  ArtisticType,
+  MediaType,
+} from './publicationFieldNames';
 
 export enum RegistrationStatus {
   Deleted = 'DRAFT_FOR_DELETION',
@@ -33,7 +44,7 @@ export interface Journal {
   name: string;
   active: boolean;
   website: string;
-  level: string;
+  level?: string;
   onlineIssn: string | null;
   printIssn: string | null;
   npiDomain: string;
@@ -48,7 +59,7 @@ export interface Publisher {
   name: string;
   website: string;
   active: boolean;
-  level: string;
+  level?: string;
 }
 
 export interface MyRegistrationsResponse {
@@ -63,6 +74,7 @@ export enum DoiRequestStatus {
 
 export interface DoiRequest {
   type: 'DoiRequest';
+  identifier: string;
   createdDate: string;
   modifiedDate: string;
   status: DoiRequestStatus;
@@ -114,6 +126,16 @@ export interface BaseReference {
   doi: string;
 }
 
+export type PublicationInstanceType =
+  | JournalType
+  | BookType
+  | ReportType
+  | DegreeType
+  | ChapterType
+  | PresentationType
+  | ArtisticType
+  | MediaType;
+
 export enum PublicationChannelType {
   Journal = 'Journal',
   Publisher = 'Publisher',
@@ -130,7 +152,8 @@ export type EntityDescription =
   | ReportEntityDescription
   | ChapterEntityDescription
   | PresentationEntityDescription
-  | ArtisticEntityDescription;
+  | ArtisticEntityDescription
+  | MediaContributionEntityDescription;
 
 export interface Registration extends BaseRegistration {
   entityDescription?: EntityDescription;

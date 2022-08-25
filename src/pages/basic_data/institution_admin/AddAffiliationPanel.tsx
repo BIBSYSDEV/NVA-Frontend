@@ -1,12 +1,11 @@
 import { Autocomplete, Box, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import LooksTwoIcon from '@mui/icons-material/LooksTwo';
+import LooksTwoIcon from '@mui/icons-material/LooksTwoOutlined';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
-import { DatePicker } from '@mui/lab';
+import { DatePicker } from '@mui/x-date-pickers';
 import { useSelector } from 'react-redux';
 import { StyledCenterContainer } from '../../../components/styled/Wrappers';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { datePickerTranslationProps } from '../../../themes/mainTheme';
 import { getNewDateValue } from '../../../utils/registration-helpers';
 import { RootState } from '../../../redux/store';
 import { Organization } from '../../../types/organization.types';
@@ -17,15 +16,15 @@ import { StartDateField } from '../fields/StartDateField';
 import { PositionField } from '../fields/PositionField';
 
 export const AddAffiliationPanel = () => {
-  const { t } = useTranslation('basicData');
-  const { values, setFieldValue, isSubmitting } = useFormikContext<AddEmployeeData>();
+  const { t } = useTranslation();
+  const { values, errors, setFieldValue, isSubmitting } = useFormikContext<AddEmployeeData>();
   const user = useSelector((store: RootState) => store.user);
   const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
     user?.topOrgCristinId ?? ''
   );
   const organizationOptions = currentOrganization ? getSortedSubUnits([currentOrganization]) : [];
 
-  const isDisabled = !values.user.firstName || !values.user.lastName || !values.user.nationalId || isSubmitting;
+  const isDisabled = !!errors.user?.firstName || !!errors.user?.lastName || !!errors.user?.nationalId || isSubmitting;
 
   return (
     <>
@@ -51,7 +50,7 @@ export const AddAffiliationPanel = () => {
                 {...field}
                 {...params}
                 required
-                label={t('common:institution')}
+                label={t('common.institution')}
                 variant="filled"
                 fullWidth
                 error={touched && !!error}
@@ -74,7 +73,7 @@ export const AddAffiliationPanel = () => {
               type="number"
               inputProps={{ min: '0', max: '100' }}
               variant="filled"
-              label={t('position_percent')}
+              label={t('basic_data.add_employee.position_percent')}
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}
             />
@@ -91,9 +90,11 @@ export const AddAffiliationPanel = () => {
         <Field name="affiliation.endDate">
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <DatePicker
-              {...datePickerTranslationProps}
               disabled={isDisabled}
-              label={t('common:end_date')}
+              label={t('common.end_date')}
+              PopperProps={{
+                'aria-label': t('common.end_date'),
+              }}
               value={field.value ? field.value : null}
               onChange={(date: Date | null, keyboardInput) => {
                 const newValue = getNewDateValue(date, keyboardInput);

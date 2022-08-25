@@ -1,13 +1,13 @@
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { AppBar, Box, Button, Divider, IconButton, Theme, useMediaQuery } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import MailIcon from '@mui/icons-material/MailOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { RootState } from '../../redux/store';
 import { getRegistrationPath, UrlPathTemplate } from '../../utils/urlPaths';
 import { LoginButton } from './LoginButton';
@@ -15,10 +15,24 @@ import { Logo } from './Logo';
 import { GeneralMenu } from './GeneralMenu';
 import { LanguageSelector } from './LanguageSelector';
 import { dataTestId } from '../../utils/dataTestIds';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { CustomerInstitution } from '../../types/customerInstitution.types';
+import { setPartialUser } from '../../redux/userSlice';
 
 export const Header = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
+  const [customer] = useFetch<CustomerInstitution>({
+    url: user?.isEditor && user?.customerId ? user.customerId : '',
+  });
+
+  useEffect(() => {
+    if (customer) {
+      dispatch(setPartialUser({ customerShortName: customer.shortName }));
+    }
+  }, [dispatch, customer]);
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
@@ -42,8 +56,9 @@ export const Header = () => {
           px: '1rem',
         }}>
         <IconButton
+          data-testid={dataTestId.header.generalMenuButton}
           onClick={handleClick}
-          title={t('common:menu')}
+          title={t('common.menu')}
           size="large"
           color="inherit"
           sx={{ gridArea: 'other-menu' }}>
@@ -64,7 +79,7 @@ export const Header = () => {
             data-testid={dataTestId.header.newRegistrationLink}
             to={getRegistrationPath()}
             startIcon={<AddCircleIcon />}>
-            {t('new_registration')}
+            {t('registration.new_registration')}
           </Button>
         )}
         <Box
@@ -82,6 +97,18 @@ export const Header = () => {
           }}>
           {!isMobile && (
             <>
+              {user?.isEditor && customer?.shortName && (
+                <Button
+                  sx={{ whiteSpace: 'nowrap', borderRadius: '2rem' }}
+                  color="inherit"
+                  variant="outlined"
+                  size="small"
+                  component={RouterLink}
+                  data-testid={dataTestId.header.editorLink}
+                  to={UrlPathTemplate.Editor}>
+                  {user.customerShortName}
+                </Button>
+              )}
               <Divider
                 variant="middle"
                 sx={{ gridArea: 'divider', borderColor: 'white', opacity: 0.8 }}
@@ -91,12 +118,13 @@ export const Header = () => {
               <LanguageSelector />
               {(user?.isInstitutionAdmin || user?.isAppAdmin) && (
                 <Button
+                  sx={{ whiteSpace: 'nowrap' }}
                   color="inherit"
                   component={RouterLink}
                   data-testid={dataTestId.header.basicDataLink}
                   to={UrlPathTemplate.BasicData}
                   startIcon={<BusinessCenterIcon />}>
-                  {t('basicData:basic_data')}
+                  {t('basic_data.basic_data')}
                 </Button>
               )}
               {user?.isCurator && (
@@ -106,17 +134,18 @@ export const Header = () => {
                   data-testid={dataTestId.header.worklistLink}
                   to={UrlPathTemplate.Worklist}
                   startIcon={<AssignmentIcon />}>
-                  {t('workLists:worklist')}
+                  {t('worklist.worklist')}
                 </Button>
               )}
-              {user?.isCreator && (
+              {user && (
                 <Button
+                  sx={{ whiteSpace: 'nowrap' }}
                   color="inherit"
                   component={RouterLink}
-                  data-testid={dataTestId.header.messagesLink}
-                  to={UrlPathTemplate.MyMessages}
-                  startIcon={<MailIcon />}>
-                  {t('workLists:messages')}
+                  data-testid={dataTestId.header.myPageLink}
+                  to={UrlPathTemplate.MyPage}
+                  startIcon={<FavoriteBorderIcon />}>
+                  {t('my_page.my_page')}
                 </Button>
               )}
             </>

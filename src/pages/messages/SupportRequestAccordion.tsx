@@ -15,6 +15,7 @@ import { MessageList } from './MessageList';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { RootState } from '../../redux/store';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
+import { getTitleString } from '../../utils/registration-helpers';
 
 interface SupportRequestAccordionProps {
   messageType: MessageType;
@@ -23,7 +24,7 @@ interface SupportRequestAccordionProps {
 }
 
 export const SupportRequestAccordion = ({ registration, messageType, messages }: SupportRequestAccordionProps) => {
-  const { t } = useTranslation('workLists');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const userId = useSelector((store: RootState) => store.user?.id);
 
@@ -32,12 +33,12 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
   const onClickSendMessage = async (message: string) => {
     const updateDoiRequestResponse = await addMessage(registration.identifier, message, messageType);
     if (isErrorStatus(updateDoiRequestResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:error.send_message'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
     } else if (isSuccessStatus(updateDoiRequestResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:success.send_message'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
       const newMessage: Message = {
         ...messagesCopy[0],
-        date: new Date().toString(),
+        createdDate: new Date().toString(),
         sender: userId ?? '',
         text: message,
       };
@@ -53,31 +54,30 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
           sx={{
             '.MuiAccordionSummary-content': {
               display: 'grid',
-              gridTemplateAreas: '"status title creator"',
-              gridTemplateColumns: '1fr 5fr 1fr',
-              columnGap: '1rem',
+              gridTemplateAreas: { xs: '"status creator" "title title"', md: '"status title creator"' },
+              gridTemplateColumns: { xs: '1fr 1fr', md: '1fr 5fr 1fr' },
+              gap: '1rem',
             },
           }}>
           <Typography
             data-testid={`message-type-${registration.identifier}`}
             sx={{ gridArea: 'status', fontWeight: 'bold' }}>
             {messageType === MessageType.DoiRequest
-              ? t('types.doi')
+              ? t('my_page.messages.types.doi')
               : messageType === MessageType.Support
-              ? t('types.support')
+              ? t('my_page.messages.types.support')
               : null}
           </Typography>
           <Typography
             data-testid={`message-title-${registration.identifier}`}
             sx={{ gridArea: 'title', fontWeight: 'bold' }}>
-            {registration.mainTitle}
+            {getTitleString(registration.mainTitle)}
           </Typography>
-          <Box
+          <Typography
             data-testid={`message-owner-${registration.identifier}`}
-            sx={{ wordBreak: 'break-word', gridArea: 'creator' }}>
-            <Typography>{registration.owner}</Typography>
-            {new Date(messagesCopy[messagesCopy.length - 1].date).toLocaleDateString()}
-          </Box>
+            sx={{ gridArea: 'creator', fontWeight: 'bold' }}>
+            {new Date(messagesCopy[messagesCopy.length - 1].createdDate).toLocaleDateString()}
+          </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Box sx={{ width: '75%', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -91,7 +91,7 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
               endIcon={<ArrowForwardIcon />}
               component={RouterLink}
               to={getRegistrationLandingPagePath(registration.identifier)}>
-              {t('go_to_registration')}
+              {t('my_page.messages.go_to_registration')}
             </Button>
           </Box>
         </AccordionDetails>

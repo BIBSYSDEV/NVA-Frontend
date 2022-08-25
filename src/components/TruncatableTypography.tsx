@@ -25,7 +25,7 @@ interface TruncatableTypographyProps extends TypographyProps {
 }
 
 export const TruncatableTypography = ({ lines = 3, ...props }: TruncatableTypographyProps) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
   const [lineClamp, setLineClamp] = useState<number | undefined>(lines);
   const [isTruncated, setIsTruncated] = useState(false);
 
@@ -38,7 +38,7 @@ export const TruncatableTypography = ({ lines = 3, ...props }: TruncatableTypogr
   }, [props.children]);
 
   return (
-    <Tooltip followCursor title={isExpandable ? t<string>('click_to_show_all') : ''}>
+    <Tooltip followCursor title={isExpandable ? t('common.click_to_show_all') : ''}>
       <StyledTruncatableTypography
         ref={(ref) => setIsTruncated(isOverflown(ref))}
         lineClamp={lineClamp}

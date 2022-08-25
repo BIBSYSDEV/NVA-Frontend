@@ -8,19 +8,22 @@ export enum JournalArticleContentType {
 }
 
 export enum BookMonographContentType {
-  AcademicMonograph = 'Academic Monograph',
-  NonFictionMonograph = 'Non-fiction Monograph',
-  PopularScienceMonograph = 'Popular Science Monograph',
+  AcademicMonograph = 'AcademicMonograph',
+  NonFictionMonograph = 'NonFictionMonograph',
+  PopularScienceMonograph = 'PopularScienceMonograph',
   Textbook = 'Textbook',
   Encyclopedia = 'Encyclopedia',
+  ExhititionCatalog = 'ExhibitionCatalog',
 }
 
 export enum ChapterContentType {
-  AcademicChapter = 'Academic Chapter',
-  NonFictionChapter = 'Non-fiction Chapter',
-  PopularScienceChapter = 'Popular Science Chapter',
-  TextbookChapter = 'Textbook Chapter',
-  EncyclopediaChapter = 'Encyclopedia Chapter',
+  AcademicChapter = 'AcademicChapter',
+  NonFictionChapter = 'NonFictionChapter',
+  PopularScienceChapter = 'PopularScienceChapter',
+  TextbookChapter = 'TextbookChapter',
+  EncyclopediaChapter = 'EncyclopediaChapter',
+  Introduction = 'Introduction',
+  ExhibitionCatalogChapter = 'ExhibitionCatalogChapter',
 }
 
 export const nviApplicableContentTypes: string[] = [

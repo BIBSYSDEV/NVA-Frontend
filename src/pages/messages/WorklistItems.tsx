@@ -14,7 +14,7 @@ interface WorklistItemsProps {
 }
 
 export const WorklistItems = ({ conversations }: WorklistItemsProps) => {
-  const { t } = useTranslation('workLists');
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (conversations.some(({ publication }) => stringIncludesMathJax(publication.mainTitle))) {
@@ -23,15 +23,15 @@ export const WorklistItems = ({ conversations }: WorklistItemsProps) => {
   }, [conversations]);
 
   return conversations.length === 0 ? (
-    <Typography>{t('no_messages')}</Typography>
+    <Typography>{t('worklist.no_messages')}</Typography>
   ) : (
     <>
-      {conversations.map((conversation) => {
+      {conversations.map((conversation, index) => {
         if (conversation.type === 'PublicationConversation') {
           const support = conversation as PublicationConversation;
           return (
             <SupportRequestAccordion
-              key={support.messageCollections[0].messages[0].date}
+              key={index}
               registration={conversation.publication}
               messageType={MessageType.Support}
               messages={support.messageCollections[0].messages}
@@ -41,7 +41,7 @@ export const WorklistItems = ({ conversations }: WorklistItemsProps) => {
           const doiRequest = conversation as DoiRequestConversation;
           return (
             <SupportRequestAccordion
-              key={doiRequest.createdDate}
+              key={doiRequest.identifier}
               registration={conversation.publication}
               messageType={MessageType.DoiRequest}
               messages={doiRequest.messages?.messages ?? []}

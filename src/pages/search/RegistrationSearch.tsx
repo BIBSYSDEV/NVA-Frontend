@@ -12,7 +12,7 @@ import { SearchResponse } from '../../types/common.types';
 import { Registration } from '../../types/registration.types';
 
 export const RegistrationSearch = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
 
@@ -24,7 +24,7 @@ export const RegistrationSearch = () => {
 
   const [searchResults, isLoadingSearch] = useFetch<SearchResponse<Registration>>({
     url: `${SearchApiPath.Registrations}?${params.toString()}`,
-    errorMessage: t('feedback:error.search'),
+    errorMessage: t('feedback.error.search'),
   });
 
   const updatePath = (from: string, results: string) => {
@@ -52,7 +52,7 @@ export const RegistrationSearch = () => {
           />
         </>
       ) : (
-        <Typography>{t('no_hits')}</Typography>
+        <Typography>{t('common.no_hits')}</Typography>
       )}
     </Box>
   );

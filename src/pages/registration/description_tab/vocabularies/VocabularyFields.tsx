@@ -2,7 +2,7 @@ import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { TFuncKey, useTranslation } from 'react-i18next';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { HrcsActivityInput } from './HrcsActivityInput';
@@ -15,19 +15,19 @@ import { hrcsActivityBaseId, hrcsCategoryBaseId } from '../../../../utils/consta
 import { InputContainerBox } from '../../../../components/styled/Wrappers';
 
 interface VocabularyConfig {
-  [key: string]: { baseId: string; i18nKey: string; component: (props: VocabularyComponentProps) => JSX.Element };
+  [key: string]: { baseId: string; i18nKey: TFuncKey; component: (props: VocabularyComponentProps) => JSX.Element };
 }
 
 // Specify which vocabularies to show, and their i18n key and component
 const vocabularyConfig: VocabularyConfig = {
   hrcsActivity: {
     baseId: hrcsActivityBaseId,
-    i18nKey: 'description.hrcs_activities',
+    i18nKey: 'registration.description.hrcs_activities',
     component: HrcsActivityInput,
   },
   hrcsCategory: {
     baseId: hrcsCategoryBaseId,
-    i18nKey: 'description.hrcs_categories',
+    i18nKey: 'registration.description.hrcs_categories',
     component: HrcsCategoryInput,
   },
 };
@@ -39,7 +39,7 @@ interface VocabularyFieldsProps {
 }
 
 export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: VocabularyFieldsProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const {
     setFieldValue,
     values: { subjects },
@@ -100,12 +100,12 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                         color="error"
                         startIcon={<RemoveCircleIcon />}
                         onClick={() => setVocabularyToRemove(vocabulary)}>
-                        {t('description.remove_vocabulary')}
+                        {t('registration.description.remove_vocabulary')}
                       </Button>
 
                       <ConfirmDialog
                         open={vocabularyToRemove === vocabulary}
-                        title={t('description.confirm_remove_vocabulary_title')}
+                        title={t('registration.description.confirm_remove_vocabulary_title')}
                         onAccept={() => {
                           const updatedValues = subjects.filter((keyword) => !keyword.startsWith(baseId));
                           setFieldValue(name, updatedValues);
@@ -116,7 +116,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                         }}
                         onCancel={() => setVocabularyToRemove('')}>
                         <Typography>
-                          {t('description.confirm_remove_vocabulary_text', {
+                          {t('registration.description.confirm_remove_vocabulary_text', {
                             vocabulary: t(i18nKey),
                           })}
                         </Typography>
@@ -156,7 +156,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
           onClick={(event) => setNewVocabularyAnchor(event.currentTarget)}
           startIcon={<AddIcon />}
           sx={{ alignSelf: 'flex-start' }}>
-          {t('description.add_vocabulary')}
+          {t('registration.description.add_vocabulary')}
         </Button>
       )}
     </InputContainerBox>

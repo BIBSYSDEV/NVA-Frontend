@@ -17,7 +17,7 @@ const disciplineOptions = disciplines
   .flat();
 
 export const NpiDisciplineField = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   return (
     <Field name={ResourceFieldNames.NpiSubjectHeading}>
@@ -36,19 +36,19 @@ export const NpiDisciplineField = () => {
             aria-labelledby={`${name}-label`}
             options={disciplineOptions}
             blurOnSelect
-            groupBy={(discipline) => t(`disciplines:${discipline.mainDisciplineId}`)}
+            groupBy={(discipline) => t(`disciplines.${discipline.mainDisciplineId}` as any)}
             onChange={(_, value) => setFieldValue(name, value.pop()?.id ?? '')}
             value={selectedOption ? [selectedOption] : []}
-            getOptionLabel={(option) => t(`disciplines:${option.id}`)}
+            getOptionLabel={(option) => t(`disciplines.${option.id}` as any)}
             renderInput={(params) => (
               <TextField
                 {...params}
                 onBlur={() => (!touched ? setFieldTouched(name, true, false) : null)}
-                label={t('description.npi_disciplines')}
+                label={t('registration.description.npi_disciplines')}
                 required
                 fullWidth
                 variant="filled"
-                placeholder={!value ? t('description.search_for_npi_discipline') : ''}
+                placeholder={!value ? t('registration.description.search_for_npi_discipline') : ''}
                 error={!!error && touched}
                 helperText={<ErrorMessage name={name} />}
                 InputProps={{

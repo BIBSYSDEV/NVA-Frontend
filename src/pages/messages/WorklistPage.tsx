@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { CircularProgress, Typography } from '@mui/material';
 import { PageHeader } from '../../components/PageHeader';
 import { SyledPageContent } from '../../components/styled/Wrappers';
-import { SearchApiPath } from '../../api/apiPaths';
+import { RoleApiPath, SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { DoiRequestConversation, PublicationConversation } from '../../types/publication_types/messages.types';
 import { ListSkeleton } from '../../components/ListSkeleton';
@@ -13,18 +13,27 @@ import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { Organization } from '../../types/organization.types';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { WorklistItems } from './WorklistItems';
+import { InstitutionUser } from '../../types/user.types';
 
 const WorklistPage = () => {
-  const { t } = useTranslation('workLists');
+  const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const viewingScopeId = user && user.viewingScope.length > 0 ? user.viewingScope[0] : '';
+
+  const [institutionUser] = useFetch<InstitutionUser>({
+    url: user?.username ? `${RoleApiPath.Users}/${user.username}` : '',
+    errorMessage: t('feedback.error.get_roles'),
+    withAuthentication: true,
+  });
+
+  const viewingScopes = institutionUser?.viewingScope?.includedUnits ?? [];
+  const viewingScopeId = viewingScopes.length > 0 ? viewingScopes[0] : '';
   const [viewingScopeOrganization, isLoadingViewingScopeOrganization] = useFetchResource<Organization>(viewingScopeId);
 
   const [worklistResponse, isLoadingWorklistResponse] = useFetch<
     SearchResponse<PublicationConversation | DoiRequestConversation>
   >({
     url: SearchApiPath.Worklist,
-    errorMessage: t('feedback:error.get_messages'),
+    errorMessage: t('feedback.error.get_messages'),
     withAuthentication: true,
   });
 
@@ -32,7 +41,7 @@ const WorklistPage = () => {
 
   return (
     <SyledPageContent>
-      <PageHeader>{t('worklist')}</PageHeader>
+      <PageHeader>{t('worklist.worklist')}</PageHeader>
       {isLoadingWorklistResponse ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
@@ -43,7 +52,7 @@ const WorklistPage = () => {
             ) : (
               viewingScopeOrganization && (
                 <Typography paragraph sx={{ fontWeight: 'bold' }}>
-                  {t('limited_to', {
+                  {t('worklist.limited_to', {
                     name: getLanguageString(viewingScopeOrganization.name),
                   })}
                 </Typography>

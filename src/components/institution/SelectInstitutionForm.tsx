@@ -33,12 +33,12 @@ interface SelectInstitutionFormProps {
 }
 
 export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFormProps) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
   const [institutions, isLoadingInstitutions] = useFetch<SearchResponse<Organization>>({
     url: debouncedQuery ? `${CristinApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
-    errorMessage: t('feedback:error.get_institutions'),
+    errorMessage: t('feedback.error.get_institutions'),
   });
 
   const options = isLoadingInstitutions || !institutions ? [] : institutions.hits;
@@ -77,7 +77,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
                     <TextField
                       {...params}
                       data-testid={dataTestId.organization.searchField}
-                      label={t('institution')}
+                      label={t('common.institution')}
                       variant="filled"
                       fullWidth
                     />
@@ -106,7 +106,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
                       <TextField
                         {...params}
                         data-testid={dataTestId.organization.subSearchField}
-                        label={t('institution:department')}
+                        label={t('registration.contributors.department')}
                         variant="filled"
                         fullWidth
                       />
@@ -123,12 +123,12 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
                 loading={isSubmitting}
                 disabled={!values.unit}
                 data-testid="institution-add-button">
-                {t('add')}
+                {t('common.add')}
               </LoadingButton>
 
               {onClose && (
                 <Button onClick={onClose} data-testid="institution-cancel-button">
-                  {t('cancel')}
+                  {t('common.cancel')}
                 </Button>
               )}
             </Box>

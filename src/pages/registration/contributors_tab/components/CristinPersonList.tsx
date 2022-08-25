@@ -3,7 +3,7 @@ import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { SearchResponse } from '../../../../types/common.types';
-import { CristinUser } from '../../../../types/user.types';
+import { CristinPerson } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { filterActiveAffiliations, getFullCristinName } from '../../../../utils/user-helpers';
 import { LastRegistrationTableCellContent } from './LastRegistrationTableCellContent';
@@ -11,9 +11,9 @@ import { LastRegistrationTableCellContent } from './LastRegistrationTableCellCon
 const radioHeadingId = 'selected-heading';
 
 interface CristinPersonListProps {
-  personSearch: SearchResponse<CristinUser>;
+  personSearch: SearchResponse<CristinPerson>;
   searchTerm?: string;
-  onSelectContributor?: (selectedContributor: CristinUser) => void;
+  onSelectContributor?: (selectedContributor: CristinPerson) => void;
   userId?: string;
 }
 
@@ -23,46 +23,46 @@ export const CristinPersonList = ({
   onSelectContributor,
   userId,
 }: CristinPersonListProps) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
 
   return (
     <>
       {searchTerm && (
         <Typography variant="subtitle1" component="p">
-          {t('search_summary', { count: personSearch.size, searchTerm })}:
+          {t('common.search_summary', { count: personSearch.size, searchTerm })}:
         </Typography>
       )}
 
       <TableContainer>
         <Table size="medium">
-          <caption style={visuallyHidden}>{t('registration:contributors.authors')}</caption>
+          <caption style={visuallyHidden}>{t('registration.contributors.authors')}</caption>
           <TableHead>
             <TableRow>
               <TableCell id={radioHeadingId} padding="checkbox">
-                {t('common:selected')}
+                {t('common.selected')}
               </TableCell>
-              <TableCell>{t('name')}</TableCell>
-              <TableCell>{t('profile:heading.affiliations')}</TableCell>
-              <TableCell>{t('common:registrations')}</TableCell>
+              <TableCell>{t('common.name')}</TableCell>
+              <TableCell>{t('my_page.my_profile.heading.affiliations')}</TableCell>
+              <TableCell>{t('common.registrations')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {personSearch.hits.map((cristinUser) => {
-              const activeAffiliations = filterActiveAffiliations(cristinUser.affiliations);
-              const isSelected = cristinUser.id === userId;
+            {personSearch.hits.map((cristinPerson) => {
+              const activeAffiliations = filterActiveAffiliations(cristinPerson.affiliations);
+              const isSelected = cristinPerson.id === userId;
               return (
                 <TableRow
                   sx={{ cursor: 'pointer' }}
                   data-testid={dataTestId.registrationWizard.contributors.authorRadioButton}
-                  key={cristinUser.id}
+                  key={cristinPerson.id}
                   hover
-                  onClick={() => onSelectContributor?.(cristinUser)}
+                  onClick={() => onSelectContributor?.(cristinPerson)}
                   selected={isSelected}>
                   <TableCell padding="checkbox">
                     <Radio inputProps={{ 'aria-labelledby': radioHeadingId }} checked={isSelected} />
                   </TableCell>
                   <TableCell>
-                    <Typography>{getFullCristinName(cristinUser.names)}</Typography>
+                    <Typography>{getFullCristinName(cristinPerson.names)}</Typography>
                   </TableCell>
                   <TableCell>
                     {activeAffiliations.length > 0 ? (
@@ -72,11 +72,11 @@ export const CristinPersonList = ({
                         ))}
                       </>
                     ) : (
-                      <i>{t('profile:authority.no_affiliations_found')}</i>
+                      <i>{t('registration.contributors.no_affiliations_found')}</i>
                     )}
                   </TableCell>
                   <TableCell>
-                    <LastRegistrationTableCellContent personId={cristinUser.id} />
+                    <LastRegistrationTableCellContent personId={cristinPerson.id} />
                   </TableCell>
                 </TableRow>
               );

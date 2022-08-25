@@ -9,10 +9,11 @@ import { ChapterPublicationInstance } from '../../types/publication_types/chapte
 import { PagesMonograph, PagesRange } from '../../types/publication_types/pages.types';
 import i18n from '../../translations/i18n';
 import { ArtisticPublicationInstance, DesignType } from '../../types/publication_types/artisticRegistration.types';
+import { ArtisticType } from '../../types/publicationFieldNames';
 
 const getPageInterval = (pages: PagesRange | null) => {
   return pages?.begin || pages?.end
-    ? `${i18n.t('registration:resource_type.pages')} ${pages.begin ?? '?'}-${pages.end ?? '?'}`
+    ? `${i18n.t('registration.resource_type.pages')} ${pages.begin ?? '?'}-${pages.end ?? '?'}`
     : '';
 };
 
@@ -21,22 +22,22 @@ export const PublicPublicationInstanceJournal = ({
 }: {
   publicationInstance: JournalPublicationInstance;
 }) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const { articleNumber, issue, pages, volume } = publicationInstance;
   const pagesInterval = getPageInterval(pages);
 
   const fieldTexts = [];
   if (volume) {
-    fieldTexts.push(`${t('resource_type.volume')} ${volume}`);
+    fieldTexts.push(`${t('registration.resource_type.volume')} ${volume}`);
   }
   if (issue) {
-    fieldTexts.push(`${t('resource_type.issue')} ${issue}`);
+    fieldTexts.push(`${t('registration.resource_type.issue')} ${issue}`);
   }
   if (pagesInterval) {
     fieldTexts.push(pagesInterval);
   }
   if (articleNumber) {
-    fieldTexts.push(`${t('resource_type.article_number')} ${articleNumber}`);
+    fieldTexts.push(`${t('registration.resource_type.article_number')} ${articleNumber}`);
   }
 
   return <Typography>{fieldTexts.join(', ')}</Typography>;
@@ -80,7 +81,7 @@ export const PublicPublicationInstanceChapter = ({
   const { pages } = publicationInstance;
   const pagesInterval = getPageInterval(pages);
 
-  return <>{pagesInterval && <Typography>{pagesInterval}</Typography>}</>;
+  return pagesInterval ? <Typography>{pagesInterval}</Typography> : null;
 };
 
 export const PublicPublicationInstanceArtistic = ({
@@ -88,19 +89,31 @@ export const PublicPublicationInstanceArtistic = ({
 }: {
   publicationInstance: ArtisticPublicationInstance;
 }) => {
-  const { t } = useTranslation('registration');
-  const { subtype, description } = publicationInstance;
+  const { t } = useTranslation();
+  const { type, subtype, description } = publicationInstance;
+
+  const i18nTypeBase =
+    type === ArtisticType.ArtisticDesign
+      ? 'registration.resource_type.artistic.design_type.'
+      : type === ArtisticType.ArtisticArchitecture
+      ? 'registration.resource_type.artistic.architecture_type.'
+      : type === ArtisticType.PerformingArts
+      ? 'registration.resource_type.artistic.performing_arts_type.'
+      : type === ArtisticType.MovingPicture
+      ? 'registration.resource_type.artistic.moving_picture_type.'
+      : '';
+
   const typeString = subtype?.type
     ? subtype.type === DesignType.Other && subtype.description
-      ? `${subtype.description} (${t(`resource_type.design_type.${subtype.type}`)})`
-      : t(`resource_type.design_type.${subtype.type}`)
+      ? `${subtype.description} (${t(`${i18nTypeBase}${subtype.type}` as any)})`
+      : t(`${i18nTypeBase}${subtype.type}` as any)
     : '';
 
   return (
     <>
       {typeString && (
         <Typography>
-          {t('resource_type.type_work')}: {typeString}
+          {t('registration.resource_type.type_work')}: {typeString}
         </Typography>
       )}
       {description && <Typography>{description}</Typography>}
@@ -109,20 +122,21 @@ export const PublicPublicationInstanceArtistic = ({
 };
 
 const PublicTotalPagesContent = ({ pages }: { pages: PagesMonograph | null }) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   return pages?.pages ? (
     <Typography>
-      {t('resource_type.number_of_pages')}: {pages.pages}
+      {t('registration.resource_type.number_of_pages')}: {pages.pages}
     </Typography>
   ) : null;
 };
 
 export const PublicIsbnContent = ({ isbnList }: { isbnList?: string[] }) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
+
   return isbnList && isbnList.length > 0 ? (
     <Typography>
-      {t('resource_type.isbn')}:{' '}
+      {t('registration.resource_type.isbn')}:{' '}
       {isbnList
         .filter((isbn) => isbn)
         .map((isbn) => hyphenateIsbn(isbn))

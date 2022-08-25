@@ -45,7 +45,7 @@ export const UserList = ({
   refetchUsers,
   showScope = false,
 }: UserListProps) => {
-  const { t } = useTranslation('admin');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [page, setPage] = useState(0);
@@ -66,9 +66,9 @@ export const UserList = ({
       const updateUserResponse = await updateUser(user.username, newUser);
       if (isErrorStatus(updateUserResponse.status)) {
         setUpdatedRoleForUsers((state) => state.filter((username) => username !== user.username));
-        dispatch(setNotification({ message: t('feedback:error.add_role'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.add_role'), variant: 'error' }));
       } else if (isSuccessStatus(updateUserResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:success.added_role'), variant: 'success' }));
+        dispatch(setNotification({ message: t('feedback.success.added_role'), variant: 'success' }));
         refetchUsers?.();
       }
     }
@@ -89,9 +89,9 @@ export const UserList = ({
       const updateUserResponse = await updateUser(removeRoleForUser, newUser);
       if (isErrorStatus(updateUserResponse.status)) {
         setUpdatedRoleForUsers((state) => state.filter((user) => user !== removeRoleForUser));
-        dispatch(setNotification({ message: t('feedback:error.remove_role'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.remove_role'), variant: 'error' }));
       } else if (isSuccessStatus(updateUserResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:success.removed_role'), variant: 'success' }));
+        dispatch(setNotification({ message: t('feedback.success.removed_role'), variant: 'success' }));
         refetchUsers?.();
       }
     }
@@ -110,7 +110,7 @@ export const UserList = ({
     <>
       {sortedList.length === 0 ? (
         <Typography>
-          <i>{t('users.no_users_found')}</i>
+          <i>{t('basic_data.users.no_users_found')}</i>
         </Typography>
       ) : (
         <>
@@ -119,17 +119,19 @@ export const UserList = ({
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <Typography fontWeight="bold">{t('users.username')}</Typography>
+                  <Typography fontWeight="bold">{t('basic_data.users.username')}</Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography fontWeight="bold">{t('common:name')}</Typography>
+                  <Typography fontWeight="bold">{t('common.name')}</Typography>
                 </TableCell>
                 {showScope && (
                   <TableCell sx={{ minWidth: { xs: '15rem', md: '40%' } }}>
-                    <Typography fontWeight="bold">{t('users.area_of_responsibility')}</Typography>
+                    <Typography fontWeight="bold">{t('basic_data.users.area_of_responsibility')}</Typography>
                   </TableCell>
                 )}
-                <TableCell width="150" />
+                <TableCell width="150">
+                  <Typography fontWeight="bold">{t('common.actions')}</Typography>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -154,7 +156,7 @@ export const UserList = ({
                         )}
                       </TableCell>
                     )}
-                    <TableCell align="right">
+                    <TableCell>
                       {roleToRemove && (
                         <Button
                           color="error"
@@ -163,7 +165,7 @@ export const UserList = ({
                           disabled={isLastInstitutionAdmin}
                           data-testid={`button-remove-role-${roleToRemove}-${user.username}`}
                           onClick={() => setRemoveRoleForUser(user.username)}>
-                          {t('common:remove')}
+                          {t('common.remove')}
                         </Button>
                       )}
                       {roleToAdd && (
@@ -176,7 +178,7 @@ export const UserList = ({
                           loading={!disableAddButton && isLoading}
                           data-testid={`button-add-role-${roleToAdd}-${user.username}`}
                           onClick={() => handleAddRoleToUser(user)}>
-                          {t('common:add')}
+                          {t('common.add')}
                         </LoadingButton>
                       )}
                     </TableCell>
@@ -203,12 +205,12 @@ export const UserList = ({
           {roleToRemove && (
             <ConfirmDialog
               open={!!removeRoleForUser}
-              title={t('users.remove_role_title')}
+              title={t('basic_data.users.remove_role_title')}
               isLoading={updatedRoleForUsers.length > 0}
               onCancel={() => setRemoveRoleForUser('')}
               onAccept={handleRemoveRoleFromUser}
-              dataTestId="confirm-remove-role-dialog">
-              {t('users.remove_role_text')}
+              dialogDataTestId="confirm-remove-role-dialog">
+              {t('basic_data.users.remove_role_text')}
             </ConfirmDialog>
           )}
         </>

@@ -14,6 +14,7 @@ export interface User {
   cristinId?: string;
   name: string;
   customerId?: string;
+  customerShortName?: string;
   topOrgCristinId?: string;
   familyName: string;
   givenName: string;
@@ -24,7 +25,6 @@ export interface User {
   isCreator: boolean;
   isEditor: boolean;
   roles: RoleName[];
-  viewingScope: string[];
   username: string;
   orcid?: string;
   allowedCustomers: string[];
@@ -91,24 +91,25 @@ interface CristinPersonName extends CristinArrayValue {
   type: CristinPersonNameType;
 }
 
-export interface CreateCristinUser {
+export interface CreateCristinPerson {
   identifiers: CristinPersonIdentifier[];
   names: CristinPersonName[];
 }
 
-export interface CristinUser extends CreateCristinUser {
+export interface CristinPerson extends CreateCristinPerson {
   id: string;
   affiliations: CristinPersonAffiliation[];
   NationalIdentificationNumber?: string;
 }
 
-export interface FlatCristinUser {
+export interface FlatCristinPerson {
   firstName: string;
   lastName: string;
   nationalId: string;
   id: string;
   cristinIdentifier: string;
   affiliations: CristinPersonAffiliation[];
+  orcid?: string;
 }
 
 interface Position {

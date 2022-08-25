@@ -10,12 +10,9 @@ env:
     REACT_APP_ORCID_BASE_URL: OrcidBaseUrl
     REACT_APP_API_HOST: /NVA/ApiDomain
     REACT_APP_APP_HOST: /NVA/ApplicationDomain
-
   secrets-manager:
     REACT_APP_ORCID_CLIENT_ID: OrcidClientID
-    #  Values to be assigned outside of pipeline
-    # REACT_APP_AWS_REGION
-    # REACT_APP_USE_MOCK
+    CYPRESS_RECORD_KEY: CypressRecordKey
 
 phases:
   install:
@@ -24,9 +21,6 @@ phases:
     commands:
       - env
       - npm ci
-  pre_build:
-    commands:
-      - export REACT_APP_ORCID_REDIRECT_URI=https://${REACT_APP_APP_HOST}/my-profile
   build:
     commands:
       - npm run build

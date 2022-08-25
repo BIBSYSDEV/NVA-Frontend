@@ -25,7 +25,7 @@ import { OutputRow } from '../OutputRow';
 const designTypes = Object.values(DesignType);
 
 export const ArtisticDesignForm = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const { values, errors, touched } = useFormikContext<ArtisticRegistration>();
   const [openNewVenueModal, setOpenNewVenueModal] = useState(false);
   const { publicationInstance } = values.entityDescription.reference;
@@ -44,13 +44,13 @@ export const ArtisticDesignForm = () => {
               variant="filled"
               fullWidth
               {...field}
-              label={t('resource_type.type_work')}
+              label={t('registration.resource_type.type_work')}
               required
               error={!!error && touched}
               helperText={<ErrorMessage name={field.name} />}>
               {designTypes.map((designType) => (
                 <MenuItem value={designType} key={designType}>
-                  {t(`resource_type.design_type.${designType}`)}
+                  {t(`registration.resource_type.artistic.design_type.${designType}`)}
                 </MenuItem>
               ))}
             </TextField>
@@ -69,7 +69,7 @@ export const ArtisticDesignForm = () => {
               {...field}
               required
               multiline
-              label={t('resource_type.type_work_specified')}
+              label={t('registration.resource_type.type_work_specified')}
               error={!!error && touched}
               helperText={<ErrorMessage name={field.name} />}
             />
@@ -86,7 +86,7 @@ export const ArtisticDesignForm = () => {
             fullWidth
             {...field}
             multiline
-            label={t('resource_type.more_info_about_work')}
+            label={t('registration.resource_type.more_info_about_work')}
             error={!!error && touched}
             helperText={<ErrorMessage name={field.name} />}
           />
@@ -95,18 +95,18 @@ export const ArtisticDesignForm = () => {
 
       <div>
         <Typography variant="h3" component="h2" gutterBottom>
-          {t('resource_type.artistic.exhibition_places')}
+          {t('registration.resource_type.artistic.exhibition_places')}
         </Typography>
-        <FieldArray name={ResourceFieldNames.Venues}>
+        <FieldArray name={ResourceFieldNames.PublicationInstanceVenues}>
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
               {venues.length > 0 && (
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>{t('resource_type.artistic.exhibition_place')}</TableCell>
-                      <TableCell>{t('common:order')}</TableCell>
-                      <TableCell></TableCell>
+                      <TableCell>{t('registration.resource_type.artistic.exhibition_place')}</TableCell>
+                      <TableCell>{t('common.order')}</TableCell>
+                      <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -139,7 +139,7 @@ export const ArtisticDesignForm = () => {
                 variant="outlined"
                 sx={{ mt: '1rem' }}
                 startIcon={<AddCircleOutlineIcon />}>
-                {t('resource_type.artistic.add_exhibition_place')}
+                {t('registration.resource_type.artistic.add_exhibition_place')}
               </Button>
               <VenueModal
                 onSubmit={(newVenue) => push(newVenue)}

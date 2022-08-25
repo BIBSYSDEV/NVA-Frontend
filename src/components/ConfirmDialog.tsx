@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useTranslation } from 'react-i18next';
+import { dataTestId } from '../utils/dataTestIds';
 
 interface ConfirmDialogProps {
   children: ReactNode;
@@ -10,7 +11,7 @@ interface ConfirmDialogProps {
   onAccept: () => void;
   onCancel: () => void;
   isLoading?: boolean;
-  dataTestId?: string;
+  dialogDataTestId?: string;
 }
 
 export const ConfirmDialog = ({
@@ -20,20 +21,24 @@ export const ConfirmDialog = ({
   onAccept,
   onCancel,
   isLoading = false,
-  dataTestId,
+  dialogDataTestId,
 }: ConfirmDialogProps) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
 
   return (
-    <Dialog open={open} onClose={onCancel} data-testid={dataTestId} PaperProps={{ 'aria-labelledby': 'titleId' }}>
-      <DialogTitle id="titleId">{title}</DialogTitle>
+    <Dialog open={open} onClose={onCancel} data-testid={dialogDataTestId}>
+      <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
-        <Button data-testid="cancel-button" variant="outlined" onClick={onCancel}>
-          {t('common:no')}
+        <Button data-testid={dataTestId.confirmDialog.cancelButton} variant="outlined" onClick={onCancel}>
+          {t('common.no')}
         </Button>
-        <LoadingButton data-testid="accept-button" variant="contained" loading={isLoading} onClick={onAccept}>
-          {t('common:yes')}
+        <LoadingButton
+          data-testid={dataTestId.confirmDialog.acceptButton}
+          variant="contained"
+          loading={isLoading}
+          onClick={onAccept}>
+          {t('common.yes')}
         </LoadingButton>
       </DialogActions>
     </Dialog>

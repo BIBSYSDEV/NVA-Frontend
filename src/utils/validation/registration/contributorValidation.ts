@@ -1,14 +1,13 @@
 import * as Yup from 'yup';
 import { Contributor, ContributorRole } from '../../../types/contributor.types';
-import { BookType } from '../../../types/publicationFieldNames';
+import { BookType, ReportType } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
-import { isArtistic, isDegree, isPresentation } from '../../registration-helpers';
+import { isArtistic, isDegree, isMediaContribution, isPresentation } from '../../registration-helpers';
 
 const contributorErrorMessage = {
-  authorRequired: i18n.t('feedback:validation.author_required'),
-  contributorRequired: i18n.t('feedback:validation.contributor_required'),
-  editorRequired: i18n.t('feedback:validation.editor_required'),
-  supervisorRequired: i18n.t('feedback:validation.supervisor_required'),
+  authorRequired: i18n.t('feedback.validation.author_required'),
+  contributorRequired: i18n.t('feedback.validation.contributor_required'),
+  editorRequired: i18n.t('feedback.validation.editor_required'),
 };
 
 const contributorValidationSchema = Yup.object().shape({
@@ -25,9 +24,6 @@ export const contributorsValidationSchema = Yup.array().when(
         .of(contributorValidationSchema)
         .test('author-test', contributorErrorMessage.authorRequired, (contributors) =>
           hasRole(contributors, ContributorRole.Creator)
-        )
-        .test('supervisor-test', contributorErrorMessage.supervisorRequired, (contributors) =>
-          hasRole(contributors, ContributorRole.Supervisor)
         );
     } else if (publicationInstanceType === BookType.Anthology) {
       return Yup.array()
@@ -35,7 +31,13 @@ export const contributorsValidationSchema = Yup.array().when(
         .test('editor-test', contributorErrorMessage.editorRequired, (contributors) =>
           hasRole(contributors, ContributorRole.Editor)
         );
-    } else if (isPresentation(publicationInstanceType) || isArtistic(publicationInstanceType)) {
+    } else if (publicationInstanceType === ReportType.BookOfAbstracts) {
+      return Yup.array().of(contributorValidationSchema);
+    } else if (
+      isPresentation(publicationInstanceType) ||
+      isArtistic(publicationInstanceType) ||
+      isMediaContribution(publicationInstanceType)
+    ) {
       return Yup.array().of(contributorValidationSchema).min(1, contributorErrorMessage.contributorRequired);
     } else {
       return Yup.array()

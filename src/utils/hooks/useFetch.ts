@@ -9,7 +9,7 @@ import { isErrorStatus, isSuccessStatus } from '../constants';
 
 interface UseFetchConfig {
   url: string;
-  errorMessage?: string;
+  errorMessage?: string | false;
   withAuthentication?: boolean;
 }
 
@@ -19,7 +19,7 @@ export const useFetch = <T>({
   withAuthentication = false,
 }: UseFetchConfig): [T | undefined, boolean, () => void, (value: T) => void] => {
   const dispatch = useDispatch();
-  const { t } = useTranslation('feedback');
+  const { t } = useTranslation();
   const [data, setData] = useState<T>();
   const [isLoading, setIsLoading] = useState(!!url);
   const cancelToken = useCancelToken();
@@ -43,18 +43,20 @@ export const useFetch = <T>({
     errorMessageRef.current = errorMessage;
   }, [errorMessage]);
 
-  const showErrorNotification = useCallback(
-    () =>
+  const shouldShowErrorMessage = errorMessage !== false;
+
+  const showErrorNotification = useCallback(() => {
+    if (shouldShowErrorMessage) {
       dispatch(
         setNotification({
           message:
-            errorMessageRef.current ??
-            tRef.current('error.fetch', { resource: url, interpolation: { escapeValue: false } }),
+            (errorMessageRef.current as string | undefined) ??
+            tRef.current('feedback.error.fetch', { resource: url, interpolation: { escapeValue: false } }),
           variant: 'error',
         })
-      ),
-    [dispatch, url]
-  );
+      );
+    }
+  }, [dispatch, shouldShowErrorMessage, url]);
 
   const fetchData = useCallback(async () => {
     try {

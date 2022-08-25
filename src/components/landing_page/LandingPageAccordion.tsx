@@ -4,11 +4,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ErrorBoundary } from '../ErrorBoundary';
 
 interface LandingPageAccordionProps extends Pick<AccordionProps, 'defaultExpanded'> {
-  heading: string;
+  dataTestId: string;
+  heading: ReactNode;
   children?: ReactNode;
 }
 
-export const LandingPageAccordion = ({ heading, children, ...props }: LandingPageAccordionProps) => (
+export const LandingPageAccordion = ({ heading, children, dataTestId, ...props }: LandingPageAccordionProps) => (
   <Accordion
     square
     elevation={0}
@@ -21,14 +22,15 @@ export const LandingPageAccordion = ({ heading, children, ...props }: LandingPag
         margin: 0,
       },
     }}
+    data-testid={dataTestId}
     {...props}>
-    <AccordionSummary expandIcon={<ExpandMoreIcon color="primary" />} sx={{ padding: '0' }}>
+    <AccordionSummary expandIcon={<ExpandMoreIcon color="primary" />} sx={{ padding: '0' }} id={dataTestId}>
       <Typography variant="h3" component="h2" color="primary">
         {heading}
       </Typography>
     </AccordionSummary>
-    <ErrorBoundary>
-      <AccordionDetails sx={{ padding: 0, marginBottom: '2rem' }}>{children}</AccordionDetails>
-    </ErrorBoundary>
+    <AccordionDetails sx={{ padding: 0, marginBottom: '2rem' }}>
+      <ErrorBoundary>{children}</ErrorBoundary>
+    </AccordionDetails>
   </Accordion>
 );

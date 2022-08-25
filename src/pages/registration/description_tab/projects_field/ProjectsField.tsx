@@ -17,13 +17,13 @@ import { CreateProjectDialog } from './CreateProjectDialog';
 import { BetaFunctionality } from '../../../../components/BetaFunctionality';
 
 export const ProjectsField = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const [openNewProjectDialog, setOpenNewProjectDialog] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
   const [projects, isLoadingProjects] = useFetch<ProjectSearchResponse>({
     url: debouncedSearchTerm ? `${CristinApiPath.Project}?query=${encodeURIComponent(debouncedSearchTerm)}` : '',
-    errorMessage: t('feedback:error.get_project'),
+    errorMessage: t('feedback.error.get_project'),
   });
 
   return (
@@ -78,9 +78,9 @@ export const ProjectsField = () => {
             renderInput={(params) => (
               <AutocompleteTextField
                 {...params}
-                label={t('description.project_association')}
+                label={t('registration.description.project_association')}
                 isLoading={isLoadingProjects}
-                placeholder={t('description.search_for_project')}
+                placeholder={t('registration.description.search_for_project')}
                 showSearchIcon={field.value.length === 0}
               />
             )}
@@ -89,7 +89,7 @@ export const ProjectsField = () => {
       </Field>
       <BetaFunctionality>
         <Button onClick={() => setOpenNewProjectDialog(true)} startIcon={<AddIcon />}>
-          {t('project:create_project')}
+          {t('project.create_project')}
         </Button>
         <CreateProjectDialog
           open={openNewProjectDialog}

@@ -22,7 +22,7 @@ interface LinkRegistrationFormProps {
 }
 
 export const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   const onSubmit = async (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
     let doiUrl = values.doiUrl.trim().toLowerCase();
@@ -48,7 +48,7 @@ export const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps
                   id={field.name}
                   data-testid="new-registration-link-field"
                   variant="outlined"
-                  label={t('registration.link_to_resource')}
+                  label={t('registration.registration.link_to_resource')}
                   required
                   fullWidth
                   disabled={isSubmitting}
@@ -66,7 +66,7 @@ export const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps
               type="submit"
               endIcon={<SearchIcon />}
               loadingPosition="end">
-              {t('common:search')}
+              {t('common.search')}
             </LoadingButton>
           </Box>
         </Form>

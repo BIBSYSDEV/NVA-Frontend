@@ -14,7 +14,7 @@ import { SearchParam } from '../../../../utils/searchHelpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 
 export const CentralImportPage = () => {
-  const { t } = useTranslation('basicData');
+  const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const resultsParam = params.get(SearchParam.Results);
@@ -24,7 +24,7 @@ export const CentralImportPage = () => {
 
   const [searchResults, isLoadingSearchResults] = useFetch<SearchResponse<Registration>>({
     url: `${SearchApiPath.Registrations}?${params.toString()}`,
-    errorMessage: t('feedback:error.search'),
+    errorMessage: t('feedback.error.search'),
   });
 
   const updatePath = (from: string, results: string) => {
@@ -44,14 +44,14 @@ export const CentralImportPage = () => {
   return (
     <>
       <Typography variant="h3" component="h2" paragraph>
-        {t('publications')}
+        {t('basic_data.central_import.publications')}
       </Typography>
       {isLoadingSearchResults ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
         searchResults && (
           <>
-            <Typography variant="subtitle1">{t('search:hits', { count: searchResults.size })}:</Typography>
+            <Typography variant="subtitle1">{t('search.hits', { count: searchResults.size })}:</Typography>
             <Divider />
             <List>
               {publications.map((publication) => (

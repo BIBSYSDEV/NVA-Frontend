@@ -32,15 +32,16 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { ContributorRow } from './components/ContributorRow';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { CristinUser } from '../../../types/user.types';
+import { CristinPerson } from '../../../types/user.types';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../../utils/user-helpers';
 
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
   contributorRoles: ContributorRole[];
+  primaryColorAddButton?: boolean;
 }
 
-export const Contributors = ({ contributorRoles, push, replace }: ContributorsProps) => {
-  const { t } = useTranslation('registration');
+export const Contributors = ({ contributorRoles, push, replace, primaryColorAddButton }: ContributorsProps) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [openAddContributor, setOpenAddContributor] = useState(false);
@@ -112,12 +113,12 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   };
 
   const onContributorSelected = (
-    selectedContributor: CristinUser,
+    selectedContributor: CristinPerson,
     role: ContributorRole,
     contributorIndex?: number
   ) => {
     if (relevantContributors.some((contributor) => contributor.identity.id === selectedContributor.id)) {
-      dispatch(setNotification({ message: t('contributors.contributor_already_added'), variant: 'info' }));
+      dispatch(setNotification({ message: t('registration.contributors.contributor_already_added'), variant: 'info' }));
       return;
     }
 
@@ -163,12 +164,12 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   const contributorRole = contributorRoles.length === 1 ? contributorRoles[0] : 'OtherContributor';
   const roleText =
     contributorRole === ContributorRole.Creator
-      ? t('registration:contributors.authors')
+      ? t('registration.contributors.authors')
       : contributorRole === ContributorRole.Editor
-      ? t('registration:contributors.editors')
+      ? t('registration.contributors.editors')
       : contributorRole === ContributorRole.Supervisor
-      ? t('registration:contributors.supervisors')
-      : t('registration:heading.contributors');
+      ? t('registration.contributors.supervisors')
+      : t('registration.heading.contributors');
 
   return (
     <div data-testid={contributorRole}>
@@ -179,7 +180,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       {relevantContributors.length > 5 && (
         <TextField
           sx={{ mb: '1rem' }}
-          label={t('contributors.filter', { role: roleText.toLocaleLowerCase() })}
+          label={t('registration.contributors.filter', { role: roleText.toLocaleLowerCase() })}
           variant="filled"
           InputProps={{
             startAdornment: (
@@ -200,14 +201,14 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           <Table size="small" sx={alternatingTableRowColor}>
             <TableHead>
               <TableRow>
-                <TableCell>{t('common:order')}</TableCell>
+                <TableCell>{t('common.order')}</TableCell>
                 <TableCell>
-                  {contributorRoles.length > 1 ? t('common:role') : t('contributors.corresponding')}
+                  {contributorRoles.length > 1 ? t('common.role') : t('registration.contributors.corresponding')}
                 </TableCell>
-                <TableCell>{t('contributors.confirmed')}</TableCell>
-                <TableCell>{t('common:name')}</TableCell>
-                <TableCell>{t('common:institution')}</TableCell>
-                <TableCell>{t('common:remove')}</TableCell>
+                <TableCell>{t('registration.contributors.confirmed')}</TableCell>
+                <TableCell>{t('common.name')}</TableCell>
+                <TableCell>{t('common.institution')}</TableCell>
+                <TableCell>{t('common.remove')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -266,14 +267,14 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         sx={{ marginBottom: '1rem', borderRadius: '1rem' }}
         onClick={() => setOpenAddContributor(true)}
         variant="contained"
-        color={contributorRoles.length === 1 ? 'primary' : 'inherit'}
+        color={primaryColorAddButton ? 'primary' : 'inherit'}
         startIcon={<AddIcon />}
         data-testid={dataTestId.registrationWizard.contributors.addContributorButton(contributorRole)}>
-        {t('contributors.add_as_role', {
+        {t('registration.contributors.add_as_role', {
           role:
             contributorRole === 'OtherContributor'
-              ? t('contributors.contributor')
-              : t(`contributors.types.${contributorRole}`),
+              ? t('registration.contributors.contributor')
+              : t(`registration.contributors.types.${contributorRole}`),
         })}
       </Button>
     </div>

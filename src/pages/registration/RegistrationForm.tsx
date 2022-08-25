@@ -1,5 +1,5 @@
 import { Form, Formik, FormikErrors, FormikProps, validateYupSchema, yupToFormErrors } from 'formik';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -10,9 +10,8 @@ import { PageSpinner } from '../../components/PageSpinner';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { RootState } from '../../redux/store';
 import { Registration, RegistrationTab } from '../../types/registration.types';
-import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
+import { getTitleString, userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
-import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { Forbidden } from '../errorpages/Forbidden';
 import { RegistrationFormActions } from './RegistrationFormActions';
@@ -41,26 +40,19 @@ interface RegistrationFormProps {
 
 export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const user = useSelector((store: RootState) => store.user);
-  const { t, i18n } = useTranslation('registration');
+  const { t, i18n } = useTranslation();
   const history = useHistory();
   const uppy = useUppy(createUppy(i18n.language));
   const highestValidatedTab =
     useLocation<RegistrationLocationState>().state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
   const [registration, isLoadingRegistration, refetchRegistration] = useFetch<Registration>({
     url: `${PublicationsApiPath.Registration}/${identifier}`,
-    errorMessage: t('feedback:error.get_registration'),
+    errorMessage: t('feedback.error.get_registration'),
   });
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
   const isValidOwner = userIsRegistrationOwner(user, registration);
   const isValidCurator = userIsRegistrationCurator(user, registration);
-
-  useEffect(() => {
-    // Redirect to Landing Page if user should not be able to edit this registration
-    if (registration && !isValidOwner && !isValidCurator) {
-      history.replace(getRegistrationLandingPagePath(registration.identifier));
-    }
-  }, [history, registration, isValidOwner, isValidCurator]);
 
   const validateForm = (values: Registration): FormikErrors<Registration> => {
     const publicationInstance = values.entityDescription?.reference?.publicationInstance;
@@ -80,12 +72,12 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   };
 
   return isLoadingRegistration ? (
-    <PageSpinner />
+    <PageSpinner aria-label={t('common.registration')} />
   ) : !isValidOwner && !isValidCurator ? (
     <Forbidden />
   ) : registration ? (
     <>
-      <SkipLink href="#form">{t('common:skip_to_schema')}</SkipLink>
+      <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik
         initialValues={registration}
         validate={validateForm}
@@ -97,13 +89,11 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
         {({ dirty, values }: FormikProps<Registration>) => (
           <Form noValidate>
             <RouteLeavingGuard
-              modalDescription={t('modal_unsaved_changes_description')}
-              modalHeading={t('modal_unsaved_changes_heading')}
+              modalDescription={t('registration.modal_unsaved_changes_description')}
+              modalHeading={t('registration.modal_unsaved_changes_heading')}
               shouldBlockNavigation={dirty}
             />
-            <ItalicPageHeader>
-              {values.entityDescription?.mainTitle || `[${t('common:missing_title')}]`}
-            </ItalicPageHeader>
+            <ItalicPageHeader>{getTitleString(values.entityDescription?.mainTitle)}</ItalicPageHeader>
             <RegistrationFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
             <RequiredDescription />
             <BackgroundDiv>

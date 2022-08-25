@@ -12,29 +12,31 @@ interface InstitutionListProps {
 }
 
 export const InstitutionList = ({ institutions }: InstitutionListProps) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
 
   return (
     <TableContainer>
       <Table data-testid={dataTestId.basicData.customers.customerList}>
         <caption>
-          <span style={visuallyHidden}>{t('admin:admin_institutions')}</span>
+          <span style={visuallyHidden}>{t('basic_data.institutions.admin_institutions')}</span>
         </caption>
         <TableHead>
           <TableRow>
             <TableCell>
-              <Typography fontWeight="bold">{t('name')}</Typography>
+              <Typography fontWeight="bold">{t('common.name')}</Typography>
             </TableCell>
             <TableCell>
-              <Typography fontWeight="bold">{t('date')}</Typography>
+              <Typography fontWeight="bold">{t('common.date')}</Typography>
             </TableCell>
-            <TableCell />
+            <TableCell>
+              <Typography fontWeight="bold">{t('common.actions')}</Typography>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {institutions.map((institution) => (
             <TableRow key={institution.id}>
-              <TableCell component="th" scope="row">
+              <TableCell>
                 <Typography>{institution.displayName}</Typography>
               </TableCell>
               <TableCell>
@@ -47,7 +49,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
                   component={RouterLink}
                   data-testid={dataTestId.basicData.customers.editInstitutionButton(institution.displayName)}
                   to={getAdminInstitutionPath(institution.id)}>
-                  <Typography>{t('edit')}</Typography>
+                  <Typography>{t('common.edit')}</Typography>
                 </Button>
               </TableCell>
             </TableRow>

@@ -1,77 +1,57 @@
-import { FormHelperText } from '@mui/material';
+import { Box, FormHelperText, Typography } from '@mui/material';
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
-import { useEffect, useRef } from 'react';
-import { ContributorRole } from '../../types/contributor.types';
-import { BookType, ContributorFieldNames } from '../../types/publicationFieldNames';
+import { useTranslation } from 'react-i18next';
+import WarningIcon from '@mui/icons-material/Warning';
+import { ContributorFieldNames } from '../../types/publicationFieldNames';
 import { EntityDescription, Registration } from '../../types/registration.types';
-import { isArtistic, isDegree } from '../../utils/registration-helpers';
+import { contributorConfig, isDegree } from '../../utils/registration-helpers';
 import { Contributors } from './contributors_tab/Contributors';
 
 export const ContributorsPanel = () => {
+  const { t } = useTranslation();
   const {
     values: { entityDescription },
     errors,
     touched,
-    setFieldValue,
   } = useFormikContext<Registration>();
   const contributorsError = (errors.entityDescription as FormikErrors<EntityDescription>)?.contributors;
   const contributorsTouched = (touched.entityDescription as FormikTouched<EntityDescription>)?.contributors;
 
-  const publicationInstanceType = entityDescription?.reference?.publicationInstance.type ?? '';
-  const contributors = entityDescription?.contributors ?? [];
-  const contributorsRef = useRef(contributors);
-
-  useEffect(() => {
-    // Ensure all contributors has a role by setting Creator role as default
-    const contributorsWithRole = contributorsRef.current.map((contributor) => ({
-      ...contributor,
-      role: contributor.role ?? ContributorRole.Creator,
-    }));
-    setFieldValue(ContributorFieldNames.Contributors, contributorsWithRole);
-  }, [setFieldValue]);
-
-  // Creator should not be selectable for other contributors
-  const selectableContributorRoles = Object.values(ContributorRole).filter((role) => role !== ContributorRole.Creator);
+  const publicationInstanceType = entityDescription?.reference?.publicationInstance.type;
+  const contributorConfigResult = publicationInstanceType ? contributorConfig[publicationInstanceType] : null;
+  const primaryRoles = contributorConfigResult?.primaryRoles ?? [];
+  const secondaryRoles = contributorConfigResult?.secondaryRoles ?? [];
+  const shouldSeparateAddPrimaryRolesButtons = isDegree(publicationInstanceType as string);
 
   return (
     <>
       <FieldArray name={ContributorFieldNames.Contributors}>
         {({ push, replace }: FieldArrayRenderProps) =>
-          isDegree(publicationInstanceType) ? (
+          publicationInstanceType ? (
             <>
-              <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
-              <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Supervisor]} />
-              <Contributors
-                push={push}
-                replace={replace}
-                contributorRoles={selectableContributorRoles.filter((role) => role !== ContributorRole.Supervisor)}
-              />
+              {shouldSeparateAddPrimaryRolesButtons && primaryRoles.length > 1 ? (
+                primaryRoles.map((primaryRole) => (
+                  <Contributors
+                    key={primaryRole}
+                    push={push}
+                    replace={replace}
+                    primaryColorAddButton
+                    contributorRoles={[primaryRole]}
+                  />
+                ))
+              ) : (
+                <Contributors push={push} replace={replace} primaryColorAddButton contributorRoles={primaryRoles} />
+              )}
+              {secondaryRoles.length > 0 && (
+                <Contributors push={push} replace={replace} contributorRoles={secondaryRoles} />
+              )}
+              {/* TODO: Show contributors with roles that are not valid for this instanceType? */}
             </>
-          ) : publicationInstanceType === BookType.Anthology ? (
-            <>
-              <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Editor]} />
-              <Contributors
-                push={push}
-                replace={replace}
-                contributorRoles={selectableContributorRoles.filter((role) => role !== ContributorRole.Editor)}
-              />
-            </>
-          ) : isArtistic(publicationInstanceType) ? (
-            <Contributors
-              push={push}
-              replace={replace}
-              contributorRoles={[
-                ContributorRole.Designer,
-                ContributorRole.CuratorOrganizer,
-                ContributorRole.Consultant,
-                ContributorRole.Other,
-              ]}
-            />
           ) : (
-            <>
-              <Contributors push={push} replace={replace} contributorRoles={[ContributorRole.Creator]} />
-              <Contributors push={push} replace={replace} contributorRoles={selectableContributorRoles} />
-            </>
+            <Box sx={{ display: 'flex', gap: '0.5rem', mt: '1rem' }}>
+              <WarningIcon color="warning" />
+              <Typography fontWeight={500}>{t('registration.contributors.must_select_type_first')}</Typography>
+            </Box>
           )
         }
       </FieldArray>

@@ -7,12 +7,12 @@ import { SeriesField } from './SeriesField';
 import { InputContainerBox } from '../../../../components/styled/Wrappers';
 
 export const SeriesFields = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   return (
     <div>
-      <Typography variant="h5">{t('resource_type.series')}</Typography>
-      <Typography paragraph>{t('resource_type.series_info')}</Typography>
+      <Typography variant="h2">{t('registration.resource_type.series')}</Typography>
+      <Typography paragraph>{t('registration.resource_type.series_info')}</Typography>
 
       <InputContainerBox>
         <SeriesField />
@@ -26,7 +26,7 @@ export const SeriesFields = () => {
               data-testid={dataTestId.registrationWizard.resourceType.seriesNumber}
               value={field.value ?? ''}
               variant="filled"
-              label={t('resource_type.series_number')}
+              label={t('registration.resource_type.series_number')}
             />
           )}
         </Field>

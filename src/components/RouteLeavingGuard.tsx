@@ -57,7 +57,7 @@ export const RouteLeavingGuard = ({
           setConfirmedNavigation(true);
         }}
         onCancel={() => setShowModal(false)}
-        dataTestId="confirm-leaving-registration-form-dialog">
+        dialogDataTestId="confirm-leaving-registration-form-dialog">
         <Typography>{modalDescription}</Typography>
       </ConfirmDialog>
     </>

@@ -20,7 +20,7 @@ interface FilesAndLicensePanelProps {
 }
 
 export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const {
     values: { fileSet, entityDescription },
     setFieldTouched,
@@ -42,7 +42,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     uppy.setOptions({
       onBeforeFileAdded: (currentFile: UppyFile) => {
         if (filesRef.current.some((file: File) => file.name === currentFile.name)) {
-          uppy.info(t('files_and_license.no_duplicates', { fileName: currentFile.name }), 'info', 6000);
+          uppy.info(t('registration.files_and_license.no_duplicates', { fileName: currentFile.name }), 'info', 6000);
           return false;
         }
         return true;
@@ -70,22 +70,24 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
       {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
         <Paper sx={{ p: '1rem', mb: '1rem', bgcolor: 'background.default' }} elevation={5}>
           <Typography variant="h6" component="h2" gutterBottom>
-            {t('files_and_license.info_from_channel_register')}
+            {t('registration.files_and_license.info_from_channel_register')}
           </Typography>
           {journalIdentifier && (
             <Link href={getChannelRegisterJournalUrl(journalIdentifier)} target="_blank">
-              <Typography paragraph>{t('files_and_license.find_journal_in_channel_register')}</Typography>
+              <Typography paragraph>{t('registration.files_and_license.find_journal_in_channel_register')}</Typography>
             </Link>
           )}
           {publisherIdentifier && (
             <Link href={getChannelRegisterPublisherUrl(publisherIdentifier)} target="_blank">
-              <Typography gutterBottom>{t('files_and_license.find_publisher_in_channel_register')}</Typography>
+              <Typography gutterBottom>
+                {t('registration.files_and_license.find_publisher_in_channel_register')}
+              </Typography>
             </Link>
           )}
 
           {seriesIdentifier && (
             <Link href={getChannelRegisterJournalUrl(seriesIdentifier)} target="_blank">
-              <Typography paragraph>{t('files_and_license.find_series_in_channel_register')}</Typography>
+              <Typography paragraph>{t('registration.files_and_license.find_series_in_channel_register')}</Typography>
             </Link>
           )}
         </Paper>
@@ -96,7 +98,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
           <>
             {files.length > 0 && (
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
-                <Typography variant="h2">{t('files_and_license.files')}</Typography>
+                <Typography variant="h2">{t('registration.files_and_license.files')}</Typography>
                 {files.map((file, index) => (
                   <FileCard
                     key={file.identifier}
@@ -123,7 +125,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
             <Paper elevation={5}>
               <FileUploader uppy={uppy} addFile={push} />
               {files.length === 0 &&
-                typeof (errors.fileSet as FormikErrors<FileSet>).files === 'string' &&
+                typeof (errors.fileSet as FormikErrors<FileSet>)?.files === 'string' &&
                 touched.fileSet && (
                   <FormHelperText error sx={{ p: '1rem' }}>
                     <ErrorMessage name={name} />
@@ -135,15 +137,15 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
       </FieldArray>
 
       <Modal
-        headingText={t('files_and_license.licenses')}
+        headingText={t('registration.files_and_license.licenses')}
         open={isLicenseModalOpen}
         onClose={toggleLicenseModal}
         maxWidth="sm"
         dataTestId={dataTestId.registrationWizard.files.licenseModal}>
         {licenses.map((license) => (
           <Box key={license.identifier} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
-            <Typography variant="h6">{t(`licenses:labels.${license.identifier}`)}</Typography>
-            <img src={license.logo} alt={license.identifier} />
+            <Typography variant="h3">{t(`licenses.labels.${license.identifier}`)}</Typography>
+            <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
             <Typography paragraph>{license.description}</Typography>
             {license.link && (
               <Link href={license.link} target="blank">

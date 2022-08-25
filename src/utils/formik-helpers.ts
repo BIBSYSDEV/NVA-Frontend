@@ -271,10 +271,34 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
               description: true,
               venues,
               architectureOutput: [],
+              outputs: [],
+              manifestations: [],
             },
           },
         },
       };
+    }
+    case PublicationType.MediaContribution: {
+      const touchedMediaContribution = {
+        entityDescription: {
+          reference: {
+            publicationContext: {
+              type: true,
+              format: true,
+              medium: true,
+              disseminationChannel: true,
+              partOf: {
+                series: true,
+                seriesPart: true,
+              },
+            },
+            publicationInstance: {
+              type: true,
+            },
+          },
+        },
+      };
+      return touchedMediaContribution;
     }
     default:
       return {
@@ -312,11 +336,6 @@ const touchedFilesTabFields = (fileSet: FileSet | null): FormikTouched<unknown> 
   },
 });
 
-export const mergeTouchedFields = (touchedArray: FormikTouched<Registration>[]) =>
-  deepmerge.all(touchedArray, {
-    arrayMerge: (destinationArray, sourceArray) => sourceArray,
-  });
-
 export const getTouchedTabFields = (
   tabToTouch: HighestTouchedTab,
   values: Registration
@@ -333,6 +352,6 @@ export const getTouchedTabFields = (
   for (let thisTab = RegistrationTab.Description; thisTab <= tabToTouch; thisTab++) {
     fieldsToTouchOnMount.push(tabFields[thisTab]());
   }
-  const mergedFields = mergeTouchedFields(fieldsToTouchOnMount);
+  const mergedFields = deepmerge.all(fieldsToTouchOnMount);
   return mergedFields;
 };

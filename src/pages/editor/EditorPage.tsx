@@ -1,39 +1,65 @@
-import { Box, ListItemText, MenuItem, MenuList, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Switch, useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { VocabularySettings } from './VocabularySettings';
-
-enum EditorItem {
-  Vocabulary,
-}
+import { PublishStrategySettings } from './PublishStrategySettings';
+import { EditorRoute } from '../../utils/routes/Routes';
+import { UrlPathTemplate } from '../../utils/urlPaths';
+import { EditorInstitution } from './EditorInstitution';
+import {
+  LinkButton,
+  NavigationList,
+  SideNav,
+  SideNavHeader,
+  StyledPageWithSideMenu,
+} from '../../components/PageWithSideMenu';
+import { RootState } from '../../redux/store';
 
 const EditorPage = () => {
-  const { t } = useTranslation('editor');
-  const [selectedItem, setSelectedItem] = useState(EditorItem.Vocabulary);
+  const { t } = useTranslation();
+  const customerShortName = useSelector((store: RootState) => store.user?.customerShortName);
+  const history = useHistory();
+  const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
+
+  useEffect(() => {
+    if (currentPath === UrlPathTemplate.Editor) {
+      history.replace(UrlPathTemplate.EditorInstitution);
+    }
+  }, [history, currentPath]);
 
   return (
-    <Box sx={{ width: '100%', p: '1rem', display: 'grid', gridTemplateColumns: '1fr 5fr', gap: '1rem' }}>
+    <StyledPageWithSideMenu>
+      <SideNav aria-labelledby="editor-title">
+        <SideNavHeader text={customerShortName} id="editor-title" />
+
+        <NavigationList>
+          <LinkButton
+            isSelected={currentPath === UrlPathTemplate.EditorInstitution}
+            to={UrlPathTemplate.EditorInstitution}>
+            {t('editor.institution.institution_name')}
+          </LinkButton>
+          <LinkButton
+            isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
+            to={UrlPathTemplate.EditorVocabulary}>
+            {t('editor.vocabulary')}
+          </LinkButton>
+          <LinkButton
+            isSelected={currentPath === UrlPathTemplate.EditorPublishStrategy}
+            to={UrlPathTemplate.EditorPublishStrategy}>
+            {t('editor.publish_strategy.publish_strategy')}
+          </LinkButton>
+        </NavigationList>
+      </SideNav>
       <BackgroundDiv>
-        <MenuList>
-          <MenuItem onClick={() => setSelectedItem(EditorItem.Vocabulary)}>
-            <ListItemText>
-              <Typography
-                variant="overline"
-                sx={{
-                  textDecoration: selectedItem === EditorItem.Vocabulary ? 'underline 2px' : undefined,
-                  textUnderlinePosition: 'under',
-                }}
-                color="primary"
-                fontSize="1rem">
-                {t('vocabulary')}
-              </Typography>
-            </ListItemText>
-          </MenuItem>
-        </MenuList>
+        <Switch>
+          <EditorRoute exact path={UrlPathTemplate.EditorVocabulary} component={VocabularySettings} />
+          <EditorRoute exact path={UrlPathTemplate.EditorPublishStrategy} component={PublishStrategySettings} />
+          <EditorRoute exact path={UrlPathTemplate.EditorInstitution} component={EditorInstitution} />
+        </Switch>
       </BackgroundDiv>
-      <BackgroundDiv>{selectedItem === EditorItem.Vocabulary && <VocabularySettings />}</BackgroundDiv>
-    </Box>
+    </StyledPageWithSideMenu>
   );
 };
 

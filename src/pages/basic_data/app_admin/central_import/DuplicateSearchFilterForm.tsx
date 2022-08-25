@@ -25,7 +25,7 @@ export const DuplicateSearchFilterForm = ({
   publication,
   setDuplicateSearchFilters,
 }: DuplicateSearchFilterFormProps) => {
-  const { t } = useTranslation('basicData');
+  const { t } = useTranslation();
 
   const initialSearchParams: DuplicateSearchForm = {
     doi: publication.entityDescription?.reference?.doi ?? '',
@@ -71,7 +71,7 @@ export const DuplicateSearchFilterForm = ({
                   type="checkbox"
                   name="isDoiChecked"
                   control={<Checkbox />}
-                  label={t('central_import.doi')}
+                  label={t('basic_data.central_import.doi')}
                   data-testid={dataTestId.basicData.centralImport.checkboxDoi}
                   onClick={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.value) {
@@ -104,7 +104,7 @@ export const DuplicateSearchFilterForm = ({
                   marginBottom: '1rem',
                   alignItems: 'center',
                 }}>
-                <Typography>{t('central_import.or_search_with')}</Typography>
+                <Typography>{t('basic_data.central_import.or_search_with')}</Typography>
               </Box>
 
               <StyledFormElementWrapper>
@@ -113,7 +113,7 @@ export const DuplicateSearchFilterForm = ({
                   type="checkbox"
                   name="isTitleChecked"
                   control={<Checkbox />}
-                  label={t('central_import.title')}
+                  label={t('common.title')}
                   data-testid={dataTestId.basicData.centralImport.checkboxTitle}
                   onClick={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.value) {
@@ -141,7 +141,7 @@ export const DuplicateSearchFilterForm = ({
                   type="checkbox"
                   name="isAuthorChecked"
                   control={<Checkbox />}
-                  label={t('central_import.author')}
+                  label={t('basic_data.central_import.author')}
                   data-testid={dataTestId.basicData.centralImport.checkboxAuthor}
                   onClick={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.value) {
@@ -169,7 +169,7 @@ export const DuplicateSearchFilterForm = ({
                   type="checkbox"
                   name="isIssnChecked"
                   control={<Checkbox />}
-                  label={t('central_import.issn')}
+                  label={t('registration.resource_type.issn')}
                   data-testid={dataTestId.basicData.centralImport.checkboxIssn}
                   onClick={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.value) {
@@ -196,7 +196,7 @@ export const DuplicateSearchFilterForm = ({
                   type="checkbox"
                   name="isYearPublishedChecked"
                   control={<Checkbox />}
-                  label={t('central_import.year_published')}
+                  label={t('registration.year_published')}
                   data-testid={dataTestId.basicData.centralImport.checkboxYear}
                   onClick={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.value) {
@@ -223,7 +223,7 @@ export const DuplicateSearchFilterForm = ({
                   variant="outlined"
                   color="primary"
                   onClick={() => resetForm()}>
-                  {t('central_import.reset_search_values')}
+                  {t('basic_data.central_import.reset_search_values')}
                 </Button>
                 <Button
                   style={{ marginLeft: '1rem' }}
@@ -240,7 +240,7 @@ export const DuplicateSearchFilterForm = ({
                     )
                   }
                   color="primary">
-                  {t('central_import.search_again')}
+                  {t('basic_data.central_import.search_again')}
                 </Button>
               </Box>
             </FormGroup>

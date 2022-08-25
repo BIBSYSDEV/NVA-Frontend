@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { RoleApiPath } from '../api/apiPaths';
 import { apiRequest, authenticatedApiRequest } from '../api/apiRequest';
 import { getCurrentUserAttributes } from '../api/userApi';
-import { setUser } from '../redux/userSlice';
+import { setPartialUser, setUser } from '../redux/userSlice';
 import { setNotification } from '../redux/notificationSlice';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import { isSuccessStatus } from '../utils/constants';
@@ -21,7 +21,7 @@ export const SelectCustomerInstitutionDialog = ({
   allowedCustomerIds,
   openDefault,
 }: SelectCustomerInstitutionDialogProps) => {
-  const { t } = useTranslation('authorization');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [openDialog, setOpenDialog] = useState(openDefault);
   const [allowedCustomers, setAllowedCustomers] = useState<CustomerInstitution[]>([]);
@@ -45,6 +45,7 @@ export const SelectCustomerInstitutionDialog = ({
     };
     fetchAllowedCustomers();
   }, [allowedCustomerIds]);
+
   const selectCustomer = async () => {
     setIsSelectingCustomer(true);
     const customerId = selectedCustomer?.id;
@@ -58,10 +59,11 @@ export const SelectCustomerInstitutionDialog = ({
         if (isSuccessStatus(response.status)) {
           const newUserInfo = await getCurrentUserAttributes();
           dispatch(setUser(newUserInfo));
+          dispatch(setPartialUser({ customerShortName: selectedCustomer.shortName }));
           setOpenDialog(false);
         }
       } catch {
-        dispatch(setNotification({ message: t('feedback:error.an_error_occurred'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.an_error_occurred'), variant: 'error' }));
       }
     }
     setIsSelectingCustomer(false);
@@ -69,20 +71,21 @@ export const SelectCustomerInstitutionDialog = ({
 
   return (
     <Dialog open={openDialog} fullWidth maxWidth="sm">
-      <DialogTitle>{t('select_institution')}</DialogTitle>
+      <DialogTitle>{t('common.select_institution')}</DialogTitle>
       <DialogContent>
         <Autocomplete
           options={allowedCustomers}
           getOptionLabel={(option) => option.displayName}
           loading={isLoadingCustomers}
           onChange={(_, value) => setSelectedCustomer(value)}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
           renderInput={(params) => (
             <TextField
               {...params}
               InputLabelProps={{
-                'aria-label': t('select_institution'),
+                'aria-label': t('common.select_institution'),
               }}
-              placeholder={t('project:search_for_institution')}
+              placeholder={t('project.search_for_institution')}
             />
           )}
         />
@@ -93,7 +96,7 @@ export const SelectCustomerInstitutionDialog = ({
           loading={isSelectingCustomer}
           disabled={!selectedCustomer}
           onClick={selectCustomer}>
-          {t('common:select')}
+          {t('common.select')}
         </LoadingButton>
       </DialogActions>
     </Dialog>

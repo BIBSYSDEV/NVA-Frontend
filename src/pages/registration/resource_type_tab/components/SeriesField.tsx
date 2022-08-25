@@ -13,11 +13,12 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
+import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
 
 export const SeriesField = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const { setFieldValue, values } = useFormikContext<Registration>();
   const { reference, date } = values.entityDescription as BookEntityDescription;
   const series = reference?.publicationContext.series;
@@ -28,9 +29,11 @@ export const SeriesField = () => {
   const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
     url:
       debouncedQuery && debouncedQuery === query
-        ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${debouncedQuery}`
+        ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${encodeURIComponent(
+            debouncedQuery
+          )}`
         : '',
-    errorMessage: t('feedback:error.get_series'),
+    errorMessage: t('feedback.error.get_series'),
   });
 
   useEffect(() => {
@@ -47,7 +50,7 @@ export const SeriesField = () => {
     }
   }, [setFieldValue, series?.title, journalOptions]);
 
-  const [journal, isLoadingJournal] = useFetchResource<Journal>(series?.id ?? '', t('feedback:error.get_series'));
+  const [journal, isLoadingJournal] = useFetchResource<Journal>(series?.id ?? '', t('feedback.error.get_series'));
 
   return (
     <Field name={ResourceFieldNames.SeriesId}>
@@ -94,11 +97,7 @@ export const SeriesField = () => {
                     emphasized={state.inputValue}
                   />
                 </Typography>
-                {option.level && (
-                  <Typography variant="body2" color="textSecondary">
-                    {t('resource_type.level')}: {option.level}
-                  </Typography>
-                )}
+                <NpiLevelTypography variant="body2" color="textSecondary" level={option.level} />
               </Box>
             </li>
           )}
@@ -112,9 +111,7 @@ export const SeriesField = () => {
                     <Typography variant="subtitle1">
                       {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {t('resource_type.level')}: {option.level}
-                    </Typography>
+                    <NpiLevelTypography variant="body2" color="textSecondary" level={option.level} />
                   </>
                 }
               />
@@ -123,9 +120,9 @@ export const SeriesField = () => {
           renderInput={(params) => (
             <AutocompleteTextField
               {...params}
-              label={t('common:title')}
+              label={t('common.title')}
               isLoading={isLoadingJournalOptions || isLoadingJournal}
-              placeholder={!field.value ? t('resource_type.search_for_series') : ''}
+              placeholder={!field.value ? t('registration.resource_type.search_for_series') : ''}
               showSearchIcon={!field.value}
               errorMessage={meta.touched && !!meta.error ? meta.error : ''}
             />

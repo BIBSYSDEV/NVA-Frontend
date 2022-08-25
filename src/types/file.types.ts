@@ -17,57 +17,56 @@ interface LicenseInfo {
   identifier: LicenseNames;
   description: string;
   logo: string;
-  link: string;
+  link?: string;
 }
 
 export const licenses: LicenseInfo[] = [
   {
     identifier: LicenseNames.RightsReserved,
-    description: i18n.t('licenses:description.rights_reserved'),
+    description: i18n.t('licenses.description.rights_reserved'),
     logo: LicenseImages.rightsReservedLogo,
-    link: i18n.t('licenses:links.rights_reserved'),
   },
   {
     identifier: LicenseNames.CC_BY,
-    description: i18n.t('licenses:description.cc_by'),
+    description: i18n.t('licenses.description.cc_by'),
     logo: LicenseImages.ccByLogo,
-    link: i18n.t('licenses:links.cc_by'),
+    link: i18n.t('licenses.links.cc_by'),
   },
   {
     identifier: LicenseNames.CC_BY_SA,
-    description: i18n.t('licenses:description.cc_by_sa'),
+    description: i18n.t('licenses.description.cc_by_sa'),
     logo: LicenseImages.ccBySaLogo,
-    link: i18n.t('licenses:links.cc_by_sa'),
+    link: i18n.t('licenses.links.cc_by_sa'),
   },
   {
     identifier: LicenseNames.CC_BY_ND,
-    description: i18n.t('licenses:description.cc_by_nd'),
+    description: i18n.t('licenses.description.cc_by_nd'),
     logo: LicenseImages.ccByNdLogo,
-    link: i18n.t('licenses:links.cc_by_nd'),
+    link: i18n.t('licenses.links.cc_by_nd'),
   },
   {
     identifier: LicenseNames.CC_BY_NC,
-    description: i18n.t('licenses:description.cc_by_nc'),
+    description: i18n.t('licenses.description.cc_by_nc'),
     logo: LicenseImages.ccByNcLogo,
-    link: i18n.t('licenses:links.cc_by_nc'),
+    link: i18n.t('licenses.links.cc_by_nc'),
   },
   {
     identifier: LicenseNames.CC_BY_NC_SA,
-    description: i18n.t('licenses:description.cc_by_nc_sa'),
+    description: i18n.t('licenses.description.cc_by_nc_sa'),
     logo: LicenseImages.ccByNcSaLogo,
-    link: i18n.t('licenses:links.cc_by_nc_sa'),
+    link: i18n.t('licenses.links.cc_by_nc_sa'),
   },
   {
     identifier: LicenseNames.CC_BY_NC_ND,
-    description: i18n.t('licenses:description.cc_by_nc_nd'),
+    description: i18n.t('licenses.description.cc_by_nc_nd'),
     logo: LicenseImages.ccByNcNdLogo,
-    link: i18n.t('licenses:links.cc_by_nc_nd'),
+    link: i18n.t('licenses.links.cc_by_nc_nd'),
   },
   {
     identifier: LicenseNames.CC0,
-    description: i18n.t('licenses:description.cc0'),
+    description: i18n.t('licenses.description.cc0'),
     logo: LicenseImages.cc0Logo,
-    link: i18n.t('licenses:links.cc0'),
+    link: i18n.t('licenses.links.cc0'),
   },
 ];
 
@@ -90,7 +89,7 @@ export interface RegistrationFileSet {
 }
 
 export interface File {
-  type: 'File';
+  type: 'File' | 'PublishedFile' | 'UnpublishedFile' | 'UnpublishableFile';
   identifier: string;
   name: string;
   size: number;

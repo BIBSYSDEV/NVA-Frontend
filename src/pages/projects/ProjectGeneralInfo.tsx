@@ -15,34 +15,34 @@ interface ProjectGeneralInfoProps {
 }
 
 export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
-  const { t } = useTranslation('project');
+  const { t } = useTranslation();
 
   return (
     <StyledGeneralInfo data-testid={dataTestId.projectLandingPage.generalInfoBox}>
       <div>
         <Typography variant="overline" component="h2">
-          {t('coordinating_institution')}
+          {t('project.coordinating_institution')}
         </Typography>
         <Typography>{getProjectCoordinatingInstitutionName(project) ?? '-'}</Typography>
         <Typography variant="overline" component="h2">
-          {t('project_manager')}
+          {t('project.project_manager')}
         </Typography>
         <Typography>{getProjectManagerName(project) ?? '-'}</Typography>
         <Typography variant="overline" component="h2">
-          {t('period')}
+          {t('project.period')}
         </Typography>
         <Typography>{getProjectPeriod(project) ?? '-'}</Typography>
       </div>
       <div>
         <Typography variant="overline" component="h2">
-          {t('financing')}
+          {t('project.financing')}
         </Typography>
         {project.funding.length > 0 ? (
-          project.funding.map((funding) => {
+          project.funding.map((funding, index) => {
             const sourceName = getLanguageString(funding.source.names);
-            const fundingText = funding.code ? `${sourceName} - ${t('grant_id')} ${funding.code}` : sourceName;
+            const fundingText = funding.code ? `${sourceName} - ${t('project.grant_id')} ${funding.code}` : sourceName;
             return (
-              <Typography key={funding.code}>
+              <Typography key={index}>
                 {funding.source.code === 'NFR' ? (
                   <Link
                     href={`https://prosjektbanken.forskningsradet.no/project/FORISS/${funding.code}`}

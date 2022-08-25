@@ -6,6 +6,7 @@ import {
   ChapterType,
   DegreeType,
   JournalType,
+  MediaType,
   PresentationType,
   ReportType,
 } from '../../../types/publicationFieldNames';
@@ -16,95 +17,123 @@ import {
   JournalArticleContentType,
   nviApplicableContentTypes,
 } from '../../../types/publication_types/content.types';
-import { DesignType } from '../../../types/publication_types/artisticRegistration.types';
-import { validateDateInterval } from '../validationHelpers';
+import { ArtisticPublicationInstance, DesignType } from '../../../types/publication_types/artisticRegistration.types';
+import { validateDateInterval, YupShape } from '../validationHelpers';
+import {
+  JournalPublicationInstance,
+  JournalPublicationContext,
+} from '../../../types/publication_types/journalRegistration.types';
+import {
+  BookPublicationInstance,
+  BookPublicationContext,
+} from '../../../types/publication_types/bookRegistration.types';
+import {
+  ReportPublicationContext,
+  ReportPublicationInstance,
+} from '../../../types/publication_types/reportRegistration.types';
+import {
+  DegreePublicationInstance,
+  DegreePublicationContext,
+} from '../../../types/publication_types/degreeRegistration.types';
+import {
+  ChapterPublicationInstance,
+  ChapterPublicationContext,
+} from '../../../types/publication_types/chapterRegistration.types';
+import {
+  PresentationPublicationContext,
+  PresentationPublicationInstance,
+} from '../../../types/publication_types/presentationRegistration.types';
+import {
+  MediaContributionPublicationContext,
+  MediaContributionPublicationInstance,
+} from '../../../types/publication_types/mediaContributionRegistration';
 
 const resourceErrorMessage = {
-  architectureOutputRequired: i18n.t('feedback:validation.architecture_output_required'),
-  contentTypeRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('registration:resource_type.content'),
+  announcementsRequired: i18n.t('feedback.validation.announcement_required'),
+  contentTypeRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.content'),
   }),
-  corrigendumForRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('registration:resource_type.original_article'),
+  corrigendumForRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.original_article'),
   }),
-  corrigendumForInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:resource_type.original_article'),
+  corrigendumForInvalid: i18n.t('feedback.validation.has_invalid_format', {
+    field: i18n.t('registration.resource_type.original_article'),
   }),
-  countryRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('common:country'),
+  countryRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('common.country'),
   }),
-  dateFromRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('registration:resource_type.date_from'),
+  dateFromRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.date_from'),
   }),
-  dateToRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('registration:resource_type.date_to'),
+  dateToRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.date_to'),
   }),
-  doiInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:registration.link_to_resource'),
+  doiInvalid: i18n.t('feedback.validation.has_invalid_format', {
+    field: i18n.t('registration.registration.link_to_resource'),
   }),
-  eventTitleRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('registration:resource_type.title_of_event'),
+  eventTitleRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.title_of_event'),
   }),
-  exhibitionRequired: i18n.t('feedback:validation.exhibition_place_required'),
-  fromMustBeBeforeTo: i18n.t('feedback:validation.cannot_be_after', {
-    field: i18n.t('registration:resource_type.date_from'),
-    limitField: i18n.t('registration:resource_type.date_to').toLowerCase(),
+  exhibitionRequired: i18n.t('feedback.validation.exhibition_place_required'),
+  fromMustBeBeforeTo: i18n.t('feedback.validation.cannot_be_after', {
+    field: i18n.t('registration.resource_type.date_from'),
+    limitField: i18n.t('registration.resource_type.date_to').toLowerCase(),
   }),
-  isbnInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:resource_type.isbn'),
+  isbnInvalid: i18n.t('feedback.validation.has_invalid_format', {
+    field: i18n.t('registration.resource_type.isbn'),
   }),
-  isbnTooShort: i18n.t('feedback:validation.isbn_too_short'),
-  journalNotSelected: i18n.t('feedback:validation.not_selected', {
-    field: i18n.t('registration:resource_type.journal'),
+  isbnTooShort: i18n.t('feedback.validation.isbn_too_short'),
+  journalNotSelected: i18n.t('feedback.validation.not_selected', {
+    field: i18n.t('registration.resource_type.journal'),
   }),
-  journalRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('registration:resource_type.journal'),
+  journalRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.journal'),
   }),
-  organizerRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('registration:resource_type.organizer'),
+  organizerRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.organizer'),
   }),
-  pageBeginMustBeSmallerThanEnd: i18n.t('feedback:validation.must_be_smaller_than', {
-    field: i18n.t('registration:resource_type.pages_from'),
-    limit: i18n.t('registration:resource_type.pages_to'),
+  pageBeginMustBeSmallerThanEnd: i18n.t('feedback.validation.must_be_smaller_than', {
+    field: i18n.t('registration.resource_type.pages_from'),
+    limit: i18n.t('registration.resource_type.pages_to'),
   }),
-  pageEndMustBeBiggerThanBegin: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('registration:resource_type.pages_to'),
-    limit: i18n.t('registration:resource_type.pages_from'),
+  pageEndMustBeBiggerThanBegin: i18n.t('feedback.validation.must_be_bigger_than', {
+    field: i18n.t('registration.resource_type.pages_to'),
+    limit: i18n.t('registration.resource_type.pages_from'),
   }),
-  pagesInvalid: i18n.t('feedback:validation.has_invalid_format', {
-    field: i18n.t('registration:resource_type.number_of_pages'),
+  pagesInvalid: i18n.t('feedback.validation.has_invalid_format', {
+    field: i18n.t('registration.resource_type.number_of_pages'),
   }),
-  pagesMustBeBigger: i18n.t('feedback:validation.must_be_bigger_than', {
-    field: i18n.t('registration:resource_type.number_of_pages'),
+  pagesMustBeBigger: i18n.t('feedback.validation.must_be_bigger_than', {
+    field: i18n.t('registration.resource_type.number_of_pages'),
     limit: 1,
   }),
-  partOfRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('registration:resource_type.chapter.published_in'),
+  partOfRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.chapter.published_in'),
   }),
-  peerReviewedRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('registration:resource_type.peer_reviewed'),
+  peerReviewedRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.peer_reviewed'),
   }),
-  placeRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('registration:resource_type.place_for_event'),
+  placeRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.place_for_event'),
   }),
-  publisherNotSelected: i18n.t('feedback:validation.not_selected', {
-    field: i18n.t('common:publisher'),
+  publisherNotSelected: i18n.t('feedback.validation.not_selected', {
+    field: i18n.t('common.publisher'),
   }),
-  publisherRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('common:publisher'),
+  publisherRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('common.publisher'),
   }),
-  seriesNotSelected: i18n.t('feedback:validation.not_selected', {
-    field: i18n.t('registration:resource_type.series'),
+  seriesNotSelected: i18n.t('feedback.validation.not_selected', {
+    field: i18n.t('registration.resource_type.series'),
   }),
-  toMustBeAfterFrom: i18n.t('feedback:validation.cannot_be_before', {
-    field: i18n.t('registration:resource_type.date_to'),
-    limitField: i18n.t('registration:resource_type.date_from').toLowerCase(),
+  toMustBeAfterFrom: i18n.t('feedback.validation.cannot_be_before', {
+    field: i18n.t('registration.resource_type.date_to'),
+    limitField: i18n.t('registration.resource_type.date_from').toLowerCase(),
   }),
-  typeRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('common:type'),
+  typeRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('common.type'),
   }),
-  typeWorkRequired: i18n.t('feedback:validation.is_required', {
-    field: i18n.t('registration:resource_type.type_work'),
+  typeWorkRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.type_work'),
   }),
 };
 
@@ -201,7 +230,7 @@ export const baseReference = Yup.object()
   .required(resourceErrorMessage.typeRequired);
 
 // Journal
-const journalPublicationInstance = Yup.object().shape({
+const journalPublicationInstance = Yup.object<YupShape<JournalPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(JournalType)).required(resourceErrorMessage.typeRequired),
   articleNumber: Yup.string().nullable(),
   volume: Yup.string().nullable(),
@@ -228,7 +257,7 @@ const journalPublicationInstance = Yup.object().shape({
   peerReviewed: peerReviewedField,
 });
 
-const journalPublicationContext = Yup.object().shape({
+const journalPublicationContext = Yup.object<YupShape<JournalPublicationContext>>({
   id: Yup.string().when('$publicationInstanceType', {
     is: JournalType.Corrigendum,
     then: Yup.string(),
@@ -246,7 +275,7 @@ export const journalReference = baseReference.shape({
 });
 
 // Book
-const bookPublicationInstance = Yup.object().shape({
+const bookPublicationInstance = Yup.object<YupShape<BookPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(BookType)).required(resourceErrorMessage.typeRequired),
   pages: pagesMonographField,
   contentType: Yup.string()
@@ -261,7 +290,7 @@ const bookPublicationInstance = Yup.object().shape({
   peerReviewed: peerReviewedField,
 });
 
-const bookPublicationContext = Yup.object().shape({
+const bookPublicationContext = Yup.object<YupShape<BookPublicationContext>>({
   publisher: publisherField,
   series: seriesField,
   isbnList: isbnListField,
@@ -273,12 +302,12 @@ export const bookReference = baseReference.shape({
 });
 
 // Report
-const reportPublicationInstance = Yup.object().shape({
+const reportPublicationInstance = Yup.object<YupShape<ReportPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(ReportType)).required(resourceErrorMessage.typeRequired),
   pages: pagesMonographField,
 });
 
-const reportPublicationContext = Yup.object().shape({
+const reportPublicationContext = Yup.object<YupShape<ReportPublicationContext>>({
   publisher: publisherField,
   series: seriesField,
   isbnList: isbnListField,
@@ -290,11 +319,11 @@ export const reportReference = baseReference.shape({
 });
 
 // Degree
-const degreePublicationInstance = Yup.object().shape({
+const degreePublicationInstance = Yup.object<YupShape<DegreePublicationInstance>>({
   type: Yup.string().oneOf(Object.values(DegreeType)).required(resourceErrorMessage.typeRequired),
 });
 
-const degreePublicationContext = Yup.object().shape({
+const degreePublicationContext = Yup.object<YupShape<DegreePublicationContext>>({
   publisher: publisherField,
   series: seriesField,
 });
@@ -305,7 +334,7 @@ export const degreeReference = baseReference.shape({
 });
 
 // Chapter
-const chapterPublicationInstance = Yup.object().shape({
+const chapterPublicationInstance = Yup.object<YupShape<ChapterPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(ChapterType)).required(resourceErrorMessage.typeRequired),
   pages: pagesRangeField,
   contentType: Yup.string()
@@ -320,7 +349,7 @@ const chapterPublicationInstance = Yup.object().shape({
   peerReviewed: peerReviewedField,
 });
 
-const chapterPublicationContext = Yup.object().shape({
+const chapterPublicationContext = Yup.object<YupShape<ChapterPublicationContext>>({
   partOf: Yup.string().nullable().required(resourceErrorMessage.partOfRequired),
 });
 
@@ -330,11 +359,11 @@ export const chapterReference = baseReference.shape({
 });
 
 // Event/Presentation
-const presentationPublicationInstance = Yup.object().shape({
+const presentationPublicationInstance = Yup.object<YupShape<PresentationPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(PresentationType)).required(resourceErrorMessage.typeRequired),
 });
 
-const presentationPublicationContext = Yup.object().shape({
+const presentationPublicationContext = Yup.object<YupShape<PresentationPublicationContext>>({
   label: Yup.string().nullable().required(resourceErrorMessage.eventTitleRequired),
   place: Yup.object().shape({
     label: Yup.string().nullable().required(resourceErrorMessage.placeRequired),
@@ -352,10 +381,16 @@ export const presentationReference = baseReference.shape({
 });
 
 // Artistic
-const artisticDesignPublicationInstance = Yup.object().shape({
+const artisticDesignPublicationInstance = Yup.object<YupShape<ArtisticPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(ArtisticType)).required(resourceErrorMessage.typeRequired),
   subtype: Yup.object().shape({
-    type: Yup.string().nullable().required(resourceErrorMessage.typeWorkRequired),
+    type: Yup.string()
+      .nullable()
+      .when('$publicationInstanceType', {
+        is: ArtisticType.MusicPerformance,
+        then: Yup.string().nullable().optional(),
+        otherwise: Yup.string().nullable().required(resourceErrorMessage.typeWorkRequired),
+      }),
     description: Yup.string()
       .nullable()
       .when('type', {
@@ -372,12 +407,64 @@ const artisticDesignPublicationInstance = Yup.object().shape({
   architectureOutput: Yup.array().when('$publicationInstanceType', {
     is: ArtisticType.ArtisticArchitecture,
     then: Yup.array()
-      .min(1, resourceErrorMessage.architectureOutputRequired)
-      .required(resourceErrorMessage.architectureOutputRequired),
+      .min(1, resourceErrorMessage.announcementsRequired)
+      .required(resourceErrorMessage.announcementsRequired),
+    otherwise: Yup.array().nullable(),
+  }),
+  outputs: Yup.array().when('$publicationInstanceType', (type: string, schema) => {
+    if (type === ArtisticType.PerformingArts) {
+      return schema.min(1, resourceErrorMessage.exhibitionRequired).required(resourceErrorMessage.exhibitionRequired);
+    } else if (type === ArtisticType.MovingPicture) {
+      return schema
+        .min(1, resourceErrorMessage.announcementsRequired)
+        .required(resourceErrorMessage.announcementsRequired);
+    } else {
+      return schema.nullable();
+    }
+  }),
+  manifestations: Yup.array().when('$publicationInstanceType', {
+    is: ArtisticType.MusicPerformance,
+    then: Yup.array()
+      .min(1, resourceErrorMessage.announcementsRequired)
+      .required(resourceErrorMessage.announcementsRequired),
     otherwise: Yup.array().nullable(),
   }),
 });
 
 export const artisticDesignReference = baseReference.shape({
   publicationInstance: artisticDesignPublicationInstance,
+});
+
+// Media Contribution
+const mediaContributionPublicationContext = Yup.object<YupShape<MediaContributionPublicationContext>>({
+  format: Yup.string()
+    .nullable()
+    .required(
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('registration.resource_type.media_contribution.format'),
+      })
+    ),
+  medium: Yup.string()
+    .nullable()
+    .required(
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('registration.resource_type.media_contribution.medium'),
+      })
+    ),
+  disseminationChannel: Yup.string()
+    .nullable()
+    .required(
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('registration.resource_type.media_contribution.channel'),
+      })
+    ),
+});
+
+const mediaContributionPublicationInstance = Yup.object<YupShape<MediaContributionPublicationInstance>>({
+  type: Yup.string().oneOf(Object.values(MediaType)).required(resourceErrorMessage.typeRequired),
+});
+
+export const mediaContributionReference = baseReference.shape({
+  publicationContext: mediaContributionPublicationContext,
+  publicationInstance: mediaContributionPublicationInstance,
 });

@@ -13,14 +13,14 @@ export const hrcsActivityOptions = hrcsActivities.categories
   .flat();
 
 export const HrcsActivityInput = (props: VocabularyComponentProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   return (
     <VocabularyAutocomplete
       {...props}
       options={hrcsActivityOptions}
       id="hrcs-activities"
-      label={t('description.hrcs_activities')}
+      label={t('registration.description.hrcs_activities')}
       renderOption={(props, option) => {
         const indentsCount = option.cristinIdentifier.split('.').length - 1;
         return (

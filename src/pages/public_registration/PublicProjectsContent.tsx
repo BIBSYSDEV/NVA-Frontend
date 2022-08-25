@@ -27,7 +27,7 @@ interface PublicProjectsContentProps {
 }
 
 export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) => {
-  const { t } = useTranslation('project');
+  const { t } = useTranslation();
 
   return (
     <>
@@ -35,13 +35,13 @@ export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) 
         sx={{
           display: { xs: 'none', md: 'grid' },
         }}>
-        <Typography variant="caption">{t('common:title')}</Typography>
+        <Typography variant="caption">{t('common.title')}</Typography>
         <span />
-        <Typography variant="caption">{t('coordinating_institution')}</Typography>
+        <Typography variant="caption">{t('project.coordinating_institution')}</Typography>
         <span />
-        <Typography variant="caption">{t('project_manager')}</Typography>
+        <Typography variant="caption">{t('project.project_manager')}</Typography>
         <span />
-        <Typography variant="caption">{t('project_info')}</Typography>
+        <Typography variant="caption">{t('project.project_info')}</Typography>
       </StyledProjectGridRow>
 
       {projects.map((project) => (
@@ -56,7 +56,7 @@ interface ProjectRowProps {
 }
 
 const ProjectRow = ({ project }: ProjectRowProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const [fetchedProject, isLoadingProject] = useFetch<CristinProject>({ url: project.id });
   const projectTitle = fetchedProject?.title ?? project.name;
 
@@ -98,7 +98,7 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
         <div>
           <Typography variant="body1">{getProjectPeriod(fetchedProject)}</Typography>
           <Typography variant="body1">
-            {t('public_page.participants', { count: fetchedProject?.contributors.length })}
+            {t('registration.public_page.participants', { count: fetchedProject?.contributors.length })}
           </Typography>
         </div>
       ) : null}

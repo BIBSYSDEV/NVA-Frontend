@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Box } from '@mui/material';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import { LocalizationProvider } from '@mui/lab';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 import { getDateFnsLocale } from './utils/date-helpers';
 import { getCurrentUserAttributes } from './api/userApi';
 import { AppRoutes } from './AppRoutes';
@@ -14,16 +14,13 @@ import { Footer } from './layout/Footer';
 import { Header } from './layout/header/Header';
 import { Notifier } from './layout/Notifier';
 import { setNotification } from './redux/notificationSlice';
-import { setPartialUser, setUser } from './redux/userSlice';
+import { setUser } from './redux/userSlice';
 import { RootState } from './redux/store';
 import { authOptions } from './utils/aws-config';
 import { LocalStorageKey, USE_MOCK_DATA } from './utils/constants';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { PageSpinner } from './components/PageSpinner';
 import { SkipLink } from './components/SkipLink';
-import { useFetch } from './utils/hooks/useFetch';
-import { RoleApiPath } from './api/apiPaths';
-import { InstitutionUser } from './types/user.types';
 import { UrlPathTemplate } from './utils/urlPaths';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInstitutionDialog';
@@ -36,7 +33,7 @@ const getLanguageTagValue = (language: string) => {
   return 'no';
 };
 
-if (window.location.pathname === UrlPathTemplate.MyProfile && window.location.hash.startsWith('#access_token=')) {
+if (window.location.pathname === UrlPathTemplate.MyPageMyProfile && window.location.hash.startsWith('#access_token=')) {
   // Workaround to allow adding orcid for aws-amplify > 4.2.2
   // Without this the user will be redirected to / for some reason
   window.location.href = window.location.href.replace('#', '?');
@@ -44,15 +41,9 @@ if (window.location.pathname === UrlPathTemplate.MyProfile && window.location.ha
 
 export const App = () => {
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation('feedback');
+  const { t, i18n } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const [isLoadingUserAttributes, setIsLoadingUserAttributes] = useState(true);
-
-  const [institutionUser, isLoadingInstitutionUser] = useFetch<InstitutionUser>({
-    url: user?.username ? `${RoleApiPath.Users}/${user.username}` : '',
-    errorMessage: t('feedback:error.get_roles'),
-    withAuthentication: true,
-  });
 
   useEffect(() => {
     // Setup aws-amplify
@@ -65,7 +56,7 @@ export const App = () => {
   useEffect(() => {
     // Handle expired token
     if (hasExpiredToken) {
-      dispatch(setNotification({ message: t('authorization:expired_token_info'), variant: 'info' }));
+      dispatch(setNotification({ message: t('authorization.expired_token_info'), variant: 'info' }));
       localStorage.removeItem(LocalStorageKey.ExpiredToken);
     }
   }, [t, dispatch, hasExpiredToken]);
@@ -91,16 +82,9 @@ export const App = () => {
     }
   }, [dispatch]);
 
-  useEffect(() => {
-    if (institutionUser) {
-      const viewingScope = institutionUser.viewingScope?.includedUnits ?? [];
-      dispatch(setPartialUser({ viewingScope }));
-    }
-  }, [dispatch, institutionUser]);
-
   return (
     <>
-      <Helmet defaultTitle={t('common:page_title')} titleTemplate={`%s - ${t('common:page_title')}`}>
+      <Helmet defaultTitle={t('common.page_title')} titleTemplate={`%s - ${t('common.page_title')}`}>
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
       {user &&
@@ -112,13 +96,13 @@ export const App = () => {
         ) : (
           <CreateCristinPersonDialog user={user} />
         ))}
-      {isLoadingUserAttributes || isLoadingInstitutionUser ? (
-        <PageSpinner />
+      {isLoadingUserAttributes ? (
+        <PageSpinner aria-label={t('common.page_title')} />
       ) : (
         <BrowserRouter>
           <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Notifier />
-            <SkipLink href="#main-content">{t('common:skip_to_main_content')}</SkipLink>
+            <SkipLink href="#main-content">{t('common.skip_to_main_content')}</SkipLink>
             <Header />
             <Box
               component="main"
@@ -131,7 +115,7 @@ export const App = () => {
                 flexGrow: 1,
               }}>
               <ErrorBoundary>
-                <LocalizationProvider dateAdapter={AdapterDateFns} locale={getDateFnsLocale(i18n.language)}>
+                <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={getDateFnsLocale(i18n.language)}>
                   <AppRoutes />
                 </LocalizationProvider>
               </ErrorBoundary>

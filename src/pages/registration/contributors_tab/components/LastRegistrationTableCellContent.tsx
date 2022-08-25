@@ -6,16 +6,17 @@ import { SearchResponse } from '../../../../types/common.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
+import { getTitleString } from '../../../../utils/registration-helpers';
 
 interface LastRegistrationTableCellContentPorps {
   personId: string;
 }
 
 export const LastRegistrationTableCellContent = ({ personId }: LastRegistrationTableCellContentPorps) => {
-  const { t } = useTranslation('feedback');
+  const { t } = useTranslation();
   const [registrationSearch, isLoadingRegistrationSearch] = useFetch<SearchResponse<Registration>>({
     url: `${SearchApiPath.Registrations}?query=(${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Id}:"${personId}")&results=1`,
-    errorMessage: t('error.search'),
+    errorMessage: t('feedback.error.search'),
   });
   const registration = registrationSearch && registrationSearch.size > 0 ? registrationSearch.hits[0] : null;
 
@@ -23,14 +24,16 @@ export const LastRegistrationTableCellContent = ({ personId }: LastRegistrationT
     <Skeleton />
   ) : registration ? (
     <>
-      <TruncatableTypography lines={2}>{registration.entityDescription?.mainTitle}</TruncatableTypography>
+      <TruncatableTypography lines={2}>
+        {getTitleString(registration.entityDescription?.mainTitle)}
+      </TruncatableTypography>
       {registrationSearch && registrationSearch.size > 1 && (
         <Typography fontStyle="italic">
-          {t('profile:authority.other_registrations', { count: registrationSearch.size - 1 })}
+          {t('registration.contributors.other_registrations', { count: registrationSearch.size - 1 })}
         </Typography>
       )}
     </>
   ) : (
-    <i>{t('profile:authority.no_registrations_found')}</i>
+    <i>{t('registration.contributors.no_registrations_found')}</i>
   );
 };

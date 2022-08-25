@@ -2,11 +2,12 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Box, Link as MuiLink, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { displayDate } from '../utils/date-helpers';
-import { getRegistrationLandingPagePath, getUserPath } from '../utils/urlPaths';
+import { getRegistrationLandingPagePath, getResearchProfilePath } from '../utils/urlPaths';
 import { Registration } from '../types/registration.types';
 import { ErrorBoundary } from './ErrorBoundary';
 import { TruncatableTypography } from './TruncatableTypography';
 import { dataTestId } from '../utils/dataTestIds';
+import { getTitleString } from '../utils/registration-helpers';
 
 interface RegistrationListProps {
   registrations: Registration[];
@@ -27,7 +28,7 @@ interface RegistrationListItemProps {
 }
 
 const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
-  const { t } = useTranslation('publicationTypes');
+  const { t } = useTranslation();
   const { identifier, entityDescription } = registration;
 
   const contributors = entityDescription?.contributors ?? [];
@@ -38,11 +39,12 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
     <ListItem divider disableGutters>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Typography variant="overline" sx={{ color: 'primary.dark' }}>
-          {t(entityDescription?.reference?.publicationInstance.type ?? '')} - {displayDate(entityDescription?.date)}
+          {t(`registration.publication_types.${entityDescription?.reference?.publicationInstance.type ?? ''}` as any)} -{' '}
+          {displayDate(entityDescription?.date)}
         </Typography>
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
           <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
-            {entityDescription?.mainTitle}
+            {getTitleString(entityDescription?.mainTitle)}
           </MuiLink>
         </Typography>
         <Box
@@ -55,7 +57,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
           {focusedContributors.map((contributor, index) => (
             <Typography key={index} variant="body2">
               {contributor.identity.id ? (
-                <MuiLink component={Link} to={getUserPath(contributor.identity.id)}>
+                <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
                   {contributor.identity.name}
                 </MuiLink>
               ) : (
@@ -64,7 +66,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
             </Typography>
           ))}
           {countRestContributors > 0 && (
-            <Typography variant="body2">({t('common:x_others', { count: countRestContributors })})</Typography>
+            <Typography variant="body2">({t('common.x_others', { count: countRestContributors })})</Typography>
           )}
         </Box>
 

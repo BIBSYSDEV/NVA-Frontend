@@ -8,13 +8,13 @@ import { dataTestId } from '../../../../../utils/dataTestIds';
 
 const isbnFormat = '000-00-000-0000-0';
 
-interface MaskIsbnInputProps {
+export interface MaskInputProps {
   onChange: (event: { target: { name: string; value: string } }) => void;
   name: string;
 }
 
 // MUI Mask demo: https://material-ui.com/components/text-fields/#integration-with-3rd-party-input-libraries
-const MaskIsbnInput = forwardRef<HTMLElement, MaskIsbnInputProps>((props, ref) => {
+const MaskIsbnInput = forwardRef<HTMLElement, MaskInputProps>((props, ref) => {
   const { onChange, ...other } = props;
   return (
     <IMaskInput
@@ -27,7 +27,7 @@ const MaskIsbnInput = forwardRef<HTMLElement, MaskIsbnInputProps>((props, ref) =
 });
 
 export const IsbnField = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   return (
     <FieldArray name={ResourceFieldNames.IsbnList}>
@@ -45,7 +45,7 @@ export const IsbnField = () => {
                   remove(0);
                 }
               }}
-              label={t('resource_type.isbn')}
+              label={t('registration.resource_type.isbn')}
               placeholder={isbnFormat}
               variant="filled"
               InputProps={{

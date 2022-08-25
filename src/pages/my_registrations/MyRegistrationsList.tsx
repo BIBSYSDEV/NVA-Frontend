@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import {
+  Box,
   Button,
   Table,
   TableBody,
@@ -25,6 +26,7 @@ import { getRegistrationLandingPagePath, getRegistrationPath } from '../../utils
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
+import { getTitleString } from '../../utils/registration-helpers';
 
 interface MyRegistrationsListProps {
   registrations: RegistrationPreview[];
@@ -32,7 +34,7 @@ interface MyRegistrationsListProps {
 }
 
 export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyRegistrationsListProps) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [registrationToDelete, setRegistrationToDelete] = useState<RegistrationPreview>();
@@ -56,10 +58,10 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
     setIsDeleting(true);
     const deleteRegistrationResponse = await deleteRegistration(registrationToDelete.identifier);
     if (isErrorStatus(deleteRegistrationResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:error.delete_registration'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.delete_registration'), variant: 'error' }));
       setIsDeleting(false);
     } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:success.delete_registration'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
       refetchRegistrations();
     }
   };
@@ -77,70 +79,68 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
       <TableContainer>
         <Table sx={alternatingTableRowColor}>
           <caption>
-            <span style={visuallyHidden}>{t('workLists:my_registrations')}</span>
+            <span style={visuallyHidden}>{t('common.registrations')}</span>
           </caption>
           <TableHead>
             <TableRow>
               <TableCell data-testid="header-registration-title">
-                <Typography sx={{ fontWeight: 'bold', minWidth: '12rem' }}>{t('title')}</Typography>
+                <Typography sx={{ fontWeight: 'bold', minWidth: '12rem' }}>{t('common.title')}</Typography>
               </TableCell>
               <TableCell data-testid="header-registration-status">
-                <Typography fontWeight="bold">{t('status')}</Typography>
+                <Typography fontWeight="bold">{t('common.status')}</Typography>
               </TableCell>
               <TableCell data-testid="header-registration-created">
-                <Typography fontWeight="bold">{t('created_date')}</Typography>
+                <Typography fontWeight="bold">{t('common.created_date')}</Typography>
               </TableCell>
-              <TableCell />
-              <TableCell />
-              <TableCell />
+              <TableCell>
+                <Typography fontWeight="bold">{t('common.actions')}</Typography>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {registrationsOnPage.map((registration) => (
               <TableRow key={registration.identifier}>
                 <TableCell component="th" scope="row" data-testid={`registration-title-${registration.identifier}`}>
-                  <Typography>{registration.mainTitle || <i>[{t('common:missing_title')}]</i>}</Typography>
+                  <Typography>{getTitleString(registration.mainTitle)}</Typography>
                 </TableCell>
                 <TableCell data-testid={`registration-status-${registration.identifier}`}>
-                  <Typography>{t<string>(`registration:status.${registration.status}`)}</Typography>
+                  <Typography>{t(`registration.status.${registration.status}` as any)}</Typography>
                 </TableCell>
                 <TableCell data-testid={`registration-created-${registration.identifier}`}>
                   <Typography>{new Date(registration.createdDate).toLocaleString()}</Typography>
                 </TableCell>
                 <TableCell>
-                  <Button
-                    variant="outlined"
-                    component={RouterLink}
-                    to={getRegistrationLandingPagePath(registration.identifier)}
-                    startIcon={<MenuBookIcon />}
-                    data-testid={`open-registration-${registration.identifier}`}>
-                    {t('show')}
-                  </Button>
-                </TableCell>
-                <TableCell>
-                  <Button
-                    variant="outlined"
-                    component={RouterLink}
-                    to={getRegistrationPath(registration.identifier)}
-                    startIcon={<EditIcon />}
-                    data-testid={`edit-registration-${registration.identifier}`}>
-                    {t('edit')}
-                  </Button>
-                </TableCell>
-                <TableCell>
-                  {registration.status === RegistrationStatus.Draft && (
+                  <Box sx={{ display: 'flex', gap: '1rem' }}>
                     <Button
-                      color="error"
                       variant="outlined"
-                      data-testid={`delete-registration-${registration.identifier}`}
-                      startIcon={<DeleteIcon />}
-                      onClick={() => {
-                        setRegistrationToDelete(registration);
-                        setShowDeleteModal(true);
-                      }}>
-                      {t('delete')}
+                      component={RouterLink}
+                      to={getRegistrationLandingPagePath(registration.identifier)}
+                      startIcon={<MenuBookIcon />}
+                      data-testid={`open-registration-${registration.identifier}`}>
+                      {t('common.show')}
                     </Button>
-                  )}
+                    <Button
+                      variant="outlined"
+                      component={RouterLink}
+                      to={getRegistrationPath(registration.identifier)}
+                      startIcon={<EditIcon />}
+                      data-testid={`edit-registration-${registration.identifier}`}>
+                      {t('common.edit')}
+                    </Button>
+                    {registration.status === RegistrationStatus.Draft && (
+                      <Button
+                        color="error"
+                        variant="outlined"
+                        data-testid={`delete-registration-${registration.identifier}`}
+                        startIcon={<DeleteIcon />}
+                        onClick={() => {
+                          setRegistrationToDelete(registration);
+                          setShowDeleteModal(true);
+                        }}>
+                        {t('common.delete')}
+                      </Button>
+                    )}
+                  </Box>
                 </TableCell>
               </TableRow>
             ))}
@@ -148,7 +148,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, { value: -1, label: t('all') }]}
+        rowsPerPageOptions={[10, 25, { value: registrations.length, label: t('common.all') }]}
         component="div"
         count={registrations.length}
         rowsPerPage={rowsPerPage}
@@ -158,16 +158,16 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
       />
       <ConfirmDialog
         open={!!showDeleteModal}
-        title={t('workLists:delete_registration')}
+        title={t('my_page.registrations.delete_registration')}
         onAccept={deleteDraftRegistration}
         onCancel={() => {
           setShowDeleteModal(false);
         }}
         isLoading={isDeleting}
-        dataTestId="confirm-delete-dialog">
+        dialogDataTestId="confirm-delete-dialog">
         <Typography>
-          {t('workLists:delete_registration_message', {
-            title: registrationToDelete?.mainTitle ?? registrationToDelete?.identifier,
+          {t('my_page.registrations.delete_registration_message', {
+            title: getTitleString(registrationToDelete?.mainTitle),
           })}
         </Typography>
       </ConfirmDialog>

@@ -21,7 +21,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { StartRegistrationAccordionProps } from './LinkRegistration';
 
 export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
-  const { t, i18n } = useTranslation('registration');
+  const { t, i18n } = useTranslation();
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
@@ -38,7 +38,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
     };
     const createRegistrationResponse = await createRegistration(registrationPayload);
     if (isErrorStatus(createRegistrationResponse.status)) {
-      dispatch(setNotification({ message: t('feedback:error.create_registration'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.create_registration'), variant: 'error' }));
       setIsLoading(false);
     } else if (isSuccessStatus(createRegistrationResponse.status)) {
       history.push(getRegistrationPath(createRegistrationResponse.data.identifier), { highestValidatedTab: -1 });
@@ -52,8 +52,8 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
         expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <CloudUploadIcon />
         <div>
-          <Typography variant="h2">{t('registration.start_with_uploading_file_title')}</Typography>
-          <Typography>{t('registration.start_with_uploading_file_description')}</Typography>
+          <Typography variant="h2">{t('registration.registration.start_with_uploading_file_title')}</Typography>
+          <Typography>{t('registration.registration.start_with_uploading_file_description')}</Typography>
         </div>
       </AccordionSummary>
 
@@ -63,7 +63,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
             <FileUploader uppy={uppy} addFile={(newFile: File) => setUploadedFiles((files) => [newFile, ...files])} />
             {uploadedFiles.length > 0 && (
               <>
-                <Typography variant="subtitle1">{t('files_and_license.files')}:</Typography>
+                <Typography variant="h3">{t('registration.files_and_license.files')}:</Typography>
                 {uploadedFiles.map((file) => (
                   <UploadedFileRow
                     key={file.identifier}
@@ -93,7 +93,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
           loading={isLoading}
           disabled={uploadedFiles.length === 0}
           onClick={createRegistrationWithFiles}>
-          {t('registration.start_registration')}
+          {t('registration.registration.start_registration')}
         </LoadingButton>
       </AccordionActions>
     </RegistrationAccordion>

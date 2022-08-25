@@ -2,14 +2,13 @@ import { FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Checkbox, FormControlLabel, Typography, TextField } from '@mui/material';
-import { DatePicker } from '@mui/lab';
-import { datePickerTranslationProps } from '../../../themes/mainTheme';
+import { DatePicker } from '@mui/x-date-pickers';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { EntityDescription, Registration, RegistrationDate } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 
 export const DatePickerField = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const {
     values: { entityDescription },
     errors,
@@ -45,17 +44,6 @@ export const DatePickerField = () => {
     setFieldValue(DescriptionFieldNames.Date, updatedDate);
   };
 
-  const onChangeDate = (newDate: Date | null) => {
-    updateDateValues(newDate, yearOnly);
-    setDate(newDate);
-  };
-
-  const toggleYearOnly = () => {
-    const nextYearOnlyValue = !yearOnly;
-    updateDateValues(date, nextYearOnlyValue);
-    setYearOnly(nextYearOnlyValue);
-  };
-
   const touchedYear = (
     (touched.entityDescription as FormikTouched<EntityDescription>)?.date as FormikTouched<RegistrationDate>
   )?.year;
@@ -67,10 +55,15 @@ export const DatePickerField = () => {
   return (
     <>
       <DatePicker
-        {...datePickerTranslationProps}
-        label={t('description.date_published')}
+        label={t('registration.description.date_published')}
         value={date}
-        onChange={onChangeDate}
+        PopperProps={{
+          'aria-label': t('registration.description.date_published'),
+        }}
+        onChange={(newDate) => {
+          updateDateValues(newDate, yearOnly);
+          setDate(newDate);
+        }}
         inputFormat={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
         views={yearOnly ? ['year'] : ['year', 'month', 'day']}
         maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
@@ -89,8 +82,17 @@ export const DatePickerField = () => {
       />
       <FormControlLabel
         sx={{ alignSelf: 'start', mt: '0.4rem' }} // Center field regardless of error state of published date field
-        control={<Checkbox checked={yearOnly} onChange={toggleYearOnly} />}
-        label={<Typography>{t('description.year_only')}</Typography>}
+        control={
+          <Checkbox
+            checked={yearOnly}
+            onChange={() => {
+              const nextYearOnlyValue = !yearOnly;
+              updateDateValues(date, nextYearOnlyValue);
+              setYearOnly(nextYearOnlyValue);
+            }}
+          />
+        }
+        label={<Typography>{t('registration.description.year_only')}</Typography>}
       />
     </>
   );

@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import commonNb from '../translations/nb/common.json';
+import nbTranslations from '../translations/nbTranslations.json';
 import { LocalStorageKey } from '../utils/constants';
 
 type ErrorBoundaryClassProps = RouteComponentProps & WithTranslation;
@@ -38,7 +38,7 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryClassProps> {
         }
       }
 
-      alert(t('common:reload_page_info'));
+      alert(t('common.reload_page_info'));
       localStorage.setItem(LocalStorageKey.AppUpdateTime, currentTime.toString());
       window.location.reload();
     }
@@ -48,7 +48,7 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryClassProps> {
     const { t, children } = this.props;
     const { hasError } = this.state;
 
-    return hasError ? <ErrorMessage errorMessage={t('common:error_occurred')} /> : children;
+    return hasError ? <ErrorMessage errorMessage={t('common.error_occurred')} /> : children;
   }
 }
 
@@ -65,7 +65,7 @@ export class BasicErrorBoundary extends Component {
     const { children } = this.props;
     const { hasError } = this.state;
 
-    return hasError ? <ErrorMessage errorMessage={commonNb.error_occurred} /> : children;
+    return hasError ? <ErrorMessage errorMessage={nbTranslations.common.error_occurred} /> : children;
   }
 }
 

@@ -1,10 +1,11 @@
-import { Registration } from '../types/registration.types';
+import { PublicationInstanceType, Registration } from '../types/registration.types';
 import {
   ArtisticType,
   BookType,
   ChapterType,
   DegreeType,
   JournalType,
+  MediaType,
   PresentationType,
   PublicationType,
   ReportType,
@@ -15,12 +16,19 @@ import { PresentationRegistration } from '../types/publication_types/presentatio
 import { Period } from '../types/common.types';
 import { Contributor, ContributorRole } from '../types/contributor.types';
 import {
-  ArchitectureOutput,
   Award,
+  Broadcast,
   Competition,
   Exhibition,
   MentionInPublication,
+  ArtisticOutputItem,
   Venue,
+  CinematicRelease,
+  OtherRelease,
+  MusicScore,
+  AudioVisualPublication,
+  Concert,
+  OtherMusicPerformance,
 } from '../types/publication_types/artisticRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 
@@ -39,6 +47,8 @@ export const getMainRegistrationType = (instanceType: string) =>
     ? PublicationType.Presentation
     : isArtistic(instanceType)
     ? PublicationType.Artistic
+    : isMediaContribution(instanceType)
+    ? PublicationType.MediaContribution
     : '';
 
 export const isJournal = (instanceType: string) => Object.values(JournalType).some((type) => type === instanceType);
@@ -56,6 +66,9 @@ export const isPresentation = (instanceType: string) =>
 
 export const isArtistic = (instanceType: string) => Object.values(ArtisticType).some((type) => type === instanceType);
 
+export const isMediaContribution = (instanceType: string) =>
+  Object.values(MediaType).some((type) => type === instanceType);
+
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCreator && user.username === registration.resourceOwner.owner;
 
@@ -69,8 +82,8 @@ const getPublicationChannelIssnString = (onlineIssn?: string | null, printIssn?:
   const issnString =
     printIssn || onlineIssn
       ? [
-          printIssn ? `${i18n.t('registration:resource_type.print_issn')}: ${printIssn}` : '',
-          onlineIssn ? `${i18n.t('registration:resource_type.online_issn')}: ${onlineIssn}` : '',
+          printIssn ? `${i18n.t('registration.resource_type.print_issn')}: ${printIssn}` : '',
+          onlineIssn ? `${i18n.t('registration.resource_type.online_issn')}: ${onlineIssn}` : '',
         ]
           .filter((issn) => issn)
           .join(', ')
@@ -145,13 +158,12 @@ export const getFormattedRegistration = (registration: Registration) => {
 
 export const getNewDateValue = (date: Date | null, keyboardInput?: string) => {
   const isValidDate = date && date && !isNaN(date.getTime());
-  const isValidInput = keyboardInput?.length === 10;
-  if (isValidDate) {
+  const dateIsSelected = !keyboardInput && isValidDate;
+  const dateIsInputted = keyboardInput && keyboardInput.length === 10 && isValidDate;
+  if (dateIsSelected || dateIsInputted) {
     return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0)).toISOString();
-  } else if (!isValidDate || !isValidInput) {
-    return '';
   } else {
-    return null;
+    return '';
   }
 };
 
@@ -166,41 +178,225 @@ export const getPeriodString = (period: Period | null) => {
   }
 };
 
-const mainDegreeRoles = [ContributorRole.Creator, ContributorRole.Supervisor];
-
-export const mainContributorRolesPerType: { [type: string]: ContributorRole[] | undefined } = {
-  [DegreeType.Bachelor]: mainDegreeRoles,
-  [DegreeType.Master]: mainDegreeRoles,
-  [DegreeType.Phd]: mainDegreeRoles,
-  [DegreeType.Other]: mainDegreeRoles,
-  [BookType.Anthology]: [ContributorRole.Editor],
-  [ArtisticType.ArtisticDesign]: [
-    ContributorRole.Designer,
-    ContributorRole.CuratorOrganizer,
-    ContributorRole.Consultant,
-    ContributorRole.Other,
-  ],
+type ContributorConfig = {
+  [type in PublicationInstanceType]: { primaryRoles: ContributorRole[]; secondaryRoles: ContributorRole[] };
 };
 
-export const splitMainContributors = (contributors: Contributor[], registrationType: string) => {
-  const mainRoles = mainContributorRolesPerType[registrationType] ?? ContributorRole.Creator;
-  const mainContributors: Contributor[] = [];
-  const otherContributors: Contributor[] = [];
-
-  contributors.forEach((contributor) => {
-    if (mainRoles.includes(contributor.role)) {
-      mainContributors.push(contributor);
-    } else {
-      otherContributors.push(contributor);
-    }
-  });
-
-  return [mainContributors, otherContributors];
+export const contributorConfig: ContributorConfig = {
+  // Journal
+  [JournalType.Article]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.Letter]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.Review]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.Leader]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.Corrigendum]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.Issue]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.ConferenceAbstract]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  // Book
+  [BookType.Monograph]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [BookType.Anthology]: {
+    primaryRoles: [ContributorRole.Editor],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  // Report
+  [ReportType.Research]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ReportType.Policy]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ReportType.WorkingPaper]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ReportType.BookOfAbstracts]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ReportType.Report]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  // Degree
+  [DegreeType.Bachelor]: {
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [DegreeType.Master]: {
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [DegreeType.Phd]: {
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [DegreeType.Licentiate]: {
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [DegreeType.Other]: {
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  // Chapter
+  [ChapterType.AnthologyChapter]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ChapterType.ReportChapter]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ChapterType.ConferenceAbstract]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  // Presentation
+  [PresentationType.ConferenceLecture]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [PresentationType.ConferencePoster]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [PresentationType.Lecture]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [PresentationType.OtherPresentation]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  // Artistic
+  [ArtisticType.ArtisticDesign]: {
+    primaryRoles: [
+      ContributorRole.Designer,
+      ContributorRole.CuratorOrganizer,
+      ContributorRole.Consultant,
+      ContributorRole.Other,
+    ],
+    secondaryRoles: [],
+  },
+  [ArtisticType.ArtisticArchitecture]: {
+    primaryRoles: [
+      ContributorRole.Architect,
+      ContributorRole.LandscapeArchitect,
+      ContributorRole.InteriorArchitect,
+      ContributorRole.ArchitecturalPlanner,
+      ContributorRole.Other,
+    ],
+    secondaryRoles: [],
+  },
+  [ArtisticType.PerformingArts]: {
+    primaryRoles: [
+      ContributorRole.Dancer,
+      ContributorRole.Actor,
+      ContributorRole.Choreographer,
+      ContributorRole.Director,
+      ContributorRole.Scenographer,
+      ContributorRole.CostumeDesigner,
+      ContributorRole.Producer,
+      ContributorRole.ArtisticDirector,
+      ContributorRole.Dramatist,
+      ContributorRole.Librettist,
+      ContributorRole.Dramaturge,
+      ContributorRole.SoundDesigner,
+      ContributorRole.LightDesigner,
+      ContributorRole.Other,
+    ],
+    secondaryRoles: [],
+  },
+  [ArtisticType.MovingPicture]: {
+    primaryRoles: [
+      ContributorRole.Director,
+      ContributorRole.Photographer,
+      ContributorRole.Producer,
+      ContributorRole.ProductionDesigner,
+      ContributorRole.Screenwriter,
+      ContributorRole.SoundDesigner,
+      ContributorRole.VfxSupervisor,
+      ContributorRole.VideoEditor,
+      ContributorRole.Other,
+    ],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ArtisticType.MusicPerformance]: {
+    primaryRoles: [
+      ContributorRole.Soloist,
+      ContributorRole.Conductor,
+      ContributorRole.Musician,
+      ContributorRole.Composer,
+      ContributorRole.Organizer,
+      ContributorRole.Writer,
+      ContributorRole.Other,
+    ],
+    secondaryRoles: [],
+  },
+  // Media
+  [MediaType.MediaFeatureArticle]: {
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Other],
+    secondaryRoles: [],
+  },
+  [MediaType.MediaReaderOpinion]: {
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Other],
+    secondaryRoles: [],
+  },
+  [MediaType.MediaInterview]: {
+    primaryRoles: [ContributorRole.Journalist, ContributorRole.InterviewSubject, ContributorRole.Other],
+    secondaryRoles: [],
+  },
+  [MediaType.MediaBlogPost]: {
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Other],
+    secondaryRoles: [],
+  },
+  [MediaType.MediaPodcast]: {
+    primaryRoles: [ContributorRole.ProgrammeLeader, ContributorRole.ProgrammeParticipant, ContributorRole.Other],
+    secondaryRoles: [],
+  },
+  [MediaType.MediaParticipationInRadioOrTv]: {
+    primaryRoles: [ContributorRole.ProgrammeLeader, ContributorRole.ProgrammeParticipant, ContributorRole.Other],
+    secondaryRoles: [],
+  },
 };
 
-export const getArtisticOutputName = (item: Venue | ArchitectureOutput) => {
+export const groupContributors = (contributors: Contributor[], registrationType: PublicationInstanceType) => {
+  const { primaryRoles, secondaryRoles } = contributorConfig[registrationType];
+  const primaryContributors = contributors.filter((contributor) => primaryRoles.includes(contributor.role));
+  const secondaryContributors = contributors.filter((contributor) => secondaryRoles.includes(contributor.role));
+
+  return { primaryContributors, secondaryContributors };
+};
+
+export const getArtisticOutputName = (item: ArtisticOutputItem) => {
   switch (item.type) {
     case 'Venue':
+    case 'PerformingArtsVenue':
       return (item as Venue).place?.label ?? '';
     case 'Competition':
       return (item as Competition).name;
@@ -210,7 +406,32 @@ export const getArtisticOutputName = (item: Venue | ArchitectureOutput) => {
       return (item as Award).name;
     case 'Exhibition':
       return (item as Exhibition).name;
+    case 'Broadcast':
+      return (item as Broadcast).publisher.name;
+    case 'CinematicRelease':
+      return (item as CinematicRelease).place.label;
+    case 'OtherRelease':
+      return (item as OtherRelease).description;
+    case 'MusicScore':
+      return (item as MusicScore).publisher.name;
+    case 'AudioVisualPublication':
+      return (item as AudioVisualPublication).publisher;
+    case 'Concert':
+      return (item as Concert).place.label;
+    case 'OtherPerformance':
+      return (item as OtherMusicPerformance).place.label;
     default:
       return '';
   }
 };
+
+export const userIsOwnerOfRegistration = (user: User | null, registration: Registration) =>
+  !!user?.isCreator && !!user.username && user.username === registration.resourceOwner.owner;
+
+export const userIsCuratorForRegistration = (user: User | null, registration: Registration) =>
+  !!user?.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
+
+export const hyphenateIsrc = (isrc: string) =>
+  isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
+
+export const getTitleString = (title: string | undefined) => title || `[${i18n.t('registration.missing_title')}]`;

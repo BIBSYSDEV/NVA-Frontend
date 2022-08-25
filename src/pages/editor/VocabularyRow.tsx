@@ -15,13 +15,14 @@ interface VocabularyRowProps {
 }
 
 export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId, disabled }: VocabularyRowProps) => {
-  const { t } = useTranslation('editor');
+  const { t } = useTranslation();
   const [isUpdating, setIsUpdating] = useState(false);
 
   return (
     <Box
       sx={{
         display: 'flex',
+        flexDirection: { xs: 'column-reverse', md: 'row' },
         alignItems: 'center',
         gap: '1rem',
       }}>
@@ -40,13 +41,13 @@ export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId, disa
           }
         }}>
         <ToggleButton sx={toggleButtonSx} value={VocabularyStatus.Default}>
-          {t('default')}
+          {t('editor.default')}
         </ToggleButton>
         <ToggleButton sx={toggleButtonSx} value={VocabularyStatus.Allowed}>
-          {t('allowed')}
+          {t('editor.allowed')}
         </ToggleButton>
         <ToggleButton sx={toggleButtonSx} value={VocabularyStatus.Disabled}>
-          {t('disabled')}
+          {t('editor.disabled')}
         </ToggleButton>
       </ToggleButtonGroup>
 

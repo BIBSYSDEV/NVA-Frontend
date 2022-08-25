@@ -14,11 +14,12 @@ import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { getYearQuery } from '../../../../utils/registration-helpers';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
+import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
 
 export const PublisherField = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const { setFieldValue, setFieldTouched, values } = useFormikContext<Registration>();
   const { reference, date } = values.entityDescription as BookEntityDescription;
   const publisher = reference?.publicationContext.publisher;
@@ -29,9 +30,11 @@ export const PublisherField = () => {
   const [publisherOptions, isLoadingPublisherOptions] = useFetch<Publisher[]>({
     url:
       debouncedQuery && debouncedQuery === query
-        ? `${PublicationChannelApiPath.PublisherSearch}?year=${getYearQuery(year)}&query=${debouncedQuery}`
+        ? `${PublicationChannelApiPath.PublisherSearch}?year=${getYearQuery(year)}&query=${encodeURIComponent(
+            debouncedQuery
+          )}`
         : '',
-    errorMessage: t('feedback:error.get_publishers'),
+    errorMessage: t('feedback.error.get_publishers'),
   });
 
   useEffect(() => {
@@ -48,7 +51,7 @@ export const PublisherField = () => {
 
   const [fetchedPublisher, isLoadingPublisher] = useFetchResource<Publisher>(
     publisher?.id ?? '',
-    t('feedback:error.get_publisher')
+    t('feedback.error.get_publisher')
   );
 
   return (
@@ -100,11 +103,7 @@ export const PublisherField = () => {
                 <Typography variant="subtitle1">
                   <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
                 </Typography>
-                {option.level && (
-                  <Typography variant="body2" color="textSecondary">
-                    {t('resource_type.level')}: {option.level}
-                  </Typography>
-                )}
+                <NpiLevelTypography variant="body2" color="textSecondary" level={option.level} />
               </Box>
             </li>
           )}
@@ -116,9 +115,7 @@ export const PublisherField = () => {
                 label={
                   <>
                     <Typography variant="subtitle1">{option.name}</Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {t('resource_type.level')}: {option.level}
-                    </Typography>
+                    <NpiLevelTypography variant="body2" color="textSecondary" level={option.level} />
                   </>
                 }
               />
@@ -128,9 +125,9 @@ export const PublisherField = () => {
             <AutocompleteTextField
               {...params}
               required
-              label={t('common:publisher')}
+              label={t('common.publisher')}
               isLoading={isLoadingPublisherOptions || isLoadingPublisher}
-              placeholder={!publisher?.id ? t('resource_type.search_for_publisher') : ''}
+              placeholder={!publisher?.id ? t('registration.resource_type.search_for_publisher') : ''}
               showSearchIcon={!publisher?.id}
               errorMessage={meta.touched && !!meta.error ? meta.error : ''}
             />

@@ -15,6 +15,8 @@ import { Contributor } from '../../../../types/contributor.types';
 import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
 import { ExpressionStatement } from '../../../../utils/searchHelpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
+import { getTitleString } from '../../../../utils/registration-helpers';
+import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -90,13 +92,13 @@ export const SearchContainerField = ({
               setQuery('');
             }}
             loading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
-            getOptionLabel={(option) => option.entityDescription?.mainTitle ?? ''}
+            getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
             renderOption={(props, option, state) => (
               <li {...props}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                   <Typography variant="subtitle1">
                     <EmphasizeSubstring
-                      text={option.entityDescription?.mainTitle ?? ''}
+                      text={getTitleString(option.entityDescription?.mainTitle)}
                       emphasized={state.inputValue}
                     />
                   </Typography>
@@ -118,7 +120,7 @@ export const SearchContainerField = ({
                   data-testid={dataTestIds.registrationWizard.resourceType.journalChip}
                   label={
                     <>
-                      <Typography variant="subtitle1">{option.entityDescription?.mainTitle ?? ''}</Typography>
+                      <Typography variant="subtitle1">{getTitleString(option.entityDescription?.mainTitle)}</Typography>
                       {descriptionToShow === 'year-and-contributors' ? (
                         <YearAndContributorsText
                           date={option.entityDescription?.date}
@@ -174,35 +176,33 @@ interface ContainerAndLevelTextProps {
 }
 
 const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => {
-  const { t } = useTranslation('feedback');
+  const { t } = useTranslation();
 
   const publicationContext = registration.entityDescription?.reference?.publicationContext as BookPublicationContext;
+  const publisherId = publicationContext.publisher?.id ?? '';
+  const seriesId = publicationContext.series?.id ?? '';
 
-  const [publisher] = useFetchResource<Publisher>(publicationContext.publisher?.id ?? '', t('error.get_publisher'));
-  const [series] = useFetchResource<Journal>(publicationContext.series?.id ?? '', t('error.get_series'));
+  const [publisher] = useFetchResource<Publisher>(publisherId, t('feedback.error.get_publisher'));
+  const [series] = useFetchResource<Journal>(seriesId, t('feedback.error.get_series'));
 
-  return series ? (
+  return seriesId ? (
     <>
-      {publisher && (
+      {publisherId && (
         <Typography variant="body2" color="textSecondary">
-          {t('common:publisher')}: {publisher.name}
+          {t('common.publisher')}: {publisher?.name}
         </Typography>
       )}
       <Typography variant="body2" color="textSecondary">
-        {t('registration:resource_type.series')}: {series.name}
+        {t('registration.resource_type.series')}: {series?.name}
       </Typography>
-      <Typography variant="body2" color="textSecondary">
-        {t('registration:resource_type.level')}: {series.level}
-      </Typography>
+      <NpiLevelTypography variant="body2" color="textSecondary" level={series?.level} />
     </>
-  ) : publisher ? (
+  ) : publisherId ? (
     <>
       <Typography variant="body2" color="textSecondary">
-        {t('common:publisher')}: {publisher.name}
+        {t('common.publisher')}: {publisher?.name}
       </Typography>
-      <Typography variant="body2" color="textSecondary">
-        {t('registration:resource_type.level')}: {publisher.level}
-      </Typography>
+      <NpiLevelTypography variant="body2" color="textSecondary" level={publisher?.level} />
     </>
   ) : null;
 };

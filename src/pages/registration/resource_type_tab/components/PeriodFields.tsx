@@ -1,8 +1,7 @@
-import { DatePicker } from '@mui/lab';
+import { DatePicker } from '@mui/x-date-pickers';
 import { TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { datePickerTranslationProps } from '../../../../themes/mainTheme';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getNewDateValue } from '../../../../utils/registration-helpers';
 
@@ -12,7 +11,7 @@ interface PeriodFieldsProps {
 }
 
 export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const { values, setFieldValue, setFieldTouched } = useFormikContext();
   const maxDate = new Date(new Date().getFullYear() + 5, 11, 31);
 
@@ -24,8 +23,10 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
       <Field name={fromFieldName}>
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <DatePicker
-            {...datePickerTranslationProps}
-            label={t('resource_type.date_from')}
+            label={t('registration.resource_type.date_from')}
+            PopperProps={{
+              'aria-label': t('registration.resource_type.date_from'),
+            }}
             value={field.value ?? null}
             onChange={(date, keyboardInput) => {
               !touched && setFieldTouched(field.name, true, false);
@@ -55,8 +56,10 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
       <Field name={toFieldName}>
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <DatePicker
-            {...datePickerTranslationProps}
-            label={t('resource_type.date_to')}
+            label={t('registration.resource_type.date_to')}
+            PopperProps={{
+              'aria-label': t('registration.resource_type.date_to'),
+            }}
             value={field.value ?? null}
             onChange={(date, keyboardInput) => {
               !touched && setFieldTouched(field.name, true, false);

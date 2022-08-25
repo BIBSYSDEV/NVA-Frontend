@@ -25,8 +25,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import LockIcon from '@mui/icons-material/LockOutlined';
-import { DatePicker } from '@mui/lab';
-import { datePickerTranslationProps } from '../../../themes/mainTheme';
+import { DatePicker } from '@mui/x-date-pickers';
 import { File, LicenseNames, licenses } from '../../../types/file.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
@@ -41,7 +40,7 @@ interface FileCardProps {
 }
 
 export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }: FileCardProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const { setFieldValue, setFieldTouched } = useFormikContext();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
@@ -55,7 +54,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
               data-testid={dataTestId.registrationWizard.files.version}
               required
               disabled={file.administrativeAgreement}>
-              <FormLabel component="legend">{t('files_and_license.version')}</FormLabel>
+              <FormLabel component="legend">{t('common.version')}</FormLabel>
               <RadioGroup
                 {...field}
                 row
@@ -63,12 +62,12 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                 <FormControlLabel
                   value={false}
                   control={<Radio />}
-                  label={t<string>('files_and_license.accepted_version')}
+                  label={t('registration.files_and_license.accepted_version')}
                 />
                 <FormControlLabel
                   value={true}
                   control={<Radio />}
-                  label={t<string>('files_and_license.published_version')}
+                  label={t('registration.files_and_license.published_version')}
                 />
               </RadioGroup>
               {error && touched && <FormHelperText error>{error}</FormHelperText>}
@@ -93,7 +92,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                   }}
                 />
               }
-              label={t<string>('files_and_license.administrative_contract')}
+              label={t('registration.files_and_license.administrative_contract')}
             />
           )}
         </Field>
@@ -123,7 +122,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
         {file.administrativeAgreement ? (
           <Box sx={{ display: 'flex', gap: '0.5rem' }}>
             <LockIcon />
-            <Typography fontStyle="italic">{t('files_and_license.file_locked')}</Typography>
+            <Typography fontStyle="italic">{t('registration.files_and_license.file_locked')}</Typography>
           </Box>
         ) : (
           <>
@@ -131,9 +130,11 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
               {({ field, meta: { error, touched } }: FieldProps) => (
                 <Box sx={{ gridArea: 'date' }}>
                   <DatePicker
-                    {...datePickerTranslationProps}
                     {...field}
-                    label={t('files_and_license.file_publish_date')}
+                    label={t('registration.files_and_license.file_publish_date')}
+                    PopperProps={{
+                      'aria-label': t('registration.files_and_license.file_publish_date'),
+                    }}
                     value={field.value ?? null}
                     onChange={(date, keyboardInput) => {
                       const newDate = getNewDateValue(date, keyboardInput);
@@ -154,7 +155,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                           error && touched ? (
                             <ErrorMessage name={field.name} />
                           ) : (
-                            t('files_and_license.file_publish_date_helper_text')
+                            t('registration.files_and_license.file_publish_date_helper_text')
                           )
                         }
                       />
@@ -177,12 +178,8 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                         const selectedLicense = licenses.find((license) => license.identifier === option);
                         return selectedLicense ? (
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <img
-                              style={{ width: '5rem' }}
-                              src={selectedLicense.logo}
-                              alt={selectedLicense.identifier}
-                            />
-                            <span>{t(`licenses:labels.${option}`)}</span>
+                            <img style={{ width: '5rem' }} src={selectedLicense.logo} alt="" />
+                            <span>{t(`licenses.labels.${option}` as any)}</span>
                           </Box>
                         ) : null;
                       },
@@ -191,7 +188,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                     value={field.value?.identifier || ''}
                     error={!!error && touched}
                     helperText={<ErrorMessage name={field.name} />}
-                    label={t('files_and_license.conditions_for_using_file')}
+                    label={t('registration.files_and_license.conditions_for_using_file')}
                     required
                     onChange={({ target: { value } }) =>
                       setFieldValue(field.name, {
@@ -213,14 +210,14 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                           <img style={{ width: '5rem' }} src={license.logo} alt={license.identifier} />
                         </ListItemIcon>
                         <ListItemText>
-                          <Typography>{t(`licenses:labels.${license.identifier}`)}</Typography>
+                          <Typography>{t(`licenses.labels.${license.identifier}`)}</Typography>
                         </ListItemText>
                       </MenuItem>
                     ))}
                   </TextField>
                 )}
               </Field>
-              <Tooltip title={t<string>('common:help')}>
+              <Tooltip title={t('common.help')}>
                 <IconButton
                   data-testid={dataTestId.registrationWizard.files.licenseHelpButton}
                   onClick={toggleLicenseModal}>
@@ -239,18 +236,18 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
         data-testid={dataTestId.registrationWizard.files.removeFileButton}
         startIcon={<DeleteIcon />}
         onClick={toggleOpenConfirmDialog}>
-        {t('files_and_license.remove_file')}
+        {t('registration.files_and_license.remove_file')}
       </Button>
 
       <ConfirmDialog
         open={openConfirmDialog}
-        title={t('files_and_license.remove_file')}
+        title={t('registration.files_and_license.remove_file')}
         onAccept={() => {
           removeFile();
           toggleOpenConfirmDialog();
         }}
         onCancel={toggleOpenConfirmDialog}>
-        <Typography>{t('files_and_license.remove_file_description', { fileName: file.name })}</Typography>
+        <Typography>{t('registration.files_and_license.remove_file_description', { fileName: file.name })}</Typography>
       </ConfirmDialog>
     </Paper>
   );

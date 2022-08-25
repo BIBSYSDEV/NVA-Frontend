@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Box, TextField, Typography } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { BookType, ChapterType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { BookType, ChapterType, ReportType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { DoiField } from '../components/DoiField';
 import { NviValidation } from '../components/NviValidation';
 import { SearchContainerField } from '../components/SearchContainerField';
@@ -13,34 +13,60 @@ import { ChapterContentType } from '../../../../types/publication_types/content.
 import { dataTestId } from '../../../../utils/dataTestIds';
 
 export const ChapterForm = () => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
 
   const { values } = useFormikContext<ChapterRegistration>();
   const instanceType = values.entityDescription.reference?.publicationInstance.type;
 
   return (
     <>
+      <DoiField />
+
       <div>
-        <Box data-testid="info-anthology" sx={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
           <InfoIcon color="primary" />
           <Typography variant="body1" gutterBottom>
-            {t('resource_type.chapter.info_anthology')}
+            {instanceType === ChapterType.AnthologyChapter
+              ? t('registration.resource_type.chapter.info_anthology')
+              : instanceType === ChapterType.ConferenceAbstract
+              ? t('registration.resource_type.chapter.info_book_of_abstracts')
+              : instanceType === ChapterType.ReportChapter
+              ? t('registration.resource_type.chapter.info_report')
+              : null}
           </Typography>
         </Box>
 
-        <DoiField />
-
-        {instanceType === ChapterType.AnthologyChapter && (
+        {instanceType === ChapterType.AnthologyChapter ? (
           <SearchContainerField
             fieldName={ResourceFieldNames.PartOf}
             searchSubtypes={[BookType.Anthology]}
-            label={t('resource_type.chapter.published_in')}
-            placeholder={t('resource_type.chapter.search_for_anthology')}
+            label={t('registration.resource_type.chapter.published_in')}
+            placeholder={t('registration.resource_type.chapter.search_for_anthology')}
             dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
-            fetchErrorMessage={t('feedback:error.get_monograph')}
+            fetchErrorMessage={t('feedback.error.search')}
             descriptionToShow="publisher-and-level"
           />
-        )}
+        ) : instanceType === ChapterType.ConferenceAbstract ? (
+          <SearchContainerField
+            fieldName={ResourceFieldNames.PartOf}
+            searchSubtypes={[ReportType.BookOfAbstracts]}
+            label={t('registration.resource_type.chapter.published_in')}
+            placeholder={t('registration.resource_type.chapter.search_for_book_of_abstracts')}
+            dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
+            fetchErrorMessage={t('feedback.error.search')}
+            descriptionToShow="publisher-and-level"
+          />
+        ) : instanceType === ChapterType.ReportChapter ? (
+          <SearchContainerField
+            fieldName={ResourceFieldNames.PartOf}
+            searchSubtypes={Object.values(ReportType)}
+            label={t('registration.resource_type.chapter.published_in')}
+            placeholder={t('registration.resource_type.chapter.search_for_report')}
+            dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
+            fetchErrorMessage={t('feedback.error.search')}
+            descriptionToShow="publisher-and-level"
+          />
+        ) : null}
       </div>
 
       <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
@@ -50,7 +76,7 @@ export const ChapterForm = () => {
               id={field.name}
               variant="filled"
               data-testid={dataTestId.registrationWizard.resourceType.pagesFromField}
-              label={t('resource_type.pages_from')}
+              label={t('registration.resource_type.pages_from')}
               {...field}
               value={field.value ?? ''}
               error={touched && !!error}
@@ -67,7 +93,7 @@ export const ChapterForm = () => {
               id={field.name}
               data-testid={dataTestId.registrationWizard.resourceType.pagesToField}
               variant="filled"
-              label={t('resource_type.pages_to')}
+              label={t('registration.resource_type.pages_to')}
               {...field}
               value={field.value ?? ''}
               error={touched && !!error}
@@ -80,7 +106,6 @@ export const ChapterForm = () => {
       {instanceType === ChapterType.AnthologyChapter && (
         <>
           <NviFields contentTypes={Object.values(ChapterContentType)} />
-
           <NviValidation registration={values} />
         </>
       )}

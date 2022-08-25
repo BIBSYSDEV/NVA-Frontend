@@ -1,4 +1,4 @@
-import { Box, List, Typography } from '@mui/material';
+import { Box, List } from '@mui/material';
 import { Formik, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -11,7 +11,7 @@ import { RegistrationSearch } from './RegistrationSearch';
 import { SortSelector } from './SortSelector';
 
 const SearchPage = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
 
@@ -19,7 +19,7 @@ const SearchPage = () => {
 
   return (
     <SyledPageContent>
-      <PageHeader backPath="/">{t('registrations')}</PageHeader>
+      <PageHeader>{t('common.registrations')}</PageHeader>
       <Formik
         initialValues={initialSearchParams}
         onSubmit={(values) => {
@@ -46,7 +46,6 @@ const SearchPage = () => {
               rowGap: '1rem',
             }}>
             <List sx={{ gridArea: 'filters' }}>
-              <Typography fontWeight={500}>{t('search:select_filters')}</Typography>
               <RegistrationTypeFilter />
             </List>
             <SearchBar />

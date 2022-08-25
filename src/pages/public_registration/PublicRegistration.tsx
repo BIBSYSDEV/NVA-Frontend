@@ -18,7 +18,7 @@ const PublicRegistration = () => {
   const { identifier } = useParams<{ identifier: string }>();
   const [registration, isLoadingRegistration, refetchRegistration] = useFetch<Registration>({
     url: `${PublicationsApiPath.Registration}/${identifier}`,
-    errorMessage: t('feedback:error.get_registration'),
+    errorMessage: t('feedback.error.get_registration'),
   });
   const user = useSelector((store: RootState) => store.user);
 
@@ -30,7 +30,7 @@ const PublicRegistration = () => {
   return (
     <SyledPageContent>
       {isLoadingRegistration ? (
-        <PageSpinner />
+        <PageSpinner aria-label={t('common.registration')} />
       ) : registration ? (
         isAllowedToSeePublicRegistration ? (
           <ErrorBoundary>

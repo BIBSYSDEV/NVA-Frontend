@@ -1,26 +1,27 @@
-import { ListItem, Collapse, List, ListItemText, Typography, Theme, useMediaQuery } from '@mui/material';
+import { Collapse, List, ListItemText, Typography, Theme, useMediaQuery, ListItemButton } from '@mui/material';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { ReactNode, useState } from 'react';
 
 interface BaseFilterItemProps {
   title: string;
+  fontWeight?: number;
   children: ReactNode;
 }
 
-export const BaseFilterItem = ({ title, children }: BaseFilterItemProps) => {
+export const BaseFilterItem = ({ title, fontWeight = 600, children }: BaseFilterItemProps) => {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'), { noSsr: true });
   const [isOpen, setIsOpen] = useState(!isMobile);
   const toggleOpen = () => setIsOpen(!isOpen);
 
   return (
-    <>
-      <ListItem button onClick={toggleOpen}>
+    <li>
+      <ListItemButton onClick={toggleOpen}>
         <ListItemText disableTypography>
-          <Typography fontWeight={600}>{title}</Typography>
+          <Typography fontWeight={fontWeight}>{title}</Typography>
         </ListItemText>
         {isOpen ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
+      </ListItemButton>
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
         <List
           disablePadding
@@ -33,6 +34,6 @@ export const BaseFilterItem = ({ title, children }: BaseFilterItemProps) => {
           {children}
         </List>
       </Collapse>
-    </>
+    </li>
   );
 };

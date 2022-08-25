@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 import { RoleApiPath } from '../../../api/apiPaths';
 import { PageHeader } from '../../../components/PageHeader';
 import { PageSpinner } from '../../../components/PageSpinner';
-import { SyledPageContent } from '../../../components/styled/Wrappers';
 import { CustomerInstitution, emptyCustomerInstitution } from '../../../types/customerInstitution.types';
 import { RoleName, UserList } from '../../../types/user.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
@@ -15,28 +14,30 @@ interface AdminCustomerInstitutionProps {
 }
 
 export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutionProps) => {
-  const { t } = useTranslation('admin');
+  const { t } = useTranslation();
   const editMode = customerId !== 'new';
   const [customerInstitution, isLoadingCustomerInstitution] = useFetch<CustomerInstitution>({
     url: editMode ? customerId : '',
-    errorMessage: t('feedback:error.get_customer'),
+    errorMessage: t('feedback.error.get_customer'),
     withAuthentication: true,
   });
   const [userList, isLoadingUsers, refetchInstitutionUsers] = useFetch<UserList>({
     url: customerId ? `${RoleApiPath.InstitutionUsers}?institution=${encodeURIComponent(customerId)}` : '',
-    errorMessage: t('feedback:error.get_users_for_institution'),
+    errorMessage: t('feedback.error.get_users_for_institution'),
     withAuthentication: true,
   });
   const admins = filterUsersByRole(userList?.users ?? [], RoleName.InstitutionAdmin);
 
   return (
-    <SyledPageContent>
-      <PageHeader htmlTitle={editMode ? customerInstitution?.displayName : t('add_institution')}>
-        {t(editMode ? 'edit_institution' : 'add_institution')}
+    <>
+      <PageHeader
+        id="admin-institution-label"
+        htmlTitle={editMode ? customerInstitution?.displayName : t('basic_data.institutions.add_institution')}>
+        {t(editMode ? 'basic_data.institutions.edit_institution' : 'basic_data.institutions.add_institution')}
       </PageHeader>
 
       {isLoadingCustomerInstitution ? (
-        <PageSpinner />
+        <PageSpinner aria-labelledby="admin-institution-label" />
       ) : (
         <>
           <CustomerInstitutionMetadataForm
@@ -53,6 +54,6 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
           )}
         </>
       )}
-    </SyledPageContent>
+    </>
   );
 };

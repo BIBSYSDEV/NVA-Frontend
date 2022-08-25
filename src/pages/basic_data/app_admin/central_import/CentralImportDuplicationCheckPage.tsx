@@ -12,15 +12,16 @@ import { CentralImportDuplicateSearch } from './CentralImportDuplicateSearch';
 import NotFound from '../../../errorpages/NotFound';
 import { DuplicateSearchFilterForm } from './DuplicateSearchFilterForm';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
+import { getTitleString } from '../../../../utils/registration-helpers';
 
 export const CentralImportDuplicationCheckPage = () => {
-  const { t } = useTranslation('basicData');
+  const { t } = useTranslation();
   const { identifier } = useParams<{ identifier: string }>();
   const [duplicateSearchFilters, setDuplicateSearchFilters] = useState(emptyDuplicateSearchFilter);
 
   const [registration, isLoadingRegistration] = useFetch<Registration>({
     url: `${PublicationsApiPath.Registration}/${identifier}`,
-    errorMessage: t('feedback:error.get_registration'),
+    errorMessage: t('feedback.error.get_registration'),
   });
 
   useEffect(() => {
@@ -40,19 +41,19 @@ export const CentralImportDuplicationCheckPage = () => {
 
   return (
     <>
-      <Typography variant="h3" component="h2" paragraph>
-        {t('central_import.duplicate_check')}
+      <Typography id="duplicate-check-label" variant="h3" component="h2" paragraph>
+        {t('basic_data.central_import.duplicate_check')}
       </Typography>
       <SyledPageContent>
         {isLoadingRegistration ? (
-          <PageSpinner />
+          <PageSpinner aria-labelledby="duplicate-check-label" />
         ) : registration ? (
           <>
             <Typography variant="h3" component="h2" paragraph>
-              {t('central_import.import_publication')}:
+              {t('basic_data.central_import.import_publication')}:
             </Typography>
             <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
-              {registration.entityDescription?.mainTitle}
+              {getTitleString(registration.entityDescription?.mainTitle)}
             </Typography>
             <Typography display="inline" variant="body2">
               {contributors.map((contributor) => contributor.identity.name).join('; ')}
@@ -70,7 +71,7 @@ export const CentralImportDuplicationCheckPage = () => {
             )}
             <Divider sx={{ marginBottom: '2rem' }} />
             <Typography variant="h3" component="h2" paragraph>
-              {t('central_import.search_for_duplicates')}:
+              {t('basic_data.central_import.search_for_duplicates')}:
             </Typography>
             <DuplicateSearchFilterForm
               publication={registration}

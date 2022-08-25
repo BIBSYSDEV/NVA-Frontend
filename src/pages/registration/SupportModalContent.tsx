@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/notificationSlice';
 import { MessageType } from '../../types/publication_types/messages.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 
 interface SupportModalContentProps {
   closeModal: () => void;
@@ -15,15 +16,15 @@ interface SupportModalContentProps {
 
 export const SupportModalContent = ({ closeModal }: SupportModalContentProps) => {
   const dispatch = useDispatch();
-  const { t } = useTranslation('feedback');
+  const { t } = useTranslation();
   const { identifier } = useParams<{ identifier: string }>();
 
   const sendMessage = async (message: string) => {
     const messageResponse = await addMessage(identifier, message, MessageType.Support);
     if (isErrorStatus(messageResponse.status)) {
-      dispatch(setNotification({ message: t('error.send_message'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
     } else if (isSuccessStatus(messageResponse.status)) {
-      dispatch(setNotification({ message: t('success.send_message'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
       closeModal();
     }
   };
@@ -31,8 +32,8 @@ export const SupportModalContent = ({ closeModal }: SupportModalContentProps) =>
   return (
     <>
       <Typography paragraph>
-        <Trans i18nKey="registration:support_description">
-          <Link component={RouterLink} to="/my-messages" />
+        <Trans i18nKey="registration.support_description">
+          <Link component={RouterLink} to={UrlPathTemplate.MyPageMessages} />
         </Trans>
       </Typography>
 

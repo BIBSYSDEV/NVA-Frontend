@@ -30,7 +30,7 @@ export const CustomerInstitutionMetadataForm = ({
   customerInstitution,
   editMode,
 }: CustomerInstitutionMetadataFormProps) => {
-  const { t } = useTranslation('admin');
+  const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -38,17 +38,17 @@ export const CustomerInstitutionMetadataForm = ({
     if (!editMode) {
       const createCustomerResponse = await createCustomerInstitution(values);
       if (isErrorStatus(createCustomerResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:error.create_customer'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.create_customer'), variant: 'error' }));
       } else if (isSuccessStatus(createCustomerResponse.status)) {
         history.push(getAdminInstitutionPath(createCustomerResponse.data.id));
-        dispatch(setNotification({ message: t('feedback:success.created_customer'), variant: 'success' }));
+        dispatch(setNotification({ message: t('feedback.success.created_customer'), variant: 'success' }));
       }
     } else {
       const updateCustomerResponse = await updateCustomerInstitution(values);
       if (isErrorStatus(updateCustomerResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:error.update_customer'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.update_customer'), variant: 'error' }));
       } else if (isSuccessStatus(updateCustomerResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:success.update_customer'), variant: 'success' }));
+        dispatch(setNotification({ message: t('feedback.success.update_customer'), variant: 'success' }));
       }
     }
   };
@@ -56,7 +56,7 @@ export const CustomerInstitutionMetadataForm = ({
   return (
     <>
       <Typography variant="h2" paragraph>
-        {t('common:institution')}
+        {t('common.institution')}
       </Typography>
       <Formik
         enableReinitialize
@@ -86,7 +86,7 @@ export const CustomerInstitutionMetadataForm = ({
                   ) : (
                     <TextField
                       variant="filled"
-                      label={t('common:institution')}
+                      label={t('common.institution')}
                       data-testid={dataTestId.organization.searchField}
                       required
                       disabled
@@ -97,26 +97,30 @@ export const CustomerInstitutionMetadataForm = ({
               </Field>
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.DisplayName}
-                label={t('display_name')}
+                label={t('basic_data.institutions.display_name')}
                 required
                 dataTestId={dataTestId.institutionAdmin.displayNameField}
               />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.ShortName}
-                label={t('short_name')}
+                label={t('basic_data.institutions.short_name')}
                 required
                 dataTestId={dataTestId.institutionAdmin.shortNameField}
               />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.ArchiveName}
-                label={t('archive_name')}
+                label={t('basic_data.institutions.archive_name')}
                 dataTestId={dataTestId.institutionAdmin.archiveNameField}
               />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.FeideOrganizationDomain}
-                label={t('feide_organization_domain')}
-                required
+                label={t('basic_data.institutions.feide_organization_domain')}
                 dataTestId={dataTestId.institutionAdmin.feideField}
+              />
+              <CustomerInstitutionTextField
+                name={CustomerInstitutionFieldNames.RorId}
+                label={t('basic_data.institutions.ror')}
+                dataTestId={dataTestId.institutionAdmin.rorField}
               />
               <StyledRightAlignedWrapper>
                 <LoadingButton
@@ -126,7 +130,7 @@ export const CustomerInstitutionMetadataForm = ({
                   loadingPosition="start"
                   loading={isSubmitting}
                   type="submit">
-                  {editMode ? t('common:save') : t('common:create')}
+                  {editMode ? t('common.save') : t('common.create')}
                 </LoadingButton>
               </StyledRightAlignedWrapper>
             </InputContainerBox>

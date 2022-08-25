@@ -14,7 +14,7 @@ import { CristinApiPath } from '../../../../api/apiPaths';
 import { ContributorRole } from '../../../../types/contributor.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { SearchResponse } from '../../../../types/common.types';
-import { CristinUser } from '../../../../types/user.types';
+import { CristinPerson } from '../../../../types/user.types';
 import { CristinPersonList } from './CristinPersonList';
 import { apiRequest } from '../../../../api/apiRequest';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
@@ -23,7 +23,7 @@ import { setNotification } from '../../../../redux/notificationSlice';
 const resultsPerPage = 10;
 
 interface AddContributorFormProps {
-  addContributor: (selectedUser: CristinUser) => void;
+  addContributor: (selectedUser: CristinPerson) => void;
   openAddUnverifiedContributor: () => void;
   initialSearchTerm?: string;
   roleToAdd: ContributorRole;
@@ -35,22 +35,22 @@ export const AddContributorForm = ({
   initialSearchTerm = '',
   roleToAdd,
 }: AddContributorFormProps) => {
-  const { t } = useTranslation('registration');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
 
   const [isAddingSelf, setIsAddingSelf] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<CristinUser>();
+  const [selectedUser, setSelectedUser] = useState<CristinPerson>();
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const debouncedSearchTerm = useDebounce(searchTerm);
 
   const [page, setPage] = useState(0);
 
-  const [userSearch, isLoadingUserSearch] = useFetch<SearchResponse<CristinUser>>({
+  const [userSearch, isLoadingUserSearch] = useFetch<SearchResponse<CristinPerson>>({
     url: debouncedSearchTerm
       ? `${CristinApiPath.Person}?name=${debouncedSearchTerm}&results=${resultsPerPage}&page=${page + 1}`
       : '',
-    errorMessage: t('feedback:error.search'),
+    errorMessage: t('feedback.error.search'),
   });
 
   const { values } = useFormikContext<Registration>();
@@ -61,9 +61,9 @@ export const AddContributorForm = ({
   const addSelfAsContributor = async () => {
     if (user?.cristinId) {
       setIsAddingSelf(true);
-      const getCurrentPersonResponse = await apiRequest<CristinUser>({ url: user.cristinId });
+      const getCurrentPersonResponse = await apiRequest<CristinPerson>({ url: user.cristinId });
       if (isErrorStatus(getCurrentPersonResponse.status)) {
-        dispatch(setNotification({ message: t('feedback:error.add_contributor'), variant: 'error' }));
+        dispatch(setNotification({ message: t('feedback.error.add_contributor'), variant: 'error' }));
       } else if (isSuccessStatus(getCurrentPersonResponse.status)) {
         addContributor(getCurrentPersonResponse.data);
       }
@@ -75,7 +75,7 @@ export const AddContributorForm = ({
     <>
       {initialSearchTerm && (
         <Typography variant="subtitle1">
-          {t('registration:contributors.prefilled_name')}: <b>{initialSearchTerm}</b>
+          {t('registration.contributors.prefilled_name')}: <b>{initialSearchTerm}</b>
         </Typography>
       )}
       <TextField
@@ -90,9 +90,8 @@ export const AddContributorForm = ({
             setPage(0);
           }
         }}
-        autoFocus
-        placeholder={t('common:search_placeholder')}
-        label={t('common:search')}
+        placeholder={t('common.search_placeholder')}
+        label={t('common.search')}
         InputProps={{
           startAdornment: <SearchIcon />,
         }}
@@ -119,7 +118,7 @@ export const AddContributorForm = ({
           />
         </>
       ) : (
-        debouncedSearchTerm && <Typography>{t('common:no_hits')}</Typography>
+        debouncedSearchTerm && <Typography>{t('common.no_hits')}</Typography>
       )}
 
       <Box
@@ -135,14 +134,16 @@ export const AddContributorForm = ({
             data-testid={dataTestId.registrationWizard.contributors.addSelfButton}
             onClick={addSelfAsContributor}
             loading={isAddingSelf}>
-            {t('contributors.add_self_as_role', { role: t(`contributors.types.${roleToAdd}`) })}
+            {t('registration.contributors.add_self_as_role', {
+              role: t(`registration.contributors.types.${roleToAdd}`),
+            })}
           </LoadingButton>
         )}
         {!initialSearchTerm && (
           <Button
             data-testid={dataTestId.registrationWizard.contributors.addUnverifiedContributorButton}
             onClick={openAddUnverifiedContributor}>
-            {t('contributors.user_not_found')}
+            {t('registration.contributors.user_not_found')}
           </Button>
         )}
         <Button
@@ -152,8 +153,10 @@ export const AddContributorForm = ({
           size="large"
           variant="contained">
           {initialSearchTerm
-            ? t('contributors.verify_person')
-            : t('common:add_custom', { name: t(`contributors.types.${roleToAdd}`) })}
+            ? t('registration.contributors.verify_person')
+            : t('common.add_custom', {
+                name: t(`registration.contributors.types.${roleToAdd}`),
+              })}
         </Button>
       </Box>
     </>

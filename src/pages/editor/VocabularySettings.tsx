@@ -1,5 +1,6 @@
 import { Typography, CircularProgress, Box } from '@mui/material';
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { TFunction, useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { authenticatedApiRequest } from '../../api/apiRequest';
@@ -25,22 +26,22 @@ const defaultHrcsCategory: CustomerVocabulary = {
   name: 'HRCS Category',
 };
 
-export const getTranslatedVocabularyName = (t: TFunction<'editor'>, id: string) =>
+export const getTranslatedVocabularyName = (t: TFunction, id: string) =>
   id === defaultHrcsActivity.id
-    ? t('editor:hrcs_activity')
+    ? t('editor.hrcs_activity')
     : id === defaultHrcsCategory.id
-    ? t('editor:hrcs_categories')
+    ? t('editor.hrcs_categories')
     : '';
 
 export const VocabularySettings = () => {
-  const { t } = useTranslation('editor');
+  const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const dispatch = useDispatch();
   const [isUpdating, setIsUpdating] = useState(false);
 
   const [vocabularyList, isLoadingVocabularyList, , setVocabularyList] = useFetch<VocabularyList>({
     url: user?.customerId ? `${user.customerId}/vocabularies` : '',
-    errorMessage: t('feedback:error.get_vocabularies'),
+    errorMessage: t('feedback.error.get_vocabularies'),
     withAuthentication: true,
   });
 
@@ -69,9 +70,9 @@ export const VocabularySettings = () => {
       if (isSuccessStatus(updatedVocabularyResponse.status)) {
         dispatch(
           setNotification({
-            message: t('feedback:success.update_vocabulary', {
+            message: t('feedback.success.update_vocabulary', {
               vocabulary: vocabularyName,
-              status: t(newVocabulary.status.toLowerCase()).toLowerCase(),
+              status: t(newVocabulary.status.toLowerCase() as any).toLowerCase(),
             }),
             variant: 'success',
           })
@@ -80,7 +81,7 @@ export const VocabularySettings = () => {
       } else if (isErrorStatus(updatedVocabularyResponse.status)) {
         dispatch(
           setNotification({
-            message: t('feedback:error.update_vocabulary', { vocabulary: vocabularyName }),
+            message: t('feedback.error.update_vocabulary', { vocabulary: vocabularyName }),
             variant: 'error',
           })
         );
@@ -91,12 +92,15 @@ export const VocabularySettings = () => {
 
   return (
     <>
+      <Helmet>
+        <title id="vocabulary-label">{t('editor.vocabulary')}</title>
+      </Helmet>
       <Typography paragraph color="primary" fontWeight="600">
-        {t('select_vocabulary_description')}
+        {t('editor.select_vocabulary_description')}
       </Typography>
 
       {isLoadingVocabularyList ? (
-        <CircularProgress />
+        <CircularProgress aria-labelledby="vocabulary-label" />
       ) : (
         vocabularyList && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -118,10 +122,10 @@ export const VocabularySettings = () => {
         )
       )}
       <Typography gutterBottom mt="1rem">
-        {t('default_description')}
+        {t('editor.default_description')}
       </Typography>
-      <Typography gutterBottom>{t('allowed_description')}</Typography>
-      <Typography gutterBottom>{t('disabled_description')}</Typography>
+      <Typography gutterBottom>{t('editor.allowed_description')}</Typography>
+      <Typography gutterBottom>{t('editor.disabled_description')}</Typography>
     </>
   );
 };

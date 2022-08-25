@@ -1,0 +1,25 @@
+version: 0.2
+
+# Buildspec to run E2E tests in parallel. To add more builds to the parallel run,
+# add dummy parameters to RUNNERS at the end of the buildspec.
+
+batch:
+  build-matrix:
+    static:
+      fast-fail: false
+    dynamic:
+      buildspec:
+        - buildspec.testrun.yml
+      env:
+        variables:
+          RUNNERS:
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10

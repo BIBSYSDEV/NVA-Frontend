@@ -1,4 +1,4 @@
-import { ListItemButton, ListSubheader } from '@mui/material';
+import { ListItemButton } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { styled as muiStyled } from '@mui/system';
@@ -28,7 +28,7 @@ const StyledIndentedListItem = muiStyled(ListItemButton, { shouldForwardProp: (p
 );
 
 export const RegistrationTypeFilter = () => {
-  const { t } = useTranslation('publicationTypes');
+  const { t } = useTranslation();
   const { setFieldValue, submitForm, values } = useFormikContext<SearchConfig>();
 
   const properties = values.properties ?? [];
@@ -53,49 +53,78 @@ export const RegistrationTypeFilter = () => {
   };
 
   return (
-    <BaseFilterItem title={t('search:registration_type')}>
-      <ListSubheader disableSticky>{t(PublicationType.PublicationInJournal)}</ListSubheader>
-      {Object.values(JournalType).map((type) => (
-        <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-          {t(type)}
-        </StyledIndentedListItem>
-      ))}
-      <ListSubheader disableSticky>{t(PublicationType.Book)}</ListSubheader>
-      {Object.values(BookType).map((type) => (
-        <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-          {t(type)}
-        </StyledIndentedListItem>
-      ))}
-      <ListSubheader disableSticky>{t(PublicationType.Report)}</ListSubheader>
-      {Object.values(ReportType).map((type) => (
-        <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-          {t(type)}
-        </StyledIndentedListItem>
-      ))}
-      <ListSubheader disableSticky>{t(PublicationType.Degree)}</ListSubheader>
-      {Object.values(DegreeType).map((type) => (
-        <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-          {t(type)}
-        </StyledIndentedListItem>
-      ))}
-      <ListSubheader disableSticky>{t(PublicationType.Chapter)}</ListSubheader>
-      {Object.values(ChapterType).map((type) => (
-        <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-          {t(type)}
-        </StyledIndentedListItem>
-      ))}
-      <ListSubheader disableSticky>{t(PublicationType.Presentation)}</ListSubheader>
-      {Object.values(PresentationType).map((type) => (
-        <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-          {t(type)}
-        </StyledIndentedListItem>
-      ))}
-      <ListSubheader disableSticky>{t(PublicationType.Artistic)}</ListSubheader>
-      {Object.values(ArtisticType).map((type) => (
-        <StyledIndentedListItem key={type} onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-          {t(type)}
-        </StyledIndentedListItem>
-      ))}
+    <BaseFilterItem title={t('search.registration_type')}>
+      <BaseFilterItem
+        title={t(`registration.publication_types.${PublicationType.PublicationInJournal}`)}
+        fontWeight={500}>
+        {Object.values(JournalType).map((type) => (
+          <li key={type}>
+            <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
+              {t(`registration.publication_types.${type}`)}
+            </StyledIndentedListItem>
+          </li>
+        ))}
+      </BaseFilterItem>
+
+      <BaseFilterItem title={t(`registration.publication_types.${PublicationType.Book}`)} fontWeight={500}>
+        {Object.values(BookType).map((type) => (
+          <li key={type}>
+            <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
+              {t(`registration.publication_types.${type}`)}
+            </StyledIndentedListItem>
+          </li>
+        ))}
+      </BaseFilterItem>
+
+      <BaseFilterItem title={t(`registration.publication_types.${PublicationType.Report}`)} fontWeight={500}>
+        {Object.values(ReportType).map((type) => (
+          <li key={type}>
+            <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
+              {t(`registration.publication_types.${type}`)}
+            </StyledIndentedListItem>
+          </li>
+        ))}
+      </BaseFilterItem>
+
+      <BaseFilterItem title={t(`registration.publication_types.${PublicationType.Degree}`)} fontWeight={500}>
+        {Object.values(DegreeType).map((type) => (
+          <li key={type}>
+            <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
+              {t(`registration.publication_types.${type}`)}
+            </StyledIndentedListItem>
+          </li>
+        ))}
+      </BaseFilterItem>
+
+      <BaseFilterItem title={t(`registration.publication_types.${PublicationType.Chapter}`)} fontWeight={500}>
+        {Object.values(ChapterType).map((type) => (
+          <li key={type}>
+            <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
+              {t(`registration.publication_types.${type}`)}
+            </StyledIndentedListItem>
+          </li>
+        ))}
+      </BaseFilterItem>
+
+      <BaseFilterItem title={t(`registration.publication_types.${PublicationType.Presentation}`)} fontWeight={500}>
+        {Object.values(PresentationType).map((type) => (
+          <li key={type}>
+            <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
+              {t(`registration.publication_types.${type}`)}
+            </StyledIndentedListItem>
+          </li>
+        ))}
+      </BaseFilterItem>
+
+      <BaseFilterItem title={t(`registration.publication_types.${PublicationType.Artistic}`)} fontWeight={500}>
+        {Object.values(ArtisticType).map((type) => (
+          <li key={type}>
+            <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
+              {t(`registration.publication_types.${type}`)}
+            </StyledIndentedListItem>
+          </li>
+        ))}
+      </BaseFilterItem>
     </BaseFilterItem>
   );
 };

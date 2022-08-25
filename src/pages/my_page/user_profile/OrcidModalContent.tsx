@@ -1,0 +1,44 @@
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import { Button, DialogActions, DialogContent, Typography } from '@mui/material';
+
+import { ORCID_BASE_URL, USE_MOCK_DATA } from '../../../utils/constants';
+import { UrlPathTemplate } from '../../../utils/urlPaths';
+
+interface OrcidModalContentProps {
+  cancelFunction: () => void;
+  cancelText?: string;
+}
+
+export const OrcidModalContent = ({ cancelFunction, cancelText }: OrcidModalContentProps) => {
+  const { t } = useTranslation();
+  const history = useHistory();
+
+  const openORCID = () => {
+    if (USE_MOCK_DATA) {
+      history.push(`${UrlPathTemplate.MyPageMyProfile}?access_token=123`);
+      cancelFunction();
+    } else {
+      window.location.assign(
+        `${ORCID_BASE_URL}/signin?oauth&client_id=${process.env.REACT_APP_ORCID_CLIENT_ID}&response_type=token&scope=openid&redirect_uri=${window.location.href}`
+      );
+    }
+  };
+
+  return (
+    <>
+      <DialogContent>
+        <Typography paragraph>{t('my_page.my_profile.orcid.dialog.paragraph0')}</Typography>
+        <Typography>{t('my_page.my_profile.orcid.dialog.paragraph1')}</Typography>
+      </DialogContent>
+      <DialogActions>
+        <Button data-testid="cancel-connect-to-orcid" variant="outlined" onClick={cancelFunction}>
+          {cancelText ?? t('common.close')}
+        </Button>
+        <Button data-testid="connect-to-orcid" onClick={openORCID} variant="contained">
+          {t('my_page.my_profile.orcid.connect_orcid')}
+        </Button>
+      </DialogActions>
+    </>
+  );
+};

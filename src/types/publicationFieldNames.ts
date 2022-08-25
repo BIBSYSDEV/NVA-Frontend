@@ -6,6 +6,7 @@ export enum PublicationType {
   Chapter = 'Chapter',
   Presentation = 'Event',
   Artistic = 'Artistic',
+  MediaContribution = 'MediaContribution',
 }
 
 export enum JournalType {
@@ -14,6 +15,8 @@ export enum JournalType {
   Review = 'JournalReview',
   Leader = 'JournalLeader',
   Corrigendum = 'JournalCorrigendum',
+  Issue = 'JournalIssue',
+  ConferenceAbstract = 'ConferenceAbstract',
 }
 
 export enum BookType {
@@ -25,6 +28,7 @@ export enum ReportType {
   Research = 'ReportResearch',
   Policy = 'ReportPolicy',
   WorkingPaper = 'ReportWorkingPaper',
+  BookOfAbstracts = 'ReportBookOfAbstract',
   Report = 'ReportBasic',
 }
 
@@ -32,11 +36,14 @@ export enum DegreeType {
   Bachelor = 'DegreeBachelor',
   Master = 'DegreeMaster',
   Phd = 'DegreePhd',
+  Licentiate = 'DegreeLicentiate',
   Other = 'OtherStudentWork',
 }
 
 export enum ChapterType {
   AnthologyChapter = 'ChapterArticle',
+  ReportChapter = 'ChapterInReport',
+  ConferenceAbstract = 'ChapterConferenceAbstract',
 }
 
 export enum PresentationType {
@@ -49,6 +56,18 @@ export enum PresentationType {
 export enum ArtisticType {
   ArtisticDesign = 'ArtisticDesign',
   ArtisticArchitecture = 'Architecture',
+  PerformingArts = 'PerformingArts',
+  MovingPicture = 'MovingPicture',
+  MusicPerformance = 'MusicPerformance',
+}
+
+export enum MediaType {
+  MediaFeatureArticle = 'MediaFeatureArticle',
+  MediaReaderOpinion = 'MediaReaderOpinion',
+  MediaInterview = 'MediaInterview',
+  MediaBlogPost = 'MediaBlogPost',
+  MediaPodcast = 'MediaPodcast',
+  MediaParticipationInRadioOrTv = 'MediaParticipationInRadioOrTv',
 }
 
 export type RegistrationSubtype =
@@ -58,7 +77,8 @@ export type RegistrationSubtype =
   | DegreeType
   | ChapterType
   | PresentationType
-  | ArtisticType;
+  | ArtisticType
+  | MediaType;
 
 export enum RegistrationFieldName {
   Identifier = 'identifier',
@@ -71,7 +91,6 @@ export const contextTypeBaseFieldName = 'entityDescription.reference.publication
 export const instanceTypeBaseFieldName = 'entityDescription.reference.publicationInstance';
 
 export enum ResourceFieldNames {
-  ArchitectureOutput = 'entityDescription.reference.publicationInstance.architectureOutput',
   ArticleNumber = 'entityDescription.reference.publicationInstance.articleNumber',
   ContentType = 'entityDescription.reference.publicationInstance.contentType',
   CorrigendumFor = 'entityDescription.reference.publicationInstance.corrigendumFor',
@@ -90,6 +109,11 @@ export enum ResourceFieldNames {
   PublicationContextId = 'entityDescription.reference.publicationContext.id',
   PublicationContextLabel = 'entityDescription.reference.publicationContext.label',
   PublicationContextLevel = 'entityDescription.reference.publicationContext.level',
+  PublicationContextMediaChannel = 'entityDescription.reference.publicationContext.disseminationChannel',
+  PublicationContextMediaFormat = 'entityDescription.reference.publicationContext.format',
+  PublicationContextMediaMedium = 'entityDescription.reference.publicationContext.medium',
+  PublicationContextMediaPartOfSeries = 'entityDescription.reference.publicationContext.partOf.series',
+  PublicationContextMediaPartOfSeriesPart = 'entityDescription.reference.publicationContext.partOf.seriesPart',
   PublicationContextPlaceLabel = 'entityDescription.reference.publicationContext.place.label',
   PublicationContextPlaceCountry = 'entityDescription.reference.publicationContext.place.country',
   PublicationContextPublisher = 'entityDescription.reference.publicationContext.publisher',
@@ -98,9 +122,13 @@ export enum ResourceFieldNames {
   PublicationContextTimeFrom = 'entityDescription.reference.publicationContext.time.from',
   PublicationContextTimeTo = 'entityDescription.reference.publicationContext.time.to',
   PublicationContextType = 'entityDescription.reference.publicationContext.type',
+  PublicationInstanceArchitectureOutput = 'entityDescription.reference.publicationInstance.architectureOutput',
   PublicationInstanceDescription = 'entityDescription.reference.publicationInstance.description',
+  PublicationInstanceManifestations = 'entityDescription.reference.publicationInstance.manifestations',
+  PublicationInstanceOutputs = 'entityDescription.reference.publicationInstance.outputs',
   PublicationInstanceSubtypeDescription = 'entityDescription.reference.publicationInstance.subtype.description',
   PublicationInstanceSubtypeType = 'entityDescription.reference.publicationInstance.subtype.type',
+  PublicationInstanceVenues = 'entityDescription.reference.publicationInstance.venues',
   Reference = 'entityDescription.reference',
   Series = 'entityDescription.reference.publicationContext.series',
   SeriesId = 'entityDescription.reference.publicationContext.series.id',
@@ -108,7 +136,6 @@ export enum ResourceFieldNames {
   SeriesTitle = 'entityDescription.reference.publicationContext.series.title',
   SeriesType = 'entityDescription.reference.publicationContext.series.type',
   SubType = 'entityDescription.reference.publicationInstance.type',
-  Venues = 'entityDescription.reference.publicationInstance.venues',
   Volume = 'entityDescription.reference.publicationInstance.volume',
 }
 

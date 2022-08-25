@@ -57,6 +57,16 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           <MenuItem divider key={dataTestId.header.languageButton}>
             <LanguageSelector isMobile={true} />
           </MenuItem>,
+          user?.isEditor && (
+            <MenuItem
+              key={dataTestId.header.editorLink}
+              data-testid={dataTestId.header.editorLink}
+              onClick={closeMenu}
+              component={Link}
+              to={UrlPathTemplate.Editor}>
+              <Typography>{user.customerShortName}</Typography>
+            </MenuItem>
+          ),
           user?.isCurator && (
             <MenuItem
               key={dataTestId.header.worklistLink}
@@ -64,7 +74,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               onClick={closeMenu}
               component={Link}
               to={UrlPathTemplate.Worklist}>
-              <Typography>{t('workLists:worklist')}</Typography>
+              <Typography>{t('worklist.worklist')}</Typography>
             </MenuItem>
           ),
           user?.isCreator && [
@@ -74,39 +84,18 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               onClick={closeMenu}
               component={Link}
               to={UrlPathTemplate.NewRegistration}>
-              <Typography>{t('registration:new_registration')}</Typography>
+              <Typography>{t('registration.new_registration')}</Typography>
             </MenuItem>,
             <MenuItem
-              key={dataTestId.header.messagesLink}
-              data-testid={dataTestId.header.messagesLink}
+              key={dataTestId.header.myPageLink}
+              data-testid={dataTestId.header.myPageLink}
               onClick={closeMenu}
               component={Link}
-              to={UrlPathTemplate.MyMessages}>
-              <Typography>{t('workLists:messages')}</Typography>
+              to={UrlPathTemplate.MyPage}>
+              <Typography>{t('my_page.my_page')}</Typography>
             </MenuItem>,
           ],
         ]}
-        {user?.isCreator && [
-          <MenuItem
-            key={dataTestId.header.myRegistrationsLink}
-            data-testid={dataTestId.header.myRegistrationsLink}
-            onClick={closeMenu}
-            component={Link}
-            to={UrlPathTemplate.MyRegistrations}>
-            <Typography>{t('workLists:my_registrations')}</Typography>
-          </MenuItem>,
-        ]}
-        {user?.isEditor && (
-          <MenuItem
-            divider
-            key={dataTestId.header.editorLink}
-            data-testid={dataTestId.header.editorLink}
-            onClick={closeMenu}
-            component={Link}
-            to={UrlPathTemplate.Editor}>
-            <Typography>{t('profile:roles.editor')}</Typography>
-          </MenuItem>
-        )}
         {(user?.isAppAdmin || user?.isInstitutionAdmin) && isMobile && (
           <MenuItem
             key={dataTestId.header.basicDataLink}
@@ -114,18 +103,11 @@ export const Menu = ({ handleLogout }: MenuProps) => {
             onClick={closeMenu}
             component={Link}
             to={UrlPathTemplate.BasicData}>
-            <Typography>{t('basicData:basic_data')}</Typography>
+            <Typography>{t('basic_data.basic_data')}</Typography>
           </MenuItem>
         )}
-        <MenuItem
-          data-testid={dataTestId.header.myProfileLink}
-          onClick={closeMenu}
-          component={Link}
-          to={UrlPathTemplate.MyProfile}>
-          <Typography>{t('profile:my_profile')}</Typography>
-        </MenuItem>
         <MenuItem data-testid={dataTestId.header.logOutLink} onClick={handleLogout}>
-          {t('authorization:logout')}
+          {t('authorization.logout')}
         </MenuItem>
       </MuiMenu>
     </Box>

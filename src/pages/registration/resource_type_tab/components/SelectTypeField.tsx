@@ -27,14 +27,14 @@ export const SelectTypeField = ({
           variant="filled"
           fullWidth
           {...field}
-          label={t('common:type')}
+          label={t('common.type')}
           required
           error={!!error && touched}
           helperText={<ErrorMessage name={field.name} />}
           onChange={(event) => (onChangeType ? onChangeType(event.target.value) : field.onChange(event))}>
           {options.map((typeValue) => (
             <MenuItem value={typeValue} key={typeValue} data-testid={`${dataTestId}-${typeValue}`}>
-              {t(`publicationTypes:${typeValue}`)}
+              {t(`registration.publication_types.${typeValue}` as any)}
             </MenuItem>
           ))}
         </TextField>
