@@ -12,7 +12,7 @@ export const FileUploader = ({ addFile, uppy }: FileUploaderProps) => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
       uppy.on('upload-success', (file, response: any) => {
         // TODO: see if this removes need of any https://github.com/transloadit/uppy/pull/3141
-        const newFile = {
+        const newFile: File = {
           ...emptyFile,
           identifier: response.uploadURL, // In reality an ID from completeMultipartUpload endpoint
           name: file.name,
