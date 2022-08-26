@@ -21,7 +21,8 @@ phases:
     runtime-versions:
       nodejs: latest
     commands:
-      - apt-get install libatk1.0-0
+      - sudo apt-get update
+      - sudo apt-get install libglib2.0-0
       - npm ci
   build:
     commands:
