@@ -126,7 +126,10 @@ export type AbortMultipartUpload = void;
 
 export type ListPartsResponse = AwsS3Part[];
 
-export type PrepareUploadPartsResponse = { presignedUrls: { [k: number]: string }; headers?: { [k: string]: string } };
+export type PrepareUploadPartsResponse = {
+  presignedUrls: { [k: number]: string };
+  headers?: { [k: string]: string };
+};
 
 export type CompleteMultipartUploadResponse = {
   location?: string;
