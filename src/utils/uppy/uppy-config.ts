@@ -38,7 +38,6 @@ export const createUppy = (language: string) => () =>
         url: FileApiPath.Create,
         method: 'POST',
         data: {
-          // TODO: Use whole file as data?
           filename: file.name,
           size: file.data.size,
           lastmodified: (file.data as File).lastModified,
