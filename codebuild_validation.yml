@@ -21,6 +21,7 @@ phases:
     runtime-versions:
       nodejs: latest
     commands:
+      - sudo apt update
       - sudo apt-get install libatk-1.0.so.0
       - npm ci
   build:
