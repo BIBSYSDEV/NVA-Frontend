@@ -21,9 +21,8 @@ phases:
     runtime-versions:
       nodejs: latest
     commands:
-      - sudo apt update
-      - sudo apt-get install libatk1.0-0
       - npm ci
+      - npm cypress install --force
   build:
     commands:
       - npm run build
