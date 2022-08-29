@@ -22,7 +22,7 @@ phases:
       nodejs: latest
     commands:
       - sudo apt update
-      - sudo apt-get install libatk
+      - sudo apt-get install libatk1.0-0
       - npm ci
   build:
     commands:
