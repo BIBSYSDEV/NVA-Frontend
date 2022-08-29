@@ -75,6 +75,7 @@ export const FindPersonPanel = () => {
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
+                    disabled={isSubmitting}
                     required
                     fullWidth
                     variant="filled"
