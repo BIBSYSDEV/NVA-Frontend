@@ -19,7 +19,7 @@ env:
 phases:
   install:
     runtime-versions:
-      nodejs: latest
+      nodejs: 14
     commands:
       - npm ci
       - npx cypress install
