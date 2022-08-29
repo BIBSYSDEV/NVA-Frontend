@@ -18,7 +18,7 @@ env:
 phases:
   install:
     runtime-versions:
-      nodejs: 14
+      nodejs: latest
   pre_build:
     commands:
       - wget https://github.com/BIBSYSDEV/NVA-end-to-end-testing/archive/refs/heads/test-deploy.zip
