@@ -22,7 +22,7 @@ phases:
       nodejs: latest
     commands:
       - npm ci
-      - npm cypress install --force
+      - npm i cypress --force
   build:
     commands:
       - npm run build
