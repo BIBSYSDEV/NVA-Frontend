@@ -23,11 +23,10 @@ phases:
     commands:
       - npm ci
       - npx cypress install --force
+      - npx cypress verify
   build:
     commands:
-      - npm run build
+      # - npm run build
       # - npm run test:react
-      - npx cypress cache path
-      - npx cypress cache list
       - npm run test:cypress --coverage
       - npx nyc report
