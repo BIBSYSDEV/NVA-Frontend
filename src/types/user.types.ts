@@ -99,6 +99,7 @@ export interface CreateCristinPerson {
 export interface CristinPerson extends CreateCristinPerson {
   id: string;
   affiliations: CristinPersonAffiliation[];
+  employments: Employment[];
   NationalIdentificationNumber?: string;
 }
 
@@ -126,6 +127,6 @@ export interface Employment {
   type: string;
   organization: string;
   startDate: string;
-  endDate: string;
+  endDate?: string;
   fullTimeEquivalentPercentage: string;
 }
