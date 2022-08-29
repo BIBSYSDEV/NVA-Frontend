@@ -1,17 +1,11 @@
 version: 0.2
 
-env:
-  parameter-store:
-    CYPRESS_baseUrl: CognitoFrontendApplicationUrl
-    CYPRESS_AWS_USER_POOL_ID: CognitoUserPoolId
-    CYPRESS_AWS_CLIENT_ID: CognitoUserPoolAppClientId
-    CYPRESS_REACT_APP_URL: /NVA/ApplicationDomain
-    CYPRESS_REACT_APP_API_HOST: /NVA/ApiDomain
+# Buildspec to generate a test report after all E2E tests are finished running.
 
 batch:
   fast-fail: false
   build-list:
-    - identifier: cypress-e2e-tests
+    - identifier: cypress-e2e-testreport
       env:
         variables:
           image: public.ecr.aws/cypress-io/cypress/browsers:node14.17.0-chrome88-ff89
@@ -19,8 +13,7 @@ batch:
 phases:
   install:
     runtime-versions:
-      nodejs: 14
-      python: 3.x
+      nodejs: latest
   pre_build:
     commands:
       - wget https://github.com/BIBSYSDEV/NVA-end-to-end-testing/archive/refs/heads/test-deploy.zip
@@ -34,19 +27,8 @@ phases:
       - export CYPRESS_AWS_REGION=${AWS_REGION}
   build:
     commands:
-      - cd test_data
-      - python create_test_data.py
-      - cd ..
-      - npx cypress run --browser chrome  --record --key e32a110d-15d4-4202-a5a0-2ee10238a66c
-  post_build:
-    commands:
-      - export SECRET_STRING=$(aws secretsmanager get-secret-value --secret-id XrayApiKey | jq -r .SecretString)
-      - export CLIENT_ID=$(echo $SECRET_STRING | jq -r .XrayClientId)
-      - export CLIENT_SECRET=$(echo $SECRET_STRING | jq -r .XrayClientSecret)
-      - 'export AUTH_BODY=''{"client_id": "''$CLIENT_ID''", "client_secret": "''$CLIENT_SECRET''"}'''
-      - export BEARER_TOKEN=$(curl -H "Content-Type:application/json" -X POST --data "$AUTH_BODY" https://xray.cloud.getxray.app/api/v2/authenticate | tr -d '"')
-      - for f in cypress/cucumber-json/*; do curl -H "Content-Type:application/json" -X POST -H "Authorization:Bearer $BEARER_TOKEN"  --data @"$f" https://xray.cloud.getxray.app/api/v2/import/execution/cucumber; done
-      - npm run create:test:reports
+      - aws s3 cp s3://$3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/cucumber-json cypress/cucumber-json --recursive
+      - npm run create:cucumber:report
       - if [ -d "cypress/screenshots" ]; then aws s3 cp cypress/screenshots s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/screenshots --recursive; fi
       - if [ -d "cypress/videos" ]; then aws s3 cp cypress/videos s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/videos --recursive; fi
       - if [ -d "TestReport" ]; then aws s3 cp TestReport s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/TestReport --recursive; aws s3 cp TestReport s3://$TESTREPORTS_BUCKET --recursive; fi
