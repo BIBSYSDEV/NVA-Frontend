@@ -21,7 +21,6 @@ phases:
       nodejs: latest
   pre_build:
     commands:
-      - echo $CYPRESS_AWS_CLIENT_ID
       - wget https://github.com/BIBSYSDEV/NVA-end-to-end-testing/archive/refs/heads/test-deploy.zip
       - unzip test-deploy.zip
       - cd NVA-end-to-end-testing-test-deploy
