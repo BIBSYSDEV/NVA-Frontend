@@ -12,7 +12,7 @@ batch:
         - buildspec.testrun.yml
       env:
         variables:
-          RUNNERS:
+          RUNNER:
             - 1
             - 2
             - 3
