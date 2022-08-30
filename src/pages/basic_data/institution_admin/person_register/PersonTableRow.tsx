@@ -24,10 +24,10 @@ import { AffiliationHierarchy } from '../../../../components/institution/Affilia
 import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../../../utils/constants';
 import {
   convertToFlatCristinPerson,
-  filterActiveAffiliations,
+  filterActiveEmployments,
   getMaskedNationalIdentityNumber,
 } from '../../../../utils/user-helpers';
-import { CristinPerson, CristinPersonAffiliation, InstitutionUser, RoleName } from '../../../../types/user.types';
+import { CristinPerson, Employment, InstitutionUser, RoleName } from '../../../../types/user.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { RoleApiPath } from '../../../../api/apiPaths';
 import { UserRolesSelector } from '../UserRolesSelector';
@@ -51,9 +51,8 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
   const [openDialog, setOpenDialog] = useState(false);
   const toggleDialog = () => setOpenDialog(!openDialog);
 
-  const { cristinIdentifier, firstName, lastName, affiliations, orcid, nationalId } =
+  const { cristinIdentifier, firstName, lastName, employments, orcid, nationalId } =
     convertToFlatCristinPerson(cristinPerson);
-  const activeEmployments = filterActiveAffiliations(affiliations);
   const orcidUrl = orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
 
   const username = `${cristinIdentifier}@${topOrgCristinIdentifier}`;
@@ -93,16 +92,16 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
     }
   };
 
-  const activeAffiliation = filterActiveAffiliations(cristinPerson.affiliations);
-  const employmentsInThisInstitution: CristinPersonAffiliation[] = [];
-  const otherEmployments: CristinPersonAffiliation[] = [];
+  const activeEmployments = filterActiveEmployments(employments);
+  const employmentsInThisInstitution: Employment[] = [];
+  const otherEmployments: Employment[] = [];
   const targetOrganizationIdStart = `${topOrgCristinIdentifier?.split('.')[0]}.`;
-  for (const affiliation of activeAffiliation) {
-    const organizationIdentifier = affiliation.organization.split('/').pop();
+  for (const employment of activeEmployments) {
+    const organizationIdentifier = employment.organization.split('/').pop();
     if (organizationIdentifier?.startsWith(targetOrganizationIdStart)) {
-      employmentsInThisInstitution.push(affiliation);
+      employmentsInThisInstitution.push(employment);
     } else {
-      otherEmployments.push(affiliation);
+      otherEmployments.push(employment);
     }
   }
 
