@@ -24,6 +24,7 @@ phases:
       - npm ci
   build:
     commands:
+      - export CYPRESS_CI_BUILD_ID=$CODEBUILD_INITIATOR
       - npm run build
       - npm run test:react
       - npm run test:cypress --coverage
