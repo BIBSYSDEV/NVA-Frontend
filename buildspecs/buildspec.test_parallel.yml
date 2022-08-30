@@ -9,7 +9,7 @@ batch:
       fast-fail: false
     dynamic:
       buildspec:
-        - buildspec.testrun.yml
+        - buildspecs/buildspec.testrun.yml
       env:
         variables:
           RUNNER:
