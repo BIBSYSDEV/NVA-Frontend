@@ -1,0 +1,30 @@
+# buildspec file for the NVA-frontend-github-check build in AWS (dev). Used to run tests with mock data for PRs in GitHub.
+
+version: 0.2
+
+env:
+  variables:
+    REACT_APP_API_HOST: 'api.dev.nva.aws.unit.no'
+    REACT_APP_USE_MOCK: 'true' # Since we use mock data the env variables below is not relevant
+    REACT_APP_AWS_USER_POOLS_ID: 'XXX'
+    REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID: 'XXX'
+    REACT_APP_DOMAIN: 'XXX'
+    REACT_APP_REDIRECT_SIGN_IN: 'XXX'
+    REACT_APP_REDIRECT_SIGN_OUT: 'XXX'
+    REACT_APP_ORCID_CLIENT_ID: 'XXX'
+    REACT_APP_ORCID_BASE_URL: 'XXX'
+  secrets-manager:
+    CYPRESS_RECORD_KEY: CypressRecordKey
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: latest
+    commands:
+      - npm ci
+  build:
+    commands:
+      - npm run build
+      - npm run test:react
+      - npm run test:cypress --coverage
+      - npx nyc report
