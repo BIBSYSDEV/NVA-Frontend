@@ -7,7 +7,7 @@ env:
   parameter-store:
     CYPRESS_baseUrl: CognitoFrontendApplicationUrl
     CYPRESS_AWS_USER_POOL_ID: CognitoUserPoolId
-    CYPRESS_AWS_CLIENT_ID: CognitoUserPoolAppClientId
+    CYPRESS_AWS_CLIENT_ID: /test/CognitoTestClient$RUNNER
     CYPRESS_REACT_APP_URL: /NVA/ApplicationDomain
     CYPRESS_REACT_APP_API_HOST: /NVA/ApiDomain
   secrets-manager:
@@ -21,6 +21,7 @@ phases:
       nodejs: latest
   pre_build:
     commands:
+      - echo $CYPRESS_AWS_CLIENT_ID
       - wget https://github.com/BIBSYSDEV/NVA-end-to-end-testing/archive/refs/heads/test-deploy.zip
       - unzip test-deploy.zip
       - cd NVA-end-to-end-testing-test-deploy
