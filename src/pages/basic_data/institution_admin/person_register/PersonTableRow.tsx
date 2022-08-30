@@ -157,6 +157,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                       value={getMaskedNationalIdentityNumber(nationalId)}
                       label={t('basic_data.person_register.national_identity_number')}
                     />
+                    <TextField variant="filled" disabled value={orcid} label={t('common.orcid')} />
                     {otherEmployments.length > 0 && (
                       <Box>
                         <Typography variant="overline">{t('basic_data.person_register.other_employees')}</Typography>
