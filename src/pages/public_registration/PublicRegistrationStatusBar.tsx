@@ -36,7 +36,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const { identifier, doi, doiRequest } = registration;
+  const { identifier, doi } = registration;
 
   const [messageToCurator, setMessageToCurator] = useState('');
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
@@ -113,7 +113,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
 
   const isOwner = userIsRegistrationOwner(user, registration);
   const isCurator = userIsRegistrationCurator(user, registration);
-  const hasNvaDoi = !!doi || doiRequest;
+  const hasNvaDoi = !!doi;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
   const editRegistrationUrl = getRegistrationPath(identifier);
 
@@ -206,7 +206,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             </LoadingButton>
           )}
 
-          {isCurator && isPublishedRegistration && doiRequest?.status === DoiRequestStatus.Requested && (
+          {isCurator && isPublishedRegistration && doi && (
             <>
               <LoadingButton
                 variant="contained"
