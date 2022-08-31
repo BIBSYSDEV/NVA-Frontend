@@ -205,6 +205,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                           {({ field, meta: { error, touched } }: FieldProps<string>) => (
                             <TextField
                               {...field}
+                              value={field.value ?? ''}
                               required
                               disabled={isSubmitting || true}
                               fullWidth
