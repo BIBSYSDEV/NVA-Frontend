@@ -25,12 +25,10 @@ export const getFullCristinName = (names: CristinArrayValue[] = []) => {
 export const filterActiveAffiliations = (affiliations: CristinPersonAffiliation[] = []) =>
   affiliations.filter((affiliation) => affiliation.active);
 
-export const filterActiveEmployments = (employments: Employment[] = []) => {
+export const isActiveEmployment = (employment: Employment) => {
   const currentDate = new Date();
-  return employments.filter(
-    (employment) =>
-      new Date(employment.startDate) <= currentDate &&
-      (!employment.endDate || new Date(employment.endDate) > currentDate)
+  return (
+    new Date(employment.startDate) <= currentDate && (!employment.endDate || new Date(employment.endDate) > currentDate)
   );
 };
 
