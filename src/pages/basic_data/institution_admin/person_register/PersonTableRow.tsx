@@ -18,9 +18,10 @@ import {
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import EditIcon from '@mui/icons-material/Edit';
-import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
+import { DatePicker } from '@mui/x-date-pickers';
 import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../../../utils/constants';
@@ -38,7 +39,6 @@ import { setNotification } from '../../../../redux/notificationSlice';
 import { createUser } from '../../../../api/roleApi';
 import { PositionField } from '../../fields/PositionField';
 import { StartDateField } from '../../fields/StartDateField';
-import { DatePicker } from '@mui/x-date-pickers';
 import { getNewDateValue } from '../../../../utils/registration-helpers';
 
 interface FormData {
@@ -202,7 +202,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                         <PositionField fieldName={`${employmentBaseFieldName}.type`} disabled={isSubmitting || true} />
 
                         <Field name={`${employmentBaseFieldName}.fullTimeEquivalentPercentage`}>
-                          {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                          {({ field }: FieldProps<string>) => (
                             <TextField
                               {...field}
                               value={field.value ?? ''}
@@ -213,8 +213,6 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                               inputProps={{ min: '0', max: '100' }}
                               variant="filled"
                               label={t('basic_data.add_employee.position_percent')}
-                              error={touched && !!error}
-                              helperText={<ErrorMessage name={field.name} />}
                             />
                           )}
                         </Field>
@@ -227,7 +225,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                         />
 
                         <Field name={`${employmentBaseFieldName}.endDate`}>
-                          {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                          {({ field }: FieldProps<string>) => (
                             <DatePicker
                               disabled={isSubmitting || true}
                               label={t('common.end_date')}
@@ -247,15 +245,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                               minDate={
                                 values.employments[0].startDate ? new Date(values.employments[0].startDate) : undefined
                               }
-                              renderInput={(params) => (
-                                <TextField
-                                  {...field}
-                                  {...params}
-                                  variant="filled"
-                                  error={touched && !!error}
-                                  helperText={<ErrorMessage name={field.name} />}
-                                />
-                              )}
+                              renderInput={(params) => <TextField {...field} {...params} variant="filled" />}
                             />
                           )}
                         </Field>
