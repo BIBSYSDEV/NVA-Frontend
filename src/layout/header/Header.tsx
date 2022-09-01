@@ -2,7 +2,7 @@ import { useState, MouseEvent, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { AppBar, Box, Button, Divider, IconButton, Theme, useMediaQuery } from '@mui/material';
+import { AppBar, Box, Button, Divider, IconButton, Theme, Typography, useMediaQuery } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import MenuIcon from '@mui/icons-material/Menu';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
@@ -24,7 +24,7 @@ export const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
   const [customer] = useFetch<CustomerInstitution>({
-    url: user?.isEditor && user?.customerId ? user.customerId : '',
+    url: user?.customerId ?? '',
   });
 
   useEffect(() => {
@@ -97,18 +97,23 @@ export const Header = () => {
           }}>
           {!isMobile && (
             <>
-              {user?.isEditor && customer?.shortName && (
-                <Button
-                  sx={{ whiteSpace: 'nowrap', borderRadius: '2rem' }}
-                  color="inherit"
-                  variant="outlined"
-                  size="small"
-                  component={RouterLink}
-                  data-testid={dataTestId.header.editorLink}
-                  to={UrlPathTemplate.Editor}>
-                  {user.customerShortName}
-                </Button>
-              )}
+              {customer?.shortName &&
+                (user?.isEditor ? (
+                  <Button
+                    sx={{ whiteSpace: 'nowrap', borderRadius: '2rem' }}
+                    color="inherit"
+                    variant="outlined"
+                    size="small"
+                    component={RouterLink}
+                    data-testid={dataTestId.header.editorLink}
+                    to={UrlPathTemplate.Editor}>
+                    {user?.customerShortName}
+                  </Button>
+                ) : (
+                  <Typography variant="button" sx={{ whiteSpace: 'nowrap', color: 'inherit' }}>
+                    {user?.customerShortName}
+                  </Typography>
+                ))}
               <Divider
                 variant="middle"
                 sx={{ gridArea: 'divider', borderColor: 'white', opacity: 0.8 }}
