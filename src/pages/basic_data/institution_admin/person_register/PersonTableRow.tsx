@@ -172,7 +172,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                     />
                     {orcid && <TextField variant="filled" disabled value={orcid} label={t('common.orcid')} />}
                     {activeEmploymentsInOtherInstitutions.length > 0 && (
-                      <Box>
+                      <div>
                         <Typography variant="overline">{t('basic_data.person_register.other_employments')}</Typography>
                         <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
                           {activeEmploymentsInOtherInstitutions.map((affiliation) => (
@@ -183,7 +183,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                             </li>
                           ))}
                         </Box>
-                      </Box>
+                      </div>
                     )}
                   </Box>
                   <Divider flexItem orientation="vertical" />
@@ -233,7 +233,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                                 'aria-label': t('common.end_date'),
                               }}
                               value={field.value ? field.value : null}
-                              onChange={(date: Date | null, keyboardInput) => {
+                              onChange={(date, keyboardInput) => {
                                 const newValue = getNewDateValue(date, keyboardInput);
                                 if (newValue !== null) {
                                   setFieldValue(field.name, newValue);
