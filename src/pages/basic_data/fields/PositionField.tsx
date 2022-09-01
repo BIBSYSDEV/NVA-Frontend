@@ -1,5 +1,6 @@
 import { Autocomplete, TextField } from '@mui/material';
 import { Field, FieldProps, ErrorMessage } from 'formik';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { PositionResponse } from '../../../types/user.types';
@@ -9,19 +10,27 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 interface PositionFieldProps {
   fieldName: string;
   disabled?: boolean;
+  includeDisabledPositions?: boolean;
 }
 
-export const PositionField = ({ fieldName, disabled }: PositionFieldProps) => {
+export const PositionField = ({
+  fieldName,
+  disabled = false,
+  includeDisabledPositions = false,
+}: PositionFieldProps) => {
   const { t } = useTranslation();
   const [positionResponse, isLoadingPositions] = useFetchResource<PositionResponse>(
-    CristinApiPath.Position,
+    includeDisabledPositions ? CristinApiPath.Position : `${CristinApiPath.Position}?active=true`,
     t('feedback.error.get_positions')
   );
-  const sortedPositions = positionResponse
-    ? [...positionResponse.positions].sort((a, b) =>
+
+  const sortedPositions = useMemo(
+    () =>
+      [...(positionResponse?.positions ?? [])].sort((a, b) =>
         getLanguageString(a.name).toLowerCase() > getLanguageString(b.name).toLowerCase() ? 1 : -1
-      )
-    : [];
+      ),
+    [positionResponse?.positions]
+  );
 
   return (
     <Field name={fieldName}>
@@ -35,6 +44,7 @@ export const PositionField = ({ fieldName, disabled }: PositionFieldProps) => {
               {getLanguageString(option.name)}
             </li>
           )}
+          getOptionDisabled={(option) => !option.enabled}
           onChange={(_, value) => setFieldValue(field.name, value?.id ?? '')}
           getOptionLabel={(option) => getLanguageString(option.name)}
           fullWidth
