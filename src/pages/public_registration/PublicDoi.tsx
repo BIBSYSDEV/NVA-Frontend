@@ -36,7 +36,7 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
         </Link>
         {isDraftDoi && (
           <Box component="span" sx={{ ml: '0.5rem' }}>
-            ({t('registration.public_page.in_progess')})
+            ({t('registration.public_page.in_progress')})
           </Box>
         )}
       </Typography>
