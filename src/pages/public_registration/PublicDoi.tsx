@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Box, Link, Typography } from '@mui/material';
 import { RootState } from '../../redux/store';
-import { DoiRequestStatus, Registration } from '../../types/registration.types';
+import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 
 interface PublicDoiProps {
@@ -15,7 +15,7 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
 
   const originalDoi = registration.entityDescription?.reference?.doi ?? '';
   const nvaDoi = registration.doi;
-  const hasApprovedDoiRequest = registration.doiRequest?.status === DoiRequestStatus.Approved;
+  const hasApprovedDoiRequest = !!registration.doi;
   const canSeeDraftDoi =
     user &&
     ((user.isCurator && registration.publisher.id === user.customerId) || user.id === registration.resourceOwner.owner);

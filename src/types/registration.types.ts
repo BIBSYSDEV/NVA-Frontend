@@ -98,7 +98,6 @@ export interface BaseRegistration extends RegistrationFileSet {
   };
   readonly status: RegistrationStatus;
   readonly doi?: string;
-  readonly doiRequest?: DoiRequest;
   readonly publisher: RegistrationPublisher;
   subjects: string[];
   projects: ResearchProject[];
