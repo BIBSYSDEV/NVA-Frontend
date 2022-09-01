@@ -41,7 +41,7 @@ import { PositionField } from '../../fields/PositionField';
 import { StartDateField } from '../../fields/StartDateField';
 import { getNewDateValue } from '../../../../utils/registration-helpers';
 
-interface FormData {
+interface PersonData {
   employments: Employment[];
   roles: RoleName[];
 }
@@ -64,29 +64,30 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
   const orcidUrl = orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
 
   const username = `${cristinIdentifier}@${topOrgCristinIdentifier}`;
-  const [user, isLoadingUser] = useFetch<InstitutionUser>({
+  const [institutionUser, isLoadingInstitutionUser] = useFetch<InstitutionUser>({
     url: openDialog ? `${RoleApiPath.Users}/${username}` : '',
     withAuthentication: true,
     errorMessage: false,
   });
 
-  const initialValues: FormData = {
-    roles: user ? user.roles.map((role) => role.rolename) : [RoleName.Creator],
+  const initialValues: PersonData = {
+    roles: institutionUser ? institutionUser.roles.map((role) => role.rolename) : [RoleName.Creator],
     employments: cristinPerson.employments,
   };
 
-  const onSubmit = async (values: FormData) => {
+  const updatePersonAndRoles = async (values: PersonData) => {
+    // TODO: Add request to update person (employments)
     let updateUserResponse;
-    if (user) {
-      const newUser: InstitutionUser = {
-        ...user,
+    if (institutionUser) {
+      const updatedInstitutionUser: InstitutionUser = {
+        ...institutionUser,
         roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
       };
 
       updateUserResponse = await authenticatedApiRequest<null>({
         url: `${RoleApiPath.Users}/${username}`,
         method: 'PUT',
-        data: newUser,
+        data: updatedInstitutionUser,
       });
     } else {
       updateUserResponse = await createUser({
@@ -156,8 +157,8 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
 
       <Dialog open={openDialog} onClose={toggleDialog} maxWidth="md" fullWidth transitionDuration={{ exit: 0 }}>
         <DialogTitle>{t('basic_data.person_register.edit_person')}</DialogTitle>
-        <Formik initialValues={initialValues} enableReinitialize onSubmit={onSubmit}>
-          {({ values, isSubmitting, setFieldValue }: FormikProps<FormData>) => (
+        <Formik initialValues={initialValues} enableReinitialize onSubmit={updatePersonAndRoles}>
+          {({ values, isSubmitting, setFieldValue }: FormikProps<PersonData>) => (
             <Form>
               <DialogContent>
                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '1rem' }}>
@@ -281,7 +282,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                       <UserRolesSelector
                         selectedRoles={values.roles}
                         updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
-                        isLoading={isLoadingUser}
+                        isLoading={isLoadingInstitutionUser}
                         disabled={isSubmitting}
                       />
                     </Box>
