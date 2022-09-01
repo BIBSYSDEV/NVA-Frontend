@@ -44,6 +44,7 @@ export const PositionField = ({
               {getLanguageString(option.name)}
             </li>
           )}
+          getOptionDisabled={(option) => !option.enabled}
           onChange={(_, value) => setFieldValue(field.name, value?.id ?? '')}
           getOptionLabel={(option) => getLanguageString(option.name)}
           fullWidth
