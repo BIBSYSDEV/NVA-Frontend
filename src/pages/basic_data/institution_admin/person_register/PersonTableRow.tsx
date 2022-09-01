@@ -199,7 +199,11 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                       </Field>
 
                       <Box display={{ display: 'flex', gap: '1rem' }}>
-                        <PositionField fieldName={`${employmentBaseFieldName}.type`} disabled={isSubmitting || true} />
+                        <PositionField
+                          fieldName={`${employmentBaseFieldName}.type`}
+                          disabled={isSubmitting || true}
+                          includeDisabledPositions
+                        />
 
                         <Field name={`${employmentBaseFieldName}.fullTimeEquivalentPercentage`}>
                           {({ field }: FieldProps<string>) => (
