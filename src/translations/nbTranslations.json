@@ -76,9 +76,10 @@
     "person_register": {
       "edit_person": "Rediger person",
       "employee_table_caption": "Liste over alle ansatte",
+      "employment_x_of_y": "Ansettelse {{selected}} av {{total}}",
       "national_identity_number": "Fødselsnummer",
       "no_employees_found": "Ingen ansatte funnet",
-      "other_employees": "Andre ansettelser",
+      "other_employments": "Andre aktive ansettelser",
       "person_id": "PersonID",
       "person_register": "Personregister"
     },
@@ -131,6 +132,7 @@
     "move_down": "Flytt ned",
     "move_up": "Flytt opp",
     "name": "Navn",
+    "next": "Neste",
     "no": "Nei",
     "no_hits": "Ingen treff",
     "not_applicable": "N/A",
@@ -145,6 +147,7 @@
     "place": "Sted",
     "publish": "Publiser",
     "publisher": "Utgiver",
+    "previous": "Forrige",
     "read": "Les",
     "read_less": "Les mindre",
     "read_less_about_nva": "Les mindre om NVA",

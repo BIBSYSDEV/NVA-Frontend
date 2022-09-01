@@ -23,7 +23,7 @@ export const StartDateField = ({ fieldName, maxDate, disabled = false }: StartDa
             'aria-label': t('common.start_date'),
           }}
           value={field.value ? field.value : null}
-          onChange={(date: Date | null, keyboardInput) => {
+          onChange={(date, keyboardInput) => {
             const newValue = getNewDateValue(date, keyboardInput);
             if (newValue !== null) {
               setFieldValue(field.name, newValue);

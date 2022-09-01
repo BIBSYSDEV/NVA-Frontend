@@ -76,9 +76,10 @@
     "person_register": {
       "edit_person": "Edit person",
       "employee_table_caption": "List of all employees",
+      "employment_x_of_y": "Employment {{selected}} of {{total}}",
       "national_identity_number": "National identity number",
       "no_employees_found": "No employees found",
-      "other_employees": "Other employees",
+      "other_employments": "Other active employments",
       "person_id": "PersonID",
       "person_register": "Person Register"
     },
@@ -131,6 +132,7 @@
     "move_down": "Move down",
     "move_up": "Move up",
     "name": "Name",
+    "next": "Next",
     "no": "No",
     "no_hits": "No hits",
     "not_applicable": "N/A",
@@ -145,6 +147,7 @@
     "place": "Place",
     "publish": "Publish",
     "publisher": "Publisher",
+    "previous": "Previous",
     "read": "Read",
     "read_less": "Read less",
     "read_less_about_nva": "Read less about NVA",
