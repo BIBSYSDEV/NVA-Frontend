@@ -30,7 +30,7 @@
     "extends": "@istanbuljs/nyc-config-typescript"
   },
   "dependencies": {
-    "@aws-amplify/auth": "^4.6.4",
+    "@aws-amplify/auth": "^4.6.5",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@fontsource/barlow": "^4.5.8",
