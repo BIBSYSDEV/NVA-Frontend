@@ -12,7 +12,6 @@ env:
     REACT_APP_APP_HOST: /NVA/ApplicationDomain
   secrets-manager:
     REACT_APP_ORCID_CLIENT_ID: OrcidClientID
-    CYPRESS_RECORD_KEY: CypressRecordKey
 
 phases:
   install:
