@@ -41,7 +41,7 @@ phases:
       - 'export AUTH_BODY=''{"client_id": "''$CLIENT_ID''", "client_secret": "''$CLIENT_SECRET''"}'''
       - export BEARER_TOKEN=$(curl -H "Content-Type:application/json" -X POST --data "$AUTH_BODY" https://xray.cloud.getxray.app/api/v2/authenticate | tr -d '"')
       - for f in cypress/cucumber-json/*; do curl -H "Content-Type:application/json" -X POST -H "Authorization:Bearer $BEARER_TOKEN"  --data @"$f" https://xray.cloud.getxray.app/api/v2/import/execution/cucumber; done
-      - if [ -d "cypress/cucumber-json" ]; then aws s3 cp cypress/cucumber-json s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/cucumber-json --recursive; fi
+      - if [ -d "cypress/cucumber-json" ]; then aws s3 cp cypress/cucumber-json s3://$TESTREPORTS_BUCKET/cucumber-json --recursive; fi
 artifacts:
   files:
     - '**/*'
