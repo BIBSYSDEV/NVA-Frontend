@@ -28,7 +28,8 @@ phases:
   build:
     commands:
       - aws s3 cp s3://$TESTREPORTS_BUCKET/cucumber-json cypress/cucumber-json --recursive
-      - if  [ ! -d "TestReport"]; then mkdir TestReport; fi
+      - [ ! -d "TestReport"] && then mkdir TestReport
+      - ls -l
       - npm run create:cucumber:report
       - if [ -d "cypress/screenshots" ]; then aws s3 cp cypress/screenshots s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/screenshots --recursive; fi
       - if [ -d "cypress/videos" ]; then aws s3 cp cypress/videos s3://$TESTREPORTS_BUCKET/videos --recursive; fi
