@@ -14,7 +14,7 @@ import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { setNotification } from '../../../redux/notificationSlice';
 import { convertToCristinPerson } from '../../../utils/user-helpers';
 import { addEmployeeValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
-import { createCristinPerson } from '../../../api/userApi';
+import { addEmployment, createCristinPerson } from '../../../api/userApi';
 import { createUser } from '../../../api/roleApi';
 import { RootState } from '../../../redux/store';
 import { UserRolesSelector } from './UserRolesSelector';
@@ -51,17 +51,31 @@ export const AddEmployeePage = () => {
       return;
     }
 
-    // Create user if it does not yet exist in Cristin
-    const cristinUser: CreateCristinPerson = convertToCristinPerson({
-      ...values.user,
-      employments: [values.affiliation],
-    });
-    const createPersonResponse = await createCristinPerson(cristinUser);
-    if (isErrorStatus(createPersonResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.error.create_user'), variant: 'error' }));
-    } else if (isSuccessStatus(createPersonResponse.status)) {
+    let personId = values.user.id;
+
+    if (!personId) {
+      // Create Person if it does not yet exist in Cristin
+      const cristinPerson: CreateCristinPerson = convertToCristinPerson({
+        ...values.user,
+        employments: [values.affiliation],
+      });
+      const createPersonResponse = await createCristinPerson(cristinPerson);
+      if (isErrorStatus(createPersonResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.error.create_user'), variant: 'error' }));
+      } else if (isSuccessStatus(createPersonResponse.status)) {
+        personId = createPersonResponse.data.id;
+        await new Promise((resolve) => setTimeout(resolve, 10_000)); // Wait 10sec before creating NVA User. TODO: NP-9121
+      }
+    } else {
+      // Add employment to existing Person
+      const addAffiliationResponse = await addEmployment(personId, values.affiliation);
+      if (isErrorStatus(addAffiliationResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.error.add_employment'), variant: 'error' }));
+      }
+    }
+
+    if (personId) {
       // Create NVA User with roles
-      await new Promise((resolve) => setTimeout(resolve, 10_000)); // Wait 10sec before creating NVA User. TODO: NP-9121
       const createUserResponse = await createUser({
         nationalIdentityNumber: values.user.nationalId,
         customerId,
