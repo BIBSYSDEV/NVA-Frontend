@@ -22,6 +22,7 @@ import {
   SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
 
 const MyPagePage = () => {
   const { t } = useTranslation();
@@ -84,10 +85,12 @@ const MyPagePage = () => {
       </SideNav>
       <BackgroundDiv>
         <Switch>
-          <CreatorRoute exact path={UrlPathTemplate.MyPageMessages} component={MyMessagesPage} />
-          <CreatorRoute exact path={UrlPathTemplate.MyPageRegistrations} component={MyRegistrations} />
-          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProfile} component={MyProfile} />
-          <LoggedInRoute exact path={UrlPathTemplate.MyPageResearchProfile} component={ResearchProfile} />
+          <ErrorBoundary>
+            <CreatorRoute exact path={UrlPathTemplate.MyPageMessages} component={MyMessagesPage} />
+            <CreatorRoute exact path={UrlPathTemplate.MyPageRegistrations} component={MyRegistrations} />
+            <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProfile} component={MyProfile} />
+            <LoggedInRoute exact path={UrlPathTemplate.MyPageResearchProfile} component={ResearchProfile} />
+          </ErrorBoundary>
         </Switch>
       </BackgroundDiv>
     </StyledPageWithSideMenu>
