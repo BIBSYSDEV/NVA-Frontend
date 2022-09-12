@@ -110,9 +110,7 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                     value={field.value ?? null}
                     onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
-                      if (date) {
-                        setFieldValue(field.name, date);
-                      }
+                      setFieldValue(field.name, date ?? '');
                     }}
                     inputFormat="yyyy"
                     views={['year']}
