@@ -25,6 +25,7 @@ import {
   SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
 
 const BasicDataPage = () => {
   const { t } = useTranslation();
@@ -96,20 +97,26 @@ const BasicDataPage = () => {
       </SideNav>
       <BackgroundDiv>
         <Switch>
-          <AppAdminRoute
-            exact
-            path={UrlPathTemplate.BasicDataInstitutions}
-            component={AdminCustomerInstitutionsContainer}
-          />
-          <AppAdminRoute exact path={UrlPathTemplate.BasicDataCentralImport} component={CentralImportPage} />
-          <AppAdminRoute
-            exact
-            path={UrlPathTemplate.BasicDataCentralImportDuplicateCheck}
-            component={CentralImportDuplicationCheckPage}
-          />
-          <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataAddEmployee} component={AddEmployeePage} />
-          <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataUsers} component={MyInstitutionUsersPage} />
-          <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataPersonRegister} component={PersonRegisterPage} />
+          <ErrorBoundary>
+            <AppAdminRoute
+              exact
+              path={UrlPathTemplate.BasicDataInstitutions}
+              component={AdminCustomerInstitutionsContainer}
+            />
+            <AppAdminRoute exact path={UrlPathTemplate.BasicDataCentralImport} component={CentralImportPage} />
+            <AppAdminRoute
+              exact
+              path={UrlPathTemplate.BasicDataCentralImportDuplicateCheck}
+              component={CentralImportDuplicationCheckPage}
+            />
+            <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataAddEmployee} component={AddEmployeePage} />
+            <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataUsers} component={MyInstitutionUsersPage} />
+            <InstitutionAdminRoute
+              exact
+              path={UrlPathTemplate.BasicDataPersonRegister}
+              component={PersonRegisterPage}
+            />
+          </ErrorBoundary>
         </Switch>
       </BackgroundDiv>
     </StyledPageWithSideMenu>
