@@ -4,7 +4,6 @@ import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'form
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { Award } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import i18n from '../../../../../../translations/i18n';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
@@ -109,11 +108,10 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                       'aria-label': t('common.year'),
                     }}
                     value={field.value ?? null}
-                    onChange={(date: Date | null, keyboardInput) => {
+                    onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
-                      const newValue = getNewDateValue(date, keyboardInput);
-                      if (newValue !== null) {
-                        setFieldValue(field.name, newValue);
+                      if (date) {
+                        setFieldValue(field.name, date);
                       }
                     }}
                     inputFormat="yyyy"
