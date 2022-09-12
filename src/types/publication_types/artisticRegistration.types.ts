@@ -37,7 +37,7 @@ export interface Award extends ArtisticOutputBase {
   organizer: string;
   date: Instant;
   otherInformation: string;
-  ranking: number;
+  ranking: number | null;
 }
 
 export interface Exhibition extends ArtisticOutputBase {

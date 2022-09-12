@@ -22,7 +22,7 @@ const emptyAward: Award = {
   organizer: '',
   date: { type: 'Instant', value: '' },
   otherInformation: '',
-  ranking: 0,
+  ranking: null,
   sequence: 0,
 };
 
@@ -136,6 +136,7 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                 {({ field, meta: { touched, error } }: FieldProps<number>) => (
                   <TextField
                     {...field}
+                    value={field.value ?? ''}
                     variant="filled"
                     fullWidth
                     type="number"
