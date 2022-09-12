@@ -51,30 +51,30 @@ export const AddEmployeePage = () => {
       return;
     }
 
-    let userId = values.user.id;
+    let personId = values.user.id;
 
-    if (!userId) {
+    if (!personId) {
       // Create Person if it does not yet exist in Cristin
-      const cristinUser: CreateCristinPerson = convertToCristinPerson({
+      const cristinPerson: CreateCristinPerson = convertToCristinPerson({
         ...values.user,
         employments: [values.affiliation],
       });
-      const createPersonResponse = await createCristinPerson(cristinUser);
+      const createPersonResponse = await createCristinPerson(cristinPerson);
       if (isErrorStatus(createPersonResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.create_user'), variant: 'error' }));
       } else if (isSuccessStatus(createPersonResponse.status)) {
-        userId = createPersonResponse.data.id;
+        personId = createPersonResponse.data.id;
         await new Promise((resolve) => setTimeout(resolve, 10_000)); // Wait 10sec before creating NVA User. TODO: NP-9121
       }
     } else {
       // Add employment to existing Person
-      const addAffiliationResponse = await addEmployment(userId, values.affiliation);
+      const addAffiliationResponse = await addEmployment(personId, values.affiliation);
       if (isErrorStatus(addAffiliationResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.add_employment'), variant: 'error' }));
       }
     }
 
-    if (userId) {
+    if (personId) {
       // Create NVA User with roles
       const createUserResponse = await createUser({
         nationalIdentityNumber: values.user.nationalId,
