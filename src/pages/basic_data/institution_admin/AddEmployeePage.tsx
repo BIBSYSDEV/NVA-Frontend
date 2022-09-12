@@ -96,7 +96,7 @@ export const AddEmployeePage = () => {
         <title>{t('basic_data.add_employee.add_employee')}</title>
       </Helmet>
       <Typography variant="h3" component="h2" paragraph>
-        {t('basic_data.add_employee.add_to_person_registry')}
+        {t('basic_data.add_employee.update_person_registry')}
       </Typography>
       <Formik
         initialValues={initialValues}

@@ -32,14 +32,14 @@
   "basic_data": {
     "add_employee": {
       "add_employee": "Add employee",
-      "add_to_person_registry": "Update person registry",
       "create_person": "Create person",
       "name_or_nin": "Name or national identity number",
       "no_matching_persons_found": "No matching persons found in the Person Registry",
       "position": "Position",
       "position_percent": "Position percent",
       "remove_selected_person": "Remove selected person",
-      "search_for_person": "Search for person"
+      "search_for_person": "Search for person",
+      "update_person_registry": "Update person registry"
     },
     "basic_data": "Basic data",
     "central_import": {
@@ -326,7 +326,7 @@
       "create_doi_request": "Could not create DOI request",
       "create_project": "Could not create project",
       "create_registration": "Could not create registration",
-      "create_user": "Could not update person",
+      "create_user": "Could not create person",
       "delete_identifier": "Could not delete {{qualifier}}",
       "delete_registration": "Could not delete registration",
       "download_file": "Could not download file",

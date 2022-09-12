@@ -32,14 +32,14 @@
   "basic_data": {
     "add_employee": {
       "add_employee": "Legg til ansatt",
-      "add_to_person_registry": "Oppdater personregister",
       "create_person": "Opprett person",
       "name_or_nin": "Navn eller fødselsnummer",
       "no_matching_persons_found": "Hvis du ikke finner riktig person i Personregisteret kan du opprette ny person.",
       "position": "Stilling",
       "position_percent": "Stillingsprosent",
       "remove_selected_person": "Fjern valgt person",
-      "search_for_person": "Søk etter person"
+      "search_for_person": "Søk etter person",
+      "update_person_registry": "Oppdater personregister"
     },
     "basic_data": "Grunndata",
     "central_import": {
@@ -326,7 +326,7 @@
       "create_doi_request": "Kunne ikke opprette DOI-forespørsel",
       "create_project": "Kunne ikke opprette prosjekt",
       "create_registration": "Kunne ikke opprette registrering",
-      "create_user": "Kunne ikke oppdatere person",
+      "create_user": "Kunne ikke opprette person",
       "delete_identifier": "Kunne ikke slette {{qualifier}}",
       "delete_registration": "Kunne ikke slette registrering",
       "download_file": "Kunne ikke laste ned fil",
@@ -494,7 +494,7 @@
       "curator_description": "Kan redigere institusjonens registreringer, besvare brukerstøttehenvendelser og ev. også tildele DOI.",
       "curators": "Kuratorer",
       "editor": "Redaktør",
-      "editor_description": "Bestemmer tilgang til kontrolerte vokabular og publiseringsstrategi for institusjonen.",
+      "editor_description": "Bestemmer tilgang til kontrollerte vokabular og publiseringsstrategi for institusjonen.",
       "editors": "Redaktører",
       "institution_admin": "Administrator",
       "institution_admin_description": "Vedlikeholder institusjonens opplysninger i personregisteret og tildeler roller i tjenesten.",
