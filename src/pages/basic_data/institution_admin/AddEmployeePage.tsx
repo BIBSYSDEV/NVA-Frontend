@@ -14,7 +14,7 @@ import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { setNotification } from '../../../redux/notificationSlice';
 import { convertToCristinPerson } from '../../../utils/user-helpers';
 import { addEmployeeValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
-import { createCristinPerson } from '../../../api/userApi';
+import { addEmployment, createCristinPerson } from '../../../api/userApi';
 import { createUser } from '../../../api/roleApi';
 import { RootState } from '../../../redux/store';
 import { UserRolesSelector } from './UserRolesSelector';
@@ -51,27 +51,38 @@ export const AddEmployeePage = () => {
       return;
     }
 
-    // Create user if it does not yet exist in Cristin
-    const cristinUser: CreateCristinPerson = convertToCristinPerson({
-      ...values.user,
-      employments: [values.affiliation],
-    });
-    const createPersonResponse = await createCristinPerson(cristinUser);
-    if (isErrorStatus(createPersonResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.error.create_user'), variant: 'error' }));
-    } else if (isSuccessStatus(createPersonResponse.status)) {
-      // Create NVA User with roles
-      await new Promise((resolve) => setTimeout(resolve, 10_000)); // Wait 10sec before creating NVA User. TODO: NP-9121
-      const createUserResponse = await createUser({
-        nationalIdentityNumber: values.user.nationalId,
-        customerId,
-        roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
-      });
-      if (isSuccessStatus(createUserResponse.status)) {
-        dispatch(setNotification({ message: t('feedback.success.add_employment'), variant: 'success' }));
-        resetForm();
-      } else if (isErrorStatus(createUserResponse.status)) {
-        dispatch(setNotification({ message: t('feedback.error.add_role'), variant: 'error' }));
+    let userId = values.user.id;
+
+    if (!userId) {
+      // Create user if it does not yet exist in Cristin
+      const cristinUser: CreateCristinPerson = convertToCristinPerson(values.user);
+      const createPersonResponse = await createCristinPerson(cristinUser);
+      if (isErrorStatus(createPersonResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.error.create_user'), variant: 'error' }));
+      } else if (isSuccessStatus(createPersonResponse.status)) {
+        userId = createPersonResponse.data.id;
+      }
+    }
+
+    if (userId) {
+      // Add employment (affiliation)
+      const addAffiliationResponse = await addEmployment(userId, values.affiliation);
+      if (isSuccessStatus(addAffiliationResponse.status)) {
+        // Create NVA User with roles
+        await new Promise((resolve) => setTimeout(resolve, 10_000)); // Wait 10sec before creating NVA User. TODO: NP-9121
+        const createUserResponse = await createUser({
+          nationalIdentityNumber: values.user.nationalId,
+          customerId,
+          roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
+        });
+        if (isSuccessStatus(createUserResponse.status)) {
+          dispatch(setNotification({ message: t('feedback.success.add_employment'), variant: 'success' }));
+          resetForm();
+        } else if (isErrorStatus(createUserResponse.status)) {
+          dispatch(setNotification({ message: t('feedback.error.add_role'), variant: 'error' }));
+        }
+      } else if (isErrorStatus(addAffiliationResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.error.add_employment'), variant: 'error' }));
       }
     }
   };
