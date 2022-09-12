@@ -4,7 +4,7 @@ import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
-import LooksThreeIcon from '@mui/icons-material/LooksTwoOutlined';
+import LooksThreeIcon from '@mui/icons-material/Looks3Outlined';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CreateCristinPerson, Employment, FlatCristinPerson, RoleName } from '../../../types/user.types';
 import { FindPersonPanel } from './FindPersonPanel';
