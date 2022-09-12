@@ -40,16 +40,16 @@ export const UserRolesSelector = ({
       ) : (
         <FormGroup sx={{ gap: '0.5rem' }}>
           <FormControlLabel
-            control={<Checkbox checked={selectedRoles.includes(RoleName.Curator)} value={RoleName.Curator} />}
-            label={
-              <RoleLabel title={t('my_page.roles.curator')} description={t('my_page.roles.curator_description')} />
-            }
-          />
-          <FormControlLabel
             disabled
             control={<Checkbox checked={selectedRoles.includes(RoleName.Creator)} value={RoleName.Creator} />}
             label={
               <RoleLabel title={t('my_page.roles.creator')} description={t('my_page.roles.creator_description')} />
+            }
+          />
+          <FormControlLabel
+            control={<Checkbox checked={selectedRoles.includes(RoleName.Curator)} value={RoleName.Curator} />}
+            label={
+              <RoleLabel title={t('my_page.roles.curator')} description={t('my_page.roles.curator_description')} />
             }
           />
           <FormControlLabel
