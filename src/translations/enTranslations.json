@@ -364,6 +364,7 @@
       "update_doi_request": "Could not update DOI request",
       "update_institution_user": "Could not update user",
       "update_orcid": "Could not update ORCID",
+      "update_person": "Could not update person",
       "update_publish_strategy": "Could not update publish strategy",
       "update_registration": "Could not update registration",
       "update_vocabulary": "Failed to update {{vocabulary}}"

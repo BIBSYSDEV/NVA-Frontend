@@ -101,6 +101,7 @@ export interface CristinPerson extends CreateCristinPerson {
   id: string;
   affiliations: CristinPersonAffiliation[];
   employments: Employment[];
+  reserved?: boolean;
 }
 
 export interface FlatCristinPerson {

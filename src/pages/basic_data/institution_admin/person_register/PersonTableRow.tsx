@@ -50,9 +50,15 @@ interface PersonTableRowProps {
   cristinPerson: CristinPerson;
   topOrgCristinIdentifier: string;
   customerId: string;
+  refetchEmployees: () => void;
 }
 
-export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, customerId }: PersonTableRowProps) => {
+export const PersonTableRow = ({
+  cristinPerson,
+  topOrgCristinIdentifier,
+  customerId,
+  refetchEmployees,
+}: PersonTableRowProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [openDialog, setOpenDialog] = useState(false);
@@ -76,31 +82,47 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
   };
 
   const updatePersonAndRoles = async (values: PersonData) => {
-    // TODO: Add request to update person (employments)
-    let updateUserResponse;
-    if (institutionUser) {
-      const updatedInstitutionUser: InstitutionUser = {
-        ...institutionUser,
-        roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
-      };
+    // Update Cristin Person
+    const updatedPerson: CristinPerson = {
+      ...cristinPerson,
+      employments: values.employments,
+      reserved: undefined, // TODO: Remove this after NP-13341
+    };
+    const updateCristinPerson = await authenticatedApiRequest({
+      url: cristinPerson.id,
+      method: 'PATCH',
+      data: updatedPerson,
+    });
+    if (isSuccessStatus(updateCristinPerson.status)) {
+      // Update NVA User
+      let updateUserResponse;
+      if (institutionUser) {
+        const updatedInstitutionUser: InstitutionUser = {
+          ...institutionUser,
+          roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
+        };
 
-      updateUserResponse = await authenticatedApiRequest<null>({
-        url: `${RoleApiPath.Users}/${username}`,
-        method: 'PUT',
-        data: updatedInstitutionUser,
-      });
+        updateUserResponse = await authenticatedApiRequest<null>({
+          url: `${RoleApiPath.Users}/${username}`,
+          method: 'PUT',
+          data: updatedInstitutionUser,
+        });
+      } else {
+        updateUserResponse = await createUser({
+          nationalIdentityNumber: nationalId,
+          customerId,
+          roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
+        });
+      }
+      if (isSuccessStatus(updateUserResponse.status)) {
+        refetchEmployees();
+        toggleDialog();
+        dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' }));
+      } else if (isErrorStatus(updateUserResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' }));
+      }
     } else {
-      updateUserResponse = await createUser({
-        nationalIdentityNumber: nationalId,
-        customerId,
-        roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
-      });
-    }
-    if (isSuccessStatus(updateUserResponse.status)) {
-      toggleDialog();
-      dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' }));
-    } else if (isErrorStatus(updateUserResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' }));
     }
   };
 
@@ -202,7 +224,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                       <Box display={{ display: 'flex', gap: '1rem' }}>
                         <PositionField
                           fieldName={`${employmentBaseFieldName}.type`}
-                          disabled={isSubmitting || true}
+                          disabled={isSubmitting}
                           includeDisabledPositions
                         />
 
@@ -212,7 +234,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                               {...field}
                               value={field.value ?? ''}
                               required
-                              disabled={isSubmitting || true}
+                              disabled={isSubmitting}
                               fullWidth
                               type="number"
                               inputProps={{ min: '0', max: '100' }}
@@ -225,14 +247,14 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                       <Box display={{ display: 'flex', gap: '1rem' }}>
                         <StartDateField
                           fieldName={`${employmentBaseFieldName}.startDate`}
-                          disabled={isSubmitting || true}
+                          disabled={isSubmitting}
                           maxDate={values.employments[0].endDate ? new Date(values.employments[0].endDate) : undefined}
                         />
 
                         <Field name={`${employmentBaseFieldName}.endDate`}>
                           {({ field }: FieldProps<string>) => (
                             <DatePicker
-                              disabled={isSubmitting || true}
+                              disabled={isSubmitting}
                               label={t('common.end_date')}
                               PopperProps={{
                                 'aria-label': t('common.end_date'),
@@ -278,20 +300,23 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                         </Box>
                       )}
                     </Box>
-                    <Box sx={{ mt: '2rem' }}>
-                      <UserRolesSelector
-                        selectedRoles={values.roles}
-                        updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
-                        isLoading={isLoadingInstitutionUser}
-                        disabled={isSubmitting}
-                      />
-                    </Box>
+
+                    <UserRolesSelector
+                      selectedRoles={values.roles}
+                      updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
+                      isLoading={isLoadingInstitutionUser}
+                      disabled={isSubmitting}
+                    />
                   </div>
                 </Box>
               </DialogContent>
               <DialogActions>
                 <Button onClick={toggleDialog}>{t('common.cancel')}</Button>
-                <LoadingButton loading={isSubmitting} variant="contained" type="submit">
+                <LoadingButton
+                  loading={isSubmitting}
+                  disabled={isLoadingInstitutionUser}
+                  variant="contained"
+                  type="submit">
                   {t('common.save')}
                 </LoadingButton>
               </DialogActions>
