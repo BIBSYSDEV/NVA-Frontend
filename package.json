@@ -46,7 +46,7 @@
     "@uppy/locales": "^1.22.0",
     "@uppy/react": "^1.12.2",
     "axios": "^0.27.2",
-    "date-fns": "^2.29.2",
+    "date-fns": "^2.29.3",
     "deepmerge": "^4.2.2",
     "formik": "^2.2.9",
     "i18n-iso-countries": "^7.5.0",
