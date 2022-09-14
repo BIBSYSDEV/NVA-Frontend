@@ -15,54 +15,73 @@ version: 0.2
 
 batch:
   build-graph:
+    - identifier: testdata
+      buildspec: buildspecs/buildspec.testdata.yml
+      ignore-failure: false
     - identifier: runner1
       buildspec: buildspecs/buildspec.testrun.yml
       env:
         variables:
           RUNNER: 1
       ignore-failure: true
+      depend-on:
+        - testdata
     - identifier: runner2
       buildspec: buildspecs/buildspec.testrun.yml
       env:
         variables:
           RUNNER: 2
       ignore-failure: true
+      depend-on:
+        - testdata
     - identifier: runner3
       buildspec: buildspecs/buildspec.testrun.yml
       env:
         variables:
           RUNNER: 3
       ignore-failure: true
+      depend-on:
+        - testdata
     - identifier: runner4
       buildspec: buildspecs/buildspec.testrun.yml
       env:
         variables:
           RUNNER: 4
       ignore-failure: true
+      depend-on:
+        - testdata
     - identifier: runner5
       buildspec: buildspecs/buildspec.testrun.yml
       env:
         variables:
           RUNNER: 5
       ignore-failure: true
+      depend-on:
+        - testdata
     - identifier: runner6
       buildspec: buildspecs/buildspec.testrun.yml
       env:
         variables:
           RUNNER: 6
       ignore-failure: true
+      depend-on:
+        - testdata
     - identifier: runner7
       buildspec: buildspecs/buildspec.testrun.yml
       env:
         variables:
           RUNNER: 7
       ignore-failure: true
+      depend-on:
+        - testdata
     - identifier: runner8
       buildspec: buildspecs/buildspec.testrun.yml
       env:
         variables:
           RUNNER: 8
       ignore-failure: true
+      depend-on:
+        - testdata
     - identifier: test_report
       buildspec: buildspecs/buildspec.testreport.yml
       depend-on:
