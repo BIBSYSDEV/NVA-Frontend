@@ -40,8 +40,9 @@ import { createUser } from '../../../../api/roleApi';
 import { PositionField } from '../../fields/PositionField';
 import { StartDateField } from '../../fields/StartDateField';
 import { getNewDateValue } from '../../../../utils/registration-helpers';
+import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
 
-interface PersonData {
+export interface PersonData {
   employments: Employment[];
   roles: RoleName[];
 }
@@ -140,7 +141,8 @@ export const PersonTableRow = ({
     }
   });
 
-  const employmentBaseFieldName = `employments[${indicesWithThisInstitution[selectedEmploymentIndex]}]`;
+  const employmentIndex = indicesWithThisInstitution[selectedEmploymentIndex];
+  const employmentBaseFieldName = `employments[${employmentIndex}]`;
 
   return (
     <TableRow>
@@ -179,7 +181,12 @@ export const PersonTableRow = ({
 
       <Dialog open={openDialog} onClose={toggleDialog} maxWidth="md" fullWidth transitionDuration={{ exit: 0 }}>
         <DialogTitle>{t('basic_data.person_register.edit_person')}</DialogTitle>
-        <Formik initialValues={initialValues} enableReinitialize onSubmit={updatePersonAndRoles}>
+        <Formik
+          initialValues={initialValues}
+          enableReinitialize
+          onSubmit={updatePersonAndRoles}
+          touched
+          validationSchema={personDataValidationSchema}>
           {({ values, isSubmitting, setFieldValue }: FormikProps<PersonData>) => (
             <Form>
               <DialogContent>
@@ -229,7 +236,7 @@ export const PersonTableRow = ({
                         />
 
                         <Field name={`${employmentBaseFieldName}.fullTimeEquivalentPercentage`}>
-                          {({ field }: FieldProps<string>) => (
+                          {({ field, meta: { touched, error } }: FieldProps<string>) => (
                             <TextField
                               {...field}
                               value={field.value ?? ''}
@@ -240,6 +247,8 @@ export const PersonTableRow = ({
                               inputProps={{ min: '0', max: '100' }}
                               variant="filled"
                               label={t('basic_data.add_employee.position_percent')}
+                              error={touched && !!error}
+                              helperText={touched && error}
                             />
                           )}
                         </Field>
@@ -248,11 +257,15 @@ export const PersonTableRow = ({
                         <StartDateField
                           fieldName={`${employmentBaseFieldName}.startDate`}
                           disabled={isSubmitting}
-                          maxDate={values.employments[0].endDate ? new Date(values.employments[0].endDate) : undefined}
+                          maxDate={
+                            values.employments[employmentIndex].endDate
+                              ? new Date(values.employments[employmentIndex].endDate)
+                              : undefined
+                          }
                         />
 
                         <Field name={`${employmentBaseFieldName}.endDate`}>
-                          {({ field }: FieldProps<string>) => (
+                          {({ field, meta: { touched, error } }: FieldProps<string>) => (
                             <DatePicker
                               disabled={isSubmitting}
                               label={t('common.end_date')}
@@ -270,9 +283,19 @@ export const PersonTableRow = ({
                               views={['year', 'month', 'day']}
                               mask="__.__.____"
                               minDate={
-                                values.employments[0].startDate ? new Date(values.employments[0].startDate) : undefined
+                                values.employments[employmentIndex].startDate
+                                  ? new Date(values.employments[employmentIndex].startDate)
+                                  : undefined
                               }
-                              renderInput={(params) => <TextField {...field} {...params} variant="filled" />}
+                              renderInput={(params) => (
+                                <TextField
+                                  {...field}
+                                  {...params}
+                                  variant="filled"
+                                  error={touched && !!error}
+                                  helperText={touched && error}
+                                />
+                              )}
                             />
                           )}
                         </Field>

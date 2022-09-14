@@ -1,6 +1,6 @@
 import { DatePicker } from '@mui/x-date-pickers';
 import { TextField } from '@mui/material';
-import { Field, FieldProps, ErrorMessage } from 'formik';
+import { Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { getNewDateValue } from '../../../utils/registration-helpers';
 
@@ -40,7 +40,7 @@ export const StartDateField = ({ fieldName, maxDate, disabled = false }: StartDa
               required
               variant="filled"
               error={touched && !!error}
-              helperText={<ErrorMessage name={field.name} />}
+              helperText={touched && error}
             />
           )}
         />

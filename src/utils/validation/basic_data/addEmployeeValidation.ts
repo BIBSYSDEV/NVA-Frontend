@@ -58,27 +58,33 @@ export const userValidationSchema = Yup.object<YupShape<FlatCristinPerson>>({
     .required(employeeErrorMessage.nationalIdInvalid),
 });
 
+const employmentValidation = Yup.object<YupShape<Employment>>({
+  type: Yup.string().required(employeeErrorMessage.affiliationTypeRequired),
+  organization: Yup.string().required(employeeErrorMessage.affiliationOrganizationRequired),
+  fullTimeEquivalentPercentage: Yup.number()
+    .min(0, employeeErrorMessage.affiliationPercentageMin)
+    .max(100, employeeErrorMessage.affiliationPercentageMax)
+    .required(employeeErrorMessage.affiliationPercentageRequired),
+  startDate: Yup.string()
+    .test('start-test', employeeErrorMessage.affiliationStartDateBeforeEnd, (startValue, context) =>
+      validateDateInterval(startValue, context.parent.endDate)
+    )
+    .required(employeeErrorMessage.affiliationStartDateRequired),
+  endDate: Yup.string().test('end-test', employeeErrorMessage.affiliationEndDateAfterStart, (endValue, context) =>
+    validateDateInterval(context.parent.startDate, endValue)
+  ),
+});
+
 export const addEmployeeValidationSchema = Yup.object<YupShape<AddEmployeeData>>({
   user: userValidationSchema,
-  affiliation: Yup.object<YupShape<Employment>>({
-    type: Yup.string().required(employeeErrorMessage.affiliationTypeRequired),
-    organization: Yup.string().required(employeeErrorMessage.affiliationOrganizationRequired),
-    fullTimeEquivalentPercentage: Yup.number()
-      .min(0, employeeErrorMessage.affiliationPercentageMin)
-      .max(100, employeeErrorMessage.affiliationPercentageMax)
-      .required(employeeErrorMessage.affiliationPercentageRequired),
-    startDate: Yup.string()
-      .test('start-test', employeeErrorMessage.affiliationStartDateBeforeEnd, (startValue, context) =>
-        validateDateInterval(startValue, context.parent.endDate)
-      )
-      .required(employeeErrorMessage.affiliationStartDateRequired),
-    endDate: Yup.string().test('end-test', employeeErrorMessage.affiliationEndDateAfterStart, (endValue, context) =>
-      validateDateInterval(context.parent.startDate, endValue)
-    ),
-  }),
+  affiliation: employmentValidation,
 });
 
 export const addCustomerAdminValidationSchema = Yup.object<YupShape<AddAdminFormData>>({
   startDate: Yup.date().required(employeeErrorMessage.affiliationStartDateRequired),
   position: Yup.string().required(employeeErrorMessage.affiliationTypeRequired),
+});
+
+export const personDataValidationSchema = Yup.object<YupShape<unknown>>({
+  employments: Yup.array().of(employmentValidation),
 });

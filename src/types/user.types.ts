@@ -129,6 +129,6 @@ export interface Employment {
   type: string;
   organization: string;
   startDate: string;
-  endDate?: string;
+  endDate: string;
   fullTimeEquivalentPercentage: string;
 }
