@@ -323,13 +323,14 @@ export const PersonTableRow = ({
                         </Box>
                       )}
                     </Box>
-
-                    <UserRolesSelector
-                      selectedRoles={values.roles}
-                      updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
-                      isLoading={isLoadingInstitutionUser}
-                      disabled={isSubmitting}
-                    />
+                    <Box sx={{ mt: '1rem' }}>
+                      <UserRolesSelector
+                        selectedRoles={values.roles}
+                        updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
+                        isLoading={isLoadingInstitutionUser}
+                        disabled={isSubmitting}
+                      />
+                    </Box>
                   </div>
                 </Box>
               </DialogContent>
