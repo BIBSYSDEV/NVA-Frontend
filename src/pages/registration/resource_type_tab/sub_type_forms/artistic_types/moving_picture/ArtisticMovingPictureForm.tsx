@@ -163,19 +163,22 @@ export const ArtisticMovingPictureForm = () => {
                   <Button
                     onClick={() => setOpenModal('Broadcast')}
                     variant="outlined"
-                    startIcon={<AddCircleOutlineIcon />}>
+                    startIcon={<AddCircleOutlineIcon />}
+                    data-testid={dataTestId.registrationWizard.resourceType.addTvWebStreamingButton}>
                     {t('registration.resource_type.artistic.add_broadcast')}
                   </Button>
                   <Button
                     onClick={() => setOpenModal('CinematicRelease')}
                     variant="outlined"
-                    startIcon={<AddCircleOutlineIcon />}>
+                    startIcon={<AddCircleOutlineIcon />}
+                    data-testid={dataTestId.registrationWizard.resourceType.addFestivalCinemaButton}>
                     {t('registration.resource_type.artistic.add_cinematic_release')}
                   </Button>
                   <Button
                     onClick={() => setOpenModal('OtherRelease')}
                     variant="outlined"
-                    startIcon={<AddCircleOutlineIcon />}>
+                    startIcon={<AddCircleOutlineIcon />}
+                    data-testid={dataTestId.registrationWizard.resourceType.addOtherButton}>
                     {t('registration.resource_type.artistic.add_other_release')}
                   </Button>
                 </Box>
