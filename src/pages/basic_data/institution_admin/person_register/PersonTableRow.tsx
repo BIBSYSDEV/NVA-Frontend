@@ -64,7 +64,7 @@ export const PersonTableRow = ({
   const dispatch = useDispatch();
   const [openDialog, setOpenDialog] = useState(false);
   const toggleDialog = () => setOpenDialog(!openDialog);
-  const [selectedEmploymentIndex, setSelectedEmploymentIndex] = useState(0);
+  const [employmentIndex, setEmploymentIndex] = useState(0);
 
   const { cristinIdentifier, firstName, lastName, employments, orcid, nationalId } =
     convertToFlatCristinPerson(cristinPerson);
@@ -77,16 +77,25 @@ export const PersonTableRow = ({
     errorMessage: false,
   });
 
-  const initialValues: PersonData = {
-    roles: institutionUser ? institutionUser.roles.map((role) => role.rolename) : [RoleName.Creator],
-    employments: cristinPerson.employments,
-  };
+  const activeEmployments = employments.filter(isActiveEmployment);
+  const employmentsInThisInstitution: Employment[] = [];
+  const employmentsInOtherInstitutions: Employment[] = [];
+  const targetOrganizationIdStart = `${topOrgCristinIdentifier?.split('.')[0]}.`;
+
+  employments.forEach((employment) => {
+    const organizationIdentifier = employment.organization.split('/').pop();
+    if (organizationIdentifier?.startsWith(targetOrganizationIdStart)) {
+      employmentsInThisInstitution.push(employment);
+    } else {
+      employmentsInOtherInstitutions.push(employment);
+    }
+  });
 
   const updatePersonAndRoles = async (values: PersonData) => {
     // Update Cristin Person
     const updatedPerson: CristinPerson = {
       ...cristinPerson,
-      employments: values.employments,
+      employments: [...values.employments, ...employmentsInOtherInstitutions], // Include all employments
       reserved: undefined, // TODO: Remove this after NP-13341
     };
     const updateCristinPerson = await authenticatedApiRequest({
@@ -117,7 +126,6 @@ export const PersonTableRow = ({
       }
       if (isSuccessStatus(updateUserResponse.status)) {
         refetchEmployees();
-        toggleDialog();
         dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' }));
       } else if (isErrorStatus(updateUserResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' }));
@@ -127,21 +135,11 @@ export const PersonTableRow = ({
     }
   };
 
-  const activeEmployments = employments.filter(isActiveEmployment);
-  const indicesWithThisInstitution: number[] = [];
-  const activeEmploymentsInOtherInstitutions: Employment[] = [];
-  const targetOrganizationIdStart = `${topOrgCristinIdentifier?.split('.')[0]}.`;
+  const initialValues: PersonData = {
+    roles: institutionUser ? institutionUser.roles.map((role) => role.rolename) : [RoleName.Creator],
+    employments: employmentsInThisInstitution,
+  };
 
-  employments.forEach((employment, i) => {
-    const organizationIdentifier = employment.organization.split('/').pop();
-    if (organizationIdentifier?.startsWith(targetOrganizationIdStart)) {
-      indicesWithThisInstitution.push(i);
-    } else if (isActiveEmployment(employment)) {
-      activeEmploymentsInOtherInstitutions.push(employment);
-    }
-  });
-
-  const employmentIndex = indicesWithThisInstitution[selectedEmploymentIndex];
   const employmentBaseFieldName = `employments[${employmentIndex}]`;
 
   return (
@@ -201,11 +199,11 @@ export const PersonTableRow = ({
                       label={t('basic_data.person_register.national_identity_number')}
                     />
                     {orcid && <TextField variant="filled" disabled value={orcid} label={t('common.orcid')} />}
-                    {activeEmploymentsInOtherInstitutions.length > 0 && (
+                    {employmentsInOtherInstitutions.some(isActiveEmployment) && (
                       <div>
                         <Typography variant="overline">{t('basic_data.person_register.other_employments')}</Typography>
                         <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
-                          {activeEmploymentsInOtherInstitutions.map((affiliation) => (
+                          {employmentsInOtherInstitutions.filter(isActiveEmployment).map((affiliation) => (
                             <li key={affiliation.organization}>
                               <Box sx={{ display: 'flex', gap: '0.5rem' }}>
                                 <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
@@ -300,24 +298,24 @@ export const PersonTableRow = ({
                           )}
                         </Field>
                       </Box>
-                      {indicesWithThisInstitution.length > 1 && (
+                      {employmentsInThisInstitution.length > 1 && (
                         <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', alignSelf: 'center' }}>
                           <IconButton
                             title={t('common.previous')}
-                            disabled={selectedEmploymentIndex === 0}
-                            onClick={() => setSelectedEmploymentIndex(selectedEmploymentIndex - 1)}>
+                            disabled={employmentIndex === 0}
+                            onClick={() => setEmploymentIndex(employmentIndex - 1)}>
                             <NavigateBeforeIcon />
                           </IconButton>
                           <Typography>
                             {t('basic_data.person_register.employment_x_of_y', {
-                              selected: selectedEmploymentIndex + 1,
-                              total: indicesWithThisInstitution.length,
+                              selected: employmentIndex + 1,
+                              total: employmentsInThisInstitution.length,
                             })}
                           </Typography>
                           <IconButton
                             title={t('common.next')}
-                            disabled={selectedEmploymentIndex === indicesWithThisInstitution.length - 1}
-                            onClick={() => setSelectedEmploymentIndex(selectedEmploymentIndex + 1)}>
+                            disabled={employmentIndex === employmentsInThisInstitution.length - 1}
+                            onClick={() => setEmploymentIndex(employmentIndex + 1)}>
                             <NavigateNextIcon />
                           </IconButton>
                         </Box>
