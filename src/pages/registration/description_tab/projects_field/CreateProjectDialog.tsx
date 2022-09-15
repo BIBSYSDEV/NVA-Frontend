@@ -67,7 +67,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
       <DialogTitle>{t('project.create_project')}</DialogTitle>
 
       <Formik initialValues={initialValues} validationSchema={basicProjectValidationSchema} onSubmit={createProject}>
-        {({ isSubmitting, setFieldValue }) => (
+        {({ values, isSubmitting, setFieldValue }) => (
           <Form noValidate>
             <DialogContent>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -106,6 +106,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                         }}
                         onChange={(date) => setFieldValue(field.name, date ?? '')}
                         value={field.value ? new Date(field.value) : null}
+                        maxDate={values.endDate}
                         inputFormat="dd.MM.yyyy"
                         mask="__.__.____"
                         renderInput={(params) => (
@@ -132,6 +133,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                         }}
                         onChange={(date) => setFieldValue(field.name, date)}
                         value={field.value ? new Date(field.value) : null}
+                        minDate={values.startDate}
                         inputFormat="dd.MM.yyyy"
                         mask="__.__.____"
                         renderInput={(params) => (
