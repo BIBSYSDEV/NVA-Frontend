@@ -30,7 +30,7 @@ import {
   getMaskedNationalIdentityNumber,
   isActiveEmployment,
 } from '../../../../utils/user-helpers';
-import { CristinPerson, Employment, InstitutionUser, RoleName } from '../../../../types/user.types';
+import { CristinPerson, Employment, emptyEmployment, InstitutionUser, RoleName } from '../../../../types/user.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { RoleApiPath } from '../../../../api/apiPaths';
 import { UserRolesSelector } from '../UserRolesSelector';
@@ -137,7 +137,7 @@ export const PersonTableRow = ({
 
   const initialValues: PersonData = {
     roles: institutionUser ? institutionUser.roles.map((role) => role.rolename) : [RoleName.Creator],
-    employments: employmentsInThisInstitution,
+    employments: employmentsInThisInstitution.map((employment) => ({ ...emptyEmployment, ...employment })),
   };
 
   const employmentBaseFieldName = `employments[${employmentIndex}]`;

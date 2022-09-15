@@ -6,7 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
 import LooksThreeIcon from '@mui/icons-material/Looks3Outlined';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { CreateCristinPerson, Employment, FlatCristinPerson, RoleName } from '../../../types/user.types';
+import {
+  CreateCristinPerson,
+  Employment,
+  emptyEmployment,
+  FlatCristinPerson,
+  RoleName,
+} from '../../../types/user.types';
 import { FindPersonPanel } from './FindPersonPanel';
 import { AddAffiliationPanel } from './AddAffiliationPanel';
 import { StyledCenterContainer } from '../../../components/styled/Wrappers';
@@ -37,7 +43,7 @@ export const emptyUser: FlatCristinPerson = {
 
 const initialValues: AddEmployeeData = {
   user: emptyUser,
-  affiliation: { type: '', organization: '', startDate: '', endDate: '', fullTimeEquivalentPercentage: '' },
+  affiliation: emptyEmployment,
   roles: [RoleName.Creator],
 };
 

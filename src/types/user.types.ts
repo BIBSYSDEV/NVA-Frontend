@@ -133,3 +133,11 @@ export interface Employment {
   endDate: string;
   fullTimeEquivalentPercentage: string;
 }
+
+export const emptyEmployment: Employment = {
+  type: '',
+  organization: '',
+  startDate: '',
+  endDate: '',
+  fullTimeEquivalentPercentage: '',
+};
