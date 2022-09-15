@@ -49,16 +49,30 @@ export const PersonRegisterPage = () => {
     }
   }, [debouncedSearchQuery]);
 
-  const [employeesSearchResponse, isLoadingEmployees] = useFetch<SearchResponse<CristinPerson>>({
-    url: getSearchUrl(
-      user?.topOrgCristinId,
-      debouncedSearchQuery,
-      prevSearchQueryRef.current !== debouncedSearchQuery ? 1 : page,
-      rowsPerPage
-    ),
-    withAuthentication: true,
-    errorMessage: t('feedback.error.get_users_for_institution'),
-  });
+  const [employeesSearchResponse, isLoadingEmployees, refetchEmployeesSearch] = useFetch<SearchResponse<CristinPerson>>(
+    {
+      url: getSearchUrl(
+        user?.topOrgCristinId,
+        debouncedSearchQuery,
+        prevSearchQueryRef.current !== debouncedSearchQuery ? 1 : page,
+        rowsPerPage
+      ),
+      withAuthentication: true,
+      errorMessage: t('feedback.error.get_users_for_institution'),
+    }
+  );
+
+  useEffect(() => {
+    // TODO: Remove this useEffect when NP-13344 is solved
+    if (
+      employeesSearchResponse &&
+      employeesSearchResponse.hits.length > 0 &&
+      employeesSearchResponse.hits[0].employments === undefined
+    ) {
+      refetchEmployeesSearch();
+    }
+  }, [refetchEmployeesSearch, employeesSearchResponse]);
+
   const employees = employeesSearchResponse?.hits ?? [];
 
   return (
