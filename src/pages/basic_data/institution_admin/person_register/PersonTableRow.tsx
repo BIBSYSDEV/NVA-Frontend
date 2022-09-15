@@ -39,7 +39,6 @@ import { setNotification } from '../../../../redux/notificationSlice';
 import { createUser } from '../../../../api/roleApi';
 import { PositionField } from '../../fields/PositionField';
 import { StartDateField } from '../../fields/StartDateField';
-import { getNewDateValue } from '../../../../utils/registration-helpers';
 
 interface PersonData {
   employments: Employment[];
@@ -238,12 +237,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, custome
                                 'aria-label': t('common.end_date'),
                               }}
                               value={field.value ? field.value : null}
-                              onChange={(date, keyboardInput) => {
-                                const newValue = getNewDateValue(date, keyboardInput);
-                                if (newValue !== null) {
-                                  setFieldValue(field.name, newValue);
-                                }
-                              }}
+                              onChange={(date) => setFieldValue(field.name, date ?? '')}
                               inputFormat="dd.MM.yyyy"
                               views={['year', 'month', 'day']}
                               mask="__.__.____"

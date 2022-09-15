@@ -20,7 +20,6 @@ import { setNotification } from '../../../../redux/notificationSlice';
 import { PostCristinProject } from '../../../../types/project.types';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { getNewDateValue } from '../../../../utils/registration-helpers';
 import { basicProjectValidationSchema } from '../../../../utils/validation/project/BasicProjectValidation';
 import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
 import { ProjectContributorRow } from './ProjectContributorRow';
@@ -105,10 +104,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                         PopperProps={{
                           'aria-label': t('common.start_date'),
                         }}
-                        onChange={(date: Date | null, keyboardValue) => {
-                          const newDateString = getNewDateValue(date, keyboardValue);
-                          setFieldValue(field.name, newDateString);
-                        }}
+                        onChange={(date) => setFieldValue(field.name, date ?? '')}
                         value={field.value ? new Date(field.value) : null}
                         inputFormat="dd.MM.yyyy"
                         mask="__.__.____"
@@ -134,10 +130,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                         PopperProps={{
                           'aria-label': t('common.end_date'),
                         }}
-                        onChange={(date: Date | null, keyboardValue) => {
-                          const newDateString = getNewDateValue(date, keyboardValue);
-                          setFieldValue(field.name, newDateString);
-                        }}
+                        onChange={(date) => setFieldValue(field.name, date)}
                         value={field.value ? new Date(field.value) : null}
                         inputFormat="dd.MM.yyyy"
                         mask="__.__.____"

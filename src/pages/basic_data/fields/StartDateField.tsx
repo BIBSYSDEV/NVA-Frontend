@@ -2,7 +2,6 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { TextField } from '@mui/material';
 import { Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { getNewDateValue } from '../../../utils/registration-helpers';
 
 interface StartDateFieldProps {
   fieldName: string;
@@ -23,12 +22,7 @@ export const StartDateField = ({ fieldName, maxDate, disabled = false }: StartDa
             'aria-label': t('common.start_date'),
           }}
           value={field.value ? field.value : null}
-          onChange={(date, keyboardInput) => {
-            const newValue = getNewDateValue(date, keyboardInput);
-            if (newValue !== null) {
-              setFieldValue(field.name, newValue);
-            }
-          }}
+          onChange={(date) => setFieldValue(field.name, date ?? '')}
           inputFormat="dd.MM.yyyy"
           views={['year', 'month', 'day']}
           mask="__.__.____"
