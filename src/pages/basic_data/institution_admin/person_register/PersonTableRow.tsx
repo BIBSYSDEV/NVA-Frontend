@@ -181,12 +181,10 @@ export const PersonTableRow = ({
         <DialogTitle>{t('basic_data.person_register.edit_person')}</DialogTitle>
         <Formik
           initialValues={initialValues}
-          enableReinitialize
           onSubmit={updatePersonAndRoles}
-          touched
           validationSchema={personDataValidationSchema}>
           {({ values, isSubmitting, setFieldValue }: FormikProps<PersonData>) => (
-            <Form>
+            <Form noValidate>
               <DialogContent>
                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '1rem' }}>
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
