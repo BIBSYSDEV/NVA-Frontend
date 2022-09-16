@@ -1,7 +1,7 @@
 import { Autocomplete, AutocompleteProps, Box, Button, CircularProgress, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import { CristinApiPath } from '../../api/apiPaths';
 import { searchByNationalIdNumber } from '../../api/userApi';
 import { AutocompleteTextField } from '../../components/AutocompleteTextField';
@@ -146,11 +146,10 @@ export const SearchForCristinPerson = ({
           </div>
           <Button
             variant="outlined"
-            color="error"
             onClick={() => setSelectedPerson(undefined)}
             sx={{ width: 'fit-content' }}
-            startIcon={<HighlightOffIcon />}>
-            {t('basic_data.add_employee.remove_selected_person')}
+            startIcon={<PersonSearchIcon />}>
+            {t('basic_data.add_employee.new_search')}
           </Button>
         </>
       ) : null}

@@ -7,7 +7,14 @@ const basicProjectErrorMessage = {
   coordinatingInstitution: i18n.t('feedback.validation.is_required', {
     field: i18n.t('project.coordinating_institution'),
   }),
+  endDateCannotBeBeforeStart: i18n.t('feedback.validation.cannot_be_before', {
+    field: i18n.t('common.end_date'),
+    limitField: i18n.t('common.start_date'),
+  }),
   endDateRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('common.end_date'),
+  }),
+  endDateInvalidFormat: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('common.end_date'),
   }),
   institutionRequired: i18n.t('feedback.validation.is_required', {
@@ -25,6 +32,9 @@ const basicProjectErrorMessage = {
   startDateRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('common.start_date'),
   }),
+  startDateInvalidFormat: i18n.t('feedback.validation.has_invalid_format', {
+    field: i18n.t('common.start_date'),
+  }),
 };
 
 const contributorValidationSchema = Yup.object().shape({
@@ -35,8 +45,15 @@ const contributorValidationSchema = Yup.object().shape({
 
 export const basicProjectValidationSchema = Yup.object<YupShape<PostCristinProject>>().shape({
   title: Yup.string().required(basicProjectErrorMessage.titleRequired),
-  startDate: Yup.date().required(basicProjectErrorMessage.startDateRequired),
-  endDate: Yup.date().required(basicProjectErrorMessage.endDateRequired),
+  startDate: Yup.date()
+    .typeError(basicProjectErrorMessage.startDateInvalidFormat)
+    .required(basicProjectErrorMessage.startDateRequired),
+  endDate: Yup.date()
+    .required(basicProjectErrorMessage.endDateRequired)
+    .typeError(basicProjectErrorMessage.endDateInvalidFormat)
+    .when('startDate', (startDate, schema) =>
+      startDate ? schema.min(startDate, basicProjectErrorMessage.endDateCannotBeBeforeStart) : schema
+    ),
   contributors: Yup.array().of(contributorValidationSchema),
   coordinatingInstitution: Yup.object().shape({
     id: Yup.string().required(basicProjectErrorMessage.coordinatingInstitution),

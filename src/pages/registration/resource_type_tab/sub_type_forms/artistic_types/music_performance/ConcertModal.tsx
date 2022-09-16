@@ -20,7 +20,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
 import i18n from '../../../../../../translations/i18n';
 import { Concert, MusicalWorkPerformance } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 
@@ -148,12 +147,9 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                       'aria-label': t('common.date'),
                     }}
                     value={field.value ?? null}
-                    onChange={(date: Date | null, keyboardInput) => {
+                    onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
-                      const newValue = getNewDateValue(date, keyboardInput);
-                      if (newValue !== null) {
-                        setFieldValue(field.name, newValue);
-                      }
+                      setFieldValue(field.name, date ?? '');
                     }}
                     inputFormat="dd.MM.yyyy"
                     mask="__.__.____"

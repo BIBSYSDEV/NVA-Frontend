@@ -4,10 +4,10 @@ import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'form
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { OtherRelease } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import i18n from '../../../../../../translations/i18n';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 
 interface OtherReleaseModalProps {
   otherRelease?: OtherRelease;
@@ -89,6 +89,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.otherReleaseType}
                   />
                 )}
               </Field>
@@ -102,6 +103,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     label={t('common.place')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.otherReleasePlace}
                   />
                 )}
               </Field>
@@ -114,6 +116,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     label={t('registration.resource_type.artistic.other_announcement_organizer')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.otherReleasePublisher}
                   />
                 )}
               </Field>
@@ -129,12 +132,9 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                       'aria-label': t('common.date'),
                     }}
                     value={field.value ?? null}
-                    onChange={(date: Date | null, keyboardInput) => {
+                    onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
-                      const newValue = getNewDateValue(date, keyboardInput);
-                      if (newValue !== null) {
-                        setFieldValue(field.name, newValue);
-                      }
+                      setFieldValue(field.name, date ?? '');
                     }}
                     inputFormat="dd.MM.yyyy"
                     mask="__.__.____"
@@ -142,6 +142,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                       <TextField
                         {...params}
                         {...field}
+                        data-testid={dataTestId.registrationWizard.resourceType.otherReleaseDate}
                         sx={{ maxWidth: '13rem' }}
                         variant="filled"
                         required
