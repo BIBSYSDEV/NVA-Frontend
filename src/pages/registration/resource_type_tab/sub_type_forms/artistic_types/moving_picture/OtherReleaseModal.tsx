@@ -8,6 +8,7 @@ import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import i18n from '../../../../../../translations/i18n';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 
 interface OtherReleaseModalProps {
   otherRelease?: OtherRelease;
@@ -89,6 +90,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.otherReleaseType}
                   />
                 )}
               </Field>
@@ -102,6 +104,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     label={t('common.place')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.otherReleasePlace}
                   />
                 )}
               </Field>
@@ -114,6 +117,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     label={t('registration.resource_type.artistic.other_announcement_organizer')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.otherReleasePublisher}
                   />
                 )}
               </Field>
@@ -142,6 +146,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                       <TextField
                         {...params}
                         {...field}
+                        data-testid={dataTestId.registrationWizard.resourceType.otherReleaseDate}
                         sx={{ maxWidth: '13rem' }}
                         variant="filled"
                         required
