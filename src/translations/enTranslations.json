@@ -401,6 +401,7 @@
       "cannot_be_before": "{{field}} cannot be before {{limitField}}",
       "contributor_required": "You need to register at least one contributor for this registration",
       "editor_required": "You need to register at least one editor for this registration",
+      "employments_missing_data": "Every employment must have position, position percent and start date",
       "exhibition_place_required": "Must have at least one exhibition place",
       "has_invalid_format": "{{field}} has invalid format",
       "invalid_number_of_digits": "{{field}} must have {{digits}} digits",

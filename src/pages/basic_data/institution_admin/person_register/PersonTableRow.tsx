@@ -182,7 +182,7 @@ export const PersonTableRow = ({
           initialValues={initialValues}
           onSubmit={updatePersonAndRoles}
           validationSchema={personDataValidationSchema}>
-          {({ values, isSubmitting, setFieldValue }: FormikProps<PersonData>) => (
+          {({ values, isSubmitting, setFieldValue, errors, touched }: FormikProps<PersonData>) => (
             <Form noValidate>
               <DialogContent>
                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '1rem' }}>
@@ -313,6 +313,10 @@ export const PersonTableRow = ({
                         </Box>
                       )}
                     </Box>
+                    {!!errors.employments && touched.employments && (
+                      <Typography color="error">{t('feedback.validation.employments_missing_data')}</Typography>
+                    )}
+
                     <Box sx={{ mt: '1rem' }}>
                       <UserRolesSelector
                         selectedRoles={values.roles}
