@@ -34,10 +34,10 @@
       "add_employee": "Add employee",
       "create_person": "Create person",
       "name_or_nin": "Name or national identity number",
+      "new_search": "New search",
       "no_matching_persons_found": "No matching persons found in the Person Registry",
       "position": "Position",
       "position_percent": "Position percent",
-      "remove_selected_person": "New search",
       "search_for_person": "Search for person",
       "update_person_registry": "Update person registry"
     },
