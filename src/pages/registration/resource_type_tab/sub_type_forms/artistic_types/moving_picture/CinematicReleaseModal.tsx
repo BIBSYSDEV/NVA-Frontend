@@ -7,6 +7,7 @@ import { CinematicRelease } from '../../../../../../types/publication_types/arti
 import i18n from '../../../../../../translations/i18n';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 
 interface CinematicReleaseModalProps {
   cinematicRelease?: CinematicRelease;
@@ -75,6 +76,7 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.cinemaPlace}
                   />
                 )}
               </Field>
@@ -105,6 +107,7 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
                         required
                         error={touched && !!error}
                         helperText={<ErrorMessage name={field.name} />}
+                        data-testid={dataTestId.registrationWizard.resourceType.cinemaDate}
                       />
                     )}
                   />

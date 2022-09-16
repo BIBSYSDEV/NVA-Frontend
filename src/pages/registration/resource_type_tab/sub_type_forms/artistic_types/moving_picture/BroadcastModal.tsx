@@ -8,6 +8,7 @@ import { PublicationChannelType } from '../../../../../../types/registration.typ
 import i18n from '../../../../../../translations/i18n';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 
 interface BroadcastModalProps {
   broadcast?: Broadcast;
@@ -72,6 +73,7 @@ export const BroadcastModal = ({ broadcast, onSubmit, open, closeModal }: Broadc
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.broadcastPublisher}
                   />
                 )}
               </Field>
@@ -102,6 +104,7 @@ export const BroadcastModal = ({ broadcast, onSubmit, open, closeModal }: Broadc
                         required
                         error={touched && !!error}
                         helperText={<ErrorMessage name={field.name} />}
+                        data-testid={dataTestId.registrationWizard.resourceType.competitionDate}
                       />
                     )}
                   />
