@@ -150,7 +150,7 @@ export const SearchForCristinPerson = ({
             onClick={() => setSelectedPerson(undefined)}
             sx={{ width: 'fit-content' }}
             startIcon={<HighlightOffIcon />}>
-            {t('basic_data.add_employee.remove_selected_person')}
+            {t('basic_data.add_employee.new_search')}
           </Button>
         </>
       ) : null}
