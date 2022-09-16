@@ -180,6 +180,7 @@ export const PersonTableRow = ({
         <DialogTitle>{t('basic_data.person_register.edit_person')}</DialogTitle>
         <Formik
           initialValues={initialValues}
+          enableReinitialize // Needed to update roles values when the institutionUser is recieved
           onSubmit={updatePersonAndRoles}
           validationSchema={personDataValidationSchema}>
           {({ values, isSubmitting, setFieldValue, errors, touched }: FormikProps<PersonData>) => (
