@@ -6,7 +6,6 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { useSelector } from 'react-redux';
 import { StyledCenterContainer } from '../../../components/styled/Wrappers';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { getNewDateValue } from '../../../utils/registration-helpers';
 import { RootState } from '../../../redux/store';
 import { Organization } from '../../../types/organization.types';
 import { useFetchResource } from '../../../utils/hooks/useFetchResource';
@@ -96,12 +95,7 @@ export const AddAffiliationPanel = () => {
                 'aria-label': t('common.end_date'),
               }}
               value={field.value ? field.value : null}
-              onChange={(date: Date | null, keyboardInput) => {
-                const newValue = getNewDateValue(date, keyboardInput);
-                if (newValue !== null) {
-                  setFieldValue(field.name, newValue);
-                }
-              }}
+              onChange={(date) => setFieldValue(field.name, date ?? '')}
               inputFormat="dd.MM.yyyy"
               views={['year', 'month', 'day']}
               mask="__.__.____"

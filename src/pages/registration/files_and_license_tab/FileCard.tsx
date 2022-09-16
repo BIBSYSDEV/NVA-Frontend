@@ -30,7 +30,6 @@ import { File, LicenseNames, licenses } from '../../../types/file.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getNewDateValue } from '../../../utils/registration-helpers';
 
 interface FileCardProps {
   file: File;
@@ -136,10 +135,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
                       'aria-label': t('registration.files_and_license.file_publish_date'),
                     }}
                     value={field.value ?? null}
-                    onChange={(date, keyboardInput) => {
-                      const newDate = getNewDateValue(date, keyboardInput);
-                      setFieldValue(field.name, newDate);
-                    }}
+                    onChange={(date) => setFieldValue(field.name, date ?? '')}
                     inputFormat="dd.MM.yyyy"
                     maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
                     mask="__.__.____"

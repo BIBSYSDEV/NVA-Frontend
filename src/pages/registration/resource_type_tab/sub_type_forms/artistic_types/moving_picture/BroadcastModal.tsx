@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { Broadcast } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { PublicationChannelType } from '../../../../../../types/registration.types';
-import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import i18n from '../../../../../../translations/i18n';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
@@ -90,12 +89,9 @@ export const BroadcastModal = ({ broadcast, onSubmit, open, closeModal }: Broadc
                       'aria-label': t('common.date'),
                     }}
                     value={field.value ?? null}
-                    onChange={(date: Date | null, keyboardInput) => {
+                    onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
-                      const newValue = getNewDateValue(date, keyboardInput);
-                      if (newValue !== null) {
-                        setFieldValue(field.name, newValue);
-                      }
+                      setFieldValue(field.name, date ?? '');
                     }}
                     inputFormat="dd.MM.yyyy"
                     mask="__.__.____"

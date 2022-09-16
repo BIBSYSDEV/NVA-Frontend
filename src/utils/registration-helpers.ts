@@ -156,17 +156,6 @@ export const getFormattedRegistration = (registration: Registration) => {
   return formattedRegistration;
 };
 
-export const getNewDateValue = (date: Date | null, keyboardInput?: string) => {
-  const isValidDate = date && date && !isNaN(date.getTime());
-  const dateIsSelected = !keyboardInput && isValidDate;
-  const dateIsInputted = keyboardInput && keyboardInput.length === 10 && isValidDate;
-  if (dateIsSelected || dateIsInputted) {
-    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0)).toISOString();
-  } else {
-    return '';
-  }
-};
-
 export const getPeriodString = (period: Period | null) => {
   const fromDate = period?.from ? new Date(period.from).toLocaleDateString() : '';
   const toDate = period?.to ? new Date(period.to).toLocaleDateString() : '';
