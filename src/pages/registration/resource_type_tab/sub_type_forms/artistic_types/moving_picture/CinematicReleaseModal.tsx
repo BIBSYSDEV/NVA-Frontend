@@ -101,7 +101,6 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        {...field}
                         sx={{ maxWidth: '13rem' }}
                         variant="filled"
                         required

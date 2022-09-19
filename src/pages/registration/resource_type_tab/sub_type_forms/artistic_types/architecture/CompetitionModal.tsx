@@ -42,11 +42,17 @@ const validationSchema = Yup.object<YupShape<Competition>>({
     })
   ),
   date: Yup.object().shape({
-    value: Yup.date().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('registration.resource_type.artistic.competition_date'),
-      })
-    ),
+    value: Yup.date()
+      .required(
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('registration.resource_type.artistic.competition_date'),
+        })
+      )
+      .typeError(
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('registration.resource_type.artistic.competition_date'),
+        })
+      ),
   }),
 });
 

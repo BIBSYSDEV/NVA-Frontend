@@ -62,11 +62,17 @@ const validationSchema = Yup.object<YupShape<Concert>>({
     ),
   }),
   time: Yup.object().shape({
-    value: Yup.string().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('common.date'),
-      })
-    ),
+    value: Yup.date()
+      .required(
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.date'),
+        })
+      )
+      .typeError(
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('common.date'),
+        })
+      ),
   }),
   extent: Yup.string().required(
     i18n.t('feedback.validation.is_required', {
@@ -156,7 +162,6 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        {...field}
                         sx={{ maxWidth: '15rem' }}
                         variant="filled"
                         required
