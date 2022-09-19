@@ -136,7 +136,6 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
                         helperText={<ErrorMessage name={field.name} />}
                       />
                     )}
-                    data-testid={dataTestId.registrationWizard.resourceType.competitionDate}
                   />
                 )}
               </Field>

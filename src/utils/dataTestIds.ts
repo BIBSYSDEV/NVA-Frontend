@@ -196,7 +196,7 @@ export const dataTestId = {
       awardOther: 'artistic-award-other',
       awardRanking: 'artistic-award-ranking',
       broadcastPublisher: 'artistic-broadcast-publisher',
-      broadcastDate: 'artistic-broadcast-publisher',
+      broadcastDate: 'artistic-broadcast-date',
       cinemaPlace: 'artistic-cinema-place',
       cinemaDate: 'artistic-cinema-date',
       competitionName: 'artistic-competition-name',
