@@ -52,7 +52,9 @@ export const basicProjectValidationSchema = Yup.object<YupShape<PostCristinProje
     .required(basicProjectErrorMessage.endDateRequired)
     .typeError(basicProjectErrorMessage.endDateInvalidFormat)
     .when('startDate', (startDate, schema) =>
-      startDate ? schema.min(startDate, basicProjectErrorMessage.endDateCannotBeBeforeStart) : schema
+      startDate instanceof Date && !isNaN(startDate.getTime())
+        ? schema.min(startDate, basicProjectErrorMessage.endDateCannotBeBeforeStart)
+        : schema
     ),
   contributors: Yup.array().of(contributorValidationSchema),
   coordinatingInstitution: Yup.object().shape({
