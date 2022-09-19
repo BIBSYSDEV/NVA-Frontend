@@ -224,7 +224,7 @@ describe('User opens registration form and can see validation errors', () => {
 
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateFromField}] input`).type('02.01.2020');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateToField}] input`).type('01.01.2020');
-    cy.get('p.Mui-error').should('have.length', 2);
+    cy.get('p.Mui-error').should('have.length', 1);
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.dateFromField}] input`)
       .clear()
       .type('01.01.2020');

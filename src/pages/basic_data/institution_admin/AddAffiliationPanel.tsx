@@ -16,7 +16,7 @@ import { PositionField } from '../fields/PositionField';
 
 export const AddAffiliationPanel = () => {
   const { t } = useTranslation();
-  const { values, errors, setFieldValue, isSubmitting } = useFormikContext<AddEmployeeData>();
+  const { values, errors, setFieldValue, setFieldTouched, isSubmitting } = useFormikContext<AddEmployeeData>();
   const user = useSelector((store: RootState) => store.user);
   const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
     user?.topOrgCristinId ?? ''
@@ -95,14 +95,16 @@ export const AddAffiliationPanel = () => {
                 'aria-label': t('common.end_date'),
               }}
               value={field.value ? field.value : null}
-              onChange={(date) => setFieldValue(field.name, date ?? '')}
+              onChange={(date) => {
+                !touched && setFieldTouched(field.name, true, false);
+                setFieldValue(field.name, date ?? '');
+              }}
               inputFormat="dd.MM.yyyy"
               views={['year', 'month', 'day']}
               mask="__.__.____"
               minDate={values.affiliation.startDate ? new Date(values.affiliation.startDate) : undefined}
               renderInput={(params) => (
                 <TextField
-                  {...field}
                   {...params}
                   variant="filled"
                   error={touched && !!error}

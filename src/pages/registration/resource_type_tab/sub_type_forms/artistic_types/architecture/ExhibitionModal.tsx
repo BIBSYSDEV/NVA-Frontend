@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
 import { Exhibition } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { periodField } from '../../../../../../utils/validation/registration/referenceValidation';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { PeriodFields } from '../../../components/PeriodFields';
 import { OutputModalActions } from '../OutputModalActions';
@@ -44,18 +45,7 @@ const validationSchema = Yup.object<YupShape<Exhibition>>({
       })
     ),
   }),
-  date: Yup.object().shape({
-    from: Yup.date().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('registration.resource_type.date_from'),
-      })
-    ),
-    to: Yup.date().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('registration.resource_type.date_to'),
-      })
-    ),
-  }),
+  date: periodField,
 });
 
 export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: ExhibitionModalProps) => {

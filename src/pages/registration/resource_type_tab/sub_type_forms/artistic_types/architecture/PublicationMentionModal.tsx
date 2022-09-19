@@ -37,11 +37,17 @@ const validationSchema = Yup.object<YupShape<MentionInPublication>>({
     })
   ),
   date: Yup.object().shape({
-    value: Yup.date().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('common.date'),
-      })
-    ),
+    value: Yup.date()
+      .required(
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.date'),
+        })
+      )
+      .typeError(
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('common.date'),
+        })
+      ),
   }),
 });
 
