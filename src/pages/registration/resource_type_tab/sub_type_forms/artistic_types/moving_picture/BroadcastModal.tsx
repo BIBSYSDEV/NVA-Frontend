@@ -104,7 +104,7 @@ export const BroadcastModal = ({ broadcast, onSubmit, open, closeModal }: Broadc
                         required
                         error={touched && !!error}
                         helperText={<ErrorMessage name={field.name} />}
-                        data-testid={dataTestId.registrationWizard.resourceType.competitionDate}
+                        data-testid={dataTestId.registrationWizard.resourceType.broadcastDate}
                       />
                     )}
                   />
