@@ -201,7 +201,7 @@ const pagesRangeField = Yup.object()
 export const periodField = Yup.object().shape({
   from: Yup.date().required(resourceErrorMessage.dateFromRequired).typeError(resourceErrorMessage.dateFromInvalid),
   to: Yup.date()
-    .required(i18n.t(resourceErrorMessage.dateToRequired))
+    .required(resourceErrorMessage.dateToRequired)
     .typeError(resourceErrorMessage.dateToInvalid)
     .when('from', (from, schema) =>
       from instanceof Date && !isNaN(from.getTime())
