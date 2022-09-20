@@ -22,6 +22,7 @@ import i18n from '../../../../../../translations/i18n';
 import { Concert, MusicalWorkPerformance } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 
 interface ConcertModalProps {
   concert?: Concert;
@@ -137,6 +138,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.concertPlace}
                   />
                 )}
               </Field>
@@ -167,6 +169,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                         required
                         error={touched && !!error}
                         helperText={<ErrorMessage name={field.name} />}
+                        data-testid={dataTestId.registrationWizard.resourceType.concertDate}
                       />
                     )}
                   />
@@ -184,6 +187,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.concertDuration}
                   />
                 )}
               </Field>
