@@ -196,7 +196,6 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                 {({ name, push, remove }: FieldArrayRenderProps) => (
                   <>
                     <Typography variant="h3">{t('registration.resource_type.artistic.concert_program')}</Typography>
-
                     {values.concertProgramme.map((_, index) => {
                       const baseFieldName = `${name}[${index}]`;
                       return (
@@ -211,6 +210,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                                 required
                                 error={touched && !!error}
                                 helperText={<ErrorMessage name={field.name} />}
+                                data-testid={`${dataTestId.registrationWizard.resourceType.concertProgramTitle}-${index}`}
                               />
                             )}
                           </Field>
@@ -224,6 +224,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                                 required
                                 error={touched && !!error}
                                 helperText={<ErrorMessage name={field.name} />}
+                                data-testid={`${dataTestId.registrationWizard.resourceType.concertProgramComposter}-${index}`}
                               />
                             )}
                           </Field>
@@ -231,7 +232,12 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                             {({ field }: FieldProps<boolean>) => (
                               <FormControlLabel
                                 {...field}
-                                control={<Checkbox checked={field.value} />}
+                                control={
+                                  <Checkbox
+                                    checked={field.value}
+                                    data-testid={`${dataTestId.registrationWizard.resourceType.concertProgramIsPremiere}-${index}`}
+                                  />
+                                }
                                 label={t('registration.resource_type.artistic.premiere')}
                               />
                             )}
@@ -242,7 +248,8 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                             title={t('registration.resource_type.artistic.remove_music_work')}
                             onClick={() => setRemoveWorkItemIndex(index)}
                             sx={{ px: '2rem' }}
-                            startIcon={<DeleteIcon />}>
+                            startIcon={<DeleteIcon />}
+                            data-testid={`${dataTestId.registrationWizard.resourceType.concertProgramRemove}-${index}`}>
                             {t('common.remove')}
                           </Button>
                         </Box>

@@ -194,6 +194,7 @@ export const AudioVisualPublicationModal = ({
                                 required
                                 error={touched && !!error}
                                 helperText={<ErrorMessage name={field.name} />}
+                                data-testid={`${dataTestId.registrationWizard.resourceType.audioVideoContentTitle}-${index}`}
                               />
                             )}
                           </Field>
@@ -207,6 +208,7 @@ export const AudioVisualPublicationModal = ({
                                 required
                                 error={touched && !!error}
                                 helperText={<ErrorMessage name={field.name} />}
+                                data-testid={`${dataTestId.registrationWizard.resourceType.audioVideoContentComposer}-${index}`}
                               />
                             )}
                           </Field>
@@ -220,6 +222,7 @@ export const AudioVisualPublicationModal = ({
                                 required
                                 error={touched && !!error}
                                 helperText={<ErrorMessage name={field.name} />}
+                                data-testid={`${dataTestId.registrationWizard.resourceType.audioVideoContentDuration}-${index}`}
                               />
                             )}
                           </Field>
@@ -229,7 +232,8 @@ export const AudioVisualPublicationModal = ({
                             title={t('registration.resource_type.artistic.remove_music_work')}
                             onClick={() => setRemoveTrackIndex(index)}
                             sx={{ px: '2rem' }}
-                            startIcon={<DeleteIcon />}>
+                            startIcon={<DeleteIcon />}
+                            data-testid={`${dataTestId.registrationWizard.resourceType.audioVideoContentRemove}-${index}`}>
                             {t('common.remove')}
                           </Button>
                         </Box>
