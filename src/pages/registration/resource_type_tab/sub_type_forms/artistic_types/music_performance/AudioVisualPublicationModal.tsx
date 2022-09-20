@@ -24,6 +24,7 @@ import {
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 
 interface AudioVisualPublicationModalProps {
   audioVisualPublication?: AudioVisualPublication;
@@ -136,7 +137,8 @@ export const AudioVisualPublicationModal = ({
                     fullWidth
                     {...field}
                     error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}>
+                    helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.audioVideoType}>
                     {Object.values(MusicMediaType).map((mediaType) => (
                       <MenuItem key={mediaType} value={mediaType}>
                         {t(`registration.resource_type.artistic.music_media_type.${mediaType}`)}
@@ -155,6 +157,7 @@ export const AudioVisualPublicationModal = ({
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.audioVideoPublisher}
                   />
                 )}
               </Field>
@@ -168,6 +171,7 @@ export const AudioVisualPublicationModal = ({
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.audioVideoCatalogueNumber}
                   />
                 )}
               </Field>
