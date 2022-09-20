@@ -28,8 +28,11 @@ CodePipeline is the AWS CI/CD service. This is used in four steps:
 
 ## AWS CodeBuild
 
-Codebuild is the AWS build service. This is used to install app dependencies, build the app, and run tests.
-TODO: describe `Promote-version`, and `e2e-test`
+Codebuild is the AWS build service. This is used to install dependencies, build, and run tests for an app. We have three CodeBuild projects:
+
+- `Frontend-build`: Builds the React app and place the outputs in the `latest` build catalog.
+- `Promote-version`: A job that promotes the current `latest` build to a new build catalog with the current date as the name.
+- `e2e-test`: A job that runs e2e test towards a specified build version.
 
 ## AWS S3
 
