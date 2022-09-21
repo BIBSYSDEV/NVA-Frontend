@@ -241,6 +241,7 @@ export const dataTestId = {
       otherReleasePlace: 'artistic-other-release-place',
       otherReleasePublisher: 'artistic-other-release-publisher',
       otherReleaseDate: 'artistic-other-release-date',
+      otherPerfomanceAddWork: 'music-other-performance-add-work',
       otherPerformanceDuration: 'music-other-performance-duration',
       otherPerformancePlace: 'music-other-performance-place',
       otherPerformanceType: 'music-other-performance-type',
