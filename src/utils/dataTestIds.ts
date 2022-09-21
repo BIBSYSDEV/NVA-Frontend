@@ -211,7 +211,7 @@ export const dataTestId = {
       competitionDescription: 'artistic-competition-description',
       concertPlace: 'concert-place',
       concertProgramTitle: 'concert-program-title',
-      concertProgramComposter: 'concert-program-composer',
+      concertProgramComposer: 'concert-program-composer',
       concertProgramIsPremiere: 'concert-program-is-premiere',
       concertProgramRemove: 'concert-program-remove',
       concertDate: 'concert-date',
