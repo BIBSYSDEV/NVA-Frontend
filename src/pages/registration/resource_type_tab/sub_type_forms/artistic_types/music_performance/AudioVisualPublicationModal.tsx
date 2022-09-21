@@ -254,7 +254,8 @@ export const AudioVisualPublicationModal = ({
                       variant="outlined"
                       sx={{ width: 'fit-content' }}
                       onClick={() => push(emptyMusicTrack)}
-                      startIcon={<AddIcon />}>
+                      startIcon={<AddIcon />}
+                      data-testid={dataTestId.registrationWizard.resourceType.audioVideoAddTrack}>
                       {t('common.add')} {t('registration.resource_type.artistic.content_track').toLocaleLowerCase()}
                     </Button>
                     {!!touched.trackList && typeof errors.trackList === 'string' && (

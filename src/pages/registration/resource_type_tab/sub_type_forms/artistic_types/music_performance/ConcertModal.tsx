@@ -224,7 +224,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                                 required
                                 error={touched && !!error}
                                 helperText={<ErrorMessage name={field.name} />}
-                                data-testid={`${dataTestId.registrationWizard.resourceType.concertProgramComposter}-${index}`}
+                                data-testid={`${dataTestId.registrationWizard.resourceType.concertProgramComposer}-${index}`}
                               />
                             )}
                           </Field>
@@ -270,7 +270,8 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                       variant="outlined"
                       sx={{ width: 'fit-content' }}
                       onClick={() => push(emptyMusicalWorkPerformance)}
-                      startIcon={<AddIcon />}>
+                      startIcon={<AddIcon />}
+                      data-testid={dataTestId.registrationWizard.resourceType.concertAddWork}>
                       {t('common.add')} {t('registration.resource_type.artistic.musical_work_item').toLocaleLowerCase()}
                     </Button>
                     {!!touched.concertProgramme && typeof errors.concertProgramme === 'string' && (
