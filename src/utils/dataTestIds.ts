@@ -208,6 +208,7 @@ export const dataTestId = {
       cinemaDate: 'artistic-cinema-date',
       competitionName: 'artistic-competition-name',
       competitionDate: 'artistic-competition-date',
+      concertAddTrack: 'concert-add-track',
       concertAddWork: 'concert-add-work',
       concertDate: 'concert-date',
       concertDuration: 'concert-duration',
