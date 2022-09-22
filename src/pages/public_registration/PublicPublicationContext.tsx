@@ -48,6 +48,7 @@ import {
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
 import { NpiLevelTypography } from '../../components/NpiLevelTypography';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
@@ -519,8 +520,10 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
       <Typography variant="overline">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
       <Typography paragraph>{extent}</Typography>
 
-      <Typography variant="overline">{t('registration.resource_type.artistic.concert_part_of_series')}</Typography>
-      <Typography paragraph>{partOfSeries ? t('common.yes') : t('common.no')}</Typography>
+      <BetaFunctionality>
+        <Typography variant="overline">{t('registration.resource_type.artistic.concert_part_of_series')}</Typography>
+        <Typography paragraph>{partOfSeries ? t('common.yes') : t('common.no')}</Typography>
+      </BetaFunctionality>
 
       <Typography variant="overline" id="program-heading">
         {t('registration.resource_type.artistic.concert_program')}
