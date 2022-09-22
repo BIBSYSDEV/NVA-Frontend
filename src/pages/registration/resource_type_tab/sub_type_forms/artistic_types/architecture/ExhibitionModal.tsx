@@ -3,6 +3,7 @@ import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'form
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
+import { emptyPeriod } from '../../../../../../types/common.types';
 import { Exhibition } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { periodField } from '../../../../../../utils/validation/registration/referenceValidation';
@@ -22,7 +23,7 @@ const emptyExhibition: Exhibition = {
   name: '',
   organizer: '',
   place: { type: 'UnconfirmedPlace', label: '', country: '' },
-  date: { type: 'Period', from: '', to: '' },
+  date: emptyPeriod,
   otherInformation: '',
   sequence: 0,
 };

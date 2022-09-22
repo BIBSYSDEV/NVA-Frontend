@@ -1059,6 +1059,7 @@
         "competition_name": "Name on competition/organizer",
         "competition_rank": "Rank/purchase/mention/invited",
         "composer": "Composer",
+        "concert_part_of_series": "Multiple performances (concert series, tour, etc)",
         "concert_program": "Concert program",
         "concert_program_table_caption": "Overview over concert program",
         "content_track": "Content/tracks",

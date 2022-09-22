@@ -101,10 +101,11 @@ export interface MusicalWorkPerformance {
 export interface Concert extends ArtisticOutputBase {
   type: 'Concert';
   place: Place;
-  time: Instant;
+  time: Instant; // TODO: Allow Period
   extent: string;
   description: string;
   concertProgramme: MusicalWorkPerformance[];
+  partOfSeries: boolean;
 }
 
 export enum MusicMediaType {

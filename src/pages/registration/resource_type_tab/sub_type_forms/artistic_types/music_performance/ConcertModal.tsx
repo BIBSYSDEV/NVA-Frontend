@@ -23,6 +23,8 @@ import { Concert, MusicalWorkPerformance } from '../../../../../../types/publica
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { emptyInstant } from '../../../../../../types/common.types';
+import { BetaFunctionality } from '../../../../../../components/BetaFunctionality';
 
 interface ConcertModalProps {
   concert?: Concert;
@@ -38,13 +40,11 @@ const emptyConcert: Concert = {
     label: '',
     country: '',
   },
-  time: {
-    type: 'Instant',
-    value: '',
-  },
+  time: emptyInstant,
   extent: '',
   description: '',
   concertProgramme: [],
+  partOfSeries: false,
 };
 
 const emptyMusicalWorkPerformance: MusicalWorkPerformance = {
@@ -128,6 +128,17 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
         {({ values, errors, touched, isSubmitting }: FormikProps<Concert>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <BetaFunctionality>
+                <Field name="partOfSeries">
+                  {({ field }: FieldProps<boolean>) => (
+                    <FormControlLabel
+                      data-testid={dataTestId.registrationWizard.resourceType.concertPartOfSeries}
+                      label={t('registration.resource_type.artistic.concert_part_of_series')}
+                      control={<Checkbox checked={field.value} {...field} />}
+                    />
+                  )}
+                </Field>
+              </BetaFunctionality>
               <Field name="place.label">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField

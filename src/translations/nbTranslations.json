@@ -1059,6 +1059,7 @@
         "competition_name": "Navn på konkurranse/arrangør/innbyder",
         "competition_rank": "Rangering/innkjøp/omtale/invitert",
         "composer": "Komponist",
+        "concert_part_of_series": "Flere fremføringer (konsertserie, turné, etc)",
         "concert_program": "Konsertprogram",
         "concert_program_table_caption": "Oversikt over konsertprogram",
         "content_track": "Innhold/spor",
