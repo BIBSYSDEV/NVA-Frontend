@@ -977,6 +977,7 @@
       "ConferenceAbstract": "Konferanseabstrakt",
       "ConferenceLecture": "Konferanseforedrag",
       "ConferencePoster": "Konferanseposter",
+      "DataManagementPlan": "Datahåndteringsplan (DMP)",
       "Degree": "Studentoppgave eller avhandling",
       "DegreeBachelor": "Bacheloroppgave",
       "DegreeLicentiate": "Lisensiatavhandling",
@@ -1014,7 +1015,8 @@
       "ReportBookOfAbstract": "Abstraktsamling",
       "ReportPolicy": "Policyrapport",
       "ReportResearch": "Forskningsrapport",
-      "ReportWorkingPaper": "Arbeidsnotat"
+      "ReportWorkingPaper": "Arbeidsnotat",
+      "ResearchData": "Forskningsdata"
     },
     "registration": {
       "link_to_resource": "Lenke til original versjon",

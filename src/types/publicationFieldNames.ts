@@ -7,6 +7,7 @@ export enum PublicationType {
   Presentation = 'Event',
   Artistic = 'Artistic',
   MediaContribution = 'MediaContribution',
+  ResearchData = 'ResearchData',
 }
 
 export enum JournalType {
@@ -70,6 +71,10 @@ export enum MediaType {
   MediaParticipationInRadioOrTv = 'MediaParticipationInRadioOrTv',
 }
 
+export enum ResearchDataType {
+  DataManagementPlan = 'DataManagementPlan',
+}
+
 export type RegistrationSubtype =
   | JournalType
   | ReportType
@@ -78,7 +83,8 @@ export type RegistrationSubtype =
   | ChapterType
   | PresentationType
   | ArtisticType
-  | MediaType;
+  | MediaType
+  | ResearchDataType;
 
 export enum RegistrationFieldName {
   Identifier = 'identifier',

@@ -977,6 +977,7 @@
       "ConferenceAbstract": "Conference abstract",
       "ConferenceLecture": "Conference lecture",
       "ConferencePoster": "Conference poster",
+      "DataManagementPlan": "Data management plan (DMP)",
       "Degree": "Thesis",
       "DegreeBachelor": "Bachelor thesis",
       "DegreeLicentiate": "Licentiate thesis",
@@ -1014,7 +1015,8 @@
       "ReportBookOfAbstract": "Book of abstracts",
       "ReportPolicy": "Policy report",
       "ReportResearch": "Research report",
-      "ReportWorkingPaper": "Working paper"
+      "ReportWorkingPaper": "Working paper",
+      "ResearchData": "Research data"
     },
     "registration": {
       "link_to_resource": "Link to original version",
