@@ -200,3 +200,20 @@ export const emptyRegistration: Registration = {
   publisher: { id: '' },
   subjects: [],
 };
+
+export interface Series {
+  type: PublicationChannelType.Series | PublicationChannelType.UnconfirmedSeries;
+  id?: string;
+  title?: string;
+}
+
+export interface ContextPublisher {
+  type: PublicationChannelType.UnconfirmedPublisher | PublicationChannelType.Publisher;
+  name?: string;
+  id?: string;
+}
+
+export const emptyContextPublisher: ContextPublisher = {
+  type: PublicationChannelType.Publisher,
+  id: '',
+};

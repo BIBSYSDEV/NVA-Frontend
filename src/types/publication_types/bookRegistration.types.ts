@@ -2,8 +2,9 @@ import {
   BaseEntityDescription,
   BaseReference,
   BaseRegistration,
+  ContextPublisher,
   NviApplicableBase,
-  PublicationChannelType,
+  Series,
 } from '../registration.types';
 import { PublicationType, BookType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
@@ -24,18 +25,6 @@ export const emptyBookPublicationInstance: BookPublicationInstance = {
   contentType: null,
   peerReviewed: null,
 };
-
-export interface Series {
-  type: PublicationChannelType.Series | PublicationChannelType.UnconfirmedSeries;
-  id?: string;
-  title?: string;
-}
-
-export interface ContextPublisher {
-  type: PublicationChannelType.UnconfirmedPublisher | PublicationChannelType.Publisher;
-  name?: string;
-  id?: string;
-}
 
 export interface BookPublicationContext {
   type: PublicationType | '';
