@@ -105,6 +105,7 @@ export interface Concert extends ArtisticOutputBase {
   extent: string;
   description: string;
   concertProgramme: MusicalWorkPerformance[];
+  partOfSeries: boolean;
 }
 
 export enum MusicMediaType {
