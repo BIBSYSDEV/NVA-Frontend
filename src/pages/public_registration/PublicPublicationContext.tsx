@@ -514,6 +514,7 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
 
       <Typography variant="overline">{t('common.date')}</Typography>
       <Typography paragraph>{new Date(time.value).toLocaleDateString()}</Typography>
+      {/* TODO: Show period */}
 
       <Typography variant="overline">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
       <Typography paragraph>{extent}</Typography>

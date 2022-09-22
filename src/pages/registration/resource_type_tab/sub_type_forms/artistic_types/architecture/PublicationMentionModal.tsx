@@ -8,6 +8,7 @@ import i18n from '../../../../../../translations/i18n';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
+import { emptyInstant } from '../../../../../../types/common.types';
 
 interface PublicationMentionModalProps {
   mentionInPublication?: MentionInPublication;
@@ -20,7 +21,7 @@ const emptyMentionInPublication: MentionInPublication = {
   type: 'MentionInPublication',
   title: '',
   issue: '',
-  date: { type: 'Instant', value: '' },
+  date: emptyInstant,
   otherInformation: '',
   sequence: 0,
 };

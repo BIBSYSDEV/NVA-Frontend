@@ -9,6 +9,7 @@ import i18n from '../../../../../../translations/i18n';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { emptyInstant } from '../../../../../../types/common.types';
 
 interface BroadcastModalProps {
   broadcast?: Broadcast;
@@ -23,7 +24,7 @@ const emptyBroadcast: Broadcast = {
     type: PublicationChannelType.UnconfirmedPublisher,
     name: '',
   },
-  date: { type: 'Instant', value: '' },
+  date: emptyInstant,
 };
 
 const validationSchema = Yup.object<YupShape<Broadcast>>({

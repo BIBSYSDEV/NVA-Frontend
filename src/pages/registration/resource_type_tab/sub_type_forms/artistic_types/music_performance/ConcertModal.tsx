@@ -23,6 +23,7 @@ import { Concert, MusicalWorkPerformance } from '../../../../../../types/publica
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { emptyInstant } from '../../../../../../types/common.types';
 
 interface ConcertModalProps {
   concert?: Concert;
@@ -38,10 +39,7 @@ const emptyConcert: Concert = {
     label: '',
     country: '',
   },
-  time: {
-    type: 'Instant',
-    value: '',
-  },
+  time: emptyInstant,
   extent: '',
   description: '',
   concertProgramme: [],
