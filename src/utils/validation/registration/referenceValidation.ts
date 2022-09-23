@@ -9,6 +9,7 @@ import {
   MediaType,
   PresentationType,
   ReportType,
+  ResearchDataType,
 } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
 import {
@@ -47,6 +48,10 @@ import {
   MediaContributionPublicationContext,
   MediaContributionPublicationInstance,
 } from '../../../types/publication_types/mediaContributionRegistration';
+import {
+  ResearchDataPublicationContext,
+  ResearchDataPublicationInstance,
+} from '../../../types/publication_types/researchDataRegistration.types';
 
 const resourceErrorMessage = {
   announcementsRequired: i18n.t('feedback.validation.announcement_required'),
@@ -474,4 +479,19 @@ const mediaContributionPublicationInstance = Yup.object<YupShape<MediaContributi
 export const mediaContributionReference = baseReference.shape({
   publicationContext: mediaContributionPublicationContext,
   publicationInstance: mediaContributionPublicationInstance,
+});
+
+// Research Data
+const researchDataPublicationContext = Yup.object<YupShape<ResearchDataPublicationContext>>({
+  publisher: publisherField,
+});
+
+const researchDataPublicationInstance = Yup.object<YupShape<ResearchDataPublicationInstance>>({
+  type: Yup.string().oneOf(Object.values(ResearchDataType)).required(resourceErrorMessage.typeRequired),
+  related: Yup.string().url(),
+});
+
+export const researchDataReference = baseReference.shape({
+  publicationContext: researchDataPublicationContext,
+  publicationInstance: researchDataPublicationInstance,
 });

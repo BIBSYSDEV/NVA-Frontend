@@ -135,6 +135,7 @@ export enum ResourceFieldNames {
   PublicationInstanceSubtypeDescription = 'entityDescription.reference.publicationInstance.subtype.description',
   PublicationInstanceSubtypeType = 'entityDescription.reference.publicationInstance.subtype.type',
   PublicationInstanceVenues = 'entityDescription.reference.publicationInstance.venues',
+  PublicationInstanceRelated = 'entityDescription.reference.publicationInstance.related',
   Reference = 'entityDescription.reference',
   Series = 'entityDescription.reference.publicationContext.series',
   SeriesId = 'entityDescription.reference.publicationContext.series.id',
