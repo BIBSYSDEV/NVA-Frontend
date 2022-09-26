@@ -38,7 +38,7 @@
     "@mui/icons-material": "^5.10.6",
     "@mui/lab": "5.0.0-alpha.100",
     "@mui/material": "^5.10.6",
-    "@mui/x-date-pickers": "^5.0.2",
+    "@mui/x-date-pickers": "^5.0.3",
     "@reduxjs/toolkit": "^1.8.5",
     "@uppy/aws-s3-multipart": "^1.8.18",
     "@uppy/core": "^1.20.1",
