@@ -28,7 +28,7 @@ export const useFetchResource = <T>(id: string, errorMessage?: string): [T | und
 
 const getKeyValue = (id: string) => (isValidUrl(id) ? id : `${API_URL.slice(0, -1)}${id}`);
 
-const isValidUrl = (value: string) => {
+export const isValidUrl = (value: string) => {
   try {
     const url = new URL(value);
     return url.protocol === 'http:' || url.protocol === 'https:';
