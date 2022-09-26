@@ -488,7 +488,7 @@ const researchDataPublicationContext = Yup.object<YupShape<ResearchDataPublicati
 
 const researchDataPublicationInstance = Yup.object<YupShape<ResearchDataPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(ResearchDataType)).required(resourceErrorMessage.typeRequired),
-  related: Yup.string().url(),
+  related: Yup.array(),
 });
 
 export const researchDataReference = baseReference.shape({

@@ -1,5 +1,4 @@
 import { useFormikContext } from 'formik';
-import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import { ResearchDataType, ResourceFieldNames } from '../../../types/publicationFieldNames';
 import { ResearchDataRegistration } from '../../../types/publication_types/researchDataRegistration.types';
@@ -15,7 +14,7 @@ export const ResearchDataTypeForm = ({ onChangeSubType }: ResearchDataTypeFormPr
   const subType = values.entityDescription.reference.publicationInstance.type;
 
   return (
-    <BetaFunctionality>
+    <>
       <StyledSelectWrapper>
         <SelectTypeField
           fieldName={ResourceFieldNames.SubType}
@@ -25,6 +24,6 @@ export const ResearchDataTypeForm = ({ onChangeSubType }: ResearchDataTypeFormPr
       </StyledSelectWrapper>
 
       {subType === ResearchDataType.DataManagementPlan ? <DataManagementPlanForm /> : null}
-    </BetaFunctionality>
+    </>
   );
 };

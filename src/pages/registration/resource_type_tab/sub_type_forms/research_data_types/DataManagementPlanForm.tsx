@@ -1,21 +1,24 @@
-import { Autocomplete, Box, Button, Skeleton, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, Link, Skeleton, TextField, Typography } from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { SearchApiPath } from '../../../../../api/apiPaths';
 import { EmphasizeSubstring } from '../../../../../components/EmphasizeSubstring';
 import { SearchResponse } from '../../../../../types/common.types';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { ResearchDataRegistration } from '../../../../../types/publication_types/researchDataRegistration.types';
 import { Registration } from '../../../../../types/registration.types';
+import { API_URL } from '../../../../../utils/constants';
 import { useDebounce } from '../../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../../utils/hooks/useFetch';
 import { getTitleString } from '../../../../../utils/registration-helpers';
+import { getRegistrationLandingPagePath } from '../../../../../utils/urlPaths';
 import { PublisherField } from '../../components/PublisherField';
 import { YearAndContributorsText } from '../../components/SearchContainerField';
 
 export const DataManagementPlanForm = () => {
   const { values } = useFormikContext<ResearchDataRegistration>();
-  const relatedResourceIds = values.entityDescription?.reference?.publicationInstance.related ?? [];
+  const relatedResourceUris = values.entityDescription?.reference?.publicationInstance.related ?? [];
 
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery);
@@ -32,6 +35,15 @@ export const DataManagementPlanForm = () => {
       <FieldArray name={ResourceFieldNames.PublicationInstanceRelated}>
         {({ push, remove }: FieldArrayRenderProps) => (
           <>
+            <Box sx={{ display: 'flex', gap: '1rem' }}>
+              <TextField
+                variant="filled"
+                fullWidth
+                label="Eksterne lenker"
+                onChange={(event) => push(event.target.value)}
+              />
+              <Button variant="outlined">Legg til lenke</Button>
+            </Box>
             <Autocomplete
               options={searchOptions?.hits ?? []}
               value={null}
@@ -72,8 +84,8 @@ export const DataManagementPlanForm = () => {
                 />
               )}
             />
-            {relatedResourceIds.map((id, index) => (
-              <SelectedRegistrationRow key={id} id={id} removeLinkedRegistration={() => remove(index)} />
+            {relatedResourceUris.map((uri, index) => (
+              <RelatedResourceRow key={uri} uri={uri} removeRelatedResource={() => remove(index)} />
             ))}
           </>
         )}
@@ -82,24 +94,33 @@ export const DataManagementPlanForm = () => {
   );
 };
 
-interface SelectedRegistrationRowProps {
-  id: string;
-  removeLinkedRegistration: () => void;
+interface RelatedResourceRowRowProps {
+  uri: string;
+  removeRelatedResource: () => void;
 }
 
-const SelectedRegistrationRow = ({ id, removeLinkedRegistration }: SelectedRegistrationRowProps) => {
-  const [registration, isLoadingRegistration] = useFetch<Registration>({ url: id });
+const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResourceRowRowProps) => {
+  const isInternalRegistration = uri.includes(API_URL);
+  const [registration, isLoadingRegistration] = useFetch<Registration>({ url: isInternalRegistration ? uri : '' });
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       {isLoadingRegistration ? (
-        <Skeleton width={'30%'} />
+        <Skeleton width="30%" />
       ) : (
-        <Typography>{getTitleString(registration?.entityDescription?.mainTitle)}</Typography>
+        <>
+          {isInternalRegistration ? (
+            <Link component={RouterLink} to={getRegistrationLandingPagePath(registration?.identifier ?? '')}>
+              {getTitleString(registration?.entityDescription?.mainTitle)}
+            </Link>
+          ) : (
+            <Link href={uri}>{uri}</Link>
+          )}
+          <Button variant="outlined" sx={{ ml: '1rem' }} color="error" onClick={() => removeRelatedResource()}>
+            Fjern
+          </Button>
+        </>
       )}
-      <Button variant="outlined" sx={{ ml: '1rem' }} color="error" onClick={() => removeLinkedRegistration()}>
-        Fjern
-      </Button>
     </Box>
   );
 };
