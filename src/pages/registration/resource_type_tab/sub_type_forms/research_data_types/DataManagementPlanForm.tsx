@@ -1,13 +1,13 @@
 import { Autocomplete, Box, Button, CircularProgress, Link, Skeleton, TextField, Typography } from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { SearchApiPath } from '../../../../../api/apiPaths';
 import { EmphasizeSubstring } from '../../../../../components/EmphasizeSubstring';
 import { SearchResponse } from '../../../../../types/common.types';
-import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
+import { RegistrationFieldName, ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { ResearchDataRegistration } from '../../../../../types/publication_types/researchDataRegistration.types';
 import { Registration } from '../../../../../types/registration.types';
 import { API_URL } from '../../../../../utils/constants';
@@ -20,6 +20,7 @@ import { PublisherField } from '../../components/PublisherField';
 import { YearAndContributorsText } from '../../components/SearchContainerField';
 
 export const DataManagementPlanForm = () => {
+  const params = useParams<{ identifier: string }>();
   const { values } = useFormikContext<ResearchDataRegistration>();
   const relatedResourceUris = values.entityDescription?.reference?.publicationInstance.related ?? [];
 
@@ -27,7 +28,9 @@ export const DataManagementPlanForm = () => {
   const debouncedSearchQuery = useDebounce(searchQuery);
 
   const [searchOptions, isLoadingSearchOptions] = useFetch<SearchResponse<Registration>>({
-    url: debouncedSearchQuery ? `${SearchApiPath.Registrations}?query=${debouncedSearchQuery}` : '', // TODO: Avoid self-reference and duplicates
+    url: debouncedSearchQuery
+      ? `${SearchApiPath.Registrations}?query=${debouncedSearchQuery} AND NOT (${RegistrationFieldName.Identifier}:"${params.identifier}")`
+      : '',
   });
 
   return (
