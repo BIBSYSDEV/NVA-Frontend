@@ -42,7 +42,7 @@ export const DataManagementPlanForm = () => {
               options={searchOptions?.hits ?? []}
               value={null}
               onChange={(_, value) => {
-                if (value?.id) {
+                if (value?.id && !relatedResourceUris.includes(value.id)) {
                   push(value.id);
                 }
                 setSearchQuery('');
@@ -80,11 +80,19 @@ export const DataManagementPlanForm = () => {
                 />
               )}
             />
-            <ExternalLinkField onAddClick={(url) => push(url)} />
+            <ExternalLinkField
+              onAddClick={(url) => {
+                if (!relatedResourceUris.includes(url)) {
+                  push(url);
+                }
+              }}
+            />
 
-            {relatedResourceUris.map((uri, index) => (
-              <RelatedResourceRow key={uri} uri={uri} removeRelatedResource={() => remove(index)} />
-            ))}
+            <Box component="ul" sx={{ m: 0, p: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              {relatedResourceUris.map((uri, index) => (
+                <RelatedResourceRow key={uri} uri={uri} removeRelatedResource={() => remove(index)} />
+              ))}
+            </Box>
           </>
         )}
       </FieldArray>
@@ -102,7 +110,7 @@ const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResourceRowRo
   const [registration, isLoadingRegistration] = useFetch<Registration>({ url: isInternalRegistration ? uri : '' });
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    <Box component="li" sx={{ display: 'flex', alignItems: 'center' }}>
       {isLoadingRegistration ? (
         <Skeleton width="30%" />
       ) : (
