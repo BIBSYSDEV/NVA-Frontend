@@ -23,7 +23,10 @@ import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 export const DataManagementPlanForm = () => {
   const params = useParams<{ identifier: string }>();
   const { values } = useFormikContext<ResearchDataRegistration>();
-  const relatedResourceUris = values.entityDescription?.reference?.publicationInstance.related ?? [];
+
+  const relatedResources = values.entityDescription?.reference?.publicationInstance.related ?? [];
+  const internalResources = relatedResources.filter((uri) => uri.includes(API_URL));
+  const externalResources = relatedResources.filter((uri) => !uri.includes(API_URL));
 
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery);
@@ -46,7 +49,7 @@ export const DataManagementPlanForm = () => {
               options={searchOptions?.hits ?? []}
               value={null}
               onChange={(_, value) => {
-                if (value?.id && !relatedResourceUris.includes(value.id)) {
+                if (value?.id && !relatedResources.includes(value.id)) {
                   push(value.id);
                 }
                 setSearchQuery('');
@@ -84,17 +87,32 @@ export const DataManagementPlanForm = () => {
                 />
               )}
             />
+
+            <Box component="ul" sx={{ m: 0, p: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              {internalResources.map((uri) => (
+                <RelatedResourceRow
+                  key={uri}
+                  uri={uri}
+                  removeRelatedResource={() => remove(relatedResources.indexOf(uri))}
+                />
+              ))}
+            </Box>
+
             <ExternalLinkField
               onAddClick={(url) => {
-                if (!relatedResourceUris.includes(url)) {
+                if (!relatedResources.includes(url)) {
                   push(url);
                 }
               }}
             />
 
             <Box component="ul" sx={{ m: 0, p: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              {relatedResourceUris.map((uri, index) => (
-                <RelatedResourceRow key={uri} uri={uri} removeRelatedResource={() => remove(index)} />
+              {externalResources.map((uri) => (
+                <RelatedResourceRow
+                  key={uri}
+                  uri={uri}
+                  removeRelatedResource={() => remove(relatedResources.indexOf(uri))}
+                />
               ))}
             </Box>
           </>
