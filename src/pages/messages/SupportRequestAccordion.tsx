@@ -5,11 +5,10 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { addMessage } from '../../api/registrationApi';
+import { addTicketMessage } from '../../api/registrationApi';
 import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/notificationSlice';
-import { Message, MessageType } from '../../types/publication_types/messages.types';
-import { RegistrationPreview } from '../../types/registration.types';
+import { Message, Ticket } from '../../types/publication_types/messages.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { MessageList } from './MessageList';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
@@ -18,21 +17,21 @@ import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { getRegistrationIdentifier, getTitleString } from '../../utils/registration-helpers';
 
 interface SupportRequestAccordionProps {
-  messageType: MessageType;
-  messages: Message[];
-  registration: RegistrationPreview;
+  ticket: Ticket;
 }
 
-export const SupportRequestAccordion = ({ registration, messageType, messages }: SupportRequestAccordionProps) => {
+export const SupportRequestAccordion = ({ ticket }: SupportRequestAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const userId = useSelector((store: RootState) => store.user?.id);
-  const identifier = getRegistrationIdentifier(registration.id);
 
-  const [messagesCopy, setMessagesCopy] = useState(messages);
+  const identifier =
+    ticket.publicationSummary?.identifier ?? getRegistrationIdentifier(ticket.publication?.id ?? '') ?? '';
+
+  const [messagesCopy, setMessagesCopy] = useState(ticket.messages);
 
   const onClickSendMessage = async (message: string) => {
-    const updateDoiRequestResponse = await addMessage(identifier, message, messageType);
+    const updateDoiRequestResponse = await addTicketMessage(ticket.id, message);
     if (isErrorStatus(updateDoiRequestResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
     } else if (isSuccessStatus(updateDoiRequestResponse.status)) {
@@ -61,17 +60,17 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
             },
           }}>
           <Typography data-testid={`message-type-${identifier}`} sx={{ gridArea: 'status', fontWeight: 'bold' }}>
-            {messageType === MessageType.DoiRequest
+            {ticket.type === 'DoiRequest'
               ? t('my_page.messages.types.doi')
-              : messageType === MessageType.Support
+              : ticket.type === 'GeneralSupportCase'
               ? t('my_page.messages.types.support')
               : null}
           </Typography>
           <Typography data-testid={`message-title-${identifier}`} sx={{ gridArea: 'title', fontWeight: 'bold' }}>
-            {getTitleString(registration.mainTitle)}
+            {getTitleString(ticket.publicationSummary?.mainTitle ?? ticket.publication?.mainTitle)}
           </Typography>
           <Typography data-testid={`message-owner-${identifier}`} sx={{ gridArea: 'creator', fontWeight: 'bold' }}>
-            {new Date(messagesCopy[messagesCopy.length - 1].createdDate).toLocaleDateString()}
+            {new Date(ticket.modifiedDate).toLocaleDateString()}
           </Typography>
         </AccordionSummary>
         <AccordionDetails>

@@ -1,36 +1,34 @@
 import { Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PublicationConversation } from '../../types/publication_types/messages.types';
+import { Ticket } from '../../types/publication_types/messages.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
 import { SupportRequestAccordion } from './SupportRequestAccordion';
 
 interface MyMessagesProps {
-  conversations: PublicationConversation[];
+  tickets: Ticket[];
 }
 
-export const MyMessages = ({ conversations }: MyMessagesProps) => {
+export const MyMessages = ({ tickets }: MyMessagesProps) => {
   const { t } = useTranslation();
+
   useEffect(() => {
-    if (conversations.some(({ publication }) => stringIncludesMathJax(publication.mainTitle))) {
+    if (
+      tickets.some(({ publicationSummary, publication }) =>
+        stringIncludesMathJax(publicationSummary?.mainTitle ?? publication?.mainTitle)
+      )
+    ) {
       typesetMathJax();
     }
-  }, [conversations]);
+  }, [tickets]);
 
-  return conversations.length === 0 ? (
+  return tickets.length === 0 ? (
     <Typography>{t('my_page.messages.no_messages')}</Typography>
   ) : (
     <>
-      {conversations.map((conversation) =>
-        conversation.messageCollections.map((messageCollection) => (
-          <SupportRequestAccordion
-            key={messageCollection.messages[0].identifier}
-            registration={conversation.publication}
-            messageType={messageCollection.messageType}
-            messages={messageCollection.messages}
-          />
-        ))
-      )}
+      {tickets.map((ticket, index) => (
+        <SupportRequestAccordion key={index} ticket={ticket} />
+      ))}
     </>
   );
 };

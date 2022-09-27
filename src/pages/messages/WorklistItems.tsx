@@ -1,56 +1,34 @@
 import { Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  DoiRequestConversation,
-  MessageType,
-  PublicationConversation,
-} from '../../types/publication_types/messages.types';
+import { Ticket } from '../../types/publication_types/messages.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
 import { SupportRequestAccordion } from './SupportRequestAccordion';
 
 interface WorklistItemsProps {
-  conversations: (PublicationConversation | DoiRequestConversation)[];
+  tickets: Ticket[];
 }
 
-export const WorklistItems = ({ conversations }: WorklistItemsProps) => {
+export const WorklistItems = ({ tickets }: WorklistItemsProps) => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (conversations.some(({ publication }) => stringIncludesMathJax(publication.mainTitle))) {
+    if (
+      tickets.some(({ publicationSummary, publication }) =>
+        stringIncludesMathJax(publicationSummary?.mainTitle ?? publication?.mainTitle)
+      )
+    ) {
       typesetMathJax();
     }
-  }, [conversations]);
+  }, [tickets]);
 
-  return conversations.length === 0 ? (
+  return tickets.length === 0 ? (
     <Typography>{t('worklist.no_messages')}</Typography>
   ) : (
     <>
-      {conversations.map((conversation, index) => {
-        if (conversation.type === 'PublicationConversation') {
-          const support = conversation as PublicationConversation;
-          return (
-            <SupportRequestAccordion
-              key={index}
-              registration={conversation.publication}
-              messageType={MessageType.Support}
-              messages={support.messageCollections[0].messages}
-            />
-          );
-        } else if (conversation.type === 'DoiRequest') {
-          const doiRequest = conversation as DoiRequestConversation;
-          return (
-            <SupportRequestAccordion
-              key={doiRequest.identifier}
-              registration={conversation.publication}
-              messageType={MessageType.DoiRequest}
-              messages={doiRequest.messages?.messages ?? []}
-            />
-          );
-        } else {
-          return null;
-        }
-      })}
+      {tickets.map((ticket, index) => (
+        <SupportRequestAccordion key={index} ticket={ticket} />
+      ))}
     </>
   );
 };

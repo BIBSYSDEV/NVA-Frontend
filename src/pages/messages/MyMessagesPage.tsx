@@ -2,30 +2,30 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { PublicationsApiPath } from '../../api/apiPaths';
 import { ListSkeleton } from '../../components/ListSkeleton';
-import { PublicationConversation } from '../../types/publication_types/messages.types';
-import { RoleName } from '../../types/user.types';
+import { TicketCollection } from '../../types/publication_types/messages.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { MyMessages } from './MyMessages';
 
 export const MyMessagesPage = () => {
   const { t } = useTranslation();
 
-  const [supportRequestsResponse, isLoadingSupportRequests] = useFetch<PublicationConversation[]>({
-    url: `${PublicationsApiPath.Messages}?role=${RoleName.Creator}`,
+  const [ticketsResponse, isLoadingTicketsRequests] = useFetch<TicketCollection>({
+    url: PublicationsApiPath.Tickets,
     errorMessage: t('feedback.error.get_messages'),
     withAuthentication: true,
   });
-  const supportRequests = supportRequestsResponse ?? [];
+
+  const tickets = ticketsResponse?.tickets ?? [];
 
   return (
     <>
       <Helmet>
         <title>{t('my_page.messages.messages')}</title>
       </Helmet>
-      {isLoadingSupportRequests ? (
+      {isLoadingTicketsRequests ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
-        <MyMessages conversations={supportRequests} />
+        <MyMessages tickets={tickets} />
       )}
     </>
   );

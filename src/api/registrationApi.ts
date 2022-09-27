@@ -67,3 +67,10 @@ export const addMessage = async (identifier: string, message: string, messageTyp
       messageType,
     },
   });
+
+export const addTicketMessage = async (ticketId: string, message: string) =>
+  await authenticatedApiRequest({
+    url: `${ticketId}/message`,
+    method: 'POST',
+    data: { message },
+  });

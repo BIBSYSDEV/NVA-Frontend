@@ -5,7 +5,7 @@ import { PageHeader } from '../../components/PageHeader';
 import { SyledPageContent } from '../../components/styled/Wrappers';
 import { RoleApiPath, SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { DoiRequestConversation, PublicationConversation } from '../../types/publication_types/messages.types';
+import { Ticket } from '../../types/publication_types/messages.types';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { SearchResponse } from '../../types/common.types';
 import { RootState } from '../../redux/store';
@@ -29,20 +29,18 @@ const WorklistPage = () => {
   const viewingScopeId = viewingScopes.length > 0 ? viewingScopes[0] : '';
   const [viewingScopeOrganization, isLoadingViewingScopeOrganization] = useFetchResource<Organization>(viewingScopeId);
 
-  const [worklistResponse, isLoadingWorklistResponse] = useFetch<
-    SearchResponse<PublicationConversation | DoiRequestConversation>
-  >({
-    url: SearchApiPath.Worklist,
+  const [ticketsResponse, isLoadingTicketsRequests] = useFetch<SearchResponse<Ticket>>({
+    url: SearchApiPath.Tickets,
     errorMessage: t('feedback.error.get_messages'),
     withAuthentication: true,
   });
 
-  const supportRequests = worklistResponse?.hits ?? [];
+  const tickets = ticketsResponse?.hits ?? [];
 
   return (
     <SyledPageContent>
       <PageHeader>{t('worklist.worklist')}</PageHeader>
-      {isLoadingWorklistResponse ? (
+      {isLoadingTicketsRequests ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
         <>
@@ -59,7 +57,7 @@ const WorklistPage = () => {
               )
             )
           ) : null}
-          <WorklistItems conversations={supportRequests} />
+          <WorklistItems tickets={tickets} />
         </>
       )}
     </SyledPageContent>

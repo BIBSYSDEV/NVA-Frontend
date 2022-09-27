@@ -28,3 +28,25 @@ export interface PublicationConversation {
 export interface DoiRequestConversation extends DoiRequest {
   publication: RegistrationPreview;
 }
+
+export interface TicketCollection {
+  type: 'TicketCollection';
+  tickets: Ticket[];
+}
+
+export interface Ticket {
+  type: 'DoiRequest' | 'GeneralSupportCase' | 'PublishingRequest';
+  status: 'Pending' | 'Closed' | 'Completed';
+  createdDate: string;
+  modifiedDate: string;
+  id: string;
+  identifier: string;
+  publicationSummary?: {
+    id: string;
+    identifier: string;
+    mainTitle: string;
+  };
+  publication?: RegistrationPreview;
+  viewedBy: string[];
+  messages: any[];
+}
