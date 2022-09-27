@@ -34,6 +34,9 @@ export const DataManagementPlanForm = () => {
       : '',
   });
 
+  const internalResources = relatedResourceUris.filter((uri) => uri.includes(API_URL));
+  const externalResources = relatedResourceUris.filter((uri) => !uri.includes(API_URL));
+
   return (
     <>
       <PublisherField />
@@ -84,6 +87,17 @@ export const DataManagementPlanForm = () => {
                 />
               )}
             />
+
+            <Box component="ul" sx={{ m: 0, p: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              {internalResources.map((uri) => (
+                <RelatedResourceRow
+                  key={uri}
+                  uri={uri}
+                  removeRelatedResource={() => remove(relatedResourceUris.indexOf(uri))}
+                />
+              ))}
+            </Box>
+
             <ExternalLinkField
               onAddClick={(url) => {
                 if (!relatedResourceUris.includes(url)) {
@@ -93,8 +107,12 @@ export const DataManagementPlanForm = () => {
             />
 
             <Box component="ul" sx={{ m: 0, p: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              {relatedResourceUris.map((uri, index) => (
-                <RelatedResourceRow key={uri} uri={uri} removeRelatedResource={() => remove(index)} />
+              {externalResources.map((uri) => (
+                <RelatedResourceRow
+                  key={uri}
+                  uri={uri}
+                  removeRelatedResource={() => remove(relatedResourceUris.indexOf(uri))}
+                />
               ))}
             </Box>
           </>
