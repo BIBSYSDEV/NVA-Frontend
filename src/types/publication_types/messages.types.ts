@@ -6,12 +6,13 @@ export enum MessageType {
 }
 
 export interface Message {
-  createdDate: string;
   id: string;
   identifier: string;
-  owner: string;
   sender: string;
+  owner: string;
   text: string;
+  date: string;
+  recipient: string;
 }
 
 export interface MessageCollection {

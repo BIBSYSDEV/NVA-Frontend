@@ -23,7 +23,7 @@ interface SupportRequestAccordionProps {
 export const SupportRequestAccordion = ({ ticket }: SupportRequestAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const userId = useSelector((store: RootState) => store.user?.id);
+  const username = useSelector((store: RootState) => store.user?.username);
 
   const identifier =
     ticket.publicationSummary?.identifier ?? getRegistrationIdentifier(ticket.publication?.id ?? '') ?? '';
@@ -39,7 +39,7 @@ export const SupportRequestAccordion = ({ ticket }: SupportRequestAccordionProps
       const newMessage: Message = {
         ...messagesCopy[0],
         createdDate: new Date().toString(),
-        sender: userId ?? '',
+        sender: username ?? '',
         text: message,
       };
       setMessagesCopy([...messagesCopy, newMessage]);
