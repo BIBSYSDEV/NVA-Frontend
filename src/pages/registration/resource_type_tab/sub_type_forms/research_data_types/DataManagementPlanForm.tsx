@@ -18,6 +18,7 @@ import { getTitleString } from '../../../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../../../../utils/urlPaths';
 import { PublisherField } from '../../components/PublisherField';
 import { YearAndContributorsText } from '../../components/SearchContainerField';
+import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 
 export const DataManagementPlanForm = () => {
   const params = useParams<{ identifier: string }>();
@@ -111,6 +112,7 @@ interface RelatedResourceRowRowProps {
 const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResourceRowRowProps) => {
   const isInternalRegistration = uri.includes(API_URL);
   const [registration, isLoadingRegistration] = useFetch<Registration>({ url: isInternalRegistration ? uri : '' });
+  const [confirmRemoveRelation, setConfirmRemoveRelation] = useState(false);
 
   return (
     <Box component="li" sx={{ display: 'flex', alignItems: 'center' }}>
@@ -130,12 +132,19 @@ const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResourceRowRo
             variant="outlined"
             sx={{ ml: '1rem' }}
             color="error"
-            onClick={() => removeRelatedResource()}
+            onClick={() => setConfirmRemoveRelation(true)}
             startIcon={<RemoveCircleOutlineIcon />}>
             Fjern relasjon
           </Button>
         </>
       )}
+      <ConfirmDialog
+        open={confirmRemoveRelation}
+        title={'Fjerne relasjopn?'}
+        onAccept={removeRelatedResource}
+        onCancel={() => setConfirmRemoveRelation(false)}>
+        <Typography>Ønsker du å fjerne denne relasjonen?</Typography>
+      </ConfirmDialog>
     </Box>
   );
 };
@@ -179,7 +188,7 @@ const ExternalLinkField = ({ onAddClick }: ExternalLinkFieldProps) => {
         onChange={(event) => setInputUrl(event.target.value)}
         helperText={
           canShowErrorState
-            ? 'Ugyldig URL. Pass på at lenken du oppgir er fullstendig. Eksempel: https://sikt.no.'
+            ? 'Ugyldig URL. Pass på at lenken du oppgir er fullstendig. Eksempel: https://sikt.no'
             : 'Oppgi ekstern URL med relatert innhold.'
         }
         error={canShowErrorState}
