@@ -20,7 +20,9 @@ export const OrcidModalContent = ({ cancelFunction, cancelText }: OrcidModalCont
       cancelFunction();
     } else {
       window.location.assign(
-        `${ORCID_BASE_URL}/signin?oauth&client_id=${process.env.REACT_APP_ORCID_CLIENT_ID}&response_type=token&scope=openid&redirect_uri=${window.location.href}`
+        `${ORCID_BASE_URL}/signin?oauth&client_id=${
+          (window as any).env.REACT_APP_ORCID_CLIENT_ID
+        }&response_type=token&scope=openid&redirect_uri=${window.location.href}`
       );
     }
   };

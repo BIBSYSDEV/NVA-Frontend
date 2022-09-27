@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <link rel="dns-prefetch" href="https://api.dev.nva.aws.unit.no">
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Nasjonalt vitenarkiv">
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <meta charset="utf-8" />
+    <link rel="dns-prefetch" href="https://api.dev.nva.aws.unit.no" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Nasjonalt vitenarkiv" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <script>
       MathJax = {
         tex: {
           inlineMath: [['$', '$']],
-        }
+        },
       };
     </script>
     <style>
@@ -23,6 +23,18 @@
     <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
   </head>
   <body>
+    <script>
+      env = {
+        REACT_APP_API_HOST: 'https://api.dev.nva.aws.unit.no',
+        REACT_APP_REDIRECT_SIGN_IN: 'http://localhost:3000',
+        REACT_APP_REDIRECT_SIGN_OUT: 'http://localhost:3000/logout',
+        REACT_APP_AWS_USER_POOLS_ID: 'eu-west-1_nLV9i5X5D',
+        REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID: '3rls7ad53ldmjvdbj7p8fii18q',
+        REACT_APP_DOMAIN: 'nva-dev.auth.eu-west-1.amazoncognito.com',
+        REACT_APP_ORCID_BASE_URL: 'https://sandbox.orcid.org',
+        REACT_APP_ORCID_CLIENT_ID: 'APP-QHBJSU99SZV1LMQJ',
+      };
+    </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
   </body>
