@@ -38,7 +38,7 @@ export const SupportRequestAccordion = ({ ticket }: SupportRequestAccordionProps
       dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
       const newMessage: Message = {
         ...messagesCopy[0],
-        createdDate: new Date().toString(),
+        date: new Date().toString(),
         sender: username ?? '',
         text: message,
       };

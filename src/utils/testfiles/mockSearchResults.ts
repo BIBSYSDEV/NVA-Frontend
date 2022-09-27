@@ -1,5 +1,5 @@
 import { SearchResponse } from '../../types/common.types';
-import { PublicationConversation } from '../../types/publication_types/messages.types';
+import { Ticket } from '../../types/publication_types/messages.types';
 import { Registration } from '../../types/registration.types';
 import { mockMathJaxRegistration, mockMessages, mockRegistration } from './mockRegistration';
 
@@ -20,8 +20,8 @@ export const mockSearchResults: SearchResponse<Registration> = {
   ],
 };
 
-export const mockSearchWorklist: SearchResponse<PublicationConversation> = {
+export const mockSearchWorklist: SearchResponse<Ticket> = {
   processingTime: 2,
   size: 1,
-  hits: mockMessages,
+  hits: mockMessages.tickets,
 };

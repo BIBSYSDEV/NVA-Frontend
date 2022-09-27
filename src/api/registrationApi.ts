@@ -1,7 +1,7 @@
 import { CancelToken } from 'axios';
 import { Doi, DoiRequestStatus, Registration } from '../types/registration.types';
 import { authenticatedApiRequest } from './apiRequest';
-import { MessageType } from '../types/publication_types/messages.types';
+import { Ticket, TicketType } from '../types/publication_types/messages.types';
 import { PublicationsApiPath } from './apiPaths';
 
 export const createRegistration = async (partialRegistration?: Partial<Registration>) =>
@@ -57,20 +57,16 @@ export const updateDoiRequest = async (registrationIdentifier: string, status: D
     },
   });
 
-export const addMessage = async (identifier: string, message: string, messageType: MessageType) =>
-  await authenticatedApiRequest({
-    url: `${PublicationsApiPath.Messages}`,
-    method: 'POST',
-    data: {
-      publicationIdentifier: identifier,
-      message,
-      messageType,
-    },
-  });
-
 export const addTicketMessage = async (ticketId: string, message: string) =>
   await authenticatedApiRequest({
     url: `${ticketId}/message`,
     method: 'POST',
     data: { message },
+  });
+
+export const createTicket = async (registrationId: string, type: TicketType) =>
+  await authenticatedApiRequest<Ticket>({
+    url: `${registrationId}/ticket`,
+    method: 'POST',
+    data: { type },
   });

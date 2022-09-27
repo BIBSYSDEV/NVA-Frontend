@@ -11,7 +11,6 @@ import { ChapterEntityDescription } from './publication_types/chapterRegistratio
 import { Contributor } from './contributor.types';
 import { PresentationEntityDescription } from './publication_types/presentationRegistration.types';
 import { ArtisticEntityDescription } from './publication_types/artisticRegistration.types';
-import { MessageCollection } from './publication_types/messages.types';
 import { MediaContributionEntityDescription } from './publication_types/mediaContributionRegistration';
 import {
   JournalType,
@@ -66,19 +65,10 @@ export interface MyRegistrationsResponse {
   publications?: RegistrationPreview[]; // "publications" is undefined if user has no registrations
 }
 
-export enum DoiRequestStatus {
+export enum DoiRequestStatus { // TODO: replace with ticket status
   Approved = 'APPROVED',
   Rejected = 'REJECTED',
   Requested = 'REQUESTED',
-}
-
-export interface DoiRequest {
-  type: 'DoiRequest';
-  identifier: string;
-  createdDate: string;
-  modifiedDate: string;
-  status: DoiRequestStatus;
-  messages?: MessageCollection;
 }
 
 interface RegistrationPublisher {

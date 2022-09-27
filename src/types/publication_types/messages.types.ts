@@ -1,9 +1,4 @@
-import { DoiRequest, RegistrationPreview } from '../registration.types';
-
-export enum MessageType {
-  DoiRequest = 'DoiRequest',
-  Support = 'Support',
-}
+import { RegistrationPreview } from '../registration.types';
 
 export interface Message {
   id: string;
@@ -15,28 +10,15 @@ export interface Message {
   recipient: string;
 }
 
-export interface MessageCollection {
-  messageType: MessageType;
-  messages: Message[];
-}
-
-export interface PublicationConversation {
-  type: 'PublicationConversation';
-  messageCollections: MessageCollection[];
-  publication: RegistrationPreview;
-}
-
-export interface DoiRequestConversation extends DoiRequest {
-  publication: RegistrationPreview;
-}
-
 export interface TicketCollection {
   type: 'TicketCollection';
   tickets: Ticket[];
 }
 
+export type TicketType = 'DoiRequest' | 'GeneralSupportCase' | 'PublishingRequest';
+
 export interface Ticket {
-  type: 'DoiRequest' | 'GeneralSupportCase' | 'PublishingRequest';
+  type: TicketType;
   status: 'Pending' | 'Closed' | 'Completed';
   createdDate: string;
   modifiedDate: string;
@@ -47,7 +29,7 @@ export interface Ticket {
     identifier: string;
     mainTitle: string;
   };
-  publication?: RegistrationPreview;
+  publication?: RegistrationPreview; // TODO: publication/publicationSummary should be one?
   viewedBy: string[];
-  messages: any[];
+  messages: Message[];
 }
