@@ -128,9 +128,10 @@ export const mockMessages: PublicationConversation[] = [
   {
     type: 'PublicationConversation',
     publication: {
-      identifier: mockRegistration.identifier,
+      id: mockRegistration.id,
       mainTitle: mockRegistration.entityDescription.mainTitle,
       createdDate: mockRegistration.createdDate,
+      modifiedDate: mockRegistration.modifiedDate,
       status: mockRegistration.status,
       owner: mockRegistration.resourceOwner.owner,
     },

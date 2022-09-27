@@ -166,13 +166,12 @@ export interface RegistrationDate {
 }
 
 export interface RegistrationPreview {
-  identifier: string;
+  id: string;
   mainTitle: string;
   createdDate: string;
-  status: string;
+  modifiedDate: string;
+  status: RegistrationStatus;
   owner: string;
-  publicationDate?: RegistrationDate;
-  contributors?: Contributor[];
 }
 
 export interface Doi {
