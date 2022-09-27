@@ -15,7 +15,7 @@ import { MessageList } from './MessageList';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { RootState } from '../../redux/store';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
-import { getTitleString } from '../../utils/registration-helpers';
+import { getRegistrationIdentifier, getTitleString } from '../../utils/registration-helpers';
 
 interface SupportRequestAccordionProps {
   messageType: MessageType;
@@ -27,11 +27,12 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const userId = useSelector((store: RootState) => store.user?.id);
+  const identifier = getRegistrationIdentifier(registration.id);
 
   const [messagesCopy, setMessagesCopy] = useState(messages);
 
   const onClickSendMessage = async (message: string) => {
-    const updateDoiRequestResponse = await addMessage(registration.identifier, message, messageType);
+    const updateDoiRequestResponse = await addMessage(identifier, message, messageType);
     if (isErrorStatus(updateDoiRequestResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
     } else if (isSuccessStatus(updateDoiRequestResponse.status)) {
@@ -48,7 +49,7 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
 
   return (
     <ErrorBoundary>
-      <Accordion data-testid={`message-${registration.identifier}`}>
+      <Accordion data-testid={`message-${identifier}`}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon fontSize="large" />}
           sx={{
@@ -59,23 +60,17 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
               gap: '1rem',
             },
           }}>
-          <Typography
-            data-testid={`message-type-${registration.identifier}`}
-            sx={{ gridArea: 'status', fontWeight: 'bold' }}>
+          <Typography data-testid={`message-type-${identifier}`} sx={{ gridArea: 'status', fontWeight: 'bold' }}>
             {messageType === MessageType.DoiRequest
               ? t('my_page.messages.types.doi')
               : messageType === MessageType.Support
               ? t('my_page.messages.types.support')
               : null}
           </Typography>
-          <Typography
-            data-testid={`message-title-${registration.identifier}`}
-            sx={{ gridArea: 'title', fontWeight: 'bold' }}>
+          <Typography data-testid={`message-title-${identifier}`} sx={{ gridArea: 'title', fontWeight: 'bold' }}>
             {getTitleString(registration.mainTitle)}
           </Typography>
-          <Typography
-            data-testid={`message-owner-${registration.identifier}`}
-            sx={{ gridArea: 'creator', fontWeight: 'bold' }}>
+          <Typography data-testid={`message-owner-${identifier}`} sx={{ gridArea: 'creator', fontWeight: 'bold' }}>
             {new Date(messagesCopy[messagesCopy.length - 1].createdDate).toLocaleDateString()}
           </Typography>
         </AccordionSummary>
@@ -86,11 +81,11 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
           </Box>
           <Box sx={{ width: '20%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
             <Button
-              data-testid={`go-to-registration-${registration.identifier}`}
+              data-testid={`go-to-registration-${identifier}`}
               variant="outlined"
               endIcon={<ArrowForwardIcon />}
               component={RouterLink}
-              to={getRegistrationLandingPagePath(registration.identifier)}>
+              to={getRegistrationLandingPagePath(identifier)}>
               {t('my_page.messages.go_to_registration')}
             </Button>
           </Box>
