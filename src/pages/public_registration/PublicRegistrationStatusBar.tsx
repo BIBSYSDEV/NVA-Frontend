@@ -70,7 +70,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
       if (message) {
         await addTicketMessage(ticketId, message);
       }
-      // Adding DOI can take some extra time, so wait 2.5 sec before refetching
+      // TODO: Adding DOI can take some extra time, so wait 2.5 sec before refetching
       setTimeout(() => {
         if (openRequestDoiModal) {
           toggleRequestDoiModal();
@@ -89,7 +89,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
         setIsLoading(LoadingState.RejectDoi);
       }
 
-      const updateTicketStatusResponse = await updateTicketStatus(pendingDoiRequestTicket.id, status);
+      const updateTicketStatusResponse = await updateTicketStatus(pendingDoiRequestTicket.id, 'DoiRequest', status);
       if (isErrorStatus(updateTicketStatusResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.update_doi_request'), variant: 'error' }));
         setIsLoading(LoadingState.None);
@@ -107,8 +107,11 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
       dispatch(setNotification({ message: t('feedback.error.publish_registration'), variant: 'error' }));
       setIsLoading(LoadingState.None);
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.success.published_registration'), variant: 'success' }));
-      refetchRegistration();
+      // TODO: Setting Publish Request to Completed can take some time, so wait 5 sec before refetching
+      setTimeout(() => {
+        dispatch(setNotification({ message: t('feedback.success.published_registration'), variant: 'success' }));
+        refetchRegistration();
+      }, 5000);
     }
   };
 
@@ -227,34 +230,36 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             </LoadingButton>
           )}
 
-          {isCurator && isPublishedRegistration && isLoadingRegistrationTicketCollection ? (
-            <CircularProgress />
-          ) : (
-            !!pendingDoiRequestTicket && (
-              <>
-                <LoadingButton
-                  variant="contained"
-                  data-testid={dataTestId.registrationLandingPage.rejectDoiButton}
-                  endIcon={<CloseIcon />}
-                  loadingPosition="end"
-                  onClick={() => onClickUpdateDoiRequest('Closed')}
-                  loading={isLoading === LoadingState.RejectDoi}
-                  disabled={!!isLoading}>
-                  {t('common.reject_doi')}
-                </LoadingButton>
-                <LoadingButton
-                  variant="contained"
-                  data-testid={dataTestId.registrationLandingPage.createDoiButton}
-                  endIcon={<CheckIcon />}
-                  loadingPosition="end"
-                  onClick={() => onClickUpdateDoiRequest('Completed')}
-                  loading={isLoading === LoadingState.ApproveDoi}
-                  disabled={!!isLoading || !registrationIsValid}>
-                  {t('common.create_doi')}
-                </LoadingButton>
-              </>
-            )
-          )}
+          {isCurator &&
+            isPublishedRegistration &&
+            (isLoadingRegistrationTicketCollection ? (
+              <CircularProgress />
+            ) : (
+              !!pendingDoiRequestTicket && (
+                <>
+                  <LoadingButton
+                    variant="contained"
+                    data-testid={dataTestId.registrationLandingPage.rejectDoiButton}
+                    endIcon={<CloseIcon />}
+                    loadingPosition="end"
+                    onClick={() => onClickUpdateDoiRequest('Closed')}
+                    loading={isLoading === LoadingState.RejectDoi}
+                    disabled={!!isLoading}>
+                    {t('common.reject_doi')}
+                  </LoadingButton>
+                  <LoadingButton
+                    variant="contained"
+                    data-testid={dataTestId.registrationLandingPage.createDoiButton}
+                    endIcon={<CheckIcon />}
+                    loadingPosition="end"
+                    onClick={() => onClickUpdateDoiRequest('Completed')}
+                    loading={isLoading === LoadingState.ApproveDoi}
+                    disabled={!!isLoading || !registrationIsValid}>
+                    {t('common.create_doi')}
+                  </LoadingButton>
+                </>
+              )
+            ))}
         </Box>
 
         {!hasNvaDoi && (

@@ -44,9 +44,9 @@ export const createTicket = async (registrationId: string, type: TicketType) =>
     data: { type },
   });
 
-export const updateTicketStatus = async (ticketId: string, status: TicketStatus) =>
+export const updateTicketStatus = async (ticketId: string, type: TicketType, status: TicketStatus) =>
   await authenticatedApiRequest({
-    url: `${ticketId}/status`, // TODO: Update path
-    method: 'POST',
-    data: { status },
+    url: ticketId,
+    method: 'PUT',
+    data: { type, status },
   });

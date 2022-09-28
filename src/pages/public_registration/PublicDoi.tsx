@@ -15,7 +15,7 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
 
   const originalDoi = registration.entityDescription?.reference?.doi ?? '';
   const nvaDoi = registration.doi;
-  const hasApprovedDoiRequest = !!registration.doi;
+  const hasApprovedDoiRequest = !!registration.doi; // TODO: Should check with DoiRequest ticket
   const canSeeDraftDoi =
     user &&
     ((user.isCurator && registration.publisher.id === user.customerId) || user.id === registration.resourceOwner.owner);
