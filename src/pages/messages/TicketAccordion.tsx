@@ -25,7 +25,7 @@ export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
   const dispatch = useDispatch();
   const username = useSelector((store: RootState) => store.user?.username);
 
-  const identifier =
+  const registrationIdentifier =
     ticket.publicationSummary?.identifier ?? getRegistrationIdentifier(ticket.publication?.id ?? '') ?? '';
 
   const [messagesCopy, setMessagesCopy] = useState(ticket.messages);
@@ -48,18 +48,20 @@ export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
 
   return (
     <ErrorBoundary>
-      <Accordion data-testid={`message-${identifier}`}>
+      <Accordion data-testid={`message-${registrationIdentifier}`}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon fontSize="large" />}
           sx={{
             '.MuiAccordionSummary-content': {
               display: 'grid',
               gridTemplateAreas: { xs: '"type date status" "title title title"', md: '"type title date status"' },
-              gridTemplateColumns: { xs: '1fr 1fr', md: '1fr 5fr 1fr 1fr' },
+              gridTemplateColumns: { xs: '1fr 1fr 1fr', md: '1fr 5fr 1fr 1fr' },
               gap: '1rem',
             },
           }}>
-          <Typography data-testid={`message-type-${identifier}`} sx={{ gridArea: 'type', fontWeight: 'bold' }}>
+          <Typography
+            data-testid={`message-type-${registrationIdentifier}`}
+            sx={{ gridArea: 'type', fontWeight: 'bold' }}>
             {ticket.type === 'DoiRequest'
               ? t('my_page.messages.types.doi')
               : ticket.type === 'GeneralSupportCase'
@@ -68,13 +70,19 @@ export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
               ? t('my_page.messages.types.publishing_request')
               : null}
           </Typography>
-          <Typography data-testid={`message-title-${identifier}`} sx={{ gridArea: 'title', fontWeight: 'bold' }}>
+          <Typography
+            data-testid={`message-title-${registrationIdentifier}`}
+            sx={{ gridArea: 'title', fontWeight: 'bold' }}>
             {getTitleString(ticket.publicationSummary?.mainTitle ?? ticket.publication?.mainTitle)}
           </Typography>
-          <Typography data-testid={`message-owner-${identifier}`} sx={{ gridArea: 'date', fontWeight: 'bold' }}>
+          <Typography
+            data-testid={`message-owner-${registrationIdentifier}`}
+            sx={{ gridArea: 'date', fontWeight: 'bold' }}>
             {new Date(ticket.modifiedDate).toLocaleDateString()}
           </Typography>
-          <Typography data-testid={`message-status-${identifier}`} sx={{ gridArea: 'status', fontWeight: 'bold' }}>
+          <Typography
+            data-testid={`message-status-${registrationIdentifier}`}
+            sx={{ gridArea: 'status', fontWeight: 'bold' }}>
             {t(`my_page.messages.ticket_types.${ticket.status}`)}
           </Typography>
         </AccordionSummary>
@@ -85,11 +93,11 @@ export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
           </Box>
           <Box sx={{ width: '20%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
             <Button
-              data-testid={`go-to-registration-${identifier}`}
+              data-testid={`go-to-registration-${registrationIdentifier}`}
               variant="outlined"
               endIcon={<ArrowForwardIcon />}
               component={RouterLink}
-              to={getRegistrationLandingPagePath(identifier)}>
+              to={getRegistrationLandingPagePath(registrationIdentifier)}>
               {t('my_page.messages.go_to_registration')}
             </Button>
           </Box>

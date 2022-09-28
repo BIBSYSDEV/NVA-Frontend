@@ -49,6 +49,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   const [registrationTicketCollection, isLoadingRegistrationTicketCollection] = useFetch<TicketCollection>({
     url: user?.isCurator ? `${registration.id}/tickets` : '',
     withAuthentication: true,
+    errorMessage: t('feedback.error.get_tickets'),
   });
   const registrationTickets = registrationTicketCollection?.tickets ?? [];
 
@@ -67,8 +68,9 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     } else if (isSuccessStatus(createDoiRequestResponse.status)) {
       const ticketId = createDoiRequestResponse.data.id;
       // Add message
-      if (message) {
+      if (ticketId && message) {
         await addTicketMessage(ticketId, message);
+        // No need to show potential error message, since Ticket with actual DoiRequest is created anyway
       }
       // TODO: Adding DOI can take some extra time, so wait 2.5 sec before refetching
       setTimeout(() => {
@@ -235,7 +237,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             (isLoadingRegistrationTicketCollection ? (
               <CircularProgress />
             ) : (
-              !!pendingDoiRequestTicket && (
+              pendingDoiRequestTicket && (
                 <>
                   <LoadingButton
                     variant="contained"

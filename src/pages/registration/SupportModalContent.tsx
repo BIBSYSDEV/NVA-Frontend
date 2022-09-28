@@ -18,19 +18,22 @@ export const SupportModalContent = ({ closeModal, registrationId }: SupportModal
   const { t } = useTranslation();
 
   const sendMessage = async (message: string) => {
-    // Create ticket
-    const createTicketResponse = await createTicket(registrationId, 'GeneralSupportCase');
-    if (isErrorStatus(createTicketResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
-    } else if (isSuccessStatus(createTicketResponse.status)) {
-      const ticketId = createTicketResponse.data.id;
-      // Add message
-      const addMessageResponse = await addTicketMessage(ticketId, message);
-      if (isErrorStatus(addMessageResponse.status)) {
+    if (message) {
+      // Create ticket
+      const createTicketResponse = await createTicket(registrationId, 'GeneralSupportCase');
+      if (isErrorStatus(createTicketResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
-      } else if (isSuccessStatus(addMessageResponse.status)) {
-        dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
-        closeModal();
+      } else if (isSuccessStatus(createTicketResponse.status)) {
+        const ticketId = createTicketResponse.data.id;
+        if (ticketId) {
+          const addMessageResponse = await addTicketMessage(ticketId, message);
+          if (isErrorStatus(addMessageResponse.status)) {
+            dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
+          } else if (isSuccessStatus(addMessageResponse.status)) {
+            dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
+            closeModal();
+          }
+        }
       }
     }
   };

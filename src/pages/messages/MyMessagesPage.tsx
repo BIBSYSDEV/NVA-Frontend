@@ -9,20 +9,20 @@ import { TicketAccordionList } from './TicketAccordionList';
 export const MyMessagesPage = () => {
   const { t } = useTranslation();
 
-  const [ticketsResponse, isLoadingTicketsRequests] = useFetch<TicketCollection>({
+  const [ticketsCollection, isLoadingTicketsCollection] = useFetch<TicketCollection>({
     url: PublicationsApiPath.Tickets,
     errorMessage: t('feedback.error.get_messages'),
     withAuthentication: true,
   });
 
-  const tickets = ticketsResponse?.tickets ?? [];
+  const tickets = ticketsCollection?.tickets ?? [];
 
   return (
     <>
       <Helmet>
         <title>{t('my_page.messages.messages')}</title>
       </Helmet>
-      {isLoadingTicketsRequests ? (
+      {isLoadingTicketsCollection ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
         <TicketAccordionList tickets={tickets} />

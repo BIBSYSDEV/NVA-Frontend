@@ -353,6 +353,7 @@
       "get_roles": "Kunne ikke hente roller",
       "get_series": "Kunne ikke hente serie",
       "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
+      "get_tickets": "Kunne ikke hente saker",
       "get_users_for_institution": "Kunne ikke hente brukere",
       "get_vocabularies": "Kunne ikke hente kontrollerte vokabular",
       "orcid_login": "Kunne ikke logge inn på ORCID",
