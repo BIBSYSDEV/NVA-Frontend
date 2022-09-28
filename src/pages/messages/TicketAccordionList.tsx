@@ -5,13 +5,12 @@ import { Ticket } from '../../types/publication_types/messages.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
 import { TicketAccordion } from './TicketAccordion';
 
-interface MyMessagesProps {
+interface TicketAccordionListProps {
   tickets: Ticket[];
 }
 
-export const MyMessages = ({ tickets }: MyMessagesProps) => {
+export const TicketAccordionList = ({ tickets }: TicketAccordionListProps) => {
   const { t } = useTranslation();
-
   useEffect(() => {
     if (
       tickets.some(({ publicationSummary, publication }) =>
@@ -26,8 +25,8 @@ export const MyMessages = ({ tickets }: MyMessagesProps) => {
     <Typography>{t('my_page.messages.no_messages')}</Typography>
   ) : (
     <>
-      {tickets.map((ticket, index) => (
-        <TicketAccordion key={index} ticket={ticket} />
+      {tickets.map((ticket) => (
+        <TicketAccordion key={ticket.id} ticket={ticket} />
       ))}
     </>
   );

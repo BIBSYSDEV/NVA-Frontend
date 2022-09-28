@@ -4,7 +4,7 @@ import { PublicationsApiPath } from '../../api/apiPaths';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { TicketCollection } from '../../types/publication_types/messages.types';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { MyMessages } from './MyMessages';
+import { TicketAccordionList } from './TicketAccordionList';
 
 export const MyMessagesPage = () => {
   const { t } = useTranslation();
@@ -25,7 +25,7 @@ export const MyMessagesPage = () => {
       {isLoadingTicketsRequests ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
-        <MyMessages tickets={tickets} />
+        <TicketAccordionList tickets={tickets} />
       )}
     </>
   );

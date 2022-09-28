@@ -1284,7 +1284,6 @@
   },
   "worklist": {
     "limited_to": "Limited to: \"{{name}}\"",
-    "no_messages": "$t(my_page.messages.no_messages)",
     "worklist": "Worklist"
   }
 }

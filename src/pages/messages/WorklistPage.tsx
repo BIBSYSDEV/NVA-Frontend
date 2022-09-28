@@ -12,7 +12,7 @@ import { RootState } from '../../redux/store';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { Organization } from '../../types/organization.types';
 import { getLanguageString } from '../../utils/translation-helpers';
-import { WorklistItems } from './WorklistItems';
+import { TicketAccordionList } from './TicketAccordionList';
 import { InstitutionUser } from '../../types/user.types';
 
 const WorklistPage = () => {
@@ -57,7 +57,7 @@ const WorklistPage = () => {
               )
             )
           ) : null}
-          <WorklistItems tickets={tickets} />
+          <TicketAccordionList tickets={tickets} />
         </>
       )}
     </SyledPageContent>
