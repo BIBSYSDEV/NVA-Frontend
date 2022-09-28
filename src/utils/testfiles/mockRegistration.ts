@@ -124,7 +124,7 @@ export const mockMathJaxRegistration: JournalRegistration = {
   },
 };
 
-export const mockMessages: TicketCollection = {
+export const mockTicketCollection: TicketCollection = {
   type: 'TicketCollection',
   tickets: [
     {

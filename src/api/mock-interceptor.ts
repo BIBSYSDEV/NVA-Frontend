@@ -15,7 +15,7 @@ import { mockProject, mockProjectSearch } from '../utils/testfiles/mockProjects'
 import { mockPublishersSearch } from '../utils/testfiles/mockPublishers';
 import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
 import { mockSearchResults, mockSearchWorklist } from '../utils/testfiles/mockSearchResults';
-import { mockMessages, mockPublishedRegistration, mockRegistration } from '../utils/testfiles/mockRegistration';
+import { mockTicketCollection, mockPublishedRegistration, mockRegistration } from '../utils/testfiles/mockRegistration';
 import {
   CristinApiPath,
   CustomerInstitutionApiPath,
@@ -47,7 +47,7 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(PublicationsApiPath.RegistrationsByOwner)).reply(200, mockMyRegistrations);
 
   //MY MESSAGES
-  mock.onGet(new RegExp(PublicationsApiPath.Tickets)).reply(200, mockMessages);
+  mock.onGet(new RegExp(PublicationsApiPath.Tickets)).reply(200, mockTicketCollection);
   mock.onGet(new RegExp(SearchApiPath.Tickets)).reply(200, mockSearchWorklist);
 
   // PUBLICATION CHANNEL
