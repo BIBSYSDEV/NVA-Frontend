@@ -1,9 +1,5 @@
 version: 0.2
 
-env:
-  secrets-manager:
-    REACT_APP_ORCID_CLIENT_ID: OrcidClientID
-
 phases:
   install:
     runtime-versions:
