@@ -65,12 +65,6 @@ export interface MyRegistrationsResponse {
   publications?: RegistrationPreview[]; // "publications" is undefined if user has no registrations
 }
 
-export enum DoiRequestStatus { // TODO: replace with ticket status
-  Approved = 'APPROVED',
-  Rejected = 'REJECTED',
-  Requested = 'REQUESTED',
-}
-
 interface RegistrationPublisher {
   id: string;
 }

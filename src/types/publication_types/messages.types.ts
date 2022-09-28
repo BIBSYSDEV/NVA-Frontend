@@ -16,10 +16,11 @@ export interface TicketCollection {
 }
 
 export type TicketType = 'DoiRequest' | 'GeneralSupportCase' | 'PublishingRequest';
+export type TicketStatus = 'Pending' | 'Closed' | 'Completed';
 
 export interface Ticket {
   type: TicketType;
-  status: 'Pending' | 'Closed' | 'Completed';
+  status: TicketStatus;
   createdDate: string;
   modifiedDate: string;
   id: string;
