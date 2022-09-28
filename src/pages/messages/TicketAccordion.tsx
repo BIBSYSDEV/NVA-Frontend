@@ -16,11 +16,11 @@ import { RootState } from '../../redux/store';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { getRegistrationIdentifier, getTitleString } from '../../utils/registration-helpers';
 
-interface SupportRequestAccordionProps {
+interface TicketAccordionProps {
   ticket: Ticket;
 }
 
-export const SupportRequestAccordion = ({ ticket }: SupportRequestAccordionProps) => {
+export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const username = useSelector((store: RootState) => store.user?.username);

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Ticket } from '../../types/publication_types/messages.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
-import { SupportRequestAccordion } from './SupportRequestAccordion';
+import { TicketAccordion } from './TicketAccordion';
 
 interface MyMessagesProps {
   tickets: Ticket[];
@@ -27,7 +27,7 @@ export const MyMessages = ({ tickets }: MyMessagesProps) => {
   ) : (
     <>
       {tickets.map((ticket, index) => (
-        <SupportRequestAccordion key={index} ticket={ticket} />
+        <TicketAccordion key={index} ticket={ticket} />
       ))}
     </>
   );
