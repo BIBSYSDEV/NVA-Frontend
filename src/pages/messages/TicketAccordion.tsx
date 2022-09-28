@@ -54,29 +54,34 @@ export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
           sx={{
             '.MuiAccordionSummary-content': {
               display: 'grid',
-              gridTemplateAreas: { xs: '"status creator" "title title"', md: '"status title creator"' },
-              gridTemplateColumns: { xs: '1fr 1fr', md: '1fr 5fr 1fr' },
+              gridTemplateAreas: { xs: '"type date status" "title title title"', md: '"type title date status"' },
+              gridTemplateColumns: { xs: '1fr 1fr', md: '1fr 5fr 1fr 1fr' },
               gap: '1rem',
             },
           }}>
-          <Typography data-testid={`message-type-${identifier}`} sx={{ gridArea: 'status', fontWeight: 'bold' }}>
+          <Typography data-testid={`message-type-${identifier}`} sx={{ gridArea: 'type', fontWeight: 'bold' }}>
             {ticket.type === 'DoiRequest'
               ? t('my_page.messages.types.doi')
               : ticket.type === 'GeneralSupportCase'
               ? t('my_page.messages.types.support')
+              : ticket.type === 'PublishingRequest'
+              ? t('my_page.messages.types.publishing_request')
               : null}
           </Typography>
           <Typography data-testid={`message-title-${identifier}`} sx={{ gridArea: 'title', fontWeight: 'bold' }}>
             {getTitleString(ticket.publicationSummary?.mainTitle ?? ticket.publication?.mainTitle)}
           </Typography>
-          <Typography data-testid={`message-owner-${identifier}`} sx={{ gridArea: 'creator', fontWeight: 'bold' }}>
+          <Typography data-testid={`message-owner-${identifier}`} sx={{ gridArea: 'date', fontWeight: 'bold' }}>
             {new Date(ticket.modifiedDate).toLocaleDateString()}
+          </Typography>
+          <Typography data-testid={`message-status-${identifier}`} sx={{ gridArea: 'status', fontWeight: 'bold' }}>
+            {t(`my_page.messages.ticket_types.${ticket.status}`)}
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Box sx={{ width: '75%', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <MessageList messages={messagesCopy} />
-            <MessageForm confirmAction={onClickSendMessage} />
+            {ticket.status === 'Pending' && <MessageForm confirmAction={onClickSendMessage} />}
           </Box>
           <Box sx={{ width: '20%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
             <Button

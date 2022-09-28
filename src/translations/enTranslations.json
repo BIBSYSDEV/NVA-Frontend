@@ -449,8 +449,14 @@
       "go_to_registration": "Go to registration",
       "messages": "Messages",
       "no_messages": "You don't have any messages",
+      "ticket_types": {
+        "Closed": "Closed",
+        "Completed": "Completed",
+        "Pending": "Pending"
+      },
       "types": {
         "doi": "DOI Request",
+        "publishing_request": "Publishing Request",
         "support": "Support"
       }
     },
