@@ -25,12 +25,11 @@ export interface Ticket {
   modifiedDate: string;
   id: string;
   identifier: string;
-  publicationSummary?: {
+  publication: {
     id: string;
     identifier: string;
     mainTitle: string;
   };
-  publication?: RegistrationPreview; // TODO: publication/publicationSummary should be one?
   viewedBy: string[];
   messages: Message[];
 }

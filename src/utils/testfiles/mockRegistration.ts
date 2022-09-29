@@ -134,7 +134,7 @@ export const mockTicketCollection: TicketCollection = {
       modifiedDate: new Date(2020, 1).toISOString(),
       id: `${mockRegistration.id}/ticket/1`,
       identifier: '1',
-      publicationSummary: {
+      publication: {
         id: mockRegistration.id,
         identifier: mockRegistration.identifier,
         mainTitle: mockRegistration.entityDescription.mainTitle,

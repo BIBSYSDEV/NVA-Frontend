@@ -25,8 +25,7 @@ export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
   const dispatch = useDispatch();
   const username = useSelector((store: RootState) => store.user?.username);
 
-  const registrationIdentifier =
-    ticket.publicationSummary?.identifier ?? getRegistrationIdentifier(ticket.publication?.id ?? '') ?? '';
+  const registrationIdentifier = getRegistrationIdentifier(ticket.publication.id);
 
   const [messagesCopy, setMessagesCopy] = useState(ticket.messages);
 
@@ -73,7 +72,7 @@ export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
           <Typography
             data-testid={`message-title-${registrationIdentifier}`}
             sx={{ gridArea: 'title', fontWeight: 'bold' }}>
-            {getTitleString(ticket.publicationSummary?.mainTitle ?? ticket.publication?.mainTitle)}
+            {getTitleString(ticket.publication.mainTitle)}
           </Typography>
           <Typography
             data-testid={`message-owner-${registrationIdentifier}`}
