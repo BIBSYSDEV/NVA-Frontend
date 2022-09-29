@@ -94,7 +94,7 @@ interface CristinPersonName extends CristinArrayValue {
 export interface CreateCristinPerson {
   identifiers: CristinPersonIdentifier[];
   names: CristinPersonName[];
-  employments: Employment[];
+  employments?: Employment[];
 }
 
 export interface CristinPerson extends CreateCristinPerson {
