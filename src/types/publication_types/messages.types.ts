@@ -1,5 +1,3 @@
-import { RegistrationPreview } from '../registration.types';
-
 export interface Message {
   id: string;
   identifier: string;
@@ -15,7 +13,7 @@ export interface TicketCollection {
   tickets: Ticket[];
 }
 
-export type TicketType = 'DoiRequest' | 'GeneralSupportCase' | 'PublishingRequest';
+export type TicketType = 'DoiRequest' | 'GeneralSupportCase' | 'PublishingRequest' | 'GeneralSupportRequest'; // TODO: remove duplicated Support when search and publication api returns same
 export type TicketStatus = 'Pending' | 'Closed' | 'Completed';
 
 export interface Ticket {

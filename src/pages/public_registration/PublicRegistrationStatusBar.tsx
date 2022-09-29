@@ -72,14 +72,14 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
         await addTicketMessage(ticketId, message);
         // No need to show potential error message, since Ticket with actual DoiRequest is created anyway
       }
-      // TODO: Adding DOI can take some extra time, so wait 2.5 sec before refetching
+      // TODO: Adding DOI can take some extra time, so wait 5 sec before refetching
       setTimeout(() => {
         if (openRequestDoiModal) {
           toggleRequestDoiModal();
         }
         dispatch(setNotification({ message: t('feedback.success.doi_request_sent'), variant: 'success' }));
         refetchRegistration();
-      }, 2500);
+      }, 5000);
     }
   };
 
@@ -109,11 +109,11 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
       dispatch(setNotification({ message: t('feedback.error.publish_registration'), variant: 'error' }));
       setIsLoading(LoadingState.None);
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
-      // TODO: Setting Publish Request to Completed can take some time, so wait 5 sec before refetching
+      // TODO: Setting Publish Request to Completed can take some time, so wait 10 sec before refetching
       setTimeout(() => {
         dispatch(setNotification({ message: t('feedback.success.published_registration'), variant: 'success' }));
         refetchRegistration();
-      }, 5000);
+      }, 10_000);
     }
   };
 
@@ -215,21 +215,49 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           </Button>
 
           {!hasNvaDoi && (
-            <LoadingButton
-              variant="outlined"
-              endIcon={<LocalOfferIcon />}
-              loadingPosition="end"
-              loading={isLoading === LoadingState.RequestDoi}
-              data-testid={
-                isPublishedRegistration
-                  ? dataTestId.registrationLandingPage.requestDoiButton
-                  : dataTestId.registrationLandingPage.reserveDoiButton
-              }
-              onClick={() => (isPublishedRegistration ? toggleRequestDoiModal() : sendDoiRequest())}>
-              {isPublishedRegistration
-                ? t('registration.public_page.request_doi')
-                : t('registration.public_page.reserve_doi')}
-            </LoadingButton>
+            <>
+              <LoadingButton
+                variant="outlined"
+                endIcon={<LocalOfferIcon />}
+                loadingPosition="end"
+                loading={isLoading === LoadingState.RequestDoi}
+                data-testid={
+                  isPublishedRegistration
+                    ? dataTestId.registrationLandingPage.requestDoiButton
+                    : dataTestId.registrationLandingPage.reserveDoiButton
+                }
+                onClick={() => (isPublishedRegistration ? toggleRequestDoiModal() : sendDoiRequest())}>
+                {isPublishedRegistration
+                  ? t('registration.public_page.request_doi')
+                  : t('registration.public_page.reserve_doi')}
+              </LoadingButton>
+              <Modal
+                open={openRequestDoiModal}
+                onClose={toggleRequestDoiModal}
+                headingText={t('registration.public_page.request_doi')}
+                dataTestId={dataTestId.registrationLandingPage.requestDoiModal}>
+                <Typography paragraph>{t('registration.public_page.request_doi_description')}</Typography>
+                <TextField
+                  variant="outlined"
+                  multiline
+                  rows="4"
+                  fullWidth
+                  data-testid={dataTestId.registrationLandingPage.doiMessageField}
+                  label={t('registration.public_page.message_to_curator')}
+                  onChange={(event) => setMessageToCurator(event.target.value)}
+                />
+                <DialogActions>
+                  <Button onClick={toggleRequestDoiModal}>{t('common.cancel')}</Button>
+                  <LoadingButton
+                    variant="contained"
+                    data-testid={dataTestId.registrationLandingPage.sendDoiButton}
+                    onClick={sendDoiRequest}
+                    loading={isLoading === LoadingState.RequestDoi}>
+                    {t('common.send')}
+                  </LoadingButton>
+                </DialogActions>
+              </Modal>
+            </>
           )}
 
           {isCurator &&
@@ -263,35 +291,6 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
               )
             ))}
         </Box>
-
-        {!hasNvaDoi && (
-          <Modal
-            open={openRequestDoiModal}
-            onClose={toggleRequestDoiModal}
-            headingText={t('registration.public_page.request_doi')}
-            dataTestId={dataTestId.registrationLandingPage.requestDoiModal}>
-            <Typography paragraph>{t('registration.public_page.request_doi_description')}</Typography>
-            <TextField
-              variant="outlined"
-              multiline
-              rows="4"
-              fullWidth
-              data-testid={dataTestId.registrationLandingPage.doiMessageField}
-              label={t('registration.public_page.message_to_curator')}
-              onChange={(event) => setMessageToCurator(event.target.value)}
-            />
-            <DialogActions>
-              <Button onClick={toggleRequestDoiModal}>{t('common.cancel')}</Button>
-              <LoadingButton
-                variant="contained"
-                data-testid={dataTestId.registrationLandingPage.sendDoiButton}
-                onClick={sendDoiRequest}
-                loading={isLoading === LoadingState.RequestDoi}>
-                {t('common.send')}
-              </LoadingButton>
-            </DialogActions>
-          </Modal>
-        )}
       </Box>
     </Box>
   ) : null;

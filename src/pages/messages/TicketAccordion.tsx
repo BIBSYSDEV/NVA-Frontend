@@ -63,7 +63,7 @@ export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
             sx={{ gridArea: 'type', fontWeight: 'bold' }}>
             {ticket.type === 'DoiRequest'
               ? t('my_page.messages.types.doi')
-              : ticket.type === 'GeneralSupportCase'
+              : ticket.type === 'GeneralSupportCase' || ticket.type === 'GeneralSupportRequest'
               ? t('my_page.messages.types.support')
               : ticket.type === 'PublishingRequest'
               ? t('my_page.messages.types.publishing_request')
