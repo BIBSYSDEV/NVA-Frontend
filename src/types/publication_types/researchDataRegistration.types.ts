@@ -8,7 +8,7 @@ import {
 } from '../registration.types';
 
 export interface ResearchDataRegistration extends BaseRegistration {
-  entityDescription: MediaContributionEntityDescription;
+  entityDescription: ResearchDataEntityDescription;
 }
 
 export interface ResearchDataPublicationInstance {
@@ -36,6 +36,6 @@ interface ResearchDataContributionReference extends BaseReference {
   publicationInstance: ResearchDataPublicationInstance;
 }
 
-export interface MediaContributionEntityDescription extends BaseEntityDescription {
+export interface ResearchDataEntityDescription extends BaseEntityDescription {
   reference: ResearchDataContributionReference;
 }

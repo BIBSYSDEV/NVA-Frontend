@@ -21,7 +21,9 @@ import {
   PresentationType,
   ArtisticType,
   MediaType,
+  ResearchDataType,
 } from './publicationFieldNames';
+import { ResearchDataEntityDescription } from './publication_types/researchDataRegistration.types';
 
 export enum RegistrationStatus {
   Deleted = 'DRAFT_FOR_DELETION',
@@ -117,7 +119,8 @@ export type PublicationInstanceType =
   | ChapterType
   | PresentationType
   | ArtisticType
-  | MediaType;
+  | MediaType
+  | ResearchDataType;
 
 export enum PublicationChannelType {
   Journal = 'Journal',
@@ -136,7 +139,8 @@ export type EntityDescription =
   | ChapterEntityDescription
   | PresentationEntityDescription
   | ArtisticEntityDescription
-  | MediaContributionEntityDescription;
+  | MediaContributionEntityDescription
+  | ResearchDataEntityDescription;
 
 export interface Registration extends BaseRegistration {
   entityDescription?: EntityDescription;
