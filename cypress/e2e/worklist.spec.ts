@@ -16,7 +16,7 @@ describe('Worklist', () => {
   });
 
   it('The Curator should be able to open an item in the DOI request list and see the summary of the registration', () => {
-    const { id } = mockTicketCollection.tickets[0].publicationSummary!;
+    const { id } = mockTicketCollection.tickets[0].publication;
     const identifier = getRegistrationIdentifier(id);
     cy.get(`[data-testid=message-${identifier}]`).click();
     cy.get(`[data-testid=go-to-registration-${identifier}]`).click();
