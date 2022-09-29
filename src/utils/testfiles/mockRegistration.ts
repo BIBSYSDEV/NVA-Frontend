@@ -2,7 +2,7 @@ import { ContributorRole } from '../../types/contributor.types';
 import { JournalType } from '../../types/publicationFieldNames';
 import { PublicationChannelType, RegistrationStatus } from '../../types/registration.types';
 import { mockCustomerInstitution } from './mockCustomerInstitutions';
-import { MessageType, PublicationConversation } from '../../types/publication_types/messages.types';
+import { TicketCollection } from '../../types/publication_types/messages.types';
 import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
 import { JournalArticleContentType } from '../../types/publication_types/content.types';
 import { mockUser } from './mock_feide_user';
@@ -124,49 +124,53 @@ export const mockMathJaxRegistration: JournalRegistration = {
   },
 };
 
-export const mockMessages: PublicationConversation[] = [
-  {
-    type: 'PublicationConversation',
-    publication: {
-      id: mockRegistration.id,
-      mainTitle: mockRegistration.entityDescription.mainTitle,
-      createdDate: mockRegistration.createdDate,
-      modifiedDate: mockRegistration.modifiedDate,
-      status: mockRegistration.status,
-      owner: mockRegistration.resourceOwner.owner,
-    },
-    messageCollections: [
-      {
-        messageType: MessageType.Support,
-        messages: [
-          {
-            text: 'Hello Mr. Curator! A have a question about this publication, okay?',
-            sender: 'creator@unit.no',
-            owner: 'creator@unit.no',
-            createdDate: new Date(2020, 1).toISOString(),
-            id: 'http://test.no/1',
-            identifier: '1',
-          },
-          {
-            text: 'Yes, how may I assist you my dear friend?',
-            sender: 'curator@unit.no',
-            owner: 'creator@unit.no',
-            createdDate: new Date(2020, 2).toISOString(),
-            id: 'http://test.no/2',
-            identifier: '2',
-          },
-          {
-            text: "I don't know...",
-            sender: 'creator@unit.no',
-            owner: 'creator@unit.no',
-            createdDate: new Date(2020, 3).toISOString(),
-            id: 'http://test.no/3',
-            identifier: '3',
-          },
-        ],
+export const mockTicketCollection: TicketCollection = {
+  type: 'TicketCollection',
+  tickets: [
+    {
+      type: 'GeneralSupportCase',
+      status: 'Pending',
+      createdDate: new Date(2020, 1).toISOString(),
+      modifiedDate: new Date(2020, 1).toISOString(),
+      id: `${mockRegistration.id}/ticket/1`,
+      identifier: '1',
+      publication: {
+        id: mockRegistration.id,
+        identifier: mockRegistration.identifier,
+        mainTitle: mockRegistration.entityDescription.mainTitle,
       },
-    ],
-  },
-];
+      viewedBy: [],
+      messages: [
+        {
+          text: 'Hello Mr. Curator! A have a question about this publication, okay?',
+          sender: 'creator@unit.no',
+          owner: 'creator@unit.no',
+          date: new Date(2020, 1).toISOString(),
+          id: 'http://test.no/1',
+          identifier: '1',
+          recipient: 'SupportService',
+        },
+        {
+          text: 'Yes, how may I assist you my dear friend?',
+          sender: 'curator@unit.no',
+          owner: 'creator@unit.no',
+          date: new Date(2020, 2).toISOString(),
+          id: 'http://test.no/2',
+          identifier: '2',
+          recipient: 'SupportService',
+        },
+        {
+          text: "I don't know...",
+          sender: 'creator@unit.no',
+          owner: 'creator@unit.no',
+          date: new Date(2020, 3).toISOString(),
+          id: 'http://test.no/3',
+          identifier: '3',
+          recipient: 'SupportService',
+        },
+      ],
+    },
+  ],
+};
 
 export const mockPublishedRegistration = { ...mockRegistration, identifier: 123, status: RegistrationStatus.Published };

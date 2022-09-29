@@ -353,6 +353,7 @@
       "get_roles": "Could not get roles",
       "get_series": "Could not get series",
       "get_session": "Invalid session. Please log in again.",
+      "get_tickets": "Could not get cases",
       "get_users_for_institution": "Could not get users",
       "get_vocabularies": "Could not fetch vocabularies",
       "orcid_login": "ORCID login failed",
@@ -449,8 +450,14 @@
       "go_to_registration": "Go to registration",
       "messages": "Messages",
       "no_messages": "You don't have any messages",
+      "ticket_types": {
+        "Closed": "Closed",
+        "Completed": "Completed",
+        "Pending": "Pending"
+      },
       "types": {
         "doi": "DOI Request",
+        "publishing_request": "Publishing Request",
         "support": "Support"
       }
     },
@@ -1280,7 +1287,6 @@
   },
   "worklist": {
     "limited_to": "Limited to: \"{{name}}\"",
-    "no_messages": "$t(my_page.messages.no_messages)",
     "worklist": "Worklist"
   }
 }

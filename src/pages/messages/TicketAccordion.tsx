@@ -5,11 +5,10 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { addMessage } from '../../api/registrationApi';
+import { addTicketMessage } from '../../api/registrationApi';
 import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/notificationSlice';
-import { Message, MessageType } from '../../types/publication_types/messages.types';
-import { RegistrationPreview } from '../../types/registration.types';
+import { Message, Ticket } from '../../types/publication_types/messages.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { MessageList } from './MessageList';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
@@ -17,30 +16,29 @@ import { RootState } from '../../redux/store';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { getRegistrationIdentifier, getTitleString } from '../../utils/registration-helpers';
 
-interface SupportRequestAccordionProps {
-  messageType: MessageType;
-  messages: Message[];
-  registration: RegistrationPreview;
+interface TicketAccordionProps {
+  ticket: Ticket;
 }
 
-export const SupportRequestAccordion = ({ registration, messageType, messages }: SupportRequestAccordionProps) => {
+export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const userId = useSelector((store: RootState) => store.user?.id);
-  const identifier = getRegistrationIdentifier(registration.id);
+  const username = useSelector((store: RootState) => store.user?.username);
 
-  const [messagesCopy, setMessagesCopy] = useState(messages);
+  const registrationIdentifier = getRegistrationIdentifier(ticket.publication.id);
+
+  const [messagesCopy, setMessagesCopy] = useState(ticket.messages);
 
   const onClickSendMessage = async (message: string) => {
-    const updateDoiRequestResponse = await addMessage(identifier, message, messageType);
+    const updateDoiRequestResponse = await addTicketMessage(ticket.id, message);
     if (isErrorStatus(updateDoiRequestResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
     } else if (isSuccessStatus(updateDoiRequestResponse.status)) {
       dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
       const newMessage: Message = {
         ...messagesCopy[0],
-        createdDate: new Date().toString(),
-        sender: userId ?? '',
+        date: new Date().toString(),
+        sender: username ?? '',
         text: message,
       };
       setMessagesCopy([...messagesCopy, newMessage]);
@@ -49,43 +47,56 @@ export const SupportRequestAccordion = ({ registration, messageType, messages }:
 
   return (
     <ErrorBoundary>
-      <Accordion data-testid={`message-${identifier}`}>
+      <Accordion data-testid={`message-${registrationIdentifier}`}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon fontSize="large" />}
           sx={{
             '.MuiAccordionSummary-content': {
               display: 'grid',
-              gridTemplateAreas: { xs: '"status creator" "title title"', md: '"status title creator"' },
-              gridTemplateColumns: { xs: '1fr 1fr', md: '1fr 5fr 1fr' },
+              gridTemplateAreas: { xs: '"type date status" "title title title"', md: '"type title date status"' },
+              gridTemplateColumns: { xs: '1fr 1fr 1fr', md: '1fr 5fr 1fr 1fr' },
               gap: '1rem',
             },
           }}>
-          <Typography data-testid={`message-type-${identifier}`} sx={{ gridArea: 'status', fontWeight: 'bold' }}>
-            {messageType === MessageType.DoiRequest
+          <Typography
+            data-testid={`message-type-${registrationIdentifier}`}
+            sx={{ gridArea: 'type', fontWeight: 'bold' }}>
+            {ticket.type === 'DoiRequest'
               ? t('my_page.messages.types.doi')
-              : messageType === MessageType.Support
+              : ticket.type === 'GeneralSupportCase' || ticket.type === 'GeneralSupportRequest'
               ? t('my_page.messages.types.support')
+              : ticket.type === 'PublishingRequest'
+              ? t('my_page.messages.types.publishing_request')
               : null}
           </Typography>
-          <Typography data-testid={`message-title-${identifier}`} sx={{ gridArea: 'title', fontWeight: 'bold' }}>
-            {getTitleString(registration.mainTitle)}
+          <Typography
+            data-testid={`message-title-${registrationIdentifier}`}
+            sx={{ gridArea: 'title', fontWeight: 'bold' }}>
+            {getTitleString(ticket.publication.mainTitle)}
           </Typography>
-          <Typography data-testid={`message-owner-${identifier}`} sx={{ gridArea: 'creator', fontWeight: 'bold' }}>
-            {new Date(messagesCopy[messagesCopy.length - 1].createdDate).toLocaleDateString()}
+          <Typography
+            data-testid={`message-owner-${registrationIdentifier}`}
+            sx={{ gridArea: 'date', fontWeight: 'bold' }}>
+            {new Date(ticket.modifiedDate).toLocaleDateString()}
+          </Typography>
+          <Typography
+            data-testid={`message-status-${registrationIdentifier}`}
+            sx={{ gridArea: 'status', fontWeight: 'bold' }}>
+            {t(`my_page.messages.ticket_types.${ticket.status}`)}
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Box sx={{ width: '75%', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <MessageList messages={messagesCopy} />
-            <MessageForm confirmAction={onClickSendMessage} />
+            {ticket.status === 'Pending' && <MessageForm confirmAction={onClickSendMessage} />}
           </Box>
           <Box sx={{ width: '20%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
             <Button
-              data-testid={`go-to-registration-${identifier}`}
+              data-testid={`go-to-registration-${registrationIdentifier}`}
               variant="outlined"
               endIcon={<ArrowForwardIcon />}
               component={RouterLink}
-              to={getRegistrationLandingPagePath(identifier)}>
+              to={getRegistrationLandingPagePath(registrationIdentifier)}>
               {t('my_page.messages.go_to_registration')}
             </Button>
           </Box>
