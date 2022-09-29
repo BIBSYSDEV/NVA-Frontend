@@ -14,11 +14,12 @@ import { ShareOptions } from './ShareOptions';
 import { SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { RegistrationList } from '../../components/RegistrationList';
-import { RegistrationFieldName } from '../../types/publicationFieldNames';
+import { RegistrationFieldName, ResearchDataType } from '../../types/publicationFieldNames';
 import { SearchResponse } from '../../types/common.types';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
 import { getTitleString } from '../../utils/registration-helpers';
+import { PublicRelatedResourcesContent } from './PublicRelatedResourcesContent';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -75,6 +76,15 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
         )}
 
         <PublicGeneralContent registration={registration} />
+
+        {entityDescription?.reference?.publicationInstance.type === ResearchDataType.DataManagementPlan && (
+          <LandingPageAccordion
+            dataTestId={'dataTestId.registrationLandingPage.relatedAccordion'}
+            defaultExpanded
+            heading={'registration.description.related'}>
+            <PublicRelatedResourcesContent related={entityDescription.reference.publicationInstance.related} />
+          </LandingPageAccordion>
+        )}
 
         <FilesLandingPageAccordion registration={registration} />
 
