@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "react-scripts build",
+    "deploy": "BUILD_PATH='./build/builds/latest' react-scripts build",
     "pre-commit": "npx pretty-quick --staged && npm run unused-i18n-keys",
     "prepare": "husky install",
     "start": "react-scripts -r @cypress/instrument-cra start",
