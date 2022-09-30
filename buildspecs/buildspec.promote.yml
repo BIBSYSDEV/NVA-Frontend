@@ -1,0 +1,7 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - export VERSION = date +%Y%m%d
+      - aws s3 cp $S3_BUCKET/builds/latest $S3_BUCKET/builds/$VERSION
