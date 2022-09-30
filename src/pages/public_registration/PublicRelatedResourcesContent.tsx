@@ -29,7 +29,7 @@ export const PublicRelatedResourcesContent = ({ related = [] }: PublicRelatedRes
     ) as Registration[];
     setRelatedRegistrations(registrations);
     setIsLoadingRegistrations(false);
-  }, []); // todo: infiite loop when using array as dependancy?
+  }, []); // todo: infinite loop when using array as dependancy?
 
   useEffect(() => {
     getRelatedRegistrations();
