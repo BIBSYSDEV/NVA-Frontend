@@ -40,9 +40,6 @@ const employeeErrorMessage = {
   affiliationEndDateInvalid: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('common.end_date'),
   }),
-  affiliationEndDateRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('common.end_date'),
-  }),
   nationalIdInvalid: i18n.t('feedback.validation.is_required', {
     field: i18n.t('basic_data.national_identity_number'),
   }),
@@ -73,7 +70,6 @@ export const addEmployeeValidationSchema = Yup.object<YupShape<AddEmployeeData>>
       .required(employeeErrorMessage.affiliationStartDateRequired)
       .typeError(employeeErrorMessage.affiliationStartDateInvalid),
     endDate: Yup.date()
-      .required(employeeErrorMessage.affiliationEndDateRequired)
       .typeError(employeeErrorMessage.affiliationEndDateInvalid)
       .when('startDate', (startDate, schema) =>
         startDate instanceof Date && !isNaN(startDate.getTime())
