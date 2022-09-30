@@ -24,13 +24,15 @@ export const contributorsValidationSchema = Yup.array().when(
         .of(contributorValidationSchema)
         .test('author-test', contributorErrorMessage.authorRequired, (contributors) =>
           hasRole(contributors, ContributorRole.Creator)
-        );
+        )
+        .required(contributorErrorMessage.authorRequired);
     } else if (publicationInstanceType === BookType.Anthology) {
       return Yup.array()
         .of(contributorValidationSchema)
         .test('editor-test', contributorErrorMessage.editorRequired, (contributors) =>
           hasRole(contributors, ContributorRole.Editor)
-        );
+        )
+        .required(contributorErrorMessage.editorRequired);
     } else if (publicationInstanceType === ReportType.BookOfAbstracts) {
       return Yup.array().of(contributorValidationSchema);
     } else if (
@@ -38,13 +40,17 @@ export const contributorsValidationSchema = Yup.array().when(
       isArtistic(publicationInstanceType) ||
       isMediaContribution(publicationInstanceType)
     ) {
-      return Yup.array().of(contributorValidationSchema).min(1, contributorErrorMessage.contributorRequired);
+      return Yup.array()
+        .of(contributorValidationSchema)
+        .min(1, contributorErrorMessage.contributorRequired)
+        .required(contributorErrorMessage.contributorRequired);
     } else {
       return Yup.array()
         .of(contributorValidationSchema)
         .test('author-test', contributorErrorMessage.authorRequired, (contributors) =>
           hasRole(contributors, ContributorRole.Creator)
-        );
+        )
+        .required(contributorErrorMessage.authorRequired);
     }
   }
 );
