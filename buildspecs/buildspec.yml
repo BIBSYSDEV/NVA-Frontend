@@ -9,9 +9,7 @@ phases:
       - npm ci
   build:
     commands:
-      - npm run build
-      - mkdir -p build/builds/latest
-      - mv build/* build/builds/latest
+      - npm run deploy
 artifacts:
   files:
     - '**/*'
