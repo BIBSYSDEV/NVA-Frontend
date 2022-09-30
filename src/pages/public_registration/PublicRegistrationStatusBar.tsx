@@ -72,14 +72,14 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
         await addTicketMessage(ticketId, message);
         // No need to show potential error message, since Ticket with actual DoiRequest is created anyway
       }
-      // TODO: Adding DOI can take some extra time, so wait 5 sec before refetching
+      // TODO: Adding DOI can take some extra time, so wait 10 sec before refetching
       setTimeout(() => {
         if (openRequestDoiModal) {
           toggleRequestDoiModal();
         }
         dispatch(setNotification({ message: t('feedback.success.doi_request_sent'), variant: 'success' }));
         refetchRegistration();
-      }, 5000);
+      }, 10_000);
     }
   };
 
