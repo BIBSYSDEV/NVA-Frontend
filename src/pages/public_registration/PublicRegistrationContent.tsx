@@ -81,7 +81,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           <LandingPageAccordion
             dataTestId={'dataTestId.registrationLandingPage.relatedAccordion'}
             defaultExpanded
-            heading={'registration.description.related'}>
+            heading={t('registration.resource_type.research_data.related_links')}>
             <PublicRelatedResourcesContent related={entityDescription.reference.publicationInstance.related} />
           </LandingPageAccordion>
         )}

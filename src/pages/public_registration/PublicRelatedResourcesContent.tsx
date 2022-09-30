@@ -1,5 +1,6 @@
 import { CircularProgress, Link, Typography } from '@mui/material';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { apiRequest } from '../../api/apiRequest';
 import { RegistrationList } from '../../components/RegistrationList';
 import { Registration } from '../../types/registration.types';
@@ -10,6 +11,7 @@ interface PublicRelatedResourcesContentProps {
 }
 
 export const PublicRelatedResourcesContent = ({ related = [] }: PublicRelatedResourcesContentProps) => {
+  const { t } = useTranslation();
   const internalResources = useMemo(() => related.filter((uri) => uri.includes(API_URL)), [related]);
   const externalResources = related.filter((uri) => !uri.includes(API_URL));
 
@@ -46,7 +48,7 @@ export const PublicRelatedResourcesContent = ({ related = [] }: PublicRelatedRes
 
       {externalResources.length > 0 && (
         <>
-          <Typography variant="overline">Eksterne lenker</Typography>
+          <Typography variant="overline">{t('registration.resource_type.research_data.external_links')}</Typography>
           <ul>
             {externalResources.map((externalResource) => (
               <li>

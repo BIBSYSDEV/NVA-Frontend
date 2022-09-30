@@ -1245,6 +1245,17 @@
       "remove_doi_text": "Du kan fjerne DOI som ble brukt ved registreringsstart.\nØnsker du å fjerne kobling til original DOI?",
       "remove_journal": "Fjern tidsskrift",
       "remove_publisher": "Fjern utgiver",
+      "research_data": {
+        "add_link": "Legg til lenke",
+        "external_links": "Eksterne lenker",
+        "external_link_helper_text": "Oppgi ekstern URL med relatert innhold",
+        "external_link_helper_text_error": "Ugyldig URL. Pass på at lenken du oppgir er fullstendig. Eksempel: https://sikt.no",
+        "remove_relation": "Fjern relasjon",
+        "remove_relation_confirm_text": "Ønsker du å fjerne denne relasjonen?",
+        "related_links": "Relaterte lenker",
+        "search_for_related_registrations": "Søk etter relaterte registreringer",
+        "search_for_related_registrations_helper_text": "Velg blant registreringer som er publisert i NVA"
+      },
       "search_for_journal": "Søk etter tidsskrift",
       "search_for_original_article": "Søk etter original artikkel",
       "search_for_publisher": "Søk etter utgiver",

@@ -39,13 +39,13 @@ export const ExternalLinkField = ({ onAddClick }: ExternalLinkFieldProps) => {
         variant="filled"
         fullWidth
         sx={{ maxWidth: '40rem' }}
-        label="Eksterne lenker"
+        label={t('registration.resource_type.research_data.external_links')}
         value={inputUrl}
         onChange={(event) => setInputUrl(event.target.value)}
         helperText={
           canShowErrorState
-            ? 'Ugyldig URL. Pass på at lenken du oppgir er fullstendig. Eksempel: https://sikt.no'
-            : 'Oppgi ekstern URL med relatert innhold.'
+            ? t('registration.resource_type.research_data.external_link_helper_text_error')
+            : t('registration.resource_type.research_data.external_link_helper_text')
         }
         error={canShowErrorState}
       />
@@ -62,7 +62,7 @@ export const ExternalLinkField = ({ onAddClick }: ExternalLinkFieldProps) => {
               setInputUrl('');
             }}
             startIcon={<AddIcon />}>
-            Legg til lenke
+            {t('registration.resource_type.research_data.add_link')}
           </Button>
         ) : null)}
     </Box>

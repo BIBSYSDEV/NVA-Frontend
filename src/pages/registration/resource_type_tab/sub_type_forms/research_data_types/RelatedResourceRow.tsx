@@ -41,16 +41,16 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
             color="error"
             onClick={() => setConfirmRemoveRelation(true)}
             startIcon={<RemoveCircleOutlineIcon />}>
-            Fjern relasjon
+            {t('registration.resource_type.research_data.remove_relation')}
           </Button>
         </>
       )}
       <ConfirmDialog
         open={confirmRemoveRelation}
-        title={'Fjerne relasjopn?'}
+        title={t('registration.resource_type.research_data.remove_relation')}
         onAccept={removeRelatedResource}
         onCancel={() => setConfirmRemoveRelation(false)}>
-        <Typography>Ønsker du å fjerne denne relasjonen?</Typography>
+        <Typography>{t('registration.resource_type.research_data.remove_relation_confirm_text')}</Typography>
       </ConfirmDialog>
     </Box>
   );

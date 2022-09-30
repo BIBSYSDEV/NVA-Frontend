@@ -1,6 +1,7 @@
 import { Autocomplete, Box, TextField, Typography } from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { SearchApiPath } from '../../../../../api/apiPaths';
 import { EmphasizeSubstring } from '../../../../../components/EmphasizeSubstring';
@@ -18,6 +19,7 @@ import { ExternalLinkField } from './ExternalLinkField';
 import { RelatedResourceRow } from './RelatedResourceRow';
 
 export const DataManagementPlanForm = () => {
+  const { t } = useTranslation();
   const params = useParams<{ identifier: string }>();
   const { values } = useFormikContext<ResearchDataRegistration>();
 
@@ -38,7 +40,7 @@ export const DataManagementPlanForm = () => {
     <>
       <PublisherField />
 
-      <Typography variant="h2">Relaterte lenker</Typography>
+      <Typography variant="h2">{t('registration.resource_type.research_data.related_links')}</Typography>
       <FieldArray name={ResourceFieldNames.PublicationInstanceRelated}>
         {({ push, remove }: FieldArrayRenderProps) => (
           <>
@@ -79,8 +81,10 @@ export const DataManagementPlanForm = () => {
                     setSearchQuery(event.target.value);
                   }}
                   variant="filled"
-                  label="Søk etter relaterte registreringer"
-                  helperText="Velg blant registreringer som er publisert i NVA."
+                  label={t('registration.resource_type.research_data.search_for_related_registrations')}
+                  helperText={t(
+                    'registration.resource_type.research_data.search_for_related_registrations_helper_text'
+                  )}
                 />
               )}
             />
