@@ -9,6 +9,7 @@ import {
   PresentationType,
   PublicationType,
   ReportType,
+  ResearchDataType,
 } from '../types/publicationFieldNames';
 import { User } from '../types/user.types';
 import i18n from '../translations/i18n';
@@ -49,6 +50,8 @@ export const getMainRegistrationType = (instanceType: string) =>
     ? PublicationType.Artistic
     : isMediaContribution(instanceType)
     ? PublicationType.MediaContribution
+    : isResearchData(instanceType)
+    ? PublicationType.ResearchData
     : '';
 
 export const isJournal = (instanceType: string) => Object.values(JournalType).some((type) => type === instanceType);
@@ -68,6 +71,9 @@ export const isArtistic = (instanceType: string) => Object.values(ArtisticType).
 
 export const isMediaContribution = (instanceType: string) =>
   Object.values(MediaType).some((type) => type === instanceType);
+
+export const isResearchData = (instanceType: string) =>
+  Object.values(ResearchDataType).some((type) => type === instanceType);
 
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCreator && user.username === registration.resourceOwner.owner;
@@ -371,6 +377,19 @@ export const contributorConfig: ContributorConfig = {
   [MediaType.MediaParticipationInRadioOrTv]: {
     primaryRoles: [ContributorRole.ProgrammeLeader, ContributorRole.ProgrammeParticipant, ContributorRole.Other],
     secondaryRoles: [],
+  },
+  // ResearchData
+  [ResearchDataType.DataManagementPlan]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.ContactPerson,
+      ContributorRole.Editor,
+      ContributorRole.RelatedPerson,
+      ContributorRole.Researcher,
+      ContributorRole.RightsHolder,
+      ContributorRole.Supervisor,
+      ContributorRole.Other,
+    ],
   },
 };
 

@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import { Contributor, ContributorRole } from '../../../types/contributor.types';
 import { BookType, ReportType } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
-import { isArtistic, isDegree, isMediaContribution, isPresentation } from '../../registration-helpers';
+import { isArtistic, isDegree, isMediaContribution, isPresentation, isResearchData } from '../../registration-helpers';
 
 const contributorErrorMessage = {
   authorRequired: i18n.t('feedback.validation.author_required'),
@@ -19,7 +19,7 @@ const contributorValidationSchema = Yup.object().shape({
 export const contributorsValidationSchema = Yup.array().when(
   ['$publicationInstanceType'],
   (publicationInstanceType) => {
-    if (isDegree(publicationInstanceType)) {
+    if (isDegree(publicationInstanceType) || isResearchData(publicationInstanceType)) {
       return Yup.array()
         .of(contributorValidationSchema)
         .test('author-test', contributorErrorMessage.authorRequired, (contributors) =>

@@ -300,6 +300,23 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
       };
       return touchedMediaContribution;
     }
+    case PublicationType.ResearchData: {
+      const touchedResearchData = {
+        entityDescription: {
+          reference: {
+            publicationContext: {
+              type: true,
+              publisher: { id: true },
+            },
+            publicationInstance: {
+              type: true,
+              related: [],
+            },
+          },
+        },
+      };
+      return touchedResearchData;
+    }
     default:
       return {
         entityDescription: {
