@@ -26,7 +26,7 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
       {isLoadingRegistration ? (
         <Skeleton width="30%" />
       ) : (
-        <>
+        <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           {isInternalRegistration ? (
             <Link component={RouterLink} to={getRegistrationLandingPagePath(registration?.identifier ?? '')}>
               {getTitleString(registration?.entityDescription?.mainTitle)}
@@ -37,13 +37,12 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
           <Button
             size="small"
             variant="outlined"
-            sx={{ ml: '1rem' }}
             color="error"
             onClick={() => setConfirmRemoveRelation(true)}
             startIcon={<RemoveCircleOutlineIcon />}>
             {t('registration.resource_type.research_data.remove_relation')}
           </Button>
-        </>
+        </Box>
       )}
       <ConfirmDialog
         open={confirmRemoveRelation}
