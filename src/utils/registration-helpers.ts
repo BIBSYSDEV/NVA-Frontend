@@ -379,6 +379,10 @@ export const contributorConfig: ContributorConfig = {
   [ResearchDataType.DataManagementPlan]: {
     primaryRoles: [ContributorRole.Creator],
     secondaryRoles: [
+      ContributorRole.DataCollector,
+      ContributorRole.DataCurator,
+      ContributorRole.DataManager,
+      ContributorRole.Distributor,
       ContributorRole.ContactPerson,
       ContributorRole.Editor,
       ContributorRole.RelatedPerson,
