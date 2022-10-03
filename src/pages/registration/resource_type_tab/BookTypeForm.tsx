@@ -3,13 +3,10 @@ import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import { BookType, ResourceFieldNames } from '../../../types/publicationFieldNames';
 import { BookRegistration } from '../../../types/publication_types/bookRegistration.types';
 import { SelectTypeField } from './components/SelectTypeField';
+import { RegistrationTypeFormProps } from './JournalTypeForm';
 import { BookForm } from './sub_type_forms/BookForm';
 
-interface BookTypeFormProps {
-  onChangeSubType: (type: string) => void;
-}
-
-export const BookTypeForm = ({ onChangeSubType }: BookTypeFormProps) => {
+export const BookTypeForm = ({ onChangeSubType }: RegistrationTypeFormProps) => {
   const { values } = useFormikContext<BookRegistration>();
   const subType = values.entityDescription.reference?.publicationInstance.type;
 
