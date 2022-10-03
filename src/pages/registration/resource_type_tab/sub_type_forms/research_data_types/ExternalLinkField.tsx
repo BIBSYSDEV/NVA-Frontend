@@ -55,7 +55,7 @@ export const ExternalLinkField = ({ onAddClick }: ExternalLinkFieldProps) => {
       />
       {inputUrl &&
         (isVerifyingLink ? (
-          <CircularProgress aria-label="Validerer lenke" />
+          <CircularProgress aria-label={t('registration.resource_type.research_data.validating_link')} />
         ) : isValidLink ? (
           <Button
             variant="outlined"

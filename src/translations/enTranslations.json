@@ -1256,7 +1256,8 @@
         "remove_relation_confirm_text": "You want to remove this relation?",
         "related_links": "Related links",
         "search_for_related_registrations": "Search for related registrations",
-        "search_for_related_registrations_helper_text": "Choose among published registrations"
+        "search_for_related_registrations_helper_text": "Choose among published registrations",
+        "validating_link": "Validating link"
       },
       "search_for_journal": "Search for journals",
       "search_for_original_article": "Search for original article",
