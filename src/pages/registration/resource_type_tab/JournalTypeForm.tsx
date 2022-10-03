@@ -5,11 +5,11 @@ import { JournalRegistration } from '../../../types/publication_types/journalReg
 import { SelectTypeField } from './components/SelectTypeField';
 import { JournalForm } from './sub_type_forms/JournalForm';
 
-interface JournalTypeFormProps {
+export interface RegistrationTypeFormProps {
   onChangeSubType: (type: string) => void;
 }
 
-export const JournalTypeForm = ({ onChangeSubType }: JournalTypeFormProps) => {
+export const JournalTypeForm = ({ onChangeSubType }: RegistrationTypeFormProps) => {
   const { values } = useFormikContext<JournalRegistration>();
   const subType = values.entityDescription.reference?.publicationInstance.type;
 

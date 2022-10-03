@@ -1,3 +1,7 @@
+export interface RegistrationParams {
+  identifier: string;
+}
+
 export enum UrlPathTemplate {
   About = '/about',
   BasicData = '/basic-data',

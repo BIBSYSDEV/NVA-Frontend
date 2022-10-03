@@ -5,12 +5,9 @@ import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import { MediaType, ResourceFieldNames } from '../../../types/publicationFieldNames';
 import { MediaFormat, MediaMedium } from '../../../types/publication_types/mediaContributionRegistration';
 import { SelectTypeField } from './components/SelectTypeField';
+import { RegistrationTypeFormProps } from './JournalTypeForm';
 
-interface MediaTypeFormProps {
-  onChangeSubType: (type: string) => void;
-}
-
-export const MediaTypeForm = ({ onChangeSubType }: MediaTypeFormProps) => {
+export const MediaTypeForm = ({ onChangeSubType }: RegistrationTypeFormProps) => {
   const { t } = useTranslation();
 
   return (

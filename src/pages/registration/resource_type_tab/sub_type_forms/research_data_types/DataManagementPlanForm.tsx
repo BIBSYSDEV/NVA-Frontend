@@ -13,6 +13,7 @@ import { API_URL } from '../../../../../utils/constants';
 import { useDebounce } from '../../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../../utils/hooks/useFetch';
 import { getTitleString } from '../../../../../utils/registration-helpers';
+import { RegistrationParams } from '../../../../../utils/urlPaths';
 import { PublisherField } from '../../components/PublisherField';
 import { YearAndContributorsText } from '../../components/SearchContainerField';
 import { ExternalLinkField } from './ExternalLinkField';
@@ -20,7 +21,7 @@ import { RelatedResourceRow } from './RelatedResourceRow';
 
 export const DataManagementPlanForm = () => {
   const { t } = useTranslation();
-  const params = useParams<{ identifier: string }>();
+  const params = useParams<RegistrationParams>();
   const { values } = useFormikContext<ResearchDataRegistration>();
 
   const relatedResources = values.entityDescription?.reference?.publicationInstance.related ?? [];

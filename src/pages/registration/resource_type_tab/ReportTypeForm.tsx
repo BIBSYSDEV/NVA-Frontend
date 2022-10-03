@@ -3,13 +3,10 @@ import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import { ResourceFieldNames, ReportType } from '../../../types/publicationFieldNames';
 import { ReportRegistration } from '../../../types/publication_types/reportRegistration.types';
 import { SelectTypeField } from './components/SelectTypeField';
+import { RegistrationTypeFormProps } from './JournalTypeForm';
 import { ReportForm } from './sub_type_forms/ReportForm';
 
-interface ReportTypeFormProps {
-  onChangeSubType: (type: string) => void;
-}
-
-export const ReportTypeForm = ({ onChangeSubType }: ReportTypeFormProps) => {
+export const ReportTypeForm = ({ onChangeSubType }: RegistrationTypeFormProps) => {
   const { values } = useFormikContext<ReportRegistration>();
   const subType = values.entityDescription.reference?.publicationInstance.type;
 
