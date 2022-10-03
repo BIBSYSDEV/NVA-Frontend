@@ -37,15 +37,19 @@ export const PublicRelatedResourcesContent = ({ related = [] }: PublicRelatedRes
     getRelatedRegistrations();
   }, [getRelatedRegistrations]);
 
-  return (
+  return relatedRegistrations.length === 0 ? (
+    <Typography>{t('registration.resource_type.research_data.no_related_links')}</Typography>
+  ) : (
     <>
       {internalResources.length > 0 &&
         (isLoadingRegistrations ? (
-          <CircularProgress aria-labelledby="TODO" sx={{ display: 'block' }} />
+          <CircularProgress
+            aria-label={t('registration.resource_type.research_data.related_links')}
+            sx={{ display: 'block' }}
+          />
         ) : (
           <RegistrationList registrations={relatedRegistrations} />
         ))}
-
       {externalResources.length > 0 && (
         <>
           <Typography variant="overline">{t('registration.resource_type.research_data.external_links')}</Typography>
