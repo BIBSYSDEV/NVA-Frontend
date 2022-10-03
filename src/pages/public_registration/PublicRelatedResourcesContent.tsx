@@ -55,7 +55,7 @@ export const PublicRelatedResourcesContent = ({ related = [] }: PublicRelatedRes
           <Typography variant="overline">{t('registration.resource_type.research_data.external_links')}</Typography>
           <ul>
             {externalResources.map((externalResource) => (
-              <li>
+              <li key={externalResource}>
                 <Link href={externalResource}>{externalResource}</Link>
               </li>
             ))}
