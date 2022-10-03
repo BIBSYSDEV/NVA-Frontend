@@ -1247,6 +1247,7 @@
       "remove_publisher": "Fjern utgiver",
       "research_data": {
         "add_link": "Legg til lenke",
+        "external_link": "Eksterne lenke",
         "external_links": "Eksterne lenker",
         "external_link_helper_text": "Oppgi ekstern URL med relatert innhold",
         "external_link_helper_text_error": "Ugyldig URL. Pass på at lenken du oppgir er fullstendig. Eksempel: https://sikt.no",

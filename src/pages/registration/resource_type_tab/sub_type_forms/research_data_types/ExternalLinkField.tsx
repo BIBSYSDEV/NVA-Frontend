@@ -39,7 +39,7 @@ export const ExternalLinkField = ({ onAddClick }: ExternalLinkFieldProps) => {
         variant="filled"
         fullWidth
         sx={{ maxWidth: '40rem' }}
-        label={t('registration.resource_type.research_data.external_links')}
+        label={t('registration.resource_type.research_data.external_link')}
         value={inputUrl}
         onChange={(event) => setInputUrl(event.target.value)}
         helperText={

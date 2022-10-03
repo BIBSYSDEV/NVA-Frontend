@@ -1245,6 +1245,18 @@
       "remove_doi_text": "You can remove the DOI that was used when starting registration.\nDo you wish to remove connection to the original DOI?",
       "remove_journal": "Remove journal",
       "remove_publisher": "Remove publisher",
+      "research_data": {
+        "add_link": "Add link",
+        "external_link": "External link",
+        "external_links": "External links",
+        "external_link_helper_text": "Add external link with related content",
+        "external_link_helper_text_error": "Invalid URL. Ensure that the link is complete. Example: https://sikt.no",
+        "remove_relation": "Remove relation",
+        "remove_relation_confirm_text": "You want to remove this relation?",
+        "related_links": "Related links",
+        "search_for_related_registrations": "Search for related registrations",
+        "search_for_related_registrations_helper_text": "Choose among published registrations"
+      },
       "search_for_journal": "Search for journals",
       "search_for_original_article": "Search for original article",
       "search_for_publisher": "Search for publisher",
