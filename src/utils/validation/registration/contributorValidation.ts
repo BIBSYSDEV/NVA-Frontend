@@ -19,7 +19,7 @@ const contributorValidationSchema = Yup.object().shape({
 export const contributorsValidationSchema = Yup.array().when(
   ['$publicationInstanceType'],
   (publicationInstanceType) => {
-    if (isDegree(publicationInstanceType)) {
+    if (isDegree(publicationInstanceType) || isResearchData(publicationInstanceType)) {
       return Yup.array()
         .of(contributorValidationSchema)
         .test('author-test', contributorErrorMessage.authorRequired, (contributors) =>
@@ -38,8 +38,7 @@ export const contributorsValidationSchema = Yup.array().when(
     } else if (
       isPresentation(publicationInstanceType) ||
       isArtistic(publicationInstanceType) ||
-      isMediaContribution(publicationInstanceType) ||
-      isResearchData(publicationInstanceType)
+      isMediaContribution(publicationInstanceType)
     ) {
       return Yup.array()
         .of(contributorValidationSchema)

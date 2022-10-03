@@ -380,8 +380,9 @@ export const contributorConfig: ContributorConfig = {
   },
   // ResearchData
   [ResearchDataType.DataManagementPlan]: {
-    primaryRoles: [ContributorRole.ContactPerson],
+    primaryRoles: [ContributorRole.Creator],
     secondaryRoles: [
+      ContributorRole.ContactPerson,
       ContributorRole.Editor,
       ContributorRole.RelatedPerson,
       ContributorRole.Researcher,
