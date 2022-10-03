@@ -2,7 +2,7 @@ import { Box, TextField, CircularProgress, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
-import { isValidUrl } from '../../../../../utils/hooks/useFetchResource';
+import { isValidUrl } from '../../../../../utils/general-helpers';
 
 interface ExternalLinkFieldProps {
   onAddClick: (url: string) => void;
