@@ -17,10 +17,14 @@ export const ExternalLinkField = ({ onAddClick }: ExternalLinkFieldProps) => {
   useEffect(() => {
     const validateUrlHeadResponse = async () => {
       setIsVerifyingLink(true);
-
-      await fetch(inputUrl, { method: 'HEAD', mode: 'no-cors' })
-        .then(() => setIsValidLink(true))
-        .catch(() => setIsValidLink(false));
+      try {
+        const linkResponse = await fetch(inputUrl, { method: 'HEAD', mode: 'no-cors' });
+        if (linkResponse) {
+          setIsValidLink(true);
+        }
+      } catch {
+        setIsValidLink(false);
+      }
       setIsVerifyingLink(false);
     };
 
