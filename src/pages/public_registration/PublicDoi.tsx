@@ -50,7 +50,7 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
           <Typography variant="overline">{t('registration.registration.link_to_resource')}</Typography>
           <Typography>
             <Link
-              data-testid={dataTestId.registrationLandingPage.doiLink}
+              data-testid={dataTestId.registrationLandingPage.doiOriginalLink}
               href={originalDoi}
               target="_blank"
               rel="noopener noreferrer">
