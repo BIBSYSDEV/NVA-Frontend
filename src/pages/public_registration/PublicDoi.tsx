@@ -43,7 +43,7 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
     ((user.isCurator && registration.publisher.id === user.customerId) || user.id === registration.resourceOwner.owner);
   const canSeeNvaDoi = nvaDoi && (nvaDoiIsFindable || canSeeDraftDoi);
 
-  return (
+  return !originalDoi && !canSeeNvaDoi ? null : (
     <>
       {originalDoi && (
         <>
