@@ -23,8 +23,9 @@ import { Concert, MusicalWorkPerformance } from '../../../../../../types/publica
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { emptyInstant } from '../../../../../../types/common.types';
-import { BetaFunctionality } from '../../../../../../components/BetaFunctionality';
+import { emptyInstant, emptyPeriod } from '../../../../../../types/common.types';
+import { PeriodFields } from '../../../components/PeriodFields';
+import { periodField } from '../../../../../../utils/validation/registration/referenceValidation';
 
 interface ConcertModalProps {
   concert?: Concert;
@@ -55,6 +56,7 @@ const emptyMusicalWorkPerformance: MusicalWorkPerformance = {
 };
 
 const validationSchema = Yup.object<YupShape<Concert>>({
+  partOfSeries: Yup.boolean(),
   place: Yup.object().shape({
     label: Yup.string().required(
       i18n.t('feedback.validation.is_required', {
@@ -62,19 +64,24 @@ const validationSchema = Yup.object<YupShape<Concert>>({
       })
     ),
   }),
-  time: Yup.object().shape({
-    value: Yup.date()
-      .required(
-        i18n.t('feedback.validation.is_required', {
-          field: i18n.t('common.date'),
+  time: Yup.object().when('partOfSeries', (partOfSeries, schema) =>
+    partOfSeries
+      ? periodField
+      : schema.shape({
+          value: Yup.date()
+            .required(
+              i18n.t('feedback.validation.is_required', {
+                field: i18n.t('common.date'),
+              })
+            )
+            .typeError(
+              i18n.t('feedback.validation.has_invalid_format', {
+                field: i18n.t('common.date'),
+              })
+            ),
         })
-      )
-      .typeError(
-        i18n.t('feedback.validation.has_invalid_format', {
-          field: i18n.t('common.date'),
-        })
-      ),
-  }),
+  ),
+
   extent: Yup.string().required(
     i18n.t('feedback.validation.is_required', {
       field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
@@ -125,20 +132,31 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
           onSubmit(values);
           closeModal();
         }}>
-        {({ values, errors, touched, isSubmitting }: FormikProps<Concert>) => (
+        {({ values, errors, touched, isSubmitting, setFieldValue, setFieldTouched }: FormikProps<Concert>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <BetaFunctionality>
-                <Field name="partOfSeries">
-                  {({ field }: FieldProps<boolean>) => (
-                    <FormControlLabel
-                      data-testid={dataTestId.registrationWizard.resourceType.concertPartOfSeries}
-                      label={t('registration.resource_type.artistic.concert_part_of_series')}
-                      control={<Checkbox checked={field.value} {...field} />}
-                    />
-                  )}
-                </Field>
-              </BetaFunctionality>
+              <Field name="partOfSeries">
+                {({ field }: FieldProps<boolean>) => (
+                  <FormControlLabel
+                    data-testid={dataTestId.registrationWizard.resourceType.concertPartOfSeries}
+                    label={t('registration.resource_type.artistic.concert_part_of_series')}
+                    control={
+                      <Checkbox
+                        checked={field.value}
+                        {...field}
+                        onChange={(event) => {
+                          if (!field.value) {
+                            setFieldValue('time', emptyPeriod);
+                          } else {
+                            setFieldValue('time', emptyInstant);
+                          }
+                          field.onChange(event);
+                        }}
+                      />
+                    }
+                  />
+                )}
+              </Field>
               <Field name="place.label">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
@@ -154,38 +172,41 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                 )}
               </Field>
 
-              <Field name="time.value">
-                {({
-                  field,
-                  form: { setFieldTouched, setFieldValue },
-                  meta: { error, touched },
-                }: FieldProps<string>) => (
-                  <DatePicker
-                    label={t('common.date')}
-                    PopperProps={{
-                      'aria-label': t('common.date'),
-                    }}
-                    value={field.value ?? null}
-                    onChange={(date) => {
-                      !touched && setFieldTouched(field.name, true, false);
-                      setFieldValue(field.name, date ?? '');
-                    }}
-                    inputFormat="dd.MM.yyyy"
-                    mask="__.__.____"
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        sx={{ maxWidth: '15rem' }}
-                        variant="filled"
-                        required
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
-                        data-testid={dataTestId.registrationWizard.resourceType.concertDate}
-                      />
-                    )}
-                  />
-                )}
-              </Field>
+              {values.partOfSeries ? (
+                <Box sx={{ display: 'flex', gap: '1rem' }}>
+                  <PeriodFields fromFieldName="time.from" toFieldName="time.to" />
+                </Box>
+              ) : (
+                <Field name="time.value">
+                  {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                    <DatePicker
+                      label={t('common.date')}
+                      PopperProps={{
+                        'aria-label': t('common.date'),
+                      }}
+                      value={field.value ?? null}
+                      onChange={(date) => {
+                        !touched && setFieldTouched(field.name, true, false);
+                        setFieldValue(field.name, date ?? '');
+                      }}
+                      inputFormat="dd.MM.yyyy"
+                      mask="__.__.____"
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          sx={{ maxWidth: '15rem' }}
+                          variant="filled"
+                          required
+                          error={touched && !!error}
+                          onBlur={() => !touched && setFieldTouched(field.name)}
+                          helperText={<ErrorMessage name={field.name} />}
+                          data-testid={dataTestId.registrationWizard.resourceType.concertDate}
+                        />
+                      )}
+                    />
+                  )}
+                </Field>
+              )}
 
               <Field name="extent">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
