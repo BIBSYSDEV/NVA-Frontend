@@ -70,7 +70,7 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
               rel="noopener noreferrer">
               {nvaDoi}
             </Link>
-            {nvaDoiIsFindable === false && (
+            {nvaDoiIsFindable === false && ( // Note: Must check explicitly for false, since it is undefined initially
               <Box component="span" sx={{ ml: '0.5rem' }}>
                 ({t('registration.public_page.in_progress')})
               </Box>
