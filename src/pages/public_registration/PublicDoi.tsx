@@ -48,33 +48,34 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
       {originalDoi && (
         <>
           <Typography variant="overline">{t('registration.registration.link_to_resource')}</Typography>
-          <Link
-            sx={{ display: 'block' }}
-            data-testid={dataTestId.registrationLandingPage.doiOriginalLink}
-            href={originalDoi}
-            target="_blank"
-            rel="noopener noreferrer">
-            {originalDoi}
-          </Link>
+          <Typography>
+            <Link
+              data-testid={dataTestId.registrationLandingPage.doiOriginalLink}
+              href={originalDoi}
+              target="_blank"
+              rel="noopener noreferrer">
+              {originalDoi}
+            </Link>
+          </Typography>
         </>
       )}
       {canSeeNvaDoi && (
         <>
           <Typography variant="overline">{t('common.doi')}</Typography>
-          <Link
-            sx={{ display: 'block' }}
-            data-testid={dataTestId.registrationLandingPage.doiLink}
-            href={nvaDoi}
-            target="_blank"
-            rel="noopener noreferrer">
-            {nvaDoi}
-          </Link>
-
-          {nvaDoiIsFindable === false && ( // Note: Must check explicitly for false, since it is undefined initially
-            <Box component="span" sx={{ ml: '0.5rem' }}>
-              ({t('registration.public_page.in_progress')})
-            </Box>
-          )}
+          <Typography>
+            <Link
+              data-testid={dataTestId.registrationLandingPage.doiLink}
+              href={nvaDoi}
+              target="_blank"
+              rel="noopener noreferrer">
+              {nvaDoi}
+            </Link>
+            {nvaDoiIsFindable === false && (
+              <Box component="span" sx={{ ml: '0.5rem' }}>
+                ({t('registration.public_page.in_progress')})
+              </Box>
+            )}
+          </Typography>
         </>
       )}
     </>
