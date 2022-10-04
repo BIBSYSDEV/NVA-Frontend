@@ -71,7 +71,7 @@ export const DuplicateSearchFilterForm = ({
                   type="checkbox"
                   name="isDoiChecked"
                   control={<Checkbox />}
-                  label={t('basic_data.central_import.doi')}
+                  label={t('common.doi')}
                   data-testid={dataTestId.basicData.centralImport.checkboxDoi}
                   onClick={(event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.value) {
