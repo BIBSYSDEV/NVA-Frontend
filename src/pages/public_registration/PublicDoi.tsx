@@ -20,19 +20,19 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
 
   useEffect(() => {
     const lookupNvaDoi = async () => {
-      try {
-        if (nvaDoi) {
+      if (!nvaDoi) {
+        setNvaDoiIsFindable(false);
+      } else {
+        try {
           const doiHeadResponse = await fetch(nvaDoi, { method: 'HEAD', redirect: 'manual' });
-          if (doiHeadResponse.status !== 404) {
-            setNvaDoiIsFindable(true);
-          } else {
+          if (doiHeadResponse.status === 404) {
             setNvaDoiIsFindable(false);
+          } else {
+            setNvaDoiIsFindable(true);
           }
-        } else {
+        } catch {
           setNvaDoiIsFindable(false);
         }
-      } catch {
-        setNvaDoiIsFindable(false);
       }
     };
     lookupNvaDoi();
