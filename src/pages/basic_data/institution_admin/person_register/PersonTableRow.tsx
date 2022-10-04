@@ -94,8 +94,7 @@ export const PersonTableRow = ({
     // Update Cristin Person
     const updatedPerson: CristinPerson = {
       ...cristinPerson,
-      employments: [...values.employments, ...employmentsInOtherInstitutions], // Include all employments
-      reserved: undefined, // TODO: Remove this after NP-13341
+      employments: values.employments,
     };
     const updateCristinPerson = await authenticatedApiRequest({
       url: cristinPerson.id,
