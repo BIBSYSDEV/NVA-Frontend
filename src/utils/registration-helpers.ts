@@ -14,7 +14,6 @@ import {
 import { User } from '../types/user.types';
 import i18n from '../translations/i18n';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
-import { Period } from '../types/common.types';
 import { Contributor, ContributorRole } from '../types/contributor.types';
 import {
   Award,
@@ -157,17 +156,6 @@ export const getFormattedRegistration = (registration: Registration) => {
   }
 
   return formattedRegistration;
-};
-
-export const getPeriodString = (period: Period | null) => {
-  const fromDate = period?.from ? new Date(period.from).toLocaleDateString() : '';
-  const toDate = period?.to ? new Date(period.to).toLocaleDateString() : '';
-
-  if (!fromDate && !toDate) {
-    return '';
-  } else {
-    return fromDate === toDate ? fromDate : `${fromDate ?? '?'} - ${toDate ?? '?'}`;
-  }
 };
 
 type ContributorConfig = {
