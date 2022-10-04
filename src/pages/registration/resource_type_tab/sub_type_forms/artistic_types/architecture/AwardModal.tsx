@@ -8,6 +8,7 @@ import i18n from '../../../../../../translations/i18n';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
+import { emptyInstant } from '../../../../../../types/common.types';
 
 interface AwardModalProps {
   award?: Award;
@@ -20,7 +21,7 @@ const emptyAward: Award = {
   type: 'Award',
   name: '',
   organizer: '',
-  date: { type: 'Instant', value: '' },
+  date: emptyInstant,
   otherInformation: '',
   ranking: null,
   sequence: 0,

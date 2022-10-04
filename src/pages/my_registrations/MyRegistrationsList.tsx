@@ -26,7 +26,7 @@ import { getRegistrationLandingPagePath, getRegistrationPath } from '../../utils
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
-import { getTitleString } from '../../utils/registration-helpers';
+import { getRegistrationIdentifier, getTitleString } from '../../utils/registration-helpers';
 
 interface MyRegistrationsListProps {
   registrations: RegistrationPreview[];
@@ -55,8 +55,9 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
     if (!registrationToDelete) {
       return;
     }
+    const identifierToDelete = getRegistrationIdentifier(registrationToDelete.id);
     setIsDeleting(true);
-    const deleteRegistrationResponse = await deleteRegistration(registrationToDelete.identifier);
+    const deleteRegistrationResponse = await deleteRegistration(identifierToDelete);
     if (isErrorStatus(deleteRegistrationResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.delete_registration'), variant: 'error' }));
       setIsDeleting(false);
@@ -98,52 +99,55 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
             </TableRow>
           </TableHead>
           <TableBody>
-            {registrationsOnPage.map((registration) => (
-              <TableRow key={registration.identifier}>
-                <TableCell component="th" scope="row" data-testid={`registration-title-${registration.identifier}`}>
-                  <Typography>{getTitleString(registration.mainTitle)}</Typography>
-                </TableCell>
-                <TableCell data-testid={`registration-status-${registration.identifier}`}>
-                  <Typography>{t(`registration.status.${registration.status}` as any)}</Typography>
-                </TableCell>
-                <TableCell data-testid={`registration-created-${registration.identifier}`}>
-                  <Typography>{new Date(registration.createdDate).toLocaleString()}</Typography>
-                </TableCell>
-                <TableCell>
-                  <Box sx={{ display: 'flex', gap: '1rem' }}>
-                    <Button
-                      variant="outlined"
-                      component={RouterLink}
-                      to={getRegistrationLandingPagePath(registration.identifier)}
-                      startIcon={<MenuBookIcon />}
-                      data-testid={`open-registration-${registration.identifier}`}>
-                      {t('common.show')}
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      component={RouterLink}
-                      to={getRegistrationPath(registration.identifier)}
-                      startIcon={<EditIcon />}
-                      data-testid={`edit-registration-${registration.identifier}`}>
-                      {t('common.edit')}
-                    </Button>
-                    {registration.status === RegistrationStatus.Draft && (
+            {registrationsOnPage.map((registration) => {
+              const identifier = getRegistrationIdentifier(registration.id);
+              return (
+                <TableRow key={identifier}>
+                  <TableCell component="th" scope="row" data-testid={`registration-title-${identifier}`}>
+                    <Typography>{getTitleString(registration.mainTitle)}</Typography>
+                  </TableCell>
+                  <TableCell data-testid={`registration-status-${identifier}`}>
+                    <Typography>{t(`registration.status.${registration.status}` as any)}</Typography>
+                  </TableCell>
+                  <TableCell data-testid={`registration-created-${identifier}`}>
+                    <Typography>{new Date(registration.createdDate).toLocaleString()}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Box sx={{ display: 'flex', gap: '1rem' }}>
                       <Button
-                        color="error"
                         variant="outlined"
-                        data-testid={`delete-registration-${registration.identifier}`}
-                        startIcon={<DeleteIcon />}
-                        onClick={() => {
-                          setRegistrationToDelete(registration);
-                          setShowDeleteModal(true);
-                        }}>
-                        {t('common.delete')}
+                        component={RouterLink}
+                        to={getRegistrationLandingPagePath(identifier)}
+                        startIcon={<MenuBookIcon />}
+                        data-testid={`open-registration-${identifier}`}>
+                        {t('common.show')}
                       </Button>
-                    )}
-                  </Box>
-                </TableCell>
-              </TableRow>
-            ))}
+                      <Button
+                        variant="outlined"
+                        component={RouterLink}
+                        to={getRegistrationPath(identifier)}
+                        startIcon={<EditIcon />}
+                        data-testid={`edit-registration-${identifier}`}>
+                        {t('common.edit')}
+                      </Button>
+                      {registration.status === RegistrationStatus.Draft && (
+                        <Button
+                          color="error"
+                          variant="outlined"
+                          data-testid={`delete-registration-${identifier}`}
+                          startIcon={<DeleteIcon />}
+                          onClick={() => {
+                            setRegistrationToDelete(registration);
+                            setShowDeleteModal(true);
+                          }}>
+                          {t('common.delete')}
+                        </Button>
+                      )}
+                    </Box>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

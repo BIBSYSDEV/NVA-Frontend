@@ -8,6 +8,7 @@ import i18n from '../../../../../../translations/i18n';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { emptyInstant } from '../../../../../../types/common.types';
 
 interface OtherReleaseModalProps {
   otherRelease?: OtherRelease;
@@ -28,10 +29,7 @@ const emptyOtherRelease: OtherRelease = {
     type: 'UnconfirmedPublisher',
     name: '',
   },
-  date: {
-    type: 'Instant',
-    value: '',
-  },
+  date: emptyInstant,
 };
 
 const validationSchema = Yup.object<YupShape<OtherRelease>>({
@@ -51,11 +49,17 @@ const validationSchema = Yup.object<YupShape<OtherRelease>>({
     name: Yup.string(),
   }),
   date: Yup.object().shape({
-    value: Yup.string().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('common.date'),
-      })
-    ),
+    value: Yup.date()
+      .required(
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.date'),
+        })
+      )
+      .typeError(
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('common.date'),
+        })
+      ),
   }),
 });
 
@@ -141,7 +145,6 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        {...field}
                         data-testid={dataTestId.registrationWizard.resourceType.otherReleaseDate}
                         sx={{ maxWidth: '13rem' }}
                         variant="filled"

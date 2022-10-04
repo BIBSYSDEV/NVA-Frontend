@@ -52,7 +52,7 @@ export const AddEmployeePage = () => {
   const dispatch = useDispatch();
   const customerId = useSelector((store: RootState) => store.user?.customerId);
 
-  const onSubmit = async (values: AddEmployeeData, { resetForm }: FormikHelpers<AddEmployeeData>) => {
+  const onSubmit = async (values: AddEmployeeData, { resetForm, validateForm }: FormikHelpers<AddEmployeeData>) => {
     if (!customerId) {
       return;
     }
@@ -90,6 +90,7 @@ export const AddEmployeePage = () => {
       if (isSuccessStatus(createUserResponse.status)) {
         dispatch(setNotification({ message: t('feedback.success.add_employment'), variant: 'success' }));
         resetForm();
+        validateForm();
       } else if (isErrorStatus(createUserResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.add_role'), variant: 'error' }));
       }

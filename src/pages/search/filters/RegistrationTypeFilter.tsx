@@ -11,6 +11,7 @@ import {
   PresentationType,
   PublicationType,
   ReportType,
+  ResearchDataType,
   ResourceFieldNames,
 } from '../../../types/publicationFieldNames';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
@@ -118,6 +119,16 @@ export const RegistrationTypeFilter = () => {
 
       <BaseFilterItem title={t(`registration.publication_types.${PublicationType.Artistic}`)} fontWeight={500}>
         {Object.values(ArtisticType).map((type) => (
+          <li key={type}>
+            <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
+              {t(`registration.publication_types.${type}`)}
+            </StyledIndentedListItem>
+          </li>
+        ))}
+      </BaseFilterItem>
+
+      <BaseFilterItem title={t(`registration.publication_types.${PublicationType.ResearchData}`)} fontWeight={500}>
+        {Object.values(ResearchDataType).map((type) => (
           <li key={type}>
             <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
               {t(`registration.publication_types.${type}`)}

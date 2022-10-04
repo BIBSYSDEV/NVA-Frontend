@@ -22,6 +22,9 @@ import i18n from '../../../../../../translations/i18n';
 import { Concert, MusicalWorkPerformance } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { emptyInstant } from '../../../../../../types/common.types';
+import { BetaFunctionality } from '../../../../../../components/BetaFunctionality';
 
 interface ConcertModalProps {
   concert?: Concert;
@@ -37,13 +40,11 @@ const emptyConcert: Concert = {
     label: '',
     country: '',
   },
-  time: {
-    type: 'Instant',
-    value: '',
-  },
+  time: emptyInstant,
   extent: '',
   description: '',
   concertProgramme: [],
+  partOfSeries: false,
 };
 
 const emptyMusicalWorkPerformance: MusicalWorkPerformance = {
@@ -62,11 +63,17 @@ const validationSchema = Yup.object<YupShape<Concert>>({
     ),
   }),
   time: Yup.object().shape({
-    value: Yup.string().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('common.date'),
-      })
-    ),
+    value: Yup.date()
+      .required(
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.date'),
+        })
+      )
+      .typeError(
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('common.date'),
+        })
+      ),
   }),
   extent: Yup.string().required(
     i18n.t('feedback.validation.is_required', {
@@ -121,6 +128,17 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
         {({ values, errors, touched, isSubmitting }: FormikProps<Concert>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <BetaFunctionality>
+                <Field name="partOfSeries">
+                  {({ field }: FieldProps<boolean>) => (
+                    <FormControlLabel
+                      data-testid={dataTestId.registrationWizard.resourceType.concertPartOfSeries}
+                      label={t('registration.resource_type.artistic.concert_part_of_series')}
+                      control={<Checkbox checked={field.value} {...field} />}
+                    />
+                  )}
+                </Field>
+              </BetaFunctionality>
               <Field name="place.label">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
@@ -131,6 +149,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.concertPlace}
                   />
                 )}
               </Field>
@@ -156,12 +175,12 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        {...field}
                         sx={{ maxWidth: '15rem' }}
                         variant="filled"
                         required
                         error={touched && !!error}
                         helperText={<ErrorMessage name={field.name} />}
+                        data-testid={dataTestId.registrationWizard.resourceType.concertDate}
                       />
                     )}
                   />
@@ -179,6 +198,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.concertDuration}
                   />
                 )}
               </Field>
@@ -187,7 +207,6 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                 {({ name, push, remove }: FieldArrayRenderProps) => (
                   <>
                     <Typography variant="h3">{t('registration.resource_type.artistic.concert_program')}</Typography>
-
                     {values.concertProgramme.map((_, index) => {
                       const baseFieldName = `${name}[${index}]`;
                       return (
@@ -202,6 +221,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                                 required
                                 error={touched && !!error}
                                 helperText={<ErrorMessage name={field.name} />}
+                                data-testid={`${dataTestId.registrationWizard.resourceType.concertProgramTitle}-${index}`}
                               />
                             )}
                           </Field>
@@ -215,6 +235,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                                 required
                                 error={touched && !!error}
                                 helperText={<ErrorMessage name={field.name} />}
+                                data-testid={`${dataTestId.registrationWizard.resourceType.concertProgramComposer}-${index}`}
                               />
                             )}
                           </Field>
@@ -222,7 +243,12 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                             {({ field }: FieldProps<boolean>) => (
                               <FormControlLabel
                                 {...field}
-                                control={<Checkbox checked={field.value} />}
+                                control={
+                                  <Checkbox
+                                    checked={field.value}
+                                    data-testid={`${dataTestId.registrationWizard.resourceType.concertProgramIsPremiere}-${index}`}
+                                  />
+                                }
                                 label={t('registration.resource_type.artistic.premiere')}
                               />
                             )}
@@ -233,7 +259,8 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                             title={t('registration.resource_type.artistic.remove_music_work')}
                             onClick={() => setRemoveWorkItemIndex(index)}
                             sx={{ px: '2rem' }}
-                            startIcon={<DeleteIcon />}>
+                            startIcon={<DeleteIcon />}
+                            data-testid={`${dataTestId.registrationWizard.resourceType.concertProgramRemove}-${index}`}>
                             {t('common.remove')}
                           </Button>
                         </Box>
@@ -254,7 +281,8 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                       variant="outlined"
                       sx={{ width: 'fit-content' }}
                       onClick={() => push(emptyMusicalWorkPerformance)}
-                      startIcon={<AddIcon />}>
+                      startIcon={<AddIcon />}
+                      data-testid={dataTestId.registrationWizard.resourceType.concertAddWork}>
                       {t('common.add')} {t('registration.resource_type.artistic.musical_work_item').toLocaleLowerCase()}
                     </Button>
                     {!!touched.concertProgramme && typeof errors.concertProgramme === 'string' && (

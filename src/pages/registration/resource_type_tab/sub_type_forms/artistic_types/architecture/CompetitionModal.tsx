@@ -8,6 +8,7 @@ import i18n from '../../../../../../translations/i18n';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
+import { emptyInstant } from '../../../../../../types/common.types';
 
 interface CompetitionModalProps {
   competition?: Competition;
@@ -26,7 +27,7 @@ const emptyCompetition: Competition = {
   type: 'Competition',
   name: '',
   description: '',
-  date: { type: 'Instant', value: '' },
+  date: emptyInstant,
   sequence: 0,
 };
 
@@ -42,11 +43,17 @@ const validationSchema = Yup.object<YupShape<Competition>>({
     })
   ),
   date: Yup.object().shape({
-    value: Yup.date().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('registration.resource_type.artistic.competition_date'),
-      })
-    ),
+    value: Yup.date()
+      .required(
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('registration.resource_type.artistic.competition_date'),
+        })
+      )
+      .typeError(
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('registration.resource_type.artistic.competition_date'),
+        })
+      ),
   }),
 });
 
@@ -130,7 +137,6 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
                         helperText={<ErrorMessage name={field.name} />}
                       />
                     )}
-                    data-testid={dataTestId.registrationWizard.resourceType.competitionDate}
                   />
                 )}
               </Field>

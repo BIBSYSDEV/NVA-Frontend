@@ -8,6 +8,7 @@ import i18n from '../../../../../../translations/i18n';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { emptyInstant } from '../../../../../../types/common.types';
 
 interface CinematicReleaseModalProps {
   cinematicRelease?: CinematicRelease;
@@ -23,10 +24,7 @@ const emptyCinematicRelease: CinematicRelease = {
     label: '',
     country: '',
   },
-  date: {
-    type: 'Instant',
-    value: '',
-  },
+  date: emptyInstant,
 };
 
 const validationSchema = Yup.object<YupShape<CinematicRelease>>({
@@ -101,7 +99,6 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        {...field}
                         sx={{ maxWidth: '13rem' }}
                         variant="filled"
                         required

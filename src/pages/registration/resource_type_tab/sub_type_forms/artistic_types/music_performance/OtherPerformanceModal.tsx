@@ -13,6 +13,7 @@ import {
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 
 interface OtherPerformanceModalProps {
   otherPerformance?: OtherMusicPerformance;
@@ -114,6 +115,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.otherPerformanceType}
                   />
                 )}
               </Field>
@@ -127,6 +129,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.otherPerformancePlace}
                   />
                 )}
               </Field>
@@ -142,6 +145,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.otherPerformanceDuration}
                   />
                 )}
               </Field>
@@ -165,6 +169,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                                 required
                                 error={touched && !!error}
                                 helperText={<ErrorMessage name={field.name} />}
+                                data-testid={dataTestId.registrationWizard.resourceType.otherPerformanceWorkTitle}
                               />
                             )}
                           </Field>
@@ -178,6 +183,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                                 required
                                 error={touched && !!error}
                                 helperText={<ErrorMessage name={field.name} />}
+                                data-testid={dataTestId.registrationWizard.resourceType.otherPerformanceWorkComposer}
                               />
                             )}
                           </Field>
@@ -187,6 +193,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                             title={t('registration.resource_type.artistic.remove_music_work')}
                             onClick={() => setRemoveWorkItemIndex(index)}
                             sx={{ px: '2rem' }}
+                            data-testid={dataTestId.registrationWizard.resourceType.otherPerformanceWorkRemove}
                             startIcon={<DeleteIcon />}>
                             {t('common.remove')}
                           </Button>
@@ -208,6 +215,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                       variant="outlined"
                       sx={{ width: 'fit-content' }}
                       onClick={() => push(emptyMusicalWork)}
+                      data-testid={dataTestId.registrationWizard.resourceType.otherPerfomanceAddWork}
                       startIcon={<AddIcon />}>
                       {t('common.add')} {t('registration.resource_type.artistic.musical_work_item').toLocaleLowerCase()}
                     </Button>

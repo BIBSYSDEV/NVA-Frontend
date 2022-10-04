@@ -18,7 +18,7 @@ import {
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import EditIcon from '@mui/icons-material/Edit';
-import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
 import { DatePicker } from '@mui/x-date-pickers';
@@ -261,7 +261,7 @@ export const PersonTableRow = ({
                         />
 
                         <Field name={`${employmentBaseFieldName}.endDate`}>
-                          {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                          {({ field, meta: { error, touched } }: FieldProps<string>) => (
                             <DatePicker
                               disabled={isSubmitting}
                               label={t('common.end_date')}
@@ -280,11 +280,10 @@ export const PersonTableRow = ({
                               }
                               renderInput={(params) => (
                                 <TextField
-                                  {...field}
                                   {...params}
                                   variant="filled"
                                   error={touched && !!error}
-                                  helperText={touched && error}
+                                  helperText={<ErrorMessage name={field.name} />}
                                 />
                               )}
                             />

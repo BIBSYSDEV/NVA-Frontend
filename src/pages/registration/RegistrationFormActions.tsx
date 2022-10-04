@@ -140,7 +140,7 @@ export const RegistrationFormActions = ({
         onClose={toggleSupportModal}
         headingText={t('common.support')}
         dataTestId="support-modal">
-        <SupportModalContent closeModal={toggleSupportModal} />
+        <SupportModalContent closeModal={toggleSupportModal} registrationId={values.id} />
       </Modal>
     </>
   );

@@ -9,6 +9,7 @@ import { MusicScore } from '../../../../../../types/publication_types/artisticRe
 import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 
 interface MusicScoreModalProps {
   musicScore?: MusicScore;
@@ -125,6 +126,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.scoreEnsemble}
                   />
                 )}
               </Field>
@@ -140,6 +142,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.scoreMovements}
                   />
                 )}
               </Field>
@@ -153,6 +156,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.scoreDuration}
                   />
                 )}
               </Field>
@@ -166,6 +170,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.scorePublisher}
                   />
                 )}
               </Field>
@@ -179,6 +184,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.scoreIsmn}
                   />
                 )}
               </Field>
@@ -195,6 +201,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                     }}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.scoreIsrc}
                   />
                 )}
               </Field>

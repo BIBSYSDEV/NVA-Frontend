@@ -8,6 +8,7 @@ import i18n from '../../../../../../translations/i18n';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
+import { emptyInstant } from '../../../../../../types/common.types';
 
 interface PublicationMentionModalProps {
   mentionInPublication?: MentionInPublication;
@@ -20,7 +21,7 @@ const emptyMentionInPublication: MentionInPublication = {
   type: 'MentionInPublication',
   title: '',
   issue: '',
-  date: { type: 'Instant', value: '' },
+  date: emptyInstant,
   otherInformation: '',
   sequence: 0,
 };
@@ -37,11 +38,17 @@ const validationSchema = Yup.object<YupShape<MentionInPublication>>({
     })
   ),
   date: Yup.object().shape({
-    value: Yup.date().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('common.date'),
-      })
-    ),
+    value: Yup.date()
+      .required(
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.date'),
+        })
+      )
+      .typeError(
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('common.date'),
+        })
+      ),
   }),
 });
 

@@ -9,6 +9,7 @@ import {
   MediaType,
   PresentationType,
   ReportType,
+  ResearchDataType,
 } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
 import {
@@ -18,7 +19,7 @@ import {
   nviApplicableContentTypes,
 } from '../../../types/publication_types/content.types';
 import { ArtisticPublicationInstance, DesignType } from '../../../types/publication_types/artisticRegistration.types';
-import { validateDateInterval, YupShape } from '../validationHelpers';
+import { YupShape } from '../validationHelpers';
 import {
   JournalPublicationInstance,
   JournalPublicationContext,
@@ -47,6 +48,10 @@ import {
   MediaContributionPublicationContext,
   MediaContributionPublicationInstance,
 } from '../../../types/publication_types/mediaContributionRegistration';
+import {
+  ResearchDataPublicationContext,
+  ResearchDataPublicationInstance,
+} from '../../../types/publication_types/researchDataRegistration.types';
 
 const resourceErrorMessage = {
   announcementsRequired: i18n.t('feedback.validation.announcement_required'),
@@ -62,8 +67,18 @@ const resourceErrorMessage = {
   countryRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('common.country'),
   }),
+  dateToBeforeDateFrom: i18n.t('feedback.validation.cannot_be_before', {
+    field: i18n.t('common.end_date'),
+    limitField: i18n.t('common.start_date'),
+  }),
+  dateFromInvalid: i18n.t('feedback.validation.has_invalid_format', {
+    field: i18n.t('registration.resource_type.date_from'),
+  }),
   dateFromRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.date_from'),
+  }),
+  dateToInvalid: i18n.t('feedback.validation.has_invalid_format', {
+    field: i18n.t('registration.resource_type.date_to'),
   }),
   dateToRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.date_to'),
@@ -189,18 +204,15 @@ const pagesRangeField = Yup.object()
   });
 
 export const periodField = Yup.object().shape({
-  from: Yup.string()
-    .nullable()
-    .test('from-test', resourceErrorMessage.fromMustBeBeforeTo, (fromValue, context) =>
-      validateDateInterval(fromValue, context.parent.to)
-    )
-    .required(resourceErrorMessage.dateFromRequired),
-  to: Yup.string()
-    .nullable()
-    .test('to-test', resourceErrorMessage.toMustBeAfterFrom, (toValue, context) =>
-      validateDateInterval(context.parent.from, toValue)
-    )
-    .required(resourceErrorMessage.dateToRequired),
+  from: Yup.date().required(resourceErrorMessage.dateFromRequired).typeError(resourceErrorMessage.dateFromInvalid),
+  to: Yup.date()
+    .required(resourceErrorMessage.dateToRequired)
+    .typeError(resourceErrorMessage.dateToInvalid)
+    .when('from', (from, schema) =>
+      from instanceof Date && !isNaN(from.getTime())
+        ? schema.min(from, resourceErrorMessage.dateToBeforeDateFrom)
+        : schema
+    ),
 });
 
 const publisherField = Yup.object().shape({
@@ -467,4 +479,19 @@ const mediaContributionPublicationInstance = Yup.object<YupShape<MediaContributi
 export const mediaContributionReference = baseReference.shape({
   publicationContext: mediaContributionPublicationContext,
   publicationInstance: mediaContributionPublicationInstance,
+});
+
+// Research Data
+const researchDataPublicationContext = Yup.object<YupShape<ResearchDataPublicationContext>>({
+  publisher: publisherField,
+});
+
+const researchDataPublicationInstance = Yup.object<YupShape<ResearchDataPublicationInstance>>({
+  type: Yup.string().oneOf(Object.values(ResearchDataType)).required(resourceErrorMessage.typeRequired),
+  related: Yup.array(),
+});
+
+export const researchDataReference = baseReference.shape({
+  publicationContext: researchDataPublicationContext,
+  publicationInstance: researchDataPublicationInstance,
 });

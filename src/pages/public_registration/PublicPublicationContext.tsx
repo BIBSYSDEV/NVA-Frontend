@@ -20,11 +20,11 @@ import {
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useState } from 'react';
 import { visuallyHidden } from '@mui/utils';
-import { BookPublicationContext, ContextPublisher } from '../../types/publication_types/bookRegistration.types';
+import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
-import { Journal, Publisher } from '../../types/registration.types';
+import { ContextPublisher, Journal, Publisher } from '../../types/registration.types';
 import { RegistrationSummary } from './RegistrationSummary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
@@ -48,6 +48,7 @@ import {
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
 import { NpiLevelTypography } from '../../components/NpiLevelTypography';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
@@ -502,7 +503,7 @@ const PublicAudioVisualPublicationDialogContent = ({
 
 const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
   const { t } = useTranslation();
-  const { type, place, time, extent, concertProgramme } = concert;
+  const { type, place, time, extent, concertProgramme, partOfSeries } = concert;
 
   return (
     <DialogContent>
@@ -514,9 +515,15 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
 
       <Typography variant="overline">{t('common.date')}</Typography>
       <Typography paragraph>{new Date(time.value).toLocaleDateString()}</Typography>
+      {/* TODO: Show period */}
 
       <Typography variant="overline">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
       <Typography paragraph>{extent}</Typography>
+
+      <BetaFunctionality>
+        <Typography variant="overline">{t('registration.resource_type.artistic.concert_part_of_series')}</Typography>
+        <Typography paragraph>{partOfSeries ? t('common.yes') : t('common.no')}</Typography>
+      </BetaFunctionality>
 
       <Typography variant="overline" id="program-heading">
         {t('registration.resource_type.artistic.concert_program')}

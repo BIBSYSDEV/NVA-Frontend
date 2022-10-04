@@ -16,7 +16,6 @@ export const ContributorsPanel = () => {
   } = useFormikContext<Registration>();
   const contributorsError = (errors.entityDescription as FormikErrors<EntityDescription>)?.contributors;
   const contributorsTouched = (touched.entityDescription as FormikTouched<EntityDescription>)?.contributors;
-
   const publicationInstanceType = entityDescription?.reference?.publicationInstance.type;
   const contributorConfigResult = publicationInstanceType ? contributorConfig[publicationInstanceType] : null;
   const primaryRoles = contributorConfigResult?.primaryRoles ?? [];

@@ -13,10 +13,11 @@ import NotFound from '../../../errorpages/NotFound';
 import { DuplicateSearchFilterForm } from './DuplicateSearchFilterForm';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
 import { getTitleString } from '../../../../utils/registration-helpers';
+import { RegistrationParams } from '../../../../utils/urlPaths';
 
 export const CentralImportDuplicationCheckPage = () => {
   const { t } = useTranslation();
-  const { identifier } = useParams<{ identifier: string }>();
+  const { identifier } = useParams<RegistrationParams>();
   const [duplicateSearchFilters, setDuplicateSearchFilters] = useState(emptyDuplicateSearchFilter);
 
   const [registration, isLoadingRegistration] = useFetch<Registration>({

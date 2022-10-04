@@ -2,6 +2,7 @@ import { Autocomplete, AutocompleteProps, Box, Button, CircularProgress, TextFie
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import { useFormikContext } from 'formik';
 import { CristinApiPath } from '../../api/apiPaths';
 import { searchByNationalIdNumber } from '../../api/userApi';
 import { AutocompleteTextField } from '../../components/AutocompleteTextField';
@@ -14,6 +15,7 @@ import { useDebounce } from '../../utils/hooks/useDebounce';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { convertToFlatCristinPerson, getMaskedNationalIdentityNumber } from '../../utils/user-helpers';
+import { AddEmployeeData } from './institution_admin/AddEmployeePage';
 
 interface SearchForCristinPersonProps
   extends Pick<AutocompleteProps<FlatCristinPerson, false, false, false>, 'disabled'> {
@@ -27,6 +29,7 @@ export const SearchForCristinPerson = ({
   disabled,
 }: SearchForCristinPersonProps) => {
   const { t } = useTranslation();
+  const { resetForm } = useFormikContext<AddEmployeeData>();
 
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery);
@@ -146,7 +149,10 @@ export const SearchForCristinPerson = ({
           </div>
           <Button
             variant="outlined"
-            onClick={() => setSelectedPerson(undefined)}
+            onClick={() => {
+              setSelectedPerson(undefined);
+              resetForm();
+            }}
             sx={{ width: 'fit-content' }}
             startIcon={<PersonSearchIcon />}>
             {t('basic_data.add_employee.new_search')}

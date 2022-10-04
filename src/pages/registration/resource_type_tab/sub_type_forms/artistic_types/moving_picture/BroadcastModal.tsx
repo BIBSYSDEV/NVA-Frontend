@@ -9,6 +9,7 @@ import i18n from '../../../../../../translations/i18n';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { emptyInstant } from '../../../../../../types/common.types';
 
 interface BroadcastModalProps {
   broadcast?: Broadcast;
@@ -23,7 +24,7 @@ const emptyBroadcast: Broadcast = {
     type: PublicationChannelType.UnconfirmedPublisher,
     name: '',
   },
-  date: { type: 'Instant', value: '' },
+  date: emptyInstant,
 };
 
 const validationSchema = Yup.object<YupShape<Broadcast>>({
@@ -35,11 +36,17 @@ const validationSchema = Yup.object<YupShape<Broadcast>>({
     ),
   }),
   date: Yup.object().shape({
-    value: Yup.string().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('common.date'),
-      })
-    ),
+    value: Yup.date()
+      .required(
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.date'),
+        })
+      )
+      .typeError(
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('common.date'),
+        })
+      ),
   }),
 });
 
@@ -98,13 +105,12 @@ export const BroadcastModal = ({ broadcast, onSubmit, open, closeModal }: Broadc
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        {...field}
                         sx={{ maxWidth: '13rem' }}
                         variant="filled"
                         required
                         error={touched && !!error}
                         helperText={<ErrorMessage name={field.name} />}
-                        data-testid={dataTestId.registrationWizard.resourceType.competitionDate}
+                        data-testid={dataTestId.registrationWizard.resourceType.broadcastDate}
                       />
                     )}
                   />

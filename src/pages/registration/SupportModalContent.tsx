@@ -1,31 +1,40 @@
 import { Trans, useTranslation } from 'react-i18next';
-import { useParams } from 'react-router';
 import { Link, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { MessageForm } from '../../components/MessageForm';
-import { addMessage } from '../../api/registrationApi';
+import { addTicketMessage, createTicket } from '../../api/registrationApi';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/notificationSlice';
-import { MessageType } from '../../types/publication_types/messages.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 
 interface SupportModalContentProps {
   closeModal: () => void;
+  registrationId: string;
 }
 
-export const SupportModalContent = ({ closeModal }: SupportModalContentProps) => {
+export const SupportModalContent = ({ closeModal, registrationId }: SupportModalContentProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { identifier } = useParams<{ identifier: string }>();
 
   const sendMessage = async (message: string) => {
-    const messageResponse = await addMessage(identifier, message, MessageType.Support);
-    if (isErrorStatus(messageResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
-    } else if (isSuccessStatus(messageResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
-      closeModal();
+    if (message) {
+      // Create ticket
+      const createTicketResponse = await createTicket(registrationId, 'GeneralSupportCase');
+      if (isErrorStatus(createTicketResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
+      } else if (isSuccessStatus(createTicketResponse.status)) {
+        const ticketId = createTicketResponse.data.id;
+        if (ticketId) {
+          const addMessageResponse = await addTicketMessage(ticketId, message);
+          if (isErrorStatus(addMessageResponse.status)) {
+            dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
+          } else if (isSuccessStatus(addMessageResponse.status)) {
+            dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
+            closeModal();
+          }
+        }
+      }
     }
   };
 

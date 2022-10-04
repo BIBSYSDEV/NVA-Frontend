@@ -12,10 +12,11 @@ import { PublicRegistrationContent } from './PublicRegistrationContent';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { PublicationsApiPath } from '../../api/apiPaths';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
+import { RegistrationParams } from '../../utils/urlPaths';
 
 const PublicRegistration = () => {
   const { t } = useTranslation();
-  const { identifier } = useParams<{ identifier: string }>();
+  const { identifier } = useParams<RegistrationParams>();
   const [registration, isLoadingRegistration, refetchRegistration] = useFetch<Registration>({
     url: `${PublicationsApiPath.Registration}/${identifier}`,
     errorMessage: t('feedback.error.get_registration'),

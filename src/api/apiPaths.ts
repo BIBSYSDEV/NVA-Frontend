@@ -29,9 +29,7 @@ export enum PublicationsApiPath {
   Registration = '/publication',
   RegistrationsByOwner = '/publication/by-owner',
   DoiLookup = '/doi-fetch',
-  DoiRequest = '/publication/doirequest',
-  UpdateDoiRequest = '/publication/update-doi-request',
-  Messages = '/publication/messages',
+  Tickets = '/publication/tickets',
 }
 
 export enum RoleApiPath {
@@ -42,5 +40,5 @@ export enum RoleApiPath {
 
 export enum SearchApiPath {
   Registrations = '/search/resources',
-  Worklist = '/search/worklist',
+  Tickets = '/search/tickets',
 }

@@ -353,6 +353,7 @@
       "get_roles": "Kunne ikke hente roller",
       "get_series": "Kunne ikke hente serie",
       "get_session": "Økten er utløpt. Vennligst logg inn på nytt.",
+      "get_tickets": "Kunne ikke hente saker",
       "get_users_for_institution": "Kunne ikke hente brukere",
       "get_vocabularies": "Kunne ikke hente kontrollerte vokabular",
       "orcid_login": "Kunne ikke logge inn på ORCID",
@@ -451,8 +452,14 @@
       "go_to_registration": "Gå til registrering",
       "messages": "Meldinger",
       "no_messages": "Du har ingen meldinger",
+      "ticket_types": {
+        "Closed": "Lukket",
+        "Completed": "Ferdig",
+        "Pending": "Pågår"
+      },
       "types": {
         "doi": "DOI-forespørsel",
+        "publishing_request": "Publiseringsforespørsel",
         "support": "Brukerstøtte"
       }
     },
@@ -853,9 +860,13 @@
         "CostumeDesigner": "Kostymedesigner",
         "Creator": "Forfatter",
         "CuratorOrganizer": "Kurator/arrangør",
+        "DataCollector": "Datainnsamler",
+        "DataCurator": "Datakurator",
+        "DataManager": "Dataforvalter",
         "Dancer": "Danser",
         "Designer": "Designer",
         "Director": "Regissør",
+        "Distributor": "Distributør",
         "Dramatist": "Dramatiker",
         "Dramaturge": "Dramaturg",
         "Editor": "Redaktør",
@@ -979,6 +990,7 @@
       "ConferenceAbstract": "Konferanseabstrakt",
       "ConferenceLecture": "Konferanseforedrag",
       "ConferencePoster": "Konferanseposter",
+      "DataManagementPlan": "Datahåndteringsplan (DMP)",
       "Degree": "Studentoppgave eller avhandling",
       "DegreeBachelor": "Bacheloroppgave",
       "DegreeLicentiate": "Lisensiatavhandling",
@@ -1016,7 +1028,8 @@
       "ReportBookOfAbstract": "Abstraktsamling",
       "ReportPolicy": "Policyrapport",
       "ReportResearch": "Forskningsrapport",
-      "ReportWorkingPaper": "Arbeidsnotat"
+      "ReportWorkingPaper": "Arbeidsnotat",
+      "ResearchData": "Forskningsdata"
     },
     "registration": {
       "link_to_resource": "Lenke til original versjon",
@@ -1061,6 +1074,7 @@
         "competition_name": "Navn på konkurranse/arrangør/innbyder",
         "competition_rank": "Rangering/innkjøp/omtale/invitert",
         "composer": "Komponist",
+        "concert_part_of_series": "Flere fremføringer (konsertserie, turné, etc)",
         "concert_program": "Konsertprogram",
         "concert_program_table_caption": "Oversikt over konsertprogram",
         "content_track": "Innhold/spor",
@@ -1237,6 +1251,20 @@
       "remove_doi_text": "Du kan fjerne DOI som ble brukt ved registreringsstart.\nØnsker du å fjerne kobling til original DOI?",
       "remove_journal": "Fjern tidsskrift",
       "remove_publisher": "Fjern utgiver",
+      "research_data": {
+        "add_link": "Legg til lenke",
+        "external_link": "Eksterne lenke",
+        "external_links": "Eksterne lenker",
+        "external_link_helper_text": "Oppgi ekstern URL med relatert innhold",
+        "external_link_helper_text_error": "Ugyldig URL. Pass på at lenken du oppgir er fullstendig. Eksempel: https://sikt.no",
+        "no_related_links": "Ingen relaterte lenker.",
+        "remove_relation": "Fjern relasjon",
+        "remove_relation_confirm_text": "Ønsker du å fjerne denne relasjonen?",
+        "related_links": "Relaterte lenker",
+        "search_for_related_registrations": "Søk etter relaterte registreringer",
+        "search_for_related_registrations_helper_text": "Velg blant registreringer som er publisert i NVA",
+        "validating_link": "Validerer lenke"
+      },
       "search_for_journal": "Søk etter tidsskrift",
       "search_for_original_article": "Søk etter original artikkel",
       "search_for_publisher": "Søk etter utgiver",
@@ -1279,7 +1307,6 @@
   },
   "worklist": {
     "limited_to": "Avgrenset til: \"{{name}}\"",
-    "no_messages": "$t(my_page.messages.no_messages)",
     "worklist": "Arbeidsliste"
   }
 }

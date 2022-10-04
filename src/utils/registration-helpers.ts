@@ -9,6 +9,7 @@ import {
   PresentationType,
   PublicationType,
   ReportType,
+  ResearchDataType,
 } from '../types/publicationFieldNames';
 import { User } from '../types/user.types';
 import i18n from '../translations/i18n';
@@ -49,25 +50,27 @@ export const getMainRegistrationType = (instanceType: string) =>
     ? PublicationType.Artistic
     : isMediaContribution(instanceType)
     ? PublicationType.MediaContribution
+    : isResearchData(instanceType)
+    ? PublicationType.ResearchData
     : '';
 
-export const isJournal = (instanceType: string) => Object.values(JournalType).some((type) => type === instanceType);
+export const isJournal = (instanceType: any) => Object.values(JournalType).includes(instanceType);
 
-export const isBook = (instanceType: string) => Object.values(BookType).some((type) => type === instanceType);
+export const isBook = (instanceType: any) => Object.values(BookType).includes(instanceType);
 
-export const isDegree = (instanceType: string) => Object.values(DegreeType).some((type) => type === instanceType);
+export const isDegree = (instanceType: any) => Object.values(DegreeType).includes(instanceType);
 
-export const isReport = (instanceType: string) => Object.values(ReportType).some((type) => type === instanceType);
+export const isReport = (instanceType: any) => Object.values(ReportType).includes(instanceType);
 
-export const isChapter = (instanceType: string) => Object.values(ChapterType).some((type) => type === instanceType);
+export const isChapter = (instanceType: any) => Object.values(ChapterType).includes(instanceType);
 
-export const isPresentation = (instanceType: string) =>
-  Object.values(PresentationType).some((type) => type === instanceType);
+export const isPresentation = (instanceType: any) => Object.values(PresentationType).includes(instanceType);
 
-export const isArtistic = (instanceType: string) => Object.values(ArtisticType).some((type) => type === instanceType);
+export const isArtistic = (instanceType: any) => Object.values(ArtisticType).includes(instanceType);
 
-export const isMediaContribution = (instanceType: string) =>
-  Object.values(MediaType).some((type) => type === instanceType);
+export const isMediaContribution = (instanceType: any) => Object.values(MediaType).includes(instanceType);
+
+export const isResearchData = (instanceType: any) => Object.values(ResearchDataType).includes(instanceType);
 
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCreator && user.username === registration.resourceOwner.owner;
@@ -371,6 +374,23 @@ export const contributorConfig: ContributorConfig = {
   [MediaType.MediaParticipationInRadioOrTv]: {
     primaryRoles: [ContributorRole.ProgrammeLeader, ContributorRole.ProgrammeParticipant, ContributorRole.Other],
     secondaryRoles: [],
+  },
+  // ResearchData
+  [ResearchDataType.DataManagementPlan]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.DataCollector,
+      ContributorRole.DataCurator,
+      ContributorRole.DataManager,
+      ContributorRole.Distributor,
+      ContributorRole.ContactPerson,
+      ContributorRole.Editor,
+      ContributorRole.RelatedPerson,
+      ContributorRole.Researcher,
+      ContributorRole.RightsHolder,
+      ContributorRole.Supervisor,
+      ContributorRole.Other,
+    ],
   },
 };
 

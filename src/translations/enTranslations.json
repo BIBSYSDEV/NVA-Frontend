@@ -353,6 +353,7 @@
       "get_roles": "Could not get roles",
       "get_series": "Could not get series",
       "get_session": "Invalid session. Please log in again.",
+      "get_tickets": "Could not get cases",
       "get_users_for_institution": "Could not get users",
       "get_vocabularies": "Could not fetch vocabularies",
       "orcid_login": "ORCID login failed",
@@ -451,8 +452,14 @@
       "go_to_registration": "Go to registration",
       "messages": "Messages",
       "no_messages": "You don't have any messages",
+      "ticket_types": {
+        "Closed": "Closed",
+        "Completed": "Completed",
+        "Pending": "Pending"
+      },
       "types": {
         "doi": "DOI Request",
+        "publishing_request": "Publishing Request",
         "support": "Support"
       }
     },
@@ -853,9 +860,13 @@
         "CostumeDesigner": "Costume designer",
         "Creator": "Author",
         "CuratorOrganizer": "Curator/organizer",
+        "DataCollector": "Data collector",
+        "DataCurator": "Data curator",
+        "DataManager": "Data manager",
         "Dancer": "Dancer",
         "Designer": "Designer",
         "Director": "Director",
+        "Distributor": "Distributor",
         "Dramatist": "Dramatist",
         "Dramaturge": "Dramaturge",
         "Editor": "Editor",
@@ -979,6 +990,7 @@
       "ConferenceAbstract": "Conference abstract",
       "ConferenceLecture": "Conference lecture",
       "ConferencePoster": "Conference poster",
+      "DataManagementPlan": "Data management plan (DMP)",
       "Degree": "Thesis",
       "DegreeBachelor": "Bachelor thesis",
       "DegreeLicentiate": "Licentiate thesis",
@@ -1016,7 +1028,8 @@
       "ReportBookOfAbstract": "Book of abstracts",
       "ReportPolicy": "Policy report",
       "ReportResearch": "Research report",
-      "ReportWorkingPaper": "Working paper"
+      "ReportWorkingPaper": "Working paper",
+      "ResearchData": "Research data"
     },
     "registration": {
       "link_to_resource": "Link to original version",
@@ -1061,6 +1074,7 @@
         "competition_name": "Name on competition/organizer",
         "competition_rank": "Rank/purchase/mention/invited",
         "composer": "Composer",
+        "concert_part_of_series": "Multiple performances (concert series, tour, etc)",
         "concert_program": "Concert program",
         "concert_program_table_caption": "Overview over concert program",
         "content_track": "Content/tracks",
@@ -1237,6 +1251,20 @@
       "remove_doi_text": "You can remove the DOI that was used when starting registration.\nDo you wish to remove connection to the original DOI?",
       "remove_journal": "Remove journal",
       "remove_publisher": "Remove publisher",
+      "research_data": {
+        "add_link": "Add link",
+        "external_link": "External link",
+        "external_links": "External links",
+        "external_link_helper_text": "Add external link with related content",
+        "external_link_helper_text_error": "Invalid URL. Ensure that the link is complete. Example: https://sikt.no",
+        "no_related_links": "No related links.",
+        "remove_relation": "Remove relation",
+        "remove_relation_confirm_text": "You want to remove this relation?",
+        "related_links": "Related links",
+        "search_for_related_registrations": "Search for related registrations",
+        "search_for_related_registrations_helper_text": "Choose among published registrations",
+        "validating_link": "Validating link"
+      },
       "search_for_journal": "Search for journals",
       "search_for_original_article": "Search for original article",
       "search_for_publisher": "Search for publisher",
@@ -1279,7 +1307,6 @@
   },
   "worklist": {
     "limited_to": "Limited to: \"{{name}}\"",
-    "no_messages": "$t(my_page.messages.no_messages)",
     "worklist": "Worklist"
   }
 }
