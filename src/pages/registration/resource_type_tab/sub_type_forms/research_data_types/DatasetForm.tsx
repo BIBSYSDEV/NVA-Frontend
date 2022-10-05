@@ -156,3 +156,28 @@ export const DatasetForm = () => {
     </>
   );
 };
+
+export const AcceptDatasetTermsDialog = () => {
+  return (
+    <>
+      <Typography fontWeight={500}>Datasettet inneholder personopplysninger?*</Typography>
+      <Typography paragraph>
+        Personopplysninger er enhver opplysning om en identifisert eller identifiserbar fysisk person. Dette kan være
+        navn, adresse, telefonnummer, e-post, bilde, lydopptak, fingeravtrykk, nettidentifikator,
+        lokaliseringsopplysninger, etc.
+      </Typography>
+
+      <Typography fontWeight={500}>Datasettet inneholder andre sensitive eller konfidensielle data?*</Typography>
+      <Typography paragraph>
+        Sensitive eller konfidensielle data er informasjon og opplysninger som har behov for beskyttelse eller
+        skjerming, og som må sikres mot urettmessig innsyn og tilgang. Dette kan være personopplysninger,
+        bedriftshemmeligheter, sikkerhetsinformasjon, kommersielle rettigheter, patenter, etc.
+      </Typography>
+
+      <Typography>
+        Når du trykker JA eller er usikker så må du sende melding til brukerstøtte der din kurator avklarer videre
+        prosess for å publisere datasettet.
+      </Typography>
+    </>
+  );
+};
