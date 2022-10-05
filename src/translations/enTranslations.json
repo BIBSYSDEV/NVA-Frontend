@@ -989,7 +989,7 @@
       "ConferenceLecture": "Conference lecture",
       "ConferencePoster": "Conference poster",
       "DataManagementPlan": "Data management plan (DMP)",
-      "DataSet": "Data set",
+      "DataSet": "Dataset",
       "Degree": "Thesis",
       "DegreeBachelor": "Bachelor thesis",
       "DegreeLicentiate": "Licentiate thesis",
@@ -1260,6 +1260,7 @@
         "remove_relation": "Remove relation",
         "remove_relation_confirm_text": "You want to remove this relation?",
         "related_links": "Related links",
+        "search_for_related_dmps": "Search for related data management plans",
         "search_for_related_registrations": "Search for related registrations",
         "search_for_related_registrations_helper_text": "Choose among published registrations",
         "validating_link": "Validating link"

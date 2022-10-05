@@ -5,6 +5,7 @@ import { ResearchDataRegistration } from '../../../types/publication_types/resea
 import { SelectTypeField } from './components/SelectTypeField';
 import { RegistrationTypeFormProps } from './JournalTypeForm';
 import { DataManagementPlanForm } from './sub_type_forms/research_data_types/DataManagementPlanForm';
+import { DatasetForm } from './sub_type_forms/research_data_types/DatasetForm';
 
 export const ResearchDataTypeForm = ({ onChangeSubType }: RegistrationTypeFormProps) => {
   const { values } = useFormikContext<ResearchDataRegistration>();
@@ -20,7 +21,11 @@ export const ResearchDataTypeForm = ({ onChangeSubType }: RegistrationTypeFormPr
         />
       </StyledSelectWrapper>
 
-      {subType === ResearchDataType.DataManagementPlan ? <DataManagementPlanForm /> : null}
+      {subType === ResearchDataType.DataManagementPlan ? (
+        <DataManagementPlanForm />
+      ) : subType === ResearchDataType.Dataset ? (
+        <DatasetForm />
+      ) : null}
     </>
   );
 };

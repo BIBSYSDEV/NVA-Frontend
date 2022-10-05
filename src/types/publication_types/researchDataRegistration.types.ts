@@ -11,14 +11,19 @@ export interface ResearchDataRegistration extends BaseRegistration {
   entityDescription: ResearchDataEntityDescription;
 }
 
-export interface ResearchDataPublicationInstance {
+export interface ResearchDataPublicationInstance
+  extends DataManagementPlanPublicationInstance,
+    DatasetPublicationInstance {
   type: ResearchDataType | '';
-  related: string[];
 }
 
 export const emptyResearchDataPublicationInstance: ResearchDataPublicationInstance = {
   type: '',
   related: [],
+  agreesWithTermsAndConditions: false,
+  geographicalCoverage: '',
+  referencedBy: [],
+  compliesWith: [],
 };
 
 export const emptyResearchDataPublicationContext: ResearchDataPublicationContext = {
@@ -26,9 +31,8 @@ export const emptyResearchDataPublicationContext: ResearchDataPublicationContext
   publisher: emptyContextPublisher,
 };
 
-export interface ResearchDataPublicationContext {
+export interface ResearchDataPublicationContext extends DataManagementPlanPublicationContext {
   type: PublicationType.ResearchData;
-  publisher: ContextPublisher;
 }
 
 interface ResearchDataContributionReference extends BaseReference {
@@ -38,4 +42,20 @@ interface ResearchDataContributionReference extends BaseReference {
 
 export interface ResearchDataEntityDescription extends BaseEntityDescription {
   reference: ResearchDataContributionReference;
+}
+
+interface DataManagementPlanPublicationInstance {
+  related: string[];
+}
+
+interface DataManagementPlanPublicationContext {
+  publisher: ContextPublisher;
+}
+
+interface DatasetPublicationInstance {
+  agreesWithTermsAndConditions: boolean;
+  geographicalCoverage: string;
+  referencedBy: string[];
+  related: string[];
+  compliesWith: string[];
 }

@@ -1260,6 +1260,7 @@
         "remove_relation": "Fjern relasjon",
         "remove_relation_confirm_text": "Ønsker du å fjerne denne relasjonen?",
         "related_links": "Relaterte lenker",
+        "search_for_related_dmps": "Søk etter relaterte datahåndteringsplaner",
         "search_for_related_registrations": "Søk etter relaterte registreringer",
         "search_for_related_registrations_helper_text": "Velg blant registreringer som er publisert i NVA",
         "validating_link": "Validerer lenke"
