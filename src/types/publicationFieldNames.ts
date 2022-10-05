@@ -73,6 +73,7 @@ export enum MediaType {
 
 export enum ResearchDataType {
   DataManagementPlan = 'DataManagementPlan',
+  Dataset = 'DataSet',
 }
 
 export type RegistrationSubtype =

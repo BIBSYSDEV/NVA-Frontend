@@ -380,6 +380,22 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.Other,
     ],
   },
+  [ResearchDataType.Dataset]: {
+    primaryRoles: [
+      ContributorRole.DataCollector,
+      ContributorRole.DataCurator,
+      ContributorRole.DataManager,
+      ContributorRole.Distributor,
+      ContributorRole.ContactPerson,
+      ContributorRole.Editor,
+      ContributorRole.RelatedPerson,
+      ContributorRole.Researcher,
+      ContributorRole.RightsHolder,
+      ContributorRole.Supervisor,
+      ContributorRole.Other,
+    ],
+    secondaryRoles: [],
+  },
 };
 
 export const groupContributors = (contributors: Contributor[], registrationType: PublicationInstanceType) => {
