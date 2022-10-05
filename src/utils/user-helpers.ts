@@ -7,6 +7,7 @@ import {
   CristinPersonNameType,
   CristinPerson,
   FlatCristinPerson,
+  Employment,
 } from '../types/user.types';
 import { ORCID_BASE_URL } from './constants';
 
@@ -24,6 +25,13 @@ export const getFullCristinName = (names: CristinArrayValue[] = []) => {
 export const filterActiveAffiliations = (affiliations: CristinPersonAffiliation[] = []) =>
   affiliations.filter((affiliation) => affiliation.active);
 
+export const isActiveEmployment = (employment: Employment) => {
+  const currentDate = new Date();
+  return (
+    new Date(employment.startDate) <= currentDate && (!employment.endDate || new Date(employment.endDate) > currentDate)
+  );
+};
+
 export const getOrcidUri = (identifiers: CristinPersonIdentifier[] = []) => {
   const orcid = getValueByKey('ORCID', identifiers);
   return orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
@@ -38,6 +46,7 @@ export const convertToCristinPerson = (user: FlatCristinPerson): CreateCristinPe
     { type: 'FirstName', value: user.firstName },
     { type: 'LastName', value: user.lastName },
   ],
+  employments: user.employments,
 });
 
 export const convertToFlatCristinPerson = (user: CristinPerson): FlatCristinPerson => ({
@@ -48,5 +57,6 @@ export const convertToFlatCristinPerson = (user: CristinPerson): FlatCristinPers
   id: user.id,
   cristinIdentifier: getValueByKey('CristinIdentifier', user.identifiers),
   affiliations: user.affiliations,
+  employments: user.employments,
   orcid: getValueByKey('ORCID', user.identifiers),
 });

@@ -4,7 +4,7 @@ import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
-import LooksThreeIcon from '@mui/icons-material/LooksTwoOutlined';
+import LooksThreeIcon from '@mui/icons-material/Looks3Outlined';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CreateCristinPerson, Employment, FlatCristinPerson, RoleName } from '../../../types/user.types';
 import { FindPersonPanel } from './FindPersonPanel';
@@ -32,6 +32,7 @@ export const emptyUser: FlatCristinPerson = {
   id: '',
   cristinIdentifier: '',
   affiliations: [],
+  employments: [],
 };
 
 const initialValues: AddEmployeeData = {
@@ -45,43 +46,47 @@ export const AddEmployeePage = () => {
   const dispatch = useDispatch();
   const customerId = useSelector((store: RootState) => store.user?.customerId);
 
-  const onSubmit = async (values: AddEmployeeData, { resetForm }: FormikHelpers<AddEmployeeData>) => {
+  const onSubmit = async (values: AddEmployeeData, { resetForm, validateForm }: FormikHelpers<AddEmployeeData>) => {
     if (!customerId) {
       return;
     }
 
-    let userId = values.user.id;
+    let personId = values.user.id;
 
-    if (!userId) {
-      // Create user if it does not yet exist in Cristin
-      const cristinUser: CreateCristinPerson = convertToCristinPerson(values.user);
-      const createPersonResponse = await createCristinPerson(cristinUser);
+    if (!personId) {
+      // Create Person if it does not yet exist in Cristin
+      const cristinPerson: CreateCristinPerson = convertToCristinPerson({
+        ...values.user,
+        employments: [values.affiliation],
+      });
+      const createPersonResponse = await createCristinPerson(cristinPerson);
       if (isErrorStatus(createPersonResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.create_user'), variant: 'error' }));
       } else if (isSuccessStatus(createPersonResponse.status)) {
-        userId = createPersonResponse.data.id;
+        personId = createPersonResponse.data.id;
+        await new Promise((resolve) => setTimeout(resolve, 10_000)); // Wait 10sec before creating NVA User. TODO: NP-9121
+      }
+    } else {
+      // Add employment to existing Person
+      const addAffiliationResponse = await addEmployment(personId, values.affiliation);
+      if (isErrorStatus(addAffiliationResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.error.add_employment'), variant: 'error' }));
       }
     }
 
-    if (userId) {
-      // Add employment (affiliation)
-      const addAffiliationResponse = await addEmployment(userId, values.affiliation);
-      if (isSuccessStatus(addAffiliationResponse.status)) {
-        // Create NVA User with roles
-        await new Promise((resolve) => setTimeout(resolve, 10_000)); // Wait 10sec before creating NVA User. TODO: NP-9121
-        const createUserResponse = await createUser({
-          nationalIdentityNumber: values.user.nationalId,
-          customerId,
-          roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
-        });
-        if (isSuccessStatus(createUserResponse.status)) {
-          dispatch(setNotification({ message: t('feedback.success.add_employment'), variant: 'success' }));
-          resetForm();
-        } else if (isErrorStatus(createUserResponse.status)) {
-          dispatch(setNotification({ message: t('feedback.error.add_role'), variant: 'error' }));
-        }
-      } else if (isErrorStatus(addAffiliationResponse.status)) {
-        dispatch(setNotification({ message: t('feedback.error.add_employment'), variant: 'error' }));
+    if (personId) {
+      // Create NVA User with roles
+      const createUserResponse = await createUser({
+        nationalIdentityNumber: values.user.nationalId,
+        customerId,
+        roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
+      });
+      if (isSuccessStatus(createUserResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.success.add_employment'), variant: 'success' }));
+        resetForm();
+        validateForm();
+      } else if (isErrorStatus(createUserResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.error.add_role'), variant: 'error' }));
       }
     }
   };
@@ -92,7 +97,7 @@ export const AddEmployeePage = () => {
         <title>{t('basic_data.add_employee.add_employee')}</title>
       </Helmet>
       <Typography variant="h3" component="h2" paragraph>
-        {t('basic_data.add_employee.add_to_person_registry')}
+        {t('basic_data.add_employee.update_person_registry')}
       </Typography>
       <Formik
         initialValues={initialValues}

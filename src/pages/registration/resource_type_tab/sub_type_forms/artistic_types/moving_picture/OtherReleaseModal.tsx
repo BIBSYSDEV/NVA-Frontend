@@ -4,10 +4,11 @@ import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'form
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { OtherRelease } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import i18n from '../../../../../../translations/i18n';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { emptyInstant } from '../../../../../../types/common.types';
 
 interface OtherReleaseModalProps {
   otherRelease?: OtherRelease;
@@ -28,10 +29,7 @@ const emptyOtherRelease: OtherRelease = {
     type: 'UnconfirmedPublisher',
     name: '',
   },
-  date: {
-    type: 'Instant',
-    value: '',
-  },
+  date: emptyInstant,
 };
 
 const validationSchema = Yup.object<YupShape<OtherRelease>>({
@@ -51,11 +49,17 @@ const validationSchema = Yup.object<YupShape<OtherRelease>>({
     name: Yup.string(),
   }),
   date: Yup.object().shape({
-    value: Yup.string().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('common.date'),
-      })
-    ),
+    value: Yup.date()
+      .required(
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.date'),
+        })
+      )
+      .typeError(
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('common.date'),
+        })
+      ),
   }),
 });
 
@@ -89,6 +93,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.otherReleaseType}
                   />
                 )}
               </Field>
@@ -102,6 +107,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     label={t('common.place')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.otherReleasePlace}
                   />
                 )}
               </Field>
@@ -114,6 +120,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     label={t('registration.resource_type.artistic.other_announcement_organizer')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.otherReleasePublisher}
                   />
                 )}
               </Field>
@@ -129,19 +136,16 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                       'aria-label': t('common.date'),
                     }}
                     value={field.value ?? null}
-                    onChange={(date: Date | null, keyboardInput) => {
+                    onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
-                      const newValue = getNewDateValue(date, keyboardInput);
-                      if (newValue !== null) {
-                        setFieldValue(field.name, newValue);
-                      }
+                      setFieldValue(field.name, date ?? '');
                     }}
                     inputFormat="dd.MM.yyyy"
                     mask="__.__.____"
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        {...field}
+                        data-testid={dataTestId.registrationWizard.resourceType.otherReleaseDate}
                         sx={{ maxWidth: '13rem' }}
                         variant="filled"
                         required

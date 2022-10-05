@@ -3,7 +3,6 @@ import { TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { getNewDateValue } from '../../../../utils/registration-helpers';
 
 interface PeriodFieldsProps {
   fromFieldName: string;
@@ -28,12 +27,9 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
               'aria-label': t('registration.resource_type.date_from'),
             }}
             value={field.value ?? null}
-            onChange={(date, keyboardInput) => {
+            onChange={(date) => {
               !touched && setFieldTouched(field.name, true, false);
-              const newValue = getNewDateValue(date, keyboardInput);
-              if (newValue !== null) {
-                setFieldValue(field.name, newValue);
-              }
+              setFieldValue(field.name, date ?? '');
             }}
             inputFormat="dd.MM.yyyy"
             views={['year', 'month', 'day']}
@@ -61,12 +57,9 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
               'aria-label': t('registration.resource_type.date_to'),
             }}
             value={field.value ?? null}
-            onChange={(date, keyboardInput) => {
+            onChange={(date) => {
               !touched && setFieldTouched(field.name, true, false);
-              const newValue = getNewDateValue(date, keyboardInput);
-              if (newValue !== null) {
-                setFieldValue(field.name, newValue);
-              }
+              setFieldValue(field.name, date ?? '');
             }}
             inputFormat="dd.MM.yyyy"
             views={['year', 'month', 'day']}

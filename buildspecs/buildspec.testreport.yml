@@ -1,0 +1,43 @@
+version: 0.2
+
+# Buildspec to generate a test report after all E2E tests are finished running.
+
+batch:
+  fast-fail: false
+  build-list:
+    - identifier: cypress-e2e-testreport
+      env:
+        variables:
+          image: public.ecr.aws/cypress-io/cypress/browsers:node14.17.0-chrome88-ff89
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: latest
+  pre_build:
+    commands:
+      - wget https://github.com/BIBSYSDEV/NVA-end-to-end-testing/archive/refs/heads/test-deploy.zip
+      - unzip test-deploy.zip
+      - cd NVA-end-to-end-testing-test-deploy
+      - npm install
+      - aws sts assume-role --role-arn $ROLE_ARN --role-session-name test > Credentials
+      - export CYPRESS_AWS_ACCESS_KEY_ID=$(cat Credentials | jq -r '.Credentials.AccessKeyId')
+      - export CYPRESS_AWS_SECRET_ACCESS_KEY=$(cat Credentials | jq -r '.Credentials.SecretAccessKey')
+      - export CYPRESS_AWS_SESSION_TOKEN=$(cat Credentials | jq -r '.Credentials.SessionToken')
+      - export CYPRESS_AWS_REGION=${AWS_REGION}
+  build:
+    commands:
+      - aws s3 cp s3://$TESTREPORTS_BUCKET/cucumber-json cypress/cucumber-json --recursive
+      - mkdir TestReport
+      - ls -l
+      - npm run create:cucumber:report
+      - if [ -d "cypress/screenshots" ]; then aws s3 cp cypress/screenshots s3://$S3_BUCKET/cypress/$CODEBUILD_BUILD_NUMBER/screenshots --recursive; fi
+      - if [ -d "cypress/videos" ]; then aws s3 cp cypress/videos s3://$TESTREPORTS_BUCKET/videos --recursive; fi
+      - if [ -d "TestReport" ]; then aws s3 cp TestReport s3://$TESTREPORTS_BUCKET/TestReport --recursive; aws s3 cp TestReport s3://$TESTREPORTS_BUCKET --recursive; fi
+      - if [ -d "mochawesome" ]; then aws s3 cp mochawesome-report s3://$TESTREPORTS_BUCKET/mochawesome-report --recursive; fi
+artifacts:
+  files:
+    - '**/*'
+cache:
+  paths:
+    - NVA-end-to-end-testing-test-deploy/node_modules/**/*

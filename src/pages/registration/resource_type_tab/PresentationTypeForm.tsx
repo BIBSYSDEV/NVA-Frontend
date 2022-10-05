@@ -11,15 +11,12 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { SelectTypeField } from './components/SelectTypeField';
 import { getPreferredLanguageCode } from '../../../utils/translation-helpers';
 import { PeriodFields } from './components/PeriodFields';
+import { RegistrationTypeFormProps } from './JournalTypeForm';
 
 countries.registerLocale(enCountries);
 countries.registerLocale(nbCountries);
 
-interface PresentationTypeFormProps {
-  onChangeSubType: (type: string) => void;
-}
-
-export const PresentationTypeForm = ({ onChangeSubType }: PresentationTypeFormProps) => {
+export const PresentationTypeForm = ({ onChangeSubType }: RegistrationTypeFormProps) => {
   const { t, i18n } = useTranslation();
   const { values, setFieldValue } = useFormikContext<PresentationRegistration>();
   const subType = values.entityDescription.reference.publicationInstance.type;

@@ -1,6 +1,6 @@
 version: 0.2
 
-# Buildspec to run E2E tests in parallel. To add more builds to the parallel run,
+# Buildspec to run Frontend tests in parallel. To add more builds to the parallel run,
 # add dummy parameters to RUNNERS at the end of the buildspec.
 
 batch:
@@ -9,17 +9,13 @@ batch:
       fast-fail: false
     dynamic:
       buildspec:
-        - buildspec.testrun.yml
+        - buildspecs/codebuild_validation_runner.yml
       env:
         variables:
-          RUNNERS:
+          RUNNER:
             - 1
             - 2
             - 3
             - 4
             - 5
             - 6
-            - 7
-            - 8
-            - 9
-            - 10

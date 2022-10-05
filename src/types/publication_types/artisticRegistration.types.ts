@@ -37,7 +37,7 @@ export interface Award extends ArtisticOutputBase {
   organizer: string;
   date: Instant;
   otherInformation: string;
-  ranking: number;
+  ranking: number | null;
 }
 
 export interface Exhibition extends ArtisticOutputBase {
@@ -101,10 +101,11 @@ export interface MusicalWorkPerformance {
 export interface Concert extends ArtisticOutputBase {
   type: 'Concert';
   place: Place;
-  time: Instant;
+  time: Instant | Period;
   extent: string;
   description: string;
   concertProgramme: MusicalWorkPerformance[];
+  partOfSeries: boolean;
 }
 
 export enum MusicMediaType {

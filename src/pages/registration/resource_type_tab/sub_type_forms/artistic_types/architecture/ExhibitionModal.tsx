@@ -3,8 +3,10 @@ import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'form
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
+import { emptyPeriod } from '../../../../../../types/common.types';
 import { Exhibition } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { periodField } from '../../../../../../utils/validation/registration/referenceValidation';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { PeriodFields } from '../../../components/PeriodFields';
 import { OutputModalActions } from '../OutputModalActions';
@@ -21,7 +23,7 @@ const emptyExhibition: Exhibition = {
   name: '',
   organizer: '',
   place: { type: 'UnconfirmedPlace', label: '', country: '' },
-  date: { type: 'Period', from: '', to: '' },
+  date: emptyPeriod,
   otherInformation: '',
   sequence: 0,
 };
@@ -44,18 +46,7 @@ const validationSchema = Yup.object<YupShape<Exhibition>>({
       })
     ),
   }),
-  date: Yup.object().shape({
-    from: Yup.date().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('registration.resource_type.date_from'),
-      })
-    ),
-    to: Yup.date().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('registration.resource_type.date_to'),
-      })
-    ),
-  }),
+  date: periodField,
 });
 
 export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: ExhibitionModalProps) => {

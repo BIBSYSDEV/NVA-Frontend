@@ -157,7 +157,7 @@ interface YearAndContributorsTextProps {
   contributors: Contributor[];
 }
 
-const YearAndContributorsText = ({ date, contributors }: YearAndContributorsTextProps) => {
+export const YearAndContributorsText = ({ date, contributors }: YearAndContributorsTextProps) => {
   const dateText = displayDate(date);
   const contributorsText = contributors
     .slice(0, 5)

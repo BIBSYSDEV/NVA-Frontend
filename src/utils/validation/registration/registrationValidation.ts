@@ -13,6 +13,7 @@ import {
   mediaContributionReference,
   presentationReference,
   reportReference,
+  researchDataReference,
 } from './referenceValidation';
 import i18n from '../../../translations/i18n';
 import { getMainRegistrationType, isBook } from '../../registration-helpers';
@@ -73,6 +74,8 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
           return artisticDesignReference;
         case PublicationType.MediaContribution:
           return mediaContributionReference;
+        case PublicationType.ResearchData:
+          return researchDataReference;
         default:
           return baseReference;
       }

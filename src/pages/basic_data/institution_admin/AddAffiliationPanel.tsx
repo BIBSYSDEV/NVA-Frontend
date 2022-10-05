@@ -6,7 +6,6 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { useSelector } from 'react-redux';
 import { StyledCenterContainer } from '../../../components/styled/Wrappers';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { getNewDateValue } from '../../../utils/registration-helpers';
 import { RootState } from '../../../redux/store';
 import { Organization } from '../../../types/organization.types';
 import { useFetchResource } from '../../../utils/hooks/useFetchResource';
@@ -17,7 +16,7 @@ import { PositionField } from '../fields/PositionField';
 
 export const AddAffiliationPanel = () => {
   const { t } = useTranslation();
-  const { values, errors, setFieldValue, isSubmitting } = useFormikContext<AddEmployeeData>();
+  const { values, errors, setFieldValue, setFieldTouched, isSubmitting } = useFormikContext<AddEmployeeData>();
   const user = useSelector((store: RootState) => store.user);
   const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
     user?.topOrgCristinId ?? ''
@@ -96,11 +95,9 @@ export const AddAffiliationPanel = () => {
                 'aria-label': t('common.end_date'),
               }}
               value={field.value ? field.value : null}
-              onChange={(date: Date | null, keyboardInput) => {
-                const newValue = getNewDateValue(date, keyboardInput);
-                if (newValue !== null) {
-                  setFieldValue(field.name, newValue);
-                }
+              onChange={(date) => {
+                !touched && setFieldTouched(field.name, true, false);
+                setFieldValue(field.name, date ?? '');
               }}
               inputFormat="dd.MM.yyyy"
               views={['year', 'month', 'day']}
@@ -108,7 +105,6 @@ export const AddAffiliationPanel = () => {
               minDate={values.affiliation.startDate ? new Date(values.affiliation.startDate) : undefined}
               renderInput={(params) => (
                 <TextField
-                  {...field}
                   {...params}
                   variant="filled"
                   error={touched && !!error}

@@ -1,7 +1,8 @@
 import { RoleName } from '../../src/types/user.types';
-import { mockMessages } from '../../src/utils/testfiles/mockRegistration';
+import { mockTicketCollection } from '../../src/utils/testfiles/mockRegistration';
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { UrlPathTemplate } from '../../src/utils/urlPaths';
+import { getRegistrationIdentifier } from '../../src/utils/registration-helpers';
 
 describe('My messages', () => {
   beforeEach(() => {
@@ -18,7 +19,9 @@ describe('My messages', () => {
   });
 
   it('The Creator should be able to open an item in the DOI request list and see the summary of the registration', () => {
-    const { identifier } = mockMessages[0].publication;
+    const { id } = mockTicketCollection.tickets[0].publication;
+    const identifier = getRegistrationIdentifier(id);
+
     cy.get(`[data-testid=message-${identifier}]`).click();
     cy.get(`[data-testid=go-to-registration-${identifier}]`).click();
     cy.url().should('include', `/registration/${identifier}/public`);

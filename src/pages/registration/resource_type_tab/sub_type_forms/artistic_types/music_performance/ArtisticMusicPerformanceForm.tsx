@@ -23,6 +23,7 @@ import { MusicScoreModal } from './MusicScoreModal';
 import { AudioVisualPublicationModal } from './AudioVisualPublicationModal';
 import { ConcertModal } from './ConcertModal';
 import { OtherPerformanceModal } from './OtherPerformanceModal';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 
 type ArtisticMusicPerformanceModalType = '' | 'MusicScore' | 'AudioVisualPublication' | 'Concert' | 'OtherPerformance';
 
@@ -98,25 +99,32 @@ export const ArtisticMusicPerformanceForm = () => {
               />
 
               <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
-                <Button onClick={() => setOpenModal('Concert')} variant="outlined" startIcon={<AddCircleOutlineIcon />}>
+                <Button
+                  onClick={() => setOpenModal('Concert')}
+                  variant="outlined"
+                  startIcon={<AddCircleOutlineIcon />}
+                  data-testid={dataTestId.registrationWizard.resourceType.addConcertShowButton}>
                   {t('registration.resource_type.artistic.add_concert')}
                 </Button>
                 <Button
                   onClick={() => setOpenModal('AudioVisualPublication')}
                   variant="outlined"
-                  startIcon={<AddCircleOutlineIcon />}>
+                  startIcon={<AddCircleOutlineIcon />}
+                  data-testid={dataTestId.registrationWizard.resourceType.addAudioVideoPublicationButton}>
                   {t('registration.resource_type.artistic.add_audio_visual_publication')}
                 </Button>
                 <Button
                   onClick={() => setOpenModal('MusicScore')}
                   variant="outlined"
-                  startIcon={<AddCircleOutlineIcon />}>
+                  startIcon={<AddCircleOutlineIcon />}
+                  data-testid={dataTestId.registrationWizard.resourceType.addScoreManuscriptButton}>
                   {t('registration.resource_type.artistic.add_music_score')}
                 </Button>
                 <Button
                   onClick={() => setOpenModal('OtherPerformance')}
                   variant="outlined"
-                  startIcon={<AddCircleOutlineIcon />}>
+                  startIcon={<AddCircleOutlineIcon />}
+                  data-testid={dataTestId.registrationWizard.resourceType.addOtherButton}>
                   {t('registration.resource_type.artistic.add_other_performance')}
                 </Button>
               </Box>

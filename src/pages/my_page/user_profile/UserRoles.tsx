@@ -34,28 +34,12 @@ export const UserRoles = ({ user }: UserRolesProps) => {
           {t('my_page.roles.not_customer')}
         </Typography>
       )}
-      {isAppAdmin && (
+      {isCreator && (
         <RoleItem
-          dataTestId="user-role-app-admin"
-          icon={<SettingsApplicationsIcon />}
-          label={t('my_page.roles.app_admin')}
-          text={t('my_page.roles.app_admin_description')}
-        />
-      )}
-      {isInstitutionAdmin && (
-        <RoleItem
-          dataTestId="user-role-institution-admin"
-          icon={<PeopleIcon />}
-          label={t('my_page.roles.institution_admin')}
-          text={t('my_page.roles.institution_admin_description')}
-        />
-      )}
-      {isEditor && (
-        <RoleItem
-          dataTestId="user-role-editor"
-          icon={<FindInPageIcon />}
-          label={t('my_page.roles.editor')}
-          text={t('my_page.roles.editor_description')}
+          dataTestId="user-role-creator"
+          icon={<CreateIcon />}
+          label={t('my_page.roles.creator')}
+          text={t('my_page.roles.creator_description')}
         />
       )}
       {isCurator && (
@@ -66,12 +50,28 @@ export const UserRoles = ({ user }: UserRolesProps) => {
           text={t('my_page.roles.curator_description')}
         />
       )}
-      {isCreator && (
+      {isEditor && (
         <RoleItem
-          dataTestId="user-role-creator"
-          icon={<CreateIcon />}
-          label={t('my_page.roles.creator')}
-          text={t('my_page.roles.creator_description')}
+          dataTestId="user-role-editor"
+          icon={<FindInPageIcon />}
+          label={t('my_page.roles.editor')}
+          text={t('my_page.roles.editor_description')}
+        />
+      )}
+      {isInstitutionAdmin && (
+        <RoleItem
+          dataTestId="user-role-institution-admin"
+          icon={<PeopleIcon />}
+          label={t('my_page.roles.institution_admin')}
+          text={t('my_page.roles.institution_admin_description')}
+        />
+      )}
+      {isAppAdmin && (
+        <RoleItem
+          dataTestId="user-role-app-admin"
+          icon={<SettingsApplicationsIcon />}
+          label={t('my_page.roles.app_admin')}
+          text={t('my_page.roles.app_admin_description')}
         />
       )}
     </div>

@@ -94,12 +94,14 @@ interface CristinPersonName extends CristinArrayValue {
 export interface CreateCristinPerson {
   identifiers: CristinPersonIdentifier[];
   names: CristinPersonName[];
+  employments?: Employment[];
 }
 
 export interface CristinPerson extends CreateCristinPerson {
   id: string;
   affiliations: CristinPersonAffiliation[];
-  NationalIdentificationNumber?: string;
+  employments: Employment[];
+  NationalIdentificationNumber?: string; // TODO: Remove (NP-10007)
 }
 
 export interface FlatCristinPerson {
@@ -109,6 +111,7 @@ export interface FlatCristinPerson {
   id: string;
   cristinIdentifier: string;
   affiliations: CristinPersonAffiliation[];
+  employments: Employment[];
   orcid?: string;
 }
 
@@ -126,6 +129,6 @@ export interface Employment {
   type: string;
   organization: string;
   startDate: string;
-  endDate: string;
+  endDate?: string;
   fullTimeEquivalentPercentage: string;
 }

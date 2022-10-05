@@ -4,6 +4,7 @@ import { useFetch } from './useFetch';
 import { RootState } from '../../redux/store';
 import { setResource } from '../../redux/resourcesSlice';
 import { API_URL } from '../constants';
+import { isValidUrl } from '../general-helpers';
 
 // This hook is used to fetch all top-level institutions and put them in Redux, to avoid fetching same data many times
 export const useFetchResource = <T>(id: string, errorMessage?: string): [T | undefined, boolean] => {
@@ -27,12 +28,3 @@ export const useFetchResource = <T>(id: string, errorMessage?: string): [T | und
 };
 
 const getKeyValue = (id: string) => (isValidUrl(id) ? id : `${API_URL.slice(0, -1)}${id}`);
-
-const isValidUrl = (value: string) => {
-  try {
-    const url = new URL(value);
-    return url.protocol === 'http:' || url.protocol === 'https:';
-  } catch {
-    return false;
-  }
-};

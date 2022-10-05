@@ -11,7 +11,6 @@ import { ChapterEntityDescription } from './publication_types/chapterRegistratio
 import { Contributor } from './contributor.types';
 import { PresentationEntityDescription } from './publication_types/presentationRegistration.types';
 import { ArtisticEntityDescription } from './publication_types/artisticRegistration.types';
-import { MessageCollection } from './publication_types/messages.types';
 import { MediaContributionEntityDescription } from './publication_types/mediaContributionRegistration';
 import {
   JournalType,
@@ -22,7 +21,9 @@ import {
   PresentationType,
   ArtisticType,
   MediaType,
+  ResearchDataType,
 } from './publicationFieldNames';
+import { ResearchDataEntityDescription } from './publication_types/researchDataRegistration.types';
 
 export enum RegistrationStatus {
   Deleted = 'DRAFT_FOR_DELETION',
@@ -66,21 +67,6 @@ export interface MyRegistrationsResponse {
   publications?: RegistrationPreview[]; // "publications" is undefined if user has no registrations
 }
 
-export enum DoiRequestStatus {
-  Approved = 'APPROVED',
-  Rejected = 'REJECTED',
-  Requested = 'REQUESTED',
-}
-
-export interface DoiRequest {
-  type: 'DoiRequest';
-  identifier: string;
-  createdDate: string;
-  modifiedDate: string;
-  status: DoiRequestStatus;
-  messages?: MessageCollection;
-}
-
 interface RegistrationPublisher {
   id: string;
 }
@@ -98,7 +84,6 @@ export interface BaseRegistration extends RegistrationFileSet {
   };
   readonly status: RegistrationStatus;
   readonly doi?: string;
-  readonly doiRequest?: DoiRequest;
   readonly publisher: RegistrationPublisher;
   subjects: string[];
   projects: ResearchProject[];
@@ -134,7 +119,8 @@ export type PublicationInstanceType =
   | ChapterType
   | PresentationType
   | ArtisticType
-  | MediaType;
+  | MediaType
+  | ResearchDataType;
 
 export enum PublicationChannelType {
   Journal = 'Journal',
@@ -153,7 +139,8 @@ export type EntityDescription =
   | ChapterEntityDescription
   | PresentationEntityDescription
   | ArtisticEntityDescription
-  | MediaContributionEntityDescription;
+  | MediaContributionEntityDescription
+  | ResearchDataEntityDescription;
 
 export interface Registration extends BaseRegistration {
   entityDescription?: EntityDescription;
@@ -167,13 +154,12 @@ export interface RegistrationDate {
 }
 
 export interface RegistrationPreview {
-  identifier: string;
+  id: string;
   mainTitle: string;
   createdDate: string;
-  status: string;
+  modifiedDate: string;
+  status: RegistrationStatus;
   owner: string;
-  publicationDate?: RegistrationDate;
-  contributors?: Contributor[];
 }
 
 export interface Doi {
@@ -200,4 +186,21 @@ export const emptyRegistration: Registration = {
   projects: [],
   publisher: { id: '' },
   subjects: [],
+};
+
+export interface Series {
+  type: PublicationChannelType.Series | PublicationChannelType.UnconfirmedSeries;
+  id?: string;
+  title?: string;
+}
+
+export interface ContextPublisher {
+  type: PublicationChannelType.UnconfirmedPublisher | PublicationChannelType.Publisher;
+  name?: string;
+  id?: string;
+}
+
+export const emptyContextPublisher: ContextPublisher = {
+  type: PublicationChannelType.Publisher,
+  id: '',
 };

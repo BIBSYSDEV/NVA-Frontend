@@ -11,7 +11,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { CristinApiPath } from '../../../../api/apiPaths';
@@ -20,7 +20,6 @@ import { setNotification } from '../../../../redux/notificationSlice';
 import { PostCristinProject } from '../../../../types/project.types';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { getNewDateValue } from '../../../../utils/registration-helpers';
 import { basicProjectValidationSchema } from '../../../../utils/validation/project/BasicProjectValidation';
 import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
 import { ProjectContributorRow } from './ProjectContributorRow';
@@ -68,7 +67,7 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
       <DialogTitle>{t('project.create_project')}</DialogTitle>
 
       <Formik initialValues={initialValues} validationSchema={basicProjectValidationSchema} onSubmit={createProject}>
-        {({ isSubmitting, setFieldValue }) => (
+        {({ values, isSubmitting, setFieldValue, setFieldTouched }: FormikProps<PostCristinProject>) => (
           <Form noValidate>
             <DialogContent>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -105,16 +104,16 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                         PopperProps={{
                           'aria-label': t('common.start_date'),
                         }}
-                        onChange={(date: Date | null, keyboardValue) => {
-                          const newDateString = getNewDateValue(date, keyboardValue);
-                          setFieldValue(field.name, newDateString);
+                        onChange={(date) => {
+                          !touched && setFieldTouched(field.name, true, false);
+                          setFieldValue(field.name, date ?? '');
                         }}
                         value={field.value ? new Date(field.value) : null}
+                        maxDate={values.endDate}
                         inputFormat="dd.MM.yyyy"
                         mask="__.__.____"
                         renderInput={(params) => (
                           <TextField
-                            {...field}
                             {...params}
                             data-testid={dataTestId.registrationWizard.description.projectForm.startDateField}
                             variant="filled"
@@ -134,16 +133,16 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                         PopperProps={{
                           'aria-label': t('common.end_date'),
                         }}
-                        onChange={(date: Date | null, keyboardValue) => {
-                          const newDateString = getNewDateValue(date, keyboardValue);
-                          setFieldValue(field.name, newDateString);
+                        onChange={(date) => {
+                          !touched && setFieldTouched(field.name, true, false);
+                          setFieldValue(field.name, date);
                         }}
                         value={field.value ? new Date(field.value) : null}
+                        minDate={values.startDate}
                         inputFormat="dd.MM.yyyy"
                         mask="__.__.____"
                         renderInput={(params) => (
                           <TextField
-                            {...field}
                             {...params}
                             data-testid={dataTestId.registrationWizard.description.projectForm.endDateField}
                             variant="filled"

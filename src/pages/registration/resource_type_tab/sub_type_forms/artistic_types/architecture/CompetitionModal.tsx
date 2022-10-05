@@ -4,11 +4,11 @@ import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'form
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { Competition } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import i18n from '../../../../../../translations/i18n';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
+import { emptyInstant } from '../../../../../../types/common.types';
 
 interface CompetitionModalProps {
   competition?: Competition;
@@ -27,7 +27,7 @@ const emptyCompetition: Competition = {
   type: 'Competition',
   name: '',
   description: '',
-  date: { type: 'Instant', value: '' },
+  date: emptyInstant,
   sequence: 0,
 };
 
@@ -43,11 +43,17 @@ const validationSchema = Yup.object<YupShape<Competition>>({
     })
   ),
   date: Yup.object().shape({
-    value: Yup.date().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('registration.resource_type.artistic.competition_date'),
-      })
-    ),
+    value: Yup.date()
+      .required(
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('registration.resource_type.artistic.competition_date'),
+        })
+      )
+      .typeError(
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('registration.resource_type.artistic.competition_date'),
+        })
+      ),
   }),
 });
 
@@ -113,12 +119,9 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
                       'aria-label': t('registration.resource_type.artistic.competition_date'),
                     }}
                     value={field.value ?? null}
-                    onChange={(date: Date | null, keyboardInput) => {
+                    onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
-                      const newValue = getNewDateValue(date, keyboardInput);
-                      if (newValue !== null) {
-                        setFieldValue(field.name, newValue);
-                      }
+                      setFieldValue(field.name, date ?? '');
                     }}
                     inputFormat="dd.MM.yyyy"
                     views={['year', 'month', 'day']}
@@ -134,7 +137,6 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
                         helperText={<ErrorMessage name={field.name} />}
                       />
                     )}
-                    data-testid={dataTestId.registrationWizard.resourceType.competitionDate}
                   />
                 )}
               </Field>

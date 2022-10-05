@@ -38,6 +38,11 @@ import {
   emptyMediaContributionPublicationInstance,
 } from '../../types/publication_types/mediaContributionRegistration';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
+import { ResearchDataTypeForm } from './resource_type_tab/ResearchDataTypeForm';
+import {
+  emptyResearchDataPublicationInstance,
+  emptyResearchDataPublicationContext,
+} from '../../types/publication_types/researchDataRegistration.types';
 
 export const ResourceTypePanel = () => {
   const { t } = useTranslation();
@@ -108,6 +113,10 @@ export const ResourceTypePanel = () => {
       case PublicationType.MediaContribution:
         setFieldValue(instanceTypeBaseFieldName, emptyMediaContributionPublicationInstance, false);
         setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPublicationContext, false);
+        break;
+      case PublicationType.ResearchData:
+        setFieldValue(instanceTypeBaseFieldName, emptyResearchDataPublicationInstance, false);
+        setFieldValue(contextTypeBaseFieldName, emptyResearchDataPublicationContext, false);
         break;
     }
 
@@ -194,6 +203,8 @@ export const ResourceTypePanel = () => {
         <ArtisticTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
       ) : mainType === PublicationType.MediaContribution ? (
         <MediaTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
+      ) : mainType === PublicationType.ResearchData ? (
+        <ResearchDataTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
       ) : null}
 
       <ConfirmDialog

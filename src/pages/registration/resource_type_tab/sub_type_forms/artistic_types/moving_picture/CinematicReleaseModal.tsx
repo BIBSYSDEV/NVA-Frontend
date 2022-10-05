@@ -4,10 +4,11 @@ import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'form
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { CinematicRelease } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { getNewDateValue } from '../../../../../../utils/registration-helpers';
 import i18n from '../../../../../../translations/i18n';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { emptyInstant } from '../../../../../../types/common.types';
 
 interface CinematicReleaseModalProps {
   cinematicRelease?: CinematicRelease;
@@ -23,10 +24,7 @@ const emptyCinematicRelease: CinematicRelease = {
     label: '',
     country: '',
   },
-  date: {
-    type: 'Instant',
-    value: '',
-  },
+  date: emptyInstant,
 };
 
 const validationSchema = Yup.object<YupShape<CinematicRelease>>({
@@ -76,6 +74,7 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.cinemaPlace}
                   />
                 )}
               </Field>
@@ -91,24 +90,21 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
                       'aria-label': t('registration.resource_type.artistic.premiere_date'),
                     }}
                     value={field.value ?? null}
-                    onChange={(date: Date | null, keyboardInput) => {
+                    onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
-                      const newValue = getNewDateValue(date, keyboardInput);
-                      if (newValue !== null) {
-                        setFieldValue(field.name, newValue);
-                      }
+                      setFieldValue(field.name, date);
                     }}
                     inputFormat="dd.MM.yyyy"
                     mask="__.__.____"
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        {...field}
                         sx={{ maxWidth: '13rem' }}
                         variant="filled"
                         required
                         error={touched && !!error}
                         helperText={<ErrorMessage name={field.name} />}
+                        data-testid={dataTestId.registrationWizard.resourceType.cinemaDate}
                       />
                     )}
                   />

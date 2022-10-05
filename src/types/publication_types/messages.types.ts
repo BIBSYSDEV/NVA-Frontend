@@ -1,30 +1,33 @@
-import { DoiRequest, RegistrationPreview } from '../registration.types';
-
-export enum MessageType {
-  DoiRequest = 'DoiRequest',
-  Support = 'Support',
-}
-
 export interface Message {
-  createdDate: string;
   id: string;
   identifier: string;
-  owner: string;
   sender: string;
+  owner: string;
   text: string;
+  date: string;
+  recipient: string;
 }
 
-export interface MessageCollection {
-  messageType: MessageType;
+export interface TicketCollection {
+  type: 'TicketCollection';
+  tickets: Ticket[];
+}
+
+export type TicketType = 'DoiRequest' | 'GeneralSupportCase' | 'PublishingRequest' | 'GeneralSupportRequest'; // TODO: remove duplicated Support when search and publication api returns same
+export type TicketStatus = 'Pending' | 'Closed' | 'Completed';
+
+export interface Ticket {
+  type: TicketType;
+  status: TicketStatus;
+  createdDate: string;
+  modifiedDate: string;
+  id: string;
+  identifier: string;
+  publication: {
+    id: string;
+    identifier: string;
+    mainTitle: string;
+  };
+  viewedBy: string[];
   messages: Message[];
-}
-
-export interface PublicationConversation {
-  type: 'PublicationConversation';
-  messageCollections: MessageCollection[];
-  publication: RegistrationPreview;
-}
-
-export interface DoiRequestConversation extends DoiRequest {
-  publication: RegistrationPreview;
 }

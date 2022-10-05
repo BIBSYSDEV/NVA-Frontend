@@ -3,7 +3,7 @@ import { AddAdminFormData } from '../../../pages/basic_data/app_admin/AddAdminDi
 import { AddEmployeeData } from '../../../pages/basic_data/institution_admin/AddEmployeePage';
 import i18n from '../../../translations/i18n';
 import { Employment, FlatCristinPerson } from '../../../types/user.types';
-import { validateDateInterval, YupShape } from '../validationHelpers';
+import { YupShape } from '../validationHelpers';
 
 const employeeErrorMessage = {
   firstNameRequired: i18n.t('feedback.validation.is_required', { field: i18n.t('common.first_name') }),
@@ -27,18 +27,17 @@ const employeeErrorMessage = {
     field: i18n.t('basic_data.add_employee.position_percent'),
     limit: 0,
   }),
-  affiliationStartDateRequired: i18n.t('feedback.validation.is_required', {
+  affiliationStartDateInvalid: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('common.start_date'),
   }),
-  affiliationStartDateBeforeEnd: i18n.t('feedback.validation.cannot_be_after', {
+  affiliationStartDateRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('common.start_date'),
-    limitField: i18n.t('common.end_date').toLowerCase(),
   }),
   affiliationEndDateAfterStart: i18n.t('feedback.validation.cannot_be_before', {
     field: i18n.t('common.end_date'),
     limitField: i18n.t('common.start_date').toLowerCase(),
   }),
-  affiliationEndDateRequired: i18n.t('feedback.validation.is_required', {
+  affiliationEndDateInvalid: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('common.end_date'),
   }),
   nationalIdInvalid: i18n.t('feedback.validation.is_required', {
@@ -67,18 +66,22 @@ export const addEmployeeValidationSchema = Yup.object<YupShape<AddEmployeeData>>
       .min(0, employeeErrorMessage.affiliationPercentageMin)
       .max(100, employeeErrorMessage.affiliationPercentageMax)
       .required(employeeErrorMessage.affiliationPercentageRequired),
-    startDate: Yup.string()
-      .test('start-test', employeeErrorMessage.affiliationStartDateBeforeEnd, (startValue, context) =>
-        validateDateInterval(startValue, context.parent.endDate)
-      )
-      .required(employeeErrorMessage.affiliationStartDateRequired),
-    endDate: Yup.string().test('end-test', employeeErrorMessage.affiliationEndDateAfterStart, (endValue, context) =>
-      validateDateInterval(context.parent.startDate, endValue)
-    ),
+    startDate: Yup.date()
+      .required(employeeErrorMessage.affiliationStartDateRequired)
+      .typeError(employeeErrorMessage.affiliationStartDateInvalid),
+    endDate: Yup.date()
+      .typeError(employeeErrorMessage.affiliationEndDateInvalid)
+      .when('startDate', (startDate, schema) =>
+        startDate instanceof Date && !isNaN(startDate.getTime())
+          ? schema.min(startDate, employeeErrorMessage.affiliationEndDateAfterStart)
+          : schema
+      ),
   }),
 });
 
 export const addCustomerAdminValidationSchema = Yup.object<YupShape<AddAdminFormData>>({
-  startDate: Yup.date().required(employeeErrorMessage.affiliationStartDateRequired),
+  startDate: Yup.date()
+    .required(employeeErrorMessage.affiliationStartDateRequired)
+    .typeError(employeeErrorMessage.affiliationStartDateInvalid),
   position: Yup.string().required(employeeErrorMessage.affiliationTypeRequired),
 });
