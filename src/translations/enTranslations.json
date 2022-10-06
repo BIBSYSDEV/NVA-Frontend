@@ -45,7 +45,6 @@
     "central_import": {
       "author": "$t(registration.contributors.types.Creator)",
       "central_import": "Central import",
-      "doi": "DOI",
       "duplicate_check": "Duplicate check",
       "duplicate_search_hits_shown": "Hits (Showing {{ShownResultsCount}} of {{TotalResultsCount}})",
       "import_publication": "Import publication",
@@ -116,6 +115,7 @@
     "date_format": "dd.mm.yyyy",
     "delete": "Delete",
     "description": "Beskrivelse",
+    "doi": "DOI",
     "edit": "Edit",
     "employments": "Employments",
     "end_date": "End date",

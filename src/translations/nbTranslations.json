@@ -45,7 +45,6 @@
     "central_import": {
       "author": "$t(registration.contributors.types.Creator)",
       "central_import": "Sentralimport",
-      "doi": "DOI",
       "duplicate_check": "Duplikatsjekk",
       "duplicate_search_hits_shown": "Søket ga følgende treff: (viser {{ShownResultsCount}} av {{TotalResultsCount}})",
       "import_publication": "Import publication",
@@ -116,6 +115,7 @@
     "date_format": "dd.mm.åååå",
     "delete": "Slett",
     "description": "Beskrivelse",
+    "doi": "DOI",
     "edit": "Endre",
     "employments": "Ansettelser",
     "end_date": "Sluttdato",
