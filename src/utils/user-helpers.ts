@@ -50,8 +50,7 @@ export const convertToCristinPerson = (user: FlatCristinPerson): CreateCristinPe
 });
 
 export const convertToFlatCristinPerson = (user: CristinPerson): FlatCristinPerson => ({
-  nationalId:
-    getValueByKey('NationalIdentificationNumber', user.identifiers) || user.NationalIdentificationNumber || '',
+  nationalId: getValueByKey('NationalIdentificationNumber', user.identifiers),
   firstName: getValueByKey('FirstName', user.names),
   lastName: getValueByKey('LastName', user.names),
   id: user.id,
