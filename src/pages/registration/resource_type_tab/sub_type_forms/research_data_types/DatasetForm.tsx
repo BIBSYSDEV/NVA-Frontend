@@ -158,26 +158,25 @@ export const DatasetForm = () => {
 };
 
 export const AcceptDatasetTermsDialog = () => {
+  const { t } = useTranslation();
+
   return (
     <>
-      <Typography fontWeight={500}>Datasettet inneholder personopplysninger?*</Typography>
+      <Typography fontWeight={500}>
+        {t('registration.resource_type.research_data.accept_dataset_terms.contains_personal_data')}
+      </Typography>
       <Typography paragraph>
-        Personopplysninger er enhver opplysning om en identifisert eller identifiserbar fysisk person. Dette kan være
-        navn, adresse, telefonnummer, e-post, bilde, lydopptak, fingeravtrykk, nettidentifikator,
-        lokaliseringsopplysninger, etc.
+        {t('registration.resource_type.research_data.accept_dataset_terms.contains_personal_data_description')}
       </Typography>
 
-      <Typography fontWeight={500}>Datasettet inneholder andre sensitive eller konfidensielle data?*</Typography>
+      <Typography fontWeight={500}>
+        {t('registration.resource_type.research_data.accept_dataset_terms.contains_sensitive_data')}
+      </Typography>
       <Typography paragraph>
-        Sensitive eller konfidensielle data er informasjon og opplysninger som har behov for beskyttelse eller
-        skjerming, og som må sikres mot urettmessig innsyn og tilgang. Dette kan være personopplysninger,
-        bedriftshemmeligheter, sikkerhetsinformasjon, kommersielle rettigheter, patenter, etc.
+        {t('registration.resource_type.research_data.accept_dataset_terms.contains_sensitive_data_description')}
       </Typography>
 
-      <Typography>
-        Når du trykker JA eller er usikker så må du sende melding til brukerstøtte der din kurator avklarer videre
-        prosess for å publisere datasettet.
-      </Typography>
+      <Typography>{t('registration.resource_type.research_data.accept_dataset_terms.further_info')}</Typography>
     </>
   );
 };

@@ -249,7 +249,7 @@ export const ResourceTypePanel = () => {
 
       <ConfirmDialog
         open={showDatasetConditions}
-        title={'For å legge til forskningsdata må du først avklare om'}
+        title={t('registration.resource_type.research_data.accept_dataset_terms.dialog_title')}
         onAccept={() => {
           setConfirmContextType('');
           setConfirmInstanceType('');

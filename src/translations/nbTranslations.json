@@ -1251,6 +1251,14 @@
       "remove_journal": "Fjern tidsskrift",
       "remove_publisher": "Fjern utgiver",
       "research_data": {
+        "accept_dataset_terms": {
+          "contains_personal_data": "Datasettet inneholder personopplysninger?*",
+          "contains_personal_data_description": "Personopplysninger er enhver opplysning om en identifisert eller identifiserbar fysisk person. Dette kan være navn, adresse, telefonnummer, e-post, bilde, lydopptak, fingeravtrykk, nettidentifikator, lokaliseringsopplysninger, etc.",
+          "contains_sensitive_data": "Datasettet inneholder andre sensitive eller konfidensielle data?*",
+          "contains_sensitive_data_description": "Sensitive eller konfidensielle data er informasjon og opplysninger som har behov for beskyttelse eller skjerming, og som må sikres mot urettmessig innsyn og tilgang. Dette kan være personopplysninger, bedriftshemmeligheter, sikkerhetsinformasjon, kommersielle rettigheter, patenter, etc.",
+          "dialog_title": "For å legge til forskningsdata må du først avklare om",
+          "further_info": "Når du trykker JA eller er usikker så må du sende melding til brukerstøtte der din kurator avklarer videre prosess for å publisere datasettet."
+        },
         "add_link": "Legg til lenke",
         "external_link": "Eksterne lenke",
         "external_links": "Eksterne lenker",
