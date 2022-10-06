@@ -101,7 +101,6 @@ export interface CristinPerson extends CreateCristinPerson {
   id: string;
   affiliations: CristinPersonAffiliation[];
   employments: Employment[];
-  NationalIdentificationNumber?: string; // TODO: Remove (NP-10007)
 }
 
 export interface FlatCristinPerson {
