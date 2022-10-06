@@ -22,7 +22,11 @@ import { getFirstErrorTab, getTabErrors, TabErrors } from '../../utils/formik-he
 import { ErrorList } from '../registration/ErrorList';
 import { dataTestId } from '../../utils/dataTestIds';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
+import {
+  userIsCuratorForRegistration,
+  userIsRegistrationCurator,
+  userIsRegistrationOwner,
+} from '../../utils/registration-helpers';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { TicketCollection, TicketStatus } from '../../types/publication_types/messages.types';
 
@@ -47,7 +51,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   const [tabErrors, setTabErrors] = useState<TabErrors>();
 
   const [registrationTicketCollection, isLoadingRegistrationTicketCollection] = useFetch<TicketCollection>({
-    url: user?.isCurator ? `${registration.id}/tickets` : '',
+    url: userIsCuratorForRegistration(user, registration) ? `${registration.id}/tickets` : '',
     withAuthentication: true,
     errorMessage: t('feedback.error.get_tickets'),
   });

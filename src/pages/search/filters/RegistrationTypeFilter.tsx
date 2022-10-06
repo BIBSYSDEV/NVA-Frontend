@@ -8,6 +8,7 @@ import {
   ChapterType,
   DegreeType,
   JournalType,
+  MediaType,
   PresentationType,
   PublicationType,
   ReportType,
@@ -119,6 +120,16 @@ export const RegistrationTypeFilter = () => {
 
       <BaseFilterItem title={t(`registration.publication_types.${PublicationType.Artistic}`)} fontWeight={500}>
         {Object.values(ArtisticType).map((type) => (
+          <li key={type}>
+            <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
+              {t(`registration.publication_types.${type}`)}
+            </StyledIndentedListItem>
+          </li>
+        ))}
+      </BaseFilterItem>
+
+      <BaseFilterItem title={t(`registration.publication_types.${PublicationType.MediaContribution}`)} fontWeight={500}>
+        {Object.values(MediaType).map((type) => (
           <li key={type}>
             <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
               {t(`registration.publication_types.${type}`)}

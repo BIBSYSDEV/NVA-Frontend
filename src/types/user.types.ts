@@ -101,7 +101,6 @@ export interface CristinPerson extends CreateCristinPerson {
   id: string;
   affiliations: CristinPersonAffiliation[];
   employments: Employment[];
-  NationalIdentificationNumber?: string; // TODO: Remove (NP-10007)
 }
 
 export interface FlatCristinPerson {
@@ -129,6 +128,14 @@ export interface Employment {
   type: string;
   organization: string;
   startDate: string;
-  endDate?: string;
+  endDate: string;
   fullTimeEquivalentPercentage: string;
 }
+
+export const emptyEmployment: Employment = {
+  type: '',
+  organization: '',
+  startDate: '',
+  endDate: '',
+  fullTimeEquivalentPercentage: '',
+};

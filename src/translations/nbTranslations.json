@@ -365,6 +365,7 @@
       "update_doi_request": "Kunne ikke oppdatere DOI-forespørsel",
       "update_institution_user": "Kunne ikke oppdatere bruker",
       "update_orcid": "Oppdatering av ORCID-kobling feilet",
+      "update_person": "Kunne ikke oppdatere person",
       "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
       "update_registration": "Kunne ikke oppdatere registrering",
       "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
@@ -401,6 +402,7 @@
       "cannot_be_before": "{{field}} kan ikke være før {{limitField}}",
       "contributor_required": "Du må ha minst en bidragsyter på denne registreringen",
       "editor_required": "Du må ha minst en redaktør på denne registreringen",
+      "employments_missing_data": "Alle ansettelser må ha stilling, stillingsprosent og startdato",
       "exhibition_place_required": "Må ha minst ett visningssted",
       "has_invalid_format": "{{field}} har ugyldig format",
       "invalid_number_of_digits": "{{field}} må ha {{digits}} siffer",
