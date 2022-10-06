@@ -1,7 +1,7 @@
 import { FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MenuItem, TextField } from '@mui/material';
+import { MenuItem, TextField, Typography } from '@mui/material';
 import { InputContainerBox, StyledSelectWrapper } from '../../components/styled/Wrappers';
 import { emptyBookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
 import { emptyChapterPublicationInstance } from '../../types/publication_types/chapterRegistration.types';
@@ -44,7 +44,6 @@ import {
   emptyResearchDataPublicationInstance,
   emptyResearchDataPublicationContext,
 } from '../../types/publication_types/researchDataRegistration.types';
-import { AcceptDatasetTermsDialog } from './resource_type_tab/sub_type_forms/research_data_types/DatasetForm';
 
 export const ResourceTypePanel = () => {
   const { t } = useTranslation();
@@ -259,7 +258,21 @@ export const ResourceTypePanel = () => {
           setPublicationInstanceType(ResearchDataType.Dataset);
           setShowDatasetConditions(false);
         }}>
-        <AcceptDatasetTermsDialog />
+        <Typography fontWeight={500}>
+          {t('registration.resource_type.research_data.accept_dataset_terms.contains_personal_data')}
+        </Typography>
+        <Typography paragraph>
+          {t('registration.resource_type.research_data.accept_dataset_terms.contains_personal_data_description')}
+        </Typography>
+
+        <Typography fontWeight={500}>
+          {t('registration.resource_type.research_data.accept_dataset_terms.contains_sensitive_data')}
+        </Typography>
+        <Typography paragraph>
+          {t('registration.resource_type.research_data.accept_dataset_terms.contains_sensitive_data_description')}
+        </Typography>
+
+        <Typography>{t('registration.resource_type.research_data.accept_dataset_terms.further_info')}</Typography>
       </ConfirmDialog>
     </InputContainerBox>
   );

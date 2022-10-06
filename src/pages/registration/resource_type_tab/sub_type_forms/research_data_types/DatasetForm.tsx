@@ -156,27 +156,3 @@ export const DatasetForm = () => {
     </>
   );
 };
-
-export const AcceptDatasetTermsDialog = () => {
-  const { t } = useTranslation();
-
-  return (
-    <>
-      <Typography fontWeight={500}>
-        {t('registration.resource_type.research_data.accept_dataset_terms.contains_personal_data')}
-      </Typography>
-      <Typography paragraph>
-        {t('registration.resource_type.research_data.accept_dataset_terms.contains_personal_data_description')}
-      </Typography>
-
-      <Typography fontWeight={500}>
-        {t('registration.resource_type.research_data.accept_dataset_terms.contains_sensitive_data')}
-      </Typography>
-      <Typography paragraph>
-        {t('registration.resource_type.research_data.accept_dataset_terms.contains_sensitive_data_description')}
-      </Typography>
-
-      <Typography>{t('registration.resource_type.research_data.accept_dataset_terms.further_info')}</Typography>
-    </>
-  );
-};
