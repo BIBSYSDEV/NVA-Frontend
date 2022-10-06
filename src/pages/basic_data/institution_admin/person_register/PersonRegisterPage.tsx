@@ -49,7 +49,7 @@ export const PersonRegisterPage = () => {
     }
   }, [debouncedSearchQuery]);
 
-  const [employeesSearchResponse, isLoadingEmployees] = useFetch<SearchResponse<CristinPerson>>({
+  const [employeesSearchResponse, isLoadingEmployees, refetchEmployees] = useFetch<SearchResponse<CristinPerson>>({
     url: getSearchUrl(
       user?.topOrgCristinId,
       debouncedSearchQuery,
@@ -129,6 +129,7 @@ export const PersonRegisterPage = () => {
                           user?.topOrgCristinId ? user.topOrgCristinId.split('/').pop() ?? '' : ''
                         }
                         customerId={user?.customerId ?? ''}
+                        refetchEmployees={refetchEmployees}
                       />
                     ))}
               </TableBody>

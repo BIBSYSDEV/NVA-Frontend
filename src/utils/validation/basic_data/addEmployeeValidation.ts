@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 import { AddAdminFormData } from '../../../pages/basic_data/app_admin/AddAdminDialog';
 import { AddEmployeeData } from '../../../pages/basic_data/institution_admin/AddEmployeePage';
+import { PersonData } from '../../../pages/basic_data/institution_admin/person_register/PersonTableRow';
 import i18n from '../../../translations/i18n';
 import { Employment, FlatCristinPerson } from '../../../types/user.types';
 import { YupShape } from '../validationHelpers';
@@ -57,26 +58,28 @@ export const userValidationSchema = Yup.object<YupShape<FlatCristinPerson>>({
     .required(employeeErrorMessage.nationalIdInvalid),
 });
 
+const employmentValidation = Yup.object<YupShape<Employment>>({
+  type: Yup.string().required(employeeErrorMessage.affiliationTypeRequired),
+  organization: Yup.string().required(employeeErrorMessage.affiliationOrganizationRequired),
+  fullTimeEquivalentPercentage: Yup.number()
+    .min(0, employeeErrorMessage.affiliationPercentageMin)
+    .max(100, employeeErrorMessage.affiliationPercentageMax)
+    .required(employeeErrorMessage.affiliationPercentageRequired),
+  startDate: Yup.date()
+    .required(employeeErrorMessage.affiliationStartDateRequired)
+    .typeError(employeeErrorMessage.affiliationStartDateInvalid),
+  endDate: Yup.date()
+    .typeError(employeeErrorMessage.affiliationEndDateInvalid)
+    .when('startDate', (startDate, schema) =>
+      startDate instanceof Date && !isNaN(startDate.getTime())
+        ? schema.min(startDate, employeeErrorMessage.affiliationEndDateAfterStart)
+        : schema
+    ),
+});
+
 export const addEmployeeValidationSchema = Yup.object<YupShape<AddEmployeeData>>({
   user: userValidationSchema,
-  affiliation: Yup.object<YupShape<Employment>>({
-    type: Yup.string().required(employeeErrorMessage.affiliationTypeRequired),
-    organization: Yup.string().required(employeeErrorMessage.affiliationOrganizationRequired),
-    fullTimeEquivalentPercentage: Yup.number()
-      .min(0, employeeErrorMessage.affiliationPercentageMin)
-      .max(100, employeeErrorMessage.affiliationPercentageMax)
-      .required(employeeErrorMessage.affiliationPercentageRequired),
-    startDate: Yup.date()
-      .required(employeeErrorMessage.affiliationStartDateRequired)
-      .typeError(employeeErrorMessage.affiliationStartDateInvalid),
-    endDate: Yup.date()
-      .typeError(employeeErrorMessage.affiliationEndDateInvalid)
-      .when('startDate', (startDate, schema) =>
-        startDate instanceof Date && !isNaN(startDate.getTime())
-          ? schema.min(startDate, employeeErrorMessage.affiliationEndDateAfterStart)
-          : schema
-      ),
-  }),
+  affiliation: employmentValidation,
 });
 
 export const addCustomerAdminValidationSchema = Yup.object<YupShape<AddAdminFormData>>({
@@ -84,4 +87,8 @@ export const addCustomerAdminValidationSchema = Yup.object<YupShape<AddAdminForm
     .required(employeeErrorMessage.affiliationStartDateRequired)
     .typeError(employeeErrorMessage.affiliationStartDateInvalid),
   position: Yup.string().required(employeeErrorMessage.affiliationTypeRequired),
+});
+
+export const personDataValidationSchema = Yup.object<YupShape<PersonData>>({
+  employments: Yup.array().of(employmentValidation),
 });

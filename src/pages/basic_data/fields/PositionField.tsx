@@ -1,5 +1,5 @@
 import { Autocomplete, TextField } from '@mui/material';
-import { Field, FieldProps, ErrorMessage } from 'formik';
+import { Field, FieldProps } from 'formik';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CristinApiPath } from '../../../api/apiPaths';
@@ -57,7 +57,7 @@ export const PositionField = ({
               label={t('basic_data.add_employee.position')}
               variant="filled"
               error={touched && !!error}
-              helperText={<ErrorMessage name={field.name} />}
+              helperText={touched && error}
             />
           )}
         />
