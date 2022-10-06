@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 import { AddAdminFormData } from '../../../pages/basic_data/app_admin/AddAdminDialog';
 import { AddEmployeeData } from '../../../pages/basic_data/institution_admin/AddEmployeePage';
+import { PersonData } from '../../../pages/basic_data/institution_admin/person_register/PersonTableRow';
 import i18n from '../../../translations/i18n';
 import { Employment, FlatCristinPerson } from '../../../types/user.types';
 import { YupShape } from '../validationHelpers';
@@ -88,6 +89,6 @@ export const addCustomerAdminValidationSchema = Yup.object<YupShape<AddAdminForm
   position: Yup.string().required(employeeErrorMessage.affiliationTypeRequired),
 });
 
-export const personDataValidationSchema = Yup.object<YupShape<unknown>>({
+export const personDataValidationSchema = Yup.object<YupShape<PersonData>>({
   employments: Yup.array().of(employmentValidation),
 });
