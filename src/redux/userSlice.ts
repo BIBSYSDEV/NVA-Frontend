@@ -17,7 +17,8 @@ const userSlice = createSlice({
       const firstName = action.payload['custom:firstName'] ?? '';
       const lastName = action.payload['custom:lastName'] ?? '';
       const cristinId = action.payload['custom:cristinId'] ?? '';
-      const allowedCustomers = action.payload['custom:allowedCustomers']?.split(',') ?? [];
+      const allowedCustomers =
+        action.payload['custom:allowedCustomers']?.split(',').filter((customerId) => customerId !== 'null') ?? [];
       const nationalIdNumber = action.payload['custom:feideIdNin'] ?? action.payload['custom:nin'] ?? '';
 
       const user: User = {
