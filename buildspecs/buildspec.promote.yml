@@ -3,5 +3,8 @@ version: 0.2
 phases:
   build:
     commands:
-      - export VERSION = date +%Y%m%d
-      - aws s3 cp $S3_BUCKET/builds/latest $S3_BUCKET/builds/$VERSION
+      - VERSION=v$(date +%Y%m%d)
+      - S3_BUCKET=frontend-builds-$(aws sts get-caller-identity --query Account --output text)
+      - FROM=s3://$S3_BUCKET/builds/latest
+      - TO=s3://$S3_BUCKET/builds/$VERSION
+      - aws s3 cp ${FROM} ${TO} --recursive
