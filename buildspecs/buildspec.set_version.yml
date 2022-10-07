@@ -1,0 +1,11 @@
+version: 0.2
+
+build:
+  commands:
+    - ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+    - VERSION=$(aws ssm get-parameter --name="/NVA/FrontendVersion/e2e" --output text --query Parameter.Value)
+    - echo $VERSION
+    - FROM=s3://frontend-builds-$ACCOUNT_ID/builds/$VERSION
+    - TO=s3://frontend-e2e-$ACCOUNT_ID
+    - aws s3 cp ${FROM} ${TO} --recursive
+    - aws s3 cp s3://frontend-builds-${ACCOUNT_ID}/index_files/e2e/index.html s3://frontend-e2e-${ACCOUNT_ID}
