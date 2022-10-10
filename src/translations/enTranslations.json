@@ -1266,6 +1266,7 @@
         "external_links": "External links",
         "external_link_helper_text": "Add external link with related content",
         "external_link_helper_text_error": "Invalid URL. Ensure that the link is complete. Example: https://sikt.no",
+        "geographic_description": "Geographic description",
         "no_related_links": "No related links.",
         "remove_relation": "Remove relation",
         "remove_relation_confirm_text": "You want to remove this relation?",

@@ -21,7 +21,10 @@ export const emptyResearchDataPublicationInstance: ResearchDataPublicationInstan
   type: '',
   related: [],
   agreesWithTermsAndConditions: false,
-  geographicalCoverage: '',
+  geographicalCoverage: {
+    type: 'GeographicalDescription',
+    description: '',
+  },
   referencedBy: [],
   compliesWith: [],
 };
@@ -54,8 +57,13 @@ interface DataManagementPlanPublicationContext {
 
 interface DatasetPublicationInstance {
   agreesWithTermsAndConditions: boolean;
-  geographicalCoverage: string;
+  geographicalCoverage: GeographicalDescription;
   compliesWith: string[]; // Related DMPs
   referencedBy: string[]; // Related Registrations (not DMPs)
   related: string[]; // External links
+}
+
+interface GeographicalDescription {
+  type: 'GeographicalDescription';
+  description: string;
 }

@@ -12,6 +12,7 @@ import {
 } from '../../../../../types/publicationFieldNames';
 import { ResearchDataRegistration } from '../../../../../types/publication_types/researchDataRegistration.types';
 import { Registration } from '../../../../../types/registration.types';
+import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../../utils/hooks/useFetch';
 import { getTitleString } from '../../../../../utils/registration-helpers';
@@ -42,13 +43,19 @@ export const DatasetForm = () => {
 
   return (
     <>
-      {/* TODO: Field names to enum */}
-      <Field name="geographicalCoverage">
-        {({ field }: FieldProps<string>) => <TextField {...field} variant="filled" label={'Geografisk område'} />}
+      <Field name={ResourceFieldNames.PublicationInstanceGeographicDescription}>
+        {({ field }: FieldProps<string>) => (
+          <TextField
+            {...field}
+            data-testid={dataTestId.registrationWizard.resourceType.geographicDescriptionField}
+            variant="filled"
+            label={t('registration.resource_type.research_data.geographic_description')}
+          />
+        )}
       </Field>
 
       <Typography variant="h2">{t('registration.resource_type.research_data.related_links')}</Typography>
-      <FieldArray name={'entityDescription.reference.publicationInstance.referencedBy'}>
+      <FieldArray name={ResourceFieldNames.PublicationInstanceReferencedBy}>
         {({ push, remove }: FieldArrayRenderProps) => (
           <>
             <Autocomplete
@@ -65,7 +72,7 @@ export const DatasetForm = () => {
               filterOptions={(options) => options}
               getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
               renderOption={(props, option, state) => (
-                <li {...props}>
+                <li {...props} key={option.identifier}>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant="subtitle1">
                       <EmphasizeSubstring
@@ -83,6 +90,7 @@ export const DatasetForm = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
+                  data-testid={dataTestId.registrationWizard.resourceType.geographicDescriptionField}
                   sx={{ maxWidth: '40rem' }}
                   onChange={(event) => {
                     setRelatedRegistrationsQuery(event.target.value);
@@ -106,7 +114,7 @@ export const DatasetForm = () => {
         )}
       </FieldArray>
 
-      <FieldArray name={'entityDescription.reference.publicationInstance.compliesWith'}>
+      <FieldArray name={ResourceFieldNames.PublicationInstanceCompliesWith}>
         {({ push, remove }: FieldArrayRenderProps) => (
           <>
             <Autocomplete
@@ -123,7 +131,7 @@ export const DatasetForm = () => {
               filterOptions={(options) => options}
               getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
               renderOption={(props, option, state) => (
-                <li {...props}>
+                <li {...props} key={option.identifier}>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant="subtitle1">
                       <EmphasizeSubstring
@@ -141,6 +149,7 @@ export const DatasetForm = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
+                  data-testid={dataTestId.registrationWizard.resourceType.compliesWithField}
                   sx={{ maxWidth: '40rem' }}
                   onChange={(event) => {
                     setRelatedDmpQuery(event.target.value);
@@ -164,7 +173,7 @@ export const DatasetForm = () => {
         )}
       </FieldArray>
 
-      <FieldArray name={'entityDescription.reference.publicationInstance.related'}>
+      <FieldArray name={ResourceFieldNames.PublicationInstanceRelated}>
         {({ push, remove }: FieldArrayRenderProps) => (
           <>
             <ExternalLinkField
