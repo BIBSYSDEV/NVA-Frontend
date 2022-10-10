@@ -1,8 +1,8 @@
 import * as Yup from 'yup';
 import { Contributor, ContributorRole } from '../../../types/contributor.types';
-import { BookType, ReportType } from '../../../types/publicationFieldNames';
+import { BookType, ReportType, ResearchDataType } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
-import { isArtistic, isDegree, isMediaContribution, isPresentation, isResearchData } from '../../registration-helpers';
+import { isArtistic, isDegree, isMediaContribution, isPresentation } from '../../registration-helpers';
 
 const contributorErrorMessage = {
   authorRequired: i18n.t('feedback.validation.author_required'),
@@ -19,7 +19,7 @@ const contributorValidationSchema = Yup.object().shape({
 export const contributorsValidationSchema = Yup.array().when(
   ['$publicationInstanceType'],
   (publicationInstanceType) => {
-    if (isDegree(publicationInstanceType) || isResearchData(publicationInstanceType)) {
+    if (isDegree(publicationInstanceType) || publicationInstanceType === ResearchDataType.DataManagementPlan) {
       return Yup.array()
         .of(contributorValidationSchema)
         .test('author-test', contributorErrorMessage.authorRequired, (contributors) =>
@@ -38,7 +38,8 @@ export const contributorsValidationSchema = Yup.array().when(
     } else if (
       isPresentation(publicationInstanceType) ||
       isArtistic(publicationInstanceType) ||
-      isMediaContribution(publicationInstanceType)
+      isMediaContribution(publicationInstanceType) ||
+      publicationInstanceType === ResearchDataType.Dataset
     ) {
       return Yup.array()
         .of(contributorValidationSchema)
