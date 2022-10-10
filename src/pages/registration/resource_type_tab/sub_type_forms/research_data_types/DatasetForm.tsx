@@ -1,4 +1,4 @@
-import { Autocomplete, Box, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, List, TextField, Typography } from '@mui/material';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -101,15 +101,17 @@ export const DatasetForm = () => {
               )}
             />
 
-            <Box component="ul" sx={{ m: 0, p: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              {referencedBy?.map((uri) => (
-                <RelatedResourceRow
-                  key={uri}
-                  uri={uri}
-                  removeRelatedResource={() => remove(referencedBy.indexOf(uri))}
-                />
-              ))}
-            </Box>
+            {referencedBy && referencedBy.length > 0 && (
+              <List>
+                {referencedBy.map((uri) => (
+                  <RelatedResourceRow
+                    key={uri}
+                    uri={uri}
+                    removeRelatedResource={() => remove(referencedBy.indexOf(uri))}
+                  />
+                ))}
+              </List>
+            )}
           </>
         )}
       </FieldArray>
@@ -160,15 +162,17 @@ export const DatasetForm = () => {
               )}
             />
 
-            <Box component="ul" sx={{ m: 0, p: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              {compliesWith?.map((uri) => (
-                <RelatedResourceRow
-                  key={uri}
-                  uri={uri}
-                  removeRelatedResource={() => remove(compliesWith.indexOf(uri))}
-                />
-              ))}
-            </Box>
+            {compliesWith && compliesWith.length > 0 && (
+              <List>
+                {compliesWith.map((uri) => (
+                  <RelatedResourceRow
+                    key={uri}
+                    uri={uri}
+                    removeRelatedResource={() => remove(compliesWith.indexOf(uri))}
+                  />
+                ))}
+              </List>
+            )}
           </>
         )}
       </FieldArray>
@@ -183,11 +187,14 @@ export const DatasetForm = () => {
                 }
               }}
             />
-            <Box component="ul" sx={{ m: 0, p: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              {related?.map((uri) => (
-                <RelatedResourceRow key={uri} uri={uri} removeRelatedResource={() => remove(related.indexOf(uri))} />
-              ))}
-            </Box>
+
+            {related && related.length > 0 && (
+              <List>
+                {related.map((uri) => (
+                  <RelatedResourceRow key={uri} uri={uri} removeRelatedResource={() => remove(related.indexOf(uri))} />
+                ))}
+              </List>
+            )}
           </>
         )}
       </FieldArray>

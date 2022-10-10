@@ -1,10 +1,11 @@
-import { CircularProgress, Link, Typography } from '@mui/material';
+import { CircularProgress, Link, List, ListItem, Typography } from '@mui/material';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
 import { apiRequest } from '../../api/apiRequest';
-import { RegistrationList } from '../../components/RegistrationList';
 import { Registration } from '../../types/registration.types';
 import { API_URL, isSuccessStatus } from '../../utils/constants';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 
 interface PublicRelatedResourcesContentProps {
   related: string[];
@@ -48,18 +49,26 @@ export const PublicRelatedResourcesContent = ({ related = [] }: PublicRelatedRes
             sx={{ display: 'block' }}
           />
         ) : (
-          <RegistrationList registrations={relatedRegistrations} />
+          <List>
+            {relatedRegistrations.map((registration) => (
+              <ListItem key={registration.identifier}>
+                <Link component={RouterLink} to={getRegistrationLandingPagePath(registration.identifier)}>
+                  {registration.entityDescription?.mainTitle}
+                </Link>
+              </ListItem>
+            ))}
+          </List>
         ))}
       {externalResources.length > 0 && (
         <>
           <Typography variant="overline">{t('registration.resource_type.research_data.external_links')}</Typography>
-          <ul>
+          <List>
             {externalResources.map((externalResource) => (
-              <li key={externalResource}>
+              <ListItem key={externalResource}>
                 <Link href={externalResource}>{externalResource}</Link>
-              </li>
+              </ListItem>
             ))}
-          </ul>
+          </List>
         </>
       )}
     </>

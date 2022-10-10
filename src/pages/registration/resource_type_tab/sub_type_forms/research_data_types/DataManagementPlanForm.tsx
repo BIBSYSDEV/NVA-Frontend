@@ -1,4 +1,4 @@
-import { Autocomplete, Box, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, List, TextField, Typography } from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -90,7 +90,7 @@ export const DataManagementPlanForm = () => {
               )}
             />
 
-            <Box component="ul" sx={{ m: 0, p: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <List>
               {internalResources.map((uri) => (
                 <RelatedResourceRow
                   key={uri}
@@ -98,7 +98,7 @@ export const DataManagementPlanForm = () => {
                   removeRelatedResource={() => remove(relatedResources.indexOf(uri))}
                 />
               ))}
-            </Box>
+            </List>
 
             <ExternalLinkField
               onAddClick={(url) => {
@@ -108,7 +108,7 @@ export const DataManagementPlanForm = () => {
               }}
             />
 
-            <Box component="ul" sx={{ m: 0, p: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <List>
               {externalResources.map((uri) => (
                 <RelatedResourceRow
                   key={uri}
@@ -116,7 +116,7 @@ export const DataManagementPlanForm = () => {
                   removeRelatedResource={() => remove(relatedResources.indexOf(uri))}
                 />
               ))}
-            </Box>
+            </List>
           </>
         )}
       </FieldArray>
