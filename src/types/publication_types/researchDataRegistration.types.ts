@@ -55,7 +55,7 @@ interface DataManagementPlanPublicationContext {
 interface DatasetPublicationInstance {
   agreesWithTermsAndConditions: boolean;
   geographicalCoverage: string;
-  referencedBy: string[];
-  related: string[];
-  compliesWith: string[];
+  compliesWith: string[]; // Related DMPs
+  referencedBy: string[]; // Related Registrations (not DMPs)
+  related: string[]; // External links
 }
