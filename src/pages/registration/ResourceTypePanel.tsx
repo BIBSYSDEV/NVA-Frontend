@@ -247,16 +247,22 @@ export const ResourceTypePanel = () => {
       </ConfirmDialog>
 
       <ConfirmDialog
-        open={showDatasetConditions}
+        open={
+          showDatasetConditions ||
+          (values.entityDescription?.reference?.publicationInstance.type === ResearchDataType.Dataset &&
+            !values.entityDescription.reference.publicationInstance.userAgreesToTermsAndConditions)
+        }
         title={t('registration.resource_type.research_data.accept_dataset_terms.dialog_title')}
         onAccept={() => {
           setConfirmContextType('');
           setConfirmInstanceType('');
+          setPublicationInstanceType('');
           setShowDatasetConditions(false);
         }}
         onCancel={() => {
           setPublicationInstanceType(ResearchDataType.Dataset);
           setShowDatasetConditions(false);
+          setFieldValue(ResourceFieldNames.PublicationInstanceAgreeTerms, true);
         }}>
         <Typography fontWeight={500}>
           {t('registration.resource_type.research_data.accept_dataset_terms.contains_personal_data')}

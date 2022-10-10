@@ -20,7 +20,7 @@ export interface ResearchDataPublicationInstance
 export const emptyResearchDataPublicationInstance: ResearchDataPublicationInstance = {
   type: '',
   related: [],
-  agreesWithTermsAndConditions: false,
+  userAgreesToTermsAndConditions: false,
   geographicalCoverage: {
     type: 'GeographicalDescription',
     description: '',
@@ -56,7 +56,7 @@ interface DataManagementPlanPublicationContext {
 }
 
 interface DatasetPublicationInstance {
-  agreesWithTermsAndConditions: boolean;
+  userAgreesToTermsAndConditions: boolean;
   geographicalCoverage: GeographicalDescription;
   compliesWith: string[]; // Related DMPs
   referencedBy: string[]; // Related Registrations (not DMPs)

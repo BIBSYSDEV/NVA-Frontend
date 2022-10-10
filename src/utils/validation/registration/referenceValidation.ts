@@ -488,6 +488,7 @@ const researchDataPublicationContext = Yup.object<YupShape<ResearchDataPublicati
 
 const researchDataPublicationInstance = Yup.object<YupShape<ResearchDataPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(ResearchDataType)).required(resourceErrorMessage.typeRequired),
+  // TODO: require accepted terms for Dataset?
   related: Yup.array(),
 });
 
