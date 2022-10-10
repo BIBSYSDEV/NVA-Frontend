@@ -62,7 +62,7 @@ export const DatasetForm = () => {
               options={relatedRegistrationsOptions?.hits ?? []}
               value={null}
               onChange={(_, value) => {
-                if (value?.id && !referencedBy.includes(value.id)) {
+                if (value?.id && !referencedBy?.includes(value.id)) {
                   push(value.id);
                 }
                 setRelatedRegistrationsQuery('');
@@ -102,7 +102,7 @@ export const DatasetForm = () => {
             />
 
             <Box component="ul" sx={{ m: 0, p: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              {referencedBy.map((uri) => (
+              {referencedBy?.map((uri) => (
                 <RelatedResourceRow
                   key={uri}
                   uri={uri}
@@ -121,7 +121,7 @@ export const DatasetForm = () => {
               options={relatedDmpOptions?.hits ?? []}
               value={null}
               onChange={(_, value) => {
-                if (value?.id && !compliesWith.includes(value.id)) {
+                if (value?.id && !compliesWith?.includes(value.id)) {
                   push(value.id);
                 }
                 setRelatedDmpQuery('');
@@ -161,7 +161,7 @@ export const DatasetForm = () => {
             />
 
             <Box component="ul" sx={{ m: 0, p: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              {compliesWith.map((uri) => (
+              {compliesWith?.map((uri) => (
                 <RelatedResourceRow
                   key={uri}
                   uri={uri}
@@ -178,13 +178,13 @@ export const DatasetForm = () => {
           <>
             <ExternalLinkField
               onAddClick={(url) => {
-                if (!related.includes(url)) {
+                if (!related?.includes(url)) {
                   push(url);
                 }
               }}
             />
             <Box component="ul" sx={{ m: 0, p: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              {related.map((uri) => (
+              {related?.map((uri) => (
                 <RelatedResourceRow key={uri} uri={uri} removeRelatedResource={() => remove(related.indexOf(uri))} />
               ))}
             </Box>

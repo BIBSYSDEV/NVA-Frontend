@@ -111,7 +111,7 @@ export const dataTestId = {
     registrationSubtype: 'public-registration-registration-subtype',
     rejectDoiButton: 'button-reject-doi',
     relatedRegistrationsAccordion: 'related-registrations-accordion',
-    relatedDmpRelationsAccordion: 'related-dmp-relations-accordion',
+    relatedRelationsAccordion: 'related-relations-accordion',
     requestDoiButton: 'button-toggle-request-doi',
     reserveDoiButton: 'button-toggle-reserve-doi',
     requestDoiModal: 'request-doi-modal',

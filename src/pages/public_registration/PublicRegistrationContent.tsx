@@ -77,12 +77,19 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
 
         <PublicGeneralContent registration={registration} />
 
-        {entityDescription?.reference?.publicationInstance.type === ResearchDataType.DataManagementPlan && (
+        {(entityDescription?.reference?.publicationInstance.type === ResearchDataType.DataManagementPlan ||
+          entityDescription?.reference?.publicationInstance.type === ResearchDataType.Dataset) && (
           <LandingPageAccordion
-            dataTestId={dataTestId.registrationLandingPage.relatedDmpRelationsAccordion}
+            dataTestId={dataTestId.registrationLandingPage.relatedRelationsAccordion}
             defaultExpanded
             heading={t('registration.resource_type.research_data.related_links')}>
-            <PublicRelatedResourcesContent related={entityDescription.reference.publicationInstance.related} />
+            <PublicRelatedResourcesContent
+              related={[
+                ...(entityDescription.reference.publicationInstance.related ?? []),
+                ...(entityDescription.reference.publicationInstance.referencedBy ?? []),
+                ...(entityDescription.reference.publicationInstance.compliesWith ?? []),
+              ]}
+            />
           </LandingPageAccordion>
         )}
 

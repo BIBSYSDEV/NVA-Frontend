@@ -1268,6 +1268,7 @@
         "external_link_helper_text_error": "Ugyldig URL. Pass på at lenken du oppgir er fullstendig. Eksempel: https://sikt.no",
         "geographic_description": "Geografisk område",
         "no_related_links": "Ingen relaterte lenker.",
+        "publications_using_dataset": "Publikasjoner som bruker datasettet",
         "remove_relation": "Fjern relasjon",
         "remove_relation_confirm_text": "Ønsker du å fjerne denne relasjonen?",
         "related_links": "Relaterte lenker",

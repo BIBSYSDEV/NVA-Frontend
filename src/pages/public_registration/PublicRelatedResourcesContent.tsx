@@ -37,7 +37,7 @@ export const PublicRelatedResourcesContent = ({ related = [] }: PublicRelatedRes
     getRelatedRegistrations();
   }, [getRelatedRegistrations]);
 
-  return relatedRegistrations.length === 0 ? (
+  return related.length === 0 ? (
     <Typography>{t('registration.resource_type.research_data.no_related_links')}</Typography>
   ) : (
     <>

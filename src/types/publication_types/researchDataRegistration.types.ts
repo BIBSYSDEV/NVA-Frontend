@@ -12,8 +12,8 @@ export interface ResearchDataRegistration extends BaseRegistration {
 }
 
 export interface ResearchDataPublicationInstance
-  extends DataManagementPlanPublicationInstance,
-    DatasetPublicationInstance {
+  extends Partial<DataManagementPlanPublicationInstance>,
+    Partial<DatasetPublicationInstance> {
   type: ResearchDataType | '';
 }
 
@@ -48,7 +48,7 @@ export interface ResearchDataEntityDescription extends BaseEntityDescription {
 }
 
 interface DataManagementPlanPublicationInstance {
-  related: string[];
+  related: string[]; // Related Registrations and external links
 }
 
 interface DataManagementPlanPublicationContext {
