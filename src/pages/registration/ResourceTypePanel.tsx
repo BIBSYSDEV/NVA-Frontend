@@ -259,6 +259,7 @@ export const ResourceTypePanel = () => {
           setPublicationInstanceType('');
           setShowDatasetConditions(false);
         }}
+        ignoreBackdropClick // Force user to click Yes or No
         onCancel={() => {
           setPublicationInstanceType(ResearchDataType.Dataset);
           setShowDatasetConditions(false);

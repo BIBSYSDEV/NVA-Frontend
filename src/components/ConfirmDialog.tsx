@@ -12,6 +12,7 @@ interface ConfirmDialogProps {
   onCancel: () => void;
   isLoading?: boolean;
   dialogDataTestId?: string;
+  ignoreBackdropClick?: boolean;
 }
 
 export const ConfirmDialog = ({
@@ -21,12 +22,13 @@ export const ConfirmDialog = ({
   onAccept,
   onCancel,
   isLoading = false,
+  ignoreBackdropClick = false,
   dialogDataTestId,
 }: ConfirmDialogProps) => {
   const { t } = useTranslation();
 
   return (
-    <Dialog open={open} onClose={onCancel} data-testid={dialogDataTestId}>
+    <Dialog open={open} onClose={!ignoreBackdropClick ? onCancel : undefined} data-testid={dialogDataTestId}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>

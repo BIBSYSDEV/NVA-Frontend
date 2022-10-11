@@ -34,7 +34,7 @@ export const emptyResearchDataPublicationContext: ResearchDataPublicationContext
   publisher: emptyContextPublisher,
 };
 
-export interface ResearchDataPublicationContext extends DataManagementPlanPublicationContext {
+export interface ResearchDataPublicationContext extends Partial<DataManagementPlanPublicationContext> {
   type: PublicationType.ResearchData;
 }
 
