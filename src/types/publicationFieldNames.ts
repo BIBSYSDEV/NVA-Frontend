@@ -73,6 +73,7 @@ export enum MediaType {
 
 export enum ResearchDataType {
   DataManagementPlan = 'DataManagementPlan',
+  Dataset = 'DataSet',
 }
 
 export type RegistrationSubtype =
@@ -128,13 +129,17 @@ export enum ResourceFieldNames {
   PublicationContextTimeFrom = 'entityDescription.reference.publicationContext.time.from',
   PublicationContextTimeTo = 'entityDescription.reference.publicationContext.time.to',
   PublicationContextType = 'entityDescription.reference.publicationContext.type',
+  PublicationInstanceAgreeTerms = 'entityDescription.reference.publicationInstance.userAgreesToTermsAndConditions',
   PublicationInstanceArchitectureOutput = 'entityDescription.reference.publicationInstance.architectureOutput',
+  PublicationInstanceCompliesWith = 'entityDescription.reference.publicationInstance.compliesWith',
   PublicationInstanceDescription = 'entityDescription.reference.publicationInstance.description',
+  PublicationInstanceGeographicDescription = 'entityDescription.reference.publicationInstance.geographicalCoverage.description',
   PublicationInstanceManifestations = 'entityDescription.reference.publicationInstance.manifestations',
   PublicationInstanceOutputs = 'entityDescription.reference.publicationInstance.outputs',
   PublicationInstanceSubtypeDescription = 'entityDescription.reference.publicationInstance.subtype.description',
   PublicationInstanceSubtypeType = 'entityDescription.reference.publicationInstance.subtype.type',
   PublicationInstanceVenues = 'entityDescription.reference.publicationInstance.venues',
+  PublicationInstanceReferencedBy = 'entityDescription.reference.publicationInstance.referencedBy',
   PublicationInstanceRelated = 'entityDescription.reference.publicationInstance.related',
   Reference = 'entityDescription.reference',
   Series = 'entityDescription.reference.publicationContext.series',

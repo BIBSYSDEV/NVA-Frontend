@@ -1,7 +1,7 @@
 import { FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MenuItem, TextField } from '@mui/material';
+import { MenuItem, TextField, Typography } from '@mui/material';
 import { InputContainerBox, StyledSelectWrapper } from '../../components/styled/Wrappers';
 import { emptyBookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
 import { emptyChapterPublicationInstance } from '../../types/publication_types/chapterRegistration.types';
@@ -16,6 +16,7 @@ import {
   contextTypeBaseFieldName,
   instanceTypeBaseFieldName,
   PublicationType,
+  ResearchDataType,
   ResourceFieldNames,
 } from '../../types/publicationFieldNames';
 import { EntityDescription, PublicationChannelType, Registration } from '../../types/registration.types';
@@ -52,6 +53,7 @@ export const ResourceTypePanel = () => {
 
   const [confirmContextType, setConfirmContextType] = useState('');
   const [confirmInstanceType, setConfirmInstanceType] = useState('');
+  const [showDatasetConditions, setShowDatasetConditions] = useState(false);
 
   const setPublicationContextType = (newContextType: string) => {
     // Ensure some values are reset when publication type changes
@@ -163,6 +165,20 @@ export const ResourceTypePanel = () => {
     '';
   const typeTouched = (referenceTouched?.publicationInstance as FormikTouched<JournalPublicationInstance>)?.type;
 
+  const onChangeSubType = (newInstanceType: string) => {
+    if (instanceType) {
+      // If Registration already has a instanceType, the user must confirm the change
+      setConfirmInstanceType(newInstanceType);
+    } else {
+      if (newInstanceType === ResearchDataType.Dataset) {
+        // User must confirm that the dataset does not include any sensitive data
+        setShowDatasetConditions(true);
+      } else {
+        setPublicationInstanceType(newInstanceType);
+      }
+    }
+  };
+
   return (
     <InputContainerBox>
       <StyledSelectWrapper>
@@ -188,23 +204,23 @@ export const ResourceTypePanel = () => {
       </StyledSelectWrapper>
 
       {mainType === PublicationType.PublicationInJournal ? (
-        <JournalTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
+        <JournalTypeForm onChangeSubType={onChangeSubType} />
       ) : mainType === PublicationType.Book ? (
-        <BookTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
+        <BookTypeForm onChangeSubType={onChangeSubType} />
       ) : mainType === PublicationType.Report ? (
-        <ReportTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
+        <ReportTypeForm onChangeSubType={onChangeSubType} />
       ) : mainType === PublicationType.Degree ? (
-        <DegreeTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
+        <DegreeTypeForm onChangeSubType={onChangeSubType} />
       ) : mainType === PublicationType.Chapter ? (
-        <ChapterTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
+        <ChapterTypeForm onChangeSubType={onChangeSubType} />
       ) : mainType === PublicationType.Presentation ? (
-        <PresentationTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
+        <PresentationTypeForm onChangeSubType={onChangeSubType} />
       ) : mainType === PublicationType.Artistic ? (
-        <ArtisticTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
+        <ArtisticTypeForm onChangeSubType={onChangeSubType} />
       ) : mainType === PublicationType.MediaContribution ? (
-        <MediaTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
+        <MediaTypeForm onChangeSubType={onChangeSubType} />
       ) : mainType === PublicationType.ResearchData ? (
-        <ResearchDataTypeForm onChangeSubType={instanceType ? setConfirmInstanceType : setPublicationInstanceType} />
+        <ResearchDataTypeForm onChangeSubType={onChangeSubType} />
       ) : null}
 
       <ConfirmDialog
@@ -215,7 +231,11 @@ export const ResourceTypePanel = () => {
             setPublicationContextType(confirmContextType);
             setConfirmContextType('');
           } else if (confirmInstanceType) {
-            setPublicationInstanceType(confirmInstanceType);
+            if (confirmInstanceType === ResearchDataType.Dataset) {
+              setShowDatasetConditions(true);
+            } else {
+              setPublicationInstanceType(confirmInstanceType);
+            }
             setConfirmInstanceType('');
           }
         }}
@@ -224,6 +244,42 @@ export const ResourceTypePanel = () => {
           setConfirmInstanceType('');
         }}>
         {t('registration.resource_type.change_registration_type_description')}
+      </ConfirmDialog>
+
+      <ConfirmDialog
+        open={
+          showDatasetConditions ||
+          (values.entityDescription?.reference?.publicationInstance.type === ResearchDataType.Dataset &&
+            !values.entityDescription.reference.publicationInstance.userAgreesToTermsAndConditions)
+        }
+        title={t('registration.resource_type.research_data.accept_dataset_terms.dialog_title')}
+        onAccept={() => {
+          setConfirmContextType('');
+          setConfirmInstanceType('');
+          setPublicationInstanceType('');
+          setShowDatasetConditions(false);
+        }}
+        ignoreBackdropClick // Force user to click Yes or No
+        onCancel={() => {
+          setPublicationInstanceType(ResearchDataType.Dataset);
+          setShowDatasetConditions(false);
+          setFieldValue(ResourceFieldNames.PublicationInstanceAgreeTerms, true);
+        }}>
+        <Typography fontWeight={500}>
+          {t('registration.resource_type.research_data.accept_dataset_terms.contains_personal_data')}
+        </Typography>
+        <Typography paragraph>
+          {t('registration.resource_type.research_data.accept_dataset_terms.contains_personal_data_description')}
+        </Typography>
+
+        <Typography fontWeight={500}>
+          {t('registration.resource_type.research_data.accept_dataset_terms.contains_sensitive_data')}
+        </Typography>
+        <Typography paragraph>
+          {t('registration.resource_type.research_data.accept_dataset_terms.contains_sensitive_data_description')}
+        </Typography>
+
+        <Typography>{t('registration.resource_type.research_data.accept_dataset_terms.further_info')}</Typography>
       </ConfirmDialog>
     </InputContainerBox>
   );

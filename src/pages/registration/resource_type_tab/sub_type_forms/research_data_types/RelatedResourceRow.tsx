@@ -1,4 +1,4 @@
-import { Box, Skeleton, Button, Typography, Link } from '@mui/material';
+import { Box, Skeleton, Button, Typography, Link, ListItem } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
@@ -22,7 +22,7 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
   const [confirmRemoveRelation, setConfirmRemoveRelation] = useState(false);
 
   return (
-    <Box component="li" sx={{ display: 'flex', alignItems: 'center' }}>
+    <ListItem>
       {isLoadingRegistration ? (
         <Skeleton width="30%" />
       ) : (
@@ -51,6 +51,6 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
         onCancel={() => setConfirmRemoveRelation(false)}>
         <Typography>{t('registration.resource_type.research_data.remove_relation_confirm_text')}</Typography>
       </ConfirmDialog>
-    </Box>
+    </ListItem>
   );
 };

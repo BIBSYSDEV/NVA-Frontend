@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
 import { isValidUrl } from '../../../../../utils/general-helpers';
+import { dataTestId } from '../../../../../utils/dataTestIds';
 
 interface ExternalLinkFieldProps {
   onAddClick: (url: string) => void;
@@ -40,6 +41,7 @@ export const ExternalLinkField = ({ onAddClick }: ExternalLinkFieldProps) => {
   return (
     <Box sx={{ display: 'flex', gap: '1rem' }}>
       <TextField
+        data-testid={dataTestId.registrationWizard.resourceType.externalLinkField}
         variant="filled"
         fullWidth
         sx={{ maxWidth: '40rem' }}

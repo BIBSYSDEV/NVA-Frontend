@@ -11,14 +11,22 @@ export interface ResearchDataRegistration extends BaseRegistration {
   entityDescription: ResearchDataEntityDescription;
 }
 
-export interface ResearchDataPublicationInstance {
+export interface ResearchDataPublicationInstance
+  extends Partial<DataManagementPlanPublicationInstance>,
+    Partial<DatasetPublicationInstance> {
   type: ResearchDataType | '';
-  related: string[];
 }
 
 export const emptyResearchDataPublicationInstance: ResearchDataPublicationInstance = {
   type: '',
   related: [],
+  userAgreesToTermsAndConditions: false,
+  geographicalCoverage: {
+    type: 'GeographicalDescription',
+    description: '',
+  },
+  referencedBy: [],
+  compliesWith: [],
 };
 
 export const emptyResearchDataPublicationContext: ResearchDataPublicationContext = {
@@ -26,9 +34,8 @@ export const emptyResearchDataPublicationContext: ResearchDataPublicationContext
   publisher: emptyContextPublisher,
 };
 
-export interface ResearchDataPublicationContext {
+export interface ResearchDataPublicationContext extends Partial<DataManagementPlanPublicationContext> {
   type: PublicationType.ResearchData;
-  publisher: ContextPublisher;
 }
 
 interface ResearchDataContributionReference extends BaseReference {
@@ -38,4 +45,25 @@ interface ResearchDataContributionReference extends BaseReference {
 
 export interface ResearchDataEntityDescription extends BaseEntityDescription {
   reference: ResearchDataContributionReference;
+}
+
+interface DataManagementPlanPublicationInstance {
+  related: string[]; // Related Registrations and external links
+}
+
+interface DataManagementPlanPublicationContext {
+  publisher: ContextPublisher;
+}
+
+interface DatasetPublicationInstance {
+  userAgreesToTermsAndConditions: boolean;
+  geographicalCoverage: GeographicalDescription;
+  compliesWith: string[]; // Related DMPs
+  referencedBy: string[]; // Related Registrations (not DMPs)
+  related: string[]; // External links
+}
+
+interface GeographicalDescription {
+  type: 'GeographicalDescription';
+  description: string;
 }
