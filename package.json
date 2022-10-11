@@ -37,7 +37,7 @@
     "@fontsource/crimson-text": "^4.5.5",
     "@mui/icons-material": "^5.10.6",
     "@mui/lab": "5.0.0-alpha.102",
-    "@mui/material": "^5.10.8",
+    "@mui/material": "^5.10.9",
     "@mui/x-date-pickers": "^5.0.4",
     "@reduxjs/toolkit": "^1.8.6",
     "@uppy/aws-s3-multipart": "^1.8.18",
