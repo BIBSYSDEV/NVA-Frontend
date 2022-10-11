@@ -409,6 +409,7 @@
       "is_required": "{{-field}} is required",
       "isbn_too_short": "ISBN must have 13 digits",
       "minimum_one_file": "You need to upload at least one file for this registration",
+      "must_accept_terms_for_dataset": "You must accept terms for dataset",
       "must_be_bigger_than": "{{field}} cannot be smaller than {{limit}}",
       "must_be_in_future": "{{field}} must be in future",
       "must_be_smaller_than": "{{field}} cannot be bigger than {{limit}}",

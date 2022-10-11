@@ -483,12 +483,20 @@ export const mediaContributionReference = baseReference.shape({
 
 // Research Data
 const researchDataPublicationContext = Yup.object<YupShape<ResearchDataPublicationContext>>({
-  publisher: publisherField,
+  publisher: Yup.object().nullable().when('$publicationInstanceType', {
+    is: ResearchDataType.DataManagementPlan,
+    then: publisherField,
+  }),
 });
 
 const researchDataPublicationInstance = Yup.object<YupShape<ResearchDataPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(ResearchDataType)).required(resourceErrorMessage.typeRequired),
-  // TODO: require accepted terms for Dataset?
+  userAgreesToTermsAndConditions: Yup.boolean()
+    .nullable()
+    .when('$publicationInstanceType', {
+      is: ResearchDataType.Dataset,
+      then: Yup.boolean().equals([true], i18n.t('feedback.validation.must_accept_terms_for_dataset')),
+    }),
   related: Yup.array(),
 });
 

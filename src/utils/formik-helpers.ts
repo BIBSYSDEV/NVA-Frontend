@@ -310,6 +310,10 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
             },
             publicationInstance: {
               type: true,
+              userAgreesToTermsAndConditions: true,
+              geographicalCoverage: true,
+              compliesWith: [],
+              referencedBy: [],
               related: [],
             },
           },
