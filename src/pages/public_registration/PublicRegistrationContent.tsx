@@ -94,7 +94,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
         {entityDescription?.reference?.publicationInstance.type === ResearchDataType.Dataset && (
           <>
             <LandingPageAccordion
-              dataTestId={dataTestId.registrationLandingPage.projectsAccordion}
+              dataTestId={dataTestId.registrationLandingPage.geographicAccordion}
               defaultExpanded
               heading={t('registration.resource_type.research_data.geographic_description')}>
               <Typography>
@@ -103,7 +103,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
             </LandingPageAccordion>
 
             <LandingPageAccordion
-              dataTestId={dataTestId.registrationLandingPage.projectsAccordion}
+              dataTestId={dataTestId.registrationLandingPage.publicationsUsingDatasetAccordion}
               defaultExpanded
               heading={t('registration.resource_type.research_data.publications_using_dataset')}>
               <PublicRelatedPublications
@@ -117,7 +117,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
 
         {entityDescription?.reference?.publicationInstance.type === ResearchDataType.DataManagementPlan && (
           <LandingPageAccordion
-            dataTestId={dataTestId.registrationLandingPage.projectsAccordion}
+            dataTestId={dataTestId.registrationLandingPage.relatedPublicationsAccordion}
             defaultExpanded
             heading={t('registration.resource_type.research_data.related_publications')}>
             <PublicRelatedPublications
@@ -146,7 +146,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
         {entityDescription?.reference?.publicationInstance.type === ResearchDataType.Dataset && (
           <>
             <LandingPageAccordion
-              dataTestId={dataTestId.registrationLandingPage.projectsAccordion}
+              dataTestId={dataTestId.registrationLandingPage.dmpAccordion}
               defaultExpanded
               heading={t('registration.publication_types.DataManagementPlan')}>
               <PublicRelatedPublications
@@ -157,7 +157,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
             </LandingPageAccordion>
 
             <LandingPageAccordion
-              dataTestId={dataTestId.registrationLandingPage.projectsAccordion}
+              dataTestId={dataTestId.registrationLandingPage.externalLinksAccordion}
               defaultExpanded
               heading={t('registration.resource_type.research_data.external_links')}>
               <PublicExternalRelations links={entityDescription.reference.publicationInstance.related} />
@@ -166,7 +166,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
         )}
         {entityDescription?.reference?.publicationInstance.type === ResearchDataType.DataManagementPlan && (
           <LandingPageAccordion
-            dataTestId={dataTestId.registrationLandingPage.projectsAccordion}
+            dataTestId={dataTestId.registrationLandingPage.externalLinksAccordion}
             defaultExpanded
             heading={t('registration.resource_type.research_data.external_links')}>
             <PublicExternalRelations
