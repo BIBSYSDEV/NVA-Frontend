@@ -13,14 +13,15 @@ import { LandingPageAccordion } from '../../components/landing_page/LandingPageA
 import { ShareOptions } from './ShareOptions';
 import { SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { RegistrationList } from '../../components/RegistrationList';
 import { RegistrationFieldName, ResearchDataType } from '../../types/publicationFieldNames';
 import { SearchResponse } from '../../types/common.types';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
 import { getTitleString, isResearchData } from '../../utils/registration-helpers';
-import { PublicExternalRelations, PublicRelatedPublications } from './PublicRelatedResourcesContent';
 import { API_URL } from '../../utils/constants';
+import { ListExternalRelations } from './public_links/ListExternalRelations';
+import { ListRegistrationRelations } from './public_links/ListRegistrationRelations';
+import { ShowRelatedRegistrationUris } from './public_links/ShowRelatedRegistrationUris';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -106,7 +107,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
               dataTestId={dataTestId.registrationLandingPage.publicationsUsingDatasetAccordion}
               defaultExpanded
               heading={t('registration.resource_type.research_data.publications_using_dataset')}>
-              <PublicRelatedPublications
+              <ShowRelatedRegistrationUris
                 links={entityDescription.reference.publicationInstance.referencedBy}
                 emptyMessage={t('registration.resource_type.research_data.no_publications_using_dataset')}
                 loadingLabel={t('registration.resource_type.research_data.publications_using_dataset')}
@@ -120,7 +121,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
             dataTestId={dataTestId.registrationLandingPage.relatedPublicationsAccordion}
             defaultExpanded
             heading={t('registration.resource_type.research_data.related_publications')}>
-            <PublicRelatedPublications
+            <ShowRelatedRegistrationUris
               links={entityDescription.reference.publicationInstance.related?.filter(
                 (uri) => uri.includes(API_URL) // DMP can have both internal and external links in .related
               )}
@@ -149,7 +150,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
               dataTestId={dataTestId.registrationLandingPage.dmpAccordion}
               defaultExpanded
               heading={t('registration.publication_types.DataManagementPlan')}>
-              <PublicRelatedPublications
+              <ShowRelatedRegistrationUris
                 links={entityDescription.reference.publicationInstance.compliesWith}
                 emptyMessage={t('registration.resource_type.research_data.no_dmp')}
                 loadingLabel={t('registration.publication_types.DataManagementPlan')}
@@ -160,7 +161,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
               dataTestId={dataTestId.registrationLandingPage.externalLinksAccordion}
               defaultExpanded
               heading={t('registration.resource_type.research_data.external_links')}>
-              <PublicExternalRelations links={entityDescription.reference.publicationInstance.related} />
+              <ListExternalRelations links={entityDescription.reference.publicationInstance.related} />
             </LandingPageAccordion>
           </>
         )}
@@ -169,7 +170,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
             dataTestId={dataTestId.registrationLandingPage.externalLinksAccordion}
             defaultExpanded
             heading={t('registration.resource_type.research_data.external_links')}>
-            <PublicExternalRelations
+            <ListExternalRelations
               links={entityDescription.reference.publicationInstance.related?.filter(
                 (uri) => !uri.includes(API_URL) // DMP can have both internal and external links in .related
               )}
@@ -182,7 +183,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
             dataTestId={dataTestId.registrationLandingPage.relatedRegistrationsAccordion}
             defaultExpanded
             heading={t('registration.public_page.other_related_registrations')}>
-            <RegistrationList registrations={relatedRegistrations.hits} />
+            <ListRegistrationRelations registrations={relatedRegistrations.hits} />
           </LandingPageAccordion>
         )}
       </div>
