@@ -16,12 +16,22 @@ export const ExternalLinkField = ({ onAddClick }: ExternalLinkFieldProps) => {
   const isValidInput = isValidUrl(inputUrl);
   const showErrorMessage = !!inputUrl && !isValidInput;
 
+  const onClickAdd = () => {
+    onAddClick(inputUrl);
+    setInputUrl('');
+  };
+
   return (
     <Box sx={{ display: 'flex', gap: '1rem' }}>
       <TextField
         data-testid={dataTestId.registrationWizard.resourceType.externalLinkField}
         variant="filled"
         fullWidth
+        onKeyPress={({ key }) => {
+          if (key === 'Enter' && isValidInput) {
+            onClickAdd();
+          }
+        }}
         sx={{ maxWidth: '40rem' }}
         label={t('registration.resource_type.research_data.external_link')}
         value={inputUrl}
@@ -37,10 +47,7 @@ export const ExternalLinkField = ({ onAddClick }: ExternalLinkFieldProps) => {
         variant="outlined"
         sx={{ height: 'fit-content', mt: '0.5rem' }}
         disabled={!isValidInput}
-        onClick={() => {
-          onAddClick(inputUrl);
-          setInputUrl('');
-        }}
+        onClick={onClickAdd}
         startIcon={<AddIcon />}>
         {t('registration.resource_type.research_data.add_link')}
       </Button>
