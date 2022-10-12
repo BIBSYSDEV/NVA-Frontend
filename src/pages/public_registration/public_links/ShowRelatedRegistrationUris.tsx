@@ -1,5 +1,5 @@
 import { CircularProgress, Typography } from '@mui/material';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { apiRequest } from '../../../api/apiRequest';
 import { Registration } from '../../../types/registration.types';
 import { isSuccessStatus } from '../../../utils/constants';
@@ -19,24 +19,28 @@ export const ShowRelatedRegistrationUris = ({
   const [isLoadingRegistrations, setIsLoadingRegistrations] = useState(true);
   const [relatedRegistrations, setRelatedRegistrations] = useState<Registration[]>([]);
 
-  const getRelatedRegistrations = useCallback(async () => {
-    setIsLoadingRegistrations(true);
-    const relatedRegistrationsPromises = links.map(async (id) => {
-      const registrationResponse = await apiRequest<Registration>({ url: id });
-      if (isSuccessStatus(registrationResponse.status)) {
-        return registrationResponse.data;
-      }
-    });
-    const registrations = (await Promise.all(relatedRegistrationsPromises)).filter(
-      (registration) => registration // Remove null/undefined objects
-    ) as Registration[];
-    setRelatedRegistrations(registrations);
-    setIsLoadingRegistrations(false);
-  }, [links]);
-
   useEffect(() => {
-    getRelatedRegistrations();
-  }, [getRelatedRegistrations]);
+    const getRelatedRegistrations = async () => {
+      setIsLoadingRegistrations(true);
+      const relatedRegistrationsPromises = links.map(async (id) => {
+        const registrationResponse = await apiRequest<Registration>({ url: id });
+        if (isSuccessStatus(registrationResponse.status)) {
+          return registrationResponse.data;
+        }
+      });
+
+      const registrations = (await Promise.all(relatedRegistrationsPromises)).filter(
+        (registration) => registration // Remove null/undefined objects
+      ) as Registration[];
+
+      setRelatedRegistrations(registrations);
+      setIsLoadingRegistrations(false);
+    };
+
+    if (links.length > 0) {
+      getRelatedRegistrations();
+    }
+  }, [links]);
 
   return links.length === 0 ? (
     <Typography>{emptyMessage}</Typography>
