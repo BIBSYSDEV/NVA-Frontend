@@ -1255,8 +1255,7 @@
         "related_publications": "Related publications",
         "search_for_related_dmps": "Search for related data management plans",
         "search_for_related_registrations": "Search for related registrations",
-        "search_for_related_registrations_helper": "Choose among published registrations",
-        "validating_link": "Validating link"
+        "search_for_related_registrations_helper": "Choose among published registrations"
       },
       "search_for_journal": "Search for journals",
       "search_for_original_article": "Search for original article",
