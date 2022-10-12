@@ -1,5 +1,5 @@
 import { CircularProgress, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { apiRequest } from '../../../api/apiRequest';
 import { Registration } from '../../../types/registration.types';
 import { isSuccessStatus } from '../../../utils/constants';
@@ -19,10 +19,12 @@ export const ShowRelatedRegistrationUris = ({
   const [isLoadingRegistrations, setIsLoadingRegistrations] = useState(true);
   const [relatedRegistrations, setRelatedRegistrations] = useState<Registration[]>([]);
 
+  const linksRef = useRef(links); // Avoid triggering fetching of Registrations multiple times
+
   useEffect(() => {
     const getRelatedRegistrations = async () => {
       setIsLoadingRegistrations(true);
-      const relatedRegistrationsPromises = links.map(async (id) => {
+      const relatedRegistrationsPromises = linksRef.current.map(async (id) => {
         const registrationResponse = await apiRequest<Registration>({ url: id });
         if (isSuccessStatus(registrationResponse.status)) {
           return registrationResponse.data;
@@ -37,12 +39,12 @@ export const ShowRelatedRegistrationUris = ({
       setIsLoadingRegistrations(false);
     };
 
-    if (links.length > 0) {
+    if (linksRef.current.length > 0) {
       getRelatedRegistrations();
     }
-  }, [links]);
+  }, [linksRef]);
 
-  return links.length === 0 ? (
+  return linksRef.current.length === 0 ? (
     <Typography>{emptyMessage}</Typography>
   ) : isLoadingRegistrations ? (
     <CircularProgress aria-label={loadingLabel} />
