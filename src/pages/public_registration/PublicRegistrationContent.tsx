@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { ItalicPageHeader } from '../../components/PageHeader';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -18,8 +18,9 @@ import { RegistrationFieldName, ResearchDataType } from '../../types/publication
 import { SearchResponse } from '../../types/common.types';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
-import { getTitleString } from '../../utils/registration-helpers';
-import { PublicRelatedResourcesContent } from './PublicRelatedResourcesContent';
+import { getTitleString, isResearchData } from '../../utils/registration-helpers';
+import { PublicExternalRelations, PublicRelatedPublications } from './PublicRelatedResourcesContent';
+import { API_URL } from '../../utils/constants';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -77,23 +78,9 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
 
         <PublicGeneralContent registration={registration} />
 
-        {(entityDescription?.reference?.publicationInstance.type === ResearchDataType.DataManagementPlan ||
-          entityDescription?.reference?.publicationInstance.type === ResearchDataType.Dataset) && (
-          <LandingPageAccordion
-            dataTestId={dataTestId.registrationLandingPage.relatedRelationsAccordion}
-            defaultExpanded
-            heading={t('registration.resource_type.research_data.related_links')}>
-            <PublicRelatedResourcesContent
-              related={[
-                ...(entityDescription.reference.publicationInstance.related ?? []),
-                ...(entityDescription.reference.publicationInstance.referencedBy ?? []),
-                ...(entityDescription.reference.publicationInstance.compliesWith ?? []),
-              ]}
-            />
-          </LandingPageAccordion>
+        {!isResearchData(entityDescription?.reference?.publicationInstance.type) && (
+          <FilesLandingPageAccordion registration={registration} />
         )}
-
-        <FilesLandingPageAccordion registration={registration} />
 
         {entityDescription && (abstract || description || entityDescription.tags.length > 0 || subjects.length > 0) && (
           <LandingPageAccordion
@@ -102,6 +89,49 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
             heading={t('registration.description.abstract')}>
             <PublicSummaryContent registration={registration} />
           </LandingPageAccordion>
+        )}
+
+        {entityDescription?.reference?.publicationInstance.type === ResearchDataType.Dataset && (
+          <>
+            <LandingPageAccordion
+              dataTestId={dataTestId.registrationLandingPage.geographicAccordion}
+              defaultExpanded
+              heading={t('registration.resource_type.research_data.geographic_description')}>
+              <Typography>
+                {entityDescription.reference.publicationInstance.geographicalCoverage?.description}
+              </Typography>
+            </LandingPageAccordion>
+
+            <LandingPageAccordion
+              dataTestId={dataTestId.registrationLandingPage.publicationsUsingDatasetAccordion}
+              defaultExpanded
+              heading={t('registration.resource_type.research_data.publications_using_dataset')}>
+              <PublicRelatedPublications
+                links={entityDescription.reference.publicationInstance.referencedBy}
+                emptyMessage={t('registration.resource_type.research_data.no_publications_using_dataset')}
+                loadingLabel={t('registration.resource_type.research_data.publications_using_dataset')}
+              />
+            </LandingPageAccordion>
+          </>
+        )}
+
+        {entityDescription?.reference?.publicationInstance.type === ResearchDataType.DataManagementPlan && (
+          <LandingPageAccordion
+            dataTestId={dataTestId.registrationLandingPage.relatedPublicationsAccordion}
+            defaultExpanded
+            heading={t('registration.resource_type.research_data.related_publications')}>
+            <PublicRelatedPublications
+              links={entityDescription.reference.publicationInstance.related?.filter(
+                (uri) => uri.includes(API_URL) // DMP can have both internal and external links in .related
+              )}
+              emptyMessage={t('registration.resource_type.research_data.no_related_publications')}
+              loadingLabel={t('registration.resource_type.research_data.related_publications')}
+            />
+          </LandingPageAccordion>
+        )}
+
+        {isResearchData(entityDescription?.reference?.publicationInstance.type) && (
+          <FilesLandingPageAccordion registration={registration} />
         )}
 
         {projects.length > 0 && (
@@ -113,11 +143,45 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           </LandingPageAccordion>
         )}
 
+        {entityDescription?.reference?.publicationInstance.type === ResearchDataType.Dataset && (
+          <>
+            <LandingPageAccordion
+              dataTestId={dataTestId.registrationLandingPage.dmpAccordion}
+              defaultExpanded
+              heading={t('registration.publication_types.DataManagementPlan')}>
+              <PublicRelatedPublications
+                links={entityDescription.reference.publicationInstance.compliesWith}
+                emptyMessage={t('registration.resource_type.research_data.no_dmp')}
+                loadingLabel={t('registration.publication_types.DataManagementPlan')}
+              />
+            </LandingPageAccordion>
+
+            <LandingPageAccordion
+              dataTestId={dataTestId.registrationLandingPage.externalLinksAccordion}
+              defaultExpanded
+              heading={t('registration.resource_type.research_data.external_links')}>
+              <PublicExternalRelations links={entityDescription.reference.publicationInstance.related} />
+            </LandingPageAccordion>
+          </>
+        )}
+        {entityDescription?.reference?.publicationInstance.type === ResearchDataType.DataManagementPlan && (
+          <LandingPageAccordion
+            dataTestId={dataTestId.registrationLandingPage.externalLinksAccordion}
+            defaultExpanded
+            heading={t('registration.resource_type.research_data.external_links')}>
+            <PublicExternalRelations
+              links={entityDescription.reference.publicationInstance.related?.filter(
+                (uri) => !uri.includes(API_URL) // DMP can have both internal and external links in .related
+              )}
+            />
+          </LandingPageAccordion>
+        )}
+
         {relatedRegistrations && relatedRegistrations.hits.length > 0 && (
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.relatedRegistrationsAccordion}
             defaultExpanded
-            heading={t('registration.public_page.related_registrations')}>
+            heading={t('registration.public_page.other_related_registrations')}>
             <RegistrationList registrations={relatedRegistrations.hits} />
           </LandingPageAccordion>
         )}
