@@ -181,7 +181,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.relatedRegistrationsAccordion}
             defaultExpanded
-            heading={t('registration.public_page.related_registrations')}>
+            heading={t('registration.public_page.other_related_registrations')}>
             <RegistrationList registrations={relatedRegistrations.hits} />
           </LandingPageAccordion>
         )}
