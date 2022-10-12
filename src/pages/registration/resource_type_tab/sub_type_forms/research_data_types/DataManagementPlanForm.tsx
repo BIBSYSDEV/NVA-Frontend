@@ -83,9 +83,7 @@ export const DataManagementPlanForm = () => {
                   }}
                   variant="filled"
                   label={t('registration.resource_type.research_data.search_for_related_registrations')}
-                  helperText={t(
-                    'registration.resource_type.research_data.search_for_related_registrations_helper_text'
-                  )}
+                  helperText={t('registration.resource_type.research_data.search_for_related_registrations_helper')}
                 />
               )}
             />

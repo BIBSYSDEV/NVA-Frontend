@@ -1255,7 +1255,7 @@
         "related_publications": "Relaterte publikasjoner",
         "search_for_related_dmps": "Søk etter relaterte datahåndteringsplaner",
         "search_for_related_registrations": "Søk etter relaterte registreringer",
-        "search_for_related_registrations_helper_text": "Velg blant registreringer som er publisert i NVA",
+        "search_for_related_registrations_helper": "Velg blant registreringer som er publisert i NVA",
         "validating_link": "Validerer lenke"
       },
       "search_for_journal": "Søk etter tidsskrift",
