@@ -1,9 +1,10 @@
+import * as Yup from 'yup';
 import { Period } from '../types/common.types';
 
 export const isValidUrl = (value: string) => {
   try {
-    const url = new URL(value);
-    return url.protocol === 'http:' || url.protocol === 'https:';
+    const validation = Yup.string().url().validateSync(value);
+    return !!validation;
   } catch {
     return false;
   }
