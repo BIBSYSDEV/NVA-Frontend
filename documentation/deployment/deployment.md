@@ -4,13 +4,13 @@ The application is deployed as an [Immutable Web App](https://github.com/Immutab
 
 ## Environments
 
-| Name      | URL                     | Description                                                                                                             |
-| --------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `dev`     | frontend.dev.nva.no     | Unstable solution with latest changes (`main` branch) with test data. Used by internal users, like the development team |
-| `test`    | frontend.test.nva.no    | Semi-stable solution with test data. Used by invited people, to verify solution                                         |
-| `e2e`     | frontend.e2e.nva.no     | Solution for testing. Used by developers. **NB! Redundant with both `sandbox` and `e2e`?**                              |
-| `sandbox` | frontend.sandbox.nva.no | Solution for testing. Used by developers. **NB! Redundant with both `sandbox` and `e2e`?**                              |
-| `prod`    | nva.unit.no             | Stable solution with production data. Used by anyone                                                                    |
+| Name      | URL                          | Description                                                                                                             |
+| --------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `dev`     | frontend.dev.nva.sikt.no     | Unstable solution with latest changes (`main` branch) with test data. Used by internal users, like the development team |
+| `test`    | frontend.test.nva.sikt.no    | Semi-stable solution with test data. Used by invited people, to verify solution                                         |
+| `e2e`     | frontend.e2e.nva.sikt.no     | Solution for testing. Used by developers. **NB! Redundant with both `sandbox` and `e2e`?**                              |
+| `sandbox` | frontend.sandbox.nva.sikt.no | Solution for testing. Used by developers. **NB! Redundant with both `sandbox` and `e2e`?**                              |
+| `prod`    | nva.sikt.no                  | Stable solution with production data. Used by anyone                                                                    |
 
 ## GitHub
 
@@ -31,24 +31,24 @@ Codebuild is the AWS build service. This is used to install dependencies, build,
 
 - `Frontend-build`: Builds the React app and place the outputs in the `latest` build catalog.
 - `Promote-version`: Promotes the current `latest` build to a new build catalog with the current date as the name.
+- `Set-version`: Copies a version to the S3-bucket for the selected environment.
 - `Build-validation`: Ensures that the pushed branch is buildable, and that some frontend tests with mock data is OK.
 - `e2e-test`: Runs e2e test towards a specified build version.
 
 ## AWS S3
 
-S3 is the AWS Simple Storage Service which allows storing objects and resources. This is where we store builds, and `<env>.index.html` files.
+S3 is the AWS Simple Storage Service which allows storing objects and resources. Builds are stored in the `frontend-builds`-bucket. Each environment have a bucket configured as a static website containing the correct version for the environment
 
 ## AWS CloudFront
 
-CloudFront is the AWS Content Delivery Network (CDN). This is where the S3 bucket containing the `<env>.index.html` files are exposed to the world.
+CloudFront is the AWS Content Delivery Network (CDN). Each environment have a CloudFront distribution exposing the S3 bucket configured as a website.
 
 ## AWS Route 53
 
-Route 53 is the AWS DNS service. This is used to expose the app on intuitive URLs like `nva.unit.no` instead of `<random-id>.cloudfront.net`.
+Route 53 is the AWS DNS service. This is used to expose the app on intuitive URLs like `nva.sikt.no` instead of `<random-id>.cloudfront.net`.
 
 # Questions:
 
 - Problematic that extrnal users have access to `dev` and other environments than `prod`?
-- What about caching? `<env>.index.html` should never be cached.
 - When are tests run?
 - Can we make a temp deploy for every PR so that PO can verify the solution before merge?
