@@ -234,3 +234,15 @@ export enum VisualArtType {
   ArtistBook = 'ArtistBook',
   Other = 'Other',
 }
+
+export enum LiteraryArtsType {
+  Novel = 'Novel',
+  Poetry = 'Poetry',
+  Novella = 'Novella',
+  ShortFiction = 'ShortFiction',
+  Essay = 'Essay',
+  Translation = 'Translation',
+  Retelling = 'Retelling',
+  Play = 'Play',
+  Other = 'Other',
+}

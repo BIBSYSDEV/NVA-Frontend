@@ -16,6 +16,7 @@ module.exports = {
     'registration.publication_types.',
     'registration.resource_type.artistic.architecture_type.',
     'registration.resource_type.artistic.design_type.',
+    'registration.resource_type.artistic.literary_arts_type.',
     'registration.resource_type.artistic.moving_picture_type.',
     'registration.resource_type.artistic.music_media_type.',
     'registration.resource_type.artistic.output_type.',

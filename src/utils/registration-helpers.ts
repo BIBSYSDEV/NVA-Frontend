@@ -342,6 +342,10 @@ export const contributorConfig: ContributorConfig = {
     primaryRoles: [],
     secondaryRoles: [],
   },
+  [ArtisticType.LiteraryArts]: {
+    primaryRoles: [],
+    secondaryRoles: [],
+  },
   // Media
   [MediaType.MediaFeatureArticle]: {
     primaryRoles: [ContributorRole.Creator, ContributorRole.Other],

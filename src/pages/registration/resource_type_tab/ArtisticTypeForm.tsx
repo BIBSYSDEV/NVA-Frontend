@@ -6,6 +6,7 @@ import { SelectTypeField } from './components/SelectTypeField';
 import { RegistrationTypeFormProps } from './JournalTypeForm';
 import { ArtisticArchitectureForm } from './sub_type_forms/artistic_types/architecture/ArtisticArchitectureForm';
 import { ArtisticDesignForm } from './sub_type_forms/artistic_types/design/ArtisticDesignForm';
+import { ArtisticLiteraryArtForm } from './sub_type_forms/artistic_types/literary_art/ArtisticLiteraryArtForm';
 import { ArtisticMovingPictureForm } from './sub_type_forms/artistic_types/moving_picture/ArtisticMovingPictureForm';
 import { ArtisticMusicPerformanceForm } from './sub_type_forms/artistic_types/music_performance/ArtisticMusicPerformanceForm';
 import { ArtisticPerformingArtsForm } from './sub_type_forms/artistic_types/performing_arts/ArtisticPerformingArtsForm';
@@ -37,6 +38,8 @@ export const ArtisticTypeForm = ({ onChangeSubType }: RegistrationTypeFormProps)
         <ArtisticMusicPerformanceForm />
       ) : subType === ArtisticType.VisualArts ? (
         <ArtisticVisualArtForm />
+      ) : subType === ArtisticType.LiteraryArts ? (
+        <ArtisticLiteraryArtForm />
       ) : null}
     </>
   );
