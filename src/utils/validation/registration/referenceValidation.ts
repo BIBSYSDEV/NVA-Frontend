@@ -412,7 +412,7 @@ const artisticDesignPublicationInstance = Yup.object<YupShape<ArtisticPublicatio
   }),
   description: Yup.string().nullable(),
   venues: Yup.array().when('$publicationInstanceType', {
-    is: ArtisticType.ArtisticDesign,
+    is: (value: ArtisticType) => value === ArtisticType.ArtisticDesign || value === ArtisticType.VisualArts,
     then: Yup.array().min(1, resourceErrorMessage.exhibitionRequired).required(resourceErrorMessage.exhibitionRequired),
     otherwise: Yup.array().nullable(),
   }),
