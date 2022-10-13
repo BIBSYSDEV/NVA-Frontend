@@ -10,7 +10,7 @@ export const NpiLevelTypography = ({ level, ...typographyProps }: NpiLevelTypogr
 
   return (
     <Typography {...typographyProps}>
-      {t('registration.resource_type.level')}: {level ?? t('common.not_applicable')}
+      {t('registration.resource_type.level')}: {level ?? t('common.not_decided')}
     </Typography>
   );
 };
