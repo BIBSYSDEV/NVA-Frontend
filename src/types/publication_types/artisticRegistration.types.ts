@@ -183,7 +183,7 @@ export interface ArtisticEntityDescription extends BaseEntityDescription {
 }
 
 interface ArtisticSubtype {
-  type: DesignType | ArchitectureType | PerformingArtType | MovingPictureType | '';
+  type: DesignType | ArchitectureType | PerformingArtType | MovingPictureType | VisualArtType | '';
   description?: string;
 }
 
@@ -221,5 +221,17 @@ export enum MovingPictureType {
   Seruial = 'SerialFilmProduction',
   InteractiveFilm = 'InteractiveFilm',
   AugmentedVirtualRealityFilm = 'AugmentedVirtualRealityFilm',
+  Other = 'Other',
+}
+
+export enum VisualArtType {
+  IndividualExhibition = 'IndividualExhibition',
+  CollectiveExhibition = 'CollectiveExhibition',
+  Installation = 'Installation',
+  ArtInPublicSpace = 'ArtInPublicSpace',
+  Performance = 'Performance',
+  // VisualArts = 'VisualArts', // TODO: Not needed?
+  AudioArt = 'AudioArt',
+  ArtistBook = 'ArtistBook',
   Other = 'Other',
 }

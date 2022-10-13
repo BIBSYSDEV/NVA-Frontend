@@ -60,6 +60,7 @@ export enum ArtisticType {
   PerformingArts = 'PerformingArts',
   MovingPicture = 'MovingPicture',
   MusicPerformance = 'MusicPerformance',
+  VisualArts = 'VisualArts',
 }
 
 export enum MediaType {

@@ -1011,7 +1011,8 @@
       "ReportPolicy": "Policy report",
       "ReportResearch": "Research report",
       "ReportWorkingPaper": "Working paper",
-      "ResearchData": "Research data"
+      "ResearchData": "Research data",
+      "VisualArts": "Visual arts"
     },
     "registration": {
       "link_to_resource": "Link to original version",
@@ -1146,7 +1147,17 @@
         "remove_music_work": "Remove work",
         "remove_music_work_description": "Are you sure you want to remove this work?",
         "remove_venue_text": "Are you sure you want to remove \"{{name}}\" from list over exhibition places?",
-        "remove_venue_title": "Remove exhibition place?"
+        "remove_venue_title": "Remove exhibition place?",
+        "visual_arts_type": {
+          "ArtInPublicSpace": "Art in public space",
+          "ArtistBook": "Artist book",
+          "AudioArt": "Audio art",
+          "CollectiveExhibition": "Collective exhibition",
+          "IndividualExhibition": "Individual exhibition",
+          "Installation": "Installation",
+          "Other": "Other",
+          "Performance": "Performance"
+        }
       },
       "change_registration_type": "Change registration type?",
       "change_registration_type_description": "Note that this can lead to some data getting lost in the case where existing data are not valid for the new type. Are you sure you want to change the registration type?",
