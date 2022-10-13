@@ -230,7 +230,6 @@ export enum VisualArtType {
   Installation = 'Installation',
   ArtInPublicSpace = 'ArtInPublicSpace',
   Performance = 'Performance',
-  // VisualArts = 'VisualArts', // TODO: Not needed?
   AudioArt = 'AudioArt',
   ArtistBook = 'ArtistBook',
   Other = 'Other',

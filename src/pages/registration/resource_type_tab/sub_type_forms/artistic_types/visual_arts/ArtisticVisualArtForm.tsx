@@ -78,6 +78,7 @@ export const ArtisticVisualArtForm = () => {
           )}
         </Field>
       )}
+
       <Field name={ResourceFieldNames.PublicationInstanceDescription}>
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <TextField
