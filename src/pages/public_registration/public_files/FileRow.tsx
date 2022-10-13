@@ -56,15 +56,16 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: 
     [t, dispatch, user, registrationIdentifier, file.identifier]
   );
 
-  useEffect(() => {
-    if (openPreviewAccordion && !previewFileUrl) {
-      handleDownload(true); // Download file for preview
-    }
-  }, [handleDownload, openPreviewAccordion, previewFileUrl]);
-
-  const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
   const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
   const fileIsEmbargoed = fileEmbargoDate ? fileEmbargoDate > new Date() : false;
+
+  useEffect(() => {
+    if (openPreviewAccordion && !previewFileUrl && !fileIsEmbargoed) {
+      handleDownload(true); // Download file for preview
+    }
+  }, [handleDownload, openPreviewAccordion, previewFileUrl, fileIsEmbargoed]);
+
+  const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
   const licenseTitle = file.license?.identifier ? t(`licenses.labels.${file.license.identifier}`) : '';
 
   return (
