@@ -14,16 +14,12 @@ import { sortCustomerInstitutions } from '../utils/institutions-helpers';
 
 interface SelectCustomerInstitutionDialogProps {
   allowedCustomerIds: string[];
-  openDefault: boolean;
 }
 
-export const SelectCustomerInstitutionDialog = ({
-  allowedCustomerIds,
-  openDefault,
-}: SelectCustomerInstitutionDialogProps) => {
+export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCustomerInstitutionDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [openDialog, setOpenDialog] = useState(openDefault);
+  const [openDialog, setOpenDialog] = useState(allowedCustomerIds.length > 1);
   const [allowedCustomers, setAllowedCustomers] = useState<CustomerInstitution[]>([]);
   const [isLoadingCustomers, setIsLoadingCustomers] = useState(true);
   const [isSelectingCustomer, setIsSelectingCustomer] = useState(false);
@@ -43,7 +39,9 @@ export const SelectCustomerInstitutionDialog = ({
       setAllowedCustomers(sortCustomerInstitutions(customers));
       setIsLoadingCustomers(false);
     };
-    fetchAllowedCustomers();
+    if (allowedCustomerIds.length > 1) {
+      fetchAllowedCustomers();
+    }
   }, [allowedCustomerIds]);
 
   const selectCustomer = async () => {

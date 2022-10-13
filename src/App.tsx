@@ -89,10 +89,9 @@ export const App = () => {
       </Helmet>
       {user &&
         (user.cristinId ? (
-          <SelectCustomerInstitutionDialog
-            allowedCustomerIds={user.allowedCustomers}
-            openDefault={user.allowedCustomers.length > 1}
-          />
+          user.allowedCustomers.length > 1 && (
+            <SelectCustomerInstitutionDialog allowedCustomerIds={user.allowedCustomers} />
+          )
         ) : (
           <CreateCristinPersonDialog user={user} />
         ))}
