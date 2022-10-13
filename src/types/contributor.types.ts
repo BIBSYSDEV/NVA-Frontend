@@ -1,6 +1,6 @@
 import { LanguageString } from './common.types';
 
-// For available roles, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/develop/src/main/java/no/unit/nva/model/Role.java
+// For available roles, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/main/nva-datamodel-java/src/main/java/no/unit/nva/model/Role.java
 export enum ContributorRole {
   AcademicCoordinator = 'AcademicCoordinator',
   Actor = 'Actor',
