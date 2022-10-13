@@ -101,6 +101,8 @@ export const PublicPublicationInstanceArtistic = ({
       ? 'registration.resource_type.artistic.performing_arts_type.'
       : type === ArtisticType.MovingPicture
       ? 'registration.resource_type.artistic.moving_picture_type.'
+      : type === ArtisticType.VisualArts
+      ? 'registration.resource_type.artistic.visual_arts_type.'
       : '';
 
   const typeString = subtype?.type
