@@ -338,6 +338,10 @@ export const contributorConfig: ContributorConfig = {
     ],
     secondaryRoles: [],
   },
+  [ArtisticType.VisualArts]: {
+    primaryRoles: [ContributorRole.Consultant, ContributorRole.Other], // TODO: Add Artist and Curator (NP-15736)
+    secondaryRoles: [],
+  },
   // Media
   [MediaType.MediaFeatureArticle]: {
     primaryRoles: [ContributorRole.Creator, ContributorRole.Other],

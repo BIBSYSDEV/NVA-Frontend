@@ -9,6 +9,7 @@ import { ArtisticDesignForm } from './sub_type_forms/artistic_types/design/Artis
 import { ArtisticMovingPictureForm } from './sub_type_forms/artistic_types/moving_picture/ArtisticMovingPictureForm';
 import { ArtisticMusicPerformanceForm } from './sub_type_forms/artistic_types/music_performance/ArtisticMusicPerformanceForm';
 import { ArtisticPerformingArtsForm } from './sub_type_forms/artistic_types/performing_arts/ArtisticPerformingArtsForm';
+import { ArtisticVisualArtForm } from './sub_type_forms/artistic_types/visual_arts/ArtisticVisualArtForm';
 
 export const ArtisticTypeForm = ({ onChangeSubType }: RegistrationTypeFormProps) => {
   const { values } = useFormikContext<ArtisticRegistration>();
@@ -34,6 +35,8 @@ export const ArtisticTypeForm = ({ onChangeSubType }: RegistrationTypeFormProps)
         <ArtisticMovingPictureForm />
       ) : subType === ArtisticType.MusicPerformance ? (
         <ArtisticMusicPerformanceForm />
+      ) : subType === ArtisticType.VisualArts ? (
+        <ArtisticVisualArtForm />
       ) : null}
     </>
   );
