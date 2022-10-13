@@ -343,7 +343,7 @@ export const contributorConfig: ContributorConfig = {
     secondaryRoles: [],
   },
   [ArtisticType.LiteraryArts]: {
-    primaryRoles: [],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor, ContributorRole.Other], // TODO: Add Translator (NP-15736)
     secondaryRoles: [],
   },
   // Media

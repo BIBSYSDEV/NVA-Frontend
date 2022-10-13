@@ -1,6 +1,7 @@
 import { Instant, Period, Place } from '../common.types';
 import { ArtisticType, PublicationType } from '../publicationFieldNames';
 import { BaseRegistration, BaseReference, BaseEntityDescription } from '../registration.types';
+import { PagesMonograph } from './pages.types';
 
 export interface ArtisticRegistration extends BaseRegistration {
   entityDescription: ArtisticEntityDescription;
@@ -91,6 +92,63 @@ export interface MusicScore extends ArtisticOutputBase {
   };
 }
 
+export interface LiteraryArtsMonograph {
+  type: 'LiteraryArtsMonograph';
+  publisher: UnconfirmedPublisher;
+  publicationDate: {
+    type: 'PublicationDate';
+    year: string;
+  };
+  isbn: string;
+  pages: PagesMonograph;
+}
+
+export enum LiteraryArtsAudioVisualSubtype {
+  Audiobook = 'Audiobook',
+  RadioPlay = 'RadioPlay',
+  ShortFilm = 'ShortFilm',
+  Podcast = 'Podcast',
+  Other = 'Other',
+}
+
+export interface LiteraryArtsAudioVisual {
+  type: 'LiteraryArtsAudioVisual';
+  subtype: LiteraryArtsAudioVisualSubtype;
+  publisher: UnconfirmedPublisher;
+  publicationDate: {
+    type: 'PublicationDate';
+    year: string;
+  };
+  isbn: string;
+  extent: string;
+}
+
+export enum LiteraryArtsPerformanceSubtype {
+  Reading = 'Reading',
+  Play = 'Play',
+  Other = 'Other',
+}
+
+export interface LiteraryArtsPerformance {
+  type: 'LiteraryArtsPerformance';
+  subtype: LiteraryArtsPerformanceSubtype;
+  place: Place;
+  publicationDate: {
+    type: 'PublicationDate';
+    year: string;
+  };
+}
+
+export interface LiteraryArtsWeb {
+  type: 'LiteraryArtsWeb';
+  id: string;
+  publisher: UnconfirmedPublisher;
+  publicationDate: {
+    type: 'PublicationDate';
+    year: string;
+  };
+}
+
 export interface MusicalWorkPerformance {
   type: 'MusicalWorkPerformance';
   title: string;
@@ -149,8 +207,13 @@ export interface OtherMusicPerformance extends ArtisticOutputBase {
 export type FilmOutput = Broadcast | CinematicRelease | OtherRelease;
 export type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
 export type MusicOutput = MusicScore | AudioVisualPublication | Concert | OtherMusicPerformance;
+export type LiteraryArtsOutput =
+  | LiteraryArtsMonograph
+  | LiteraryArtsAudioVisual
+  | LiteraryArtsPerformance
+  | LiteraryArtsWeb;
 
-export type ArtisticOutputItem = Venue | ArchitectureOutput | FilmOutput | MusicOutput;
+export type ArtisticOutputItem = Venue | ArchitectureOutput | FilmOutput | MusicOutput | LiteraryArtsOutput;
 
 export interface ArtisticPublicationInstance {
   type: ArtisticType | '';
@@ -159,7 +222,7 @@ export interface ArtisticPublicationInstance {
   venues?: Venue[];
   architectureOutput?: ArchitectureOutput[];
   outputs?: Venue[] | FilmOutput[];
-  manifestations?: MusicOutput[];
+  manifestations?: MusicOutput[] | LiteraryArtsOutput[];
 }
 
 export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {
@@ -183,7 +246,7 @@ export interface ArtisticEntityDescription extends BaseEntityDescription {
 }
 
 interface ArtisticSubtype {
-  type: DesignType | ArchitectureType | PerformingArtType | MovingPictureType | VisualArtType | '';
+  type: DesignType | ArchitectureType | PerformingArtType | MovingPictureType | VisualArtType | LiteraryArtsType | '';
   description?: string;
 }
 
