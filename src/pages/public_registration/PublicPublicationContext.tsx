@@ -20,6 +20,7 @@ import {
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useState } from 'react';
 import { visuallyHidden } from '@mui/utils';
+import { hyphenate } from 'isbn-utils';
 import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
@@ -50,7 +51,6 @@ import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
 import { NpiLevelTypography } from '../../components/NpiLevelTypography';
 import { getPeriodString } from '../../utils/general-helpers';
-import { hyphenate } from 'isbn-utils';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
