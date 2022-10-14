@@ -1142,6 +1142,7 @@
           "Competition": "Competition",
           "Concert": "Concert/show",
           "Exhibition": "Exhibition",
+          "LiteraryArtsMonograph": "Book/printed matter",
           "MentionInPublication": "Publication/mention",
           "MusicScore": "Score/manuscript",
           "OtherPerformance": "Other performance",

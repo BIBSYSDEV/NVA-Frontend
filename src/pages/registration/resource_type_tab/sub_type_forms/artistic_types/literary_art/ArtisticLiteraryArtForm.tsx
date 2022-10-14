@@ -92,6 +92,7 @@ export const ArtisticLiteraryArtForm = () => {
                 <Table>
                   <TableHead>
                     <TableRow>
+                      <TableCell>{t('common.type')}</TableCell>
                       <TableCell>{t('registration.resource_type.artistic.publisher')}</TableCell>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
@@ -107,6 +108,7 @@ export const ArtisticLiteraryArtForm = () => {
                         moveItem={(newIndex) => move(index, newIndex)}
                         index={index}
                         maxIndex={manifestations.length - 1}
+                        showTypeColumn
                       />
                     ))}
                   </TableBody>

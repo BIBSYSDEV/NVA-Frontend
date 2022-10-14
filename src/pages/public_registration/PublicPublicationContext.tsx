@@ -44,11 +44,13 @@ import {
   AudioVisualPublication,
   Concert,
   OtherMusicPerformance,
+  LiteraryArtsMonograph,
 } from '../../types/publication_types/artisticRegistration.types';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
 import { NpiLevelTypography } from '../../components/NpiLevelTypography';
 import { getPeriodString } from '../../utils/general-helpers';
+import { hyphenate } from 'isbn-utils';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext;
@@ -287,6 +289,8 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
             <PublicConcertDialogContent concert={output as Concert} />
           ) : output.type === 'OtherPerformance' ? (
             <PublicOtherPerformanceDialogContent otherPerformance={output as OtherMusicPerformance} />
+          ) : output.type === 'LiteraryArtsMonograph' ? (
+            <PublicLiteraryArtsMonographDialogContent literaryArtsMonograph={output as LiteraryArtsMonograph} />
           ) : null}
         </ErrorBoundary>
 
@@ -598,6 +602,30 @@ const PublicOtherPerformanceDialogContent = ({ otherPerformance }: { otherPerfor
           </TableBody>
         </Table>
       </TableContainer>
+    </DialogContent>
+  );
+};
+
+const PublicLiteraryArtsMonographDialogContent = ({
+  literaryArtsMonograph,
+}: {
+  literaryArtsMonograph: LiteraryArtsMonograph;
+}) => {
+  const { t } = useTranslation();
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('common.type')}</Typography>
+      <Typography paragraph>
+        {t(`registration.resource_type.artistic.output_type.${literaryArtsMonograph.type}`)}
+      </Typography>
+      <Typography variant="overline">{t('registration.resource_type.artistic.publisher')}</Typography>
+      <Typography paragraph>{literaryArtsMonograph.publisher.name}</Typography>
+      <Typography variant="overline">{t('common.year')}</Typography>
+      <Typography paragraph>{literaryArtsMonograph.publicationDate.year}</Typography>
+      <Typography variant="overline">{t('registration.resource_type.isbn')}</Typography>
+      <Typography paragraph>{hyphenate(literaryArtsMonograph.isbn)}</Typography>
+      <Typography variant="overline">{t('registration.resource_type.number_of_pages')}</Typography>
+      <Typography>{literaryArtsMonograph.pages.pages}</Typography>
     </DialogContent>
   );
 };

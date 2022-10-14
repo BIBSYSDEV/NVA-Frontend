@@ -1,5 +1,4 @@
 import { Dialog, DialogTitle, DialogContent, TextField } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
 import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
@@ -39,11 +38,31 @@ const validationSchema = Yup.object<YupShape<LiteraryArtsMonograph>>({
     ),
   }),
   publicationDate: Yup.object({
-    year: Yup.string().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('common.year'),
-      })
-    ),
+    year: Yup.number()
+      .min(
+        1800,
+        i18n.t('feedback.validation.must_be_bigger_than', {
+          field: i18n.t('common.year'),
+          limit: 1800,
+        })
+      )
+      .max(
+        2100,
+        i18n.t('feedback.validation.must_be_smaller_than', {
+          field: i18n.t('common.year'),
+          limit: 2100,
+        })
+      )
+      .typeError(
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('common.year'),
+        })
+      )
+      .required(
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.year'),
+        })
+      ),
   }),
   isbn: isbnField,
   pages: Yup.object({
@@ -77,7 +96,7 @@ export const LiteraryArtsMonographModal = ({
           onSubmit(values);
           closeModal();
         }}>
-        {({ isSubmitting, setFieldTouched, setFieldValue }: FormikProps<LiteraryArtsMonograph>) => (
+        {({ isSubmitting }: FormikProps<LiteraryArtsMonograph>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <Field name="publisher.name">
@@ -96,30 +115,14 @@ export const LiteraryArtsMonographModal = ({
               </Field>
               <Field name="publicationDate.year">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                  <DatePicker
+                  <TextField
+                    {...field}
+                    variant="filled"
                     label={t('common.year')}
-                    PopperProps={{
-                      'aria-label': t('common.year'),
-                    }}
-                    value={field.value ?? null}
-                    onChange={(date) => {
-                      !touched && setFieldTouched(field.name, true, false);
-                      setFieldValue(field.name, date ?? '');
-                    }}
-                    inputFormat="yyyy"
-                    views={['year']}
-                    mask="____"
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="filled"
-                        required
-                        onBlur={() => !touched && setFieldTouched(field.name)}
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
-                        data-testid={dataTestId.registrationWizard.resourceType.publicationDateField}
-                      />
-                    )}
+                    required
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.publicationDateField}
                   />
                 )}
               </Field>
