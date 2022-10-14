@@ -1,6 +1,7 @@
 import { Instant, Period, Place } from '../common.types';
 import { ArtisticType, PublicationType } from '../publicationFieldNames';
-import { BaseRegistration, BaseReference, BaseEntityDescription } from '../registration.types';
+import { BaseRegistration, BaseReference, BaseEntityDescription, RegistrationDate } from '../registration.types';
+import { PagesMonograph } from './pages.types';
 
 export interface ArtisticRegistration extends BaseRegistration {
   entityDescription: ArtisticEntityDescription;
@@ -49,10 +50,15 @@ export interface Exhibition extends ArtisticOutputBase {
   otherInformation: string;
 }
 
-interface UnconfirmedPublisher {
+export interface UnconfirmedPublisher {
   type: 'UnconfirmedPublisher';
   name: string;
 }
+
+export const emptyUnconfirmedPublisher: UnconfirmedPublisher = {
+  type: 'UnconfirmedPublisher',
+  name: '',
+};
 
 export interface Broadcast extends ArtisticOutputBase {
   type: 'Broadcast';
@@ -89,6 +95,51 @@ export interface MusicScore extends ArtisticOutputBase {
     type: 'Isrc';
     value: string;
   };
+}
+
+export interface LiteraryArtsMonograph {
+  type: 'LiteraryArtsMonograph';
+  publisher: UnconfirmedPublisher;
+  publicationDate: RegistrationDate;
+  isbn: string;
+  pages: PagesMonograph;
+}
+
+export enum LiteraryArtsAudioVisualSubtype {
+  Audiobook = 'Audiobook',
+  RadioPlay = 'RadioPlay',
+  ShortFilm = 'ShortFilm',
+  Podcast = 'Podcast',
+  Other = 'Other',
+}
+
+export interface LiteraryArtsAudioVisual {
+  type: 'LiteraryArtsAudioVisual';
+  subtype: LiteraryArtsAudioVisualSubtype;
+  publisher: UnconfirmedPublisher;
+  publicationDate: RegistrationDate;
+  isbn: string;
+  extent: string;
+}
+
+export enum LiteraryArtsPerformanceSubtype {
+  Reading = 'Reading',
+  Play = 'Play',
+  Other = 'Other',
+}
+
+export interface LiteraryArtsPerformance {
+  type: 'LiteraryArtsPerformance';
+  subtype: LiteraryArtsPerformanceSubtype;
+  place: Place;
+  publicationDate: RegistrationDate;
+}
+
+export interface LiteraryArtsWeb {
+  type: 'LiteraryArtsWeb';
+  id: string;
+  publisher: UnconfirmedPublisher;
+  publicationDate: RegistrationDate;
 }
 
 export interface MusicalWorkPerformance {
@@ -149,8 +200,13 @@ export interface OtherMusicPerformance extends ArtisticOutputBase {
 export type FilmOutput = Broadcast | CinematicRelease | OtherRelease;
 export type ArchitectureOutput = Competition | MentionInPublication | Award | Exhibition;
 export type MusicOutput = MusicScore | AudioVisualPublication | Concert | OtherMusicPerformance;
+export type LiteraryArtsOutput =
+  | LiteraryArtsMonograph
+  | LiteraryArtsAudioVisual
+  | LiteraryArtsPerformance
+  | LiteraryArtsWeb;
 
-export type ArtisticOutputItem = Venue | ArchitectureOutput | FilmOutput | MusicOutput;
+export type ArtisticOutputItem = Venue | ArchitectureOutput | FilmOutput | MusicOutput | LiteraryArtsOutput;
 
 export interface ArtisticPublicationInstance {
   type: ArtisticType | '';
@@ -159,7 +215,7 @@ export interface ArtisticPublicationInstance {
   venues?: Venue[];
   architectureOutput?: ArchitectureOutput[];
   outputs?: Venue[] | FilmOutput[];
-  manifestations?: MusicOutput[];
+  manifestations?: MusicOutput[] | LiteraryArtsOutput[];
 }
 
 export const emptyArtisticPublicationInstance: ArtisticPublicationInstance = {
@@ -183,7 +239,7 @@ export interface ArtisticEntityDescription extends BaseEntityDescription {
 }
 
 interface ArtisticSubtype {
-  type: DesignType | ArchitectureType | PerformingArtType | MovingPictureType | VisualArtType | '';
+  type: DesignType | ArchitectureType | PerformingArtType | MovingPictureType | VisualArtType | LiteraryArtsType | '';
   description?: string;
 }
 
@@ -232,5 +288,17 @@ export enum VisualArtType {
   Performance = 'Performance',
   AudioArt = 'AudioArt',
   ArtistBook = 'ArtistBook',
+  Other = 'Other',
+}
+
+export enum LiteraryArtsType {
+  Novel = 'Novel',
+  Poetry = 'Poetry',
+  Novella = 'Novella',
+  ShortFiction = 'ShortFiction',
+  Essay = 'Essay',
+  Translation = 'Translation',
+  Retelling = 'Retelling',
+  Play = 'Play',
   Other = 'Other',
 }

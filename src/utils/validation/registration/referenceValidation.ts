@@ -155,11 +155,11 @@ const resourceErrorMessage = {
 export const emptyStringToNull = (value: string, originalValue: string) => (originalValue === '' ? null : value);
 
 // Common Fields
-const isbnListField = Yup.array().of(
-  Yup.string()
-    .min(13, resourceErrorMessage.isbnTooShort)
-    .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !!parseIsbn(isbn ?? '')?.isIsbn13())
-);
+export const isbnField = Yup.string()
+  .min(13, resourceErrorMessage.isbnTooShort)
+  .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !!parseIsbn(isbn ?? '')?.isIsbn13());
+
+const isbnListField = Yup.array().of(isbnField);
 
 const peerReviewedField = Yup.boolean()
   .nullable()
@@ -435,7 +435,7 @@ const artisticDesignPublicationInstance = Yup.object<YupShape<ArtisticPublicatio
     }
   }),
   manifestations: Yup.array().when('$publicationInstanceType', {
-    is: ArtisticType.MusicPerformance,
+    is: (value: ArtisticType) => value === ArtisticType.MusicPerformance || value === ArtisticType.LiteraryArts,
     then: Yup.array()
       .min(1, resourceErrorMessage.announcementsRequired)
       .required(resourceErrorMessage.announcementsRequired),

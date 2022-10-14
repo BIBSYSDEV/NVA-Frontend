@@ -153,6 +153,13 @@ export interface RegistrationDate {
   day: string;
 }
 
+export const emptyRegistrationDate: RegistrationDate = {
+  type: 'PublicationDate',
+  year: '',
+  month: '',
+  day: '',
+};
+
 export interface RegistrationPreview {
   id: string;
   mainTitle: string;

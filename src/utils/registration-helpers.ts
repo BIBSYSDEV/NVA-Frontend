@@ -29,6 +29,10 @@ import {
   AudioVisualPublication,
   Concert,
   OtherMusicPerformance,
+  LiteraryArtsMonograph,
+  LiteraryArtsPerformance,
+  LiteraryArtsAudioVisual,
+  LiteraryArtsWeb,
 } from '../types/publication_types/artisticRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 
@@ -342,6 +346,10 @@ export const contributorConfig: ContributorConfig = {
     primaryRoles: [ContributorRole.Consultant, ContributorRole.Other], // TODO: Add Artist and Curator (NP-15736)
     secondaryRoles: [],
   },
+  [ArtisticType.LiteraryArts]: {
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor, ContributorRole.Other], // TODO: Add Translator (NP-15736)
+    secondaryRoles: [],
+  },
   // Media
   [MediaType.MediaFeatureArticle]: {
     primaryRoles: [ContributorRole.Creator, ContributorRole.Other],
@@ -410,7 +418,7 @@ export const groupContributors = (contributors: Contributor[], registrationType:
   return { primaryContributors, secondaryContributors };
 };
 
-export const getArtisticOutputName = (item: ArtisticOutputItem) => {
+export const getArtisticOutputName = (item: ArtisticOutputItem): string => {
   switch (item.type) {
     case 'Venue':
     case 'PerformingArtsVenue':
@@ -437,6 +445,14 @@ export const getArtisticOutputName = (item: ArtisticOutputItem) => {
       return (item as Concert).place.label;
     case 'OtherPerformance':
       return (item as OtherMusicPerformance).place.label;
+    case 'LiteraryArtsMonograph':
+      return (item as LiteraryArtsMonograph).publisher.name;
+    case 'LiteraryArtsPerformance':
+      return (item as LiteraryArtsPerformance).place.label;
+    case 'LiteraryArtsAudioVisual':
+      return (item as LiteraryArtsAudioVisual).publisher.name;
+    case 'LiteraryArtsWeb':
+      return (item as LiteraryArtsWeb).publisher.name;
     default:
       return '';
   }
