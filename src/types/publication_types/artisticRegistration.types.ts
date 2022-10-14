@@ -50,7 +50,7 @@ export interface Exhibition extends ArtisticOutputBase {
   otherInformation: string;
 }
 
-interface UnconfirmedPublisher {
+export interface UnconfirmedPublisher {
   type: 'UnconfirmedPublisher';
   name: string;
 }

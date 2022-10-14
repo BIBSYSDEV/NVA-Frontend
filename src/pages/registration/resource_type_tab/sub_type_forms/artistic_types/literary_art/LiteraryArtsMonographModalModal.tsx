@@ -6,9 +6,10 @@ import i18n from '../../../../../../translations/i18n';
 import {
   emptyUnconfirmedPublisher,
   LiteraryArtsMonograph,
+  UnconfirmedPublisher,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { emptyPagesMonograph } from '../../../../../../types/publication_types/pages.types';
-import { emptyRegistrationDate } from '../../../../../../types/registration.types';
+import { emptyPagesMonograph, PagesMonograph } from '../../../../../../types/publication_types/pages.types';
+import { emptyRegistrationDate, RegistrationDate } from '../../../../../../types/registration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { isbnField } from '../../../../../../utils/validation/registration/referenceValidation';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
@@ -30,14 +31,14 @@ const emptyLiteraryArtsMonograph: LiteraryArtsMonograph = {
 };
 
 const validationSchema = Yup.object<YupShape<LiteraryArtsMonograph>>({
-  publisher: Yup.object({
+  publisher: Yup.object<YupShape<UnconfirmedPublisher>>({
     name: Yup.string().required(
       i18n.t('feedback.validation.is_required', {
         field: i18n.t('registration.resource_type.artistic.publisher'),
       })
     ),
   }),
-  publicationDate: Yup.object({
+  publicationDate: Yup.object<YupShape<RegistrationDate>>({
     year: Yup.number()
       .min(
         1800,
@@ -65,7 +66,7 @@ const validationSchema = Yup.object<YupShape<LiteraryArtsMonograph>>({
       ),
   }),
   isbn: isbnField,
-  pages: Yup.object({
+  pages: Yup.object<YupShape<PagesMonograph>>({
     pages: Yup.number().typeError(
       i18n.t('feedback.validation.has_invalid_format', {
         field: i18n.t('registration.resource_type.number_of_pages'),
