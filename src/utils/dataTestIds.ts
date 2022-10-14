@@ -246,6 +246,7 @@ export const dataTestId = {
       issueField: 'issue-field',
       journalChip: 'journal-chip',
       journalField: 'journal-search-field',
+      linkField: 'link-field',
       nviFailed: 'not-nvi-applicable',
       nviSuccess: 'nvi-applicable',
       otherReleaseType: 'artistic-other-release-type',
