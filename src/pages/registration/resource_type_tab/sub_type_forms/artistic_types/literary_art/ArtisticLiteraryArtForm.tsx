@@ -138,7 +138,7 @@ export const ArtisticLiteraryArtForm = () => {
                     {t('registration.resource_type.artistic.add_book')}
                   </Button>
                   <Button
-                    data-testid={dataTestId.registrationWizard.resourceType.addBookButton}
+                    data-testid={dataTestId.registrationWizard.resourceType.addWebPublicationButton}
                     onClick={() => setOpenNewManifestationModal('LiteraryArtsWeb')}
                     variant="outlined"
                     startIcon={<AddCircleOutlineIcon />}>

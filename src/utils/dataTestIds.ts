@@ -192,6 +192,7 @@ export const dataTestId = {
       addConcertShowButton: 'add-concert-show-button',
       addAudioVideoPublicationButton: 'add-audio-video-publication-button',
       addScoreManuscriptButton: 'add-score-manuscript-button',
+      addWebPublicationButton: 'add-web-publication-button',
       articleNumberField: 'article-number-field',
       artisticTypeField: 'artistic-type-field',
       artisticDescriptionField: 'artistic-description-field',
