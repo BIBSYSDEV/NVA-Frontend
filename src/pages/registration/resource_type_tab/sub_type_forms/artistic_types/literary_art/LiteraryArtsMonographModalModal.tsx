@@ -11,6 +11,7 @@ import {
 import { emptyPagesMonograph } from '../../../../../../types/publication_types/pages.types';
 import { emptyRegistrationDate } from '../../../../../../types/registration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { isbnField } from '../../../../../../utils/validation/registration/referenceValidation';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 
@@ -44,11 +45,14 @@ const validationSchema = Yup.object<YupShape<LiteraryArtsMonograph>>({
       })
     ),
   }),
-  isbn: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.isbn'),
-    })
-  ),
+  isbn: isbnField,
+  pages: Yup.object({
+    pages: Yup.number().typeError(
+      i18n.t('feedback.validation.has_invalid_format', {
+        field: i18n.t('registration.resource_type.number_of_pages'),
+      })
+    ),
+  }),
 });
 
 export const LiteraryArtsMonographModal = ({

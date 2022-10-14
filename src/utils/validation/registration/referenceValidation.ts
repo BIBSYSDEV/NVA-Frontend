@@ -155,11 +155,11 @@ const resourceErrorMessage = {
 export const emptyStringToNull = (value: string, originalValue: string) => (originalValue === '' ? null : value);
 
 // Common Fields
-const isbnListField = Yup.array().of(
-  Yup.string()
-    .min(13, resourceErrorMessage.isbnTooShort)
-    .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !!parseIsbn(isbn ?? '')?.isIsbn13())
-);
+export const isbnField = Yup.string()
+  .min(13, resourceErrorMessage.isbnTooShort)
+  .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !!parseIsbn(isbn ?? '')?.isIsbn13());
+
+const isbnListField = Yup.array().of(isbnField);
 
 const peerReviewedField = Yup.boolean()
   .nullable()
