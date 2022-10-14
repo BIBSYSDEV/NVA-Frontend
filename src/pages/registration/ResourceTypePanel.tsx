@@ -256,7 +256,6 @@ export const ResourceTypePanel = () => {
         onAccept={() => {
           setConfirmContextType('');
           setConfirmInstanceType('');
-          setPublicationInstanceType('');
           setShowDatasetConditions(false);
         }}
         ignoreBackdropClick // Force user to click Yes or No
