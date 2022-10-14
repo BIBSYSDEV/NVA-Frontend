@@ -35,7 +35,7 @@ export const ArtisticLiteraryArtForm = () => {
   const { values, touched, errors } = useFormikContext<ArtisticRegistration>();
   const manifestations = values.entityDescription.reference.publicationInstance.manifestations ?? [];
 
-  const [openManifestationModal, setOpenNewManifestationModal] = useState<ArtisticArchitectureModalType>('');
+  const [openNewManifestationModal, setOpenNewManifestationModal] = useState<ArtisticArchitectureModalType>('');
 
   return (
     <>
@@ -138,7 +138,7 @@ export const ArtisticLiteraryArtForm = () => {
                 </Button>
                 <LiteraryArtsMonographModal
                   onSubmit={onAddManifestation}
-                  open={openManifestationModal === 'LiteraryArtsMonograph'}
+                  open={openNewManifestationModal === 'LiteraryArtsMonograph'}
                   closeModal={() => setOpenNewManifestationModal('')}
                 />
               </>
