@@ -46,6 +46,7 @@ import {
   Concert,
   OtherMusicPerformance,
   LiteraryArtsMonograph,
+  LiteraryArtsWeb,
 } from '../../types/publication_types/artisticRegistration.types';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
@@ -291,6 +292,8 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
             <PublicOtherPerformanceDialogContent otherPerformance={output as OtherMusicPerformance} />
           ) : output.type === 'LiteraryArtsMonograph' ? (
             <PublicLiteraryArtsMonographDialogContent literaryArtsMonograph={output as LiteraryArtsMonograph} />
+          ) : output.type === 'LiteraryArtsWeb' ? (
+            <PublicLiteraryArtsWebPublicationDialogContent webPublication={output as LiteraryArtsWeb} />
           ) : null}
         </ErrorBoundary>
 
@@ -626,6 +629,26 @@ const PublicLiteraryArtsMonographDialogContent = ({
       <Typography paragraph>{hyphenate(literaryArtsMonograph.isbn)}</Typography>
       <Typography variant="overline">{t('registration.resource_type.number_of_pages')}</Typography>
       <Typography>{literaryArtsMonograph.pages.pages}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicLiteraryArtsWebPublicationDialogContent = ({ webPublication }: { webPublication: LiteraryArtsWeb }) => {
+  const { t } = useTranslation();
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('common.type')}</Typography>
+      <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${webPublication.type}`)}</Typography>
+      <Typography variant="overline">{t('registration.resource_type.artistic.web_link')}</Typography>
+      <Typography paragraph>
+        <Link href={webPublication.id} target="_blank" rel="noopener noreferrer">
+          {webPublication.id}
+        </Link>
+      </Typography>
+      <Typography variant="overline">{t('registration.resource_type.artistic.publisher')}</Typography>
+      <Typography paragraph>{webPublication.publisher.name}</Typography>
+      <Typography variant="overline">{t('common.year')}</Typography>
+      <Typography paragraph>{webPublication.publicationDate.year}</Typography>
     </DialogContent>
   );
 };
